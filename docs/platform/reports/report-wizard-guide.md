@@ -256,6 +256,44 @@ reasonable ways to narrow it.
 - **Layout**, together with **Parameters Position** and **Number Of Parameters In Row** on the group
   above the grid, arranges the boxes on the run screen.
 
+### Sorting the questions into sections
+
+Once a report asks more than a handful of questions, the run screen is easier to read when related
+questions sit together under a title — the dates in one section, the customer filters in another.
+That takes two steps.
+
+**1. Define the sections in the Parameter Groups grid**, just above the **Parameters** grid. Each row
+is one section:
+
+| Column | What it holds |
+|---|---|
+| **Parameter Group** | A short name for the section, such as `grpDates`. The reader never sees it; it is how the parameter rows refer to the section. |
+| **Arabic Title** / **English Title** | The title shown on the section's header. |
+| **Collapsed** | Tick it and the section opens folded, showing only its title until the reader clicks it. |
+
+**2. Put each question in its section.** On the **Parameters** grid, type the section's name into the
+**Parameter Group** column of every row that belongs to it. A row left empty stays outside the
+sections.
+
+The run screen shows the sections in the order of the **Parameter Groups** grid, each with its
+questions in the order of the **Parameters** grid, and then every question that belongs to no
+section. A **Between** row takes both its boxes into the section, and so does a **Show as Date
+Range** picker. A section that no row points at is left out of the report altogether.
+
+Sections are drawn by the new UI only; the old interface shows the same questions without them.
+
+### Opening on the reader's last answer
+
+Tick **Remember Last Value** on a parameter row and the run screen opens on whatever the reader chose
+the last time they ran the report, instead of the row's default value. It suits the question someone
+answers the same way every day — their own branch, their usual warehouse.
+
+The answer is kept for each user and each report, in the browser the report was run from, and only
+when the question was answered: clear it and run, and next time the default comes back. A value
+passed in the report's link still wins over the remembered one. The full rules, including how a
+remembered date interacts with a moving default such as `$monthStart()`, are on the
+[Report Definition guide](/platform/reports/reports-guide#Remembering-the-users-last-answer).
+
 ## Custom parameters — asking a question the query does not answer
 
 Sometimes the report needs to ask the reader something that is not a filter on a field at all: a
@@ -583,3 +621,6 @@ Refusals raised when you save a Report Wizard record.
 | *Sort parameters count must be less than or equal to {0}* — «عدد مدخلات الترتيب يجب أن يكون أقل من أو يساوي {0}» | The report sorts by a run-time parameter and asks the reader for more sort choices than there are rows in the sort-fields grid. | Lower the count, or add sort fields. |
 | *Used As Default Value To Parameter Number value can not be greater than {0}* — «قيمة يستعمل كقيمة افتراضية للمدخل رقم لا يمكن أن تكون أكبر من {0}» | A sort field is marked as the default for a sort question the report never asks, because its number is above the sort parameters count. | Use a number within the count, or raise the count. |
 | *Used As Default Value To Parameter Number value is repeated at line number {0}* — «قيمة يستعمل كقيمة افتراضية للمدخل رقم مكررة في السطر {0}» | Two sort fields claim to be the default for the same sort question. | Leave one default per sort question. |
+| *The parameter group {0} is repeated in lines {1} and {2}* — «مجموعة المدخلات {0} مكررة في السطرين {1} و {2}» | Two rows of the **Parameter Groups** grid carry the same name, so a parameter row naming it could belong to either. | Rename one of the two sections, or merge them into one row. |
+| *The parameter group name {0} is already used as a parameter name* — «اسم مجموعة المدخلات {0} مستخدم بالفعل كاسم مدخل» | A section's name is the same as the name of one of the report's parameters — a field, a generated name such as `customer_Equals`, or one of the parameters Nama fills in by itself. Each section becomes a parameter of its own in the report, so the two names would clash. The same message can also appear when the report is generated, for the few names the wizard only creates at that point. | Give the section a name that cannot be mistaken for a parameter, for example with a `grp` prefix. |
+| *The parameter group {0} is not defined in the parameter groups grid* — «مجموعة المدخلات {0} غير معرفة في جدول مجموعات المدخلات» | A row of the **Parameters** grid names a section in its **Parameter Group** column that has no row in the **Parameter Groups** grid — usually a typo. | Correct the name on the parameter row, or add the section to the **Parameter Groups** grid. |

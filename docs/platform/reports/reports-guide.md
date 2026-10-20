@@ -314,6 +314,81 @@ where $X{[BETWEEN],valueDate,FromValueDate,ToValueDate}
 
 Three things have to hold or the picker will not appear: the controller must be a `java.lang.String`, both date parameters must set `isForPrompting="false"` so they do not show up as separate prompts beside the picker, and `fromDateId` and `toDateId` must match the two parameter names exactly.
 
+### Grouping prompts into sections
+
+A report with fifteen prompts is a wall of boxes, and the user has to read all of them to find the two they care about. Groups let you sort the prompts into titled sections — *Dates*, *Customer*, *Items* — the way an edit screen sorts its fields, and each section can be folded away until the user needs it.
+
+A group is a parameter of its own that asks nothing. It carries `paramGroup = true`, a title in `arabic` and `english`, and it must set `isForPrompting="false"`. The prompts that belong to it name it in their `paramGroupId` property:
+
+```xml
+<parameter name="grpDates" class="java.lang.String" isForPrompting="false">
+    <property name="paramGroup" value="true"/>
+    <property name="arabic" value="تواريخ"/>
+    <property name="english" value="Dates"/>
+</parameter>
+
+<parameter name="ValueDate" class="java.lang.String">
+    <property name="paramGroupId" value="grpDates"/>
+    <property name="showAsDateRange" value="true"/>
+    <property name="fromDateId" value="FromValueDate"/>
+    <property name="toDateId" value="ToValueDate"/>
+    <property name="arabic" value="التاريخ الفعلي"/>
+    <property name="english" value="Value Date"/>
+</parameter>
+
+<parameter name="grpCustomer" class="java.lang.String" isForPrompting="false">
+    <property name="paramGroup" value="true"/>
+    <property name="arabic" value="العميل"/>
+    <property name="english" value="Customer"/>
+    <property name="collapsed" value="true"/>
+</parameter>
+
+<parameter name="Customer" class="java.lang.String">
+    <property name="paramGroupId" value="grpCustomer"/>
+    <property name="entityType" value="Customer"/>
+    <property name="arabic" value="العميل"/>
+    <property name="english" value="Customer"/>
+</parameter>
+```
+
+How the run screen lays it out:
+
+- **Sections follow the order of the group parameters** in the layout, and inside a section the prompts keep their own order.
+- **Membership is explicit.** A prompt joins a group only through `paramGroupId`; where it sits in the file does not matter. Prompts that name no group are shown after all the sections, as before.
+- **`collapsed = true`** opens the section folded, so only its title shows until the user clicks it. Leave it out and the section opens unfolded.
+- A section whose prompts are all hidden is not shown at all, so an empty title never appears.
+
+Groups are drawn by the new UI only. The old interface ignores them and lists the prompts as it always has, so adding groups to a report never breaks it there.
+
+Saving the report definition refuses a layout where a group parameter is left as a prompt, or where a prompt's `paramGroupId` names something that is not a group parameter — see the messages at the end of this page.
+
+### Remembering the user's last answer
+
+Some reports are run the same way every morning: the same branch, the same warehouse, the same customer group. `rememberLastValue = true` on a prompt makes the run screen open on whatever the user chose last time instead of the layout's default.
+
+```xml
+<parameter name="Warehouse" class="java.lang.String">
+    <property name="entityType" value="Warehouse"/>
+    <property name="rememberLastValue" value="true"/>
+    <property name="arabic" value="المخزن"/>
+    <property name="english" value="Warehouse"/>
+</parameter>
+```
+
+The answer is recorded when the user runs the report, and again when they change the prompts from the report result and apply them. It is kept separately for each user, each report and each prompt. Like groups, this is a feature of the new UI; the old interface ignores the property.
+
+Which value wins when the run screen opens:
+
+1. A value passed in the report's link always wins.
+2. Otherwise the remembered answer.
+3. Otherwise the layout's `defaultValue`.
+
+A few things follow from this:
+
+- **A remembered date is a fixed date.** If the prompt's default is `$monthStart()` and the user picked 1 March, the screen opens on 1 March next month too — the moving default no longer applies once there is a remembered answer. A preset chosen in a date range picker, such as *This Month*, is remembered as the preset itself, so it keeps moving.
+- **Clearing a prompt and running the report forgets it.** Only filled answers are remembered, so an emptied prompt goes back to the default next time.
+- **The answer lives in the browser.** It is stored on the user's own computer, in the browser they ran the report from. Another browser or another computer starts from the defaults, and clearing the browser's site data forgets every remembered answer.
+
 ### Parameter properties reference
 
 #### Basic properties
@@ -327,6 +402,10 @@ Three things have to hold or the picker will not appear: the controller must be 
 - **`required`** — `true`/`false`, makes the prompt mandatory
 - **`requiredGroup`** — groups parameters so at least one of them must be filled
 - **`hijri`** — `true`/`false`, prompts for a Hijri date
+- **`paramGroup`** — `true` makes this parameter a section title instead of a prompt; it must also set `isForPrompting="false"`. See [Grouping prompts into sections](#Grouping-prompts-into-sections)
+- **`collapsed`** — on a group parameter, `true` opens the section folded
+- **`paramGroupId`** — on a prompt, the name of the group parameter it belongs to
+- **`rememberLastValue`** — `true`/`false`, opens the prompt on the user's last answer. See [Remembering the user's last answer](#Remembering-the-users-last-answer)
 - **`nama-id`** — an internal identifier used by the Report Wizard; you do not set it by hand
 
 #### Suggestions for text fields
@@ -814,4 +893,6 @@ Refusals raised when you save or run a report definition.
 | *You can not make changes to the report {0} because it is a system report.* — «لا يمكن تعديل التقرير {0} لأنه تقرير نظامي.» | A frozen part of a report shipped with Nama was changed: its entity, book, term, report type, page, order, view, security equivalent, base report, scriptlet, or the content of the layout, its subreports or its resources. Code, names, groups and the report's own security lines are *not* frozen. | Copy the report into one of your own and change the copy. If the original really must change, an administrator can enable **Allow Change System Report To Non System** in the global configuration — after which upgrades no longer refresh it. |
 | *Can not change system reports* — «لا يمكن تعديل أو إنشاء التقارير النظامية» | A brand-new report was saved with **System** already ticked. Only the shipped set may be system reports. | Untick **System** and save it as your own report. |
 | *You are not allowed to run the report {0}* — «لا تملك الصلاحيه لتشغيل هذ التقرير {0}» | The report's security grid shuts this user out: a **Prevent** line names them, their profile or their group, or the grid holds only **Allow** lines and none of them matches. | Add an **Allow** line for the user, their profile or their group — see [Who may run a report](#Who-may-run-a-report). |
+| *The group parameter {0} must have isForPrompting set to false* — «يجب أن تكون قيمة isForPrompting في مدخل المجموعة {0} هي false» | A parameter marked `paramGroup = true` is still a prompt. A group only titles a section and has no answer of its own. | Add `isForPrompting="false"` to that group parameter. |
+| *The parameter {0} refers to the group {1}, which is not a group parameter* — «المدخل {0} يشير إلى المجموعة {1} وهو ليس مدخل مجموعة» | A prompt's `paramGroupId` names a parameter that does not exist, or one that is not marked `paramGroup = true` — usually a typo in the name. | Correct `paramGroupId` to the exact name of a group parameter, or add `paramGroup = true` to the parameter it names. |
 | *You can not run this report without authentication* | A no-login link was opened for a report that does not have **Allow Run Report Without Authentication** ticked. This message has no Arabic translation and shows in English on Arabic screens. | Tick the option on the report, if the report is really meant to be public. |
