@@ -171,3 +171,5 @@ Bump the pinned `getmeili/meilisearch:vX.Y` in `docker-compose.yaml` and nothing
 not move to `:latest` — on 2026-07-23 that left the ask stack two releases behind with no
 visible sign. Check the release notes first: a major version may need a dump/restore rather
 than an in-place restart. After any upgrade that resets storage, just re-run the push.
+
+.
