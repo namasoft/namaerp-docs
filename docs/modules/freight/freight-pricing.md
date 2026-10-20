@@ -24,14 +24,16 @@ Records what you buy services from suppliers for. Each list has:
 Records what you sell services to the customer for. It stands out in that it builds the selling price on top of the purchase price plus a profit margin for each service type separately:
 
 - **Customer and Sales Man**, commodity, and the import/export and collect/prepaid flags.
-- **A markup per service** — *ocean freight markup, clearance markup, trucking markup, genset markup, other markups* — each carrying both a **percentage** and a **fixed value**.
+- **A markup per service** — *ocean freight markup, clearance markup, trucking markup, genset markup, other markups* — each with a **percentage** field and a **fixed value** field.
 - **All-In** — an option for a single combined rate (All-In Rate) instead of detailing each service, with **Agency Fees**.
 - Textual **Conditions** per service type, to print on the customer's quotation.
 
 ![Sales price list](../../ar/modules/freight/images/pricing/sales-price-list-en.png)
 
 ::: tip How the markup is calculated
-The profit markup (FRM Mark) is flexible: it can be a **percentage** over the purchase price, a **fixed value** added to it, or both together. That's how you price one service at "cost + 10%", another at "cost + $50", and a third combining both.
+Each tab's markup uses **one** of its two fields, never both: the **fixed value** when one is filled, otherwise the **percentage**. That is how ocean freight runs at "cost + $60 a container" while clearance runs at "cost + 10%". A tab cannot add both — fill in 10% and $50 and the price is cost + $50 — so fill only the field you mean.
+
+To price one line by hand, fill its **SalesPrice | Manual Edit**: on saving, it replaces whatever the markup gave that line.
 :::
 
 ## From the list to the operation order
@@ -45,6 +47,8 @@ Each list also carries its own buttons. On the purchase list: **Create Sales Quo
 ## Linking sale to cost
 
 When [invoicing sales](./freight-invoicing.md), the system matches each sale line to its corresponding purchase line in the same operation order (same service item, currency, quantity, ports, container, and commodity), computing the **actual cost** and the **difference (profit)** for each line — so you know your profit at the level of a single service, not just the shipment.
+
+The match runs each time the sales invoice is saved, so it only finds supplier invoices that were saved before it. A supplier invoice saved later does not reach back into the sales invoice: [Invoices & Returns](./freight-invoicing.md) explains what to do.
 
 ## Messages you may see
 

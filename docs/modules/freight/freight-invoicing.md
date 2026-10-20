@@ -26,7 +26,13 @@ The invoice is the document that records the sale in accounting and bills the cu
 ![Sales invoice](../../ar/modules/freight/images/invoicing/sales-invoice-en.png)
 
 ::: info Linking cost to sale automatically
-When the sales invoice is posted, the system looks for the matching purchase lines in the same operation order and links them to the sale lines, computing each service's cost and marking the purchase lines as "used" in this invoice. This way you know your net profit on each service, and cost is never counted twice.
+Every time the sales invoice is saved, the system looks for the matching purchase lines in the same operation order and links them to the sale lines, computing each service's cost and marking the purchase lines as "used" in this invoice. This way you know your net profit on each service, and cost is never counted twice.
+:::
+
+::: warning Save the supplier invoices first
+The match only finds purchase invoices that were already saved. A supplier invoice saved after the sales invoice does not update it: that line keeps a **Cost** of 0 and a **Diff** equal to its whole price. To pick up the cost, open the sales invoice, make any change, and save it again — the screen will not save a record with nothing changed.
+
+Where a service item has a commission item, the [e-invoice](./freight-einvoicing.md) is built from the same cost, so a missing cost sends the whole amount as your commission. Correct the cost before the invoice goes to the tax authority.
 :::
 
 #### Buttons on the sales invoice
