@@ -21,7 +21,7 @@ For finer control than a whole period, **Prevent Transactions On Accounts Or Sub
 
 ## Working in more than one currency
 
-Multi-currency rests on the **Ledger** (`دفتر حسابات`), which defines the **main currency** the books are kept in and a **reporting currency** for presentation. Every foreign-currency transaction is stored with both its **original value** and its **local value** at the day's rate, so balances can always be shown either way. Where the day's rate comes from — the **Exchange Rate** screen and the order in which a document looks it up — is on [Currencies and exchange rates](../../../platform/shared-master-files/currencies-and-exchange-rates.md).
+Multi-currency rests on the **Ledger** (`دفتر حسابات`), which defines the **main currency** the books are kept in, and a **reporting currency** that the [consolidated statements](../consolidated-statements.md) use by default to present a group of companies in one currency. Every foreign-currency transaction is stored with both its **original value** and its **local value** at the day's rate, so balances can always be shown either way. Where the day's rate comes from — the **Exchange Rate** screen and the order in which a document looks it up — is on [Currencies and exchange rates](../../../platform/shared-master-files/currencies-and-exchange-rates.md).
 
 Rates move, though, and that creates **currency differences** on open foreign balances. Two documents handle this:
 

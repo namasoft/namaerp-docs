@@ -20,7 +20,7 @@ That single rule explains almost everything on this page, so start with it:
 |---|---|
 | The physical location only | Nothing. The asset record and its history are updated, the ledger is untouched |
 | An accounting-relevant dimension (branch, sector, department, analysis set) or one of the asset's accounts, inside the same company | **One** entry, moving gross cost and accumulated depreciation from the old dimension/account to the new one |
-| The company (legal entity) | **Two** linked entries, one in each company, joined by mediator accounts |
+| The company (legal entity) | **Two** linked entries, one in each company, joined by mediator accounts. Allowed only between companies that keep their books in the same currency |
 
 Which of the four dimensions count as accounting-relevant is a decision you make once, in
 [module configuration](/modules/fixedassets/fixedassets-configuration.md). If your installation does
@@ -210,7 +210,7 @@ hole in that timeline. All failures are reported together, so you see the full l
    it is already fully depreciated and the last depreciation is genuinely behind the transfer date.
    In practice: run the [depreciation](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md)
    up to the month of the move first, then transfer.
-5. **Both companies need a mediator account** when the legal entity changes — see the
+5. **Both companies need a mediator account, and the same currency,** when the legal entity changes — see the
    [inter-company page](/modules/fixedassets/movement/fixedassets-intercompany-transfers.md).
 
 The interlock works in both directions. Once a transfer exists, a depreciation dated *before* it is

@@ -66,7 +66,7 @@ The **Dimensions** group on a Branch offers Legal Entity, Analysis Set, Sector a
 
 - **Parent Legal Entity** builds a group structure out of companies.
 - **Ledger** is the set of books this company posts into, and **Configuration Group** is the settings list it follows — two companies in one database can therefore keep different books and different configuration.
-- **Mediator account** is the account used when a transaction crosses from one legal entity to another.
+- **Mediator account** is the account used when a transaction crosses from one legal entity to another: the other companies post against it when they deal with this one. Make it an account flagged **Intercompany**, so the [consolidated statements](/modules/accounting/consolidated-statements) eliminate its balances. When you set or change it to an account without that flag, the record still saves, with a warning that the consolidated reports will not eliminate it.
 - **Commercial Registration Number**, **Foundation Year**, **Practice Start Date**, **Social Insurance Number**, **Tax File ID**, **Tax Registration Issuing Office** and **Tax Registration Number** are the statutory identifiers printed on documents and sent to the tax authority.
 - **Default Menu** gives the company its own menu, and **Use This Legal Entity Logo For Public** decides whose logo greets a user logged in on PUBLIC.
 - **Unused Entities** and **Unused Features** hide screens and features that this company does not use.

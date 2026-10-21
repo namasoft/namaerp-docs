@@ -38,6 +38,7 @@
   <LandingCard icon="⏳" title="تسوية أعمار الديون" link="/ar/modules/accounting/aging-allocation.md" details="تسوية الدفعات على أعمار الديون." />
   <LandingCard icon="📊" title="كشوف الحسابات وميزان المراجعة" link="/ar/modules/accounting/reports-account-statements-and-trial-balance.md" details="كشوف الحسابات وميزان المراجعة." />
   <LandingCard icon="📈" title="القوائم المالية" link="/ar/modules/accounting/financial-statements.md" details="إعداد القوائم المالية." />
+  <LandingCard icon="🌐" title="القوائم المالية الموحدة" link="/ar/modules/accounting/consolidated-statements.md" details="ميزان مراجعة وقائمة دخل ومركز مالي للمجموعة كلها بعملة واحدة، بعد استبعاد المعاملات بين شركاتها." />
   <LandingCard icon="🛒" title="المشتريات المتنوعة وتشغيل المعدات" link="/ar/modules/accounting/misc-purchasing.md" details="المشتريات المتنوعة وتشغيل المعدات." />
   <LandingCard icon="⭐" title="تقييم الجهات" link="/ar/modules/accounting/party-evaluation.md" details="تقييم الجهات." />
   <LandingCard icon="🔗" title="التسوية مع الذمم" link="/ar/modules/accounting/subsidiary-reconciliation.md" details="التسوية مع الذمم." />

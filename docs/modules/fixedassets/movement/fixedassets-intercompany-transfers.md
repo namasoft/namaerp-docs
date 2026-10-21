@@ -35,23 +35,37 @@ The two entries are separate — separate companies, separate ledgers — so eac
 counterpart. That counterpart is the **mediator account** (حساب وسيط الشركة): an inter-company
 account through which the transfer passes.
 
-There are two of them, and they are not interchangeable:
+There are two of them, one for each entry, and each company posts against the **other** company's
+account, the same convention as the Inter Company Transfer and inter-company stock transfers:
 
-| Field | Whose account it is |
-|---|---|
-| **Mediator Account 1** (حساب وسيط الشركة 1) | The **source** company — the one the asset is leaving |
-| **Mediator Account 2** (حساب وسيط الشركة 2) | The **destination** company — the one receiving it |
+| Field | Used in the entry of | Falls back to |
+|---|---|---|
+| **Mediator Account 1** (حساب وسيط الشركة 1) | The **source** company — the one the asset is leaving | The **destination** company's mediator account |
+| **Mediator Account 2** (حساب وسيط الشركة 2) | The **destination** company — the one receiving it | The **source** company's mediator account |
 
 ![The To group, where the destination company is set](../../../ar/modules/fixedassets/images/movement/fa-transfer-document-to-dimensions-en.png)
 
 You do not normally type them. Each legal entity's own record carries a mediator account, and the
-transfer falls back to it when the field on the document is empty. Setting it once per company is the
+transfer falls back to the other company's when the field on the document is empty. Setting it once per company is the
 right way to work; the fields on the document exist for the case where a particular move should pass
 through a different inter-company account.
 
 What you cannot do is skip it. If the companies differ and neither the document nor the legal entity
 supplies a mediator account, the commit is refused with *"You must specify mediator account for legal
 entity …"*, naming the company that is missing one.
+
+### Only between companies on the same currency
+
+A transfer moves the asset at its book value in the source company's currency. That works only when
+the receiving company keeps its books in the same currency, so a transfer between companies whose
+ledgers use different currencies is refused:
+
+*A fixed asset can move between legal entities {0} and {1} only when they use the same currency. Sell the asset from {0} and purchase it in {1} instead* — «لا يمكن نقل الأصل الثابت بين الشركتين {0} و{1} إلا إذا كانتا تستخدمان نفس العملة. قم ببيع الأصل من {0} وشرائه في {1} بدلا من ذلك»
+
+Between such companies, do what the message says. Dispose of the asset in the selling company, and
+buy it in the other with a fixed asset purchase, each in its own currency. For the group, the asset
+has only moved, and the [consolidated statements](/modules/accounting/consolidated-statements.md)
+take the gain on the sale back out if it is booked on an intercompany gain account.
 
 ::: warning Set the document's own legal entity to the company the asset is leaving
 The transfer works out how much to move by reading the balances the asset has already accumulated in
@@ -84,22 +98,22 @@ balances and parks the difference on the inter-company account:
 | Account | Debit | Credit |
 |---|---|---|
 | Accumulated depreciation | 93,900 | |
-| Inter-company (Mediator Account 1) | 176,100 | |
+| Inter-company: Al-Waha Jeddah's mediator account (Mediator Account 1) | 176,100 | |
 | Asset cost | | 270,000 |
 | **Total** | **270,000** | **270,000** |
 
 The machine is now completely off Al-Waha Industries' books. What is left is a 176,100 receivable
-from the sister company, sitting on the mediator account.
+from the sister company, sitting on Jeddah's mediator account.
 
 **Entry two — in Al-Waha Jeddah**, which is gaining it:
 
 | Account | Debit | Credit |
 |---|---|---|
 | Asset cost | 176,100 | |
-| Inter-company (Mediator Account 2) | | 176,100 |
+| Inter-company: Al-Waha Industries' mediator account (Mediator Account 2) | | 176,100 |
 
 Jeddah now carries the machine at 176,100 gross, with nothing in accumulated depreciation, and a
-176,100 payable to Riyadh on its own mediator account.
+176,100 payable to Riyadh on Al-Waha Industries' mediator account.
 
 The accounts used on each side are the ones on that side of the document: entry one uses the
 accounts the asset was sitting on before the move, entry two uses the accounts in the **Detail
@@ -154,7 +168,8 @@ and the change of legal entity on the asset then all follow from committing the 
 
 1. **Depreciate the asset up to the month of the move.** The transfer will not commit unless
    depreciation is current, and you want the accumulated figure the transfer moves to be the real one.
-2. **Check that both companies have a mediator account**, or fill the two fields on the document.
+2. **Check that both companies have a mediator account and keep their books in the same currency**, or
+   fill the two mediator fields on the document.
 3. **Set the document's Dimensions group to the source company.**
 4. **Pick the destination location** — it brings the destination company, branch, sector, department
    and analysis set with it — and check the three accounts in the Detail Accounts group are the

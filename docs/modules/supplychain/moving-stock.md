@@ -69,6 +69,14 @@ When transfer requests recur from several branches or for several items, the **A
 
 ![Stock transfer screen in NaMa ERP](../../ar/modules/supplychain/images/moving/stock-transfer-edit-en.png)
 
+## Transfers between companies
+
+A stock transfer can also move stock from one company of the group to another. What makes it an inter-company transfer is its document term: set the term's **Transfer Type** to **Global (Normal)**. On the transfer, the **From** group of the Details tab names the sending company and the **To** group names the receiving one.
+
+Processing then creates an entry in each company. The sender takes the stock off its books against the receiving company's **Mediator account**. The receiver puts it on its books against the sender's mediator account. Each company's mediator account comes from its Legal Entity record. The stock moves at its cost.
+
+This route is for companies that keep their books **in the same currency**. A Saudi company cannot take Egyptian stock at its pound cost as if pounds were riyals, so a transfer between companies whose ledgers use different currencies is refused. Between such companies, sell from one with a sales invoice and buy into the other with a purchase invoice, on intercompany accounts. Each side is then recorded in its own currency, and the [consolidated statements](../accounting/consolidated-statements.md) eliminate the sale and the margin on stock still held.
+
 ## Actions on these screens
 
 **On the Stock Transfer, and on both halves of the two-step transfer (the issue side and the receipt side):** **Collect Lots** — fills the batch on every detail line from what the header warehouse and locator hold, following the document's term. It asks first whether to clear the batches already entered.
@@ -94,7 +102,7 @@ When transfer requests recur from several branches or for several items, the **A
 
 **Q: Can we transfer items between different companies?**
 
-A: Transfers within a single company are simple. Between companies, you usually need intercompany sale/purchase documents to account for the change of ownership correctly.
+A: Yes, between companies that use the same currency, with a stock transfer whose term's Transfer Type is **Global (Normal)** (see [Transfers between companies](#Transfers-between-companies)). Between companies with different currencies, use an intercompany sales invoice and purchase invoice.
 
 **Q: What happens to reservations when transferring reserved items?**
 
@@ -103,6 +111,16 @@ A: Reservations usually travel with the items - if you transfer reserved stock t
 **Q: Do we use the two-step or one-step transfer?**
 
 A: Use one-step for transfers within a single location or between nearby locations with negligible transit time. Use two-step when transit time is significant, different people handle shipping vs. receiving, or you need to track inventory in transit.
+
+## Messages you may see
+
+These messages have no Arabic text in the product except the last one, so the others appear in English on Arabic screens too.
+
+| Message | Why | What to do |
+|---|---|---|
+| *From legal entity {0} can not be same as to legal entity because this is inter-company transfer* | The term makes this an inter-company transfer, but the From and To groups name the same company. | Set the receiving company in the To group, or use a term for transfers within one company. |
+| *Mediator account in legal entity {0} is empty* | One of the two companies has no mediator account on its Legal Entity record. | Fill the company's **Mediator account**. |
+| *Stock can move between legal entities {0} and {1} only when they use the same currency. Use an intercompany sales invoice and purchase invoice instead* — «لا يمكن نقل المخزون بين الشركتين {0} و{1} إلا إذا كانتا تستخدمان نفس العملة. استخدم فاتورة مبيعات وفاتورة مشتريات بين الشركتين بدلا من ذلك» | The two companies' ledgers keep different main currencies. | Sell from one company and buy into the other. |
 
 ## Next Steps
 

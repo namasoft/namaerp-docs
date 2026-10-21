@@ -33,6 +33,15 @@ In the screen header you enter the **Code**, **Name1** (Arabic), and **Name2** (
 A debit balance in a debit-natured account (like cash) is a naturally positive balance. A debit balance in a credit-natured account (like suppliers) signals an unusual situation. The system uses the natural side to present balances with their correct signs in account statements and trial balances.
 :::
 
+## Consolidation settings
+
+Two more fields in the same section matter only to a group that runs the [consolidated statements](./consolidated-statements.md), and both pass down the tree:
+
+- **Intercompany** — marks the node as holding business with other companies of the group: group receivables and payables, loans, the parent's investment and the capital it contributed, group sales and their cost. The consolidated reports eliminate every account under a ticked node. The tick is inherited: when you save a node or an account under a ticked node, it is ticked as well. Unticking a parent leaves its children ticked, and you can then untick them one by one.
+- **Consolidation Rate** — the exchange rate the consolidated reports translate the node's accounts at: **Closing**, **Average** or **Historical**. Left empty, the node takes the value of the nearest node above it that sets one, and if none does, it follows its **Class**: **Average** for Income Statement, **Closing** for Balance Sheet and Other. In practice you set **Historical** once on the equity node and leave the rest empty.
+
+When you change either field, or the **Class**, on a node that already has children, saving it updates every node and account beneath it.
+
 ## Automatic account coding
 
 Instead of numbering accounts by hand, the **Code Formula Settings** section on a grouping node lets the system compute a new account's code automatically from a formula: a sequence prefix, a numeric-suffix length, and a starting number. You can also generate the Arabic/English name from a computed formula and set a code-validity query. The benefit is that every new account under that group gets a code consistent with its siblings, effortlessly.

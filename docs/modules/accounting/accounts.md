@@ -34,6 +34,15 @@ Alongside them you set:
 - **Currency** — the account's currency. A transaction in any other currency is translated at the exchange rate (see [Currencies and exchange rates](../../platform/shared-master-files/currencies-and-exchange-rates.md)).
 - **Account Category** and **Account Tax Category** — the two angles feeding the income statement, cash-flow statement, and tax reports (see [Chart of Accounts](./chart-of-accounts.md)).
 
+## Consolidation settings
+
+Two fields serve the [consolidated statements](./consolidated-statements.md) of a group:
+
+- **Intercompany** — marks the account as holding business with other group companies, so the consolidated reports eliminate it. An account under a chart node flagged Intercompany (on either its debit or its credit chart) is ticked when you save it. You can also tick it on a single account whose chart is not flagged.
+- **Consolidation Rate** — **Closing**, **Average** or **Historical**: the rate the consolidated reports translate this account at. Leave it empty to inherit from the chart, as described on [Chart of Accounts](./chart-of-accounts.md#Consolidation-settings). A value on the account wins over the chart.
+
+Each company's **Mediator account**, on the Legal Entity screen, should be an intercompany account. When a company's mediator account is set or changed to an account without the flag, the Legal Entity screen saves but warns: *The mediator account {0} is not marked as intercompany, so the consolidated reports will not eliminate its balances. Mark the account, or a chart above it, as intercompany.* — «الحساب الوسيط {0} غير محدد كحساب بين شركات المجموعة، لذلك لن تستبعد التقارير الموحدة أرصدته. حدد الحساب، أو إحدى شجرات الحسابات الأعلى منه، كحساب بين شركات المجموعة.»
+
 ## Subsidiary types (up to five)
 
 When the account is of type **Subsidiary**, you set its **Subsidiary Type** — the kind of party the balance breaks down by (customer, supplier, employee, bank, bank account, safe, fixed asset, item, project... the list is long and includes entities from every licensed module). You can combine up to **five subsidiary types** on the same account (subsidiary type 2 through 5), so its balance breaks down across more than one dimension at once — for example customer × project.

@@ -38,6 +38,7 @@ Accounting features are sold as licensed sub-modules, so some screens may not ap
   <LandingCard icon="⏳" title="Aging Allocation" link="/modules/accounting/aging-allocation.md" details="Allocating payments against debt ages." />
   <LandingCard icon="📊" title="Account Statements & Trial Balance" link="/modules/accounting/reports-account-statements-and-trial-balance.md" details="Account statements and the trial balance." />
   <LandingCard icon="📈" title="Financial Statements" link="/modules/accounting/financial-statements.md" details="Producing the financial statements." />
+  <LandingCard icon="🌐" title="Consolidated Statements" link="/modules/accounting/consolidated-statements.md" details="One trial balance, income statement and balance sheet for the whole group, in one currency, with intercompany eliminated." />
   <LandingCard icon="🛒" title="Misc Purchasing & Machine Rent" link="/modules/accounting/misc-purchasing.md" details="Misc purchasing and machine rent." />
   <LandingCard icon="⭐" title="Party Evaluation" link="/modules/accounting/party-evaluation.md" details="Party evaluation." />
   <LandingCard icon="🔗" title="Subsidiary Reconciliation" link="/modules/accounting/subsidiary-reconciliation.md" details="Subsidiary reconciliation." />

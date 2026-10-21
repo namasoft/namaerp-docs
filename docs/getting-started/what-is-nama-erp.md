@@ -23,8 +23,9 @@ and if two screens disagree, one of them is being filtered differently.
 
 The same database also holds all of your companies. Multiple legal entities, branches, warehouses and
 currencies live side by side and are kept apart by configuration and security rules rather than by
-separate installations — which is why a group can produce a consolidated report without an
-integration project.
+separate installations. A group therefore needs no integration project to consolidate: the
+[consolidated statements](/modules/accounting/consolidated-statements.md) read every company's books
+directly, translate them into one reporting currency and eliminate the business between the companies.
 
 ## Everything is a record, and there are exactly two kinds
 

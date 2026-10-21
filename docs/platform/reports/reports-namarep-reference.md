@@ -141,6 +141,18 @@ NamaRep.tafqeetFrench(currencyCode, amount)
 
 How each currency is spelled — the name of the unit and of the fraction — comes from Global Configuration, under `value.info.tafqeetInfo.currencyCode`.
 
+### Group exchange rates
+
+A report that shows amounts from companies on different currencies needs one rate to bring them together. `findCurrencyExchangeRate` reads it from the group rate table that Nama keeps up to date from the Exchange Rate screen (see [Currencies and exchange rates](/platform/shared-master-files/currencies-and-exchange-rates#The-group-rate-table-behind-the-consolidated-reports)). Multiply an amount in the second currency by the result to get it in the first:
+
+```groovy
+NamaRep.findCurrencyExchangeRate("USD", "EGP")                     // closing rate today
+NamaRep.findCurrencyExchangeRate("USD", "EGP", $P{asOfDate})        // closing rate on a date
+NamaRep.findCurrencyExchangeRate("USD", "EGP", $F{valueDate}, "Average")  // the month's average rate
+```
+
+With the Egyptian ledger at 49.9 pounds to the dollar, the first call returns about 0.02, so an amount of 49,900 pounds becomes 1,000 dollars. Currencies may be given as a code or an id. The last argument is `"Closing"` or `"Average"`; where a date has no average rate, the closing rate is returned. Only group rates count (rates entered with the legal entity left public), and the call returns empty when the two currencies have no rate between them at all, so guard the expression with `NamaRep.zeroIfNull` or a print-when condition.
+
 ## Prices
 
 `priceCalculator()` answers the question "what would this item cost, for this customer, on this date?" by running the same price-list resolution the sales screens use. It is the way to show a current price on a report without writing a query against the price lists yourself.

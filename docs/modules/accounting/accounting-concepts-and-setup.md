@@ -32,7 +32,7 @@ The ledger is the heart of the setup. You'll find it under **Accounting → Sett
 ![The Ledger screen](../../ar/modules/accounting/images/setup/ledger-en.png)
 
 - **Main Currency** — the currency your balances are held in and your financial statements are prepared in. Any transaction in another currency is translated to this currency when recorded.
-- **Reporting Currency** — an optional second currency kept in parallel with the main currency, useful for organizations that need to present their results in another currency (say, USD) alongside the local one.
+- **Reporting Currency** — optional. It is the currency the [consolidated statements](./consolidated-statements.md) present the group in by default, when they are run from a company on this ledger. Nothing is posted in it: balances are kept in the main currency only, and the consolidated reports translate them each time they run.
 - **Chart Type** — links the ledger to the chart of accounts it works on (see the next section).
 - **Calendar** — the calendar on which this ledger's years and periods are built.
 - **Current Year** — the fiscal year currently adopted for the ledger.
@@ -40,7 +40,7 @@ The ledger is the heart of the setup. You'll find it under **Accounting → Sett
 The ledger also carries **default dimensions** (legal entity, branch, sector, department, analysis set) shown in the lower section of the screen, used as initial values when working on this ledger.
 
 ::: warning Core fields can't be changed after use
-Once you link any **Legal Entity** to this ledger, the system blocks changing the **Main Currency**, **Reporting Currency**, **Chart Type**, or **Calendar**. These decisions shape every recorded balance, so changing them after go-live would corrupt the historical data. Plan them carefully before the first transaction — if you try to edit them after linking, you'll get a save-blocking message.
+Once you link any **Legal Entity** to this ledger, the system blocks changing the **Main Currency**, **Chart Type**, or **Calendar**. These decisions shape every recorded balance, so changing them after go-live would corrupt the historical data. Plan them carefully before the first transaction — if you try to edit them after linking, you'll get a save-blocking message. The **Reporting Currency** is not locked, because nothing is recorded in it: you can set or change it after go-live.
 :::
 
 ## The Account Chart Type
@@ -101,5 +101,5 @@ Broader detail on the legal entity as one of the **dimensions** (alongside branc
 
 - **"The accounting screens don't appear at all"** — check that the `accounting` license is enabled.
 - **"The system refuses to save a transaction on a certain date"** — most likely the accounting period for that date has status **Closed**, or no period covers the date, or a **Prevent Accounting Transactions** document is blocking it. Open the fiscal year and review the periods grid and their statuses.
-- **"A blocking message when editing the ledger"** — appears when trying to change the main/reporting currency, chart type, or calendar after the ledger has been linked to a legal entity. These fields are deliberately locked after use.
+- **"A blocking message when editing the ledger"** — appears when trying to change the main currency, chart type, or calendar after the ledger has been linked to a legal entity. These fields are deliberately locked after use.
 - Year creation and bulk open/close of periods will be covered in depth in the **Fiscal periods & currency** reference, and the module's option catalog in [Accounting configuration](./support/accounting-configuration.md).
