@@ -112,6 +112,8 @@ Almost nothing in the loan system is typed line by line — the schedules are ge
 | Loan installment details (SYSR-LON001) | The loan's installment schedule: due, paid and remaining for each installment and its interest. |
 | Details of banking facilities (SYSR-LON002) | Facility-limit consumption across loans, guarantees and credits (see [Credit Facilities](./credit-facilities.md)). |
 
+![Loan installment details sample (SYSR-LON001): a 12-installment loan with three installments paid](../../ar/modules/accounting/images/reports/SYSR-LON001-en.png)
+
 ## For Support
 
 - **"The loan is still Initial and the amount hasn't arrived"** — the loan issue document hasn't been recorded yet; issuing is what records the amount in the ledger and moves the status to "Released".

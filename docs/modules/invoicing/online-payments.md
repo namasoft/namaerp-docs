@@ -57,6 +57,8 @@ Navigate to **Basic > Documents > Online Payment Configuration** to create your 
 3. **Enter the gateway credentials** based on your provider (see fields above)
 4. **Set the GUI URL** - This is your server's public address, typically something like `https://yourcompany.com/erp/`
 
+![An Online Payment Configuration for MyFatoorah, with the link expiry hours and the weekend days](../../ar/modules/invoicing/images/online-payment-config-myfatoorah-en.png)
+
 ### Link Expiration Settings
 
 Payment links don't last forever. You can control how long they remain valid:

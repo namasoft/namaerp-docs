@@ -28,7 +28,7 @@ These six options are added for all inventory document terms and govern how rese
 
 **Consider Origin Document In Lines With Cancel/Update Reservation** `termConfig.considerOriginDocInLinesWithCancelOrUpdateReservation` — When cancelling or updating reservations, considers the per-line origin ("copied from", بناءً على) document rather than only the header link.
 
-**Prevent Cancel Reservation** `termConfig.preventCancelReservation` — Blocks cancellation of reservations from this document.
+**Prevent Cancel Reservation** `termConfig.preventCancelReservation` — Refuses the manual **Cancel Reservation Of Related Docs** button (More menu) on documents of this term, and the scheduled cancel-by-query entity flow that does the same.
 
 **Update Reservation Of Related Docs** `termConfig.updateReservationOfRelatedDocs` — On save, updates (recalculates) the reservation quantities held by related/source documents.
 

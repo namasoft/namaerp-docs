@@ -55,6 +55,12 @@ Alongside these, **Investment Allocation** and **Refund Investment Allocation** 
 
 The **Investment Projects Balance Sheet** (`SYSR-IVS001`) summarizes the standing of the investment projects.
 
+![Investment Projects Balance Sheet sample (SYSR-IVS001): two projects with their 2026 budget figures](../../ar/modules/accounting/images/reports/SYSR-IVS001-en.png)
+
+The Investment Project's printed form is `SYSF-ACC024`:
+
+![Investment Project form (SYSF-ACC024)](../../ar/modules/accounting/images/forms/SYSF-ACC024-en.png)
+
 ## For Support
 
 - **"The portfolio is stuck at Initial"** — it only moves to **Ongoing** when an **Investment Start** is committed against it; check that document.

@@ -94,6 +94,24 @@ The printed statements all come out of this engine, under the report menu (`Acc-
 
 ![Issue-driven monthly income statement (SYSR-FNS010)](../../ar/modules/accounting/images/reports/SYSR-FNS010-en.png)
 
+::: details More samples: income statements and the yearly balance sheet
+**Monthly income statement** (`SYSR-FNS002`) — one row per account category, placed by the category's **Equation Type** (see [Chart of Accounts](./chart-of-accounts.md)); a category whose Equation Type is empty is left out, and when none is set the report prints no data:
+
+![Monthly income statement sample (SYSR-FNS002)](../../ar/modules/accounting/images/reports/SYSR-FNS002-en.png)
+
+**Income statement grouped by dimension** (`SYSR-FNS009`) — here grouped by branch:
+
+![Income statement grouped by branch sample (SYSR-FNS009)](../../ar/modules/accounting/images/reports/SYSR-FNS009-en.png)
+
+**Issue-driven yearly income statement** (`SYSR-FNS012`) — printed from a saved issue file:
+
+![Issue-driven yearly income statement sample (SYSR-FNS012)](../../ar/modules/accounting/images/reports/SYSR-FNS012-en.png)
+
+**Issue-driven yearly balance sheet** (`SYSR-FNS014`) — from a balance-sheet settings file whose lines take each chart node's balance at the end of the period, add the period's profit to equity through an equation line, and total with further equation lines; each line's level puts it in the Leaf, Middle or Main column:
+
+![Issue-driven yearly balance sheet sample (SYSR-FNS014)](../../ar/modules/accounting/images/reports/SYSR-FNS014-en.png)
+:::
+
 ## For Support
 
 - **"A line shows the wrong number"** — check the line's **equation** (balance vs debit-credit vs opening vs totals) and any **dimension limits** on it; a line limited to one branch only sums that branch.

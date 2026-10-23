@@ -118,6 +118,8 @@ Each line below is a field-map line. Type the lines into the field-map parameter
 - `exel.row1 ` gives you access to the first row, even if that row was ignored, to facilitate header rows querying
 
 
+![An Entity Flow line whose field map reads the attached Excel sheet into the document lines](../../ar/platform/images/entity-flows/entity-flow-excel-import-field-map-en.png)
+
 ## Import From SQL Statement by Entity Flow or GUI Post Action
 
 - [Watch this video for detailed steps](https://youtu.be/XAOituWQqsg)

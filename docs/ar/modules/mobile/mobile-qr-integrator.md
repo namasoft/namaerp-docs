@@ -57,6 +57,8 @@ MobileQRIntegrator هو كيان ملف رئيسي يحتوي على الحقو�
 2. ضبط `requiresCommitOnManual: true` للحفظ التلقائي، وإلا ستفشل التحديثات
 3. الوصول إلى معاملات QR عبر متغيرات `$map`
 
+![مُكامل QR للموبايل ينشئ خيط بيع أو يحدّثه من رمز QR في المعرض](images/administration/mobile-qr-integrator-ar.png)
+
 ## إنشاء رمز QR
 
 ### استخدام NamaRep.mobileQr() في Jasper Reports

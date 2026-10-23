@@ -99,6 +99,16 @@ The **Ledger Revise Document** (`Accounting > Documents > Ledger Revise Document
 - Ledger Revise Document: `SYSF-ACC016`.
 - Prevent Accounting Transactions: `SYSF-ACC018`.
 
+::: details Samples: Ledger Revise Document and Prevent Accounting Transactions forms
+**Ledger Revise Document** (`SYSF-ACC016`):
+
+![Ledger Revise Document form (SYSF-ACC016)](../../ar/modules/accounting/images/forms/SYSF-ACC016-en.png)
+
+**Prevent Accounting Transactions** (`SYSF-ACC018`) — each blocked account or subsidiary with its date range:
+
+![Prevent Accounting Transactions form (SYSF-ACC018)](../../ar/modules/accounting/images/forms/SYSF-ACC018-en.png)
+:::
+
 ## For Support
 
 - **"Closing won't complete / refuses to execute"** — use the **Check Data Before Closing** button; the cause is usually transactions not yet processed, or the entry's period not being Adjustment/Closing type.

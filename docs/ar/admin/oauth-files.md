@@ -37,6 +37,8 @@ Google تجديده أو سحبه لاحقًا. و**OAuth File** هو السجل
 
 وتحمل الشاشة أيضًا زرين: **Start OAuth Flow** و**Revoke Authentication**.
 
+![ملف OAuth مُعد لإرسال البريد من Gmail، مع زري بدء التفويض وإلغائه](images/administration/oauth-file-gmail-ar.png)
+
 ## تفعيل الملف خطوة بخطوة
 
 يريد المركز الرئيسي إرسال الفواتير بالبريد من `invoices@nilegroup.com`، وهو صندوق بريد على Google Workspace.

@@ -29,6 +29,8 @@ Arabic screens too. The ministry's own refusals appear in whatever language MCS 
    what is worth a second look; for a refused request it also prints the envelope with line
    numbers, so a ministry message that names a line can be matched to a field.
 
+![The Details grid of a submission, with the send state, operation counts and Last Eltezam Error for each employee](../../../ar/modules/integrations/images/eltezam-submission-details-grid-en.png)
+
 ## The three-failures stop rule
 
 When the ministry's server fails to answer — it cannot be reached, it times out, the address is

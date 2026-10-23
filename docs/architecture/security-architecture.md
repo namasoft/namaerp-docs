@@ -9,7 +9,7 @@ Security questions arrive in a predictable order. Who can get in? Once in, what 
 
 Every user has a **user record** with their own login identity. There are no shared accounts by design, and there is no anonymous access to business data.
 
-Authentication can be handled by Nama itself or delegated to your existing directory through **LDAP**, so that staff use their corporate credentials and joiner–leaver processes stay in one place. Where Nama holds the password, the policy is configurable: minimum length, alphabetic, numeric and special character counts, mixed case, and a rule preventing a "change" that reuses the current password.
+Authentication can be handled by Nama itself or delegated to your existing directory through **LDAP**, so that staff use their corporate credentials and joiner–leaver processes stay in one place. Where Nama holds the password, the policy is configurable: minimum length, alphabetic, numeric and special character counts, mixed case, and a rule preventing a "change" that reuses the current password. A user changing their own password in the browser must type the current one first, so a session left open on an unattended desk cannot be used to take over the account.
 
 **Two-factor authentication** is available and can be required at login — either a one-time code delivered to the user by message, or a code checked through the Estidamah gateway. Code length, format, validity period and resend delay are all configurable. See [Two-Factor Authentication](../getting-started/two-factor-authentication.md).
 

@@ -28,7 +28,8 @@ The connection runs through a Facebook app that your company owns. Whoever manag
 
 1. Create an app in Meta for Developers and note its **App ID** and **App Secret**.
 2. Add **Facebook Login** to the app and allow your Nama server's address (for example `erp.example.com`) as an app domain, so the login page Nama opens is accepted.
-3. Add **Webhooks** to the app, choose the **Page** object and subscribe to the `leadgen` field. Use your server's public address followed by `/facebook/` as the callback URL — for a server at `https://erp.example.com/erp/`, that is `https://erp.example.com/erp/facebook/leads`. Facebook also asks for a verify token; type any value.
+3. Add **Webhooks** to the app, choose the **Page** object and subscribe to the `leadgen` field. Use your server's public address followed by `/facebook/` as the callback URL — for a server at `https://erp.example.com/erp/`, that is `https://erp.example.com/erp/facebook/leads`.
+   Facebook also asks for a **Verify token**. Make one up — a long random string — and type exactly the same value in **Webhook Verify Token** on the configuration record. When you save the webhook, Facebook calls the callback URL with that token, and Nama answers only when it matches the Webhook Verify Token of one of its configurations. Any other value is refused (HTTP 403), and Facebook reports that the callback URL could not be verified. So save the Nama record with the token first, then save the webhook in Meta.
 4. The app needs the permissions `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement` and `leads_retrieval`. Until Meta has approved them for your app, only people with a role on the app receive real leads.
 
 Your Nama server must be reachable from the internet over HTTPS, or Facebook cannot deliver anything to it.
@@ -43,12 +44,15 @@ The screen has a single tab. Besides the usual code and names, it holds:
 |---|---|
 | Page (الصفحة) | The Facebook Page ID. This is how an incoming lead finds its configuration, so each page has exactly one record. |
 | App ID (معرف التطبيق) | The ID of your company's Facebook app. |
-| App Secret (المفتاح السري للتطبيق) | The app's secret, stored as a password. |
+| App Secret (المفتاح السري للتطبيق) | The app's secret, stored as a password. It must be the real secret of the app the webhook belongs to: Facebook signs every lead it sends with it, and Nama drops any call whose signature does not match. |
+| Webhook Verify Token (رمز التحقق من الـ Webhook) | The same value you typed as the **Verify token** when you set up the webhook in Meta for Developers. It sits right after **Page** on the screen. |
 | Save Leads As | **CRM Lead** or **CRM Potential** — which record each form submission becomes. |
 | Finder Query(Retriever) | An SQL query that finds the existing record for this person, if there is one. |
 | Fields Map | One line per field to fill on the new record, in the same syntax entity flows use to fill a generated record. |
 
-All six are required. The dimensions group at the bottom — legal entity, branch and the rest — is copied to every lead the configuration saves, so a company with one page per branch gets each branch's leads stamped with the right branch.
+All seven are required. A configuration saved before **Webhook Verify Token** existed must have it filled in the next time it is saved; until then its page keeps receiving leads as before, as long as its **App Secret** is right. The dimensions group at the bottom — legal entity, branch and the rest — is copied to every lead the configuration saves, so a company with one page per branch gets each branch's leads stamped with the right branch.
+
+![A Social Media Subscriber Configuration for a Facebook page, saving leads as CRM leads](../../../ar/modules/crm/images/config/social-media-subscriber-config-en.png)
 
 ### The answers on a lead form
 
@@ -89,13 +93,22 @@ Facebook's own test leads — the ones its lead-ads testing tool sends, whose an
 
 ## Connecting a page, step by step
 
-1. Create the configuration record, fill the six fields and the dimensions, and **save** it.
+1. Create the configuration record, fill the seven fields and the dimensions, and **save** it. Then finish the webhook in Meta for Developers with the same verify token (step 3 of the list above).
 2. Press **Login To Facebook** (التسجيل في فيسبوك). A new browser tab opens with a Facebook login button. Log in with a Facebook account that manages the page and grant every permission Facebook asks for.
+   The tab saves the token under your Nama session, so press the button while you are signed in to Nama, in the same browser, as a user whose security profile gives **Edit After Commit** on **Social Media Subscriber Configuration**. Otherwise the tab shows **Error saving Facebook login:** followed by the server's refusal, and nothing is stored.
 3. When the tab says **You correctly logged in to facebook**, Nama has stored a long-lived access token for the page and subscribed the page to your app's lead notifications. Close the tab.
 4. Press **Update Leads** (تحديث العملاء المحتملين) to bring in the leads collected before today. It asks for **From Date** and **To Date**; leave both empty to read the last 30 days.
 5. Submit a test lead on the page and check that it appears in the CRM Lead list within a few seconds.
 
 If the person who logged in later loses their role on the page, or changes their Facebook password, the token stops working. Press **Login To Facebook** again with an account that manages the page.
+
+::: warning Leads stopped arriving through the webhook?
+Check the **App Secret** first. Nama checks every lead call against the signature Facebook computes with the app's secret, and quietly drops a call whose signature is wrong or missing: no lead is saved, and the server log gets a line like this one, with the Page ID in it:
+
+*Rejected a Facebook webhook call for page 1234567890: its signature does not match the app secret*
+
+Copy the secret again from the app's basic settings in Meta for Developers — the app the webhook belongs to — into **App Secret**, save, and submit a test lead. Then press **Update Leads** for the days the webhook missed.
+:::
 
 ## Reading the Update Leads result
 

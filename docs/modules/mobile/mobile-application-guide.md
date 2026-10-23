@@ -121,6 +121,8 @@ On a Sunmi handheld (such as the [V2s](https://www.sunmi.com/en-US/v2s/)) the de
 
 ::: tip Changing the password and admin PIN
 From the profile screen the user can change their password, and the administrator can change the **Admin PIN** that protects access to the Settings screen.
+
+The setup QR code from **Qr Info** in the web interface's user menu carries the PIN only when an administrator opens it. A regular user's QR leaves the phone's PIN unchanged, and a new phone set up from it has no PIN until an administrator scans their own QR on it or sets the PIN here.
 :::
 
 ## Customizing the home screen and the menu

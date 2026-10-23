@@ -25,6 +25,8 @@ This is the master definition of standard terms that can be attached to sales do
 - **Initial Term Work Period** (`initialTermWorkPeriod`): Default duration for the term (includes value and unit of measure)
 - **Remarks 2** (`remarks2`): Additional notes or detailed description of the term
 
+![A Sales Standard Term that needs a fulfillment document and can be extended, with a 30-day initial period](../../ar/modules/invoicing/images/sales-standard-term-en.png)
+
 ### 2. Standard Term Fulfillment Document
 **Entity**: `StandardTermFulfillment`  
 **Table**: `StandardTermFulfillment`  

@@ -27,6 +27,8 @@ And in Nama:
 - an **API Credentials** record — keep its **Client ID** and **Client Secret** to hand
 - a saved **Attendance Machine Configuration** — keep its **Code** to hand
 
+![The Attendance Machine Configuration record whose code the agent asks for](../ar/integration/images/attendance-machine-config-attcron-en.png)
+
 ## Installing
 
 The agent is delivered by a small installer that downloads and unpacks it for you.

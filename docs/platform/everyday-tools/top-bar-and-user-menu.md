@@ -39,7 +39,7 @@ Every record you create is stamped with the dimensions of your session — the c
 
 Everything you do after **OK** uses the new values: new records are stamped with them, and lists and lookups are filtered by them. The lookups inside this window offer what your **user record's** own dimensions allow, which is why a user fenced to the Jeddah branch on the user record never sees Riyadh in the list.
 
-When the user record has **Prevent Modify Context** ticked, pick one of the sets of dimensions listed on the user record — the login context or a row of the login context table. How those sets are defined is on [Record-Level Security](/platform/security/record-level-security#Login-Context-and-the-Alternate-Login-Context-Table).
+When the user record has **Prevent Modify Context** ticked, each value must be one listed on the user record — in the login context or in any row of the login context table. The values may come from different rows; a value that is on no row is refused with *Invalid authentication information, please re-login*. How those sets are defined is on [Record-Level Security](/platform/security/record-level-security#Login-Context-and-the-Alternate-Login-Context-Table).
 
 The same window carries a few personal switches that belong to the session rather than to any one screen:
 
@@ -65,7 +65,7 @@ Click your name or picture to open it.
 | **Settings** | Opens your personal settings in a window — see the next section. Ctrl + click opens them in a new browser tab instead. |
 | **Dark Mode** | Switches the interface between light and dark. |
 | **GUI Themes List** | Picks one of the themes, with **Edit My Theme** at the end. See [Themes](/platform/everyday-tools/ui-themes). |
-| **Qr Info** | Shows a QR code for setting up Nama's mobile apps on this server — the server address and your user code — with links to the apps on Google Play and the App Store. |
+| **Qr Info** | Shows a QR code for setting up Nama's mobile apps on this server — the server address and your user code — with links to the apps on Google Play and the App Store. Only an administrator's QR (the `admin` user or a user with **Treat As Admin**) also carries the **Default Admin Pin** of the apps configuration. Scanning anyone else's QR leaves the phone's admin PIN as it was, and a new phone gets none, so an administrator scans their own QR on it or sets the PIN on the phone. |
 | **Back To Old GUI** | Opens the screen you are on in the older interface, in a new browser tab. |
 | **About Nama ERP** | The same About window as right-clicking the logo. |
 | **Sign out** | Ends your session. |
@@ -84,7 +84,7 @@ The **Settings** window has five tabs down its side.
 - **Email Password** — the password of that mailbox. When both are filled in, documents and reports you send by e-mail from Nama go out from your own address instead of the company's sending account.
 - **Mobile** — your mobile number.
 
-**Reset Password** changes your login password: type the new password in **Password** and again in **Confirm Password**, then **Save**. The new password has to meet the company's password policy (see [Password policy](/platform/global-config/global-config-security#Password-policy)), and after a successful change you are signed out so that you log in again with it. Users who log in through LDAP or Active Directory change their password there, not in Nama.
+**Reset Password** changes your login password: type the password you use now in **Current Password**, the new password in **Password** and again in **Confirm Password**, then **Save**. A wrong or empty **Current Password** is refused, so an unattended open session is not enough to take over the account. The **Change Password** window of the old interface asks for the current password the same way. The new password has to meet the company's password policy (see [Password policy](/platform/global-config/global-config-security#Password-policy)), and after a successful change you are signed out so that you log in again with it. Users who log in through LDAP or Active Directory change their password there, not in Nama.
 
 **GUI Preferences** holds the display settings, which apply in this browser on this device only — the same user on another computer starts again from the defaults:
 
@@ -99,6 +99,7 @@ The **Settings** window has five tabs down its side.
 
 | Message | Why | What to do |
 |---|---|---|
+| *The current password is incorrect* — «كلمة المرور الحالية غير صحيحة» | **Current Password** is empty or is not the password you signed in with. | Type the password you use now. If you have forgotten it, ask an administrator to set a new one from your User record. |
 | *New password and confirmed passwords do not match* — «كلمة المرور الجديدة لا تطابق تأكيد كلمة المرور» | The two password boxes differ. | Type the same password in both. |
 | *New password is the same as old password, please use a different password* — «كلمة المرور الجديد مطابقة للحالية. يرجى استعمال كلمة مرور مختلفة.» | The company forbids reusing the current password. | Choose a different password. |
 | *Password length must be greater than or equal {0}* — «طول كلمة المرور يجب ان يكون اكبر من او يساوي {0}» | The password is shorter than the policy allows. | Use at least the number of characters shown. |

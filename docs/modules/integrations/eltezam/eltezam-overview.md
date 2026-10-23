@@ -38,6 +38,8 @@ All three live in the integrations menu:
 | **MCS Eltezam Code Table** (جدول أكواد التزام) | Master Files | One table per MCS lookup list (job class, nationality, gender, salary element, …) that translates Nama values into MCS codes. See [Eltezam code tables](./eltezam-code-tables). |
 | **MCS Eltezam Submission** (إرسال بيانات التزام) | Documents | One sending run: which employees, which period, which operations — and afterwards, the per-employee result and the full request log. See [Submissions and sending](./eltezam-submissions-and-sending). |
 
+![An MCS Eltezam Submission for September: the operations to send and the employees collected from the group](../../../ar/modules/integrations/images/eltezam-submission-filled-en.png)
+
 ## What gets sent: the seven operations
 
 Each operation is a separate request type on the ministry's side. You choose which ones to send

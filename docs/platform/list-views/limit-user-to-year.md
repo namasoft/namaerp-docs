@@ -51,6 +51,8 @@ The "Limit User To Year" screen is used to control:
 - If "Min Date From Today" is specified, it takes priority and the date is calculated dynamically
 - The system chooses the most recent (largest) date from all restrictions applied to the user
 
+![A Limit User To Year record: fiscal-year lines for two users above, report date limits below](../../ar/platform/images/list-views/limit-user-to-year-en.png)
+
 ## How the System Works
 
 ### 1. Restricting Document List Views

@@ -26,6 +26,8 @@ entities: [AttendanceMachineConfig]
 - سجل **بيانات اعتماد الـ API** (API Credentials) — احتفظ بـ **Client ID** و **Client Secret**
 - سجل **إعدادات ماكينة الحضور** محفوظ — احتفظ بـ **الكود** الخاص به
 
+![سجل إعدادات ماكينة الحضور الذي يطلب الوكيل رمزه](images/attendance-machine-config-attcron-ar.png)
+
 ## التنصيب
 
 يتم تسليم التطبيق عبر ملف تنصيب صغير يقوم بتحميله وفك ضغطه نيابةً عنك.

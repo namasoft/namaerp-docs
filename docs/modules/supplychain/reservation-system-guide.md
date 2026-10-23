@@ -1,15 +1,15 @@
 ---
-description: "How stock reservation works: the Reservation Document, pre-out and pre-in quantities by document type, reservation statuses, satisfied quantities, item and document term settings, the overdraft policy, cancellation and troubleshooting."
+description: "How stock reservation works: the Reservation Document, pre-out and pre-in quantities by document type, reservation statuses, satisfied quantities, item and document term settings, the overdraft policy, releasing a reservation and the messages a refused save shows."
 entities: [ReservationDocument]
 menu: Inventory → Reservation Documents → Reservation Document
 ---
 # Comprehensive Reservation System Guide
 
-This guide provides comprehensive documentation for the Reservation System in Nama ERP, intended for technical support staff and system administrators.
-
-## Overview
-
-The Reservation System in Nama ERP is a sophisticated inventory management feature that allows organizations to reserve inventory items across different types of supply chain documents. The system manages reservation effects differently based on document types and integrates with quantity tracking mechanisms to provide real-time inventory allocation control.
+Reserving stock sets a quantity aside for a document before anything physically moves, so that a sales order
+taken this morning is not sold again to the next customer this afternoon. This page explains which documents
+reserve and in which direction, how reservations change what the quantity check considers available, the
+Reservation Document screen, how a reservation is reduced or released as the document chain moves on, and what
+to look at when a save is refused.
 
 **Menu Path:** Inventory > Reservation Documents > Reservation Document
 
@@ -19,36 +19,28 @@ The Reservation System in Nama ERP is a sophisticated inventory management featu
 Reservation is part of [The Sales Journey](./sales-journey.md) (reserving stock for a customer's order) and sets up [Delivery & Loading](./delivery-and-loading.md). To ignore specific warehouses/locators in the reservation quantity check by date, see [the dedicated guide](./ignore-reservation-qty-check-by-date.md).
 :::
 
-## Fundamental Concepts
+## Which documents reserve, and in which direction
 
-### Reservation Direction by Document Type
+A document reserves only when its term has **Reserve** ticked and, if the term's **Reserve Only When Criteria Is
+Matched** is filled, the document matches it. What it reserves depends on the kind of document:
 
-The reservation system affects inventory quantities differently based on the document type:
+- **Sales-side and issue-type documents** reserve stock **out** (Pre-Out). This covers sales quotations, sales
+  orders, sales invoices, the Reservation Document itself and stock issue requests: the stock is promised to a
+  customer or to an internal consumer.
+- **Purchase-side and receipt-type documents** reserve stock **in** (Pre-In). This covers purchase orders,
+  purchase invoices and stock receipt requests: the stock is expected but has not arrived.
+- **Stock transfer requests** reserve the outgoing side at the source warehouse. Unless **Transfer Request Reserve
+  Quantity Out Only** is ticked in the supply chain configuration, they also reserve the incoming side at the
+  destination.
+- **Stock Issue, Stock Receipt and the three stock-transfer documents never reserve.** They move real stock, so
+  their terms do not even offer the reserve fields. What they can do is release or reduce the reservation of the
+  document they were made from (see [Releasing and reducing a reservation](#Releasing-and-reducing-a-reservation)).
 
-#### Sales and Issue Documents (Pre-Out Reservations)
-- **Sales Documents:** Sales quotations, sales orders, sales invoices
-- **Issue Documents:** Stock issue requests, transfer requests, production withdrawals
-- **Effect:** Creates **Pre-Out** quantities (reserved for outbound)
-- **Purpose:** Ensures items are allocated for customer orders or internal consumption
+A line whose quantity is zero is never reserved.
 
-#### Purchase and Receipt Documents (Pre-In Reservations)  
-- **Purchase Documents:** Purchase requests, purchase orders, purchase invoices
-- **Receipt Documents:** Stock receipt requests
-- **Effect:** Creates **Pre-In** quantities (reserved for inbound)
-- **Purpose:** Tracks expected inventory arrivals and allocations
+### The four quantities
 
-#### Stock Documents (No Direct Reservation)
-**Stock Issue, Stock Receipt, and Stock Transfer documents do not create reservations** because they affect actual inventory quantities (In and Out), not reserved quantities.
-
-**However, these documents support:**
-- **Cancelling reservation of upper documents:** When a stock issue is created from a sales order, it should cancel the sales order's reservation
-- **Updating reservation of related documents:** Through the **Update Reservation Of Related Docs** configuration
-
-**Example:** Creating a stock issue from a sales order should cancel the sales order's Pre-Out reservation since the items are now actually issued (moved from reserved to actual Out quantities).
-
-### Quantity Types in Reservation System
-
-The system manages four types of quantities for each item dimension:
+Every item balance, per item and dimension combination, keeps four quantities:
 
 | Quantity Type | Arabic | Description |
 |---------------|--------|-------------|
@@ -57,315 +49,140 @@ The system manages four types of quantities for each item dimension:
 | **Pre-In** | محجوز داخل | Reserved quantities expecting receipt |
 | **Pre-Out** | محجوز خارج | Reserved quantities allocated for issue |
 
-**Available Balance Calculation:**
+Whether the reserved quantities take part in the availability check is decided per item, by **Include Reserved
+In Balance** on the item's **Item Configurations**. When it is ticked, the check works with
+
 ```
 Available = (In + Pre-In) - (Out + Pre-Out)
 ```
 
-*Note: Pre-In and Pre-Out inclusion in balance depends on item configuration.*
+so other documents' outgoing reservations reduce what is available and expected receipts add to it. When it is
+not ticked, only In and Out count. A document term can switch reservations out of the check for its own documents
+with **Force Do Not Include Reserved With Qty Validation**.
 
-## Reservation Document Structure
+Stock Issue, Stock Receipt and the stock-transfer documents treat expected receipts more strictly: for them,
+reserved-in quantities can offset reserved-out quantities but never add to the stock on hand. A stock issue cannot
+take out goods that a purchase order has only promised.
 
-### Main Entity: ReservationDocument
+Whether a line may go below zero at all is a separate question, answered by the overdraft settings. The item's
+**Allow Overdraft In Reservation** is checked first, then the matching *Dimensions With Allowed Overdraft* row, the
+item's **Over Draft Policy**, its item section's policy and finally the company-wide policy; each policy is
+**Yes**, **No** or **Inherited** (use the next level). See [Which setting wins](#Which-setting-wins) below and
+[Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking).
 
-**Entity Type:** ReservationDocument  
-**Database Table:** ReservationDocument  
-**Classification:** Document File (not Master File)
+## The Reservation Document
 
-### Key Header Fields
+Most documents reserve as a side effect of being a sales order or a purchase order. The **Reservation Document**
+exists for the cases where you want to hold stock for a customer without any order yet, or to hold part of an
+order line by line. It is a sales-side document, so it reserves stock out.
 
-- **Reservation Status:** Controls the current state of the entire document
-- **Due Date:** When the reservation expires or should be fulfilled
-- **To Employee:** Employee assigned to handle the reservation
-- **Copy To Employee:** Additional employee to be notified
-- **Warehouse:** Primary warehouse for the reservation
-- **Locator:** Specific location within the warehouse
-- **Customer:** Customer associated with the reservation
-- **From Document:** Source document that generated this reservation
+Its header carries the usual **Book**, **Code**, **Term**, **Issue Date** and **Value Date**, plus:
 
-### Detail Lines
+- **Warehouse** and **Locator**: the default warehouse and locator for the lines.
+- **Customer**: the customer the stock is held for.
+- **From Document**: the document this reservation was created from, if any.
+- **Reservation Status**: copied to every line that has no status of its own.
+- **Due Date**: the date by which the reservation should be used. Nothing is released on its own when the date
+  passes. To release overdue reservations automatically, schedule the
+  [EACancelReservationOfDocsByQuery](/entity-flows/supplychain/EACancelReservationOfDocsByQuery) entity flow with a
+  query that selects them, for example reservation documents whose due date has passed.
 
-Each reservation document contains detail lines that specify:
+The **Details** grid holds one line per item: the item, its quantity and unit, the dimension columns (warehouse,
+locator, lot, serial numbers, size, colour, box, revision), production and expiry dates, and the line's own
+**Reservation Status** and **Reservation Date**. A line's warehouse and locator can differ from the header's.
 
-- **Item Information:** Item code, name, and specifications
-- **Quantities:** Reserved quantity with primary and secondary units
-- **Dimensions:** Warehouse, locator, lot, serial numbers, colors, sizes
-- **Reservation Details:** Line-level reservation status, date, and specific warehouse/locator
-- **Tracking Information:** Satisfied and unsatisfied quantities for linked documents
+### Reservation status
 
-## Reservation Status Values
-
-| English | Arabic | Description |
-|---------|--------|-------------|
-| Reserved | محجوز | Items are fully reserved and allocated |
-| PostReserved | حجز مؤجل | Reservation is pending or delayed |
+| On screen (English) | On screen (Arabic) | Meaning |
+|---|---|---|
+| Total Reservation | حجز كلي | The whole line quantity is reserved |
+| Part Reservation | حجز جزئي | Only part of the line quantity is reserved |
+| Post Reserved | حجز مؤجل | The reservation starts on a later date |
+| Confirmed | مؤكد | The reservation has been confirmed |
 | None | بدون | No reservation status |
-| Confirmed | مؤكد | Reservation is confirmed and locked |
-| PartialyReserved | PartialyReserved | Only partial quantities are reserved |
 
-### Selective Line Reservation
+On its own, the status does not decide whether a line is reserved: every line with a quantity is. To reserve only
+some lines, set **Reservation Lines Criteria** on the document term, for example to the lines whose status is
+**Total Reservation**. Only the lines that match are reserved.
 
-By default, the reservation status has no effect on whether a line is reserved. However, when combined with the **reservationCriteria** configuration in the document term, the reservation status can be used to selectively apply reservations to specific lines.
+On sales lines the status is partly filled in for you. The **Reservation Date** defaults to the document's value
+date, and a line whose reservation date is later than the value date becomes **Post Reserved**. When the line's
+**Reserved Quantity** is filled, the line becomes **Part Reservation** if it is less than the line quantity and
+**Total Reservation** if it equals it.
 
-**Usage Pattern:**
-1. Configure **Reservation Lines Criteria** in the document term to filter lines based on status
-2. Set line-level reservation status to control which lines get reserved
-3. Only lines matching the criteria will have reservation effects applied
+A Reservation Document whose term has **Update Reservation Status In From Doc** ticked writes each line's status
+back to the document it was created from, and from there to that document's own source.
 
-This allows fine-grained control over which document lines participate in the reservation system.
+### Apply Reservation and Cancel Reservation
 
-## Document Quantity Tracking and Satisfied Quantities
+Two buttons in the **More** menu of a saved Reservation Document switch its reservation off and on without deleting
+the document:
 
-### The Satisfied Quantity Mechanism
+- **Cancel Reservation Of Related Docs** («إلغاء الحجز») releases this document's own reservation. Despite the
+  English label, it acts on the document you are looking at.
+- **Apply Reservation** («تطبيق الحجز») puts the reservation back.
 
-The reservation system includes a sophisticated quantity tracking mechanism that monitors how much of a document's quantities have been fulfilled by subsequent documents.
+Deleting a reserving document also removes its reservation.
 
-#### Key Concepts
+## Satisfied quantities
 
-**Satisfied Quantity:** The amount of a document line that has been fulfilled by other documents  
-**Unsatisfied Quantity:** The remaining amount that still needs to be fulfilled  
-**User Satisfied Quantity:** Manually adjusted satisfied quantities
+A quotation that turns into several orders should not keep reserving what the orders already reserve. Quantity
+tracking records how much of each line later documents have taken (**Satisfied Qty**), how much is still open
+(**Unsatisfied Qty**) and any quantity marked as delivered by hand (**Manually Satisfied Qty**). With the right
+term settings, the reservation follows the open quantity.
 
-#### Practical Example: Sales Quotation to Orders
+For example, with **Reserve** and **Reservation Satisfied Fields** on the quotation's term, and quantity tracking
+against the quotation plus **Update Reservation Of Related Docs** on the order's term:
 
-1. **Create Sales Quotation:** 100 pieces of Item A with reservation enabled
-   - **Effect:** Creates Pre-Out reservation for 100 pieces
-   - **Satisfied Qty:** 0, **Unsatisfied Qty:** 100
+1. **Sales quotation for 100 pieces of Item A.** It reserves 100 pieces out. Satisfied 0, unsatisfied 100.
+2. **Sales order #1 for 50 pieces from the quotation.** The quotation shows satisfied 50, unsatisfied 50, and its
+   reservation drops to 50. The order reserves its own 50.
+3. **Sales order #2 for 20 pieces from the same quotation.** The quotation shows satisfied 70, unsatisfied 30, and
+   its reservation drops to 30. The order reserves its own 20.
 
-2. **Create Sales Order #1:** 50 pieces from the quotation
-   - **System Updates Quotation:**
-     - **Satisfied Qty:** 50, **Unsatisfied Qty:** 50
-   - **System Updates Reservation:** Reduces quotation reservation to 50 pieces
-   - **Order Creates:** New Pre-Out reservation for 50 pieces
+At every step the total reserved stays at 100: the quotation holds what is still open and the orders hold what
+they took.
 
-3. **Create Sales Order #2:** 20 pieces from the same quotation
-   - **System Updates Quotation:**
-     - **Satisfied Qty:** 70, **Unsatisfied Qty:** 30
-   - **System Updates Reservation:** Reduces quotation reservation to 30 pieces
-   - **Order Creates:** New Pre-Out reservation for 20 pieces
+## Releasing and reducing a reservation
 
-#### Configuration for Quantity Tracking
+A reservation ends in one of these ways:
 
-The term settings behind this — quantity tracking against the source document, plus **Reservation Satisfied Fields** and **Update Reservation Of Related Docs** for the reservation itself — are listed in the [Configuration Reference](#Configuration-Reference) below.
+- **A later document releases it.** A document whose term has **Cancel Reservation Of Related Docs** ticked releases
+  the reservation of the document it was created from when it is saved: invoicing an order frees the order's
+  reservation, and a stock issue made from a sales order frees the order's. When the direct source does not
+  reserve, the nearest reserving document further up the chain is released. By default the release goes on up the
+  whole chain; **Cancel Reservation Of Direct Parent Only When Using (Cancel Reservation Option) In Document Terms**
+  in the supply chain configuration limits it to the direct source.
+  With **Consider Origin Document In Lines With Cancel/Update Reservation** on the term, the documents named on
+  the lines are released or reduced too, not only the header's source.
+- **A later document reduces it.** With **Update Reservation Of Related Docs** instead, the source keeps reserving
+  what is still open, as in the quotation example above.
+- **Someone releases it by hand** with the Cancel Reservation button, or a scheduled entity flow does it.
+- **The document is deleted.**
 
-## Item-Level Reservation Configuration
+A reserving document made from another reserving document must have one of the two options on its term, otherwise
+both would hold the same stock and the save is refused (see
+[Combinations the system refuses](#Combinations-the-system-refuses)).
 
-Each item's **Item Configurations** record (**Inventory → Settings → Item Configurations**) carries two reservation settings:
+## When a reservation does not behave as expected
 
-### Core Reservation Settings
+**The source document still reserves the full quantity after a later document was saved.** The later document's
+term has neither **Cancel Reservation Of Related Docs** nor **Update Reservation Of Related Docs**, or the later
+document was not created from the source (its **From Document** is empty). With the update option, also check that
+the source's term has **Reservation Satisfied Fields** set to the tracking quantity that the later documents fill,
+and that quantity tracking against the source is set up on the later document's term.
 
-- **Include Reserved In Balance:** the availability check counts other documents' reservations
-- **Allow Overdraft In Reservation:** lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
+**A reservation was released further up the chain than intended.** Cancelling releases the whole chain above the
+document unless **Cancel Reservation Of Direct Parent Only When Using (Cancel Reservation Option) In Document Terms**
+is ticked in the supply chain configuration.
 
-### Overdraft Policy Hierarchy
+**The line status on the order did not change when the Reservation Document changed.** The Reservation Document's
+term needs **Update Reservation Status In From Doc**, and the document must have been created from the order.
 
-The system decides whether a line may go below zero in this order:
-
-1. **Item's Allow Overdraft In Reservation:** when ticked, allows it in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
-2. **Dimensions With Allowed Overdraft:** the first matching row in the supply chain configuration (not for stock transfers)
-3. **Item Level:** the item's own overdraft policy
-4. **Item Section Level:** the item section's overdraft policy
-5. **System Level:** the global supply chain configuration overdraft policy
-
-**Prevent Overdraft** on the document term can only make the check stricter. The full rules are on [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking).
-
-**Policy Values:**
-- **Yes:** Allow overdraft
-- **No:** Prevent overdraft
-- **Inherited:** Use parent level policy
-
-## Reservation Process Flow
-
-### 1. Document Creation and Setup
-
-1. **Document Type Determination:** System identifies if document is Sales/Issue (Pre-Out) or Purchase/Receipt (Pre-In)
-2. **Term Configuration Loading:** Retrieves reservation settings from document term configuration
-3. **Item Configuration Check:** Validates item-level reservation permissions and overdraft policies
-4. **Warehouse/Locator Assignment:** Applies reservation-specific warehouse and locator rules
-
-### 2. Reservation Request Generation
-
-When a document with reservations is saved:
-
-1. **Inventory request:** the system creates the document's inventory transaction request
-2. **Line Processing:** Converts document lines to reservation request lines
-3. **Quantity Calculation:** 
-   - For new reservations: Uses full document quantities
-   - For updates with satisfied quantities: Subtracts fulfilled amounts
-4. **Dimension Transfer:** Copies item dimensions, warehouse, locator, and tracking information
-
-### 3. Quantity Validation and Effects
-
-Saving runs these checks:
-
-1. **Available Quantity Check:** Verifies sufficient quantities exist
-2. **Overdraft Validation:** Checks item, section, and system-level overdraft policies
-3. **Reserved Quantity Processing:** 
-   - For Sales/Issue documents: Increases Pre-Out quantities
-   - For Purchase/Receipt documents: Increases Pre-In quantities
-4. **Balance Calculation:** Updates available balance based on item configuration
-
-### 4. Satisfied Quantity Updates (For Related Documents)
-
-When a document is created from another document with reservations:
-
-1. **Source Document Identification:** Finds the originating document
-2. **Quantity Tracking Configuration:** Retrieves tracking field settings
-3. **Satisfied Quantity Calculation:** Updates fulfilled amounts in source document
-4. **Reservation Adjustment:** Reduces source document's reservation by satisfied amount
-5. **New Reservation Creation:** Creates new reservation for the current document
-
-### 5. Reservation Cancellation
-
-#### Automatic Cancellation Triggers
-- **Document Deletion:** Automatically cancels all reservation effects
-- **Cancel Reservation:** manual cancellation from the document's screen
-- **Related Document Processing:** Cascading cancellation through document chains
-
-#### Cancellation Process
-1. **Validation:** Check if cancellation is allowed by term configuration
-2. **Request Type Change:** Converts reservation requests to DELETE operations
-3. **Effect Reversal:** Removes Pre-In/Pre-Out quantities
-4. **Related Updates:** Updates all connected documents in the chain
-
-## System Integration Points
-
-### Inventory Management Integration
-
-#### Quantity Effects
-- **Item balances:** reservation effects are kept per item and dimension combination, as in, out, pre-in and pre-out quantities
-- **Balance Calculation:** Consider reserved quantities based on item configuration
-
-
-### Document Workflow Integration
-
-#### Source Document Relationships
-- **From Document Processing:** Automatic creation from sales orders, purchase orders, etc.
-- **Document Chain Tracking:** Maintains relationships for quantity tracking
-- **Quantity Inheritance:** Copies quantities and dimensions from source documents
-
-#### Stock Document Behavior
-**Important:** Stock Issue, Stock Receipt, and Stock Transfer documents have special behavior:
-- **No Direct Reservations:** They do not create Pre-In or Pre-Out quantities
-- **Actual Quantity Effects:** They modify actual In and Out quantities only
-- **Reservation Cancellation:** They can cancel reservations of parent documents
-
-### Delivery System Integration
-
-#### Delivery-Based Reservations
-- **Delivery system table:** Use delivery system quantities instead of document quantities
-- **Root Entry Processing:** Creates reservation lines from delivery entries
-- **Remaining Quantity Management:** Reserves based on delivery system remaining quantities
-
-## User Interface and Operations
-
-### Main Edit Screen Layout
-
-#### Details Grid
-The details grid provides comprehensive item management:
-
-**Item Identification:**
-- Item code and description
-- Assortment and measure quantities
-- Dimensions (length, width, height)
-
-**Quantity Management:**
-- Primary quantity with UOM
-- Secondary quantity tracking
-- Reserved quantity display
-- Satisfied/unsatisfied quantity tracking
-
-**Dimension Specifications:**
-- Warehouse and locator (can differ from header)
-- Serial numbers and identifiers
-- Item-specific dimensions (box, revision, size, color, lot)
-- Active/inactive percentages
-- Production, expiry, and retest dates
-
-**Tracking Information:**
-- Line reservation status
-- Reservation date and warehouse assignment
-
-#### Available Actions
-
-**Core Reservation Actions:**
-1. **Apply Reservation** - Execute the reservation effects on inventory
-2. **Cancel Reservation** - Cancel reservation effects for related documents
-
-## Troubleshooting Guide
-
-### Common Issues and Solutions
-
-#### Issue: Insufficient Quantity Errors
-
-**Error Message:** *Insufficient quantity for item {0} {1},Available Quantity is {2}, Reserved quantity is {3}* — «الكمية من الصنف {0} {1} لا تكفي. الكمية المتاحه {2} . الكميه المحجوزه {3}»
-
-**Root Causes:**
-1. **Actual Shortage:** Item doesn't have enough available quantity
-2. **Reserved Quantity Blocking:** Previous reservations are consuming availability
-3. **Configuration Issue:** Item's **Include Reserved In Balance** setting affecting calculations
-4. **Dimension Mismatch:** Specific warehouse/locator/lot doesn't contain the item
-5. **Overdraft Policy:** Item or system settings preventing overdraft
-
-**Diagnostic Steps:**
-1. Check actual inventory quantities in specified warehouse/locator
-2. Review item configuration for **Include Reserved In Balance** setting
-3. Verify item's **Allow Overdraft In Reservation** configuration
-4. Check dimension specifications match available inventory
-5. Review system-level overdraft policies
-
-**Solutions:**
-1. **Transfer Inventory:** Move items from other locations
-2. **Adjust Item Configuration:** Modify **Include Reserved In Balance** if appropriate
-3. **Cancel Competing Reservations:** Review and cancel unnecessary reservations
-4. **Adjust Dimensions:** Modify warehouse, locator, or other dimension requirements
-
-#### Issue: Reservation Sequentiality Violations
-
-**Problem:** System rejects reservation due to sequentiality rules
-
-**Causes:**
-1. **Term Configuration:** **Check Reservation Sequentiality** enabled
-2. **Document Order:** Documents not created in required sequence
-3. **Chain Breaks:** Missing intermediate documents in the workflow
-
-**Solutions:**
-1. **Review Sequentiality Settings:** Check if **Check Reservation Sequentiality In First Save Only** can be used
-2. **Document Order:** Ensure documents are created in proper sequence
-3. **Configuration Adjustment:** Consider relaxing sequentiality requirements if business allows
-4. **Workflow Review:** Ensure complete document chain exists
-
-#### Issue: Related Document Updates Not Working
-
-**Problem:** Changes in reservation document don't update source documents
-
-**Diagnostic Checklist:**
-1. **Document Relationships:** Verify proper "From Document" linkage
-2. **Term Configuration:** Check **Update Reservation Of Related Docs** setting
-3. **Quantity Tracking:** Verify **Reservation Satisfied Fields** configuration
-4. **Status Updates:** Confirm **Update Reservation Status In From Doc** is enabled
-
-**Solutions:**
-1. **Configure Relationships:** Ensure proper document chain setup
-2. **Enable Updates:** Turn on related document update settings
-3. **Field Mapping:** Configure appropriate satisfaction quantity fields
-4. **Test Chain:** Verify updates flow through entire document hierarchy
-
-#### Issue: Satisfied Quantity Tracking Errors
-
-**Problem:** Satisfied quantities not updating correctly between documents
-
-**Common Causes:**
-1. **Configuration Missing:** **Force Qty** not enabled
-2. **Field Mapping:** Wrong **Related Doc Qty Fields** or **Reservation Satisfied Fields** setting
-3. **Unit Conversion:** UOM conversion failures between documents
-4. **Chain Breaks:** Document relationship issues
-
-**Solutions:**
-1. **Enable Tracking:** Turn on quantity tracking in term configuration
-2. **Field Configuration:** Verify correct quantity field mappings
-3. **UOM Setup:** Ensure proper unit of measure conversions exist
-4. **Relationship Verification:** Check document chain integrity
+**A sales order is refused although the warehouse shows enough stock.** The item has **Include Reserved In
+Balance** ticked and other documents already reserve that stock. Release or reduce the reservations that are no
+longer needed, or move stock from another warehouse; the
+[Messages you may see](#Messages-you-may-see) table below gives the exact message.
 
 ## Configuration Reference
 
@@ -383,7 +200,7 @@ Open the document's term (**Basic → Settings → Document Term**). The full de
 | **Reservation Warehouse Source** `reservationWarehouseSource` | مصدر مخزن الحجز | Reserves against the line's normal warehouse, or against its separate reservation warehouse. |
 | **Reservation Locator Source** `reservationLocatorSource` | مصدر موقع الحجز | The same choice for the locator. |
 | **Reservation Satisfied Fields** `reservationSatisfiedFields` | حقول الكمية الملغي حجزها | Reserves only what is still open on the line: the quantity already satisfied by later documents (first or second tracking quantity) is taken off the reservation. |
-| **Prevent Cancel Reservation** `preventCancelReservation` | منع إلغاء الحجز | Later documents cannot cancel this document's reservation. |
+| **Prevent Cancel Reservation** `preventCancelReservation` | منع إلغاء الحجز | Refuses the **Cancel Reservation Of Related Docs** button (the manual cancel in the More menu) on documents of this term, and the scheduled cancel-by-query entity flow that does the same. |
 | **Cancel Reservation Of Related Docs** `cancelReservationOfRelatedDocs` | إلغاء حجز المستندات المرتبطة | Saving this document releases the reservation held by the document it was created from — invoicing an order frees the order's reservation. |
 | **Update Reservation Of Related Docs** `updateReservationOfRelatedDocs` | تحديث حجز المستندات المرتبطة | Instead of releasing it, recalculates the source document's reservation so it covers only what is still open. Cannot be on together with the cancel option. |
 | **Check Reservation Sequentiality** `checkReservationSequentiality` | التاكد من تسلسل الحجز | First reserved, first served: a document that delivers against a reservation is refused when the stock on hand, after setting aside the reservations made before its source document, does not cover it. |
@@ -435,3 +252,14 @@ Whether a line may take an item below zero is decided in a fixed order: the item
 *You have selected two conflicting options in the term {0} for document {1}: update reservation and cancel reservation, please uncheck one of them* — «لقد قمت بالتعليم علي اختيارين متعارضين في التوجيه {0} للمستند {1}: تحديث الحجز و الغاء الحجز. يرجي ازالة العلامة من أحدهما»
 - A reserving document created from another reserving document when its term has neither option on, so both would hold the same stock. It is refused with
 *Cannot create reserve document based on other reserve document* — «لا يمكن إنشاء مستند يقوم بالحجز بناءا على مستند حجز اخر»
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *Insufficient quantity for item {0} {1},Available Quantity is {2}, Reserved quantity is {3}* — «الكمية من الصنف {0} {1} لا تكفي. الكمية المتاحه {2} . الكميه المحجوزه {3}» | The line needs more than is available for that item and dimension combination. The last number is the reservation of other documents that the check counted against you, which happens when the item has **Include Reserved In Balance** ticked. Overdraft is not allowed for the item at any level. | Check the stock in the line's warehouse, locator and lot. If other reservations hold the stock, release the ones that are no longer needed or move stock from elsewhere. If the business accepts negative stock for this item, allow overdraft at the level that fits (see [Which setting wins](#Which-setting-wins)). |
+| *This line will lead to overdraft resevation. The net quantity is {0} and the reservation queue is {1} and you are trying to deliver {2}* | The term has **Check Reservation Sequentiality**. The document delivers against a reservation, and the stock on hand, after setting aside the reservations made before its source document, does not cover it. This message has no Arabic translation and appears in English on Arabic screens too. | Deliver the older reservations first, or release the older ones that are no longer needed. Tick **Check Reservation Sequentiality In First Save Only** if documents should be checked only when they are first saved. |
+| *Can not cancel reservation for this document because prevent cancel reservation option in the document term is selected* — «لا يمكن إلغاء الحجز للمستند لانه تم تحديد اختيار منع الغاء الحجز فى توجيه المستند» | **Cancel Reservation Of Related Docs** was pressed on a document whose term has **Prevent Cancel Reservation** ticked. | Leave the reservation in place, or untick the option on the term if this kind of document may be released by hand. |
+| *This document reservation is cancelled before* — «الحجز لهذا المستند تم إلغاؤة من قبل» | The document's reservation is already released. | Nothing to do. Use **Apply Reservation** to reserve again. |
+| *This document reservation is applied before* — «الحجز لهذا المستند تم تطبيقة من قبل» | **Apply Reservation** was pressed on a document that already reserves. | Nothing to do. |
+| *This document is not saved yet* — «لم يتم حفظ المستند من قبل» | One of the two buttons was pressed on a document that has never been saved. | Save the document first. |

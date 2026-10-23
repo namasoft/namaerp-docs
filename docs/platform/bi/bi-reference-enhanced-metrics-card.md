@@ -5,7 +5,11 @@ menu: Administration → DashBoards → DashBoard Widget
 ---
 # BI Reference — EnhancedMetricsCard (and legacy MetricsCards)
 
-Companion to [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). Load this for `type: "EnhancedMetricsCard"` (modern, JSON-driven) or `type: "MetricsCards"` (legacy, value-object driven).
+This page is the setting-by-setting reference for the two card widgets made on the **DashBoard Widget** screen:
+the modern **EnhancedMetricsCard**, configured in the **Chart Config JSON** field, and the older **MetricsCards**.
+Open it when a card strip shows the wrong figure, colour or icon, or when a customer asks for a card that the
+dashboard does not have yet. The [BI module guide](./bi-module-guide.md) explains dashboards as a whole, and the
+settings shared by every widget are in the [BI technical reference](./bi-module-technical-reference.md).
 
 `EnhancedMetricsCard` reads `chartConfigJSON` end-to-end, supports embedded sparklines, conditional card backgrounds, icon swaps, and the full BI interaction stack (cross-filter / drill-down / link). The legacy `MetricsCards` widget continues to coexist; opt into the new one via `type: "EnhancedMetricsCard"`.
 

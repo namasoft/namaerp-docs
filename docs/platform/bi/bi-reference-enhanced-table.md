@@ -5,7 +5,11 @@ menu: Administration → DashBoards → DashBoard Widget
 ---
 # BI Reference — EnhancedTable
 
-Companion to [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). Load this when authoring a widget with `type: "EnhancedTable"` (or its pivot/cross-tab mode).
+This page is the reference for the **EnhancedTable** widget type on the **DashBoard Widget** screen, including
+its pivot (cross-tab) layout. Every column, format and colour rule of the table lives in the widget's
+**Chart Config JSON** field, so open this page when a table widget shows a column wrongly or a customer wants
+one changed. The click, drill-down and link settings it shares with the other widgets are in the
+[BI technical reference](./bi-module-technical-reference.md).
 
 `EnhancedTable` is the JSON-driven table widget — every column declared in `chartConfigJSON` with its own formatting, renderer, conditional formatting, pinning, grouping, aggregation. Reuses the BI interaction machinery (`clickEmitMapping`, `drillDownMapping`, `linkMappings`, `clickAction` — main reference §4–5b) with an optional `column` field on each entry to scope to a specific cell. Classic `Table` widget remains; opt in via `"type": "EnhancedTable"`.
 

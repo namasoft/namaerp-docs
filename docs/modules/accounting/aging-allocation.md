@@ -67,6 +67,8 @@ pairs the system itself would have considered. And pressing **Collect Data** sta
 refills both grids and clears any linking you had built up. If nothing is open in the range you get
 **"No unmatched transactions found"** and two empty grids.
 
+![Aging Allocation after Collect Data: the customer's open invoices fill the Debit Transactions grid, oldest first](../../ar/modules/accounting/images/banks/aging-allocation-collect-data-en.png)
+
 ### 3. Tick, then Link Data
 
 Now the human part. Tick **Selected** on the debit rows and the credit rows that belong together, then

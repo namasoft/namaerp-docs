@@ -37,6 +37,8 @@ At the top of the panel sit the controls that always apply:
 
 Below those, the panel shows **Page**, **Block**, **Field** and **Action** tabs. Which tabs appear depends on what you've clicked on the canvas: select a field and the Field tab opens; select a button and the Action tab opens, and so on.
 
+![The Visual Layout Editor: the properties panel on the left, the live screen on the canvas](../../ar/platform/screen-modifier/images/screen-modifier-visual-editor-en.png)
+
 ## Editing a page
 
 The **Page** tab acts on the current tab:

@@ -183,7 +183,7 @@ After collection, review the **Required Lines** tab:
 | **Item** | الصنف | The item required |
 | **Required Qty** | الكمية المطلوبة | Quantity needed |
 | **Required On** | مطلوب في | Date when quantity is needed |
-| **Dimensions** | الأبعاد | Specific dimensions (warehouse, locator, lot, size, color, etc.) |
+| **Dimensions** | المحددات | Specific dimensions (warehouse, locator, lot, size, color, etc.) |
 | **Total Available** | الإجمالي المتاح | Current inventory quantity |
 | **Predicted Purchase** | المشتريات المتوقعة | Expected incoming purchases |
 | **Predicted Sales** | المبيعات المتوقعة | Expected outgoing sales |

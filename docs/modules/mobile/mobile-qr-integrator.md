@@ -56,6 +56,8 @@ The entity flow referenced by the integrator must:
 2. Set `requiresCommitOnManual: true` for automatic commit, otherwise updates will fail
 3. Access QR parameters via `$map` variables
 
+![A Mobile QR Integrator that creates or updates a CRM lead from an exhibition QR code](../../ar/modules/mobile/images/administration/mobile-qr-integrator-en.png)
+
 ## QR Code Generation
 
 ### Using NamaRep.mobileQr() in Jasper Reports

@@ -36,7 +36,7 @@ Start a new carton order and fill in the essentials:
 
 **Sales Person** (م.المبيعات): The salesperson handling this account (optional)
 
-**Book** (الدفتر) and **Term** (الشرط): These control numbering and automatic document generation settings
+**Book** (الدفتر) and **Term** (توجيه المستند): These control numbering and automatic document generation settings
 
 **Subsidiary**: If this order's entries should be recorded on a specific subsidiary account (advanced accounting feature)
 

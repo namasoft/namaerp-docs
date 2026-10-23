@@ -18,13 +18,16 @@ entities: [EntityFlow]
 
 ## Parameters
 
-The entity flow requires two parameters:
+The **Title** column is the caption the entity flow line shows above each parameter after saving.
 
-1. **Parameter 1**: `-` (not used)
-2. **Parameter 2**: **Records To Embed Query**
-   - A SQL query that must return exactly two columns:
-     - **Column 1**: `entityType` - The entity type name (e.g., 'CRMLead', 'Customer', 'Item')
-     - **Column 2**: `id` - The unique ID of the record to embed
+| Parameter | Title | What to enter |
+|---|---|---|
+| Parameter 1 | - | Not used. Leave it empty. |
+| Parameter 2 | Records To Embed Query, eg: select entityType,id from CRMLead where lastUpdateDate >= '20250901' and commitedBefore = 1 | A query whose first column is the entity type and second column is the record id. See [SQL Query Requirements](#SQL-Query-Requirements). |
+
+Only master files can be embedded (customers, items, leads, ...). Of those, only the types listed in the
+**AI Record Embedding Config** screen are embedded; a row of any other type is skipped without a message.
+See [AI Module Configuration](../../modules/ai/ai-configuration.md).
 
 ## How It Works
 
@@ -48,7 +51,8 @@ AI embeddings are numerical representations (vectors) of text content that captu
 4. **Transaction Safety**: Each record is processed in its own database transaction
 
 ::: warning Important Notes
-- The system only processes records that don't already have embeddings or need updates
+- A record whose text has not changed since it was last embedded is left as it is; a changed one is embedded again
+- Nothing is embedded until the vector store is set up in the AI configuration
 - Large queries may take significant time to process
 - Each record is processed individually, so 1000 records = 1000 separate operations
 - The system shows progress updates during processing
@@ -68,8 +72,10 @@ WHERE [your conditions]
 
 | Column Name | Type | Description | Example Values |
 |-------------|------|-------------|---------------|
-| `entityType` | VARCHAR | Entity type name (case-sensitive) | 'CRMLead', 'Customer', 'Item' |
-| `id` | BIGINT | Record's unique identifier | 12345, 67890 |
+| `entityType` | text | Entity type name | 'CRMLead', 'Customer', 'InvItem' |
+| `id` | uniqueidentifier | The record's id (a GUID) | the `id` column of the record's table |
+
+The columns are read by position, not by name: the first is the entity type, the second the id.
 
 
 ## Common Usage Examples
@@ -79,7 +85,7 @@ WHERE [your conditions]
 SELECT 'CRMLead' as entityType, id
 FROM CRMLead
 WHERE lastUpdateDate >= '2025-09-01'
-AND committed = 1
+AND commitedBefore = 1
 ```
 
 ### Example 2: Process Customer Records by Date Range
@@ -87,7 +93,7 @@ AND committed = 1
 SELECT 'Customer' as entityType, id
 FROM Customer
 WHERE creationDate BETWEEN '2025-01-01' AND '2025-09-30'
-AND active = 1
+AND commitedBefore = 1
 ```
  
 ### Example 3: Process Multiple Entity Types

@@ -6,7 +6,10 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 
 # مرجع BI — EnhancedTable
 
-مرجع مكمّل لـ [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). استخدمه عند تأليف widget من نوع `type: "EnhancedTable"` (أو وضع الـ pivot/cross-tab).
+هذه الصفحة مرجع نوع العنصر **EnhancedTable** في شاشة **عنصر اللوحة**، ومعه تخطيط الـ Pivot (cross-tab).
+كل عمود في الجدول وتنسيقه وقواعد تلوينه محفوظة في حقل **Chart Config JSON** للعنصر، فارجع إلى هذه الصفحة حين
+يعرض عنصر جدول عمودًا على غير المتوقع أو يطلب العميل تغييره. أما إعدادات النقر والتنقل التفصيلي والروابط التي
+يشترك فيها مع باقي العناصر ففي [المرجع التقني لوحدة BI](./bi-module-technical-reference.md).
 
 `EnhancedTable` هو جدول مدفوع بـ JSON — كل عمود معرَّف في `chartConfigJSON` له تنسيقه الخاص، وrenderer، وتنسيق شرطي، وتثبيت، وتجميع، وإجماليات. يعيد استخدام آلية تفاعل BI (`clickEmitMapping`، `drillDownMapping`، `linkMappings`، `clickAction` — المرجع الرئيسي §4–5b) مع حقل `column` اختياري في كل مدخل للتحديد إلى خلية بعينها. يبقى widget الكلاسيكي `Table` متاحاً؛ للانتقال استخدم `"type": "EnhancedTable"`.
 

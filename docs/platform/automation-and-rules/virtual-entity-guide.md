@@ -69,6 +69,8 @@ A Virtual Entity gives the wizards a new *table* to build reports and widgets on
 
 The dialog has two halves stacked vertically.
 
+![The Edit Mappings dialog after Bootstrap: the SQL on top, the proposed properties below](../../ar/platform/images/automation-and-rules/virtual-entity-edit-mappings-en.png)
+
 ### Top — The SQL Editor
 
 A Monaco editor (the same one that powers VS Code) with SQL syntax highlighting, autocomplete, and full-screen height. Edit your query freely; the system parses it as you type so it can spot which columns each property is mapped to.

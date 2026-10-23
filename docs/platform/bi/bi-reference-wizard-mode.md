@@ -4,7 +4,11 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 ---
 # BI Reference — Wizard Mode
 
-Companion to [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). Load this only when authoring a widget whose `wizardDataSource` is set.
+This page is the reference for dashboard widgets built from a **Dashboard Widget Wizard**, that is, the widgets
+whose **Wizard Data Source** field is filled. Open it when such a widget shows the wrong data, when a drill-down
+or cross-filter from it does not behave as expected, or when you edit its **Chart Config JSON** by hand. Widgets
+written directly in SQL are covered by the [BI technical reference](./bi-module-technical-reference.md), and
+nothing on this page applies to them.
 
 When a widget has a `wizardDataSource`, its `chartConfigJSON` references **wizard field IDs** instead of raw SQL column names. The backend resolves each ID to a SQL alias from cached metadata; SQL-mode widgets are unaffected by anything here.
 
@@ -193,4 +197,4 @@ Setting both `true` hides the selector entirely.
 
 **Click/drill follow active dims**: runtime slot changes reshape `activeDimensionFieldIds`, so click-emit and drill-down entries keyed by `wizardFieldId` automatically follow the new active dimensions.
 
-**AI guidance**: prefer wizard-mode keys (`*WizardFieldId`) whenever `wizardDataSource` is present so widgets pick up the runtime selector for free.
+**When you edit the JSON**: prefer the wizard-mode keys (`*WizardFieldId`) whenever `wizardDataSource` is present so widgets pick up the runtime selector for free.

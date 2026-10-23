@@ -77,7 +77,7 @@ The tables group the permissions by what they control. The **Arabic** column is 
 |---|---|---|
 | Can Cancel Invoice Before Save | إمكانية إلغاء فاتورة قبل الحفظ | Abandoning an invoice in progress. |
 | Can Hold Invoice | إمكانية تعليق فاتورة | Holding (parking) an invoice to recall later. |
-| Can Delete Held Invoices | إمكانية حذف الفواتير المعلقة | Deleting a held invoice. |
+| Can Delete Held Invoices | إمكانية حذف الفواتير المعلقة | Deleting the held invoice on screen (**Delete Held Invoice**, `Alt+F6`) and deleting every held invoice, return and replacement on the register at once (**Delete All Held Invoices**, `Shift+F6`). Without it both menu entries are hidden (unless the POS settings keep such entries visible), and both shortcuts are refused, or ask for a supervisor when the permission is listed for [supervisor authorization](#Asking-a-supervisor-instead-of-refusing). |
 | Can Print Held Invoice | إمكانية طباعة فاتورة معلقة | Printing an invoice that is still held. |
 | Can Open Old Document | إمكانية فتح مستند قديم | Opening an already-saved document. |
 | Prevent Opening Old Invoices *(grid only, restriction)* | منع عرض فواتير نقاط البيع القديمة | Blocks opening saved invoices. |

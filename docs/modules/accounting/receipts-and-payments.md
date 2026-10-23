@@ -72,6 +72,24 @@ The three stages of the chain each carry their own buttons, and knowing them is 
 - Receipt/payment voucher, request, and entry statements (`SYSR-ACC015` to `ACC019` and `ACC046`–`ACC047`) are covered in [Account statements & trial balance](./reports-account-statements-and-trial-balance.md).
 - Printed forms: receipt voucher `SYSF-ACC002`, payment voucher `SYSF-ACC003`, receipt order `SYSF-ACC010`, payment order `SYSF-ACC022`, receipt request `SYSF-ACC014`, payment request `SYSF-ACC021`, consolidated payment request `SYSF-ACC017`.
 
+::: details Samples: request and order forms
+**Receipt request** (`SYSF-ACC014`):
+
+![Receipt request form (SYSF-ACC014)](../../ar/modules/accounting/images/forms/SYSF-ACC014-en.png)
+
+**Receipt order** (`SYSF-ACC010`):
+
+![Receipt order form (SYSF-ACC010)](../../ar/modules/accounting/images/forms/SYSF-ACC010-en.png)
+
+**Payment request** (`SYSF-ACC021`):
+
+![Payment request form (SYSF-ACC021)](../../ar/modules/accounting/images/forms/SYSF-ACC021-en.png)
+
+**Payment order** (`SYSF-ACC022`), first part of the page:
+
+![Payment order form (SYSF-ACC022)](../../ar/modules/accounting/images/forms/SYSF-ACC022-en.png)
+:::
+
 ## Stopping a payment from overdrawing the cash box
 
 There is no overdraft switch on the payment voucher itself. A treasury or bank is kept from going negative by its account, through two settings that must both be on:

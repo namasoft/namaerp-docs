@@ -97,7 +97,7 @@ Two settings in Global Configuration drive that lock: **Max Failed Login Attempt
 
 - Passwords are stored **hash-encrypted** (irreversible) unless the organization explicitly operates in legacy plaintext mode.
 - The **Password Must Be Changed** flag forces a new password on next login; the system tracks **Last Password Change Date** for auditing and policy enforcement.
-- The **changePassword** action on the user screen is the administrative reset path; users change their own passwords from the user menu on the top bar — see [The Top Bar and Your User Menu](/platform/everyday-tools/top-bar-and-user-menu#Settings).
+- The **Change Password** action on the user screen is the administrative reset path; users change their own passwords from the user menu on the top bar — see [The Top Bar and Your User Menu](/platform/everyday-tools/top-bar-and-user-menu#Settings). There they must type their **Current Password** first, and a wrong or empty one is refused with *The current password is incorrect* — «كلمة المرور الحالية غير صحيحة». An administrator resetting someone else's password from the User record is not asked for it.
 
 ## Actions on this screen
 
@@ -153,6 +153,7 @@ Licenses can define named user levels with different counts. The **User Level** 
 | *You have exhausted your max failed login attempts, please try again after {0} minutes or contact your system administrator - user name: {1}* — «لقد استنفذت أقصى عدد من محاولات الدخول الخطأ. يرجي المحاولة مرة أخرى بعد {0} دقيقة أو التواصل مع مدير النظام. اسم المستخدم: {1}» | More wrong passwords than **Max Failed Login Attempts** allows. | Wait out **Minutes To Remember Failed Logins** without trying again, or have an administrator press **Allow Login After Failed Logins**. |
 | *The user was unblocked, here are the IPs that caused the block: {0}* | The unlock worked, and the message names the addresses the failed attempts came from. | Nothing — but the IP list is worth reading before you assume the user simply mistyped. |
 | *The user was not blocked* | The unlock was pressed on a user who is not blocked. | Look elsewhere: **Prevent Login**, the licence limits, or the user's level. |
+| *Invalid authentication information, please re-login* — «معلومات الدخول غير صحيحة. فضلاً حاول الدخول مرة أخرى» | One cause: **Prevent Modify Context** is ticked and one of the session's dimensions has a value that is on neither the login context nor any row of the login context table. Mixing values from different rows is allowed and is not the cause. | Log in with values that are listed, or add the missing value on a row — see [Record-Level Security](/platform/security/record-level-security#Login-Context-and-the-Alternate-Login-Context-Table). |
 | *User login id {0} is already existing* | A committed user already holds that login id. Login ids are unique system-wide; drafts do not count. | Choose another login id, or find the existing user. |
 
 The two unlock replies have no Arabic translation and appear in English on Arabic screens.

@@ -163,6 +163,8 @@ These shortcuts apply to the Point of Sale (POS) application. The keys listed ar
 - **Alt + F6**: Delete held invoices
 - **Shift + F6**: Delete all held invoices
 
+Both delete shortcuts need **Can Delete Held Invoices** on the cashier's [POS Security Profile](/modules/pos/erp-setup/pos-security-profiles).
+
 ### Discounts
 - **F10**: Invoice discount
 - **Ctrl + F10**: Delete discount

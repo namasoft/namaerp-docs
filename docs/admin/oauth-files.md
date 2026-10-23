@@ -36,6 +36,8 @@ only what you will use. Each option widens what Google asks the account owner to
 
 The screen also carries two buttons, **Start OAuth Flow** and **Revoke Authentication**.
 
+![An OAuth File set up for sending email from Gmail, with the Start OAuth Flow and Revoke Authentication buttons](../ar/admin/images/administration/oauth-file-gmail-en.png)
+
 ## Authorising a file, step by step
 
 A head office wants its invoices emailed from `invoices@nilegroup.com`, a Google Workspace mailbox.

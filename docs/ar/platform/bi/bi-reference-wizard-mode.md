@@ -5,7 +5,11 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 
 # مرجع BI — وضع المعالج (Wizard Mode)
 
-مرفق بـ [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). يُحمَّل هذا الملف فقط عند تأليف widget تم فيها تعيين `wizardDataSource`.
+هذه الصفحة مرجع عناصر اللوحة المبنية من **أداة إنشاء عنصر لوحة**، أي العناصر التي امتلأ فيها حقل
+**Wizard Data Source**. ارجع إليها حين يعرض عنصر من هذا النوع بيانات خاطئة، أو حين لا يتصرف التنقل التفصيلي أو
+الفلتر المتقاطع منه كما يُتوقع، أو حين تعدّل حقل **Chart Config JSON** الخاص به يدويًا. أما العناصر المكتوبة
+مباشرة بـ SQL فيغطيها [المرجع التقني لوحدة BI](./bi-module-technical-reference.md)، ولا ينطبق عليها شيء مما
+في هذه الصفحة.
 
 عندما يحتوي widget على `wizardDataSource`، يشير `chartConfigJSON` إلى **معرّفات حقول المعالج (wizard field IDs)** بدلاً من أسماء أعمدة SQL الخام. يُحلّل الخادم كل معرّف إلى اسم مستعار SQL من البيانات الوصفية المخزّنة مؤقتاً؛ لا تتأثر widgets وضع SQL بأي شيء هنا.
 
@@ -194,4 +198,4 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 
 **النقر/التنقل يتبعان المحددات النشطة**: تغييرات الفتحة في وقت التشغيل تُعيد تشكيل `activeDimensionFieldIds`، لذا تتبع إدخالات النقر والتنقل المفتاحة بـ `wizardFieldId` المحددات النشطة الجديدة تلقائياً.
 
-**توجيه AI**: يُفضَّل استخدام مفاتيح وضع المعالج (`*WizardFieldId`) كلما كان `wizardDataSource` موجوداً حتى تكتسب widgets أداة الاختيار في وقت التشغيل تلقائياً.
+**عند تعديل الـ JSON**: يُفضَّل استخدام مفاتيح وضع المعالج (`*WizardFieldId`) كلما كان `wizardDataSource` موجوداً حتى تكتسب widgets أداة الاختيار في وقت التشغيل تلقائياً.

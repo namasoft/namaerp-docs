@@ -80,6 +80,24 @@ Printing the cheque itself uses **bank-specific templates** (Ahli United, Arab A
 - Reports: commercial-paper statement `SYSR-BNK001`, cheques under collection `SYSR-BNK002`, cheques by status `SYSR-BNK003`, financial-paper books `SYSR-BNK004` (see [Account statements & trial balance](./reports-account-statements-and-trial-balance.md)).
 - Forms: bank portfolio `SYSF-BNK003`, bank notice `SYSF-BNK004`, paper transfer `SYSF-BNK005`, paper cancel `SYSF-BNK006`, agio `SYSF-BNK007`, agio return `SYSF-BNK008`, opening paper `SYSF-BNK009`, receipt request `SYSF-ACC013`.
 
+::: details Samples: commercial-paper reports and the receipt-request form
+**Commercial-paper statement** (`SYSR-BNK001`) — the received cheques by due date, with their status and bank:
+
+![Commercial-paper statement sample (SYSR-BNK001)](../../ar/modules/accounting/images/reports/SYSR-BNK001-en.png)
+
+**Cheques under collection** (`SYSR-BNK002`), grouped by the collecting bank:
+
+![Cheques under collection sample (SYSR-BNK002)](../../ar/modules/accounting/images/reports/SYSR-BNK002-en.png)
+
+**Cheques by status** (`SYSR-BNK003`):
+
+![Cheques by status sample (SYSR-BNK003)](../../ar/modules/accounting/images/reports/SYSR-BNK003-en.png)
+
+**Commercial papers receipt request** form (`SYSF-ACC013`):
+
+![Commercial papers receipt request form (SYSF-ACC013)](../../ar/modules/accounting/images/forms/SYSF-ACC013-en.png)
+:::
+
 ## For Support
 
 - **"The paper's status won't advance"** — each transition needs its document: deposit via the portfolio, collection/return via the bank notice. Check that the right document was issued and processed.

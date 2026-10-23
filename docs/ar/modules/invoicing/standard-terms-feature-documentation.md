@@ -26,6 +26,8 @@ menu: الأساسيات ← الملفات ← بند بيع قياسي
 - **فترة العمل الأولية للشرط** (`initialTermWorkPeriod`): المدة الافتراضية للشرط (تشمل القيمة ووحدة القياس)
 - **ملاحظات 2** (`remarks2`): ملاحظات إضافية أو وصف تفصيلي للشرط
 
+![بند بيع قياسي يتطلب مستند تحقق ويقبل التمديد، بفترة عمل مبدئية 30 يومًا](images/sales-standard-term-ar.png)
+
 ### 2. وثيقة إتمام الشرط القياسي (Standard Term Fulfillment Document)
 **الكيان**: `StandardTermFulfillment`  
 **الجدول**: `StandardTermFulfillment`  

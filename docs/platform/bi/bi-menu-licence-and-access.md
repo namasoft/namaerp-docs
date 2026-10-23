@@ -83,6 +83,12 @@ The finer control is the record-level **View Capability**, the same one any reco
 [Capability Types](/admin/users-counter-and-security-capabilities#Locking-one-record-with-a-capability)).
 On BI records it behaves like this:
 
+- **On the dashboard itself.** A user who does not hold the dashboard's View Capability cannot open
+  it at all — neither a single dashboard nor a Tabbed one, whose own capability is checked before
+  any of its tabs. Instead of the dashboard they get the standard refusal, the same in the new and
+  the old interface, naming the capability and the dashboard:
+
+  *You do not have the capability {0} required for the record {1}* — «ليس لديك صلاحيات {0} المطلوبة للسجل {1}»
 - **On a widget.** A user who does not hold the widget's View Capability simply does not get that
   widget. The rest of the dashboard draws normally and the widget's place stays empty; there is no
   message. Use it to keep, for example, a margin chart on the sales dashboard for managers only,

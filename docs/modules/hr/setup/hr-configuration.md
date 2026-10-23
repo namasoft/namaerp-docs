@@ -514,9 +514,11 @@ performance on a large run, but when a customer disputes a number they are the o
 without re-deriving the calculation by hand. Turn one on for the run you need to explain, then turn
 it off.
 
-**Concurrent Salary Docs In Generation** `value.concurrentSalaryDocsInGeneration` ships as **25** and
-is how many salary documents are generated in parallel. Its Arabic label was never translated, so
-the Arabic screen shows the English text.
+**Concurrent Salary Docs In Generation** `value.concurrentSalaryDocsInGeneration` is how many
+employees a salary sheet's **Generate Salary Documents** handles in one transaction; empty or zero
+means **25**. The batches run one after another, not in parallel. Each batch is saved on its own,
+so a run that fails part-way keeps the batches before the failure. The Arabic screen shows this
+setting under its English label too.
 
 ## Evaluation
 

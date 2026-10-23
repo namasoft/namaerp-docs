@@ -26,6 +26,8 @@ table name the table; how the table itself picks a code is on
 | First grade date | **First Grade Date From Employee Field** → else the hiring date |
 | Basic salary | The **Basic Salary Component**'s addition on the employee's latest committed salary document in the period |
 
+![An MCS Eltezam Configuration with its agency IDs, default location, employee group and basic salary component](../../../ar/modules/integrations/images/eltezam-configuration-filled-en.png)
+
 ## Employee Info
 
 One request per employee, describing the person and their current state.

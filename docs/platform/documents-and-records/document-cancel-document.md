@@ -48,6 +48,8 @@ behaves, and this one behaves exactly one way, so it does not need one.
 There are no buttons specific to this screen either — it carries the standard toolbar every screen
 carries, and nothing more. The cancellation happens when you save.
 
+![A Document Cancel Document listing one sales invoice to cancel](../../ar/platform/images/documents-and-records/document-cancel-document-en.png)
+
 ## What committing it actually does
 
 Saving the cancel document runs, for each document named on it, the same unwinding the system would

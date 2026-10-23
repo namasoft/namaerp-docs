@@ -6,7 +6,11 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 
 # مرجع BI — EnhancedMetricsCard (وwidget المقاييس القديم MetricsCards)
 
-مرافق لـ [`bi-module-technical-reference.md`](./bi-module-technical-reference.md). استخدم هذا الملف مع `type: "EnhancedMetricsCard"` (الحديث، يعتمد على JSON) أو `type: "MetricsCards"` (القديم، يعتمد على value-object).
+هذه الصفحة مرجع إعدادات نوعَي البطاقات اللذين يُنشآن في شاشة **عنصر اللوحة**: النوع الحديث **EnhancedMetricsCard**
+الذي تُضبط إعداداته في حقل **Chart Config JSON**، والنوع الأقدم **MetricsCards**. ارجع إليها حين يعرض شريط
+البطاقات رقمًا أو لونًا أو أيقونة على غير المتوقع، أو حين يطلب العميل بطاقة لا تحويها لوحته بعد. ويشرح
+[دليل وحدة BI](./bi-module-guide.md) اللوحات في مجملها، أما الإعدادات المشتركة بين كل العناصر ففي
+[المرجع التقني لوحدة BI](./bi-module-technical-reference.md).
 
 يقرأ `EnhancedMetricsCard` الحقل `chartConfigJSON` بالكامل، ويدعم sparklines مدمجة، وخلفيات بطاقة شرطية، وتبديل الأيقونات، وكامل مكدس التفاعل في BI (cross-filter / drill-down / link). يستمر widget المقاييس القديم `MetricsCards` في العمل جنبًا إلى جنب؛ للتحويل إلى النوع الجديد استخدم `type: "EnhancedMetricsCard"`.
 

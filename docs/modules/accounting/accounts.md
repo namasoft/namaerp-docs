@@ -107,6 +107,10 @@ The field unlocks in two cases: when the account has no transactions left, or wh
 
 This account's statements and balances (general/subsidiary/detail account statement, trial balance, debt ages) are all on the [Account statements & trial balance](./reports-account-statements-and-trial-balance.md) page.
 
+The account record itself prints on the **Account** form (`SYSF-ACC019`): its charts, category, natural side, type, currency, subsidiary types and control flags:
+
+![Account form (SYSF-ACC019)](../../ar/modules/accounting/images/forms/SYSF-ACC019-en.png)
+
 ## For Support
 
 Most "the entry won't save" or "the balance is wrong" tickets are resolved from this screen:

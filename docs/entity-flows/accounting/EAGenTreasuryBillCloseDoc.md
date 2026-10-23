@@ -23,7 +23,7 @@ Automatically generates Treasury Bill Close Documents for treasury bills that ha
 
 ### Bill Selection Criteria
 - **Due Date:** Due date <= today's date
-- **Status:** "Running" status only (not "Closed")
+- **Status:** anything except "Closed"
 - **State:** Previously committed entities only
 - **Limit:** Maximum 500 bills per execution
 
@@ -32,6 +32,18 @@ Automatically generates Treasury Bill Close Documents for treasury bills that ha
 - **Links:** References to original treasury bills
 - **Copies:** Key financial data (bank account, ROI rate, current value)
 - **Dimensions:** Transfers all dimension fields automatically
+- **Fields Map:** Applies Parameter 1, then saves each close document as final
+
+The record the flow runs on is not used: the bills are always found by the criteria above, so the
+flow is normally run from a task schedule.
+
+## Parameters
+
+The **Title** column is the caption the entity flow line shows above each parameter after saving.
+
+| Parameter | Title | What to enter |
+|---|---|---|
+| Parameter 1 | Fields Map | A [field map](../core/ai-generated-field-maps-documentation.md) from the treasury bill to the new close document, one `target field=bill field` per line. It is applied after the treasury bill, bank account, ROI rate, current value and dimensions are copied, so it can override them. Use it for what the flow does not fill, such as the close document's book and term (`book="TBC"`, `term="TBC"`). |
 
 ## SQL Queries for Troubleshooting
 

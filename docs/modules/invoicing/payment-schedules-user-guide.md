@@ -76,6 +76,8 @@ When using Equal Payments type:
 - **Payments Period From Due Date** (فترة الدفعات من تاريخ الاستحقاق): Calculate payment periods from due date instead of document date
 - **First Payment Date Is Document Date** (تاريخ أول دفعة هو تاريخ المستند): Set first payment on the document date
 
+![A Payment Schedule Template with a 10% down payment and three staged percentage payments](../../ar/modules/invoicing/images/payment-schedule-template-en.png)
+
 ## Creating Payment Schedule Templates
 
 ### Step 1: Access Payment Schedule Templates

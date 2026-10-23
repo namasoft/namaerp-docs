@@ -24,9 +24,23 @@ Automatic line is considered on every event. Leaving the field empty and setting
 fails to appear. Real installations run this flow with both, and both work.
 :::
 
-## Parameters (Simple Explanation)
+## Parameters
 
-### 1. Effects Configuration
+The **Title** column is the caption the entity flow line shows above each parameter after saving.
+
+| Parameter | Title | What to enter |
+|---|---|---|
+| Parameter 1 | Effects: fieldId=DebitEffectAccSideCode,CreditEffectAccSideCode eg: n1=N1EffectDR,N1EffectCR lines.n2=DetailsN2EffectDR,DetailsN2EffectCR | Required. One effect per line: the field holding the amount, `=`, then the codes of two **accounting side** records, the debit side first. See [Effects](#Effects-Parameter-1). |
+| Parameter 2 | Apply When Query (Return 0 or 1), example: … | Optional. A query run once per document line; a line whose result is 0 or empty gets no effect. Applies only to effects on a line field. See [Apply When Query](#Apply-When-Query-Parameter-2). |
+| Parameter 3 | ShortenLedger (true,false) | `true` merges the finished entry's similar lines (the original lines and the added ones together). Empty or `false` leaves them as they are. |
+| Parameter 4 | Currency Field  (optional) | The field holding the currency of the added lines. Empty: the main currency of the legal entity's ledger. |
+| Parameter 5 | Rate Field (optional) | The field holding the rate of the added lines. Empty: a rate of 1, so fill it whenever Parameter 4 can point to a foreign currency. |
+| Parameter 6 | Flush Before Running (true,false) | `true` writes the pending changes of the current save to the database before the amounts are read, so a query in Parameter 2 sees them. |
+
+Parameters 1, 3 and 6 are checked when the entity flow is saved: Parameter 1 must not be empty, and
+Parameters 3 and 6 accept only `true`, `false` or empty.
+
+### Effects (Parameter 1)
 **Format:** `fieldId=DebitEffectAccSideCode,CreditEffectAccSideCode`
 
 **What it does:** Tells the system which field contains the amount and which accounting side codes to use for debit/credit entries.
@@ -37,10 +51,15 @@ fails to appear. Real installations run this flow with both, and both work.
 
 **Multiple Effects:** Put each effect on a new line to create multiple accounting entries.
 
-### 2. Apply When Query (Optional)
-**Purpose:** Controls when the effect should be applied using SQL logic.
+A side code that matches no accounting side stops the save with *Could not find AccountingSideConfig with code {0}*.
+
+### Apply When Query (Parameter 2)
+**Purpose:** Controls, line by line, which document lines get the effect.
 
 **Format:** SQL query that returns 0 (don't apply) or 1 (apply the effect)
+
+The query is used only by effects whose amount field is a line field (`lines.n2`, `details.tax1.value`, ...).
+An effect on a header field (`n1`) is applied whatever the query returns.
 
 **Example:**
 ```sql
@@ -48,7 +67,7 @@ select case when {lines.ref1.entityType} in ('Branch','Department') then 1 else 
 ```
 This means: "Only apply this accounting effect if the reference field (ref1) in the document lines points to a Branch or Department entity."
 
-### 3. ShortenLedger
+### ShortenLedger (Parameter 3)
 **Options:** `true` or `false`
 **Purpose:** When set to `true`, combines similar accounting entries to reduce the number of journal entry lines
 **Recommendation:** Usually set to `true` to keep ledger clean and organized
@@ -68,20 +87,15 @@ meet while diagnosing an entry. When you are testing a new effect, set this to `
 confirm every line you expect is really there, then switch it back on.
 :::
 
-### 4. Currency Field (Optional)
-**Purpose:** Specify which field contains the currency for multi-currency transactions
-**Format:** Field ID (like `currencyId` or `lines.currency`)
-**When to use:** Only needed for documents with multiple currencies
+### Currency and Rate Fields (Parameters 4 and 5)
+**Format:** a field id, on the header or on the lines (`lines.<field>`). A line field gives each line
+its own currency or rate; a header field gives every added line the same one.
+**When empty:** the currency is the main currency of the legal entity's ledger and the rate is 1.
 
-### 5. Rate Field (Optional)
-**Purpose:** Specify which field contains the exchange rate
-**Format:** Field ID (like `rate` or `lines.exchangeRate`)
-**When to use:** Only needed when currency conversion is required
-
-### 6. Flush Before Running
+### Flush Before Running (Parameter 6)
 **Options:** `true` or `false`
-**Purpose:** Forces the system to save all pending changes to database before running this flow
-**When to use:** Set to `true` if this flow depends on data from other flows that might not be saved yet
+**Purpose:** Writes the pending changes of the current save to the database before the amounts are read
+**When to use:** Set to `true` when the Apply When Query reads data that other flows of the same save have just changed
 
 ## The Sign of the Amount Decides the Direction
 
@@ -118,7 +132,8 @@ positive because the screen shows a tax percentage.
 - Stock Receipt documents  
 - Stock Transfer documents
 
-**Unless:** The global configuration option `EnablePresendRequestsForCostLedger` is enabled.
+**Unless:** The global configuration option **Enable PresendRequests For Cost Ledger** is ticked. Without it,
+saving an entity flow that applies this line to one of these documents is refused.
 
 **Why:** Stock documents have special cost calculation logic that conflicts with this flow's timing.
 

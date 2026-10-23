@@ -65,6 +65,8 @@ Both need the request **saved** first.
 | Raw-material prices by initial LC invoices (SYSR-LCD001) | Linking imported-material cost to the LC's initial invoices. |
 | Analysis of costly LCs (SYSR-LCD002) | The highest-cost LCs for comparison and analysis. |
 
+![Raw-material prices by initial LC invoices sample (SYSR-LCD001): each item on the LC's initial invoice with its quantity, price and value](../../ar/modules/accounting/images/reports/SYSR-LCD001-en.png)
+
 ## Banking or Import? — How It Differs from the Supply-Chain LC
 
 Nama has two letters of credit that share a name but serve different purposes:

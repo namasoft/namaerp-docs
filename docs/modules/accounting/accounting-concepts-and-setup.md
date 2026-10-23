@@ -39,6 +39,10 @@ The ledger is the heart of the setup. You'll find it under **Accounting → Sett
 
 The ledger also carries **default dimensions** (legal entity, branch, sector, department, analysis set) shown in the lower section of the screen, used as initial values when working on this ledger.
 
+The ledger prints on the **Ledger** form (`SYSF-ACC012`):
+
+![Ledger form (SYSF-ACC012)](../../ar/modules/accounting/images/forms/SYSF-ACC012-en.png)
+
 ::: warning Core fields can't be changed after use
 Once you link any **Legal Entity** to this ledger, the system blocks changing the **Main Currency**, **Chart Type**, or **Calendar**. These decisions shape every recorded balance, so changing them after go-live would corrupt the historical data. Plan them carefully before the first transaction — if you try to edit them after linking, you'll get a save-blocking message. The **Reporting Currency** is not locked, because nothing is recorded in it: you can set or change it after go-live.
 :::

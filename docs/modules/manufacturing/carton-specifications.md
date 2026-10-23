@@ -58,9 +58,7 @@ Similar to assembled cartons, but for complex separator configurations. An assem
 
 You define the assembled separator and link it to its small separator children. This type is less common - used mainly for intricate internal packaging systems.
 
-###
-
- Small Separator (نوع التصنيع: فاصل صغير)
+### Small Separator (نوع التصنيع: فاصل صغير)
 
 Small separators are individual components of an assembled separator. You typically don't order these directly - they're manufactured as part of the assembled separator parent.
 

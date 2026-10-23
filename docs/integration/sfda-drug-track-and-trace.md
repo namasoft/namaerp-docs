@@ -24,6 +24,8 @@ This is a Saudi pharmaceutical requirement, licensed separately under `supplycha
 
 **The report queue** carries each report to the Authority and keeps the evidence. You watch it from lists under *Administration*.
 
+![An SFDA RSD Configuration with one reporting warehouse and two operation rules](../ar/integration/images/sfda-rsd-configuration-en.png)
+
 ## Setting up the configuration
 
 ### Which Authority environment

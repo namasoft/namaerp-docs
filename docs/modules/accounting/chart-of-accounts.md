@@ -67,6 +67,10 @@ Its key fields:
 
 The **Accounts Chart** report (`SYSR-ACC001`) prints the full tree with its levels; you'll find it alongside the other core account reports on the [Account statements & trial balance](./reports-account-statements-and-trial-balance.md) page.
 
+An account category prints on the **Account Category** form (`SYSF-ACC009`), which lists its parent, class, natural side, cash flow type, equation type and report flags:
+
+![Account Category form (SYSF-ACC009)](../../ar/modules/accounting/images/forms/SYSF-ACC009-en.png)
+
 ## For Support
 
 - **"I can't record entries on a certain account"** — make sure the node is a **leaf** (doesn't carry the "Accepts Elements" flag); entries can't be recorded on grouping nodes.

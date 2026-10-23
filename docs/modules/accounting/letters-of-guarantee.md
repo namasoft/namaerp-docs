@@ -90,6 +90,8 @@ Both need the request **saved** first — an unsaved request has nothing for the
 |---|---|
 | Letter of Guarantee movements (SYSR-LGT001) | Each letter's movements: issue, amendments, closing, and covered/facility balances. |
 
+![Letter of Guarantee movements sample (SYSR-LGT001): each movement shows the letter's figures before (From) and after (To) it](../../ar/modules/accounting/images/reports/SYSR-LGT001-en.png)
+
 ## For Support
 
 - **"Couldn't issue the letter — limit exceeded"** — the reserved amount exceeds the linked facility limit; see [Credit Facilities](./credit-facilities.md).

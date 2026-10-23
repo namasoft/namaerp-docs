@@ -29,7 +29,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **اعتبار "تم النسخ من" بالسطور عند إلغاء وتحديث الحجز (Consider Origin Document In Lines With Cancel/Update Reservation)** `termConfig.considerOriginDocInLinesWithCancelOrUpdateReservation` — عند إلغاء أو تحديث الحجوزات، يعتبر مستند المصدر (بناءً على/"تم النسخ من") على مستوى السطر بدلًا من الاكتفاء بربط الرأس.
 
-**منع إلغاء الحجز (Prevent Cancel Reservation)** `termConfig.preventCancelReservation` — يمنع إلغاء الحجوزات من هذا المستند.
+**منع إلغاء الحجز (Prevent Cancel Reservation)** `termConfig.preventCancelReservation` — يرفض زر **إلغاء الحجز** اليدوي (قائمة المزيد) في مستندات هذا التوجيه، وكذلك مسار الكيان المجدول الذي يلغي الحجز باستعلام.
 
 **تحديث حجز المستندات المرتبطة (Update Reservation Of Related Docs)** `termConfig.updateReservationOfRelatedDocs` — عند الحفظ، يحدّث (يعيد حساب) كميات الحجز المحجوزة بواسطة المستندات المرتبطة/المصدر.
 
