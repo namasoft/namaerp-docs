@@ -15,7 +15,7 @@ entities: [SalesInvoice, SalesOrder, SalesQuotation, SalesQuotationRequest, Prof
 
 ليست كل عملية بيع تمر بكل هذه الخطوات (البيع النقدي يتخطى معظمها!)، لكن فهم المسار الكامل يساعدك على تصميم العملية الصحيحة لكل نوع بيع.
 
-![قائمة أوامر البيع في Nama ERP](images/sales/sales-order-list-ar.png)
+![قائمة أوامر البيع في نما](images/sales/sales-order-list-ar.png)
 
 ## قبل أن تبدأ الرحلة: ملف العميل
 
@@ -56,7 +56,7 @@ entities: [SalesInvoice, SalesOrder, SalesQuotation, SalesQuotationRequest, Prof
 
 يحمل الأمر كل ما في العرض، مضافًا إليه تفاصيل التنفيذ (تاريخ التسليم المطلوب، عنوان التسليم الذي قد يختلف عن عنوان الفوترة، طريقة الشحن)، وتخصيص المخزون (أي مخزن سينفّذ، وهل الأصناف متوفرة)، والشروط المالية (الأسعار النهائية، وشروط الدفع نقدًا أو آجلًا أو أقساطًا، والتحقق من حد الائتمان للعملاء الآجلين).
 
-![شاشة أمر البيع في Nama ERP](images/sales/sales-order-edit-ar.png)
+![شاشة أمر البيع في نما](images/sales/sales-order-edit-ar.png)
 
 ### الفاتورة المبدئية (ProformaSalesInvoice)
 

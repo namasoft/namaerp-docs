@@ -1,6 +1,6 @@
-# دليل تثبيت Nama ERP
+# دليل تثبيت نما
 
-**Nama ERP** هو تطبيق ويب مبني على Java يعمل على Apache Tomcat ويستخدم Microsoft SQL Server محركًا لقاعدة البيانات.
+**نما** هو تطبيق ويب مبني على Java يعمل على Apache Tomcat ويستخدم Microsoft SQL Server محركًا لقاعدة البيانات.
 
 ## متطلبات النظام
 
@@ -18,7 +18,7 @@
   [تنزيل 7-Zip](https://www.7-zip.org/download.html)
 * **Notepad++** (لعرض السجلات أو تحرير ملفات الإعداد)
   [تنزيل Notepad++](https://notepad-plus-plus.org/downloads/)
-* **مثبّت Nama ERP**
+* **مثبّت نما**
   [تنزيل المثبّت](https://namasoft.com/bin/installer/installer.zip)
 
 ## إعداد قاعدة البيانات
@@ -47,7 +47,7 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 
 ## استخدام المثبّت
 
-يوفر **مثبّت Nama ERP** واجهة رسومية بالميزات الرئيسية التالية:
+يوفر **مثبّت نما** واجهة رسومية بالميزات الرئيسية التالية:
 
 ### ميزات التثبيت الأساسية
 * إنشاء قاعدة البيانات ومستخدمي قاعدة البيانات
@@ -84,7 +84,7 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 
 ## قواعد البيانات المدعومة
 
-رغم أن SQL Server هو الافتراضي، قد تكون قواعد بيانات أخرى مدعومة. يرجى التواصل مع الدعم الفني لـ Nama ERP للتأكيد قبل استخدام بدائل أخرى.
+رغم أن SQL Server هو الافتراضي، قد تكون قواعد بيانات أخرى مدعومة. يرجى التواصل مع الدعم الفني لنما للتأكيد قبل استخدام بدائل أخرى.
 
 ---
 
@@ -93,7 +93,7 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 شاهد الشرح الكامل للتثبيت هنا:
 👉 [https://youtu.be/6UWe9GyZC20](https://youtu.be/6UWe9GyZC20)
 
-## التحقق من تثبيت Nama ERP
+## التحقق من تثبيت نما
 
 يعمل Apache Tomcat افتراضياً على المنفذ `8080`. إذا لم تغيّر المنفذ أثناء الإعداد، يمكنك التحقق من صحة التثبيت بزيارة:
 
@@ -110,13 +110,13 @@ http://localhost:8080/erp/
 
 ---
 
-## ترقية Nama ERP
+## ترقية نما
 
-يمكنك ترقية Nama ERP من **صفحة utils** داخل واجهة النظام. تتوفر طرق ترقية متعددة حسب إعدادك.
+يمكنك ترقية نما من **صفحة utils** داخل واجهة النظام. تتوفر طرق ترقية متعددة حسب إعدادك.
 
 ### الترقية اليدوية
 
-لترقية Nama ERP يدوياً:
+لترقية نما يدوياً:
 
 1. نزّل أداة الترقية:
    [https://namasoft.com/bin/upg-wget.jar](https://namasoft.com/bin/upg-wget.jar)
@@ -145,14 +145,14 @@ http://localhost:8080/erp/
           java -jar upg-wget.jar
           ```
 
-ستقوم هذه الأداة بتنزيل وتطبيق آخر تحديثات Nama ERP تلقائياً.
+ستقوم هذه الأداة بتنزيل وتطبيق آخر تحديثات نما تلقائياً.
 
 ### كيفية السماح بتنزيل الإصدارات من صفحة Utils؟
 
 لتمكين النظام من تنزيل التحديثات وتثبيتها من صفحة **utils** (أي دعم الترقية الذاتية)، يجب أن تعمل خدمة Tomcat تحت حساب **Local System Account**.
 
 ::: tip
-يُعدّ هذا الإعداد عادةً تلقائياً أثناء تثبيت Nama ERP. إذا توقفت الترقية التلقائية عن العمل، اتبع هذه الخطوات لاستعادتها
+يُعدّ هذا الإعداد عادةً تلقائياً أثناء تثبيت نما. إذا توقفت الترقية التلقائية عن العمل، اتبع هذه الخطوات لاستعادتها
 :::
 
 1. افتح **أداة إعداد خدمة Tomcat**:
@@ -212,7 +212,7 @@ Arguments = " -Dprint-process-output=true -jar \""+oFolder.path+"\\nama-installe
 * **Load From Tomcat** (Ctrl+L): يستورد الإعداد من تثبيت موجود
 
 ### العمليات المتقدمة
-* **Request Key**: طلب مفتاح ترخيص تلقائي من سيرفرات Nama مع متابعة الموافقة — انظر [الترخيص](/ar/getting-started/licensing)
+* **Request Key**: طلب مفتاح ترخيص تلقائي من سيرفرات نما مع متابعة الموافقة — انظر [الترخيص](/ar/getting-started/licensing)
 * **Install SSL**: يشغّل معالج تثبيت شهادة Let's Encrypt
 * **Migrate Tomcat**: ترقية من Tomcat 9 إلى Tomcat 10 مع الحفاظ على الإعداد
 * **DB Scripts**: يولّد سكريبتات إعداد قاعدة البيانات

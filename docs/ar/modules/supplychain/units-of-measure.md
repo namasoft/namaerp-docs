@@ -22,7 +22,7 @@ entities: [UOM, UOMGroup, UOMConversions, StandardMeasures, CalculationFormula, 
 
 ## تعريف وحدة
 
-![شاشة تعريف وحدة القياس في Nama ERP](images/uom/uom-edit-ar.png)
+![شاشة تعريف وحدة القياس في نما](images/uom/uom-edit-ar.png)
 
 شاشة **وحدة قياس** صغيرة عن قصد. فالوحدة كود واسم عربي واسم إنجليزي وحفنة من الإعدادات التي تحدد كيف يعامل النظام الأرقام المكتوبة بها.
 
@@ -60,7 +60,7 @@ entities: [UOM, UOMGroup, UOMConversions, StandardMeasures, CalculationFormula, 
 
 ## مجموعات الوحدات: تعريف المعدلات مرة واحدة لعائلة كاملة
 
-![شاشة مجموعة الوحدات في Nama ERP](images/uom/uom-group-ar.png)
+![شاشة مجموعة الوحدات في نما](images/uom/uom-group-ar.png)
 
 بالنسبة لتاجر جملة عنده ثلاثة آلاف صنف، ليس تعريف «1 كرتونة = 24 قطعة» ثلاثة آلاف مرة خطةً. وشاشة **مجموعة وحدات** هي الجواب: عائلة مسمّاة من الوحدات، ومعدلات التحويل بينها، ومجموعة من الافتراضيات المعقولة، يتبناها أي صنف بحقل واحد.
 
@@ -92,7 +92,7 @@ entities: [UOM, UOMGroup, UOMConversions, StandardMeasures, CalculationFormula, 
 
 ### الخطوة 3 — املأ تبويب الوحدات في بطاقة الصنف
 
-![تبويب الوحدات في بطاقة الصنف في Nama ERP](images/uom/item-units-tab-ar.png)
+![تبويب الوحدات في بطاقة الصنف في نما](images/uom/item-units-tab-ar.png)
 
 افتح الصنف واذهب إلى تبويب **الوحدات**. والمجموعة التي تملؤها هي **الوحدة الرئيسية**:
 
@@ -178,7 +178,7 @@ entities: [UOM, UOMGroup, UOMConversions, StandardMeasures, CalculationFormula, 
 
 ## شاشة تحويل الوحدات
 
-![شاشة تحويل الوحدات في Nama ERP](images/uom/uom-conversions-ar.png)
+![شاشة تحويل الوحدات في نما](images/uom/uom-conversions-ar.png)
 
 عند هذه النقطة تصير شاشة **تحويل وحدات** (المخازن ← الإعدادات ← تحويل وحدات) مفهومة. فهي القائمة الواحدة التي يُجمَّع فيها كل معدل عُرِّف في أي مكان آخر — سجل لكل وحدة، ولكل مجموعة، ولوحدات الصنف الرئيسية، ولوحداته الثانية — كلٌّ منها معلَّم في **نوع التحويل** بـ*قياسي* أو *مجموعة* أو *الوحدة الرئيسية لصنف* أو *الوحدة الثانية لصنف*، ويحمل في الملحوظات *Created By System*، ومسمّى بكود ما أنشأه.
 

@@ -10,7 +10,7 @@ entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize
 
 ## تصنيف صنف من 1 إلى 10: الخانات العشر
 
-![شاشة تصنيف الصنف 1 في Nama ERP](images/item-classification/item-class1-ar.png)
+![شاشة تصنيف الصنف 1 في نما](images/item-classification/item-class1-ar.png)
 
 **تصنيف صنف 1** حتى **تصنيف صنف 10** (المخازن ← الملفات ← تصنيف صنف 1 … تصنيف صنف 10) هي آلية التصنيف الأساسية. عشر خانات مستقلة فارغة، وأنت من يقرر معنى كل واحدة منها.
 
@@ -32,7 +32,7 @@ entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize
 
 ## القسم والماركة
 
-![قائمة ماركات الأصناف في Nama ERP](images/item-classification/item-brand-list-ar.png)
+![قائمة ماركات الأصناف في نما](images/item-classification/item-brand-list-ar.png)
 
 ملفا تصنيف آخران يقفان خارج الخانات المرقّمة لأن لهما معنى ثابتًا.
 
@@ -42,7 +42,7 @@ entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize
 
 ## الألوان والمقاسات
 
-بعض الأصناف ليست شيئًا واحدًا. فالقميص قميص بثمانية ألوان وخمسة مقاسات، ولا تريد أربعين بطاقة صنف له. وفي Nama ERP يمكن للصنف الواحد أن يحمل اللون والمقاس كـ**محددات**: صنف واحد، تُتابَع الأرصدة والتكاليف والأسعار فيه لكل تركيبة لون ومقاس.
+بعض الأصناف ليست شيئًا واحدًا. فالقميص قميص بثمانية ألوان وخمسة مقاسات، ولا تريد أربعين بطاقة صنف له. وفي نما يمكن للصنف الواحد أن يحمل اللون والمقاس كـ**محددات**: صنف واحد، تُتابَع الأرصدة والتكاليف والأسعار فيه لكل تركيبة لون ومقاس.
 
 وتدعم ذلك أربعة ملفات رئيسية:
 
@@ -73,7 +73,7 @@ entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize
 
 ## بيع تشكيلة كوحدة واحدة (Item Assortment)
 
-![شاشة تشكيلة الألوان والمقاسات في Nama ERP](images/item-classification/item-assortment-ar.png)
+![شاشة تشكيلة الألوان والمقاسات في نما](images/item-classification/item-assortment-ar.png)
 
 التشكيلة خليط مُعبأ مسبقًا يُباع كوحدة واحدة. فكرتونة قمصان تضم مقاسين صغيرين وثلاثة متوسطة وواحدًا كبيرًا هي شيء واحد بالنسبة للعميل ولقائمة الأسعار، لكنها ستة أثواب بالنسبة للمخزن.
 

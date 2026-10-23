@@ -25,7 +25,7 @@ entities: [PurchasePriceList, VendorDiscount, InvoiceClassification]
 
 ## قائمة أسعار المشتريات (Purchase Price List)
 
-![شاشة قائمة أسعار المشتريات في Nama ERP](images/pricing/purchase-price-list-ar.png)
+![شاشة قائمة أسعار المشتريات في نما](images/pricing/purchase-price-list-ar.png)
 
 شاشة **قائمة أسعار المشتريات** (المشتريات ← الملفات ← قائمة أسعار المشتريات) هي توأم قائمة أسعار البيع من جهة الموردين: مجموعة مؤرَّخة ومرتَّبة بالأولوية من أسعار الشراء المتفق عليها. وعمليًا كل قائمة هي اتفاق واحد — الكتالوج الذي أرسله المورد لهذا الموسم، أو المناقصة التي رسَت عليك، أو أسعار ناقل بضائع لسنة كاملة.
 
@@ -85,7 +85,7 @@ entities: [PurchasePriceList, VendorDiscount, InvoiceClassification]
 
 ### ملء السطور دون كتابتها
 
-![تبويب تجميع الأصناف في قائمة أسعار المشتريات في Nama ERP](images/pricing/purchase-price-list-collect-items-ar.png)
+![تبويب تجميع الأصناف في قائمة أسعار المشتريات في نما](images/pricing/purchase-price-list-collect-items-ar.png)
 
 على الشاشة أربع أدوات، تغطي بينها معظم الطرق التي تُبنى بها القائمة فعلًا.
 
@@ -107,7 +107,7 @@ entities: [PurchasePriceList, VendorDiscount, InvoiceClassification]
 
 ## خصومات المورد (Vendor Discount)
 
-![شاشة خصومات المورد في Nama ERP](images/pricing/vendor-discount-ar.png)
+![شاشة خصومات المورد في نما](images/pricing/vendor-discount-ar.png)
 
 تسجّل شاشة **خصومات مورد** (المشتريات ← الملفات ← خصومات مورد) النصف الآخر من الاتفاق مع المورد: لا السعر، بل ما يُقتطع منه. وكل سجل هو ترتيب خصومات مورد واحد، وحقلا **مورد** و**ترتيب الأهمية** فيه إجباريان معًا.
 

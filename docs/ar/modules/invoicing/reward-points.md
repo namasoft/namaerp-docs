@@ -86,7 +86,7 @@ openssl req -newkey rsa:2048 -nodes \
 
 أرسل ملف `.csr` فقط إلى STC. ستعالجه وترسل لك ملف شهادة موقّعة.
 
-#### الخطوة الثالثة: الإعداد في نظام Nama ERP
+#### الخطوة الثالثة: الإعداد في نظام نما
 
 1. افتح شاشة **Reward Points Config**
 2. ارفع ملف الشهادة (المستلم من STC) في حقل **Certificate** - يُسمى الملف عادةً `qitaf-{YourPartnerID}-{SomeSerialNumber}.pem.txt`

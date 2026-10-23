@@ -120,7 +120,7 @@ entities: [SIPurchaseOrder, SIProformaPurchaseInvoice]
 يعرض رسالة، فإن بدا أن شيئاً لم يحدث فافحص التوجيه أولاً.
 
 وتذكّر الشرط المذكور في
-[إدارة معارض السيارات في Nama](/ar/modules/servicecenter/cars-setup/servicecenter-cars-overview.md):
+[إدارة معارض السيارات في نما](/ar/modules/servicecenter/cars-setup/servicecenter-cars-overview.md):
 **لا تعرض أي من هاتين الشاشتين عمود رقم هيكل في التركيب الافتراضي.** فالأمر والفاتورة المبدئية
 يعرضان منتقي **السياره (Customer Car)** فقط، فلا موضع لكتابة رقم الهيكل الذي يُفترض أن يقرأه روتين
 الإنشاء. أضف أعمدة خصائص السيارة بتعديل شاشة أولاً.

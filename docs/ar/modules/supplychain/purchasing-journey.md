@@ -17,7 +17,7 @@ entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, Purch
 
 ليس كل عملية شراء تمر بكل خطوة (أحيانًا تقفز مباشرةً إلى أمر الشراء)، لكن فهم المسار الكامل يساعدك على اختيار المستوى المناسب من الإجراءات لكل حالة.
 
-![قائمة أوامر الشراء في Nama ERP](images/purchasing/purchase-order-list-ar.png)
+![قائمة أوامر الشراء في نما](images/purchasing/purchase-order-list-ar.png)
 
 ## الخطوة الأولى: تحديد الحاجة
 
@@ -62,7 +62,7 @@ entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, Purch
 
 ما الذي يجعله رسميًا؟ إنه التزام بين الطرفين، يحدّد الأصناف والكميات، والأسعار المتفق عليها، وشروط التسليم (أين ومتى)، وشروط الدفع (متى وكيف)، ورقم أمر يكون مرجعًا لك وللمورد. ويتضمن بياناتك (الشركة، عنوان التسليم، عنوان الفوترة، جهة الاتصال)، وبيانات المورد، وسطور الأصناف بأوصافها وكمياتها ووحداتها وأسعارها، والشروط (تاريخ وموقع التسليم، طريقة الشحن، العملة، معالجة الضرائب)، والإجماليات (الإجمالي الفرعي، الخصومات، الضرائب، الإجمالي الكلي).
 
-![شاشة أمر الشراء في Nama ERP](images/purchasing/purchase-order-edit-ar.png)
+![شاشة أمر الشراء في نما](images/purchasing/purchase-order-edit-ar.png)
 
 ### البديل المبدئي (ProformaPurchaseInvoice)
 

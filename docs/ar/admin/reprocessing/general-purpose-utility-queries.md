@@ -163,7 +163,7 @@ delete from FifoCostTrans where requestId is null
 
 ```
 :::
-## جلب جهات الاتصال من Nama لدفتر عناوين Grandstream LDAP UCM
+## جلب جهات الاتصال من نما لدفتر عناوين Grandstream LDAP UCM
 ::: details
 ```sql
 /*First Name	Last Name	Account Number	CallerID Name	Email	Department	Mobile Number 	Home Number	Fax	Phonebook DN*/

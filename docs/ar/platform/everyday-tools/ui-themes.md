@@ -14,7 +14,7 @@ menu: إدارة النظام ← تخصيص شكل النظام ← New GUI The
 
 يعرض هذا الفيديو القصير (دقيقتان) الثيمات الثلاثة عشر كلها، كلاً منها بالوضعين الفاتح والداكن وباللغتين العربية والإنجليزية:
 
-<iframe style="width:100%;max-width:800px;aspect-ratio:16/9;border:0" src="https://www.youtube.com/embed/4R_-jWcGN8k" title="ثيمات نما ERP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe style="width:100%;max-width:800px;aspect-ratio:16/9;border:0" src="https://www.youtube.com/embed/4R_-jWcGN8k" title="ثيمات نما" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## اختيار الثيم
 

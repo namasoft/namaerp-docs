@@ -25,7 +25,7 @@ entities: [CustomersReqsShortageDoc, SalesReplacementReq, ReservationCancellatio
 
 ### مستند نواقص طلبات العملاء (Customers Requests Shortage Document)
 
-![شاشة مستند نواقص طلبات العملاء في Nama ERP](images/sales-ops/customers-requests-shortage-ar.png)
+![شاشة مستند نواقص طلبات العملاء في نما](images/sales-ops/customers-requests-shortage-ar.png)
 
 البائع على الهاتف. العميل يريد اثنتي عشرة وحدة والمتاح أربع. الأربع تُفوتر، والثماني غير الموجودة هي الجزء المثير للاهتمام — فهي طلب حقيقي، باسم عميل وبتاريخ، وفي معظم الشركات يتبخر لحظة انتهاء المكالمة.
 
@@ -84,7 +84,7 @@ entities: [CustomersReqsShortageDoc, SalesReplacementReq, ReservationCancellatio
 
 ### سند تحديث مندوب المبيعات (Sales Man Update Document)
 
-![شاشة سند تحديث مندوب المبيعات في Nama ERP](images/sales-ops/salesman-update-document-ar.png)
+![شاشة سند تحديث مندوب المبيعات في نما](images/sales-ops/salesman-update-document-ar.png)
 
 مندوب يستقيل. منطقة تُقسَّم بين شخصين. حساب متنامٍ يُسلَّم إلى مسؤول حسابات كبرى. وفي كل حالة يجب أن يتغير الحقلان نفسهما في ملف العميل — **مندوب المبيعات** و**المسئول عن العميل** — عبر ما بين ثلاثة عملاء وثلاثمائة.
 
@@ -119,7 +119,7 @@ entities: [CustomersReqsShortageDoc, SalesReplacementReq, ReservationCancellatio
 
 ### تحديد كميات الصنف للعميل (Limit Sales Qty)
 
-![شاشة تحديد كميات الصنف للعميل في Nama ERP](images/sales-ops/limit-sales-qty-ar.png)
+![شاشة تحديد كميات الصنف للعميل في نما](images/sales-ops/limit-sales-qty-ar.png)
 
 بعض الأشياء لا تُباع بحرية: منتج مدعوم بحصة شهرية لكل عميل، أو صنف مقيَّد، أو صنف في عرض ترويجي يجب ألا يستأثر به عميل واحد. و**تحديد كميات الصنف للعميل** هو الملف الرئيسي الذي يعبّر عن هذه الحدود، والنظام هو من يفرضها نيابة عنك عند حفظ فاتورة المبيعات.
 
@@ -148,7 +148,7 @@ entities: [CustomersReqsShortageDoc, SalesReplacementReq, ReservationCancellatio
 
 ### تعديل الخصومات (Discount Update)
 
-![شاشة مستند تعديل الخصومات في Nama ERP](images/sales-ops/discount-update-ar.png)
+![شاشة مستند تعديل الخصومات في نما](images/sales-ops/discount-update-ar.png)
 
 انتهى الربع، وحُفظت فواتير الشراء، والمورد يمنحك الآن 3% مرتجعة على ماركة واحدة على كل ما اشتريته منه منذ يناير. وتعديل تلك الفواتير يدويًا ليس خيارًا حقيقيًا: فخصومات الشراء تغذّي تكلفة الصنف، والتكلفة تغذّي كل ما بعدها.
 

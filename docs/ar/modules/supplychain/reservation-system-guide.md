@@ -12,7 +12,7 @@ menu: المخازن ← سندات الحجوزات ← سند حجز
 
 **مسار القائمة:** المخازن > سندات الحجوزات > سند حجز
 
-![شاشة سند الحجز في نما ERP](images/reservation/reservation-document-ar.png)
+![شاشة سند الحجز في نما](images/reservation/reservation-document-ar.png)
 
 ::: tip أين يظهر الحجز في رحلتك
 الحجز جزء من [رحلة المبيعات](./sales-journey.md) (حجز المخزون لأمر العميل) ويمهّد لـ[التسليم والتحميل](./delivery-and-loading.md). ولتجاهل مخازن/مواقع معينة في التحقق من كمية الحجز بالتاريخ، راجع [الدليل المخصص لذلك](./ignore-reservation-qty-check-by-date.md).

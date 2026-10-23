@@ -9,7 +9,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ## لماذا تتشابه كل الشاشات
 
-![شاشة فاتورة المبيعات في Nama ERP](images/document-screen/sales-invoice-screen-ar.png)
+![شاشة فاتورة المبيعات في نما](images/document-screen/sales-invoice-screen-ar.png)
 
 لا يبني نظام نما كل نوع مستند من الصفر. فمستند سلسلة التوريد له دائمًا الشكل نفسه في العمق: **رأس** يقول من ومتى وبأي عملة وتحت أي قواعد؛ و**جدول سطور** يقول ماذا وكم؛ ومجموعة **محددات** تقول لأي جزء من المنشأة ينتمي هذا؛ و**كتلة إجماليات** تجمع كل ذلك. وما يتغير بين فاتورة مبيعات وتحويل مخزني هو أيٌّ من هذه الأجزاء مُفعَّل وماذا تُسمّى الحقول.
 
@@ -17,7 +17,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ## الرأس: من، ومتى، وتحت أي قواعد (The Header)
 
-![كتلة رأس فاتورة المبيعات في Nama ERP](images/document-screen/sales-invoice-header-ar.png)
+![كتلة رأس فاتورة المبيعات في نما](images/document-screen/sales-invoice-header-ar.png)
 
 الرأس هو الكتلة العليا من تبويب **الرئيسية**. وهو صغير، ويكاد كل حقل فيه يغيّر شيئًا أسفل الشاشة.
 
@@ -90,7 +90,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ## جدول السطور (The Details Grid)
 
-![جدول سطور فاتورة المبيعات في Nama ERP](images/document-screen/sales-invoice-lines-grid-ar.png)
+![جدول سطور فاتورة المبيعات في نما](images/document-screen/sales-invoice-lines-grid-ar.png)
 
 جدول **التفاصيل** هو حيث يقول المستند عمّا يدور فعلًا. وهو عريض — أعرض من الشاشة — وتقع أعمدته في أربع مجموعات.
 
@@ -209,7 +209,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ### كتلة الإجماليات
 
-![كتلة إجماليات فاتورة المبيعات في Nama ERP](images/document-screen/sales-invoice-totals-ar.png)
+![كتلة إجماليات فاتورة المبيعات في نما](images/document-screen/sales-invoice-totals-ar.png)
 
 أسفل الجدول تجلس الأموال. وهي تُقرأ نزولًا كعملية حسابية لا كقائمة:
 
@@ -237,7 +237,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ## تجميع وتطبيق: نصفا عمل واحد (Collect & Apply)
 
-![جدول السندات المخزنية مع زري تجميع وتطبيق في Nama ERP](images/document-screen/sales-invoice-stock-documents-ar.png)
+![جدول السندات المخزنية مع زري تجميع وتطبيق في نما](images/document-screen/sales-invoice-stock-documents-ar.png)
 
 هذا أكثر زرَّين في الشاشة كلها صلةً بالدعم، وأشيع سوء فهم أنهما طريقتان لفعل الشيء نفسه. وليسا كذلك. بل هما خطوتان متتاليتان، والضغط على واحد منهما فقط يترك العمل نصفه.
 
@@ -315,7 +315,7 @@ entities: [SalesInvoice, PurchaseInvoice]
 
 ## أين تختلف فاتورة المشتريات (Purchase Invoice)
 
-![شاشة فاتورة المشتريات في Nama ERP](images/document-screen/purchase-invoice-screen-ar.png)
+![شاشة فاتورة المشتريات في نما](images/document-screen/purchase-invoice-screen-ar.png)
 
 كل ما سبق يصدق على فاتورة المشتريات. وما يلي هو القائمة القصيرة لما ليس مثلها.
 

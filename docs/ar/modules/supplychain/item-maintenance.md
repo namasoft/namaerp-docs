@@ -10,7 +10,7 @@ entities: [InvItemOpiningRequest, MultiItemCreator, ItemConfigurations, InvItemU
 
 ## طلب فتح صنف جديد (Item Opening Request)
 
-![شاشة طلب فتح صنف في Nama ERP](images/item-maintenance/item-opening-request-ar.png)
+![شاشة طلب فتح صنف في نما](images/item-maintenance/item-opening-request-ar.png)
 
 في شركة صغيرة، ينشئ أي شخص يحتاج صنفًا جديدًا الصنفَ بنفسه. أما في شركة أكبر فسرعان ما يتحول ذلك إلى فوضى: ثلاثة أشخاص ينشئون ثلاثة أصناف شبه متطابقة، ولا أحد يتفق على أسلوب الترميز، ويكتشف فريق الحسابات الفوضى بعد شهر.
 
@@ -28,7 +28,7 @@ entities: [InvItemOpiningRequest, MultiItemCreator, ItemConfigurations, InvItemU
 
 ## فتح عدة أصناف دفعة واحدة (Multiple Item Creator)
 
-![شاشة إنشاء أصناف متعددة في Nama ERP](images/item-maintenance/multi-item-creator-ar.png)
+![شاشة إنشاء أصناف متعددة في نما](images/item-maintenance/multi-item-creator-ar.png)
 
 بعض الأصناف لا تصل واحدًا تلو الآخر. فمستورد ملابس يفتح موسمًا جديدًا يحتاج القميص نفسه بأربعة تصنيفات من القماش وثلاثة من القَصّة. وموزّع يتسلّم كتالوج مورد يحتاج ستين صنفًا لا تختلف إلا في سمة واحدة.
 
@@ -42,7 +42,7 @@ entities: [InvItemOpiningRequest, MultiItemCreator, ItemConfigurations, InvItemU
 
 ## تحديد طريقة متابعة الصنف (Item Configurations)
 
-![شاشة إعدادات الصنف في Nama ERP](images/item-maintenance/item-configurations-ar.png)
+![شاشة إعدادات الصنف في نما](images/item-maintenance/item-configurations-ar.png)
 
 من بين كل الشاشات في هذه الصفحة، **إعدادات صنف** (المخازن ← الإعدادات ← إعدادات صنف) هي الأوسع أثرًا. فهي ملف تعريف مُسمّى وقابل لإعادة الاستخدام، يجيب عن سؤال كنت ستضطر للإجابة عنه لكل صنف على حدة: **ما التفاصيل التي يجب تسجيلها عند حركة هذا المخزون، وما الذي يُتابَع مقابلها؟**
 
@@ -75,7 +75,7 @@ entities: [InvItemOpiningRequest, MultiItemCreator, ItemConfigurations, InvItemU
 
 ## تعديل سياسة التخزين لاحقًا (Item Update)
 
-![شاشة مستند تحديث بيانات الصنف في Nama ERP](images/item-maintenance/item-update-ar.png)
+![شاشة مستند تحديث بيانات الصنف في نما](images/item-maintenance/item-update-ar.png)
 
 توجد شاشة **تحديث بيانات صنف** (المخازن ← الملفات ← تحديث بيانات صنف) لأن حدود المخزون الدنيا والقصوى لا تُضبط مرة واحدة ثم تُنسى. فهي تتغير مع الموسم، ومع فترة توريد المورد، ومع إعادة تنظيم مخزن.
 
@@ -140,7 +140,7 @@ entities: [InvItemOpiningRequest, MultiItemCreator, ItemConfigurations, InvItemU
 
 ## إخبار المخزن بمكان الصنف (Item Storage Allocation)
 
-![شاشة تحديد تخزين الأصناف في Nama ERP](images/item-maintenance/item-storage-allocation-ar.png)
+![شاشة تحديد تخزين الأصناف في نما](images/item-maintenance/item-storage-allocation-ar.png)
 
 تجيب الشاشة الأخيرة عن سؤال لا يطرحه أحد حتى يكبر المخزن: حين يصل هذا الصنف، أين ينبغي وضعه؟
 

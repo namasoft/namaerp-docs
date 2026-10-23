@@ -28,11 +28,11 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 ### مميزات التطبيق
 
 * لا يحتاج إلى static IP في كل الفروع التي تحتوي على ماكينات.
-* لكن يجب وجود static IP أو أي طريقة تسمح للتطبيق بالوصول إلى خادم Nama ERP الرئيسي.
+* لكن يجب وجود static IP أو أي طريقة تسمح للتطبيق بالوصول إلى خادم نما الرئيسي.
 
 ### خطوات التشغيل
 
-* قم بإنشاء ملف API Credentials في نظام Nama ERP واحتفظ بـ **Client ID** و **Client Secret**.
+* قم بإنشاء ملف API Credentials في نظام نما واحتفظ بـ **Client ID** و **Client Secret**.
 
 * قم بإنشاء ملف "إعدادات ماكينة الحضور" جديد، وحدد له:
 
@@ -130,7 +130,7 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 
 7. ستظهر لك صفحة تطلب منك إدخال البيانات التالية:
 
-  * **Nama Server Address**: أدخل عنوان خادم Nama.
+  * **Nama Server Address**: أدخل عنوان خادم نما.
   * **Client Id and Client Secret**: أدخل بيانات الاتصال التي أنشأتها سابقًا.
   * **Attendance Machine Config Code**: أدخل كود الماكينة الذي حددته عند إنشاء الإعدادات.
 
@@ -147,7 +147,7 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 
 من خلال إعدادات **Database Options**، يتم التأكد من ضبط البرنامج للعمل على **SQL Server**.
 
-### إذا كان البرنامج مثبتًا على نفس خادم Nama ERP:
+### إذا كان البرنامج مثبتًا على نفس خادم نما:
 
 في هذه الحالة، تكون قاعدة بيانات برنامج ZK على نفس قاعدة بيانات SQL Server الخاصة بنظام نما، وبالتالي يكون الاتصال بين النظامين مباشرًا ولا يحتاج إلى إعدادات متقدمة.
 
@@ -157,7 +157,7 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 
 * احصل على **IP Address** أو اسم الكمبيوتر الذي توجد عليه قاعدة البيانات الخاصة بماكينة الحضور.
 * أنشئ مستخدمًا جديدًا في SQL Server الخاص بماكينة الحضور، بصلاحيات مناسبة، مثلاً: `Nama`.
-* على خادم Nama ERP، أنشئ **Linked Server** جديدًا، كما يلي:
+* على خادم نما، أنشئ **Linked Server** جديدًا، كما يلي:
 
 ![SQL Server Linked-Server Example](images/attendance-machine-integration-linked-server.png)
 

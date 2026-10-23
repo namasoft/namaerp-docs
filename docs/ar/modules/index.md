@@ -2,9 +2,9 @@
 # Handcrafted modules landing — GenNamaDocsIndex skips this file because of the
 # .custom-index marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 layout: home
-title: وحدات Nama ERP
+title: وحدات نما
 hero:
-  name: وحدات Nama ERP
+  name: وحدات نما
   text: أدلة الوحدات
   tagline: استكشف دليل كل وحدة من وحدات نظام نما — من المحاسبة والمخازن إلى التصنيع والموارد البشرية والمستشفيات
   image:

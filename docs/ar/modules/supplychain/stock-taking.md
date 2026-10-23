@@ -17,11 +17,11 @@ entities: [StartStockTaking, EndStockTaking, StockTakingDetails, StockTakingElec
 
 الجرد يكشف هذه الفروق ويعيد مطابقة الرصيد الدفتري مع الواقع، فتبقى قراراتك (الشراء، البيع، التسعير) مبنية على أرقام صحيحة.
 
-![قائمة مستندات بدء الجرد في Nama ERP](images/stock-taking/start-stock-taking-list-ar.png)
+![قائمة مستندات بدء الجرد في نما](images/stock-taking/start-stock-taking-list-ar.png)
 
 ## دورة الجرد: البداية والنهاية
 
-يُبنى الجرد في Nama ERP على مستندَين متلازمَين يحدّدان نافذة العد:
+يُبنى الجرد في نما على مستندَين متلازمَين يحدّدان نافذة العد:
 
 ### بدء الجرد (StartStockTaking)
 
@@ -38,7 +38,7 @@ entities: [StartStockTaking, EndStockTaking, StockTakingDetails, StockTakingElec
 بين بدء الجرد وإنهائه توجد نافذة يجري فيها العد. كلما قصرت هذه النافذة قلّت حركة المخزون أثناء العد وزادت دقة المطابقة. للمخازن الكبيرة، الجرد الدوري المتكرر على نطاقات أصغر أدق من جرد سنوي واحد ضخم.
 :::
 
-![شاشة إنهاء الجرد في Nama ERP](images/stock-taking/end-stock-taking-ar.png)
+![شاشة إنهاء الجرد في نما](images/stock-taking/end-stock-taking-ar.png)
 
 ## إدخال نتائج العد
 

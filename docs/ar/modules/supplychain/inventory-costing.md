@@ -35,7 +35,7 @@ entities: [ReceiptAdditionalCost, CostRevaluation, FinishedProductPricing, Froze
 
 سعر الصنف عند المورّد ليس كل تكلفته الحقيقية. هناك الشحن، والتأمين، والجمارك، والتخليص، والعمولات. **مستند التكلفة الإضافية** يوزّع هذه المصاريف على أصناف التوريد لتصل إلى **التكلفة الواصلة (Landed Cost)** الحقيقية.
 
-![شاشة التكلفة الإضافية في Nama ERP](images/inventory-costing/additional-cost-ar.png)
+![شاشة التكلفة الإضافية في نما](images/inventory-costing/additional-cost-ar.png)
 
 ### كيف يعمل
 
@@ -51,7 +51,7 @@ entities: [ReceiptAdditionalCost, CostRevaluation, FinishedProductPricing, Froze
 
 أحيانًا تكون الكمية صحيحة لكن **القيمة** تحتاج تعديلًا. **مستند إعادة تقييم التكلفة** يغيّر تكلفة الأصناف دون تغيير كمياتها - لا حركة فعلية، أثر محاسبي فقط.
 
-![شاشة إعادة تقييم التكلفة في Nama ERP](images/inventory-costing/cost-revaluation-ar.png)
+![شاشة إعادة تقييم التكلفة في نما](images/inventory-costing/cost-revaluation-ar.png)
 
 حالات الاستخدام:
 - **انخفاض القيمة السوقية**: إلكترونيات اشتُريت بسعر مرتفع ثم صدر طراز أحدث، فتُخفَّض قيمتها لتطابق السوق (التقييم بالأقل من التكلفة أو السوق).

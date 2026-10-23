@@ -17,7 +17,7 @@ entities: [QualityControlDoc, QualityControlReq, QualityAssuranceDoc, QualityAss
 
 ## مستندات ضبط الجودة (QualityControlDoc)
 
-![شاشة مستند ضبط الجودة في Nama ERP](images/quality/quality-control-doc-ar.png)
+![شاشة مستند ضبط الجودة في نما](images/quality/quality-control-doc-ar.png)
 
 يبدأ المسار بـ**طلب ضبط الجودة** (QualityControlReq) الذي يحدّد معايير الفحص ومستوياته، ثم يُنفَّذ عبر **مستند ضبط الجودة** (QualityControlDoc) الذي يسجّل نتائج الفحص (نجاح/رسوب/إعادة عمل)، ويرتبط بالطلب، ويدعم التسلسل بين فحوصات متعددة المراحل (مستند سابق ولاحق) لضمان استمرارية التتبع.
 
@@ -38,7 +38,7 @@ entities: [QualityControlDoc, QualityControlReq, QualityAssuranceDoc, QualityAss
 
 ## التكامل مع الاستلام والإنتاج
 
-![شاشة قائمة الفحص في Nama ERP](images/quality/quality-checklist-ar.png)
+![شاشة قائمة الفحص في نما](images/quality/quality-checklist-ar.png)
 
 ضبط الجودة ليس معزولًا، بل خطوة ضمن مسارات أكبر:
 

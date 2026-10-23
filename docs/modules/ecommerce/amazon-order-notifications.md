@@ -119,6 +119,8 @@ Open your Amazon **e-commerce site** record (`MAGMagentoSite`) and fill in:
 If you click **Register Webhooks** again, Nama reuses the destination already registered for your queue instead of creating duplicates, so you won't end up with stray subscriptions.
 :::
 
+![The Amazon tab of a Magento Site, with the AWS keys, the Order Status Field Id and the Register Webhooks button](../../ar/modules/ecommerce/images/amazon-site-tab-en.png)
+
 ---
 
 ## Part 3 — Schedule the polling task

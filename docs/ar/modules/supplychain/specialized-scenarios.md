@@ -10,7 +10,7 @@ entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, O
 
 لقطاع تصنيع الزجاج وما يشبهه من تصنيع قائم على العمليات، يوفّر النظام مسار **أوامر عمل الزجاج** المتخصص: من تقدير الطلب إلى التنفيذ التشغيلي إلى التسليم.
 
-![شاشة أمر عمل الزجاج في Nama ERP](images/specialized/glass-job-order-ar.png)
+![شاشة أمر عمل الزجاج في نما](images/specialized/glass-job-order-ar.png)
 
 يبدأ المسار بـ**طلب أمر العمل** (GlassJobOrderReq) لدراسة التكلفة وعرض السعر، ثم يتحوّل إلى **أمر عمل الزجاج** (GlassJobOrder) الذي يحمل قائمة المواد والعمليات وأصناف التسليم. وتُعرّف العمليات عبر **خريطة العمليات** (GlassOperationMap)، وتُسجَّل التنفيذات عبر **تنفيذ العملية** (OrderExecution) التي تتتبع الموظف المسؤول والوقت والتكلفة الفعلية وتولّد صرف المواد. وتُحدَّث الحالة عبر **تحديث حالة أمر العمل** (GlassJobOrderStatusUpdate)، ويُسلَّم الناتج عبر **تسليم الأمر** (OrderDelivery) و**إنهاء الأمر** (OrderFinished). كما يدعم المسار التعاقد الخارجي عبر **طلب/صرف/استلام التعهيد** (OutsourceRequest / OutsourceIssue / OutsourceReceipt)، وتوثيق التلف عبر **تلف الأمر** (OrderDamage)، والمصاريف عبر **مصروف أمر العمل** (JOrderExpense).
 

@@ -2,9 +2,9 @@
 entities: [WhatsAppMessageConfiguration, WhatsAppMessage]
 ---
 
-# إعداد الرسائل القصيرة (SMS) و WhatsApp في نظام نما ERP
+# إعداد الرسائل القصيرة (SMS) و WhatsApp في نظام نما
 
-يدعم نظام نما ERP إرسال الرسائل عبر SMS و WhatsApp إلى المستخدمين والعملاء والموردين وغيرهم.
+يدعم نظام نما إرسال الرسائل عبر SMS و WhatsApp إلى المستخدمين والعملاء والموردين وغيرهم.
 لتفعيل هذه الميزة، قم بتهيئة الإعدادات المناسبة من شاشة **الإعدادات العامة** (Global Configuration).
 
 ## قائمتا المزودين
@@ -83,7 +83,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 واملأ **Success Indicator** بكلمة يحتويها رد المزود حين يقبل الرسالة؛ فإن تُرك فارغًا عُدّ كل رد يحتوي كلمة `error` فشلًا.
 
 ::: tip
-✅ بعد حفظ الإعدادات، سيتمكن نظام نما ERP من إرسال الإشعارات والرسائل عبر المزود المحدد. تأكد من صحة بيانات الاعتماد ومعرّفات المرسل مع مزود الخدمة.
+✅ بعد حفظ الإعدادات، سيتمكن نظام نما من إرسال الإشعارات والرسائل عبر المزود المحدد. تأكد من صحة بيانات الاعتماد ومعرّفات المرسل مع مزود الخدمة.
 :::
 
 ---
@@ -111,19 +111,19 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
   * انتقل إلى [صفحة API Tokens](https://waapi.app/user/api-tokens)
   * أدخل اسمًا مناسبًا، ثم اضغط "Create"
-  * سيتم عرض الـ Token في نافذة منبثقة — انسخه وضعه في حقل **كلمة المرور** في إعدادات Nama
+  * سيتم عرض الـ Token في نافذة منبثقة — انسخه وضعه في حقل **كلمة المرور** في إعدادات نما
     ![شاشة رمز التوكن](images/waapi-token.png)
 
 3. **الحصول على Instance ID**
 
   * انتقل إلى [صفحة Instances](https://waapi.app/account/instances)
   * انسخ **معرّف الـ Instance**
-  * ضعه في حقل **اسم المستخدم** أو **الإعدادات الأخرى** في إعدادات الرسائل القصيرة في Nama
+  * ضعه في حقل **اسم المستخدم** أو **الإعدادات الأخرى** في إعدادات الرسائل القصيرة في نما
     ![شاشة معرف الـ Instance](images/waapi-instance-id.png)
 
 ---
 
-### إعدادات Nama ERP
+### إعدادات نما
 
 في شاشة إعدادات الرسائل:
 
@@ -135,7 +135,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
 ## التكامل مع WhatsApp باستخدام ultramsg.com
 
-لإرسال رسائل WhatsApp من نظام نما ERP باستخدام [ultramsg.com](https://ultramsg.com)، اتبع الخطوات التالية:
+لإرسال رسائل WhatsApp من نظام نما باستخدام [ultramsg.com](https://ultramsg.com)، اتبع الخطوات التالية:
 
 ### الخطوة 1: إنشاء وربط الـ Instance
 
@@ -171,7 +171,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
 ## تكامل WhatsApp عبر WaPilot
 
-لتفعيل إرسال رسائل WhatsApp من نظام Nama ERP باستخدام [wapilot.net](https://wapilot.net)، اتبع الخطوات التالية:
+لتفعيل إرسال رسائل WhatsApp من نظام نما باستخدام [wapilot.net](https://wapilot.net)، اتبع الخطوات التالية:
 
 ---
 
@@ -193,7 +193,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
 ---
 
-### إعدادات Nama ERP
+### إعدادات نما
 
 في شاشة إعدادات رسائل الواتساب:
 
@@ -209,7 +209,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
 ## تكامل WhatsApp عبر WasenderAPI
 
-لإرسال رسائل WhatsApp من نظام Nama ERP باستخدام [wasenderapi.com](https://wasenderapi.com)، اتبع الخطوات التالية:
+لإرسال رسائل WhatsApp من نظام نما باستخدام [wasenderapi.com](https://wasenderapi.com)، اتبع الخطوات التالية:
 
 ---
 
@@ -227,7 +227,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 
 ---
 
-### إعدادات Nama ERP
+### إعدادات نما
 
 في شاشة إعدادات رسائل الواتساب:
 
@@ -375,7 +375,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
 ## تكامل WhatsApp عبر WaboxApp
 
 
-لتفعيل إرسال رسائل WhatsApp من نظام Nama ERP باستخدام WaboxApp، اتبع الخطوات التالية:
+لتفعيل إرسال رسائل WhatsApp من نظام نما باستخدام WaboxApp، اتبع الخطوات التالية:
 
 ---
 
@@ -412,7 +412,7 @@ https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&t
     * **API Token**
     * **رقم الهاتف بصيغة دولية** (مثال: `201065122360` بدلاً من `01065122360`)
 
-7. **إعداد Nama ERP**
+7. **إعداد نما**
 
   * افتح شاشة إعدادات الرسائل القصيرة
   * أضف سطرًا جديدًا واختر المزود: `waboxapp`
