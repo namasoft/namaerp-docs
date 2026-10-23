@@ -1,4 +1,5 @@
 ---
+description: "The HMS Pharmacy and Blood Bank master files and the pharmacy, medical supplies, service and supply and blood bank invoices and returns: billing the patient and insurer, the stock they move, and their prices."
 entities: [HMSPharmacyInvoice, HMSPharmacyReturn, HMSPharmacy, HMSSuppliesInvoice, HMSSupplyReturn, HMSServiceSupplyInvoice, HMSBloodBankInvoice, HMSBloodBankReturn, HMSBloodBank]
 menu: Hospital Management System → Pharmacies → Pharmacy Invoice
 ---

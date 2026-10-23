@@ -1,4 +1,5 @@
 ---
+description: "How project extract lines are mapped to tax extract terms for tax reporting and e-invoicing: the tax extract term master file, the Missing Tax Term Strategy switch, the Taxing Details grid and tax percentages."
 entities: [ProjContrExtract, ContractingTaxExtractTerm]
 ---
 # Taxes on Extracts

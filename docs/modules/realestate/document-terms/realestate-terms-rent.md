@@ -1,4 +1,5 @@
 ---
+description: "The rent contract document term page by page: the contract's own accounts and options, generating accrual ledgers, deposits, commissions and charges, the auto-cancel term, tax effects and the lease-termination term."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -86,7 +87,7 @@ two thirds of that quarter is this year's income and one third is deferred.
 | Option | What it does |
 |---|---|
 | Rental Contract | Flips the direction of the whole lease. Left off, we are the landlord: only receipt vouchers may be raised from the schedule. Turned on, we are the tenant renting property in, and only payment vouchers are allowed. Get this wrong and users hit a refusal the first time they try to collect. |
-| Allow Rent Sold Estate | Off by default, which blocks leasing a unit that is already flagged sold. Turn it on for the sell-then-lease-back case, or when the company manages a unit it has sold to an investor. |
+| Allow Rent Sold Estate | Off by default, which blocks leasing a unit that is already flagged sold. Turn it on for the sell-then-lease-back case, or when the company manages a unit it has sold to an investor. The sold unit only appears in the unit lookup when *Allow Sold Unit For Rent* is also ticked on the unit itself — see [How Properties Are Modelled](/modules/realestate/properties/realestate-estate-model.md). |
 | Shorten Ledger Effect | Merges ledger lines that share an account and analysis, so a twelve-installment lease produces a compact entry instead of one line per installment. |
 | Manual Coding | Stops the system numbering the installment lines, so the user types the codes. The setting survives Extend Contract. |
 | Pay Installments In Order | Forces collections against the lease to settle installments oldest first. |
@@ -114,6 +115,7 @@ than on their own screen.
 |---|---|
 | Generate Rent Installment Ledger | The master switch. Off, nothing is generated at all. On, every commit or update of the contract groups the installment lines by period and creates or updates one accrual document per group; a group that becomes empty deletes its document. |
 | Rent Ledger Period Type | Daily, Monthly or Yearly. It decides both the grouping and the accrual document's value date. **Leaving it empty means Daily** — one accrual document per distinct installment date, which is rarely what anyone wants. |
+| Generate Rent Installment Ledger By Line | On, the lines are grouped by **installment code** instead of by period, so each installment gets its own accrual document. The period type still sets the value date: the start of the month or year for Monthly or Yearly. |
 | Save Generated Ledger As Draft | On, the generated accruals are left as drafts for review. Off, they are committed immediately. |
 | Generated Rent Installment Ledger Book | The book the generated accruals are created in. |
 | Generated Rent Installment Ledger Term | The term the generated accruals are created with — **this is where the accrual's own accounts live**, not on the contract term. |
@@ -194,7 +196,8 @@ cancel contract term"*, with the error pointing back at the term field. See
 
 Ending a lease early is a settlement, not a cancellation: several buckets of money flow back to the
 tenant or stay with the landlord, and each of them belongs somewhere different. The termination
-document therefore has a term all of its own, with **eight pages**, each owning one bucket:
+document therefore has a term all of its own, with **nine pages**: eight that each own one bucket, and
+a Taxes page:
 
 | Page | Title on screen | The bucket |
 |---|---|---|
@@ -206,6 +209,7 @@ document therefore has a term all of its own, with **eight pages**, each owning 
 | 5 | Discount value insurance effects · تاثيرات خصم التامين | The discount taken out of the deposit |
 | 6 | Other discount effects · تاثيرات الخصومات الأخرى | Any other discount applied to the settlement |
 | 7 | Remaining Effects · تاثيرات المتبقي | Everything still owed or prepaid at termination |
+| 8 | Taxes · الضرائب | Not a bucket: the single **Send As** field — Invoice, CreditNote or DebitNote, as the English screen spells them — that decides how the termination is sent to the tax authority |
 
 Pages 2, 3 and 4 each hold a debit block and a credit block for their bucket, and follow the same
 both-halves-or-nothing rule as everywhere else: an unconfigured page means that bucket is not booked

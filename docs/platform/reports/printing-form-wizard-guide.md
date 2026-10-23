@@ -1,4 +1,5 @@
 ---
+description: "The Printing Form Wizard: building a printable form such as a sales invoice from lists of header and grid fields, how saving builds the form, sorting, page setup, and choosing when a form is used."
 entities: [PrintingFormWizard]
 menu: Administration → Reports → Printing Form Wizard
 ---

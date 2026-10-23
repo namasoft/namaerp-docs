@@ -80,27 +80,14 @@ instalment codes are valid, and that the payment lines and standard terms are co
 
 ### The financing block
 
-For a financed deal the order carries an instalment block: the financing bank or finance company,
-the reservation value, the down payment, the loan amount and the bank's response — the figures the
-salesperson re-keys by hand from a
+For a financed deal the order carries an instalment block: the instalment programme, the financing
+bank or finance company and the reservation value — the details the salesperson enters from a
 [car instalment quotation](/modules/servicecenter/car-installments/car-installment-quotation.md).
-Exactly one field in that block does anything.
 
 **قيمة الحجز (Reservation Value) is the booking deposit, and it posts.** When the document term has
 its reservation-value debit and credit accounts filled and the value is not zero, the order produces
 a journal entry for it. This is the only accounting effect anywhere in the car sales chain before
 the invoice, and the only place in the whole module where those two accounts are used.
-
-::: warning Recorded, not enforced
-The rest of the financing block is data capture:
-
-- **حظر بيع السيارة (Block Car Sale)** — blocks nothing. Ticking it has no effect anywhere.
-- **Bank Response Received** and **Bank Response Date** — recorded, read by no rule.
-- **Down Payment** and **Loan Amount** — recorded, read by no rule. Nothing subtracts the down
-  payment from the loan amount, and nothing checks either against a finance programme's limits.
-
-Capture them for your own reporting if they are useful; do not build a control on them.
-:::
 
 ## What the order does
 
@@ -166,8 +153,8 @@ The Car Sales Order and the Car Sales Approval carry the same three actions.
 
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*, More menu) — for every line
   whose item has sub items, creates the car record (or refreshes the one already on the line) from the
-  line's data and writes it back onto the line. The car record is saved straight away. It does
-  nothing, and shows no message, unless the term's *Create Sub Item From Line Info* option is on.
+  line's data and writes it back onto the line. The car record is saved straight away. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.
 - **Add Current Line To Shortage Document** (*إضافة السطر الحالي الي مستند النواقص*, More menu) —
   appends the line you are standing on to a
   [shortage document](/modules/supplychain/sales-operations-documents.md), using the shortage book and

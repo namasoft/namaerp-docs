@@ -1,3 +1,6 @@
+---
+description: "Arabic-English glossary of recurring Nama ERP terms, grouped by subject (records, document behaviour, states, dates, ownership, fields and screens), with the pairs that get mixed up."
+---
 # Glossary of Nama ERP Terms
 
 Nama ERP is used in Arabic and in English, often by the same team on the same call. The customer says

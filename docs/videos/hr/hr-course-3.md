@@ -1,3 +1,6 @@
+---
+description: "Video summary, HR payroll course part 3: performance indicators, formulas, repetition counts versus ranges, overtime and lateness brackets, time rounding, taxes and payroll periods."
+---
 # Detailed Explanation of the Payroll Management System in Nama ERP - 3
 
 # Detailed Explanation of HR, Formulas, Salaries, and Calculation Bases in the HR System

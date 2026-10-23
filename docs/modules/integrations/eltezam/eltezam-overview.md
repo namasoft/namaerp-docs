@@ -1,4 +1,5 @@
 ---
+description: "Overview of the Eltezam (MCS) integration that sends HR data to the Saudi Ministry of Civil Service: its licence, the three Eltezam screens, the seven operations sent and the workflow."
 entities: [EltezamSubmissionDoc, EltezamConfiguration, EltezamCodeTable]
 ---
 # Eltezam (MCS) Integration — Overview

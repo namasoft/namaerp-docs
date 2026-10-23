@@ -1,6 +1,6 @@
 ---
 entities: [ProductionExecution, ProductDelivery, ProductReturn, ScrapReceipt, ProductionSampleDoc]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات مستندات التنفيذ والتسليم

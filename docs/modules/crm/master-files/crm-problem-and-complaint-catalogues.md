@@ -13,12 +13,10 @@ actually wrong*. Four master files cover those two questions — Complaint Type 
 for the first, Problem Classification and Problem for the second.
 
 ::: info These four serve Complaints only
-Every one of them is read by the [Complaint](/modules/crm/support/crm-complaints.md) screen and by
-nothing else. A [trouble ticket](/modules/crm/support/crm-trouble-tickets.md) has no problem
+Every one of them is selected on the [Complaint](/modules/crm/support/crm-complaints.md) screen only. A [trouble ticket](/modules/crm/support/crm-trouble-tickets.md) has no problem
 catalogue at all, and the machine-maintenance half of the module keeps its **own** fault vocabulary
 — dysfunctions, trouble levels and trouble descriptions — in the
-[Fault Catalogues](/modules/crm/maintenance-setup/crm-fault-catalogues.md). The two sets never read
-each other. A problem you define here cannot be selected on a maintenance order, and a dysfunction
+[Fault Catalogues](/modules/crm/maintenance-setup/crm-fault-catalogues.md). The two sets are separate. A problem you define here cannot be selected on a maintenance order, and a dysfunction
 defined there cannot be selected on a complaint. If your business needs both, expect to maintain
 both.
 :::

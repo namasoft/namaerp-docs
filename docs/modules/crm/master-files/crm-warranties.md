@@ -113,14 +113,14 @@ product, for every customer, in every branch**, and will be shown to all of them
 The word "warranty" appears in more than one place in this module, and the places do not talk to
 each other.
 
-- **The register on this page** is read by the trouble ticket, and by nothing else.
+- **The register on this page** is what the trouble ticket checks.
 - **The machine-maintenance suite keeps its own**: named warranty period types, warranty start and
   end dates on the [machine file](/modules/crm/maintenance-setup/crm-machines.md), and a ledger of
   dysfunction warranties that maintenance orders write and read back. That system genuinely works —
   and it never looks at a CRM Warranty, and the trouble ticket never looks at it.
 - The [Complaint](/modules/crm/support/crm-complaints.md) screen has its own typed *Warranty Period*
-  and *Warranty End Date* boxes, filled from the invoice search. They are notes on that complaint;
-  nothing reads them either.
+  and *Warranty End Date* boxes, filled from the invoice search. They record the warranty on that
+  complaint itself.
 - A [CRM service contract](/modules/crm/support/crm-service-contracts.md) line carries its own start
   and end dates, and those are what the ticket's coverage check prefers.
 

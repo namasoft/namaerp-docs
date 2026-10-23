@@ -1,4 +1,5 @@
 ---
+description: "ECPA project milestones, the Phases Discipline Group template and the project's phase-discipline grids, and the checks applied when the project is saved."
 entities: [CPAProjectMileStone, CPAPhasesDisciplineGroup, CPAProject]
 ---
 # Milestones and the Phase–Discipline Matrix

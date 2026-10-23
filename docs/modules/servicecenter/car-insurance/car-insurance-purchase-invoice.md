@@ -1,5 +1,6 @@
 ---
-entities: [SIInsurancePurchaseInvoice]
+description: "The Car Insurance Policy Purchase Invoice and its return: settling with the insurer for the policies bought, purchase and commission values per policy, what it books and what it changes on the policy."
+entities: [SIInsurancePurchaseInvoice, SIInsurancePurchaseReturn]
 menu: cars → Car Insurance → Car Insurance Policy Purchase Invoice
 ---
 # Settling with the Insurer
@@ -8,82 +9,69 @@ menu: cars → Car Insurance → Car Insurance Policy Purchase Invoice
 `srvcenter-insurance-and-installments` **and** `srvcenter-subitems`. The [overview page](/modules/servicecenter/car-insurance/car-insurance-overview.md) explains why both are needed.
 :::
 
-Al-Sahra has arranged Layla's policy, taken her money and handed her the paperwork. What remains is the other side of the arrangement: Al-Sahra bought that policy from Wafa Insurance, usually at a discount off its face value, and it earns something for placing the business. The **Car Insurance Purchase Invoice** (*فاتورة شراء تأمين سيارة*) is where that is booked. You reach it from **cars → Car Insurance**.
+Al-Sahra has arranged Layla's policy, taken her money and handed her the paperwork. What remains is the other side of the arrangement: Al-Sahra bought that policy from Wafa Insurance, usually at a discount off its face value, and it earns something for placing the business. The **Car Insurance Policy Purchase Invoice** (*فاتورة شراء وثيقة تامين سيارة*) is where that is booked. You reach it from **cars → Car Insurance**.
 
 Al-Sahra raises `SIIPI-2026-0074` with one line: policy `POL-2026-7741`, car sale price **87,500**, policy purchase percentage **3.6 %**.
 
 ## The screen
 
-One page, three blocks.
+![The Car Insurance Policy Purchase Invoice screen](../../../ar/modules/servicecenter/images/car-insurance/sc-car-insurance-purchase-invoice-en.png)
 
-![The Car Insurance Purchase Invoice screen](../../../ar/modules/servicecenter/images/car-insurance/sc-car-insurance-purchase-invoice-en.png)
+**Basic information** carries the code, the value date, the currency, the **insurance company** and the **Supplier** (*مورد*) — the party the invoice is owed to. Leave the supplier empty and it is copied from the first policy in the grid that has one.
 
-**Basic information** carries the code, the value date, the currency and the **insurance company**.
-
-**Insurance information** carries a reference to the **policy order** the invoice settles, plus three totals — total purchase value, total commission value and total insurance value. All three are calculated from the grid and are read-only in practice.
+**Insurance information** carries a reference to the **policy order** the invoice settles, plus three totals — total purchase value, total commission value and total insurance value, all calculated from the grid. Picking a policy order fills the grid with that order's policies.
 
 **The details grid** is where the money is, one row per policy:
 
 | Column | Arabic | Typed or calculated |
 |---|---|---|
-| **Insurance Policy** | وثيقة تأمين سيارة | Picked |
-| **Car Sale Price** | سعر بيع السيارة | Typed — the price the car sold for on its [sales invoice](/modules/servicecenter/car-sales/car-sales-invoice.md) |
-| **Policy Purchase Percentage** | نسبة شراء الوثيقة | Typed — normally the *Buyer Insurance Percentage* from the programme band |
+| **Insurance Policy** | وثيقة تأمين سيارة | Picked — the picker offers only policies not yet bought |
+| **Car Sale Price** | سعر بيع السيارة | Filled from the policy's car price |
+| **Policy Purchase Percentage** | نسبة شراء الوثيقة | Filled from the programme band that matches the car |
+| **Purchase Value** | قيمة الشراء | **Calculated** — car sale price × the percentage. It becomes the row's unit price |
 | **Insurance Value** | — | **Typed** |
 | **Commission Value** | — | **Typed** |
-| **Purchase Value** | — | **Calculated** from the car sale price and the percentage |
 
-Note which is which. The **insurance value and the commission are numbers you type**; nothing derives them from the programme, from the policy or from each other. Only the purchase value is calculated — and that is the column with the problem.
+After those columns come the usual invoice price columns — unit price, discounts and taxes — and below the grid the invoice totals and payment methods. A **Payment Documents** page holds the payment lines and the external payment documents. Taxes are calculated only when the invoice's term has **Taxable** (*خاضع للضريبة*) ticked. The invoice cannot be saved with a negative remaining amount.
 
-Al-Sahra's line reads: insurance value **2,835**, commission value **315**, both typed, and a purchase value that saves as **3,150**.
+The **insurance value and the commission are numbers you type**; nothing derives them from the programme, from the policy or from each other.
 
-::: danger The purchase value is computed 100× too high on screen
-The screen and the server do not agree about what a percentage is.
+Al-Sahra's line reads: purchase value **3,150** (87,500 × 3.6 %), and insurance value **2,835** and commission value **315**, both typed.
 
-While you are typing, the screen multiplies the car sale price by the percentage **without dividing by 100**. Type 87,500 and 3.6 and the *Purchase Value* column shows **315,000**. When you press save, the server recomputes the same column *with* the division and stores **3,150** — a hundredth of what you were just looking at.
+## What it books
 
-The stored figure is the sensible one, and it is the figure that reaches the ledger. But the number on your screen while you build the document is wrong by a factor of one hundred, and it is wrong in the direction that will make a total look catastrophic.
+The invoice books the **purchase value** like any purchase invoice: the rows' net value (after discounts and taxes) against the **Insurance Purchase** pair on its term (*Purchase Value Debit / Credit*, *قيمة الشراء - مدين / دائن*), with the taxes, discounts and payments booked from the term's tax, discount and cash settings.
 
-**How to work with this:**
+On top of that, it books two amounts per row against two more pairs:
 
-- **Never quote, print or check the on-screen purchase value.** Save the document, reopen it, and read the stored figure.
-- **Do the same for the three header totals.** They are calculated from the grid, so before the first save they are built from the inflated on-screen figures.
-- If somebody reports an insurance purchase invoice with an absurd total, ask whether they read it before saving. That is almost always the answer.
-- The same raw multiplication appears on the instalment quotation's insurance value — see [the quotation page](/modules/servicecenter/car-installments/car-installment-quotation.md).
-:::
-
-## Three independent postings
-
-This is the unusual part of the document and the part worth understanding properly. The invoice does not post one net amount. **It posts three separate amounts, per line, against three different pairs of accounts, and they are not required to add up to anything.**
-
-| Amount posted | Debit account (term) | Credit account (term) |
+| Amount | Term group | Debit / credit fields |
 |---|---|---|
-| **Insurance Value** | مدين تحمل التأمين | دائن تحمل التأمين |
-| **Commission Value** | عمولة التأمين - مدين | عمولة التأمين - دائن |
-| **Purchase Value** | قيمة الشراء - مدين | قيمة الشراء - دائن |
+| **Insurance Value** | Insurance Expense (*تحمل التأمين*) | *Insurance Value Debit / Credit* (*مدين / دائن تحمل التأمين*) |
+| **Commission Value** | Commission (*العمولة*) | *Insurance Commission Debit / Credit* (*عمولة التأمين - مدين / دائن*) |
 
-Each column produces its own debit and its own credit against its own configured accounts, one set per grid row. Nothing reconciles them: the insurance value is not the purchase value plus the commission, and the system never checks that it is. In Layla's case 2,835 + 315 happens to equal 3,150, because that is how Al-Sahra chose to break the figure down — not because anything enforced it.
-
-Which party each posting lands on is decided entirely by the accounting side configuration on the term. Typically the insurer's subsidiary sits on one side and an insurance-expense or commission-income account on the other. Nothing in the document hard-wires the insurance company into the entry, so if the entry lands against the wrong party, it is the term's account configuration that needs correcting.
-
-::: warning The term screen cannot configure the third posting
-[The document term screen](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) has two defects that matter the first time you set this up.
-
-**The insurance-value pair is placed twice.** The same *Insurance Value Debit* and *Insurance Value Credit* fields appear in two different groups on the term screen. They are one pair of settings shown in two places, not two pairs — setting one sets the other, and there is no second posting behind the duplicate.
-
-**The purchase-value pair is not on the screen at all.** *Purchase Value Debit* and *Purchase Value Credit* are the accounts the third posting uses, and neither field is placed anywhere on the standard term layout. On a standard installation you cannot configure them, which means **the purchase-value posting cannot be set up without a screen modification.**
-
-The practical consequence: out of the box you can configure the insurance-value and commission postings and nothing else. If your accounting design needs the purchase value booked as well, plan for a screen modifier on the insurance purchase invoice term before you go live — and if the purchase value is not a posting your accounts need, leave the column at whatever it computes and know that it lands nowhere.
-:::
+A pair left empty on the term books nothing. Nothing reconciles the three amounts: the insurance value is not the purchase value plus the commission, and the system never checks that it is. In Layla's case 2,835 + 315 happens to equal 3,150, because that is how Al-Sahra chose to break the figure down — not because anything enforced it.
 
 ## What it does to the policy
 
-Beyond the ledger, the invoice touches every policy it names. On commit it stamps each one with a reference back to itself and sets its **Payment Status** to **Paid To Supplier** (*مدفوعة للمورد*). Cancelling or deleting the invoice clears the reference and puts the payment status back to *Fully or Partially Paid*.
+Beyond the ledger, the invoice touches every policy it names. On commit it stamps each one with a reference back to itself, ticks its **Purchased** flag, sets its **Payment Status** to **Paid To Supplier** (*مدفوعة للمورد*), and writes the row's net value into the policy's **Actual Cost**.
 
-If you re-edit and re-commit the invoice after changing which policies it covers, the policies dropped from the grid have their stamps cleared first, so the marks stay in step with the current lines.
+That actual cost then replaces the policy's *Initial Cost* as the cost the receipt and the delivery book. Any receipt or delivery already committed for the policy has its cost entry rebuilt on the spot, so the cost in the ledger always follows the latest purchase.
+
+Cancelling or deleting the invoice reverses all of this: the reference is cleared, *Purchased* is unticked, the actual cost goes back to zero (so the initial cost applies again) and the payment status goes back to *Fully or Partially Paid*.
 
 It moves no stock — there is nothing physical about a policy — and it does not touch the policy's physical status, its value or its dates.
 
-::: warning Three header fields that do nothing
-The invoice's model carries a **Customer** (*العميل*), a **Tax Plan** (*خطة الضريبة*) and a **Sale Type** (*نوع البيع*). None of the three is on the standard screen, and none influences the ledger entry — the postings are built from the grid rows and the document alone. Neither the header customer nor the header insurance company is passed to the accounting entry; only the term's account configuration decides the parties.
-:::
+## One purchase at a time
+
+A policy is bought once. A second purchase invoice for a policy that is still bought is refused, and so is a purchase return that was not made from the invoice that bought it:
+
+- *Document {0} can not be the first document in the purchase cycle of insurance policy {1}* — «المستند {0} لا يمكن أن يكون أول مستند في دورة شراء وثيقة التأمين {1}»
+- *Document {0} can not come after document {1} in the purchase cycle of insurance policy {2}* — «المستند {0} لا يمكن أن يأتي بعد المستند {1} في دورة شراء وثيقة التأمين {2}»
+
+## Returning a policy to the insurer
+
+The **Car Insurance Policy Purchase Return** (*مرتجع شراء وثيقة تامين سيارة*), on the same menu, undoes a purchase — the insurer took the policy back, or it was bought against the wrong band. It must be created **from a committed purchase invoice**: pick the invoice in **From Document** and the screen copies its header, rows, prices and payment lines. A return made any other way is refused with:
+
+*Document {0} must be created from a committed document of type {1}* — «يجب إنشاء المستند {0} بناءً على مستند محفوظ من النوع {1}»
+
+On commit the return clears the policy's purchase exactly as cancelling the invoice would: *Purchased* is unticked, the actual cost goes back to zero and the payment status returns to *Fully or Partially Paid*, and the receipt's and delivery's cost entries are rebuilt with the initial cost. The policy can then be bought again with a new purchase invoice. The return has its own term, with the same groups as the invoice's.

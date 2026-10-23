@@ -136,7 +136,7 @@ http://localhost:8080/erp/
         * انتقل إلى مجلد تثبيت Tomcat باستخدام أمر `cd`، مثلاً:
 
           ```cmd
-          cd "C:\Program Files\Apache Software Foundation\Tomcat 10"
+          cd "C:\Program Files\Apache Software Foundation\Tomcat 10.1"
           ```
 
         * شغّل أداة الترقية:
@@ -158,7 +158,7 @@ http://localhost:8080/erp/
 1. افتح **أداة إعداد خدمة Tomcat**:
 
     * انتقل إلى:
-      `C:\Program Files\Apache Software Foundation\Tomcat 10\bin\tomcatw.exe`
+      `C:\Program Files\Apache Software Foundation\Tomcat 10.1\bin\tomcatw.exe`
     * أو ابحث في قائمة ابدأ في Windows عن: **Configure Tomcat**
 
 2. في نافذة الإعداد، اذهب إلى تبويب **Log On**.

@@ -1,3 +1,6 @@
+---
+description: "Overview of the CRM support screens (Complaint, Trouble Ticket, Ticket Execution, Ticket Follow Up, Service Contract): how they link and how to set the desk up."
+---
 # Support Overview
 
 ::: info Required licence
@@ -68,13 +71,13 @@ The two also keep **separate warranty registers**. The warranty a trouble ticket
 
 Read this list before you promise a customer anything.
 
-- **No service-level agreements.** Severity, Ticket Type, Relative Weight and Expected Execution Date are all recorded on the ticket and never read by anything. Estimated Fix Period is never compared with Actual Fix Period.
+- **No service-level agreements.** Severity, Ticket Type, Relative Weight and Expected Execution Date are labels on the ticket for filtering and reporting; no deadline or priority rule is built on them, and Estimated Fix Period is not compared automatically with Actual Fix Period.
 - **No due-date alarm and no breach detection.** Nothing watches the clock.
 - **No escalation state.** *Escalate To* is a single field plus a button that stamps it. It changes no status, notifies nobody, and there is no queue of escalated cases.
 - **No notifications of any kind** — no e-mail, no user message, no mobile push when a ticket is assigned, changes status or goes stale.
 - **No scheduler anywhere in CRM.** There is no task schedule, no reminder and no recurring job in the whole module. Everything that looks scheduled happens because a person pressed a button.
 - **No stock and no money.** No document in this folder except the service contract touches inventory or the ledger. A ticket execution does not consume spare parts and does not bill labour; if parts are needed, they are issued with an ordinary stock document and nothing links that document back to the ticket.
-- **No customer-facing portal.** Customers cannot see, raise or comment on their own tickets, and the FAQ file that a ticket can create is read by nothing — see [FAQ](/modules/crm/master-files/crm-faq.md).
+- **No customer-facing portal.** Customers cannot see, raise or comment on their own tickets, and the FAQ file that a ticket can create is an internal notebook for your staff — see [FAQ](/modules/crm/master-files/crm-faq.md).
 
 ## Where to see a customer's history
 
@@ -84,7 +87,7 @@ There is no "support history" tab on the customer file. What support staff use i
 2. **The Ticket Execution list screen**, filtered by Trouble Ticket, Employee, External Responsible or Customer — the right place to answer "how many hours did we spend on this customer?"
 3. **The complaint's Related Records tab**, which lists the tickets, executions and follow-ups descending from *that one complaint*.
 4. **The ticket's own Executions and Follow Up tabs**, scoped to that one ticket.
-5. **The service contract's Executions tab**, which lists tickets that were matched to that contract — with an important caveat described on the [Service Contracts](/modules/crm/support/crm-service-contracts.md) page.
+5. **The service contract's Executions tab**, which lists tickets that were matched to that contract — see [Service Contracts](/modules/crm/support/crm-service-contracts.md).
 
 ## Reporting: none
 

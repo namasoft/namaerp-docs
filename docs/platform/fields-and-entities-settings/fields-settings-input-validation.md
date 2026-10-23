@@ -206,8 +206,7 @@ over.
 | Column | What it does |
 |---|---|
 | Field | The grid being limited, e.g. `details`. |
-| For Type | The entity that owns the grid, e.g. Sales Invoice. |
-| Entity List | A named list of entity types — see the warning below. |
+| For Type | The entity that owns the grid, e.g. Sales Invoice. Add one line per entity. |
 | Max Lines Count | The largest number of lines allowed. Leave empty or zero for no limit. |
 
 Two behaviours are worth knowing before you set a limit, because both of them are deliberate and
@@ -223,11 +222,6 @@ automatically, the generated document is not blocked by a limit meant for hand e
 applies while records are being replicated between databases. Otherwise a limit set for the
 convenience of data-entry staff would start breaking automated flows in the background.
 
-::: warning The Entity List column does not work on this grid
-Filling Entity List here does not currently spread the limit across the listed types. Use **For
-Type** and add one line per entity instead. It is slightly more typing and it actually works.
-:::
-
 ## Max Fields Length In DB
 
 This grid does two related but genuinely different things, and you need to understand both before
@@ -242,8 +236,7 @@ the length allowed.
 
 | Column | What it does |
 |---|---|
-| For Type | The entity that owns the field. |
-| Entity List | A named list of entity types — see the warning below. |
+| For Type | The entity that owns the field. Add one line per entity. |
 | Field | The field whose length is being changed. |
 | Max Length | The new length, in characters. |
 
@@ -271,13 +264,6 @@ passwords, colours and phone numbers. Anything else — a date, a checkbox, a re
 record — is refused, and the action tells you which field it refused and why, rather than failing
 silently. It also tells you if it cannot find the entity or the field you named, which is the usual
 sign of a typo in the Field column.
-
-::: warning The Entity List column does not work on this grid either
-For the length check applied on save, Entity List is ignored — use **For Type**, one line per
-entity. (The resize action itself does read Entity List, which makes the inconsistency easy to miss:
-the storage would be resized but the save-time check would not follow. Use For Type and the two
-stay in step.)
-:::
 
 ## Max POS Fields Length In DB
 

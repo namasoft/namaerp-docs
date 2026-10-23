@@ -43,10 +43,9 @@ Details* appear on the job order, the closing and the shared workshop term. On t
 four are copied onto the document header on **every save**, so changing the term's tax plan changes
 what the next save of an existing job order calculates.
 
-::: warning One tax only on operation lines
-The operation lines carry four tax columns, but taxes 2, 3 and 4 are overwritten with tax 1 whenever
-the line is recalculated. Configure a tax plan with a single tax — Al-Sahra uses one 15 % VAT
-throughout — and do not build a multi-tax plan for workshop labour.
+::: tip One tax on operation lines
+Workshop labour lines apply a single tax. Configure the tax plan with one tax — Al-Sahra uses one
+15 % VAT throughout.
 :::
 
 ## The shared workshop term
@@ -62,9 +61,8 @@ carries the vehicle-status trio, the tax quartet, and one extra switch:
 spare parts are added to the parts grid automatically. This one is offered on the Service Request,
 the Job Estimation and the Add Task To Job Order only.
 
-Two honest notes about this family. On the **Product Inspection Document** the term screen shows only
-the status trio — the tax fields are absent and would do nothing anyway, since that document holds no
-priced lines. And on **Pending Operation** and **Resume Operation** the term field is shown but not
+Two notes about this family. On the **Product Inspection Document** the term screen shows only
+the status trio — the tax fields are absent, since that document holds no priced lines. And on **Pending Operation** and **Resume Operation** the term field is shown but not
 required; those documents work perfectly well without one.
 
 ## The Job Order term
@@ -181,6 +179,7 @@ Small, but with a trap.
 |---|---|---|
 | Prevent Opening More Than One Unfinished Task | منع فتح اكثر من مهمة للفنى في نفس اليوم | Refuses a save that would leave one technician with two unfinished tasks on the same date |
 | Close Book / Close Term | — | The book and term used for the Job Order Closing produced by the *Generate Closing* button |
+| Allow Time Overlap | السماح بتداخل الوقت | Lets one technician have overlapping from/to intervals on two lines. Unticked, the save is refused when the intervals overlap |
 
 Plus the vehicle-status trio.
 
@@ -230,18 +229,12 @@ store — Al-Sahra's `SCRMI-2026-1902` generating stock issue `STI-2026-1188` ou
 the parts move to the work-in-progress store `WH-WIP` instead and stay on the books until the job
 consumes them.
 
-::: warning "Generate Document(s)" is ignored on these documents
-The *أنشاء مستندات تلقائيا / Generate Document(s)* tick box on the issue and return terms is
-overridden in code and always behaves as if ticked. The only way to stop the stock document is to
-**clear the Generation Book and the Generation Term** — or, in transfer mode, the Transfer Book and
-Transfer Term.
-:::
+To stop an issue or a return creating its stock document, **clear the Generation Book and the
+Generation Term** — or, in transfer mode, the Transfer Book and Transfer Term.
 
-::: warning The Spare Parts Issue Request's term options do nothing
-The request's term screen shows the same generation and transfer options, because it reuses the
-issue's layout. The request generates nothing, posts nothing and moves nothing — it is a paper
-request that the issue is later built from. Fill those fields and nothing at all happens.
-:::
+The Spare Parts Issue Request is a paper request that the issue is later built from: it moves no
+stock and creates no journal entry. The stock settings that apply are the ones on the issue's own
+term.
 
 ---
 

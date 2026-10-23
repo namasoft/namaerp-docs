@@ -393,6 +393,38 @@ different aggregate in the group footers. The same dialog offers a function (**S
 **First**) and a reset level (**Report**, **Page**, **Column**, **Group 1** … **Group 5**), so you
 can build the aggregate rather than write it out.
 
+## Grouping the rows
+
+"Subtotal per customer", "a page per branch", "group by month, then by item" — all of these live on the
+**Groups** tab. It holds five grouping levels, **Group 1** to **Group 5**; Group 1 is the outermost, and
+each level inside it breaks the rows of the level above into smaller groups. Leave a level empty and the
+report simply skips it.
+
+For each level you fill:
+
+- **Group N Lines** — the field or fields the rows are grouped by. **Select Group N Fields** opens the
+  field picker instead of typing ids, and **Reuse An Existing Field** points the line at a column already
+  in the report.
+- **Group N Arabic Title** / **Group N English Title** — the level's name. This is the name the reader
+  sees when the report lets them choose the grouping (below).
+- **Group N Totals Arabic Title** / **Group N Totals English Title** — the label printed beside the
+  level's totals. Which columns are totalled is decided on the **Fields** grid: tick **Show Total In
+  Group N Section** on each column that should add up at that level.
+- **Group N Header Custom Expression**, **Group N Footer Custom Expression** and the **Group N Header
+  Custom Expression Lines** grid — extra content printed in the level's header and footer, written the
+  same way as [calculated columns](#Columns-you-calculate-yourself).
+- **Start New Page Group N** starts each group on a new page; **Reprint Header On Each Page Group N**
+  repeats the group header when a group runs over several pages; **Reset Page Number Group N** restarts
+  page numbering at every group — the usual choice when each group is printed and handed out separately.
+
+### Letting the reader choose the grouping
+
+Tick **Use Groups As Parameter** and the report asks one more question before it runs: which grouping to
+use. The choices are the levels you filled, by their titles, and the reader must pick one. The same
+report then serves as "sales by customer" and "sales by item" without being built twice. With **Allow
+Selecting Multiple Groups As Parameter** ticked as well, the reader may pick several levels at once; the
+ones not picked are skipped.
+
 ## Reaching data that is not on the main table
 
 A report starts from one main table, and most of what you need hangs off it as an ordinary field

@@ -4,6 +4,8 @@ menu: Basic → Documents → Reward Points Configuration
 ---
 # Customer Reward Points (Loyalty Points)
 
+This page covers the messages Nama sends customers about their reward points and the connection to STC Qitaf. How points are earned, when they expire, how they are redeemed, and the opening, periodic-grant and restriction screens are on [Setting Up Nama Reward Points](/modules/invoicing/reward-points-setup).
+
 ## Send a notification to the customer with each invoice with rewarded points, redeemed, and total points
 * English Version
 ```

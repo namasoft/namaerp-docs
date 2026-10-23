@@ -1,3 +1,6 @@
+---
+description: "Point of sale questions: the deferred payment method still showing after it is hidden, the repeated payment method error when closing a shift, and building a stock movement report that runs from the POS."
+---
 # Point of Sale FAQ
 
 ## Why does the deferred payment method appear on the payment screen even after enabling the option to hide it from settings?

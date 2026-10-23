@@ -23,11 +23,11 @@ The vacation document's term is a small set of side effects.
 | **Generate Delegation** | `termConfig.generateDelegation` | Saving the vacation also creates a **delegation** document, so somebody is formally covering the absentee's responsibilities while they are away. |
 | **Generated Delegation Book** | `termConfig.generatedDelegationBook` | The book that delegation is filed in. Setting the switch without the book leaves the delegation nowhere to go. |
 | **Change Employee State only If vacation Start Date Match Today** | `termConfig.changeEmpStateIfDateMatchToday` | The employee's state changes to "on vacation" only when the vacation actually starts, rather than the moment the document is saved. Leave it off and a vacation entered three weeks ahead moves the employee's state today. |
-| **Generated Loan Reschedule Book / Term** | `termConfig.generatedLoanRescheduleBook`, `…Term` | A vacation can push a loan instalment out, which is done by creating a loan reschedule document. These two name its book and term. |
+| **Generated Loan Reschedule Book / Term** | `termConfig.generatedLoanRescheduleBook`, `…Term` | When the vacation document has **Postpone Loans During Vacation** ticked, saving it creates an **Aggregated Loan Installment Reschedule** that pushes the employee's unpaid instalments out. These two name that document's book and term, and both must be for the Aggregated Loan Installment Reschedule type. |
 
-The last pair is easy to overlook and produces a good support puzzle: a customer reports that going
-on unpaid leave did not postpone the loan instalment, and the cause is an empty book on the vacation
-term.
+Loans are postponed only for a vacation document that has **Postpone Loans During Vacation** ticked —
+the term alone never postpones anything. With the box ticked and this book or term empty, the
+document is refused (see [Vacation Documents](../vacations/vacation-documents.md#Postponing-loans-during-the-vacation)).
 
 ## The aggregated vacation terms
 

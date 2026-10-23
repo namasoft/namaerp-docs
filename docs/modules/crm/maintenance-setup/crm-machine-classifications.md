@@ -1,4 +1,5 @@
 ---
+description: "The five Machine Classification files (1 to 5) in CRM maintenance: what is on the screen, where they appear on machines, renaming their captions and filtering by them."
 entities: [MnClassification1, MnClassification2, MnClassification3, MnClassification4, MnClassification5]
 ---
 # Machine Classifications

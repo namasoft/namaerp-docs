@@ -38,7 +38,7 @@ select code,creationDate [creationDate#ddMMyyy HH:mm:ss] from Employee
 
 **Parameter 3:** Attachment Name Tempo (Required) - Dynamic filename template using Tempo syntax
 
-**Parameter 4:** Headers Line (Optional) - CSV column headers (uses SQL column names if empty)
+**Parameter 4:** Headers Line (Optional) - Text written as the first line of the file, before the rows. If empty, the file starts directly with the data rows (the query's column names are not written)
 
 **Parameter 5:** Send To Emails (Optional) - Comma-separated recipient email addresses
 
@@ -47,6 +47,8 @@ select code,creationDate [creationDate#ddMMyyy HH:mm:ss] from Employee
 **Parameter 7:** Body Tempo (Required) - Email body template using Tempo syntax
 
 **Parameter 8:** Preferred Sender ID (Optional) - Sender configuration ID
+
+**Parameter 9:** Footer Line (Optional) - Text written as the last line of the attached file, after the rows
 
 ## Database Tables Affected
 

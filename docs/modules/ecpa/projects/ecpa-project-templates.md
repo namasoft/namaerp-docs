@@ -1,6 +1,7 @@
 ---
+description: "The ECPA Template Project screen: what it holds, which values copy to a new project, and what a new project still needs after using a template."
 entities: [CPATemplateProject]
-menu: ECPA → Projects → Template Project
+menu: Project Management → Projects → Template Project
 ---
 # Project Templates
 

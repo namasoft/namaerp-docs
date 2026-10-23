@@ -19,7 +19,7 @@ The map of the module, the settings, and the order to set a fresh database up in
 <LandingGrid>
   <LandingCard icon="🗺️" title="Service Center Overview" link="/modules/servicecenter/servicecenter-overview.md" details="The four products, the two menu roots, the six licences and what each unlocks, and why the sold car and the serviced car are separate records." />
   <LandingCard icon="🚀" title="Getting Started" link="/modules/servicecenter/servicecenter-getting-started.md" details="The order to build a fresh installation in, and the three-part setup that car tracking needs before it will work at all." />
-  <LandingCard icon="⚙️" title="Configuration" link="/modules/servicecenter/servicecenter-configuration.md" details="The module settings screen option by option — including the seven that are on the screen but change nothing." />
+  <LandingCard icon="⚙️" title="Configuration" link="/modules/servicecenter/servicecenter-configuration.md" details="The module settings screen option by option." />
   <LandingCard icon="📊" title="Reports and Printed Forms" link="/modules/servicecenter/servicecenter-reports-and-forms.md" details="What ships for reporting and printing, which is very little — and what does not exist despite appearances." />
 </LandingGrid>
 

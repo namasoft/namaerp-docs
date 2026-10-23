@@ -5,7 +5,7 @@ title: Amazon Order Notifications
 
 # Amazon Order Notifications
 
-If you sell on Amazon, you don't want to sit refreshing Seller Central waiting for orders to ship so you can punch them into the ERP by hand. This guide shows you how to wire your Amazon Seller account to Nama so that **every order Amazon marks as shipped turns into a Sales Order automatically**.
+If you sell on Amazon, you don't want to sit refreshing Seller Central waiting for orders to ship so you can punch them into the ERP by hand. This guide shows you how to wire your Amazon Seller account to Nama so that **every change Amazon makes to an order reaches Nama on its own** — typically, an order marked as shipped turns into a Sales Order without anyone typing it.
 
 It uses Amazon's SP-API `ORDER_CHANGE` notifications — Amazon's way of telling you "something happened to this order" the moment it happens.
 
@@ -14,10 +14,11 @@ It uses Amazon's SP-API `ORDER_CHANGE` notifications — Amazon's way of telling
 Here's the one thing that shapes the whole setup: **Amazon will not push notifications directly to your ERP.** The only place Amazon agrees to deliver order notifications is an **Amazon SQS queue** — a message inbox that lives in *your* AWS account. So the flow looks like this:
 
 ```
-Amazon ships an order
+Amazon changes an order (for example, ships it)
    → an ORDER_CHANGE notification lands in your SQS queue (in your AWS account)
    → Nama polls that queue on a schedule
-   → for every order that reached "Shipped", Nama reads it fresh and creates the Sales Order
+   → for every order whose status changed, Nama reads it fresh and creates the document your site's
+     generation lines call for (normally a Sales Order)
 ```
 
 You set the queue up once, hand Nama three values so it can read the queue, and schedule a small task to do the polling. After that it just runs.
@@ -106,6 +107,7 @@ Open your Amazon **e-commerce site** record (`MAGMagentoSite`) and fill in:
 | **Amazon SQS Queue ARN** | The ARN from Part 1, Step 1 |
 | **AWS Access Key** | The Access Key ID from Part 1, Step 3 |
 | **AWS Secret Key** | The Secret Access Key from Part 1, Step 3 |
+| **Order Status Field Id** | **Required on Amazon sites** — the site will not save without it. The id of a text field on the sales document (for example a spare text field) where Nama writes the order's Amazon status. Nama compares each notification with the status already saved there and skips the order when nothing changed. |
 
 **Save** the record, then:
 
@@ -125,9 +127,13 @@ The last piece is the recurring job that drains the queue. Create a **Task Sched
 - **Action:** `EAEcommerceReadAmazonNotifications`
 - **Parameter 1 — Site Code:** the code of your Amazon site
 - **Parameter 2 — Max Messages Per Run:** how many messages to drain per run (leave empty for the default of 500)
+- **Parameter 3 — Process Notifications For Last (N) days:** notifications older than this many days are removed from the queue without being processed. Leave it empty to use the site's **Orders Updated Until** date instead (and, when that is empty too, to process everything).
+- **Parameter 4 — Process Only Order Statuses:** a comma-separated list of Amazon statuses, such as `Shipped`. Leave it empty to process **every** status.
 - **Interval:** every 1–2 minutes
 
-Every run pulls the new notifications waiting in the queue and creates a Sales Order for each order that has reached the **Shipped** status. Other status changes are simply ignored.
+Every run pulls the new notifications waiting in the queue, reads each changed order from Amazon and passes it to the site's document generation lines — whatever its status, unless Parameter 4 narrows it. To create Sales Orders only for shipped orders, put `Shipped` in Parameter 4. A notification whose status is not in that list is removed from the queue and not read again.
+
+An order whose Amazon status equals the one already saved in the **Order Status Field Id** of its document is skipped, so a repeated notification never creates a second document.
 
 ::: info One order, one read
 If several notifications for the same order pile up between polls, Nama collapses them and reads that order only once — the order is always read fresh from Amazon's Orders API, so there's no point reading it twice. This keeps you well within Amazon's rate limits even on a busy queue.

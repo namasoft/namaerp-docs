@@ -1,4 +1,5 @@
 ---
+description: "The Operation goal (Target Plan) screen for monthly activity quotas per employee (calls, visits, leads, tasks, ticket executions), its deviation columns and how to fill in the actual counts."
 entities: [CRMTargetPlan]
 menu: Customer Relationship Management → Marketing → Operation goal
 ---
@@ -33,7 +34,7 @@ accounting effect.
 
 - **السنة / Year** — a whole number, and it is **required**. Unlike the marketing plan's free-text
   year, this one is a real number, so `2026` it is.
-- **الفرع / Branch** — the branch. Record it for your own filing; nothing filters or restricts by it.
+- **الفرع / Branch** — the branch the plan belongs to, a label you can filter the list view by.
 - Responsible employee, mediator and remarks.
 
 ## One row per employee, per activity type
@@ -94,39 +95,9 @@ The good news is that this screen's arithmetic is reliable. Both totals and all 
 are recalculated on the server every time the record is saved, so a target plan you open is always
 internally consistent, however it was filled in.
 
-## The *Actual update* button
+## Filling in the actual counts
 
-The screen carries a button labelled **تحديث فعلي / Actual update**, sitting in the actions block on
-the main page. Its intention is obvious and appealing: press it, and the twelve *actual* cells fill
-themselves with the real number of calls, visits and leads the employee recorded that year.
-
-::: danger *Actual update* does not work — it fails with a database error
-Pressing the button returns a database error instead of filling anything in. The query behind it
-refers to a table that does not exist in the database, so it fails before a single row is read. This
-happens on every installation, on every target plan, every time.
-
-**Target achievement is therefore never measured automatically.** Treat the target plan as a sheet
-you fill in and read by eye: the planned counts are typed, and so are the actual counts.
-:::
-
-::: warning Do not try to make the button work
-It is worth saying plainly, because the failure looks like a small database problem somebody could
-patch. It is not, and repairing the query would make things worse rather than better:
-
-- Each employee-and-type row comes back from the query carrying **one** month's count, and the
-  screen would copy that single value across all twelve months — writing a real figure into one
-  month and **zero into the other eleven**, wiping any actual counts already typed there.
-- The query has no filters at all: no year, no branch, no legal entity, no dimensions, and no
-  distinction between a saved document and a draft. It would count everything in the database,
-  including other companies' records and unfinished drafts, towards an employee's target.
-
-So the honest position is not "this feature is broken and will be fixed shortly by your database
-administrator" — it is "this feature does not exist yet". Fill the actual columns by hand.
-:::
-
-## Getting the real counts by hand
-
-Typing actuals is less painful than it sounds, because every count this screen wants is one filtered
+You type the actual counts in. That is less work than it sounds, because every count this screen wants is one filtered
 list view away. For each employee and month:
 
 1. Open the matching list view — CRM Call, Visit, CRM Lead, CRM Potential, CRM Task, CRM Project or
@@ -155,7 +126,7 @@ activity list views, their Excel export and BI are where achievement figures act
 :::
 
 ::: tip A note on the English column headers
-As on the marketing plan, some English month headers in this grid are misspelt (`Jan|Panned`,
-`Mars|Planned`, `Jan |excuted`, `Sept|Planned`, `total Excuted`). They are cosmetic; the Arabic
-headers are correct and the columns behave as described above.
+As on the marketing plan, some English month headers in this grid are spelled this way on screen
+(`Jan|Panned`, `Mars|Planned`, `Jan |excuted`, `Sept|Planned`, `total Excuted`). The columns behave as
+described above.
 :::

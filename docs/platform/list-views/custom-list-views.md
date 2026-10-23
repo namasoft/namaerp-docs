@@ -1,4 +1,5 @@
 ---
+description: "The Custom List View screen: showing a block of related records, such as the customer's other invoices, inside another record's screen, its header and grids, making changes appear, and security."
 entities: [CustomListView]
 menu: Administration → Display Customization → Custom List View
 ---
@@ -46,9 +47,6 @@ invoices whose *customer* equals the *customer* on the invoice you are looking a
 | **List View Default Criteria**, **List View Always Apply Default Criteria** | A [criteria definition](/platform/automation-and-rules/criteria-definitions) the block applies on top of the filters, and whether it is applied every time. |
 | **Default Sort Type**, **List View Width**, **List View Default Page Size**, **List View Prevent Auto Load** | Work as their namesakes on a [Screen Modifier](/platform/screen-modifier/screen-modifier-list-and-search). |
 | **OQl** | For implementers. Leave it empty and the system builds the block's query from the filters itself. |
-
-The **Layout ID (View name)** field has no effect. The system names the block's list on its own (see
-[Security](#Security)).
 
 ![A custom list view for Sales Invoice with its displayed columns](../../ar/platform/images/list-views/custom-list-view-header-en.png)
 

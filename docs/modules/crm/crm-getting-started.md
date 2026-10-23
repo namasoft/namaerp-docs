@@ -62,7 +62,7 @@ Maintenance order statuses are yours to define, but each one carries a *Status* 
 [The Machine File](/modules/crm/maintenance-setup/crm-machines) is the spine of everything that follows. You can create them by hand or generate them from a maintenance sales order — but if you generate them, read that page's warning first, because the generated record does not carry the customer, which makes it invisible in later lookups.
 
 **7. Configure books, terms and the generation pairs.**
-This is where maintenance differs most from the rest of the ERP. Every "generate" button in the suite is driven by a book-and-term pair on the source document's term. Miss one and the button quietly does nothing useful. See [Maintenance Document Terms](/modules/crm/document-terms/crm-maintenance-terms).
+This is where maintenance differs most from the rest of the ERP. Every "generate" button in the suite is driven by a book-and-term pair on the source document's term. The button needs both before it can generate its document. See [Maintenance Document Terms](/modules/crm/document-terms/crm-maintenance-terms).
 
 **8. Then write your first contract** and follow [The Maintenance Cycle](/modules/crm/maintenance-cycle/crm-maintenance-overview).
 

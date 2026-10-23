@@ -1,4 +1,5 @@
 ---
+description: "Overview of Service Center rental assets: a separate bookable-resource register, the three booking documents, the setting that governs them, and what the sub-module does not do."
 entities: [RentalAsset, RARentalRequest, RARentalInvoice]
 ---
 # Renting Out Assets
@@ -52,16 +53,6 @@ It is installation-wide. There is no per-asset override and no per-document over
 - which of the two counts is mandatory before the document may be committed.
 
 Al-Sahra rents by the hour, and every example in this documentation is By Hour.
-
-::: warning By Day does not recompute the day count
-With Pricing Method set to By Day, the number of days you type is **never corrected from the from/to dates**. The system does compute a day count from the period — but it writes that figure into the *hours* field, which is hidden on the By Day screen, and leaves the *Number of Days* field exactly as you typed it. Meanwhile the hidden hours figure is what the price-tier matcher consumes.
-
-What you see: type 3 days, then change the dates to cover 5, and the header still says 3 days while the lines price 5. Do not describe or rely on the day count as self-maintaining. On a By Day installation, re-type the day count by hand every time you change a date, and reopen the document after saving to check what it kept.
-:::
-
-::: warning Integrating an external booking site
-The public availability service that a website or kiosk can call returns the asset's **hour** prices regardless of the configured pricing method. On a By Day installation it therefore hands back zeros. If you are wiring a booking site to a By Day installation, do not take prices from that service.
-:::
 
 ## What this sub-module does not do
 

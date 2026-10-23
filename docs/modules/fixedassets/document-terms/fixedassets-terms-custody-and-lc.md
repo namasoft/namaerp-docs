@@ -1,4 +1,5 @@
 ---
+description: "Document terms for the Fixed Assets custody documents and the letter of credit chain: which accounts each term supplies and the entries the custody, expense and cost documents produce."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---

@@ -1,4 +1,5 @@
 ---
+description: "End-of-service and vacation accrual provisions: the salary component flags that feed them, opening a provision per employee, recalculating it every period, its accounting effect and bulk recalculation."
 entities: [EmployeeProvisionsRecalc, EmployeeProvisionsOpening, AggrEmpProvisionsRecalc]
 ---
 # HR Provisions (End-of-Service & Vacation Accrual)

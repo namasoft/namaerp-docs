@@ -1,4 +1,5 @@
 ---
+description: "What document terms decide across Service Center documents, which documents share a term, which have none, and how the generation switches on a term behave."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -77,18 +78,22 @@ other, which is worth knowing before you tune anything.
 | Sub Item Assembly Document | Sub Item Assembly Document — the only document in the module that needs the **`supplychain-assembly`** licence on top of `srvcenter-subitems` |
 | Insurance Policy Order | Insurance Policy Order, Insurance Policy Renewal |
 | Insurance Policy Receipt | Insurance Policy Receipt |
-| Insurance Purchase Invoice | Insurance Purchase Invoice |
+| Insurance Policy Receipt Cancellation | Insurance Policy Receipt Cancellation |
+| Insurance Policy Delivery | Insurance Policy Delivery |
+| Insurance Policy Delivery Cancellation | Insurance Policy Delivery Cancellation |
+| Insurance Policy Purchase Invoice | Insurance Policy Purchase Invoice |
+| Insurance Policy Purchase Return | Insurance Policy Purchase Return |
 | Rental | Rental Request, Rental Invoice |
 | Reservation Cancel | Reservation Cancel |
 | Delivery Document | Delivery Document |
 | Batch Delivery Document | Batch Delivery Document |
 | Invoice Receipt Document | Invoice Receipt Document |
 
-Twenty-six families for eighty-odd documents — which means most of your configuration effort goes
+Thirty families for eighty-odd documents — which means most of your configuration effort goes
 into a handful of screens. The two that repay attention first are the [**Job Order**](/modules/servicecenter/job-cycle/servicecenter-job-order.md) term and the
 [**Car sales**](/modules/servicecenter/car-sales/car-sales-cycle.md) term, because between them they cover the whole of both halves of the business.
 
-## Nine documents have no term at all
+## Eight documents have no term at all
 
 Some documents in this module have nothing to configure. Their document book still shows a *توجيه*
 tab, but there is no term class behind it, so there is no rulebook to write and nothing you can tune
@@ -98,58 +103,30 @@ per book:
 - Odometer Reading Log
 - Product Task Opening
 - Customer Insurance Policy
-- Insurance Policy Delivery
 - Insurance Policy Cancellation
 - Insurance Policy Period Adjustment
 - Insurance Policy Value Adjustment
 - Instalment Quotation
 
-Five of those nine are insurance-policy documents, so more than half of the insurance sub-module's
-documents behave one way and one way only. If you have been hunting for the switch that makes a
-policy delivery post something, stop hunting — there is no switch, and the document posts nothing.
+Four of those eight are insurance-policy documents: the policy record itself, the cancellation and
+the two adjustments. None of them books anything, so there is nothing to configure.
 
 ## The rule that governs the other two pages
 
-Here is the habit to build, because it is what separates a working configuration from a
-plausible-looking one:
+Not every Service Center document creates a journal entry. The [car, insurance and rental terms
+page](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) lists which car
+documents do; the four **traffic letter** documents and the **Car Pro-forma Purchase Invoice** do
+not. Before you rely on a term's accounts, commit one document and look for its entry.
 
-::: warning An account block on a term screen does not prove the document posts
-Several Service Center term screens are assembled from a shared layout that carries the full
-accounting block — debit, credit, cash, taxes, eight discount accounts — regardless of whether the
-document behind it ever produces a journal entry. Filling those fields on a document that does not
-post produces **no error, no warning, and no entry**. You simply never see the money.
-
-The two worst offenders are named on the [car, insurance and rental terms
-page](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md): the four **traffic
-letter** documents, and the **Car Pro-forma Purchase Invoice**. Treat every account block as
-unproven until you have committed one document and looked for the entry.
-:::
-
-The pro-forma deserves a second sentence, because it is not merely inert:
-
-::: danger The Car Pro-forma Purchase Invoice can acquire entries out of band
-Committing a Car Pro-forma Purchase Invoice posts nothing, no matter what is on its term. But the
-generic **More → Regenerate Accounting Effects** action on that same document *does* reach the
-ledger and *does* create entries from those accounts. A document that has never posted can suddenly
-sprout a journal entry because somebody used a menu item. Document the pro-forma internally as a
-non-financial document and leave its account fields empty.
-:::
-
-## Generation: the switch that lies, and the two that double
+## Generation: the book, the term, and the two that double
 
 The generation block is where terms cause real damage, and always in the same two ways.
 
-::: warning "Generate Document" does not always stop generation
+::: info The book and the term decide generation
 On the **Car Receipt**, the **Car Final Delivery**, the **Spare Parts Issue** and the **Spare Parts
-Return**, the *Generate Document(s)* / *إنشاء مستندات تلقائيا* tick box is not consulted. Whatever
-you set, these documents look only at the **Generation Book** and **Generation Term**. Unticking the
-box and leaving the book filled still produces the stock document.
-
-To stop generation on those four documents you must **clear the generation book and the generation
-term**. Nothing else works.
-
-The same applies to *Manual Generation* on the car receipt and the final delivery, and to the whole
-generation block on the **Spare Parts Issue Request**, which generates nothing under any setting.
+Return**, generation is decided by the **Generation Book** and **Generation Term**: fill both and the
+document generates its stock document. To stop these documents generating, **clear the generation
+book or the generation term**.
 :::
 
 And then the two symmetric traps. They are the reason this page exists at all, because a document
@@ -163,8 +140,7 @@ in stock **twice**, at double cost, with no error at all.
 **The safe rule: fill the generation Book and Term on exactly one of the two terms.** Al-Sahra Motors
 generates on the purchase invoice (`SIPI-2026-021` produced stock receipt `STR-2026-0552`) and leaves
 the car receipt's generation book and term **empty**, so car receipt `SIR-2026-0088` records the
-physical arrival, the accessory checklist and the parking slots and moves nothing. Remember that
-unticking *Generate Document* on the receipt is not enough — blank the book and the term.
+physical arrival, the accessory checklist and the parking slots and moves nothing.
 
 Treat the two documents as **alternatives**, never as a sequence.
 :::
@@ -177,9 +153,7 @@ a shortage error that names a stock document nobody created by hand.
 
 **Same rule: fill the generation Book and Term on exactly one of the two terms.** Al-Sahra issues
 from the sales invoice (`SISI-2026-0498` produced stock issue `STI-2026-1201`) and leaves the final
-delivery's generation book and term empty, so `SIFD-2026-0357` is purely the hand-over record. And
-again: unticking *Generate Document* on the final delivery does nothing — blank the book and the
-term.
+delivery's generation book and term empty, so `SIFD-2026-0357` is purely the hand-over record.
 :::
 
 ## Where to go next

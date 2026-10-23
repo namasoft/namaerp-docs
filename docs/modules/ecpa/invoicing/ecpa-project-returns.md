@@ -1,6 +1,7 @@
 ---
+description: "The ECPA Project Return document: building its lines, the accounts it uses, what committing it does and does not do, and the checks before commit."
 entities: [CPAProjectReturn]
-menu: ECPA → Invoice → Project Return
+menu: Project Management → Invoice → Project Return
 ---
 # Project Return
 

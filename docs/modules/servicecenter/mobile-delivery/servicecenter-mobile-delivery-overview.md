@@ -1,4 +1,5 @@
 ---
+description: "Overview of Service Center mobile delivery: courier route sheets for delivering sales invoices, returns and work tasks through the Nama Delivery app; it is not related to car delivery."
 entities: [MobDeliveryDoc, MultiMobDeliveryDoc]
 ---
 # Delivering with the Driver App
@@ -43,25 +44,50 @@ Everything else the sub-module does is record-keeping: which stop belongs to whi
 
 The delivery document is written for a phone app the courier carries, not for the Nama screen. The flow, from the courier's side:
 
-1. **The courier opens the app and sees the day's stops.** The list is drawn from delivery-document lines where the courier is the logged-in employee — or where no courier has been named at all — whose delivery state is still open, that carry no courier remarks yet, and whose value date falls inside a recent window.
+1. **The courier opens the app and sees the stops.** The list is drawn from delivery-document lines where the courier is the logged-in employee — or where no courier has been named at all — whose delivery state is still open (*Initial*, *Moved* or *Customer Not Available*), and whose value date falls inside a recent window. Lines are also limited to the courier's own legal entity and branch, as set on the courier's employee record; a line with no legal entity or branch is shown to everyone. The stops still waiting at the branch and the stops already on the road are listed separately.
 
    ::: info The collection window is configurable
-   The app only shows lines from roughly the last few days; on a fresh installation that window is **three days**. If a courier reports that yesterday's stop is missing from the app, that window is the first thing to check.
+   The window is the setting **Previous Days Count To Limit Mob Deliver Document Search Period** (*عدد الأيام السابقة للبحث عن مستند حركة*) on the **Mobile Apps Configurations** screen. Left empty, it is **three days**. If a courier reports that yesterday's stop is missing from the app, that window is the first thing to check — then the legal entity and branch on the courier's employee record.
    :::
 
-2. **The courier checks in.** Check-in records the time and the GPS position on a *time check* line of the document. A second check-in is refused before the matching check-out, so a courier cannot open two shifts at once. Check-out closes the line with its own time and position.
+2. **The courier moves the orders out.** Leaving the branch, the courier picks the stops being taken and records the move. Each picked stop goes from *Initial* to **Moved**, takes this courier if it had none, and gets its own line in the **Courier Check In And Out** grid with the **Move Date Time** and the **Move Location** (the phone's position). Only stops waiting at the branch are moved; a stop taken by another courier, already delivered or marked *Customer Not Available* is refused.
 
-3. **The app can re-order the stops.** The courier asks for the route to be arranged, and the stops come back in driving order rather than the order somebody happened to type them in.
+3. **At each stop the courier checks in and out.** Check-in is done per stop: it fills the check-in time and position on that stop's line in the *Courier Check In And Out* grid, and check-out fills the departure time and position on the same line. A check-in is refused for a stop that is still waiting at the branch, or that this courier never moved.
 
-4. **At each stop the courier records what happened.** Each line carries a **delivery state** with four values — *Initial*, *Delivered*, *Customer Not Available* and *Moved* — plus the arrival date and time, the customer address as the courier found it, free remarks, and a voice note.
+4. **The app can re-order the stops.** The courier asks for the route to be arranged, and the stops come back in driving order rather than the order somebody happened to type them in.
 
-5. **The courier can raise work from the road.** Beyond updating stops, the app can create a receipt voucher for cash collected, a sales return, an item request, a sales order, a work task, and a suggestion or complaint. Those are ordinary Nama documents; they are not part of the delivery document itself.
+5. **The courier records what happened.** Each line carries a **delivery state** — *Initial*, *Moved*, *Delivered* or *Customer Not Available* — plus the arrival date and time, the customer address as the courier found it, free remarks, and a voice note. The state can only move forward:
+
+   | From | Allowed next states |
+   |---|---|
+   | *Initial* (waiting at the branch) | *Moved*, *Delivered*, *Customer Not Available* |
+   | *Moved* | *Delivered*, *Customer Not Available* |
+   | *Customer Not Available* | *Moved* (another visit), *Delivered* |
+   | *Delivered* | none — it is final |
+
+   Nothing goes back to *Initial*.
+
+6. **The courier can raise work from the road.** Beyond updating stops, the app can create a receipt voucher for cash collected, a sales return, an item request, a sales order, a work task, and a suggestion or complaint. Those are ordinary Nama documents; they are not part of the delivery document itself.
 
 ::: warning Courier edits bypass the document's own checks
 When the app writes the delivery state, the arrival time, the address, the remarks or the voice note back to a line, it writes **straight onto the line** — the delivery document is not opened for editing, its validations do not run, and its effects are not re-applied.
 
 This is expected behaviour, not a fault to report, but support staff need to know it for two reasons. First, changes made from the app do not appear in the document's editing history the way a change made on the Nama screen would, so an apparently unexplained value on a line is usually the courier. Second, whatever the document would normally check on save is simply not checked for those fields.
 :::
+
+### Messages the courier may see
+
+These messages have no Arabic text; they appear in English on Arabic phones too.
+
+| Message | Why | What to do |
+|---|---|---|
+| *The order of {0} has not left the branch yet* | Check-in at a stop that is still *Initial*. | Move the order out first, then check in. |
+| *The courier {0} did not move the order of {1}* | Check-in at a stop this courier never moved. | Move the order, then check in. |
+| *The courier {0} did not check in at the order of {1}* | Check-out at a stop with no check-in. | Check in first. |
+| *The order of {0} belongs to the courier {1}* | Check-in at another courier's stop. | Leave it to that courier, or change the courier on the delivery document. |
+| *The order of {0} was taken by the courier {1}* | Moving another courier's stop. | As above. |
+| *The order of {0} is already {1}* | Moving a stop that is delivered or marked *Customer Not Available*. | Report its state instead; a *Customer Not Available* stop goes back on the road by setting it to *Moved*. |
+| *The order of {0} can not go from {1} to {2}* | A state change the table above does not allow, such as reopening a delivered stop. | None from the app; a supervisor corrects the line on the delivery document. |
 
 ## Addresses go back onto the customer file
 

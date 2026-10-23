@@ -1,3 +1,6 @@
+---
+description: "Overview of the Service Center module: its two menu roots, the separate workshop and showroom vehicle registers, the six licence codes and what each enables, and the rental, delivery and queue extras."
+---
 # Service Center Overview
 
 From the street, a car dealership and its workshop look like one business. A customer buys a car in the showroom, brings it back for its first service, and expects the people behind the counter to know both halves of the story.
@@ -7,7 +10,7 @@ Nama's Service Center module does not work that way, and the sooner you know it 
 This page is the map. It tells you what each part does, which licence switches it on, and — most importantly — where the seams are, so you plan around them instead of discovering them in month three.
 
 ::: info Required licence
-Every one of the module's **85 records and documents is licence-gated**. Nothing at all is available in a base installation — not one master file, not one document. The six codes are `srvcenter`, `srvcenter-subitems`, `srvcenter-insurance-and-installments`, `srvcenter-rental-assets`, `srvcenter-mobile-delivery` and `srvcenter-service-queues`. What each buys you is set out in [What Each Licence Switches On](#What-Each-Licence-Switches-On) below.
+Every one of the module's **88 records and documents is licence-gated**. Nothing at all is available in a base installation — not one master file, not one document. The six codes are `srvcenter`, `srvcenter-subitems`, `srvcenter-insurance-and-installments`, `srvcenter-rental-assets`, `srvcenter-mobile-delivery` and `srvcenter-service-queues`. What each buys you is set out in [What Each Licence Switches On](#What-Each-Licence-Switches-On) below.
 :::
 
 Throughout this documentation we follow one company:
@@ -41,13 +44,13 @@ The practical consequence for how you read this documentation: the workshop page
 
 ## What Each Licence Switches On
 
-All 85 entities are gated, and each sits behind exactly one code. Use the code strings below verbatim when you talk to your licence contact — nothing here is derived from anything else.
+All 88 entities are gated, and each sits behind exactly one code. Use the code strings below verbatim when you talk to your licence contact — nothing here is derived from anything else.
 
 | Licence code | Records and documents | What it buys |
 |---|---|---|
 | `srvcenter` | **36** | The whole workshop: work centres, tasks, services, the vehicle file, brands and models, the job-order chain from service request through estimation, job order, execution, spare parts, closing and gate pass, plus inspections, recall campaigns and trips |
 | `srvcenter-subitems` | **26** | The car dealership: the car file and its status configurations, car purchasing, car inventory, car sales, allocation, traffic letters and the sales cancellation documents — **and** the Insurance Company and External Agency master files |
-| `srvcenter-insurance-and-installments` | **13** | Insurance programmes and policies, the seven policy documents, the insurance purchase invoice, the finance company, instalment programmes and instalment quotations |
+| `srvcenter-insurance-and-installments` | **16** | Insurance programmes and policies, the nine policy documents, the insurance policy purchase invoice and its return, the finance company, instalment programmes and instalment quotations |
 | `srvcenter-rental-assets` | **5** | The rental asset file and its classification, and the rental request, invoice and reservation cancel |
 | `srvcenter-mobile-delivery` | **3** | The courier delivery document, the batch delivery generator and the invoice receipt document |
 | `srvcenter-service-queues` | **2** | Queue service configurations and queue branches |
@@ -111,7 +114,7 @@ Three smaller features share the module and nothing else. Each has its own licen
 
 If you are standing up the module for the first time, go to [Setting Up a Service Center](/modules/servicecenter/servicecenter-getting-started.md) — it walks the workshop and the dealership in the order that avoids rework, and it opens with the prerequisite that catches nearly everybody.
 
-If you are tuning a running installation, [Service Center Settings](/modules/servicecenter/servicecenter-configuration.md) covers the 24 module options — including the seven that are recorded and read by nothing, which are worth knowing before you spend an afternoon tuning them.
+If you are tuning a running installation, [Service Center Settings](/modules/servicecenter/servicecenter-configuration.md) covers the module-wide options one by one.
 
 Almost everything else in this module is configured **per document book**, on the document term rather than centrally. [Document Terms in Service Center](/modules/servicecenter/document-terms/servicecenter-terms-basics.md) explains which documents share which term family, and which nine have no term at all.
 

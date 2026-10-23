@@ -1,3 +1,6 @@
+---
+description: "What reporting ships with CRM: the single customer visit printed form, no system reports or dashboards, and what to use instead."
+---
 # CRM Reports and Printed Forms
 
 This is a short page, and the shortness is the point.

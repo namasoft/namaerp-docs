@@ -1,4 +1,5 @@
 ---
+description: "The Custody Type master file in Fixed Assets: its fields, what the Priceless flag changes on custody records and documents, and what a custody type does not control."
 entities: [CustodyType]
 menu: Assets → Custodys → Custody Type
 ---

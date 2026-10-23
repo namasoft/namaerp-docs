@@ -1,4 +1,5 @@
 ---
+description: "Maintenance Task Templates (reusable visit checklists) and Maintenance Groups (crews) in CRM maintenance: what is on them and the three places a template is used."
 entities: [MnTaskTemplate, MnMaintenanceGroup]
 menu: Customer Relationship Management → Maintenance Files → Maintenance Task Template
 ---

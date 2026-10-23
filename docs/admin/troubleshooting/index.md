@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Troubleshooting
+description: "Troubleshooting landing page that maps common support complaints (slowness, freezes, missing ledger entries, background work, licence and access, wrong figures, e-invoicing) to the page that explains each."
 ---
 
 # Troubleshooting

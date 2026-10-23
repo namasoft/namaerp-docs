@@ -1,3 +1,6 @@
+---
+description: "Map of the CRM menu: the five separate products it holds (support and marketing, maintenance, services and more), their licences, and what the module does not do."
+---
 # CRM Overview
 
 The Customer Relationship Management menu — «خدمة العملاء» — is one of the widest branches in Nama ERP. It holds ninety-six screens covering sales leads, marketing campaigns, customer visits, support tickets, service contracts, questionnaires, and a full equipment-maintenance operation with its own contracts, work orders and invoices.

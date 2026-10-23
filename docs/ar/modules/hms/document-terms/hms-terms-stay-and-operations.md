@@ -1,6 +1,6 @@
 ---
 entities: [HMSPatientAdmission, HMSAccommodation, HMSAccommodationTransfer, HMSAccommodationExit, HMSClosingInvoice, HMSSurgeryPackageInvoice, HMSSurgeryReservation, HMSFeedingIssue]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات الإقامة والعمليات
@@ -96,8 +96,7 @@ menu: الأساسيات ← الإعدادات ← توجيه المستند
 | **دفتر سند تجميع** / **توجيه سند تجميع** | `termConfig.assemblyDocumentBook` / `termConfig.assemblyDocumentTerm` | سطر الوجبة الذي يحمل وصفة (قائمة مكونات نوع التغذية) يصير **سند تجميع** يستهلك المكونات وينتج الوجبة — سند لكل سطر. |
 | **دفتر سند صرف مخزني** / **توجيه سند صرف مخزني** | `termConfig.stockIssueBook` / `termConfig.stockIssueTerm` | السطور التي بلا وصفة تُصرف معًا في **صرف مخزني** واحد. |
 
-صرف التغذية لا يُفوتر أحدًا، فجوانب المريض والتأمين في أعلى صفحة التأثير لا تُستخدم؛ اتركها فارغة. تصل
-تكلفته إلى الدفتر عبر سندات الصرف والتجميع التي يُنشئها.
+صرف التغذية لا يُفوتر أحدًا: تصل تكلفته إلى الدفتر عبر سندات الصرف والتجميع التي يُنشئها.
 
 ## رسائل قد تظهر لك
 

@@ -79,6 +79,8 @@ See Section 13 for the full list of wizard-mode key pairs, cross-filter / drill-
 
 Each widget has a `dataSource` field containing a SQL query (T-SQL for SQL Server). The query **must** include the literal placeholder `/*AND-FILTERS*/` in its WHERE clause. The server replaces this with the active cross-filter conditions at runtime. Because the placeholder is a SQL comment, the query is also valid when run directly in SQL Server Management Studio without any modifications.
 
+The general rules for SQL against Nama tables (count only documents with `commitedBefore = 1`, join lines to their header for the status, `name1` Arabic and `name2` English, amounts from `LedgerTransLine`, quantities from `QtyTransLine`) are on [Querying Nama Tables with SQL](/platform/reports/querying-nama-tables). Every widget query needs them too.
+
 ::: tip Reusing complex SQL across widgets
 If the same `UNION` / multi-join / hand-rolled SELECT keeps showing up across several SQL-mode widgets, consider promoting it to a **Virtual Entity** instead. A Virtual Entity wraps the SELECT in a SQL Server view and registers it as a first-class entity, so it becomes pickable from the wizard's main-table picker (`tableType = "VirtualEntity"`) — and from there, every wizard-mode convenience (auto-joins on reference fields, dimension drill-by, auto-inferred cross-filter columns) works against it as if it were a real table. See the [Virtual Entity Guide](../automation-and-rules/virtual-entity-guide.md).
 :::
@@ -120,9 +122,10 @@ SELECT TOP 10
   i.name2 itemName,
   SUM(l.netValue) netValue
 FROM SalesInvoiceLine l
+  JOIN SalesInvoice h ON h.id = l.salesInvoice_id
   LEFT JOIN InvItem i ON i.id = l.item_id
   LEFT JOIN Branch b ON b.id = l.branch_id
-WHERE 1=1 /*AND-FILTERS*/
+WHERE h.commitedBefore = 1 /*AND-FILTERS*/
 GROUP BY i.name2
 ORDER BY netValue DESC
 ```
@@ -244,8 +247,8 @@ Pivot-table style: one column for categories (X-axis), one column whose distinct
 
 ```sql
 SELECT YEAR(l.valueDate) salesYear, b.name2 branchName, SUM(l.netValue) netValue
-FROM SalesInvoiceLine l LEFT JOIN Branch b ON b.id = l.branch_id
-WHERE 1=1 /*AND-FILTERS*/
+FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN Branch b ON b.id = l.branch_id
+WHERE h.commitedBefore = 1 /*AND-FILTERS*/
 GROUP BY YEAR(l.valueDate), b.name2
 ORDER BY salesYear
 ```
@@ -915,6 +918,8 @@ Dashboard-level entries carry an extra **required** `element` field naming the t
 | `Contains` | `LIKE '%value%'` | Text search |
 | `StartsWith` | `LIKE 'value%'` | Text prefix match |
 
+These are the only operators a cross-filter applies.
+
 ### Widget-Local Scope (`localScope`)
 
 Cross-filter bindings — both at the widget level (`DashBoardWidget.crossFilterBindings`) and at the dashboard level (`DashBoard.crossFilterBindings`) — carry an optional `localScope` flag:
@@ -996,12 +1001,12 @@ Cross-filters are master-file entities that define reusable filter parameters. T
 | `code` | Yes | Unique identifier, referenced by widgets |
 | `name1` / `name2` | Yes | Arabic / English name |
 | `paramType` | Yes | Base scalar type. Allowed values: `"Text"`, `"Integer"`, `"Long"`, `"Decimal"`, `"Boolean"`, `"Date"`, `"Time"`, `"Reference"`, `"Genericreference"`, `"BigText"`, `"Enum"`, `"ID"`, `"EntityType"`, `"Password"`, `"LatLng"`. (There is no `"ListParam"` value — multi-value mode is the orthogonal `listParam` flag below.) |
-| `listParam` | No | When `true`, the filter accepts multiple values. **Required** when `operator` is `"In"` or `"NotIn"`. Pair with `listDisplayType` to control the UI affordance. |
+| `listParam` | No | When `true`, the user can pick several values. Use it with `operator: "In"`; an `In` filter without it works with the single value picked. Pair with `listDisplayType` to control the UI affordance. |
 | `listDisplayType` | No | UI affordance for `listParam: true` filters: `"Default"`, `"Dropdown"`, or `"Chips"` (the chip strip is the most common). `Chips` shows a search box and a "show more" control whenever the list has more than one page of options (page size 25), so long lists remain pickable; `Dropdown` remains the compact choice for very long lists. |
 | `referencedEntityType` | If `paramType=Reference` | Entity type (e.g., `"Branch"`, `"Customer"`, `"InvItem"`) |
 | `arTitle` / `enTitle` | No | Localized labels shown in the filter bar. |
 | `sqlLeftHandSide` | Yes | The left side of the WHERE condition: a column (e.g., `"l.branch_id"`) or, from the 20260929 release, any SQL expression — see **Filtering on a computed value** below. For `Reference` filters, point at the **ID column** — never a name/code column; binary(16) encoding is handled automatically. |
-| `operator` | Yes | Comparison operator (see §6). `"In"`/`"NotIn"` require `listParam: true`. |
+| `operator` | Yes | Comparison operator (see §6). For a multi-select use `"In"` with `listParam: true`. |
 | `customWhereClause` | No | Full custom WHERE fragment (overrides `sqlLeftHandSide` + `operator`). |
 | `required` | No | Filter must have a value before any widget query runs. |
 | `defaultValue` | No | Initial value applied when the dashboard loads. A `Reference` filter also accepts `$currentUser()` and `$currentUserEmployee()` — see **Defaulting to the current user** below. |
@@ -1010,7 +1015,7 @@ Cross-filters are master-file entities that define reusable filter parameters. T
 | `requiredGroup` | No | Multi-filter "at least one of" group code — any filter in the group satisfies the requirement. |
 | `criteriaExpression` | No | Server-side criteria for the filter's reference picker (`Reference` filters). Same syntax as a report parameter's `filter`, `${otherFilterCode}` substitution included — see [Narrowing what the user may choose](/platform/reports/reports-guide#Narrowing-what-the-user-may-choose). |
 | `suggestionQuery` | No | Custom SQL that returns suggestion rows for autocomplete pickers. |
-| `comparisonConfig` | No | Period-comparison config (offset, baseline label) — see `BIPeriodComparisonExecutor`. |
+| `comparisonConfig` | No | Code of a `BIPeriodComparisonConfig` (the shift and the period labels) — see [10.5](#105-BIPeriodComparisonConfig-Array-Optional). Set it on every date filter that should shift. |
 | `showAsDateRange` | No | Render the filter as a single from/to range picker that expands to two bound parameters — see Section 8a. |
 | `autoCreateWidget` | No | When true, saving the cross-filter also creates a paired `CrossFilterControl` widget with the same `code`/`name1`/`name2` and `crossFilterRef` set. |
 | `hideFilterTitle` | No | Suppress the title label across all renderings (popup, bar dialog, `CrossFilterControl` legend). |
@@ -1020,7 +1025,8 @@ Cross-filters are master-file entities that define reusable filter parameters. T
 | `operator` | `listParam` | Behavior |
 |---|---|---|
 | `Equal` / `NotEqual` / `>` / `>=` / `<` / `<=` / `Contains` / `StartsWith` | `false` (or omitted) | Single value. |
-| `In` / `NotIn` | `true` (required) | Multi-value; emits `IN (...)` / `NOT IN (...)`. Setting `In` without `listParam: true` is a configuration error. |
+| `In` | `true` | Multi-value; emits `IN (...)` with the picked values. |
+| `In` | `false` (or omitted) | Single value; emits `IN (value)`. |
 
 **Filtering on a computed value** — from the 20260929 release, `sqlLeftHandSide` accepts any SQL expression, not just a column. Suppose deliveries with no status should count as "not delivered":
 
@@ -1187,6 +1193,15 @@ The two content keys are independent of the frame styles, which apply to both la
 
 Nama ERP supports importing a complete dashboard setup (cross-filters, widgets, wizards, and dashboard layout) from a single JSON file. This is the fastest way to create a full dashboard with multiple interconnected charts.
 
+::: warning Saving through `ImportRecord`? Send `chartConfigJSON` as a string
+Every example in this reference writes `chartConfigJSON` as a nested JSON object. That form works
+only in an import **file** loaded with **Import Records** (see [How to Import](#How-to-Import)).
+When an AI assistant saves a widget with the `ImportRecord` tool, `chartConfigJSON` must be a JSON
+**string** — the whole configuration stringified, `"chartConfigJSON":"{\"series\":[…]}"`. A nested
+object sent there is read as a reference to another record, and the widget saves without a usable
+chart configuration.
+:::
+
 ::: tip Sample file
 A working end-to-end example is available: [HR_DASHBOARD_IMPORT.json](/HR_DASHBOARD_IMPORT.json). Download it and import via the bulk-import flow described in [How to Import](#How-to-Import) to see cross-filters, widgets, wizards, and the dashboard layout wired together.
 :::
@@ -1195,16 +1210,17 @@ A working end-to-end example is available: [HR_DASHBOARD_IMPORT.json](/HR_DASHBO
 
 ```json
 {
+  "BIPeriodComparisonConfig": [ ],
   "BICrossFilter": [ ],
-  "DashBoardWidget": [ ],
   "DashBoardWidgetWizard": [ ],
+  "DashBoardWidget": [ ],
   "DashBoard": [ ]
 }
 ```
 
-All four keys are optional — include only the entity types you need. Entities are created in order: cross-filters first, then widgets, then wizards, then dashboards. References between entities use `code` (business key), not IDs.
+Every key is optional — include only the entity types you need. Records are created in the order the keys appear in the file, so keep the order above: each type refers only to types listed before it, and it is the order **Export Dashboard JSON** writes. References between entities use `code` (business key), not IDs. `BIPeriodComparisonConfig` is needed only for period comparison — see [10.5](#105-BIPeriodComparisonConfig-Array-Optional).
 
-### 11.1 BICrossFilter Array
+### 10.1 BICrossFilter Array
 
 Each entry creates a `BICrossFilter` master file entity. See Section 8 for field definitions.
 
@@ -1222,7 +1238,7 @@ Each entry creates a `BICrossFilter` master file entity. See Section 8 for field
 }
 ```
 
-### 11.2 DashBoardWidget Array
+### 10.2 DashBoardWidget Array
 
 Each entry creates a `DashBoardWidget` entity. Key fields:
 
@@ -1259,14 +1275,13 @@ Each entry creates a `DashBoardWidget` entity. Key fields:
 | `crossFilterRef` | If type=`CrossFilterControl` | Bare string — the `BICrossFilter` code (e.g. `"branchFilter"`). Do **not** use an object (`{"code": "..."}`) — the importer rejects it with "crossFilterRef cannot be empty". See §9a. |
 | `enableComparison` | No | Toggles period-comparison execution (`BIPeriodComparisonExecutor`). |
 | `mergeComparisonByColumns` | No | CSV of column names that key the merge between baseline and comparison rows. |
+| `comparisonDataMapping` | No | Grid that splits a measure into a current and a previous-period column: `[{"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}]`. Previous-period rows move their `netValue` into `prevNetValue`, so a chart can draw both as separate series. See [10.5](#105-BIPeriodComparisonConfig-Array-Optional). |
 
 ::: info
-Write `chartConfigJSON` as a **nested JSON object** in import/export files — no escaping, no manual stringification. The system serializes it to the stored JSON string on import and parses it back to an object on export. Older files that still carry `chartConfigJSON` as an escaped string keep importing unchanged.
-
-This nested-object convenience belongs to the import/export file format only. Creating a widget through the generic record-import path (a record JSON handed straight to the entity service) does **not** get it: there, `chartConfigJSON` has to be a **stringified** JSON string, and a nested object is read as a reference rather than as configuration.
+Write `chartConfigJSON` as a **nested JSON object** in import/export files — no escaping, no manual stringification. The system serializes it to the stored JSON string on import and parses it back to an object on export. Older files that still carry `chartConfigJSON` as an escaped string keep importing unchanged. Saving a widget through the AI `ImportRecord` tool is different — see the warning at the top of this section.
 :::
 
-### 11.3 DashBoardWidgetWizard Array (Optional)
+### 10.3 DashBoardWidgetWizard Array (Optional)
 
 Wizards define data sources using field IDs rather than raw SQL. The system generates SQL from the wizard definition and enables several features (dimension drill-by, auto-inferred cross-filter columns, per-dimension drill menus) that raw-SQL widgets don't get. See Section 13 for the wizard-mode chart-config shape.
 
@@ -1296,7 +1311,7 @@ Wizards define data sources using field IDs rather than raw SQL. The system gene
 | `fields[].chartUsageType` | Yes | `"Dimension"` or `"Measure"` |
 | `fields[].sqlAggregationType` | If Measure | `"Sum"`, `"Count"`, `"DistinctCount"`, `"Avg"`, `"Min"`, `"Max"` |
 
-### 11.4 DashBoard Array
+### 10.4 DashBoard Array
 
 Each entry creates a `DashBoard` entity. There are two kinds: **`Single`** (a grid of widgets) and **`Tabbed`** (a parent that composes other Single dashboards as tabs).
 
@@ -1449,8 +1464,10 @@ Below the small-screen breakpoint the grid stops being a grid. Widgets stack in 
 column, in row-then-column order, and `rowsCount`, `colsCount`, `heightInRows` and `widthInColumns`
 are all ignored. `mobileMaxRowsCount` takes over as "how many widgets fit on one phone screen" —
 each ordinary widget gets `1 ÷ mobileMaxRowsCount` of the visible height, and the list scrolls
-past that. Leaving it empty (or `0`) means one widget per screen. Self-sizing widgets still take
-their content height.
+past that. Leaving it empty (or `0`) lets the dashboard decide: a dashboard with a single ordinary
+widget gives it the whole screen, and one with two or more shows two per screen. Either way no
+widget is drawn shorter than 260 pixels, so a large value on a short phone scrolls rather than
+squashing the charts. Self-sizing widgets still take their content height.
 
 #### Tabbed dashboard (composes Single sub-dashboards)
 
@@ -1484,9 +1501,69 @@ A Tabbed parent has no `charts` of its own — it lists `subDashboards` (each a 
 | `charts` | Single only | Array of widget placements (`element`, `rowNumber`, `columnNumber`, `heightInRows`, `widthInColumns`). |
 | `subDashboards` | Tabbed only | Array of `{subDashboard, arTitle, enTitle}`. `subDashboard` is the `code` of another `DashBoard` (must be `kind: "Single"`). |
 | `crossFilterBindings` | No | Dashboard-level **overrides** — each entry needs `element` (target widget code) plus `crossFilter`, with optional `operator`/`sqlLeftHandSide`/`customWhereClause`/`localScope`. Usually `[]`. See §6 for shape. |
-| `totalDashboardRowsCount` | No | Design-time only — the layout editor's canvas height. **Nothing reads it when the dashboard is rendered**, so it affects neither sizing nor scrolling, and leaving it out or at `0` changes nothing. Opening the layout editor and pressing OK stamps a value into it if it was empty. Ignore it when authoring by import; do not try to keep it in step with `rowsCount` or the widget extent. |
-| `mobileMaxRowsCount` | No | Phone layout only: how many widgets fit on one narrow screen. On phones the grid is abandoned — widgets stack full-width in row-then-column order and `rowsCount`/`colsCount`/`heightInRows`/`widthInColumns` are ignored — and each ordinary widget gets `1 ÷ mobileMaxRowsCount` of the visible height. Empty or `0` means one widget per screen. |
-| `refreshDashboardPer` | No | `TimePeriod` value-object (e.g. `{magnitude: 5, unit: "Minutes"}`) — auto-refresh interval. |
+| `totalDashboardRowsCount` | No | Design-time only — the layout editor's canvas height. The rendered dashboard takes its sizing and scrolling from `rowsCount`/`colsCount` and the widget placements, so leave this out or at `0` when authoring by import; do not try to keep it in step with `rowsCount` or the widget extent. Opening the layout editor and pressing OK stamps a value into it if it was empty. |
+| `mobileMaxRowsCount` | No | Phone layout only: how many widgets fit on one narrow screen. On phones the grid is abandoned — widgets stack full-width in row-then-column order and `rowsCount`/`colsCount`/`heightInRows`/`widthInColumns` are ignored — and each ordinary widget gets `1 ÷ mobileMaxRowsCount` of the visible height, never less than 260 pixels. Empty or `0` is automatic: one widget per screen when the dashboard has only one ordinary widget, otherwise two. |
+| `refreshDashboardPer` | No | `TimePeriod` value-object (e.g. `{"value": 5, "uom": "Minute"}`) — auto-refresh interval. |
+
+### 10.5 BIPeriodComparisonConfig Array (Optional)
+
+A period comparison runs a widget's query twice — once for the dates the user picked and once for
+the same dates shifted back — and merges the two results. The config record says how far to shift
+and what to call each period; date cross-filters point at it through `comparisonConfig`, and each
+widget that should compare sets `enableComparison: true`. The guide's
+[Period Comparison](/platform/bi/bi-module-guide.md#Period-Comparison) section explains the two
+ways a chart can show the result.
+
+```json
+{
+  "code": "yoy-comparison",
+  "name1": "مقارنة سنوية",
+  "name2": "Year-over-Year Comparison",
+  "subtractedPeriod": {"value": 1, "uom": "Year"},
+  "periodColumnArName": "periodAr",
+  "periodColumnEnName": "periodEn",
+  "currentPeriodArValue": "السنة الحالية",
+  "currentPeriodEnValue": "Current Year",
+  "previousPeriodArValue": "السنة السابقة",
+  "previousPeriodEnValue": "Previous Year"
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `code` | Yes | Referenced by a cross-filter's `comparisonConfig`. |
+| `name1` / `name2` | Yes | Arabic / English name. |
+| `subtractedPeriod` | Yes | How far back the previous period is: `{"value": 1, "uom": "Year"}`, with `uom` one of `Day`, `Week`, `Month`, `Year`. A date filter moves by this period; a fiscal year or fiscal period filter moves to the year or period that holds the shifted start date. |
+| `periodColumnArName` / `periodColumnEnName` | Yes | Names of the two columns added to every result row, holding the period label. Use one as a chart's `labelColumn` to get one series per period. |
+| `currentPeriodArValue` / `currentPeriodEnValue` | Yes | Label written into those columns for the current period. |
+| `previousPeriodArValue` / `previousPeriodEnValue` | Yes | Label written into them for the previous period. |
+
+The same labels reach the SQL as the parameters `{periodArValue}` and `{periodEnValue}`, so a
+query can use them in a `CASE` or `CONCAT`. A widget's bindings may reach only **one** config;
+two different configs on one widget are refused. Until the user gives one of the linked filters a
+value, the widget runs once, for the current period only.
+
+A wiring example, cross-filter side and widget side:
+
+```json
+{
+  "BICrossFilter": [
+    {"code": "dateFrom", "paramType": "Date", "sqlLeftHandSide": "l.valueDate", "operator": "GreaterThanOrEqual", "comparisonConfig": "yoy-comparison"},
+    {"code": "dateTo",   "paramType": "Date", "sqlLeftHandSide": "l.valueDate", "operator": "LessThanOrEqual",    "comparisonConfig": "yoy-comparison"}
+  ],
+  "DashBoardWidget": [
+    {
+      "code": "bi-top-item-classes",
+      "enableComparison": true,
+      "mergeComparisonByColumns": "itemClassName",
+      "comparisonDataMapping": [
+        {"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}
+      ],
+      "crossFilterBindings": [ {"crossFilter": "dateFrom"}, {"crossFilter": "dateTo"} ]
+    }
+  ]
+}
+```
 
 ---
 
@@ -1537,7 +1614,7 @@ Here is a complete, working import JSON that creates a sales analysis dashboard 
       "chartTitle": "المبيعات حسب التصنيف",
       "englishChartTitle": "Sales by Category",
       "type": "EChart",
-      "dataSource": "SELECT cc.id ccId, cc.code ccCode, cc.name1 ccName1, cc.name2 ccName2, SUM(l.netValue) netValue FROM SalesInvoiceLine l LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ GROUP BY cc.id, cc.code, cc.name1, cc.name2",
+      "dataSource": "SELECT cc.id ccId, cc.code ccCode, cc.name1 ccName1, cc.name2 ccName2, SUM(l.netValue) netValue FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE h.commitedBefore = 1 /*AND-FILTERS*/ GROUP BY cc.id, cc.code, cc.name1, cc.name2",
       "chartConfigJSON": {
         "echartOption": {
           "tooltip": {"trigger": "item", "formatter": "{b}: {c} ({d}%)"},
@@ -1561,7 +1638,7 @@ Here is a complete, working import JSON that creates a sales analysis dashboard 
       "chartTitle": "أعلى 10 أصناف",
       "englishChartTitle": "Top 10 Items",
       "type": "EChart",
-      "dataSource": "SELECT TOP 10 i.name2 itemName, SUM(l.netValue) netValue FROM SalesInvoiceLine l LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ GROUP BY i.name2 ORDER BY netValue DESC",
+      "dataSource": "SELECT TOP 10 i.name2 itemName, SUM(l.netValue) netValue FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE h.commitedBefore = 1 /*AND-FILTERS*/ GROUP BY i.name2 ORDER BY netValue DESC",
       "chartConfigJSON": {
         "echartOption": {
           "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
@@ -1589,7 +1666,7 @@ Here is a complete, working import JSON that creates a sales analysis dashboard 
       "chartTitle": "تفاصيل الفواتير",
       "englishChartTitle": "Invoice Details",
       "type": "Table",
-      "dataSource": "SELECT TOP 200 s.code invoiceCode, l.valueDate, c.name2 customerName, i.name2 itemName, l.quantityBaseValue qty, l.netValue FROM SalesInvoiceLine l LEFT JOIN SalesInvoice s ON s.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ ORDER BY l.valueDate DESC",
+      "dataSource": "SELECT TOP 200 s.code invoiceCode, l.valueDate, c.name2 customerName, i.name2 itemName, l.quantityBaseValue qty, l.netValue FROM SalesInvoiceLine l JOIN SalesInvoice s ON s.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE s.commitedBefore = 1 /*AND-FILTERS*/ ORDER BY l.valueDate DESC",
       "crossFilterBindings": [
         {"crossFilter": "custCategoryFilter"},
         {"crossFilter": "dateFromFilter"},
@@ -1625,10 +1702,28 @@ Here is a complete, working import JSON that creates a sales analysis dashboard 
 
 ### How to Import
 
-1. Save the JSON to a file
-2. In Nama ERP, navigate to **BI Dashboard Import** (or use the developer tools import endpoint)
-3. Upload the file — all entities are created in one operation
-4. Open the dashboard by its code (`ex-sales-dashboard`)
+There is no dedicated dashboard-import screen. The file is an ordinary import file, so it goes in
+through the same **Import Records** command as any other data:
+
+1. Save the JSON to a file with the `.json` extension.
+2. Open the **DashBoard** list (*Administration → DashBoards → DashBoard*) — or the list of any of
+   the record types in the file, or an open dashboard — and choose **Import Records** from the
+   **More** menu. The file decides what is imported, not the screen you start from.
+3. Choose the file and run the import. The records are created in the order of the keys in the
+   file — see [Top-Level Structure](#Top-Level-Structure).
+4. Read the result file the import hands back — it reports each record that was created or
+   refused. See [Importing Records](/platform/import-export/importing-records.md) for the options
+   and the result file.
+5. Open the dashboard by its code (`ex-sales-dashboard`).
+
+The command appears only for users whose security profile grants **Can Import** on that record type.
+
+::: tip Start from an export
+**Export Dashboard JSON** in an open dashboard's **More** menu produces a file in exactly this
+format — the dashboard together with its widgets, wizards and cross-filters. Exporting an existing
+dashboard is the quickest way to get a working template, and the way to copy a dashboard from one
+installation to another.
+:::
 
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: "The Entities Screens tab of System Settings: screen additions, extra pages shown on other entities such as Contacts, record colour coding, and entity images in search results."
 entities: [ConfigEntry]
 menu: Administration → Settings → System Settings
 ---
@@ -23,7 +24,7 @@ What you set here is a default for a whole record type. The screen that does the
 
 **Add Work Tasks List to Employee** `value.info.addWorkTasksListToEmployee` — Adds a list of the employee's work tasks to the Employee screen, so a manager can see someone's workload from their record rather than running a separate query.
 
-**Use Update Employee Info Document** `value.useUpdateEmpInfoDoc` — Employee data is changed through a dedicated *Update Employee Info* document instead of being edited directly on the Employee screen. This is how you get an approval trail and a dated history for HR changes: the change becomes a document that can be reviewed, approved and reported on, rather than a silent edit.
+**Use Update EmpInfoDoc** `value.useUpdateEmpInfoDoc` — Employee data is changed through a dedicated *Update Employee Info* document instead of being edited directly on the Employee screen. This is how you get an approval trail and a dated history for HR changes: the change becomes a document that can be reviewed, approved and reported on, rather than a silent edit.
 
 **Google Maps Api Key** `value.info.googleMapsApiKey` — The key used by the map picker on location fields and by the delivery application. Without it, map-based fields fall back to manual entry.
 
@@ -31,9 +32,9 @@ What you set here is a default for a whole record type. The screen that does the
 
 Each of these tables names the entity types that should receive one extra page. Add a row per entity type, or use the entity-type list column to cover several at once.
 
-**Add Remarks Page To** `value.info.addRemarksPageTo` — Adds a Remarks page. Comes preset for Employee, Supplier, Customer, Fixed Asset and Third Party.
+**Add Related Remarks To** `value.info.addRemarksPageTo` — Adds a Remarks page. Comes preset for Employee, Supplier, Customer, Fixed Asset and Third Party.
 
-**Add Detailed Remarks Page To** `value.info.addDetailedRemarksPageTo` — Adds the detailed remarks page, which records remarks as structured, dated entries rather than free text.
+**Add Detailed Remarks To** `value.info.addDetailedRemarksPageTo` — Adds the detailed remarks page, which records remarks as structured, dated entries rather than free text.
 
 **Add Meeting Remarks Page To** `value.info.addMeetingRemarksPageTo` — Adds a page for meeting notes.
 

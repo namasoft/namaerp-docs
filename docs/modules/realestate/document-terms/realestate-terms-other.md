@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate collection, aggregated collect, fine, return payment, maintenance, investment, cost document, opening cost, money-movement and lease-termination terms, and the accounts each one needs."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -101,11 +102,13 @@ the generated documents and the term they were created with. See
 ## The fine term
 
 A late-payment fine is a receivable in its own right, so its term is short: a single page titled
-**Effect** with one debit block and one credit block for the fine amount, plus one option.
+**Effect** with one debit block and one credit block for the fine amount, plus one option and a
+**Taxes** group.
 
 | Option | What it does |
 |---|---|
 | Do Not Copy Installments With Related To | Normally, pressing *Create Fine Document* on a contract copies the contract's installment lines into the fine as "related to" rows. Turn this on and the copy is skipped, so the fine is entered free-hand against the contract as a whole. |
+| Send As | In the Taxes group: Invoice, CreditNote or DebitNote — decides how the fine is sent to the tax authority. When the fine must be sent and this is empty, the save is refused with *Send As must be selected in the term* — «يجب اختيار إرسال كـ في التوجيه». |
 
 See [Late-Payment Fines](/modules/realestate/collections/realestate-fines).
 

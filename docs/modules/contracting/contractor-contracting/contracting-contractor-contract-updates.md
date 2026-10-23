@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract Update document, which changes a subcontract after its first certified extract: how it differs from the owner-side update, actions, a worked example and what blocks commit or delete."
 entities: [ContractorContractUpdate]
 menu: Contracting → Contractor Contracting → Contractor Contract Update
 ---

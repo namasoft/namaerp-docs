@@ -1,6 +1,6 @@
 ---
 entities: [CPAProcedure]
-menu: ECPA → Projects → Procedure
+menu: Project Management → Projects → Procedure
 ---
 # Procedures
 
@@ -32,7 +32,7 @@ Everything is on one page.
 
 The three work references narrow each other as you fill them in: choose a customer and the project lookup shows only that customer's projects; choose a project as well and the task lookup shows only that project's tasks. Fill them in left to right and the pickers stay short.
 
-**Procedure Status** offers *Not Started*, *Under Processing*, *Postponed*, *Finished*, *Not Responsible* and *Other*, plus one more for an item that has been reopened. It is descriptive: nothing in the module branches on it, no rule depends on it. What it does earn you is a usable list screen — the status is both a filter and a sort column, so "everything still under processing on the Riyadh clinic" is one search away.
+**Procedure Status** offers *Not Started*, *Under Processing*, *Postponed*, *Finished*, *Not Responsible* and *Other*, plus one more for an item that has been reopened. It is a descriptive label you set by hand, and it earns you a usable list screen — the status is both a filter and a sort column, so "everything still under processing on the Riyadh clinic" is one search away.
 
 The four numbered remark areas exist because every firm keeps a slightly different set of notes against a follow-up: the client's exact wording, the reference number of the letter sent, the internal decision. Use them as your team agrees, and give them names that match through the [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-overview) screen so nobody has to remember what "Remarks 3" means on this particular record.
 

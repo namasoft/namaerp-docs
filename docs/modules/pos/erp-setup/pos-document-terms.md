@@ -1,4 +1,5 @@
 ---
+description: "How the server picks the book and term for each document a POS register sends, using the register's Books And Terms and term grids, the error term, and what each POS term screen controls."
 entities: [DocumentTerm, NamaPOSRegister]
 ---
 

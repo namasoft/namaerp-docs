@@ -1,4 +1,5 @@
 ---
+description: "Working with freight price lists: the price list elements behind each line, loading supplier rates, turning them into a customer quotation, re-pricing it, and bulk changes with Edit Purchase Price List."
 entities: [FRMPurchasePriceList, FRMPPriceListElement, FRMSalesPriceList, FRMSPriceListElement, FRMEditPurchasePriceList]
 ---
 # From Supplier Rates to Customer Quotations
@@ -47,7 +48,8 @@ Tick **Selected** on the purchase lines you want to offer, then:
   it.
 
 Each copied line keeps its cost, and its selling price is the cost plus the sales list's markup for
-that tab: the markup's fixed value when one is set, otherwise its percentage. Review the pop-up,
+that tab: the markup's fixed value when one is set, otherwise its percentage. A line whose own
+**Markup Percentage** or **Markup Value** is filled uses that instead of the tab's. Review the pop-up,
 choose the customer, and save.
 
 The same two buttons exist on the **Purchase Price Lists Element** list view, in the **More** menu,

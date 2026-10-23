@@ -36,13 +36,6 @@ What is deliberately missing, compared with the Visit: Visit Cost, Payment Statu
 the signatures, and the four levers that write onto a lead. A Visit Request cannot change a lead's
 status — only Calls and Visits do that.
 
-::: info Some fields exist but do nothing here
-The lead action-plan columns (change status to, update classification to, next activity type, new
-rejection reason) still exist behind the scenes because the request shares its structure with the
-Visit, and they are correctly kept off the screen. If a site puts them back with a screen modifier,
-or fills them through an import, nothing will happen — this document has no write-back behaviour.
-:::
-
 ## Actions on this screen
 
 One button, **Convert To Visit** (*تحويل إلى زيارة*), and the request must be **saved** first. Pressing it opens a **new, unsaved Visit** in a
@@ -53,7 +46,7 @@ representative and status, plus the remarks lines and the employee lines copied 
 Then it is over to you. Review it, finish it and save it.
 
 ::: warning There is no approval step, and the request is never consumed
-The button opens a pop-up and does nothing else. It does not save the Visit, it does not write a link
+The button only opens the pop-up. It does not save the Visit, it does not write a link
 from the Visit back to the request, and it does not mark, close or flag the request in any way — a
 Visit Request has no "converted" state to set.
 

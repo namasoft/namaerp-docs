@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Out Document and Fixed Asset Return Document: recording units of a countable asset leaving the premises and coming back, how the outside count is checked, and reading the counters."
 entities: [FAMovementOutDoc, FAMovementInDoc]
 ---
 # Sending Assets Out and Bringing Them Back

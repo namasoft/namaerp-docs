@@ -8,7 +8,8 @@ entities: [AIToolDefinition, APICredentials]
 
 ::: info Requirements
 - The AI module installed and licensed — without it, the server is not mounted at all.
-- A committed **API Credentials** record (the same credentials used with the REST API).
+- If the licence carries an end date for the MCP subscription, that date must not have passed — after it, every request is refused (see [Messages you may see](#Messages-you-may-see)).
+- A committed **API Credentials** record (**Basic → Documents → API Credentials** — the same credentials used with the REST API).
 - At least one committed tool defined on the **AI Tool Definition** screen.
 :::
 
@@ -30,9 +31,9 @@ The server authenticates **every request** using API credentials:
 
 | Header | Value | Required |
 |---|---|---|
-| `X-API-Key` | The **Client Secret** field of the API Credentials record | Yes |
+| `X-API-Key` | The **API Key (Client Secret)** of the API Credentials record | Yes |
 | `Authorization` | `Bearer <client secret>` — an alternative to `X-API-Key` | No |
-| `X-API-Secret` | The **API Secret** field — sent only if the credential requires an extra secret | No |
+| `X-API-Secret` | The **API Key (Client Secret)**, only when `X-API-Key` carries the record's **Client Id (Can Be Ignored)** instead | No |
 
 (The values are also accepted under the alternative names: `apiKey`/`clientId` for the access key and `apiSecret`/`clientSecret` for the secret — as a header or as a URL parameter.)
 
@@ -42,7 +43,13 @@ Some clients cannot send a header of your own choosing and always authenticate t
 Put the **Client Secret** in the bearer token and the server accepts it; it looks at `Authorization` only when the request carried no `X-API-Key`, so nothing changes for clients that already work. Servers older than release 20260922 ignore the header and answer with an authentication failure.
 :::
 
-The **API Credentials** record maps the credentials to a specific user through its **Login As User** field, and supports a validity window (**Valid From / Valid To**) and disabling (**Prevent Login**). Every tool the client calls executes as that user: record security, dimensions (legal entity, branch, ...), and validation rules all apply exactly as if the user were working from the system screens.
+The **API Credentials** record maps the credentials to a specific user through its **User** field, and supports a validity window (**Valid from / Valid to**) and disabling (**Prevent Login (Includes POS, Apps, and All Other System Components)**). The key is shown once, when the record is first saved; tick **View API Key** and save to see it again. Every tool the client calls executes as that user: record security, dimensions (legal entity, branch, ...), and validation rules all apply exactly as if the user were working from the system screens.
+
+### Choosing the login context
+
+A call normally runs in the user's own login context — the legal entity, sector, branch, department and analysis set the user would land in on the login screen. Every tool also accepts five optional arguments that change that for one call: `loginLegalEntity`, `loginSector`, `loginBranch`, `loginDepartment` and `loginAnalysisSet`, each given as the dimension's code or id. A dimension left out keeps the user's own value.
+
+This is how you check something "as legal entity 02": run the report, or read the document term, with `loginLegalEntity` = `02`, and anything that depends on the login context — a report whose default filter is the user's legal entity, for example — behaves as it would for someone logged in there. The same rules as the login screen apply, so a context the user may not log in to is refused and the tool does not run; a code that matches no dimension is refused the same way. You do not define these arguments on the tool definition: every tool gets them.
 
 ::: warning Protect the credentials
 An MCP client connected with these credentials can do everything the mapped user can — including creating records if the import tools are enabled. Dedicate a user with carefully measured permissions for this purpose, and restrict sensitive tools through the access-control grid on the tool definition.
@@ -50,9 +57,9 @@ An MCP client connected with these credentials can do everything the mapped user
 
 ## Client Setup
 
-### Claude Code
+### Claude Desktop's Code tab or Claude Code — the recommended setup
 
-Add the server to the project's `.mcp.json`:
+The way we recommend working is the one described in [Getting Better Support with an AI Assistant](./ai-assisted-support.md): Claude Desktop's **Code** tab — or Claude Code in a terminal — opened inside the support knowledge-base folder, so the assistant has the documentation, the data model and the live system side by side. Both read their MCP servers from a `.mcp.json` file in the folder they are opened in, so add the server to `.mcp.json` in the knowledge-base folder (create the file if it is not there):
 
 ```json
 {
@@ -68,9 +75,9 @@ Add the server to the project's `.mcp.json`:
 }
 ```
 
-### Claude Desktop
+Start a new session after saving the file, and allow the server when you are asked to; in Claude Code, `/mcp` lists the servers and reconnects one. Several Nama servers can sit side by side in the same file, each under its own name. The Code tab and Claude Code connect from your own machine, so a customer server on a private network works as long as your machine can reach it — over the customer's VPN, for example.
 
-Add the same definition under `mcpServers` in `claude_desktop_config.json`.
+Do not put the server in Claude Desktop's `claude_desktop_config.json`: that file is for servers the app starts on your machine, and it ignores a remote server such as Nama's.
 
 ### Claude's MCP connector
 
@@ -80,7 +87,7 @@ Claude can also reach the server straight from the Claude API, with no MCP clien
 
 The protocol's official inspector works straight from the browser (the server allows CORS requests): choose the `Streamable HTTP` transport, enter the URL, and add the authentication header.
 
-After connecting, list the tools from the client — you will find every committed, non-inactive tool from the AI Tool Definition screen, and any change to the definitions is picked up automatically on the next connection.
+After connecting, list the tools from the client — you will find every committed, non-inactive tool from the AI Tool Definition screen that the credential's user is allowed to run (a tool the access-control grid prevents for that user is not listed at all), and any change to the definitions is picked up automatically on the next connection.
 
 ::: info Not just the export tools
 The server exposes **every** committed tool the linked user is allowed to use — query, report, entity-flow, and system tools — not only the export tools. This page details the export tools because of their importance with external clients; the other types are documented in [AI Tool Definitions](./ai-tool-definitions.md).
@@ -115,7 +122,7 @@ Lists the fields of an entity that can be used as `FindRecords` criteria, each w
 | Parameter | Required | Description |
 |---|---|---|
 | `entityType` | Yes | The entity type to describe, such as `SalesInvoice` |
-| `collections` | No | Detail collections to include as well (comma-separated names, such as `invoiceLines`) — header fields are always included |
+| `collections` | No | Detail collections to include as well (comma-separated names, such as `details`, the lines of a sales invoice) — header fields are always included |
 
 This is not the same list as `GetImportSchema`: it also carries system fields such as `creationDate`, which can be searched on but never imported, and it flags calculated fields, which may not be filterable at all.
 
@@ -163,7 +170,7 @@ An attachment field is returned as `{"id": "...", "fileName": "...", "size": 123
 | Parameter | Required | Description |
 |---|---|---|
 | `entityType` | Yes | The entity type owning the field |
-| `fieldId` | No | The field id, such as `invoiceLines.discountType`. Accepts several, comma-separated; leave it out to get every enum field of the entity |
+| `fieldId` | No | The field id, such as `details.transItemType` (the line type of a sales invoice line). Accepts several, comma-separated; leave it out to get every enum field of the entity |
 
 Returns the value list with each value's Arabic and English titles — useful before importing, to send the correct constants.
 
@@ -185,7 +192,7 @@ Describes how to build a record for an entity type: every field with its type an
 |---|---|---|
 | `entityType` | Yes | The entity type |
 | `mode` | No | `visible` (default): on-screen fields — what a user would normally fill — or `all`: every importable field |
-| `collections` | No | Limit the returned detail collections (comma-separated names, such as `invoiceLines`) — header fields are always included |
+| `collections` | No | Limit the returned detail collections (comma-separated names, such as `details`) — header fields are always included |
 
 The response also carries an `example`: a skeleton record with placeholder values in exactly the shape `ImportRecord` expects. Amounts and quantities keep their real nesting rather than dotted keys — a journal-entry debit, for instance, is `"debit": { "value": { "amount": 1500, "currency": "EGP" }, "rate": 1, "localAmount": 1500 }`. Date fields carry a `format` hint: a date is written day-first as `dd-MM-yyyy` or ISO as `yyyy-MM-dd`, and a date-and-time as `yyyy-MM-dd'T'HH:mm` (a date alone is taken as midnight).
 
@@ -205,18 +212,23 @@ Imports one or more records in Nama's JSON format: an object keyed by entity typ
 The general shape:
 
 ```json
-{
-  "SalesInvoice": [
-    {
-      "code": "INV-1001",
-      "customer": "C-0005",
-      "invoiceLines": [ { "...": "line fields as described by the import schema" } ]
-    }
-  ]
-}
+{"SalesInvoice": [
+  {
+    "book": "SalesInvoice$#SINV",
+    "valueDate": "01-02-2024",
+    "customer": "10011",
+    "details": [
+      { "item": { "itemCode": "9999", "item": "9999" },
+        "quantity": { "quantity": { "primeQty": { "value": 1, "uom": "SRV" } } },
+        "price": { "unitPrice": 100 } }
+    ]
+  }
+]}
 ```
 
-(References — such as the customer and the item — are written directly by code; the exact structure of each entity is what `GetImportSchema` returns, and the safest approach is for the client to read an existing record with `GetRecord` and mirror its shape.)
+A sales invoice's lines are its `details` collection. References — the customer, the item — are written by code. A book or a document term is written as `<entity type>$#<code>`, as with `"book": "SalesInvoice$#SINV"`: the entity type it belongs to, then its code. The same JSON shape is described field by field in [The JSON Shape](../../platform/import-export/export-file-format.md#The-JSON-Shape). The exact structure of each entity is what `GetImportSchema` returns, and the safest approach is for the client to read an existing record with `GetRecord` and mirror its shape.
+
+A new record starts from the same blank record a new screen would show, so the user's default-values template fills it first and the imported fields are laid over it — a field the import leaves out keeps the template's value.
 
 Records are persisted through the standard entity gate, so all validations and effects (journal entries, inventory transactions, ...) work exactly as if the record were entered from the screen. If a record fails, the error details are returned to the model so it can correct and retry.
 
@@ -313,3 +325,19 @@ The second is the same endpoint that serves the single-use links of rendered rep
 ::: warning Release 20261007 or later
 The attachment tools, and attachment values in `ImportRecord`, exist only on servers from release 20261007 onwards.
 :::
+
+## Messages you may see
+
+When the server refuses a connection it answers every request with HTTP **401** and a text that starts with `MCP authentication failed:`. Clients usually show it as a failed connection; the text is in the connection's details or log. These messages exist in English only, so they read the same on an Arabic installation.
+
+| Message | Why | What to do |
+|---|---|---|
+| *MCP authentication failed: Missing API key* | The request carried no `X-API-Key` header (or `apiKey` / `clientId` parameter) and no bearer token. | Add the `X-API-Key` header to the client's configuration, spelled exactly. |
+| *MCP authentication failed: Invalid API key* | The key matches no committed API Credentials record — mistyped, from another server, or the record was deleted. | Copy the **API Key (Client Secret)** again from the record on *this* server (tick **View API Key** and save). |
+| *MCP authentication failed: Invalid API secret* | `X-API-Key` carried the record's **Client Id (Can Be Ignored)**, and `X-API-Secret` was missing or wrong. | Send the **API Key (Client Secret)** in `X-API-Key` and drop `X-API-Secret`. |
+| *MCP authentication failed: Your API key expired on {0}* | The record's **Valid to** date has passed. | Extend **Valid to** on the record, or issue a new one. |
+| *MCP authentication failed: Your API key can be used only after {0}* | The record's **Valid from** date is still in the future. | Wait, or bring **Valid from** forward. |
+| *MCP authentication failed: The provided API key is prevented from login* | **Prevent Login** is ticked on the record. | Untick it if the connection should work. |
+| *MCP authentication failed: MCP subscription expired on {0}* | The MCP subscription in the server's licence ended on that date (written `yyyy-MM-dd`). Everything else may be fine — the same key worked the day before. | Renew the MCP subscription with Nama; the key does not need to change. |
+
+An HTTP **404** at `/basic-services/mcp` is a different matter: the AI module is not installed on that server, so there is no MCP server to answer.

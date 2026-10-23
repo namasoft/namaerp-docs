@@ -62,9 +62,10 @@ A few general fields are worth knowing:
 Every order line, stock update and price update needs to know which Nama item a shop SKU means. Nama answers that question in this order:
 
 1. A line on a **Magento Item Linker** for this site with that SKU. The line gives the item and, when filled, its **Item UOM**, size, colour and revision.
-2. Otherwise, the Nama item whose **code** equals the SKU.
+2. Otherwise, an entry in **Item Codes** — the item's barcodes and alternative codes — whose code equals the SKU. It gives the item together with the size, colour, revision, lot and box recorded on that code.
+3. Otherwise, the Nama item whose **code** equals the SKU.
 
-So if your item codes already match the shop's SKUs, you need no linker for order reading. You need one when the codes differ, when one Nama item is sold as several shop products (one per colour or size, for example), or when the shop sells an item in a different unit.
+So if your item codes — or the barcodes and alternative codes in Item Codes, which can also carry the size and colour — already match the shop's SKUs, you need no linker for order reading. You need one when the codes differ and you do not want them as item codes in Nama, or when the shop sells an item in a different unit.
 
 ### The Magento Item Linker screen
 

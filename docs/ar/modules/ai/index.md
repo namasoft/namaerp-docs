@@ -15,6 +15,6 @@
 
 <LandingGrid>
   <LandingCard icon="💬" title="المساعد الذكي داخل النظام" link="/ar/modules/ai/ai-assistant.md" details="نافذة المحادثة المدمجة: فتحها واختيار النموذج ومراجعة سجل المحادثات واستخدام الوضع المتقدّم لتشخيص الإجابات." />
-  <LandingCard icon="🔌" title="خادم MCP لنظام نما ERP" link="/ar/modules/ai/ai-mcp-server.md" details="ربط عميل MCP خارجي بالنظام: عنوان الخادم والمصادقة وإعداد العملاء، وأدوات تصدير واستيراد السجلات التسع." />
+  <LandingCard icon="🔌" title="خادم MCP لنظام نما ERP" link="/ar/modules/ai/ai-mcp-server.md" details="ربط عميل MCP خارجي بالنظام: عنوان الخادم والمصادقة وإعداد العملاء، وأدوات تصدير واستيراد السجلات الاثنتا عشرة." />
   <LandingCard icon="🎧" title="دعم أفضل بمساعد ذكاء اصطناعي" link="/ar/modules/ai/ai-assisted-support.md" details="الإعداد الكامل للإجابة عن أسئلة الدعم عبر Claude Desktop: قاعدة معرفة التوثيق، وإبقاؤها محدَّثة، والربط بنظام حي." />
 </LandingGrid>

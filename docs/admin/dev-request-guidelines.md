@@ -1,3 +1,6 @@
+---
+description: "What support and setup teams must include in a development request for a bug or a new feature (logs, table name, backup URL, reproduction steps) and how to tell when the fix is released."
+---
 # Guidelines for Submitting Development Requests by Support and Setup Teams
 
 - Namasoft provides an internal system for tracking development requests arising from:

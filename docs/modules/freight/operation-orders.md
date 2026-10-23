@@ -46,7 +46,7 @@ What sets the operation order apart is that it splits services into **separate s
 | **Courier** | sending documents |
 | **Other** | any additional services |
 | **Transport / Remarks** | operational notes and data |
-| **Loading Points** | goods loading locations |
+| **Loading Points** | goods loading locations; each line can also name the **Container**, **Loading Date** and **Loading Time** |
 | **Certificates & Forms** | documents required for the shipment |
 | **Dimensions** and **Commodity** | weights and volumes of the goods |
 

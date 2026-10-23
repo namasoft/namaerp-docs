@@ -140,8 +140,8 @@ they are not re-applied when you save. Full explanation on
 ### Resources
 
 Task, resource, count, planned period (the English label reads *Standard Flat Rate*), actual period,
-remarks. The actual period is written back by the execution documents. This grid is descriptive —
-nothing schedules a machine and nothing checks that one is free.
+remarks. The actual period is written back by the execution documents, so the grid shows how long each
+machine was planned for and how long it was actually used.
 
 ### Spare parts
 

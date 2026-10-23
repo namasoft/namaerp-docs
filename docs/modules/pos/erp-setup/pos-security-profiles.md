@@ -1,4 +1,5 @@
 ---
+description: "The POS Security Profile screen that controls what a cashier may do at the register: attaching users, checkboxes versus the capabilities grid, supervisor approval instead of refusal, and every permission."
 entities: [POSSecurityProfile]
 menu: Point of sale → Settings → POS Security Profile
 ---
@@ -56,7 +57,8 @@ The tables group the permissions by what they control. The **Arabic** column is 
 | Can Edit Delivery Cost *(grid only)* | إمكانية تعديل تكلفة خدمة التوصيل | Changing the delivery charge. |
 | Can Edit Line Quantity | إمكانية تعديل الكمية على سطر المبيعات | Changing a line's quantity. |
 | Can Edit Sales Uom | إمكانية تعديل وحدة المبيعات | Selling in a different unit of measure. |
-| Can Edit Item Dims | إمكانية تعديل محددات الصنف | Changing the item's size, colour and similar properties on the line. |
+| Can Edit Item Dims | إمكانية تعديل محددات الصنف | Changing a line's lot, serial number, production and expiry dates, size, colour, revision, box and second serial on an ordinary line. Without it these cells are locked, unless the permission is listed for supervisor authorization (see [Asking a supervisor instead of refusing](#Asking-a-supervisor-instead-of-refusing)); then double-clicking the cell asks for a supervisor. It does not cover lines added by an offer — see the next row. |
+| Can Edit Free Item Dims | إمكانية تعديل محددات الأصناف المجانية | Changing the same properties on a line an offer added (a free item, or an item the offer brought in). A cashier with only **Can Edit Item Dims** can change the size on normal lines but not on these. |
 | Make Line Discount 1 … 8 *(grid; discount 1 also has a checkbox)* | إمكانية إعطاء تخفيض 1 على السطر … 8 | Entering line discount 1 to 8. Each discount column is controlled separately. |
 | Can Make Document Discount | إمكانية إعطاء تخفيض كلي على الفاتورة | Entering an invoice-level discount. |
 | Can Make Line Taxes | إمكانية إعطاء ضريبة على السطر | Editing the taxes on a line. |

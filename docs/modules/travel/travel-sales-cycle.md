@@ -1,4 +1,5 @@
 ---
+description: "The Travel Service Sales Order, Sales Invoice and Sales Return: selling tour services without stock, collecting payment, taxes and e-invoicing, and messages you may see."
 entities: [TRSalesInvoice, TRSalesOrder, TRSalesReturn]
 ---
 # Selling to the Client

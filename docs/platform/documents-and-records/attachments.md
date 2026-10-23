@@ -1,3 +1,6 @@
+---
+description: "Attachment fields on records and on grid lines: attaching, opening, replacing and removing files, where files are stored, finding what is attached where, bulk transfer of files and attachment security."
+---
 # Attachments
 
 Paperwork follows business documents around. A purchase invoice arrives as a PDF in somebody's

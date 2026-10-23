@@ -1,3 +1,6 @@
+---
+description: "The Audit Trail and Record Detailed Audit Trail of every record: reading the version history, viewing and comparing versions, field-level auditing, reverting a record, and who may see the trail."
+---
 # Audit Trail and Version History
 
 Sooner or later somebody asks the question every ERP has to answer: *who changed this, and what did

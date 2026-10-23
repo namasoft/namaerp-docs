@@ -71,7 +71,7 @@ When using Equal Payments type:
 #### Advanced Settings
 - **Approximation** (التقريب): Rounding value for payment amounts
 - **Rounding Type** (نوع التقريب): How to round payment values
-- **Payment Date at Day** (اليوم في الشهر): Specific day of month for payments
+- **Make Payment Date at Day** (جعل تاريخ الدفعة يوم): A day of the week, such as Sunday. Each calculated due date that does not already fall on that weekday is moved forward to the next one, so every instalment lands on, say, a Sunday
 - **Add Remaining Payment With Save** (إضافة دفعه بالمتبقي دائما مع الحفظ): Automatically add a final payment for any remaining balance
 - **Payments Period From Due Date** (فترة الدفعات من تاريخ الاستحقاق): Calculate payment periods from due date instead of document date
 - **First Payment Date Is Document Date** (تاريخ أول دفعة هو تاريخ المستند): Set first payment on the document date
@@ -237,18 +237,17 @@ Rounded Payment = Round(Payment Amount, Approximation, Rounding Type)
 Last Payment = Remaining Amount - Sum of Previous Payments
 ```
 
-### Validation Rules
+### Messages you may see
 
-The system validates:
-1. **Total Percentage**: Must equal 100% for percentage-based templates
-2. **Down Payment**: Cannot specify both value and percentage
-3. **Payment Values**: Must not exceed remaining amount
-4. **Payment Dates**: Must be valid future dates
-5. **Template Lines**: At least one payment line required for variable payments
+The percentages on a template are checked against 100, counting the down payment percentage too. They must add up to exactly 100 unless a line is of type **Fixed Value** or **Add Remaining Payment With Save** is ticked - then they only must not go above 100, because a fixed amount or the automatic remaining payment covers the rest.
 
-::: info
-If validation fails, the system will display specific error messages indicating which rule was violated.
-:::
+| Message | Why | What to do |
+|---|---|---|
+| *Sum of payments percentages must be one hundred* — «مجموع نسب الدفعات يجب إن يكون مائة» | The template's percentages, down payment included, do not add up to 100, and no line is a Fixed Value line and Add Remaining Payment With Save is off. | Correct the percentages, or tick **Add Remaining Payment With Save** so the shortfall becomes a final payment. |
+| *Sum of payments percentages can not be greater than one hundred* — «مجموع النسب لا يمكن ان يكون اكبر من مائة» | The percentages, down payment included, add up to more than 100. | Lower them. |
+| *Must enter either the value or the percentage* — «يجب إدخال قيمة الدفعه أو قيمة النسبة» | Both **Down Payment Value** and **Down Payment Percentage** are filled. | Clear one of them. |
+| *Must enter payment period value* — «يجب إدخال قيمة فترة الدفعة» | A line has a **Payment Period** unit but no number. | Type the number of days, weeks, months or years. |
+| *Payments total {0} is not equal to remaining {1}* — «مجموع الدفعات {0} لا يساوي قيمة المتبقي {1}» | Raised on an invoice: the payment schedule lines do not add up to what is left to pay after the down payment and external payments. | Correct the schedule lines. The check can be switched off with **Do Not Compare Remaining With Payment Total In Invoices** in the global configuration. |
 
 
 ## Common Scenarios
@@ -293,7 +292,7 @@ Template Configuration:
 - Payments Count: 4
 - Payment Period: 3 Months
 - Grace Period: 15 Days
-- Payment Date at Day: 1 (First of month)
+- Make Payment Date at Day: Sunday (each due date moves forward to the next Sunday)
 ```
 
 ### Scenario 5: Ten Monthly Instalments Plus Two Lump Sums
@@ -443,6 +442,7 @@ The installment lines grid in payment documents contains the following key field
 | **Due Date** | تاريخ الاستحقاق | Original due date of the installment |
 | **Remaining** | المتبقي | Outstanding balance after this payment |
 | **Net Value** | صافي القيمة | Total value of the installment |
+| **Collection Discount** | خصم التحصيل | A discount granted on this installment when it is collected — for paying early, say. It counts toward the installment's paid amount together with **Paid Value**, so the installment is settled even though less money changed hands. The voucher books it through the **Collection Discount** sides of its term. It cannot be negative: *Collection discount can not be negative* — «خصم التحصيل لا يمكن أن يكون سالبًا». |
 
 ### Payment Processing Logic
 

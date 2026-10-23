@@ -80,7 +80,7 @@ two records makes the winner unpredictable. Keep all the coding lines for one fi
 
 ## The formula columns
 
-The rest of the line is one block of seventeen formula and numbering columns. You rarely fill more
+The rest of the line is one block of formula and numbering columns. You rarely fill more
 than three or four of them.
 
 | Column | Purpose |
@@ -90,22 +90,12 @@ than three or four of them.
 | Name1 Calculation Formula | Builds the Arabic name. |
 | Name2 Calculation Formula | Builds the English name. |
 | Alternate Code Formula | Builds the alternative code, on files that have one. |
-| Revision Code Calculation Formula | Builds the code of an item's revision records. |
-| Size And Color Code Calculation Formula | Builds the code of an item's size-and-colour records. |
-| Name 1 Encoding Formula For Colour And Size | The Arabic name of a size-and-colour record. |
-| Name 2 Encoding Formula For Colour And Size | The English name of a size-and-colour record. |
-| Name 1 Encoding Formula For Revision | The Arabic name of a revision record. |
-| Name 2 Encoding Formula For Revision | The English name of a revision record. |
 | Code Sequence Prefix | Identifies **which running counter** the next number is drawn from. |
 | Code Suffix Length | How many digits the running number is padded to. |
 | Suffix First Number | The number the counter starts from. |
 | Do Not Reset Code With Update | Keeps the existing code instead of recalculating it when the record is edited. |
-| Update Revision If Empty Only | Fills a revision code only when it has been left blank. |
-| Update Color and Size If Empty Only | Fills a size/colour code only when it has been left blank. |
 
-The five revision and size-and-colour columns exist because an **item** is not one record: it can
-carry revision variants and size-and-colour variants, and each variant needs its own code and its
-own pair of names. On every other master file those five columns have nothing to act on — see
+Item revisions and size-and-colour variants are coded from the item's own coding setup — see
 [Items have their own coding setup](#Items-have-their-own-coding-setup) below.
 
 ::: tip Not every column is on screen
@@ -312,14 +302,11 @@ Items do not start with this grid. When an item is saved the system looks first 
 matches. If nothing is defined there it falls back to the item coding formula held in the global
 configuration, and only if **both** are empty does it come down to a Files Auto Coding line.
 
-::: warning The revision and size/colour columns do not act from this grid
+::: tip Coding item variants
 The revision code, the size-and-colour code, their four name formulas and the two
 "…If Empty Only" switches are applied on the item's own coding path — the **Item Section** and the
-global item coding formula. A Files Auto Coding line reached as the last resort codes the item
-record itself and nothing else; the variant columns on that line stay inert.
-
-If you are coding item variants, configure the formula on the **Item Section** and leave this grid
-for the other master files.
+global item coding formula. If you are coding item variants, configure the formula there and use
+this grid for the other master files.
 :::
 
 A section can also be told to **Prevent AutoCoding**, in which case its items are never coded

@@ -273,7 +273,9 @@ Turn on **Enable Execution Log** to keep a history of every run. Each time the t
 - **Status** — *Running* while in progress, then *Success* or *Failed*
 - **Error Message** — a short reason when the run failed
 
-This gives you an at-a-glance audit trail: you can confirm a task is actually firing on schedule, see how long each run takes, and spot a run that failed. Leave it off for very frequent tasks (e.g. every-minute jobs) if you don't want a long history building up.
+This gives you an at-a-glance audit trail: you can confirm a task is actually firing on schedule, see how long each run takes, and spot a run that failed.
+
+To stop the history growing without end — an every-minute job writes more than 1,400 lines a day — fill **Execution Log Retention By Days** on the task header. Each logged run then deletes this task's log lines older than that many days. Leave it at 0 or empty to keep every line.
 
 ### Error Notification
 Configure **When Errors Notification** to send an alert whenever the task fails. That notification definition must be:

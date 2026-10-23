@@ -11,12 +11,13 @@ Two checks can run when a stock document is saved. A document kept as a draft is
 
 Whether a line is subject to these checks is decided by an overdraft policy, evaluated in this order:
 
-1. The matching row in *Dimensions With Allowed Overdraft* (ignored for stock transfers).
-2. The item's own **Over Draft Policy**. **Yes** allows, **No** blocks, and an empty policy counts as **No**. Only **Inherited** passes the decision on.
-3. The item section's policy, when the item has a section. Here too an empty policy counts as **No**, and only **Inherited** passes it on.
-4. The global **Over Draft Policy** below.
+1. The item's **Allow Overdraft In Reservation** (on the item's configuration). When it is ticked, the item may go negative in every document except a Stock Issue, a Stock Receipt and the three stock-transfer documents (Stock Transfer, Issue Stock Transfer, Receipt Stock Transfer). Those five, and every document for an item where it is clear, move on to step 2.
+2. The matching row in *Dimensions With Allowed Overdraft* (ignored for stock transfers).
+3. The item's own **Over Draft Policy**. **Yes** allows, **No** blocks, and an empty policy counts as **No**. Only **Inherited** passes the decision on.
+4. The item section's policy, when the item has a section. Here too an empty policy counts as **No**, and only **Inherited** passes it on.
+5. The global **Over Draft Policy** below.
 
-So an item whose policy is **No** is blocked on its own; nothing on the document term is needed for that.
+So an item whose policy is **No** is blocked on its own (unless step 1 lets it through); nothing on the document term is needed for that.
 :::
 
 ## Switches on the document and its term
@@ -98,7 +99,6 @@ With it off, only the immediate balance check runs, and that check does not look
 | *Insufficient quantity for item {0} {1},Available Quantity is {2}, Reserved quantity is {3}* — «الكمية من الصنف {0} {1} لا تكفي. الكمية المتاحه {2} . الكميه المحجوزه {3}» | The immediate balance check: the line issues more than is on hand right now, once reservations are set aside. | Reduce the quantity, receive the stock first, or allow overdraft for the item, its section or the dimensions row. |
 | *Insufficient quantity for item {0} {1},Available Quantity on Date {2}, time {3} is {4}* — «الكمية من الصنف {0} {1} لا تكفي , الكمية المتاحة في تاريخ {2} - الساعة {3} كانت: {4}» | The by-date check: the balance was not enough **at that moment in the past**, even if it is enough today. The message gives the date, the time and the balance as it stood. | Check what the document is back-dated to. Either move the date after the receipt, or turn the by-date check off for this case. |
 | *Insufficient quantity for item {0} {1},Available Quantity on Date {2}, time {3} is {4} and the document {5} will lead to overdraft* — «الكمية من الصنف {0} {1} لا تكفي , الكمية المتاحة في تاريخ {2} - الساعة {3} كانت: {4}  المستند {5} سيؤدي الي كميات مكشوفة» | The same by-date check, but the negative appears on a **later** document — the one named in the message — rather than on the one you are saving. | Look at the named document. Inserting stock movements in the past is what pushes a later document negative. |
-| *Insufficient quantity for item {0} {1}, Reserved quantity is {2}* — «الكمية من الصنف {0} {1} لا تكفي. الكمية المحجوزة {2}» | The quantity exists but is reserved for something else. | Release the reservation, or issue from what is unreserved. |
 | *Cannot commit document {0} on date {1} because there are {2} documents not processed* — «لا يمكن حفظ المستند {0} في التاريخ {1} لوجود عدد مستندات {2} لم تتم معالجة تكاليفهم» | The backlog guard described above: the document is older than **Max Days Count** *and* more than **Max Unprocessed Documents Count** stock documents are still waiting for cost processing. | Let the backlog clear, or save the document with today's date. Both settings must be filled for this guard to fire at all. |
 | *Negative balance for item {0} - quantity {1} on date {2}* — «رصيد بالسالب للصنف {0} - كمية {1} في التاريخ {2}» | A closing entry was attempted while an item stands negative at the period end, and **Allow Creating Closing Entry if Negative Stock Balance Found** is off. | Fix the negative — usually a missing receipt — or turn that option on if you accept closing with negatives. |
 | *Allow overdraft can only be used with Stock or Assembly items* — «لا يمكن استعمال السماح بالسحب علي المكشوف إلا مع الأصناف المخزنية أو المجمعة» | An overdraft policy was set on an item that holds no stock, such as a service item. | Leave the policy empty on those items. |

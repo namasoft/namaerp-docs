@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract Fine document: recording a charge against a subcontractor, its fine lines, what it books, how it is deducted from the next extract, what can change afterwards, and fine reasons."
 entities: [ContractorContractFine]
 menu: Contracting → Contractor Contracting → Contractor Contract Fine
 ---

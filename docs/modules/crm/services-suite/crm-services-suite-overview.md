@@ -44,10 +44,8 @@ Three more gaps are inside the documents that *do* exist:
 
 Here is the fact that decides the choice for most businesses, and it is easier to say than to accept.
 
-::: danger Services in this branch carry no price
-A service line in the Service Documents folder has **no item, no quantity and no price**. There is nowhere to type a rate for the work. The *Total Price Of Services* (إجمالي سعر الخدمات) group and the matching grid column are therefore **always 0.00** on every screen in this branch — contract, order, execution, invoice, return, sales order, sales quotation.
-
-A **Maintenance Service Invoice can bill spare parts only.** Service revenue never reaches the ledger.
+::: warning Services in this branch carry no price
+A service line in the Service Documents folder names the service and carries **no item, no quantity and no price**. A **Maintenance Service Invoice bills its spare-part lines.**
 :::
 
 So the choice comes down to this:
@@ -55,8 +53,6 @@ So the choice comes down to this:
 - **If your product is labour** — a cleaning contract, a security contract, a monthly servicing retainer — and you expect the system to price it, total it and invoice it, then the Service Documents branch **cannot do that as it stands**. The machine maintenance branch can: it has a priced service catalogue whose lines carry an item, a quantity and a price, and those lines reach the invoice and the ledger. Register each serviced site as a machine record and use the machine suite.
 - **If you already run the machine suite** and your only reason to look at Service Documents is that some of your subjects are sites rather than equipment, stay where you are. A machine record is generic enough to stand for a site, and you keep pricing, instalments, visits, itineraries and the ownership history.
 - **Use the Service Documents branch** when what you need is a **dispatch-and-execute engine**: plan recurring visits from a contract, generate work plans and orders, send an employee, record the checklist and the parts consumed, and invoice the **parts**. The one supported way to charge for the labour itself is to register the service fee as a stock or service **item** and put it in the **Spare Parts** grid. That is not a workaround somebody invented — it is the only route the product supports.
-
-There is a second, quieter consequence of the missing price. The contract's spare-part entitlement columns — **Sold Quantity** (ما تم بيعه) and **Remaining Quantity** (المتبقي) — look like allowances that get drawn down as work is done. They are not. Nothing in this branch ever consumes them. They are manual bookkeeping columns, and no over-draw is ever refused. See [Service Invoicing](/modules/crm/services-suite/crm-service-invoicing) for the full picture.
 
 ## A Naming Clash You Will Trip Over
 
@@ -71,12 +67,11 @@ The services branch has no equivalent of the second one, which is exactly why se
 
 ## Machine Vocabulary You Will See Anyway
 
-Because the shared foundation was written for machines first, machine wording survives on service screens. None of it is a defect you can fix from the screen, and knowing it in advance saves a support call:
+Because the shared foundation was written for machines first, machine wording survives on service screens. Knowing it in advance saves a support call:
 
-- Header fields labelled **Machine Type** (نوع الآلة) and **Machine Category** (تصنيف آلة) appear on service contracts, orders and notices. Machine Category is genuinely used — it filters the task-template lookup — so fill it. Machine Type is inherited and inert here.
+- A header field labelled **Machine Category** (تصنيف آلة) appears on service contracts, orders and notices. It filters the task-template lookup, so fill it.
 - **Machine Classification 1..5** and **Serial Number** are on the screens too, as free reference fields.
 - On the Maintenance Service Order the services grid is **titled "Machines" (ألآت)** although every row in it is a service. The other five documents in the folder title the same grid correctly.
-- The **Maintenance Visits** tab (on the order, invoice and invoice return) and the **Visits Number** tab (on the contract, sales order and sales quotation) both list the machine suite's visit document. They can never show a row in this branch. Do not use them as evidence that no visits took place.
 
 ## What Is in the Folder
 

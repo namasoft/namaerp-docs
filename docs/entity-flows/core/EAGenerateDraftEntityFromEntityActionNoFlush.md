@@ -9,11 +9,11 @@ entities: [EntityFlow]
 
 # EAGenerateDraftEntityFromEntityActionNoFlush
 
-Visit [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md) to know more about fields map and the available features
-
 ## Overview
 
 Same as [EAGenerateDraftEntityFromEntityAction](EAGenerateDraftEntityFromEntityAction.md) but without automatic database flush for batch processing optimization.
+
+Visit [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md) to know more about fields map and the available features
 
 ## When This Action Runs
 

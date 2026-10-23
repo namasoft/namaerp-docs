@@ -27,8 +27,7 @@ schedule runs one of the integration's actions.
 ![The Integrations menu in the sidebar](../../ar/modules/integrations/images/integrations-menu-en.png)
 
 The menu has the same shape for both: the configuration screens under **Master Files**, and — for
-Eltezam only — the submission document under **Documents**. The root of the menu reads
-*integrations* in both languages.
+Eltezam only — the submission document under **Documents**, all under the **Integrations** root.
 
 ::: tip Looking for another integration?
 The platform-wide integrations — the Nama ERP API, attendance machines, the invoice retriever,

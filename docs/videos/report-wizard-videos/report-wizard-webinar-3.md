@@ -1,3 +1,6 @@
+---
+description: "Video summary: building Cross Tab reports, account statements and inventory movement reports with the Report Wizard, step by step."
+---
 # Complete Documentation for Creating Cross Tab Reports, Account Statements, and Inventory Movement Using the Report Builder
 
 [Watch the video](https://youtu.be/jZGCZt99ouw)

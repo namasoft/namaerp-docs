@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset master file, page by page: the identity fields you type, the financial figures written only by documents, insurance and custody, statistics, maintenance history, save refusals and messages."
 entities: [FixedAsset]
 menu: Assets → Master Files → Fixed Asset
 ---

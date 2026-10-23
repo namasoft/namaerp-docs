@@ -35,7 +35,7 @@ title: إدارة المستندات
 <LandingGrid>
   <LandingCard icon="📄" title="المستندات الأرشيفية" link="/ar/platform/dms/dms-documents.md" details="سجل المستند نفسه: الحفظ والملاك والصور المرفقة والحالات والنسخ والطرق الأربع للعثور عليه ثانية." />
   <LandingCard icon="🔁" title="إخراج المستندات وإعادتها" link="/ar/platform/dms/dms-movements.md" details="سند الحركة: أنواعه الأربعة وما يغيّره الترحيل فعلًا ولماذا تحتاج حركة النقل إلى متابعة يدوية." />
-  <LandingCard icon="📦" title="تحميل أرشيف من ملف مضغوط" link="/ar/platform/dms/dms-bulk-import.md" details="تحويل ملف مضغوط واحد إلى مئات المستندات، وأي أعمدة تُهمَل بصمت في تلك الشاشة." />
+  <LandingCard icon="📦" title="تحميل أرشيف من ملف مضغوط" link="/ar/platform/dms/dms-bulk-import.md" details="تحويل ملف مضغوط واحد إلى مئات المستندات، وأي أعمدة تصل إلى المستندات المُنشأة." />
 </LandingGrid>
 
 ## الإعداد

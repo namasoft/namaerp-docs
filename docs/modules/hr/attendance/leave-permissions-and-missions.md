@@ -1,5 +1,6 @@
 ---
-entities: [LeavePermission, MissionDocument, LeavePermissionConfiguration, LeaveReason]
+description: "Leave Permission and Mission Document for short intra-day absences, the Leave Permission Configuration limits, the Leave Reason list, mission overlaps, and the aggregated versions for many employees."
+entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, AggregatedMissionDocument, LeavePermissionConfiguration, LeaveReason]
 ---
 # Leave Permissions & Missions
 
@@ -190,9 +191,20 @@ The all-overtime rule is not peculiar to the weekly rest day — an official hol
 <HRConfigOption option-code="value.calculateNormalWorkHoursForVacations" link-title="Calculate Normal Work Hours For Vacations (Overtime will not be all day)" />
 :::
 
+## Many employees at once: Aggregated Leave Permission and Aggregated Mission Document
+
+When a whole team leaves early for a training session, or ten engineers go out to one site visit, entering ten separate permissions or missions is slow. Two batch screens do it in one document:
+
+- **Aggregated Leave Permission** (إذن انصراف مجمع) — *Payroll > Time Attendance > Aggregated Leave Permission*.
+- **Aggregated Mission Document** (سند مأموريه مجمع) — *Payroll > Time Attendance > Aggregated Mission Document*.
+
+Each grid line is one employee with its own dates, hours and reason (plus permission type and HR period on the leave permission, or allowance value, **Full Day Mission** and **Not Include Week Ends** on the mission). The header carries the shared values — employee, dates, hours, reason, and on the leave permission also permission type and HR period — and whatever is filled in the header is copied to every line on save, so fill the header for what everyone shares and leave it empty for what differs per line.
+
+Saving the batch creates one ordinary **Leave Permission** or **Mission Document** per line, filed in the book and term named on the batch's [document term](../document-terms/hr-terms-attendance-and-vacations.md), and links it on the line. Those single documents are what attendance reads, so every rule on this page applies to them one by one. Editing the batch updates them, removing a line deletes its document, and deleting the batch deletes them all — so make changes on the batch, not on the generated documents.
+
 ## Actions on this screen
 
-The **Leave Permission**, **Mission Document**, **Leave Permission Configuration** and **Leave Reason** screens have no buttons of their own. The one button in this area sits on the **Leave Permission Request** (*Payroll > Time Attendance > Leave Permission Request*), the request an employee raises — often from the mobile app — before HR records the permission:
+The **Aggregated Leave Permission** and **Aggregated Mission Document** have no buttons of their own either. The **Leave Permission**, **Mission Document**, **Leave Permission Configuration** and **Leave Reason** screens have no buttons of their own. The one button in this area sits on the **Leave Permission Request** (*Payroll > Time Attendance > Leave Permission Request*), the request an employee raises — often from the mobile app — before HR records the permission:
 
 - **Convert To Leave Permission** — opens a new Leave Permission in a popup, already carrying the request's employee, permission type, HR period, dates, hours, reason and multi-day setting, for you to review and save. The request must be saved first.
 

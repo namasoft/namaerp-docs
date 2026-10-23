@@ -59,8 +59,8 @@ Work through these in order:
 3. **Is the cash really the cash method?** Check that the payment method used for cash is ticked **Cash Payment Method** on the register (see above).
 4. **Is the Cash tab of the term filled?** If the register resets but no transfer entry appears on the server, the shift-closing term's **Cash Debit** and **Cash Credit** are missing.
 
-::: warning Not the same option as on the Payment Method
-The **Payment Method** screen has an option with a similar name, **Reset Balance With Shift Close** (*تصفير الرصيد مع غلق الوردية*). It belongs to the accounting module's own **Open Shift** / **Close Shift** documents, not to the POS. Ticking it has no effect on POS shifts.
+::: info Not the same option as on the Payment Method
+The **Payment Method** screen has an option with a similar name, **Reset Balance With Shift Close** (*تصفير الرصيد مع غلق الوردية*). It belongs to the accounting module's own **Open Shift** / **Close Shift** documents. POS shifts follow **Shift Close Reset Cash** on POS Settings.
 :::
 
 ## How differences are posted
@@ -95,7 +95,7 @@ All of these are on **POS Settings**. Where a register has its own field with th
 | Update Invoices Without ShiftOpening On Shift Save | تحديث الفواتير التي لا تحتوي على فتح وردية مع حفظ الوردية | When a shift opening reaches the server after its invoices, links the already-received invoices of that shift to it. |
 | Start With New Shift UI | البدء بالشكل الجديد لشاشة الورديات | Uses the newer shift-screen layout for the mid-shift cash count too. |
 
-A delayed-payment invoice always blocks the close, whatever the settings.
+Two things always block the close, whatever the settings: a delayed-payment invoice, and a return still waiting for the server to confirm it (see [Returns waiting for the server](../pos-returns-and-replacements.md#Returns-waiting-for-the-server)).
 
 ### Payment-method options that affect the close
 
@@ -115,6 +115,7 @@ The register raises these when a cashier tries to close a shift or sell.
 | *You can not close shift if there is any held documents (invoices, returns or replacements)* — «لا يمكن غلق الوردية و هناك مستندات معلقة (فواتير او مردودات او استبدالات)» | **Prevent Close If Hold Documents Exist** is on. | Finish or delete every held document. |
 | *You can not close shift if there is any unused credit notes* — «لا يمكن غلق الوردية و هناك إشعارات دائنة غير مستخدمة» | **Prevent Shift Close On Unused Credit Notes** is on and a credit note from this shift still has a balance. | Use the credit note, or ask the manager whether the setting should stay on. |
 | *You can not close shift if there is any delayed payment invoices* — «لا يمكن غلق الورديه في وجود فواتير مؤجلة الدفع» | An invoice in this register is waiting for payment. | Take the payment for it first. |
+| *You cannot close the shift while these returns are not confirmed by the server: {0}. Open them from the held documents to confirm or complete them, or delete them* — «لا يمكن غلق الوردية و هناك مردودات لم يؤكد السيرفر استلامها: {0}. افتحها من المستندات المعلقة لتأكيدها أو استكمالها، أو احذفها» | The listed returns were sent to the server, but the register never got the server's answer. | On the return screen, open each one from the held documents and confirm, complete or delete it as described in [Returns waiting for the server](../pos-returns-and-replacements.md#Returns-waiting-for-the-server). Never refund the customer a second time. |
 | *Actual balance is required for payment method {0}* — «الرصيد الفعلي إجباري لطريقة الدفع {0}» | The method is marked **Actual Balance Is Required In POS** and its count is empty. | Enter the counted amount. |
 | *Negative actual value* — «قيمه فعليه سالبه» | A negative amount was typed as the counted cash. | Correct the count. |
 | *You should close current shift, And open new one* — «يجب إغلاق الوردية الحالية لتخطى وقت الوردية المسموح به وفتح وردية جديدة» | The shift has passed its **Work Shift Time**. | Close the shift and open a new one. |

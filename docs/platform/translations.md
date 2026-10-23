@@ -1,4 +1,5 @@
 ---
+description: "How to change Arabic and English labels of screens, fields and actions with a Translation OverRider record, edit them from the screen with Alt + Ctrl + T, and use the Export Translations window."
 entities: [TranslationOverRider]
 menu: Basic → Settings → Translation OverRider
 ---

@@ -31,6 +31,7 @@ A **Vacation Request** and a **Vacation Document** follow the general request/do
 | Balance Till End Of Year | الرصيد حتى نهاية العام | A projection of the balance through year end, useful for planning further leave. |
 | Alternative Employee | الموظف البديل | Who covers for the employee while away. |
 | Delegation | التفويض | An optional formal delegation of the employee's authority/tasks for the duration of the leave. |
+| Postpone Loans During Vacation | تأجيل السلف خلال فترة الإجازة | Pushes the employee's loan instalments out by the length of the leave — see [Postponing loans during the vacation](#Postponing-loans-during-the-vacation) below. Also on the Aggregated Vacation Document. |
 | From Document | بناءا على | Points back to the Vacation Request the document was generated from, when applicable. |
 
 The document also has a small "contact info during vacation" block (address, mobile, email) so HR can reach the employee if genuinely needed while they are away.
@@ -40,6 +41,14 @@ The document also has a small "contact info during vacation" block (address, mob
 ## How it's processed
 
 A vacation document does not post to the general ledger — the accounting effect of an employee's salary is worked out later, on the salary document for the period. What a vacation document *does* do is register the leave against the employee's attendance record for those dates, and against their balance. When the [salary engine](../concepts/hr-salary-engine.md) later calculates that period, it reads the recorded leave to decide whether those days are paid as normal, paid partially, or unpaid — exactly as configured on the vacation type (`Without Salary...` / `Deduct Percentage From Salary Components`). In other words: the vacation document's effect surfaces in attendance and then in salary, not in the ledger directly.
+
+## Postponing loans during the vacation
+
+An employee going on a long leave — unpaid leave especially — often has no salary to recover a loan instalment from. Tick **Postpone Loans During Vacation** (تأجيل السلف خلال فترة الإجازة) on the Vacation Document or the Aggregated Vacation Document and Nama moves the instalments for you. Nothing is postponed unless this box is ticked; the vacation term alone never postpones anything.
+
+When the document is saved, Nama creates an **Aggregated Loan Installment Reschedule** (سند إعادة جدولة أقساط سلفة مجمع), filed in the **Generated Loan Reschedule Book / Term** named on the [vacation term](../document-terms/hr-terms-attendance-and-vacations.md). It carries one line for every saved, active loan of the employee that still has an instalment, not yet paid or exempted, due on or after the vacation's start date. Each line shifts that loan's instalments, from the vacation's start date onwards, by the length of the vacation in whole months, rounded up: a 10-day leave moves them one month, and a leave of one month and five days moves them two.
+
+Editing the vacation updates the same reschedule. Deleting or cancelling the vacation deletes it, and the instalments go back to their original dates. If the employee has no loan to postpone, no reschedule is created.
 
 ## Planning leave ahead of time: Vacation Plan Document
 
@@ -109,6 +118,9 @@ Most refusals on a vacation come from the rules on its [Vacation Type](vacation-
 | *Vacations of type {0} must be created before vacation date with at least {1} days* — «الأجازات من النوع {0} يجب أن تنشأ قبل تاريخ الأجازة ب {1} يوم على الأقل» | The vacation type has a **Minimum Period Before Vacation Request** for leaves of this length, and the document is being entered too close to the start date. The check uses the date the document was created. | Enter leave of this type earlier. If an exception is needed, change the type's rule. |
 | *Vacations of type {0} must be created after vacation date with at most {1} days* — «الأجازات من النوع {0} يجب أن تنشأ بعد تاريخ الأجازة ب {1} يوم على الأكثر» | The type has a **Maximum Period After Taking Vacation**, and the document is being entered too long after the leave started. This is typical for sick leave. | Record such leave sooner, or relax the rule on the vacation type. |
 | *Document {0} - you Must Create Working Start Document After Vacation {1}* — «المستند {0} - يجب عمل سند مباشرة عمل بعد الأجازة {1}» | **Calculate Vacation Balance Based On Start Date** is on in HR Configuration, and the employee's previous vacation {1} has no **Work Starting Document**. Without one the system can't tell when the employee came back. | Create the Work Starting Document for vacation {1} first. If the return date should count as the return to work for this type or reason, tick **Consider Return Date As Working Start Date** on the vacation type or the vacation reason. |
+| *Document {0}, To postpone loans during vacation, the term must define the generated loan reschedule book and term* — «المستند {0}، لتأجيل السلف خلال فترة الإجازة يجب تحديد دفتر وتوجيه سند إعادة الجدولة المنشأ في توجيه المستند» | **Postpone Loans During Vacation** is ticked, but the document's term has no **Generated Loan Reschedule Book** or **Generated Loan Reschedule Term**, so the reschedule has nowhere to go. | Fill both on the vacation term (or the Aggregated Vacation Document term), or untick the box if the loans should not move. |
+| *The book {0} must be for the type {1}* — «الدفتر {0} يجب أن يكون للنوع {1}» | Raised when saving the vacation term: the **Generated Loan Reschedule Book** belongs to another document type. | Pick a book of the Aggregated Loan Installment Reschedule type. |
+| *The term {0} must be for the type {1}* — «التوجيه {0} يجب أن يكون للنوع {1}» | Raised when saving the vacation term: the **Generated Loan Reschedule Term** belongs to another document type. | Pick a term of the Aggregated Loan Installment Reschedule type. |
 | *You did not define hr year contains date {0}* — «لم يتم تعريف سنة رواتب تحتوي علي التاريخ {0}» | No HR year covers the vacation's start date. | Define the HR year — see [HR Years, Periods & Salary Issuance](../setup/hr-years-and-periods.md). |
 
 ## Where this fits

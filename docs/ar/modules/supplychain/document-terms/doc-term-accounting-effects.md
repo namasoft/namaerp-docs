@@ -41,11 +41,11 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | المحدِّد | معرّف الحقل |
 |---|---|
 | مصدر / قيمة البعد الكياني (Entity dimension) | `termConfig.config.debit.entityDimensionSource` / `termConfig.config.debit.entityDimension` |
-| مصدر / قيمة مرجع 1 (Reference 1) | `termConfig.config.debit.ref1Source` / `termConfig.config.debit.ref1` |
-| مصدر / قيمة مرجع 2 (Reference 2) | `termConfig.config.debit.ref2Source` / `termConfig.config.debit.ref2` |
-| مصدر / قيمة مرجع 3 (Reference 3) | `termConfig.config.debit.ref3Source` / `termConfig.config.debit.ref3` |
+| مصدر مرجع 1 (Reference 1) | `termConfig.config.debit.ref1Source` |
+| مصدر مرجع 2 (Reference 2) | `termConfig.config.debit.ref2Source` |
+| مصدر مرجع 3 (Reference 3) | `termConfig.config.debit.ref3Source` |
 
-**تجاهل الحقول غير الموجودة في المراجع والبعد الكياني (Ignore unfound fields in refs and entity dimension)** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — عدم فشل الترحيل عندما يكون حقل مصدر مرجعي مفقودًا. يُعرض عند تفعيل أي مصدر مرجع/بعد كياني.
+**تجاهل الحقول غير الموجودة في المراجع والبعد الكياني (Ignore unfound fields in refs and entity dimension)** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — عدم فشل المعالجة عندما يكون حقل مصدر مرجعي مفقودًا. يُعرض عند تفعيل أي مصدر مرجع/بعد كياني.
 
 **حقل مصدر العملة / المعدل (Currency / Rate source field)** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — حقول مصدر عملة ومعدل سطر القيد؛ يُعرضان عند تفعيل `AddCurrencyAndRateSourceToTerms`.
 
@@ -65,7 +65,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 يستخدم سند مصروفات أمر التشغيل (JOrderExpense) المعرّفات المجرّدة `termConfig.debit` / `termConfig.credit` (وليس تحت `config`)؛ بينما تستخدم التكلفة الإضافية للتوريد (ReceiptAdditionalCost) المعرّفات `termConfig.config.debit` / `termConfig.config.credit`.
 :::
 
-**إختصار القيود (Shorten Ledger)** `termConfig.config.shortenLedger` — تلخيص القيد بدلًا من ترحيل سطر لكل سطر مستند. فالسطور المتماثلة تُدمج في سطر واحد، وحيثما التقى مدين ودائن في نفس المجموعة لا يبقى إلا الفرق بينهما. فالفاتورة ذات العشرة سطور التي تجعل نفس العميل مدينًا عشر مرات تُرحّل سطر عميل واحدًا بالإجمالي.
+**إختصار القيود (Shorten Ledger)** `termConfig.config.shortenLedger` — تلخيص القيد بدلًا من تسجيل سطر لكل سطر مستند. فالسطور المتماثلة تُدمج في سطر واحد، وحيثما التقى مدين ودائن في نفس المجموعة لا يبقى إلا الفرق بينهما. فالفاتورة ذات العشرة سطور التي تجعل نفس العميل مدينًا عشر مرات تُرحّل سطر عميل واحدًا بالإجمالي.
 
 ولا يُعدّ سطران "متماثلين" إلا إذا تطابق كل شيء فيهما: الحساب، والحساب الفرعي، والبعد الكياني، ومحددات مراكز التكلفة الأربعة، والمراجع العامة الثلاثة، وسطرا البيان، والعملة وسعر التحويل. وأي شيء يختلف من سطر لآخر يبقي السطور منفصلة — وقالب بيان يطبع اسم الصنف هو السبب المعتاد في أن يخرج قيدٌ كان متوقَّعًا أن يُختصر بطوله كاملًا.
 
@@ -210,7 +210,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **مدين / دائن التكاليف الإضافية (التوريد المخزني)** `termConfig.config.additionalCostDebit` / `termConfig.config.additionalCostCredit` — الأطراف المحاسبية للسطرين اللذين يُضافان إلى قيد التوريد المخزني حين يوزّع عليه سند تكاليف إستلام إضافية مصروفاً. وليسا خيارَي تفعيل: إن تُرك المدين فارغاً استُخدم طرف المدين الرئيسي للتوريد (حساب المخزون)، وإن تُرك الدائن فارغاً استُخدم طرف الدائن الرئيسي. اضبط الدائن على الحساب الذي يجعله سند التكاليف الإضافية مديناً، وإلا لم يتقابل القيدان. وانظر [الشحن والجمارك والتكلفة النهائية](/ar/modules/servicecenter/car-purchasing/car-landed-cost#yn-tdhhb-lmHsb) لمثال عملي.
 
-**جانب التكلفة الإضافية (التحويلات)** `termConfig.additionalCostConfig` — على التحويل المخزني / توريد التحويل المخزني / صرف التحويل المخزني، الجانب المحاسبي المستخدم لترحيل التكلفة الإضافية (المحمّلة) المضافة إلى المخزون المحوّل، ضمن مجموعة *التكاليف الإضافية*.
+**جانب التكلفة الإضافية (التحويلات)** `termConfig.additionalCostConfig` — على التحويل المخزني / توريد التحويل المخزني / صرف التحويل المخزني، الجانب المحاسبي المستخدم لقيد التكلفة الإضافية (المحمّلة) المضافة إلى المخزون المحوّل، ضمن مجموعة *التكاليف الإضافية*.
 
 **مدين / دائن فرق مردود المشتريات (Purchase Return Difference Debit / Credit)** `termConfig.config.purchaseRetDiffDebit` / `termConfig.config.purchaseRetDiffCredit` — الجوانب المحاسبية لمدين ودائن فرق تكلفة مردود المشتريات. الصرف المخزني فقط.
 
@@ -222,7 +222,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **مدين / دائن الدفعة المقدمة (Down Payment Debit / Credit)** `termConfig.config.debit` / `termConfig.config.credit` — على فتح الاعتماد، يحمل الجانبان المدين/الدائن الرئيسيان عنواني *مدين الدفعة المقدمة* / *دائن الدفعة المقدمة*.
 
-**مدين / دائن الرسوم (Fees Debit / Credit)** `termConfig.feesDebit` / `termConfig.feesCredit` — الجوانب المحاسبية لترحيل عمولة/رسوم فتح الاعتماد.
+**مدين / دائن الرسوم (Fees Debit / Credit)** `termConfig.feesDebit` / `termConfig.feesCredit` — الجوانب المحاسبية لقيد عمولة/رسوم فتح الاعتماد.
 
 **مدين / دائن التغطية (Covered Debit / Credit)** `termConfig.coveredDebit` / `termConfig.coveredCredit` — الجوانب المحاسبية لجزء التغطية النقدية (الهامش/الغطاء) من الاعتماد المستندي، ضمن مجموعة *تأثير التغطية*.
 
@@ -236,11 +236,11 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **يمكن تعديل الضريبة (Editable Taxes)** `termConfig.editableTaxes` — السماح بتعديل الضرائب المحتسَبة على المستند. JOrderExpense وReceiptAdditionalCost وLcExpense.
 
-**السماح بترك نوع الحافظة فارغاً (Allow Empty Subsidiary Account Type)** `termConfig.allowEmptySubsidiaryAccountType` — السماح بالترحيل حتى عندما لا يكون نوع الحافظة/الحساب الفرعي مضبوطًا. JOrderExpense وReceiptAdditionalCost وLcExpense.
+**السماح بترك نوع الحافظة فارغاً (Allow Empty Subsidiary Account Type)** `termConfig.allowEmptySubsidiaryAccountType` — السماح بالمعالجة حتى عندما لا يكون نوع الحافظة/الحساب الفرعي مضبوطًا. JOrderExpense وReceiptAdditionalCost وLcExpense.
 
 **السماح بترك سطور التوزيع النظامية فارغة (Allow Empty Sys Distribution Lines)** `termConfig.allowEmptySysDistributionLines` — السماح بالحفظ عندما تكون سطور التوزيع النظامية للتكلفة فارغة. ReceiptAdditionalCost فقط.
 
-**نوع المصروف (Expense Type)** `termConfig.expenseType` — يصنّف مصروف أمر التشغيل، متحكّمًا في كيفية ترحيله/توزيعه. JOrderExpense فقط.
+**نوع المصروف (Expense Type)** `termConfig.expenseType` — يصنّف مصروف أمر التشغيل، متحكّمًا في كيفية قيده/توزيعه. JOrderExpense فقط.
 
 ## أي المستندات تعرض أي صفحات تأثير (Which Documents Expose Which Effect Pages)
 

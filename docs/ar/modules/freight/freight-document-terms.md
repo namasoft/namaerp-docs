@@ -1,6 +1,6 @@
 ---
 entities: [DocumentTerm, FRMSalesInvoice, FRMSalesReturn, FRMSalesOrder, FRMPurchaseInvoice, FRMPurchaseReturn, FRMOperationOrder, FRMOOReceipt, FRMOOTransfer, FRMOODelivery, IPSDeliveryRequest, IPSDeliveryInvoice, IPSMailItemManifest, IPSMailItemTransfer, IPSMailItemStockTaking, IPSMailItemAdjustment, IPSManifestForCustody, IPSMailRetentionDocument, IPSPostalParcelsSort, IPSReceptaclesReceipt, IPSTransferReceptacles]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 # توجيهات مستندات الشحن (Freight Document Terms)
 

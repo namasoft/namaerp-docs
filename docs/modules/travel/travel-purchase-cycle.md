@@ -1,4 +1,5 @@
 ---
+description: "The Travel Service Purchase Order, Purchase Invoice and Purchase Return: buying tour services from hotels, restaurants, guides and suppliers, and carrying a document forward."
 entities: [TRPurchaseInvoice, TRPurchaseOrder, TRPurchaseReturn]
 ---
 # Buying from Suppliers

@@ -36,7 +36,6 @@
 
 - Added an option in the Subcontractor Extract term config named (Consider Previous Tax Values From Previous Extracts - termConfig.considerPreviousTaxValues), so the tax journal entry is issued with the value of the current extract only, not the total taxes of previous extracts, as is the case in the Project Extract term config.
 - In the Contracting settings, added an option (Do Not Copy Contract Data In Contracting Purchase Order and Request When Selecting The Contract - doNotCopyContractDataInPurchaseDocs).
-- In the Maintenance Order (MnOrder) and Maintenance Order Request (MnRequest), added accounting effects.
 
 ### Real Estate
 
@@ -56,6 +55,7 @@
 - In the Technician Appointments system, added the (Technician Appointments Schedule) screen where each technician sees only their own appointments, in a daily or weekly view, without seeing others' appointments; also added a (Create New) button inside the Technician Appointment Creator screen, and (Descriptors) are now taken into account in the appointment name shown on the appointment creation page.
 - In the (Update Customer Info) screen, the screen now includes all editable customer fields instead of a limited number of them, so modification dates and previous values are recorded for data such as contact methods, address, and national ID number.
 - In the Questionnaire Template file, added the options (showAttachment1InQuestionnaire through showAttachment8InQuestionnaire) to show the attachment fields inside the questionnaire page, so the customer can upload attachments while answering.
+- In the Maintenance Order (MnOrder) and Maintenance Order Request (MnRequest), added accounting effects.
 
 ### Human Resources
 
@@ -88,7 +88,7 @@
 - After running a report and the result appearing, the link in the browser now includes the temporary print ID, so refreshing the page fetches the previous result instead of rerunning the report. Also, running the same report with the same inputs by the same user now shows the same result on both pages, reusing the output of the ongoing run instead of starting a new run.
 - In the Report Builder tool, added a field (borderLinePreset) in the document header with the options (No Lines / Outer Lines Only / Inner Lines Only), and two fields (horizontalBorders, verticalBorders) on the lines to control the lines of each column separately.
 - In the Report Builder tool, added an option (allowSelectingMultipleGroupsAsParameter) to select more than one group through a parameter.
-- Added an action (Create Print Template From This Screen) in the (More) menu on list screens and edit screens.
+- Added an action (Create Printing Form From This Screen) in the (More) menu on list screens and edit screens.
 - Documented how to use the function (getVacationAssignedConsumedRemainder) to extract the accrued, consumed, and remaining amounts, each separately. For details: [NamaRep Expression Reference](/platform/reports/reports-namarep-reference)
 
 ### Import & Export

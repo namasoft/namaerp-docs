@@ -1,4 +1,5 @@
 ---
+description: "The Task Queue screen: running scheduled tasks and entity flows in parallel lanes instead of one single line, putting tasks and flows on a queue, the rules that keep queues safe, and watching them work."
 entities: [TaskQueue, EntityFlow, TaskSchedule]
 menu: Basic → Settings → Task Queue
 ---

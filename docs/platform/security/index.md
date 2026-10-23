@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Security & Permissions
+description: "Landing page for security: the overview, Security Profiles, field, page and list view security, record-level security by dimensions and filters, and users and login."
 ---
 
 # Security & Permissions

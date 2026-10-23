@@ -28,6 +28,7 @@
   <LandingCard icon="🛒" title="فاتورة المبيعات" link="/ar/modules/pos/pos-sales-invoice.md" details="شاشة البيع الرئيسية: إضافة الأصناف، العميل، الخصومات، تعليق الفاتورة واستعادتها." />
   <LandingCard icon="💳" title="الدفع والتحصيل" link="/ar/modules/pos/pos-payment-and-tender.md" details="تحصيل المبلغ: نقدًا، بالبطاقة، الدفع المجزّأ، الكوبونات، الإشعارات الدائنة، نقاط المكافأة." />
   <LandingCard icon="↩️" title="المرتجعات والإحلال" link="/ar/modules/pos/pos-returns-and-replacements.md" details="الاسترجاع، الاستبدال، الإشعارات الدائنة، وخصم الإهلاك على المرتجع." />
+  <LandingCard icon="🛍️" title="كشك الدفع الذاتي" link="/ar/modules/pos/pos-self-checkout-kiosk.md" details="العميل يمسح أصنافه ويدفع بالبطاقة على كشك أندرويد يحفظ مبيعاته على ماكينة." />
 </LandingGrid>
 
 ### تشغيل الماكينة

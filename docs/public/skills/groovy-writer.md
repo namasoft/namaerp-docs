@@ -4,7 +4,8 @@ description: >
   Write Nama ERP EntityAction Groovy scripts in the correct Nama style, matching the established patterns from sample scripts.
   Use this skill whenever the user asks to write, create, generate, or draft a Groovy script for Nama ERP — even if they just say
   "write me an action", "I need validation for X", "create an EA for Y", or paste a DM URL and describe logic.
-  Always fetch DM URLs to understand entity fields before writing. If the user forgets to provide DM URL(s), remind them.
+  Always read the entity's data-model JSON to learn its fields before writing (from a local namaerp-dm checkout when
+  there is one; otherwise ask for the DM URL).
 ---
 
 # Groovy Writer
@@ -18,24 +19,48 @@ Write Nama ERP `EntityAction` Groovy scripts that match the established Nama cod
 Before writing any code, make sure you have:
 
 1. **A description of the logic** — what the action should validate or do
-2. **DM URL(s)** for the entity/entities involved (e.g. `https://dm.namasoft.com/modules/...`)
+2. **The entity/entities involved** (by name, screen name, or DM URL)
 
-**If the user did NOT provide DM URLs**, remind them:
-> "Please provide the DM URL(s) for the entity/entities involved so I can check the available fields before writing. Example: `https://dm.namasoft.com/modules/basic-forms-7-8/FormDoc7.html`"
+**Where to read the fields:**
+- **A local `namaerp-dm/docs/public/dm-json/` folder exists** (for example inside the support knowledge base):
+  read `<Entity>.json` there. Don't ask for DM URLs and don't fetch the web. If you only know the screen name,
+  find the entity in `namaerp-dm/docs/public/llms.txt` or `dm-json/index.json` first.
+- **No local copy:** ask the user for the DM URL(s), then fetch each one:
+  > "Please provide the DM URL(s) for the entity/entities involved so I can check the available fields before writing. Example: `https://dm.namasoft.com/modules/basic-forms-7-8/FormDoc7.html`"
 
-Do not write the script until you have both the logic description and the DM URLs.
+Do not write the script until you have the logic description and have read each entity's fields.
 
 ---
 
-## Step 2 — Fetch the DM
+## Step 2 — Read the Data Model, Then Work Out the Imports
 
-Use `web_fetch` on each DM URL provided. From the DM page, extract:
-- Entity class name (e.g. `Remark`, `FormDoc5`, `BasicSCDocument`)
-- Detail line class name (e.g. `RemarkLine`, `FormDoc5Line1`, `BasicSCDocumentLine`)
-- Available fields: `ref1`–`ref8`, `number1`–`number35`, `date1`–`dateN`, `text1`–`textN`, `description1`–`descriptionN`
+From each entity's DM JSON (or page), take:
+- Available fields and their ids: `ref1`–`ref8`, `number1`–`number35`, `date1`–`dateN`, `text1`–`textN`, `description1`–`descriptionN`
 - Any special fields (e.g. `remarkDate`, `valueDate`, `term`, `code`, `altCode`)
-- The correct `IdsOf*` class name for criteria (e.g. `IdsOfRemark`, `IdsOfFormDoc5`)
-- The correct module package for imports
+- The detail grids (the `details` part of the JSON) and their field ids
+
+The DM does **not** give Java class names or packages. Its `module` value is a display group
+(`supplychain-sales`, `basic-forms-5-6`), not a package. Take the imports from the published example closest to
+the task (Step 2b) or from this table:
+
+| Entity | Entity import | `IdsOf*` import |
+|---|---|---|
+| Sales Invoice | `com.namasoft.modules.supplychain.domain.entities.SalesInvoice` | `com.namasoft.common.fieldids.newids.supplychain.IdsOfSalesInvoice` |
+| Purchase Invoice | `com.namasoft.modules.supplychain.domain.entities.PurchaseInvoice` | `com.namasoft.common.fieldids.newids.supplychain.IdsOfPurchaseInvoice` |
+| Stock Transfer | `com.namasoft.modules.supplychain.domain.entities.StockTransfer` | `com.namasoft.common.fieldids.newids.supplychain.IdsOfStockTransfer` |
+| Item | `com.namasoft.modules.supplychain.domain.entities.InvItem` | `com.namasoft.common.fieldids.newids.supplychain.IdsOfInvItem` |
+| Customer | `com.namasoft.modules.basic.domain.entities.Customer` | `com.namasoft.common.fieldids.newids.basic.IdsOfCustomer` |
+| Employee | `com.namasoft.infra.domainbase.modules.hr.Employee` | `com.namasoft.common.fieldids.newids.basic.IdsOfEmployee` |
+| Journal Entry | `com.namasoft.modules.accounting.domain.entities.JournalEntry` | `com.namasoft.common.fieldids.newids.accounting.IdsOfJournalEntry` |
+| Receipt Voucher | `com.namasoft.modules.accounting.domain.entities.ReceiptVoucher` | `com.namasoft.common.fieldids.newids.accounting.IdsOfReceiptVoucher` |
+| Form Document 5 (same for 1–16) | `com.namasoft.modules.basic.domain.entities.FormDoc5` | `com.namasoft.common.fieldids.newids.basic.IdsOfFormDoc5` |
+| Remark | `com.namasoft.modules.basic.domain.entities.Remark` | `com.namasoft.common.fieldids.newids.basic.IdsOfRemark` |
+
+Detail line classes sit in the `.domain.details` package next to the entity's `.domain.entities` package
+(e.g. `com.namasoft.modules.supplychain.domain.details.SalesInvoiceLine`,
+`com.namasoft.modules.basic.domain.details.FormDoc5Line1`). For an entity not listed here, find an example
+script that imports it (`grep -h "import .*\.<Entity>$"` over `docs/public/groovy-examples/`); if none does,
+tell the user the import is a best guess that the save will confirm.
 
 ---
 
@@ -44,11 +69,11 @@ Use `web_fetch` on each DM URL provided. From the DM page, extract:
 Before writing, read the published example closest to the requested logic. Each one is a tested product
 script with a page explaining what it does, which event it runs on and how its parameters are filled:
 
-- Index of all examples, grouped by theme: https://docs.namasoft.com/entity-flows/groovy/
-- Each page: `https://docs.namasoft.com/entity-flows/groovy/<ClassName>.html`
-- Each raw script: `https://docs.namasoft.com/groovy-examples/<ClassName>.groovy`
-- In a local checkout of the docs, the pages are under `docs/entity-flows/groovy/` and the scripts are under
-  `docs/public/groovy-examples/`.
+- In a local checkout of the docs (the support knowledge base has one at `namaerp-docs/`), read them there: the
+  pages are under `docs/entity-flows/groovy/` and the scripts under `docs/public/groovy-examples/`.
+- Without a local checkout: the index is https://docs.namasoft.com/entity-flows/groovy/, each page is
+  `https://docs.namasoft.com/entity-flows/groovy/<ClassName>.html` and each raw script is
+  `https://docs.namasoft.com/groovy-examples/<ClassName>.groovy`.
 
 Pick the example closest to the task. Each name below is both a page (`<ClassName>.html`) and a script
 (`<ClassName>.groovy`):
@@ -115,7 +140,7 @@ Example: `EAKuwaitPreventRemarkMoreThan1DayConsideringLineDate`
 import com.namasoft.common.Pair
 import com.namasoft.common.fieldids.newids.basic.IdsOf[Entity]
 import com.namasoft.common.utilities.CollectionsUtility
-import com.namasoft.common.utilities.NamaLogger
+import com.namasoft.common.utilities.NaMaLogger
 import com.namasoft.common.utilities.ObjectChecker
 import com.namasoft.infra.domainbase.common.criteria.CriteriaBuilder
 import com.namasoft.infra.domainbase.datafields.BooleanDF
@@ -245,7 +270,7 @@ List<[Entity]> results = Persister.listPageMatching([Entity].class,
 **Raw JDBC query:**
 ```groovy
 def sql = "select sum(number1+number2) from [DetailTable] l where l.ref1Id = {ref1Id} and l.remark_id <> {id}";
-NamaLogger.error(sql);
+NaMaLogger.error("{0}", sql); // never NaMaLogger.error(sql): the logger reads {...} in its first argument as placeholders
 DecimalDF total = DecimalDF.fromQueryResult(
     Persister.prepareAndExecuteJDBCQuery(
         Map.of("ref1Id", ref.getId(), "id", object.getId()),
@@ -396,6 +421,20 @@ if (result.failed())
 
 // continue with next validation phase...
 ```
+
+---
+
+### ❌ `NamaLogger` does not exist — the logger is `NaMaLogger`
+```groovy
+// WRONG — saving fails with "unable to resolve class"
+import com.namasoft.common.utilities.NamaLogger
+
+// CORRECT
+import com.namasoft.common.utilities.NaMaLogger
+NaMaLogger.error("Value is {0}", value)
+```
+The first argument is a message pattern: `{0}`, `{1}` are replaced by the following arguments. To log text that
+contains braces (a SQL statement with `{id}` parameters, JSON), pass it as an argument: `NaMaLogger.error("{0}", sql)`.
 
 ---
 

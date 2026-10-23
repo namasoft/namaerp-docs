@@ -1,4 +1,5 @@
 ---
+description: "Manufacturing questions answered with ready-made entity flows, such as moving a production order to In Progress as soon as it is saved."
 entities: [ProductionOrder]
 ---
 # Frequently Asked Questions — Manufacturing Module in Nama ERP

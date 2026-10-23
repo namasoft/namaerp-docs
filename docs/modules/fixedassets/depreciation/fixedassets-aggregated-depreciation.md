@@ -1,4 +1,5 @@
 ---
+description: "The Aggregated Depreciation Document: running depreciation over a range of fiscal periods at once, which creates and commits one depreciation document per period, used for catch-up at go-live."
 entities: [AggrFADepreciation]
 menu: Assets → Documents → Aggregated Depreciation Document
 ---

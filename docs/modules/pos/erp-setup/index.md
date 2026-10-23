@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: POS — Server-Side Setup
+description: "Landing page for POS server-side setup: the register master file, POS Settings and the supporting screens that control warehouses, numbering, shift closing, accounts and cashier permissions."
 ---
 
 # POS — Server-Side Setup

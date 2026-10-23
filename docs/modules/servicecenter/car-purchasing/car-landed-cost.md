@@ -1,4 +1,5 @@
 ---
+description: "How freight, customs and clearance charges reach individual cars through the standard additional-cost mechanism on the Car Purchase Invoice, with a worked example and the accounting it produces."
 entities: [SIPurchaseInvoice, ReceiptAdditionalCost]
 ---
 # Freight, Customs and Landed Cost
@@ -26,15 +27,13 @@ Start with the disappointment, because it saves a lot of hunting.
 Not the order, not the pro-forma, not the invoice, not the return. There is no "duty" column and no
 "landed cost" tab where you type an amount.
 
-::: warning The customs fields on the car file are descriptive text, and nothing more
+::: info The customs fields on the car file record the paperwork
 The [car record's](/modules/servicecenter/cars-setup/car-master-file.md) *Document Control Data* tab
 carries customs list number, customs paid, customs paid
 date, customs release number, customs release date, vessel name and carrier. Every one of them is
-typed by hand, and **none of them is connected to any amount, any account or any cost calculation.**
+typed by hand, so the paperwork is filed against the right chassis.
 
-They are there so the paperwork is filed against the right chassis. Filling them in does not
-capitalise anything. Do not use them as a substitute for the mechanism described below, and do not
-expect the two to agree.
+The amounts that reach the car's cost come from the mechanism described below.
 :::
 
 ## How the charges actually reach the cars

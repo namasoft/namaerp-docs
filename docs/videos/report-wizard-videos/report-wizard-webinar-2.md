@@ -1,3 +1,6 @@
+---
+description: "Video walkthrough of the Report Wizard: grouping by customer and branch with totals, controlling sorting, data sources for aggregating sales, returns and collections, and account statement reports."
+---
 # Detailed Guide to Grouping, Data Sources, and Report Sorting in Nama ERP
 [Watch the video](https://youtu.be/Vp3laGFs99U)
 

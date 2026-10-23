@@ -1,6 +1,6 @@
 ---
 entities: [EmployeeHealthInsurance, HealthInsuranceUpgrade, EmpHealthInsurDelete, HealthInsuranceClaimDoc, HealthInsuranceCredence, CarInsurancePolicy, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات التأمينات

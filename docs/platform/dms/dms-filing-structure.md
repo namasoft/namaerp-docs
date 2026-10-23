@@ -1,4 +1,5 @@
 ---
+description: "The DMS Location (archive), DMS Folder and Document Management System Topic master files that describe where paperwork is stored, how it is filed and what it is about."
 entities: [DMSLocation, DMSFolder, DMSTopic]
 ---
 # Archives, Folders and Topics
@@ -60,7 +61,7 @@ hierarchy can go as deep as you need.
 | **Parent** | المجموعة الأعلي | The folder above this one. The picker offers only folders that do **not** accept elements. |
 | **Accepts Elements** | يقبل عناصر | The switch that decides what this folder is for. See below — it matters more than it looks. |
 | **Aclaseir Folder** | حافظة | Marks the folder as a binder rather than a normal folder. A document can be filed in a binder *in addition to* its normal folder. |
-| **Importance** | الأهميه | A numeric priority. Recorded only; nothing acts on it. |
+| **Importance** | الأهميه | A numeric priority you can filter and sort on. |
 | **Default Topic** | الموضوع الأفتراضي | Pushed onto any document filed here. |
 | **Default Location** | الموقع الأفتراضي | Pushed onto any document filed here. |
 | **Default Sub Location** | الموقع الفرعي الأفتراضي | Pushed onto any document filed here. |

@@ -9,7 +9,7 @@ spinner, and a user asking whether to keep waiting. These screens are how you te
 and how you end a run that is never going to finish.
 
 ::: info Where to find them
-**Basic → Reports → Reports Monitoring**, which holds two entries: **Running Reports** and **View
+**Reports → Reports Monitoring**, which holds two entries: **Running Reports** and **View
 Report Results**.
 :::
 

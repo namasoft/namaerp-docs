@@ -1,3 +1,6 @@
+---
+description: "Overview of Nama POS: the offline-first desktop register, the Captain Order mobile app, the central ERP side where registers and permissions are set up, and what can be done at the register."
+---
 # Nama POS — Overview
 
 Most of Nama ERP runs in a web browser. **Nama POS** is the exception: it is a dedicated **desktop application** that runs right on the cash register, plus a companion **Captain Order** mobile app for waiters. It is built this way for one simple reason — a point of sale cannot stop selling just because the internet went down.

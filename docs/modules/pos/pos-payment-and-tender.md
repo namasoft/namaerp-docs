@@ -30,6 +30,8 @@ Type the cash the customer handed over. If it is more than the total, the remain
 
 Card payments go through an integrated **payment terminal**. Enter the amount on the card row and send it to the terminal (there is a dedicated button on the row). The terminal does its work and hands back the result — approval, card type, the masked card number — which the register records against that payment line. If a terminal response cannot be matched to a configured method, the cashier is told rather than left guessing. Setting up the terminal itself and the rules that match a card to a payment method is covered in [Payment Methods and Payment Terminals](/platform/payments/payment-methods-and-terminals).
 
+While the customer pays, the register waits in a small window with a **Cancel** button. Cancelling — or waiting more than three minutes — makes the register ask the terminal for its last transaction before giving up, so a card that was in fact approved is still recorded and must not be charged or keyed in again. The whole sequence and its messages are in [How a Card Payment Travels Through PGW](/platform/payments/pgw-card-payment-flow#In-Nama-POS).
+
 ![Card terminal button](../../ar/modules/pos/images/payment/pos-tender-card-terminal-en.png)
 
 ### Split across several methods

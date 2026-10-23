@@ -68,6 +68,12 @@ term at all. It carries a **generation configuration** block `termConfig.generat
 — the shared block that controls how the batch produces its documents — and a *Generate Accounting
 Effects* switch. Its label carries no translation, so on screen it shows its internal name.
 
+The same term has **Allow Repeating Employee With The Same Reward / Penalty**
+`termConfig.allowRepeatingEmployeeWithSameReward`. Off (the default), a batch is refused when the
+same employee appears on two lines with the same reward or penalty — usually a double entry. Tick
+it when one run legitimately gives an employee the same reward twice, for example two separate
+overtime bonuses in one month.
+
 Rewards and penalties are on
 [Rewards and Penalties](/modules/hr/discipline/rewards-and-penalties).
 

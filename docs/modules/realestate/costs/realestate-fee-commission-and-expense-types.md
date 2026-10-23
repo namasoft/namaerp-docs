@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate fee type, commission type, broker, expense type and RE expense item master files: what each catalogue holds and where it is picked on contracts and maintenance documents."
 entities: [REFeeType, RECommissionType, REBroker, REExpenseType, REExpenseItem]
 ---
 # Fee, Commission, Broker and Expense Catalogues
@@ -113,9 +114,9 @@ and settled by payment voucher; and a **Tax Information / معلومات الض�
 registration and tax numbers when sales tax is in use.
 
 There is one thing about brokers that is easy to assume wrongly. Sales and rent contracts carry a
-header field **Broker / وسيط**, and it is informational: it is copied along when one document is
-created from another — offer to contract, reservation to sales document — and that is all it does.
-It creates no commission line and books nothing. **The commission lines are entered in the
+header field **Broker / وسيط**, which names the broker who brought the deal and is copied along
+when one document is created from another — offer to contract, reservation to sales document. It
+does not create a commission line. **The commission lines are entered in the
 commissions grid by hand**, and it is on the line that you name who receives the money.
 
 ## Expense Type — the recurring charge on a lease

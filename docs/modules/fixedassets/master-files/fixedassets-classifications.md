@@ -1,4 +1,5 @@
 ---
+description: "The five Fixed Asset Classification master files: how the five levels chain into a tree, how they land on an asset, what they are used for in lists and reports, and what they do not control."
 entities: [FAClassification1, FAClassification2, FAClassification3, FAClassification4, FAClassification5]
 ---
 # Classifications

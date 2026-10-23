@@ -47,8 +47,8 @@ Open **Customer Relationship Management → Support → Ticket Follow Up**, or p
 
 | Field | Arabic | What it does |
 |---|---|---|
-| **Trouble Ticket** | طلب الدعم | The ticket this follow-up belongs to. Treat it as mandatory — see below. |
-| **Ticket Status** | حاله طلب الدعم | A snapshot of where the ticket stood. You can type in it; **nothing reads it.** |
+| **Trouble Ticket** | طلب الدعم | The ticket this follow-up belongs to. Fill it in first; the follow-up is saved against it. |
+| **Ticket Status** | حاله طلب الدعم | A snapshot of where the ticket stood when the follow-up was written. |
 | **Ticket New Status** | تغير حاله طلب الدعم الى | **The field that moves the ticket.** |
 | **Expected Execution Date** | تاريخ التنفيذ المتوقع | Copied onto the ticket along with the status. |
 | Attachment 1 / 2, Description | | Free capture. |
@@ -66,21 +66,7 @@ Follow-up `TFUP-0333` in the canonical example, dated 8 April 2026 against ticke
 
 On commit, `TKT-0451` moves to *Postponed* and picks up 13 April as its expected execution date. *Postponed* is one of the eight; there is no other way to get the ticket there.
 
-## The two things that will bite you
-
-::: danger A blank Ticket New Status wipes the ticket's status
-**Ticket New Status is optional on the screen and mandatory in practice.**
-
-If you file a follow-up purely to record what the customer said and leave that field empty, the empty value is written onto the ticket anyway. The ticket's Status goes **blank** — and it stays blank through every later save, because the value the ticket remembers was blanked too. The **Expected Execution Date** on the ticket is cleared with it.
-
-Recovering means filing another follow-up that carries the correct status. There is no undo, and cancelling the offending follow-up does not put the old status back.
-
-**Always set Ticket New Status.** If the status is not changing, set it to the status the ticket already has.
-:::
-
-::: warning Saving without a Trouble Ticket produces a technical error
-The Trouble Ticket field is not marked as required on the screen, but the document cannot be committed without it. Leaving it blank raises a raw technical error on save instead of a friendly "this field is required" message. Pick the ticket first.
-:::
+**Always set Ticket New Status.** The follow-up writes it onto the ticket together with the Expected Execution Date; if the status is not changing, set it to the status the ticket already has.
 
 ## Only the latest follow-up wins
 
@@ -88,16 +74,16 @@ When a follow-up is committed, the system checks whether it is the **latest foll
 
 Two practical consequences:
 
-- **Back-dating does nothing.** A follow-up dated before an existing one is stored perfectly well and leaves the ticket exactly as it was. If you are correcting history, this is what you want; if you were trying to change the status, it is not.
+- **A back-dated follow-up leaves the status alone.** A follow-up dated before an existing one is stored and leaves the ticket exactly as it was. If you are correcting history, this is what you want; if you were trying to change the status, it is not.
 - **The newest follow-up owns the ticket's status.** File a follow-up dated today and it overrides whatever an earlier follow-up said, regardless of what the ticket has been through in between.
 
 The status is written straight onto the committed ticket rather than through a normal edit of it, so it does not run the ticket's own checks and it does not show up as somebody having edited the ticket. What it *cannot* escape is the ticket's own rule that a populated Employees grid forces the status to *Assigned* on every save — so a ticket you parked on *Postponed* will jump back to *Assigned* the next time anybody saves it. If a parked status has to survive, the ticket must not be saved again until you are ready to move it on.
 
 ## What a follow-up does not do
 
-- **No effects.** It posts nothing, moves no stock, and has no document term — so there is nothing to configure and nothing that can be made to react to it.
+- **No effects.** It posts nothing, moves no stock, and has no document term — so there is nothing to configure.
 - **No notification.** Nobody is told that a follow-up was filed, including the ticket's responsible employee and the concerned party named on it.
-- **No reminder.** The Expected Execution Date it stamps on the ticket is never watched by anything. Nothing alerts when it arrives or passes.
+- **No reminder.** Nothing alerts when the Expected Execution Date it stamps on the ticket arrives or passes.
 - **No chaining.** A follow-up does not create the next follow-up, and there is no "next contact date" process anywhere in CRM.
 
 The follow-ups filed against a ticket are visible on that ticket's **متابعات / Follow Up** tab, and on the originating complaint's Related Records tab. There is no list of "follow-ups due" because nothing is ever due.

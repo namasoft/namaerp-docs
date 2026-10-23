@@ -33,6 +33,8 @@ Now in the Report Wizard, you pick "Main Table → InTransitMovements", and you 
 
 You can drop them into a report, group by `item`, sum the cost and quantity, and you're done. No raw SQL anywhere in the report. The same Virtual Entity is also pickable from the Dashboard Widget Wizard — same auto-join behavior, same translations, same drill-down support.
 
+The SELECT itself follows the usual rules for Nama tables: documents filtered on `commitedBefore = 1`, lines joined to their header for the status, amounts from the ledger and quantities from the stock movements. They are collected on [Querying Nama Tables with SQL](/platform/reports/querying-nama-tables).
+
 ---
 
 ## Where to Find It

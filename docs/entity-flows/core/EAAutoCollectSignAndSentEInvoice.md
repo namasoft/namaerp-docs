@@ -10,11 +10,11 @@ entities: [EntityFlow]
 
 ## Overview
 
-Automates the complete Saudi ZATCA e-Invoice submission process by collecting eligible invoices, creating submission documents, digitally signing them, and sending them to the tax authority. Handles high-volume electronic invoice submissions with proper batching.
+Automates the complete e-Invoice submission process (Egyptian Tax Authority or Saudi ZATCA) by collecting eligible invoices, creating submission documents, digitally signing them, and sending them to the tax authority. Handles high-volume electronic invoice submissions with proper batching.
 
 ## When This Action Runs
 
-Scheduled task execution for automated e-Invoice processing on TaskSchedule entities configured for ZATCA compliance.
+Scheduled task execution for automated e-Invoice processing on TaskSchedule entities.
 
 ## How It Works
 
@@ -26,20 +26,25 @@ Scheduled task execution for automated e-Invoice processing on TaskSchedule enti
 
 ## Key Parameters
 
-- **Parameter 1:** Submission Document Book (Required) - Document book code (e.g., `EINV_SUB`)
-- **Parameter 2:** Tax Payer Configuration (Required) - TaxPayerConfiguration code (e.g., `MAIN_TAXPAYER`)
-- **Parameter 3:** Entity Type (Required) - Type of documents to process (e.g., `SalesInvoice`)
-- **Parameter 4:** Max Lines Per Submission Document (Optional) - Batch size (default: 500)
-- **Parameter 5:** Collect When Query Matched (Optional) - SQL filter expression
-- **Parameter 6:** Created Submission Extra Fields Map (Optional) - Additional field mappings
+- **Parameter 1:** Submission Document Book (Required) - Code of the Tax Authority Submission book the created submission documents are saved in (e.g., `EINV_SUB`)
+- **Parameter 2:** Tax Payer Configuration - Tax Payer Configuration code (e.g., `MAIN_TAXPAYER`). Only documents that belong to this configuration are collected
+- **Parameter 3:** Entity Type - Type of documents to collect (e.g., `SalesInvoice`). Leave empty to collect every document type waiting to be sent
+- **Parameter 4:** Max Lines Per Submission Document (Optional) - Whole number; how many documents go into one submission document (default: 500)
+- **Parameter 5:** Collect When Query Matched (Optional) - An SQL query that **returns the ids of e-invoice submission entries** (`EInvoiceSubmissionEntry`). Only the entries whose id is in the first column of the result are collected. The query runs once at the start of each run
+- **Parameter 6:** Created Submission Extra Fields Map (Optional) - Field map applied to each created submission document, e.g. `branch="ABC"`
+- **Parameter 7:** Max Submission Documents to be processed at one run (Optional) - Whole number, default 3, never more than 5. A further submission document is only created when the previous one was filled up to Parameter 4
 
-### SQL Filter Examples:
+### Collect When Query Matched examples
+Each query returns submission-entry ids, never a 1/0 flag:
+
 ```sql
--- Amount threshold
-SELECT CASE WHEN {money.total} > 1000 THEN 1 ELSE 0 END
+-- Only entries dated after 1 January 2025 (the product's own example)
+select id from EInvoiceSubmissionEntry where valueDate > '20250101'
 
--- Customer filter
-SELECT CASE WHEN {customer.code} LIKE 'VIP%' THEN 1 ELSE 0 END
+-- Only entries of one branch
+select e.id from EInvoiceSubmissionEntry e
+inner join Branch b on b.id = e.branch_id
+where b.code = 'B01'
 ```
 
 ## Database Tables Affected

@@ -1,4 +1,5 @@
 ---
+description: "The Salary Structure screen: a reusable template of salary component types with values or formulas, its fields and components grid, the fallback rule versus employee components, and where structures are used."
 entities: [SalaryStructure]
 menu: Payroll → Salary Configurations → Salary Structure
 ---

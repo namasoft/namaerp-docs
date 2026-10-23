@@ -5,7 +5,7 @@ entities: [MnSalesQuotation, MnSalesOrder]
 
 Before Al Nokhba can maintain anything at Marina Plaza, it has to sell the hotel the plant and the maintenance deal. That conversation runs on two documents: a **Maintenance Sales Quotation** on 3 February 2026 (`MSQ-0033`) offering two 300 TR chillers, one air-handling unit and a one-year maintenance contract, and a **Maintenance Sales Order** a week later (`MSO-0029`) once the hotel says yes.
 
-Both live under **CRM → Maintenance Documents**, and both are best understood as what they are: paperwork with one useful button on it.
+Both live under **CRM → Maintenance Documents**, and both are best understood as what they are: paperwork with one button on it.
 
 ::: info Required licence
 `crm-maintenance`. Neither document has a document term (توجيه) at all, so there is nothing to configure for them and no accounting or generation settings to get wrong.
@@ -13,18 +13,9 @@ Both live under **CRM → Maintenance Documents**, and both are best understood 
 
 ![The Maintenance Sales Order screen, which shares its layout with the quotation and the contract](../../../ar/modules/crm/images/maintenance-cycle/crm-mn-sales-order-en.png)
 
-## What They Actually Do
+## What They Do
 
-::: warning These two documents have no effects of any kind
-A maintenance sales quotation and a maintenance sales order **create no accounting entry, move no stock, generate no supply-chain document and do not create the maintenance contract**. Saving one changes nothing anywhere else in the system. Treat them as a record of the offer and the acceptance, not as a step that makes something happen.
-:::
-
-That is not a criticism of using them — a signed sales order is a perfectly good thing to have on file, and it is the natural predecessor of the contract. It just means nobody should wait for something to happen after saving one.
-
-Two smaller consequences of the same fact are worth knowing so that you do not chase them as bugs:
-
-- The **per-machine totals** on the Machines grid (total price of spare parts, total price of services) are never filled in on these two documents. They stay empty however you price the lines.
-- The **remaining quantity** column on the spare-parts and services grids simply mirrors the quantity you typed. Nothing on these documents consumes anything, so nothing is ever subtracted.
+A maintenance sales quotation and a maintenance sales order are a record of the offer and the acceptance. They create no accounting entry, move no stock and generate no supply-chain document. A signed sales order is a good thing to have on file and is the natural predecessor of the [maintenance contract](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md), which you raise as a document of its own.
 
 ## The Screen
 

@@ -33,6 +33,8 @@ The last three are what let different items or document types treat taxes differ
 
 **Show Narration in Stock Receipt, Issue and Transfer Ledgers** `value.showNarrationInStockIssueReceiptTransferLedgers` — When on, the remark/narration from stock issue, receipt and transfer documents is copied onto the lines of the accounting entries they generate. Useful when accountants need the source-document remark on the journal lines for traceability.
 
+**Round Ledger Lines After Merging Cost Lines** `value.roundLedgerLinesAfterMergingCostLines` — Normally each cost line is rounded to the currency's decimal places before it goes into the stock document's accounting entry, and the small rounding remainders add up. When on, the cost lines go in unrounded and each side of the finished entry is rounded once, with the remainder spread over its lines. Turn it on when a stock receipt's entry differs by a few fractions from the foreign-currency purchase invoice it came from, which happens when that currency has more decimal places than the local one.
+
 **Show Affect Only Cost of Assembled Item** `value.showAffectOnlyCostOfItem` — Changes how assembly cost is reported. When on, the calculation isolates and shows only the assembled item's own cost contribution (prorated by quantity). Turn it on for assembly/manufacturing setups that need the assembled item's own cost impact shown separately.
 
 ## Quantity & Cost Tracking

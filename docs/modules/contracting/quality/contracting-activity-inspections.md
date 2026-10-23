@@ -1,4 +1,5 @@
 ---
+description: "The Activity Inspection Request document for asking the consultant to inspect finished work before it is covered: what is inspected, the three signing panels, the two verdicts and what approval unblocks."
 entities: [CQCActivityInspectionReq]
 menu: Contracting → Quality → Activity Inspection Request
 ---

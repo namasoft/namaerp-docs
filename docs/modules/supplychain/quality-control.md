@@ -1,4 +1,5 @@
 ---
+description: "Quality control and quality assurance requests and documents, inspection checklists, and how inspection ties into receiving and production before stock becomes available."
 entities: [QualityControlDoc, QualityControlReq, QualityAssuranceDoc, QualityAssuranceReq, QualityCheckList, QuestionClassification]
 ---
 # Quality Control

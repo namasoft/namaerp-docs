@@ -1,4 +1,5 @@
 ---
+description: "Project expenses in ECPA: the expense catalogue, the Project Expense Request and Project Expense Document, internal accounts, and what committing them does in the ledger."
 entities: [CPAProjExpenseReq, CPAProjExpenseDoc, CPAProjectExpenseItem]
 ---
 # Project Expenses

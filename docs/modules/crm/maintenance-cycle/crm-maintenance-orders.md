@@ -136,8 +136,8 @@ to move, and no screen tells you why. Check this first — see
 :::
 
 There is a second status box, *Current Status Type* (*Reviewed*, *Pending Review*, *Rejected*,
-*Ended With Customer Approval*). It is stored and displayed and **nothing reads it**. Treat it as a
-note to your colleagues, not as a review cycle.
+*Ended With Customer Approval*). It is a label you set by hand for your colleagues, and you can
+filter and report on it.
 
 ## Where the prices come from
 
@@ -282,6 +282,8 @@ document that opens.
   buttons, which need the payment-gateway sub-module. **Pay Part Of Invoice** asks for an amount and
   is refused when nothing remains to be paid. **Fetch Last Terminal Payment Transaction** recovers a
   payment that went through on the terminal but whose confirmation never reached the document.
+  The card machine is the one in the order's **Payment Terminal** header field (see
+  [Payment Methods and Payment Terminals](/platform/payments/payment-methods-and-terminals.md)).
 
 ## Moving on
 

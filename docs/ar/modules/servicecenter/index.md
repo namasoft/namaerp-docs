@@ -19,7 +19,7 @@ title: مركز الخدمة
 <LandingGrid>
   <LandingCard icon="🗺️" title="نظرة عامة على مركز الخدمة" link="/ar/modules/servicecenter/servicecenter-overview.md" details="المنتجات الأربعة، وجذرا القائمة، والرخص الست وما تفتحه كل واحدة، ولماذا السيارة المُباعة والسيارة المخدومة سجلّان منفصلان." />
   <LandingCard icon="🚀" title="بدء الاستخدام" link="/ar/modules/servicecenter/servicecenter-getting-started.md" details="ترتيب بناء تركيب جديد، والإعداد الثلاثي الذي يحتاجه تتبّع السيارات قبل أن يعمل أصلًا." />
-  <LandingCard icon="⚙️" title="الإعدادات" link="/ar/modules/servicecenter/servicecenter-configuration.md" details="شاشة إعدادات الوحدة خيارًا بخيار — بما فيها السبعة الموجودة على الشاشة ولا تُغيّر شيئًا." />
+  <LandingCard icon="⚙️" title="الإعدادات" link="/ar/modules/servicecenter/servicecenter-configuration.md" details="شاشة إعدادات الوحدة خيارًا بخيار." />
   <LandingCard icon="📊" title="التقارير والمطبوعات" link="/ar/modules/servicecenter/servicecenter-reports-and-forms.md" details="ما يأتي جاهزًا للتقارير والطباعة، وهو قليل جدًا — وما لا وجود له رغم ما قد يُظن." />
 </LandingGrid>
 

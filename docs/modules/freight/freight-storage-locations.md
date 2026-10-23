@@ -1,4 +1,5 @@
 ---
+description: "Freight storage locations: setting up FRM Location with capacity, section, type and class, the space an operation order needs, and the receipt, transfer and delivery documents that move cargo."
 entities: [FRMLocation, FRMLocationSection, FRMLocationClass, FRMLocationType, FRMOOReceipt, FRMOOTransfer, FRMOODelivery, FRMOOStatus]
 ---
 # Storage Locations

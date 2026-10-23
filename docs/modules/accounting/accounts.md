@@ -100,7 +100,7 @@ One button on the account does real work, and it is the one you reach for after 
 
 *{0} can not be changed after transactions, old value was {1}, new value is {2}* — «لا يمكن تغيير {0} بعد انشاء حركات - القيمة السابقة {1} و تم تغييرها الي {2}»
 
-The field unlocks in two cases: when the account has no transactions left, or when *Allow Changing Subsidiary Accounts After Usage In Accounts* is on in [accounting configuration](./support/accounting-configuration.md). That switch also unlocks the account type and the subsidiary types. After you change the currency, run **Update Balances Currency**. Then recommit the documents that post to this account, from the [Business Requests list](/platform/background-processing/business-requests), so their entries are rebuilt in the new currency. You do not need to reprocess the whole database.
+The field unlocks in two cases: when the account has no transactions left, or when *Allow Changing Subsidiary Accounts After Usage In Accounts* is on in [accounting configuration](./support/accounting-configuration.md). That switch also unlocks the account type and the subsidiary types. The lock only protects a value that is already set: an empty **Subsidiary Type 2** to **Subsidiary Type 5** can be filled in on an account that already has transactions, without the switch. After you change the currency, run **Update Balances Currency**. Then recommit the documents that post to this account, from the [Business Requests list](/platform/background-processing/business-requests), so their entries are rebuilt in the new currency. You do not need to reprocess the whole database.
 
 ## Reports
 

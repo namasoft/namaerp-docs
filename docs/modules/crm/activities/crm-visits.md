@@ -41,33 +41,26 @@ Then comes **Visit details** (*تفاصيل الزيارة*), which is where the
 | Start Time (*من*), End Time (*إلى*), Visit date | When |
 | Visit location, Address, Customer representative | Where, and who received you |
 | Related To, and the six lead fields | The subject and the state machine — see below |
-| Expense, other expense, transportation expense, Visit Cost, Payment Status | Money boxes — see the warning below |
-| Status | A free label; nothing enforces any transition |
+| Expense, other expense, transportation expense, Visit Cost, Payment Status | What the visit cost — see below |
+| Status | A label you set by hand (or the mobile app sets) |
 | Map Location ×2, Building Number ×2, Client Signature, Employee Signature, Attachment…Attachment 5 | Filled by the mobile app — see below |
 
 **Status** uses the same list of values as the trouble ticket (Initial, Assigned, In Progress,
 Cancelled, Closed, Finished, Done, Postponed, Re-Open, Development Request, Customer Feedback, Out Of
-Warranty). It starts at *Initial* and is otherwise entirely free — there are no transition rules and
-nothing reads it. One entry in that list has no translation in either language and shows as a raw
-key; ignore it.
+Warranty). It starts at *Initial*; you move it to any value by hand, with no fixed order, and filter the list
+view by it.
 
 The **Action Plan** (*خطة التنفيذ*) group — Serial, Phase or Cycle, Description — is meaningful only
 when the subject is a CRM Project. There, the Serial field suggests the project's preparation and
-training lines, and picking one fills in the phase and the description. For any other subject the
-group does nothing.
+training lines, and picking one fills in the phase and the description. With any other subject the
+three boxes are plain text.
 
 Below that sit the **Employees** grid (a technician and a note per row — the employee is the only
-truly required field on the whole screen), and a second one-column remarks grid whose heading has no
-translation and renders as a raw key. The **Remarks** tab holds three more free-text grids: customer
-remarks, technician remarks and supervisor remarks. They are three parallel comment logs and nothing
-reads any of them.
+truly required field on the whole screen), and a second one-column remarks grid. The **Remarks** tab
+holds three more free-text grids: customer remarks, technician remarks and supervisor remarks — three
+parallel comment logs.
 
-::: warning The money boxes on a Visit reach nothing
-**Expense**, **other expense**, **transportation expense**, **Visit Cost** and **Payment Status** are
-free-form boxes. They are never added up, never compared with one another, and never reach
-accounting, payroll or any claim process. If you need visit expenses reimbursed, raise them through
-the normal expense route — this screen will not do it for you.
-:::
+**Expense**, **other expense** and **transportation expense** record what the visit cost. **Visit Cost** and **Payment Status** record the total and whether it has been settled. Reimbursing a visit expense to the employee goes through the normal expense route.
 
 ## What a Visit writes onto the lead
 
@@ -95,7 +88,8 @@ Warm. There is no stored "previous value" and no rollback. Correct the lead by h
 :::
 
 The subject may also be a Trouble Ticket, a Complaint, a Customer, a Campaign, a CRM Project or a
-Development Request — in which case the Visit is a plain log and the levers do nothing.
+Development Request. The levers apply only when the subject is a Lead or a Potential; with any other
+subject the Visit is a log of the visit.
 
 ## Visits on the phone
 

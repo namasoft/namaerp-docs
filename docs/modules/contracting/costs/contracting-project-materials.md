@@ -1,4 +1,5 @@
 ---
+description: "Issuing stock to your own project with Contracting Material Issue Req, Contracting Material Issue and Contracting Material Return: lines, term code checks, processing, cost timing and locking."
 entities: [ContractingMaterialIssue, ContractingMaterialReturn, ContractingMaterialIssueReq]
 menu: Contracting → Costs → Contracting Material Issue
 ---

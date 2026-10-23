@@ -22,11 +22,7 @@ Either way the new record opens with **Ticket Date** set to today, **Estimated F
 
 The Main tab holds the case identity: Customer, Product, Serial Number, Responsible Employee, the Mediator, External Responsible, Severity, Ticket Type, Relative Weight, Expected Execution Date, the contact block, and four wide text fields — Error Message, Log, Technical Support Remarks and Description.
 
-::: warning Severity and its neighbours are recorded and never read
-**Severity** (Minor / Major / Feature / Critical), **Ticket Type**, **Relative Weight** and **Expected Execution Date** are stored on the ticket and consulted by nothing. No queue is sorted by them, no rule reacts to them, nothing alerts when the expected date passes. **Estimated Fix Period** is likewise never compared with the actual hours the ticket accumulates.
-
-Fill them in if your reporting wants them — they export perfectly well to Excel — but do not build a priority process on them, because the system will not enforce one.
-:::
+**Severity** (Minor / Major / Feature / Critical), **Ticket Type**, **Relative Weight** and **Expected Execution Date** are labels you can filter, sort and report on, and they export to Excel. Priorities and deadlines built on them are managed by your staff; the ticket raises no alerts from them.
 
 ### The Ticket Time group
 
@@ -37,15 +33,13 @@ Four fields, two of which you cannot type into:
 - **Ticket Date** (*تاريخ الطلب*) — defaults to today, and it is this date the coverage lookup tests.
 - **Closing Date** (*تاريخ الإغلاق*) — read-only.
 
-::: warning Closing Date is usually empty
-Closing Date is stamped in only two situations: on the document's **first** commit, if the ticket was already Closed at that moment, or when a Ticket Execution reaches 100 % completion. The realistic path — open a ticket, work it for a week, then Change Status → Closed — leaves Closing Date **blank**. Any "time to close" analysis built on it will be mostly empty.
-:::
+Closing Date is stamped when the ticket itself is saved with status *Closed*, or when a Ticket Execution reaches 100 % completion.
 
 ### The discussion thread
 
 Below the main fields sits the ticket's conversation: twenty text boxes. Type into one and, on save, the system stamps your user name and the current date and time into the read-only pair beside it. It is the internal running commentary on the case — and it is capped at twenty entries, after which there is nowhere else to write.
 
-## Coverage — the one lookup that really works
+## Coverage
 
 The moment you pick a Customer and a Product, two read-only fields fill themselves in:
 
@@ -63,12 +57,12 @@ On `TKT-0451` both a warranty and a contract match the split unit on 6 April:
 
 **A service contract always beats a warranty.** Had `CSC-0044` not existed, the ticket would read *In Warranty Period* with `WR-00219` as the covering document; with neither, *Not Covered*.
 
-::: danger What coverage matches, and what it ignores
+::: warning What coverage matches, and what it does not check
 **What coverage matches:** the ticket's **Product**, the ticket's **Serial Number** *only when the ticket carries one*, and the **Ticket Date** falling inside the line's **Start In → End In** window. A service contract wins over a warranty when both match.
 
-**What coverage ignores:** the **customer** (any customer's contract or warranty can cover any other customer's ticket), the contract's **status** (Cancelled, Finished and Renewed contracts still cover), whether the contract has ever been **committed** (drafts cover), the **frozen extension** (the contract screen shows an extended *To* date, but coverage tests the original End In), and all **dimensions** — legal entity, branch, sector.
+**What coverage does not check:** the **customer** (any customer's contract or warranty can cover any other customer's ticket), the contract's **status** (Cancelled, Finished and Renewed contracts still cover), whether the contract has ever been **committed** (drafts cover), the **frozen extension** (coverage uses the line's End In, not the extended *To* date), and all **dimensions** — legal entity, branch, sector.
 
-**What coverage does:** nothing but display. Covering Type and Covering Document are an on-screen indicator for the agent. No validator, pricing rule, status guard or document generation reads them, and there is no document term on the Trouble Ticket that could react to them. The commercial decision — whether to charge for the work — remains entirely manual.
+**What coverage does:** Covering Type and Covering Document tell the agent whether the product is covered and by which document. Whether to charge for the work is the agent's decision.
 
 **Practical advice:** always fill Serial Number on serialised items, or one warranty registered without a serial will cover every ticket raised on that product, for every customer, in every branch.
 :::
@@ -82,7 +76,7 @@ Status is **not** something you type. The field is read-only on screen, and the 
 Open the **مسند إلي / Assigned To** tab and add rows to the **الموظفين / Employees** grid. On `TKT-0451` that means the two technicians, `EMP-2011` and `EMP-2014`.
 
 ::: warning Filling the Employees grid forces the status to Assigned
-Every single time the ticket is saved, if the Employees grid has at least one row the status is set to *مسند / Assigned* before anything else is applied. You cannot leave a ticket on *Initial* once technicians are on it, and — more surprisingly — a status set by some other route can be pushed back to *Assigned* by an unrelated later save. This is the mechanism behind the reverting behaviour described under Ticket Executions.
+Every single time the ticket is saved, if the Employees grid has at least one row the status is set to *مسند / Assigned* before anything else is applied. You cannot leave a ticket on *Initial* once technicians are on it, and — more surprisingly — a status set by some other route can be pushed back to *Assigned* by an unrelated later save.
 :::
 
 The grid is also what makes the ticket's technicians selectable on a Ticket Execution: the employee picker there offers only the ticket's responsible employee and the people in this grid.
@@ -122,10 +116,10 @@ Train the desk on this early. Sites that do not know about it end up using only 
 
 ### 4. Close
 
-Two routes, and they behave differently:
+Two routes:
 
-- **Change Status → Closed** — the ticket is closed. Closing Date is filled only if this happens to be the document's first commit.
-- **Commit a Ticket Execution at 100 % completion** — the ticket shows *Finished* and Closing Date is set to that line's From Date. On `TKT-0451`, execution `TEXE-0679` on 13 April does exactly this. But see the warning on [Ticket Executions](/modules/crm/support/crm-ticket-executions.md): that route sets the visible status without making it stick.
+- **Change Status → Closed**, then save — the ticket is closed and Closing Date is filled with the date of that save.
+- **Commit a Ticket Execution at 100 % completion** — the ticket shows *Finished* and Closing Date is set to that line's From Date. On `TKT-0451`, execution `TEXE-0679` on 13 April does exactly this.
 
 **ReOpen** puts the ticket back into play; nothing else changes, and the Closing Date is not cleared.
 
@@ -147,10 +141,8 @@ On `TKT-0451` the stopwatch reads:
 **Total Execution Time** (10:35 here) comes from this stopwatch. **Actual Fix Period** (7.0 hours here) comes from the Ticket Execution documents. They measure different things, are maintained independently, and nothing reconciles them. Decide which one your business reports on and be consistent.
 :::
 
-::: danger Starting work stops the same technician's clock on a different ticket
+::: warning Starting work stops the same technician's clock on a different ticket
 When a technician's clock starts here, the system first looks for **any** open stopwatch row belonging to that technician — *across every ticket in the database* — and closes it. One person can only be "in progress" on one ticket at a time.
-
-Worse, the end time written onto the abandoned row is not the current time. It is the timestamp of that employee's most recent recorded action on the same day, and if there is none, the row is closed at its own start time — **zero minutes recorded** for a morning of work. The other ticket is re-saved silently as part of this.
 
 Tell technicians to press **إنهاء / End** before starting work on another ticket. A row also may not span more than one day; the screen refuses one that does.
 :::
@@ -176,13 +168,13 @@ The **Assigned To** tab carries two more buttons, **بدء / Start** and **إن�
 
 ## The rest of the screen
 
-- **Executions** tab — a read-only list of the Ticket Execution documents raised against this ticket. (Its columns list Employee twice; that is a display quirk, not two different employees.)
+- **Executions** tab — a read-only list of the Ticket Execution documents raised against this ticket. (Employee appears in two columns; both show the same employee.)
 - **Follow Up** tab — a read-only list of the Ticket Follow-Ups raised against this ticket.
 - **الملاحظات / Remarks** tab — a free-notes grid with a remark and two attachments per row, on top of the five attachment slots on the Main tab.
 
 ## No effects, no term
 
-The Trouble Ticket **posts nothing and moves no stock.** It has no document term, so there is nothing to configure and nothing that can be made to react to a status or to the coverage result. If a repair consumes spare parts, they are issued with an ordinary stock document raised separately, and no link back to the ticket exists.
+The Trouble Ticket **posts nothing and moves no stock.** It has no document term, so there is nothing to configure. If a repair consumes spare parts, they are issued with an ordinary stock document raised separately, and no link back to the ticket exists.
 
 ::: info The "Create Trouble Ticket" button on other screens is something else entirely
 Nama's own toolbar carries a generic *Create Trouble Ticket* action that can appear on any screen. That action does **not** create a ticket in your installation — it files a support request with NaMaSoft's own support desk over the internet, and it only works when your Global Config carries the Nama server address and credentials. What you see locally is a queue entry, not a CRM document. It has nothing to do with the tickets described on this page.

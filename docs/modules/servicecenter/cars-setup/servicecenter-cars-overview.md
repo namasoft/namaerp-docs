@@ -1,4 +1,5 @@
 ---
+description: "Overview of the car dealership side of Service Center: the car record held as an item dimension, car statuses, the setup it needs, the cars menu and the External Agency file."
 entities: [SubItem, SubItemStatusConfigurations, ExternalAgency]
 ---
 # The Car Dealership in Nama
@@ -74,14 +75,12 @@ Al-Sahra sells `CAR-000318` to Layla in March, and if Layla brings it back for i
 September the workshop opens a **new and unrelated** product file for it. Nothing carries over: not
 the chassis number, not the warranty pack, not the purchase history.
 
-::: warning There is no link between the sold car and the serviced car
-Two fields exist in the data model that look as though they would join the two registers, but they
-are on no screen and nothing reads or writes them. A workshop cannot look up the dealership record,
-and a dealership record does not know its car has been serviced.
+::: info The sold car and the serviced car are separate records
+The two registers are kept apart: a workshop works from its own product file, and the dealership
+record holds the sale.
 
 If you need the two joined — for example so a warranty claim can be checked against the sale date —
-that is a configuration project at your site, not a product feature. It is not something you switch
-on.
+that is a configuration project at your site.
 :::
 
 ## Nothing about a car's behaviour is built in

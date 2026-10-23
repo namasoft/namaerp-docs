@@ -1,6 +1,6 @@
 ---
 entities: [ApprovalDefinition]
-menu: Basic → Settings → Approval Definition
+menu: Administration → Display Customization → Approval Definition
 ---
 # Approvals System - Approval Definition Full Guide
 
@@ -13,7 +13,7 @@ An approval definition holds a record of a chosen type until the people it names
 ### Approval Definition
 An Approval Definition is the master configuration that defines when, how, and who should approve specific business transactions. Each definition contains:
 
-- **Target Entity**: Which type of record requires approval (invoices, purchase orders, etc.)
+- **Approval Entity**: Which type of record requires approval (invoices, purchase orders, etc.)
 - **Approval Steps**: Sequential or parallel approval stages
 - **Responsible Parties**: Who can approve at each step
 - **Conditions**: When the approval should be triggered
@@ -31,14 +31,14 @@ When a transaction meets approval criteria, an Approval Case is automatically cr
 
 ### Accessing Approval Definitions
 
-Navigate to: **Basic → Settings → Approval Definition**
+Navigate to: **Administration → Display Customization → Approval Definition**
 
 ### Creating Your First Approval Definition
 
 1. **Basic Information**
    - **Code**: Unique identifier for the approval definition
    - **Name**: Descriptive name (e.g., "Invoice Approval Above 10,000")
-   - **Target Entity**: Select the entity type that requires approval
+   - **Approval Entity**: Select the entity type that requires approval
 
 2. **Approval Conditions**
    - **Use With Insert**: Apply when creating new records
@@ -78,7 +78,7 @@ When **Confirm Before Starting** is enabled, the system displays a confirmation 
 
 ::: info Confirmation Dialog Features
 - **Tempo Language**: Use `arabicConfirmation` and `englishConfirmation` fields with Tempo template syntax
-- **Dynamic Content**: Support for field references from the approved element (e.g., `{totalAmount}`, `{code}`, `{department}`)
+- **Dynamic Content**: Support for field references from the approved element (e.g., `{money.netValue}`, `{code}`, `{department}`)
 - **User Choice**: Users can click "Confirm" to proceed or "Cancel" to abort the approval process
 - **Language Support**: Displays appropriate message based on user's language preference
 :::
@@ -86,10 +86,10 @@ When **Confirm Before Starting** is enabled, the system displays a confirmation 
 **Example Confirmation Messages with Dynamic Content:**
 ```
 Arabic Confirmation:
-"تأكيد: هل أنت متأكد من طلب الموافقة على {entityType} رقم {code} بمبلغ {totalAmount} للقسم {department.name1}؟"
+"تأكيد: هل أنت متأكد من طلب الموافقة على {entityType} رقم {code} بمبلغ {money.netValue} للقسم {department.name1}؟"
 
 English Confirmation:
-"Confirmation: Are you sure you want to request approval for {entityType} #{code} with amount {totalAmount} for department {department.name2}?"
+"Confirmation: Are you sure you want to request approval for {entityType} #{code} with amount {money.netValue} for department {department.name2}?"
 
 Static Example:
 Arabic: "تأكيد: هذا المبلغ كبير، هل تريد المتابعة؟"
@@ -97,7 +97,7 @@ English: "Confirmation: This is a large amount, do you want to proceed?"
 ```
 
 **Available Dynamic Fields:**
-- **Entity Fields**: Any field from the record being approved (e.g., `{totalAmount}`, `{customerName}`)
+- **Entity Fields**: Any field from the record being approved, by its field id (e.g., `{money.netValue}` for the net total of an invoice or order, `{customer.name1}`). Field ids are listed per screen on [dm.namasoft.com](https://dm.namasoft.com)
 - **System Fields**: Built-in fields like `{code}`, `{entityType}`, `{creationDate}`
 - **Related Entity Fields**: Referenced entity fields using dot notation (e.g., `{department.name1}`, `{customer.creditLimit}`)
 - **Calculated Values**: Custom calculations or formatted values
@@ -110,7 +110,7 @@ By default, records awaiting approval cannot be edited to maintain data integrit
 
 **Configuration Options:**
 
-**Allow Modify While Under Approval** (Global Setting):
+**Allow Modify While Under Approval** (on the Approval Definition):
 - When **disabled** (default): Records cannot be edited during approval process
 - When **enabled**: Records can be modified based on the policy settings below
 
@@ -131,12 +131,12 @@ The system supports three different policies for controlling modifications durin
 3. **Prevent Modify**
    - No modifications allowed regardless of user permissions
    - Highest security level for critical approval steps
-   - Overrides the global `allowModifyWhileUnderApproval` setting
+   - Overrides the definition's **Allow Modify While Under Approval** option
 :::
 
 #### Field-Level Editing Control
 
-Beyond the global `allowModifyWhileUnderApproval` setting, the system provides granular field-level control over what can be edited during approval. This allows organizations to permit modifications to specific fields while keeping others locked.
+Beyond the **Allow Modify While Under Approval** option on the Approval Definition, the system provides granular field-level control over what can be edited during approval. This allows organizations to permit modifications to specific fields while keeping others locked.
 
 **Configuration Options:**
 
@@ -167,7 +167,7 @@ The system provides enhanced security through OTP verification for approval deci
 
 **Configuration Options:**
 
-**Require OTP For All Steps** (Global Setting):
+**Require OTP For All Steps** (on the Approval Definition):
 - When **enabled**: All approval steps require OTP verification
 - Applies to every step in the approval definition
 - Overrides individual step settings
@@ -215,10 +215,11 @@ When **enabled**:
 Use a [Criteria Definition](/platform/automation-and-rules/criteria-definitions) and **Apply When Query** to create sophisticated approval triggers:
 
 ```sql
--- Example: Approve invoices above 50,000 SAR
-SELECT case when {totalAmount} > 50000 then 1 else 0 end
-
+-- Example on a purchase order definition: approve orders above 50,000
+SELECT CASE WHEN {money.netValue} > 50000 THEN 1 ELSE 0 END
 ```
+
+The names in braces are field ids of the record being approved; [dm.namasoft.com](https://dm.namasoft.com) lists them for every screen. On invoices and orders the net total is `money.netValue`. A name that is not a field of the record makes the query return 0, so the approval never starts.
 
 ### Approval Rules
 
@@ -333,6 +334,16 @@ The request now goes to the receiving warehouse's keeper and to that keeper's di
 Open a new Approval Definition, then **More → Import Into Current Record** and paste it — see [Importing Into the Record You Have Open](/platform/import-export/importing-records.md#Importing-Into-the-Record-You-Have-Open).
 :::
 
+#### Responsible Type = Query: a fixed list from a query
+
+Set a step's **Responsible Type** to **Query** when the approvers are best described as a filter on employees, for example everyone in one department. The step's **Query** field takes an HQL query that selects **Employee** records:
+
+```
+select e from Employee e where e.department.code = '01'
+```
+
+Every employee the query returns is a candidate for the step, plus the definition's alternates. HQL names entities and their fields (`Employee`, `e.department.code`), not tables and columns (`department_id`). The query receives no `{fieldId}` placeholders, so it returns the same people for every record; to pick approvers from the record itself, use **From Field** as in the example above.
+
 ### Alternate Approvers
 
 The system provides flexibility by allowing alternate approvers who can act on ANY step of the approval process, regardless of the specific step assignments. This ensures approvals can proceed even when primary approvers are unavailable.
@@ -437,6 +448,13 @@ The system can generate customized summaries for approval requests that provide 
 | **Revise On Completion** | Mark record as revised after approval (locks editing/deletion) |
 | **Allow Modify While Under Approval** | Allow editing records during approval process |
 | **Require OTP For All Steps** | Require OTP verification for all approval decisions |
+| **Approve Lines** | Ask for approval on the lines that meet the definition's conditions instead of on the whole record; approvers decide on those lines |
+| **Reject Line Delete It** | When the case ends approved, the lines an approver rejected are deleted from the record. Only record types that support approval per line accept it |
+| **Allow Edit After Usage** | Lets you change this definition while records based on it are still waiting for approval; without it that save is refused |
+| **Request Comment In Approval Links** | An approver who decides from the links in an approval e-mail is asked for a comment |
+| **Ignore Usage Capability When Approving** | When an approver's decision saves the record, the approver's usage permissions on the records it refers to are not checked |
+| **Remove Other Employees From approval When Escalate** | When an approver escalates the step to a specific employee, the step's other candidates are dropped, so only the escalated-to employee decides |
+| **WhatsApp Message**, **WhatsApp Preferred Sender**, **Telegram Message** | Also send each approver the request over [WhatsApp](/platform/notifications/sms-and-whatsapp) or [Telegram](/platform/notifications/telegram) |
 | **Fallback** | Employee to handle system errors (required) |
 | **Alternate** | Employee who can approve any step |
 | **Other Alternates** | Dynamic alternates (supervisor, field-based, etc.) |
@@ -486,7 +504,7 @@ The condition is evaluated at the moment the workflow reaches the step, based on
 
 ```sql
 -- Example on a step: only require this step when the total is above 100,000
-SELECT case when {totalAmount} > 100000 then 1 else 0 end
+SELECT CASE WHEN {money.netValue} > 100000 THEN 1 ELSE 0 END
 ```
 
 ::: tip Document is saved when a trailing optional step does not apply
@@ -534,6 +552,8 @@ The decision fails with a message such as *"Employee X does not have a direct su
 
 ::: tip Reasons and comments cover both decisions
 Approval reasons flagged **Used With Escalation** (تستخدم مع التصعيد) are offered for all three escalation decisions, and the step-level settings **Comment Required With Escalation** and **Reason Required With Escalation** apply to escalations to the Supervisor and to the Direct Supervisor alike. You do not maintain a separate reason list per escalation route.
+
+Returning works the same way. **Return To A Specific Step** has its own step columns, **Comment Required With Returning To Specific Step** and **Reason Required With Returning To Specific Step**, and offers the approval reasons flagged **Used With Returning To Specific Step**.
 :::
 
 ##### Configuration Impact
@@ -617,7 +637,7 @@ For auto-escalation to work, you must create a **Task Schedule** with the follow
 
 The decisions above are what an approver chooses. These are the buttons that get them there, and they sit on the ordinary record screens rather than on the Approval Definition itself.
 
-- **Approve Selected Lines** — the bulk decision, offered on the list view of any entity under approval. Tick the pending rows and press it, and one dialog settles them all: **Decision**, **Escalate To** (an employee, a security profile or an employee group), **OTP** where the step requires one, **Description** for the reasoning, and an **Approval Reason**. It refuses if you ticked nothing, and again if you leave the decision empty. Its decision list carries six of the eight: Approve, Reject, Return, Escalate To Supervisor, Return To Previous Step and Escalate To Specific Employee — **Return To A Specific Step and Escalate To Direct Supervisor are only available one record at a time**, because both need you to look at the case's own step list first.
+- **Approve Selected Lines** — the bulk decision, offered on the list view of any entity under approval. Tick the pending rows and press it, and one dialog settles them all. Fill in what the decision needs — **Escalate To** (an employee, a security profile or an employee group), **OTP** where the step requires one, **Description** for the reasoning, and an **Approval Reason** — then press the decision itself: the dialog has an **Approve**, a **Reject** and a **Return** button. The other decisions sit behind **Other Decision**, which opens a second dialog with one button per decision. It refuses if you ticked nothing. Six of the eight decisions are offered here: Approve, Reject, Return, Escalate To Supervisor, Return To Previous Step and Escalate To Specific Employee — **Return To A Specific Step and Escalate To Direct Supervisor are only available one record at a time**, because both need you to look at the case's own step list first.
 - **Revoke Approval Request** — cancels the pending approval request and takes the record back out of the workflow. It works on the record you are in, or on every row you ticked in a list.
 - **Move Approvals To Delegated Employee** — on the **Delegation** screen. Save the delegation, tick the rows, and the pending approval cases belonging to the delegating employee move across to the delegate. This is the button that makes a delegation retroactive; without it a new delegation only catches cases raised after it.
 
@@ -648,7 +668,7 @@ Templates use Tempo language for dynamic content rendering. The templates have a
 <p>Please review and approve the following {entityType}:</p>
 <ul>
     <li><strong>Document:</strong> {link(this)} (#{code})</li>
-    <li><strong>Amount:</strong> {totalAmount}</li>
+    <li><strong>Amount:</strong> {money.netValue}</li>
     <li><strong>Department:</strong> {department.name2}</li>
     <li><strong>Date:</strong> {$creationDate}</li>
     <li><strong>Current Step:</strong> {$notificationInfo.approvalCase.nextStepName2}</li>
@@ -674,7 +694,7 @@ Templates use Tempo language for dynamic content rendering. The templates have a
 **SMS Template Example:**
 ```
 {$notificationInfo.employee.name2}: Approval needed for {entityType} #{code}
-Amount: {totalAmount}
+Amount: {money.netValue}
 OTP: {$notificationInfo.otp}
 
 {approvelink}
@@ -685,7 +705,7 @@ OTP: {$notificationInfo.otp}
 ```
 <strong>Approval Request</strong>{enter}
 {entityType} #{code} requires your approval{enter}
-Amount: {totalAmount}{enter}
+Amount: {money.netValue}{enter}
 Department: {department.name1}{enter}
 {enter}
 {titledlink("View Details", this)}
@@ -697,7 +717,7 @@ Department: {department.name1}{enter}
 All notification templates have access to the following context objects and variables:
 
 **Document Fields:**
-- Direct field access: `{code}`, `{totalAmount}`, `{creationDate}`, etc.
+- Direct field access: `{code}`, `{money.netValue}`, `{creationDate}`, etc.
 - Related entity fields: `{customer.name1}`, `{department.code}`, etc.
 - System fields: `{entityType}`, `{firstAuthor}`, `{currentVersion}`
 
@@ -834,7 +854,7 @@ Access candidate details from `$firstCandidate`, `$secondCandidate`, etc.:
 <h3>Document Details:</h3>
 <ul>
     <li><strong>Document:</strong> {link(this)}</li>
-    <li><strong>Amount:</strong> {totalAmount}</li>
+    <li><strong>Amount:</strong> {money.netValue}</li>
     <li><strong>Requested By:</strong> {currentApprovalCase.requestedBy.name2}</li>
     <li><strong>Request Date:</strong> {currentApprovalCase.requestDate}</li>
 </ul>

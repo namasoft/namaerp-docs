@@ -17,7 +17,7 @@ Every debit, credit, tax, discount, cash, fees, warehouse, coverage and service-
 **Side Configuration** `termConfig.config.debit.sideConfig` — Points the side at an [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record: the same block of settings saved once as a master file and shared by as many terms as need it.
 
 ::: warning A Side Configuration replaces the block, it does not merge with it
-Once this field is filled in, every other field in the same block is ignored — the account, the subsidiary type, the narrations, the dimension sources, all of it. The fields stay on screen showing whatever was typed there before, so a side can read as though it posts to one account while actually posting somewhere else entirely. Clear the Side Configuration to go back to the values typed in the block.
+Once this field is filled in, every other field in the same block is ignored — the account, the subsidiary type, the narrations, the dimension sources, all of it. The fields stay on screen showing whatever was typed there before, so a side can read as though it books to one account while actually booking somewhere else entirely. Clear the Side Configuration to go back to the values typed in the block.
 :::
 
 **Account source / Account** `termConfig.config.debit.accountSource.type` + `termConfig.config.debit.accountRef` — How the GL account is resolved: either a fixed account (`accountRef`) or pulled from a source on the document. When the account comes from a referenced entity, `termConfig.config.debit.accountSource.entityType` names that entity type and `termConfig.config.debit.accountSource.fieldID` names the field on it that yields the account. `termConfig.config.debit.accountSource.accFrmBagCrrncy` resolves the account using the bag (portfolio) currency.
@@ -40,11 +40,11 @@ Once this field is filled in, every other field in the same block is ignored —
 | Dimension | Field ID |
 |---|---|
 | Entity dimension source / value | `termConfig.config.debit.entityDimensionSource` / `termConfig.config.debit.entityDimension` |
-| Reference 1 source / value | `termConfig.config.debit.ref1Source` / `termConfig.config.debit.ref1` |
-| Reference 2 source / value | `termConfig.config.debit.ref2Source` / `termConfig.config.debit.ref2` |
-| Reference 3 source / value | `termConfig.config.debit.ref3Source` / `termConfig.config.debit.ref3` |
+| Reference 1 source | `termConfig.config.debit.ref1Source` |
+| Reference 2 source | `termConfig.config.debit.ref2Source` |
+| Reference 3 source | `termConfig.config.debit.ref3Source` |
 
-**Ignore unfound fields in refs and entity dimension** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — Don't fail posting when a referenced source field is missing. Shown when any ref/entity-dimension source is enabled.
+**Ignore unfound fields in refs and entity dimension** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — Don't fail processing when a referenced source field is missing. Shown when any ref/entity-dimension source is enabled.
 
 **Currency / Rate source field** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — Source fields for the currency and rate of the ledger line; shown when `AddCurrencyAndRateSourceToTerms` is on.
 
@@ -64,7 +64,7 @@ The two primary ledger sides of the document. For an invoice the debit is typica
 JOrderExpense uses the bare `termConfig.debit` / `termConfig.credit` ids (not under `config`); ReceiptAdditionalCost uses `termConfig.config.debit` / `termConfig.config.credit`.
 :::
 
-**Shorten Ledger** `termConfig.config.shortenLedger` — Summarize the entry instead of posting one line per document line. Lines that are alike are merged into a single line, and where a debit and a credit meet in the same group only the difference survives. A ten-line invoice that debits the same customer ten times posts one customer line for the total.
+**Shorten Ledger** `termConfig.config.shortenLedger` — Summarize the entry instead of booking one line per document line. Lines that are alike are merged into a single line, and where a debit and a credit meet in the same group only the difference survives. A ten-line invoice that debits the same customer ten times books one customer line for the total.
 
 Two lines are "alike" only when everything about them matches: the account, the subsidiary, the entity dimension, the four cost-centre dimensions, the three generic references, both narration lines, the currency and the rate. Anything that varies per line keeps the lines apart — a narration template that prints the item name is the usual reason an entry that was expected to collapse comes out at full length.
 
@@ -221,7 +221,7 @@ The Letter-of-Credit opening document exposes several extra sides beyond its mai
 
 **Down Payment Debit / Credit** `termConfig.config.debit` / `termConfig.config.credit` — On an LC opening, the main debit/credit sides carry the *Down Payment Debit* / *Down Payment Credit* titles.
 
-**Fees Debit / Credit** `termConfig.feesDebit` / `termConfig.feesCredit` — Account sides for the LC opening commission/fees posting.
+**Fees Debit / Credit** `termConfig.feesDebit` / `termConfig.feesCredit` — Account sides for the LC opening commission/fees entry.
 
 **Covered Debit / Credit** `termConfig.coveredDebit` / `termConfig.coveredCredit` — Account sides for the cash-cover (margin/coverage) portion of the letter of credit, under the *Coverage Effect* group.
 
@@ -235,7 +235,7 @@ Toggles on expense/cost documents (JOrderExpense, ReceiptAdditionalCost, LcExpen
 
 **Editable Taxes** `termConfig.editableTaxes` — Allow editing the computed taxes on the document. JOrderExpense, ReceiptAdditionalCost, LcExpense.
 
-**Allow Empty Subsidiary Account Type** `termConfig.allowEmptySubsidiaryAccountType` — Permit posting even when the subsidiary/portfolio account type is not set. JOrderExpense, ReceiptAdditionalCost, LcExpense.
+**Allow Empty Subsidiary Account Type** `termConfig.allowEmptySubsidiaryAccountType` — Permit processing even when the subsidiary/portfolio account type is not set. JOrderExpense, ReceiptAdditionalCost, LcExpense.
 
 **Allow Empty Sys Distribution Lines** `termConfig.allowEmptySysDistributionLines` — Permit saving when the system cost-distribution lines are empty. ReceiptAdditionalCost only.
 

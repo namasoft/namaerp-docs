@@ -40,6 +40,12 @@ Cashiers reach for whichever is fastest in the moment:
 3. **Search by name.** Type part of the name and pick from the list that appears. Handy when neither code nor barcode is at hand.
 4. **Tap a favourite.** On the favourites panel, tap the item's button. Use the breadcrumb to drill into categories (say, *Drinks → Cold*). To add several at once, type the number in the **quantity** box first, then tap the button.
 
+An item whose **Sellable** box (*يمكن بيعه*) is off on the item card is refused with a beep and this message, where `{0}` is the item code and name joined by `_`:
+
+*Item {0} is unsellable in POS* — «الصنف {0} غير قابل للبيع في نقاط البيع»
+
+Tick **Sellable** on the item card on the server; the register picks the change up with the next data sync. An item deleted on the server that the register could not remove is also kept on the register as not sellable, so it gives the same message.
+
 ![Sales screen with lines](../../ar/modules/pos/images/sales/pos-sales-with-lines-en.png)
 
 ![Item search dialog](../../ar/modules/pos/images/sales/pos-item-search-dialog-en.png)

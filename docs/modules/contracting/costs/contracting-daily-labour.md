@@ -166,14 +166,14 @@ photograph if there is one. Picking the contract fills in the project and the re
 term code column offers the contract's terms as suggestions and, once chosen, brings the standard term
 and the term's description across.
 
-Then it stops. There is **no document term on the diary at all**, no accounting effect, no cost entries,
-and — the point people get wrong — **it drives no quantities**. Today's and tomorrow's work are free
-narrative text, and nothing reads them. Executed quantities come only from
+The diary is a record. It has **no document term**, no accounting effect and no cost entries, and
+**it does not feed executed quantities**: today's and tomorrow's work are narrative text for the site
+record. Executed quantities come from
 [project execution](/modules/contracting/project-contracting/contracting-project-execution),
 [subcontractor execution](/modules/contracting/contractor-contracting/contracting-contractor-execution)
 and the [cost execution](/modules/contracting/costs/contracting-cost-execution).
 
-That is not a shortcoming. A defensible daily record of what happened on site, term by term, signed off
+A defensible daily record of what happened on site, term by term, signed off
 by a named engineer, is exactly what wins a delay claim two years later. Its value is the record itself.
 
 ## Worked example: a week of the block-laying gang

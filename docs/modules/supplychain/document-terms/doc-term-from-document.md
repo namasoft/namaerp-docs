@@ -46,6 +46,8 @@ These switches govern what is pulled from the origin document and how quantities
 
 **Prevent Fill Lot Id According To Expiry Date If Empty** `termConfig.preventFillLotIdAccordingToExpiryDateIfEmpty` — Disables the default behavior of auto-deriving the lot/batch id from the expiry date when the lot field is empty.
 
+**Allow Creating Document From Expired Quotation** `termConfig.allowCreatingDocumentFromExpiredQuotation` — By default a sales document created from a Sales Quotation must have its value date inside the quotation's **Valid from** / **Valid to** range, or the save is refused with *Value date must be within the range of sales quotation valid from and valid to.* Tick this on the new document's term to accept expired quotations. Sales documents only.
+
 **Allow Item Code And Name Without An Item** `termConfig.allowItemCodeAndNameWithoutAnItem` — Permits typing a free item code/name on a line without selecting a registered item record.
 
 **Do Not Copy Contract Terms When Selected** `termConfig.doNotCopyContractTermsWhenSelected` — When the origin is a contract, suppress copying the contract's terms/conditions into the new document. Contracting-material documents only.

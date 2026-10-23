@@ -1,4 +1,5 @@
 ---
+description: "The Car Traffic Letter Request and Car Traffic Letter documents and their cancellations, used to issue registration letters to the traffic department, and what they update on the car record."
 entities: [SITrafficLetter, SITrafficLetterReq, SITrafficLetterCancel, SITrafficLetterReqCancel]
 ---
 # Traffic Letters
@@ -61,30 +62,16 @@ has a status updater line targeting that document. And, if the
 document term switches the option on, the letter's reference is stamped onto the car's Statistics
 tab so you can see from the car which letter was issued for it.
 
-::: warning The letter cannot record the plate it exists to obtain
-There is **no plate-number field** anywhere on the traffic letter or its request. The document that
-exists to get plates has nowhere to write the plate that comes back.
-
+::: info The plate is typed on the car record
 The plate lives on the [**car record**](/modules/servicecenter/cars-setup/car-master-file.md), on
-its Warehouse Data tab, and it is typed there by hand.
-Nothing writes it — not the traffic letter, not the final delivery, not any other document. Make it
-an explicit step in your process: when the plates arrive, open the car and type the number.
+its Warehouse Data tab, and it is typed there by hand. Make it an explicit step in your process:
+when the plates arrive, open the car and type the number.
 :::
 
 ## What they do not do
 
-::: danger The accounting configuration on these documents is completely inert
-All four traffic-letter documents show a full accounting block on their
-[document term screens](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) —
-debit and credit, cash, taxes, discounts one to seven, service fees, reservation value, the lot.
-
-**None of the four ever posts anything.** Every account you configure there is ignored, no journal
-entry is produced, and nothing tells you. This is not "optional accounting"; it is a screen block
-that does nothing on these documents. Do not spend time on it, and do not use it to explain a
-missing entry.
-:::
-
-They move no stock either. A traffic letter is paperwork and a status move — nothing else.
+None of the four traffic-letter documents creates a journal entry, and they move no stock. A
+traffic letter is paperwork and a status move.
 
 ::: warning Nothing requires a traffic letter before delivery
 No rule in the product refuses to invoice or deliver a car that has no traffic letter. You can
@@ -118,8 +105,7 @@ one action, in the More menu:
 
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — builds car records from the
   line data: for every line whose item has sub items it creates the car record (or refreshes the one
-  already on the line) and writes it back onto the line. The car record is saved straight away. It
-  does nothing, and shows no message, unless the document term's *Create Sub Item From Line Info*
+  already on the line) and writes it back onto the line. The car record is saved straight away. It runs only when the term's *Create Sub Item From Line Info*
   option is on.
 
 Switch *Create Sub Item From Line Info* on for exactly **one** document type in a chain. Two

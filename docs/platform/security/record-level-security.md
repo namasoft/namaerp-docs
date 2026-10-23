@@ -1,4 +1,5 @@
 ---
+description: "Record-level security: which records a user sees through dimensions and login context, creator-only restrictions, extra filters, record capabilities and records prevented from use."
 entities: [User, SecurityProfile]
 ---
 # Record-Level Security (Dimensions and Filters)
@@ -77,9 +78,33 @@ Example: on a sales invoice row, set the field to `salesMan`. A user whose Relat
 
 When matching a single field is not enough, write a criteria expression in the **Dynamic Tempo Criteria** column. The expression supports Tempo template syntax, so it can reference the current user's data and combine multiple conditions. Use it for rules like "only invoices for customers whose collector is the current user's employee" or a view restricted to specific time periods.
 
-::: info Filters are applied everywhere
-Extra Filters are added to lists, searches, and reports built on the type — and they are re-checked when a record is opened directly (via a link, for example), so the user cannot bypass them by guessing a record code or URL.
+::: info Where Extra Filters apply
+Extra Filters are added to lists, searches, and reports built on the type — and they are re-checked when a record is opened directly (via a link, for example), so the user cannot bypass them by guessing a record code or URL. The one exception is a lookup inside a reference field that a **Search Extra Filters** row covers: there the row's own filter is used instead, as described next.
 :::
+
+### Search Extra Filters
+
+Sometimes the filter that suits a list is wrong inside one particular field. A collector whose Extra Filter shows only the customers he collects from still has to pick any customer of his branch in the **Customer** field of a sales invoice. The second grid on the Extra Filters page, **Search Extra Filters (Cancels Normal Extra Filters If Applicable)**, handles that. It sits on the security profile and on the user record.
+
+| Column | Meaning |
+|---|---|
+| **Works Only When Searching Inside Fields** | The reference fields the row applies to, by field id — `customer`, for example. Separate several with commas. Leave it empty to cover every field on the screens named next. |
+| **Works Only When Searching Inside Type** | The screen the lookup is opened from — Sales Invoice in the example. |
+| **Works Only When Searching Inside Types List** | The same, for every type in an EntityType List. |
+| **Criteria** | A criteria definition the offered records must meet. |
+| **Dynamic Tempo Criteria** | A Tempo criteria expression, as on the Extra Filters grid. |
+
+How a row is used:
+
+- It applies only while the user searches inside a reference field. Lists, reports and other screens keep the normal Extra Filters.
+- When a row matches the field and the screen, its criteria filter what the lookup offers, and the normal Extra Filter for that type is **skipped** for this search. Other record security, such as view capabilities and *View Only Created Records*, still applies.
+- The user's own rows are checked before the security profile's rows, and the first matching row wins.
+- Fill **Works Only When Searching Inside Type** or **Works Only When Searching Inside Types List**: lookups on a record screen match a row only through the screen's type.
+- Typing a code by hand does not get around it. A record the row excludes is refused with:
+
+  *The record {0} is not allowed in this field according to the search extra filters* — «السجل {0} غير مسموح به في هذا الحقل طبقاً للمرشحات الإضافية عند البحث»
+
+Users whose security profile has Full Authority are not filtered.
 
 ## Record Capabilities (Changing Capability at the Record Level)
 

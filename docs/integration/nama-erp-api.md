@@ -111,17 +111,38 @@ The API automatically excludes:
 
 ### Working with Entity Collections
 
-Many entities include detail collections (one-to-many relationships):
+Many entities include detail collections (one-to-many relationships). A sales invoice's lines, for example, are its `details` collection; each line nests the item, the quantity and the price as objects:
 
 ```json
 {
-  "invoiceLines": {
+  "details": {
     "type": "array",
     "items": {
       "properties": {
-        "itemCode": { "type": "string" },
-        "quantity": { "type": "number" },
-        "unitPrice": { "type": "number" }
+        "item": {
+          "properties": {
+            "item": { "type": "string" }
+          }
+        },
+        "quantity": {
+          "properties": {
+            "quantity": {
+              "properties": {
+                "primeQty": {
+                  "properties": {
+                    "value": { "type": "number" },
+                    "uom": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "properties": {
+            "unitPrice": { "type": "number" }
+          }
+        }
       }
     }
   }
@@ -187,7 +208,7 @@ For browser-based testing, you can use session cookies from a logged-in user ses
 
 The **system administrator** can generate API keys using the **API Credentials** master screen:
 
-1. Open the API Credentials screen
+1. Open the API Credentials screen (**Basic → Documents → API Credentials**)
 2. Create a new record with:
    - **Code**: Unique identifier for this API credential
    - **Name**: Descriptive name for the integration
@@ -202,6 +223,10 @@ The API Key inherits all access permissions from the selected user:
 - Module permissions
 - Data visibility rules
 - Company/branch restrictions
+:::
+
+::: info Each record belongs to its user
+An API Credentials record belongs to the user in its **User** field. An administrator sees and manages everyone's records; any other user sees only their own, and an empty **User** is filled with whoever saves the record. Saving a record that names somebody else, as a non-administrator, is refused with *You can only create or edit records that belong to you* (English only — it has no Arabic translation).
 :::
 
 ### Viewing API Keys After Creation
@@ -329,13 +354,20 @@ responseFields: code,id      # Fields to return after save
   "name1": "Customer Name",
   "contactInfo": {
     "email": "customer@example.com",
-    "phone": "+966501234567"
-  },
-  "invoiceLines": [
+    "mobile": "+966501234567"
+  }
+}
+```
+
+A document's lines are sent in the same body, inside its collection — for a sales invoice:
+
+```json
+{
+  "details": [
     {
-      "itemCode": "ITEM001",
-      "quantity": 5,
-      "unitPrice": 100
+      "item": { "item": "ITEM001" },
+      "quantity": { "quantity": { "primeQty": { "value": 5 } } },
+      "price": { "unitPrice": 100 }
     }
   ]
 }
@@ -539,7 +571,7 @@ updateRecord: false
   "name1": "Customer Name",
   "contactInfo": {
     "email": "customer@example.com",
-    "phone": "+966501234567"
+    "mobile": "+966501234567"
   }
 }
 ```

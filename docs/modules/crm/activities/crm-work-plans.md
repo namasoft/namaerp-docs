@@ -60,7 +60,7 @@ Everything else is the **Details** (*التفاصيل*) grid, one row per planne
 | **Related To** | Who the contact is with — a Lead, Potential, Project, Campaign, Trouble Ticket, Complaint, Customer or Development Request |
 | **Task Type** | **Call** or **Visit** — this is what decides which document the line produces |
 | **Ticket Status**, **Re Call Record**, **Called Back** | Values pushed into the generated document |
-| **Task Status** | See the note below |
+| **Task Status** | A progress label you set by hand on the line |
 | **Description** | Copied into the generated document |
 | **Generated Document** | Filled by the system once the line has produced its document |
 
@@ -68,11 +68,8 @@ Three helper buttons above the grid — **Choose All Lines**, **Do Not Choose Al
 Selected Lines** — just tick, untick and invert the Selected column, which saves a lot of clicking on
 a fifty-line plan.
 
-::: info The Task Status column does nothing
-Setting a line to *Finished* changes nothing anywhere, and it is never read back from the generated
-document. If you want to know whether a planned contact happened, look at the line's Generated
-Document column and open it.
-:::
+To see whether a planned contact took place, open the document in the line's **Generated Document**
+column.
 
 ## Generating the documents
 
@@ -122,13 +119,6 @@ subject, description, re-call flags, ticket status and spare columns are copied 
 Cancelling the generated document clears the line's Generated Document column, which frees the line
 to be generated again — a clean way to re-issue a contact that was logged by mistake.
 
-::: info A newly generated Call refreshes its line one commit late
-A Call that has just been generated does not push anything back to its plan line until it is edited
-and committed a second time. In practice this rarely matters — the line is where the data came from
-in the first place — but if a plan line looks stale immediately after generation, this is why. Visits
-do not have this quirk.
-:::
-
 ## Start, End, and why there is no plan versus actual
 
 Each row carries **Start** (*بدء*) and **End** (*إنهاء*) buttons. Start stamps the row with the
@@ -144,13 +134,6 @@ intend to do, and which document each intention produced. If you need planned-ve
 that lives on [Target Plans](/modules/crm/marketing/crm-target-plans), which count activity per
 employee per month.
 :::
-
-One more small thing about the times. The **Work hours | net** figure you see while typing is
-computed in the browser, and the figure stored on save is computed on the server with a slightly
-different rule: the browser ignores the To Date, and the server rounds to about half a minute. For an
-ordinary same-day line the two agree to within a few seconds. For a line that crosses midnight the
-grid shows nonsense until you save, and then it corrects itself. Do not chase the difference — save
-and read the stored value.
 
 ## Actions on this screen
 

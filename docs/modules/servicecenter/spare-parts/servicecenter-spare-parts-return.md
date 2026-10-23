@@ -1,4 +1,5 @@
 ---
+description: "The Spare Parts Return document that returns unused parts from a job order to stock: what committing does, one return line per item, prices, and checks before invoicing the job."
 entities: [SrvcRawMaterialReturn]
 menu: Service Center → Documents → Spare Parts Return
 ---
@@ -33,8 +34,8 @@ Committing does three things:
    work-in-progress store and back into your store when the
    [term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md) says
    *Transfer Not Issue*. As with
-   the issue, an empty generation book or term means **nothing moves at all**, and un-ticking
-   *Generate Document(s)* does not stop it — clearing the book or term is the only control.
+   the issue, an empty generation book or term means **nothing moves at all** — clearing the book or
+   term is how you stop it.
 2. It **nets the parts ledger**: the job order's issued quantity for that item less what has come
    back.
 3. It **refreshes the job order's materials grid**, so the closing and the invoices bill the net
@@ -46,42 +47,16 @@ a **single line**. Six litres issued, one returned, five consumed, and the custo
 
 ## One return line per item — and one return document at a time
 
-::: danger A second return line for the same item is lost
-The parts ledger accumulates issued quantities correctly, but **it does not accumulate returned
-quantities**. When the same item is returned on more than one line, or across more than one return
-document for the same job order, only the **last** one processed is counted. Every earlier return of
-that item is silently discarded.
+In normal (stock receipt) mode, work to these rules:
 
-The consequence is money. The
-[job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md) keeps showing the parts as
-consumed, the [closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) splits
-them across the payers, and **the customer is invoiced for parts that are physically back on the
-shelf**.
-Nothing warns anybody, and the stock is right — only the bill is wrong — so it will not be caught by
-a stock count either.
-
-**The rule to work to:**
-
-- one line per item on a return — if two litres come back, return them as a single line of 2, never
-  as two lines of 1;
-- one open return document per job order at a time — if a second return of the same item is needed,
-  amend the existing return rather than raising a new one;
+- one line per item on a return — if two litres come back, return them as a single line of 2;
+- one return document per job order at a time — if more of the same item comes back, amend the
+  existing return rather than raising a new one;
 - before invoicing a job that had returns, open the job order and check the material quantities
   against what is physically back.
 
-This applies to returns in normal (stock receipt) mode. The *Transfer Not Issue* path accumulates
-correctly.
-:::
-
-::: warning Cancelling a return leaves the job order stale
-Cancelling or deleting a return recalculates the parts ledger correctly, but — unlike the issue —
-it does **not** refresh the job order's materials grid. With the job order term set to accept
-materials from other documents, the grid keeps showing the **reduced**, post-return quantity even
-though the return has been cancelled, so the customer is **under**-billed.
-
 After cancelling a return, reopen the job order and save it again before closing or invoicing. That
-one save rebuilds the grid from the ledger and puts the quantity back.
-:::
+save rebuilds the materials grid from the parts ledger.
 
 ## Where the return is and is not the issue's mirror
 
@@ -89,9 +64,7 @@ one save rebuilds the grid from the ledger and puts the quantity back.
 |---|---|---|
 | Generates the document that moves stock | Stock issue, or transfer to the work-in-progress store | Stock receipt, or transfer back |
 | Updates the parts ledger on commit | Yes | Yes |
-| Accumulates several lines of the same item | Yes | **No — see the box above** |
 | Refreshes the job order's materials grid on commit | Yes | Yes |
-| Refreshes the job order's materials grid on **cancel** | Yes | **No — see the box above** |
 | Writes a price back onto the job order | Yes, when the plan had none | No — and correctly so; a return should never set a price |
 | Counted in the "issued exceeds planned" limit | Added | Subtracted |
 | Deletion refused once the job order is closed or invoiced | No | **Yes** |

@@ -1,4 +1,5 @@
 ---
+description: "How to undo a Real Estate sale: the Waiver Document and its two types, waiver price and accounting, cancelling or deleting a wrong contract, and what the Cancel Contract Request does."
 entities: [REWaiverDoc, RECancelContractReq]
 menu: Real Estate and Property → Documents → Waiver Document
 ---
@@ -15,7 +16,7 @@ Nothing in the module cancels a sales contract. When a sale has to be undone, th
 - **A waiver of type *For Company*** — the proper instrument. The unit comes back to the company, the settlement with the buyer is recorded and accounted for, and the original contract stays on file stamped as waivered. This is what you use once anything at all has happened against the contract.
 - **Cancelling or deleting the sales contract** — done with the platform's own [Document Cancel Document](../../../platform/documents-and-records/document-cancel-document.md), or by deleting the contract outright. The honest route only when the contract should never have existed: entered on the wrong unit, for the wrong buyer, in the wrong month, with nothing collected against it. Cancelling or deleting it reverses what the commit did — the property goes back to available, the reservation flips back to *Confirmed*, the journal entry is withdrawn.
 
-There *is* a document called **Cancel Contract Request** (طلب فسخ تعاقد) at *Real Estate and Property > Documents > Cancel Contract Request*. It is a paper trail, and it is worth being clear about what that means: it records the unit, the contract to be cancelled, all the parties and a grid of the commissions that will have to be settled or clawed back — and it does nothing else. It has no document term, no accounting effect and no automation behind it. Approving one changes nothing; somebody still has to issue the waiver.
+There *is* a document called **Cancel Contract Request** (طلب فسخ تعاقد) at *Real Estate and Property > Documents > Cancel Contract Request*. It is the customer's request on paper: it records the unit, the contract to be cancelled, all the parties and a grid of the commissions that will have to be settled or clawed back, and the unit's screen shows a link to it. It needs no document term and creates no journal entry; the cancellation itself is the waiver you issue afterwards.
 
 ![The cancel contract request](../../../ar/modules/realestate/images/sales/re-cancel-contract-req-en.png)
 

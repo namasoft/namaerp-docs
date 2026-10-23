@@ -19,7 +19,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **حساب التكلفة المؤقتة بناءً على المستند (Calculate Temp Cost By From Doc)** `termConfig.calculateTempCostByFromDoc` — يستخدم تكلفة المستند المبني عليه كتكلفة مؤقتة للتوريد بدلاً من إعادة حسابها.
 
-**السماح بشراء المراجعة من مورد مختلف (Allow Revision Purchase From Different Supplier)** `termConfig.allowRevsionPurchaseFromDifSupplier` — يسمح باستلام نفس مراجعة الصنف من مورد غير المورد المسجَّل أصلاً.
+**السماح بشراء الإصدارات من مورد مختلف** `termConfig.allowRevsionPurchaseFromDifSupplier` — يسمح باستلام إصدار الصنف من مورد غير المورد الافتراضي لذلك الإصدار. وعنوانه على الشاشة الإنجليزية *Prevent Revsion Purchase From Different Supplier*، لكن تفعيله **يسمح** بالشراء ولا يمنعه.
 
 تجعل مجموعة **اعتبار … في التكلفة (Consider … For Cost)** طبقة التكلفة/التقييم تميّز التوريدات حسب المحدد المختار، فتُحسَّب تكلفة الوحدات التي تختلف في ذلك المحدد فقط بشكل منفصل.
 
@@ -100,6 +100,12 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **آجل (Credit)** `termConfig.creditInvoice` — يعامل الفاتورة كفاتورة آجلة (بيع آجل).
 
+**فرد مكونات الصنف المجمع مع الحفظ (Spread Assembly Components With Save)** `termConfig.spreadAssemblyComponentsWithSave` — للصنف الذي له **طريقة فرد مكونات الصنف المجمع**، يضيف حفظ مستند المبيعات مكونات تلك الطريقة سطورًا مجانية تحت سطر الصنف، ويُستبعد سطر الصنف نفسه من سند الصرف المنشأ، فيخرج المخزون على هيئة المكونات (مستندات المبيعات).
+
+**فرد مكونات الصنف المجمع مع الإدخال (Spread Assembly Components With Insert)** `termConfig.spreadAssemblyComponentsWithInsert` — يضيف سطور المكونات فور إدخال الصنف على السطر بدلًا من انتظار الحفظ. أبقِ خيار **…مع الحفظ** مفعّلًا أيضًا، فهو الذي يستبعد سطر الصنف نفسه من سند الصرف (مستندات المبيعات).
+
+**حقل الصنف البديل للمكونات (Bom Alt Item Field)** `termConfig.bomAltItemField` — يحدد أحد أعمدة المراجع في السطر (مرجع 1–4) مكانًا لصنف بديل. فإذا احتوى ذلك العمود صنفًا، صار الأثر المخزني والتكلفة للسطر، في الصرف وفي الإرجاع، على ذلك الصنف بدلًا من صنف السطر، بمقاس السطر ولونه وإصداره. ويُقرأ الخيار من توجيه المستند نفسه، ثم من توجيهات المستندات الأعلى في سلسلة **بناءا على** (الفواتير).
+
 ## مستندات الإلغاء (Cancellation Documents)
 
 *ينطبق على: مستند إلغاء الحجز ومستند إلغاء التسليم (Reservation Cancellation / Delivery Cancellation).*
@@ -141,6 +147,12 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 **دفتر مستند التجميع (Assembly Document Book)** `termConfig.assemblyDocumentBook` — دفتر مستندات التجميع المُنشأة من التجميع المتعدد.
 
 **توجيه مستند التجميع (Assembly Document Term)** `termConfig.assemblyDocumentTerm` — توجيه مستندات التجميع المُنشأة تلك.
+
+**فرد سطور (بناءا على) إلى الأصناف الرئيسية (Spread From Document Lines To Main Items)** `termConfig.addFromDocLinesToMainItems` — ينسخ سطور مستند **بناءا على** إلى جدول **الأصناف الرئيسية** بدلًا من **التفاصيل**، وتتبع متابعة الكميات مقابل المصدر حينئذٍ سطور الأصناف الرئيسية (تجميع متعدد).
+
+**فرد الأصناف المخزنية فقط من (بناءا على) (Spread Only Stock Items From Document)** `termConfig.spreadOnlyStockItemsFromDoc` — لا ينسخ من مستند **بناءا على** إلا الأصناف المخزنية، ويتجاوز سطور الخدمات (تجميع متعدد).
+
+**حفظ كل سندات التجميع كمسودات (Save All Assembly Documents As Drafts)** `termConfig.saveAllAssemblyDocumentsAsDrafts` — يعلّم **الحفظ كمسودة** على كل السطور، فتُحفظ سندات التجميع المنشأة مسودات (تجميع متعدد). انظر [التجميع متعدد المستويات والتعبئة المجمّعة](../assembly-and-packaging/multi-level-and-aggregated-assembly.md).
 
 ## أمر تشغيل الزجاج (Glass Job Order)
 

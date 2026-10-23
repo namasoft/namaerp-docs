@@ -1,4 +1,5 @@
 ---
+description: "Map of the Real Estate leasing cycle: the Renter field, the Rental Contract term flag, the chain from rent offer to contract, accrual, collection and renewal or termination, and the estate rent-status timeline."
 entities: [RERentContract, RERentOffer, RERentOfferCancel, REMultiRentContract, REOpeningRentContract, RERentInstallmentLedger, RECancelContract]
 ---
 

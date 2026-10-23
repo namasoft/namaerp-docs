@@ -1,4 +1,5 @@
 ---
+description: "The CRM Machine file: its main tab, warranty period types, the two grids, the transactions tab with the unit's service history, and the messages you may see."
 entities: [MnMachine, WarrantyPeriodType]
 menu: Customer Relationship Management → Maintenance Files → Machine
 ---
@@ -24,7 +25,7 @@ Here is the screen as it opens for a new machine; the Basic Information group ca
 
 The machine screen is mostly a set of pointers at other files, and it is much less painful to create those first:
 
-- The [machine type and category](/modules/crm/maintenance-setup/crm-machine-types-and-categories) — the type is where the warranty defaults and the real spare-parts list live.
+- The [machine type and category](/modules/crm/maintenance-setup/crm-machine-types-and-categories) — the type is where the warranty defaults and the spare-parts list live.
 - The [building, floor and room](/modules/crm/maintenance-setup/crm-machine-locations) the unit is installed in.
 - A [task template](/modules/crm/maintenance-setup/crm-maintenance-task-templates) if this model has a standard checklist.
 - The [five classification files](/modules/crm/maintenance-setup/crm-machine-classifications), if your site uses them.
@@ -122,12 +123,12 @@ To change a warranty, change the inputs: the sale date, the installation date, o
 
 It exists so that a warranty duration can be picked by name instead of typed as a number, in the two places where a warranty is attached to *part of* a machine rather than the whole unit:
 
-- On the machine's (and machine type's) spare-parts lines, as the warranty that comes with that part.
+- On the machine type's spare-parts lines, as the warranty that comes with that part.
 - On the fault lines of maintenance orders and invoices — and this is the important one. When a technician repairs a fault and the work carries its own warranty, the fault line names a Warranty Period Type. If the line's new warranty end date is left blank, **the end date is worked out from the Warranty Period Type**, and the result lands in the machine's dysfunction-warranty ledger described below.
 
 So the machine's overall warranty comes from the period fields on the machine itself, while the per-fault warranties come from these named period types. Create one record per duration you actually quote — three months, six months, a year — and no more.
 
-## The Three Grids
+## The Two Grids
 
 **المهام / Tasks.** The checklist for this unit, two columns of free text (Task and Task 2). You rarely type into it: pick a [task template](/modules/crm/maintenance-setup/crm-maintenance-task-templates) in the header and the grid is rebuilt from the template's lines. Note the word *rebuilt* — picking a template **replaces** whatever was in the grid.
 
@@ -140,16 +141,6 @@ So the machine's overall warranty comes from the period fields on the machine it
 - the machine lists itself.
 
 When the record is saved, each child is stamped with this machine as its parent, and children you removed are released. Deleting the parent releases them all.
-
-**قطع الغيار / Spare Parts.** This is a grid of items, quantities, reference numbers, default purchase and sales prices and a warranty period type.
-
-::: warning The machine's own Spare Parts grid is read by nothing
-Nothing in the system reads this grid. It does not restrict a lookup, does not price anything and does not reach any document. It is a reference list you keep for your own eyes.
-
-The grid that genuinely drives spare-part lookups on notices, orders and invoices is the **identical grid on the [Machine Type](/modules/crm/maintenance-setup/crm-machine-types-and-categories)**. Maintain your parts lists there. And remember the underlying rule that applies everywhere in the suite: an item is offered as a spare part only if it is flagged **Spare Part / قطعة غيار** on the item master.
-
-One cosmetic oddity while you are in this grid: the unit-of-measure column is headed **وحدة سكنية / "Housing units"**, a label borrowed from the real-estate module. It is the unit of measure; only the caption is wrong.
-:::
 
 Below the grids sits the usual **المحددات / Dimensions** group — legal entity, sector, branch, department and analysis set.
 
@@ -166,10 +157,6 @@ The second tab, **الحركات / Transactions**, is the part of the machine fi
 | ضمانات الأعطال / **Dysfunction Warranties** | The per-fault warranty ledger, maintained by the system. |
 
 Because the module ships **no reports and no dashboards at all**, these four lists are the whole of the ready-made reporting on a machine's history. For anything wider — all machines out of warranty this quarter, all faults of one type across a customer's site — use the list screens with their filters, export to Excel, or build it in BI.
-
-::: warning The ownership history's contact column is unreliable
-The **From Customer** chain on the transfer list is correct. The **From Contact** column is not: from the second transfer onwards it repeats the very first document's contact instead of the previous document's new contact, so the two columns disagree with each other. Read the customer chain; treat the contact chain as decoration.
-:::
 
 ### The Dysfunction Warranty Ledger
 

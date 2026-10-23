@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Partial Disposal Document: disposing of some units of a countable asset, the cost and depreciation split, the effect on the depreciation schedule, salvaged assets and undoing it."
 entities: [FAPartialDisposalDoc]
 menu: Assets → Documents → Fixed Asset Partial Disposal Document
 ---

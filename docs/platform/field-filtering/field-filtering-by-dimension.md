@@ -1,4 +1,5 @@
 ---
+description: "The Field Filtering screen: loosening the dimension narrowing of one reference field's lookup, such as offering every branch's warehouses on a stock transfer, with the Prevent Filter By and Ignore Login switches."
 entities: [FieldFiltering]
 menu: Administration → Display Customization → Field Filtering
 ---

@@ -1,4 +1,5 @@
 ---
+description: "Fingerprint login at the POS register with a Digital Persona URU4500 reader: installing the driver, enabling it in POS Settings, enrolling fingerprints, logging in and syncing with the server."
 entities: [UserFingerprint]
 ---
 

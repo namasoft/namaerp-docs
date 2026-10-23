@@ -1,4 +1,5 @@
 ---
+description: "The Project Advance Payment document: recording the owner's advance on a contract, the recovery rule, how each extract recovers it, what the advance books and what blocks a commit."
 entities: [ProjectAdvancePayment]
 menu: Contracting → Project Contracting → Project Advance Payment
 ---

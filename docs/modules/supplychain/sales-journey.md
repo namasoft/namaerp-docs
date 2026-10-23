@@ -22,10 +22,9 @@ accounts, salesman and payment terms — so the file is worth getting right befo
 It is documented under
 [Customers, Suppliers and Other Parties](/platform/shared-master-files/customers-suppliers-and-parties).
 
-**Credit control deserves a word of warning.** The customer file carries a credit limit, a payment
-period and *Forbid Billing* / *Forbid Ordering* ticks, and it is natural to read those as a brake on
-the journey. They are not: nothing in the shipped product stops an order or an invoice because a
-customer is over their limit. If your implementation needs that brake, it is built with
+**Credit control is a rule you build.** The customer file carries a credit limit and a payment
+period. Saving an order or an invoice does not compare it with them, so a customer over their limit
+is not stopped on its own. If your implementation needs that brake, it is built with
 [Criteria Based Validation](/platform/governance/criteria-based-validation#Block-a-sale-that-exceeds-the-customers-credit-limit),
 where the query is written out in full.
 
@@ -42,6 +41,12 @@ The **Sales Quotation** is your formal price proposal to the customer. It includ
 The pricing and discount details - price lists, automatic margin pricing, discount layers, and minimum price - have their own dedicated page: [Pricing, Offers & Coupons](./pricing-offers-and-coupons.md).
 
 **Quote lifecycle:** after creation, the sales manager reviews it (especially for special pricing), then it's sent to the customer, and the response is tracked. Possible outcomes: conversion to an order (customer accepts), revision (negotiation, so you create an amended quote), expiry (validity ends), or loss (they chose someone else).
+
+**Validity is enforced.** A sales document created from a quotation must have a value date inside the quotation's **Valid from** / **Valid to** range (an empty end is open). Otherwise the save is refused with:
+
+*Value date must be within the range of sales quotation valid from and valid to.* — «التاريخ الفعلي يجب ان يكون في المدي المحدد في صالح من و صالح إلي في عرض الأسعار»
+
+To accept an expired quotation anyway, tick **Allow Creating Document From Expired Quotation** on the term of the document being created (see [From-Document Configuration](./document-terms/doc-term-from-document.md)).
 
 ## Step Three: The Sales Order (SalesOrder)
 
@@ -86,6 +91,8 @@ The last step is collecting what's due. In a **cash sale**, it's paid immediatel
 ## Returns and Replacements
 
 Sometimes sales don't stick. The **Sales Return** is used when the customer wants to return (a defective item, a wrong shipment, a change of mind within the return window, or damage in shipping). The path often starts with a **Sales Return Request** (SalesReturnRequest) for authorization, then the actual return is created, the goods are received, and their value is processed.
+
+**Returning against a specific invoice:** each return line has an **Invoice** column. Its list shows only the customer's invoices that contain the line's item and are not yet fully returned. Choosing one fills the line's price and discounts from that invoice, so the customer is credited what they actually paid. The Sales Return then cannot take back more than that invoice line sold, counting what earlier returns already took; saving refuses with *You can not return {0} because returned qty will be {1} and allowed qty {2} only*. The same column works in the Sales Return Request and in the Service Center's sales return.
 
 **Accounting effect of a return:** debit sales returns (a contra-revenue account), debit inventory (goods coming back), debit tax (reversing it), credit receivables (the customer owes less).
 

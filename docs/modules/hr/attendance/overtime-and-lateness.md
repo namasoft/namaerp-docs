@@ -1,4 +1,5 @@
 ---
+description: "How HR attendance measures overtime, lateness, early leave and missing punches from punches and shifts, how days off and holidays are handled, and the settings that change each result."
 entities: [TimeAttendance, AttendancePlan, PerformanceIndicator]
 ---
 
@@ -68,6 +69,8 @@ punch-in, if the employee arrived after the shift had already ended) and runs to
 punch-out. The same employee, one hour late and two hours late leaving, now gets **two hours** of
 overtime and an hour of lateness. Choose this rule when staying late is what earns overtime and
 arriving early or working through a break does not.
+
+Under this rule the shift day's **Latest Allowed Time After Shift End** caps the overtime: when it is filled, overtime runs to the punch-out or to that time, whichever comes first. A shift ending at 17:00 with a latest allowed time of 20:00 gives an employee who punches out at 22:00 three hours of overtime, not five. A latest time earlier than the shift end is read as the next day, for night shifts.
 
 ::: tip Which rule do you want?
 "Hours beyond expected" rewards total time and forgives a late arrival that was made up later. "Time
@@ -152,7 +155,9 @@ permission to arrive at ten, arrives at ten past, and should not be marked late 
 **Early arrival** — the time between the punch-in and the shift's start, when the employee arrives
 early. It is recorded as its own figure. It is **not** overtime under either rule, though it does
 increase actual worked hours, which can produce overtime indirectly under the "hours beyond
-expected" rule.
+expected" rule. When the shift day has an **Earliest Allowed Time Before Shift Start**, early arrival
+is counted only from that time: with a shift starting at 08:00 and an earliest allowed time of 07:30, a
+punch-in at 06:45 records thirty minutes of early arrival.
 
 **Early leave** — the time between the actual punch-out and the shift's last out time. As with
 lateness, an excuse on the **following** record that falls inside the same shift range is subtracted

@@ -1,4 +1,5 @@
 ---
+description: "Moving stock between warehouses: the one-step Stock Transfer, the two-step issue and receipt transfers, stock transfer requests and aggregated requests, and transfers between companies."
 entities: [StockTransfer, IssueStockTransfer, ReceiptStockTransfer, StockTransferReq, AggrStockTransferReq]
 menu: Inventory → Stock transfer Docs → Stock Transfer
 ---

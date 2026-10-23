@@ -1,28 +1,25 @@
 # nama.properties
 
-`nama.properties` is the one file that tells an installation what it is: which database to open, what to call itself, where its files live, and which of the system's safety valves are open. It sits beside the application on the server — normally in Tomcat's `lib` folder — and it is read once at startup, so **a change to it takes effect when the server is restarted**.
+`nama.properties` is the one file that tells an installation what it is: what to call itself, where its files live, which addresses it hands out, and which of the system's safety valves are open. It sits beside the application on the server — normally in Tomcat's `lib` folder — and it is read once at startup, so **a change to it takes effect when the server is restarted**.
 
 The format is one `key=value` per line:
 
 ```properties
-dbtype=SQLSERVER
-dbname=namademo
-dbuser=nama
 customer=Nile Group
 serverid=production-1
+timezone=Africa/Cairo
 ```
 
 This page covers the settings support staff actually set on a customer's server. The system reads many more, but they are internal flags that exist for a developer chasing one specific problem — if a setting is not here and nobody told you to add it, it should not be in the file.
 
-::: danger An unrecognised value is not an error
-Most of these settings are read without validation. `dbtype=sqlserve` — one letter short — does not stop the server or log a complaint: the value fails to match, and the installation quietly starts up as **MySQL**. The same silence applies to a misspelled key, which is simply never read. When a setting seems to have no effect, check the spelling first.
+::: danger A misspelled setting is not an error
+Nothing in this file is validated. A misspelled key is simply never read, and a value the system does not recognise falls back to the default — either way the server starts as usual and logs no complaint. When a setting seems to have no effect, check its spelling before looking anywhere else.
 :::
 
-## The database, and what this installation calls itself
+## What this installation calls itself
 
 | Setting | What it does |
 |---|---|
-| `dbuser` / `dbpassword` | The database login. The password is stored encrypted, not in clear text. |
 | `customer` | The customer's name, as it appears in the licence and in messages the server sends home. |
 | `serverid` | This server's identity. It is what decides whether **this** machine is allowed to send e-mails and SMS — see below — so a test copy must never keep production's value. |
 | `timezone` | The server's timezone. |
@@ -43,18 +40,20 @@ A link that lands the user on `localhost` is almost always one of these left uns
 
 ## Mail, SMS and WhatsApp — especially on a copy
 
-The most expensive accident in ERP support is a test copy of a live database that starts e-mailing and texting the customer's customers. Three settings exist precisely to prevent it:
+The most expensive accident in ERP support is a test copy of a live database that starts e-mailing and texting the customer's customers. The real safety catch is `serverid` (see the warning below); these settings narrow what a server that *is* allowed to send actually sends:
 
 | Setting | What it does |
 |---|---|
-| `sendmailsandsms` | The master switch. Off, and nothing leaves the server at all. |
+| `sendmailsandsms` | Only for a server run from a developer's IDE: there it must be `true` for anything to be sent. It has no effect on a normal server. |
 | `send-emails-only-to` | Every e-mail the system produces goes to this address instead of its real recipients. |
-| `send-sms-only-to` | The same for SMS: every message goes to this number. |
-| `send-whatsapp-only-to` | The same for WhatsApp. |
+| `send-sms-only-to` | A filter, not a redirect: only recipients whose number contains this value receive the SMS; every other recipient is skipped. |
+| `send-whatsapp-only-to` | Every WhatsApp message goes to this number instead of its real recipient. |
 | `log-sms-data` | Records the body and the provider URL of each SMS so you can see what was actually sent. Diagnostic — turn it off afterwards. |
 
+Telegram messages and mobile push notifications have no such setting — on a copy, the server id is the only thing that stops them.
+
 ::: warning Restoring a production backup onto a test server
-Change `serverid`, then set `send-emails-only-to` and `send-sms-only-to` to your own address and number, **before** the first startup. The sending rule is `serverid` matched against the **Send Mails And SMS Only From Servers** list in [Global Configuration](/platform/global-config/global-config-notifications), and that list travels inside the database you just restored — so a clone that keeps production's server id is, as far as the software is concerned, production.
+The real safety catch is `serverid`. Change it **before** the first startup, then set `send-emails-only-to` and `send-sms-only-to` to your own address and number. The sending rule is `serverid` matched against the **Send Mails And SMS Only From Servers** list in [Global Configuration](/platform/global-config/global-config-notifications), and that list travels inside the database you just restored — so a clone that keeps production's server id is, as far as the software is concerned, production.
 :::
 
 ## Keeping people out
@@ -66,6 +65,7 @@ Change `serverid`, then set `send-emails-only-to` and `send-sms-only-to` to your
 | `prevent-login-of-ips` | A comma-separated list of blocked addresses, matched by prefix — `192.168` blocks the whole range. |
 | `prevent-login-of-ips-msg` | The message they see, with `{0}` for the address. |
 | `use-ldap-for-authentication` | Hand password checking to the customer's LDAP directory. |
+| `preventViewingPublicDocuments` | When `true`, documents saved with PUBLIC in a dimension are hidden from users working inside a specific value of that dimension, unless **Show Public Documents to All** is on in [global configuration](/platform/global-config/global-config-dimensions). Master files are not affected. |
 
 ```properties
 prevent-login-of-login-ids=user1,user2
@@ -81,7 +81,6 @@ These are a blunt instrument for an emergency — a leaked account, an office th
 | Setting | What it does |
 |---|---|
 | `tempFolder` | Where temporary files are written. Defaults to `c:/nama/temp` on Windows and `/var/nama/temp` elsewhere. |
-| `storage-path` | Where the system keeps its stored files. |
 | `local-external-attachments-folder` | Keeps attachments on disk in this folder instead of inside the database — the setting that stops an attachment-heavy database growing out of hand. |
 | `max-single-attachment-size-kb` | Rejects a single attachment larger than this. |
 | `max-total-attachment-size-gb` | Caps the total size of attachments. |
@@ -94,7 +93,6 @@ These are a blunt instrument for an emergency — a leaked account, an office th
 | `processors-initial-delay-minutes` | The same for the background processors. |
 | `no-background-processors` | Stops the background processors entirely. A server with this set saves documents but never processes them — which is right for a reporting replica and disastrous anywhere else. |
 | `disable-critical-errors` | Turns off the critical-errors checks: isolation level, missing server id, disk space, failed business requests. Only for a server where those checks are known to be noise. |
-| `enable-purge` | Enables the purge job that archives and removes old data. |
 
 ## Reports that will not end
 

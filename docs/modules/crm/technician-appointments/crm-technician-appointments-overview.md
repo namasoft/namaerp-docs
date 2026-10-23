@@ -1,3 +1,6 @@
+---
+description: "Overview of CRM Technician Appointments: the ten screens, how services, crews, availability and the booking calendar fit together, and setting up a section for booking."
+---
 # Technician Appointments Overview
 
 ::: info Required licence

@@ -1,4 +1,5 @@
 ---
+description: "The Material Receipt (material receiving report) and MRR Register screens for recording site deliveries and their consultant approval; a standalone form with no link to purchase orders, items or suppliers."
 entities: [CQCMaterialReceipt, CQCMRRRegister]
 ---
 # Material Inspection on Delivery

@@ -42,6 +42,13 @@ that catches people:
 - **Tax on a condition is booked separately.** If the condition line carries a tax percentage, the tax
   amount is booked against the condition's tax debit and tax credit rather than being folded into the
   main pair.
+- **On the subcontractor side, the condition decides whether a line may carry tax at all.** Every time
+  a subcontract or a subcontractor extract is saved, each condition line's tax percentage is reset from
+  the condition's **Taxable** and **Tax Percentage** fields: if **Taxable** is not ticked, the line's tax
+  percentage becomes 0, whatever was typed on it; if it is ticked and the line has no percentage, the
+  line takes the condition's **Tax Percentage**; a percentage already on the line is kept. So a retention
+  clause that must carry VAT needs **Taxable** ticked on the condition itself. Project contracts and
+  owner extracts are not affected — there the percentage typed on the condition line is used as it is.
 - **The amount booked** is whichever of the addition, the deduction or the "other" value the condition
   produced.
 
@@ -80,6 +87,7 @@ The remaining fields on the Main page tune the clause:
 | Do Not Use With Project Contract / Do Not Use With Contractor Contract | keep the clause out of the lookup on one side or the other, so a subcontractor clause never appears on an owner contract |
 | Condition Value Can Exceed Contract Planned Value | allow the clause to go beyond what the contract planned for it |
 | Do Not Affect Remaining | the amount does not reduce the contract's remaining value. Use it for clauses that are cash movements rather than consumption of the contract |
+| Taxable and Tax Percentage | whether the clause carries tax on subcontracts and subcontractor extracts, and the default percentage their condition lines take. Untick **Taxable** and those lines' tax percentage is set to 0 on every save — see [A Condition Is a Journal Entry](#A-Condition-Is-a-Journal-Entry-Not-a-Number) |
 
 ## How Much — Value Types
 
@@ -89,7 +97,7 @@ The **Value Type** decides the formula, and the **Value** beside it is the numbe
 |---|---|
 | Value | a flat amount. The simplest clause there is |
 | Percentage From Extract | the percentage of *this extract's* line value. If the clause names a phase, only that phase's value is used. With *calculated after previous conditions* on, the net of the clauses already collected is added to the base first |
-| Percentage From Total | the percentage of the **contract** total — or, when the clause is tied to a single term code, of that term's total price |
+| Percentage From Total | the percentage of the **contract** total — or, when the clause is tied to a single term code, of that term's total price. With the module option **Calculate Conditions Percentage From Contract Total Before Taxes** on, the contract-total base is the sum of the term lines' prices before taxes instead |
 | Percentage From Total Due Value | the percentage of the extract's total due value |
 | Percentage From Term Net Value | the percentage of the matching extract line's net value |
 | Percentage From Term Due Value | the percentage of the matching extract line's due value |
@@ -102,8 +110,7 @@ agree 5% with one client and 10% with another using the same catalogue clause.
 
 Three value types behave differently: **percentage from total due value**, **percentage from term net
 value** and **percentage from term due value** take their percentage from the **standard condition
-record** itself. For those three, set the percentage here on the master file — editing it on the
-contract line has no effect, and the *can update condition value* flag has nothing to act on.
+record** itself. For those three, set the percentage here on the master file.
 :::
 
 **Addition, deduction or other.** Once the amount is computed, the **Effect Type** decides where it

@@ -56,7 +56,7 @@ To control who sees the rows *inside* a report, see [Limiting what each user see
 
 ## System reports
 
-A **system report** is one of the reports and printed forms that Namasoft ships ready-made. It has **System** ticked on the **Advanced** tab. They are filed under groups such as *System Reports - Accounting*. Each one gets that group's capability as its **View Capability**, so a user needs that capability in their security profile, or full authority, to run it. The **View System Reports** flag on a security profile grants only the general *System Reports* capability, which covers just the system reports filed without a group.
+A **system report** is one of the reports and printed forms that Namasoft ships ready-made. It has **System** ticked on the **Advanced** tab. They are filed under groups such as *System Reports - Accounting*. Each one gets that group's capability as its **View Capability**, so a user needs that capability in their security profile, or full authority, to run it. The **View System Reports** flag on a security profile grants only the general *System Reports* capability, which covers just the system reports filed without a group. That flag is hidden from the Security Profile screen on purpose — [Fields hidden on purpose](/platform/security/security-profiles#Fields-Hidden-on-Purpose) shows how to reveal it with a Screen Modifier.
 
 **Where they come from.** **Update System Reports** downloads the current catalogue from Namasoft's server, so the server needs internet access. You find it on the utilities page under *System Update*, or in the More menu of the Report Definition screen after pressing **Ctrl + Alt + X** (see [Keyboard shortcuts](/platform/everyday-tools/shortcuts)). It asks for confirmation. For every module you have installed it creates the reports you are missing. It also overwrites the existing ones: their layout, type, security type, names and group. Your own **Security Capability Types** lines, **For User** and **Report Groups** survive. Afterwards it deletes the system reports whose module is no longer installed or that Namasoft has withdrawn, and removes system groups left empty. The same run also refreshes the shipped notifications, dashboards, tooltips and scheduled tasks.
 
@@ -216,6 +216,8 @@ A report never runs from the text field. Every save rebuilds a compiled version 
 ## Asking the user for input: report parameters
 
 Parameters are the prompts a user fills in before a report runs, and they are also the values the SQL query reads. A parameter is declared once in the layout and does both jobs.
+
+Once the report is on screen, the **Re-Run With Parameters** button (the play icon) on the viewer's toolbar — or **F5** — runs it again with the same parameter values, so figures that changed in the meantime show up without filling the prompts again.
 
 ### Multi-selection (list) parameters
 
@@ -423,7 +425,7 @@ WHERE invItem_id = {fItem}
 #### Choosing a record
 
 - **`entityType`** — what the user picks from
-- **`property`** — which field of the chosen record reaches the query: `code`, `name1`, `name2`, `startDate`
+- **`property`** — which field of the chosen record reaches the query: `code` (the usual choice), `id`, `name1`, `name2`, or — for a fiscal period — `startDate` and `endDate`
 
 Ordinarily `entityType` names one fixed type — `Employee`, `Customer` — and the prompt is a picker over that type. But plenty of columns hold a **generic reference**: a subsidiary that may be a customer, a supplier or an employee; an owner that may be a branch or a department. A report filtering on such a column has to ask the user two questions, and the answer to the first decides what the second is allowed to offer.
 

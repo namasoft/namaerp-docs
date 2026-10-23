@@ -1,4 +1,5 @@
 ---
+description: "The CRM Lead master file: its main tab, contacts grid, products tab, assignment fields, buttons, list screen and the checks the system applies on save."
 entities: [CRMLead]
 menu: Customer Relationship Management → Marketing → CRM Lead
 ---
@@ -125,6 +126,10 @@ Assigning a lead raises no e-mail, no alert, no task and no reminder. The assign
 ## The Related Records Tab
 
 The third tab is entirely read-only: the **Contacts** generated from this lead, the **CRM Tasks**, **CRM Calls** and **Visits** that point at it, and the **Assigning History** described above. Nothing on this tab can be edited; it is the "what has happened to this lead" view.
+
+## The Actions Tab
+
+The fourth tab, **Actions** (*الحركات*), is the same story told as a timeline. Every record that names this lead lands here, ordered by creation date, with its type, its code, its creation date and its value date: calls, visits, CRM tasks, follow-up documents, offers, potentials, CRM projects, work plans and analyses. A record joins the timeline when it is saved, follows the lead if it is edited to point at another one, and leaves when it is deleted. Use it when a customer asks "what did we do about this lead?" and the answer is spread across five kinds of document.
 
 ## Buttons on the Screen
 

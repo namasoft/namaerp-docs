@@ -1,4 +1,5 @@
 ---
+description: "The FixedAssets Taking Document: counting fixed assets and custody items by location or by employee, building the count sheet, how missing and unexpected items are listed, and acting on the findings."
 entities: [FAFixedAssetsTaking]
 menu: Assets → Custody Of Assets → FixedAssets Taking Document
 ---

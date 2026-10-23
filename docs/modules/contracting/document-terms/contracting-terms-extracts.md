@@ -69,7 +69,7 @@ Three further options apply the same cumulative-then-net-off treatment to indivi
 |---|---|---|
 | **Consider Previous Extracts Discount 1 Values** | Discount 1 is treated cumulatively and the earlier extracts' discount 1 is netted off | both |
 | **Consider Previous Extracts Discount 2 Values** | The same for discount 2 | both |
-| **Consider Previous Tax Values** | Taxes 1 to 4 are treated cumulatively and the earlier extracts' tax is netted off | project extract |
+| **Consider Previous Tax Values** | Taxes 1 to 4 are treated cumulatively and the earlier extracts' tax is netted off | both |
 
 A fourth, **Previous Unit Price Difference Adjustment**, handles the case where the contract's unit price changed mid-project and earlier certificates were priced at the old rate: it posts the difference as its own adjustment. It depends on the module-level unit-price-difference setting being switched on — with that setting off, the term refuses to be saved with this option ticked, which is the system telling you to enable the feature first.
 

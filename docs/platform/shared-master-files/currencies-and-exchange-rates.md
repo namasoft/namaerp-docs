@@ -1,4 +1,5 @@
 ---
+description: "The Currency master file and the Exchange Rate screen: where to enter daily rates, how the local currency comes from the ledger, how a document picks its rate, and revaluation with Exchange Rate Update."
 entities: [Currency, ExchangeRate]
 menu: Basic → Documents → Exchange Rate
 ---

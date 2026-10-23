@@ -50,21 +50,16 @@ It is a single page. Customer, contact, machine, machine type and category, task
 date* and *to date* with *from time* and *to time*; a **planned visit date** and an **actual visit
 date**; the **visit status**; *From document*; four attachments; the serial number; the odometer
 block (last odometer and its date, current odometer and its date, and a calculated difference); the
-linked notice and the linked order; and a **machine recall request** block — a flag, an "instant"
-flag, a recall type and free-text remarks.
+linked notice and the linked order.
 
 Below that: an *Additional spare parts* grid (item and quantity), a *Maintenance groups* grid, a
 *Discussion lines* checklist, and an *Orders* grid with a **Copy All From MnOrders** button that
 appends the listed orders' detail lines.
 
-::: warning Three fields on this screen do less than they look
-- **Visit Status** drives nothing whatsoever. It is a label for your own reporting; no rule, no
-  status change and no validation reads it. See
+::: tip Two fields worth knowing
+- **Visit Status** is a label you can filter and report on, to show how each visit went. See
   [Order and Visit Statuses](/modules/crm/maintenance-setup/crm-maintenance-statuses.md).
-- The **machine recall request** block is stored and displayed only. Nothing acts on it, nothing
-  lists it, nothing chases it.
-- **Current Odometer Date** is silently overwritten with the document's value date every time you
-  save, so whatever you type there will not survive.
+- **Current Odometer Date** takes the document's value date every time you save.
 :::
 
 ## The two rules the document does enforce

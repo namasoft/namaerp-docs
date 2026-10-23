@@ -1,3 +1,6 @@
+---
+description: "Overview of the Fixed Assets module: the asset register and the documents that change it, one asset's life from purchase to sale, asset statuses, the menu folders and the four licences."
+---
 # Fixed Assets Module Overview
 
 The general ledger knows that you own machinery worth 2,400,000 and that 400,000 of depreciation has piled up against it. What it cannot tell you is *which* machine, standing *where*, held by *whom*, with how many months of life left, and what would happen to the profit and loss account if you sold it tomorrow. That is the gap the Fixed Assets module fills: a register that keeps one record per owned thing, and a set of documents that move those records — and the ledger — together, so that the two can never drift apart.

@@ -98,8 +98,7 @@ entries out of the finished menu.
 ::: tip You do not have to know the codes
 The code columns look up the source menu as you type, so you can search for what you want rather
 than memorising codes. As you pick each one, the Arabic and English captions are filled in beside it
-so you can see at a glance what you have chosen — those two columns are there for you to read, and
-have no effect on anything.
+so you can see at a glance what you have chosen.
 :::
 
 ### 4. Say what to add or change

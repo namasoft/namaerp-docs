@@ -1,6 +1,6 @@
 ---
 entities: [AlwataniaDistConfig]
-menu: integrations → Master Files → Alwatania Distributors Config
+menu: Integrations → Master Files → Alwatania Distributors Config
 ---
 # Alwatania Send Logs and Resending
 

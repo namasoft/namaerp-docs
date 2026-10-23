@@ -1,4 +1,5 @@
 ---
+description: "The Technician Unavailability document: blocking a technician's time for leave or training so their crew cannot be booked, and its effect on existing appointments."
 entities: [TechnicianUnavailability]
 menu: Customer Relationship Management → Technician Appointments → Technician Unavailability
 ---

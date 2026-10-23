@@ -30,8 +30,8 @@ delivers.
 
 The gate pass has **no direction** — there is no "in" and no "out". It has **no gate**: no barrier
 integration, no guard, no camera, no gate identifier. It has **no time of passage** — nothing records
-the moment the vehicle actually crossed anything. And it has no effect on stock, on accounting or on
-the job order.
+the moment the vehicle actually crossed anything. It moves no stock, creates no journal entry and
+leaves the job order as it is.
 
 It is a **release check**, not gate control. If you need a vehicle in/out log with timestamps, that
 is not this document and there is nothing else in the module that does it.

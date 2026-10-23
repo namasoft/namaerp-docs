@@ -1,7 +1,7 @@
 
 # General FAQ
 
-Answers to recurring support questions that do not belong to one screen: a blank error when searching with the lens, granting permissions on all record types at once, installing SQL Server on new SSDs, adding the discussion panel to a screen, SMS encoding, and several error messages with their fixes.
+Answers to recurring support questions that do not belong to one screen: a blank error when searching with the lens, granting permissions on all record types at once, installing SQL Server on new SSDs, adding the discussion panel to a screen, and several error messages with their fixes.
 
 <ServerBaseURL/>
 
@@ -78,18 +78,6 @@ You can control which fields appear in the discussion screen by editing the scre
 The discussion screen only appears on saved records - when creating a new record before saving, discussions are not shown.
 :::
 
-## SMS Messages Arrive with a Plus Sign (+) Instead of Spaces
-Messages arrive incorrectly with a plus sign (+) instead of spaces.
-`Dear+Customer` instead of `Dear Customer`
-### The Solution is to Use `{utf8msg_sp20}` in the Other Settings Field in the Mail and SMS Settings Screen in Global Configuration Instead of `{utf8msh`}
-For example, if the current value in the message settings is:
-```
-https://api.oursms.com/api-a/msgs?username=info@xyz.com&token=ToKenVaLue&src=SourceName&dests={to}&body={utf8msg}&priority=0&delay=0&validity=0&maxParts=0&dlr=0&prevDups=0
-```
-It should be changed to:
-```
-https://api.oursms.com/api-a/msgs?username=info@xyz.com&token=ToKenVaLue&src=SourceName&dests={to}&body={utf8msg_sp20}&priority=0&delay=0&validity=0&maxParts=0&dlr=0&prevDups=0
-```
 ## When Opening the Item Transactions Screen, an Error Appears
 `Can not find Field getter method : userQty.measures.clippedHeight1`
 ::: details Full Log Details

@@ -2,7 +2,7 @@
 
 # أسئلة عامة 
 
-إجابات عن أسئلة دعم متكررة لا تخص شاشة واحدة: الخطأ الفارغ عند البحث بالعدسة، ومنح الصلاحيات على كل أنواع السجلات دفعة واحدة، وتثبيت SQL Server على أقراص SSD الحديثة، وإضافة لوحة النقاش إلى شاشة، وترميز رسائل SMS، وعدد من رسائل الخطأ وحلولها.
+إجابات عن أسئلة دعم متكررة لا تخص شاشة واحدة: الخطأ الفارغ عند البحث بالعدسة، ومنح الصلاحيات على كل أنواع السجلات دفعة واحدة، وتثبيت SQL Server على أقراص SSD الحديثة، وإضافة لوحة النقاش إلى شاشة، وعدد من رسائل الخطأ وحلولها.
 
 <ServerBaseURL/>
 
@@ -83,18 +83,6 @@ The window should be blue, not black
 لا تظهر شاشة النقاشات إلا في السجلات المحفوظة - مع إنشاء جديد قبل الحفظ لا تظهر النقاشات
 :::
 
-## في الرسائل النصية تصل الرسالة بحرف زائد + بدلا من المسافات
-تصل الرسائل النصية بشكل غير صحيح بعلامة plus (+) بدلا من المسافات space
-`عزيزي+العميل` بدلا من `عزيزي العميل`
-### الحل هو استعمال `{utf8msg_sp20}` في حقل إعدادات أخرى في شاشة البريد والرسائل القصيرة بالإعدادات العامة بدلا من `{utf8msh`}
-كمثال إذا كانت القيمة الحالية في اعدادات الرسائل كالتالي:
-```
-https://api.oursms.com/api-a/msgs?username=info@xyz.com&token=ToKenVaLue&src=SourceName&dests={to}&body={utf8msg}&priority=0&delay=0&validity=0&maxParts=0&dlr=0&prevDups=0
-```
-يجب تغييرها للتالي:
-```
-https://api.oursms.com/api-a/msgs?username=info@xyz.com&token=ToKenVaLue&src=SourceName&dests={to}&body={utf8msg_sp20}&priority=0&delay=0&validity=0&maxParts=0&dlr=0&prevDups=0
-```
 ## عند فتح شاشة الحركات بالصنف تظهر رسالة خطأ 
 `Can not find Field getter method : userQty.measures.clippedHeight1`
 ::: details وهذا هو اللوج الكامل

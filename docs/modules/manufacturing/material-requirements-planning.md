@@ -1,4 +1,5 @@
 ---
+description: "The MRP document: how the calculation works, its prerequisites (items, BOM, routing, warehouses, scenarios, terms) and the workflow from collecting demand to planned production and purchase lines."
 entities: [MRPDocument, Scenario, MRPAvailableQtySource]
 menu: Manufacturing → Material Resource Planning → planning raw materials Document
 ---

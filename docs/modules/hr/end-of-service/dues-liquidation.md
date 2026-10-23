@@ -1,4 +1,5 @@
 ---
+description: "The Dues Liquidation Document for an employee's final settlement: gratuity, unused vacation, unpaid salary, loan balances and manual adjustments, how the figures are built, its accounting effect and bulk settlement."
 entities: [DuesLiquidationDoc, DuesLiquidationComponent, AggrDuesLiquidationDoc]
 menu: Payroll → Dues Liquidation and Firing → Dues Liquidation Document
 ---
@@ -42,6 +43,13 @@ because the two things being paid out follow completely different rules:
 
 A third **Statistics** tab (`الإحصائيات`) lists the termination formulas that fed the calculation
 and the payment vouchers that were issued.
+
+When HR Configuration calculates vacation balances from the start date, a settlement is normally
+refused while the employee's last vacation has no Work Starting Document — the system cannot tell
+whether the employee ever came back. For an employee who is leaving straight from a vacation, tick
+**Ignore Vacation Work Starting Document For Vacation That Requires Work Starting Document**
+(`تجاهل عمل سند مباشرة عمل للأجازات التي تطلب سند المباشرة`) on the Vacation Liquidation page, and the
+settlement is saved without one.
 
 ## The building blocks you configure once
 
@@ -204,6 +212,7 @@ pattern is explained in
 | *Issued value {0} in document {1} can not be greater than remaining value {2}* — «المبلغ المصروف {0} في مستند التصفية {1} لا يمكن أن يكون أكبر من المتبقي {2}» | A payment voucher is trying to pay out more than the settlement still has outstanding. | Reduce the voucher amount to the remaining figure shown in the message. |
 | *Query can not be empty if Component Calculation method is SQL* — «لا يمكن ترك الإستعلام فارغا إذا كانت طريقة حساب المكون SQL» | On the Liquidation Component setup record the calculation type is **SQL** but the **Query** field was left blank. | Write the statement that returns the value, or change the calculation type to a fixed value or a formula. |
 | *Vacation Document {0} not belong to this Employee {1}* — «سند الأجازة {0} لا يخص الموظف {1}» | On the Aggregated Dues Liquidation Document a line points at a vacation document that belongs to a different employee than the line's own. | Choose a vacation document for the right employee, or move the line to that employee. |
+| *Document {0} - you Must Create Working Start Document After Vacation {1}* — «المستند {0} - يجب عمل سند مباشرة عمل بعد الأجازة {1}» | HR Configuration calculates vacation balances from the start date, and the employee's vacation {1} has no Work Starting Document, so the settlement cannot tell when the employee came back. | Record the employee's [Work Starting Document](../recruitment/work-starting.md) for that vacation. If the employee leaves without returning, tick **Ignore Vacation Work Starting Document For Vacation That Requires Work Starting Document** on the settlement instead. |
 | *Last Liquidation Date can not be after or equal Liquidation To Date* — «تاريخ اّخر تصفية لا يمكن ان يساوي او بعد تاريخ تصفية حتي» | On an aggregated line the period reads backwards: the last-liquidation date is on or after the liquidate-to date, so the span to settle is empty. | Set the last-liquidation date to the end of the previously settled period and the liquidate-to date to the new end date. |
 
 ## Related pages

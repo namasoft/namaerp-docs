@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Getting Started
+description: "Landing page for new users and implementers: what Nama ERP is, the glossary, minimum requirements, installation, configuration files and securing sign-in."
 ---
 
 # Getting Started

@@ -1,4 +1,5 @@
 ---
+description: "The Estate Handover document that records delivery and can release the contract's accounting, the Inspection Document for the unit's condition, and Post Handover Cost for cost arriving after handover."
 entities: [REEStateHandover, REInspectionDoc, PostHandoverCost]
 ---
 # Handing the Unit Over

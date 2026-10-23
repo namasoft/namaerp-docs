@@ -1,4 +1,5 @@
 ---
+description: "The Manufacturing Molds screens: the mold master file with its value and wear rate, Mold Receipt, Mold Voucher, Mold Disposal and Mold Location, and the manufacturing-molds licence they need."
 entities: [MFGMold, MFGMoldReceipt, MFGMoldVoucher, MFGMoldDisposal, MFGMoldLocation]
 menu: Manufacturing → Manufacturing Molds → Manufacturing Mold
 ---

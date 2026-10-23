@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Fields and Entities Settings
+description: "Landing page for the Fields and Entities Settings screen (Basic → Settings), where administrators change how fields, reference lookups and screens behave, with links to each group of grids."
 ---
 
 # Fields and Entities Settings

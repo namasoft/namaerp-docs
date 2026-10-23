@@ -28,12 +28,6 @@ Custom authentication provider integration for organizations using the Estidamah
 ### 3. None
 Disables 2FA (not recommended for production environments)
 
-::: warning A fourth value in the list
-The method list also offers **Authenticator App**. Nothing is wired behind it: with that value
-selected the login asks for no second factor at all, exactly as if the method were None. Use
-Message OTP or Estidamah API.
-:::
-
 ## Who is never asked for a code
 
 Even with 2FA on, three cases go straight through, and every "why was I not asked?" question ends in one of them:
@@ -54,7 +48,7 @@ The system enforces the following validation rules when configuring 2FA:
 
 1. **Message OTP Method Requirements**:
    - **Notification Template**: You must select a notification definition for sending OTP codes
-   - Error message if not configured: *"Cannot select the option Message OTP without filling Notification For Two-Factor Authentication OTP"*
+   - Error message if not configured: *"Can not select the option Message OTP without fill Notification For Two-Factor Authentication OTP"*
 
 2. **Estidamah API Method Requirements**:
    - The method needs **four** settings — **Estidamah Environment Url**, **Estidamah Api Key**, **Estidamah Encryption Key** and **Estidamah Encryption IV**. Three of them are checked when you save; the **Api Key** is not, so a configuration missing it saves cleanly and then fails at the gateway on the first login attempt. Fill all four.
@@ -65,7 +59,7 @@ The system enforces the following validation rules when configuring 2FA:
 
 | Field | Description | Default | Options | Validation Rules |
 |-------|-------------|---------|---------|-----------------|
-| **Login Two-Factor Authentication Method** | Which second factor the login asks for | None | None · Message OTP · Estidamah API · Authenticator App (does nothing) | - |
+| **Login Two-Factor Authentication Method** | Which second factor the login asks for | None | None · Message OTP · Estidamah API | - |
 | **Notification For Two-Factor Authentication OTP** | The notification definition that carries the code | - | Any manual notification definition | **Required** when the method is Message OTP |
 | **OTP Format** | Shape of the generated code | Numeric | Numeric (123456) · Alphabetic (ABCDEF) · AlphaNumeric (A1B2C3) | - |
 | **OTP Length** | How many characters the code has | 6 when the field is empty or zero | Any number | - |

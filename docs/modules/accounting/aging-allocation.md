@@ -1,4 +1,5 @@
 ---
+description: "The Aging Allocation document: manually matching a party's open debit and credit items so debt-age reports are right, the steps on the screen, what saving does, and reading matches for custom aging reports."
 entities: [AgingAllocation]
 menu: Banks → Master Files → Aging Allocation
 ---

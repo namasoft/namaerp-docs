@@ -1,6 +1,6 @@
 ---
 entities: [CPATemplateProject]
-menu: ECPA ← مشاريع ← قالب مشروع
+menu: ادارة المشاريع ← مشاريع ← قالب مشروع
 ---
 
 # قوالب المشاريع

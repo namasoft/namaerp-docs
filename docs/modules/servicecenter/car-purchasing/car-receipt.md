@@ -45,13 +45,11 @@ the car records, so afterwards the
 with a spare key".
 
 More menu: **إنشاء صنف فرعي من السطر (Create Sub Item From Line Information)**, which runs the
-car-creation routine against the grid — and is a silent no-op if the term's option is off.
+car-creation routine against the grid when the term's option is on.
 
 ## What it does on commit
 
-- **Accounting: none of its own.** The Car Receipt never posts. Its document term nevertheless shows
-  accounting sides, inherited from the shared purchase term family — they are ignored here. Leave
-  them empty.
+- **Accounting: none of its own.** The Car Receipt creates no journal entry.
 - **Stock: yes, indirectly** — it generates a **Stock Receipt**, and that generated document is what
   actually carries the inventory movement and the inventory accounting, under its own book and term.
 - **Status entries** on each car, as drawn in the item's
@@ -70,16 +68,8 @@ Exactly two settings on the
 [document term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md):
 **دفتر الإنشاء (Generation Book)** and
 **توجيه الإنشاء (Generation Term)** inside the generation configuration. Fill both, and every commit
-generates a stock receipt. Leave either blank, and it generates nothing.
-
-::: danger Unticking *Generate Document* does not stop the Car Receipt
-The generation configuration has an **إنشاء مستند (Generate Document)** switch, and on this document
-it is **ignored**. Only the book and the term are examined. Sites that untick *Generate Document* and
-assume the receipt has stopped posting stock get a nasty surprise.
-
-**To stop the Car Receipt moving stock, blank the Generation Book and the Generation Term.** That is
-the only thing that works.
-:::
+generates a stock receipt. Leave either blank, and it generates nothing — so **to stop the Car
+Receipt moving stock, clear the Generation Book or the Generation Term.**
 
 ## The stock-in rule
 
@@ -112,26 +102,19 @@ switched on.
 
 ## Undoing a receipt
 
-There are two ways, and only one of them does what people expect.
+There are two ways, and they do different things.
 
 **Cancelling or deleting the Car Receipt itself** deletes the stock receipt it generated. That is the
 real reversal: the quantity comes back out, and the inventory entry goes with it.
 
-**The Car Receipt Cancel document** (`إلغاء توريد سيارة`, in the same Car Inventory folder) does
-**not**. It is worth being precise about what it is:
+**The Car Receipt Cancel document** (`إلغاء توريد سيارة`, in the same Car Inventory folder) records
+the event and moves the status:
 
-::: warning Cancelling a car receipt reverses nothing
-The Car Receipt Cancel has no stock generation of its own and no reversing effects of any kind. It
-does not delete the stock receipt the original Car Receipt generated, and it reverses no accounting.
-**The cars stay in stock and stay at cost**, exactly as they were before you raised it. It cannot
-even mark the original receipt as cancelled, because the purchase-side documents have no such flag.
-
-Anybody who raises this document expecting the receipt to be undone will be wrong, and has to
-reverse the stock movement themselves.
-
-What it *does* is write a status entry of its own. That is the whole of its effect: it is a numbered,
-filed marker that says "this arrival was cancelled", plus whatever status move you configure for it —
-typically *Free Stock → Customs*, or straight back to the initial status.
+::: info What the Car Receipt Cancel does
+The Car Receipt Cancel is a numbered, filed marker that says "this arrival was cancelled", plus
+whatever status move you configure for it — typically *Free Stock → Customs*, or straight back to the
+initial status. It leaves the stock receipt the original Car Receipt generated in place, so **the cars
+stay in stock and stay at cost**.
 
 So: **to unwind the stock, cancel or delete the original Car Receipt.** Raise the Car Receipt Cancel
 only if you want the event recorded and the status moved. And remember that its status move, like
@@ -155,5 +138,5 @@ The Car Receipt and the Car Receipt Cancel carry one action each, in the More me
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — for every line whose item
   has sub items, creates the car record (or refreshes the one already on the line) from the line's
   data and writes it back onto the line. The car record is saved straight away, even before you save
-  the document. It does nothing, and shows no message, unless the term's *Create Sub Item From Line
-  Info* option is on.
+  the document. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.

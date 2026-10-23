@@ -78,7 +78,7 @@ Car Final Delivery              optional   the hand-over record
 | Quotation | Records the price you offered | No |
 | Sales Approval | An internal record of the deal, complete with the payment plan | No |
 | Sales Order | The agreed price, the payment method and schedule, the [financing block](/modules/servicecenter/car-installments/car-installment-programs.md), the booking deposit | Not enforced by anything, but everything downstream copies from it |
-| Allocation | Stamps a customer, branch, department, salesman and warehouse onto one chassis | No — and nothing downstream reads the stamp |
+| Allocation | Stamps a customer, branch, department, salesman and warehouse onto one chassis | No — the stamp records who the car is promised to |
 | Proforma Sales Invoice | A priced, payable-looking document you can hand to a bank | No |
 | **Sales Invoice** | **Revenue, tax, receivable, cost of goods sold, the stock issue, the e-invoice** | **Yes — this is the sale** |
 | Final Delivery | The hand-over event, and a stock issue *if its term is configured to generate one* | No |
@@ -117,9 +117,9 @@ rather than the car document you were saving.
 At Al-Sahra Motors the sales invoice generates the issue, so the final-delivery term's generation
 book and term are left **empty**.
 
-Note that **unticking *Generate Document* does not stop the final delivery** — that switch is
-ignored by this document. Blanking the book and the term is the only thing that works. Treat the
-invoice and the final delivery as **alternatives for moving stock, never as a sequence**.
+To stop the final delivery generating, clear the generation book or the generation term on its
+term. Treat the invoice and the final delivery as **alternatives for moving stock, never as a
+sequence**.
 :::
 
 ## The showroom thread, end to end
@@ -190,14 +190,10 @@ The honest summary, which the rest of the folder expands:
 | Sales Return | full reversal | **in, via a stock receipt** | status line |
 | The cancellation documents | **none** | **none** | mark the source cancelled; status line |
 
-::: warning Accounts on a term screen do not prove the document posts
-[The document term screens](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
-for the allocation, the final delivery, the quotations and all four cancellation documents show a
-complete block of debit, credit, cash, tax and discount accounts.
-**Those documents never post.** Anything you configure there is ignored — no journal entry appears,
-and nothing tells you why. Fill accounts only on the sales order, the sales approval, the pro-forma
-sales invoice, the sales invoice and the sales return.
-:::
+The allocation, the final delivery, the quotations and the cancellation documents create no journal
+entry. Fill accounts on the
+[document terms](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) of the
+sales order, the sales approval, the pro-forma sales invoice, the sales invoice and the sales return.
 
 Where a document does post or move stock, the effect is created as a **business request** processed
 in the background, so the document itself saves instantly. If an effect fails, it is retried from
@@ -228,7 +224,7 @@ The Car Sales Quotation Request and the Car Sales Quotation carry one action eac
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — for every line whose item
   has sub items, creates the car record (or refreshes the one already on the line) from the line's
   data and writes it back onto the line. The car record is saved straight away, even before you save
-  the document. It does nothing, and shows no message, unless the term's *Create Sub Item From Line
-  Info* option is on.
+  the document. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.
 
 The actions on the later documents in the chain are listed on each document's own page.

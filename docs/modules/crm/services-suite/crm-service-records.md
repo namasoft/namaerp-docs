@@ -74,7 +74,7 @@ Two consequences bite immediately:
 After pressing *Generate Service*, open every record it created and give it a customer, an English name and its tasks. Nothing warns you that this step is outstanding.
 :::
 
-There is one more thing to know about the sales documents while you are there: they carry a **Service Name** field on the header as well as the grid column, but the header field is **never rendered on any tab**. Only the grid column exists on screen, and the grid column is the one *Generate Service* reads. Do not go looking for the header field.
+On the sales documents, **Service Name** is a column of the services grid, and that column is what *Generate Service* reads.
 
 ## How Documents Use the Record
 
@@ -89,7 +89,7 @@ Neither of those two messages has an Arabic translation, so both appear in Engli
 
 ## The Machine Wording, One More Time
 
-A service record is described with fields whose labels talk about machines: **Machine Category** (تصنيف آلة) here, and on the documents that point at it, **Machine Type** (نوع الآلة), **Machine Classification 1..5** and **Serial Number**. Only Machine Category does anything on this side of the product — it drives the task-template filter. The rest are inherited fields you can use as free reference data or leave alone.
+A service record is described with fields whose labels talk about machines. **Machine Category** (تصنيف آلة) here drives the task-template filter; on the documents that point at the record, **Machine Classification 1..5** and **Serial Number** are free reference fields.
 
 Do not confuse this file with **Machine Maintenance Service** (خدمة صيانة ماكينة), which is a completely different file under the `crm-maintenance` licence: a priced catalogue entry with a price and a tax plan that you sell on a machine order line. The overview page, [Services or Machines?](/modules/crm/services-suite/crm-services-suite-overview), sets the two side by side.
 

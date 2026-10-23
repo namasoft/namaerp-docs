@@ -153,8 +153,8 @@ draft records"*.
 **Has it been printed before?** Every record carries a **Print Count**. Once it is above zero, a
 further print needs **Can Print** set to *More Than One* — with *One*, the first print succeeds and
 every later attempt is refused. This is the answer to "it printed once and now it will not", and it
-is usually intentional: paired with *Prevent Edit/Delete After Print* it is how an official invoice
-is made final.
+is usually intentional: paired with *Prevent Edit After Print* and *Prevent Delete After Print* it is
+how an official invoice is made final.
 
 **Is there a cap?** **Max Print Count** on the profile puts a number on it, and the refusal names
 the arithmetic: *"Max print count is 3 for entity SalesInvoice, and the record SI-000412 was printed

@@ -1,4 +1,5 @@
 ---
+description: "Employee services in HR: Car Action, Car Problem and car insurance documents for company vehicles, the Pickup Plan for staff transport routes, and meal types and meal delivery plans."
 entities: [CarAction, CarProblem, CarActionRequest, CarInfoUpdater, CarInsurancePolicy, CarInsuranceOfferDoc, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc, PickupPlan, MealType, MealsDetails, MealDeliveryPlan]
 ---
 # Employee Services (Vehicles, Transport & Meals)

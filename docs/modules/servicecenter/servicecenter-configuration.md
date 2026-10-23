@@ -1,23 +1,22 @@
 ---
+description: "The Service Center settings screen: capacity shares, pricing, job orders and invoicing, the execution screen, vehicle history and car options."
 entities: [ConfigEntry]
 menu: Service Center → Settings
 ---
 
 # Service Center Settings
 
-Almost everything that changes how this module behaves is configured **per document book**, on the document term. What is left over — the handful of decisions that have to be the same everywhere — lives on one settings screen with **24 options** on it.
-
-Twenty-four is a small number, and that is the point of this page: seventeen of them genuinely change something, and **seven do not**. Six of the seven sit on the screen looking like a productivity-measurement feature, which they are not. Knowing which is which saves you an afternoon.
+Almost everything that changes how this module behaves is configured **per document book**, on the document term. What is left over — the handful of decisions that have to be the same everywhere — lives on one settings screen, and this page walks through its options group by group.
 
 ::: info Required licence
-The settings screen belongs to the module as a whole. You reach it under **Service Center → ` Settings`** — the folder label really does begin with a space, so it renders slightly indented. Which options are meaningful depends on which of the six licence codes you hold; the rental pricing method, for instance, does nothing without `srvcenter-rental-assets`.
+The settings screen belongs to the module as a whole. You reach it under **Service Center → ` Settings`** — the folder label really does begin with a space, so it renders slightly indented. Which options are meaningful depends on which of the six licence codes you hold; the rental pricing method, for instance, matters only with `srvcenter-rental-assets`.
 :::
 
 ::: warning Save this screen once before using the module
-Several parts of the module read this record without checking that it exists. On a database where the screen has never been saved, closing a job order and recalculating prices fail with a technical error instead of a useful message. Open it and save it, even with every default untouched. This is a genuine prerequisite, not boilerplate.
+Several parts of the module — closing a job order and recalculating prices among them — need this record to exist. Open it and save it once, even with every default untouched. This is a genuine prerequisite, not boilerplate.
 :::
 
-One more thing before the tables. Keep **one settings record for the whole database**. The module's own code does not always resolve the settings with the document's dimensions in hand, so a dimension-specific variant can be picked up on one code path and ignored on another. If you need different behaviour per branch or per sector, get it from the document terms, not from here.
+One more thing before the tables. Keep **one settings record for the whole database**. If you need different behaviour per branch or per sector, get it from the document terms, not from here.
 
 ## Capacity — How the Working Day Is Divided
 
@@ -41,7 +40,7 @@ The two English-only rows are not a mistake in this table: *Walk In Percent* and
 | سياسة تسعير الخدمات / **Service Price Strategy** | Normal · MSRP | Decides whether a task's hourly rate and a service's total price come from the ordinary price columns or from the manufacturer's recommended price columns. Applied at the moment a price is pulled onto a document. |
 | طريقة التسعير / **Pricing Method** | By Hour (default) · By Day | **Rental assets only.** Whether a rental is charged by the hour or by the day. It changes the arithmetic *and* the screen layout of the rental documents, and it is one setting for the whole installation — not per asset, not per booking. |
 
-Both are worth settling before the first document exists. Prices already written onto documents are not revisited when you flip the strategy, so a mid-life change leaves an installation with two generations of prices and no way to tell them apart. On the rental side, By Hour is the safer choice for the reasons set out in [Renting Out Assets](/modules/servicecenter/rental-assets/servicecenter-rental-overview.md).
+Both are worth settling before the first document exists. Prices already written onto documents are not revisited when you flip the strategy, so a mid-life change leaves an installation with two generations of prices and no way to tell them apart. On the rental side, see [Renting Out Assets](/modules/servicecenter/rental-assets/servicecenter-rental-overview.md).
 
 ## Job Orders and Invoicing
 
@@ -62,10 +61,6 @@ Both are worth settling before the first document exists. Prices already written
 | لا يمكن التعديل في السطر الذى حالته منتهى / **Can Not Edit Line Status Is Finished** | Off | Makes every column of a finished execution line read-only, so a completed clocking cannot be quietly edited afterwards. |
 | لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Has Open Task In Job Order Execution** | **On** | Filters technicians who already have an unfinished task out of the picker on the execution document. |
 
-::: warning The technician filter is not exhaustive
-The lookup behind *Do Not Show Technicians Who Has Open Task* is capped at a fixed number of rows, so on an installation with a large payroll a busy technician can still appear in the list. Treat it as a convenience that keeps the picker tidy, not as a control that prevents double-assignment.
-:::
-
 ## Vehicle History
 
 | Option (Arabic / English) | What it does |
@@ -76,37 +71,15 @@ The lookup behind *Do Not Show Technicians Who Has Open Task* is capped at a fix
 
 | Option (Arabic / English) | What it does |
 |---|---|
-| إعدادات حالة الصنف الفرعي الإفتراضية / **Default Sub Item Configuration** | Supplies the status-filter rows that the car picker offers — and only when the **item** has no car status configuration of its own. |
+| إعدادات حالة الصنف الفرعي الإفتراضية / **Default SubItem Configuration** | Supplies the status-filter rows that the car picker offers — and only when the **item** has no car status configuration of its own. |
 
-::: warning What Default Sub Item Configuration does not do
+::: warning What Default SubItem Configuration does not do
 This option is read in exactly one place: the filter list on the car picker. It is commonly misread as a fallback that makes the car lifecycle work for items nobody configured. It is not.
 
 Both the status engine and automatic car creation read the configuration attached to the **item**, and neither falls back to this setting — car creation refuses outright with a message saying the item has no car status configurations. Note also that the fallback is keyed on the item, not on the car.
 
 So: **every vehicle item still needs its own Car Status Configurations record.** Setting a default here changes nothing about statuses or car creation. See [Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations.md).
 :::
-
-## Options That Are Recorded but Never Read
-
-Seven of the twenty-four options store what you type and are read by nothing at all. They are listed here so that nobody spends time tuning them, and so that nobody builds a policy on the assumption that the system is acting on them.
-
-::: warning These seven do nothing
-| Option as shown on screen | Note |
-|---|---|
-| **Standard Effieciency Rate** | Read by nothing. The spelling is the on-screen one. |
-| **Standard Productivity Rate** | Read by nothing. |
-| **Standard UtilizationRate** | Read by nothing. The missing space is on the screen. |
-| **Benchmark Effieciency Rate** | Read by nothing. |
-| **Benchmark Productivity Rate** | Read by nothing. |
-| **Benchmark Utilization Rate** | Read by nothing. |
-| **Remaining Percent** | Read by nothing, **and not on the settings screen at all** — it exists only in the stored record and in import and export files. |
-
-The six rate options are visible, sit together in a block, and read as the front end of a technician efficiency, productivity and utilisation feature. **There is no such feature.** No screen, no report and no calculation anywhere in the module consumes any of these figures, and the module ships no technician-productivity or utilisation report that could. If you need those measures, they have to be built as a custom report over the execution documents.
-
-All six are also untranslated: the Arabic screen shows the raw English strings above.
-:::
-
-There is a second, unrelated field also called *Remaining Percent*, on the [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md). That one is live but does not mean what its name suggests — it is explained on its own page. The two have nothing to do with each other.
 
 ## What Is Not Here
 

@@ -1,3 +1,6 @@
+---
+description: "The thirteen printable forms (SYSF-AST001 to SYSF-AST013) shipped with Fixed Assets: how a form is bound to a document type, book or term, which document each form prints, and which documents have none."
+---
 # Printable Document Forms
 
 A report answers a question about many records. A **form** does something narrower and more everyday: it prints *one document* on paper — the purchase document you file with the supplier's invoice, the transfer note the receiving department signs, the count sheet somebody walks round the plant with.

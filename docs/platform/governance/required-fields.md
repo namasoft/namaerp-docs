@@ -36,7 +36,8 @@ page, **Required Fields Based On Criteria**, carries the other two: the criteria
 
 ![The Main page: the record's own code and name, the Fields Required Always grid, and the dimensions block](../../ar/platform/images/required-fields/required-fields-main-en.png)
 
-All three start with the same scoping columns, and they behave identically everywhere:
+All three start with **Entity Type** and **On Field**. The first two grids also carry **Entity Type List** and
+**Do Not Apply With Mobile App**; the Ignore grid has neither. Where a column appears, it behaves the same:
 
 | Column | What it does |
 |---|---|
@@ -110,10 +111,10 @@ criteria first and the query second. Leave both empty and the line has no condit
 field is simply required — which is what Fields Required Always is for, and doing it here costs you
 the on-screen marker for nothing.
 
-::: warning A criteria line with no entity type does nothing at all
-The generic behaviour described above for Fields Required Always does **not** exist on this grid. A
-line here with neither an Entity Type nor an Entity Type List is silently discarded — no error, no
-warning, and the rule you thought you wrote never fires. Always name the entity type on this grid.
+::: warning Always name the entity type on this grid
+The generic behaviour described above for Fields Required Always does **not** exist on this grid: a
+line here applies only to the entity types it names. Fill **Entity Type** or **Entity Type List** on
+every line.
 :::
 
 ### When the field is inside a grid

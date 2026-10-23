@@ -40,6 +40,8 @@ Backup preparation for TaskSchedule entities requiring Google Drive folder struc
 
 **Parameter 6:** Output (Output) - Generated folder configuration for backup validation
 
+**Parameter 7:** Errors (Output) - Filled by the flow with the backup folders that do not contain exactly two sub-folders; empty when every folder is valid
+
 ## Database Tables Affected
 
 - **TaskSchedule Parameters** - Updates parameter6 with generated configuration, optionally parameter2 of target task

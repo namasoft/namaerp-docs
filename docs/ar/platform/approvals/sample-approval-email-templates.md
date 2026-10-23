@@ -1,6 +1,6 @@
 ---
 entities: [ApprovalDefinition]
-menu: الأساسيات ← الإعدادات ← تعريف موافقه
+menu: إدارة النظام ← تخصيص شكل النظام ← تعريف موافقه
 ---
 
 # نماذج بريد إلكتروني جاهزة لطلبات الموافقة (Sample Approval Email Templates)

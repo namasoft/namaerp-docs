@@ -5,6 +5,7 @@ Besides connecting external clients through the [MCP server](./ai-mcp-server.md)
 ::: info Requirements
 - The AI module installed and licensed.
 - At least one chat model defined in [AI Module Configuration](./ai-configuration.md).
+- The semantic index set up in the same settings: the **Open AI Embedding Key**, the **Text Embedding Model** and the **Vector Store URI** (see [Semantic Search and Embedding Setup](./ai-configuration.md#Semantic-Search-and-Embedding-Setup)). Without them the assistant does not start, and a new chat answers *AI vector store is not configured* (in English, also on Arabic screens). External MCP clients do not need this.
 - At least one committed tool in the [AI Tool Definition](./ai-tool-definitions.md) screen (otherwise the assistant chats but cannot reach system data).
 :::
 
@@ -62,6 +63,12 @@ This mode is very useful for technical support and power users: it reveals **whi
 ### The Available Tools List
 
 The side panel shows the tools available to the assistant in this session — the same committed, non-inactive tools this user is allowed to use in the AI Tool Definition screen. If a tool you expect is missing, it is most likely not committed, inactive, or prevented for the user by the access-control grid.
+
+## How the assistant picks its tools
+
+The assistant does not hand the model every tool on the list. For each message you send, it compares your words with the name, description and parameters of every tool — the semantic index keeps a copy of each tool for exactly this — and offers the model only the few closest ones, never more than four, after dropping any the user is not allowed to run. Two helpers come with every message on top of those: one that finds the records your message mentions, and one that works out which entity type you mean.
+
+That is why a tool can be on the list and still never be called. If the assistant answers without the tool you expected, look at the tool's **Description** before anything else: it has to read like the questions people actually ask. A report tool described only as "Customer balances report" is a weak match for "who owes us the most this month"; a description that says what the report answers, in the words a user would use, gets chosen. Expert Mode shows which tools were called for each message.
 
 ## When the Assistant Can't Find Something
 

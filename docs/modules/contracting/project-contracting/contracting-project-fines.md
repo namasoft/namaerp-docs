@@ -1,4 +1,5 @@
 ---
+description: "The Project Contract Fine document: recording penalties against the owner contract, its own journal entry, its cost against the BOQ term, deduction from the next extract, and the rules that lock or block it."
 entities: [ProjectContractFine]
 menu: Contracting → Project Contracting → Project Contract Fine
 ---

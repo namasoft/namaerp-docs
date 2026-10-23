@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Document Management
+description: "Landing page for Document Management, the register of physical paperwork and its scans: overview, filing structure, archived documents, check-in and check-out movements and ZIP import."
 ---
 
 # Document Management
@@ -37,7 +38,7 @@ Registering paperwork, finding it again, and keeping track of who has it.
 <LandingGrid>
   <LandingCard icon="📄" title="Archived Documents" link="/platform/dms/dms-documents.md" details="The document record itself: filing, owners, attached scans, states, copies, and the four ways to find something again." />
   <LandingCard icon="🔁" title="Checking Documents In and Out" link="/platform/dms/dms-movements.md" details="The movement voucher — the four types, what committing really changes, and why a transfer needs a manual follow-up." />
-  <LandingCard icon="📦" title="Loading an Archive from a ZIP File" link="/platform/dms/dms-bulk-import.md" details="Turning one compressed file into hundreds of documents, and which columns on that screen are quietly ignored." />
+  <LandingCard icon="📦" title="Loading an Archive from a ZIP File" link="/platform/dms/dms-bulk-import.md" details="Turning one compressed file into hundreds of documents, and which columns reach the created documents." />
 </LandingGrid>
 
 ## Setup

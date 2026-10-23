@@ -66,7 +66,7 @@ Then comes the part that has no owner-side equivalent, and it is the reason this
 | Contractor Material Issue | material sold to him |
 | Contractor Material Return | material he handed back |
 
-Below them sit a free *Additional Info* grid — a scratch pad of numbers, texts, dates and references that nothing in the system reads — and the dimensions block.
+Below them sit a free *Additional Info* grid — numbers, texts, dates and references for your own data, to record, filter and report on — and the dimensions block.
 
 ## Actions on this screen
 

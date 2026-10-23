@@ -1,4 +1,5 @@
 ---
+description: "The Criteria Based Validator screen: When/Then rules and queries that refuse, warn or ask for confirmation on save, limiting them to certain users, checking only on change, worked examples and messages."
 entities: [CriteriaBasedValidator]
 menu: Basic → Settings → Criteria Based Validator
 ---

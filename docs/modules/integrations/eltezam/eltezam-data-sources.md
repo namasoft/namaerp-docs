@@ -1,4 +1,5 @@
 ---
+description: "Where each value Nama sends to Eltezam comes from, operation by operation (employee, job, payslip, qualification, vacation and appraisal info), and which documents count as in the period."
 entities: [EltezamSubmissionDoc, EltezamConfiguration]
 ---
 # What Nama Sends to Eltezam

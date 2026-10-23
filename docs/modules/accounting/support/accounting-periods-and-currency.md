@@ -1,4 +1,5 @@
 ---
+description: "Fiscal years and periods, opening and locking periods, and how documents in more than one currency are handled: why a document will not save into a date and why a foreign-currency balance changes."
 entities: [FiscalYear, FiscalYearStatusUpdate]
 menu: Basic → Master Files → Fiscal Year
 ---
@@ -15,7 +16,9 @@ This is why the value date matters so much: change it and you change which perio
 
 ## Opening and locking periods
 
-A period can be **open** (postings allowed) or **closed** (locked). You control this through **Fiscal Year Status Update** (`Basic > Master Files > Fiscal Year Status Update`), which opens or closes a **range** of periods at once — so after a month is reviewed and reported, you close it and nothing can change underneath the numbers you've already published.
+A period can be **open** (documents allowed) or **closed** (locked). You open and close periods on the **Fiscal Year** screen (Basic → Master Files → Fiscal Year): change a period line's status, or use the **Open Periods** / **Close Periods** buttons, then save — so after a month is reviewed and reported, you close it and nothing can change underneath the numbers you've already published.
+
+Two finer tools sit on top of that. **Fiscal Year Status Update** (Basic → Master Files → Fiscal Year Status Update) only *narrows*: it closes an open period further for chosen users, permission files, document types or dimensions, and it does nothing at all unless **Enable Fiscal Year Status Update** is ticked in Global Configuration. It cannot reopen a closed period. **Ignore Closed Periods** works the other way: it lets a chosen user or document type work in a period that is closed. Both are explained in [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
 For finer control than a whole period, **Prevent Transactions On Accounts Or Subsidiaries** (`Accounting > Master Files > Prevent Transactions On Accounts Or Subsidiaries`) locks postings on **specific accounts or subsidiaries** (optionally within a date range) — useful for freezing a single account while the rest of the period stays open. The year-end workflow that uses these is described in [Year-end closing & period control](../year-end-and-period-control.md).
 
@@ -32,7 +35,7 @@ Two account-level flags shape this behavior: one makes an account **keep its tra
 
 ## For Support
 
-- **"The document won't save into this date"** — its **period** is closed; reopen the range with **Fiscal Year Status Update**, or check **Prevent Transactions** locks on the account/subsidiary.
+- **"The document won't save into this date"** — its **period** is closed, for everyone or (through a Fiscal Year Status Update rule) for this user or document type. Reopen it with **Open Periods** on the Fiscal Year, or add an **Ignore Closed Periods** rule for the user or document type — see [Fiscal Period Control](/platform/governance/fiscal-period-control-guide). Also check **Prevent Transactions** locks on the account/subsidiary.
 - **"A foreign balance's local value changed"** — an **Exchange Rate Update** revalued it at a new rate; that's expected, and the difference is the currency gain/loss.
 - **"An account shouldn't be revalued but is (or vice-versa)"** — check its **keep transaction local currency** and **exclude from exchange-rate update** flags.
 - **"The wrong period was stamped"** — it follows the document's **value date**; correct the date and reprocess (see [How documents are processed into accounting effects](./accounting-request-processing.md)).

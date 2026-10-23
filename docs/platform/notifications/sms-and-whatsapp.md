@@ -58,6 +58,30 @@ A few entries read as bare lower-case identifiers (`mobilyws`, `maktoobicom`, `a
   select case when {to} like '2%' then {to} else concat('2',{to}) end
   ```
 
+## SMS Provider: URL Generic
+
+`URL Generic` is for a gateway that has no entry of its own but accepts a plain web address. The address is called with GET; tick **Use POST Method** when the provider wants POST.
+Paste the provider's full sending URL into **Other Settings** and put these placeholders where the provider
+expects each value; Nama fills them in for every message:
+
+| Placeholder | Replaced with |
+|---|---|
+| `{sender}` | The **Sender** of the line. |
+| `{to}` | The recipient's number. |
+| `{user}` | The **User Name** of the line. |
+| `{password}` | The **Password** of the line. |
+| `{message}` | The message text as it is. |
+| `{utf8message}` / `{utf8msg}` | The message text encoded for a web address — the usual choice. Spaces are sent as `+`. |
+
+For example:
+
+```
+https://api.example.com/send?user={user}&pass={password}&from={sender}&to={to}&text={utf8msg}
+```
+
+Fill **Success Indicator** with a word the provider's reply contains when the message was accepted; without
+it, any reply that contains the word `error` counts as a failure.
+
 ::: tip
 ✅ After saving the configuration, Nama ERP will be able to send notifications and messages via the selected provider. Make sure credentials and sender IDs are valid and verified with the provider.
 :::

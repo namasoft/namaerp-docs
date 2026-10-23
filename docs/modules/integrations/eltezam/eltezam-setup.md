@@ -1,6 +1,6 @@
 ---
 entities: [EltezamConfiguration]
-menu: integrations → Master Files → MCS Eltezam Configuration
+menu: Integrations → Master Files → MCS Eltezam Configuration
 ---
 # Setting up Eltezam
 

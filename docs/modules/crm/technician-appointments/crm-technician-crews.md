@@ -1,4 +1,5 @@
 ---
+description: "The Technician Crew file: its header and colour, the technicians and procedures grids, and how to build the crews that the appointment calendar books."
 entities: [TechnicianCrew]
 menu: Customer Relationship Management → Technician Appointments → Technician Crew
 ---

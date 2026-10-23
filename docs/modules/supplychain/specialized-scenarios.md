@@ -1,4 +1,5 @@
 ---
+description: "Specialized supply chain scenarios: glass job orders and their operations, Service Item BOMs, document automation tools, tenders, and resources and activities."
 entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, OrderExecution, GlassJobOrderStatusUpdate, OrderDelivery, OrderFinished, OutsourceRequest, OutsourceIssue, OutsourceReceipt, OrderDamage, JOrderExpense, Tender, TenderCondition, SCDocRuleSet, SCExtraDocCreationRule, SCCopierExtraFields, OrderStatusQtyTrackConfig, DeliveryConfiguration, Resource, Activity, MaterialClassification]
 ---
 # Specialized Scenarios

@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Expense Document and the Expense Item master file: entering import costs on a letter of credit and distributing each line across the assets by value, weight or hand, with its entries and messages."
 entities: [FALcExpenseDocument, AdditionalCost]
 menu: Assets → Fixed Asset Letter of Credits → Fixed Asset Expense Document
 ---

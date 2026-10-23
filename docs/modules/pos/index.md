@@ -1,3 +1,6 @@
+---
+description: "Landing page for Nama POS, the offline-first desktop register with the Captain Order waiter app: how the guide is organised, from installing a register and selling to server-side setup."
+---
 # Point of Sale
 
 Most of Nama ERP runs in a web browser. **Nama POS** is the exception: a dedicated **desktop application** that runs right on the cash register, with a companion **Captain Order** mobile app for waiters. It is built this way for one simple reason — a point of sale cannot stop selling just because the internet went down.
@@ -28,6 +31,7 @@ This guide is a tour of the register, roughly in the order you meet each part.
   <LandingCard icon="🛒" title="The Sales Invoice" link="/modules/pos/pos-sales-invoice.md" details="The main selling screen: adding items, the customer, discounts, holding and recalling a sale." />
   <LandingCard icon="💳" title="Payment & Tender" link="/modules/pos/pos-payment-and-tender.md" details="Taking the money: cash, card, split payments, coupons, credit notes, reward points." />
   <LandingCard icon="↩️" title="Returns & Replacements" link="/modules/pos/pos-returns-and-replacements.md" details="Refunds, exchanges, credit notes, and depreciation on returned goods." />
+  <LandingCard icon="🛍️" title="Self-Checkout Kiosk" link="/modules/pos/pos-self-checkout-kiosk.md" details="Customers scan and pay by card on an Android kiosk that saves its sales on a register." />
 </LandingGrid>
 
 ### Running the register

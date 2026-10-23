@@ -118,19 +118,9 @@ reservation, *Cancel Reservation Of Related Docs* and *Prevent Cancel Reservatio
 ## The Generation tab — the two settings that decide everything
 
 **Generation Book** and **Generation Term** name the book and term of the stock document this
-document creates. On the car documents, these two fields — and nothing else — decide whether stock
-moves.
-
-::: warning "Generate Document" and "Manual Generation" are ignored here
-On the **Car Receipt** and the **Car Final Delivery**, the *Generate Document* and *Manual
-Generation* tick boxes sitting right beside the book and term are not read at all. Unticking
-*Generate Document* while leaving the book filled still produces the stock document. To stop
-generation you must **clear the generation book and the generation term**.
-
-The Car **Sales Invoice** is the exception: it does honour *Generate Document*.
-:::
-
-That asymmetry is exactly why the next two boxes matter.
+document creates. On the **Car Receipt** and the **Car Final Delivery**, these two fields decide
+whether stock moves: to stop either document generating, **clear the generation book or the
+generation term**.
 
 ::: danger Stock in — configure generation on exactly one term
 The [**Car Receipt**](/modules/servicecenter/car-purchasing/car-receipt.md) and the [**Car Purchase Invoice**](/modules/servicecenter/car-purchasing/car-purchase-invoice.md) can each generate a Stock Receipt for the same
@@ -140,8 +130,7 @@ chassis, and neither can see the other's stock document. Configure both and the 
 **Fill the generation Book and Term on exactly one of the two terms.** Al-Sahra generates on the
 purchase invoice — `SIPI-2026-021` produced stock receipt `STR-2026-0552` into `WH-SHOW` — and leaves
 the car receipt's generation book and term **empty**, so `SIR-2026-0088` records the physical
-arrival, the accessory checklist and the parking slots and moves nothing. Remember that unticking
-*Generate Document* on the receipt is **not** enough: blank the book and the term.
+arrival, the accessory checklist and the parking slots and moves nothing.
 
 If instead you generate on the receipt, leave *Generate Document* off on the purchase invoice term
 and use its *تجميع / Collect* and *تطبيق / Apply* buttons to link the receipts that already exist. On
@@ -159,8 +148,7 @@ or with a shortage error naming a stock document nobody created by hand.
 
 **Fill the generation Book and Term on exactly one of the two terms.** Al-Sahra issues from the sales
 invoice — `SISI-2026-0498` produced stock issue `STI-2026-1201` — and leaves the final delivery's
-generation book and term **empty**, so `SIFD-2026-0357` is purely the hand-over record. Unticking
-*Generate Document* on the final delivery does nothing; blank the book and the term.
+generation book and term **empty**, so `SIFD-2026-0357` is purely the hand-over record.
 
 The invoice and the final delivery are **alternatives** for stock purposes, not a sequence.
 :::
@@ -169,10 +157,9 @@ The invoice and the final delivery are **alternatives** for stock purposes, not 
 
 The car sales term screen carries the full accounting block — debit and credit, cash, invoice and
 line discount, seven further discount accounts, approximation discount, the tax accounts, service-fee
-pairs, and for the sales order a pair of reservation-value accounts. It carries that block for
-**every** document in the family, because the screen is assembled from one shared layout.
+pairs, and for the sales order a pair of reservation-value accounts.
 
-Only three of the fourteen ever post:
+Three of the fourteen documents in the family create a journal entry from it:
 
 | Document | Posts? |
 |---|---|
@@ -181,26 +168,10 @@ Only three of the fourteen ever post:
 | Pro-forma Sales Invoice | **Yes** |
 | Everything else in the family | **No** |
 
-::: warning Accounts configured on the inert documents are silently ignored
 Allocation, Allocation Cancel, Sales Order Cancel, Final Delivery, Final Delivery Cancel, Sales
-Quotation, Sales Quotation Request, Car Receipt, Car Receipt Cancel and **all four traffic-letter
-documents** show a complete Debit / Credit / Cash / Tax / Discount screen and never produce a journal
-entry from it. There is no error and no warning — the entry simply never appears.
-
-The traffic letters are the case support sees most often. `SITLR-2026-0288` and `SITL-2026-0296`
-push chassis, engine and key data onto `CAR-000318` and move its status; they post nothing, and no
-term option makes them post. Leave their account fields empty so nobody is misled later.
-:::
-
-::: danger The Car Pro-forma Purchase Invoice posts nothing on commit — but can post later
-On the purchasing side, the **Car Pro-forma Purchase Invoice** has a complete accounting-effects page
-on its term and produces **no entry when you commit it**. Worse, the generic **More → Regenerate
-Accounting Effects** action on the same document *does* reach the ledger and creates entries from
-those accounts. A document that has never posted can acquire a journal entry out of band, long after
-the fact.
-
-Document the pro-forma as a non-financial document and leave its account fields empty.
-:::
+Quotation, Sales Quotation Request, Car Receipt, Car Receipt Cancel and the four traffic-letter
+documents create no journal entry. On the purchasing side, neither does the **Car Pro-forma
+Purchase Invoice**.
 
 The genuinely financial car documents are the **Car Purchase Invoice**, the **Car Purchase Return**,
 the **Car Sales Invoice** and the **Car Sales Return** — those post from their term's accounts every
@@ -234,40 +205,37 @@ the four: taxable, tax plan, modifiable tax, *Disable After Use* and approximati
 
 ## Insurance terms
 
-The insurance sub-module's terms are small, and most of its documents have none at all.
+The insurance sub-module's terms are small. What each document books is explained on
+[the policy cycle page](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md).
 
-**Insurance Policy Order** and **Insurance Policy Renewal** share one term, whose whole content is
-one pair of accounting sides: *Insurance Value Debit* / *Insurance Value Credit* (مدين/دائن قيمة
-التأمين). Al-Sahra's policy order `SIIPO-2026-0212` posts the typed 3,150 against that pair.
+**Car Insurance Policy Order** and **Car Insurance Policy Renewal** share one term, whose whole
+content is one pair of accounting sides under *Total Insurance Price*: *Total Insurance Price Debit* /
+*Total Insurance Price Credit* (مدين/دائن قيمة التأمين). Al-Sahra's policy order `SIIPO-2026-0212`
+books the typed 3,150 against that pair.
 
-**Insurance Policy Receipt** gets the same pair. Its term also shows *Prevent Saving If Policy Is
-Unpaid* (منع حفظ إذا كانت الوثيقة غير مسددة).
+**Car Insurance Policy Receipt** gets the same pair, plus a **Cost** group (*Debit Cost* / *Credit
+Cost*, مدين التكلفة / دائن التكلفة) for the policy's cost. The **Receipt Cancellation** has a term
+of the same shape; give it the receipt's accounts swapped so it reverses the receipt.
 
-::: warning "Prevent Saving If Policy Is Unpaid" never fires
-The check reads its setting from an empty configuration rather than from your term, so it can never
-refuse anything. Ticking it changes nothing. If unpaid policies must not be received, enforce that
-by procedure, not by this switch.
-:::
+**Car Insurance Policy Delivery** has three groups: **Taxes Info** with the *Taxable* switch (taxes
+are calculated on the delivery only when it is ticked), **Cost** (*Debit Cost* / *Credit Cost*) and
+**Net Value** (*Net Value Debit* / *Net Value Credit*, صافي القيمة - مدين / دائن) for what the
+customer is charged. The **Delivery Cancellation** has a term of the same shape, set up the other
+way round.
 
-[**Insurance Purchase Invoice**](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md) — the dealer's settlement with the insurer — has three independent
-account pairs, one per money column on the document: *Insurance Value*, *Insurance Commission*
-(عمولة التأمين) and *Purchase Value* (قيمة الشراء). They post separately and are not required to add
-up to anything: Al-Sahra's `SIIPI-2026-0074` posts 2,835, 315 and 3,150 against three different
-pairs.
+[**Car Insurance Policy Purchase Invoice**](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md)
+— the dealer's settlement with the insurer — has a full invoice term. Its **Effect** page carries
+three pairs, one per money column on the document: **Insurance Expense** (*Insurance Value Debit /
+Credit*, مدين/دائن تحمل التأمين), **Commission** (*Insurance Commission Debit / Credit*, عمولة
+التأمين) and **Insurance Purchase** (*Purchase Value Debit / Credit*, قيمة الشراء), plus the
+*Taxable* switch. The remaining pages hold the tax, discount and cash sides, as on any purchase
+invoice. The three amounts are booked separately and are not required to add up to anything:
+Al-Sahra's `SIIPI-2026-0074` books 2,835, 315 and 3,150 against three different pairs. The
+**Purchase Return** has a term of the same shape.
 
-::: warning Only two of the three pairs are on the term screen
-The standard term screen shows the **Insurance Value** debit and credit pair **twice** — once under
-each of two groups — and does not show the **Purchase Value** pair at all. But the purchase-value
-amount, the 3,150 on `SIIPI-2026-0074`, is posted against that missing pair.
-
-The practical consequence: you cannot set the accounts for the purchase-value posting from this
-screen, so that third posting cannot be configured without a screen modification. Take it up with
-your implementation team before promising the insurer settlement will post in full.
-:::
-
-And the five documents with **no term at all** — Customer Insurance Policy, Policy Delivery, Policy
-Cancellation, Policy Period Adjustment, Policy Value Adjustment — have nothing to configure and post
-nothing. Their book's *توجيه* tab is empty by design.
+And the documents with **no term at all** — Customer Insurance Policy, Policy Cancellation, Policy
+Period Adjustment, Policy Value Adjustment — have nothing to configure and book nothing. Their
+book's *توجيه* tab is empty by design.
 
 ## Rental terms
 

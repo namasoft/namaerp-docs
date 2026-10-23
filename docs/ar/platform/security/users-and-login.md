@@ -120,7 +120,6 @@ menu: إدارة النظام ← الصلاحيات ← مستخدم
 
 إعداد **Login 2FA Method** في الإعدادات العامة يقبل:
 
-- **Authenticator App** — أكواد TOTP من تطبيقات مثل Google Authenticator،
 - **Message OTP** — كود لمرة واحدة يُرسل للمستخدم،
 - **Estidamah API** — تكامل التحقق من الهوية السعودي (استدامة)، أو
 - **None**.

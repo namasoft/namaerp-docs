@@ -1,3 +1,6 @@
+---
+description: "Step-by-step setup of Service Center in a new database: saving the settings screen, decisions to make first, workshop setup, turning car tracking on for the dealership, and the extras."
+---
 # Setting Up a Service Center
 
 Standing this module up in a fresh database is less about the number of screens and more about the order you touch them in, and about three or four decisions that are cheap to make now and painful to change later.
@@ -14,11 +17,11 @@ Nothing in this module exists without a licence. Before you start, confirm which
 
 Do this before anything else, even if you change nothing.
 
-Several parts of the module read the Service Center settings record without checking whether it exists — closing a job order and recalculating prices are two of them. On a database where nobody has ever saved that screen there is no record to read, and those operations fail with an unhelpful technical error rather than a message telling you what is missing.
+Several parts of the module read the Service Center settings record — closing a job order and recalculating prices are two of them — so the record has to exist before they run.
 
 So: open **Service Center → ` Settings`**, open the module settings screen, and save it. The defaults are sensible — 80 % of capacity to appointments, closing blocked while tasks are unfinished, busy technicians hidden — and you can revisit them at leisure. What matters is that the record exists.
 
-(Yes, that folder really does display with a leading space, so it looks slightly indented. That is a label defect, not a different folder.)
+(That folder label begins with a space on screen, so it looks slightly indented. It is the same folder.)
 
 ## Decisions to Settle Before You Type
 
@@ -30,21 +33,11 @@ Four questions. All four are answered on the settings screen, all four are read 
 
 ### How rentals are priced
 
-**Pricing Method** — *By Hour* or *By Day* — is likewise **one setting for the whole installation**, not per asset and not per booking. It changes both the arithmetic and the screen layout of every rental document.
-
-::: warning Prefer By Hour
-The By Day path does not recalculate the day count from the booking dates: the count is computed once and then left alone, so a user who changes the period after typing the count is left with a total that does not match the dates. If your business genuinely bills by the day, price a day as a block of hours and stay on By Hour. All the rental examples in this documentation are By Hour for that reason. See [Renting Out Assets](/modules/servicecenter/rental-assets/servicecenter-rental-overview.md).
-:::
+**Pricing Method** — *By Hour* or *By Day* — is likewise **one setting for the whole installation**, not per asset and not per booking. It changes both the arithmetic and the screen layout of every rental document. All the rental examples in this documentation are By Hour; see [Renting Out Assets](/modules/servicecenter/rental-assets/servicecenter-rental-overview.md).
 
 ### One work centre, or several
 
 A [work centre](/modules/servicecenter/workshop-setup/servicecenter-work-centers.md) is the shop: its warehouse, its fallback labour rate, its reception window, its bay count and hours per bay. Al-Sahra has two — a mechanical hall and a body shop — which is the natural modelling choice.
-
-::: danger Publish daily capacity for one work centre at a time
-The [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md), which is how you publish a day's capacity split, does not scope its effects to the work centre named on it. Commit a loading table for the body shop and it will overwrite the day capacity that the mechanical hall was relying on, and the appointment check will then be testing bookings against the wrong shop's hours.
-
-Until this is fixed, treat published day capacity as an installation-wide figure: either run capacity for a single work centre, or accept that the appointment check is indicative. Multiple work centres for costing, routing and reporting are fine — it is only the day-capacity numbers that cannot be trusted across more than one.
-:::
 
 ### Whether an item carries individually tracked cars
 
@@ -55,8 +48,6 @@ This one belongs to the dealership half and is the least reversible thing in the
 ### 1. The shop
 
 Create a [work centre](/modules/servicecenter/workshop-setup/servicecenter-work-centers.md) for each hall. Give it the warehouse its parts come out of, an hourly labour rate to fall back on, the reception window customers can book into, and the bay count and hours per bay that add up to a day's total available hours. Al-Sahra's `WC-MECH` is five bays × eight hours = **40 hours a day** at **120** an hour.
-
-The resources grid — the machines in the hall — is worth filling for the record, but be clear about what it is: it is descriptive. Nothing schedules against it and nothing checks machine availability.
 
 ### 2. Brands, models and categories
 
@@ -70,7 +61,7 @@ Then bundle them into [services](/modules/servicecenter/workshop-setup/servicece
 
 Give each task a per-model line carrying the labour time and rate for that model. It takes longer to set up, and it is what makes the figures the job order proposes agree with the figures a later recalculation produces.
 
-The small classification files — accessories kits, visit types, operation classifications — can wait. They classify and nothing more.
+The small classification files — accessories kits, visit types, operation classifications — can wait. They are mostly labels you group, filter and report on; the visit type also decides which bookings may bypass the capacity check.
 
 ### 4. Vehicles already on the road
 
@@ -82,13 +73,13 @@ That is what the product task opening document is for: one per vehicle, listing 
 
 Every document in the chain needs a book, and most need a **توجيه** (document term). The terms are where the real behaviour lives — which invoices the closing generates, what the gate pass demands before it releases a car, whether spare-parts documents generate stock movements. Start from [Document Terms in Service Center](/modules/servicecenter/document-terms/servicecenter-terms-basics.md) and then [Workshop Document Terms](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md).
 
-Two things to know before you fill them in. First, **an accounting block on a term screen does not prove the document posts** — several documents show account fields they never use. Second, where a term generates a stock document, the *Generate Document* tick is not the switch you think it is: on several documents it is ignored, and the only reliable way to stop generation is to leave the generation **book and term blank**.
+One thing to know before you fill them in: where a term generates a stock document, the way to stop a document generating it is to leave the generation **book and term blank**. Each document's own page says whether it creates a journal entry.
 
 ### 6. Publish capacity, and start taking work
 
 Post a [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md) for the work centre and the date range, splitting the day's total available hours into appointments, carry-over, walk-ins and emergencies. Al-Sahra's split is 80 / 10 / 5 / 5, which puts **32 of the 40 hours** into the appointment bucket.
 
-Understand what that buys you: **only the appointment bucket is enforced**, and only from the second booking of a day onwards — the first reservation of any day is accepted whatever its size. The other three buckets are planning information.
+Understand what that buys you: **only the appointment bucket is enforced** when a booking is saved. The other three buckets are planning information.
 
 From here the shop is open: [service requests](/modules/servicecenter/job-cycle/servicecenter-service-request.md) can be booked, and the [job-order cycle](/modules/servicecenter/job-cycle/servicecenter-job-cycle-overview.md) runs.
 
@@ -100,10 +91,10 @@ Here is the trap. Individually tracked cars are **not** available on a new insta
 
 ::: danger Three things must all be true, or car tracking does not work
 1. **The Sub Items feature must be removed from the prevented-features list.** Every configuration group ships with the sub-item feature (`الأصناف الفرعية` / *Sub Items*) on its **prevented features** list, which hides every car-related field on every screen. Until an administrator takes it off that list, users will not see the fields at all — and will report, quite reasonably, that the module is missing.
-2. **Each vehicle item needs its own status configuration.** On the item that represents the model, tick **Has Sub Item** *and* attach a **Car Status Configurations** record. Both are required. Without the configuration, car creation fails with a message naming the item, and the lifecycle does nothing at all. Setting a *Default Sub Item Configuration* in the module settings does **not** cover this — see [Service Center Settings](/modules/servicecenter/servicecenter-configuration.md).
-3. **The chassis and engine columns must be added to the purchase screens.** Out of the box, **no car-purchase screen carries a chassis-number or engine-number column** — not the purchase order, not the purchase invoice, not the proforma, not the purchase return. Since automatic car creation reads those columns off the line, the feature cannot work as shipped. Add them to the line grid through a screen modification before you rely on it.
+2. **Each vehicle item needs its own status configuration.** On the item that represents the model, tick **Has Sub Item** *and* attach a **Car Status Configurations** record. Both are required. Without the configuration, car creation is refused with a message naming the item. Setting a *Default SubItem Configuration* in the module settings does **not** cover this — see [Service Center Settings](/modules/servicecenter/servicecenter-configuration.md).
+3. **The chassis and engine columns must be added to the purchase screens.** Out of the box, **no car-purchase screen carries a chassis-number or engine-number column** — not the purchase order, not the purchase invoice, not the proforma, not the purchase return. Automatic car creation reads those columns off the line, so add them to the line grid through a screen modification before you rely on it.
 
-Miss any one of the three and the result is not an error message; it is a screen that looks right and does nothing. This is the biggest first-day trap in the module.
+All three are needed before cars are created and tracked. This is the biggest first-day trap in the module.
 :::
 
 Remember also that **Has Sub Item** locks once the item has transactions. Decide per model, and decide before the first purchase.
@@ -138,7 +129,7 @@ Al-Sahra's choice — and the one this documentation assumes throughout — is t
 
 ### Which document moves the stock
 
-The other setup decision with real money attached. Both the Car Receipt and the Car Purchase Invoice can generate a stock receipt, and neither can see the other's; configure both and the same chassis is taken into stock twice, at double the cost, with no error. The same defect exists on the way out, between the Car Sales Invoice and the Car Final Delivery.
+The other setup decision with real money attached. Both the Car Receipt and the Car Purchase Invoice can generate a stock receipt, and neither can see the other's; configure both and the same chassis is taken into stock twice, at double the cost. The same applies on the way out, between the Car Sales Invoice and the Car Final Delivery.
 
 The rule, both times: **fill the generation book and term on exactly one of the two document terms, and leave them blank on the other.** Al-Sahra generates stock from the purchase invoice on the way in and from the sales invoice on the way out; its receipt and final-delivery terms have empty generation books.
 
@@ -152,7 +143,7 @@ Each of these is independent of everything above and can be set up whenever you 
 
 **Rental** — create the classifications, then the [rental assets](/modules/servicecenter/rental-assets/servicecenter-rental-asset.md) with their service item, working hours and price tiers. An asset with an empty tier grid and no classification refuses every booking, so fill the tiers before you announce the service. [Booking, Invoicing and Cancelling](/modules/servicecenter/rental-assets/servicecenter-rental-booking.md) covers the documents.
 
-**Queues** — build one [queue configuration](/modules/servicecenter/service-queues/servicecenter-queue-configuration.md) as a reusable rulebook (queue letters, numbering, who serves which queue, waiting-room banners), then a [branch](/modules/servicecenter/service-queues/servicecenter-queue-branches.md) per reception hall with its day start time. Ticket numbering restarts at **1** each day at that time. On a multi-branch installation, verify the daily reset on each branch after any configuration change — it is not reliably applied to every branch at once.
+**Queues** — build one [queue configuration](/modules/servicecenter/service-queues/servicecenter-queue-configuration.md) as a reusable rulebook (queue letters, numbering, who serves which queue, waiting-room banners), then a [branch](/modules/servicecenter/service-queues/servicecenter-queue-branches.md) per reception hall with its day start time. Ticket numbering restarts at **1** each day at that time.
 
 **Mobile delivery** — configure the courier app's document books and the collection window, then read [Delivery Documents](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-documents.md). One rule from the start: **one courier per delivery document**.
 

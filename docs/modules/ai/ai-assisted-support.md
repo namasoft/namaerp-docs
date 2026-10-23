@@ -18,7 +18,7 @@ Nama technical support staff, and system administrators at customer sites who wa
 
 ## Step 1: Install Claude Desktop
 
-We recommend **Claude Desktop**, because it puts everything in one window with no command line at all. Download it from [claude.com/download](https://claude.com/download), install it, launch it, and sign in with your Anthropic account.
+We recommend **Claude Desktop**, because it puts everything in one window with no command line at all. Download it from [claude.com/download](https://claude.com/download), install it, launch it, and sign in with your Anthropic account. (If you already work with Claude Code in a terminal, that does exactly the same job: run it inside the knowledge-base folder from Step 3 on.)
 
 ::: warning A paid plan is required
 The coding side of Claude Desktop needs a **Pro, Max, Team or Enterprise** subscription. The free plan gives you the Chat tab only, which cannot read the documentation files on your machine — and reading those files is the entire point of this setup.
@@ -33,12 +33,12 @@ The coding side of Claude Desktop needs a **Pro, Max, Team or Enterprise** subsc
 
 ## Step 3: Open the Code tab and choose a folder
 
-In Claude Desktop, click the **Code** tab at the top of the window. (The three tabs are **Chat**, **Cowork** and **Code** — you want Code, the one that can read files on your machine.)
+In Claude Desktop, click the **Code** tab at the top of the sidebar. (The tabs are **Chat**, **Cowork** and **Code** — you want Code, the one that can read files on your machine. If the tabs show only icons, hover over one to see its name.)
 
-Then:
+Then, in the row of controls under the prompt box:
 
-1. Choose **Local** as the environment, so that Claude works with the files on your own computer.
-2. Click **Select folder**.
+1. Click the first control, the environment selector, and choose the top entry in the **Local** group, so that Claude works with the files on your own computer.
+2. Click the folder control next to it and choose **Open folder…**. (Older versions of the app have no environment selector; there you choose **Local** and click **Select folder** instead.)
 3. Create or pick an empty folder to keep the knowledge base in — something you will remember, such as `Documents\nama-kb`. Select it.
 
 The window is now pointed at that folder. It is empty, which is exactly right — the next step fills it.
@@ -57,7 +57,7 @@ The documentation and the data model are attached as *submodules*, which are dow
 
 ## Step 5: Ask your questions
 
-That is the setup finished. From now on you open Claude Desktop, click **Code**, pick that folder, and ask. Questions like:
+That is the setup finished. From now on you open Claude Desktop, click **Code**, choose that folder in the folder control under the prompt box, and ask. Questions like:
 
 - "العميل يقول إن قيد اليومية لم يتكوّن للفاتورة — من أين أبدأ؟"
 - "Which table stores salary item values, and what is the column for the amount?"
@@ -86,7 +86,7 @@ Everything so far is a very good library. The step that changes the nature of th
 
 Once connected, the assistant can read records, look up how a document type is configured, list the settings behind a behaviour, run a report, and — when you allow it — create and update records. The question stops being "what does the manual say about credit limits" and becomes "why did *this* order get blocked", which it answers by reading the customer, the document term, and the configuration entry that governs it.
 
-Again, you can simply ask Claude to set this up: give it the server address and the key, and tell it to read `namaerp-docs/docs/modules/ai/ai-mcp-server.md` and follow it. The connection is a few lines in a `.mcp.json` file in your knowledge base folder:
+Again, you can simply ask Claude to set this up: give it the server address and the key, and tell it to read `namaerp-docs/docs/modules/ai/ai-mcp-server.md` and follow it. The connection is a few lines in a `.mcp.json` file in your knowledge base folder — the Code tab reads it from there, so it is not something you set in Claude Desktop's own settings:
 
 ```json
 {
@@ -108,7 +108,7 @@ An MCP connection on its own exposes nothing. The assistant can only call the to
 
 ### The record tools — for everyone, bounded by permissions
 
-The nine export/import tools, added in one click with the **Add Export Tools** button, let the assistant resolve an Arabic or English term to an entity type, list the fields it can search on and the tables behind them, search records, read a record as JSON, list the allowed values of a field, learn an entity's import schema, and import new records.
+The twelve export/import tools, added in one click with the **Add Export Tools** button, let the assistant resolve an Arabic or English term to an entity type, find a field or an option by its name, list the fields it can search on and the tables behind them, search records, read a record as JSON, list the allowed values of a field, learn an entity's import schema, import new records, and upload or download attachment files.
 
 The important property is that **every one of them goes through the same gates the screens use**. If the linked user cannot see a company's documents, neither can the assistant. If the user may not create purchase invoices, the import call is refused. These tools are bounded by exactly the permissions you already trust that user with, which is what makes them reasonable to hand to support staff generally.
 

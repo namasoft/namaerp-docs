@@ -1,4 +1,5 @@
 ---
+description: "The spare master files under Basic → Remarks for registers no module covers: Subsidiary 1 to 5, which can carry ledger accounts, the remarks family, which cannot, Remark Types, and how to choose."
 entities: [Subsidiary1, SubsidiaryClass, DetailedRemark, MeetingRemark, Remark, RemarkType]
 menu: Basic → Remarks → Subsidiary 1
 ---

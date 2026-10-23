@@ -1,4 +1,5 @@
 ---
+description: "Issuing stock: the Stock Issue for internal use, samples, losses and damage, the Stock Issue Request, cutting two-dimensional materials, batch and serial selection, the accounting effect and corrections."
 entities: [StockIssue, StockIssueReq, ItemCuttingDoc]
 menu: Inventory → Receipt Documents → Stock Issue
 ---

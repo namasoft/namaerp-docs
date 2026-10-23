@@ -38,17 +38,35 @@ Synchronizes data between Nama ERP servers using JSON format for data transmissi
 
 ## Parameters
 
-**Same as EASaveToAnotherServer except:**
+The parameters are the same as [EASaveToAnotherServer](EASaveToAnotherServer.md):
 
-### Parameter 12: Keep Creation Date
-- **Status:** **NOT SUPPORTED**
-- **Behavior:** Throws `NaMaBusinessLogicExeption` if set to true
-- **Workaround:** Use standard `EASaveToAnotherServer` for creation date preservation
+**Parameter 1:** Other Server URL (Required) - `http://hostname:port/` or `https://hostname:port/`, for example `http://localhost:7070/`
 
-**Other parameters work identically:**
-- Server URL, Login ID, Password
-- Draft mode, reference handling, field overrides
-- Dimension management, bulk processing via SQL
+**Parameter 2:** Login ID (Required) - Username for target server authentication
+
+**Parameter 3:** Password (Required) - Plain text password (automatically hashed)
+
+**Parameter 4:** Append @draft to document files code if first save (true/false) - Adds `@draft` to the code when the record has never been committed
+
+**Parameter 5:** Ignore Not Found References on the Other Server (true/false) - Saves the record even when some of its references do not exist on the other server
+
+**Parameter 6:** Save As Draft (true/false) - Saves the record as a draft on the other server instead of committing it
+
+**Parameter 7:** Fields Value Overrider (Optional) - Field map of header fields whose values replace the exported ones, for example:
+```
+book="ABC"
+name1=sql(select case when {group.code} = '11' then '' else {group.name1} end)
+```
+
+**Parameter 8:** Do Not Use Current User Dimensions (true/false) - Does not send the current user's dimensions with the import
+
+**Parameter 9:** Max Trials Count (Optional) - How many times to retry on a connection failure (default 10)
+
+**Parameter 10:** Save From Query (Optional) - SQL returning `entityType, id` of the records to send instead of the current record, for example `select entityType,id from SalesInvoice where valueDate >= {date1}`
+
+**Parameter 11:** Add Manual Code Prefix - Leave empty.
+
+**Parameter 12:** Keep Creation Date - Not supported by this flow; setting it to `true` stops the flow with an error. Use [EASaveToAnotherServer](EASaveToAnotherServer.md) to keep the creation date
 
 ## JSON Structure Example
 

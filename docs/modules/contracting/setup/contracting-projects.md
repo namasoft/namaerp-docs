@@ -60,10 +60,9 @@ two places the consultant is read at all, and it saves the most commonly forgott
 contract screen.
 :::
 
-**Status** is a plain descriptive label — in progress, suspended, finished, and so on. Nothing in the
-module reads it: it does not lock the project, does not stop documents being raised against it, and
-does not drive any report logic on its own. Treat it as a filterable note that your team keeps
-honest, and if you need a hard stop use the platform's *Prevent Usage* action instead.
+**Status** is a descriptive label — in progress, suspended, finished, and so on — that you can filter
+and report on. It does not lock the project; to stop documents being raised against a project, use the
+platform's *Prevent Usage* action.
 
 **Insurance Info** — the policy number and its issue and expiry dates. One policy per project, which
 is the normal case for a CAR or a third-party policy taken out per site.

@@ -85,8 +85,8 @@ Four separate permissions decide a delete, and which one applies depends on the 
 | A draft | **Draft Deletion Capability** on the [security profile](/platform/security/security-profiles) | *{0} can not be deleted because current user dos not have the authority for deleting drafts* |
 | A draft, with **Delete Only Created Drafts** on | the same, plus authorship | *{0} can not be deleted because current user is not the creator of this draft* |
 | Committed | **Can Delete** | *You do not have the authority {1} on entity {0}* (with `{1}` = Delete) |
-| Approved | **Prevent Edit/Delete After Approval** | *Current user can not delete {0} after approval* |
-| Printed at least once | **Prevent Edit/Delete After Print** | *Current user can not delete {0} after being printed* |
+| Approved | **Prevent Delete After Approval** | *Current user can not delete {0} after approval* |
+| Printed at least once | **Prevent Delete After Print** | *Current user can not delete {0} after being printed* |
 
 The last two are worth reading carefully, because they are *prevention* flags on the profile rather
 than grants: ticking them takes the ability away from that profile, and a document that has been
@@ -100,9 +100,10 @@ check.
 
 > Can not delete transactions on closed periods
 
-Nothing dated inside a closed fiscal period may be added, changed or deleted, whoever you are. The
-three layers that can close a date — the period itself, the fiscal-year status, and the *Ignore
-Closed Periods* permission — are explained in
+Nothing dated inside a closed fiscal period may be added, changed or deleted, unless an *Ignore
+Closed Periods* rule covers you or the document type. The three layers — the period's own status,
+the Fiscal Year Status Update rules that close it further, and the *Ignore Closed Periods* exceptions
+that open it for chosen users or document types — are explained in
 [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
 ### 6. The record is revised, prevented from usage, or in an approval cycle
@@ -147,8 +148,8 @@ clearing, the save simply has to be repeated against the current version.
 | *{0} can not be deleted because current user dos not have the authority for deleting drafts* — «لا يمكن حذف {0} لأن المستخدم الحالى لا يملك صلاحية حذف المسودات» | **Draft Deletion Capability** is not granted on the profile. | Grant it on the security profile, or have someone who has it delete the draft. |
 | *{0} can not be deleted because current user is not the creator of this draft* — «لا يمكن حذف {0} لأن المستخدم الحالى ليس هو منشئ المستند» | **Delete Only Created Drafts** is on, and this draft was entered by somebody else. | Its author deletes it, or the option is relaxed for that profile. |
 | *You do not have the authority {1} on entity {0}* — «لا توجد لديك الصلاحية {1} على النوع {0}» | The profile's line for this type does not grant the named permission. | See [security profiles](/platform/security/security-profiles) — the row that decides is chosen by type, then type list, then wildcard. |
-| *Current user can not delete {0} after approval* — «لا يمكن للمستخدم الحالي حذف {0} بعد الموافقة» | The document completed its approval cycle and the profile has **Prevent Edit/Delete After Approval**. | Untick it for that profile, or cancel the document instead. |
-| *Current user can not delete {0} after being printed* — «لا يمكن للمستخدم الحالى حذف {0} بعد طباعته» | The document has been printed and the profile has **Prevent Edit/Delete After Print**. | Untick it for that profile, or cancel the document instead. |
+| *Current user can not delete {0} after approval* — «لا يمكن للمستخدم الحالي حذف {0} بعد الموافقة» | The document completed its approval cycle and the profile has **Prevent Delete After Approval** ticked. | Untick it for that profile, or cancel the document instead. |
+| *Current user can not delete {0} after being printed* — «لا يمكن للمستخدم الحالى حذف {0} بعد طباعته» | The document has been printed and the profile has **Prevent Delete After Print** ticked. | Untick it for that profile, or cancel the document instead. |
 | *Can not delete transactions on closed periods* — «لا يمكن حذف مستندات في فترة مغلقة» | The document's date falls in a closed period. | Reopen the period, or use the *Ignore Closed Periods* permission where policy allows. |
 | *Record cannot be edited, because {0}-{1} use this record in from doc* — «لا يمكن تعديل السجل لأن {0} - {1} يستخدم هذا السجل في بناءا على» | The term option **Prevent Editing Documents After Using In From Doc** is on, and the named document was built on this one. | Delete the dependent document first, or turn the term option off. |
 | *You can not change public records* — «لا يمكنك تعديل السجلات العامة» | The record belongs to no legal entity; your user belongs to one. | Edit it with a user whose legal entity is public. |

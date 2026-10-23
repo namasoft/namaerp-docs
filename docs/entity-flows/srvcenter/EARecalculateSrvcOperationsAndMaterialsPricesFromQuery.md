@@ -22,23 +22,23 @@ Manual execution for bulk pricing updates across multiple service jobs. Typicall
 1. **Executes query** - Runs the provided SQL query to find service jobs to update
 2. **Processes each job** - Iterates through found jobs in separate transactions
 3. **Applies pricing recalculation** - Calls the individual job pricing recalculation action
-4. **Accumulates results** - Collects success/failure status for each job processed
+4. **Stops on the first failure** - Each job is saved in its own transaction, so jobs recalculated before a failing job keep their new prices and the remaining jobs are not processed
 
 ## Parameters
 
-**Parameter 1:** SQL Query (Required) - Query to select service jobs for pricing recalculation
+**Parameter 1:** SQL Query (Required) - Query to select service jobs for pricing recalculation. The parameter has no title on the entity flow line
 
 ## Example Query
 
 ```sql
-SELECT entityType, id FROM SrvCenterJob 
-WHERE valueDate >= '2024-01-01' AND status = 'Draft'
+SELECT entityType, id FROM SrvCJobOrder
+WHERE valueDate >= '2024-01-01'
 ```
 
 ## Query Requirements
 
 - Must return two columns: entityType and id
-- entityType should be service center job entity types
+- entityType should be a service center job document, such as `SrvCJobOrder` or `SrvCJobEstimation`
 - id should be valid job IDs
 
 ## Database Tables Affected

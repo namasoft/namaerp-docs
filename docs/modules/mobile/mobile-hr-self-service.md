@@ -36,7 +36,7 @@ When browsing the days the employee was present, the card shows precise details 
 
 The **Create vacation request** screen shows the **leave balance** at the top as a pie chart (consumed during the year and remaining), then the employee chooses:
 
-- **Vacation type** and **leave/departure reason**.
+- **Vacation type** and **leave/departure reason**. A vacation type with **Do Not Show In Mobile App** ticked on its [Vacation Type](../hr/vacations/vacation-types-and-balances.md) record is not offered here.
 - A **vacation less than a day** option when needed.
 - **Start date** and **return date**, with a **notes** field.
 
@@ -56,7 +56,7 @@ When traveling on an external work assignment the employee creates a **mission v
 
 ## Loan voucher
 
-The employee submits a **loan request** specifying the loan type, currency, **loan amount**, **installment amount**, **number of installments**, installment period type and start date.
+The employee submits a **loan request** specifying the loan type, currency, **loan amount**, **installment amount**, **number of installments**, installment period type and start date. A loan type with **Do Not Show In Mobile App** ticked on its [Loan Type](../hr/loans/hr-loan-types.md) record is not offered in the list.
 
 ![Loan voucher](../../ar/modules/mobile/images/hr/loan-voucher.jpg)
 

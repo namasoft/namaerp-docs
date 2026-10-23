@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Assets Disposal Document: selling, scrapping or writing off a whole asset, the depreciation-first rule, the gain or loss arithmetic and entries, electronic sale invoices, undoing a disposal and its messages."
 entities: [FADisposalDocument]
 menu: Assets → Documents → Fixed assets disposal document
 ---

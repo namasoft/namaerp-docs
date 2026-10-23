@@ -37,13 +37,15 @@ Automatically generates control journal entries for Receipt and Payment Vouchers
 
 ### Parameter 1: Debit Side Account Type (Required)
 - **Type:** Text
-- **Purpose:** Defines subsidiary account type for debit side
-- **Examples:** `MainAccount`, `ReceivableAccount`
+- **Purpose:** Which account of the voucher's related subsidiary receives the debit line
+- **Examples:** `MainAccount`, `Account1` … `Account20`
 
 ### Parameter 2: Credit Side Account Type (Required)
 - **Type:** Text
-- **Purpose:** Defines subsidiary account type for credit side
-- **Examples:** `MainAccount`, `PayableAccount`
+- **Purpose:** Which account of the voucher's related subsidiary receives the credit line
+- **Examples:** `MainAccount`, `Account1` … `Account20`
+
+The parameters have no titles on the entity flow line; enter the values in Parameter 1 and Parameter 2.
 
 ## Database Tables Affected
 

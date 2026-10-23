@@ -1,3 +1,6 @@
+---
+description: "Overview of the Service Center job order cycle from service request and job estimation through job order, closing, customer, insurance and warranty invoices and gate pass, and which documents need a term."
+---
 # Job Order Cycle Overview
 
 A car turns into the service centre at Al-Sahra Motors on a March morning. Two days later it drives

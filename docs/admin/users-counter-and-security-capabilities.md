@@ -1,4 +1,5 @@
 ---
+description: "How the Users Counter screen limits concurrent sign-ins for a group of users, and how Capability Types create custom permissions attached to profiles, users, records, reports and price lines."
 entities: [UsersCounter, SecurityCapability]
 ---
 # Users Counter and Capability Types
@@ -88,7 +89,7 @@ This is the use that support meets most often. A user who has **Can Change Capab
 A worked example: the board's three supplier contracts must stay hidden from the purchasing team. Create the Capability Type *Board Confidential*. On each contract, choose **Change Capabilities** and set **View Capability** to it. Then add a Custom Capabilities line for *Board Confidential* to the board members' profile. Purchasing staff keep their normal rights on every other contract, and those three are refused to them by name.
 
 ::: info SYSTEMREPORTS is reserved
-The capability with the code `SYSTEMREPORTS` (*System Reports*) is created by the system, and it is what the **View System Reports** flag on a security profile grants. You cannot create a capability with that code yourself, or save one under it. Any attempt is refused with *You can not create security capability SYSTEMREPORTS*.
+The capability with the code `SYSTEMREPORTS` (*System Reports*) is created by the system, and it is what the **View System Reports** flag on a security profile grants. That flag is hidden from the Security Profile screen on purpose; [Fields hidden on purpose](/platform/security/security-profiles#Fields-Hidden-on-Purpose) shows how to reveal it with a Screen Modifier. You cannot create a capability with that code yourself, or save one under it. Any attempt is refused with *You can not create security capability SYSTEMREPORTS*.
 :::
 
 ![The Change Capabilities dialog on a customer](../ar/admin/images/administration/change-capabilities-dialog-en.png)

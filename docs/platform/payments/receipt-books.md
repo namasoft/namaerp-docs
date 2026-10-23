@@ -26,12 +26,10 @@ The **Automatic Coding** group (التكويد الآلي) decides the receipt n
 
 The **Name Auto Coding** group (التكويد الآلي للإسم) works the same way for the receipts' names. Leave it empty if the code is enough.
 
-In both groups only the prefix, suffix length and first number matter. The fourth field, **Use Next Real Number For Drafts**, has no effect on generated receipts.
-
 Save the book, then press **Generate Receipt Papers** (إنشاء أوراق الدفتر). The system creates one Receipt Paper per leaf. Each paper copies the book's collector, document type, commercial-papers setting and dimensions. The papers appear on the book's **Receipt Papers** tab (إيصالات), and each one shows the document it was later used in.
 
 ::: warning Generate works once per book
-Generating is refused while the book already has any papers, with *To generate new receipt papers ,it is a must to delete old papers*. A printed pad is a fixed set of leaves anyway, so a new pad gets a new book. To start the same book again, for example because the count or numbering was wrong, press **Delete Old Receipt Papers Of** (حذف اوراق الدفترالقديمه) first. That works only while none of the papers has been used.
+Generating is refused while the book already has any papers, with *To generate new receipt papers, delete the old papers first*. A printed pad is a fixed set of leaves anyway, so a new pad gets a new book. To start the same book again, for example because the count or numbering was wrong, press **Delete Old Receipt Papers Of** (حذف اوراق الدفترالقديمه) first. That works only while none of the papers has been used.
 :::
 
 You can also add a single leaf by hand on the **Receipt Paper** screen by naming its **Receipt Book**. The book's counts are updated in the same way.

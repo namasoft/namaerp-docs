@@ -1,3 +1,6 @@
+---
+description: "Webinar summary: the new interface (menu, list views, user settings, mobile, chat, announcements, data-entry grids, dashboards) and connecting AI agents to Nama through MCP."
+---
 # Nama ERP's New UI and AI Integration Through MCP
 
 [Watch the full webinar on YouTube](https://www.youtube.com/watch?v=QTjJ3E88kX8)

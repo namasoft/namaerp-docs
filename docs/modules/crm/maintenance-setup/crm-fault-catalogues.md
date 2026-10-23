@@ -1,4 +1,5 @@
 ---
+description: "The maintenance fault files: Dysfunction (standard diagnosis, remedy and parts), Maintenance Trouble Description, Maintenance Trouble Level and Maintenance Notice Category."
 entities: [MnDysfunction, MnTroubleLevel, MnTroubleDescription, MnNoticeCategory]
 ---
 # Fault Catalogues
@@ -59,13 +60,9 @@ These two are deliberately thin — code, names, and a single **العميل / C
 
 They are picked on the headers of maintenance orders, notices and execution sheets, and they can also be listed on the terms grid of a contract, a sales quotation or a sales order.
 
-There is one piece of genuine behaviour: **on a notice, the Trouble Level lookup is restricted to the levels listed in the selected contract's terms.** If the Marina Plaza contract's terms grid lists only Medium and High, those are the only two levels the notice offers.
+**On a notice, the Trouble Level and Trouble Description lookups are restricted to the rows listed in the selected contract's terms.** If the Marina Plaza contract's terms grid lists only Medium and High, those are the only two levels the notice offers. Picking a level fills the matching trouble description, response time and remarks from that row, and picking a description fills the level the same way.
 
-::: warning A trouble level does not create a service level
-The contract's terms grid pairs each trouble level with a response time, which makes it look like a service-level agreement. Nothing reads it. No clock starts, no due date is set, no escalation happens and no report compares a response time against a promised one — there is no scheduler, alarm or notification anywhere in this module.
-
-Trouble Level is a priority label that helps a human decide what to do first. Treat it as exactly that.
-:::
+Trouble Level is a priority label that helps the team decide what to do first, and the response time it brings onto the notice is the one the contract promises for that level.
 
 ## Notice Category
 

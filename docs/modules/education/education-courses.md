@@ -1,4 +1,5 @@
 ---
+description: "The Education Course Definition (catalogue entry) and Course (a running intake with dates, lecturers and subjects) screens, and how a course's sales price is set."
 entities: [EDCourse, EDCourseDefinition, EDMainLevel, EDSubLevel]
 ---
 # Course Definitions and Courses

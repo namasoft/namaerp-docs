@@ -1,10 +1,13 @@
 ---
+description: "The Security Profile Transfer document that gives a stand-in another user's permissions or an extra security profile for a date range, how the permissions combine, and where to see a user's delegations."
 entities: [SecurityProfileTransfer]
 menu: Administration → Security → Security Profile Transfer
 ---
 # Temporary Additional Permissions (Delegation)
 
-The purchasing manager is on two weeks' leave, and purchase order approvals must keep flowing. The wrong solution — sharing the manager's password or permanently upgrading the stand-in's security profile and forgetting to revert it — is common enough to deserve a better alternative. The right answer in Nama is the **Temporary Additional Permissions (Security Profile Transfer)** document: a tracked, time-bounded delegation that is added on top of the stand-in's existing permissions and then expires on its own.
+The purchasing manager is on two weeks' leave, and the stand-in has to open the purchasing screens, reports and supplier records that only the manager's security profile allows. The wrong solution — sharing the manager's password or permanently upgrading the stand-in's security profile and forgetting to revert it — is common enough to deserve a better alternative. The right answer in Nama is the **Temporary Additional Permissions (Security Profile Transfer)** document: a tracked, time-bounded delegation that is added on top of the stand-in's existing permissions and then expires on its own.
+
+This document hands over **permissions** only. It does not send the manager's pending approvals to the stand-in; that is the job of the **Delegation** document — see [Delegation: covering for someone who is away](/platform/approvals/responsibilities-and-delegation#Delegation-covering-for-someone-who-is-away). The two are often used together.
 
 **Path**: Administration > Security > Security Profile Transfer
 

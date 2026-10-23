@@ -1,3 +1,6 @@
+---
+description: "The core ideas behind Nama ERP for new support staff: one database, master files versus documents, modules and the platform, and the document lifecycle from draft to commit, revision and deletion."
+---
 # What is Nama ERP
 
 If you have just been handed a login and told to support Nama ERP, the honest first problem is not
@@ -143,8 +146,9 @@ Two things deliberately freeze a committed document:
 - **Revising** stamps it as checked by a named person on a date and locks it — see
   [Revise and unrevise](/platform/governance/revise-and-unrevise). A revised document cannot be edited, deleted or
   cancelled until someone unrevises it.
-- **Printing and approval** can freeze it too, if the security profile says so: *Prevent Edit/Delete
-  After Print* and *Prevent Edit/Delete After Approval* are exactly what they sound like.
+- **Printing and approval** can freeze it too, if the security profile says so: *Prevent Edit After
+  Print*, *Prevent Delete After Print*, *Prevent Edit After Approval* and *Prevent Delete After Approval*
+  are four separate columns, and each does exactly what it says.
 
 ### Taking a committed document back
 

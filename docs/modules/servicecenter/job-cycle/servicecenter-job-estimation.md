@@ -61,8 +61,8 @@ customer, the insurer, the warranty provider and the company itself. The full ru
 [Who Pays for What](/modules/servicecenter/job-cycle/servicecenter-payer-split.md); for this
 estimate the split works out at 695 / 60 / 2,400 / 60.
 
-The third grid, **Resources** (موارد التشغيل), lists the machines a task needs. It is descriptive:
-nothing schedules against it.
+The third grid, **Resources** (موارد التشغيل), lists the machines a task needs, so the estimate
+shows what the job will occupy.
 
 ## The estimation checks nothing
 
@@ -101,16 +101,10 @@ It has the same header and the same three grids, plus one required field pointin
 it relates to. You raise `SCJEU-2026-0119`, point it at `SCJE-2026-0455`, and price the revised job
 on it.
 
-::: warning It is not an amendment and not a supersede
-The document is called an update, but it **does nothing at all to the estimation it references**.
-The original keeps its own lines, its own prices and its own totals. It is not locked, not versioned,
-not marked as revised, and there is no indication anywhere on it that a revision exists until a job
-order is eventually built and flips its status.
-
-So the honest mental model is: two estimates side by side, the second one carrying a pointer to the
-first. If your process needs the superseded quote to be visibly dead, you have to do that yourself —
-by cancelling the original, or by a naming convention your staff follows.
-:::
+Think of it as two estimates side by side, the second one carrying a pointer to the first. The
+original keeps its own lines, prices and totals; it moves on only when a job order is eventually built
+from the revision. If your process needs the superseded quote marked as such, cancel the original or
+use a naming convention your staff follows.
 
 Its practical purpose is to be the *From Document* of the job order after the customer approves the
 revised quote. When that job order is committed, both the original estimation **and** the original

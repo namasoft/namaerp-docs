@@ -1,4 +1,5 @@
 ---
+description: "The Tour document: its header, filling a tour from a tour program, its three grids, status, checks on commit and creating tourism service purchase orders."
 entities: [TRTour]
 menu: Travel → Documents → Tour
 ---
@@ -43,7 +44,7 @@ The one bridge between the halves is a button, and it is described at the end of
 | **Term** (توجيه المستند) | The [document term](./travel-document-terms). Fill it in — the purchase-order button will not run without one |
 | **Issue Date** (تاريخ التحرير) / **Value Date** (التاريخ الفعلي) | The document dates. Both are carried onto any purchase orders the tour generates |
 | **Fiscal Period** (الفترة) | The period the document belongs to |
-| **Status** (الحالة) | Initial, In Progress, Finished, Canceled — informational, see below |
+| **Status** (الحالة) | Initial, In Progress, Finished, Canceled — a label you keep, see below |
 | **Tour Guide** (المرشد السياحي) | The guide running the trip |
 | **Tour Leader** (قائد الرحلة) | The employee leading it |
 | **Tour Operator** (منظم الرحلة) | The employee who owns the file. A new tour starts with the employee linked to the user creating it |
@@ -251,16 +252,15 @@ other. See [Hotel & Restaurant Vouchers](./travel-vouchers) for what the voucher
 
 ## Status and Situation
 
-Two pick-lists appear on the tour, and both are **informational labels the system does not act on**.
+Two pick-lists appear on the tour, and both are **labels you keep for follow-up and reporting**.
 
-**Status** (الحالة) on the header — **Initial**, **In Progress**, **Finished**, **Canceled**.
-Nothing is blocked by it, nothing is triggered by it, and no rule stops you moving from any value
-to any other. It is copied from the program when you pick one.
+**Status** (الحالة) on the header — **Initial**, **In Progress**, **Finished**, **Canceled**. You
+can move it from any value to any other. It is copied from the program when you pick one.
 
 **Situation** (الموقف) on accommodation and flight lines — **OK**, **RQ**, **WL**, the familiar
-confirmed / on request / waitlisted shorthand of the trade. Again, purely descriptive.
+confirmed / on request / waitlisted shorthand of the trade.
 
-Because nothing depends on them, they are yours to use as reporting and follow-up tools. Agree one
+Use them as reporting and follow-up tools. Agree one
 meaning across the office, keep them current, then filter the tour list by status to see this
 month's live files, or scan a tour for lines still sitting at `RQ` before the ticketing deadline
 passes.

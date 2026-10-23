@@ -1,4 +1,5 @@
 ---
+description: "The Inspection Point, Inspection Template and Product Inspection Document used to record a vehicle's condition at reception, what a completed inspection does, and its term settings."
 entities: [SrvCInspectionDoc, SrvCInspectionTemplate, SrvCInspectionPoint]
 menu: Service Center → Documents → Product Inspection Document
 ---
@@ -145,8 +146,7 @@ Al-Sahra's `SCJO-2026-0417` was built exactly that way: the five tasks were ente
 after reading sheet `SCID-2026-0623`.
 :::
 
-It is not entirely inert, though. Three real things happen on commit, and they are worth configuring
-deliberately.
+Three things do happen on commit, and they are worth configuring deliberately.
 
 **The odometer is checked.** If you fill the current odometer and its date, and that date is on or
 after the vehicle's own last reading date, then the reading must not be lower than the vehicle's

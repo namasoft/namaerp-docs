@@ -1,6 +1,6 @@
 ---
 entities: [CRTNOrder, CRTNMaterialPlanning, CRTNMaterialIssue]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات مستندات الكرتون

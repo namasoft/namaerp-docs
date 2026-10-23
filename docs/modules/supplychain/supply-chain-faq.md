@@ -1,6 +1,6 @@
 # FAQ — Distribution, Warehousing, Sales & Purchasing Module
 
-Here is a professionally revised version of the content, with all important information preserved:
+Answers to questions support often gets about stock, sales and purchasing: capping quantities, tying items to warehouses, which price an invoice picks, costing bundles and purchase returns, and the three kinds of stock transfer.
 
 ---
 

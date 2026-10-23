@@ -1,8 +1,11 @@
+---
+description: "How Nama ERP is deployed and run: the standard single-server topology, what to build, network ports, where data lives, backup and recovery, availability, upgrades and multi-site setups."
+---
 # Infrastructure Architecture
 
 This page answers the question a systems administrator actually needs answered: what has to be built, opened, backed up and watched in order to run Nama ERP.
 
-The short version is reassuringly small. Nama ERP needs one Windows server running Apache Tomcat and SQL Server, a folder for attachments, a backup destination, and — if users work from outside the office — a domain name and two open ports. Most installations, including large ones, never grow beyond that.
+The short version is reassuringly small. Nama ERP needs one Windows server running Apache Tomcat and SQL Server, a backup destination, a folder for attachments if you choose to keep them outside the database, and — if users work from outside the office — a domain name and two open ports. Most installations, including large ones, never grow beyond that.
 
 ## The standard topology
 
@@ -78,7 +81,7 @@ Nama ERP keeps data in three places, and a complete recovery plan has to account
 
 **The database** holds every record the system manages — masters, documents, configuration, screen layouts, security rules and the audit trail. It is the centre of gravity; restore it and you have the system back.
 
-**The attachments folder** holds files users attach to records: scanned documents, contracts, photographs. It is an ordinary folder on disk, and its location is a server setting, so it can be placed on whichever volume has room. Because these files are *not* inside the database, they need to be in the backup plan explicitly — a database backup alone will not bring them back. Retention and size limits are configured in [Attachment settings](../platform/global-config/global-config-attachments.md).
+**The attachments folder** is optional. By default the files users attach to records — scanned documents, contracts, photographs — are stored inside the database. Switching on **Externalize Attachments** moves them to an ordinary folder on disk, whose location is a setting, so it can be placed on whichever volume has room. Once they are there they are *not* inside the database, so the folder needs to be in the backup plan explicitly — a database backup alone will not bring them back. Retention and size limits are configured in [Attachment settings](../platform/global-config/global-config-attachments.md).
 
 **Logs** are written to the application log on the server. They are the first place to look when something misbehaves, and they are where slow SQL statements are recorded when timing thresholds are enabled.
 
@@ -91,7 +94,7 @@ The installer configures a backup regime through SQL Server Agent, and it is wor
 - A **cleanup job** that removes older backup files, so the backup volume does not silently fill.
 - An optional **upload to cloud storage** — Google Drive, Dropbox, OneDrive or similar — which is what turns a backup into a disaster-recovery plan. A backup sitting on a second drive inside the same server does not survive the events you are insuring against.
 
-Two things are worth adding to what the installer sets up. First, include the attachments folder in the off-site copy. Second, test a restore before you need one; an untested backup is a hypothesis.
+Two things are worth adding to what the installer sets up. First, if attachments are kept outside the database, include their folder in the off-site copy. Second, test a restore before you need one; an untested backup is a hypothesis.
 
 ## Availability and disaster recovery
 

@@ -1,4 +1,5 @@
 ---
+description: "The Resource Voucher, which charges machine, labour and other resource time to a production order: when it is needed beyond auto-charged operations, its header, details grid and where the cost goes."
 entities: [ResourceVoucher]
 menu: Manufacturing → Documents → Resource Voucher
 ---

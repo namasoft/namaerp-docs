@@ -204,7 +204,7 @@ In edit mode, you can:
 
 The layout designer is for Single dashboards only. Trying to open it on a Tabbed dashboard shows an error — Tabbed dashboards have no widget grid to lay out, just a list of sub-dashboards.
 
-The row and column counts themselves are not edited in the designer — they are the **Rows Count** and **Columns Count** fields on the dashboard record. Change one and everything on the dashboard resizes at once, because you have changed the scale the widget heights are measured against, not the size of a cell. Two neighbouring fields on the same screen are easy to misread: **Total Dashboard Rows Count** is a leftover the layout editor keeps for itself and has no effect on how the dashboard displays, and **Mobile Max Rows Count** applies only on phones, where the grid is abandoned entirely and widgets simply stack full-width — that field decides how many of them fit on one narrow screen.
+The row and column counts themselves are not edited in the designer — they are the **Rows Count** and **Columns Count** fields on the dashboard record. Change one and everything on the dashboard resizes at once, because you have changed the scale the widget heights are measured against, not the size of a cell. Two neighbouring fields on the same screen are easy to misread: **Total Dashboard Rows Count** is a leftover the layout editor keeps for itself and has no effect on how the dashboard displays, and **Mobile Max Rows Count** applies only on phones, where the grid is abandoned entirely and widgets simply stack full-width — that field decides how many of them fit on one narrow screen. Left empty, the dashboard decides for itself: two per screen, or the whole screen when there is only one widget.
 
 Each tab of a Tabbed dashboard divides its own height by its own row count, so tabs are tuned one at a time and a change to one never affects another.
 
@@ -417,7 +417,7 @@ Picking a ready-made period stores the period itself, not the two dates it happe
 
 Two things worth knowing while configuring one:
 
-- The cross-filter's own **Operator** is not used — the `>=` / `<=` pair is fixed.
+- The comparison is always the `>=` / `<=` pair, so there is no **Operator** to choose.
 - A **Custom WHERE Clause**, on the cross-filter or on a widget's binding, still wins: it replaces the generated pair with your own SQL, exactly as it does for an ordinary filter.
 
 ### Operators
@@ -796,7 +796,7 @@ Here's a workflow that works well:
    > "I need a sales analysis dashboard with a pie chart showing sales by customer category, a horizontal bar chart showing top 10 items, a monthly trend line chart, and a details table. All charts should be cross-filtered by branch, date range, and customer category. The pie chart should emit the customer category filter when clicked, and the bar chart should drill down to invoice details."
 
 4. Ask the AI to generate a complete import JSON file following the technical reference format
-5. Import the generated JSON into Nama ERP — you'll have a working dashboard with all the cross-filters, drill-downs, and styling ready to go
+5. Import the generated JSON into Nama ERP with **More → Import Records** (see [How to Import](/platform/bi/bi-module-technical-reference.md#How-to-Import)) — you'll have a working dashboard with all the cross-filters, drill-downs, and styling ready to go
 6. Given AI can guess table names, column names, or joins incorrectly, it is better to give it a sample query containing the columns and joins you want to use.
 7. For wizards, you can skip the sample query and instead let the AI reference [dm.namasoft.com](https://dm.namasoft.com) for property paths — the wizard resolves joins automatically from the field IDs.
 

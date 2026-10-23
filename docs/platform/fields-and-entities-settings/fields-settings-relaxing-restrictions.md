@@ -1,4 +1,5 @@
 ---
+description: "Fields and Entities Settings grids that switch off built-in checks: Allow Usage Of Prevented Records, Ignore Dimensions Consistency for Fields (and Ignore Drafts), and Public Entities."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---

@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate sales term shared by sales, initial, opening and purchase contracts, reservations, cancellations, waivers and handovers: its account blocks, income split, tax pairs and switches."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---

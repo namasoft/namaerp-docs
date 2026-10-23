@@ -69,11 +69,11 @@ The option lives on the **document term** of each spending document, so it has t
 The option's own wording mentions the analysis card, but the check it turns on applies just as much to **budget** and **contract** term lines. Ticking it to police analysis cards will also start refusing budget overruns, which is usually what you wanted — but know that it does both.
 :::
 
-### Two things not to rely on
+### Quantity limits
 
-**The companion quantity option.** Next to the cost option sits **Do Not Save If Actual Quantity Greatr Than Planned Quantity**. On budget and contract term lines it does not bite — only analysis-card lines are compared this way. If you need a quantity limit against a budget, do not expect this option to give you one.
+**The companion quantity option.** Next to the cost option sits **Do Not Save If Actual Quantity Greatr Than Planned Quantity**. It compares quantities on analysis-card lines.
 
-**A purchase order can cap quantity, though.** On the [contracting purchase order](/modules/contracting/costs/contracting-purchasing.md) term there is a third option, **Do Not Exceed Quantity** (عدم تخطي الكمية), and that one *does* work against a budget line: it compares the quantity already on order against the budget line's planned quantity and refuses the order when it would go past it. If the discipline you want is "never order more of this material than the budget planned", that is the option to tick, and the purchase order is where to tick it.
+**A purchase order caps quantity against a budget line.** On the [contracting purchase order](/modules/contracting/costs/contracting-purchasing.md) term there is a third option, **Do Not Exceed Quantity** (عدم تخطي الكمية), and that one *does* work against a budget line: it compares the quantity already on order against the budget line's planned quantity and refuses the order when it would go past it. If the discipline you want is "never order more of this material than the budget planned", that is the option to tick, and the purchase order is where to tick it.
 
 ## The tower, worked through
 

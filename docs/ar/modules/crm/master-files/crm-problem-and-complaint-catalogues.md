@@ -13,11 +13,11 @@ entities: [CRMComplaintType, CRMComplaintSource, CRMProblem, CRMProblemClassific
 للأول، وتصنيف مشكله ومشكلة شائعة للثاني.
 
 ::: info هذه الأربعة تخدم الشكاوى وحدها
-كل واحد منها تقرؤه شاشة [الشكوى](/ar/modules/crm/support/crm-complaints.md) ولا يقرؤه سواها. فـ
+كل واحد منها يُختار في شاشة [الشكوى](/ar/modules/crm/support/crm-complaints.md) وحدها. فـ
 [طلب الدعم](/ar/modules/crm/support/crm-trouble-tickets.md) لا كتالوج مشكلات له إطلاقاً، ونصف صيانة
 الآلات من الوحدة يحتفظ بمفرداته **الخاصة** للأعطال — الأعطال ومستويات الصعوبة وأوصاف الأعطال — في
-[كتالوجات الأعطال](/ar/modules/crm/maintenance-setup/crm-fault-catalogues.md). والمجموعتان لا تقرأ
-إحداهما الأخرى. فالمشكلة التي تعرّفها هنا لا يمكن اختيارها على أمر صيانة، والعطل المعرّف هناك لا يمكن
+[كتالوجات الأعطال](/ar/modules/crm/maintenance-setup/crm-fault-catalogues.md). والمجموعتان
+منفصلتان. فالمشكلة التي تعرّفها هنا لا يمكن اختيارها على أمر صيانة، والعطل المعرّف هناك لا يمكن
 اختياره على شكوى. فإن احتاج عملك الاثنين فتوقّع صيانة الاثنين.
 :::
 

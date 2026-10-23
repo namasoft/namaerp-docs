@@ -1,3 +1,6 @@
+---
+description: "Video summary: designing a Report Wizard print template for a document with several grids, using the multi-cell grid layout, merged cells, notes, signatures and an employee custody example."
+---
 # Creating a Print Template for a Filter Document Screen
 
 [Watch the video](https://youtu.be/q16A05lIC5I)

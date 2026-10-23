@@ -1,6 +1,6 @@
 ---
 entities: [EltezamConfiguration]
-menu: integrations ← الملفات ← إعدادات خدمة التزام
+menu: التكاملات ← الملفات ← إعدادات خدمة التزام
 ---
 # إعداد التزام
 

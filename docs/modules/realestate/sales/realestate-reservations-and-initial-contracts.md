@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate reservation document and its statuses, turning it into a contract, the reservation cancellation, and the initial (preliminary) sales contract that locks a unit with no accounting entry."
 entities: [REReservationDoc, REReservationDocCancel, REInitialSalesContract]
 ---
 # Reservations and Initial Sales Contracts

@@ -1,4 +1,5 @@
 ---
+description: "How Real Estate document terms decide the accounts of each document: accounting sides, debit and credit pairs, routing by installment type in the Configuration List, and the tax policy."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -187,7 +188,7 @@ The grid has the same columns in both places:
 |---|---|
 | Type | Applies the row only to installments of this type |
 | Unit Model | Applies the row only to units built from this model |
-| Effective From / Effective To | The date window in which the row applies |
+| Effective From / Effective To | The date window in which the row applies, compared with the document's value date — except on a rent contract, where each installment is matched by its own due date, so a rate change in the middle of a lease applies only to the installments due after it. The same rule picks the unit's or the buyer's tax plan |
 | Entity Type / Entity Type List | Restricts the row to one document type, or to a list of them |
 | Tax 1 / Tax 2 | The two percentages |
 | Tax 1 Is Deduction / Tax 2 Is Deduction | Marks the tax as withheld from the amount rather than added to it |

@@ -86,12 +86,12 @@ Do this before you raise a single order:
 
 ## Visit Status
 
-The second file looks like the first one's twin: code, names, and a **نوع الزيارة / Visit Type** drop-down offering Daily, Weekly, Bimonthly, Monthly, Quarterly, Biannual and Yearly. Al Nokhba keeps one record, `MVS-DONE` تمت الزيارة / Visit Completed, and puts it on maintenance visits as they are logged.
+The second file is a short list of labels: code and names. Al Nokhba keeps one record, `MVS-DONE` تمت الزيارة / Visit Completed, and puts it on maintenance visits as they are logged.
 
-::: warning Visit Status is a label and nothing more
-Unlike the order status, **the visit status drives nothing at all**. Nothing reads the status you put on a [maintenance visit](/modules/crm/maintenance-cycle/crm-maintenance-visits) — no total, no counter, no filterable state, no downstream document. The Visit Type drop-down on this file is not read either.
+::: tip Visit Status is a label
+Unlike the order status, the visit status carries no built-in meaning. It is a label you put on a [maintenance visit](/modules/crm/maintenance-cycle/crm-maintenance-visits) to show how it went, and you can filter and report on it in the visit list.
 
-So keep the list very short. One or two records — "Visit Completed", perhaps "Visit Not Possible" — are enough to make a visit list readable when somebody scans it. Anything more elaborate is effort spent on a label.
+So keep the list very short. One or two records — "Visit Completed", perhaps "Visit Not Possible" — are enough to make a visit list readable when somebody scans it.
 :::
 
 Neither file has any accounting or inventory effect, generates nothing, and validates nothing beyond the ordinary master-file rules. There are, as everywhere in this module, **no reports and no dashboards** — to see how many orders sit on hold, filter the order list screen and export it.

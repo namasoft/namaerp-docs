@@ -1,3 +1,6 @@
+---
+description: "Video summary, HR payroll course part 4: attendance and departure, the Timer, shifts, leave, the mobile attendance app, importing fingerprint data from Excel and handling double shifts."
+---
 # Detailed Explanation of the Payroll System in Nama ERP - 4
 
 # Attendance and Departure System in Detail

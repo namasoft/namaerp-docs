@@ -1,6 +1,6 @@
 ---
 entities: [RawMaterialIssue, RawMaterialReturn, RawMaterialIssueReq, RawMaterialReturnReq, ManufacturingStockTaking]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات مستندات المواد الخام

@@ -89,8 +89,7 @@ In either mode, an empty book or term means **no stock document is generated at 
 previously generated one is deleted. The issue still commits, still prices, still writes the parts
 ledger and still feeds the invoice. The parts simply never leave the store in inventory terms.
 
-Un-ticking *أنشاء مستندات تلقائيا / Generate Document(s)* does **not** stop generation on this
-document; it is ignored here. Clearing the book or the term is the only control.
+To stop this document generating a stock document, clear the book or the term.
 :::
 
 ::: tip Different warehouses, several stock issues
@@ -141,10 +140,9 @@ not planned for that task, or a quantity that takes the cumulative issued past t
 are described on the
 [overview page](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md).
 
-::: warning Deletion is not protected on this document
-A **committed** spare parts issue can be deleted even after its job order has been closed and
-invoiced — the check that refuses this on the return document was overridden away here. Deleting one
-silently changes the cost of a job that has already been billed.
+::: warning Who may delete a committed issue
+A **committed** spare parts issue can be deleted after its job order has been closed and invoiced,
+and deleting one changes the cost of a job that has already been billed.
 
 Restrict the delete permission on the spare parts issue to a small number of supervisors, and correct
 mistakes with a [return](/modules/servicecenter/spare-parts/servicecenter-spare-parts-return.md)

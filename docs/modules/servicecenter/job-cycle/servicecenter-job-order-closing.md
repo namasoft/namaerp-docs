@@ -1,4 +1,5 @@
 ---
+description: "The Job Order Closing document: what it totals per payer, the journal entry and stock issue it creates, the next-visit date, what it refuses, its messages and how to undo a closing."
 entities: [SrvCJobOrderClosing]
 menu: Service Center → Documents → Job Order Closing
 ---

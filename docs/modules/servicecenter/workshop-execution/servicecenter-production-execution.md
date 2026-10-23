@@ -71,9 +71,9 @@ computed net time, the status and remarks. Above the grid sit **المهمه ا�
 **الفني الحالي / Current Technician**, **المهمه التالية / Next Operation**, **الفني التالي / Next
 Technician** and a **Unified Technician** field.
 
-::: warning Two labels that mislead
+::: warning Two fields to read carefully
 The two fields the English screen calls *Current Operation* and *Next Operation* pick from the
-**task** list, not from services — the Arabic labels (**المهمه**) are the correct ones.
+**task** list, not from services — the Arabic labels read **المهمه** (task).
 
 **Unified Technician** is not a default. Fill it and, on save, it **overwrites the technician on
 every line of the document**. Use it when one person genuinely did everything, as Turki did on
@@ -107,8 +107,8 @@ A normal day at `WC-MECH` runs like this.
    **إعاده فتح أمر الشغل / Re Open The Job Order** deletes that closing again. Save the execution document
    before pressing either.
 
-The three **change status** buttons — *Under Processing*, *Cancelled*, *Finished* — do nothing more
-than append one row to the Job Orders grid, for the job order in the header, with that status and
+The three **change status** buttons — *Under Processing*, *Cancelled*, *Finished* — each append one
+row to the Job Orders grid, for the job order in the header, with that status and
 the current moment as its creation date. They are how you correct a status log that has drifted.
 
 *Collect Job Orders* loads only orders that are *Under Processing* or *Not Started*, whatever you
@@ -120,13 +120,19 @@ is therefore not loaded: resume it first, then collect.
 
 **No technician may be in two places at once.** If two lines share a technician and their
 from/to intervals overlap — whether both lines are on this document or one of them is on another
-execution document for the same dates — the save is refused, naming the interval. This is the
-module's one genuine integrity check on recorded time, and it is worth the discipline it imposes.
+execution document for the same dates — the save is refused, naming the interval:
+
+*There is time overlapping between this line and another line time interval from {0} to {1}* — «هناك تداخل في الوقت بين هذا السطر وسطر اخر يبدا من {0} الي {1}»
+
+This is the module's one genuine integrity check on recorded time, and it is worth the discipline it
+imposes. A workshop whose technicians genuinely work two jobs side by side ticks **Allow Time
+Overlap** on the [Job Order Execution term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md#The-Job-Order-Execution-term),
+and the check is skipped for documents of that term.
 
 **Only work that was planned may be clocked.** Every detail line's job order must appear in the Job
-Orders grid, and every detail line's task must exist on that job order's own operations grid. Neither
-message is a defect: they mean somebody is recording work the order does not contain, which is a
-conversation to have before it becomes an invoice.
+Orders grid, and every detail line's task must exist on that job order's own operations grid. Either
+message means somebody is recording work the order does not contain, which is a conversation to have
+before it becomes an invoice.
 
 **Finished orders are protected.** An order that is already *Closed*, or that already has a customer,
 insurance or warranty invoice, cannot appear on a new execution document at all.
@@ -137,8 +143,7 @@ Finished* is switched on, a finished line is read-only in every column.
 
 One further check is optional. Tick **preventing more than one unfinished task per technician** on
 this document's term and a save is refused when a technician would be left with two open tasks on the
-same day. Treat it as a helpful nudge rather than a guarantee: it stops applying to the rest of the
-document once it meets one open line with no technician named.
+same day.
 
 ::: warning The Term field looks optional — on this document it is not
 The document saves happily with **توجيه المستند / Term** left empty. But an empty term silently
@@ -197,22 +202,16 @@ without a prompt and without a message.
 the Operations tab — never both on the same document.
 :::
 
-::: danger Clock one service per document on the Operations tab
-When a single operations row is exploded into task lines, the chain is built correctly: the first
-task starts when the service started, the last ends when it ended, and the middle ones divide the
-elapsed time in proportion to their standard hours.
-
-With a **second** operations row on the same document, the task lines of the second service take
-their start times from the tasks of the *first* one. The resulting net times are wrong and may even
-trip the overlap check. Raise one execution document per service you clock this way.
+::: tip Clock one service per document on the Operations tab
+When an operations row is exploded into task lines, the first task starts when the service started,
+the last ends when it ended, and the middle ones divide the elapsed time in proportion to their
+standard hours. Raise one execution document per service you clock this way.
 :::
 
 ## Choosing the technician
 
 By default the module hides from the technician lookups anybody who currently has an execution line
-with no finish stamp — a reasonable way of steering a foreman towards someone who is free. In a large
-installation the underlying look-up is capped, so a genuinely busy technician can still appear in the
-list; the setting is an aid, not a lock. If you would rather see everybody, switch
+with no finish stamp — a reasonable way of steering a foreman towards someone who is free. If you would rather see everybody, switch
 *Do Not Show Technicians Who Have Open Task* off in the Service Center settings.
 
 ## What the document does — and does not — produce
@@ -232,13 +231,10 @@ order closing, and only when you press the button.
 on the same `srvcenter` licence. It is a plain capture sheet: one grid of employee, time from, time
 to, and the resulting total time, with the document's value date used for any line you leave undated.
 
-It is honest to say what it is for, which is your own record-keeping. **Nothing reads it.** It is not
-HR attendance, it does not feed payroll, it is never compared with the times clocked on an execution
-document, and no report ships against it. If you need technician attendance to drive anything, it has
-to be captured in the HR module instead.
+It is the workshop's own record of who was present and for how long. Attendance that feeds payroll
+is captured in the HR module.
 
-::: warning Never enter a shift that crosses midnight
-A line from 22:00 to 06:00 is treated as both times on the *same* day, so it stores a negative total
-of −16 hours — and the document saves without complaint, because this screen validates nothing at
-all. Split a night shift into two lines on two days: 22:00–23:59 and 00:00–06:00.
+::: tip Enter a night shift as two lines
+Both times on a line belong to the same day. Enter a shift that crosses midnight as two lines on two
+days: 22:00–23:59 and 00:00–06:00.
 :::

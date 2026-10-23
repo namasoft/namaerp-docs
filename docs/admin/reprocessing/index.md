@@ -42,6 +42,40 @@ If step 1 does not explain the symptom, that is the moment to escalate rather th
 
 Many tools on these pages are started from a link rather than a menu. Each one is shown as a small form: an input for each of the tool's parameters, the finished link below them, and two buttons beside it — **copy**, which copies the link exactly as shown, and **show server URL** (the eye icon), which opens a box where you type the address of the customer's server. The link is rebuilt as you type, and the address you enter is remembered by your browser for every launcher link on the site, so you set it once per server rather than once per page.
 
+### Building a launcher link by hand
+
+In the page's markdown source each launcher is a `<UtilityLinkBuilder>` tag with a `className`, sometimes a `:params` list, and on some a `:gui="true"`. The link it shows is always built the same way, so you can write it yourself from the source:
+
+```text
+<server address>/utils?util=<className>-<value 1>,<value 2>,<id>=<value>&gui=true
+```
+
+- **Server address** — the customer's ERP address up to and including `/erp`, for example `http://localhost:8080/erp` on the server itself.
+- **`className`** — copied exactly as it is in the tag.
+- **Values** — a `-`, then the values of the `:params` list separated by commas: first every entry that has no `id`, as its value alone, in the order listed; then every entry that has an `id`, as `id=value`. Use the `default` value unless the customer's case needs another one. An empty value is left out, and with no values at all the `-` is left out too. Everything after that first `-` reaches the tool unchanged, so a value may contain a `-` (employee codes such as `E001-E002-E003`) but never a comma.
+- **`&gui=true`** — add it only when the tag carries `:gui="true"`.
+
+Open the link in a browser where you are logged in to that server as an administrator; the tool's answer is shown as the page.
+
+For example, the **Recommit From File** launcher on [Batch Utilities That Work From a List File](/admin/reprocessing/batch-utilities-from-file.md) is written as:
+
+```text
+className="com.namasoft.erp.gui.server.RecommitFromFile"
+:params="[
+{ title: 'Main File', default: 'e:/rc/recommit.txt' },
+{ title: 'Done File', default: 'e:/rc/done.txt' },
+{ title: 'Errors File', default: 'e:/rc/errors.txt' }
+]" :gui = "true"
+```
+
+and its link, with the default values, is:
+
+```text
+http://localhost:8080/erp/utils?util=com.namasoft.erp.gui.server.RecommitFromFile-e:/rc/recommit.txt,e:/rc/done.txt,e:/rc/errors.txt&gui=true
+```
+
+A parameter with an `id` such as `{ title: 'Types To Process File', default: 'e:/rc/toProcessTypes.txt', id:'file' }` becomes `-file=e:/rc/toProcessTypes.txt`, and a launcher with no `:params` is just `<server address>/utils?util=<className>`.
+
 ## Find the problem first
 
 <LandingGrid>

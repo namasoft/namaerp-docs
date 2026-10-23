@@ -105,6 +105,7 @@ its source, on screen; changing the grid later does not touch saved vouchers.
 | **Validate Remaining And Installments Total Equality** | `termConfig.validateInstallmentsTotal` | The instalment lines must equal the voucher total exactly. Without it they must only not exceed it. |
 | **Do Not Check Total Installments With Total Amount** | `termConfig.doNotCheckTotalInstallmentsWithTotalAmount` | Switches both instalment checks off. |
 | **Use Installment Lines For Debit Ages** | `termConfig.useInstallmentLinesForDebitAges` | Each instalment line settles the debt age of its document. |
+| **Collection Discount Debit** / **Collection Discount Credit** *(Collection Discount group)* | `termConfig.collectionDiscountDebit`, `termConfig.collectionDiscountCredit` | Receipt and payment vouchers: book the **Collection Discount** entered on the instalment lines — one debit and one credit line for each instalment line that carries a discount. Fill both sides. |
 | **Apply Effects On Parent From Doc…** | `termConfig.applyEffectsOnParentFromDoc` | When the voucher is created from a request or order, the payment lands on the invoice behind it. |
 | **Update Remaining in RVPV Requests** | `termConfig.updateRemainingRVPVRequest` | Receipt and payment orders: the order's amount is added to the request's processed amount and taken off its remaining. |
 | **Treat in Debt Ages Similarly To** + **Make Accounting Effect Payment Or Receipt Based On Debt Ages Treatment** | `termConfig.debtAgesTreatment`, `termConfig.makeAccountingEffectPaymentOrReceiptBasedOnDebtAgesTreatment` | Bank transfer only: whether the transfer settles debt ages as a payment or as a receipt, and — with the second option — whether its entry is turned round to match. |
@@ -185,6 +186,7 @@ Messages marked *(EN)* have no Arabic text in the product and appear in English 
 
 | Message | Why | What to do |
 |---|---|---|
+| *Collection discount can not be negative* — «خصم التحصيل لا يمكن أن يكون سالبًا» | An instalment line carries a negative **Collection Discount**. | Enter the discount as a positive amount, or clear it. |
 | *First side subsidiary Must be bank account* — «الذمة يجب أن تكون حساب بنكي» | The term's source is **Bank Account** and the voucher's first side is something else — or the term has no bank account. | Fill **Bank account** on the term, or choose a bank account on the voucher. |
 | *First side subsidiary must be safe deposit* — «الذمة يجب أن تكون خزينة» | Source **Safe Deposit**, first side is not a safe. | Choose a safe. |
 | *First side subsidiary must be an employee* — «الذمة يجب ان تكون موظف» | Source **Employee** or **Current User Subsidiary**, first side is not an employee. | Choose an employee. |

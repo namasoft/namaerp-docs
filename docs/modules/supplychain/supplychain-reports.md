@@ -1,3 +1,6 @@
+---
+description: "Catalogue of the 77 system reports for inventory, purchasing, sales and point of sale: where to run them, their shared criteria conventions, and each report's code, names and purpose."
+---
 # Supply Chain and Sales Reports
 
 A document answers one question at a time: what is on this invoice, what did this receipt bring in. The

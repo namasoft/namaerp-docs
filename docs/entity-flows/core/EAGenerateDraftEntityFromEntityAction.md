@@ -9,11 +9,11 @@ entities: [EntityFlow]
 
 # EAGenerateDraftEntityFromEntityAction
 
-Please review the page at [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md)
-
 ## Overview
 
 Creates new entities from existing entities and saves them as draft documents for review. Identical to standard entity generation but saves as drafts instead of committing, allowing review before finalization.
+
+Please review the page at [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md)
 
 ## When This Action Runs
 

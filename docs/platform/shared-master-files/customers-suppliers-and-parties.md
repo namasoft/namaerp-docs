@@ -1,4 +1,5 @@
 ---
+description: "The Customer, Supplier, Contact and Third Party master files, customer credit limits, the Update Customer Information document, and customer change requests raised from the portal."
 entities: [Customer, Supplier, Contact, ThirdParty, UpdateCustomerInfo, ModifyCustomerInfoReq]
 menu: Sales → Master Files → Customer
 ---
@@ -108,8 +109,8 @@ The header fields apply to the customer as a whole:
 | **Payment Period** | The days the customer is given to pay. |
 
 Underneath, the **credit limits grid** lets you state a different ceiling per combination of
-dimensions and per currency, each row carrying its own period, limit value, currency, payment period
-and the **Forbid billing before payment** / **Forbid ordering before paying** ticks. Which dimension
+dimensions and per currency, each row carrying its own period, limit value, currency and payment
+period. Which dimension
 columns the grid offers is a
 Global Configuration choice, described under
 [credit-limit dimensions](/platform/global-config/global-config-accounting) — by default the grid
@@ -127,9 +128,8 @@ Two things happen on save, and they surprise people:
 
 ::: warning No document is blocked by these numbers on its own
 This is the important part. The credit fields are recorded, reported on and available to every other
-setting in the system — but **no shipped check reads them when an invoice or an order is saved**.
-*Forbid billing before payment* and *Forbid ordering before paying* mark a row as forbidden; they do
-not by themselves refuse anything. A customer who is 200,000 over their limit can still be invoiced.
+setting in the system — but saving an invoice or an order does not compare it with them. A customer
+who is 200,000 over their limit can still be invoiced.
 
 Blocking the invoice is a rule you add, and the tool for it is
 [Criteria Based Validation](/platform/governance/criteria-based-validation#Block-a-sale-that-exceeds-the-customers-credit-limit),
@@ -139,7 +139,8 @@ the mobile app and imports alike.
 The one credit ceiling the product does enforce by itself lives elsewhere entirely: on a **Credit
 Facility Setting**, whose own limit — and the per-supplier limits in its grid — are checked against
 the facilities still open against it, so a Credit Facility refuses to be committed once the
-outstanding total would pass them. That check never reads a customer or supplier master file.
+outstanding total would pass them. That check works from the Credit Facility Setting alone, not from
+the customer or supplier file.
 :::
 
 ## The supplier file

@@ -54,6 +54,8 @@ Each row in **Details** is one component. In the pipe-pair example above there a
 
 **Item** is the component itself — the raw material or sub-assembly being consumed.
 
+**Code**, right after it, is the quicker way to fill a row: type an item code or barcode and the row picks up the item, its first unit, and the size, colour and revision that code stands for. When the row names a **Component Class**, the codes offered are limited to items of that class. The component grid of a production order has the same column.
+
 **Item Quantity** (**Value** + **UOM**) is how much of it. Read together with the header's Qty|UOM: with Qty = 1 and a row reading `2 Each`, one finished pair consumes two insulation sleeves.
 
 **Final Quantity** is what the system will actually plan for, after the percentage columns have had their say. On a clean BOM with no waste allowance it equals Item Quantity, which is why the two columns so often look redundant — they aren't, they just agree.

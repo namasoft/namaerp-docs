@@ -1,4 +1,5 @@
 ---
+description: "The Performance and Search tab of System Settings: query time limits, per-user usage limits, and the settings that control how searching behaves."
 entities: [ConfigEntry]
 menu: Administration → Settings → System Settings
 ---

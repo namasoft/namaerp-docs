@@ -1,4 +1,5 @@
 ---
+description: "How Service Center queues work: the Queue Service Configurations and Queue Service Branch records, the ticket kiosk, display screen and advisor stations, ticket numbering and closing."
 entities: [QueueServiceConfig, QueueServiceBranch]
 ---
 # How Service Queues Work
@@ -69,7 +70,7 @@ A ticket can be closed explicitly — the advisor ends the visit, or signs out a
 
 This is worth stating flatly because the opposite is the natural guess.
 
-**The queue has no connection whatsoever to the [Service Request](/modules/servicecenter/job-cycle/servicecenter-service-request.md).** The service request is the appointment book: Fahad's visit was booked on `SCSR-2026-0881` two days earlier. That document carries no ticket fields at all, and committing it does nothing to any queue.
+**The queue is not linked to the [Service Request](/modules/servicecenter/job-cycle/servicecenter-service-request.md).** The service request is the appointment book: Fahad's visit was booked on `SCSR-2026-0881` two days earlier. That document carries no ticket fields.
 
 The link lives on the [**Job Order**](/modules/servicecenter/job-cycle/servicecenter-job-order.md). Its Basic Information group carries two fields — **Service Branch** (فرع الخدمة) and the ticket code — and when Majed raises job order `SCJO-2026-0417` for Fahad's car he picks branch `QSB-RUH` and then chooses `A014` from a suggestion list. **When that job order is committed, ticket `A014` is stamped finished and the wall display drops it.**
 
@@ -80,10 +81,6 @@ The link is covered in full, including what happens if the job order is later ca
 ## Ticket numbering, in one paragraph
 
 Each queue has a letter and a suffix length. Numbering restarts at the branch's **day start time**, and the **first customer of the day gets number 1** — printed as the letter followed by the number padded out to the suffix length, so with a suffix length of 3 the first ticket of the day is `A001` and Fahad's, later that morning, is `A014`. The **Last Number** on the queue is a hard ceiling: issue past it and the ticket is refused.
-
-::: warning The *First Number* column has no effect
-**أول رقم / First Number** on the queue grid is read by nothing. Type 100 into it and the first customer of the day still gets `A001`. Leave it alone; it is not a way to reserve a number range. Its neighbours *Last Number* and *Suffix Length* both work normally.
-:::
 
 ## Printing
 

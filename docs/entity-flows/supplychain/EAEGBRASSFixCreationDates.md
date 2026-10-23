@@ -39,9 +39,9 @@ select entityType,id from StockIssue where fromDoc_id = {id}
 
 **Parameter 4:** Flush After Each Fix (Optional) - true/false to flush after each document (default: false)
 
-**Parameter 5:** Continue on Errors (Optional) - true/false to process remaining documents if errors occur (default: false)
+**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - true/false. When true, each document is fixed in its own transaction, so an error in one document is logged and the remaining documents are still processed (default: false)
 
-**Parameter 6:** Pre-Processing Update (Optional) - SQL update query to run before fixing dates
+**Parameter 6:** Run Update Query After Selecting Entities, and Before Fix Creation Date (Optional) - SQL update query that runs after Parameter 1 has selected the documents and before their creation dates are fixed
 
 ## Database Tables Affected
 

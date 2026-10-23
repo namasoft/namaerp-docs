@@ -30,4 +30,5 @@ Reports are how you get your data back out of Nama ERP, and printed forms are ho
 
 <LandingGrid>
   <LandingCard icon="🔧" title="NamaRep Expression Reference" link="/platform/reports/reports-namarep-reference.md" details="The expression catalogue for report authors: names, dates, numbers and tafqeet, prices, links, security and QR codes." />
+  <LandingCard icon="🗄️" title="Querying Nama Tables with SQL" link="/platform/reports/querying-nama-tables.md" details="The rules every report, widget and approval query needs: committed documents only, header joins, where amounts and quantities live." />
 </LandingGrid>

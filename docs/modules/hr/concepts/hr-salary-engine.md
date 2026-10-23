@@ -1,3 +1,6 @@
+---
+description: "How Nama calculates salary end to end: salary component types, fixed values and formulas, assigning components and salary structures, attendance and performance inputs, and generating the salary sheet."
+---
 # How Salary Is Calculated
 
 A payslip in Nama is never typed in by hand — it is **computed** from building blocks you set up once and reuse every month. Understanding how those blocks fit together is the key to trusting the numbers, and to fixing them when a figure comes out wrong. This page walks the whole pipeline end to end; the detailed screens each have their own page, linked as we go.
@@ -26,7 +29,7 @@ Everything starts with a **Salary Component Type** (نوع المفرد): the *c
 
 - **Component order** — the sequence in which components are calculated. This matters enormously: a component that is a *percentage of another* must be calculated **after** the thing it depends on. Tax computed before the allowances it should tax will silently come out as zero.
 
-The type also decides whether the amount counts toward the tax base and the insurance base, and a **Salary Component Group** (مجموعة مفردات) can bundle related components for organisation only — it has no effect on the maths.
+The type also decides whether the amount counts toward the tax base and the insurance base, and a **Salary Component Group** (مجموعة مفردات) bundles related components into one named set, so that a calculation formula, a vacation type's deduction lines or a loan type's salary conditions can refer to all of them in one step.
 
 ## Step 2 — Price each component
 

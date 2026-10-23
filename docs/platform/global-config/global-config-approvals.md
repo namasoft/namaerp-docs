@@ -1,4 +1,5 @@
 ---
+description: "The Approvals and Revise tab of System Settings: the approval engine switch and which approver buttons show, the Revise settings, and record version history."
 entities: [ConfigEntry]
 menu: Administration → Settings → System Settings
 ---
@@ -19,11 +20,11 @@ The options that follow decide which buttons an approver actually sees. Every on
 
 **Use Return Decision** `value.info.useReturnDecision` *(default on)* — Shows **Return**, which sends the document back to its author to be fixed and resubmitted, rather than killing it.
 
-**Use Escalate to Supervisor** `value.info.useEscalateToSupervisor` *(default on)* — Shows **Escalate to Supervisor**, passing the decision up the org chart.
+**Use Escalate To Supervisor** `value.info.useEscalateToSupervisor` *(default on)* — Shows **Escalate To Supervisor**, passing the decision up the org chart.
 
 **Use Escalate to Direct Supervisor** `value.info.useEscalateToDirectSupervisor` *(default on)* — Shows **Escalate to Direct Supervisor**, which passes the decision to the approver's *direct* supervisor instead. The two escalation decisions read two different fields on the employee record, so where a person's direct supervisor is not the manager approvals escalate to, you can offer both and let the approver pick. If the employee has neither person recorded the decision is refused with a message saying so, which is the usual reason the button looks like it does nothing.
 
-**Use Escalate to Specific Employee** `value.info.useEscalateToSpecificEmployee` *(default on)* — Shows **Escalate to Employee**, letting the approver choose who should decide instead.
+**Use Escalate To Specific Employee** `value.info.useEscalateToSpecificEmployee` *(default on)* — Shows **Escalate To Specific Employee**, letting the approver choose who should decide instead.
 
 **Use Return to Previous Step** `value.info.useReturnToPreviousStep` *(default on)* — Shows **Return to Previous Step**, sending the document back one stage in the approval chain rather than all the way to its author.
 
@@ -33,7 +34,7 @@ The options that follow decide which buttons an approver actually sees. Every on
 
 **Prevent Update of Document and Related Documents in Approval** `value.info.preventUpdateDocAndRelatedDocInApproval` — Locks the document *and the documents linked to it* while it waits for a decision. Without this, an author can quietly change what the approver is looking at.
 
-**Allow Approvals on Documents Update** `value.info.allowApprovalsOnDocumentsUpdate` — Re-runs the approval rules when an already-approved document is edited, so a material change goes back through the chain instead of inheriting the old approval.
+**Allow Approvals On Documents Update** `value.info.allowApprovalsOnDocumentsUpdate` — Lets approval definitions with **Use With Update** apply to documents. While it is off, editing a saved document never starts an approval, and a definition for a document type with **Use With Update** ticked is refused when you save it; update approvals then work on master files only. See [An update approval on a document will not save](/platform/approvals/approvals-system#An-update-approval-on-a-document-will-not-save).
 
 **Add Approval Steps to Action History** `value.info.addApprovalStepsToActionHistory` — Writes each approval step into the record's action history, giving a permanent audit trail of who decided what and when. Worth the small storage cost anywhere approvals carry weight.
 
@@ -51,6 +52,6 @@ Revise is lighter than approval: no routing, no decisions, just a required numbe
 
 **Track Records Versions** `value.trackVersionsEnabled` *(default on)* — Keeps a full version history of records, so you can see what a document looked like before an edit and who changed it.
 
-::: tip History costs storage, not speed
-Version tracking writes a copy of the record on change. On high-volume documents that adds up over years, which is why the per-entity override exists — keep full history on the records an auditor will ask about, and turn it off on high-churn operational records where nobody ever looks back.
+::: danger Switching it off also loses the audit trail
+The version snapshot and the audit-trail line are written together, so with this off you can no longer see who changed a record, not just restore an older version. See [Turning version tracking on and off](/platform/governance/audit-trail#Turning-version-tracking-on-and-off).
 :::

@@ -1,4 +1,5 @@
 ---
+description: "The Loading Table document that splits a work centre's daily hours between appointments, carry-over, walk-ins and emergencies, and what the appointment booking check enforces."
 entities: [SrvCLoadingTable]
 menu: Service Center → Settings → Loading Table
 ---
@@ -56,7 +57,7 @@ The *Carry Over* and *Walk In* pairs have no Arabic translation registered, so t
 labels even in an Arabic session. They are reproduced above exactly as they appear.
 :::
 
-## What it actually enforces — one bucket, and only sometimes
+## What it enforces — the appointment bucket
 
 Committing the sheet writes one capacity row per calendar day in the range, each carrying that day's
 **appointment hours**, the engineer count and the reception window.
@@ -69,57 +70,18 @@ allowance, unless the visit type is flagged as always allowed. It also refuses a
 outside the reception window.
 
 That is the entire enforcement surface. **Carry-over, walk-in, emergency and remaining hours are
-recorded, displayed and read by nothing.** They are planning information: a statement of intent for
-the people running the shop, not a rule the system applies. Nobody is stopped from booking into the
-carry-over hours, and no walk-in is counted against anything.
+planning information:** a statement of intent for the people running the shop, not a rule the system
+applies.
 
 Which is a perfectly reasonable way to use the sheet — as long as you know that is what you are
 doing. Publish it, print it, use the appointment figure as the number reception may sell, and treat
 the other three as the shop's own budget.
 
-::: danger Publish loading tables for one work centre only
-The day-capacity rows this document writes are keyed on the **date alone** — the work centre is not
-part of the key, and it is not part of the query that looks them up.
-
-On an installation with two or more work centres this is destructive: committing a sheet for the
-mechanical hall **overwrites the day capacity of the body and paint hall**, and a booking for either
-shop may be checked against whichever sheet happens to cover that day. The numbers reception sees can
-belong to the wrong workshop entirely.
-
-Until this is fixed, publish loading tables for a **single** work centre. If you run several, manage
-the others' capacity outside the system rather than by publishing a second sheet.
-:::
-
-::: danger The sheet validates nothing
-Neither of the two checks this screen appears to make actually refuses anything:
-
-- **Duplicate sheets save silently.** Two loading tables for the same work centre and the same date
-  range are both accepted, and both write over the same days. Keep your own register of which sheet
-  covers which period, and delete rather than re-issue.
-- **An inverted reception window saves silently.** A reception end time earlier than the start time
-  is accepted, and is then stamped onto every day in the range — after which every booking is outside
-  the window and is refused, with nothing on screen to explain why.
-
-Read the sheet back after saving it, before you rely on it.
-:::
-
-::: warning The first booking of a day is never checked
-The capacity check only runs when the day **already has** a reservation. The first appointment of any
-day is accepted whatever its size — a single 500-hour booking against a 40-hour day goes through
-without a murmur, and only the *second* booking of that day is refused. Treat the check as a backstop
-for a busy diary, not as a guarantee.
-:::
-
 ## Keep the four shares adding up to 100
 
-The **الساعات المتبقة / Remaining Hours** and **النسبة المتبقية / Remaining Percent** pair is only
+The **الساعات المتبقة / Remaining Hours** and **النسبة المتبقية / Remaining Percent** pair is
 meaningful while the four buckets total 100 % or less — as they do in the table above, where nothing
-is left over.
-
-Nothing prevents you from allocating more than 100 %, and if you do, the screen and the saved record
-stop agreeing with each other: the remaining figure can come back larger than the total available
-hours, and the remaining percentage larger than 100. That is a sign the sheet is over-allocated, not
-a spare-capacity figure to work from. Adjust the buckets until they add to 100 and save again.
+is left over. Keep the four shares within 100 % so the sheet reads as a real split of the day.
 
 ## Effects
 

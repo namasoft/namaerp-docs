@@ -1,3 +1,6 @@
+---
+description: "How to install Nama ERP on Tomcat and SQL Server with the Nama installer: prerequisites, database setup, SSL, confirming the install, upgrading, and fixing common installer problems."
+---
 # Nama ERP Installation Guide
 
 **Nama ERP** is a Java-based web application that runs on Apache Tomcat and uses Microsoft SQL Server as its database engine.
@@ -136,7 +139,7 @@ To upgrade Nama ERP manually:
         * Navigate to your Tomcat installation folder using the `cd` command, for example:
 
           ```cmd
-          cd "C:\Program Files\Apache Software Foundation\Tomcat 10"
+          cd "C:\Program Files\Apache Software Foundation\Tomcat 10.1"
           ```
 
         * Run the upgrade tool:
@@ -158,7 +161,7 @@ To enable the system to download and install updates from the **utils** page (i.
 1. Open the **Tomcat Service Configuration Utility**:
 
     * Navigate to:
-      `C:\Program Files\Apache Software Foundation\Tomcat 10\bin\tomcatw.exe`
+      `C:\Program Files\Apache Software Foundation\Tomcat 10.1\bin\tomcatw.exe`
     * Or search in the Windows Start Menu for: **Configure Tomcat**
 
 2. In the configuration window, go to the **Log On** tab.

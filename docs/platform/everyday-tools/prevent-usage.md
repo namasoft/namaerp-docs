@@ -1,3 +1,6 @@
+---
+description: "How to retire a record with Prevent Usage and Allow Usage from the More menu, how a retired record shows, what it stops, the related visibility settings and Prevent Usage As From Doc."
+---
 # Preventing a Record From Being Used
 
 An item is withdrawn from the catalogue. A customer is blocked after a payment dispute. A warehouse

@@ -1,3 +1,6 @@
+---
+description: "Index of Supply Chain development request notes: untagged quantities for batch and expiry items before a cut-off date, and stock receipts for the unsatisfied part of a purchase order."
+---
 # Development Request Notes
 
 Every now and then a client asks for something that changes how a core part of the Supply Chain module behaves — not a bug fix, but a deliberate new capability that touches inventory, costing, or document validation. These changes are important enough that the people who configure and support the system need to understand **why** they exist, **what** they change, and **when** to turn them on.

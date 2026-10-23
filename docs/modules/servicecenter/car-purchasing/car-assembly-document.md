@@ -1,4 +1,5 @@
 ---
+description: "The Sub Item Assembly Document, which creates car records from a chassis and an engine and generates a supply-chain assembly document; covers its fields, checks, effects on commit and landed cost."
 entities: [SubItemAssemblyDocument]
 menu: cars → Car Purchases → Sub Item Assembly Document
 ---

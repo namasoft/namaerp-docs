@@ -1,6 +1,6 @@
 ---
 entities: [CPAProjectInvoice]
-menu: ECPA → Invoice → Project Invoice
+menu: Project Management → Invoice → Project Invoice
 ---
 # Project Invoice
 
@@ -53,9 +53,8 @@ invoice?* — because that decides what the amount means and where it came from.
 | **Create Auto Invoices** | the periodic-billing amount held on the project | yes, on new documents |
 
 There is deliberately **no percentage-of-completion route and no milestone-value route**. A milestone
-on an invoice line is a label and a grouping key; its own value is never read. Nor does the
-quotation's payment schedule feed anything here — if you bill by instalment, you type the instalment
-amount.
+on an invoice line labels and groups the line; the amount is always the line's own Actual Value. To
+bill by instalment, type the instalment amount on the line.
 
 ### Typing the amount yourself
 

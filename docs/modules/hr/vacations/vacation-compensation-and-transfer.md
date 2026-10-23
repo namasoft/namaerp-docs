@@ -1,4 +1,5 @@
 ---
+description: "The Vacation Compensation, Vacation Transfer, Vacation Changing and Holidays And Rest Days Balance Compensation documents: cashing out, carrying forward, correcting and earning vacation balance."
 entities: [VacationCompensation, VacationTransferDocument, VacationChangingDocument, HolidaysRestBalanceDoc]
 ---
 # Vacation Compensation & Transfer

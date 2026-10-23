@@ -1,4 +1,5 @@
 ---
+description: "The six CRM classification lists (Lead Classification, Activity Type, Rejection Reason, Main Category, Industry, Campaign Type) and which screens use them."
 entities: [CRMLeadClassification, CRMActivityType, CRMRejectionReason, CRMMainCategory, CRMIndustry, CRMCampaignType]
 ---
 # Classification Files
@@ -100,7 +101,7 @@ Visit and `AT-03` Technical Presentation, and that is the whole of its job.
 
 ## Two labels that do not match their master file
 
-Both of these are cosmetic, but they trip people up when they are told to "fill in the Industry" and
+These two trip people up when they are told to "fill in the Industry" and
 cannot find a box with that name.
 
 - **CRM Industry** appears in the menu as **مجال خيط البيع** and as *CRM Industry* in English — but

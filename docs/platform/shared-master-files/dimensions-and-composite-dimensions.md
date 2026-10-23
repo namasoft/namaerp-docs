@@ -1,4 +1,5 @@
 ---
+description: "The five dimension master files (Legal Entity, Sector, Branch, Department, Analysis Set), the PUBLIC dimension, composite dimensions, and why a dimension refuses to change."
 entities: [LegalEntity, Sector, Branch, Department, AnalysisSet]
 menu: Basic → Dimensions → Legal Entity
 ---
@@ -35,9 +36,11 @@ Every dimension type owns one record the system creates for itself, with the cod
 
 PUBLIC means *not restricted on this axis*. A record saved with `Branch = PUBLIC` belongs to no branch in particular, and a user whose session runs with `Branch = PUBLIC` is not restricted to one. The item catalogue shared by the whole group is the classic case: leave its dimensions PUBLIC and everybody can use it.
 
-::: warning A public record is not automatically a visible one
-Legal Entity is the exception worth knowing. A record with no legal entity is public, but it is still hidden from users working inside a specific legal entity until **Show Public Documents to All** is switched on in [global configuration](/platform/global-config/global-config-dimensions). "Why can't he see this item?" is very often this setting.
+::: info When public documents are hidden
+A PUBLIC record is visible to everybody, with one exception that is off unless the server is set up for it. When `nama.properties` contains `preventViewingPublicDocuments=true` (see [nama.properties](/getting-started/nama-properties)), **documents** saved with PUBLIC in a dimension are hidden from users who work inside a specific value of that dimension — for any dimension type, not only the legal entity. Switching on **Show Public Documents to All** in [global configuration](/platform/global-config/global-config-dimensions) shows them again. Master files such as items and customers are never hidden this way.
 :::
+
+**Seeing is not saving.** A user logged in to a specific legal entity can open a record whose legal entity is PUBLIC but cannot save it: neither a change to it nor a new record with PUBLIC in that field. The save is refused with *{0} with code {1} is not accessible from this context* followed by *Invalid {0} - the record carries {1} while the current context allows {2}*. Log in with the legal entity set to PUBLIC to maintain shared records. Record types listed under [Public Entities](/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions#Public-Entities) are exempt.
 
 ## The dimension screen
 

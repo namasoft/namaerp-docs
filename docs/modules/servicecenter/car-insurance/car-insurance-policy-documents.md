@@ -1,5 +1,5 @@
 ---
-entities: [SIInsurancePolicyOrder, SIInsurancePolicyReceipt, SIInsurancePolicyDelivery, SIInsurancePolicyRenewal, SIInsurancePolicyValueAdjustment, SIInsurancePolicyPeriodAdjustment, SIInsurancePolicyCancellation]
+entities: [SIInsurancePolicyOrder, SIInsurancePolicyReceipt, SIInsurancePolicyReceiptCancel, SIInsurancePolicyDelivery, SIInsurancePolicyDeliveryCancel, SIInsurancePolicyRenewal, SIInsurancePolicyValueAdjustment, SIInsurancePolicyPeriodAdjustment, SIInsurancePolicyCancellation]
 ---
 # Moving a Policy Through Its Cycle
 
@@ -15,15 +15,13 @@ Layla's policy `POL-2026-7741` exists as a record on 5 March 2026, but nothing h
 | 10 March | `SIIPRP-2026-0198` **Car Insurance Policy Receipt** | The paper policy arrives |
 | 12 March | `SIIPD-2026-0187` **Car Insurance Policy Delivery** | It is handed to Layla with the keys |
 
-Later, if the cover changes, three more documents are available — renewal, value adjustment and period adjustment — and at any point after the first document the policy can be cancelled.
+Later, if the cover changes, three more documents are available — renewal, value adjustment and period adjustment — and at any point after the first document the policy can be cancelled. A receipt or a delivery recorded by mistake is undone with its own cancellation document: the **receipt cancellation** and the **delivery cancellation**.
 
-All seven share a common shape. The header carries the [sales order](/modules/servicecenter/car-sales/car-sales-order.md), the programme, the category, the policy number and the [car](/modules/servicecenter/cars-setup/car-master-file.md) details; the grid carries **one row per policy**, so a single document can move a whole batch of policies at once. The same policy may not appear twice in one document.
+All nine share a common shape. The header carries the [sales order](/modules/servicecenter/car-sales/car-sales-order.md), the programme, the category, the policy number and the [car](/modules/servicecenter/cars-setup/car-master-file.md) details; the grid carries **one row per policy**, so a single document can move a whole batch of policies at once. The same policy may not appear twice in one document.
 
-## The order is enforced — and this genuinely works
+## The order is enforced
 
-Of everything on these four pages, this is the part that behaves exactly as its design intends, so it is worth stating clearly.
-
-Every time you commit one of these documents, the system gathers **all committed documents of all seven types** that touch each policy in your grid, sorts them by value date, and checks that the resulting sequence is legal. If it is not, the commit is refused.
+Every time you commit one of these documents other than the renewal, the system gathers **all committed documents of the cycle** that touch each policy in your grid, sorts them by date, and checks that the resulting sequence is legal. If it is not, the commit is refused. The date used is the row's received date on a receipt, the row's delivered date on a delivery, and the value date on the other documents.
 
 The legal sequence is:
 
@@ -31,31 +29,33 @@ The legal sequence is:
 Order  →  Receipt  →  Delivery  →  { Renewal | Value adjustment | Period adjustment }*
                                      (repeatable, in any order)
 
+Receipt   →  Receipt cancellation   →  a new Receipt
+Delivery  →  Delivery cancellation  →  a new Delivery, or a Receipt cancellation
+
 Cancellation — allowed after any document
 ```
 
 In words:
 
 - **Only the Insurance Policy Order may be first.** A receipt against a policy that was never ordered is refused, and so is a delivery against a policy that was never received.
-- **The receipt may only follow an order**, and the **delivery may only follow a receipt**.
+- **The receipt may only follow an order** or a receipt cancellation, and the **delivery may only follow a receipt** or a delivery cancellation.
+- **The delivery cancellation may only follow a delivery.** It puts the policy back to *received*, so the next step is a new delivery or a receipt cancellation.
+- **The receipt cancellation may only follow a receipt** or a delivery cancellation. It puts the policy back to *requested from the supplier*, so the next step is a new receipt.
 - **Value and period adjustments** may follow the delivery, a renewal, or another adjustment — never an order or a receipt. A policy must have reached the customer before its terms are adjusted.
 - **Cancellation** may follow anything.
 
+A refused commit names the documents and the policy:
+
+- *Document {0} can not be the first document in the cycle of insurance policy {1}* — «المستند {0} لا يمكن أن يكون أول مستند في دورة وثيقة التأمين {1}»
+- *Document {0} can not come after document {1} in the cycle of insurance policy {2}* — «المستند {0} لا يمكن أن يأتي بعد المستند {1} في دورة وثيقة التأمين {2}»
+
 Because the check is re-run on every commit against the whole history, back-dating matters: a document you insert with an earlier value date is placed at that point in the sequence, and if that makes the sequence illegal the commit fails even though nothing about the document itself is wrong.
-
-::: warning The renewal is the one document that does not run this check
-The **Car Insurance Policy Renewal** is the exception. It can be committed against a policy that has never been ordered, received or delivered, because the renewal does not perform the ordering check that its six siblings perform — it only checks that its grid is not empty.
-
-The mistake does not go unnoticed forever. The next time any *other* document in the chain is committed against that policy, the full sequence is checked, the renewal-without-an-order is found, and that innocent later document is refused. The error message will point at the document you are committing, not at the renewal that caused the problem.
-
-If a commit fails with a sequencing message you do not understand, open the policy's **Related Documents** page and look for a renewal that arrived before its order.
-:::
 
 ## What each document does
 
 ### Insurance Policy Issuance Order — أمر إصدار وثيقة تأمين
 
-The first document in the chain, and the one that reaches accounting. The header carries the currency, the **insurance company** (required) and a calculated total; the grid carries the policies.
+The first document in the chain. The header carries the currency, the **insurance company** (required) and a calculated total; the grid carries the policies.
 
 ![The Insurance Policy Issuance Order screen](../../../ar/modules/servicecenter/images/car-insurance/sc-car-insurance-policy-order-en.png)
 
@@ -63,45 +63,57 @@ On commit it stamps each policy with **Processed By** pointing at itself and —
 
 Its policy picker offers only policies with no *Processed By* — that is, policies not yet ordered.
 
-**Accounting:** yes. One journal line pair per grid row, using the **Insurance Value Debit / Credit** (*مدين / دائن قيمة التأمين*) accounts on its term, for the amount in the row's **Insurance Price** column. See the danger box below.
+**Accounting:** yes. One journal line pair per grid row, using the **Total Insurance Price Debit / Credit** (*مدين / دائن قيمة التأمين*) accounts on its term, for the amount in the row's **Insurance Price** column. See the danger box below.
 
-::: warning Choosing the insurance company can fill the grid with thousands of rows
-Selecting an insurance company in the header does not just filter the picker — it **replaces the entire grid** with one row for every un-ordered policy of that insurer, with no paging and no filter by branch or company.
-
-On a fresh installation that is a convenience. On a live dealership with a few thousand open policies it produces a document that is unusable and may not open again.
-
-Pick the policies through the grid's own picker instead, and set the header company only on an installation where the number of open policies is small — or after the grid is already built.
-:::
+Selecting an insurance company in the header fills the grid with one row for every policy of that insurer that has not been ordered yet. To order only some of them, pick the policies through the grid's own picker instead.
 
 ### Car Insurance Policy Receipt — استلام وثيقة تأمين سيارة
 
-Records the paper arriving from the insurer. The header carries a **Received Date** (*تاريخ الاستلام*), which is copied down onto every grid row on save, and a second grid for **external payment documents** — the payment instruments Al-Sahra handed the insurer, each with a value and a date.
+Records the paper arriving from the insurer. The header carries the insurance company, the **Supplier** (*مورد*), a **Received Date** (*تاريخ الاستلام*) that is copied down onto every grid row on save, the **Net Value** (the total of the rows' policy values) and the **Total Cost**. A second grid holds the **external payment documents** — the payment instruments Al-Sahra handed the insurer, each with a value and a date.
 
-On commit it sets each policy's *Physical Status* to **Received From Supplier** (only if it had not already been received) and writes the received date onto the policy. Cancelling or deleting the document clears the received date and puts the status back to *Requested From Supplier*.
+If the supplier is left empty, it is copied from the first policy in the grid that has one. Each row's **Cost** column is filled from its policy: the policy's *Initial Cost* until the policy is bought from the insurer, its *Actual Cost* afterwards (see [the policy record page](/modules/servicecenter/car-insurance/car-insurance-policy.md)).
+
+On commit it sets each policy's *Physical Status* to **Received From Supplier**, ticks its **Received** flag and writes the received date onto the policy. Cancelling or deleting the document clears the received date and puts the status back to *Requested From Supplier*.
 
 Its picker offers only policies with no received date, narrowed to the header's insurance company when one is set.
 
-**Accounting:** yes — the same insurance-value account pair as the order, for the same *Insurance Price* column, **plus** debt lines built from the external payment grid.
+**Accounting:** yes — three things:
 
-::: warning "Prevent Saving If Policy Is Unpaid" never fires
-The receipt's term screen carries an option labelled **منع حفظ إذا كانت الوثيقة غير مسددة / Prevent Saving If Policy Is Unpaid**, which reads as though it will stop a receipt being recorded for a policy the dealer has not yet settled.
+- the **Insurance Price** column against the *Total Insurance Price Debit / Credit* pair (*مدين / دائن قيمة التأمين*), as on the order;
+- the **Cost** column against the *Debit Cost / Credit Cost* pair (*مدين التكلفة / دائن التكلفة*);
+- debt lines built from the external payment grid.
 
-It cannot fire. The check reads a fresh, empty configuration rather than the term you set up, so the answer is always "no" whatever you tick. Switching the option on changes nothing at all.
+When the policy's cost changes later — because a purchase invoice for it is saved, changed or cancelled — the receipt's cost entry is rebuilt with the new figure. You do not need to touch the receipt.
 
-If you need that control, it has to be an organisational rule or a customer-specific validation — do not rely on the option.
-:::
+### Car Insurance Policy Receipt Cancellation — إلغاء استلام وثيقة تأمين سيارة
+
+Undoes a receipt. It must be created **from a committed receipt**, and every policy on it must be one of that receipt's policies; otherwise the commit is refused with:
+
+- *Document {0} must be created from a committed document of type {1}* — «يجب إنشاء المستند {0} بناءً على مستند محفوظ من النوع {1}»
+- *Insurance policy {0} is not included in document {1}* — «وثيقة التأمين {0} غير موجودة في المستند {1}»
+
+It has the same screen as the receipt plus a **From Document** field: pick the receipt there and the screen copies its header and its rows; delete the rows of any policy you are keeping. On commit it puts each policy back to **Requested From Supplier** and clears its received date, so a new receipt can be recorded. It books the same three amounts as a receipt, against the accounts on its own term, and the debt lines from its payment grid go to the opposite side — set up its term with the receipt's accounts swapped so the entry reverses the receipt.
 
 ### Car Insurance Policy Delivery — تسليم وثيقة تأمين سيارة
 
-The hand-over. The header carries a **Delivered Date** (*تاريخ التسليم*), copied down to every row, plus five attachment slots for a signed receipt.
+The hand-over — and the document that charges the customer for the policy. The header carries a **Delivered Date** (*تاريخ التسليم*), copied down to every row, the **Supplier** (copied from the policies when left empty) and the **Total Cost**, plus five attachment slots for a signed receipt.
 
-The one thing it validates is that the delivery date is not earlier than the policy's received date. On commit it sets *Physical Status* to **Delivered To Customer** and writes the delivered date onto the policy; cancelling or deleting the document clears both.
+The delivery is built like an invoice. Each row's unit price is the policy's **Policy Value**, and the row carries the usual discount columns; the totals and the payment methods sit below the grid, and a **Payment Documents** page holds the payment lines and the external payment documents. Taxes are calculated only when the delivery's term has **Taxable** (*خاضع للضريبة*) ticked; otherwise the rows carry no tax. Each row also carries a **Cost** column, filled from the policy's *Initial Cost* or, once the policy is bought, its *Actual Cost*. The delivery cannot be saved with a negative remaining amount.
 
-**Accounting:** none.
+The one date check is that the delivery date is not earlier than the policy's received date. On commit it sets *Physical Status* to **Delivered To Customer**, ticks the policy's **Delivered** flag and writes the delivered date onto the policy; cancelling or deleting the document clears them.
 
-::: warning Fill the header delivery date before committing
-Committing a delivery whose header date is empty produces an error rather than a clean validation message, because the per-row date is only populated from the header. Always type the delivery date on the header first.
-:::
+**Accounting:** yes — two pairs from the delivery's term:
+
+- the **Cost** column against the *Debit Cost / Credit Cost* pair (*مدين التكلفة / دائن التكلفة*);
+- each row's **net value** (after discounts and taxes) against the *Net Value Debit / Credit* pair (*صافي القيمة - مدين / دائن*).
+
+As on the receipt, the cost entry is rebuilt by itself whenever a purchase invoice changes the policy's cost.
+
+### Car Insurance Policy Delivery Cancellation — إلغاء تسليم وثيقة تأمين سيارة
+
+Undoes a delivery — the customer handed the policy back, or it was delivered against the wrong sale. Like the receipt cancellation, it must be created **from a committed delivery** (pick it in **From Document**, and the screen copies the delivery's header, rows, prices and payment lines), and every policy on it must be one of that delivery's; the same two messages refuse it otherwise.
+
+On commit it puts each policy back to **Received From Supplier** and clears its delivered date, so the policy can be delivered again or its receipt cancelled. It books the same cost and net value amounts as a delivery, against the accounts on its own term — set up that term with the delivery's accounts swapped so the entry reverses the delivery.
 
 ### Car Insurance Policy Renewal — تجديد وثيقة تأمين سيارة
 
@@ -109,15 +121,7 @@ Extends the cover into a new period. The header carries a **New Insurance Date**
 
 On commit it writes the new dates onto each policy — its effective date and its expiry date — and sets *Policy Status* to **Renewal**.
 
-**Accounting:** yes, using the same account pair and the same term family as the order, for the *Insurance Price* column on its rows. Note that it posts in the company's own currency rather than a currency chosen on the document.
-
-::: danger Cancelling a renewal does not undo it
-Cancelling or deleting a renewal reverses **only its journal entry**. The policy keeps the renewed effective date, the renewed expiry date and the *Renewal* status; nothing is put back.
-
-There is a second trap behind it. The renewal never touches the policy's **Policy Duration**, so on an installation where that field has been made visible and filled, the *next ordinary save of the policy* recalculates the expiry date from the old duration and silently replaces the renewed one.
-
-If you need to undo a renewal, cancel or delete it to reverse the accounting, then correct the policy's dates deliberately — and re-check them after saving.
-:::
+**Accounting:** yes, using the same account pair and the same term family as the order, for the *Insurance Price* column on its rows. Note that it books in the company's own currency rather than a currency chosen on the document.
 
 ### Car Insurance Policy Cancellation — إلغاء وثيقة تأمين سيارة
 
@@ -125,7 +129,7 @@ Records that cover has ended. The header carries a **Cancellation Date** (*تا�
 
 On commit it writes the cancellation date onto each policy, sets *Policy Status* to **Cancelled** and records itself as the cancelling document. Cancelling or deleting the cancellation document clears all three — but only for policies this particular document cancelled, so a second cancellation cannot undo the first one's work. Committing a cancellation against a policy another document has already cancelled is refused with a message naming that document.
 
-**Accounting:** none. **A cancellation posts nothing and refunds nothing.** If money comes back from the insurer, that is a separate accounting document.
+**Accounting:** none. **A cancellation books nothing and refunds nothing.** If money comes back from the insurer, that is a separate accounting document.
 
 ### The two adjustments
 
@@ -133,28 +137,21 @@ On commit it writes the cancellation date onto each policy, sets *Policy Status*
 
 **Car Insurance Policy Period Adjustment** (*تعديل فترة وثيقة تأمين سيارة*) changes when the policy ends. Type a **New Expiry Date** on the header; on commit each policy's expiry date is overwritten with it and the *Policy Status* becomes **Period Adjustment**.
 
-::: danger Neither adjustment is retroactive, and the period adjustment cannot be undone at all
-**Both documents are pure stamps.** Read that literally:
-
-- **Nothing is recalculated.** No premium is recomputed, no policy duration is updated, no pro-rata figure is worked out for the shortened or extended period, and no difference of any kind is derived.
-- **Neither posts anything.** Extending a policy by six months or halving its value produces no journal entry, no credit note and no adjustment to what the insurer is owed. The money side has to be handled entirely by hand, as a separate accounting document.
-- **The period adjustment has no reversal behaviour whatsoever.** Cancelling it — or deleting it — leaves the new expiry date and the *Period Adjustment* status on the policy permanently. There is no way to walk it back through the document; you must open the policy and correct the date yourself, and even then the status stays.
-
-The value adjustment does restore the previous value when it is cancelled or deleted, with one qualification: it restores the value stored on its own grid row, not a separately preserved "old value". If somebody edited that row's policy-value column after the document was committed, the reversal restores the edited figure rather than the original.
-
-**The working rule for both:** treat a committed adjustment as final, and record the money consequence separately.
-:::
+Neither adjustment recalculates anything — no premium, no pro-rata figure — and neither books anything. Extending a policy or changing its value produces no journal entry and no change to what the insurer is owed; record the money side as a separate accounting document. Cancelling or deleting a value adjustment restores the policy value stored on its rows.
 
 ## What actually reaches the ledger
 
-Three of the seven documents post: the **order**, the **receipt** and the **renewal**. Delivery, cancellation and both adjustments post nothing.
+Each document books one debit/credit pair per grid row for every amount below, against the accounts configured on [the document's term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md):
 
-All three post the same thing in the same way — one debit/credit pair per grid row, against the **Insurance Value Debit / Credit** accounts configured on [the document's term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md), for the amount in that row's **Insurance Price** (*سعر التأمين*) column.
+| Document | Amounts booked |
+|---|---|
+| **Order**, **Renewal** | The **Insurance Price** (*سعر التأمين*) column, against *Total Insurance Price Debit / Credit* |
+| **Receipt**, **Receipt Cancellation** | The Insurance Price column, as above; the **Cost** column, against *Debit Cost / Credit Cost*; and debt lines from the payment grid |
+| **Delivery**, **Delivery Cancellation** | The **Cost** column, against *Debit Cost / Credit Cost*; and the row's **net value**, against *Net Value Debit / Credit* |
+| **Cancellation**, **Value Adjustment**, **Period Adjustment** | Nothing |
 
 ::: danger The Insurance Price column is never filled for you
-This is the defect described on the [overview page](/modules/servicecenter/car-insurance/car-insurance-overview.md), and this is where it bites.
-
-**Insurance Price is the only figure these documents post, and nothing ever writes it.** Choosing an insurance programme does not fill it. Choosing a policy does not fill it. The car price does not derive it. It is a blank column waiting for somebody to type in it.
+**Nothing ever writes the Insurance Price column.** Choosing an insurance programme does not fill it. Choosing a policy does not fill it. The car price does not derive it. It is a blank column waiting for somebody to type in it.
 
 Commit an order with that column left empty — which is exactly what happens if you assume the programme priced the policy — and the document produces a **journal entry of zero**, cleanly, with no warning, and the business request completes successfully.
 

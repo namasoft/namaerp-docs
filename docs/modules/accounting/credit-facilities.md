@@ -1,4 +1,5 @@
 ---
+description: "How bank facility limits (a shared ceiling consumed by loans, guarantees and letters of credit) and credit facilities (issued, repaid and terminated through their own documents) are set up and tracked."
 entities: [CreditFacility, FacilityLimit, FacilityLimitConfig, CreditFacilitySetting, CreditFacilityIssuance, CreditFacilityPayment, CreditFacilityTermination]
 menu: Banks → Credit Facilities → Credit Facility
 ---

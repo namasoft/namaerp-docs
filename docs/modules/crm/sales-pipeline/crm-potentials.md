@@ -30,16 +30,16 @@ Everything else is the same: name, legal-entity text, responsible employee, sale
 Activity Type, Lead Classification, Rejection Reason and Planned Re-Call Date are missing from the Potential's screen but still exist on the record — and a committed [CRM Call](/modules/crm/activities/crm-calls) or [Visit](/modules/crm/activities/crm-visits) still writes them. So a potential can be carrying a lead classification and a planned re-call date that nobody can see on the screen. Read them from the list view's columns, or from an Excel export, if you need them.
 :::
 
-::: warning The Mediator field appears twice
-On the Potential screen the **Mediator** (الوسيط) field is added to the same group twice, so you may see two identical boxes side by side. They are the same field — fill either one.
+::: info The Mediator box appears twice
+On the Potential screen the **Mediator** (الوسيط) box appears twice in the same group. Both are the same field — fill either one.
 :::
 
 ## The Deal Value Problem Is Worse Here
 
 ::: danger A potential has no visible value at all
-The Potential carries a field named *Value Of Deal*. It is **not on the screen**, and it has **no Arabic and no English label** — the system has no name to show for it. The currency group beside it shows a currency and an exchange rate with no amount, exactly as on the Lead, and the Lead's free-text **Budget** box is not on the Potential screen at all.
+The Potential screen has no amount box. Its currency group shows a currency and an exchange rate with no amount, exactly as on the Lead, and the Lead's free-text **Budget** box is not on the Potential screen at all.
 
-The practical effect: the record that is supposed to represent a deal you expect to win cannot tell you what that deal is worth. There is no pipeline total, no weighted value and no forecast anywhere in the module. If a site needs a value per potential, the field has to be put on the screen by its implementer.
+The practical effect: the record that is supposed to represent a deal you expect to win cannot tell you what that deal is worth. There is no pipeline total, no weighted value and no forecast anywhere in the module. If a site needs a value per potential, its implementer has to add one.
 :::
 
 ## What the System Refuses

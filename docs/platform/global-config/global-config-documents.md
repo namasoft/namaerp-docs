@@ -5,7 +5,7 @@ menu: Administration → Settings → System Settings
 
 # Documents and Books
 
-Every document in Nama gets its number from a **book** and its behaviour from a **document term**. This tab governs that machinery: how books and terms are picked, what a term is allowed to control, how drafts are numbered, how master files are coded automatically, how installments are generated, and who may post into a closed fiscal period.
+Every document in Nama gets its number from a **book** and its behaviour from a **document term**. This tab governs that machinery: how books and terms are picked, what a term is allowed to control, how drafts are numbered, how master files are coded automatically, how installments are generated, and who may save documents into a closed fiscal period.
 
 ![Documents and Books tab](../../ar/platform/global-config/images/gc-documents-en.png)
 
@@ -103,14 +103,19 @@ Keep the three apart. A **document's** number comes from its book's auto-coder, 
 
 **Do Not Prevent Modifying Documents Before Last Closing Entry** `value.info.doNotPreventModifyingDocsBeforeLastCloseEntry` — Normally a document dated before the last closing entry is locked, because editing it would change a period that has already been closed and reported. This lifts that lock.
 
-**Allow Reprocessing of Ledger Transaction Requests Before Closing Entry** `value.info.allowReprocessingOfLedgerTransRequestsBeforeClosingEntry` — Allows the accounting effects of documents dated before a closing entry to be reprocessed.
+**Allow Reprocessing Of Ledger Trans Requests Before Closing Entry** `value.info.allowReprocessingOfLedgerTransRequestsBeforeClosingEntry` — Allows the accounting effects of documents dated before a closing entry to be reprocessed.
 
-**Allow Reprocessing of Inventory Transaction Requests Before Closing Entry** `value.info.allowReprocessingOfInvTransRequestsBeforeClosingEntry` — The same for inventory effects.
+**Allow Reprocessing Of Inventory Trans Requests Before Closing Entry** `value.info.allowReprocessingOfInvTransRequestsBeforeClosingEntry` — The same for inventory effects.
 
-::: danger These two are flagged as dangerous
-Both reprocessing options ask for explicit confirmation before they can be enabled, and the system records that they were turned on. Reprocessing across a closing entry rewrites figures that a closed period was built from, so balances that were reported to management or to an auditor can silently change. Enable them for a supervised correction, then switch them off again.
+::: danger Only a Namasoft support session can switch these two on
+Switching either option **on** is not an ordinary edit. Both sit at a protected security level, and a save
+that turns one on from a normal session is refused with
+*"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"* — «انت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمى لمستوى الأمان {1} برجاء التواصل مع الدعم الفنى»
+— with the option's id and `L2Dangerous` filling the two placeholders. Turning them back off is not gated.
+
+That is deliberate: reprocessing across a closing entry rewrites figures that a closed period was built from, so balances that were reported to management or to an auditor can silently change. While either option is on, every login shows the critical error *The option {0} in {1} config is enabled, it should be disabled. Please contact our support team.* — see [Critical errors](/admin/troubleshooting/critical-errors). Switch them on for a supervised correction, then off again.
 :::
 
-**Enable Fiscal Year Status Update** `value.info.enableFiscalYearStatusUpdateFile` — Activates the Fiscal Year Status Update file, which lets you open or close periods for a specific combination of entity, dimensions and user rather than globally.
+**Enable Fiscal Year Status Update** `value.info.enableFiscalYearStatusUpdateFile` — Activates the Fiscal Year Status Update file, which closes an open period further for a specific combination of entity, dimensions and user. It cannot reopen a period that is closed — see [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
-**Ignore Closed Periods In** `value.info.ignoreClosedPeriodsIn` *(table)* — A more surgical alternative to the options above. Each row grants one user (or one "allow for" group) the right to post into a named fiscal period and year, for one entity type, optionally narrowed to specific dimensions. This is how you let the accountant finish last month's adjustments without unlocking the period for everybody.
+**Ignore Closed Periods In** `value.info.ignoreClosedPeriodsIn` *(table)* — A more surgical alternative to the options above. Each row grants one user (or one "allow for" group) the right to save documents into a named fiscal period and year, for one entity type, optionally narrowed to specific dimensions. This is how you let the accountant finish last month's adjustments without unlocking the period for everybody.

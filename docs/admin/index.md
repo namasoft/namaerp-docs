@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: System Administration
+description: "Landing page for system administration: troubleshooting pages, reprocessing and repair utilities, administration screens, and messaging tools such as the Tempo language."
 ---
 
 # System Administration

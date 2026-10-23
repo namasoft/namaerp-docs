@@ -12,6 +12,20 @@ How requests work, what each processing status means, how to find the failed one
 **[Business Requests](/platform/background-processing/business-requests)**. Read it first — nothing
 on this page repeats it.
 
+Two checks come before you go looking for a failed request, because in both cases there is none:
+
+- **Look at the document's status first.** A document that is still a **Draft** or **Approval
+  Pending** has raised no request at all — it is written down, not counted. It gets its entry when it
+  is committed or approved. See
+  [The Life of a Document](/platform/documents-and-records/document-lifecycle).
+- **A Processed request can have no entry behind it.** When every account side the document term
+  would write to is left empty, the request carries no lines. It still finishes **Processed**, writes
+  no entry, and removes any entry the document had before. That is how a term says "this document
+  has no accounting effect", so the fix is on the term: open its Effect tab — see
+  [Accounting Effects Configuration](/modules/supplychain/document-terms/doc-term-accounting-effects)
+  — and fill the sides. With the accounting configuration option **Create System Transaction for
+  Empty Lines** ticked, an entry with no lines is written instead.
+
 What is specific to accounting is the list of reasons a ledger request refuses:
 
 - **The period is closed.** The document's date falls inside a closed accounting period — see

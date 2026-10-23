@@ -1,4 +1,5 @@
 ---
+description: "The User Mobile Identifier Document that binds a user to approved phones: how the request is sent from the app, accepting or refusing it, switching the check on per document and the refusal messages."
 entities: [UserMobileIdentifierDocument]
 menu: Basic → Mobile Apps → User Mobile Identifier Document
 ---

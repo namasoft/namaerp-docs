@@ -81,18 +81,15 @@ Leave the option **off** on every return term. The same applies to the
 ## Reversing a car that is already in stock
 
 The purchase return is the document that genuinely takes a received car back out of stock and off the
-supplier account. Do not reach for the **Car Receipt Cancel** instead — it looks like the obvious
-reversal and it is not one.
+supplier account.
 
-::: warning Cancelling a car receipt reverses nothing
-A **Car Receipt Cancel** does not delete the stock receipt the original Car Receipt generated, and it
-reverses no accounting. **The cars stay in stock and stay at cost.** It writes a status entry, and
-that is the whole of its effect — see
+::: info The Car Receipt Cancel records the event; it does not move stock
+A **Car Receipt Cancel** writes a status entry on the car and leaves the stock receipt the original
+Car Receipt generated in place, so **the cars stay in stock and stay at cost** — see
 [Receiving Cars into the Showroom](/modules/servicecenter/car-purchasing/car-receipt.md).
 
-So a user who raises one and expects the receipt to be undone will be wrong, and has to reverse the
-stock movement themselves: either cancel or delete the **original Car Receipt**, or — when the
-cars really are going back to the supplier — raise this purchase return.
+To take the stock back out, either cancel or delete the **original Car Receipt**, or — when the cars
+really are going back to the supplier — raise this purchase return.
 :::
 
 ## What the return does not reverse
@@ -115,8 +112,8 @@ Two things readers reasonably expect and do not get:
 **More menu:**
 
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — runs the car-creation
-  routine against the lines when the term's *Create Sub Item From Line Info* option is on; with the
-  option off it does nothing. Leave the option off on a return term, as explained above.
+  routine against the lines; it runs only when the term's *Create Sub Item From Line Info* option is
+  on. Leave the option off on a return term, as explained above.
 - **Generate Doc** (*إنشاء مستند بناءا على*) — asks which kind of document to create (stock issue,
   stock receipt, stock transfer, purchase invoice, purchase return, car purchase return, sales invoice
   or car sales invoice) and opens a new, unsaved one built from this return.

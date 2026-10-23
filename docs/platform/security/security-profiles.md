@@ -14,6 +14,8 @@ The Security Profile is where most of your permission settings live. You create 
 
 The most powerful flag in the entire system. When **Full Authority** is enabled, the profile grants *everything*: all types, all permissions, all fields, all pages, all list views. The rest of the permission tables are ignored entirely.
 
+You will not find a **Full Authority** checkbox on the Security Profile screen. It is hidden on purpose, so that nobody grants it by ticking the wrong box. The built-in **default** profile already carries it. If another profile really needs it, first show the field with a Screen Modifier, as described in [Fields hidden on purpose](#Fields-Hidden-on-Purpose).
+
 A few rules the system enforces around this:
 
 - The built-in **default** security profile must always have Full Authority enabled — it is the `admin` user's profile.
@@ -63,8 +65,12 @@ You do not have to add lines one by one: the **Copy Entities From Menu** and **C
 | **Draft Deletion Capability** | Independent control over draft deletion: **Yes**, **No**, or **Same As Delete** (mirrors the Delete permission). |
 | **Delete Only Created Drafts** | The user can only delete drafts they created. |
 | **Prevent Save Draft** | Disables the draft mechanism entirely for this type. |
-| **Prevent Edit/Delete After Print** | Once a record is printed it is locked for editing/deletion. |
-| **Prevent Edit/Delete After Approval** | Once the approval workflow completes the record is locked. |
+| **Prevent Edit After Print** | Once a record has been printed, it can no longer be edited. |
+| **Prevent Delete After Print** | Once a record has been printed, it can no longer be deleted. |
+| **Prevent Edit After Approval** | Once the record's approval is complete, it can no longer be edited. |
+| **Prevent Delete After Approval** | Once the record's approval is complete, it can no longer be deleted. |
+
+The four are separate: ticking a *Prevent Edit…* column does not stop deletes, so tick the matching *Prevent Delete…* column as well when the record should be fully locked. On the User screen's own lines only the two *Prevent Edit…* columns appear.
 | **Prevent Modify While Under Approval** | Prevents editing while an approval is in progress (see [Approvals System](/platform/approvals/approvals-system.md)). |
 
 ### Printing
@@ -75,7 +81,7 @@ You do not have to add lines one by one: the **Copy Entities From Menu** and **C
 | **Max Print Count** | A numeric cap on how many times the same record can be printed. |
 | **Do Not Allow Print Drafts** | Drafts cannot be printed. |
 
-Combining these columns with *Prevent Edit/Delete After Print* gives you a tight "printing = final" policy for documents such as official invoices.
+Combining these columns with *Prevent Edit After Print* and *Prevent Delete After Print* gives you a tight "printing = final" policy for documents such as official invoices.
 
 ### Revision
 
@@ -144,7 +150,7 @@ How it works:
 Custom capability lines also carry optional inputs (two references, two dates, two text fields) that specific features can interpret — for example a reference to a cost center to which the capability applies.
 
 ::: info System Reports
-The **View System Reports** flag in the screen header grants one built-in capability, *System Reports* (code `SYSTEMREPORTS`). That covers far less than its name suggests. The reports Namasoft ships are filed under groups such as *System Reports - Accounting*, and each one carries its group's own capability as its view capability. So to let a user without full authority run the shipped accounting reports, add a Custom Capabilities line for *System Reports - Accounting*, and likewise for every other group they need. The flag on its own only opens the few system reports filed without a group.
+The **View System Reports** flag grants one built-in capability, *System Reports* (code `SYSTEMREPORTS`). That covers far less than its name suggests. The reports Namasoft ships are filed under groups such as *System Reports - Accounting*, and each one carries its group's own capability as its view capability. So to let a user without full authority run the shipped accounting reports, add a Custom Capabilities line for *System Reports - Accounting*, and likewise for every other group they need. The flag on its own only opens the few system reports filed without a group. It is not on the screen by default — see [Fields hidden on purpose](#Fields-Hidden-on-Purpose).
 
 Who may run a particular report — its own security grid, its security equivalent, and the capability each shipped report carries — is explained in [Who may run a report](/platform/reports/reports-guide#Who-may-run-a-report).
 :::
@@ -154,6 +160,8 @@ Who may run a particular report — its own security grid, its security equivale
 ## Extra Filters Page
 
 Row-level filters that restrict *which records* the role sees for each type — by matching a field against something related to the user, or via a free-form criteria expression. Because this is a record-visibility topic it is documented in [Record-Level Security](/platform/security/record-level-security.md).
+
+The same page carries a second grid, **Search Extra Filters (Cancels Normal Extra Filters If Applicable)**, which sets a different filter for the lookup inside particular reference fields and replaces the normal Extra Filter there — see [Search Extra Filters](/platform/security/record-level-security#Search-Extra-Filters).
 
 ![Security Profile — Extra Filters](../../ar/platform/security/images/security-profile-extra-filters-en.png)
 
@@ -176,11 +184,34 @@ The common pattern therefore is: a line with action `*` and *disabled* for a typ
 Alongside the tables, the security profile header carries defaults and switches that apply to every user assigned this profile (most are also present on the user record, where the user's value takes priority):
 
 - **Sessions and Login**: maximum number of concurrent login sessions with an option to auto-logout the oldest session, *Allow Login Through Applications Only*, and *Do Not Use LDAP For Login*.
-- **Reports and Printing**: maximum number of reports a user can run simultaneously, *Prevent the user from running the same report twice at the same time*, *Allow PDF Printing Only* for reports and/or screen forms, and *View System Reports*.
+- **Reports and Printing**: maximum number of reports a user can run simultaneously, *Prevent the user from running the same report twice at the same time*, and *Allow PDF Printing Only* for reports and/or screen forms.
 - **Prevent-Usage Records**: allow their use in data entry/editing, and show or hide them in search and list views.
 - **Default Settings**: default menu, default list-view ID, dashboard, the email used with the send-as-email window, maximum records per list page.
-- **Reprocessing Controls**: allow re-saving files, re-issuing accounting effects, re-issuing stock effects, and re-syncing files — four switches (enabled by default) that you can remove from sensitive roles.
 - **Miscellaneous**: do not show system help messages, do not display critical errors, prevent access to sales threads not assigned to the employee, auto-load user shift, access to AI capabilities, prevent access to instant messaging, and notification sounds.
+
+## Fields Hidden on Purpose
+
+Six fields of a security profile are kept off the screen, so that nobody changes them by ticking the wrong box. They still work. The built-in **default** profile holds Full Authority, and the four reprocessing switches are on in every new profile.
+
+| Field | Field id | On a new profile | What it controls |
+|---|---|---|---|
+| **Full Authority** | `fullAuthority` | Off (on in the **default** profile) | Grants everything — see [Full Authority](#Full-Authority). |
+| **View System Reports** | `viewSystemReports` | Off | The general *System Reports* capability — see [System Reports](#Custom-Capabilities-Page). |
+| **Allow Record Recommiting** | `allowRecommitRecord` | On | Recommitting a saved record. |
+| **Allow ReGenerate Accounting Effects** | `allowReGenAccountingEffects` | On | Regenerating a record's accounting effects. |
+| **Allow ReGenerate Inventory Effects** | `allowReGenInventoryEffects` | On | Regenerating a record's stock effects. |
+| **Allow ReReplicate Record** | `allowReReplicateRecord` | On | Sending a record to the other sites again (Replication). |
+
+A profile with Full Authority passes the four reprocessing checks whatever their value.
+
+When a role does need one of them changed — for example, taking recommitting away from ordinary users — show the field first:
+
+1. Open **Administration → Display Customization → Screen Modifier** and create a modifier with **Applicable For** = *Entity Type* and **For Type** = *Security Profile*.
+2. Add the field ids you need to a header group, through **Modified Group Fields** or a new group in **Add Groups** — see [Groups of header fields](/platform/screen-modifier/screen-modifier-edit-screen#Groups-of-header-fields).
+3. Tick **Activate**, save, and run **Regenerate GUI For Applicable Types Only** ([Making your changes take effect](/platform/screen-modifier/screen-modifier-overview#Making-your-changes-take-effect)).
+4. Reopen the security profile, set the field and save.
+
+Users pick up the change at their next login.
 
 ## Users Page
 
@@ -199,8 +230,8 @@ A permission refusal always names the thing it checked, and that tells you which
 | *You do not have the authority {1} on entity {0}* — «لا توجد لديك الصلاحية {1} على النوع {0}» | **Standard Security Lines**. `{1}` is the authority itself — Insert, Update, Delete, View, Commit, Revise and the rest — and `{0}` is the entity type. | Find the row covering that entity type and tick that authority. If several rows could match, the most specific one wins, which is the trap explained in [the permissions FAQ](/admin/troubleshooting/general-faq#How-Can-Permissions-Be-Assigned-to-All-Record-Types-in-Nama-ERP-in-a-Flexible-and-Fast-Way-Without-Adding-a-Row-for-Each-Type). |
 | *The user {0} does not have the capability {1} on the type {2}* — «المستخدم {0} ليس لديه الصلاحية {1} للنوع {2}» | **Custom Capabilities**, not the standard grid. The named capability is one of the per-screen actions, so ticking Update will not help. | Add the capability for that type on the Custom Capabilities page. |
 | *The user {0} level ({1}) does not include the entity type {2}* — «السمتخدم {0} يتبع المستوي {1} و هو غير مسموح له بحفظ السجلات من النوع {2}» | Neither grid — this is the **User Level**, which comes from the licence and is checked before any profile row. A profile cannot grant past it. | See [Users and Login](/platform/security/users-and-login#User-Level). Moving the user to a level that covers the type is the only route, and the levels available are the ones your licence defines. |
-| *Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة حفظ الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | The **Allow Record Recommiting** switch in *Reprocessing Controls* above — one of the four that are on by default and are often removed from ordinary roles. | Tick it on the profile, or have someone whose profile keeps it do the recommit. |
-| *Current User {0} Cannot Rereplicate Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة مزامنة الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | The re-syncing switch in the same group. | As above. |
+| *Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة حفظ الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | The **Allow Record Recommiting** switch — one of the four reprocessing switches that are on by default but [hidden from the screen](#Fields-Hidden-on-Purpose). It has been turned off for this role. | Have someone whose profile keeps it do the recommit, or show the field again and tick it. |
+| *Current User {0} Cannot Rereplicate Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة مزامنة الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | The **Allow ReReplicate Record** switch, hidden in the same way. | As above. |
 | *{0} can not be deleted because current user dos not have the authority for deleting drafts* — «لا يمكن حذف {0} لأن المستخدم الحالى لا يملك صلاحية حذف المسودات» | Deleting a draft is its **own** authority, separate from Delete. Granting Delete does not grant it. | Tick the draft-delete authority on the row for that entity type. |
 | *{0} can not be deleted because current user is not the creator of this draft* — «لا يمكن حذف {0} لأن المستخدم الحالى ليس هو منشئ المستند» · *You can not delete the record {0} because you did not create it* — «لا يمكنك حذف السجل {0} حيث أنك لست منشئ السجل» · *You can not edit the record {0} because you did not create it* — «لا يمكنك تعديل السجل {0} حيث أنك لست منشئ السجل» | The authority is granted, but only for the user's **own** records — see [Record-Level Security](/platform/security/record-level-security). | Widen the row beyond own-records, or add the user to *Treat Users as Creator* for the real creator. |
 

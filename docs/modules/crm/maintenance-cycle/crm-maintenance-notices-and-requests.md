@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Notice (a customer call-in) and the Maintenance Order Request: their fields, turning a notice into a maintenance order, and the actions on both screens."
 entities: [MnNotice, MnRequest]
 ---
 # Notices and Requests
@@ -30,7 +31,7 @@ A notice is a fault log with a customer's name on it. `MNOT-0140` reads:
 
 ![The Maintenance Notice screen](../../../ar/modules/crm/images/maintenance-cycle/crm-mn-notice-en.png)
 
-Picking the machine does most of the typing for you: the customer, contact, serial number, warranty dates and the building, floor and room all fill in from the machine file. The categories on the right come from the fault catalogues — see [Fault Catalogues](/modules/crm/maintenance-setup/crm-fault-catalogues.md).
+Picking the machine does most of the typing for you: the customer, contact, serial number, warranty dates and the building, floor and room all fill in from the machine file. The categories on the right come from the fault catalogues — see [Fault Catalogues](/modules/crm/maintenance-setup/crm-fault-catalogues.md). When the notice names a [maintenance contract](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md) whose **Terms** page is filled in, the Trouble Level and Trouble Description lookups offer only that contract's rows, and picking one fills the other together with the response time and the remarks.
 
 **The main page** also carries the responsible employee, machine type and category, task template, the maintenance contract, a full address block with a map location, an attachment, a ticket status, a visit date, a payment status, and two fields written by the dispatch document: **maintenance itinerary** and **planned visit date**. Below the header sit a **Machines** grid, a **Dysfunctions** grid — the fault, the machine, a free-text detail, a proposed solution — and a totals group.
 
@@ -40,13 +41,10 @@ Picking the machine does most of the typing for you: the customer, contact, seri
 
 **The Billing page** has a payment-schedule template, a **GeneratePayments** button, schedule lines, payment documents and payment methods.
 
-::: danger A notice records money and does nothing with it
-The notice recalculates the spare-part totals, the service totals, the header money block and the whole payment schedule as you type — and then **none of it reaches anything**. There is no accounting entry, no stock movement, no receivable, no customer balance and no document term to configure one. A notice is a **fault log**, and pricing it is bookkeeping for your own eyes only.
+::: info A notice is a fault log
+The notice works out the spare-part totals, the service totals, the header money block and the payment schedule as you type, so it shows the expected cost of the repair. It creates no accounting entry, no stock movement and no receivable; the money and the stock are recorded by the maintenance order and invoice that follow it.
 
-Two matching quirks to expect while you are on the screen:
-
-- Every machine line's **Total Price Of Services** is written as **zero**, whatever you put in the services grid.
-- The document is nevertheless refused if the payment-schedule lines do not add up to the money net value — a validation on a schedule that has no effect. If a notice will not save, that is usually why.
+The notice is refused if its payment-schedule lines do not add up to the money net value. If a notice will not save, check the schedule first.
 :::
 
 ## Technician Attendance from the Mobile App
@@ -64,7 +62,7 @@ The result is `MO-0527`, a normal maintenance order carrying everything the call
 ::: tip Dispatching a day's notices
 If your branch works by route rather than by call, the **CRM Maintenance Plan** and **Maintenance Itinerary** pair is the tool: a plan lists the day's routes with a technician on each and the notices to be served, and saving it stamps the technician, the route and the planned visit date onto every notice listed. That is a genuine automatic effect — the one place in this area where saving a document changes another one.
 
-It is daily dispatch, not preventive scheduling, and the route capacity figures are never enforced. See [Daily Dispatch](/modules/crm/maintenance-cycle/crm-maintenance-dispatch.md).
+It is daily dispatch, not preventive scheduling. See [Daily Dispatch](/modules/crm/maintenance-cycle/crm-maintenance-dispatch.md).
 :::
 
 ## The Maintenance Order Request

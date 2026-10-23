@@ -235,13 +235,15 @@ Reservations are powerful because they ensure commitments are met without physic
 
 ### Cost Management
 
-Every item has a **standard cost** (what you expect it to cost on average). But the system also tracks cost using different methods - such as First In First Out (FIFO), average cost, and last purchase cost - and you choose which method to use per item or sector.
+Every item has a **standard cost** (what you expect it to cost on average). The actual cost of what you issue and sell is calculated by the company's costing method: either First In First Out (FIFO) or moving average. That one choice, the **Issue Cost Policy** in [Costing Configuration](/modules/supplychain/configuration/costing-configuration#Costing-Method), applies to every item.
 
 ### Sales Pricing
 
 An item can have prices in multiple **price lists** (retail, wholesale, VIP customers, special promotions). When you create a sales invoice, you choose the appropriate price list and the system fills prices automatically. You can also enable **automatic pricing** with profit margins (default margin, minimum, and maximum), so the system recalculates sales prices when costs change while respecting your margin policy. You'll find the details in [Pricing, Offers & Coupons](./pricing-offers-and-coupons.md).
 
 You can also set a **minimum price** to prevent salespeople from over-discounting; the system warns or prevents selling below it.
+
+Some items are never charged for — carrier bags, samples, a gift that goes with every order. Tick **Always Free** on the item and every line of it in a sales document or at the point of sale is marked as a free line automatically, so nobody has to remember to do it.
 
 ## Purchase Configuration
 

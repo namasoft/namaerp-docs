@@ -1,4 +1,5 @@
 ---
+description: "HMS pricing screens: Medical Sales Price List, Medical Cost List, Medical Discount, the overhead items, lists and Actual Overhead Calculation, and Change Patient Price Plan."
 entities: [HMSSalesPriceList, HMSCostList, HMSDiscount, HMSOverheadItem, HMSOverheadList, HMSActualOverheadCalculation, HMSChangePatientPricePlan]
 menu: Hospital Management System → Master Files → Medical Sales Price List
 ---

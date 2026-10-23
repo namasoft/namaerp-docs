@@ -43,7 +43,7 @@ Pick one and leave it alone: three separate places in the system read this flag,
 
 Every estate carries a chronological chain of rent- and reservation-status entries — reserved, rented, cancelled, sold — and the system refuses sequences that make no sense, such as a cancellation with nothing before it. That validator is exactly what you do *not* want when you are importing ten years of history that was never entered in Nama.
 
-The date field near the bottom of the group (its caption is still the English **Do Not Validate Estate Before** even on the Arabic screen) is the cut-off. Set it to your go-live date and the validator ignores any pair of entries whose earlier entry predates that date, so imported contracts are accepted while everything entered in Nama afterwards is still policed.
+The date field near the bottom of the group, **Do Not Validate Estate Before**, is the cut-off. Set it to your go-live date and the validator ignores any pair of entries whose earlier entry predates that date, so imported contracts are accepted while everything entered in Nama afterwards is still policed.
 
 Because getting this wrong quietly disables a real validation, the system treats it as a critical field and warns you when you change or clear it after it has been set. It matters most during [going live](/modules/realestate/opening/realestate-opening-balances.md) and it is also the switch behind the estate rent-status timeline described in [The Leasing Cycle](/modules/realestate/rent/realestate-rent-cycle.md).
 

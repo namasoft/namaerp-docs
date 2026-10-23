@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Technician Appointments
+description: "Landing page for CRM Technician Appointments: the setup screens, booking the work on the calendar, and recording what happened after the visit."
 ---
 
 # Technician Appointments

@@ -1,6 +1,7 @@
 ---
+description: "The MCS Eltezam Code Table screen that maps Nama records and values to the MCS code lists: creating all 29 tables at once, filling the grid, how a code is picked and which Nama data each list is keyed on."
 entities: [EltezamCodeTable]
-menu: integrations → Master Files → MCS Eltezam Code Table
+menu: Integrations → Master Files → MCS Eltezam Code Table
 ---
 # Eltezam Code Tables
 

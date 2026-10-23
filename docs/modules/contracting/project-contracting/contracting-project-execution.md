@@ -1,4 +1,5 @@
 ---
+description: "The Project Contract Execution document, a quantity-only statement of work done per period with no prices and no accounting effect: the screen, the Executions grid, back-dating, save checks and how extracts use it."
 entities: [ProjContractExecution]
 menu: Contracting → Project Contracting → Project Contract Execution
 ---

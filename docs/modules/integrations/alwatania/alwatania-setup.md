@@ -1,11 +1,11 @@
 ---
 entities: [AlwataniaDistConfig]
-menu: integrations → Master Files → Alwatania Distributors Config
+menu: Integrations → Master Files → Alwatania Distributors Config
 ---
 # Setting Up the Alwatania Config
 
 Everything Nama needs to reach the Alwatania platform lives on one record, the **Alwatania
-Distributors Config**. Open **integrations → Master Files → Alwatania Distributors Config** and
+Distributors Config**. Open **Integrations → Master Files → Alwatania Distributors Config** and
 create one record per Alwatania account; most installations need exactly one.
 
 The record's **code** is what the sending actions ask for, so pick something short you will type

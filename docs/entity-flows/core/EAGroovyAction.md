@@ -14,7 +14,7 @@ entities: [EntityFlow]
 Runs a custom Groovy script as an entity flow action. The script is compiled on the server when the flow runs, so custom business logic can be added without a new Nama release.
 
 ::: tip Writing a Groovy action?
-Follow the **[Groovy Writer skill](https://docs.namasoft.com/skills/groovy-writer.md)** — a step-by-step guide (raw Markdown) for writing Nama `EntityAction` Groovy scripts in the correct Nama style, matching the established sample-script patterns. Intended for Claude Code and support staff drafting scripts.
+Follow the **[Groovy Writer skill](https://docs.namasoft.com/skills/groovy-writer.md)** — a step-by-step guide (raw Markdown) for writing Nama `EntityAction` Groovy scripts in the correct Nama style, matching the established sample-script patterns. Intended for Claude Code and support staff drafting scripts. In a local copy of the docs (such as the support knowledge base) the same file is `docs/public/skills/groovy-writer.md`.
 :::
 
 ## Two Ways to Attach a Script

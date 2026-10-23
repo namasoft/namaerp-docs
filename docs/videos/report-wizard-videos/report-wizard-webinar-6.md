@@ -1,3 +1,6 @@
+---
+description: "Video summary: Report Wizard report permissions, filtering report data by the user's branch, a sales invoice report, data sources and joins, SQL, and first and last invoice per customer."
+---
 # Comprehensive Documentation: Report Wizard Reports and Permission Management
 
 [Watch the video](https://youtu.be/jvAJ5UjiIS8)

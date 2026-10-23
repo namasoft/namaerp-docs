@@ -1,6 +1,6 @@
 ---
 entities: [ApprovalDefinition]
-menu: الأساسيات ← الإعدادات ← تعريف موافقه
+menu: إدارة النظام ← تخصيص شكل النظام ← تعريف موافقه
 ---
 
 # نظام الموافقات - الدليل الشامل لتعريف الموافقة
@@ -14,7 +14,7 @@ menu: الأساسيات ← الإعدادات ← تعريف موافقه
 ### تعريف الموافقة (Approval Definition)
 تعريف الموافقة هو الإعداد الرئيسي الذي يحدد متى وكيف ومن يجب أن يوافق على معاملات تجارية معينة. يحتوي كل تعريف على:
 
-- **الكيان المستهدف (Target Entity)**: نوع السجل الذي يتطلب موافقة (فواتير، أوامر شراء، إلخ)
+- **نوع الملف/المستند (Approval Entity)**: نوع السجل الذي يتطلب موافقة (فواتير، أوامر شراء، إلخ)
 - **خطوات الموافقة (Approval Steps)**: مراحل الموافقة المتسلسلة أو المتوازية
 - **الأطراف المسؤولة (Responsible Parties)**: من يمكنه الموافقة في كل خطوة
 - **الشروط (Conditions)**: متى يجب تفعيل الموافقة
@@ -32,14 +32,14 @@ menu: الأساسيات ← الإعدادات ← تعريف موافقه
 
 ### الوصول إلى تعريفات الموافقة
 
-انتقل إلى: **الأساسيات > الإعدادات > تعريف موافقه** (Basic > Settings > Approval Definition)
+انتقل إلى: **إدارة النظام ← تخصيص شكل النظام ← تعريف موافقه** (Administration → Display Customization → Approval Definition)
 
 ### إنشاء تعريف الموافقة الأول
 
 1. **المعلومات الأساسية**
    - **الكود (Code)**: معرّف فريد لتعريف الموافقة
    - **الاسم (Name)**: اسم وصفي (مثل "موافقة الفاتورة فوق 10,000")
-   - **الكيان المستهدف (Target Entity)**: اختر نوع الكيان الذي يتطلب موافقة
+   - **نوع الملف/المستند (Approval Entity)**: اختر نوع الكيان الذي يتطلب موافقة
 
 2. **شروط الموافقة**
    - **Use With Insert**: تطبيق عند إنشاء سجلات جديدة
@@ -79,7 +79,7 @@ menu: الأساسيات ← الإعدادات ← تعريف موافقه
 
 ::: info ميزات مربع حوار التأكيد
 - **لغة Tempo**: استخدام حقلَي `arabicConfirmation` و`englishConfirmation` مع صيغة قوالب Tempo
-- **المحتوى الديناميكي**: دعم مراجع الحقول من العنصر المعتمَد (مثل `{totalAmount}` و`{code}` و`{department}`)
+- **المحتوى الديناميكي**: دعم مراجع الحقول من العنصر المعتمَد (مثل `{money.netValue}` و`{code}` و`{department}`)
 - **خيار المستخدم**: يمكن للمستخدمين النقر على "تأكيد" للمتابعة أو "إلغاء" لإيقاف عملية الموافقة
 - **دعم اللغات**: يعرض الرسالة المناسبة بناءً على تفضيل لغة المستخدم
 :::
@@ -87,10 +87,10 @@ menu: الأساسيات ← الإعدادات ← تعريف موافقه
 **أمثلة رسائل التأكيد مع المحتوى الديناميكي:**
 ```
 Arabic Confirmation:
-"تأكيد: هل أنت متأكد من طلب الموافقة على {entityType} رقم {code} بمبلغ {totalAmount} للقسم {department.name1}؟"
+"تأكيد: هل أنت متأكد من طلب الموافقة على {entityType} رقم {code} بمبلغ {money.netValue} للقسم {department.name1}؟"
 
 English Confirmation:
-"Confirmation: Are you sure you want to request approval for {entityType} #{code} with amount {totalAmount} for department {department.name2}?"
+"Confirmation: Are you sure you want to request approval for {entityType} #{code} with amount {money.netValue} for department {department.name2}?"
 
 Static Example:
 Arabic: "تأكيد: هذا المبلغ كبير، هل تريد المتابعة؟"
@@ -98,7 +98,7 @@ English: "Confirmation: This is a large amount, do you want to proceed?"
 ```
 
 **الحقول الديناميكية المتاحة:**
-- **حقول الكيان (Entity Fields)**: أي حقل من السجل المراد اعتماده (مثل `{totalAmount}` و`{customerName}`)
+- **حقول الكيان (Entity Fields)**: أي حقل من السجل المراد اعتماده، باسم الحقل البرمجي (مثل `{money.netValue}` لصافي الفاتورة أو الأمر، و`{customer.name1}`). وتجد أسماء حقول كل شاشة في [dm.namasoft.com](https://dm.namasoft.com)
 - **حقول النظام (System Fields)**: حقول مدمجة مثل `{code}` و`{entityType}` و`{creationDate}`
 - **حقول الكيان المرتبط (Related Entity Fields)**: حقول الكيان المرجعي باستخدام الترميز النقطي (مثل `{department.name1}` و`{customer.creditLimit}`)
 - **القيم المحسوبة (Calculated Values)**: حسابات مخصصة أو قيم منسقة
@@ -111,7 +111,7 @@ English: "Confirmation: This is a large amount, do you want to proceed?"
 
 **خيارات الإعداد:**
 
-**Allow Modify While Under Approval** (إعداد عام):
+**Allow Modify While Under Approval** (في تعريف الموافقة):
 - عند **التعطيل** (الافتراضي): لا يمكن تعديل السجلات أثناء عملية الموافقة
 - عند **التفعيل**: يمكن تعديل السجلات بناءً على إعدادات السياسة أدناه
 
@@ -132,12 +132,12 @@ English: "Confirmation: This is a large amount, do you want to proceed?"
 3. **Prevent Modify**
    - لا يُسمح بأي تعديلات بغض النظر عن أذونات المستخدم
    - أعلى مستوى أمان لخطوات الموافقة الحرجة
-   - يتجاوز الإعداد العام `allowModifyWhileUnderApproval`
+   - يتجاوز خيار **Allow Modify While Under Approval** في التعريف
 :::
 
 #### التحكم في التعديل على مستوى الحقل (Field-Level Editing Control)
 
-بالإضافة إلى الإعداد العام `allowModifyWhileUnderApproval`، يوفر النظام تحكماً دقيقاً على مستوى الحقل في ما يمكن تعديله أثناء الموافقة. يتيح هذا للمؤسسات السماح بتعديل حقول معينة مع إبقاء حقول أخرى مقفلة.
+بالإضافة إلى خيار **Allow Modify While Under Approval** في تعريف الموافقة، يوفر النظام تحكماً دقيقاً على مستوى الحقل في ما يمكن تعديله أثناء الموافقة. يتيح هذا للمؤسسات السماح بتعديل حقول معينة مع إبقاء حقول أخرى مقفلة.
 
 **خيارات الإعداد:**
 
@@ -168,7 +168,7 @@ User attempts to edit field during approval:
 
 **خيارات الإعداد:**
 
-**Require OTP For All Steps** (إعداد عام):
+**Require OTP For All Steps** (في تعريف الموافقة):
 - عند **التفعيل**: تتطلب جميع خطوات الموافقة التحقق عبر OTP
 - ينطبق على كل خطوة في تعريف الموافقة
 - يتجاوز إعدادات الخطوة الفردية
@@ -216,10 +216,11 @@ User attempts to edit field during approval:
 استخدم **Criteria Definition** و**Apply When Query** لإنشاء مشغلات موافقة متطورة:
 
 ```sql
--- Example: Approve invoices above 50,000 SAR
-SELECT case when {totalAmount} > 50000 then 1 else 0 end
-
+-- مثال على تعريف موافقة لأمر الشراء: اعتماد الأوامر التي تتجاوز 50,000
+SELECT CASE WHEN {money.netValue} > 50000 THEN 1 ELSE 0 END
 ```
+
+الأسماء بين الأقواس هي أسماء حقول السجل المراد اعتماده، وتجدها لكل شاشة في [dm.namasoft.com](https://dm.namasoft.com). وصافي الفاتورة أو الأمر هو `money.netValue`. وإذا كتبت اسمًا ليس من حقول السجل أعاد الاستعلام 0، فلا تبدأ الموافقة أبدًا.
 
 ### قواعد الموافقة (Approval Rules)
 
@@ -334,6 +335,16 @@ toWarehouse.warehouseKeeper,toWarehouse.warehouseKeeper.directSupervisor
 افتح تعريف موافقة جديدًا، ثم **المزيد ← Import Into Current Record** والصق الملف — راجع [الاستيراد إلى السجل الحالي](/ar/platform/import-export/importing-records.md#lstyrd-l-lsjl-lmftwH-mmk).
 :::
 
+#### نوع المسئول = استعلام: قائمة ثابتة من استعلام
+
+اجعل **نوع المسئول** في الخطوة **استعلام** عندما يكون أسهل وصف للمعتمِدين أنه شرط على الموظفين، مثل كل موظفي إدارة معينة. ويأخذ حقل **الاستعلام** في الخطوة استعلام HQL يختار سجلات **الموظفين (Employee)**:
+
+```
+select e from Employee e where e.department.code = '01'
+```
+
+كل موظف يُرجعه الاستعلام يصبح مرشحاً للخطوة، ويُضاف إليهم بدلاء التعريف. ويكتب HQL أسماء الكيانات وحقولها (`Employee` و`e.department.code`) لا أسماء الجداول والأعمدة (`department_id`). ولا يستقبل الاستعلام علامات `{fieldId}`، فيُرجع الأشخاص أنفسهم لكل سجل؛ أما لاختيار المعتمِدين من بيانات السجل نفسه فاستخدم **من حقل** كما في المثال السابق.
+
 ### المعتمِدون البدلاء (Alternate Approvers)
 
 يوفر النظام مرونة من خلال السماح للمعتمِدين البدلاء الذين يمكنهم التصرف في أي خطوة من خطوات عملية الموافقة، بغض النظر عن تعيينات الخطوة المحددة. يضمن هذا إمكانية المضي في الموافقات حتى عند عدم توافر المعتمِدين الأساسيين.
@@ -438,6 +449,13 @@ toWarehouse.warehouseKeeper,toWarehouse.warehouseKeeper.directSupervisor
 | **Revise On Completion** | تمييز السجل كمراجَع بعد الموافقة (يقفل التعديل/الحذف) |
 | **Allow Modify While Under Approval** | السماح بتعديل السجلات أثناء عملية الموافقة |
 | **Require OTP For All Steps** | اشتراط التحقق عبر OTP لجميع قرارات الموافقة |
+| **الموافقة للسطور** (Approve Lines) | طلب الموافقة على السطور التي تستوفي شروط التعريف بدلًا من السجل كله، ويبتّ المعتمِدون في هذه السطور |
+| **عند رفض سطر يتم حذفه** (Reject Line Delete It) | حين تنتهي الحالة بالموافقة تُحذف من السجل السطور التي رفضها أحد المعتمِدين. ولا يقبله إلا نوع سجل يدعم الموافقة على مستوى السطر |
+| **السماح بالتعديل بعد الاستخدام** (Allow Edit After Usage) | يسمح بتعديل هذا التعريف ما دامت هناك سجلات مبنية عليه تنتظر الموافقة، وبدونه يُرفض هذا الحفظ |
+| **طلب ملاحظة في روابط الموافقة** (Request Comment In Approval Links) | يُطلب من المعتمِد الذي يبتّ من روابط بريد الموافقة أن يكتب ملاحظة |
+| **تجاهل صلاحيات الاستخدام عند الموافقة** (Ignore Usage Capability When Approving) | حين يحفظ قرارُ المعتمِد السجلَّ لا تُفحص صلاحيات الاستخدام لدى المعتمِد على السجلات التي يشير إليها |
+| **حذف باقي مسئولين الموافقة عند التصعيد** (Remove Other Employees From approval When Escalate) | حين يصعّد المعتمِد الخطوة إلى موظف بعينه يُستبعد باقي المرشحين على الخطوة، فلا يبتّ فيها إلا الموظف المُصعَّد إليه |
+| **WhatsApp Message** و**المرسل المفضل لواتساب** و**Telegram Message** | إرسال الطلب إلى كل معتمِد أيضًا عبر [واتساب](/ar/platform/notifications/sms-and-whatsapp) أو [تيليجرام](/ar/platform/notifications/telegram) |
 | **Fallback** | الموظف للتعامل مع أخطاء النظام (مطلوب) |
 | **Alternate** | الموظف الذي يمكنه الموافقة على أي خطوة |
 | **Other Alternates** | بدلاء ديناميكيون (المشرف، القائم على الحقل، إلخ) |
@@ -487,7 +505,7 @@ toWarehouse.warehouseKeeper,toWarehouse.warehouseKeeper.directSupervisor
 
 ```sql
 -- مثال على خطوة: اطلب هذه الخطوة فقط عندما يتجاوز الإجمالي 100,000
-SELECT case when {totalAmount} > 100000 then 1 else 0 end
+SELECT CASE WHEN {money.netValue} > 100000 THEN 1 ELSE 0 END
 ```
 
 ::: tip يُعتبر المستند محفوظاً عندما لا تنطبق آخر خطوة اختيارية
@@ -535,6 +553,8 @@ SELECT case when {totalAmount} > 100000 then 1 else 0 end
 
 ::: tip الأسباب والملحوظات تغطي القرارين معاً
 أسباب الموافقة المعلَّم عليها **تستخدم مع التصعيد** (Used With Escalation) تظهر مع قرارات التصعيد الثلاثة جميعاً، كما أن إعدادَي الخطوة **يجب إدخال ملحوظة مع التصعيد** و**يجب إدخال السبب مع التصعيد** يسريان على التصعيد إلى المدير الأعلي وإلى المشرف المباشر على حد سواء. فلا حاجة إلى قائمة أسباب منفصلة لكل مسار تصعيد.
+
+والإرجاع يسير على النهج نفسه: لقرار **إرجاع لخطوة محددة** عمودان خاصان في جدول الخطوات، **يجب إدخال الملاحظات مع الإرجاع لخطوة محددة** و**يجب إدخال السبب مع الإرجاع لخطوة محددة**، وتظهر معه أسباب الموافقة المعلَّم عليها **تستخدم مع الإرجاع لخطوة محددة**.
 :::
 
 ##### تأثير الإعداد
@@ -618,7 +638,7 @@ SELECT case when {totalAmount} > 100000 then 1 else 0 end
 
 القرارات السابقة هي ما يختاره المعتمِد. وهذه هي الأزرار التي توصله إليها، وهي على شاشات السجلات العادية لا على شاشة تعريف الموافقة نفسها.
 
-- **الموافقة على السجلات المختارة** (Approve Selected Lines) — القرار المجمَّع، ويُعرض في شاشة قائمة أي كيان خاضع للموافقة. أشّر على السطور المعلَّقة واضغطه، فتحسمها نافذة واحدة: **القرار** و**تصعيد إلى** (موظف أو صلاحية أو مجموعة موظفين) و**الرقم السري المؤقت** حيث تطلبه الخطوة و**ملاحظات** للتسبيب و**سبب الموافقة**. ويرفض العمل إن لم تؤشّر على شيء، ويرفضه ثانية إن تركت القرار فارغًا. وقائمة قراراته تحمل ستة من الثمانية: موافقة، ورفض، وإرجاع، وتصعيد إلى المدير الأعلي، وإرجاع للخطوة السابقة، وتصعيد الي موظف بعينه — أما **إرجاع لخطوة محددة وتصعيد إلى المشرف المباشر فلا يتاحان إلا على سجل واحد في كل مرة**، لأن كليهما يقتضي النظر في قائمة خطوات الحالة نفسها أولًا.
+- **الموافقة على السجلات المختارة** (Approve Selected Lines) — القرار المجمَّع، ويُعرض في شاشة قائمة أي كيان خاضع للموافقة. أشّر على السطور المعلَّقة واضغطه، فتحسمها نافذة واحدة. املأ ما يحتاجه القرار — **تصعيد إلى** (موظف أو صلاحية أو مجموعة موظفين) و**الرقم السري المؤقت** حيث تطلبه الخطوة و**ملاحظات** للتسبيب و**سبب الموافقة** — ثم اضغط القرار نفسه: في النافذة زر **موافقة** وزر **رفض** وزر **إرجاع**. وبقية القرارات خلف زر **قرار آخر**، الذي يفتح نافذة ثانية فيها زر لكل قرار. ويرفض العمل إن لم تؤشّر على شيء. والقرارات المتاحة هنا ستة من الثمانية: موافقة، ورفض، وإرجاع، وتصعيد إلى المدير الأعلي، وإرجاع للخطوة السابقة، وتصعيد الي موظف بعينه — أما **إرجاع لخطوة محددة وتصعيد إلى المشرف المباشر فلا يتاحان إلا على سجل واحد في كل مرة**، لأن كليهما يقتضي النظر في قائمة خطوات الحالة نفسها أولًا.
 - **إلغاء طلب الموافقة** (Revoke Approval Request) — يلغي طلب الموافقة المعلَّق ويخرج السجل من دورة الموافقات. ويعمل على السجل الذي أنت فيه، أو على كل سطر أشّرت عليه في القائمة.
 - **نقل الموافقات إلى الموظف المفوض** (Move Approvals To Delegated Employee) — في شاشة **التفويض**. احفظ التفويض وأشّر على السطور، فتنتقل حالات الموافقة المعلَّقة الخاصة بالموظف المفوِّض إلى المفوَّض إليه. وهذا هو الزر الذي يجعل التفويض بأثر رجعي؛ فبدونه لا يلتقط التفويض الجديد إلا الحالات التي تنشأ بعده.
 
@@ -649,7 +669,7 @@ SELECT case when {totalAmount} > 100000 then 1 else 0 end
 <p>Please review and approve the following {entityType}:</p>
 <ul>
     <li><strong>Document:</strong> {link(this)} (#{code})</li>
-    <li><strong>Amount:</strong> {totalAmount}</li>
+    <li><strong>Amount:</strong> {money.netValue}</li>
     <li><strong>Department:</strong> {department.name2}</li>
     <li><strong>Date:</strong> {$creationDate}</li>
     <li><strong>Current Step:</strong> {$notificationInfo.approvalCase.nextStepName2}</li>
@@ -675,7 +695,7 @@ SELECT case when {totalAmount} > 100000 then 1 else 0 end
 **مثال قالب الرسائل القصيرة:**
 ```
 {$notificationInfo.employee.name2}: Approval needed for {entityType} #{code}
-Amount: {totalAmount}
+Amount: {money.netValue}
 OTP: {$notificationInfo.otp}
 
 {approvelink}
@@ -686,7 +706,7 @@ OTP: {$notificationInfo.otp}
 ```
 <strong>Approval Request</strong>{enter}
 {entityType} #{code} requires your approval{enter}
-Amount: {totalAmount}{enter}
+Amount: {money.netValue}{enter}
 Department: {department.name1}{enter}
 {enter}
 {titledlink("View Details", this)}
@@ -698,7 +718,7 @@ Department: {department.name1}{enter}
 تتمتع جميع قوالب الإشعارات بالوصول إلى كائنات السياق والمتغيرات التالية:
 
 **حقول المستند:**
-- الوصول المباشر للحقل: `{code}` و`{totalAmount}` و`{creationDate}` إلخ
+- الوصول المباشر للحقل: `{code}` و`{money.netValue}` و`{creationDate}` إلخ
 - حقول الكيان المرتبط: `{customer.name1}` و`{department.code}` إلخ
 - حقول النظام: `{entityType}` و`{firstAuthor}` و`{currentVersion}`
 
@@ -835,7 +855,7 @@ Department: {department.name1}{enter}
 <h3>Document Details:</h3>
 <ul>
     <li><strong>Document:</strong> {link(this)}</li>
-    <li><strong>Amount:</strong> {totalAmount}</li>
+    <li><strong>Amount:</strong> {money.netValue}</li>
     <li><strong>Requested By:</strong> {currentApprovalCase.requestedBy.name2}</li>
     <li><strong>Request Date:</strong> {currentApprovalCase.requestDate}</li>
 </ul>

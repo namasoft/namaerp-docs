@@ -1,4 +1,5 @@
 ---
+description: "Development request SRDRQ06178: term options that keep a stock receipt in step with a purchase order's unsatisfied quantity, hide fully executed orders, and date or split receipts a purchase invoice generates."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---

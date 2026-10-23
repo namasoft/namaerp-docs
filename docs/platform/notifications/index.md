@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Notifications
+description: "Landing page for notifications: notification definitions, SMS and WhatsApp, Telegram, general announcements, bulk messages and internal chat."
 ---
 
 # Notifications

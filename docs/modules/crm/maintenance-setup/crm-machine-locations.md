@@ -1,4 +1,5 @@
 ---
+description: "The Building, Floor and Room master files that record where a maintained machine is installed, how to fill the location on a machine, and what it is used for."
 entities: [MnBuilding, MnFloor, MnRoom]
 ---
 # Buildings, Floors and Rooms

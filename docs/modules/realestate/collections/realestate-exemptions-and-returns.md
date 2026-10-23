@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate Exemption Document, which waives rent installments without cash, and the RE Return Payment Document, which pays money or rebates back to the buyer, with worked examples."
 entities: [REExemptionDoc, REReturnPaymentDoc]
 ---
 # Exemptions and Returning Money to the Buyer

@@ -103,7 +103,7 @@ When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCar
     // Badge (optional delta indicator)
     "badge": {
       "field":      "deltaPercent",
-      "formatting": { "type": "percent", "decimals": 1 },
+      "formatting": { "type": "percent", "decimals": 1, "percentScale": "fraction" },  // SQL returns 0.125 → 12.5%
       "prefixIcon": { "positive": "trending_up", "negative": "trending_down", "zero": "remove" },
       "colorRules": { "rules": [
         { "when": { "type": "threshold", "op": ">=", "value": 0 }, "style": { "color": "#065f46" } },
@@ -151,6 +151,8 @@ When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCar
   "clickAction":       { "type": "crossFilter", "targetKey": "..." }
 }
 ```
+
+A `percent` value is shown **as is** unless the formatting says otherwise: `12.5` becomes `12.5%`. When the SQL returns a fraction (`0.125`), add `"percentScale": "fraction"` as in the badge above, or the badge reads `0.1%`. The other formatting options — decimals, currency, dates, `nullDisplay` — are the same as the EnhancedTable's; see [Formatting](/platform/bi/bi-reference-enhanced-table.md#41-formatting).
 
 ### `cardLayout.direction`
 

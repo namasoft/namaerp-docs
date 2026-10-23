@@ -1,4 +1,5 @@
 ---
+description: "Catalogue of the system-wide refusal and error messages (authority, licence, login, saving and deleting, periods, budgets, configuration), what each one protects and where the fix lives."
 entities: [EntityHelp]
 menu: Administration → Other → Entity Help
 ---
@@ -76,7 +77,7 @@ row; these are the messages that send you there.
 | *You do not have the authority {1} on entity {0}* — «لا توجد لديك الصلاحية {1} على النوع {0}» | The permission named in `{1}` is not granted for that type. | Find the winning row for the type and grant it, or have the work done by a role that has it. |
 | *The user {0} does not have the capability {1} on the type {2}* — «المستخدم {0} ليس لديه الصلاحية {1} للنوع {2}» | The same thing, raised where the check knows which user it is about — typically **Edit While Under Approval**. | As above. |
 | *The user {0} level ({1}) does not include the entity type {2}* — «السمتخدم {0} يتبع المستوي {1} و هو غير مسموح له بحفظ السجلات من النوع {2}» | This is the **user level** from the licence, not a security profile. The level the user belongs to does not license that entity type at all, so no profile can grant it. | Move the user to a level that covers the type, or extend the licence. See [Users and Login](/platform/security/users-and-login). |
-| *Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة حفظ الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | Recommitting a record — reprocessing its effects — is a separate permission from saving it. | Grant it on the profile if the user is meant to run recoveries. |
+| *Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي لا يستطيع إعادة حفظ الملفات برجاء مراجعة إختيارات ملف الصلاحيات» | Recommitting a record — reprocessing its effects — is a separate permission from saving it. | The switch, **Allow Record Recommiting**, is on by default but hidden from the Security Profile screen. If the user is meant to run recoveries, show it with a Screen Modifier and tick it — see [Fields hidden on purpose](/platform/security/security-profiles#Fields-Hidden-on-Purpose). |
 | *You can not change public records* — «لا يمكنك تعديل السجلات العامة» | The record belongs to no legal entity; the user belongs to one. | Edit it from a user whose legal entity is public. |
 
 ## Licence, users and login

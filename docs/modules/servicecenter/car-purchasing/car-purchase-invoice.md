@@ -141,8 +141,8 @@ the purchase return. If two documents in the same chain have it on:
 
 The whole model rests on it. A car record is created **per line**, never per unit of quantity, so a
 line of six cars produces one car record. The *Spread Sub Item Lines If Qty Greater Than One* option
-only splits lines when a document is built *from* another document — it does nothing for a
-hand-typed line.
+splits lines when a document is built *from* another document; a hand-typed line stays as you
+typed it.
 
 Type six lines of one. And tick *Prime Quantity Must Be One* on the item's status configuration so
 that anything else is refused.
@@ -174,8 +174,7 @@ Whichever term does generate, switch
 *عدم إنشاء مستندات إذا وجدت مستندات يدوية (Do Not Generate Documents If Manual Documents Found)* on,
 so a collected receipt suppresses a second generation.
 
-Note that unticking *Generate Document* on the **Car Receipt** term does **not** stop it — that
-switch is ignored there, and only blanking the book and the term works.
+To stop the **Car Receipt** generating, clear the Generation Book or the Generation Term on its term.
 :::
 
 ## Actions on this screen
@@ -185,8 +184,8 @@ switch is ignored there, and only blanking the book and the term works.
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — runs the car-creation
   routine against the grid on demand: for every line whose item has sub items it creates the car
   record (or refreshes the one already on the line) and writes it back onto the line. The car record
-  is saved straight away. It does nothing, and shows no message, unless the term's *Create Sub Item
-  From Line Info* option is on.
+  is saved straight away. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.
 - **Reverse Document** (*عكس المستند*) — the invoice must be saved; opens a new, unsaved
   [Car Purchase Return](/modules/servicecenter/car-purchasing/car-purchase-return.md) with this
   invoice's lines copied in.

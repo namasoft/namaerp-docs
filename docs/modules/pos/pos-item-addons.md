@@ -1,4 +1,5 @@
 ---
+description: "Item add-ons at the POS: the POS Item Additional Items setup that offers up to ten groups of choices when an item is added, with single or multiple, required and default choices."
 entities: [NamaPosItemAdditionalItems]
 menu: Point of sale → Settings → POS Item Additional Items
 ---

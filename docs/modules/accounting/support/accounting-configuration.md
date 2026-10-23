@@ -107,7 +107,7 @@ Each of these switches the check off for a whole document type — every user, e
 |---|---|
 | Merge accounts and charts auto-coding | Unify the auto-coding logic. |
 | Allow repeating the auto-coding prefix in the paper book | Permit prefix repetition. |
-| Create transactions for empty lines | Process empty lines. |
+| Create System Transaction for Empty Lines | When a document's term writes no lines (every account side empty), still write an entry with no lines. Off, such a document is processed with no entry at all. |
 | Allow transfers between more than two companies in inter-company transfer | Extend inter-company transfer beyond two parties. |
 
 ## For Support

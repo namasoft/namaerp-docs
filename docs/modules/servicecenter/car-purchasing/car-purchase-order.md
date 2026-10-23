@@ -1,4 +1,5 @@
 ---
+description: "The Car Purchase Order and Car Proforma Purchase Invoice that open the car buying chain: their screens, payment schedules, where car records are created, actions and car status changes."
 entities: [SIPurchaseOrder, SIProformaPurchaseInvoice]
 ---
 # Ordering Cars
@@ -77,21 +78,7 @@ What it is genuinely for:
 3. being a *From Document* source for the real Car Purchase Invoice;
 4. tracking the quantity so the invoice knows what is left.
 
-::: danger The pro-forma does not post — but the *Regenerate Accounting Effects* action will make it
-Its document term shows a **complete** invoice financial-effects page: debit and credit sides, cash,
-taxes, eight discount accounts, service-fee sides — the lot. **None of it is read when the document
-commits.** Fill every account on that page and the pro-forma still books nothing, silently, with no
-message telling you why.
-
-Worse, the generic **More → إعادة إنشاء التأثيرات المحاسبية (Regenerate Accounting Effects)** action
-does *not* go through the same path. It reaches the standard invoice posting routine and **will**
-create a journal entry from those accounts — one that no ordinary commit, re-commit or cancel of the
-document ever produced.
-
-So: treat the Car Proforma Purchase Invoice as a **non-financial** document, leave the accounting
-page on its term empty, and do not run *Regenerate Accounting Effects* on it. If you have run it,
-look for the resulting entry and reverse it deliberately.
-:::
+The Car Proforma Purchase Invoice creates no journal entry.
 
 It is also worth stating what the pro-forma is **not**, because the name invites both guesses: it is
 **not a capitalisation document** and it is **not a distribution base**. Its value is not spread

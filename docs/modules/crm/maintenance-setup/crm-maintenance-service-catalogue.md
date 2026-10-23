@@ -1,4 +1,5 @@
 ---
+description: "The Machine Maintenance Service file, the priced catalogue of visits and charges used on maintenance quotations, contracts and invoices, and how it differs from the similarly named file."
 entities: [MnMaintenanceService]
 menu: Customer Relationship Management → Maintenance Files → Machine Maintenance Service
 ---
@@ -62,7 +63,7 @@ Keep it short and priced honestly. A useful shape for a fresh installation:
 4. Review the prices when you review your price list — nothing links this catalogue to the sales price list, so it will not update itself.
 
 ::: warning The services suite has no catalogue like this at all
-If you also hold the `crm-maintenance-services` licence, do not go looking for the equivalent file there. In that suite **services carry no price whatsoever**: the *Total Price Of Services* box on every service document is permanently 0.00, and a service invoice can bill spare parts only. To charge for labour in the services suite, sites register it as a stock item and put it in the spare-parts grid. That is covered on the [service invoicing page](/modules/crm/services-suite/crm-service-invoicing).
+If you also hold the `crm-maintenance-services` licence, do not go looking for the equivalent file there. In that suite **services carry no price**, and a service invoice bills its spare-part lines. To charge for labour in the services suite, sites register it as a stock item and put it in the spare-parts grid. That is covered on the [service invoicing page](/modules/crm/services-suite/crm-service-invoicing).
 :::
 
 The catalogue itself has no accounting or inventory effect, generates nothing and validates nothing beyond the ordinary master-file rules. And, as everywhere in this module, there is **no report and no dashboard** telling you which services sold best — filter and export the order or invoice list screens, or build it in BI.

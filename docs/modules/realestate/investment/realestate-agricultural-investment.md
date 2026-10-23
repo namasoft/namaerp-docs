@@ -1,4 +1,5 @@
 ---
+description: "Agricultural investment contracts, where one investor pays a lump sum for a schedule of profit installments: the contract category, generating and amending the schedule, and claiming the profit."
 entities: [AgrInvestmentContract, AgrInvestContrProfitClaim, AgrInvestmentContractCategory]
 ---
 # Agricultural Investment Contracts

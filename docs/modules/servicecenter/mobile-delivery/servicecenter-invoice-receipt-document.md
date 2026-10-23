@@ -1,4 +1,5 @@
 ---
+description: "The Invoice Receipt Document that records what a customer actually received against a delivered sales invoice, generates the mismatched lines and returned packaging, and its messages."
 entities: [InvoiceReceiptDoc]
 menu: Service Center → Mobile Apps - Service Center → Invoice Receipt Document
 ---
@@ -92,15 +93,7 @@ Cancelling the invoice receipt document deletes both generated documents.
 
 Two useful consequences to keep in mind: the invoice receipt document has **no inventory effect of its own** — every stock movement belongs to the generated sales return and the generated stock transfer, each under its own book and توجيه — and it has **no accounting effect of its own** either.
 
-::: warning Three توجيه blocks on this document do nothing
-Because this document does not run the standard document effect pipeline, three things you will find on its توجيه screen are inert here:
-
-- the **inventory reservation** settings,
-- **box and lot tracking**,
-- any **rule set** configured to generate further documents.
-
-They are drawn on the screen because the [document term](/modules/servicecenter/document-terms/servicecenter-terms-basics.md) inherits them from the ordinary sales-document family, but nothing on this document reads them. Configure the sales return and stock transfer books and terms — those are the settings that work.
-:::
+The settings that shape this document on its توجيه are the sales return and stock transfer books and terms, and the packaging classification described next.
 
 ## The packaging classification setup
 

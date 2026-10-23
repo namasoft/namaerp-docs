@@ -59,28 +59,6 @@ That 40 is the raw material for the [daily capacity sheet](/modules/servicecente
 
 The number is computed on the capacity sheet, not here. The work center simply supplies the two factors.
 
-::: warning The first booking of a day is never checked
-The check that compares a booking against the reception window and the appointment hours only runs when the day already holds another reservation. The **first** booking of any day passes untested — it can be for fifty hours, at midnight, and nothing objects. The second one is checked, and the total includes the first.
-
-In practice this means a shop that takes one appointment a day is not being controlled at all, and a wrongly entered first booking silently eats the day's capacity before anyone notices.
-:::
-
-::: danger Publish capacity for one hall only
-The daily capacity sheet does not distinguish between work centers. If you publish a sheet for the mechanical hall and another for the body-and-paint hall over the same dates, one silently overwrites the day capacity the other published, and a booking can end up checked against the wrong hall's hours.
-
-Until this is fixed, treat published capacity as an **installation-wide** figure: publish it once, for the shop you actually want to control, and manage the second hall's load by hand. Do not build a multi-hall capacity plan on it.
-:::
-
-### The Resources Grid
-
-Below the basic block sits a grid headed **Resources** (` موارد التشغيل`), with three columns — **Resource** (` مورد تشغيل`), **Resources Count** (العدد) and **Work Hours** (ساعات العمل). It invites you to list the lift, the alignment rig, the paint booth and how many hours a day each is available.
-
-::: warning This grid is recorded and never used
-Nothing in the module reads these rows. There is no equipment scheduling, no finite-capacity check, no "the alignment rig is busy" message — the counts and hours you type here change no behaviour anywhere.
-
-Fill the grid if you want the file to describe the shop honestly for a human reader, and leave it empty if you do not. Either way, plan equipment availability outside the system.
-:::
-
 ### Dimensions
 
 The standard block — Legal Entity (الشركة), Branch (الفرع), Sector (القطاع), Department (الإدارة) and Analysis Set (المجموعة التحليلية) — files the work center in the organisation. See [Dimensions and Composite Dimensions](/platform/shared-master-files/dimensions-and-composite-dimensions) for what the five are and how one is created.
@@ -102,7 +80,7 @@ The work center's rate is what the **server-side recalculation** falls back to w
 The work center is the **only** workshop resource in the module. There is no bay record, no equipment calendar, no technician roster with a capacity, and no parent/child structure of shops. A shop is one flat file with a bay count on it.
 
 ::: warning "Station" is not a workshop bay
-Under the same Master Files folder you will find a master file called **Service Center Station** (`محطة`). It looks like it should be a bay or a work station, and it is not: it belongs to the vehicle **trip and route** feature, where it names a departure or arrival point. It has no fields beyond code, names, dimensions and attachments, and nothing in the workshop reads it.
+Under the same Master Files folder you will find a master file called **Service Center Station** (`محطة`). It looks like it should be a bay or a work station, and it is not: it belongs to the vehicle **trip and route** feature, where it names a departure or arrival point. It has no fields beyond code, names, dimensions and attachments.
 
 Do not model your bays as stations. Model them as the bay count on the work center — that is the only place the number means anything.
 :::
@@ -113,6 +91,5 @@ Do not model your bays as stations. Model them as the bay count on the work cent
 2. Create the record with its code and both names, point **Warehouse** at the store the shop draws parts from, and set **Hour Price** to the rate you will also put on your task rows.
 3. Set the reception window to the hours the desk really takes cars in — an appointment outside it is refused, so a wrong window is felt immediately.
 4. Type the bay count and hours per bay. These are the two factors behind the shop's daily hours; get them right before anyone publishes capacity.
-5. Leave the resources grid to your own judgement, knowing it is descriptive.
 
 Once the work center exists you can build the [task catalogue](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) and bundle tasks into [services](/modules/servicecenter/workshop-setup/servicecenter-operations.md).

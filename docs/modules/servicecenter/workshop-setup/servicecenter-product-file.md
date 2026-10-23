@@ -39,7 +39,7 @@ Every workshop page in this documentation is about this car.
 ::: danger The workshop's vehicle file and the showroom's car record are not connected
 Al-Sahra also sells cars, and a car it sells gets a completely different record in a completely different register — the **[car file](/modules/servicecenter/cars-setup/car-master-file.md)**, under the `cars` menu root, with its own status engine and its own documents.
 
-There is **no working link between the two**. A car sold by the showroom does not appear in the workshop's product list, and servicing a car does not touch the showroom record. The two reference fields in the model that were meant to join them are on no screen and are read by no code.
+There is **no working link between the two**. A car sold by the showroom does not appear in the workshop's product list, and servicing a car does not touch the showroom record.
 
 If you need the same physical vehicle to be visible on both sides, you must create it twice — once as a car record when it is bought, once as a product when it first comes in for service — and keep the chassis number identical so a human can match them. Nothing automates that, and nothing checks it.
 :::

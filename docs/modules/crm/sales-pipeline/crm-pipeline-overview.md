@@ -1,3 +1,6 @@
+---
+description: "Overview of the CRM sales pipeline screens (Lead, Potential, Offer, Analysis, CRM Project, Development Request): where they are and which buttons link them."
+---
 # Sales Pipeline Overview
 
 Al Nokhba Air Conditioning Systems met Marina Plaza Hotels on a stand at the International Cooling Expo on 8 January 2026. Four days later Hala Samir Abdel Rahman opened a **CRM Lead** and typed in what she knew: a hotel in Alexandria, a plant room being refurbished, two 300-TR chillers and an air-handling unit wanted, and a chief engineer who takes the calls. Five weeks after that, Marina Plaza was a customer in the accounting system.
@@ -66,7 +69,7 @@ Two side exits leave the same two screens:
                                    back to this lead or potential
 ```
 
-**Convert To Customer may be pressed on the Lead directly.** Promoting to a Potential first is a convention, not a requirement — nothing forces a lead through the Potential screen, and nothing checks the sales stage before a conversion.
+**Convert To Customer may be pressed on the Lead directly.** Promoting to a Potential first is a convention, not a requirement, and a conversion does not depend on the sales stage.
 
 ::: warning The chain stops at the quotation
 There is no step after *Create Sales Quotation*. The quotation is an ordinary Supply Chain document from that moment on, and it carries no reference back to the lead or the potential it came from. That means **there is no lead-to-order conversion reporting anywhere in the product** — you cannot ask "which quotations came from the January expo campaign", because the quotation does not know.
@@ -76,7 +79,7 @@ There is no step after *Create Sales Quotation*. The quotation is an ordinary Su
 
 The Offer, the Analysis and the CRM Project sit in the same menu and use the same visual language, so readers reasonably assume they continue the story. They do not.
 
-::: danger Offers, Analysis and Projects are stand-alone screens
+::: info Offers, Analysis and Projects are stand-alone screens
 - **No button anywhere creates an Offer from a Lead or a Potential.** None exists on either screen. An Offer is typed from scratch and, if you want it connected to the prospect, you fill its *Related To* (يرتبط بـ) reference field by hand.
 - **No button anywhere creates a CRM Project from an Offer or an Analysis** — and, the part that surprises people, **you cannot make that link by hand either.** The Project's *Related To* field accepts a Lead, a Potential, another Project, a Campaign, a Trouble Ticket, a Customer or a Development Request. An Offer is not in that list and neither is an Analysis. A project can therefore never point at the work package that preceded it, by any route at all.
 - **Nothing is generated out of an Offer, an Analysis or a Project.** No quotation, no order, no invoice, no accounting entry, no stock movement.
@@ -93,7 +96,7 @@ The Lead and the Potential both carry a **Sales Stage** (مرحلة البيع) 
 Both are pure record-keeping. Nothing in the product calculates from either one:
 
 - there is no weighted pipeline value and no forecast;
-- *Closed Won* and *Closed Lost* change nothing — they do not lock the record, do not create anything, and are not required before a conversion;
+- *Closed Won* and *Closed Lost* are labels too — they do not lock the record, do not create anything, and are not required before a conversion;
 - no rule stops a stage moving backwards, and nothing sets a stage automatically.
 
 They earn their keep on the list screen, where **Status** and **Sales Stage** are the two quick-filter chips, and as criteria you can filter and export by.
@@ -101,7 +104,7 @@ They earn their keep on the list screen, where **Status** and **Sales Stage** ar
 ## A Pipeline With No Value
 
 ::: warning You cannot record what a deal is worth
-The Lead screen shows a group labelled *Currency* holding a **currency** and an **exchange rate** — and no amount. The amount field exists behind the screen but is not on it. On the Potential, the field named *Value Of Deal* is not on the screen either, and it has no Arabic or English label at all.
+The Lead screen shows a group labelled *Currency* holding a **currency** and an **exchange rate**, and neither the Lead nor the Potential screen has an amount box.
 
 The **Budget** (الميزانية) box on the Lead is free text, so `about EGP 4.5 million` is a note, not a number: it cannot be summed, averaged or sorted numerically.
 

@@ -37,7 +37,7 @@ These are checked whenever a password is set or changed.
 
 ## Two-factor authentication
 
-**Login Two-Factor Authentication Method** `value.info.login2FAMethod` — The second factor required at login: **None**, **Authenticator App** (a rotating code from an app on the user's phone), **Message OTP** (a one-time code sent to the user), or **Estidamah API**.
+**Login Two-Factor Authentication Method** `value.info.login2FAMethod` — The second factor required at login: **None**, **Message OTP** (a one-time code sent to the user), or **Estidamah API**.
 
 **Notification for Two-Factor Authentication OTP** `value.info.notificationFor2FAOtp` — The notification that carries the code. **Required** when the method is Message OTP — the system refuses to save otherwise, since a code nobody receives locks everyone out.
 
@@ -67,7 +67,7 @@ Like Estidamah, this requires `use-ldap-for-authentication=true` in `nama.proper
 
 **Allow Filling Disabled Fields with Creators** `value.info.allowFillingDisabledFieldsWithCreators` *(default on)* — Lets the system's own field creators write into fields the user is not allowed to edit. Usually what you want: a user who may not type the branch by hand should still get it filled in automatically.
 
-**Merge Alternate Security Profiles into Main User** `value.info.mergeAlternateSecurityProfilesIntoMainUser` — A user can hold alternate profiles. Normally they are switched between; with this on, they are merged into one effective set of permissions, so the user always has the union of what all their profiles allow.
+**Merge Alternate Security Profiles Into Main User** `value.info.mergeAlternateSecurityProfilesIntoMainUser` — A user who has been given another user's permissions with a [Security Profile Transfer](/platform/security/security-delegation) always holds the union of their own permissions and those transferred to them; this option does not change that. It only changes how the union is worked out: normally each check asks the user first and then each transferring user in turn, while with this on their rows are merged once into a single copy of the user and every check reads that copy. The result is the same, worked out faster where many transfers are active.
 
 **Display Prevented Records** `value.info.displayPreventedRecords` — Records the user has no view capability for are still listed (blocked, not opened) instead of vanishing. Some organisations prefer the visible "you may not see this" to a silently shorter list.
 

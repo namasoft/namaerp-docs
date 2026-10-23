@@ -10,8 +10,8 @@ the original and mark it. An allocation is cancelled by a Car Allocation Cancel;
 [final delivery](/modules/servicecenter/car-sales/car-final-delivery.md) by a Car Final Delivery
 Cancel.
 
-Understanding what that marker does — and, far more importantly, what it does **not** do — saves a
-great deal of confusion later.
+Understanding what that marker does, and where stock and money are undone instead, saves a great
+deal of confusion later.
 
 ::: info Required licence
 `srvcenter-subitems`.
@@ -19,8 +19,8 @@ great deal of confusion later.
 
 ## The one sentence to remember
 
-> **A cancellation document is a bookkeeping marker plus a status move. It does not unwind money and
-> it does not unwind stock.**
+> **A cancellation document is a bookkeeping marker plus a status move. Money and stock are unwound on
+> the original document.**
 
 Everything below is an elaboration of that sentence.
 
@@ -70,26 +70,18 @@ cancellations — that is not a mistake in this page.
 | Car Sales Order Cancel | Yes | **No** — the order's journal entry, including the booking deposit, stays exactly where it is | No | Its own status line |
 | Car Allocation Cancel | Yes | No — neither document posts | No | **Clears the five allocation fields on the car** |
 | Car Final Delivery Cancel | Yes | No | **No** — the delivery's stock issue is left in place | Its own status line |
-| Car Receipt Cancel | **No — it cannot** | No | **No** — the receipt's stock receipt is left in place | Its own status line |
+| Car Receipt Cancel | — | No | **No** — the receipt's stock receipt is left in place | Its own status line |
 | Car Traffic Letter Cancel / Request Cancel | Yes | No | No | Its own status line |
 
-::: danger Three traps in that table
-**1. Nothing is reversed except the marker and the status.** A cancelled sales order still has its
-booking-deposit journal entry. A cancelled final delivery still has its stock issue, so the car is
-still out of stock. A cancelled car receipt still has its stock receipt, so the car is still in
-stock. Cancelling changes what the paperwork says, not what the ledger and the warehouse say.
+::: warning Two things to know before you cancel
+**1. The ledger and the warehouse stay as they were.** A cancelled sales order keeps its
+booking-deposit journal entry. A cancelled final delivery keeps its stock issue, so the car stays
+out of stock. A cancelled car receipt keeps its stock receipt, so the car stays in stock. The next
+section shows how to undo each of them.
 
-**2. The Car Receipt Cancel cannot even mark its source.** The
-[car receipt](/modules/servicecenter/car-purchasing/car-receipt.md) is a purchase-side
-document and it has no cancelled field at all, so the cancellation has nowhere to write. It commits,
-it writes a status line on the car, and the original receipt shows no sign that anything happened to
-it. Do not rely on the receipt's own screen to tell you it was cancelled.
-
-**3. A cancellation saved without *From Document* commits and half-cancels.** There is no validation
-requiring the link. Save one with the field empty and the original is never marked — yet the
-document still writes its status line, and a **Car Allocation Cancel** still clears the allocation
-fields of whatever car is on its lines. Silent, partial, with nothing on screen to show for it.
-**Always fill *From Document*.**
+**2. Always fill *From Document*.** Nothing requires the link. A cancellation saved with the field
+empty still commits: the original is not marked, yet the document still writes its status line, and a
+**Car Allocation Cancel** still clears the allocation fields of whatever car is on its lines.
 :::
 
 ## So how do you actually undo something?
@@ -100,7 +92,7 @@ fields of whatever car is on its lines. Silent, partial, with nothing on screen 
 | A committed [sales invoice](/modules/servicecenter/car-sales/car-sales-invoice.md) | Raise a [Car Sales Return](/modules/servicecenter/car-sales/car-sales-return.md). There is no cancellation document for an invoice, and money that reached the ledger should come back through a return. |
 | An allocation | A [Car Allocation Cancel](/modules/servicecenter/car-sales/car-allocation.md), which does genuinely clear the five allocation fields. |
 | A sales order's booking-deposit entry | The ordinary accounting route. The cancellation does not touch it. |
-| A sales approval | Delete it. **No cancellation document targets the sales approval** — the cancelled fields exist on it but nothing can ever set them. |
+| A sales approval | Delete it. No cancellation document targets the sales approval. |
 
 ## The real reversal is the status move
 
@@ -116,13 +108,10 @@ The moves are yours to design. A site typically configures:
 Without those movement lines in the
 [car status configuration](/modules/servicecenter/cars-setup/car-status-configurations.md), a
 cancellation document commits and
-the car's status does not budge — which is the most common reason a site reports that "cancellation
-does nothing".
+the car's status stays where it was — so when a site reports that a cancellation left the car's
+status unchanged, check those movement lines first.
 
-::: warning The account block on a cancellation term is ignored
-Every cancellation document's term screen shows a full set of debit, credit, cash, tax and discount
-accounts. **None of these documents posts.** Anything configured there is silently ignored.
-:::
+None of the cancellation documents creates a journal entry.
 
 ## One more thing the cancelled marker does
 
@@ -140,5 +129,5 @@ The Car Sales Order Cancel, Car Allocation Cancel, Car Final Delivery Cancel, Ca
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — for every line whose item
   has sub items, creates the car record (or refreshes the one already on the line) from the line's
   data and writes it back onto the line. The car record is saved straight away, even before you save
-  the document. It does nothing, and shows no message, unless the term's *Create Sub Item From Line
-  Info* option is on.
+  the document. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.

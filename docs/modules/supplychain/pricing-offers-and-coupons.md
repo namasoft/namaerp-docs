@@ -70,11 +70,28 @@ Some incentives aren't granted at the time of sale but afterward (incentives, re
 ## Coupons (DiscountCoupon)
 
 The **Discount Coupon** is a targeted promotion tool: a discount value, item scope, usage limits, validity, and customer eligibility. Coupons are organized into:
-- **Coupon type** (DiscountCouponType): a category that governs its rules (store, online, seasonal).
-- **Coupon book** (DiscountCouponBook): a collection of coupons for a promotional campaign and its distribution.
-- **Coupon coding method** (SalesCouponsCodingMethod): the code format, its generation algorithm, and uniqueness validation.
+- **Coupon type**: a category that governs its rules (store, online, seasonal).
+- **Coupon book**: a collection of coupons for a promotional campaign and its distribution.
+- **Coupon coding method**: the code format, its generation algorithm, and uniqueness validation.
 
-At the point of sale, the coupon is applied via the **Coupons Sales Order** (CouponsSalesOrder), and its reversal on a return is handled via the **Coupons Sales Order Return** (CouponsSalesOrderReturn).
+At the point of sale, the coupon is applied via the **Coupons Sales Order**, and its reversal on a return is handled via the **Coupons Sales Order Return**.
+
+### Coupon book settings
+
+The **Discount Coupon Book** generates the coupons of a campaign and gives each one its settings. A coupon only reduces an invoice when **Use As Discount In Invoices** is ticked. Four settings decide how a percentage coupon is worked out:
+
+- **Percentage Tiers Based on Invoice Value** — a grid of *Invoice Value Greater Than Or Equal* / *Invoice Value Less Than Or Equal* / *Discount* rows, so a bigger invoice earns a bigger percentage: for example 5% from 0 to 999, 10% from 1,000 up. The first row the invoice value falls into wins; an invoice outside every row gets the coupon's own percentage. With tiers filled, the header **Percentage** may stay empty. The **Maximum Coupon Value (Used With Percentage Type)** still caps the discount.
+- **Invoice Value Used To Apply Coupon** — which invoice amount is compared with the tiers: *Total*, *Net Value* (the default when empty), *After Tax Value* or *After Discount 1*.
+- **Discount Apply Rules For Lines** and **Invoice discount apply on** — fill both to give the coupon only to some lines. The coupon's percentage is then written into the chosen discount column (Discount 1 to 8) of the lines that the [offer apply rule](./offer-apply-rules.md) picks, instead of a discount on the whole invoice. Either one needs the other.
+
+Tiers, apply rules and the discount column only work for a coupon whose **Discount Coupon Calculation Type** is *Percentage*, and a percentage coupon must also be **Used Once**. The book refuses to save otherwise:
+
+| Message | Why | What to do |
+|---|---|---|
+| *Discount coupon type must be Percentage when percentage tiers are used* | The tiers grid has rows but the calculation type is Value. | Switch the calculation type to Percentage, or empty the grid. |
+| *Invoice value range {0} - {1} is crossed with another tier* | Two tier rows overlap. This message has no Arabic translation, so it shows in English on Arabic screens. | Make the ranges follow one another without overlapping. |
+| *Discount coupon type must be Percentage when discount apply rules or discount location is set* — «نوع القسيمة لابد أن يكون نسبة عند تحديد قواعد تطبيق الخصم أو مكان الخصم» | Apply rules or a discount column are filled on a Value coupon. | Switch to Percentage, or clear both fields. |
+| *Option {0} must be true with {1} - {2}* — «الحقل {0} يجب ان يكون مفعلاً في حالة {1} - {2}» | A percentage coupon is not marked Used Once. | Tick **Used Once**. |
 
 ## Price Voting (PriceVotingDoc)
 

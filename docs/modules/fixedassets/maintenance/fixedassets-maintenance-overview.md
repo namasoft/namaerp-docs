@@ -1,3 +1,6 @@
+---
+description: "Overview of Fixed Assets maintenance: date-based maintenance plans, the five pieces to set up and their order, why maintenance targets an asset component, one plan worked through, and reading the history back."
+---
 # Fixed Assets Maintenance Overview
 
 A CNC machine that cost 240,000 does not survive five years on its own. Somebody greases it,

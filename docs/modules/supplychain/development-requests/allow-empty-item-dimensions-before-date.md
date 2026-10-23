@@ -1,4 +1,5 @@
 ---
+description: "Development request SRDRQ06261: the per-dimension cut-off date on Item Configurations that lets items tracked by batch, serial or other dimensions keep moving untagged stock dated before it."
 entities: [ItemConfigurations]
 menu: Inventory → Settings → Item Configurations
 ---

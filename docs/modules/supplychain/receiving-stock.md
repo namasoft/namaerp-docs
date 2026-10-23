@@ -1,4 +1,5 @@
 ---
+description: "Receiving stock: the Stock Receipt and Stock Receipt Request, opening stock documents, receiving damaged goods, receipt inspection, and correcting or cancelling receipts."
 entities: [StockReceipt, StockReceiptReq, InitialReceipt, PurgeStockReceipt, ReceiptInspection, StockReceiptCancellation, OpeningStockDocument]
 menu: Inventory → Receipt Documents → Stock Receipt
 ---

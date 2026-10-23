@@ -55,10 +55,34 @@ These mirror the list-view settings, but apply to the pop-up used to pick a refe
 | **Criteria Fields (Used For "Search For")** + *Search For Modify Type* | The fields covered by the pop-up's single free-text **Search For** box — i.e. which columns a typed search term is matched against. |
 | **Search Quick Filter** | The same quick filters, for the selector pop-up. |
 | **Searcher Template Columns** | Computed columns for the selector pop-up. |
-| **Search Default Page Size** | Rows per page in the pop-up — the same fixed choices **25, 50, 75, 100 or All**. |
+| **Searcher Default Page Size** | Rows per page in the pop-up — the same fixed choices **25, 50, 75, 100 or All**. |
 | **Search View** *(width)* | The default width of the selector pop-up. |
 | **Search View Default Criteria** | A criteria definition applied automatically every time the pop-up opens. |
 | **Searcher Prevent Auto Load** | Stops the selector pop-up from listing anything when it first opens; no rows appear until the user types a search term or filter and searches. Handy for reference types with very many records, where an immediate unfiltered load would be slow. |
+
+### Showing a pop-up column only for some lookups
+
+The same pop-up serves every lookup of a type: the item pop-up opens from the sales invoice, the stock issue,
+the price list and dozens of other screens. Sometimes a column only makes sense from one of them — the
+item's barcode when picking items on a sales invoice, say, and nowhere else. The **Default Columns
+Visibility Control** grid does this:
+
+1. In **Search Display Columns**, tick **Enable Visibility Control By Type And Field** on the column.
+2. In **Default Columns Visibility Control**, add a line for that **Column** with the **Searched From Type**
+   (the screen the lookup is opened from), the **Searched From Field** (the lookup field on it), or both,
+   and set **Visibility** to **Visible** or **Hidden**.
+
+A controlled column is **hidden unless a line matches** the lookup being opened. When several lines match,
+the most specific wins: a line naming both type and field, then one naming the field only, then one naming
+the type only. Columns without the tick are not affected.
+
+These three refusals come from this grid. They have no Arabic text and appear in English on Arabic screens too:
+
+| Message | Why | What to do |
+|---|---|---|
+| *You must specify the searched from type or the searched from field, line {0}* | A visibility line names neither a type nor a field. | Fill **Searched From Type**, **Searched From Field** or both. |
+| *You must enable the visibility control for column {0}, line {1}* | The column has visibility lines, but its box in Search Display Columns is not ticked. | Tick **Enable Visibility Control By Type And Field** on that column. |
+| *You must add at least one line to control the visibility of column {0}, line {1}* | The column is ticked but has no visibility line. | Add a line for it, or untick the box. |
 
 ::: tip
 You don't have to type every column id by hand. The Screen Modifier toolbar has **Select … Fields** actions (Select Display Columns Fields, Select Search For Fields, Select Criteria Fields, Select Sort Fields, and their search-side equivalents) that open a field picker for the target type and fill the matching collection for you.

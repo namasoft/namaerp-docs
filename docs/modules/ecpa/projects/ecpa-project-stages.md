@@ -1,6 +1,6 @@
 ---
 entities: [CPAProjectStage]
-menu: ECPA → Projects → Project Stage
+menu: Project Management → Projects → Project Stage
 ---
 # Project Stages
 

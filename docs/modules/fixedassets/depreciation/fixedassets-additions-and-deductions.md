@@ -1,4 +1,5 @@
 ---
+description: "The Asset Addition Deduction document: capitalising an improvement or writing off value on one asset's cost, the instalment arithmetic, changing remaining life, the aggregated version and its messages."
 entities: [FAAdditionDeduction, AggrAdditionDeduction]
 menu: Assets → Documents → Asset addition deduction
 ---

@@ -110,9 +110,9 @@ Of Success**, the **Important Changes On Operation** you would like to make, and
 **Perfect Operation Suggestion** (اقتراح لتكون من العمليات المثلى), answered with **Yes**, **No**
 or **Yes After Editing** (نعم بعد التعديل). Ten attachments again.
 
-::: warning Initial Operation is connected to nothing at all
-Nothing creates it, nothing reads it, and it does not link to the other two documents in this
-folder. It cannot be selected in a Problem Declaration's countermeasure row or in a Solution
+::: info Initial Operation is a standalone form
+Initial Operation is filled in and filed on its own; it is separate from the other two documents in
+this folder. It cannot be selected in a Problem Declaration's countermeasure row or in a Solution
 Suggestion's *From Document*, and neither of those points back at it. Treat it as a standalone
 form you fill in and file — not as step one of a three-step cycle.
 :::

@@ -2,6 +2,7 @@
   "sortedPaths": [
     "/modules",
     "/modules/invoicing",
+    "/modules/invoicing/reward-points-setup.md",
     "/modules/invoicing/reward-points.md",
     "/modules/invoicing/invoice-discounts-and-tax-calculation-guide.md",
     "/modules/invoicing/pricing-and-offers-guide.md",

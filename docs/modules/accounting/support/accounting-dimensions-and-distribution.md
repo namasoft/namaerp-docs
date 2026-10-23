@@ -1,4 +1,5 @@
 ---
+description: "The dimensions carried on ledger lines (legal entity, sector, branch, department, analysis set and more), restricting dimensions per account, and Account Distribution for spreading a value across them."
 entities: [AccDistribution]
 menu: Accounting → Settings → Account Distribution
 ---

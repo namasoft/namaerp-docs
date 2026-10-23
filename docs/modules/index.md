@@ -3,6 +3,7 @@
 # .custom-index marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 layout: home
 title: Nama ERP Modules
+description: "Landing page of the module guides: links to every Nama ERP module, from accounting, invoicing and supply chain to manufacturing, human resources, hospitals and the industry modules."
 hero:
   name: Nama ERP Modules
   text: Module Guides

@@ -1,4 +1,5 @@
 ---
+description: "The Data Source screen: a saved query that a Report Wizard or Printing Form Wizard attaches to read data from another table, its Main, Conditions and Security Constraints tabs, and its parameters."
 entities: [DataSource]
 menu: Administration → Reports → Data Source
 ---

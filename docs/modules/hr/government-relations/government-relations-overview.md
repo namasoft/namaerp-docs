@@ -1,4 +1,5 @@
 ---
+description: "Overview of the Gulf government relations documents (residency, visas, GOSI): their shared cycle, the Transaction Type fee catalogue, the Definition Letter, and the Payment Request for government fees."
 entities: [HOTransactionType, HODefinitionLetter, HOPaymentRequest]
 ---
 # Government Relations Overview

@@ -37,7 +37,7 @@ In the accounting module configuration there is one option per document type: **
 
 ### 2. Allow System Account In Opening — open outside normal periods
 
-Next to the **System Account** flag on the account sits **Allow System Account In Opening**. With it ticked, the account can be used manually in any period whose type is **not** Normal — that is, in **Opening**, **Adjustment**, **Closing** and purge periods. It exists for exactly the case above: loading opening balances and making year-end adjustments on accounts that are otherwise system-owned, without leaving them open during the year. In ordinary (Normal) periods the lock still applies. Period types are set on the fiscal calendar — see [Year-End Closing & Period Control](./year-end-and-period-control.md).
+Next to the **System Account** flag on the account sits **Allow System Account In Opening**. With it ticked, the account can be used manually in any period whose type is **not** Normal — that is, in **Opening**, **Adjustment** and **Closing** periods. It exists for exactly the case above: loading opening balances and making year-end adjustments on accounts that are otherwise system-owned, without leaving them open during the year. In ordinary (Normal) periods the lock still applies. Period types are set on the fiscal calendar — see [Year-End Closing & Period Control](./year-end-and-period-control.md).
 
 ### 3. The exceptions master file — open one account, for one purpose
 

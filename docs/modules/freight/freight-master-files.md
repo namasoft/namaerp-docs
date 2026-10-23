@@ -1,4 +1,5 @@
 ---
+description: "The Freight master files: service items and their flags, containers with their types and sizes, vessels, ports and sailing schedules, commodities, countries, locations, bill of lading types and units."
 entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRMOceanVessel, ShippingPort, FRMSailingSchedule, FRMCommodity, FRMBillOfLadingType, FRMUOM, FRMCountry, FRMLocation]
 ---
 # Freight Master Files

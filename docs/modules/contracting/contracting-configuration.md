@@ -6,7 +6,7 @@ entities: [ConfigEntry]
 
 The Contracting module keeps its settings in a single record, and that record shapes the behaviour of every contract, extract and cost document in the database. A handful of the switches on it change arithmetic rather than appearance — whether an extract prices this month's quantity or the cumulative quantity, whether term codes are typed or generated, which cost figure a subcontract inherits — so it is worth one careful read before the first live contract rather than a puzzled read afterwards.
 
-There are around ninety options on the screen, and they arrive as one long alphabet soup in declaration order: **one page, one block, no tabs and no group titles**. That is why this page ignores the screen order entirely and groups the options by what they affect. If you are hunting for one option, use your browser's find rather than scrolling the screen.
+There are around ninety options on the screen, and almost all of them arrive as one long alphabet soup in declaration order: **one page, no tabs, and a single untitled block** holding nearly every switch. Only two small titled groups follow it — *Discount Calculation* (the eight discount-percentage switches) and *Tax Calculation Terms* (the two tax terms) — and then three grids. That is why this page ignores the screen order entirely and groups the options by what they affect. If you are hunting for one option, use your browser's find rather than scrolling the screen.
 
 ![The Contracting settings — around ninety options on a single flat page](../../ar/modules/contracting/images/config/module-configuration-en.png)
 
@@ -18,7 +18,7 @@ Two facts about the record itself matter more than any individual option.
 
 **It is read live.** Nothing is cached into your contracts. Changing an option changes the behaviour of the next document you save, including documents that already existed — so a switch that changes how an extract prices its lines will change how an existing draft extract recalculates the moment you reopen and save it. Change these settings deliberately, and preferably not in the middle of a billing run.
 
-Only two options ship switched on by default: *Prevent Update Execution If Extract On It* and *Allow Calculating Taxes From Tax Configuration*. Everything else starts off, so the module's out-of-the-box behaviour is the conservative one described throughout these pages.
+Do not assume any option starts on. What is switched on depends on how the database was set up: the setup wizard's Contracting Configurations step saves only the options you tick there, and everything else stays off. Open this screen and check before relying on an option.
 
 ## Term Codes and the Parent-Term Rule
 
@@ -73,7 +73,7 @@ Turn on the slots your business negotiates as flat amounts and leave the rest of
 
 | Option | What it changes | When to turn it on |
 |---|---|---|
-| **Prevent Update Execution If Extract On It** | Blocks editing an execution document once an extract has consumed it. **On by default.** | Leave it on. Editing a measurement that has already been billed is how billed quantities and measured quantities silently diverge. |
+| **Prevent Update Execution If Extract On It** | Blocks editing an execution document once an extract has consumed it. | Turn it on. Editing a measurement that has already been billed is how billed quantities and measured quantities silently diverge. |
 | **Allow Current Quantity Percentage Exceed Permitted Percentage** | Lets the current-quantity percentage on an execution go past the permitted percentage set on the contract's term line. | Where the permitted percentage is guidance rather than a contractual cap. |
 
 ## When a Contract, Assay or Subcontract Can Still Be Edited
@@ -119,6 +119,7 @@ The card itself, and how its analysed cost becomes a unit cost and then a sellin
 |---|---|---|
 | **Show Items In Analysis Card Only** | On a contracting material issue, the item lookup is restricted to items that appear on the analysis card. | When the analysis card is treated as the authorised material list for the term — the closest thing the module has to a material budget on issue. |
 | **Create Purchase Element On Contracting Item Save** | Saving a direct-cost item automatically creates its purchasing element. | When cost items are routinely bought, so the purchasing side does not have to be set up twice. |
+| **Do Not Copy Data In Contractor Purchase Order And Request When Selecting Contract** | Picking the project contract on a contracting purchase request or order no longer copies the project and the contract's term lines into the document. | When purchase lines never mirror the contract's bill of quantities and deleting the copied lines is more work than typing the few you need. See [Contracting Purchase Requests and Orders](/modules/contracting/costs/contracting-purchasing.md). |
 | **Update Tax Reg No And Commercial Reg No With Save In Contracting Misc Invoices** | Refreshes the supplier's tax-registration and commercial-registration numbers on a miscellaneous contracting invoice each time it is saved. | Where those numbers appear on printed or e-invoiced documents and must reflect the supplier file as it stands today. |
 
 The two material streams themselves behave very differently — project issues carry no money, subcontractor issues are invoices — and that distinction is covered in [Issuing Material to a Project](/modules/contracting/costs/contracting-project-materials.md) and [Selling Material to a Subcontractor](/modules/contracting/costs/contracting-contractor-materials.md).
@@ -152,11 +153,12 @@ What the budget does and does not prevent is answered squarely in [Budget Item R
 
 | Option | What it changes | When to turn it on |
 |---|---|---|
-| **Allow Calculating Taxes From Tax Configuration** | Extract and budget-execution lines may take their tax from the central tax configuration instead of only from the term. **On by default.** | Leave it on unless taxes are deliberately maintained per standard term and must never be sourced elsewhere. |
+| **Allow Calculating Taxes From Tax Configuration** | Extract and budget-execution lines may take their tax from the central tax configuration instead of only from the term. | Turn it on unless taxes are deliberately maintained per standard term and must never be sourced elsewhere. |
 | **Project Contract Term To Calculate Tax** | Names the document term whose tax setup an assay borrows when it computes tax for a **project** contract. | Fill it if assays are used and their tax figures must match what the eventual extract will charge. |
 | **Contractor Contract Term To Calculate Tax** | The same, for a **subcontract**. | Same. |
+| **Calculate Conditions Percentage From Contract Total Before Taxes** | A *Percentage From Total* condition that is not tied to one term code is computed on the sum of the term lines' prices **before taxes** instead of on the contract total. | When a retention or advance clause is agreed as a percentage of the contract value excluding VAT. See [Contract Conditions](/modules/contracting/setup/contracting-conditions.md). |
 
-Tax on extracts is a bigger subject than these three switches — the tax extract terms and the missing-term strategy are covered in [Taxes on Extracts](/modules/contracting/project-contracting/contracting-extract-taxes.md).
+Tax on extracts is a bigger subject than these switches — the tax extract terms and the missing-term strategy are covered in [Taxes on Extracts](/modules/contracting/project-contracting/contracting-extract-taxes.md).
 
 ## Real-Estate Cost Distribution
 

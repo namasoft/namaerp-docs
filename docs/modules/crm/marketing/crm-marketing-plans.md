@@ -1,4 +1,5 @@
 ---
+description: "The MarketingPlan document screen, a master file holding a year's planned and actual figures per section across twelve months, with row totals and monthly deviations, all typed by hand."
 entities: [CRMMarketingPlan]
 menu: Customer Relationship Management → Marketing → MarketingPlan document
 ---
@@ -38,9 +39,8 @@ Four boxes matter, and one of them will surprise you:
   `2026 – revised` are both accepted. Pick one convention and hold to it across the site, because
   nothing sorts, groups or validates this field for you.
 - **الفرع / Branch** — the branch the plan belongs to, `BR-CAI` in our example.
-- **سناريو1 / Scenario 1** and **سناريو2 / Scenario 2** — two free-text boxes. Nothing reads them
-  and nothing branches on them; they are a place to write "optimistic" or "board-approved" if that
-  helps you tell two plans apart.
+- **سناريو1 / Scenario 1** and **سناريو2 / Scenario 2** — two free-text boxes for a label such as
+  "optimistic" or "board-approved", to tell two plans apart.
 - Plus the usual responsible employee, mediator and remarks.
 
 ## The details grid — one row per section, twelve months across
@@ -104,7 +104,7 @@ who did not open the screen themselves, say which of the two plans it came from.
 
 ## Where the actual figures come from
 
-They come from you. There is **no *Actual update* button on this screen**, no query behind it, no
+They come from you. There is **no button on this screen that fills the actual figures**, no query behind it, no
 service call, and nothing anywhere in NaMa that pushes a sales figure into a marketing plan. The
 system never reads a sales order, an invoice or a revenue account on this screen's behalf.
 
@@ -147,7 +147,7 @@ plan out, use the list view's Excel export and work in the spreadsheet.
 :::
 
 ::: tip A note on the English column headers
-Several English headers in the twelve-month grid are misspelt in the shipped screen — you will see
-`Jan|Panned`, `Mars|Planned`, `Jan |excuted`, `Sept|Planned` and `total Excuted`. They are cosmetic;
-the columns behave exactly as the Arabic labels describe. The Arabic month headers are correct.
+Several English headers in the twelve-month grid are spelled this way on screen: `Jan|Panned`,
+`Mars|Planned`, `Jan |excuted`, `Sept|Planned` and `total Excuted`. The columns behave exactly as the
+Arabic labels describe.
 :::

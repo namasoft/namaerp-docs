@@ -1,4 +1,5 @@
 ---
+description: "Recruitment screens: HR Vacancy Type as a reusable job profile, HR Vacancy for an actual opening, HR Candidate for registering applicants, and HR Test and HR Test Result."
 entities: [HRVacancy, HRVacancyType, HRCandidate, HRTest, HRTestResult]
 ---
 # Vacancies & Candidates

@@ -49,14 +49,14 @@ Keep the list short. Detailed auditing is not free, and a hundred audited fields
 | Applicable For | A broad category — `AllScreens`, `Documents` or `MasterFiles`. |
 | On Field | The field ID to audit in detail, for example `creditLimit`, `details.price`. |
 
-::: warning Name the type in For Type
-On this grid, use **For Type** (or **For Type List**) rather than the Applicable For category. A line that relies on Applicable For alone is currently ignored, and you will be left convinced that detailed auditing does not work. Naming the entity type explicitly in For Type always works — so if a line does nothing, that is the first thing to change.
+::: tip Name the type in For Type
+On this grid, name the entity type in **For Type** (or list the types in **For Type List**) rather than relying on the Applicable For category.
 :::
 
 This grid is applied by the server, so it takes effect the moment you save. The next edit of an audited field is already recorded in detail; edits made before you added the line are not, because the detail simply was not captured at the time.
 
 ::: info Where audit trails earn their keep
-Detailed auditing pairs naturally with the two other places where "who changed what" decides an argument: [Revise and Unrevise](/platform/governance/revise-and-unrevise), where a posted document is pulled back and edited, and the [Approvals System](/platform/approvals/approvals-system), where a value may be changed after somebody has already approved it.
+Detailed auditing pairs naturally with the two other places where "who changed what" decides an argument: [Revise and Unrevise](/platform/governance/revise-and-unrevise), where a saved document is pulled back and edited, and the [Approvals System](/platform/approvals/approvals-system), where a value may be changed after somebody has already approved it.
 :::
 
 ## Add Discussion To

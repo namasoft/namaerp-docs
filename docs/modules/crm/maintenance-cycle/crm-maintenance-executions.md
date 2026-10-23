@@ -9,19 +9,12 @@ The execution sheet is the technician's document. One is produced for each machi
 machine's checklist, it has a start button and an end button that time the job, and it has a grid
 where the technician writes down the spare parts he actually fitted.
 
-Everything in that sentence is true and useful. But there is one thing the sheet does not do, and
-getting it wrong is the single most expensive mistake in this module.
-
-::: danger The execution moves no stock and no money
-The spare-parts grid on an execution looks exactly like an inventory document — warehouse, locator,
-lot, serial, quantity. **It is not one.** Committing an execution creates no accounting entry and
-issues nothing from any store. The parts the technician records here stay in stock as far as the
-system is concerned until a
+::: info The execution records the work; stock and money move elsewhere
+The spare-parts grid on an execution carries warehouse, locator, lot, serial and quantity, but it is
+a record of what the technician fitted. Committing an execution creates no accounting entry and
+issues nothing from any store. The parts leave stock when a
 [maintenance invoice](/modules/crm/maintenance-cycle/crm-maintenance-invoicing.md) is saved, or
-until somebody presses *mnSparePartsIssue* and saves the supply-chain document that opens.
-
-Nothing checks that either happened. A branch that treats the execution as the stock-consuming
-document will have a warehouse that never reconciles, and the discrepancy grows with every job.
+when somebody presses *mnSparePartsIssue* and saves the supply-chain document that opens.
 :::
 
 ::: info Required licence

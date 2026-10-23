@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Letter of Credit master file: opening a credit for an import, its parties and fields, the related documents page with the running cost breakdown, and what closes the credit."
 entities: [FALetterOfCredit]
 menu: Assets → Fixed Asset Letter of Credits → Fixed asset Letter of Credit
 ---

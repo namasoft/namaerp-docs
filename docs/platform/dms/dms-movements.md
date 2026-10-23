@@ -1,4 +1,5 @@
 ---
+description: "The Document Movement and Folder Movement documents that record checking archived documents in and out, the document book they need, and what committing does."
 entities: [DMSDocMovement, DMSFolderMovement]
 menu: Basic → Document Management System → Document Movement
 ---
@@ -31,7 +32,7 @@ The header describes the movement as a whole:
 | **Issue Date** / **Value Date** | تاريخ الإصدار / التاريخ الفعلي | The value date is what lands on the history rows, and it must fall in an open fiscal period. |
 | **Movement Type** | نوع الحركة | The kind of movement. Drives the whole screen — see below. |
 | **Document Owner** | مالك المستند | Limited to **Customer** or **Employee**. Filling it narrows the document picker to that owner's paperwork. |
-| **Movment Destenition Or Source** | إتجاة أو مصدر الحركة | Who the paper is going to, or coming from. **Customer**, **Employee** or **Third Party**. (The English label is misspelled in the interface.) |
+| **Movment Destenition Or Source** | إتجاة أو مصدر الحركة | Who the paper is going to, or coming from. **Customer**, **Employee** or **Third Party**. (The English label is spelled this way on screen.) |
 | **Responsible Employee** | الموظف المسئول | Who authorised or performed the movement. Copied onto every history row. |
 | **Attachment** | مرفق | Room for the signed hand-over slip. |
 

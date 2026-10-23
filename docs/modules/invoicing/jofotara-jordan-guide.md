@@ -84,7 +84,7 @@ Tax is described the way the rest of the UBL world describes it: each line carri
 **Quantity Fractional Places** deserves a look before you go live. Jordan checks that the unit price multiplied by the quantity really does produce the line total, to the number of decimal places you declare here. If your prices carry more precision than you declare, the arithmetic the portal performs will not match the totals you sent.
 
 ::: tip Item codes are not part of a Jordanian invoice
-Unlike Egypt, JoFotara does not want a registered code for the item — the line identifies the goods by their **description** only. The item code settings on the page have no effect on what is transmitted to Jordan, so what matters is that the item description template produces something a human reader can recognise.
+Unlike Egypt, JoFotara does not want a registered code for the item — the line identifies the goods by their **description** only. The item code settings on the page serve other countries; for Jordan, what matters is that the item description template produces something a human reader can recognise.
 :::
 
 ## Sending, and what comes back

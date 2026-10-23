@@ -1,4 +1,5 @@
 ---
+description: "The fixed asset Transfer document: moving an asset between locations, dimensions, accounts or companies, the entries each kind of move produces, what blocks a commit, cancelling, and aggregated transfers."
 entities: [FATransferDocument, AggrFATransferDoc]
 menu: Assets → Custody Of Assets → Transfer document
 ---
@@ -73,7 +74,7 @@ Below that sit four groups:
 |---|---|
 | **الحسابات / Detail Accounts** | The three accounts the asset should sit on from now on — **Asset account** (حساب الأصل), **Depreciation account** (حساب الإهلاك) and **Accumulative depreciation account** (حساب الإهلاك التراكمي) — plus **Mediator Account 1** and **Mediator Account 2**, which only come into play when the company changes |
 | **من / From** | Where the asset is now: its custodian and its five current dimensions. Filled from the asset |
-| **إلى / To** | Where it is going: the five destination dimensions |
+| **إلى / To** | Where it is going: the five destination dimensions, and **To Fixed Asset Classification 1** to **5** (إلى تصنيف أصل ثابت) when the move also reclassifies the asset |
 | **المحددات / Dimensions** | The document's *own* dimensions — the ones the document is filed under. These matter more than they look; see below |
 
 The accounts are pre-filled from the asset, so leaving them alone means "keep the asset where it is
@@ -154,6 +155,11 @@ Committing the document does three things to the asset record: it sets the **loc
 **five dimensions**, and it sets the **three accounts** — all from the *To* side of the document. It
 also writes a row into the asset's location history, which is what you read on the asset's Statistics
 page when someone asks where a machine has been.
+
+The same commit can reclassify the asset. Each **To Fixed Asset Classification** that is filled
+replaces the matching **Fixed Asset Classification** (1 to 5) on the asset; the ones left empty leave the
+asset's classification as it is. So a machine moving from the workshop into the production line can
+change its classification from "Maintenance equipment" to "Production equipment" in the same document.
 
 There is one condition on the write-back. The asset takes its header values from its **latest**
 movement. Enter a back-dated transfer behind one that is already recorded, and the history gains a row

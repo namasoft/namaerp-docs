@@ -22,9 +22,10 @@ correct…». لم يفعل هو شيئاً يسبّبها، ولا يستطيع
 
 - **مرة كل ساعة** آلياً. ويمكن تغيير الموعد بالمفتاح `critical-errors-refresh-cron` في
   `nama.properties`.
-- **عند الطلب**، بفتح `utils?refreshcriticalerrors=true` على الخادم:
-  <NamaURL url="utils?refreshcriticalerrors=true"/>
-  وهذا هو «Refresh Critical Errors» الذي تطلبه أجوبة الدعم.
+- **عند الطلب**، من **Utilities ← Caching ← Refresh Critical Errors** — وهذا هو «Refresh Critical Errors»
+  الذي تطلبه أجوبة الدعم. ومثل بقية صفحة Utilities لا يعمل إلا للمستخدم `admin` أو لمستخدم مفعَّل عليه
+  **Allow Access to Admin Restricted Functionality**؛ وكذلك الرابط نفسه إذا فُتح مباشرة
+  (<NamaURL url="utils?refreshcriticalerrors=true"/>).
 - **من مهمة مجدولة**، بإجراء
   [EARefreshCriticalErrors](/entity-flows/core/EARefreshCriticalErrors) — وهو ما يجعل التحديث جزءاً
   من روتين ليلي.

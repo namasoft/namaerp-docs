@@ -1,4 +1,5 @@
 ---
+description: "The departmental clearance before a settlement or long leave: Evacuation Approval Settings as the step template, the Evacuation Party Document per employee, and each step's Evacuation Approval Document."
 entities: [EvacuationPartyDocument, EvacuationApprovalSettings, EvacuationApprovalDocument]
 ---
 # Evacuation Approval

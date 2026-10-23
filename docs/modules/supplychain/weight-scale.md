@@ -32,6 +32,12 @@ Imagine receiving a truck of grain:
 
 This eliminates manual weight-entry errors and speeds up receiving and issuing at high-traffic locations.
 
+### When the scale cannot give a reading
+
+Sometimes the scale is out of order or the load cannot sit on it, and the operator has to type the weight. That is allowed only for users who have **Allow Manual Weight Entry** ticked on their line of the **Authorities** grid in the Weight Scale Configuration. For them the scale app shows a **Manual Weight** button: it stops reading the scale and asks *Enter net weight manually*. A typed weight counts as stable, so the sticker can be printed straight away; text that is not a number is refused with *Invalid weight value*, and the app goes back to reading the scale.
+
+Every line of the preparation document records where its weight came from in the **Weight Sent By Device** column: ticked for a scale reading, clear for a typed one. Filter on it to review manual entries.
+
 ## Actions on this screen
 
 **On the Weight Scale Preparation Generator:**

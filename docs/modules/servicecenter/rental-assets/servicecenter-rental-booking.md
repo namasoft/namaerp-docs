@@ -1,4 +1,5 @@
 ---
+description: "The Rental Asset Request, Rental Asset Invoice and Rental Asset Reservation Cancel documents: holding a slot, billing the planned period and cancelling a booking."
 entities: [RARentalRequest, RARentalInvoice, RAReservationCancel]
 ---
 # Booking, Invoicing and Cancelling
@@ -71,10 +72,6 @@ Never describe rental availability as guaranteed. The working rule for Al-Sahra,
 ### What else is checked on commit
 
 The from date/time must be strictly earlier than the to date/time. The booking must fall inside the asset's working-hours window — unless that grid is empty, in which case the check is skipped. Whichever count the pricing method makes mandatory (hours or days) must be filled. Beyond that, the ordinary sales-document checks apply: payment-schedule consistency, sales price-list validation, a customer when the [توجيه](/modules/servicecenter/document-terms/servicecenter-terms-basics.md) requires one, instalment code and payment-line authorisation, and uniqueness of the standard terms.
-
-::: warning The By Day day count is not recomputed
-On an installation whose Pricing Method is By Day, the *Number of Days* you type is never corrected from the from/to dates. The system computes a day count from the period but writes it into the hidden *hours* field — which is what the price-tier matcher then consumes — and leaves your typed day count alone. Change the dates after typing the count and the header and the lines will disagree. Re-type the count whenever you change a date, and reopen after saving to confirm what was kept.
-:::
 
 ## The invoice — billing the planned period
 

@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Expense Request and Maintenance Expense documents: authorising and booking maintenance spend, recharging the customer's share, paying the contractor and distributing the cost over units."
 entities: [REMaintenanceExpense, REMaintenanceExpenseRequest]
 menu: Real Estate and Property → Documents → Maintenance Expense
 ---

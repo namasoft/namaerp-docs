@@ -112,8 +112,9 @@ Docs To** gives you the same list as a permanent page rather than a menu action.
 ## Integration
 
 Every DMS entity has a standard web service, so archived documents can be created, updated and
-read from outside the system like any other record. There is no REST layer; integration is through
-the ordinary SOAP services.
+read from outside the system like any other record — through the ordinary SOAP services or the
+[REST API](/integration/nama-erp-api#Uploading-and-Attaching-Files): upload the scan with
+`/erp/rest/v1/upload`, then save the document with `/erp/rest/v1/DMSDocument/save`.
 
 The point worth knowing is that **the file travels with the record**. A document's attached scan is
 part of the same create-or-update call as its metadata, so one round trip registers a document and

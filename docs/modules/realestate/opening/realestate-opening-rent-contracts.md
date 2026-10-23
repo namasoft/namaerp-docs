@@ -1,4 +1,5 @@
 ---
+description: "The Opening rent contract for leases already running at go-live: how it differs from the rent contract, the opening fiscal period, the prepaid figure, the Fully Paid column and renewal."
 entities: [REOpeningRentContract]
 menu: Real Estate and Property → Rents → Opening rent contract
 ---

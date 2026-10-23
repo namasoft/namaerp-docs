@@ -154,9 +154,14 @@ period afterwards.
 
 ## Period Closing Depends on This Document
 
-Fixed Assets participates in fiscal-period closing: a period will not close while a running asset
-whose depreciation start date falls inside it was not depreciated in the previous period, and the
-close fails naming the asset. That check is the main reason to run depreciation as part of the
+Fixed Assets takes part in year-end closing: a **Closing Entry** is refused while any running asset
+of its legal entity whose depreciation start date falls before the end of the closing entry's
+period has not been depreciated in the period just before it. The refusal names the asset and that
+period:
+
+*Asset {0} is not depreciated in period {1}* — «الأصل {0} غير مُهلك في الفترة {1}»
+
+That check is the main reason to run depreciation as part of the
 month-end routine rather than when somebody remembers.
 
 Two options on the
@@ -191,6 +196,7 @@ takes a period range and creates the individual runs for you.
 
 | Message | Why | What to do |
 |---|---|---|
+| *Asset {0} is not depreciated in period {1}* — «الأصل {0} غير مُهلك في الفترة {1}» | Saving a **Closing Entry** found a running asset that has not been depreciated in the period before the closing period. | Run this document for the period the message names, then save the closing entry again — or use one of the two configuration options above. |
 | *You can not change fiscal period in Depreciation Documents, please delete and re-insert* — «لا يمكنك التغيير في الفترة في مستندات الإهلاك الرجاء مسح وإعادة الإدخال» | You reopened a saved depreciation document and changed its **Fiscal Period**. | Delete the document and enter a new one for the period you want. The period is fixed once the run exists. |
 | *Fixed asset {0} is repeated* — «الأصل {0} مكرر» | The same asset appears on two lines of the details grid. | Remove the duplicate line. Use the collect button rather than typing lines to avoid this. |
 | *Cannot Depreciate Asset because it is undepreciable* — «لا يمكن اهلاك الاصل لأنه اصل غير قابل للاهلاك» | A line names an asset flagged **Undepreciable** — land and the like are never depreciated. | Take the line off. Neither translation prints the asset code, so find it by sorting the grid on the undepreciable flag. |

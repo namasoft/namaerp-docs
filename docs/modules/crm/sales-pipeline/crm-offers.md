@@ -64,7 +64,7 @@ The last row really is labelled *TroubleTicket* in English and *دعم* (support
 
 **Status** (الحالة) has three values: *مخطّطة / Planned*, *تحت التنفيذ / Excuting* and *تم التنفيذ / Excuted*. The two English spellings are what the screen shows.
 
-Neither field drives anything. There is no rule that a status must move forwards, no rule that actual time may only be filled once the status is *Excuted*, and no calculation anywhere that compares planned time with actual time. **Planned Time** and **Actual Time** are clock-style values (hours and minutes) that nothing reads, totals or compares — the variance is yours to work out by eye.
+Type and Status are labels you set by hand and filter on: a status can move to any value in any order, and actual time can be filled at any status. **Planned Time** and **Actual Time** are clock-style values (hours and minutes) you type; the variance between them is yours to work out.
 
 ## The Offers Tab
 
@@ -74,13 +74,11 @@ So a single Offer for Marina Plaza might carry a *preparement* line for the plan
 
 Below that grid sits a second, one-column grid for meeting notes, labelled **دقائق ملاحظات الاجتماع / Training preparing remarks**.
 
-::: warning That second grid has no heading of its own
-The remarks grid on this tab shows the raw key **`CRMOffers.remarkLines`** where its title should be — in both Arabic and English, because the label is simply missing. It is the meeting-notes grid; nothing is wrong with the grid itself, only with its heading.
-:::
+On screen, this grid's title shows as **`CRMOffers.remarkLines`** in both Arabic and English; it is the meeting-notes grid.
 
-## The One Link That Does Something
+## Copying From an Analysis
 
-Fill **Related To 2** (مرتبط ب2) with an **Analysis** and the offer copies five things across from it: the product, the type, the status, the client representative and the responsible employee. It is the only automatic behaviour on the whole screen.
+Fill **Related To 2** (مرتبط ب2) with an **Analysis** and the offer copies five things across from it: the product, the type, the status, the client representative and the responsible employee.
 
 That same reference has one further effect: the Analysis screen carries a read-only **Offers** list on its Related Records tab, and that list is driven by *Related To 2*. It is the only place in the product where an analysis and the offers made against it are shown together — so if you want that view, you must use the **second** reference field, not the first.
 

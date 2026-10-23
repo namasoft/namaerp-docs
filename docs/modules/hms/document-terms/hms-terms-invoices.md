@@ -173,8 +173,7 @@ above.
 Two things differ from the service invoices:
 
 - **The stock document comes from the Generation tab.** A *Generation Book* and *Generation Term* make
-  the invoice issue its items (and the return receive them back). The Origin Document Effect group on
-  these terms is not used.
+  the invoice issue its items (and the return receive them back).
 - **A return does not reverse the sides for you.** It posts the same pairs as the invoice, in the
   direction its own term gives them, so a return term needs each pair set the other way round from
   the invoice term — patient value on the credit side where the invoice debits it, and so on.

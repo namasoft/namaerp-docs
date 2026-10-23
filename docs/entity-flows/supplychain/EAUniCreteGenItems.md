@@ -39,11 +39,11 @@ Manual execution on item sections or item classes when bulk item generation is n
 
 ## Parameters
 
-**Parameter 1:** Test Only (Optional) - true to skip item creation, empty to create items
+**Parameter 1:** Test Only (Optional) - Any value (for example `true`) skips creating and updating items; leave empty to create them
 
 **Parameter 2:** Log Into Field (Optional) - Field name to log generation details and tree structure
 
-**Parameter 3:** Mark Items for Deletion (Optional) - true to mark unused items in description5 field
+**Parameter 3:** Mark Items for Deletion (Optional) - true to write `Delete` in the Description 5 field of the section's items that are not in the generated set (and clear it on the others)
 
 **Parameter 4:** Delete Unneeded Items (Optional) - true to actually delete items not in generated set
 

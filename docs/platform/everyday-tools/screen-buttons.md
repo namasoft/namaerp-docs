@@ -171,7 +171,9 @@ heading.
 
 Reading from the left: find text inside the grid, add a line, copy the current line, copy the current
 line many times over, delete the line, jump to a line by its number, the two auto-fit buttons, row
-drag, column drag, view the sorted columns, and clear the grid's filters.
+drag, column drag, view the sorted columns, and clear the grid's filters. Last comes **Print**, which
+downloads the grid's lines, with the columns you can see, as a PDF file. It works only for users whose
+security profile grants **Print Once** on that screen; for everyone else it is greyed out.
 
 Multi Line Copy is the one people miss. It asks how many copies you want and makes them all at once —
 if you are entering twenty lines that differ only in item code, filling in the first and copying it

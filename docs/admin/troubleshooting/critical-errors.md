@@ -1,3 +1,6 @@
+---
+description: "The critical errors list shown at login: how it is built and refreshed, who sees it, how to post your own message to users, and every health check with its cause and fix."
+---
 # Critical Errors at Login
 
 A user signs in and, before anything else, a stack of red messages appears: *There are 3 failed
@@ -26,9 +29,10 @@ login afterwards. That is why correcting the problem does not clear the message.
 
 - **Once an hour**, automatically. The schedule can be changed with the
   `critical-errors-refresh-cron` key in `nama.properties`.
-- **On demand**, by opening `utils?refreshcriticalerrors=true` on the server:
-  <NamaURL url="utils?refreshcriticalerrors=true"/>
-  This is the "Refresh Critical Errors" the troubleshooting answers ask for.
+- **On demand**, from **Utilities → Caching → Refresh Critical Errors** — the "Refresh Critical Errors"
+  the troubleshooting answers ask for. Like the rest of the Utilities page, it needs the `admin` user or a
+  user with **Allow Access to Admin Restricted Functionality**; the same link opened directly
+  (<NamaURL url="utils?refreshcriticalerrors=true"/>) also needs such a session.
 - **From a scheduled task**, with the
   [EARefreshCriticalErrors](/entity-flows/core/EARefreshCriticalErrors) action — the way to make the
   refresh part of a nightly routine.

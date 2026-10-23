@@ -1,5 +1,6 @@
 ---
 entities: [TelegramBotConfiguration, TelegramMessage, TelegramBotInfo]
+menu: إدارة النظام ← أخري ← Telegram Bot Configuration
 ---
 # التنبيهات عبر تليجرام (Telegram) في نظام نما
 
@@ -34,7 +35,7 @@ BotFather ← رمز البوت (Bot Token) ← إعداد بوت تليجرام
 
 ## الخطوة 2 — إنشاء إعداد بوت تليجرام في نما
 
-من القائمة الرئيسية ابحث عن **Telegram Bot Configuration** وأضف سجلًّا جديدًا. هذه الشاشة هي مكان إقامة البوت داخل نما.
+افتح **إدارة النظام ← أخري ← Telegram Bot Configuration** وأضف سجلًّا جديدًا. هذه الشاشة هي مكان إقامة البوت داخل نما.
 
 ![شاشة إعداد بوت تليجرام](images/telegram/telegram-bot-configuration-ar.png)
 
@@ -95,7 +96,7 @@ BotFather ← رمز البوت (Bot Token) ← إعداد بوت تليجرام
 
 ## الخطوة 6 — إنشاء رسالة تليجرام (Telegram Message)
 
-**رسالة تليجرام** هي قالب ما سيُرسَل — الصياغة والتنسيق وأي مرفق. ابحث في القائمة عن **Telegram Message** وأضف سجلًّا جديدًا.
+**رسالة تليجرام** هي قالب ما سيُرسَل — الصياغة والتنسيق وأي مرفق. افتح **إدارة النظام ← أخري ← Telegram Message** وأضف سجلًّا جديدًا.
 
 ![شاشة رسالة تليجرام](images/telegram/telegram-message-ar.png)
 

@@ -69,9 +69,31 @@ Quick Filters are configured through the Screen Modifier system, which allows cu
    - **Column Names**: Enter comma-separated field IDs (e.g., "status,customerType")
    - **Show Count**: Enable to display record counts
    - **Max Button Count**: Set maximum number of buttons (typically 5-10)
-   - **Remove**: Check this to hide/remove a quick filter group (useful for overriding inherited configurations)
+   - **Is Dropdown**: Show the group's values as a dropdown instead of a row of buttons — the better choice for a column with many values
+   - **Component Effect Type**: **Add New** (the default) adds this line as a new group; **Modify** changes or removes a group that already exists — see below
+   - **Remove**: With **Modify**, removes the existing group instead of changing it
    - **Quick Filter Values Criteria**: Select a [Criteria Definition](/platform/automation-and-rules/criteria-definitions) to filter which values appear in the quick filter buttons
    - **Quick Filter Values Dynamic Criteria**: Enter dynamic criteria text to filter which values are shown (uses the same syntax as [Text Criteria](../automation-and-rules/text-criteria-guide.md))
+
+##### Changing or removing an existing group
+
+Many list screens ship with quick filters of their own — a **Status** group on most documents, for example. To
+change one, add a line with **Component Effect Type** = **Modify** and the **same Column Names** as the
+existing group; the line's Show Count, Is Dropdown, Max Button Count and values criteria then replace the
+group's own. This is how you turn the shipped Status buttons into a dropdown. A Modify line whose column names
+match no group exactly does nothing.
+
+To hide a group, tick **Remove** on a Modify line. Removal is broader than modification: it deletes **every**
+group that shares at least one column with the line's Column Names. A line ticked Remove with the effect type
+left empty is saved as Modify.
+
+| Message | Why | What to do |
+|---|---|---|
+| *Quick filter must have either column names or criteria defined* | The line has neither Column Names nor a Quick Filter Criteria. | Fill one of them. |
+| *Quick filter cannot have both column names and criteria defined. Please use only one* | The line has both. | Keep Column Names for a value group, or the criteria for a custom filter — not both. |
+| *Quick filter with effect type 'Add New' cannot have remove enabled* | **Remove** is ticked on an Add New line. | Set **Component Effect Type** to **Modify**, or untick Remove. |
+
+These messages have no Arabic text and appear in English on Arabic screens too.
 
 ##### Filtering Quick Filter Values
 You can control which values appear in the quick filter buttons using criteria. These criteria filter the database query that fetches distinct values, and can be applied on **any column in the table** - not just the column being displayed in the quick filter.

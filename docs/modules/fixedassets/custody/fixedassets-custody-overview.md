@@ -1,3 +1,6 @@
+---
+description: "Overview of the Custody register for items handed to staff: how it differs from fixed assets, its six screens and licence, the status ladder and undo order."
+---
 # Custody — Items Handed to Staff
 
 In the same week, Al-Waha Industries buys two things. One is a CNC cutting machine that costs

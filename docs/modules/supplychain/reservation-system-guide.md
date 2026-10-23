@@ -162,15 +162,19 @@ Items can be configured with specific reservation behaviors through `ItemConfigu
 ### Core Reservation Settings
 
 - **includeReservedInBalance:** Whether reserved quantities affect available balance calculations
-- **allowOverdraftInReservation:** Allow reservations even when insufficient quantities exist
+- **allowOverdraftInReservation:** Lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
 
 ### Overdraft Policy Hierarchy
 
-The system uses a hierarchical approach to determine overdraft permissions:
+The system decides whether a line may go below zero in this order:
 
-1. **Item Level:** Individual item overdraft policy
-2. **Item Section Level:** Item category overdraft policy  
-3. **System Level:** Global supply chain configuration overdraft policy
+1. **Item's Allow Overdraft In Reservation:** when ticked, allows it in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
+2. **Dimensions With Allowed Overdraft:** the first matching row in the supply chain configuration (not for stock transfers)
+3. **Item Level:** the item's own overdraft policy
+4. **Item Section Level:** the item section's overdraft policy
+5. **System Level:** the global supply chain configuration overdraft policy
+
+**Prevent Overdraft** on the document term can only make the check stricter. The full rules are on [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking).
 
 **Policy Values:**
 - **Yes:** Allow overdraft
@@ -433,20 +437,20 @@ This section provides a comprehensive list of all configuration options related 
 **Location:** Document Term > Term Configuration Tab
 
 #### Basic Reservation Settings
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `reserve` | حجز | Enable/disable reservation functionality for this document type |
 | `reserveFromReservationQty` | حجز من كميات الحجز وليس من كمية المستند | Reserve from existing reservation quantities instead of document quantities |
 | `preventCancelReservation` | منع إلغاء الحجز | Disable reservation cancellation for this document type |
 
 #### Reservation Sequentiality Control
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `checkReservationSequentiality` | التاكد من تسلسل الحجز | Enforce proper reservation order across document chain |
 | `checkReservationSequentialityInFirstSaveOnly` | التاكد من التسلسل في الحفظ اول مرة فقط | Apply sequentiality check only on initial document save |
 
 #### Warehouse and Location Management
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `reservationWarehouseSource` | مصدر مخزن الحجز | Define warehouse selection rules for reservations |
 | `reservationLocatorSource` | مصدر موقع الحجز | Define locator selection rules for reservations |
@@ -460,7 +464,7 @@ This section provides a comprehensive list of all configuration options related 
 - `ReservationLocator`: Use specialized reservation locator
 
 #### Quantity Tracking and Satisfaction
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `reservationSatisfiedFields` | حقول الكمية الملغي حجزها | Configure which fields track satisfied reservation quantities |
 | `reservationCriteria` | فلتر سطور الحجز | Filter criteria for which lines can be reserved |
@@ -470,14 +474,14 @@ This section provides a comprehensive list of all configuration options related 
 - `TrackInSecond`: Track satisfied quantities in second quantity field
 
 #### Related Document Processing
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `cancelReservationOfRelatedDocs` | إلغاء حجز المستندات المرتبطة | Automatically cancel related document reservations |
 | `updateReservationOfRelatedDocs` | تحديث حجز المستندات المرتبطة | Update connected reservations when quantities change |
 | `updateReservationStatusInFromDoc` | تحديث حالة الحجز في المستند المرتبط | Sync reservation status with source documents |
 
 #### Quantity Tracking Configuration
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `forceTrackQtyOfRelatedDocs` | متابعة كمية المستند المرتبط إجبارياً | Enable mandatory quantity tracking between documents |
 | `updateTrackQtyInRelatedDoc` | تحديث متابعة الكميات في السند المرتبط | Update tracking quantities in source documents |
@@ -485,13 +489,13 @@ This section provides a comprehensive list of all configuration options related 
 | `relatedDocQtyFields` | حقول متابعة الكميات في السند المرتبط | Which fields to use for tracking (first or second quantity) |
 
 #### Validation and Quality Control
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `checkAvailableQties` | التاكد من الكميات المتاحة قبل الحفظ | Validate available quantities before saving |
 | `forceDoNotIncludeReserved` | عدم اعتبار المحجوز عند التأكد من الكميات | Exclude reserved quantities from validation |
 
 #### Delivery System Integration
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
 | `useDelivSysEntriesForReserv` | الحجز بأستخدام جدول التوصيل النظامي | Use delivery system entries for reservations |
 | `reserveFromDeliveryEntryQty` | حجز من كمية جدول التوصيل النظامي | Reserve based on delivery system quantities |
@@ -500,92 +504,75 @@ This section provides a comprehensive list of all configuration options related 
 ### Item Configuration (ItemConfigurations)
 **Location:** Item Master > Item Configuration Tab
 
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `includeReservedInBalance` | اعتبار المحجوز في الرصيد | Whether reserved quantities affect available balance calculations |
-| `allowOverdraftInReservation` | السماح بالسحب على المكشوف في الحجز | Allow reservations even when insufficient quantities exist |
-| `overDraftPolicy` | سياسة السحب على المكشوف | Item-level overdraft policy (Yes/No/Inherited) |
+| `includeReservedInBalance` | خصم المحجوز من المتاح للبيع | Whether reserved quantities affect available balance calculations |
+| `allowOverdraftInReservation` | السماح بالسحب على المكشوف في الحجز | Lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents |
+| `overDraftPolicy` | إمكانية السحب على المكشوف | Item-level overdraft policy (Yes/No/Inherited) |
 
 ### Supply Chain Configuration (SupplyChainConfigurations)  
 **Location:** System Configuration > Supply Chain Configurations
 
 #### Core Reservation Settings
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `reservationType` | نوع الحجز | Global reservation type (Automatic/Manual) |
-| `checkQtiesInReservationDocs` | فحص الكميات في سندات الحجز | Check quantities in reservation documents |
-| `cancelReservationOfDirectParentsOnly` | إلغاء حجز الوالدين المباشرين فقط | Cancel reservation of direct parent documents only |
+| `checkQtiesInReservationDocs` | التأكد من الكميات في المستندات التي تقوم بالحجز | Check quantities in reservation documents |
+| `cancelReservationOfDirectParentsOnly` | إلغاء حجز المستند الأعلى فقط عند استعمال خيار إلغاء الحجز بالتوجيه | Cancel reservation of direct parent documents only |
 
 #### Overdraft Control
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `overDraftPolicy` | سياسة السحب على المكشوف | System-level overdraft policy |
-| `dimensionsWithAllowedOverdraft` | الأبعاد المسموح بها السحب على المكشوف | Dimensions with allowed overdraft configurations |
-| `checkOverdraftByDate` | فحص السحب على المكشوف بالتاريخ | Check overdraft by date |
-| `includeReservationInCheckOverdraftByDate` | تضمين الحجز في فحص السحب على المكشوف بالتاريخ | Include reservation in overdraft check by date |
-| `doNotCheckOverdraftByDateForReservation` | عدم فحص السحب على المكشوف بالتاريخ للحجز | Do not check overdraft by date for reservations |
+| `overDraftPolicy` | إمكانية السحب على المكشوف | System-level overdraft policy |
+| `dimensionsWithAllowedOverdraft` | محددات تسمح بالسحب على المكشوف | Dimensions with allowed overdraft configurations |
+| `checkOverdraftByDate` | التاكد من السحب على المكشوف بالتاريخ | Check overdraft by date |
+| `includeReservationInCheckOverdraftByDate` | تضمين الحجز عند التأكد من السحب على المكشوف بالتاريخ | Include reservation in overdraft check by date |
+| `doNotCheckOverdraftByDateForReservation` | عدم التاكد من السحب على المكشوف بالتاريخ في الحجز | Do not check overdraft by date for reservations |
 
 #### Quantity Check Configuration
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `checkQtyByDateOnly` | فحص الكمية بالتاريخ فقط | Check quantity by date only |
-| `checkQtyByDateOnlyWithReservation` | فحص الكمية بالتاريخ فقط مع الحجز | Check quantity by date only with reservation |
-| `reservationSettings` | إعدادات الحجز | Reservation-specific settings for ignoring certain validations |
-| `doNotConsiderDimensionsInOverdraftByDate` | عدم اعتبار الأبعاد في السحب على المكشوف بالتاريخ | Do not consider dimensions in overdraft by date |
-| `doNotConsiderDimensionsInOverdraftByDateWithReservation` | عدم اعتبار الأبعاد في السحب على المكشوف بالتاريخ مع الحجز | Do not consider dimensions in overdraft by date with reservation |
+| `checkQtyByDateOnly` | التأكد من الكميات بالتاريخ فقط (تسمح بتجاهل المخازن مثلا) | Check quantity by date only |
+| `checkQtyByDateOnlyWithReservation` | التأكد من الكميات بالتاريخ فقط مع الحجز (تسمح بتجاهل المخازن مثلا) | Check quantity by date only with reservation |
+| `reservationSettings` | إعدادات التجاهل مع الحجز | Reservation-specific settings for ignoring certain validations |
+| `doNotConsiderDimensionsInOverdraftByDate` | تجاهل المحددات التالية عند التأكد من الكميات بالتاريخ | Do not consider dimensions in overdraft by date |
+| `doNotConsiderDimensionsInOverdraftByDateWithReservation` | تجاهل المحددات التالية عند التأكد من الكميات بالتاريخ مع الحجز | Do not consider dimensions in overdraft by date with reservation |
 
 #### Quantity Tracking System
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `useEntriesForTrackQuantities` | استخدام المدخلات لتتبع الكميات | Use system entries for quantity tracking |
-| `ignoreQtyTrackingWhithDocumentDelete` | تجاهل تتبع الكميات مع حذف المستند | Ignore quantity tracking when deleting documents |
-| `updateReservationQtyWithPrimeQtyChange` | تحديث كمية الحجز مع تغيير الكمية الرئيسية | Update reservation quantity with primary quantity changes |
+| `useEntriesForTrackQuantities` | إستخدام الجدول النظامي لمتابعة الكميات | Use system entries for quantity tracking |
+| `ignoreQtyTrackingWhithDocumentDelete` | تجاهل اخطاء متابعة الكميات مع حذف المستندات | Ignore quantity tracking when deleting documents |
+| `updateReservationQtyWithPrimeQtyChange` | تحديث كمية الحجز مع تغيير كمية المستند | Update reservation quantity with primary quantity changes |
 
 #### Transfer and Stock Document Settings
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `transReqReserveQtyOutOnly` | طلب التحويل يحجز الكمية الخارجة فقط | Transfer request reserves outbound quantity only |
-| `showToItemDimensionsInTransfer` | إظهار أبعاد الصنف المستقبل في التحويل | Show destination item dimensions in transfers |
-| `doNotUpdateItemLotAndBoxFromIssueAndSales` | عدم تحديث شحنة وصندوق الصنف من الصرف والمبيعات | Do not update item lot and box from issue and sales |
+| `transReqReserveQtyOutOnly` | طلب التحويل يقوم بحجز الكميات للخارج فقط | Transfer request reserves outbound quantity only |
+| `showToItemDimensionsInTransfer` | عرض الي محددات الصنف في التحويل و استعمالها | Show destination item dimensions in transfers |
+| `doNotUpdateItemLotAndBoxFromIssueAndSales` | Do Not Update Item Lot And Box From Issue And Sales | Do not update item lot and box from issue and sales |
 
 #### Performance and Processing
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `checkOverdraftNextTransCount` | عدد المعاملات التالية لفحص السحب على المكشوف | Number of next transactions to check for overdraft |
-| `doNotCheckOverdraftWithRecommit` | عدم فحص السحب على المكشوف مع إعادة الحفظ | Do not check overdraft with recommit operations |
+| `checkOverdraftNextTransCount` | عدد الحركات اللاحقة للسند التي يجب التاكد من انها لم تصبح مكشوفة | Number of next transactions to check for overdraft |
+| `doNotCheckOverdraftWithRecommit` | Do Not Check Over Draft With Recommit | Do not check overdraft with recommit operations |
 
 ### Item Section Configuration
 **Location:** Item Section Master > Configuration
 
-| Configuration Field | Arabic Translation | Description |
+| Configuration Field | Arabic label on screen | Description |
 |---------------------|-------------------|-------------|
-| `overDraftPolicy` | سياسة السحب على المكشوف | Section-level overdraft policy (Yes/No/Inherited) |
+| `overDraftPolicy` | إمكانية السحب على المكشوف | Section-level overdraft policy (Yes/No/Inherited) |
 
-### System-Wide Reservation Enums and Values
+### Which setting wins
 
-### Configuration Hierarchy and Inheritance
-
-The reservation system uses a hierarchical configuration approach:
-
-1. **System Level:** SupplyChainConfigurations provides global defaults
-2. **Item Section Level:** Item section overdraft and tracking policies
-3. **Item Level:** Individual item configuration overrides
-4. **Document Term Level:** Document-specific reservation behavior
-5. **Document Line Level:** Line-specific reservation settings
-
-**Priority Order (highest to lowest):**
-1. Document Line Settings
-2. Document Term Configuration  
-3. Item Configuration
-4. Item Section Configuration
-5. System Configuration
+Whether a line may take an item below zero is decided in a fixed order: the item's **Allow Overdraft In Reservation**, then the matching *Dimensions With Allowed Overdraft* row, the item's policy, the item section's policy and finally the company-wide policy. **Prevent Overdraft** on the document term can only make the check stricter, never looser. [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking) walks through the order step by step.
 
 ### Configuration Validation Rules
 
 #### Required Configurations for Basic Reservation
 - Document Term: `reserve = true`
 - Item Configuration: Valid `overDraftPolicy` setting
-- System Configuration: Valid `reservationType` setting
 
 #### Required Configurations for Quantity Tracking
 - Document Term: `forceTrackQtyOfRelatedDocs = true`

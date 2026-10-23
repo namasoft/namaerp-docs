@@ -15,6 +15,6 @@ These capabilities reach beyond the system too: Nama ships with a **built-in MCP
 
 <LandingGrid>
   <LandingCard icon="💬" title="The In-System AI Assistant" link="/modules/ai/ai-assistant.md" details="The built-in chat window: opening it, choosing the model, reviewing chat history, and using Expert Mode to diagnose answers." />
-  <LandingCard icon="🔌" title="Nama ERP MCP Server" link="/modules/ai/ai-mcp-server.md" details="Connecting an external MCP client: the server endpoint, authentication, client setup, and the nine record export/import tools." />
+  <LandingCard icon="🔌" title="Nama ERP MCP Server" link="/modules/ai/ai-mcp-server.md" details="Connecting an external MCP client: the server endpoint, authentication, client setup, and the twelve record export/import tools." />
   <LandingCard icon="🎧" title="Getting Better Support with an AI Assistant" link="/modules/ai/ai-assisted-support.md" details="The complete Claude Desktop setup for answering support questions: the documentation knowledge base, keeping it current, and connecting to a live system." />
 </LandingGrid>

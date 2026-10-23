@@ -1,6 +1,6 @@
 ---
 entities: [ProductionOrder, ProductionOrderRequest, AggregatedProductionOrder, AggregatedProductDelivery, AggregatedProductionOrderClosing, MRPDocument]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات مستندات أوامر الإنتاج والتخطيط

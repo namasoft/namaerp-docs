@@ -26,12 +26,12 @@ The system keeps the list of flows in memory, and saving any Entity Flow clears 
 
 ## Step 2 — Does the line listen to what the user did?
 
-Each line in the flow's details has a **Target Action**: the moment in the record's life when it runs. A line on **Post Commit** runs when the record is saved finally; it does not run on **Save Draft**, on **Revise**, or when the record is opened. The header's **Target Action** is only a default: a line left empty takes the header's value when the flow is saved. The full list of moments is in [Understanding the Record Lifecycle](/platform/entity-flows/introduction-to-entity-flows).
+Each line in the flow's details has a **Target Action**: the moment in the record's life when it runs. A line on **Post Commit** runs when the record is saved finally; it does not run on **Add Draft**, on **Revise**, or when the record is opened. The header's **Target Action** is only a default: a line left empty takes the header's value when the flow is saved. The full list of moments is in [Understanding the Record Lifecycle](/platform/entity-flows/introduction-to-entity-flows).
 
 Three timing traps account for most "it did not run" reports:
 
 1. **Saving a record that has not changed sends nothing to the server.** Open an existing invoice, press Save without touching anything, and the screen answers *Can not save as there are no changes*. No save happened, so no flow ran. Change a field, then save, and the **Post Commit** lines run normally.
-2. **A draft save is not a final save.** Lines on **Post Commit**, **Validate On Save** and the other save stages run only on a final save. A draft save runs the **Save Draft** lines and nothing more.
+2. **A draft save is not a final save.** Lines on **Post Commit**, **Validate On Save** and the other save stages run only on a final save. A draft save runs only three stages: the **Pre Update Calculated Fields** lines, the **Update Calculated Fields** lines, and then the **Add Draft** lines.
 3. **A record that goes to approval is not saved finally yet.** When an approval definition catches the save, the **Post Commit** lines wait until the final approval saves the record — then they run.
 
 Two target actions have their own switch:

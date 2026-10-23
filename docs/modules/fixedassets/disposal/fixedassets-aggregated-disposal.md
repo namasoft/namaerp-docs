@@ -1,4 +1,5 @@
 ---
+description: "The Aggregated Fixed Asset Disposal Document: disposing of many assets in one grid, which generates one ordinary disposal document per line, what blocks a commit and where to check the result."
 entities: [AggrFADisposalDoc]
 menu: Assets → Documents → Aggregated Fixed Asset Disposal Document
 ---

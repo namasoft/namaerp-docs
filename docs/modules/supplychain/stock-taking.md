@@ -1,5 +1,6 @@
 ---
-entities: [StartStockTaking, EndStockTaking, StockTakingDetails, StockTakingElectronic, ItemVotingDoc, ItemVotingFile]
+description: "Stock taking: the Start and End Stock Taking documents, entering counts in Stock Taking Details or electronically, the surplus and shortage documents it generates, and handling natural loss."
+entities: [StartStockTaking, EndStockTaking, StockTakingDetails, StockTakingElectronic]
 ---
 # Stock Taking
 
@@ -49,15 +50,6 @@ The **Stock Taking Details** document carries the physically-counted quantities 
 
 When counting is done with barcode scanners, **Electronic Stock Taking** captures the readings electronically and feeds them straight into the counting process. This reduces manual-entry errors and speeds up counting in large, item-dense warehouses.
 
-## Vote Counting: When More Than One Person Counts
-
-In large warehouses, the same item may be counted by more than one person to ensure accuracy. The **voting** system handles this:
-
-- **Voting document (ItemVotingDoc)**: each "voter" (counter) records the quantity they counted for the item at the same location.
-- **Voting file (ItemVotingFile)**: gathers voting documents within a scope and period, defines the list of voters, and sets the mechanism for reaching the approved figure (consensus or average) before the difference is accepted.
-
-The benefit: a valuable item's difference isn't accepted based on one person's count alone, but after two or more counts agree - reducing counting errors and adding control over the stock-taking process itself.
-
 ## Handling Natural Loss and Shrinkage
 
 ::: warning This Is Where Weight Losses Are Handled
@@ -86,8 +78,6 @@ Specific incidental damage (a particular event), on the other hand, is recorded 
 **Freeze movement during counting**: Reduce or stop movements in the warehouse being counted during the count period to avoid the balance changing between start and end.
 
 **Adopt cycle counting**: Don't wait for a single annual count. Regular cycle counts over small scopes catch problems early and keep accuracy high year-round.
-
-**Use voting for valuable items**: For high-value items, require more than one count before accepting the difference.
 
 **Document the reason for the difference**: When settling a difference, record what the investigation revealed (a location always short? a particular shift with recording issues?) - patterns matter more than individual numbers.
 

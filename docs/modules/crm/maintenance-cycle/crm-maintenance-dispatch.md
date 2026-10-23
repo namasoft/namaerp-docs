@@ -1,4 +1,5 @@
 ---
+description: "The CRM Maintenance Plan and Maintenance Itinerary: building a one-day dispatch route sheet for technicians, what committing the plan does, and where its notices come from."
 entities: [MnPlan, MnItinerary]
 menu: Customer Relationship Management → Maintenance Documents → CRM Maintenance Plan
 ---
@@ -29,9 +30,6 @@ The Maintenance Itinerary is a master file, filed under **Maintenance Files** ra
 documents. It holds a route name, a **noticing capacity** — how many call-outs the route is thought
 to absorb in a day — five free description boxes, and a grid of the address regions the route
 covers.
-
-That is all it holds, and the capacity figure is the one to be careful about: nothing enforces it,
-and it is not even carried onto the plan for you. See the warning below.
 
 ## The plan — one document per day
 
@@ -74,11 +72,9 @@ changed — it is still a fault log, and the work still becomes real only when s
 [maintenance order](/modules/crm/maintenance-cycle/crm-maintenance-orders.md) with the notice in
 *From document*.
 
-::: warning Capacity is a note, not a limit
-The route's *noticing capacity* and *planned number of notices* are typed by hand and never compared
-with the number of notice lines. A route with a capacity of 5 accepts 30 notices and saves happily.
-The capacity is not even copied from the itinerary master onto the plan line — you retype it, and
-nobody checks that you retyped it correctly.
+::: tip Capacity is a planning figure
+The route's *noticing capacity* and *planned number of notices* are figures the dispatcher types on
+each plan line to plan the day against; the plan does not limit the number of notice lines to them.
 :::
 
 ::: warning Nothing tells the technician

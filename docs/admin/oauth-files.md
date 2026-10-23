@@ -1,4 +1,5 @@
 ---
+description: "The OAuth File screen that holds Google sign-in access for Gmail sending and Google Drive backup checks: its fields, authorising a file step by step, lost access and using your own Google application."
 entities: [OAuthFile]
 menu: Administration → Other → OAuth File
 ---

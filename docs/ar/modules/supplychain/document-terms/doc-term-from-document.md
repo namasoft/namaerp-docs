@@ -47,6 +47,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **منع ملء رقم الشحنة طبقاً لتاريخ الانتهاء إن كان حقل الشحنة فارغاً (Prevent Fill Lot Id According To Expiry Date If Empty)** `termConfig.preventFillLotIdAccordingToExpiryDateIfEmpty` — يعطّل السلوك الافتراضي الذي يشتق رقم الشحنة/الدفعة من تاريخ الانتهاء عندما يكون حقل الشحنة فارغاً.
 
+**السماح بعمل فاتورة مستند على عرض سعر منتهي (Allow Creating Document From Expired Quotation)** `termConfig.allowCreatingDocumentFromExpiredQuotation` — افتراضيًا يجب أن يقع التاريخ الفعلي لمستند المبيعات المنشأ بناءً على عرض أسعار داخل مدى **صالح من** / **صالح حتي** في العرض، وإلا رُفض الحفظ بالرسالة «التاريخ الفعلي يجب ان يكون في المدي المحدد في صالح من و صالح إلي في عرض الأسعار». فعّل هذا الخيار في توجيه المستند الجديد لقبول العروض المنتهية. لمستندات المبيعات فقط.
+
 **السماح بإدخال كود واسم صنف بدون اختيار صنف (Allow Item Code And Name Without An Item)** `termConfig.allowItemCodeAndNameWithoutAnItem` — يسمح بكتابة كود/اسم صنف حر على السطر دون اختيار سجل صنف مُسجّل.
 
 **عدم نسخ بنود العقد عند اختياره (Do Not Copy Contract Terms When Selected)** `termConfig.doNotCopyContractTermsWhenSelected` — عندما يكون المصدر عقداً، يمنع نسخ بنود/شروط العقد إلى المستند الجديد. لمستندات خامات المقاولات فقط.

@@ -65,7 +65,7 @@ Code, group and the two names, then a **Project details** group:
 | Assignee (المعين للمهمة) | The employee who owns the delivery |
 | Project Start Date / Project End Date (تاريخ بداية المشروع / تاريخ نهاية المشروع) | Plain dates |
 
-::: danger There is no budget, no cost and no progress on a CRM Project
+::: info There is no budget, no cost and no progress on a CRM Project
 The screen has no budget field, no cost field, no revenue field, no percentage complete, no milestone and no completion flag. Nothing is rolled up from the lines, and nothing is compared to anything.
 
 It is also completely unrelated to the **Contracting** module's projects — different screens, different data, no reference in either direction, no shared reporting. If you are looking for project costing, budgets, extracts or progress billing, that is the Contracting module and this screen has nothing to do with it.
@@ -77,7 +77,7 @@ The second tab is the plan. A remarks field, then a grid with one row per phase:
 
 Select a row and press **Create Visit From Selected Line** (إنشاء زيارة من السطر المختار) and a new [CRM Visit](/modules/crm/activities/crm-visits) opens carrying that line's serial, description, phase and assignee. As always, the visit is unsaved until you save it, and no link is written back onto the project line.
 
-Below the grid sits the same meeting-notes grid you saw on the Offer, and it has the same problem: its heading renders as the raw key **`CRMProject.remarkLines`** in both languages.
+Below the grid sits the same meeting-notes grid you saw on the Offer; on screen its heading shows as **`CRMProject.remarkLines`** in both languages.
 
 ### Related Records
 
@@ -93,12 +93,6 @@ The four buttons on the Basic Information tab need the project **saved** first, 
 - **Create Contact** (*إنشاء جهة اتصال*) — a new Contact linked back to the project.
 
 On the Preparing and Training tab, each row of the phase grid carries **Create Visit From Selected Line** (*إنشاء زيارة من السطر المختار*). It opens a new Visit for the project with the row's serial, phase and description already filled in its Action Plan group — the same values the Visit's own Serial picker would bring.
-
-::: warning Do not use "convert to Project" on a service contract
-The CRM Service Contract screen carries a button, **convert to Project** (*تحويله الي مشروع*), that creates a CRM Project from the contract. The important issue is that **the project it produces is pointed at a type its own reference field does not accept**. A contract is not one of the values *Related To* allows, so the project comes back holding something the picker cannot re-select, and the behaviour of that record has not been verified.
-
-Treat Service Contract → CRM Project as unsupported. If you need the link, create the project from its own menu and point *Related To* at the customer instead.
-:::
 
 ![The action block on the CRM Project's Basic Information tab](../../../ar/modules/crm/images/sales-pipeline/crm-project-actions-en.png)
 

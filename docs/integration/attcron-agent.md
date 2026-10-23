@@ -1,4 +1,5 @@
 ---
+description: "Installing and running attcron, the branch-side agent that collects attendance machine punches and pushes them to Nama: prerequisites, first connection, the daily screen, upgrades and troubleshooting."
 entities: [AttendanceMachineConfig]
 ---
 

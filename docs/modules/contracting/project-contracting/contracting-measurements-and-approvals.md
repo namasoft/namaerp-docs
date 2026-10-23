@@ -1,4 +1,5 @@
 ---
+description: "Three approval records around the contracting billing chain: Measurements Request (site visit before pricing), Customer Submittal (material approval) and Project Deliver Letter (handover); none of them books anything."
 entities: [MeasurementsRequest, CustomerSubmittal, ProjectDeliverLetter]
 ---
 # Measurements, Submittals and Handover

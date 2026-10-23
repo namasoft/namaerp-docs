@@ -33,11 +33,18 @@ Unlike standard automatic generation, this version:
 
 ## Key Parameters
 
-Inherits all parameters from EAAutomaticGenerateEntityFromEntityAction:
-- **Target Type** - Entity type to create (checked for approval definitions)
-- **Finder SQL** - Query to find existing entity
-- **Field Map** - Field mapping expressions
-- **Parameters 4-10** - All parent action parameters apply
+Uses the same parameters as [EAAutomaticGenerateEntityFromEntityAction](EAAutomaticGenerateEntityFromEntityAction.md):
+
+- **Parameter 1:** Target Type (Required) - Entity type to create (checked for approval definitions)
+- **Parameter 2:** Finder SQL (Required) - Query to find existing entity
+- **Parameter 3:** Field Map (Required) - Field mapping expressions
+- **Parameter 4:** Update Only (Optional) - Only update existing entities
+- **Parameter 5:** Inverse Copy (Optional) - Copy fields back to source
+- **Parameter 6:** Run Entity Flow Per Each Line (Optional) - Process collections
+- **Parameter 7:** Insert Only (Optional) - Only create new entities
+- **Parameter 8:** Apply When Query (Optional) - Conditional processing
+- **Parameter 9:** Group Details By (Optional) - Group collection items
+- **Parameter 10:** Run Only If (Optional) - Execution condition
 
 ## Database Tables Affected
 

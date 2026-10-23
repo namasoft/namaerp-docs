@@ -1,4 +1,5 @@
 ---
+description: "Ending employment in HR: the Firing Request and Firing Document, generating the final settlement, Termination Reasons with their end-of-service gratuity rules, and aggregated firing for many employees."
 entities: [FiringDocument, FiringRequest, TerminationReason, AggFiringDocument, AggFiringRequest]
 ---
 # Firing & Termination

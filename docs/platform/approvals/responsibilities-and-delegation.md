@@ -1,4 +1,5 @@
 ---
+description: "The Responsibility, Special Responsible and Delegation screens used to route approvals and notifications to roles instead of named employees and to cover for someone who is away."
 entities: [Responsibility, SpecialResponsible, Delegation]
 menu: Administration → Security → Responsibility
 ---

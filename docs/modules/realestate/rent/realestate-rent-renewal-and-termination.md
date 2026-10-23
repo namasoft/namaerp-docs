@@ -172,6 +172,15 @@ layout order they are:
 | 5 | Discount value insurance effects | The part of the deposit you are withholding |
 | 6 | Other discount effects | Other withheld amounts |
 | 7 | Remaining Effects | The unpaid balance, the current-year and next-year rent, the current-year and prepaid expenses, and the two behavioural options |
+| 8 | Taxes | Nothing — it holds **Send As**, which decides whether the termination goes to the tax authority as an Invoice, a CreditNote or a DebitNote |
+
+When the termination is one that must be sent to the tax authority and **Send As** is empty, the save is
+refused with:
+
+*Send As must be selected in the term* — «يجب اختيار إرسال كـ في التوجيه»
+
+Pick the type on the term's Taxes page and save again. The fine term has the same field and the same
+check.
 
 Each page is a pair of accounting sides, and — as everywhere in the module — **a pair only produces
 ledger lines when both of its sides are filled in**. A half-configured page is skipped in silence, so

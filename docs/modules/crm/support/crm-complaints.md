@@ -67,10 +67,10 @@ The link runs one way only. The complaint's Related Records tab reads the ticket
 
 ## Status, escalation, and the absence of a workflow
 
-::: danger Complaint status never changes by itself
-The **الحالة / Status** field offers *مبدئي / Initial*, *منتهي / Finished*, *Escalated* and *مغلقة / Closed*, and **no process in the system ever writes it or reads it** — including Convert To Ticket. `CMPL-0207` will read *Initial* forever unless somebody opens it and changes the field by hand.
+::: info Complaint status is a manual label
+The **الحالة / Status** field offers *مبدئي / Initial*, *منتهي / Finished*, *Escalated* and *مغلقة / Closed*. Your agents set it by hand — Convert To Ticket leaves it as it is — and you can filter the complaint list by it. `CMPL-0207` reads *Initial* until somebody opens it and changes the field.
 
-It is a manual label. If your desk relies on it, put a step in your own procedure that says who updates it and when, because the system will not. (*Escalated* has no translation in either language and shows as a raw Latin word in the dropdown.)
+If your desk relies on it, put a step in your own procedure that says who updates it and when. (*Escalated* shows in Latin script in both languages.)
 :::
 
 ::: warning escaleted to is a field, not a state
@@ -96,7 +96,7 @@ An honest answer, because it comes up in every implementation:
 
 **Use the complaint** if your desk logs every inbound contact — including suggestions and remarks that will never become work — or if agents routinely need the invoice search to identify a product. It is a good notepad with excellent auto-fill.
 
-**Skip it** if your desk only ever records faults and agents already know the product. Raising a Trouble Ticket directly loses you nothing: the complaint has no validation, its status is inert, and its one piece of automation opens an unsaved ticket you would have opened anyway.
+**Skip it** if your desk only ever records faults and agents already know the product. Raising a Trouble Ticket directly loses you nothing: the complaint has no validation, its status is a manual label, and its one piece of automation opens an unsaved ticket you would have opened anyway.
 
 What you must not do is treat the complaint as a case that progresses through states while the ticket handles the work. Only the ticket has a lifecycle.
 

@@ -58,32 +58,18 @@ in the module can score a questionnaire.** If you want a score, ask for a Number
 up yourself outside the system.
 :::
 
-::: warning Leave the *Question Answers Template (HTML)* box empty
-The question carries two HTML boxes for sites that want to control how a question is drawn on a web
-form. *Question Title Template (HTML)* works — it replaces the rendered question text.
+The **Question Title Template (HTML)** box is for sites that want to control how a question is drawn
+on the web form: fill it and it replaces the rendered question text.
 
-*Question Answers Template (HTML)* does **not**. Filling it makes the web form print the question's
-title a second time and emit **no answer box at all** for that question, so the question becomes
-impossible to answer from the link. If the title template is empty too, the page fails outright.
-Leave this box empty on every question.
-:::
-
-::: warning The image and ordering fields belong to a separate mobile application
+::: info The image and ordering fields are for the mobile questionnaire app
 The question screen shows a *صورة السؤال / Question Image*, seven *صورة الخيار / Choice Image* slots
-and a *ترتيب عرض السؤال / Question Display Order* box. These are read by a separate mobile
-application only. **They are drawn nowhere in the ERP and nowhere on the web questionnaire**, and
-the display-order number is never applied — questionnaire lines always come out in the order the
+and a *ترتيب عرض السؤال / Question Display Order* box. These serve a separate mobile questionnaire
+application. In the ERP and on the web questionnaire, questionnaire lines come out in the order the
 template lists them.
 
-The choice images also carry a validation that catches people out: fill **one** choice image on a
-Choices question and the record refuses to save until the number of images matches the number of
-option lines exactly. Since the images are never shown anyway, the simplest advice is to leave all
-eight image boxes empty.
+The choice images carry a validation: fill **one** choice image on a Choices question and the record
+refuses to save until the number of images matches the number of option lines exactly.
 :::
-
-One more small thing: the **غير نشط / Inactive** tick has no effect inside the ERP. Ticking it does
-not remove the question from the picker on a new template line, and does not remove it from
-templates or questionnaires that already use it. To retire a question, take it out of the templates.
 
 ## The template — the survey itself
 
@@ -92,8 +78,8 @@ A template is the survey: a code, Arabic and English names, a few settings, and 
 ![Questionair Template screen](../../../ar/modules/crm/images/questionnaires/crm-questionnaire-template-en.png)
 
 **Details grid.** One row per question, in the order you want them asked. The same question may not
-appear twice — the screen refuses to save and points at the offending line. There are also five
-free-text description columns on the row which nothing reads; ignore them.
+appear twice — the screen refuses to save and points at the offending line. Five free-text
+description columns on the row hold your own notes about that line.
 
 ::: tip The English column header says "Criteria"
 On both the template's question grid and the questionnaire's answer grid, the English label of the

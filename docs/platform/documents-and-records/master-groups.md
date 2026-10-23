@@ -1,4 +1,5 @@
 ---
+description: "The Group screen that numbers master-file records such as customers, items and employees: the For Type rule, the group tree beside list screens, what locks once a group is used, and retiring a group."
 entities: [MasterGroup]
 menu: Basic → Settings → Group
 ---
@@ -253,7 +254,7 @@ master records and no other.
 | Field | What it does |
 |---|---|
 | Template | A [Default Values Template](/platform/everyday-tools/default-values-templates) applied to records in the group. |
-| Field Filter | A [field filter](/platform/field-filtering/field-filter-with-criteria) that hides or protects fields on those records. An automatic filter is refused here. |
+| Field Filter | A [field filter](/platform/field-filtering/field-filter-with-criteria) that restricts which records the reference fields offer on records of the group. It does not hide fields. An automatic filter is refused here. |
 | View / Update / Usage Capability | Security capabilities copied onto records that join the group. |
 | Dimensions | Legal entity, sector, branch, department and analysis set, copied onto records that join the group. |
 | Revise With Commit | Makes the records in the group revise as they commit. |

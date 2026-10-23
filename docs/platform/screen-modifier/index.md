@@ -3,6 +3,7 @@
 # the .custom-index marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 layout: home
 title: Screen Modifier
+description: "Landing page for the Screen Modifier, which adds, hides, renames, reorders and recomputes fields on edit screens, list views and selector pop-ups, with links to the overview and the visual editor."
 hero:
   name: Screen Modifier
   text: Reshape any screen without code

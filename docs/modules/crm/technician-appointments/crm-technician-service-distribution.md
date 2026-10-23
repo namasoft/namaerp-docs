@@ -1,4 +1,5 @@
 ---
+description: "The Technician Service Distribution document: recording which technician did which service and for how long after a visit, and how committing it marks the appointment executed."
 entities: [TechnicianServiceDistribution]
 menu: Customer Relationship Management → Technician Appointments → Technician Service Distribution
 ---

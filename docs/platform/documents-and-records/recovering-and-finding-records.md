@@ -1,4 +1,5 @@
 ---
+description: "How to restore a deleted record from the Recycle Bin (what lands there, restoring, who can use it, emptying it) and how to find any record by code with the All Records screen."
 entities: [EntityVersion, EntitySystemEntry]
 ---
 

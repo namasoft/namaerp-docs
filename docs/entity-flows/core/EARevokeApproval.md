@@ -22,7 +22,7 @@ Manual execution when approval workflows need to be reset, cancelled, or restart
 1. **Determines target entities** - Current entity (if no parameters), entities from reference field, or entities from SQL query
 2. **Validates approval state** - Ensures entities are currently in active approval cycles
 3. **Checks partial approvals** - Prevents revoking approvals that have already been partially processed (unless forced)
-4. **Revokes approval** - Calls EntityMediator.revokeApproval() to reset approval workflow
+4. **Revokes approval** - Ends the record's current approval cycle
 5. **Handles multiple entities** - Processes all target entities with individual validation
 
 ## Parameters

@@ -1,6 +1,6 @@
 ---
 entities: [CPASalesQuotation]
-menu: ECPA → Projects → CPA Projects Sales Quotation
+menu: Project Management → Projects → CPA Projects Sales Quotation
 ---
 # Project Sales Quotation
 
@@ -178,10 +178,10 @@ when receipt vouchers are collected against the quotation, the collected amounts
 paid* and *Remaining* falls. No accounting comes from the quotation itself — the entry belongs to the
 receipt voucher.
 
-::: info The schedule is a promise, not a billing instruction
-Nothing connects these instalment lines to the project invoice. The invoice never reads them, and
-they are never a source of an invoice amount. If a firm bills by instalment it types the instalment
-amount onto the invoice line by hand.
+::: info The schedule tracks payments, not billing
+The instalment lines follow what the customer pays against the quotation. Project invoice amounts
+come from the invoice's own lines, so a firm that bills by instalment types the instalment amount
+onto the invoice line.
 :::
 
 The **Remarks** grid below it holds two free-text columns for anything else that belongs on the

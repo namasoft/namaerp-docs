@@ -1,4 +1,5 @@
 ---
+description: "The POS settings records that shape what the cashier sees and types: screen layouts, the waiter's phone, keyboard shortcuts, pole display, default values, required fields, phone country codes and payment methods."
 entities: [NamaPosUISettings, NamaPosMobileUISettings, NamaPOSShortcuts, NamaPosPoleDisplaySpecs, NamaPosDefaultsTemplate, NamaPosRequiredFields, NamaPOSCustomerPhoneCountryCodes, NamaPOSPaymentMethodsSettings, PaymentFromPosSettings]
 ---
 

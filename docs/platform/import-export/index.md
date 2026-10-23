@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Importing & Exporting Records
+description: "Landing page for exporting records to Excel and importing them back to create or update records, with links to saved import and export definitions and custom sheets."
 ---
 
 # Importing & Exporting Records

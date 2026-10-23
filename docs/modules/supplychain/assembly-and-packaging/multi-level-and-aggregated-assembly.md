@@ -29,6 +29,13 @@ On either grid, **Quantity** is worked out as **Required Quantity** minus **Avai
 
 ![A Multi Assembly Document after choosing a main BOM that has a sub-assembly](../../../ar/modules/supplychain/images/assembly/multi-assembly-details-en.png)
 
+**From a sales order.** Pick the order in **From Document** and its lines are copied in. Two options on the multi-assembly term shape the copy:
+
+- **Spread From Document Lines To Main Items** — the lines go into **Main Items** instead of **Details**, ready for **Spread Main Items**. Leave it clear and they land in Details.
+- **Spread Only Stock Items From Document** — only stock items are copied; service lines on the order are skipped.
+
+The term's quantity-tracking tab works as on other documents: with **Consider Satisfied Qties In From Doc** ticked only the quantity not yet covered by earlier multi-assembly documents is brought in, so the same order can be built in several rounds. The quantities tracked against the order are the Main Items lines when the first option is on, and the Details lines otherwise.
+
 ### What saving does
 
 On save, every Details line with a quantity becomes an **Assembly Document** — created the first time, updated after — using the **Assembly Document Book** and **Assembly Document Term** on the multi-assembly term. The generated document is linked in the line's **Assembly Document** column, and its issued items are filled from the line's BOM.

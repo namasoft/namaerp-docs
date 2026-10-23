@@ -48,10 +48,6 @@ Each line also carries a unit price, eight discount levels, four item taxes, a d
 
 Inserting a line copies the header's Start In and End In down onto it, and typing a period value or unit computes the line's End In from its Start In. Any line dates still empty when the document is saved are back-filled from the header.
 
-::: warning Picking a product does not fill that line's dates
-There is an auto-fill that is supposed to derive a line's dates from the chosen product, and it does not work: choosing a product fills nothing, and in some situations it **blanks a Start In you had already typed**. Check the dates on every line after choosing products, and fill them from the header period rather than expecting the product to supply them.
-:::
-
 **The totals** are calculated from the lines. On `CSC-0044`:
 
 | | |
@@ -88,12 +84,12 @@ For `CSC-0044`, Al Nokhba collects **twelve receipts of 3,800.00** (3,800.00 × 
 
 Its one functional consumer is the trouble ticket. When an agent raises a ticket for a product, the ticket asks *"is this product under contract on this date?"* and the contract answers. On `TKT-0451`, `CSC-0044`'s first line is what makes the ticket read **مغطي بعقد خدمة / Covered By Contract**.
 
-::: danger What coverage matches, and what it ignores
+::: warning What coverage matches, and what it does not check
 **What coverage matches:** the ticket's **Product**, the ticket's **Serial Number** *only when the ticket carries one*, and the **ticket date** falling inside the line's **Start In → End In** window. A service contract wins over a warranty when both match.
 
-**What coverage ignores:** the **customer** (any customer's contract or warranty can cover any other customer's ticket), the contract's **status** (Cancelled, Finished and Renewed contracts still cover), whether the contract has ever been **committed** (drafts cover), the **frozen extension** (the screen shows the extended date but coverage tests the original End In), and all **dimensions** — legal entity, branch, sector.
+**What coverage does not check:** the **customer** (any customer's contract or warranty can cover any other customer's ticket), the contract's **status** (Cancelled, Finished and Renewed contracts still cover), whether the contract has ever been **committed** (drafts cover), the **frozen extension** (coverage uses the line's End In), and all **dimensions** — legal entity, branch, sector.
 
-**What coverage does:** nothing but display. Covering Type and Covering Document are an on-screen indicator for the agent. No validator, pricing rule, status guard or document generation reads them; there is no document term on the Trouble Ticket that could react. The commercial decision — whether to charge for the work — remains entirely manual.
+**What coverage does:** Covering Type and Covering Document tell the agent whether the product is covered and by which document. Whether to charge for the work is the agent's decision.
 
 **Practical advice:** always fill Serial Number on serialised items, or one contract line registered without a serial will cover every ticket raised on that product, for every customer, in every branch.
 :::
@@ -104,25 +100,15 @@ Its one functional consumer is the trouble ticket. When an agent raises a ticket
 The machine maintenance suite has its own, richer contract with visit schedules and instalments, under a different licence. Nothing links the two: no reference field, no shared status, no migration path, and a maintenance contract plays no part in trouble-ticket coverage. Which one you use is decided by which licence you own, not by which fits better. See [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md).
 :::
 
-## Contract status — a label with no teeth
+## Contract status
 
 The **حالة العقد / Service Contract Status** field is read-only on screen and has six values: *upgraded*, *transferred*, *renewed*, *extended*, *Cancelled* and *Finished*. An **empty** status is the normal, live state — there is no value meaning "in force".
 
 Two things write it. First, committing a **new** contract whose type is Renewal, Extension, Upgrade or Transfer, with **العقد المعدل / updated contract** pointing at the old one: the old contract is stamped *renewed*, *extended*, *upgraded* or *transferred* accordingly. (The document refuses that link when the type is empty or Ordinary, and refuses a contract already claimed by another.) Second, the **CRM Update Contract Status** document.
 
-::: danger Contract status enforces nothing at all
-Cancelling or finishing a contract does **not** withdraw coverage, block tickets, block work or block free repairs. A contract marked *Cancelled* still reports **Covered By Contract** on every ticket raised inside its date window, and so does a contract auto-stamped *renewed* by its successor. There is not one rule anywhere in the system that reads this field.
+Coverage follows the line dates, not the status: a contract covers tickets inside its lines' **Start In → End In** windows whatever its status, so to stop a contract covering, shorten its line dates. When a line's product is a Service Center vehicle, the [vehicle file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) shows its latest service contract and that contract's status.
 
-**The only thing that ever ends coverage is the line's End In date passing.** If a contract must stop covering, shorten the line dates — changing the status achieves nothing.
-:::
-
-::: danger The Update Contract Status document can rewrite a different contract
-**CRM Update Contract Status** (*تغيير حالة عقد خدمة*) is a two-field document — the contract, and the status to apply — with one rule: its value date must be later than the contract's. It is unreliable in a way that is easy to miss.
-
-When it runs, it looks at **every status document in the database**, for every contract, picks the one with the latest value date, and applies *that* status to the contract being saved. So marking contract B *Finished* today can silently change the status of contract A — a different, live contract belonging to a different customer — the next time A is saved. Re-saving any contract can flip it again.
-
-Do not use this document as a reliable way to set one contract's status. Combined with the fact that status enforces nothing, the whole status feature is cosmetic at best: if you need to record that a contract is dead, record it in the description and correct the line dates.
-:::
+**CRM Update Contract Status** (*تغيير حالة عقد خدمة*) is a two-field document — the contract, and the status to apply — and its value date must be later than the contract's.
 
 The status document itself is this small:
 
@@ -130,37 +116,17 @@ The status document itself is this small:
 
 ## Freezing a contract
 
-The **تجميد عقد / Freezing Contract** tab handles a suspension of service: a product, a freeze start date and a freeze end date. It is one of the better-behaved parts of the screen — it refuses a product that is not on the contract (*"You can not freeze product {0} because it does not exist in contract"* — a message with no Arabic translation, so Arabic screens show the English), and it adds up the frozen days per product and pushes that line's calculated **إلى / To** column out by the same number of days.
+The **تجميد عقد / Freezing Contract** tab handles a suspension of service: a product, a freeze start date and a freeze end date. It refuses a product that is not on the contract (*"You can not freeze product {0} because it does not exist in contract"* — a message with no Arabic translation, so Arabic screens show the English), and it adds up the frozen days per product and pushes that line's calculated **إلى / To** column out by the same number of days.
 
 On `CSC-0044`, the hotel closes a wing from 1 to 31 July 2026, so line 2's *To* moves from 1 March 2027 to **1 April 2027**.
 
-::: warning Freezing does not extend support coverage
-The extension shows on the line's *To* column and nowhere else. The ticket coverage lookup still tests the line's raw **ينتهى / End In**, so a ticket raised in those extra 31 days reads **Not Covered** even though the screen says the line runs to April.
-
-If a freeze must genuinely extend cover, edit the line's End In as well.
-:::
+Ticket coverage uses the line's **ينتهى / End In** date. To have the frozen days count as cover too, move End In by the same number of days.
 
 ## The Executions tab
 
 Tab 3 shows two read-only lists: the trouble tickets matched to this contract, and their execution lines. It is the closest thing the module has to "what did this contract cost us to service?"
 
-::: warning The Executions tab under-reports
-A ticket only appears here if the coverage answer happened to be worked out while the ticket was being saved. Tickets created through import, a web service or a bulk operation frequently never appear, even though opening them shows *Covered By Contract* perfectly correctly.
-
-Treat the tab as indicative. For a complete picture, filter the Trouble Ticket list by customer and product.
-:::
-
-## The parts of the screen that do nothing
-
-Two whole tabs and one group on this document accept data, store it, and are read by nothing.
-
-::: danger Inert areas — record-keeping only
-**تفاصيل عقد الصيانة / Fixing Contract Details** (tab 2) — a complete parallel block of dates, amounts, percentages, a customer, a mediator, an agent and its own lines grid. Only two fields are touched by any code, and only to default them from the header customer and mediator. Nothing on this tab is summed, validated, billed or posted.
-
-**عقد اضافي / Addition contract** (tab 4) — product, dates, an addition amount, currency and share percentages. **An addition amount does not increase the contract value, does not change what is billed, and does not reach the ledger.** If a customer adds equipment mid-term, raise a new contract of type Extension instead.
-
-**Mediator share, agent share and main-centre share** in the *Service Contr Details* group, and the matching percentages on the Fixing Contract tab — free-form numeric record-keeping. No commission is calculated, no total is validated, nothing is posted. Do not present commission splitting or revenue sharing as a feature of this document.
-:::
+For every ticket raised on a contract's products, filter the Trouble Ticket list by customer and product.
 
 ::: info No visit schedule here
 Unlike the maintenance suite's contract, this one schedules no visits and generates none. There is no visit-schedule grid, nothing expands a series of planned visits, and nothing warns about a visit that did not happen.
@@ -168,11 +134,10 @@ Unlike the maintenance suite's contract, this one schedules no visits and genera
 
 ## Actions on this screen
 
-The action block on the Main tab carries three buttons. All three need the contract **saved** first, and each opens a new, unsaved record in a pop-up with a reference back to the contract — nothing is saved for you.
+The action block on the Main tab carries two buttons. Both need the contract **saved** first, and each opens a new, unsaved record in a pop-up with a reference back to the contract — nothing is saved for you.
 
 - **Create Calling** (*إنشاء  اتصال*) — a blank CRM Call.
 - **Create Visit** (*إنشاء زيارة*) — a blank CRM Visit.
-- **convert to Project** (*تحويله الي مشروع*) — a new CRM Project. Do not use it; see the warning on [Projects, Analysis and Development Requests](/modules/crm/sales-pipeline/crm-projects-and-analysis).
 
 The Call and Visit buttons are shortcuts for logging a conversation, not a schedule: no date, no recurrence, and the created activity is not tracked against the contract in any way.
 
@@ -186,7 +151,7 @@ All meaningful configuration for this document lives in its **Document Term**, n
 
 **تأثير الخصومات / Discount Effects** — the account sides for the line discount, the invoice discount and discounts 2 to 8.
 
-Two notes on that last page: a few of the discount account sides show their raw internal names instead of translated labels in search, export and column-picker lists, so the group headings are the reliable guide; and the third and fourth tax sides carry Arabic and English labels that describe different things — read the Arabic label as the authority.
+Two notes on that last page: in search, export and column-picker lists, use the group headings to tell the discount account sides apart; and for the third and fourth tax sides, go by the Arabic label.
 
 ::: info Service fees are not available on this document
 Whatever you may have seen on other invoice-style terms, the service-fee account sides and the second debit and credit sides do not exist for the service contract. Do not go looking for them.

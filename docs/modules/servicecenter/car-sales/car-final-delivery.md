@@ -41,14 +41,7 @@ Four things, and only four:
 4. **Stamps the delivery date** onto the car, when the term's *update delivery date* option is on —
    along with any of the other reference stamps the term switches on.
 
-It posts **nothing**. The delivery has no accounting effect of its own at all.
-
-::: warning The account block on the final-delivery term is ignored
-Its [document term screen](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
-shows a full set of debit, credit, cash, tax and discount accounts. The
-document never posts, so anything entered there is silently ignored. Do not configure it, and do not
-expect a journal entry.
-:::
+The final delivery creates no journal entry of its own.
 
 ## The stock rule — read this before configuring anything
 
@@ -71,9 +64,8 @@ generation book and term **empty**, and let the invoice move the stock. Use the 
 the stock-moving document only on a flow where there is no invoice to do it: a consignment, or a
 deliver-now-invoice-later arrangement.
 
-**Unticking *أنشاء مستندات تلقائيا (Generate Document)* does not stop the final delivery.** That
-switch — and *Manual Generation* beside it — is ignored by this document. Blanking the generation
-book, or the generation term, is the only thing that works.
+**To stop the final delivery generating a stock issue, clear the generation book or the generation
+term on its term.**
 
 Treat the invoice and the final delivery as **alternatives** for moving stock, never as a sequence.
 :::
@@ -104,8 +96,7 @@ matter to your reporting, this is a manual step in your process, not something t
 you.
 :::
 
-This surprises people most with the plate number, because the traffic letters exist precisely to
-obtain plates. Even they cannot record the plate — see
+The same goes for the plate number, even though the traffic letters exist to obtain plates — see
 [Traffic Letters](/modules/servicecenter/car-sales/car-traffic-letters.md). The plate lives on the
 car record and is typed there, afterwards, by a person.
 
@@ -154,5 +145,5 @@ The Car Final Delivery and its cancellation carry one action each, in the More m
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — for every line whose item
   has sub items, creates the car record (or refreshes the one already on the line) from the line's
   data and writes it back onto the line. The car record is saved straight away, even before you save
-  the document. It does nothing, and shows no message, unless the term's *Create Sub Item From Line
-  Info* option is on.
+  the document. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.

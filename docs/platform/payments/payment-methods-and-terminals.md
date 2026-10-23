@@ -1,4 +1,5 @@
 ---
+description: "The Payment Method, Payment Terminal and Payment Gateway Method Group screens: which account a payment lands in, fees and fee ranges, behaviour on documents, POS cash and shifts, and card terminals."
 entities: [PaymentMethod, PaymentTerminal, PGWMethodGroup]
 menu: Basic → Master Files → Payment Method
 ---

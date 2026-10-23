@@ -1,4 +1,5 @@
 ---
+description: "The CRM services suite chain: Service Contract, generating work plans and service orders, the Service Notice and the Execution sheet, with actions and messages."
 entities: [MnSrvContract, MnSrvOrder, MnSrvWorkPlan, MnSrvOrderExecution, MnSrvNotice]
 ---
 # Service Orders and Executions
@@ -44,26 +45,20 @@ The contract's start and end dates are the fields labelled **Warranty Start Date
 **The services grid** carries one row per serviced site. For each row you choose the **Visit Types 1 to 7** — up to seven independent recurrences on the same site — each with its own task template, plus the employee who will do the work and the building. Nile Commercial Bank's three branches all take **Bimonthly** (نصف شهرية) with template `TT-BRN-B` and employee `EMP-2014`.
 
 ::: warning The services grid on this screen and on the service order is titled "Machines"
-On the Maintenance Service Order the grid holding the service lines is headed **Machines** (ألآت), and it carries Machine Classification and Odometer columns as well. Every row in it is a service. The heading is wrong, the rows are right; read past it. Do not spend time looking for a separate machines grid, because there is not one anywhere in this branch.
+On the Maintenance Service Order the grid holding the service lines is headed **Machines** (ألآت), and it carries Machine Classification and Odometer columns as well. Every row in it is a service. Do not spend time looking for a separate machines grid, because there is not one anywhere in this branch.
 :::
 
 Here is the grid in question — headed **Machines**, with Service and Task Template as its first columns:
 
 ![The services grid on the Maintenance Service Order, headed Machines](../../../ar/modules/crm/images/services-suite/crm-srv-services-grid-en.png)
 
-**The Spare Parts And Services tab** holds the parts entitlement — for `SVC-0006`, 312 filters (`SP-FLT-10`) at 180.00 each, being 39 planned visits × 8 filters per visit — with **Sold Quantity** (ما تم بيعه) and **Remaining Quantity** (المتبقي) columns beside them. Below the parts sits the **Total Price Of Services** (إجمالي سعر الخدمات) group, showing 0.00, and it will show 0.00 for the life of the contract: service lines in this branch carry no price at all.
+**The Spare Parts And Services tab** holds the parts entitlement — for `SVC-0006`, 312 filters (`SP-FLT-10`) at 180.00 each, being 39 planned visits × 8 filters per visit — with **Sold Quantity** (ما تم بيعه) and **Remaining Quantity** (المتبقي) columns beside them. Service lines in this branch carry no price.
 
-**The Terms tab** is the SLA table: trouble level, trouble description and response time, plus two remark columns. It is a reference table on the contract; nothing measures a response against it.
+**The Terms tab** is the SLA table: trouble level, trouble description and response time, plus two remark columns. On a Maintenance Service Notice raised against the contract, the Trouble Level and Trouble Description lookups offer only these rows, and picking one fills the other together with the response time and the remarks.
 
 **When the contract is saved**, it creates an accounting entry over the **spare-part lines only** — for `SVC-0006`, 64,022.40 against the customer's subsidiary account, 56,160.00 to spare-parts revenue and 7,862.40 sales tax. That happens only if the contract's document term has **both** a debit and a credit side configured; if either is empty, nothing is created and any existing entry is cancelled. Like all document effects it is processed in the background, so the save itself is instant and the processing status is visible on the document. The contract moves no stock.
 
-::: warning Entitlement is never drawn down
-Nothing in this branch ever increases Sold Quantity or reduces Remaining Quantity. Orders and invoices do not consume the contract, and the check that would refuse a quantity greater than the remaining entitlement never fires here. Treat those two columns as manual bookkeeping and reconcile them yourself.
-:::
-
-::: warning Two permanently empty tabs
-The contract's **Visits Number** (عدد الزيارات) tab — and the **Maintenance Visits** list on the Tools And Visits tab of the order, invoice and invoice return — list the **machine** suite's visit document. There is no visit document in the services branch, so these lists can never show a row, no matter how much work has been done. The execution sheet is what records a visit here.
-:::
+The execution sheet is what records a visit in this branch.
 
 ## Generating the Work Plans
 
@@ -81,8 +76,8 @@ For each services line, for each of its visit types, it walks forward from the c
 | Biannual | 6 months |
 | Yearly | 12 months |
 
-::: warning "Bimonthly" steps 14 days, not two months
-The label reads as *every two months* in English; the Arabic *نصف شهرية* reads as *twice a month*, and the Arabic is the one that matches the behaviour. If you meant every two months, there is no visit type for that — use Monthly and delete alternate lines, or use Quarterly.
+::: tip "Bimonthly" means every 14 days
+The Arabic label *نصف شهرية* — *twice a month* — describes what this visit type does: a visit every 14 days. For a visit every two months, use Monthly and delete alternate lines, or use Quarterly.
 :::
 
 For `SVC-0006` that gives 13 dates per branch — 15 and 29 May, 12 and 26 June, and so on to 30 October, the next one falling past the contract end — and 13 × 3 branches = **39 planned visits**, which is where the 312 filters came from. Those 39 lines are grouped into work plans according to **Work Plan Generate Type**; `SVC-0006` uses *Based On Contract Priority*, which groups by the month of the expected date, producing six work plans `SWP-0011` to `SWP-0016`.
@@ -111,21 +106,13 @@ To build or rebuild a work plan's lines by hand, tick one or more visit types in
 
 ![The Maintenance Service Order screen and its five pages](../../../ar/modules/crm/images/services-suite/crm-srv-order-en.png)
 
-::: warning The service order creates nothing in the ledger and moves no stock
-Unlike the machine suite's maintenance order, a Maintenance Service Order has **no accounting effect at all** — the whole accounting layer of the order document belongs to the machine branch. The Debit and Credit pages are correctly hidden on its document term, which is the honest signal. Its *Total Price Of Services* is 0.00 as everywhere else. Nothing about the order reaches the general ledger; only the invoice does.
+::: info The service order creates nothing in the ledger and moves no stock
+Unlike the machine suite's maintenance order, a Maintenance Service Order has **no accounting effect** — its document term has no Debit and Credit pages. Only the invoice reaches the general ledger.
 :::
 
-Two fields on the header regularly cause trouble:
+The header's **Service Contract** (عقد خدمة صيانة) field links the order to its service contract; the same field is on the Maintenance Service Notice and the Maintenance Service Invoice.
 
-::: warning Use Service Contract, not Warranty Contract
-The header carries both **Service Contract** (عقد خدمة صيانة) and **Warranty Contract** (عقد الضمان). Only the first is a service contract. The Warranty Contract picker searches the **machine** suite's contracts, and selecting one is expected to fail with a technical error rather than copy any dates across. Fill Service Contract and leave Warranty Contract empty. The same trap is on the Maintenance Service Notice and the Maintenance Service Invoice.
-:::
-
-::: warning Roll-up and odometer columns never fill themselves
-Total Price Of Spare Parts, Total Price Of Services, Total Price Of Returned Spare Parts, Last Odometer, Current Odometer and *Difference Between Current and Last Odometer* on the service lines are computed by nothing in this branch. They stay empty unless somebody types into them, and selecting a service does not auto-fill the header customer or contact. There is no odometer tracking for services — but the order still refuses to save if a line's Current Odometer Date equals its Last Odometer Date, so leave both empty.
-:::
-
-**What the order does refuse to save.** The technicians' rewards in the grid must add up to the header reward; every service used in a spare-parts, tools or dysfunctions line must appear in the services grid; the same service and task template may not be listed twice; and the status-change lines may not be added, removed or edited by hand. That last rule is why the **Status Change** tab is read-only on screen: every row on it is written automatically when somebody changes the Current Status, capturing the from-status, to-status, timestamp, user and remark, and then clearing the remark box.
+**What the order does refuse to save.** The technicians' rewards in the grid must add up to the header reward; every service used in a spare-parts, tools or dysfunctions line must appear in the services grid; the same service and task template may not be listed twice; a service line's Current Odometer Date may not equal its Last Odometer Date, so leave both empty; and the status-change lines may not be added, removed or edited by hand. That last rule is why the **Status Change** tab is read-only on screen: every row on it is written automatically when somebody changes the Current Status, capturing the from-status, to-status, timestamp, user and remark, and then clearing the remark box.
 
 **The status type** is copied from whichever status you choose. If your Maintenance Order Status records have no status type set, the order's lifecycle records nothing useful — that setup detail is covered with the statuses themselves in the maintenance files.
 
@@ -145,15 +132,15 @@ The execution is what the technician fills in. From the order, **Create Service 
 
 **What saving it does:** the execution writes its status back onto the matching line of the parent order, and then sets the order's overall status type — *In Progress* if any line is still in progress or reopened, *Finished* otherwise. Cancelling the execution clears the link and the status from those lines again.
 
-::: warning The execution sheet moves no stock and no money
-Despite listing spare parts and showing money totals, a Maintenance Service Order Execution has **no accounting effect and no inventory effect**. It is a work record. Parts are moved either by saving one of the pre-filled stock requests its buttons open, or by the invoice — and nothing checks that one of those happened.
+::: info The execution sheet is a work record
+A Maintenance Service Order Execution lists spare parts and money totals, and it has **no accounting effect and no inventory effect**. Parts are moved either by saving one of the pre-filled stock requests its buttons open, or by the invoice.
 :::
 
 The execution is also the one document in this folder with **no document term class at all**. The Term field is on its screen; there are no settings behind it. Its machine twin does have one, which is why the two screens look identical and behave differently.
 
 Four documents in this folder — the work plan, the sales order, the sales quotation and the execution — perform **no validation whatsoever** when saved. Book, code and dimensions aside, nothing on them is checked. Do not rely on the system to catch a mistake in a work plan.
 
-When the work is done, [Service Invoicing](/modules/crm/services-suite/crm-service-invoicing) is the next and last step — and the one with the most important warning in this folder.
+When the work is done, [Service Invoicing](/modules/crm/services-suite/crm-service-invoicing) is the next and last step.
 
 ## Actions on these screens
 
@@ -186,7 +173,7 @@ Every button below is pressed by a person; none of them runs on its own. Buttons
 - **End** (*انهاء*) — sets the status to *Finished*, stamps today's date and the current time as the end, and calculates the net time. It does nothing if the sheet is already finished.
 - **Change Status To In Progress** (*تغيير الحالة إلى قيد التنفيذ*) — sets the status to *ReOpen* (معاد فتحه).
 - **Create Service Invoice** (*إنشاء فاتورة خدمة*) — opens a new, unsaved Maintenance Service Invoice in a pop-up with the execution's header, its service and its spare parts copied in.
-- **SrvSparePartsIssueRequest** (*طلب صرف قطع غيار*), on the Spare Parts And Services tab — opens an unsaved Stock Issue Request with the spare parts and the customer; choose the warehouse yourself. The English label shows the button's internal name; that is how it ships.
+- **SrvSparePartsIssueRequest** (*طلب صرف قطع غيار*), on the Spare Parts And Services tab — opens an unsaved Stock Issue Request with the spare parts and the customer; choose the warehouse yourself. The English label shows the button's internal name on screen.
 - **Spare Parts Issue** (*طلب صرف قطع غيار*) — opens an unsaved **Stock Issue** itself, not a request, with the spare parts, the customer, your current dimensions and the execution as From Document. On an Arabic screen this button and the previous one carry the same label; the first one in the block is the request.
 
 The **Maintenance Service Notice** has no buttons of its own beyond the standard toolbar.
@@ -198,7 +185,7 @@ The **Maintenance Service Notice** has no buttons of its own beyond the standard
 | *Customer must be entered* — «يجب ادخال العميل» | **Collect All Services Related To Customer** was pressed on a contract with no Customer. | Fill the Customer box and press the button again. |
 | *You must select execution doc book and term in the term {0}* — «يجب اختيار دفتر وتوجيه سند التنفيذ في التوجيه {0}» | **Create Service Execution For All Lines** or **For Selected Line** was pressed, but the order's document term names no execution book and term. | Fill the execution book and term on the service order's document term. |
 | *Visit type {0} is after contract end date {1} in line number {2}* — «نوع الزبارة {0} هو بعد تاريخ نهاية العقد {1} في السطر {2}» | *Generate Services Work Plans* computed a first visit date that already falls after the contract's Warranty End Date. | Check the contract's Warranty Start Date and Warranty End Date — they are usually the wrong way round. |
-| *Main Quantity can not be less than the Sold Quantity* — «الكمية الأساسية لا يمكن ان تقل عن الكمية المباعة» | A spare-parts line on the contract has a Quantity lower than the Sold Quantity typed beside it. | Raise the Quantity or correct the Sold Quantity; nothing maintains that column for you. |
+| *Main Quantity can not be less than the Sold Quantity* — «الكمية الأساسية لا يمكن ان تقل عن الكمية المباعة» | A spare-parts line on the contract has a Quantity lower than the Sold Quantity typed beside it. | Raise the Quantity or correct the Sold Quantity. |
 | *The Item {0} in line {1} is repeated* — «البند {0} في السطر {1} مكرر» | The same spare part is listed twice in the contract's Spare Parts And Services grid. | Merge the two rows into one carrying the combined quantity. |
 | *Total technicians reward is not equal to total of technicians rewards in the grid* — «مكأفاة الفنين لا تساوي مجموع مكأفات الفنين في التفاصيل» | On a service order, the header Technicians Reward does not equal the sum of the rewards in the technicians grid. | Correct either the header figure or the grid rows so the two agree. |
 | *The Line Number {0} is added by User,This is not permitted* — «السطر رقم {0} تم إضافته بواسطة المستخدم وهذا غير مسموح به» | A row was typed by hand into the order's Status Change tab; only an actual status change may write there. | Delete the row and move the document by setting Current Status instead. |

@@ -27,19 +27,17 @@ Nama stores amounts at full precision; these three settings control how many fra
 
 **Rate Fractional Decimal Places** `value.info.rateFractionalDecimalPlaces` *(default 5)* — Applies to exchange-rate fields. Currencies with a large ratio to the base currency need the precision.
 
-**Do Not Use Today and Yesterday for Dates in List Views** `value.info.doNotUseTodayAndYesterdayForDates` — By default a date within the last day or two is displayed as the words "Today" or "Yesterday", which reads well but hides the actual date. Turn this on when users need to see the real date everywhere — typically in operations where documents are compared by date all day long.
+**Do Not Use Today and Yesterday in List Views** `value.info.doNotUseTodayAndYesterdayForDates` — By default a date within the last day or two is displayed as the words "Today" or "Yesterday", which reads well but hides the actual date. Turn this on when users need to see the real date everywhere — typically in operations where documents are compared by date all day long.
 
 ## Hijri date format
 
-Nama can show a Hijri twin for any date field. These options decide how that Hijri date is written.
+These options decide how a Hijri date is written when Nama writes one out — for example through the Tempo expression `$asHijriString` in printed text and messages (see [Hijri Table](/admin/hijri-table)).
 
 **Day Position** / **Month Position** / **Year Position** `value.info.hijriFormat.dayPosition`, `...monthPosition`, `...yearPosition` — Each part is placed First, Second or Third. The defaults give day-month-year; set day to Third and year to First for the year-first style.
 
 **Separator** `value.info.hijriFormat.seperator` *(default `-`)* — The character between the parts.
 
 **Add Zero to Numbers Less Than 10** `value.info.hijriFormat.addZeroToNumbersLessThan10` *(default on)* — Writes `05` instead of `5`, so dates line up in columns.
-
-**Hijri Fields** `value.info.hijriFields` *(table)* — This is where you decide *which* dates get a Hijri twin. Each row names an entity and one of its date fields; the system then shows a matching Hijri field beside it on screen. Add only the dates that genuinely need it — a contract signature date, an employee hire date — rather than every date on every screen.
 
 ## Measures
 

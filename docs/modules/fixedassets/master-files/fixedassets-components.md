@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Component Type master file and the components grid on an asset: defining maintainable parts, why the grid must be filled before maintenance is recorded, and what a visit writes back."
 entities: [FAComponentType]
 menu: Assets → Master Files → Fixed Asset Component Type
 ---

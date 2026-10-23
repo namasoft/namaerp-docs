@@ -1,4 +1,5 @@
 ---
+description: "The Employee HR Information master file in Payroll, which holds each employee's salary structure, calendar and personal salary component lines, and the Employment Information screen for bulk onboarding."
 entities: [EmployeeHRInfo, EmployementInformation]
 menu: Payroll → Main → Employee HR Information
 ---

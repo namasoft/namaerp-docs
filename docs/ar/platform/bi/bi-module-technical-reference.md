@@ -80,6 +80,8 @@ entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard]
 
 يحتوي كل widget على حقل `dataSource` يتضمن استعلام SQL (T-SQL لـSQL Server). **يجب** أن يتضمن الاستعلام placeholder نصي `/*AND-FILTERS*/` في جملة WHERE الخاصة به. يستبدل الخادم هذا بشروط cross-filter النشطة في وقت التشغيل. بما أن الـplaceholder تعليق SQL، يظل الاستعلام صالحاً عند تشغيله مباشرةً في SQL Server Management Studio دون أي تعديلات.
 
+القواعد العامة لكتابة SQL على جداول نما (احتساب المستندات التي `commitedBefore = 1` فقط، وربط السطور برأس مستندها لمعرفة الحالة، و`name1` عربي و`name2` إنجليزي، والمبالغ من `LedgerTransLine` والكميات من `QtyTransLine`) موجودة في [الاستعلام من جداول نما بلغة SQL](/ar/platform/reports/querying-nama-tables). ويحتاجها كل استعلام widget كذلك.
+
 ::: tip إعادة استخدام SQL المعقد عبر الـwidgets
 إذا ظهر نفس الـ`UNION` / multi-join / SELECT مكتوباً يدوياً عبر عدة widgets بوضع SQL، فكِّر في ترقيته إلى **Virtual Entity** بدلاً من ذلك. يلفّ Virtual Entity الـSELECT في view لـSQL Server ويسجّله ككيان من الدرجة الأولى، فيصبح قابلاً للاختيار من منتقي الجدول الرئيسي في الـwizard (`tableType = "VirtualEntity"`) — ومن هناك تعمل كل ميزات wizard mode (الربط التلقائي على حقول المراجع، وdrill-by الأبعاد، وأعمدة cross-filter المستنتجة تلقائياً) مقابله كما لو كان جدولاً حقيقياً. انظر [دليل Virtual Entity](../automation-and-rules/virtual-entity-guide.md).
 :::
@@ -121,9 +123,10 @@ SELECT TOP 10
   i.name2 itemName,
   SUM(l.netValue) netValue
 FROM SalesInvoiceLine l
+  JOIN SalesInvoice h ON h.id = l.salesInvoice_id
   LEFT JOIN InvItem i ON i.id = l.item_id
   LEFT JOIN Branch b ON b.id = l.branch_id
-WHERE 1=1 /*AND-FILTERS*/
+WHERE h.commitedBefore = 1 /*AND-FILTERS*/
 GROUP BY i.name2
 ORDER BY netValue DESC
 ```
@@ -245,8 +248,8 @@ ORDER BY netValue DESC
 
 ```sql
 SELECT YEAR(l.valueDate) salesYear, b.name2 branchName, SUM(l.netValue) netValue
-FROM SalesInvoiceLine l LEFT JOIN Branch b ON b.id = l.branch_id
-WHERE 1=1 /*AND-FILTERS*/
+FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN Branch b ON b.id = l.branch_id
+WHERE h.commitedBefore = 1 /*AND-FILTERS*/
 GROUP BY YEAR(l.valueDate), b.name2
 ORDER BY salesYear
 ```
@@ -903,6 +906,8 @@ drill-down للوحة البيانات مفيد بشكل خاص للتحليل �
 | `Contains` | `LIKE '%value%'` | البحث النصي |
 | `StartsWith` | `LIKE 'value%'` | مطابقة بادئة النص |
 
+هذه هي المشغِّلات الوحيدة التي يطبّقها الفلتر المتقاطع.
+
 ### النطاق المحلي للـWidget (`localScope`)
 
 تحمل روابط cross-filter علامة `localScope` اختيارية:
@@ -982,12 +987,12 @@ cross-filters كيانات ملف رئيسي تُعرِّف معاملات فل�
 | `code` | نعم | معرّف فريد، مُشار إليه من الـwidgets |
 | `name1` / `name2` | نعم | الاسم العربي / الإنجليزي |
 | `paramType` | نعم | النوع العددي الأساسي. القيم المسموح بها: `"Text"` و`"Integer"` و`"Long"` و`"Decimal"` و`"Boolean"` و`"Date"` و`"Time"` و`"Reference"` و`"Genericreference"` و`"BigText"` و`"Enum"` و`"ID"` و`"EntityType"` و`"Password"` و`"LatLng"`. (لا توجد قيمة `"ListParam"` — وضع متعدد القيم هو علامة `listParam` الأعمدية المنفصلة.) |
-| `listParam` | لا | عندما `true`، يقبل الفلتر قيماً متعددة. **مطلوب** عند `operator` هو `"In"` أو `"NotIn"`. |
+| `listParam` | لا | عندما `true`، يستطيع المستخدم اختيار عدة قيم. استخدمه مع `operator: "In"`؛ ويعمل فلتر `In` بدونه بالقيمة الواحدة المختارة. |
 | `listDisplayType` | لا | واجهة العرض لفلاتر `listParam: true`: `"Default"` أو `"Dropdown"` أو `"Chips"` (شريط الرقائق هو الأكثر شيوعاً). ويُظهر `Chips` مربع بحث وزر «عرض المزيد» عندما تتجاوز القائمة صفحة واحدة من الخيارات (حجم الصفحة 25)، فتبقى القوائم الطويلة قابلة للاختيار؛ ويظل `Dropdown` الخيار الأكثر اختصاراً للقوائم الطويلة جداً. |
 | `referencedEntityType` | إذا `paramType=Reference` | نوع الكيان (مثل `"Branch"` أو `"Customer"` أو `"InvItem"`) |
 | `arTitle` / `enTitle` | لا | التسميات المُترجَمة المعروضة في شريط الفلتر. |
 | `sqlLeftHandSide` | نعم | الطرف الأيسر من شرط WHERE: عمود (مثل `"l.branch_id"`) أو أي تعبير SQL بدءاً من إصدار 20260929؛ راجع **الفلترة على قيمة محسوبة** أدناه. لفلاتر `Reference`، أشر إلى **عمود ID** — ليس عمود اسم أو كود. |
-| `operator` | نعم | مشغِّل المقارنة (انظر §6). `"In"`/`"NotIn"` يتطلبان `listParam: true`. |
+| `operator` | نعم | مشغِّل المقارنة (انظر §6). وللاختيار المتعدد استخدم `"In"` مع `listParam: true`. |
 | `customWhereClause` | لا | جزء WHERE مخصص كامل (يُلغي `sqlLeftHandSide` + `operator`). |
 | `required` | لا | يجب أن يكون للفلتر قيمة قبل تشغيل أي استعلام widget. |
 | `defaultValue` | لا | القيمة الأولية المُطبَّقة عند تحميل لوحة البيانات. ويقبل فلتر `Reference` أيضاً `$currentUser()` و`$currentUserEmployee()`؛ راجع **القيمة الافتراضية بالمستخدم الحالي** أدناه. |
@@ -996,7 +1001,7 @@ cross-filters كيانات ملف رئيسي تُعرِّف معاملات فل�
 | `requiredGroup` | لا | كود مجموعة "واحد على الأقل من" للفلاتر المتعددة. |
 | `criteriaExpression` | لا | معايير من جانب الخادم لمنتقي مرجع الفلتر. والصيغة هي صيغة `filter` في مدخلات التقارير نفسها، ومنها استبدال `${otherFilterCode}` — راجع [تضييق ما يستطيع المستخدم اختياره](/ar/platform/reports/reports-guide#tDyyq-m-ystTyaa-lmstkhdm-khtyrh). |
 | `suggestionQuery` | لا | SQL مخصص يُعيد صفوف اقتراحات للمنتقيات التلقائية. |
-| `comparisonConfig` | لا | إعداد مقارنة الفترة (الإزاحة، التسمية الأساسية). |
+| `comparisonConfig` | لا | كود `BIPeriodComparisonConfig` (الإزاحة وتسميتا الفترتين) — راجع [10.5](#105-mSfwf-BIPeriodComparisonConfig-khtyry). ضعه على كل فلتر تاريخ يجب أن يُزاح. |
 | `showAsDateRange` | لا | عرض الفلتر كمنتقي نطاق واحد من/إلى يتوسّع إلى مُدخلَين مربوطَين — انظر القسم 8a. |
 | `autoCreateWidget` | لا | عند true، يُنشئ حفظ cross-filter أيضاً widget `CrossFilterControl` مقترناً. |
 | `hideFilterTitle` | لا | إخفاء تسمية العنوان عبر جميع طرق العرض. |
@@ -1006,7 +1011,8 @@ cross-filters كيانات ملف رئيسي تُعرِّف معاملات فل�
 | `operator` | `listParam` | السلوك |
 |---|---|---|
 | `Equal` / `NotEqual` / `>` / `>=` / `<` / `<=` / `Contains` / `StartsWith` | `false` (أو محذوف) | قيمة واحدة. |
-| `In` / `NotIn` | `true` (مطلوب) | متعدد القيم؛ يُصدر `IN (...)` / `NOT IN (...)`. |
+| `In` | `true` | متعدد القيم؛ يُصدر `IN (...)` بالقيم المختارة. |
+| `In` | `false` (أو محذوف) | قيمة واحدة؛ يُصدر `IN (value)`. |
 
 **الفلترة على قيمة محسوبة**: بدءاً من إصدار 20260929 يقبل `sqlLeftHandSide` أي تعبير SQL، لا عموداً فقط. لنفترض أن التسليمات التي ليس لها حالة يجب أن تُحسب «لم تُسلَّم»:
 
@@ -1173,6 +1179,14 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 يدعم Nama ERP استيراد إعداد لوحة بيانات كاملة (cross-filters وwidgets وwizards وتخطيط لوحة البيانات) من ملف JSON واحد.
 
+::: warning تحفظ عبر `ImportRecord`؟ أرسل `chartConfigJSON` كنص
+كل الأمثلة في هذا المرجع تكتب `chartConfigJSON` ككائن JSON متداخل. وهذه الصيغة لا تصلح إلا في **ملف**
+استيراد يُحمَّل بأمر **استيراد سجلات** (راجع [كيفية الاستيراد](#kyfy-lstyrd)). أما حين يحفظ مساعد الذكاء
+الاصطناعي widget بأداة `ImportRecord` فيجب أن تكون `chartConfigJSON` **نصاً** JSON — الإعداد كله محوَّلاً
+إلى سلسلة نصية، `"chartConfigJSON":"{\"series\":[…]}"`. والكائن المتداخل المُرسَل هناك يُقرأ كمرجع إلى
+سجل آخر، فيُحفظ الـ widget بلا إعداد مخطط صالح.
+:::
+
 ::: tip ملف نموذجي
 مثال كامل يعمل من البداية إلى النهاية متاح: [HR_DASHBOARD_IMPORT.json](/HR_DASHBOARD_IMPORT.json). نزّله واستورده عبر تدفق الاستيراد الجماعي الموضح في [كيفية الاستيراد](#kyfy-lstyrd).
 :::
@@ -1181,16 +1195,17 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 ```json
 {
+  "BIPeriodComparisonConfig": [ ],
   "BICrossFilter": [ ],
-  "DashBoardWidget": [ ],
   "DashBoardWidgetWizard": [ ],
+  "DashBoardWidget": [ ],
   "DashBoard": [ ]
 }
 ```
 
-جميع المفاتيح الأربعة اختيارية — أدرج فقط أنواع الكيانات التي تحتاجها. تُنشأ الكيانات بالترتيب: cross-filters أولاً، ثم widgets، ثم wizards، ثم لوحات البيانات.
+كل المفاتيح اختيارية — أدرج فقط أنواع الكيانات التي تحتاجها. تُنشأ السجلات بترتيب ظهور المفاتيح في الملف، فحافظ على الترتيب أعلاه: كل نوع لا يشير إلا إلى أنواع مذكورة قبله، وهو الترتيب الذي يكتبه أمر **تصدير اللوحة JSON**. والإشارات بين الكيانات تكون بالـ `code` لا بالمعرّفات. ولا يلزم `BIPeriodComparisonConfig` إلا لمقارنة الفترات — راجع [10.5](#105-mSfwf-BIPeriodComparisonConfig-khtyry).
 
-### 11.1 مصفوفة BICrossFilter
+### 10.1 مصفوفة BICrossFilter
 
 كل مدخل يُنشئ كيان ملف رئيسي `BICrossFilter`. انظر القسم 8 لتعريفات الحقول.
 
@@ -1208,7 +1223,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 }
 ```
 
-### 11.2 مصفوفة DashBoardWidget
+### 10.2 مصفوفة DashBoardWidget
 
 كل مدخل يُنشئ كيان `DashBoardWidget`. الحقول الرئيسية:
 
@@ -1245,14 +1260,13 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 | `crossFilterRef` | إذا type=`CrossFilterControl` | سلسلة مجردة — كود الـ`BICrossFilter` (مثل `"branchFilter"`). **لا** تستخدم كائناً (`{"code": "..."}`) — الاستيراد يرفضه برسالة "لا يمكن ترك crossFilterRef فارغاً". انظر §9a. |
 | `enableComparison` | لا | يُبدِّل تنفيذ مقارنة الفترة. |
 | `mergeComparisonByColumns` | لا | CSV لأسماء الأعمدة التي تُشكِّل مفتاح الدمج. |
+| `comparisonDataMapping` | لا | جدول يقسم المقياس إلى عمود للفترة الحالية وعمود للفترة السابقة: `[{"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}]`. فصفوف الفترة السابقة تنقل قيمة `netValue` إلى `prevNetValue`، فيرسم المخطط الاثنين سلسلتين منفصلتين. راجع [10.5](#105-mSfwf-BIPeriodComparisonConfig-khtyry). |
 
 ::: info
-تُكتب قيمة `chartConfigJSON` ككائن JSON **متداخل** في ملفات الاستيراد/التصدير — بلا تهريب وبلا تسلسل يدوي إلى سلسلة. يتولّى النظام تسلسلها إلى سلسلة JSON المخزَّنة عند الاستيراد، ويعيد تحليلها إلى كائن عند التصدير. وتظل الملفات القديمة التي تحمل `chartConfigJSON` كسلسلة مُهرَّبة تُستورَد دون تغيير.
-
-وهذه التسهيلة الخاصة بالكائن المتداخل تخص صيغة ملفات الاستيراد/التصدير وحدها. أما إنشاء widget عبر مسار استيراد السجلات العام (سجل JSON يُمرَّر مباشرةً إلى خدمة الكيانات) فلا يستفيد منها: هناك يجب تمرير `chartConfigJSON` **كسلسلة نصية** تحتوي على JSON، وأي كائن متداخل يُقرأ كمرجع لا كإعداد.
+تُكتب قيمة `chartConfigJSON` ككائن JSON **متداخل** في ملفات الاستيراد/التصدير — بلا تهريب وبلا تسلسل يدوي إلى سلسلة. يتولّى النظام تسلسلها إلى سلسلة JSON المخزَّنة عند الاستيراد، ويعيد تحليلها إلى كائن عند التصدير. وتظل الملفات القديمة التي تحمل `chartConfigJSON` كسلسلة مُهرَّبة تُستورَد دون تغيير. أما حفظ widget عبر أداة الذكاء الاصطناعي `ImportRecord` فمختلف — راجع التحذير في أول هذا القسم.
 :::
 
-### 11.3 مصفوفة DashBoardWidgetWizard (اختيارية)
+### 10.3 مصفوفة DashBoardWidgetWizard (اختيارية)
 
 تُعرِّف Wizards مصادر البيانات باستخدام معرّفات الحقول بدلاً من SQL الخام. يُنشئ النظام SQL من تعريف wizard ويُتيح عدة ميزات. انظر القسم 13.
 
@@ -1282,7 +1296,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 | `fields[].chartUsageType` | نعم | `"Dimension"` أو `"Measure"` |
 | `fields[].sqlAggregationType` | إذا Measure | `"Sum"` أو `"Count"` أو `"DistinctCount"` أو `"Avg"` أو `"Min"` أو `"Max"` |
 
-### 11.4 مصفوفة DashBoard
+### 10.4 مصفوفة DashBoard
 
 كل مدخل يُنشئ كيان `DashBoard`. نوعان: **`Single`** (شبكة widgets) و**`Tabbed`** (أب يؤلف لوحات Single كتبويبات).
 
@@ -1420,8 +1434,10 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 تحت حد الشاشات الصغيرة تتوقف الشبكة عن كونها شبكة. تُرصّ الـ widgets في عمود واحد بعرض كامل، بترتيب
 الصف ثم العمود، وتُتجاهل `rowsCount` و`colsCount` و`heightInRows` و`widthInColumns` كلها. ويتولى
 `mobileMaxRowsCount` الأمر بمعنى «كم widget يظهر على شاشة هاتف واحدة» — فيأخذ كل widget عادي
-`1 ÷ mobileMaxRowsCount` من الارتفاع المرئي، وتمرّر القائمة بعد ذلك. وتركه فارغاً (أو `0`) يعني
-widget واحداً لكل شاشة. أما الـ widgets ذاتية الارتفاع فتبقى على ارتفاع محتواها.
+`1 ÷ mobileMaxRowsCount` من الارتفاع المرئي، وتمرّر القائمة بعد ذلك. وتركه فارغاً (أو `0`) يترك القرار
+للوحة: إن لم يكن فيها إلا widget عادي واحد أخذ الشاشة كلها، وإن كان فيها اثنان أو أكثر ظهر منها اثنان
+في كل شاشة. وفي الحالتين لا يُرسم أي widget بارتفاع أقل من 260 بكسل، فالقيمة الكبيرة على هاتف قصير
+تؤدي إلى التمرير لا إلى ضغط المخططات. أما الـ widgets ذاتية الارتفاع فتبقى على ارتفاع محتواها.
 
 #### لوحة بيانات Tabbed (تؤلف لوحات Single فرعية)
 
@@ -1455,9 +1471,67 @@ widget واحداً لكل شاشة. أما الـ widgets ذاتية الارت
 | `charts` | Single فقط | مصفوفة من أماكن الـwidgets (`element` و`rowNumber` و`columnNumber` و`heightInRows` و`widthInColumns`). |
 | `subDashboards` | Tabbed فقط | مصفوفة من `{subDashboard, arTitle, enTitle}`. |
 | `crossFilterBindings` | لا | **تجاوزات** مستوى لوحة البيانات — كل مدخل يحتاج `element` بالإضافة إلى `crossFilter`. عادةً `[]`. انظر §6. |
-| `totalDashboardRowsCount` | لا | حقل خاص بوقت التصميم فقط — ارتفاع لوحة الرسم في محرر التخطيط. **لا يقرأه أحد عند عرض اللوحة**، فلا يؤثر في الأحجام ولا في التمرير، وتركه فارغاً أو عند `0` لا يغيّر شيئاً. وفتح محرر التخطيط والضغط على OK يكتب فيه قيمة إن كان فارغاً. تجاهله عند التأليف بالاستيراد، ولا تحاول إبقاءه متسقاً مع `rowsCount` أو مع مدى الـ widgets. |
-| `mobileMaxRowsCount` | لا | خاص بتخطيط الهاتف فقط: كم widget يظهر على شاشة ضيقة واحدة. على الهواتف تُلغى الشبكة — تُرصّ الـ widgets بعرض كامل بترتيب الصف ثم العمود وتُتجاهل `rowsCount` و`colsCount` و`heightInRows` و`widthInColumns` — ويأخذ كل widget عادي `1 ÷ mobileMaxRowsCount` من الارتفاع المرئي. وتركه فارغاً أو `0` يعني widget واحداً لكل شاشة. |
-| `refreshDashboardPer` | لا | كائن قيمة `TimePeriod` (مثل `{magnitude: 5, unit: "Minutes"}`) — فترة التحديث التلقائي. |
+| `totalDashboardRowsCount` | لا | حقل خاص بوقت التصميم فقط — ارتفاع لوحة الرسم في محرر التخطيط. تأخذ اللوحة المعروضة أحجامها وتمريرها من `rowsCount`/`colsCount` ومواضع الـ widgets، فاتركه فارغاً أو عند `0` عند التأليف بالاستيراد، ولا تحاول إبقاءه متسقاً مع `rowsCount` أو مع مدى الـ widgets. وفتح محرر التخطيط والضغط على OK يكتب فيه قيمة إن كان فارغاً. |
+| `mobileMaxRowsCount` | لا | خاص بتخطيط الهاتف فقط: كم widget يظهر على شاشة ضيقة واحدة. على الهواتف تُلغى الشبكة — تُرصّ الـ widgets بعرض كامل بترتيب الصف ثم العمود وتُتجاهل `rowsCount` و`colsCount` و`heightInRows` و`widthInColumns` — ويأخذ كل widget عادي `1 ÷ mobileMaxRowsCount` من الارتفاع المرئي، وليس أقل من 260 بكسل أبداً. وتركه فارغاً أو `0` يعني التوزيع الآلي: widget واحد لكل شاشة إن لم يكن في اللوحة إلا widget عادي واحد، وإلا فاثنان. |
+| `refreshDashboardPer` | لا | كائن قيمة `TimePeriod` (مثل `{"value": 5, "uom": "Minute"}`) — فترة التحديث التلقائي. |
+
+### 10.5 مصفوفة BIPeriodComparisonConfig (اختيارية)
+
+تشغّل مقارنة الفترات استعلام الـ widget مرتين — مرة للتواريخ التي اختارها المستخدم ومرة للتواريخ نفسها
+بعد إزاحتها إلى الوراء — ثم تدمج النتيجتين. يحدد سجل الإعداد مقدار الإزاحة واسم كل فترة؛ وتشير إليه فلاتر
+التاريخ المتقاطعة عبر `comparisonConfig`، ويضبط كل widget يُراد أن يقارن `enableComparison: true`. ويشرح
+قسم [مقارنة الفترات](/ar/platform/bi/bi-module-guide.md#mqrn-lftrt-Period-Comparison) في الدليل الطريقتين اللتين يعرض بهما
+المخطط النتيجة.
+
+```json
+{
+  "code": "yoy-comparison",
+  "name1": "مقارنة سنوية",
+  "name2": "Year-over-Year Comparison",
+  "subtractedPeriod": {"value": 1, "uom": "Year"},
+  "periodColumnArName": "periodAr",
+  "periodColumnEnName": "periodEn",
+  "currentPeriodArValue": "السنة الحالية",
+  "currentPeriodEnValue": "Current Year",
+  "previousPeriodArValue": "السنة السابقة",
+  "previousPeriodEnValue": "Previous Year"
+}
+```
+
+| الحقل | مطلوب | الوصف |
+|---|---|---|
+| `code` | نعم | يُشار إليه من `comparisonConfig` في الفلتر المتقاطع. |
+| `name1` / `name2` | نعم | الاسم العربي / الإنجليزي. |
+| `subtractedPeriod` | نعم | كم ترجع الفترة السابقة: `{"value": 1, "uom": "Year"}`، وقيمة `uom` إحدى `Day` و`Week` و`Month` و`Year`. فلتر التاريخ يُزاح بهذه المدة؛ وفلتر السنة المالية أو الفترة المالية ينتقل إلى السنة أو الفترة التي تقع فيها بداية الفترة بعد الإزاحة. |
+| `periodColumnArName` / `periodColumnEnName` | نعم | اسما العمودين اللذين يُضافان إلى كل صف في النتيجة ويحملان تسمية الفترة. استعمل أحدهما `labelColumn` في المخطط لتحصل على سلسلة لكل فترة. |
+| `currentPeriodArValue` / `currentPeriodEnValue` | نعم | التسمية التي تُكتب في هذين العمودين للفترة الحالية. |
+| `previousPeriodArValue` / `previousPeriodEnValue` | نعم | التسمية التي تُكتب فيهما للفترة السابقة. |
+
+وتصل التسميات نفسها إلى الاستعلام كمدخلين `{periodArValue}` و`{periodEnValue}`، فيمكن استعمالهما في
+`CASE` أو `CONCAT`. ولا يجوز أن تصل روابط الـ widget إلا إلى إعداد **واحد**؛ فإعدادان مختلفان على widget
+واحد يُرفضان. وما لم يعطِ المستخدم أحد الفلاتر المرتبطة قيمة، يعمل الـ widget مرة واحدة للفترة الحالية فقط.
+
+مثال على الربط، من جهة الفلتر المتقاطع ومن جهة الـ widget:
+
+```json
+{
+  "BICrossFilter": [
+    {"code": "dateFrom", "paramType": "Date", "sqlLeftHandSide": "l.valueDate", "operator": "GreaterThanOrEqual", "comparisonConfig": "yoy-comparison"},
+    {"code": "dateTo",   "paramType": "Date", "sqlLeftHandSide": "l.valueDate", "operator": "LessThanOrEqual",    "comparisonConfig": "yoy-comparison"}
+  ],
+  "DashBoardWidget": [
+    {
+      "code": "bi-top-item-classes",
+      "enableComparison": true,
+      "mergeComparisonByColumns": "itemClassName",
+      "comparisonDataMapping": [
+        {"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}
+      ],
+      "crossFilterBindings": [ {"crossFilter": "dateFrom"}, {"crossFilter": "dateTo"} ]
+    }
+  ]
+}
+```
 
 ---
 
@@ -1508,7 +1582,7 @@ widget واحداً لكل شاشة. أما الـ widgets ذاتية الارت
       "chartTitle": "المبيعات حسب التصنيف",
       "englishChartTitle": "Sales by Category",
       "type": "EChart",
-      "dataSource": "SELECT cc.id ccId, cc.code ccCode, cc.name1 ccName1, cc.name2 ccName2, SUM(l.netValue) netValue FROM SalesInvoiceLine l LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ GROUP BY cc.id, cc.code, cc.name1, cc.name2",
+      "dataSource": "SELECT cc.id ccId, cc.code ccCode, cc.name1 ccName1, cc.name2 ccName2, SUM(l.netValue) netValue FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE h.commitedBefore = 1 /*AND-FILTERS*/ GROUP BY cc.id, cc.code, cc.name1, cc.name2",
       "chartConfigJSON": {
         "echartOption": {
           "tooltip": {"trigger": "item", "formatter": "{b}: {c} ({d}%)"},
@@ -1532,7 +1606,7 @@ widget واحداً لكل شاشة. أما الـ widgets ذاتية الارت
       "chartTitle": "أعلى 10 أصناف",
       "englishChartTitle": "Top 10 Items",
       "type": "EChart",
-      "dataSource": "SELECT TOP 10 i.name2 itemName, SUM(l.netValue) netValue FROM SalesInvoiceLine l LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ GROUP BY i.name2 ORDER BY netValue DESC",
+      "dataSource": "SELECT TOP 10 i.name2 itemName, SUM(l.netValue) netValue FROM SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE h.commitedBefore = 1 /*AND-FILTERS*/ GROUP BY i.name2 ORDER BY netValue DESC",
       "chartConfigJSON": {
         "echartOption": {
           "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
@@ -1560,7 +1634,7 @@ widget واحداً لكل شاشة. أما الـ widgets ذاتية الارت
       "chartTitle": "تفاصيل الفواتير",
       "englishChartTitle": "Invoice Details",
       "type": "Table",
-      "dataSource": "SELECT TOP 200 s.code invoiceCode, l.valueDate, c.name2 customerName, i.name2 itemName, l.quantityBaseValue qty, l.netValue FROM SalesInvoiceLine l LEFT JOIN SalesInvoice s ON s.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE 1=1 /*AND-FILTERS*/ ORDER BY l.valueDate DESC",
+      "dataSource": "SELECT TOP 200 s.code invoiceCode, l.valueDate, c.name2 customerName, i.name2 itemName, l.quantityBaseValue qty, l.netValue FROM SalesInvoiceLine l JOIN SalesInvoice s ON s.id = l.salesInvoice_id LEFT JOIN InvItem i ON i.id = l.item_id LEFT JOIN Customer c ON c.id = l.customer_id LEFT JOIN CustomerCategory cc ON cc.id = c.customerCategory_id WHERE s.commitedBefore = 1 /*AND-FILTERS*/ ORDER BY l.valueDate DESC",
       "crossFilterBindings": [
         {"crossFilter": "custCategoryFilter"},
         {"crossFilter": "dateFromFilter"},
@@ -1596,10 +1670,26 @@ widget واحداً لكل شاشة. أما الـ widgets ذاتية الارت
 
 ### كيفية الاستيراد
 
-1. احفظ JSON في ملف
-2. في Nama ERP، انتقل إلى **BI Dashboard Import** (أو استخدم endpoint استيراد أدوات المطور)
-3. ارفع الملف — تُنشأ جميع الكيانات في عملية واحدة
-4. افتح لوحة البيانات بكودها (`ex-sales-dashboard`)
+لا توجد شاشة مخصصة لاستيراد اللوحات. فالملف ملف استيراد عادي، ويدخل النظام عبر أمر **استيراد سجلات**
+نفسه الذي تُستورد به أي بيانات أخرى:
+
+1. احفظ JSON في ملف بامتداد `.json`.
+2. افتح قائمة **لوحة** (*إدارة النظام ← لوحات ← لوحة*) — أو قائمة أي نوع من السجلات الموجودة في الملف،
+   أو لوحة مفتوحة — واختر **استيراد سجلات** من قائمة **المزيد**. فالملف هو الذي يقرر ما يُستورد، لا
+   الشاشة التي بدأت منها.
+3. اختر الملف وشغّل الاستيراد. تُنشأ السجلات بترتيب المفاتيح في الملف — راجع
+   [الهيكل الرئيسي](#lhykl-lryysy).
+4. اقرأ ملف النتيجة الذي يعيده الاستيراد — فهو يبيّن كل سجل أُنشئ أو رُفض. راجع
+   [استيراد السجلات](/ar/platform/import-export/importing-records.md) للخيارات ولملف النتيجة.
+5. افتح لوحة البيانات بكودها (`ex-sales-dashboard`).
+
+لا يظهر الأمر إلا للمستخدمين الذين يمنحهم ملف الصلاحيات حق **الاستيراد** على نوع السجل.
+
+::: tip ابدأ من ملف مُصدَّر
+الأمر **تصدير اللوحة JSON** في قائمة **المزيد** للوحة مفتوحة يُنتج ملفاً بهذه الصيغة نفسها تماماً —
+اللوحة ومعها الـ widgets والـ wizards والفلاتر المتقاطعة التابعة لها. وتصدير لوحة قائمة هو أسرع طريق
+للحصول على قالب يعمل، وهو طريقة نقل لوحة من تركيبة إلى أخرى.
+:::
 
 ---
 

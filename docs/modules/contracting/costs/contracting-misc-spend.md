@@ -1,4 +1,5 @@
 ---
+description: "The Misc Contracting Request, Order and Invoice documents for project costs that have no item code (permits, hire, utilities, small jobs): their lines, what only the invoice books, and a worked example."
 entities: [MiscContractingInvoice, MiscContractingOrder, MiscContractingRequest]
 menu: Contracting → Costs → Misc Contracting Invoice
 ---
@@ -78,8 +79,9 @@ answer is almost always that the order has not been invoiced yet.
 
 The request is the site's written ask: this purchase element, this much of it, against this term. Its
 screen is deliberately quantity-only — there are no price columns and no totals on it, because at
-request time the site is describing a need, not negotiating a price. It validates almost nothing
-beyond requiring at least one line with a purchase element on it, and it has no effects of any kind.
+request time the site is describing a need, not negotiating a price. It needs at least one line with a
+purchase element on it. It is a record of the need; the cost and the accounting effect come from the
+invoice.
 
 ## The order
 

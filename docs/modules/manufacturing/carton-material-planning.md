@@ -74,20 +74,18 @@ Rows can also be added straight to Items without going through an order at all, 
 
 This is the part worth knowing, because it saves a great deal of typing.
 
-**When you save a planning document that has rows in `documents`, Nama fills the Items grid for you** from the manufacturing details of those orders. One row appears per carton specification, already carrying:
+**When you save a planning document that has rows in `documents`, Nama fills the Items grid for you** from what those orders still have open — the quantity that no earlier planning document has taken. One row appears per carton specification that is still open, already carrying:
 
 - **Carton Order** and **Carton Specs**
 - **Sheet Length** and **Sheet Width**, taken from the specification
 - **Measures | Length**, **Width**, **Height** and **Flap Value**
 - **Unit Price** and **Total**
 
-What it does **not** fill is **Quantity** and **Total Requested Quantity**. Those stay empty and you type them.
+- **Quantity** and **Total Requested Quantity**, both set to the open quantity
 
-That is deliberate rather than an oversight: the quantity you plan is not always the quantity ordered — you may be planning part of an order now and the rest later, or adding a margin for expected waste — so Nama declines to guess.
+To plan only part of it now, type the smaller figure in **Manually Adjusted Quantity**. When that column is filled, it is the quantity the optimizer plans and the quantity taken off the order; the rest stays open for a later planning document. It cannot go above what is open — saving then fails with *Planned quantity {0} of carton specs {1} is more than the open quantity {2} in order {3}*. How the order tracks what has been planned is described in [Carton Orders](./carton-orders.md).
 
-::: warning Check the quantity columns before you optimize
-A row with no quantity contributes nothing to the plan. The optimizer will run happily, report a solution, and simply have planned less than you meant to make.
-:::
+An order that has nothing left open cannot be added at all: the planning document is refused with *CRTN order {0} is fully planned*.
 
 ### Reading the Rest of the Items Grid
 
@@ -98,6 +96,16 @@ The Items grid is wide, and its right-hand half is entirely results. Before the 
 After a run they carry the answer for each carton. **Roll Width** is the reel width the solver chose, and **Number Of Pieces** how many sheets fit across it. **Operating Width** is the width those pieces actually consume, and **Trim** what is left over — the waste on that pattern. **Number Of Operations** counts the separate cutting operations the plan needs, and **Metric Length** the linear metres of reel required. **Total Planned Quantity** is what will really be produced, usually a little above **Total Requested Quantity** because cutting works in whole strikes.
 
 The **Force All Layers Roll Width** and **Force Layer 1** to **Force Layer 7 Roll Width** columns work the other way round: they are inputs, and they constrain the solver. Fill one and it will only consider reels of that width for that layer. Use them for a real requirement — finishing a part-used reel, a customer demand about appearance, a machine that runs only certain widths — and leave them empty otherwise, because every forced width is a choice taken away from the optimizer.
+
+### Manual Adjustments: A Different Layer for This Plan Only
+
+Sometimes one plan needs a layer the specification does not name — the specified liner is short this week and a heavier one is in stock, say. Editing the specification would change it for every future order. The **Manual Adjustment in Material Planning** grid changes it for this planning document only.
+
+1. In **Carton Specs**, pick the specification. Only specifications already in the Items grid are offered.
+2. In **Stage Line Number**, pick the layer. The suggestions list the lines of that specification's **First Production Stage**; choosing one copies the whole layer into the row — item, **Corrugating Type**, **Corrugating Factor**, section, the item classes and **Layer Type**.
+3. Change what should be different, typically **Class 1** (the grade) or **Class 2** (the grammage), and save.
+
+From then on the optimizer, **Collect Materials** and the companion-order search all use the adjusted row in place of that layer of the specification. The specification itself is untouched. Each layer can be adjusted only once per planning document.
 
 ## What the Optimizer Matches Reels On
 
@@ -281,3 +289,16 @@ Force widths sparingly. The optimizer is better at this than intuition is, and f
 Watch the solution type. A run that keeps returning **Feasible** rather than **Optimal** is telling you it ran out of time, and the fix is a longer search budget rather than acceptance of the result.
 
 And when a run finds nothing at all, look at the classes before you look at the stock. A layer pointing at a grade or grammage that no reel item carries fails in exactly the same way as an empty warehouse, and it is far commoner.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *CRTN order {0} is fully planned* — «تم تخطيط أمر الكرتون {0} بالكامل» | An order in the documents grid has no quantity left to plan; other planning documents already cover all of it. | Remove the order from this document. |
+| *Planned quantity {0} of carton specs {1} is more than the open quantity {2} in order {3}* — «الكمية المخططة {0} لمواصفة الكرتون {1} أكبر من الكمية المتبقية {2} في الأمر {3}» | The rows of one specification of an order plan more than the order still has open. | Lower **Manually Adjusted Quantity**, or raise the quantity on the order. |
+| *Carton specs is required in manual adjustment line {0}* — «المواصفات مطلوبة في سطر التعديل اليدوي {0}» | A manual adjustment row has no **Carton Specs**. | Pick the specification, or delete the row. |
+| *Line number is required in manual adjustment line {0}* — «رقم السطر مطلوب في سطر التعديل اليدوي {0}» | A manual adjustment row has no **Stage Line Number**. | Pick the layer it replaces. |
+| *Carton specs {0} in manual adjustment line {1} is not used in the planned items* — «المواصفات {0} في سطر التعديل اليدوي {1} غير مستخدمة في الأصناف المخططة» | The row adjusts a specification that is not in the Items grid. | Pick a specification from the Items grid, or delete the row. |
+| *The first production stage line of carton specs {0} used in manual adjustment line {1} no longer exists* — «سطر مرحلة الإنتاج الأولى للمواصفات {0} المستخدم في سطر التعديل اليدوي {1} لم يعد موجوداً» | The layer the row was copied from has since been deleted from the specification. | Pick the stage line number again. |
+| *Line number {0} in manual adjustment line {1} is not a valid first production stage line of carton specs {2}, which has {3} lines* — «رقم السطر {0} في سطر التعديل اليدوي {1} ليس سطراً صحيحاً في مرحلة الإنتاج الأولى للمواصفات {2} التي تحتوي على {3} سطر» | The typed line number is outside the specification's layers. | Pick a number from the suggestions. |
+| *Manual adjustment line {0} repeats line number {1} of carton specs {2}* — «سطر التعديل اليدوي {0} يكرر رقم السطر {1} للمواصفات {2}» | Two rows adjust the same layer of the same specification. | Keep one of them. |

@@ -1,3 +1,6 @@
+---
+description: "Map of the CRM machine-maintenance cycle: which document follows which, which steps are manual, where money and stock move, and the order to set it up in."
+---
 # Maintenance Cycle Overview
 
 Al Nokhba Air Conditioning Systems does two things for Marina Plaza Hotels. In February 2026 it sold and installed two 300 TR chillers and an air-handling unit at the hotel's Alexandria tower. From March 2026 onwards it looks after them — a monthly check on all three machines, a quarterly check on the two chillers, whatever the hotel calls in between times, and an invoice when a job is done.
@@ -99,16 +102,15 @@ Plan around that. The sites that run this well give one person — Nahed El Gind
 
 ## Where Visits Really Come From
 
-Three separate things on these screens use the word *visit*, and only one of them produces anything.
+Two separate things on these screens use the word *visit*, and only one of them produces anything.
 
 | What you see | What it really is |
 |---|---|
 | The **Visit Type 1…7** columns on the contract's Machines grid | **This is the real one.** Each machine line carries up to seven visit frequencies, each with its own task template. The work-plan generator reads those columns and the contract's start and end dates, and nothing else. |
-| The **Visit schedule** grid on the contract (machine + visit date) | Inert. The only code that reads it is a validation checking that the machine also appears in the Machines grid. Filling in visit dates here produces no work plans, no orders and no visits. |
 | The **Maintenance Visit** document | An after-the-fact log. **Nothing ever generates one** — not the contract, not the work plan, not the order. Somebody types it to record that a trip happened, and saving it raises the contract's performed-visit counter. |
 
-::: warning The visit-schedule grid is not how you schedule visits
-Someone who fills in the contract's visit-date grid and waits will get nothing. Preventive work is scheduled by setting the **Visit Type** columns on the contract's machine lines — see [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md).
+::: tip Schedule preventive work on the contract's machine lines
+Preventive work is scheduled by setting the **Visit Type** columns on the contract's machine lines — see [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md).
 :::
 
 ## What Moves Money, and What Moves Stock
@@ -125,7 +127,7 @@ Most of these documents move neither. Know which ones do before you configure a 
 | **Maintenance Order Request** | **yes, if its term carries accounting sides** — leave them empty | none |
 | **Maintenance Order** | **yes, if its term carries accounting sides** — normally left empty so that only the invoice books | none |
 | Maintenance Order Execution | none | **none** — despite the spare-parts grid on it |
-| **Maintenance Estimation** | none when it is saved (see its own page) | **yes** — issues stock if its term is set up for it |
+| Maintenance Estimation | none | none |
 | **Maintenance Invoice** | **yes** | **yes** — generates a Stock Issue |
 | **Maintenance Invoice Return** | **yes**, reversed | **yes** — generates a Stock Receipt |
 | Maintenance Visit | none | none |
@@ -134,8 +136,8 @@ Most of these documents move neither. Know which ones do before you configure a 
 
 Two consequences follow, and both surprise people:
 
-- **The document where the technician records the parts he actually fitted moves no stock.** The execution sheet has a full inventory-shaped grid — warehouse, locator, lot, serial, quantity — and it relieves nothing. Either the invoice relieves the stock, or somebody presses the manual issue button as a separate step. Nothing checks that either happened. See [Order Executions](/modules/crm/maintenance-cycle/crm-maintenance-executions.md).
-- **Two different documents can issue the same parts.** The estimation and the invoice each generate their own stock issue from their own lines, and neither knows about the other. Turn stock-issue generation on for **exactly one** document term in the installation — normally the invoice term. See [Maintenance Estimations](/modules/crm/maintenance-cycle/crm-maintenance-estimations.md).
+- **The document where the technician records the parts he actually fitted moves no stock.** The execution sheet's spare-parts grid — warehouse, locator, lot, serial, quantity — is a record of the work. The invoice relieves the stock, or somebody presses the manual issue button as a separate step. See [Order Executions](/modules/crm/maintenance-cycle/crm-maintenance-executions.md).
+- **Two routes can issue the same parts.** The invoice term's stock-issue generation and the manual *Spare parts issue* buttons work from the same lines with no link between them. Choose **one** route per installation — normally the invoice term. See [Maintenance Invoicing](/modules/crm/maintenance-cycle/crm-maintenance-invoicing.md).
 
 Accounting and inventory effects are created as **business requests** and processed in the background, which is why saving is instant. If one fails, retry it from the Business Requests list view: filter for failed requests, select the rows, then use the More menu → Reprocess / Recommit.
 
@@ -157,7 +159,7 @@ Nothing compares the date of the work to the warranty period or to the contract'
 | Maintenance Contract | Which machines, how often, what is pre-paid, what is billed | [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md) |
 | Maintenance Work Plan | The expanded calendar of expected visits | [Maintenance Work Plans](/modules/crm/maintenance-cycle/crm-maintenance-work-plans.md) |
 | Maintenance Notice / Order Request | The reactive intake path — a customer call-in, and a request for work | [Notices and Requests](/modules/crm/maintenance-cycle/crm-maintenance-notices-and-requests.md) |
-| Maintenance Estimation | A costing sheet built from existing orders — and a document that moves stock | [Maintenance Estimations](/modules/crm/maintenance-cycle/crm-maintenance-estimations.md) |
+| Maintenance Estimation | A costing sheet built from existing orders | [Maintenance Estimations](/modules/crm/maintenance-cycle/crm-maintenance-estimations.md) |
 | Maintenance Order | The work order itself | [Maintenance Orders](/modules/crm/maintenance-cycle/crm-maintenance-orders.md) |
 | Maintenance Order Execution | What the technician did, machine by machine | [Order Executions](/modules/crm/maintenance-cycle/crm-maintenance-executions.md) |
 | Maintenance Visit | A manual log that a trip happened | [Maintenance Visits](/modules/crm/maintenance-cycle/crm-maintenance-visits.md) |

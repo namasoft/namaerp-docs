@@ -65,6 +65,7 @@ Available in the criteria expression editor.
 ## Menu & Search Shortcuts
 - **Arrow Up / Arrow Down**: Move the selection in the "More" menu and the navbar search results
 - **Enter**: Open the highlighted menu item or search result
+- **Ctrl + Enter** / **Alt + Enter**: Open the highlighted navbar search result in a new browser tab
 - **Escape**: Close the open menu, dropdown, or dialog
 
 ## Chat Shortcuts
@@ -73,6 +74,9 @@ Available in the criteria expression editor.
 
 ## Login Shortcuts
 - **Enter**: Submit the sign-in, change-password, forgot-password, or OTP form
+
+## Report Viewer Shortcuts
+- **F5**: Re-Run With Parameters — run the open report again with the same parameter values
 
 ## Business Function Shortcuts
 These shortcuts trigger business functions (the standard actions on edit and list screens). They are defined by the `default` Shortcuts Definition that ships with the system, and they can be customized per user. When a function has a shortcut assigned, the key combination is shown in square brackets next to its button or menu item (for example, `[Ctrl + S]`).

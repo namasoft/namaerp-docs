@@ -1,4 +1,5 @@
 ---
+description: "The External Repair document, a purchase invoice for sublet work done by an outside workshop: what it holds, what committing does, and its effect on job order tasks and costs."
 entities: [SrvCExternalRepair]
 menu: Service Center → Documents → External Repair
 ---
@@ -18,10 +19,9 @@ You will find it at **Service Center > Documents > External Repair**.
 `srvcenter`
 :::
 
-::: tip Two label defects on this screen
-The screen title has no English translation, so it shows Arabic in an English session — and the
-Arabic itself carries a typo, **«مستند اصلاج خارجي»**, where the correct spelling is
-**«مستند إصلاح خارجي»**. The menu entry reads *External Repair* correctly.
+::: tip The screen title
+The screen title shows in Arabic in an English session too, spelled **«مستند اصلاج خارجي»** on
+screen. The menu entry reads *External Repair*.
 :::
 
 ![The External Repair screen](../../../ar/modules/servicecenter/images/spare-parts/sc-external-repair-en.png)

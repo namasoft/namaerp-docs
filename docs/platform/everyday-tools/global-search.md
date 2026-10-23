@@ -71,7 +71,8 @@ same keys produce `ح:` and `ب:`, and those work too.
 ## Opening what you found
 
 **Enter**, or a click, opens the highlighted result in the current tab. The link icon at the end of
-each result opens it in a new browser tab, and so does **Ctrl + click** or **Alt + click**. The arrow
+each result opens it in a new browser tab, and so do **Ctrl + click** or **Alt + click** and, from the
+keyboard, **Ctrl + Enter** or **Alt + Enter**. The arrow
 keys move through the results, and **Escape** closes the list.
 
 ## Utility pages for administrators

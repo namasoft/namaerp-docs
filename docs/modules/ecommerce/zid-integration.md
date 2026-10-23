@@ -21,7 +21,7 @@ Whichever way you choose, two fields on the tab named after Zid must be filled b
 | Field | What to enter |
 |---|---|
 | Ecommerce Store ID | The id Zid gives the store. Nama sends it with every product and stock call. |
-| Ecommerce App Token | The screen requires a value here, but the connection does not use it, so any value works. |
+| Ecommerce App Token | The screen requires a value here. The connection itself signs in with the access token it receives when the store is connected, as described below. |
 
 When you pick **Zid Site**, Nama fills **URL** with `https://api.zid.sa/` and **Redirect URL** with the Namasoft gateway's Zid address. Leave **URL** as it is.
 

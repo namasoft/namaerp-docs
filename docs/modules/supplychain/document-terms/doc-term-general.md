@@ -30,7 +30,7 @@ These fields identify the term and define which document type it configures. The
 
 **Allow Printing Drafts** `termInfo.allowPrintingDrafts` — Permits printing documents that are still drafts (not yet saved/committed).
 
-**Field Filter** `filters` — Field-level filter and visibility rules applied to every document that uses this term.
+**Field Filter** `filters` — Restricts which records the reference fields offer on every document that uses this term. It does not hide fields — see [field filters with criteria](/platform/field-filtering/field-filter-with-criteria).
 
 ## Shortage Document Creation
 

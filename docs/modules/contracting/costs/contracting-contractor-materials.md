@@ -122,8 +122,8 @@ and the term code across.
 
 The **Contractor Material Issue Request** is the paperwork stage: a priced list of what the
 subcontractor has asked for, against which contract terms, at what price, on what settlement terms. It
-is genuinely inert — it books nothing in the ledger, generates no stock document and writes no
-charge-back record.
+is a record of the agreement: the ledger entry, the stock document and the charge-back come from the
+issue.
 
 Its value is what it saves you when it becomes an issue. Select it in *From Document* on the issue and
 the subcontract, the condition, the payment method, the payment percent, the payment value and the term

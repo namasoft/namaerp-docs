@@ -1,4 +1,5 @@
 ---
+description: "The Station, Service Center Trip Route and Service Center Trip master files used to record vehicle trips between sites and the kilometres driven."
 entities: [SrvCTrip, SrvCTripRoute, SrvCStation]
 menu: Service Center → Master Files → Service Center Trip
 ---

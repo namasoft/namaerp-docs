@@ -1,4 +1,5 @@
 ---
+description: "The Education Marks Balance screen: recording one student's marks per subject on one course and semester, and where its subject lines come from."
 entities: [EDMarksBalance]
 menu: Education → Master Files → Marks Balance
 ---
@@ -76,7 +77,7 @@ This is worth saying plainly, because the document sits in a module that also ha
 
 A Marks Balance is a record. Saving and committing it creates **no accounting entry** and **no stock
 movement**, and it feeds **no other document** — not a course contract, not a fee, not an
-instalment, not attendance. Nothing in the module reads it back. Marks and money never meet: the
+instalment, not attendance. Marks and money never meet: the
 money side of Education runs entirely through the
 [Course Contract](./education-course-contracts) and its
 [payment schedule](./education-payment-schedules).

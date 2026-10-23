@@ -1,4 +1,5 @@
 ---
+description: "The Work Starting Request and Work Starting Document: recording an employee's first day back after hiring, a vacation or a suspension, what processing does, and the Aggregated Vacation Work Starting Document."
 entities: [WorkStartingDocument, WorkStartingRequest, AggregatedVacationStartingDoc]
 menu: Payroll → Recruitment → Work Starting Document
 ---

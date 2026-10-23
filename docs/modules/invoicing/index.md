@@ -25,7 +25,8 @@ How an invoice's numbers come together — discounts, taxes, price lists and pro
 Rewarding customers, and the full path from invoice to settled payment.
 
 <LandingGrid>
-  <LandingCard icon="🎁" title="Customer Reward Points" link="/modules/invoicing/reward-points.md" details="Run a loyalty program that earns and redeems reward points against customer purchases." />
+  <LandingCard icon="⭐" title="Setting Up Reward Points" link="/modules/invoicing/reward-points-setup.md" details="Earning rates, when points become usable and expire, redeeming, opening balances, periodic grants and restrictions." />
+  <LandingCard icon="🎁" title="Customer Reward Points" link="/modules/invoicing/reward-points.md" details="Notification templates for earned and redeemed points, and the STC Qitaf connection." />
   <LandingCard icon="📅" title="Payment Schedules" link="/modules/invoicing/payment-schedules-user-guide.md" details="Split an invoice into scheduled instalments and track each due date." />
   <LandingCard icon="🔗" title="Linking Payments to Invoices" link="/modules/invoicing/payment-entries.md" details="Match payment vouchers to the invoices they settle so balances stay accurate." />
   <LandingCard icon="💳" title="Online Payments" link="/modules/invoicing/online-payments.md" details="Collect invoice payments through integrated online payment gateways." />

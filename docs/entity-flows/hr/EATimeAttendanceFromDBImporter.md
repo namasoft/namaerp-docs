@@ -35,11 +35,15 @@ Manual execution or scheduled tasks for regular attendance data imports. Commonl
 
 **Parameter 3:** Document Initialization Query (Required) - SQL to determine document properties
 
-**Parameter 4:** Save as Draft (Required) - true to save as draft, false to commit
+**Parameter 4:** Save as Draft (Optional) - true to save as draft; false or empty to commit
 
 **Parameter 5:** Data Pre-processor (Optional) - Groovy script for custom data processing
 
-**Parameter 6:** Ignore Unfound Employees (Required) - true/false to skip unmatched records
+**Parameter 6:** Ignore Unfound Employees (Optional) - true/false to skip unmatched records
+
+**Parameter 7:** Split To Multiple Documents Each With N Lines (Optional) - a positive number N spreads the lines over several documents of at most N lines each, coded `<code>_001`, `<code>_002`, … from the `code` column of parameter 3. One employee's lines are never split across documents. Documents left over from a larger earlier run are deleted. Empty means one document.
+
+**Parameter 8:** Employees Query (Optional) - a query whose first column returns employee codes or ids. Only those employees are imported: their lines in the existing documents are replaced, other employees' lines are kept untouched, and selected employees not yet in any document get a new one. Requires parameter 7. If the query returns no known employee the run fails with *Employees query returned no known employee, nothing was imported*.
 
 ## Example Attendance Query
 

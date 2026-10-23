@@ -1,4 +1,5 @@
 ---
+description: "The General Announcement screen: time-limited Arabic and English announcements for all users or chosen users, groups and security profiles, where readers see them, formatting, and why one is not showing."
 entities: [GeneralAnnouncement]
 menu: Administration → Other → General Announcement
 ---

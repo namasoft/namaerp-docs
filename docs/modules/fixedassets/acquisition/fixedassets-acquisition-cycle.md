@@ -1,3 +1,6 @@
+---
+description: "The fixed-asset acquisition chain from purchase request to purchase invoice and receipt: which document creates the asset record and which one affects the ledger."
+---
 # How an Asset Is Acquired
 
 Buying a machine is not one event. Somebody asks for it, somebody shops for it, somebody signs an

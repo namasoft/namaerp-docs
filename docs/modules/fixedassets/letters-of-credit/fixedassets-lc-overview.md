@@ -1,3 +1,6 @@
+---
+description: "Overview of importing fixed assets on a letter of credit: the four documents in order (credit, proforma invoice, expense, cost), how costs are spread across assets, and the fixedassets-lc licence."
+---
 # Importing Assets on a Letter of Credit
 
 A press bought from a factory down the road costs what the invoice says it costs. A press bought from

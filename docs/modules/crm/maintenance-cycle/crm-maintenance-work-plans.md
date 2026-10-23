@@ -127,7 +127,7 @@ Split the work sensibly first. Because grouping is by date, technician and build
 
 ## What a Work Plan Does Not Do
 
-::: warning A work plan has no effects of its own
+::: info A work plan is a planning document
 Saving a work plan creates **no accounting entry** and **moves no stock**. It is a planning document. All it ever produces is the maintenance orders you generate from it, and even those only exist because somebody pressed the button.
 :::
 

@@ -66,7 +66,7 @@ maintenance suites and have their own page.
 | Maintenance Contract, Maintenance Service Contract | Accounts and work-plan generation |
 | Maintenance Invoice, Maintenance Service Invoice | Accounts and stock-issue generation |
 | Maintenance Invoice Return, Maintenance Service Invoice Return | Accounts and stock-receipt generation |
-| Maintenance Estimation (مقايسة صيانة) | Accounts and stock-issue generation |
+| Maintenance Estimation (مقايسة صيانة) | Tax settings |
 | Maintenance Work Plan, Maintenance Service Work Plan | Order generation |
 | Maintenance Order Execution (تنفيذ أمر صيانة) | Tax settings only |
 | Maintenance Visit (زيارة صيانة) | One option |

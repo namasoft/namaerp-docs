@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance CheckList and CheckList Item master files in Fixed Assets maintenance: defining reusable inspection points, bundling them into a checklist, and how a checklist reaches a maintenance document."
 entities: [FAMaintenanceCheckList, FACheckListItem]
 ---
 # Checklists and Checklist Items

@@ -1,4 +1,5 @@
 ---
+description: "The Payment Lines, Payment Documents, Payments (instalment plan) and Standard Terms grids shared by the six travel sales and purchase documents, and how they meet the header totals."
 entities: [TRSalesInvoice, TRSalesOrder, TRSalesReturn, TRPurchaseInvoice, TRPurchaseOrder, TRPurchaseReturn]
 ---
 # Payments, Instalments & Contract Terms

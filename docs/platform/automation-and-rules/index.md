@@ -1,3 +1,6 @@
+---
+description: "Landing page for automation and rules: GUI post actions, scheduled tasks, recurring documents, criteria definitions, the text criteria parser, entity type lists and virtual entities."
+---
 # Automation and Rules
 
 Let the system do the repetitive work, and define once the conditions the rest of the system reuses. The first group covers what runs by itself — a screen reacting to a field change, jobs on a schedule, documents that repeat. The second covers the reusable building blocks: saved criteria, criteria written as text, named lists of screens, and the SQL-based virtual entities behind reports and dashboards.

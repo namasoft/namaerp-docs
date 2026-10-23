@@ -1,4 +1,5 @@
 ---
+description: "How to set up bulk edit with a Bulk Edit Config and a Screen Modifier button, then change one field on many ticked records from a list screen, and when to export and re-import instead."
 entities: [BulkEditConfig, ScreenModifier]
 menu: Administration → Display Customization → Bulk Edit Config
 ---

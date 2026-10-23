@@ -1,4 +1,5 @@
 ---
+description: "How Subsidiary Reconciliation compares your books for a customer or supplier with their external statement in three steps, matches what agrees and lists the differences, with no accounting effect."
 entities: [SubsidiaryReconciliation]
 menu: Accounting → Reconciliations → Subsidiary Reconciliation
 ---

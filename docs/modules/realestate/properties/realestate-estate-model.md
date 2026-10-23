@@ -1,4 +1,5 @@
 ---
+description: "How Real Estate models properties as estates at eight levels from project to unit: address pointers, derived statuses, sale cascades, what blocks a sale or lease, areas, prices, accounts and cost."
 entities: [REProject, RESquare, REBlock, RELand, REBuilding, REFloor, RERentalUnit, REUnitGroup]
 ---
 
@@ -87,9 +88,13 @@ each of which is switched on or off by whichever document did the deed:
 | *partially Sold* (مباع جزئيا) | a descendant being sold |
 | *partially Rented* (مؤجر جزئيا) | a descendant being leased |
 
-Alongside them sit two markers you set by hand, *Unavailable For Sale* (غير متاحة للبيع) and
-*Unavailable For Rent* (غير متاحة للإيجار), which are how you take a unit off the market without
-any document at all — a flat kept for the site engineer, a shop under renovation.
+Alongside them sit three markers you set by hand. *Unavailable For Sale* (غير متاحة للبيع) and
+*Unavailable For Rent* (غير متاحة للإيجار) are how you take a unit off the market without
+any document at all — a flat kept for the site engineer, a shop under renovation. The third, *Allow
+Sold Unit For Rent* (إتاحة الوحدة المباعة للإيجار), puts a sold unit back on the rental market: the unit
+lookup on rent documents hides sold units unless this box is ticked on the unit. It works together with
+the rent term's *Allow Rent Sold Estate*, which decides whether the contract may be saved on a sold unit
+at all — see [Rent Document Terms](/modules/realestate/document-terms/realestate-terms-rent.md).
 
 Because they are independent, combinations that would be impossible in a single status field are
 perfectly normal here. A unit can be sold **and** rented at the same time (the buyer lets it out

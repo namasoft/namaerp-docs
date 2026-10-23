@@ -36,10 +36,8 @@ of the term configurations are literally the same shape used twice:
 
 The screens are adjusted per document — the services versions swap in their own book-and-term
 fields and hide the account sides the services document cannot use — but the settings underneath
-are shared. The practical consequence is the theme of the second half of this page: **an option
-that does something useful on a machine document may have nothing to act on when it appears on
-its services twin.** Never assume that because a switch works on the maintenance invoice it works
-on the service invoice.
+are shared. The services documents do less than their machine twins — no warranty contracts, no
+payment schedules — so the last section of this page lists what the services terms use.
 
 Four more terms are not shared at all: the Maintenance Estimation term, the Maintenance Order
 Execution term, the Maintenance Visit term and the CRM Maintenance Plan term. The Maintenance
@@ -61,7 +59,6 @@ that lives on one term and produces one kind of document.
 | Maintenance Order / Order Request | دفتر عقد الضمان / Warranty Contract Book · توجيه عقد الضمان / Warranty Contract Term | A warranty Maintenance Contract | **Automatically**, on commit, when Order Type is *Installation* |
 | Maintenance Invoice / Service Invoice | دفتر سند صرف مخزني / Stock Issue Book · توجيه سند صرف مخزني / Stock Issue Term, plus *Generate Stock Issue With Spare Parts* and *Generate Stock Issue With Service Items* | A supply-chain Stock Issue | **Automatically**, on commit |
 | Maintenance Invoice Return / Service Invoice Return | دفتر سند توريد مخزني / Stock Receipt Book · توجيه سند توريد مخزني / Stock Receipt Term, plus the two *Generate Stock Receipt With…* switches | A supply-chain Stock Receipt | **Automatically**, on commit |
-| Maintenance Estimation | the stock issue book and term — **not reachable from the term screen**, see below | A supply-chain Stock Issue | **Automatically**, on commit |
 
 Read that table as a chain and the worked example falls straight out of it. Contract `MC-0021` is
 saved under book `MC` with term `T-MC-STD`; that term names work-plan book `WP` and term
@@ -74,7 +71,7 @@ and term `T-SI-CRM` produce the supply-chain issue `SI-1904` on commit.
 
 Break any link in that chain by leaving a book or term empty and the chain stops there.
 
-::: warning A generate button with no book and term does nothing
+::: warning Generation needs both the book and the term
 The manual buttons refuse politely: they answer with a message asking you to set the book and term
 on the named term, and no documents appear. The automatic ones say nothing at all — an invoice
 whose term has no stock-issue book simply commits without generating a stock issue, and nobody is
@@ -97,9 +94,9 @@ Only some of them, and always through the term's Debit and Credit sides.
 |---|---|
 | Maintenance Order, Maintenance Order Request | An **Effect** (التأثير) page with a single Debit and Credit pair. Set both and the document creates a two-sided journal entry over its spare-part and service lines. |
 | Maintenance Contract, Maintenance Service Contract | An **Invoice effect** (تأثير الفاتوره) page — the full invoice shape, with tax, discount, cash and approximation-discount sides. |
-| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape, plus four extra Service Fees debit/credit pairs on the machine invoice. |
-| Maintenance Invoice Return, Maintenance Service Invoice Return | The same, in the opposite direction. |
-| Maintenance Estimation | The pages are there — but see the warning below. |
+| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape, plus four extra Service Fees debit/credit pairs on the machine invoice. The machine invoice also has a **Services Debit** / **Services Credit** pair (مدين الخدمات / دائن الخدمات): fill both and the service lines are booked against them instead of the invoice's main sides, so labour revenue can sit apart from spare-parts revenue. Leave either empty and the service lines use the main sides. |
+| Maintenance Invoice Return, Maintenance Service Invoice Return | The same, in the opposite direction — including the Services Debit / Credit pair on the machine invoice return. |
+| Maintenance Estimation | It creates no accounting entry. |
 | Maintenance Service Order | Its term shows no account sides, and the document creates no accounting entry. |
 | Maintenance Order Execution | Tax settings only. It creates no accounting entry and moves no stock. |
 | Maintenance Notice, both sales orders, both sales quotations, Maintenance Visit, the plans | Nothing. |
@@ -108,53 +105,15 @@ As on every CRM term, the effect only happens when **both** sides are configured
 means no journal entry, no error message and nothing in Business Requests, because no request was
 ever raised.
 
-## The estimation term — two traps on one screen
+## Stock issue: the invoice term or the manual buttons
 
-The Maintenance Estimation is the most dangerous document in the suite to configure, and both of
-its problems live on its term.
-
-::: danger The generation settings on the estimation term are the wrong ones
-The estimation term's Settings page has a **Generation** (الإنشاء التلقائي) group holding
-*Generate Stock Receipt With Spare Parts*, *Generate Stock Receipt With Service Items*,
-**Stock Receipt Book** and **Stock Receipt Term**. Those are stock **receipt** settings, and the
-estimation never reads them — ticking or filling them changes nothing.
-
-What the estimation actually reads is a stock **issue** book, a stock issue term and two
-stock-issue switches, and **none of those four is on this screen**. So the estimation's stock
-generation cannot be configured from the standard term screen at all.
-
-Take that as a safety feature, not a limitation: an estimation that issues stock is almost never
-what a site wants. Configure stock generation on the maintenance invoice term and leave the
-estimation term's generation group alone. See
-[Maintenance Estimations](/modules/crm/maintenance-cycle/crm-maintenance-estimations).
-:::
-
-::: warning The estimation's account sides are dormant, not harmless
-The estimation term displays full Debit, Credit, tax and discount pages. Saving an estimation does
-**not** use them — the document creates no accounting entry on commit. But they are not ignored
-forever: if anyone presses *Regenerate Accounting Effects* on the estimation, or a
-ledger-regeneration job runs over it, the document suddenly produces a full invoice-style entry
-from exactly those pages.
-
-Leave the estimation term's account sides empty unless that behaviour is deliberately wanted.
-:::
-
-## Stock generation belongs on exactly one term
-
-::: warning Enable stock generation once, on the invoice term
-The maintenance invoice and the maintenance estimation each generate their own stock issue, from
-their own copies of the same spare-part and service lines, and neither one knows about the other.
-There is no netting and no "already issued" check, so a single repair can empty the same parts out
-of the warehouse twice.
-
-Pick **one** document term in the installation to carry the stock-issue settings — in practice the
-maintenance invoice term, as `T-MINV-STD` does in our example — and leave every other term's
-generation group empty.
-
-The manual *Spare parts issue* buttons on the order, the execution and the invoice are an
-**alternative** to term-driven generation, never an addition to it. They open a pre-filled
-supply-chain document for someone to save, with no duplicate detection whatsoever. Choose one
-route per site and train people on it. See
+::: warning Issue spare parts by one route only
+Stock generation is configured on the maintenance invoice term, as `T-MINV-STD` does in our
+example. The manual *Spare parts issue* buttons on the order, the execution and the invoice are an
+**alternative** to that term-driven generation, never an addition to it. They open a pre-filled
+supply-chain document for someone to save, with no "already issued" check, so using both routes
+for the same repair takes the same parts out of the warehouse twice. Choose one route per site and
+train people on it. See
 [Maintenance Invoicing](/modules/crm/maintenance-cycle/crm-maintenance-invoicing).
 :::
 
@@ -206,35 +165,26 @@ The smaller terms hold almost nothing: the Maintenance Order Execution term has 
 settings, the Maintenance Visit term has only *Consider Lines Of FromDoc*, and the CRM Maintenance
 Plan term is completely empty.
 
-One cosmetic oddity on the contract terms — both the machine one and the services one: **Pay
-Installments In Order** is rendered **twice**, in two groups one after the other. It is the same
-single setting shown two times, not two settings, so ticking either box does the same thing.
+On the Maintenance Contract term, **Pay Installments In Order**
+appears **twice**, in two groups one after the other. It is one setting shown in two places, so
+either box sets it.
 
 ## The services-suite terms
 
-Everything above applies to the services suite with the shared fields renamed — but the services
-documents do less than the machine documents whose settings they inherit, so several options
-arrive with nothing to act on.
+Everything above applies to the services suite with the shared fields renamed. Two points are
+specific to the service terms:
 
-::: warning Settings on the service terms that have nothing to act on
-- On the **Maintenance Service Order** term, **Warranty Contract Book** and **Warranty Contract
-  Term** are displayed and read by nothing. No service order ever produces a warranty contract.
-- On that same screen, the service execution book and term — the two fields that *do* matter, since
-  they drive the service order's execution buttons — are shipped **without translations** and
-  appear under raw technical names in both languages. They are the two fields immediately below
-  the do-not-copy switches.
-- On the **Maintenance Service Invoice** and **Maintenance Service Invoice Return** terms, the
-  payment and pricing options — *Copy Remaining To Cash*, *Pay Installments In Order*, *Allow
-  Payment More Than Invoice Amount*, *Use Payment Docs As Debt Ages* and *Price List Default Price*
-  — have no payment or schedule lines to work on in this suite. Ticking them changes nothing.
-- Also on the service invoice term, ticking **Generate Stock Issue With Service Items** produces an
-  **empty** stock issue, because only spare-part lines are ever collected. Only *Generate Stock
-  Issue With Spare Parts* does anything.
+- On the **Maintenance Service Order** term, the service execution book and term drive the service
+  order's execution buttons. They are the two fields immediately below the do-not-copy switches, and
+  their labels appear untranslated on screen in both languages.
+- On the **Maintenance Service Invoice** term, tick **Generate Stock Issue With Spare Parts** to have
+  the invoice issue its spare parts from the warehouse. The generated stock issue carries the
+  spare-part lines; on the **Maintenance Service Invoice Return** term, *Generate Stock Receipt With
+  Spare Parts* does the same in reverse.
 
 See [Services or Machines?](/modules/crm/services-suite/crm-services-suite-overview) for the wider
-picture of what the services branch does and does not have.
-:::
+picture of what the services branch does.
 
-And one gap rather than a defect: the **Maintenance Service Order Execution** has no term
+The **Maintenance Service Order Execution** has no term
 configuration at all, so its Document Term offers only the platform's standard options. In our
 example `SEX-0090` is saved under book `SEX` with no term.

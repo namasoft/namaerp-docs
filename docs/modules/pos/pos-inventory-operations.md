@@ -1,4 +1,5 @@
 ---
+description: "The stock documents a shop user creates at the register: stock receipt, stock transfer request, stock taking, and scrap and shortfalls documents for damaged or missing stock."
 entities: [NamaPOSStockReceipt, NamaPOSStockTransferReq, NamaPOSStockTakingDetails, NamaPOSScrapDoc, NamaPOSShortfallsDoc]
 ---
 

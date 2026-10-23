@@ -57,7 +57,7 @@ You do not have to start from the collect document at all. On a contract screen,
 
 What it is for is the instruction "please go and collect these installments" — a branch or a collections supervisor raises it, hands it to a collection officer, and the real collect document is raised when the money arrives.
 
-Its defining property is that **it has no effects whatsoever**:
+Because it is an instruction rather than a collection, it leaves the books and the contracts alone:
 
 - it creates no accounting entry;
 - it writes no installment payment entries, so no contract's paid or remaining figure changes;

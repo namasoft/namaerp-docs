@@ -39,6 +39,10 @@ controlled entirely from the contract's own
 - **Rent Ledger Period Type** (نوع فترة قيد إثبات استحقاق الأقساط) chooses how the installments are
   grouped: **Daily**, **Monthly** or **Yearly**. Leaving it empty means **Daily** — not "no
   grouping".
+- **Generate Rent Installment Ledger By Line** (إنشاء قيد إثبات استحقاق قسط إيجار بالسطر) changes
+  the grouping: the lines are grouped by **installment code** instead of by period, so each installment
+  gets its own accrual document. The period type still sets the document's value date (start of the
+  month or year).
 - **Generated Rent Installment Ledger Book** and **Generated Rent Installment Ledger Term** name the
   book and the توجيه the generated documents are created under.
 
@@ -57,7 +61,7 @@ which is the quickest way to see what a commit produced:
 ## How the schedule is cut up
 
 Nama groups the contract's installment lines by the chosen period — day, month or year — and creates
-one document per group, in date order. The document's value date is the group's date, snapped to the
+one document per group, in date order (by installment code instead, when *By Line* is ticked). The document's value date is the group's date, snapped to the
 start of the month for *Monthly* grouping and the start of the year for *Yearly*. Every line in the
 group is copied across as it stands: amount, discount, penalty, net, due date, installment code,
 type, expense type, taxes.

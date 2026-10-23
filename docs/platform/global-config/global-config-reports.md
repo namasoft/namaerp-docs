@@ -37,8 +37,6 @@ For writing and running reports, see the [Reports guide](../reports/reports-guid
 
 **Reports Footer Note 1** / **Note 2** `value.info.reportsFooterNote1`, `value.info.reportsFooterNote2` *(default "Powered by Nama ERP" and "www.namasoft.com")* — The two footer lines on every report. Most installations replace these with the company name and contact details.
 
-**Show Company Name Next to Logo** `value.info.showCompanyNameNextToLogo` — Prints the company name beside the logo rather than relying on the logo alone.
-
 **Use Logo for Public** `value.info.useLogoForPublic` — Which legal entity's logo to use when the record being printed is public and so has no legal entity of its own.
 
 **Use Entity Legal Entity Logo When Printing Form** `value.info.useEntityLegalEntityLogoWhenPrintForm` *(default on)* — A printed form carries the logo of the record's own legal entity. In a group of companies this is what makes each subsidiary's invoice look like its own.

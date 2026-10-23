@@ -1,4 +1,5 @@
 ---
+description: "Overview of the subcontractor chain under Contracting > Contractor Contracting (offer, contract, execution, update, extract and payment), what is optional, what books, and how it mirrors the owner-side cycle."
 entities: [ContractorContract, ContractorContrExtract, ContractorContractOffer, ContractorContractExecution, ContractorContractUpdate, Contractor]
 ---
 

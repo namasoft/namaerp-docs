@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate Owner master file, one record that can act as owner, buyer or tenant, individual and group ownership, and the standard contract clauses and undertakings that contracts copy or point to."
 entities: [REOwner, REStandardTermsConditions]
 ---
 # Owners, Buyers and Standard Contract Clauses

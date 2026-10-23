@@ -1,4 +1,5 @@
 ---
+description: "The EntityType List screen: a saved list of screens that settings point at instead of a single screen, building it from a menu group, the Use As Module option, and where lists are used."
 entities: [EntityTypeList]
 menu: Administration → Display Customization → EntityType List
 ---

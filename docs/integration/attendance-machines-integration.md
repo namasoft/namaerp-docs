@@ -216,6 +216,11 @@ SELECT
   (SELECT id FROM legalEntity WHERE code = '03') legalEntity
 ```
 
+Parameters 4 to 6 (save as draft, a Groovy pre-processor, ignore unfound employees) can stay empty. Two more optional parameters help when there are many employees:
+
+* **Parameter 7 (Split To Multiple Documents Each With N Lines):** a number such as `5000`. Instead of one huge Time Attendance document, the lines are spread over several documents of at most that many lines each, coded after the `code` from parameter 3 with a running suffix — `TA202610_001`, `TA202610_002`, and so on. One employee's lines always stay together in one document. On the next run, documents left over from a larger earlier run are deleted. Leave it empty for a single document.
+* **Parameter 8 (Employees Query):** a query whose first column returns employee codes, for example `select code from Employee where department_id = (select id from Department where code = 'D01')`. Only those employees are imported: their lines in the existing documents are replaced, every other employee's lines are left untouched, and selected employees not yet in any document get a new one. It works only together with parameter 7. When the query returns no known employee, the run stops with *Employees query returned no known employee, nothing was imported* (no Arabic text, so it shows in English on Arabic screens).
+
 ::: details JSON for Direct Import
 
 ```json

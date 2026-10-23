@@ -27,6 +27,8 @@ By default a stock document carries one warehouse and one set of accounting dime
 
 **Purchases Man in Details** (`value.purchasesManInDetails`) — Shows the purchases man column on document lines (its per-line/header fill behavior follows the salesman options above).
 
+**Apply Warehouse Usage Policies** (`value.applyWarehouseUsagePolicies`) — The company-wide switch for [Warehouse Usage Policies](/modules/supplychain/warehouses-and-locators#Warehouse-Usage-Policy). While it is off, no document is checked against any policy and the policy screen refuses to save.
+
 ## Document Behavior
 
 **Quantity Before Value** (`value.quantityBeforeValue`) — Controls column order on the detail grid: when on, quantity columns appear before the value/price columns. A data-entry preference.

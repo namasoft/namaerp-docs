@@ -1,4 +1,5 @@
 ---
+description: "How each job order operation and spare-part line is split between customer, insurance, warranty and internal shares, the rules checked on commit, and where each share is invoiced."
 entities: [SrvCJobOrder]
 ---
 # Who Pays for What
@@ -64,7 +65,7 @@ That asymmetry is not a typo and it is the single thing to remember from this pa
 Because the customer share is computed from its percentage and the other three from their values, the
 same number typed into the wrong box behaves differently:
 
-- Typing **80** into *Insurance %* and leaving the insurance value empty does nothing useful. On save
+- Typing **80** into *Insurance %* and leaving the insurance value empty is not enough. On save
   the percentage is recomputed from the empty value — back to zero — and the line then fails the
   commit check with an error about the percentage distribution.
 - Typing a **customer value** without the matching percentage is likewise overwritten.
@@ -106,8 +107,7 @@ their entire behaviour.
 They are **not**:
 
 - a default for lines you add afterwards — a new line ignores them completely;
-- a policy that is re-applied when you save;
-- read by anything downstream.
+- a policy that is re-applied when you save.
 
 After you edit a single line, the header fields are stale and mean nothing. Use them as a fast way to
 paint a grid, then forget them.

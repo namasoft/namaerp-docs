@@ -21,7 +21,7 @@ menu: Customer Relationship Management → Technician Appointments → Technicia
 
 **Technician Procedure** (*إجراء فني*) — the job. The picker offers the procedures whose Department Sections grid names the section you chose, plus the procedures whose grid is empty.
 
-**From Document** (*بناءا على*) — the document that promised the visit, such as a sales invoice, order or contract. Any document type is accepted. You must pick it before you can draw: if you try to draw without it, the calendar tells you to *"Pick the source document (from doc)"*.
+**From Document** (*بناءا على*) — the document that promised the visit, such as a sales invoice, order or contract. Any document type is accepted, unless the From Document field of **Technician Appointment** has been narrowed in [Allowed Values For Generic References](/platform/fields-and-entities-settings/fields-settings-reference-lookups.md#Allowed-Values-For-Generic-References); then the calendar offers the same types the appointment screen does. You must pick it before you can draw: if you try to draw without it, the calendar tells you to *"Pick the source document (from doc)"*.
 
 Until both the section and the procedure are set, the calendar stays behind a *"Pick department & procedure to start drawing periods"* panel. Once both are set, the crew list and the week fill in. If you change the section or the procedure later, any periods you have drawn and not saved are discarded without a warning.
 
@@ -112,8 +112,9 @@ The server checks the moved period again when you save, against the [booking rul
 | Add a reason | Asks for the *Reason for the change* |
 | Remove from pending changes | Shown only when the appointment has unsaved changes. Drops every unsaved change you made to this appointment |
 | Open the record | Opens the appointment document in a new tab |
+| Open the from document | Opens the appointment's From Document in a new tab |
 
-The three status actions act on the **whole appointment**, not on the period you clicked, because an appointment has one status. A locked (executed) appointment offers only Open the record, plus Remove from pending changes if it has unsaved changes.
+The three status actions act on the **whole appointment**, not on the period you clicked, because an appointment has one status. A locked (executed) appointment offers only Open the record and Open the from document, plus Remove from pending changes if it has unsaved changes.
 
 While the menu or the reason box is open, a click on the calendar only closes it. It does not also start a drag or open a dialog.
 
@@ -202,6 +203,12 @@ The same link can be a button on the sales invoice itself. In a [Screen Modifier
 ```
 
 Then tick where the button should appear: **Show Button In Edit Screen**, **Show In Edit Screen Toolbar** or **Show In More Menu For Edit Screen**. Clicking it opens the calendar in a new tab, already set up for that invoice.
+
+### The calendar embedded in the document
+
+Instead of a button that opens the calendar in a new tab, the calendar itself can sit on a page of the document. In a [Screen Modifier](/platform/screen-modifier/screen-modifier-edit-screen.md#Embedded-Records-Editor) for the document's screen, add a line to **Embedded Records Editor** (*تعديل السجلات المدمج*), set its **Entity Type** to **Technician Appointment**, and in **Layout ID (View name)** pick **TechnicianAppointmentCreator** — it is offered in the suggestions once the entity type is set. Choose the page the block should appear on.
+
+The block opens collapsed. Expanding it shows the booking calendar with the open document already set as the **From Document**, so every appointment drawn there points back at it. The document must be saved first: expanding the block on a new document, or on one with unsaved changes, is refused with *Should Commit To Open Group* — «يجب الحفظ لفتح المجموعة».
 
 ## Where the calendar's limits come from
 

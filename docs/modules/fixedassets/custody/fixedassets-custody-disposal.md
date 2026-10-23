@@ -1,4 +1,5 @@
 ---
+description: "The Custody Disposal document: scrapping, selling, charging or writing off a custody item, its screen and actions, undoing a disposal, and how it differs from a return."
 entities: [FACustodyDisposal]
 menu: Assets → Custodys → Custody Disposal
 ---

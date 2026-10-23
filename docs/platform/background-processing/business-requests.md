@@ -1,4 +1,5 @@
 ---
+description: "The Business Requests screen: the accounting and inventory requests raised when a document is saved, reading the Processing Status, finding what went wrong, what to do about it, and Saved Business Requests."
 menu: Administration → Settings → Business Requests
 ---
 # Business Requests
@@ -45,7 +46,7 @@ This is the column everything else hangs off.
 | **Waiting Processing** | Raised, not yet picked up. Normal for a few seconds. |
 | **Retry Processing** | Queued for another attempt after somebody asked for one. |
 | **Processing** | Being worked on right now. Only inventory costing sits here for any length of time. |
-| **Processed** | Done. The effect exists. |
+| **Processed** | Done. Whatever the document had to write is written — a document whose term writes nothing (every account side empty) is Processed with no entry. See [When a Document Has No Accounting Effect](/modules/accounting/support/accounting-request-processing). |
 | **Processing Failed** | The system understood the work and refused it — a closed period, a missing account, a rule that said no. |
 | **Failed By Exception** | The work broke unexpectedly. Usually a configuration gap rather than a business rule. |
 

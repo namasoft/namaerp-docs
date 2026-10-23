@@ -60,6 +60,8 @@ whether the result is also carried into the new year:
 | **Relay Profit And Loss Account To The Beginning Of Next Year** | `termConfig.postProfitAndLossAccToTheBeginningOfNextYear` | Creates a second journal entry, dated the day after the closed period, that moves the year's result into the account below. |
 | **Posted Entry Book** / **Posted Entry Term** | `termConfig.postedEntryBook`, `termConfig.postedEntryTerm` | Book and term of that journal entry. |
 | **Posted Profit Loss Account** | `termConfig.postedProfitLossAccount` | The account that receives the result — typically retained earnings. |
+| **Settle Rounding Difference** | `termConfig.settleRoundingDiff` | Clears the fractions smaller than the main currency's smallest unit (a fil, a piastre) that years of rate conversion leave on account balances. Any imbalance left on a generated closing journal entry is booked to the account below, and a last settlement entry moves the leftover fraction of each account kept in the main currency into it, so no such account carries a sub-unit balance into the new year. |
+| **Rounding Difference Account** | `termConfig.roundingDiffAccount` | The account that receives those differences. Required when **Settle Rounding Difference** is ticked. |
 
 With the first option ticked, the term cannot be saved until all three of the others are filled. The
 new year must already exist as a fiscal year, or the closing refuses with the message below.
@@ -102,5 +104,6 @@ Each side is a full account-side block — see
 | Message | Why | What to do |
 |---|---|---|
 | *There is no fiscal year defined for posted profit date {0}, legal entity {1}* — «لا توجد سنة مالية معرفة للتاريخ الفعلي {0} لسند القيد، والشركة {1}» | The closing term carries the result into the next year, and that year is not defined. | Define the next fiscal year for the legal entity, then close again. |
+| *The term {0} settles rounding differences, so its rounding difference account is required* — «التوجيه {0} يقوم بتسوية فروق التقريب، لذا يجب تحديد حساب فروق التقريب فيه» | A closing entry was saved on a term that has **Settle Rounding Difference** ticked and no **Rounding Difference Account**. | Fill the account on the term, or untick the option, then save the closing entry again. |
 | *Only one side may have several selected lines* — «لا يمكن اختيار أكثر من حركة في الجانبين معاً» | Several lines are selected on both sides of an aging allocation. | Select one line on one side, or use a term with **Allow Multiple Selection On Both Sides**. |
 | *Legal entity {0} does not have a line in the term* | An inter-company transfer touches a legal entity that has no row in its term. This message has no Arabic text in the product. | Add the legal entity's row with its book and term. |

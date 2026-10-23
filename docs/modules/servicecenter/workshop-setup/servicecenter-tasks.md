@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Task master file: standard hours, hour price, materials and recurrence of a repair step, and where a job order takes its hours and labour rate from."
 entities: [SrvCTask]
 menu: Service Center → Master Files → Service Center Task
 ---
@@ -85,23 +86,15 @@ Pick `TSK-OIL` on a job order for `VEH-2031` and two numbers appear on the line:
 
 The screen looked in the task's Products grid for a row that fits the vehicle in front of it, found the `MDL-SAIF16` row, and took its labour time and hour price. If it had found nothing, it would have fallen back to the header — the **Average Period** and the header **Total** — and derived an hour price by dividing one by the other.
 
-That is the behaviour you see while typing. The complication is what happens afterwards.
+That is the behaviour you see while typing.
 
-::: warning Three matching rules, one grid — keep it simple
-The product row that fits your vehicle is chosen by three different rules in three different places:
+::: tip Keep the product grid simple
+The product row that fits your vehicle is looked up in three places: when you **pick the task on a document**, when the server **recalculates prices** on the saved document — where, if no row matches, it falls back to the **work center's** hour price and the task's Average Period — and when you **build a service** out of tasks. Keep the grid simple so that all three land on the same row:
 
-- while you are **picking the task on a document**, the match considers the model, the brand, the record category and the dimensions;
-- when the server **recalculates prices** on the saved document, the match considers the **model and the record category only** — the brand column is ignored — and where nothing matches it falls back to the **work center's** hour price and the task's Average Period, not to zero;
-- while you are **building a service** out of tasks, a brand-only row can win over a model-specific one.
-
-You cannot control which rule runs where. What you can control is your data, so that all three rules land on the same row:
-
-1. **One row per model.** Never two rows for the same model that differ only by brand — the first one always wins and the brand column will not save you.
-2. **Fill Brand with the marque that actually owns the model.** The column is required, so you have no choice; just do not expect it to select anything.
+1. **One row per model.** Never two rows for the same model that differ only by brand.
+2. **Fill Brand with the marque that actually owns the model.** The column is required.
 3. **Leave Record Category empty** unless you genuinely price by document category, and then use it on every row.
-4. **Make the work center's hour price agree with your rows.** At Al-Sahra both are 120, so a recalculation cannot move the price.
-
-After any bulk recalculation, reopen a job order and check the labour figures before invoicing.
+4. **Make the work center's hour price agree with your rows.** At Al-Sahra both are 120, so a recalculation lands on the same price.
 :::
 
 ::: tip Which price column is used
@@ -146,11 +139,11 @@ The first matching row wins; if none matches, the default interval applies.
 
 That interval is what makes the arithmetic on the [vehicle's file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) mean something. `VEH-2031` last had its oil done at **36,000 km**; the interval is **10,000 km**; so the next one falls due at **46,000 km**. The car reads **45,300** on 3 March and burns about **60.7 km a day**, which puts the next visit around **15 March 2026** — and that is the date the job order closing projects.
 
-## Two Things the Task Does Not Do
+## Finding and Tagging Tasks
 
-**It does not filter itself by the vehicle.** On a job order, the task picker shows every task in the catalogue regardless of the car's model. The filter that would narrow it exists in the model but is switched off in the code. If you want technicians to find the right task quickly, use codes and groups that sort well — the system will not narrow the list for you.
+**The picker lists the whole catalogue.** On a job order, the task picker shows every task in the catalogue. If you want technicians to find the right task quickly, use codes and groups that sort well.
 
-**Its classification changes nothing.** The **classification** field, and the whole Standard Operation Classification file behind it, are a free tag. No price, no filter, no grouping and no report reads it. Use it for your own record-keeping, and see [tags and classification files](/modules/servicecenter/workshop-setup/servicecenter-classification-files.md).
+**The classification is a free tag.** The **classification** field, and the Standard Operation Classification file behind it, give you a column to search and filter the task list by. See [tags and classification files](/modules/servicecenter/workshop-setup/servicecenter-classification-files.md).
 
 ## Building the Catalogue
 

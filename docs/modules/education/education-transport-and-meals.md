@@ -123,7 +123,7 @@ Say a driver clips a gatepost and the bodywork costs 4,000 to put right. The sch
 driver bears a quarter of it. You record the amount as 4,000, the responsible percentage as 25 and
 the responsible value as 1,000.
 
-::: warning These figures are recorded, not booked
+::: info These figures are recorded, not booked
 Both figures are numbers you type, exactly as you and the driver agreed them. The system keeps them
 on the log entry and reports on them; it does not calculate one from the other, and it does not book
 any of them. There is no journal entry for the 4,000, no payable to the workshop, and no payroll

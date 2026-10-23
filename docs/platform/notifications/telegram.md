@@ -1,5 +1,6 @@
 ---
 entities: [TelegramBotConfiguration, TelegramMessage, TelegramBotInfo]
+menu: Administration → Other → Telegram Bot Configuration
 ---
 # Telegram Notifications in Nama ERP
 
@@ -34,7 +35,7 @@ Anyone who holds the token can send messages as your bot and read everything it 
 
 ## Step 2 — Create the Telegram Bot Configuration in Nama
 
-From the main menu search for **Telegram Bot Configuration** and add a new record. This screen is where the bot lives inside Nama.
+Open **Administration → Other → Telegram Bot Configuration** and add a new record. This screen is where the bot lives inside Nama.
 
 ![Telegram Bot Configuration screen](../../ar/platform/notifications/images/telegram/telegram-bot-configuration-en.png)
 
@@ -95,7 +96,7 @@ A single contact can be linked to only **one** chat within the same bot configur
 
 ## Step 6 — Create a Telegram Message
 
-A **Telegram Message** is the template of what gets sent — the wording, the formatting and any attachment. Search the menu for **Telegram Message** and add a new record.
+A **Telegram Message** is the template of what gets sent — the wording, the formatting and any attachment. Open **Administration → Other → Telegram Message** and add a new record.
 
 ![Telegram Message screen](../../ar/platform/notifications/images/telegram/telegram-message-en.png)
 

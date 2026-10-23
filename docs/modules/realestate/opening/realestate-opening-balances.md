@@ -1,4 +1,5 @@
 ---
+description: "Going live in Real Estate: building the estate tree first, the three opening documents, the opening fiscal period rule, turning off the status timeline and loading historical cost with the estate opening cost."
 entities: [REEstateOpeningCost]
 ---
 # Going Live: Opening Balances in Real Estate
@@ -62,8 +63,7 @@ records say is already leased.
 
 That is exactly what you want for documents entered in Nama, and exactly what you do not want for a
 decade of imported history, where the earlier links in the chain were never entered at all. The
-module settings therefore carry a cut-off date, shown on screen with the English caption **Do Not
-Validate Estate Before**. Set it to your go-live date and the validator stops checking any pair of
+module settings therefore carry a cut-off date, **Do Not Validate Estate Before**. Set it to your go-live date and the validator stops checking any pair of
 entries whose earlier half is dated before it, so migrated contracts commit without being asked to
 justify a past that was never loaded.
 

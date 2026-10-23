@@ -51,6 +51,14 @@ not there is refused. The executive budget term code is checked too, against the
 parent/leaf hierarchy — so you cannot order against a roll-up budget line that exists only to total
 its children.
 
+**Picking the contract fills the screen.** When you choose the project contract on either document, its
+project is copied to the header and every term line of the contract is added to the grid, with its term
+code, standard term, term category, remarks and item. Two switches turn this off. Tick *Do Not Copy
+Contract Terms When Selected* on the document term and only the project is copied. Turn on the module
+option *Do Not Copy Data In Contractor Purchase Order And Request When Selecting Contract* in
+[Contracting Configuration](/modules/contracting/contracting-configuration) and nothing is copied at all —
+the lines are entered by hand.
+
 ## The request — the site asking, and nothing more
 
 ![The Contracting Purchase Request screen: contract, requester, the availability columns and the term-coded details grid](../../../ar/modules/contracting/images/contractor-contracting/contracting-purchase-request-main-en.png)

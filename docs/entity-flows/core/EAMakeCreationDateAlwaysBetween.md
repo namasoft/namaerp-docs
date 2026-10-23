@@ -27,7 +27,7 @@ Time window enforcement for DocumentFile entities requiring creation time constr
 
 ## Parameters
 
-**Parameter 1:** Ignore (Not Used) - This parameter is not used
+**Parameter 1:** Ignore (Not Used) - Leave empty.
 
 **Parameter 2:** Start Hour (Required) - Starting hour (0-23) of time window, inclusive (e.g., 9 for 9 AM)
 

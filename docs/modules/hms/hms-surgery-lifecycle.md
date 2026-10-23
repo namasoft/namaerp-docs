@@ -1,4 +1,5 @@
 ---
+description: "One operation through the HMS surgery screens: Surgery Request, Surgery Reservation, Surgery Approval, Surgery Invoice and the surgery package deal and its settlement invoice."
 entities: [HMSSurgeryReq, HMSSurgeryReservation, HMSSurgeryApproval, HMSSurgeryInvoice, HMSSurgeryPackage, HMSSurgeryPackageInvoice]
 menu: Hospital Management System → Surgeries → Surgery Request
 ---

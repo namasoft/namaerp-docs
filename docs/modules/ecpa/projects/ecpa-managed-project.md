@@ -1,6 +1,6 @@
 ---
 entities: [CPAProject]
-menu: ECPA → Projects → Managed Project
+menu: Project Management → Projects → Managed Project
 ---
 # The Managed Project
 
@@ -47,7 +47,7 @@ This block is the contract in fields. It is shared with the quotation and the [p
 | **Responsible Employee**, **Responsible**, **Mediator** | the day-to-day owner, an outside responsible party, and the agent or intermediary who brought the work |
 | **Contract Total Cost**, **Currency**, **Rate** | the contracted value in the deal's currency, and the rate to convert it |
 | **Contract Local Cost** | the contracted value in the local currency — recomputed on every save as *Contract Total Cost × Rate*, so treat it as a result rather than an input |
-| **Estimated Cost** | your own estimate of what the job will cost to deliver. It is informational: nothing compares it to what is actually spent |
+| **Estimated Cost** | your own estimate of what the job will cost to deliver, a planning figure |
 
 The planned window is self-balancing, which saves a lot of arithmetic. Type the **From Date** and a **Planned Project Time**, and the **To Date** fills itself in; type a **To Date** instead and the **From Date** is worked back from it; change the duration or its unit and the end date moves.
 
@@ -228,10 +228,6 @@ The action duplicates the selected project **once for every customer in the From
 **Repeat Miles** does not create a project. It appends copies of the milestone rows to the project you are already on, and can bring the last milestone's tasks onto the new one — the tool for a job that repeats the same phase, such as a retainer that runs another survey cycle each quarter. It needs at least two milestone rows to work with.
 
 **copy from**, on the Basic Information group, prefills a new project from an existing one: the header, project details, accounts, currency and rate, the phases-discipline group, and all four grids — disciplines, milestones and the details matrix. The copied milestone rows arrive unlinked, so saving the new project generates its own milestone records rather than sharing the source's.
-
-::: warning A copied project inherits the original's progress
-*copy from* also carries the source project's **Total Project Cost**, **Current Finished Percentage**, planned and actual time and its **status**. A brand-new project can therefore open showing another job's numbers. They correct themselves the first time one of the new project's own tasks is saved; until then, do not read them.
-:::
 
 **Generate Invoice**, in the *More* menu, opens a new [project invoice](/modules/ecpa/invoicing/ecpa-project-invoice) already carrying the project's customer and pointing at this project on both sides, so the collect buttons on the invoice know what to sweep. The project must be saved first.
 

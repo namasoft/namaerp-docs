@@ -109,17 +109,7 @@ When you commit a service request, two checks run:
 Fahad's 6.5 hours are checked against the 32, and the day entry's remaining hours drop accordingly.
 Cancelling or deleting the request gives the hours back.
 
-::: warning The first booking of any day is never checked
-The capacity check only runs when at least one other reservation already exists for that work centre
-on that date. The **first** booking of a day is accepted whatever its size — a single request for
-500 hours against a 40-hour day commits without complaint, and only the second request that day
-triggers the message.
-
-In practice this means the check protects you against gradual over-booking but not against one
-badly typed number. Treat the first appointment of each day as unverified and glance at its hours.
-:::
-
-The other way past the check is deliberate: a **visit type** with *Always Allow Reservation* switched
+There is one deliberate way past the check: a **visit type** with *Always Allow Reservation* switched
 on bypasses the appointment-hours test entirely. That is what you use for the customer who has broken
 down outside and must be taken today. Keep it on one clearly named visit type — an emergency type —
 rather than on your everyday ones.

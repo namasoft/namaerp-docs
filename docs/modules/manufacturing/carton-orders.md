@@ -68,29 +68,25 @@ The system calculates line totals, applies discounts, calculates taxes, and upda
 
 You can't directly order "Small Separators" or "Assembled Separators" in orders - those are components manufactured as part of other products.
 
-### Step 3: Review Manufacturing Details
+### Step 3: Manufacturing Details
 
-Here's where it gets interesting. Once you save the order, look at the **Manufacturing Details** (تفاصيل التصنيع) tab (read-only grid).
+Below the order lines sits the read-only **Manufacturing Details** (تفاصيل التصنيع) grid. It shows what is actually being manufactured for the order, and by which planning document.
 
-This grid shows what actually needs to be manufactured to fulfill the order.
+The grid stays empty until the order is planned. It is filled from the material planning documents that take up the order: one line per carton specification **per planning document**, carrying the quantity that document planned and, in **Used In Document** (مستعمل في سند), the planning document itself.
 
-**For normal cartons**: Manufacturing details match order details. One order line = one manufacturing line.
+**For normal cartons**: one order line becomes one manufacturing line per planning document.
 
-**For assembled cartons**: Nama explodes the assembly into components. If you ordered an assembled carton with two child components, you'll see two manufacturing detail lines - one for each child carton that needs to be produced.
+**For assembled cartons**: Nama explodes the assembly into its child cartons. If you ordered an assembled carton with two child components, each planning document that covers it adds two manufacturing lines - one for each child carton that needs to be produced.
 
-**Example**:
+**Example** - an order for 1000 "Display Shipper Full", fully planned by one planning document MP-002:
 ```
 Order Details:
 - 1000 units of "Display Shipper Full" (assembled carton)
 
 Manufacturing Details:
-- 1000 units of "Display Base" (child component 1)
-- 1000 units of "Display Lid" (child component 2)
+- 1000 units of "Display Base"  - Used In Document: MP-002
+- 1000 units of "Display Lid"   - Used In Document: MP-002
 ```
-
-The manufacturing details are what feeds into material planning. When you plan materials, you're planning for the manufacturing details, not the order details.
-
-**Used In Document** (مستعمل في سند): This field in manufacturing details shows if a manufacturing line has been included in a material planning document. Once planned, it's marked to prevent duplicate planning.
 
 ### Step 4: Money Calculations
 
@@ -112,13 +108,19 @@ Once everything looks good, commit the order. Nama validates:
 
 If validation passes, the order commits and is ready for planning.
 
-## The Planning Status: Fully Planned vs. Partially Planned
+## The Planning Status: How Much Is Already Planned
 
-Once an order is committed, Nama tracks its planning status with two fields (visible in the header):
+Planning works by **quantity**, not by line. A planning document can take all of an order line or only part of it, and the rest stays open for the next planning document. Each order line shows where it stands in two columns:
 
-**Used In Document** (مستعمل في سند): Shows the material planning document that this order is part of (or null if not yet planned)
+**Executed Quantity** (الكمية المنفذة): how much of the line is already covered by committed material planning documents. It stays empty until some planning document takes the line up. For an assembled carton it is the quantity of the least-planned child carton - a shipper is only covered as far as both its base and its lid are.
 
-**Fully Planned** (مخطط بالكامل): True if all manufacturing detail lines have been included in material planning, false if any lines are still pending
+**Unexecuted Quantity** (الكمية غير المنفذة): **Quantity** minus **Executed Quantity** - what is still waiting to be planned.
+
+The order list adds two columns, which can also be used as filters:
+
+**Fully Planned** (مخطط بالكامل): ticked once every order line has been planned in full.
+
+**Used In Document** (مستعمل في سند): the first planning document that took up the order.
 
 Here's how it works:
 
@@ -126,53 +128,46 @@ Here's how it works:
 
 You just committed Carton Order #5001 with 5000 tomato boxes.
 
-- Manufacturing Details: 1 line, "Tomato Box 250", 5000 units, Used In Document = null
-- Order Header: Used In Document = null, Fully Planned = False
+- Order line: Quantity 5000, Executed Quantity and Unexecuted Quantity empty
+- Manufacturing Details: empty
+- Order list: Fully Planned not ticked, Used In Document empty
 
-This order appears in searches for "unplanned orders" when creating material planning documents.
+### Scenario 2: Order Planned in Two Parts
 
-### Scenario 2: Order Fully Planned
+You can only run 3000 boxes this week. You create Material Planning #MP-001 for Order #5001. Saving it fills its items grid with the 5000 still open; you type 3000 in **Manually Adjusted Quantity** and commit.
 
-You created Material Planning #MP-001, added Order #5001, ran optimization, committed the planning document.
+- Order line: Executed Quantity 3000, Unexecuted Quantity 2000
+- Manufacturing Details: "Tomato Box 250", 3000, Used In Document = MP-001
+- Order list: Fully Planned not ticked, Used In Document = MP-001
 
-Nama marks:
-- Manufacturing Details: Used In Document = Material Planning #MP-001
-- Order Header: Used In Document = Material Planning #MP-001, Fully Planned = True
+Next week you create MP-002 for the same order. Its items grid is filled with the 2000 that are still open. You commit it as it is.
 
-This order no longer appears in searches for unplanned orders. You won't accidentally plan it again.
+- Order line: Executed Quantity 5000, Unexecuted Quantity 0
+- Manufacturing Details: two lines - 3000 from MP-001 and 2000 from MP-002
+- Order list: Fully Planned ticked, Used In Document = MP-001
 
-### Scenario 3: Assembled Carton, Partially Planned
+The order is now fully planned. A third planning document for it is refused with *CRTN order {0} is fully planned*, and so is **Genrate Carton Material Planning** on the order.
 
-You have Order #5002 for 1000 assembled cartons (base + lid components).
+### Scenario 3: Assembled Carton, One Child at a Time
 
-Manufacturing Details show:
-- Line 1: Base component, 1000 units
-- Line 2: Lid component, 1000 units
+You have Order #5002 for 1000 assembled cartons (base + lid components). You create Material Planning #MP-003 for it and delete the lid row from its items grid, because lids are in stock and you only need bases this time.
 
-You create Material Planning #MP-002 and add only the base component (maybe lids are in stock, you just need to manufacture bases).
+After committing MP-003:
+- Manufacturing Details: Base, 1000, Used In Document = MP-003 (no lid line yet)
+- Order line: Executed Quantity 0, Unexecuted Quantity 1000 - the lid is not planned, so no complete shipper is covered yet
+- Order list: Fully Planned not ticked
 
-After committing MP-002:
-- Line 1 (Base): Used In Document = MP-002
-- Line 2 (Lid): Used In Document = null
-- Order Header: Used In Document = MP-002, Fully Planned = False
-
-The order is partially planned. It still appears in searches (because Fully Planned = False), but when you look at it, you'll see the base is already planned.
-
-Later, you create MP-003 for the lids. After committing:
-- Line 1 (Base): Used In Document = MP-002
-- Line 2 (Lid): Used In Document = MP-003
-- Order Header: Used In Document = MP-002 (first planning document), Fully Planned = True
-
-Now it's fully planned and drops off the unplanned list.
+Later, you create MP-004 for the order. Only the lid is still open, so only the lid comes into its items grid. After committing it, both children carry 1000, Executed Quantity becomes 1000 and the order is fully planned.
 
 ### Scenario 4: Planning Document Cancelled
 
-If you cancel or delete a material planning document, Nama automatically updates all orders that were included in it:
+If you cancel or delete a material planning document, Nama works out the order's planned quantities again from the planning documents that remain - oldest first - so the cancelled document's lines disappear from Manufacturing Details, Executed and Unexecuted Quantity move back, and Fully Planned is recalculated.
 
-- Used In Document fields are cleared
-- Fully Planned status recalculates
+The released quantity is open for planning again.
 
-The orders become available for planning again.
+### Changing an Order That Is Already Planned
+
+You can still edit a planned order, within two limits. A line's **Quantity** cannot go below what is already planned - the order is refused with *Quantity {0} is less than the quantity already planned {1}* - and a carton specification that a planning document has planned cannot be taken off the order. Raising a quantity simply opens the difference for the next planning document.
 
 ## Generating Material Planning from an Order
 
@@ -186,6 +181,8 @@ Nama:
 3. Opens the planning document for you
 
 You're now in material planning, ready to run optimization. This shortcut saves you from manually creating a planning document and selecting the order - it does it in one click.
+
+On an order that is already fully planned the button is refused with *CRTN order {0} is fully planned*.
 
 **Note**: This button requires a document term configuration that specifies which book and term to use for generating planning documents — the **Generation** tab of the Carton Order term, described in [Carton Document Terms](/modules/manufacturing/document-terms/mfg-terms-carton).
 
@@ -208,14 +205,10 @@ That's it from a sales perspective. The customer ordered 500 display shippers.
 ### Manufacturing Details Generation
 
 Nama looks at the specification for "Display Shipper Full" and sees it has two child carton lines:
-1. "Display Base" - quantity per assembly: 1
-2. "Display Lid" - quantity per assembly: 1
+1. "Display Base"
+2. "Display Lid"
 
-So manufacturing details show:
-- 500 units of "Display Base" needed
-- 500 units of "Display Lid" needed
-
-Both lines reference the order detail line ID, so you can trace back to which order line drove these requirements.
+So there are two things to plan - 500 units of "Display Base" and 500 units of "Display Lid" - and each child carries the full order quantity. They appear in the Manufacturing Details grid as planning documents take them up, each line referencing the order detail line ID, so you can trace back to which order line drove these requirements.
 
 ### Material Planning
 
@@ -272,10 +265,10 @@ Anything unusual — special printing, a rush, customer-specific packaging — b
 ## Common Questions
 
 **Q: Can I edit an order after it's been planned?**
-A: You can edit the order, but if manufacturing details are already in material planning documents, you need to handle those separately. Safer approach: delete the planning document, edit the order, re-plan.
+A: Yes, within limits. You cannot lower a line's quantity below what is already planned, and you cannot remove a carton specification that a planning document has planned. Raising a quantity or adding a line is fine - the extra is simply open for the next planning document. To go below the planned quantity, cancel or delete the planning document first.
 
 **Q: What if I order an assembled carton but only need to manufacture one of the child components (the other is in stock)?**
-A: When you create the material planning document, you can selectively add just the manufacturing detail lines you want to plan. The order stays partially planned until all lines are planned.
+A: When you create the material planning document, delete the row of the child you don't need from its items grid. The order stays partially planned, and the other child is still open for a later planning document.
 
 **Q: Can I mix multiple customers' orders in one material planning document?**
 A: Yes. Material planning documents don't care about customers - they care about carton specs and material efficiency. You can batch orders from different customers if it makes sense for production efficiency.
@@ -298,3 +291,13 @@ With orders entered, you're ready for the most powerful part of the carton modul
 ::: info Order Status Tracking
 The "Fully Planned" flag is your quick indicator of order readiness. Use it to filter pending orders when creating production schedules.
 :::
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *CRTN order {0} is fully planned* — «تم تخطيط أمر الكرتون {0} بالكامل» | The order has no quantity left to plan. It appears when you press **Genrate Carton Material Planning**, and when a planning document listing the order is saved. | Nothing more to plan. Raise the order quantity first if more is really needed. |
+| *Quantity {0} is less than the quantity already planned {1}* — «الكمية {0} أقل من الكمية التي تم تخطيطها بالفعل {1}» | A line's quantity was lowered below its **Executed Quantity**. | Keep it at least at the planned quantity, or cancel or delete the planning document first. |
+| *Carton specs {0} is planned in material planning {1} and can not be removed from the order* — «مواصفة الكرتون {0} مخططة في تخطيط الخامات {1} ولا يمكن حذفها من الأمر» | A line was removed, or its carton specification changed, after a planning document planned it. | Put the line back, or cancel or delete the planning document named in the message first. |
+| *Customer {0} in carton specifications {1} is not the same as the customer {2} in the order* — «العميل {0} الموجود بمواصفات الكرتونة {1} مختلف عن العميل {2} الموجود بالطلبية» | A line uses a specification tagged to another customer. | Pick a specification of the order's customer. |
+| *Carton spec {0} at line {1} can not be used in orders because manufacturing type is {2}* — «لا يمكن استخدام المواصفة {0} في السطر {1} في أوامر بيع الكرتون لأن نوع التصنيع {2}» | The line names an assembled separator, which is a manufacturing structure, not something sold. | Order the specification that uses the separator instead. |

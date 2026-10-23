@@ -1,4 +1,5 @@
 ---
+description: "The Custom Report Menu screen: adding entries to a screen's More menu that open a report with parameters filled from the current record or list, ordering them, who sees them, and why one does not show."
 entities: [CustomReportMenu]
 menu: Administration → Reports → Custom Report Menu
 ---
@@ -208,6 +209,5 @@ A distributor wants "Print Journal Entry" available directly on their accounting
 
 ::: info An extra tab you may not see
 On Nama's own implementation servers this screen shows a second tab used to catalogue the customisation
-internally. It has no effect on how the menu entry behaves, and it does not appear on a normal
-installation.
+internally. It does not appear on a normal installation.
 :::

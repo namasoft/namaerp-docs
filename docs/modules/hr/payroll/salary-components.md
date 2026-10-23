@@ -18,6 +18,7 @@ Found at **Payroll > Salary Configurations > Salary Component Type**, a componen
 | Component Order | ترتيب المفرد | The calculation sequence. **Load-bearing**: a component that is a percentage of another must be ordered *after* the component it depends on. |
 | Default Calendar | التقويم الافتراضى | The [HR Calendar](../setup/hr-calendar-and-holidays.md) components of this type use unless overridden. |
 | Issuance | الصرفية | Ties this component type to a [payroll stream](../setup/hr-years-and-periods.md), so it only feeds its own salary run. |
+| Estimate Salary Element Value From Formula | تخمين قيمة مفرد الراتب من المعادلة | For components worked out by a [formula](salary-calculation-formulas.md) rather than typed in. On a [Job Offer](../recruitment/job-offers-and-tests.md) for an existing employee and on Update Employee Info, a salary-element line of this type left empty is filled by running the formula for that employee on the document's date, so the offer shows a realistic figure. On Update Employee Info, a line of this type that the employee already had a value for is recalculated the same way on every save, so a figure typed by hand there is replaced. |
 
 **Component Effect Type** decides what a component actually does to the payslip:
 
@@ -69,9 +70,9 @@ A component carries its own **debit account lines** and **credit account lines**
 
 ## Salary Component Group
 
-A **Salary Component Group** (مجموعة مفردات راتب, **Payroll > Salary Configurations > Salary Component Group**) bundles related components together for filtering and reporting. That is most of what it does, and for the great majority of groups it is all of it.
+A **Salary Component Group** (مجموعة مفردات راتب, **Payroll > Salary Configurations > Salary Component Group**) bundles related components into one named set. Wherever a rule has to name several components at once, it can name the group instead: a **Component Calculation Formula** related to components, a **Reward / Penalty** that considers other issuances, a **Vacation Type**'s deduction-percentage lines and the salary conditions on a **[Loan Type](/modules/hr/loans/hr-loan-types.md)** all accept a group. Groups are also handy for filtering and reporting.
 
-The exception is the group's **component types** grid. Each line names a component type, and where that type's own effect is **Other**, the line's **Other Component Effect Type** column says whether salary generation should treat it as an addition or a deduction when it works out a component that refers to the group. So the group is organization *plus* one narrow rule, and the refusal at the bottom of this page exists to keep that column confined to the types it applies to.
+The group's **component types** grid lists its members. Each line names a component type, and where that type's own effect is **Other**, the line's **Other Component Effect Type** column says whether salary generation should treat it as an addition or a deduction when it works out a component that refers to the group. The refusal at the bottom of this page keeps that column confined to the types it applies to.
 
 ## Actions on this screen
 

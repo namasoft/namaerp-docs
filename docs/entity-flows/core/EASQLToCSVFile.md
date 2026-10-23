@@ -38,7 +38,7 @@ select code,creationDate [creationDate#ddMMyyy HH:mm:ss] from Employee
 
 **Parameter 3:** Path Tempo (Required) - Dynamic file path template using Tempo syntax
 
-**Parameter 4:** Headers Line (Optional) - CSV column headers (uses SQL column names if empty)
+**Parameter 4:** Headers Line (Optional) - Text written as the first line of the file, before the rows. If empty, the file starts directly with the data rows (the query's column names are not written)
 
 **Parameter 5:** Protocol (Optional) - Transfer protocol: `local`, `ftp`, `ftps`, or `sftp` (default: local)
 
@@ -49,6 +49,8 @@ select code,creationDate [creationDate#ddMMyyy HH:mm:ss] from Employee
 **Parameter 8:** Server User (Optional) - Username for remote server authentication
 
 **Parameter 9:** Server Password (Optional) - Password for remote server authentication
+
+**Parameter 10:** Footer Line (Optional) - Text written as the last line of the file, after the rows
 
 ## Database Tables Affected
 

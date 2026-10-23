@@ -1,4 +1,5 @@
 ---
+description: "The Brand, Model and Product Model Category master files that classify serviced vehicles, what the model drives in the workshop, and how to set them up."
 entities: [SrvProductModel, SrvcBrand, SrvProductModelCategory]
 ---
 # Brands, Models and Model Categories
@@ -51,7 +52,7 @@ The three things a model drives, below, all key off the **model record itself**,
 
 ### The Model Category File
 
-**Product Model Category** (`تصنيف موديل`) is code and names and nothing else. It groups models for a human reader and for list-view filtering. No price, no interval and no rule anywhere in the module reads it.
+**Product Model Category** (`تصنيف موديل`) is code and names. It groups models for a human reader and for list-view filtering and reporting.
 
 ## What the Model Actually Drives
 
@@ -65,18 +66,14 @@ This is the part worth memorising, because it is short and it is the entire retu
 
 And one thing it explicitly does **not** drive: **[inspection templates](/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md)**. Inspection templates and the inspection points they are built from carry no model and no brand at all, and no rule, filter or `توجيه` option picks a template. The template is chosen by hand, by the person filling the form — never by the car.
 
-::: warning Brand is required but ignored
+::: tip Rows are chosen by model
 On a task's Products grid the **Brand** column is mandatory — you cannot save a row without it. On a service's model price grid the brand column is displayed and is checked against the header.
 
-Neither is used to choose a row. Every matcher that picks a price, a labour time or an interval keys on the **model**. Two rows for the same model that differ only in brand are indistinguishable to the system, and the **first** one always wins.
-
-So: fill the brand with the marque that genuinely owns the model, because you have to — and then design your data as though the column were not there. One row per model, never two.
+Every matcher that picks a price, a labour time or an interval keys on the **model**. So fill the brand with the marque that genuinely owns the model, and keep one row per model.
 :::
 
-::: warning Choosing a model does not filter the task list
-On a job order, picking the vehicle does not narrow the task or service pickers to the things defined for that model. The whole catalogue is offered every time, and it is up to the service advisor to choose correctly.
-
-The mechanism that would have filtered the list exists in the model but is switched off in the code, so do not build a training story around it. If the catalogue is large, invest in codes and master groups that sort sensibly instead.
+::: tip The pickers offer the whole catalogue
+On a job order, the task and service pickers offer the whole catalogue, and the service advisor chooses the ones that fit the vehicle. If the catalogue is large, invest in codes and master groups that sort sensibly.
 :::
 
 ::: tip Write `brad`, not `brand`

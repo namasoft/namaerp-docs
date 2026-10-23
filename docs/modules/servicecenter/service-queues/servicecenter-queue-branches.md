@@ -34,12 +34,6 @@ Plus the usual **Dimensions** group.
 
 **It drives the nightly numbering reset.** At the start time each day, every queue's counter goes back to zero, so the first customer after 07:00 gets number 1 and prints `A001`. That is why Fahad's `A014` on 3 March means "the fourteenth customer in the new-service queue since 07:00 this morning", and why the same code appears again the following day for a different customer.
 
-::: warning The nightly reset is unreliable on a multi-branch installation
-The scheduled reset is held in a **single shared slot** rather than one per branch, so on an installation with more than one queue branch only the most recently loaded branch's reset is reliably managed — earlier ones can be left unmanaged or cancelled.
-
-If you run more than one branch: after **any** change to a branch or to its configuration, check the next morning that each branch really did restart at 1. Where it did not, the visible symptom is ticket numbers continuing upward from yesterday's last number instead of starting again — and eventually a counter hitting its *Last Number* ceiling and refusing to issue tickets. A single-branch installation is not affected.
-:::
-
 ## The console — the two ticket lists
 
 The branch screen carries two lists of the branch's tickets. Both show the same columns; they differ in what they include and in what you may do from them.
@@ -121,10 +115,10 @@ Once you pick the branch, the ticket-code field suggests **the branch's still-op
 
 When job order `SCJO-2026-0417` is committed, ticket `A014` is stamped finished, the queue screens are told, and the advisor's station is freed. **Committing the job order is what closes the customer's ticket** — so commit it at the desk. Job orders saved as drafts and committed in a batch at the end of the day leave their tickets showing as in progress on the wall display for the whole afternoon.
 
-::: warning Cancelling the job order does not properly reopen the ticket
-Cancelling a committed job order releases the ticket's link to it, but the ticket **keeps its finished timestamp and does not return to the waiting list** — the display and the advisor stations still treat it as served.
+::: tip Cancelling the job order
+Cancelling a committed job order releases the ticket's link to it; the ticket **keeps its finished timestamp** and stays served.
 
-If a job order has to be cancelled and the customer is genuinely still waiting, do not expect the old ticket to come back to life. Issue a fresh ticket from the branch screen with **Add Day Ticket** and link that one to the replacement job order.
+If a job order has to be cancelled and the customer is still waiting, issue a fresh ticket from the branch screen with **Add Day Ticket** and link that one to the replacement job order.
 :::
 
 ## Where to read next

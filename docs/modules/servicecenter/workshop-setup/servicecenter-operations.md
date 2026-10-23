@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Operation (service) master file that bundles tasks into one package, priced per line or as a total, and how a service reaches a job order."
 entities: [SrvCOperation]
 menu: Service Center → Master Files → Service Center Operation
 ---

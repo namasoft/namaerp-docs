@@ -1,4 +1,5 @@
 ---
+description: "The Machine Type (model, warranty defaults, spare-parts list) and Maintenance Machine Category (grouping) files in CRM maintenance, and how to set them up."
 entities: [MnMachineType, MnMachineCategory]
 ---
 # Machine Types and Categories
@@ -13,15 +14,11 @@ The distinction matters more than it looks, because one of the two files does re
 
 ## Machine Category — The Broad Family
 
-The category screen is short: the standard code, group and two names, an **item** (الصنف), two warranty period fields, and the dimensions group.
+The category screen is short: the standard code, group and two names, an **item** (الصنف) and the dimensions group.
 
 Al Nokhba keeps two: `MCT-CHL` تبريد مركزي / Central Cooling, and `MCT-SPL` وحدات منفصلة / Split Units. Every chiller and air handling unit is Central Cooling; every wall-mounted split is Split Units. The category is carried onto machines, and [task templates](/modules/crm/maintenance-setup/crm-maintenance-task-templates) are tied to a category so that a checklist can be recognised as "the one for cooling plant".
 
-::: warning The warranty fields on the category do nothing
-The category screen shows **مدة الضمان / Warranty Period** and **مدة الضمان الافتراضي / Default Warranty Period**, which reads exactly like a place to set a default warranty for a whole family of equipment. Nothing reads them. A machine never takes its warranty periods from its category.
-
-Set warranty defaults on the **Machine Type**, described below. If you have already filled the category's warranty fields, no harm is done — they simply have no effect.
-:::
+Warranty defaults are set on the **Machine Type**, described below.
 
 ## Machine Type — The Model
 
@@ -35,19 +32,17 @@ This is the file that earns its keep. One record per model you maintain:
 | مدة الضمان الافتراضي / **Default Warranty Period** | The grace period between sale and the start of the warranty — 3 Month. Also copied onto the machine. |
 | مرفق 1..5 / **Attachment 1..5** | Manuals, drawings, data sheets. |
 
-Then one grid, **قطع الغيار / Spare Parts**, with the same columns as the machine's own spare-parts grid: item, unit of measure, quantity, reference number, a default warranty start period, a [warranty period type](/modules/crm/maintenance-setup/crm-machines), a default purchase price, a default sales price and a description.
+Then one grid, **قطع الغيار / Spare Parts**, with these columns: item, unit of measure, quantity, reference number, a default warranty start period, a [warranty period type](/modules/crm/maintenance-setup/crm-machines), a default purchase price, a default sales price and a description.
 
 **This is the grid the system actually uses.** When a technician fills the spare-parts grid on a maintenance notice, order or invoice for a machine, the item lookup is restricted to the parts listed on that machine's Machine Type. So `MT-CHL300` lists `SP-FLT-14` (14-inch air filter), `SP-CMP-30` (30 HP compressor), `SP-GAS-410` (R-410A refrigerant) and `SP-OIL-05` (compressor oil), and those are what the crew can pick when working on either Marina Plaza chiller.
 
-::: warning Two prerequisites that catch people out
+::: warning A prerequisite that catches people out
 **An item is only ever offered as a spare part if it is flagged *Spare Part / قطعة غيار* on the item master.** That flag is set in the supply-chain item file, not here. A part listed on the Machine Type but not flagged on the item master will never appear in a lookup, and the message you get is simply an empty list.
-
-And the equivalent grid on the **machine record itself is read by nothing at all**. Maintaining parts per machine feels more precise and achieves nothing — keep the list here, on the type.
 :::
 
-One cosmetic point, so it does not surprise you: the unit-of-measure column in this grid is headed **وحدة سكنية / "Housing units"**, a caption borrowed from the real-estate module. The column works normally; only the heading is wrong.
+The unit-of-measure column in this grid is headed **وحدة سكنية / "Housing units"** on screen; it holds the unit of measure.
 
-The type screen holds the header fields and that spare-parts grid, borrowed heading and all:
+The type screen holds the header fields and that spare-parts grid:
 
 ![The Machine Type screen](../../../ar/modules/crm/images/maintenance-setup/crm-machine-type-en.png)
 
@@ -64,6 +59,6 @@ For a fresh installation, work from broad to narrow:
 1. Create the categories first — a handful is usually enough. Al Nokhba's two cover everything they touch.
 2. Create one machine type per model, tie it to its stock item, set the two warranty periods, and list its standard spare parts.
 3. Check the item master: every part you listed must be flagged as a spare part.
-4. Only then start creating machines. Picking type and category on a machine will fill in the warranty periods and give the spare-part lookups something to offer.
+4. Only then start creating machines. Picking the type on a machine will fill in the warranty periods and give the spare-part lookups something to offer.
 
 Neither file has any accounting or inventory effect, neither generates anything, and neither is validated beyond the usual master-file rules. There are no reports or dashboards over them — the list screens and their filters, plus Excel export, are what you have.

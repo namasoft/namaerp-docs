@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Record and Maintenance Record Request documents: recording a maintenance request and the visit itself, the rules that decide whether a record commits, what committing updates, and maintenance cost."
 entities: [FAMaintenanceRecord, FAMaintenanceRecordRequest]
 menu: Assets → Fixed Asset Maintenance → Maintenance Record
 ---

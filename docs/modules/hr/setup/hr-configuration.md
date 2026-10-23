@@ -1,4 +1,5 @@
 ---
+description: "The Human Resource Settings screen (Payroll, Settings): calendar and month divisor, vacation balances, salary document rules, absence deductions, attendance, overtime, loans and penalties settings."
 entities: [ConfigEntry]
 menu: Payroll → Settings → Human Resource Settings
 ---
@@ -73,8 +74,7 @@ three things about the layout before you hunt for an option.
   fault in your installation.
 - **Four group titles show an internal name instead of a translated one** — `AttendanceConfig`,
   `overtimeInMultiVacationDayHandling`, `SalaryDeductions` and `ProvisionCalculation` appear in that
-  code-like form in both the Arabic and the English interface, because no translation was ever
-  registered for them. They are the attendance group, the day-type collision group, the
+  code-like form in both the Arabic and the English interface. They are the attendance group, the day-type collision group, the
   absence-deduction group and the provisions group respectively.
 - **A handful of fields have no label at all** and show their internal name: the ten salary
   component slots and the five constant-salary groups (see

@@ -1,4 +1,5 @@
 ---
+description: "How to score customers, suppliers and banks with Party Evaluation: defining evaluation elements and element groups with weights, and recording a party's evaluation."
 entities: [PartyEvaluation, PartyEvaluationElement, PartyEvalElementGroup]
 menu: Accounting → Party Evaluations → Party Evaluation
 ---

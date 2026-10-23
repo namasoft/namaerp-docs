@@ -143,7 +143,7 @@ The [assay](/modules/contracting/project-contracting/contracting-assays.md) — 
 | **Tax 2** | The second tax |
 | The discount effects | One discount posting only. The assay draws on the **first discount debit** and the **second discount credit**, so those are the two sides to fill — set both or the discount line arrives one-sided |
 
-Tax 3, tax 4, the cost pair, the actual-cost pair, the cost-variance pair and the variance groups are not part of what an assay books, so leave them out of your set-up plan for this document. The cumulative-pricing options are extract concepts and have no effect on an assay either.
+Tax 3, tax 4, the cost pair, the actual-cost pair, the cost-variance pair and the variance groups are not part of what an assay books, so leave them out of your set-up plan for this document. The cumulative-pricing options belong to extracts.
 
 ## Worked example — the tail end of Tower A's configuration
 

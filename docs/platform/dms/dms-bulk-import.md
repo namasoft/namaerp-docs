@@ -1,4 +1,5 @@
 ---
+description: "The Compressed File To DMS Document screen that unpacks a ZIP archive into a staging grid and turns each file into an archived DMS document, with what transfers and practical limits."
 entities: [DMSCompressedFileToDocs]
 menu: Basic → Document Management System → Compressed File To DMS Document
 ---
@@ -12,7 +13,7 @@ You upload one ZIP archive, the system unpacks it into a staging grid — one ro
 you complete the coding, and a second button turns every row into a real archived document with
 the file already attached.
 
-![The Compressed File To DMS Document screen, with the compressed file, the block of default values and the two action buttons above the staging grid](../../ar/platform/dms/images/dms-zip-import-en.png)
+![The Compressed File To DMS Document screen, with the compressed file and the two action buttons above the staging grid](../../ar/platform/dms/images/dms-zip-import-en.png)
 
 ## The Two-Step Workflow
 
@@ -55,11 +56,9 @@ untouched, and the message does not identify which row was at fault. Fix the pro
 button again — the rows that already worked will not be duplicated.
 :::
 
-## What Actually Transfers — and What Does Not
+## What the Created Document Receives
 
-This is the part to read twice, because the screen offers far more than it delivers.
-
-**Only these columns reach the created document:**
+**These columns reach the created document:**
 
 | Column | Arabic label |
 |---|---|
@@ -72,30 +71,18 @@ This is the part to read twice, because the screen offers far more than it deliv
 | Expiration Date | تاريخ الانتهاء |
 | Current Version *(the file)* | النسخة الحالية |
 
-::: danger Folder, topic, owner and archive are silently discarded
-The grid also offers **DMS Docs Coding Group**, **English Code**, **Parent** (the folder),
-**Aclaseir Folder**, **Topic**, **Location** (the archive) and **Document Owner** as editable
-columns — and none of them is copied to the created document. Nothing warns you. You get documents
-filed in no folder, classified under no topic and owned by nobody.
+Fill in these columns before you press the second button. The document's folder, topic, archive
+and owner are set in a second pass, as described next.
 
-Worse, the whole **block of default values** in the header — Default Group, Default Parent,
-Default Aclaseir Folder, Default Importance, Default Topic, Default Location, Default Sub Location,
-Default Detailed Location and Default Owner — is read by nothing at all. Filling it in changes
-nothing anywhere.
+## A Workflow for a Large Load
 
-Do not spend time coding those columns. Plan to set the filing after import instead.
-:::
-
-## A Workflow That Works Today
-
-Given the above, the reliable way to load an archive in bulk is to let the ZIP importer do what it
-genuinely does — create documents with their files attached — and to do the filing in a second
-pass:
+The reliable way to load an archive in bulk is to let the ZIP importer create the documents with
+their files attached, and to do the filing in a second pass:
 
 1. **Group your files by destination before you zip them.** One ZIP per folder-and-topic
    combination: all the employment contracts in one, all the licences in another. This is what
    makes the second pass a bulk operation instead of a per-document one.
-2. **Unpack and create** with the two buttons, filling in only the columns that transfer — names,
+2. **Unpack and create** with the two buttons, filling in the columns listed above — names,
    importance, positions and dates.
 3. **Set the filing in bulk afterwards.** Export the newly created documents to a spreadsheet,
    fill in Folder, Topic, Location and Owner down the column, and import it back. See
@@ -104,8 +91,7 @@ pass:
 ::: tip Or skip this screen entirely
 If your scans are already named after something the system knows — an employee code, a contract
 number — a straight [record import](/platform/import-export/importing-records.md) of DMS Documents
-gives you complete control over every field in one pass, with no second step and no discarded
-columns. The ZIP screen is most useful when the files are all you have and their names mean
+gives you complete control over every field in one pass, with no second step. The ZIP screen is most useful when the files are all you have and their names mean
 nothing.
 :::
 

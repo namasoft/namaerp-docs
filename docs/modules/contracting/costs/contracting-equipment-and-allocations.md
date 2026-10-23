@@ -1,4 +1,5 @@
 ---
+description: "Charging employees and equipment to projects in three steps (allocation, cost distribution of salary and depreciation, invoice), plus the Equipment Statement and capitalising a self-built project."
 entities: [ContrEmployeeEquipmentAlloc, ContrEmployeeEquipmentCost, ContrEmployeeEquipInvoice, EquipmentStatementDoc, FACreationDoc]
 ---
 # Employees, Equipment and Their Costs

@@ -282,6 +282,12 @@ itself rather than from the document term, so if a retention clause is meant to 
 where you set it up. A term option additionally rolls condition taxes into the document's main
 Tax 1 amount.
 
+The condition record also decides the condition line's tax percentage. On every save, a line whose
+condition does not have **Taxable** ticked gets a tax percentage of 0, and an empty percentage on a
+taxable condition is filled from the condition's **Tax Percentage**. If a retention line's tax keeps
+going back to 0, tick **Taxable** on the condition — see
+[Contracting Conditions](/modules/contracting/setup/contracting-conditions.md#A-Condition-Is-a-Journal-Entry-Not-a-Number).
+
 ## What the extract books
 
 The extract does not write ledger rows itself. On commit it builds an accounting **business request**

@@ -1,4 +1,5 @@
 ---
+description: "How to create Default Values Templates that pre-fill header fields and detail lines on new records, who gets each template, when it applies automatically and how to apply one on demand."
 entities: [DefaultValuesTemplate]
 menu: Administration → Display Customization → Default Values Template
 ---

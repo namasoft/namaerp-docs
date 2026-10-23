@@ -25,7 +25,8 @@ title: الفواتير والضرائب والخصومات
 مكافأة العملاء، والمسار الكامل من الفاتورة إلى تحصيل الدفعة.
 
 <LandingGrid>
-  <LandingCard icon="🎁" title="نقاط مكافآت العملاء" link="/ar/modules/invoicing/reward-points.md" details="تشغيل برنامج ولاء يكسب فيه العملاء نقاط مكافآت على مشترياتهم ويستبدلونها." />
+  <LandingCard icon="⭐" title="إعداد نقاط المكافأة" link="/ar/modules/invoicing/reward-points-setup.md" details="معدلات الاكتساب، ومتى تصبح النقاط صالحة ومتى تنتهي، والصرف، والأرصدة الافتتاحية، والمنح الفتري، والمنع." />
+  <LandingCard icon="🎁" title="نقاط مكافآت العملاء" link="/ar/modules/invoicing/reward-points.md" details="قوالب إشعارات النقاط المكتسبة والمصروفة، والربط مع STC قطاف." />
   <LandingCard icon="📅" title="جداول الدفع" link="/ar/modules/invoicing/payment-schedules-user-guide.md" details="تقسيم الفاتورة إلى أقساط مجدولة وتتبّع كل تاريخ استحقاق." />
   <LandingCard icon="🔗" title="ربط المدفوعات بالفواتير" link="/ar/modules/invoicing/payment-entries.md" details="مطابقة سندات الدفع بالفواتير التي تسدّدها لإبقاء الأرصدة دقيقة." />
   <LandingCard icon="💳" title="المدفوعات الإلكترونية" link="/ar/modules/invoicing/online-payments.md" details="تحصيل مدفوعات الفواتير عبر بوابات الدفع الإلكتروني المتكاملة." />

@@ -1,4 +1,5 @@
 ---
+description: "The RE Building, RE Floor, Rental Unit, RE Unit group and Unit Model screens: building paperwork, generating floors and units from a model, unit types, garages, meters and maintenance markers."
 entities: [REBuilding, REFloor, RERentalUnit, REUnitGroup, REUnitModel]
 ---
 # Buildings, Floors and Rental Units
@@ -163,7 +164,10 @@ filled in:
 
 The unit's second page collects everything that ever happened to it: its rent contracts, sales
 contracts, reservations, its garages, the price lists that mention it, its rent offers, the unit
-groups it belongs to, and its rent and sales transactions.
+groups it belongs to, and its rent and sales transactions. A third page, **Actions**, shows the unit's
+history as a timeline: every document that touched it — reservations, sales and rent contracts,
+collections, fines, maintenance, handover, termination requests and more — with its owner, buyer,
+creation date and value date, newest first or oldest first as you sort it.
 
 ## RE Unit group — selling several units as one
 

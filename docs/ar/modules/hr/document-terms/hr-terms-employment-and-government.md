@@ -1,6 +1,6 @@
 ---
 entities: [JobOffer, CandidateJobOffer, UpdateEmployeeInfo, AggrUpdateEmpInfo, EmployeeRelocate, AggFiringDocument, AggFiringRequest, HODefinitionLetter, AggrResidenceRenewReq, AggrHOSponsorshipTransferDoc, AggrHOExitReEntryVisaReq]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات التوظيف والعلاقات الحكومية

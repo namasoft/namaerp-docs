@@ -1,6 +1,6 @@
 ---
 entities: [CPATask, CPATaskType]
-menu: ECPA → Tasks → Task
+menu: Project Management → Tasks → Task
 ---
 # Project Tasks
 

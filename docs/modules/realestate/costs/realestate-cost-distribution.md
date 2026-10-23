@@ -1,4 +1,5 @@
 ---
+description: "How Real Estate spreads project costs down to units: RE Additional Cost elements and their distribution rule, the RE Cost Document, a worked example and the journal entry it creates."
 entities: [RECostDocument, REAdditionalCost]
 ---
 # Distributing Project Costs Over Properties

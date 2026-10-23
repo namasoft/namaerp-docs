@@ -1,6 +1,6 @@
 ---
 entities: [HMSPatientCheckInvoice, HMSAttendantInvoice, HMSLabTestInvoice, HMSRadiologyInvoice, HMSPhysicalTherapyInvoice, HMSServicesInvoice, HMSSupervisionInvoice, HMSAccommodationInvoice, HMSSurgeryInvoice, HMSPharmacyInvoice, HMSPharmacyReturn, HMSSuppliesInvoice, HMSSupplyReturn, HMSServiceSupplyInvoice, HMSBloodBankInvoice, HMSBloodBankReturn]
-menu: الأساسيات ← الإعدادات ← توجيه المستند
+menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
 
 # توجيهات فواتير المستشفى
@@ -162,7 +162,7 @@ menu: الأساسيات ← الإعدادات ← توجيه المستند
 يختلف أمران عن فواتير الخدمات:
 
 - **المستند المخزني يأتي من صفحة الإنشاء التلقائي.** *دفتر المستند* و*توجيه المستند* (Generation Book / Generation Term) يجعلان الفاتورة تصرف
-  أصنافها (والمردود يستلمها). مجموعة تأثيرات المستند المنشأ في هذه التوجيهات لا تُستخدم.
+  أصنافها (والمردود يستلمها).
 - **المردود لا يعكس الجوانب لك.** يُرحِّل الأزواج نفسها التي تُرحِّلها الفاتورة، بالاتجاه الذي يعطيه
   توجيهه، فيحتاج توجيه المردود كل زوج معكوسًا عن توجيه الفاتورة — تحمل المريض في الجانب الدائن حيث
   تجعله الفاتورة مدينًا، وهكذا.

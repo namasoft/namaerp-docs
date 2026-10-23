@@ -1,3 +1,6 @@
+---
+description: "The request, document and aggregated document pattern shared by HR screens: the approval states of a request, what a document executes, how aggregated documents create many at once, and where to find them."
+---
 # HR Requests, Documents & Aggregated Documents
 
 Almost everything that happens to an employee in Nama HR — a vacation, a loan, joining the company, leaving it — is recorded through the **same three-layer pattern**. Once you understand this pattern you can read any HR screen, because they all behave the same way. This page explains that pattern once so the rest of the HR documentation can simply point back here.

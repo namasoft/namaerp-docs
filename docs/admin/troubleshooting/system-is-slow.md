@@ -31,7 +31,7 @@ A few questions to the customer save a lot of guessing:
 Three screens show live activity. None of them keeps history, so look while the slowness is
 happening.
 
-**Running Reports** — **Basic → Reports → Reports Monitoring → Running Reports**. Every report
+**Running Reports** — **Reports → Reports Monitoring → Running Reports**. Every report
 running at this moment, who started it and how long it has been going. A report that has been
 running for twenty minutes during the working day is the first suspect. See
 [Report Monitoring](/platform/background-processing/report-monitoring).

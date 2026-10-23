@@ -5,7 +5,7 @@ menu: Basic → Master Files → Tax Plan
 # Invoice Discounts and Tax Calculation System - Comprehensive Guide
 ## Overview
 
-Nama ERP provides a sophisticated invoice discount and tax calculation system that supports complex business requirements. This guide explains how discounts and taxes are calculated, configured, and applied to invoices with detailed field-level configuration information.
+This guide explains how Nama works out the discounts and taxes on an invoice line: which tax configuration a document uses, the order in which discounts and taxes are applied, and the options that change each step. Every option is named as it appears on screen, with its field id beside it in the tables.
 
 ::: tip Key Features
 - Support for 8 sequential line discounts plus 1 header discount
@@ -29,39 +29,27 @@ When an invoice is processed, Nama ERP follows this general calculation sequence
 5. **Final Totals**: Calculate net amounts and remaining balances
 
 ::: info Important Note
-The exact sequence can be customized through the `effectsConfig` field in TaxConfiguration, allowing for different discount and tax application orders based on business requirements.
+The order can be changed with a **Tax and Discounts Effects Configuration** record (see [Advanced Effects Configuration](#Advanced-Effects-Configuration)), so discounts and taxes can be applied in whatever order the business needs.
 :::
 
-## Tax Configuration Resolution System
+## Which Tax Configuration Applies
 
-### Understanding fetchTaxConfiguration Method
+The tax options described further down are not chosen per document. They include where each tax sits in the sequence, what it is calculated on, and whether the price already includes it. They travel together as one *tax configuration*, and a document takes its configuration from one of three places. Nama checks them in this order and stops at the first one that gives an answer:
 
-The `fetchTaxConfiguration` method in `TaxPlan.java` determines which tax configuration to use through a hierarchical resolution process:
+1. **The document's tax plan.** If the document header names a **Tax Plan**, that plan's **Default Tax Configuration** decides:
+   - **Global Configuration**: use the tax options on the global configuration's [Taxes tab](/platform/global-config/global-config-taxes).
+   - **Tax Plan Header**: use the **Tax Configuration** filled in on the tax plan itself.
+   - **Tax Plan Line**: use the first row of the plan's **Legal Entity Taxes** grid that matches the document. A row matches when all three hold:
+     - its **Legal Entity** is the document's legal entity, or is empty;
+     - the document date falls between **Effective From** and **Effective To** (an empty date leaves that end open);
+     - its **Entity Type** or **Entity Type List** includes the document's type, or both are empty.
 
-```java
-public static TaxConfiguration fetchTaxConfiguration(
-    TaxPlan header,      // Header tax plan (from document)
-    TaxPlan line,        // Line tax plan (from item/line)
-    LegalEntity legalEntity, 
-    DateDF valueDate,
-    EntityTypeDF entityType)
-```
+     If no row matches, Nama moves on to step 2.
+   - Left empty: Nama moves on to step 2.
+2. **The line's tax plan**, which comes from the item, read the same way.
+3. **The global configuration's Taxes tab**, when neither plan gives an answer. A document with no tax plan on the header or the item goes straight here.
 
-#### Resolution Hierarchy
-
-1. **Header Tax Plan Priority**
-   - First checks if header tax plan exists
-   - If exists, checks its `defaultTaxConfig` field:
-     - **GlobalConfig**: Uses system-wide global configuration
-     - **TaxPlanHeader**: Uses configuration from tax plan header
-     - **TaxPlanLine**: Uses configuration from legal entity tax lines
-
-2. **Line Tax Plan Fallback**
-   - If header plan doesn't provide configuration, checks line tax plan
-   - Follows same `defaultTaxConfig` resolution logic
-
-3. **Global Default**
-   - If neither plan provides configuration, uses global system configuration
+For example, a tax plan set to **Tax Plan Line** has two rows: one for legal entity A, effective from 1 January 2025, and one with the legal entity left empty. An invoice of legal entity B uses the second row. So does an invoice of legal entity A dated December 2024, because the first row had not started yet. Row order matters: put the specific rows above the catch-all one.
 
 ### Tax Plan Configuration Fields
 
@@ -80,7 +68,7 @@ public static TaxConfiguration fetchTaxConfiguration(
 
 #### Legal Entity Tax Fields
 
-Each `LegalEntityTax` record contains:
+Each row of the **Legal Entity Taxes** grid holds:
 
 | Field Name | Database Field | Description |
 |------------|---------------|-------------|
@@ -113,7 +101,7 @@ Each `LegalEntityTax` record contains:
 
 #### Global Configuration - Discount Apply Types
 
-Located in `GlobalConfigInfo.java`:
+These are set on the global configuration's [Discounts tab](/platform/global-config/global-config-discounts):
 
 | Field Name | Database Field | Description | Available Values |
 |------------|---------------|-------------|------------------|
@@ -142,14 +130,14 @@ Located in `GlobalConfigInfo.java`:
 
 #### Tax Effect on Discount Configuration
 
-Each discount (1-8) has a `TaxEffectOnDiscount` configuration with these fields:
+Each of Discount 1 to 8 has its own group of these options:
 
 | Field Name | Database Field | Description | Impact |
 |------------|---------------|-------------|---------|
-| **Consider Tax 1** | `discount[N].considerTax1` | Subtract Tax1 from discount base | When true, Tax1 is deducted before applying discount |
-| **Consider Tax 2** | `discount[N].considerTax2` | Subtract Tax2 from discount base | When true, Tax2 is deducted before applying discount |
-| **Consider Tax 3** | `discount[N].considerTax3` | Subtract Tax3 from discount base | When true, Tax3 is deducted before applying discount |
-| **Consider Tax 4** | `discount[N].considerTax4` | Subtract Tax4 from discount base | When true, Tax4 is deducted before applying discount |
+| **Discount Tax 1** | `discount[N].considerTax1` | Subtract Tax 1 from the discount base | When on, Tax 1 is deducted from the base before the discount is applied |
+| **Discount Tax 2** | `discount[N].considerTax2` | Subtract Tax 2 from the discount base | When on, Tax 2 is deducted from the base before the discount is applied |
+| **Discount Tax 3** | `discount[N].considerTax3` | Subtract Tax 3 from the discount base | When on, Tax 3 is deducted from the base before the discount is applied |
+| **Discount Tax 4** | `discount[N].considerTax4` | Subtract Tax 4 from the discount base | When on, Tax 4 is deducted from the base before the discount is applied |
 
 ### How Discounts Are Calculated
 
@@ -177,9 +165,9 @@ Changing the term, the value date, the subsidiary or the customer can make the d
 
 ## Tax System Configuration
 
-### Tax Configuration Fields in TaxConfiguration Object
+### The Tax Options
 
-The `TaxConfiguration` object contains all tax behavior settings:
+These are the options a tax configuration carries, whichever of the three places above it comes from:
 
 #### Tax Location Fields
 
@@ -251,11 +239,11 @@ Available Location Values:
 
 ### Tax as Addition vs Deduction
 
-The system determines whether a tax adds to or subtracts from the invoice total based on the `tax[N]IsDiscount` field:
+Whether a tax adds to or subtracts from the invoice total depends on **Tax N Is Discount**:
 
 #### When Tax Adds to Total (Standard Tax)
-- **Field Setting**: `tax[N]IsDiscount = false`
-- **Calculation**: `New Total = Base Amount + Tax Amount`
+- **Setting**: **Tax N Is Discount** off
+- **Calculation**: New Total = Base Amount + Tax Amount
 - **Use Case**: VAT, GST, Sales Tax
 - **Example**: 
   ```
@@ -265,8 +253,8 @@ The system determines whether a tax adds to or subtracts from the invoice total 
   ```
 
 #### When Tax Reduces Total (Discount Tax)
-- **Field Setting**: `tax[N]IsDiscount = true`
-- **Calculation**: `New Total = Base Amount - Tax Amount`
+- **Setting**: **Tax N Is Discount** on
+- **Calculation**: New Total = Base Amount − Tax Amount
 - **Use Case**: Withholding Tax, Discount Tax, Rebates
 - **Example**:
   ```
@@ -279,51 +267,26 @@ The system determines whether a tax adds to or subtracts from the invoice total 
 
 #### Percentage-Based Taxes
 
-**Tax-Exclusive (Added to Price):**
-```java
-if (!priceIncludesTax && !taxIsDiscount) {
-    taxAmount = (baseAmount × taxPercentage) ÷ 100;
-    finalAmount = baseAmount + taxAmount;
-}
-```
-
-**Tax-Inclusive (Included in Price):**
-```java
-if (priceIncludesTax && !taxIsDiscount) {
-    taxAmount = baseAmount - (baseAmount × 100) ÷ (100 + taxPercentage);
-    finalAmount = baseAmount; // Price already includes tax
-}
-```
-
-**Tax as Discount:**
-```java
-if (taxIsDiscount) {
-    taxAmount = (baseAmount × taxPercentage) ÷ 100;
-    finalAmount = baseAmount - taxAmount;
-}
-```
+| Setting | Tax amount | Line after the tax |
+|---|---|---|
+| Added to the price (**Price Includes Tax N** off, **Tax N Is Discount** off) | Base × % ÷ 100 | Base + tax |
+| Included in the price (**Price Includes Tax N** on) | Base − Base × 100 ÷ (100 + %) | Base (the price already holds the tax) |
+| A deduction (**Tax N Is Discount** on) | Base × % ÷ 100 | Base − tax |
 
 #### Value-Based Taxes
 
-**Per Unit Calculation:**
-```java
-if (taxIsValue && !taxValueIsForTotal) {
-    taxAmount = taxRate × quantity;
-}
-```
+With **Tax N Is Value Not Percentage** on, the rate is an amount rather than a percentage:
 
-**Total Amount Calculation:**
-```java
-if (taxIsValue && taxValueIsForTotal) {
-    taxAmount = taxRate; // Fixed amount regardless of quantity
-}
-```
+| Setting | Tax amount |
+|---|---|
+| **Tax N Value Is For Total Not Per Piece** off | Rate × quantity |
+| **Tax N Value Is For Total Not Per Piece** on | Rate, once for the whole line |
 
 ## Advanced Effects Configuration
 
-### TaxDiscountEffectsConfig Entity
+### Tax and Discounts Effects Configuration
 
-The `effectsConfig` field in TaxConfiguration references a `TaxDiscountEffectsConfig` entity that provides complete control over calculation sequence:
+When the fixed sequence does not fit, create a **Tax and Discounts Effects Configuration** (*Basic → Master Files*) and select it in the **Tax and Discounts Effects Configuration** field of the tax configuration. It takes full control of the sequence:
 
 #### Effects Order Configuration
 
@@ -441,10 +404,10 @@ This applies to Egypt Tax Authority e-invoices only (tax invoices, credit/debit 
 ### Scenario 1: Standard VAT with Trade Discount
 
 **Configuration:**
-- `discount1ApplyType`: TotalPrice
-- `tax1Location`: HeaderDiscount
-- `priceIncludesTax`: false
-- `tax1IsDiscount`: false
+- **Discount 1 Apply Type**: Total Price
+- **Tax 1 Location**: Header Discount
+- **Price Includes Tax 1**: off
+- **Tax 1 Is Discount**: off
 
 **Calculation:**
 ```
@@ -458,9 +421,9 @@ Final Total: $900 + $135 = $1,035
 ### Scenario 2: Tax-Inclusive Pricing with Discount
 
 **Configuration:**
-- `priceIncludesTax`: true
-- `discount1ApplyType`: TotalPrice
-- `discount1.considerTax1`: true
+- **Price Includes Tax 1**: on
+- **Discount 1 Apply Type**: Total Price
+- **Discount Tax 1** in Discount 1's group: on
 
 **Calculation:**
 ```
@@ -477,9 +440,9 @@ Final Total: $1,035
 ### Scenario 3: Withholding Tax Configuration
 
 **Configuration:**
-- `tax3IsDiscount`: true (makes it a deduction)
-- `tax3Location`: HeaderDiscount
-- `tax3NotIncludedInTotal`: false
+- **Tax 3 Is Discount**: on (makes it a deduction)
+- **Tax 3 Location**: Header Discount
+- **Tax 3 Not Included In Total**: off
 
 **Calculation:**
 ```
@@ -492,7 +455,7 @@ Final Total: $1,150 - $50 = $1,100
 
 ### Scenario 4: Complex Effects Order
 
-**Configuration using TaxDiscountEffectsConfig:**
+**Configuration using a Tax and Discounts Effects Configuration:**
 ```
 Effect 1: Discount1 (10% trade discount)
 Effect 2: Discount2 (5% volume discount)  
@@ -510,139 +473,3 @@ After Tax1: $855 + $128.25 = $983.25
 After Header Discount: $958.25
 After Withholding: $958.25 - $28.75 = $929.50
 ```
-
-## Configuration Best Practices
-
-### Setting Up Tax Plans
-
-1. **Create Base Tax Plans**
-   - Set `defaultTaxConfig` to control configuration source
-   - Configure `taxConfiguration` with standard settings
-   - Define `legalEntityTaxes` for different entities and date ranges
-
-2. **Configure Tax Behavior**
-   - Set `tax[N]IsDiscount` correctly for additions vs deductions
-   - Configure `priceIncludesTax[N]` based on pricing strategy
-   - Set `tax[N]NotIncludedInTotal` for display-only taxes
-
-3. **Set Application Points**
-   - Configure `tax[N]Location` for proper sequence
-   - Set `tax[N]ApplyType` for correct base calculation
-   - Use `effectsConfig` for complex sequences
-
-### Discount Configuration Guidelines
-
-1. **Sequential Discounts**
-   - Configure `discount[N]ApplyType` for cascading discounts
-   - Use `AfterDiscount[N-1]Price` for sequential application
-   - Consider tax effects with `discount[N].considerTax[N]`
-
-2. **Value vs Percentage**
-   - Set `calcDisc[N]PercentFromValue` based on business rules
-   - Use value-based for fixed discounts
-   - Use percentage-based for proportional discounts
-
-### Tax Configuration Validation
-
-Before deploying tax configurations:
-
-1. **Verify Calculation Direction**
-   - Check `tax[N]IsDiscount` for correct addition/subtraction
-   - Validate `priceIncludesTax[N]` matches pricing strategy
-
-2. **Test Date Ranges**
-   - Ensure `effectiveFrom` and `effectiveTo` cover required periods
-   - Test rate transitions at date boundaries
-
-3. **Validate Sequences**
-   - Confirm `effectsOrder` produces expected results
-   - Test with sample data covering all scenarios
-
-## Troubleshooting Guide
-
-### Common Configuration Issues
-
-#### Issue: Tax Being Added Instead of Deducted
-
-**Check These Fields:**
-- `tax[N]IsDiscount`: Should be `true` for deductions
-- `tax[N]Location`: Verify calculation point
-- `effectsConfig`: Check if custom sequence overrides settings
-
-#### Issue: Incorrect Discount Base
-
-**Check These Fields:**
-- `discount[N]ApplyType`: Verify base value selection
-- `discount[N].considerTax[N]`: Check tax consideration
-- `effectsConfig`: Review custom calculation rules
-
-#### Issue: Tax Not Appearing in Total
-
-**Check These Fields:**
-- `tax[N]NotIncludedInTotal`: Should be `false` to include
-- `noItemTaxesWithThisPolicy`: Should be `false` for Tax1/Tax2
-- `noInvoiceTaxesWithThisPolicy`: Should be `false` for Tax3/Tax4
-- Customer/Supplier `tax[N]Exempt`: Check exemption flags
-
-#### Issue: Wrong Tax Rate Applied
-
-**Check Resolution Order:**
-1. Header tax plan with matching legal entity and date
-2. Line tax plan with matching criteria
-3. Global configuration default
-4. Verify `priorityPolicyOverCusOrSup` setting
-
-### Validation Rules
-
-The system enforces these validation rules:
-
-1. **Tax Plan Consistency**
-   - `itemPlan` and `noItemTaxesWithThisPolicy` cannot both be true
-   - Configuration combinations must be mathematically valid
-
-2. **Calculation Integrity**
-   - Discount amounts cannot make line totals negative
-   - Tax percentages must be within valid ranges
-   - Rounding must maintain accuracy
-
-3. **Date Range Validity**
-   - Overlapping date ranges for same entity not allowed
-   - Effective dates must be logically consistent
-
-## Performance Considerations
-
-### Optimization Guidelines
-
-1. **Minimize Effects Configuration Complexity**
-   - Use only necessary effect positions
-   - Avoid redundant calculations
-   - Cache frequently used configurations
-
-2. **Efficient Tax Plan Design**
-   - Minimize legal entity tax records
-   - Use date ranges effectively
-   - Leverage default configurations
-
-3. **Configuration Caching**
-   - Tax configurations are cached per invoice
-   - Avoid unnecessary tax plan changes
-   - Use consistent configurations across similar documents
-
-::: warning Important
-Always test configuration changes in a development environment before applying to production systems. Complex discount and tax interactions can have unexpected results, especially when using custom effects configurations.
-:::
-
-## Summary
-
-The Nama ERP invoice discount and tax calculation system provides extensive flexibility through:
-
-- **Hierarchical Configuration**: Tax plans, legal entity rates, and global defaults
-- **Flexible Calculation**: Taxes can be additions or deductions
-- **Custom Sequences**: Complete control over calculation order via effects configuration
-- **Date-Based Rates**: Automatic rate changes over time
-- **Entity-Specific Settings**: Different rates and rules per legal entity
-- **Comprehensive Control**: Field-level configuration for all aspects of calculation
-
-The eight-level discount structure, the unified tax model and the effects configuration between them cover complex discount and tax requirements through configuration alone, without anyone writing code for them.
-
-Understanding the field-level configuration options and the tax configuration resolution process is essential for proper system setup and maintenance. The combination of tax plans, configuration objects, and effects ordering provides the flexibility to handle virtually any business requirement while maintaining calculation accuracy and regulatory compliance.

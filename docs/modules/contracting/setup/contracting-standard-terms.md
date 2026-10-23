@@ -1,4 +1,5 @@
 ---
+description: "The Standard Term catalogue in Contracting: what a term is, parent and leaf terms, the accounts set on a term, the screen's actions, and where terms are used next."
 entities: [ContractingStandardTerm]
 menu: Contracting → Master Files → Standard Term
 ---

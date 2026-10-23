@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract Offer master file: recording each subcontractor's priced quote (terms, conditions and payments grids), comparing quotes, and converting the chosen offer into a subcontract."
 entities: [ContractorContractOffer]
 menu: Contracting → Contractor Contracting → Contractor Contract Offer
 ---
@@ -49,7 +50,7 @@ The fields that carry the meaning:
 | **Contracting Date**, **Start In**, **End In**, **Project Period In Days** | the programme he is quoting to |
 | **Payment Period** (مدة السداد) | the credit period he is asking for, as a value plus a unit |
 
-Alongside them sit the accounts and taxes blocks — an offer can be an accounting subsidiary in its own right, the same as a subcontract — the dimensions, the five attachments (the natural home for the PDF he emailed you), and a free *Additional Info* grid of numbers, texts, dates and references that nothing in the system reads and you may use for anything.
+Alongside them sit the accounts and taxes blocks — an offer can be an accounting subsidiary in its own right, the same as a subcontract — the dimensions, the five attachments (the natural home for the PDF he emailed you), and a free *Additional Info* grid of numbers, texts, dates and references for your own data, to record, filter and report on.
 
 ## Page 2 — the priced bill of quantities
 

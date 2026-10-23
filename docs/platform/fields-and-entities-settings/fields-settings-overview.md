@@ -1,4 +1,5 @@
 ---
+description: "How the Fields and Entities Settings screen works: its four tabs, the scope columns that decide which screens and fields a line applies to, writing field IDs, and when a change takes effect."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---

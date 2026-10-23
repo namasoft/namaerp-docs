@@ -21,7 +21,7 @@ The menu next to this one holds **Field Filtering**, a different screen with a s
 
 2. **Create a Field Filter Record**
     - Open the **Field Filter with Criteria** screen and create a new record.
-    - Specify the **Document Type** (e.g., Sales Invoice).
+    - Choose the screen in **For Type** (e.g., Sales Invoice).
     - Define the **Field** to apply the filter on (e.g., `details.item.item`). It has to be the lookup field itself — the one the user picks in — not the code or name that mirrors it (`details.item.itemCode` and its siblings are filled *from* the lookup, so a filter there never reaches the picker).
     - Assign the previously defined **Criteria** to this field.
 
@@ -35,7 +35,19 @@ The menu next to this one holds **Field Filtering**, a different screen with a s
 
 4. **Save** your changes.
 
-> If your filter requires dynamic logic such as loops or conditions, use **Tempo Language** instead of a criteria definition.
+Each line of the grid takes these columns:
+
+| Column | What it does |
+|---|---|
+| On Field (`fieldId`) | The lookup field on the screen in **For Type** that the line narrows. |
+| Criteria (`criteria`) | A saved [Criteria Definition](/platform/automation-and-rules/criteria-definitions) the lookup must satisfy. |
+| Dynamic Filter (`dynamicFilter`) | A condition written as text, which can read values from the record being edited. |
+| Use Tempo (`useTempo`) | Tick it when the Dynamic Filter is written in Tempo (`{loop}`, `{if}`, `{field}`). |
+| Apply Filter with Type (`filteredType`) | For a lookup that can point to more than one entity type, the line applies only when this type is being looked up. |
+
+A Dynamic Filter without **Use Tempo** understands only `${field}` placeholders — `code,Equal,${customer.code},AND;`. Tempo braces are not evaluated at all, so a Tempo filter on a line without the tick never filters the way it was written — the classic "my dynamic filter returns nothing".
+
+> If your filter requires dynamic logic such as loops or conditions, write it in **Tempo** in the Dynamic Filter column and tick **Use Tempo**.
 
 ::: tip A shortcut when the filter should always apply
 Steps 2 and 3 above exist so that the same filter can be switched on for one document term or one book and left off elsewhere. When a filter should simply always apply to a field, there is a quicker route: register the criteria straight against the field in the **Extra Filter** grid of [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-reference-lookups). No filter record to name, nothing to assign — the lookup starts obeying the criteria as soon as you save.
@@ -51,7 +63,7 @@ To show only non-service items when selecting an item in the **Sales Invoice** s
 
 1. In the *Criteria Definition* file, define a condition for non-service items.
 2. Create a new record in **Field Filter with Criteria**:
-    - Document Type: Sales Invoice
+    - For Type: Sales Invoice
     - Field: `details.item.item`
     - Criteria: Your non-service items criteria
 3. Save the filter with a name like `NonService`.
@@ -75,7 +87,7 @@ To show only non-service items when selecting an item in the **Sales Invoice** s
 
 Suppose a **Sales Invoice** is based on a **Sales Order** containing multiple customers in the lines. You want to list only the customers with remaining quantities (`unsatisfiedQty2`) when selecting a customer in the sales invoice.
 
-Use this **Tempo** code in the `Dynamic Filter` field of the field filter:
+Put this **Tempo** code in the **Dynamic Filter** column of the line and tick **Use Tempo** on the same line:
 
 ```
 {loop(fromDoc.$toReal.details)}
@@ -100,7 +112,7 @@ termsLines.ref1,Equal,{details.item.item.code},OR;
 {endloop}
 ```
 
-`termsLines.ref1` belongs in the **Field** column, not in the condition — the item screen being searched has no such field. Write the condition with the item's own fields, and let the Tempo placeholders read your document:
+`termsLines.ref1` belongs in the **Field** column, not in the condition — the item screen being searched has no such field. Write the condition with the item's own fields, and let the Tempo placeholders read your document (with **Use Tempo** ticked, as for every Tempo filter):
 
 ```
 {loop(details)}

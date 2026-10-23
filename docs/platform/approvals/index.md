@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Approvals
+description: "Landing page for approvals: approval definitions and steps, sample approval email templates, and responsibilities, special responsibles and delegation."
 ---
 
 # Approvals

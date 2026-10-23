@@ -1,4 +1,5 @@
 ---
+description: "Which menu record a user is given, why an entry is missing (licence, permission, role, personal parts, empty folders), why a menu change has not appeared yet, and the mobile app menu."
 entities: [MenuDefinition]
 ---
 # Who Sees Which Menu

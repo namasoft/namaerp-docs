@@ -1,4 +1,5 @@
 ---
+description: "How to set up Contracting Price Lists (rate cards per customer and currency), publish or withdraw them, and how priority decides which list fills the rate on a term line."
 entities: [ContractingPriceList]
 menu: Contracting → Master Files → Contracting Price list
 ---
@@ -48,14 +49,21 @@ Reading the columns by purpose rather than by their captions, a rate line carrie
 | The rate | a minimum, a maximum and a **default** unit price |
 | Extra keys | five free text keys and, where they are switched on, up to five sales-price classifiers |
 
-The **default price** is the one that lands on the term line. The minimum and maximum are recorded on
-the card as reference figures for your commercial team; the lookup does not police the price against
-them.
+The **default price** is the one that lands on the term line. The minimum and maximum are a price
+band. When an assay, a project contract or a subcontract is saved, each term line's net unit price (its
+total price divided by its quantity) is checked against the band of the price list line that matches
+it, and a price outside the band stops the save with one of these messages on the unit price:
 
-::: info The English column captions on this grid are rough
-Several headers on the rate-line grid are unpolished, with a couple of misspellings and a few raw field
-names showing through. Read them by position and purpose using the table above — the behaviour is
-exactly as described, whatever the caption says.
+*Unit price must not be less than {0}* — «سعر الوحدة لا يمكن أن يكون أقل من {0}»
+
+*Unit price must not be greater than {0}* — «سعر الوحدة لا يمكن أن يكون أكبر من {0}»
+
+Leave the minimum or the maximum empty for no limit on that side.
+
+::: info Reading the grid's English captions
+Some English column captions on the rate-line grid are spelled differently from the names used on this
+page, and a few show the field's internal name. Match them by position and purpose using the table
+above.
 :::
 
 Each standard term's own **Statistics** page carries the mirror image of this screen: a read-only list
@@ -111,7 +119,7 @@ number first.
 - it does not apply to the employee on the document.
 
 **The first row still standing wins.** Its default price becomes the line's unit price, and its minimum
-and maximum come back alongside for reference — plus any extra amount carried by a sales-price
+and maximum come back with it as the band the save checks — plus any extra amount carried by a sales-price
 classifier, where a classifier on the line beats one on the document.
 
 If nothing matches at all, nothing is written and the line keeps whatever it had.

@@ -1,4 +1,5 @@
 ---
+description: "Warehouses and locators: warehouse types, keepers and MRP inclusion, locators inside a warehouse, item-warehouse links, warehouse groups, the Warehouse Usage Policy and Prevent Using Batch."
 entities: [Warehouse, Locator, WarehouseUsagePolicy, PreventUsingBatch, WarehouseGroup, WareLocationClass, ItemWarehouseRelation]
 menu: Inventory → Master Files → Warehouse
 ---
@@ -90,29 +91,48 @@ Picture a few everyday situations:
 - A seasonal showroom warehouse should only be touched by the showroom team, not by central purchasing.
 - An old warehouse is being phased out: you want to block new transactions on it from a certain date forward, without deleting any of its history.
 
-A Warehouse Usage Policy is a master file holding a grid of rules. Each line answers four questions: *which warehouse, in which documents, for whom, and when.*
+### Switch it on first
+
+Policies are off for the whole company until you tick **Apply Warehouse Usage Policies** (`value.applyWarehouseUsagePolicies`) in *Inventory → Settings → Supply Chain Configurations*, tab **Documents & Details**, group *Dimensions And Warehouse Config*. While that box is clear, no document is checked against any policy, and the policy screen itself refuses to save with:
+
+*You must enable (Apply Warehouse Usage Policies) in supply chain configurations before using this screen*
+
+This message has no Arabic translation, so it shows in English on Arabic screens too. When a customer says "the policy does nothing" or "the policy will not save", this switch is the first thing to check.
+
+### The policy: a mode and a list of warehouses
+
+You'll find **Warehouse Usage Policy** under *Inventory → Master Files*, right next to Warehouses and Warehouse Groups. Each policy has one required header field, **Usage Policy Mode** (طريقة تطبيق السياسة), which decides what the lines mean:
+
+| Mode | What the lines are |
+| --- | --- |
+| **Allow All Warehouses Except Those In Lines** | A block list. Every warehouse stays usable except the ones the lines name. Use it to close a warehouse that is being counted or phased out. |
+| **Prevent All Warehouses Except Those In Lines** | An allow list. For the users, document types and dates the lines match, only the warehouses the lines name can be used, and every other warehouse is blocked. Use it to keep the showroom team inside the showroom warehouse. |
+
+Each line answers four questions: *which warehouse, in which documents, for whom, and when.*
 
 | Column | What it controls |
 | --- | --- |
-| **For Type** (للنوع) | The document type the rule applies to - e.g. a stock issue, stock receipt, or stock transfer. |
-| **Entity List** (قائمة الأنواع) | A reusable list of several document types, for when one rule should cover more than a single type. |
-| **Applicable For** (مطبق على) | Who the rule targets: a specific user, a user group, a security profile, or a criteria definition. Leave it empty to apply the rule to everyone. |
-| **Warehouse** (المخزن) | The warehouse - or a whole warehouse group - the rule governs. This is required. |
-| **Prevent Usage** (منع الاستعمال) | Tick this to actually block the warehouse. |
-| **From Date / To Date** | The period during which the rule is active. Leave both empty for an open-ended rule. |
+| **For Type** (للنوع) | The document type the line applies to - e.g. a stock issue, stock receipt, or stock transfer. |
+| **Entity List** (قائمة الأنواع) | A reusable list of several document types, for when one line should cover more than a single type. |
+| **Applicable For** (مطبق على) | Who the line targets: a specific user, a user group, a security profile, or a criteria definition. Leave it empty to apply the line to everyone. |
+| **Warehouse** (المخزن) | The warehouse - or a whole warehouse group - the line names. This is required. |
+| **From Date / To Date** | The period during which the line is active. Leave both empty for an open-ended line. |
+
+A line only ever affects the document types named in its **For Type** or **Entity List**, so always fill one of the two.
 
 ### How a rule kicks in
 
-The check happens the moment you save a supply chain document - not buried in a report you read later. The system looks at the document's type, the user entering it, and the document's date, then inspects both the header warehouse and the warehouse on every line. A line is blocked when a policy rule matches all of the following and has **Prevent Usage** ticked:
+The check happens the moment you save a supply chain document - not buried in a report you read later. The system looks at the document's type, the user entering it, and the document's value date, then inspects both the header warehouse and the warehouse on every line. A policy line *matches* when:
 
 - its **For Type** (or entity list) includes the document's type,
-- its **Warehouse** is the one being used - or that warehouse belongs to the referenced **warehouse group**,
 - the document date falls inside the **From/To** window (an empty window always matches),
 - and **Applicable For** matches the current user - directly, through their group or security profile, or through a matching criteria definition - or is left empty.
 
-When all of that lines up, the save is rejected with a clear message naming the blocked warehouse, the date, and the user, so it's obvious why the document won't go through. Leaving **Applicable For** empty makes the block apply to everyone; an empty date window makes it permanent.
+A warehouse is then blocked when a matching line of an *Allow All … Except* policy names it (directly or through its warehouse group), or when the user has at least one matching line of a *Prevent All … Except* policy and none of those lines names that warehouse. The save is rejected with a message naming the blocked warehouse, the date, and the user:
 
-You'll find Warehouse Usage Policy among the supply chain master files, right next to Warehouses and Warehouse Groups.
+*Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع إستخدامة في تاريخ {1} للمستخدم {2}»
+
+Documents created in the background by the system, with no user entering them, are not checked.
 
 ## Taking a Batch Out of Circulation: Prevent Using Batch
 
@@ -177,7 +197,8 @@ This spatial structure is the foundation on which all the stock movements we'll 
 | *You can not change the legal entity from {0} to {1} because there are {2} reservation transactions.* — «لا يمكن تغيير الشركه من {0} إلى  {1} لوجود  {2} حركات حجز» | The same block, raised by reservation movements rather than quantity movements — so it can appear on a warehouse that looks empty. | Cancel or move the reservations first, or have that same configuration option switched on. |
 | *Reservation warehouse {0} in reservation locator {1} must equal to reservation warehouse {2}* — «مخزن الحجز {0} فى موقع الحجز {1} يجب ان يساوي مخزن الحجز {2}» | The warehouse names both a **Reservation Warehouse** and a **Reservation Locator**, and that locator belongs to a third warehouse. | Pick a locator that belongs to the reservation warehouse you named. |
 | *Reservation warehouse {0} in reservation locator {1} must equal to current warehouse {2}* — «مخزن الحجز {0} فى موقع الحجز {1} يجب ان يساوي المخزن الحالي {2}» | A **Reservation Locator** was named without a reservation warehouse, so reservations stay in this warehouse — but the locator belongs to another one. | Use a locator of this warehouse, or name the reservation warehouse the locator really belongs to. |
-| *Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع إستخدامة في تاريخ {1} للمستخدم {2}» | A **Warehouse Usage Policy** line blocks this warehouse for this document type, this date and this user. It is raised for the header warehouse and, separately, for a warehouse typed on a line. | Use a warehouse the policy allows, change the document date, or have the policy amended. The message names the user, which is what tells you the block is user-specific. |
+| *Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع إستخدامة في تاريخ {1} للمستخدم {2}» | A **Warehouse Usage Policy** blocks this warehouse for this document type, this date and this user — either a block-list line names it, or the user has an allow list that does not. It is raised for the header warehouse and, separately, for a warehouse typed on a line. | Use a warehouse the policy allows, change the document date, or have the policy amended. The message names the user, which is what tells you the block is user-specific. |
+| *You must enable (Apply Warehouse Usage Policies) in supply chain configurations before using this screen* | A Warehouse Usage Policy is being saved while the company-wide switch is off. No Arabic translation exists, so it shows in English on Arabic screens too. | Tick **Apply Warehouse Usage Policies** in supply chain configuration (Documents & Details tab), then save the policy. |
 | *The locator {0} does not belong to warehouse {1}* — «الموقع {0} لا ينتمي إلى المخزن {1}» | A **Prevent Using Batch** line names a warehouse and a locator that sits in a different warehouse. | Either clear the warehouse and let the locator speak for itself, or use a locator of the warehouse you named. |
 | *You must activate validate item warehouse relation in the SupplyChain Configurations* — «لا بد اولاً من تفعيل خيار ربط الاصناف بالمخزن فى إعدادات المخازن» | An **Item Warehouse Relation** record is being saved while the switch that makes those records mean anything is still off. | Switch **Activate Item Warehouse Relation** on in supply chain configuration, then save the record. |
 | *You must fill one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد من الحقول الأتية:{0}, {1} في السطر {2}» | An item-warehouse link line names neither a warehouse nor a warehouse group, so there is nothing for the item to be linked to. | Fill one of the two on that line. |

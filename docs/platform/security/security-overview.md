@@ -1,4 +1,5 @@
 ---
+description: "Overview of the security layers a user passes through (login, menus, type permissions, record visibility, fields and pages, actions) and how Security Profile and User records combine in a permission check."
 entities: [SecurityProfile, User]
 ---
 

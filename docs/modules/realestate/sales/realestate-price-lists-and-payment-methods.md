@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate sales price list, how a unit price is matched and made binding, and the payment method template that fills a sales contract's down payment and installment plan."
 entities: [RESalesPriceList, RESalesPaymentMethod]
 ---
 # Price Lists and Payment Plan Templates

@@ -100,10 +100,9 @@ group beside Project Type and Project Sub Type; slots two to eight are gathered 
 further down, titled **Project Classes**. People often look for the first one there and do not find
 it.
 
-Be clear with your users about what a class is for: it is stored, displayed and filterable, and no
-rule, calculation or accounting entry in the module depends on it. That is not a shortcoming — it is
-exactly what a reporting tag should be — but a consultant who promises that a class will drive
-pricing or approvals will have to take the promise back.
+Be clear with your users about what a class is for: it is a reporting tag, shown on the project and
+used to filter and group projects in lists and reports. Pricing, approvals and accounting are set up
+elsewhere, so do not promise a customer that a class will drive them.
 
 ## Discipline — who does which part of the work
 

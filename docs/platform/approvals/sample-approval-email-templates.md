@@ -1,6 +1,6 @@
 ---
 entities: [ApprovalDefinition]
-menu: Basic → Settings → Approval Definition
+menu: Administration → Display Customization → Approval Definition
 ---
 # Sample Approval Email Templates
 

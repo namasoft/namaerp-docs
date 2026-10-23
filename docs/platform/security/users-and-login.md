@@ -119,7 +119,6 @@ The `admin` user never authenticates via LDAP.
 
 The **Login 2FA Method** setting in Global Configuration accepts:
 
-- **Authenticator App** — TOTP codes from apps such as Google Authenticator,
 - **Message OTP** — A one-time code sent to the user,
 - **Estidamah API** — Saudi identity-verification integration (Estidamah), or
 - **None**.

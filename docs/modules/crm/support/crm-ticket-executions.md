@@ -73,25 +73,15 @@ The overlap check only rejects duplicate or fully-contained entries. **09:00–1
 If accurate labour hours matter, review the Details grid rather than trusting the check.
 :::
 
-## The status effect — and why it does not stick
+## The status effect
 
 Each committed detail line pushes the ticket to *Finished* when Finished Percent is 100, and to *In Progress* otherwise, and adds its hours to the ticket's Actual Fix Period. Re-saving the execution subtracts the previous version's hours first, so editing is safe. Cancelling it subtracts all of them, puts the ticket back to *In Progress* and clears its Closing Date.
 
-::: danger Completing an execution does not close the ticket
-An execution at 100 % makes the ticket **display** *Finished* — but it does not update the status the ticket itself remembers. The next time anybody saves `TKT-0451` for any reason, the ticket re-applies its remembered status and, because its Employees grid has rows, silently drops back to *مسند / Assigned*.
+To close the ticket itself, use **Change Status → Closed** on the ticket, or a [Ticket Follow-Up](/modules/crm/support/crm-ticket-follow-ups.md) carrying the closing status.
 
-Read that again if your desk plans to close tickets this way: the ticket looks finished, then quietly un-finishes itself. **Close a ticket explicitly** — with **Change Status → Closed** on the ticket, or with a [Ticket Follow-Up](/modules/crm/support/crm-ticket-follow-ups.md) carrying the closing status. Treat the execution as *reporting* completion, not as performing it.
-:::
+## The execution's own Status
 
-## The Status field on the execution does nothing
-
-The header carries a **الحالة / Status** dropdown with four values — *Awaiting Review*, *Reviewed*, *Rejected* and *Finished*.
-
-::: warning There is no review or approval cycle here
-Nothing sets this field and nothing reads it. A supervisor who marks an execution **Rejected** has changed a label and nothing else: the ticket still went to *Finished*, and the rejected hours are still counted in its Actual Fix Period. Nothing is reversed, nobody is told, and no list shows executions awaiting review.
-
-Use it as a note to yourself if you like. Do not build an approval process on it.
-:::
+The header carries a **الحالة / Status** dropdown with four values — *Awaiting Review*, *Reviewed*, *Rejected* and *Finished*. It is a label your supervisors set by hand to record their review of the execution, and you can filter the list view by it. The hours and the ticket's status come from the detail lines, whatever this label says.
 
 ## Two clocks, and a third-party hazard
 

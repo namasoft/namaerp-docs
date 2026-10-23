@@ -36,7 +36,7 @@ The **Multiple Item Creator** (*Inventory → Master Files → Multiple Item Cre
 Underneath the template sits the **Details** grid, and this is where the multiplication happens. Each line carries **Class 1** through **Class 10** plus the four unit conversion rates. When you press **Generate Items**, you get one item per line — every one of them built from the template, each differing by the classification values on its own line.
 
 ::: info Item classes are what the tool multiplies by
-The generation grid offers **Class 1–10** and nothing else. Item categories exist on the template as ordinary reference fields, but they play no part in generating anything. If you are deciding how to structure your item classification, this screen is a good indication of which mechanism the system is built around — see [Item Classification Files](./item-classification-files.md) for the full picture.
+The generation grid offers **Class 1–10** and nothing else. Item categories sit on the template as ordinary reference fields: each generated item gets the same categories, but they do not multiply. If you are deciding how to structure your item classification, this screen is a good indication of which mechanism the system is built around — see [Item Classification Files](./item-classification-files.md) for the full picture.
 :::
 
 ## Deciding How an Item Is Tracked: Item Configurations

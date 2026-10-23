@@ -1,3 +1,6 @@
+---
+description: "Landing page for the side menu: how the menu record is built, changing it safely with a Menu Update, and who sees which menu."
+---
 # The Menu
 
 The tree down the side of the screen is not fixed. It is a record you can edit, and most

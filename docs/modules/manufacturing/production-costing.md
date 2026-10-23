@@ -32,7 +32,7 @@ These are the raw materials and components that physically go into your product.
 
 Tracking this is straightforward: When you issue materials to a production order, the system records the cost. If you issued 100 kg of steel at $5/kg, that's $500 of material cost. Done.
 
-The system uses your inventory costing method (FIFO, Average, or Standard) to value the materials. If you're using lot-tracked materials, it knows exactly which lot you consumed and what that lot cost.
+The system values the materials with the company's inventory costing method - FIFO or moving average, chosen once in the **Issue Cost Policy** of [Costing Configuration](/modules/supplychain/configuration/costing-configuration#Costing-Method). If you're using lot-tracked materials, it knows exactly which lot you consumed and what that lot cost.
 
 ### Bucket 2: Direct Labor and Machine Time - Still Pretty Clear
 
@@ -64,84 +64,34 @@ This overhead is real money you're spending. It needs to be recovered through pr
 
 This is where **Overhead Types** (التكاليف الغير مباشرة) come in. An overhead type is your formula for spreading indirect costs across products.
 
-Think of it as a recipe for overhead allocation. You define overhead "elements" (like "Factory Rent", "Utilities", "Supervision") and tell the system how to calculate each one.
+Think of it as a recipe for overhead allocation. Each line of the overhead type is one overhead element (like "Factory Rent", "Utilities", "Supervision"): it has a **Name**, a **Type** that says what the charge is measured against, a **Value** (the rate or the percentage), and its own **Accounting Effects | Debit side** and **Accounting Effects | Credit side**, so every element can land in its own accounts.
 
-### Method 1: Fixed Amount per Order
+When the order is closed, the system works out a base figure for each line (the **Element value** on the close voucher) and turns it into the line's overhead amount. The types to choose from:
 
-The simplest approach. Every production order gets charged a flat amount.
+| Type | The base figure | Overhead amount |
+|---|---|---|
+| **Material Percentage** — «نسبة من تكلفة المواد الخام» | Cost of raw materials issued to the order, less materials returned | Base × Value ÷ 100 |
+| **Resource Percentage** — «نسبة من تكلفة الموارد» | Cost of the order's resources (labour and machines) | Base × Value ÷ 100 |
+| **Resource And Material Percentage** — «نسبة من التكاليف الأولية ( مواد خام+ موارد)» | Material cost plus resource cost | Base × Value ÷ 100 |
+| **Final Product Amount** — «قيمة لكل وحدة منتجة» | Quantity of finished product delivered on the order's product deliveries | Base × Value |
+| **Value Per Material Amont** — «قيمة لكل وحدة ماده خام» | Quantity of raw material issued less returned, in the base unit — only the item in the line's **Raw material** column, or every material when that column is empty | Base × Value |
+| **Resource Time Amount** — «قيمة لكل ساعة مورد» | Hours on the order's resource vouchers, human and machine together | Base × Value |
+| **Human Resource Time Amount** — «قيمة لكل ساعة مورد بشري» | Hours on the order's resource vouchers, human resources only | Base × Value |
+| **Machine Amount** — «قيمة لكل ساعة آلة» | Hours on the order's resource vouchers, machines only | Base × Value |
+| **Execution Time Amount** — «قيمة لكل ساعة عمل ( من سند التنفيذ)» | Hours between the from and to date/time on the order's production execution lines | Base × Value |
+| **Custom** — «مخصص» | — | The result of the query written in the line's **Script Statement** column, run for the order being closed |
 
-```
-Overhead Element: "Production Setup Cost"
-Method: Fixed $500 per order
-```
+Two examples. A line of type **Material Percentage** with a value of 12 charges an order that consumed $10,000 of materials $1,200. A line of type **Final Product Amount** with a value of 3 charges an order that delivered 500 units $1,500.
 
-Whether you're making 10 units or 1000 units, you get charged $500. This works if setup/administrative overhead is roughly the same regardless of order size.
+A line does not have to apply to every order. Fill its **Finished Product** column, or any of **Product Class 1** to **Product Class 10**, and the line is used only for orders whose finished product matches; leave them empty and it applies to all.
 
-**When to use it**: Small-batch manufacturing where setup costs dominate. Job shops. Custom manufacturing.
+::: tip There is no fixed amount per order
+None of the types charges a flat sum per order. If you need one, use **Custom** with a query that returns that amount.
+:::
 
-**Limitation**: Unfair to large orders (they subsidize small orders) and small orders might look unprofitable when they're really not.
+### The Actual Overhead Calculator - Getting Real
 
-### Method 2: Percentage of Material Cost
-
-Allocate overhead as a percentage of direct material cost.
-
-```
-Overhead Element: "Material Handling Overhead"
-Method: 12% of material cost
-```
-
-If an order consumed $10,000 in materials, it gets charged $1,200 in overhead.
-
-**When to use it**: When overhead correlates with material value. More expensive materials often require more careful handling, storage, and quality control.
-
-**Real example**: You make both budget products with cheap materials and premium products with expensive materials. The premium products need climate-controlled storage, extra security, more careful handling. A percentage of material cost is a fair way to allocate those costs.
-
-### Method 3: Percentage of Labor Cost
-
-Similar idea, but based on direct labor.
-
-```
-Overhead Element: "Labor Burden"
-Method: 35% of direct labor cost
-```
-
-If an order consumed $8,000 in direct labor, it gets charged $2,800 in overhead.
-
-**Why 35%?** That might cover payroll taxes, benefits, training, supervision, and HR costs. In many countries, for every dollar you pay in wages, you're spending another 30-40% on labor-related overhead.
-
-**When to use it**: When indirect labor overhead (supervision, training, HR) is significant. Labor-intensive manufacturing.
-
-### Method 4: Rate per Production Hour
-
-Charge based on how long products were in production.
-
-```
-Overhead Element: "Facility Overhead"
-Method: $50 per production hour
-```
-
-If an order took 80 hours to produce (from start to finish), it gets charged $4,000 in overhead.
-
-**When to use it**: When time on the factory floor is the main cost driver. The longer something occupies your facility, the more rent, utilities, and depreciation it should bear.
-
-**Getting the rate**: Add up all your monthly overhead costs (rent, utilities, depreciation, supervision, etc.), divide by the total production hours per month. That's your overhead rate per hour.
-
-### Method 5: Rate per Unit Produced
-
-Charge a fixed amount per unit.
-
-```
-Overhead Element: "Quality Control Overhead"
-Method: $3 per unit
-```
-
-Produce 500 units, get charged $1,500 in overhead.
-
-**When to use it**: When certain overhead costs scale directly with volume. If every unit needs an inspection and inspections cost about the same per unit, this makes sense.
-
-### Method 6: The Actual Overhead Calculator - Getting Real
-
-All the above methods use predetermined rates - you're estimating what overhead should be. But what if you want to use actual overhead costs?
+All the types above use predetermined rates - you're estimating what overhead should be. But what if you want to use actual overhead costs?
 
 That's where the **Actual Overhead Calculator** (طريقة حساب فعلي للمصاريف الغير مباشرة) comes in.
 
@@ -198,7 +148,7 @@ You close an order when:
 - ✅ No more work will happen on this order
 - ✅ You're ready to lock the costs and move on
 
-**Important**: The system won't let you normally close an order if there are still quantities in intermediate operations. If you have 20 units sitting at Operation 30 waiting to move forward, those represent unfinished work. You need to either complete them or scrap them before closing.
+**Important**: The system won't let you normally close an order while part of its quantity has not been started yet. If 20 of 100 units were never moved into the operations, move them in (or terminate the order) before closing.
 
 ### What Happens When You Close
 
@@ -228,22 +178,25 @@ These overhead amounts get added to your total cost.
 
 Here's the clever part: The system goes back to all the Product Delivery documents for this order and updates them with the actual unit cost.
 
-Maybe when you delivered 100 units, the system used a standard cost of $50/unit. Now, after closing, the actual cost is $52/unit. The system adjusts the inventory value accordingly.
+Maybe when you delivered 100 units, they went into stock at a provisional $50/unit. Now, after closing, the actual cost is $52/unit. The system adjusts the inventory value accordingly.
 
 This ensures your finished goods inventory reflects actual production costs, not estimates.
 
 **4. Accounting Entries**
 
-Journal entries are generated for:
-- Overhead application (DR: Work in Process, CR: Overhead accounts)
-- WIP to finished goods transfer
-- Any variances (if using standard costing)
+The voucher's own accounting entry carries:
+- One pair of lines per overhead line, to the debit and credit sides set on that line of the overhead type
+- The finished product's standard cost deviation, when the Order Close term names **Standard Deviation Debit** and **Standard Deviation Credit** and deviations are calculated (see [Costing Document Terms](/modules/manufacturing/document-terms/mfg-terms-costing))
+
+The product deliveries that were revalued are saved again, so their own entries follow the new cost.
 
 The general ledger gets updated to reflect the reality of what this production cost.
 
 **5. Status Change**
 
-The production order status changes from "In Progress" to "Closed". It's locked - no more changes allowed. What you see is what happened.
+The production order status changes from "In Progress" to "Closed". From then on, documents that work on the order are refused with *Production order {0} is closed or terminated*.
+
+To reopen it, cancel or delete its Order Close voucher: the order returns to "In Progress" and its actual completion date is cleared. Pointing the voucher at a different order does the same for the order it used to close.
 
 If the order came from a Production Order Request, that request's status updates to "Finished" too.
 
@@ -251,12 +204,9 @@ If the order came from a Production Order Request, that request's status updates
 
 ### Normal Close: Mission Accomplished
 
-This is the standard way - production completed successfully, all units are accounted for. When you select "Normal Close" type, the system validates that:
-- No quantities are stuck in intermediate operations
-- All work-in-process has been delivered or scrapped
-- The production order is truly done
+This is the standard way - production completed successfully, all units are accounted for. When you select "Normal Close" type, the system checks that the whole order quantity has been started, that is, moved out of the order's starting point into its operations. If part of it has not, the voucher is refused with *This production order has pending quantities*.
 
-If validation passes, closure proceeds and costs are finalized.
+If the check passes, closure proceeds and costs are finalized.
 
 ### Terminate: Calling It Quits
 
@@ -267,88 +217,53 @@ Sometimes you need to cancel an order before completion:
 - Business priorities changed
 
 When you select "Terminate" type, the system:
-- Closes the order without requiring all quantities to be delivered
-- Writes off any work-in-process as loss
-- Allocates costs to variance accounts
-- Marks the order status as "Terminated" (not "Closed")
+- Skips the pending-quantities check, so the order can be closed part-way
+- Marks the order status as "Terminated" instead of "Closed"
 
-You still go through the costing calculation - you spent money on partial production, and that cost needs to be recorded. But instead of flowing to finished goods inventory, it flows to loss accounts.
+Everything else is the same as a normal close. The costing runs in full, the cost lands on the product deliveries the order has, and the accounting entries are exactly those of a normal close. Terminate does not write work-in-process off to a loss account or move anything to variance accounts.
 
 ## Variance Analysis: Playing Detective
 
-If you're using standard costing (where you set expected costs for materials and labor), the Order Close Voucher can show you variances - the differences between what you expected to spend and what you actually spent.
+Inventory in Nama is always valued at actual cost - FIFO or moving average, chosen once for the whole company (see [Inventory Costing](/modules/supplychain/inventory-costing)). There is no "standard costing" valuation method. What the Order Close voucher can do is hold the actual result of an order up against a yardstick, and show you where the two part ways.
 
-This is incredibly valuable for continuous improvement. Let's look at the types of variances:
+Two things switch it on:
 
-### Material Variances
+1. **Calculate Deviations With Save** ticked on the production order's term.
+2. Expected prices recorded in a **Manufacturing Standard Price** document (سعر قياسي للتصنيع), under **Manufacturing → Documents → Manufacturing Standard Price**: a price per item and unit, each with an optional from and to date. Where two documents cover the same item and date, their **Priority** decides which one is used.
 
-For each component you consumed, the system can compare expected vs. actual on two dimensions:
+Each time the voucher is saved it then fills three things.
 
-**Quantity Variance** (Did you use the right amount of material?)
+**The finished product, in the header.** **Actual Product Cost** is the actual unit cost of what was delivered; **Standard Unit Cost** is the product's standard price on the voucher date; **Unit Cost Deviation** is the difference, and the totals beside them multiply it by the delivered quantity. **Product Qty Deviation** is the order quantity minus what was actually delivered.
+
+**Material Deviations.** One line per component. **Standard Quantity** is what the production order planned for the component; **Actual Quantity** is what was issued less what came back. A material issued to the order that is not on its component list still gets a line, with a standard quantity of zero.
+
+- **Quantity Deviation** = (Actual Quantity − Standard Quantity) × **Standard Unit Price**. Did you use the right amount?
+- **Cost Deviation** = **Total Actual Cost** − Standard Quantity × Standard Unit Price. The whole gap, amount and price together.
+
+The part of the Cost Deviation that the Quantity Deviation does not explain is the price effect - you paid more, or less, per unit than the standard.
+
 ```
-Standard: Should use 100 kg
-Actual: Used 110 kg
-Variance: 10 kg over
+Standard: 100 kg at a standard price of $10/kg = $1,000
+Actual:   110 kg costing $1,210 ($11/kg)
 
-At standard price of $10/kg: 10 kg × $10 = $100 unfavorable variance
-```
-
-**What it tells you**: You're consuming more material than expected. Maybe there's waste in the process, maybe the BOM needs updating, maybe quality issues are causing scrap. This is a red flag to investigate.
-
-**Price Variance** (Did you pay the expected price?)
-```
-Standard: Expected $10/kg
-Actual: Paid $11/kg
-Variance: $1/kg over
-
-For 110 kg actually consumed: 110 kg × $1 = $110 unfavorable variance
-```
-
-**What it tells you**: Material costs are higher than expected. Maybe supplier raised prices, maybe you bought from an expensive source due to shortage, maybe freight costs increased. This variance points to purchasing issues, not manufacturing issues.
-
-**Total Material Variance**: Quantity variance + Price variance = Total
-
-### Resource Variances
-
-Similar analysis for labor and machine time:
-
-**Efficiency Variance** (Did the work take as long as it should?)
-```
-Standard: Should take 40 hours
-Actual: Took 45 hours
-Variance: 5 hours over
-
-At standard rate of $25/hour: 5 hours × $25 = $125 unfavorable variance
+Quantity Deviation: (110 - 100) × $10       = $100 unfavourable
+Cost Deviation:     $1,210 - (100 × $10)    = $210 unfavourable
+Price effect:       $210 - $100             = $110 unfavourable
 ```
 
-**What it tells you**: Work is taking longer than expected. Maybe workers need more training, maybe the routing times are optimistic, maybe there were delays or problems. Look for root causes.
-
-**Rate Variance** (Did you pay the expected rate?)
-```
-Standard: Expected $25/hour
-Actual: Paid $28/hour
-Variance: $3/hour over
-
-For 45 hours actually worked: 45 hours × $3 = $135 unfavorable variance
-```
-
-**What it tells you**: Labor is costing more than expected. Maybe you used overtime (higher rate), maybe you used a more skilled (expensive) worker than planned, maybe rates increased. This points to labor cost or staffing issues.
+**What it tells you**: a quantity deviation points at the shop floor - waste, scrap, or a [BOM](/modules/manufacturing/manufacturing-bom) that no longer matches reality. A price effect points at purchasing - a supplier raised prices, or a shortage forced you to an expensive source.
 
 ### Reading the Clues
 
 Variances tell stories. Here are some common patterns:
 
-**High material quantity variance + normal price variance**: You're wasting material or having quality issues. Check scrap rates, look for process problems.
+**High quantity deviation, small price effect**: You're wasting material or having quality issues. Check scrap rates, look for process problems.
 
-**Normal material quantity + high price variance**: Purchasing is paying more than expected. Check supplier contracts, freight costs, market conditions.
-
-**High labor efficiency variance + normal rate variance**: Work is taking longer than it should. Check for bottlenecks, training needs, equipment issues.
-
-**Normal labor efficiency + high rate variance**: Labor costs increased. Check overtime usage, skill mix, wage changes.
+**Small quantity deviation, large price effect**: Purchasing is paying more than expected. Check supplier contracts, freight costs, market conditions.
 
 **Large variances on some orders but not others**: Process inconsistency. Some orders go well, others have problems. Look for what's different.
 
-**Consistently favorable variances**: Your standards might be too pessimistic. Or you've genuinely improved the process - time to update standards and take credit!
+**Consistently favorable variances**: Your standard prices might be too pessimistic. Or you've genuinely improved the process - time to update the standard prices and take credit!
 
 ## Cost Per Batch: When One Size Doesn't Fit All
 
@@ -397,7 +312,7 @@ You made 100 widgets:
 - Machine cost: $1,500 (from resource vouchers)
 - Subtotal: $8,500
 
-Your overhead type charges 20% of direct costs:
+Your overhead type has one line of type **Resource And Material Percentage** with a value of 20:
 - Overhead: $8,500 × 20% = $1,700
 
 Total cost: $8,500 + $1,700 = $10,200
@@ -414,36 +329,20 @@ Simple, clean, done.
 
 ### Scenario 2: Variance Analysis Reveals Problems
 
-Expected costs (from standards):
-- Materials: 100 kg @ $10/kg = $1,000
-- Labor: 40 hours @ $25/hour = $1,000
-- Total expected: $2,000
+The order planned 100 kg of copper, and the Manufacturing Standard Price document prices copper at $10/kg. The order actually consumed 115 kg, which cost $1,265 ($11/kg).
 
-Actual costs:
-- Materials: 115 kg @ $11/kg = $1,265
-- Labor: 50 hours @ $25/hour = $1,250
-- Total actual: $2,515
+The Material Deviations line on the Order Close voucher shows:
+- Standard Quantity 100, Actual Quantity 115, Standard Unit Price $10, Total Actual Cost $1,265
+- Quantity Deviation: (115 - 100) × $10 = $150 unfavorable
+- Cost Deviation: $1,265 - (100 × $10) = $265 unfavorable
 
-Variance: $515 unfavorable (25% over budget - yikes!)
+The $115 that the quantity does not explain is the price effect.
 
-The Order Close Voucher breaks it down:
-
-**Material Variances**:
-- Quantity: (115 - 100) × $10 = $150 unfavorable
-- Price: (11 - 10) × 115 = $115 unfavorable
-- Total material: $265 unfavorable
-
-**Labor Variances**:
-- Efficiency: (50 - 40) × $25 = $250 unfavorable
-- Rate: ($25 - $25) × 50 = $0 (no variance)
-- Total labor: $250 unfavorable
-
-**The story**: You used 15% more material than expected (waste or scrap issue) AND paid 10% more for it (purchasing issue). Plus labor took 25% longer (efficiency issue). Three separate problems revealed.
+**The story**: You used 15% more material than planned (waste or scrap issue) AND paid 10% more for it (purchasing issue). Two separate problems revealed.
 
 Now you can investigate:
 - Why the material waste? Check scrap records
 - Why the higher price? Talk to purchasing
-- Why the extra labor hours? Check execution records for that order
 
 Without variance analysis, you'd just know "this order cost more than expected" but not why. With it, you have specific clues to follow.
 
@@ -481,7 +380,7 @@ Several settings control how costing works:
 
 **Cost Per Batch**: Enable lot-specific costing. Each lot gets its own cost calculation.
 
-**Calculate Deviations**: Enable variance analysis. System will populate material and resource deviation lines showing expected vs. actual.
+**Calculate Deviations With Save**: Enable variance analysis. The Order Close voucher then compares the actual cost with the standard prices - see [Variance Analysis](#Variance-Analysis-Playing-Detective).
 
 **Overhead**: Default overhead type for all orders using this term.
 
@@ -489,15 +388,15 @@ Several settings control how costing works:
 
 **Overhead**: If specified, overrides the production order's overhead type. Useful if you have a special overhead allocation for certain situations.
 
-**Do Not Update Accounting Effects With Actual Values**: Use standard costs in accounting instead of actual. Variances are posted separately. This is a policy decision - some companies prefer standard cost accounting, others prefer actual.
+**Do Not Update Accounting Effects With Actual Values**: The overhead lines always post their planned overhead value, even after an Actual Production Overhead document has distributed actual figures onto the voucher. Use it when the actual overheads are distributed for analysis but the books must keep the planned figure.
 
 ### Overhead Type Configuration
 
 **Elements**: Define each overhead component (rent, utilities, supervision, etc.)
 
-**Calculation Methods**: Fixed, percentage of material cost, percentage of labor cost, rate per hour, rate per unit, or actual from GL accounts.
+**Type**: What each element is charged against — a percentage of material or resource cost, an amount per unit delivered, per unit of material, per resource or execution hour, or a custom query. See the table under [Overhead Allocation](#Overhead-Allocation-Making-the-Invisible-Visible). Actual figures from GL accounts come from the Actual Overhead Calculator instead.
 
-**Accounting Accounts**: Where to debit and credit for each overhead element.
+**Accounting Effects**: The debit and credit side for each overhead element.
 
 ## Getting Good Results From Costing
 
@@ -509,8 +408,8 @@ Consistently *favourable* variances deserve the same suspicion. Twenty percent f
 
 Choose overhead methods that match how your costs actually behave rather than copying another company's approach. If overhead is genuinely driven by production hours, a rate per hour is honest; if it is driven by material handling, a percentage of material cost is. And whichever predetermined method you use for day-to-day speed, run an actual overhead calculation at period end to true the figures up.
 
-::: warning Closing locks the costs
-Once an order is closed its costs are locked, and reopening it is not straightforward. Make sure production is genuinely complete first.
+::: warning Closing locks the order
+Once an order is closed, nothing more can be recorded against it until its Order Close voucher is cancelled or deleted. Make sure production is genuinely complete first.
 :::
 
 ::: tip Regulated industries may not have a choice
@@ -525,3 +424,6 @@ In pharmaceuticals, food or medical devices, batch-level costing is often a trac
 | *The overhead name {0} does not exist in the overhead type {1}* — «الاسم {0} غير موجود في التكلفة الغير مباشرة {1}» | The name typed on the line is not one of the names defined inside the overhead type it points at. | Use a name the overhead type defines, or add it there first. |
 | *You must choose account or accounts chart not both* — «يجب اختيار حساب او شجرة حسابات وليس الاثنان معا» | A line names both a single account and an accounts chart. The calculator reads the actual cost from one or the other. | Clear one of the two — the chart when you want one account, the account when you want a whole branch of the tree. |
 | *To calculate the Overhead Value for {0} only query or criteria allowed not both* — «أو الاستعلام لحساب قيمه التكاليف الغير مباشره ل {0} يمكن استخدام المعايير» | The line carries a **Query** and also narrows the figure by account, subsidiary, entity dimension or dimensions. Those are the two alternative ways of finding the value, and only one may be used. | Either keep the query and clear the selection fields, or drop the query and let the account and dimensions do the filtering. |
+| *This production order has pending quantities* — «هذا الأمر له كميات معلقة لا يمكن إغلاقة إغلاق عادي» | The voucher's close type is **Normal Close** and part of the order quantity has not been started yet (or the order has no operation quantities recorded yet). | Move the remaining quantity into the operations, or use the **Terminate** close type if the order is being stopped part-way. |
+| *Production order {0} is already closed by order close voucher {1}* — «أمر الإنتاج {0} تم إغلاقه بالفعل بسند إغلاق الأمر {1}» | Another saved Order Close voucher already closes this order. An order has only one. | Open the voucher named in the message and change it, or cancel or delete it before saving this one. |
+| *Production order {0} is closed or terminated* — «أمر الإنتاج {0} انتهي أو تم إغلاقه» | A document is being saved against an order whose status is Closed or Terminated. | Reopen the order by cancelling or deleting its Order Close voucher, record the document, then close the order again. |

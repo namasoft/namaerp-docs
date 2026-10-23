@@ -3,6 +3,7 @@
 # .custom-index marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 layout: home
 title: Mobile Applications
+description: "Landing page for the Nama Mobile app: what each field team can do on the phone (attendance, sales and inventory, customer visits) and which guide to start with."
 hero:
   name: Nama Mobile
   text: The ERP in your pocket

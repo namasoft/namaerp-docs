@@ -155,6 +155,12 @@ Some manufacturing - like injection molding or die casting - requires special to
 - Tracking mold usage for maintenance scheduling
 - Costing mold usage charges to products
 
+### Delivery Information: planned deliveries
+
+The **Delivery Information** tab says in advance how the output will leave the shop floor. Its **Planned Delivery** grid holds one line per expected delivery: the item (the order's own item or one of its co-products), the warehouse, locator, lot and other dimensions it should go to, and the **Planned Delivery Quantity**. Each line gets an **Expected Delivery Code** — leave it empty and the order numbers it for you (001, 002, …) when you save.
+
+As product deliveries and product returns are saved against the order, each is matched to a planned line and the line's **Actual Delivery Quantity** follows along, so the grid always shows how much of each planned delivery has really happened. The same tab still holds the **Production Lot Lines** grid of proposed lots. How deliveries are matched, and whether delivering outside the plan is refused, is set on the term — see [Planned deliveries](/modules/manufacturing/document-terms/mfg-terms-production-orders#Planned-deliveries).
+
 ## The Production Order Lifecycle
 
 Let's follow a production order from birth to completion.
@@ -258,7 +264,7 @@ Eventually, the final operation is complete, and all your finished goods are del
 
 To truly finalize the order, you create an **Order Close Voucher**. This:
 - Calculates the total actual costs (materials, labor, overhead)
-- Compares to standard costs if you have them
+- Compares to standard prices if you record them
 - Updates finished goods inventory values
 - Generates accounting entries
 - Changes the order status to "Closed"
@@ -444,7 +450,9 @@ Understanding the constraints helps avoid frustration:
 
 ❌ You can't change anything (it's locked)
 ❌ You can't execute more production
-❌ You can't re-open it (closed is final)
+❌ You can't re-open it from the order itself
+
+To reopen a closed order, cancel or delete its Order Close voucher. The order returns to "In Progress" and work can be recorded against it again.
 
 This lifecycle ensures data integrity. Once you've started production and are consuming materials and recording labor, you can't go back and change what the order was supposed to be. What you see is what actually happened.
 
@@ -475,3 +483,7 @@ Creating the order is planning. [Production Execution](/modules/manufacturing/pr
 | *Production Order {0} Status is not Initial You can not change it* — «أمر الإنتاج {0} حالته ليست إبتدائية لا يمكنك تعديله» | A line of the aggregated order was changed, and the production order behind it has already left the *Initial* status. It is raised both for the order you are pointing at now and for the one you are pointing away from. | Leave started orders alone and change the shop floor documents instead. The same refusal is raised in English when it is the new line that is checked, because only one of the two wordings carries an Arabic translation. |
 | *You can not choose option {0} and {1} together* — «لا يمكنك اختيار الحقل {0} و{1} معًا» | **Start Prod Order** and **Cancel Start Prod Order** are both ticked on the aggregated order, which asks it to start and unstart the same orders in one save. | Tick one of the two and save; tick the other on a later save if you then want the opposite. |
 | *You must enable the option {0} in manufacturing configuration to be able to use {1}* | **Allow Negative Quantity For Operation 1**, or **Allow Negative Quantity** on a routing line, is ticked while **Use Production Movement System Entry** is off in the manufacturing configuration. The flags only work on top of movement entries. The message has no Arabic translation. | Switch the setting on (then use **Recreate Quantity Movements** for orders already in progress), or untick the flags. |
+| *The item {0} is neither the order item nor one of its co-products* — «الصنف {0} ليس صنف أمر الإنتاج ولا أحد منتجاته الثانوية» | A line of the **Planned Delivery** grid names an item the order does not produce. | Pick the order's item or one of its co-products on that line. |
+| *Expected delivery code {0} at line {1} is repeated with line {2}* — «كود التسليم المتوقع {0} في السطر {1} مكرر مع السطر {2}» | Two planned delivery lines carry the same **Expected Delivery Code**. | Change one of the codes, or clear it and let the order number the line. |
+| *Planned delivery quantity {0} of item {1} exceeds the produced quantity {2}* — «الكمية المخطط تسليمها {0} للصنف {1} تتجاوز الكمية المنتجة {2}» | The planned deliveries of an item add up to more than the order produces of it. | Lower the planned quantities, or raise the order or co-product quantity. |
+| *Planned delivery quantity {0} of the planned delivery line {1} cannot be less than the delivered quantity {2}* — «الكمية المخطط تسليمها {0} في سطر التسليم المخطط {1} لا يمكن أن تكون أقل من الكمية المسلمة {2}» | A planned quantity was lowered below what has already been delivered against that line. | Keep it at least equal to the **Actual Delivery Quantity**. |

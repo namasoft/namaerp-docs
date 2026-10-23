@@ -45,7 +45,6 @@ The **Queues / الطوابير** grid is one row per queue. A queue is a servic
 | **Queue Letter (Queue Code)** | الطابور (كود الطابور) | **Required.** The prefix on the ticket, and the code you refer to everywhere else — on provider rows, on automatic-ticketing rows. Usually a single letter. |
 | Description | الوصف | What this queue is for, in words. |
 | Suffix Length | طول اللاحقة | How many digits the number is padded to. 3 gives `A001`. |
-| First Number | أول رقم | **Not used — see the warning below.** |
 | **Last Number** | اخر رقم | **Required.** The highest number this queue may issue in a day. |
 | Max Time To Switch Queues | اقصي وقت لخدمة طوابير أخرى | Minutes. A ticket that has waited this long is promoted ahead of the whole branch's waiting list. Leave empty or zero to switch the promotion off. |
 
@@ -64,12 +63,6 @@ Numbering restarts at the branch's day start time and the **first customer of th
 > Thirteen tickets later, Fahad Al-Otaibi draws **`A014`**.
 
 When you type a suffix length, the screen offers to fill *Last Number* with the largest number that fits — 999 for a suffix length of 3. Take it. Issuing past *Last Number* is refused outright with *You reached out to the last number {0} for queue {1}* (a message with no Arabic string, so it appears in English on Arabic screens too), and the customer standing at the kiosk gets nothing, so a ceiling that is too low is a live outage at the counter. If a busy branch genuinely issues more than 999 tickets between one day start and the next, raise the suffix length to 4 and the ceiling to 9999.
-
-::: warning *First Number* does nothing at all
-**أول رقم / First Number** is read by no part of the system. Set it to 100 and the first ticket of the day is still **`A001`** — numbering always begins at 1. It is not a way to reserve a range, and it is not a way to make two branches issue distinct numbers. Leave it at its default and never build a procedure around it.
-
-Its neighbours are fine: *Last Number* really is enforced, and *Suffix Length* really does control the padding.
-:::
 
 ### What *Max Time To Switch Queues* actually does
 
@@ -157,10 +150,6 @@ The validations here are strict, and they are the good kind — they stop a kios
 - a *Create And Print Ticket* step with no *Ticket Queue Code*;
 - a step that points at a step code that does not exist;
 - a loop — the whole path is walked and a cycle is refused with *We found infinite path {0}* — also English-only.
-
-::: warning The then/else error highlights the wrong column
-When you leave *Next Step (Else)* empty, the message points at *Next Step (Then)* — and vice versa. The save is correctly refused either way, but read the two columns together rather than trusting which one is flagged.
-:::
 
 ## Messages you may see
 

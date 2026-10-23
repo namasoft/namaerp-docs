@@ -71,7 +71,6 @@ Every period has a **type** that defines its role in the year:
 | **Normal** | The day-to-day operating periods (typically the twelve months) where most transactions are recorded. |
 | **Adjustment** | A period dedicated to year-end adjustment entries before closing. |
 | **Closing** | The period in which the year-end closing entry is recorded. |
-| **Purge Period** | A special period for purging/archiving old transactions. |
 
 ### Period status
 

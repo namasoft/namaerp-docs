@@ -1,4 +1,5 @@
 ---
+description: "The Project Contract Extract, the owner-side billing document: extract types, the Details grid, the seven grids, conditions such as retention, advances and fines, the net payable and the journal it produces."
 entities: [ProjContrExtract]
 menu: Contracting → Project Contracting → Project Contract Extract
 ---
@@ -124,7 +125,7 @@ In the **More** menu: **Installment Payments** opens, in a pop-up list, the paym
 | **Additions And Deductions** (the conditions grid) | retention, advance recovery, fines, bonuses — everything that moves the net payable away from the works value | the *Collect Conditions* button, or automatically on save |
 | **Payments** | the instalment plan for *this* extract, generated from a payment template. Validated against the extract's total, so it must add up | you, via the template and the generate action |
 | **Payment Documents** | the receipt vouchers that have been applied to this extract | the system, as vouchers are recorded against it |
-| **Additional Info** | ten numbers, ten texts, five dates and three references — a free scratch pad for customer-specific data. Nothing in the module reads it | you |
+| **Additional Info** | ten numbers, ten texts, five dates and three references — for customer-specific data you want to record, filter and report on | you |
 | **Taxing Details** | the e-invoice roll-up — the detail lines grouped by tax extract term. This, not Details, is what goes to the tax authority | the system, on every save. See [Taxes on Extracts](/modules/contracting/project-contracting/contracting-extract-taxes.md) |
 
 ## Conditions — where the net payable is actually formed

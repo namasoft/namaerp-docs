@@ -1,4 +1,5 @@
 ---
+description: "The Assembly Document and Assembly Request: assembling components into a product from an assembly BOM, what saving creates, extra receipt items, expense items and process files, and disassembly."
 entities: [AssemblyDocument, AssemblyRequest, AssemblyProcessFile]
 menu: Inventory → Assembly Documents → Assembly Document
 ---

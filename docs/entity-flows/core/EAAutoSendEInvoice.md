@@ -26,7 +26,9 @@ Automatically after invoice save/commit operations on entities implementing ITax
 
 ## Key Parameters
 
-- **Parameter 1:** Tax Submission Document Book (Required) - Document book code (e.g., `EINV_SUB`, `ZATCA_SUB`)
+- **Parameter 1:** Tax Submission Document Book (Required) - Code of the Tax Authority Submission book (e.g., `EINV_SUB`, `ZATCA_SUB`)
+- **Parameter 2:** TaxPayerConfiguration Code or ID - The Tax Payer Configuration written on the submission document (e.g., `MAIN_TAXPAYER`)
+- **Parameter 3:** Add Dimensions From Invoice (Optional) - `true` copies the invoice's branch, sector, department and analysis set to the submission document; leave empty to keep them off
 
 ## Database Tables Affected
 
@@ -37,8 +39,8 @@ Automatically after invoice save/commit operations on entities implementing ITax
 ## Configuration Requirements
 
 ### Entity Flow Settings
-- Must have `runAfterCommitDocAndEffectOnDB = true`
-- Only works with entities implementing ITaxAuthorityDoc
+- Must have **Run After Committing Document And Affect On DataBase** ticked; otherwise the flow refuses with *The action (EAAutoSendEInvoice) should be used only when the option {0} is active*, where {0} is that option's name
+- Only works with invoice documents that are sent to the tax authority; on any other entity it refuses with *This entity flow must be used only with invoice entities*
 - Should run after invoice save operations
 
 ### Tax Authority Setup

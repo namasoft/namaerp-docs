@@ -9,7 +9,7 @@ history: change the room and yesterday's location is gone. These three documents
 dated, numbered trail — one for changing a machine's data, one for changing its owner, and one for
 recording a site survey before an installation.
 
-Two of the three do what they promise, with traps. The third does nothing at all.
+The first two change the machine file; the third is a record of the survey.
 
 ::: info Required licence
 `crm-maintenance`
@@ -34,26 +34,19 @@ checks run afterwards, its warranty dates are recomputed at the same time.
 **Ledger: none. Stock: none.** The document has no term configuration of its own, so its Term
 carries only the generic document settings.
 
-::: danger Two traps that lose data silently
+::: warning Before you save a Machine Update
+**It writes every field on its screen onto the machine.** Picking the machine pre-fills most of the
+boxes from the current record. The alternative code, the manufacturing, sale, installation and
+last-visit dates, the default warranty start date and the warranty status start empty, and whatever
+they hold when you save is written onto the machine. An alternative code left empty is saved as the update's own
+number, so the machine takes that number as its alternative code. Treat this document as "retype the machine":
+before committing, work down the screen and make sure every box holds the value you want the
+machine to end up with.
 
-**1. It writes every field on its screen, whether you filled it in or not.** Picking the machine
-pre-fills *most* of the boxes from the current record — but not all of them. The alternative code,
-the manufacturing, sale, installation and last-visit dates, the default warranty start date and the
-warranty status are **not** pre-filled, and they are still written onto the machine when you save.
-Leave them as they arrived and the machine's installation date, sale date and warranty status are
-**blanked**, quietly, with nothing on screen to tell you.
-
-Treat this document as "retype the machine", not "change one field". Before committing, work down
-the screen and make sure every box holds the value you want the machine to end up with.
-
-**2. Cancelling the only update reverts nothing.** Cancelling restores the values of the
-**previous** Machine Update document for that machine. If this is the first — and for most machines
-it always is — there is no previous document to restore from, and the machine simply keeps
-everything the cancelled document wrote. Cancelling `MUPD-0007` would leave `MCH-00318` in the pump
-room.
-
-To undo a first update you must open the machine and put the old values back by hand, which is
-exactly why you should note them down before you commit.
+**Cancelling restores the previous update.** Cancelling a Machine Update restores the values of the
+**previous** Machine Update document for that machine. When there is no previous update, the machine
+keeps the values the cancelled document wrote — so note the old values down before you commit a
+first update.
 :::
 
 Two more behaviours worth knowing:
@@ -65,13 +58,11 @@ Two more behaviours worth knowing:
 
 Finally, some of the machine's data is **not** on this screen and therefore cannot be changed
 through it: the second serial number, the task template and the tasks grid, the dependent-machines
-grid, the spare-parts grid and the attachments. Those are edited on the machine file itself.
+grid and the attachments. Those are edited on the machine file itself.
 
-::: warning This document is the only writer of two fields that look automatic
-*Last Visit Date* and *Warranty Status* on the machine are never maintained by any process — no
-visit, order or execution touches them. The Machine Update is the only thing in the system that ever
-writes them, and as described above it writes them blank unless you fill them in. Read *Warranty End
-Date* for the real warranty answer.
+::: tip Last Visit Date and Warranty Status are typed
+*Last Visit Date* and *Warranty Status* on the machine are manual fields: you type them on the
+machine file or write them with a Machine Update. Read *Warranty End Date* for the warranty answer.
 :::
 
 ## The Machine Ownership Transfer Document
@@ -87,7 +78,7 @@ Five fields carry the meaning:
 | From Customer | Filled by the system from the machine's current owner |
 | To Customer | Mandatory, typed |
 | From Contact | Filled by the system from the machine's current contact |
-| To Contact | Typed — but see the warning below |
+| To Contact | Typed — but see the tip below |
 | Description | Free text |
 
 On save, the document gathers **every** committed transfer for that machine, adds itself, sorts them
@@ -97,23 +88,12 @@ taken from the one before it, and the machine's current customer and contact are
 document in the chain. The machine's *original* customer and contact are frozen by the **first**
 transfer, so a machine that has never been transferred has no original owner recorded yet.
 
-Cancelling a transfer is well behaved: the chain is rebuilt without it, falling back to the original
-owner when no transfers remain. This is the opposite of the Machine Update's cancel, and it is worth
-remembering which is which.
+Cancelling a transfer rebuilds the chain without it, falling back to the original owner when no
+transfers remain.
 
-::: warning The contact half of the chain is wrong from the second transfer onward
-The customer chain is correct. The **contact** chain is not: from the second transfer on, each
-document's *From Contact* repeats the very first document's contact instead of the previous
-document's *To Contact*. On the machine's transactions tab you will see a From Contact column that
-disagrees with the From Customer column beside it. Read the customer chain; treat the contact column
-as unreliable.
-:::
-
-::: warning You cannot choose the new contact
-The *To Contact* lookup only ever offers **the machine's current contact** — the one you are
-transferring away from — and on a machine with no contact at all it produces an error instead of an
-empty list. Treat ownership transfer as a **customer-level** operation: leave *To Contact* empty,
-save the transfer, then set the new contact on the machine file afterwards.
+::: tip Set the new contact on the machine afterwards
+Treat ownership transfer as a **customer-level** operation: leave *To Contact* empty, save the
+transfer, then set the new contact on the machine file afterwards.
 :::
 
 ## The Pre-Installation Preview
@@ -122,16 +102,9 @@ The site survey before an installation: customer, contact, machine, machine type
 from date and a to date, an attachment, *From document*, the serial number, a maintenance-groups
 grid and a discussion checklist. Picking the machine fills the serial, customer and contact.
 
-::: danger The Pre-Installation Preview does nothing at all
-There are no buttons on this screen, no document term configuration, no validation and no effect of
-any kind. It creates no machine, feeds no order, no contract and no work plan, and no other document
-reads it. Once saved, the survey is invisible to the rest of the system.
-
-If your process depends on a survey happening before installation, that dependency has to be
-enforced by your own procedures. And if you need the survey's findings to reach the technician, put
-them on the [maintenance order](/modules/crm/maintenance-cycle/crm-maintenance-orders.md) — nobody
-downstream will see them here.
-:::
+The preview is a record of the survey: it has no buttons and no document term configuration, and it
+creates no machine, order, contract or work plan. To pass the survey's findings to the technician,
+put them on the [maintenance order](/modules/crm/maintenance-cycle/crm-maintenance-orders.md).
 
 The document that *does* create machines is *Generate Machine* on the maintenance sales order — see
 [Maintenance Sales](/modules/crm/maintenance-cycle/crm-maintenance-sales.md), and note that it

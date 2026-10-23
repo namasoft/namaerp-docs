@@ -80,23 +80,20 @@ deliver to related, and two attachment slots.
 
 ![The Warehouse Data tab of the car file](../../../ar/modules/servicecenter/images/cars-setup/sc-car-master-warehouse-en.png)
 
-::: warning Almost this entire tab is typed by hand — no document ever fills it
-This is the most consistently wrong expectation in the cars half. **Delivery status, delivered to
-customer, deliver to related, condition, mileage, PDI performed / date / by, plate number, customs
-paid, customs paid date, customs release number and date, and traffic letter stamping** have no
-automatic writer anywhere in the product.
+::: info Most of this tab is typed by hand
+**Delivery status, delivered to customer, deliver to related, condition, mileage, PDI performed /
+date / by, plate number, customs paid, customs paid date, customs release number and date, and
+traffic letter stamping** are typed here by a person, after the event.
 
-In particular, committing a
-**[Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md)** does *not* set the
-delivery status and does not record who the car was delivered to, even though it will happily move
-the car's status to *Final Delivered*. And a
-**[Traffic Letter](/modules/servicecenter/car-sales/car-traffic-letters.md)** does not carry a plate
-number field at all, so the document that
-exists to obtain plates cannot record the plate it obtained. All of that is typed on this tab, by a
-person, after the fact.
+That includes the hand-over: a
+**[Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md)** moves the car's
+status to *Final Delivered*, and the delivery status and the customer it was delivered to are typed
+on this tab. The plate number, once the
+**[Traffic Letter](/modules/servicecenter/car-sales/car-traffic-letters.md)** has produced it, is
+typed here too.
 
-The two genuine exceptions are **warehouse** and **locator**, which document terms can copy onto the
-car through the *Copy Warehouse To Sub Item* and *Copy Locator To Sub Item* options.
+**Warehouse** and **locator** are the exceptions: document terms can copy them onto the car through
+the *Copy Warehouse To Sub Item* and *Copy Locator To Sub Item* options.
 :::
 
 ### Tab 3 — بيانات البيع / Sales Data
@@ -106,8 +103,8 @@ warehouse. They are written by the
 **[Car Allocation](/modules/servicecenter/car-sales/car-allocation.md)** document and cleared by the
 **Car Allocation Cancel**, and by nothing else.
 
-Read them as an informational stamp. No business rule anywhere consults them — a sales invoice for a
-car allocated to somebody else commits without complaint.
+Read them as an informational stamp: they show who the car is promised to, and they do not hold the
+car for that customer.
 
 ### Tab 4 — بيانات متابعة المستندات / Document Control Data
 
@@ -122,13 +119,11 @@ Three groups of paperwork, every field typed by hand:
 
 ![The Document Control Data tab: customs, OEM and registration paperwork](../../../ar/modules/servicecenter/images/cars-setup/sc-car-master-documents-en.png)
 
-::: warning The customs fields are text, not cost
-Nothing on this tab is connected to any amount. The customs list number and the customs paid tick
-are labels you record for your own reference and for your own reports; they do not feed the car's
-cost, they do not create an accounting entry, and they are not read by the landed-cost mechanism.
+::: info The customs fields record the paperwork
+The customs list number and the customs paid tick are labels you record for your own reference and
+for your own reports.
 
-Import charges reach the car's cost through a completely different route — service lines on the
-purchase invoice. See
+Import charges reach the car's cost through service lines on the purchase invoice. See
 [Freight, Customs and Landed Cost](/modules/servicecenter/car-purchasing/car-landed-cost.md).
 :::
 

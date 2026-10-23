@@ -1,6 +1,7 @@
 ---
+description: "The AI Tool Definition screen where administrators define the tools an AI assistant may call: basic data, access control, and the query, report, entity flow and system tool types."
 entities: [AIToolDefinition]
-menu: ai → Master Files → AI Tool Definition
+menu: Artificial Intelligence → Master Files → AI Tool Definition
 ---
 
 # AI Tool Definitions
@@ -35,6 +36,7 @@ A tool is only offered to the language model when it is **committed** and not in
 
 - **Query, report, and entity-flow tools** are advertised under their **Alt Code** as-is.
 - **System Tools**: each line in the tools grid may generate one or more tools, and each tool name is composed of a prefix plus the internal tool name. The prefix is the first non-empty value of **Tool Name**, then **Alt Code**, then the record **code**, followed by an underscore. For example, a record whose code is `import` containing the `AITReadRecordTools` tool generates two tools, `import_FindRecords` and `import_GetRecord`.
+- **Every tool**, of every type, also takes five optional arguments you never define yourself: `loginLegalEntity`, `loginSector`, `loginBranch`, `loginDepartment` and `loginAnalysisSet`. They run the call as if the user had logged in to those dimensions — see [Choosing the login context](./ai-mcp-server.md#Choosing-the-login-context).
 
 ## Security (Access Control)
 
@@ -45,8 +47,8 @@ The **Security (Access Control)** grid decides who may execute the tool. Each li
 
 When the tool is executed, the system looks for the first line matching the current user in this order: the **user's** own line first, then the user's **security profile** line, then the **group** line. The first matching line decides. If the grid is empty (or no line matches), the tool is available to everyone.
 
-::: warning Access is checked at execution time
-The advertised tool list is the same for all users, but **execution** is what gets the access check: if a prevented user tries to run a tool, the call is rejected with a clear message. Record-level security and dimensions (legal entity, branch, ...) also still apply to everything the tool reads or writes, because everything goes through the system's standard service gates.
+::: warning Access is checked twice
+A client is shown only the tools its user may run: a tool this grid prevents for the user does not appear in the user's tool list at all, in an MCP client or in the in-app assistant. So "user X does not see tool Y" is usually this grid, not a fault. **Execution** is checked again as well: a call to a prevented tool is rejected with a clear message. Record-level security and dimensions (legal entity, branch, ...) also still apply to everything the tool reads or writes, because everything goes through the system's standard service gates.
 :::
 
 ## Type 1: Query Based
@@ -199,7 +201,7 @@ Almost every question about a report — why is this total wrong, why is this ro
 | `AITReportReadTools` | `<prefix>GetReportQuery` and `<prefix>RunReport` | Return a report's parameters and the SQL of its own query, of each of its sub-datasets and of each of its subreports; and run the report with given parameters and return its output |
 | `AITUpdateReportTools` | `<prefix>UpdateReportQuery` and `<prefix>UpdateReportContent` | Replace the SQL of one dataset without touching the rest of the report file, or replace a whole report file |
 
-A report runs with the permissions of the user the tool acts for, and its parameters are checked before it runs rather than after. Dates are day-first (`31-01-2026`), unlike the record tools. A parameter that points at a record — a fiscal period, a legal entity, a branch — takes that record's **code** as readily as its id: the tool looks the record up and hands the report the form that particular parameter reads.
+A report runs with the permissions of the user the tool acts for, and its parameters are checked before it runs rather than after. Dates are day-first (`31-01-2026`), unlike the record tools. A date filter shown as one range picker is the exception: it takes a single value on the picker's own parameter, `2026-07-01@2026-07-31`, and the two hidden date parameters behind the picker are refused if sent directly. A parameter that points at a record — a fiscal period, a legal entity, a branch — takes that record's **code** as readily as its id: the tool looks the record up and hands the report the form that particular parameter reads.
 
 ::: warning A report that filters on nothing answers with everything
 This check matters more than it sounds. When a report's filters do not reach it, nothing fails and nothing warns: it prints the same headings, the same columns and a full page of entirely plausible figures — for every period and every branch instead of the one that was asked for — and the parameters still appear in its own header. Somebody comparing those figures against a customer's question reaches a confident, wrong conclusion.
@@ -208,7 +210,7 @@ So `RunReport` refuses the run instead of answering with unfiltered figures: whe
 :::
 
 ::: tip Read the numbers, don't look at a picture
-`RunReport` returns **TXT** by default, the format whose figures can be checked line by line against the read-only SQL tool. **HTML** returns the rendered table. Both come back inside the answer itself, cut off at the length the call asks for. The binary formats — PDF, XLSX, DOCX, RTF, ODT, ODS, PPTX, XLS — are stored on the server instead and answered with a **single-use link that expires after thirty minutes**, for a person to open: the link serves the file once and deletes it. Set `ai-file-download-base-url` in `nama.properties` if those links should carry the server's public address rather than a path.
+Ask `RunReport` for **JSON** whenever the figures matter: one row per printed line, tagged with its band (column header, detail, group footer, summary …), its cells lined up with the column headers, and numbers as plain numbers — the grand totals are in the summary rows at the end. **CSV** is the report's grid as comma-separated values, **TXT** (the default) the page laid out as plain text, and **HTML** the rendered page, by far the largest. These text formats come back inside the answer itself: the first 20,000 characters by default (`maxChars`, up to 200,000), or with `tailChars` the *last* that many characters instead — which is where a report's totals are. `language` picks Arabic (the default) or English labels. The binary formats — PDF, XLSX, DOCX, RTF, ODT, ODS, PPTX, XLS — are stored on the server instead and answered with a **single-use link that expires after thirty minutes**, for a person to open: the link serves the file once and deletes it. Set `ai-file-download-base-url` in `nama.properties` if those links should carry the server's public address rather than a path.
 :::
 
 ::: warning A report is never saved unless it still compiles
@@ -241,6 +243,10 @@ Comparing those rows with the chart's series tells a wrong query from a wrong ch
 
 `PreviewDashboardWidget` starts from a saved widget, from scratch, or both: it takes the widget's code and a set of changes — typically a new SQL, a new chart configuration or a different widget type — runs the result with the parameters and cross filters given, and returns what it would show. Nothing is saved, so the assistant can try a query, read the figures, correct it and try again, and save the widget with `ImportRecord` only once the numbers are right. Only the widget's own text, number and yes/no fields can be changed this way; its grids (inputs, cross filter bindings) are taken from the saved widget as they are.
 
+::: warning `chartConfigJSON` goes to `ImportRecord` as a string
+When the widget is saved with `ImportRecord`, its `chartConfigJSON` must be sent as a JSON **string** — the whole configuration stringified, `"chartConfigJSON":"{\"series\":[…]}"` — exactly as `PreviewDashboardWidget` takes it. A nested object is read as a reference to another record, and the widget saves without a usable chart configuration. The nested form shown in the [BI technical reference](/platform/bi/bi-module-technical-reference.md#10-Bulk-Import-JSON-Format) works only in an import file loaded with **Import Records**.
+:::
+
 ::: info A parameter the widget does not have is reported, not refused
 A widget's parameters are the lines of its **inputs** grid. A value sent for an id that is not one of them cannot reach the query, so the widget runs without it — and a `{name}` in its SQL that matches no input is bound to `NULL`, which usually means no rows at all. The widget tools say so in their answer, naming the parameters that were not applied, so an empty chart is not mistaken for a period with no sales.
 :::
@@ -271,6 +277,7 @@ The remaining ready-made tools are single classes with no group of their own; ad
 | `AINamaERPDocsTool` | `<prefix>erpDocs` | Search the Nama ERP documentation and return the passages closest to the question |
 | `AITAppVersionTools` | `<prefix>GetAppVersion` | Return the build this server is running — the twelve-digit build stamp and the date and time behind it |
 | `AITReadOnlySQLQuery` | `<prefix>runReadOnlySqlQuery` | Run a single read-only SQL `SELECT` against the database and return the rows — see the warning below |
+| `AITViewAppLogTools` | `<prefix>ViewAppLog` | Return the last lines of one of the server's application log files — what to read when an operation failed with a message that does not say why. `logFile` picks the file (`namasoft`, the general log, by default; also `nama-services`, `hibernate`, `spy`, `gui`, `performance`, `reportPerformance`, `replication`, `mail`, `service`, `root` and `other`) and `lines` how many, 500 by default and 2000 at most. **Administrators only**, whatever the access-control grid says, because a log carries whatever data passed through the server |
 
 ::: tip Before concluding that a feature is missing
 Nama ships monthly, and both this documentation and the [release notes](/release-notes/) describe the newest build. A server last upgraded before a feature was released does not have it, and no amount of configuration will make it appear — so an assistant that cannot date the server it is talking to will happily spend an afternoon hunting for a setting that was never there. `GetAppVersion` answers with the build stamp, the date it stands for and the month whose release notes that build carries, which is what turns "let me find that setting for you" into "that arrived in the March release, and this server is on January".
@@ -284,8 +291,8 @@ Reading and writing are deliberately kept in separate classes so you can leave t
 Some modules add their own system tools that appear in the same list. For example, the HR module provides tools for an employee's vacation balance (for the current employee or any employee). The available set grows with the modules you have installed and licensed.
 :::
 
-::: warning The ERP docs tool and semantic search
-`AINamaERPDocsTool` relies on a semantic index of the documentation; it does not work until the vector store is configured in [AI Module Configuration](./ai-configuration.md#Semantic-Search-and-Embedding-Setup).
+::: info The ERP docs tool needs the internet, not the vector store
+`AINamaERPDocsTool` sends the question to Nama's documentation search service, so it needs nothing from the vector store — only for the server to reach `https://nlm.namasoft.com` over HTTPS. When it cannot, the tool answers *Nama ERP documentation search is currently unavailable* followed by the reason.
 :::
 
 ::: danger The read-only SQL tool ignores record permissions
@@ -303,12 +310,14 @@ Most of what an administrator does on the **utilities** page (`/utils`) — chec
 | Tool Class Name | Generated tool(s) | Purpose |
 |---|---|---|
 | `AITServerAdminTools` | `<prefix>ListLoggedInUsers`, `<prefix>ListRunningTasks`, `<prefix>ListCaches`, `<prefix>ListWebSocketSessions`, `<prefix>ListCostProcessingRequests`, `<prefix>ListPendingAsyncSaves` and `<prefix>CheckForNewRelease` | Look without touching: the users logged in now, the tasks running (both server tasks and those started from screens), the in-memory caches, the open WebSocket connections, the queued inventory cost recalculations, the supply chain document lines still being saved in the background, and which release the server runs against the latest one available to it |
-| | `<prefix>EvictCaches`, `<prefix>ReloadConfiguration`, `<prefix>RegenerateDefaultUIs`, `<prefix>RefreshCriticalErrors` and `<prefix>KillReport` | The safe actions: clear the caches of screens and services, re-read the settings file, translations and application configuration without a restart, regenerate the default screens (keeping users' screen modifiers), re-check the critical errors after fixing one, and stop a runaway report |
+| | `<prefix>EvictCaches`, `<prefix>ReloadConfiguration`, `<prefix>RegenerateDefaultUIs`, `<prefix>RegenerateDefaultUIsForTypes`, `<prefix>RefreshCriticalErrors` and `<prefix>KillReport` | The safe actions: clear the caches of screens and services, re-read the settings file, translations and application configuration without a restart, regenerate the default screens — all of them, or only those of some entity types — (keeping users' screen modifiers), re-check the critical errors after fixing one, and stop a runaway report |
 | `AITServerDangerousTools` | `<prefix>UpgradeToLatestRelease` | Upgrade the server to the latest release of its sub-release — which stops Tomcat and disconnects every user. See below |
 
 Both classes are for **administrators only**. The check is made on the user the call signs in as, every time, and the access-control grid cannot widen it: a definition that lists these classes simply gets a refusal back when a non-administrator calls them. Every call is also written to the **Actions History**, under the operation's name prefixed with `MCP:`.
 
 Regenerating the default screens takes several minutes, so `RegenerateDefaultUIs` starts it and answers at once; the assistant can follow it with `ListRunningTasks`. Only one regeneration runs at a time — a second one started while the first is still running is refused, and the refusal is written to the application log.
+
+When you know which screens are affected, prefer `RegenerateDefaultUIsForTypes`: it does what **Regenerate GUI For Applicable Types Only** does on a screen modifier or a custom list view, in seconds rather than minutes, and waits until it is done. Give it `entityTypes` (comma-separated, such as `SalesInvoice,SalesReturn`), `screenModifierCode` (the types that screen modifier applies to) or `customListViewCode` (the custom list view's types, including those on its "added to" lines) — any mix, but at least one.
 
 ::: danger The upgrade is confirmed by you, not by the assistant
 An upgrade stops the server: Tomcat shuts down, every user is disconnected and loses unsaved work, and nobody can work for several minutes. So `UpgradeToLatestRelease` never goes ahead on the assistant's say-so. Before it does anything, your MCP client shows **you** a confirmation form — the customer, the release it moves from and to, the users logged in and the tasks running right now — with a choice that defaults to **Cancel** and a box where you must **type the customer name exactly**. The upgrade starts only if you choose **Upgrade now** and the name matches; declining, closing the form, a mistyped name, or two minutes without an answer all leave the server untouched.

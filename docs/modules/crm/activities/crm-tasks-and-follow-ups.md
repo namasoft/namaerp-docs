@@ -1,4 +1,5 @@
 ---
+description: "The CRM Task and Follow Up Document screens: where they are in the menu, their fields, and how each records a piece of follow-up work for a customer."
 entities: [CRMTask, CRMFollowUp]
 menu: Customer Relationship Management → Support → CRM Task
 ---
@@ -12,9 +13,8 @@ the questionnaires group, not with the other support documents.
 :::
 
 Two small screens share this page because they have the same shape: both are places to write
-something down, and neither one makes anything else happen. The CRM Task is a genuinely useful to-do
-card with a time sheet on it. The Follow Up Document is a bare log — an honest description of it is
-short, and this page gives it plainly rather than dressing it up.
+something down. The CRM Task is a to-do card with a time sheet on it. The Follow Up Document is a
+log of a contact attempt with a lead or a potential.
 
 ## The CRM Task
 
@@ -37,10 +37,10 @@ Then the working block:
 | **Responsible Employee**, **Assignee**, **Mediator**, **escaleted to** | Responsible Employee and Assignee are stamped with the logged-in user's employee on every new task, always |
 | **Related To** (*يرتبط بـ*) | The subject: a Lead, Potential, Project, Campaign, Trouble Ticket, Complaint, Customer, Development Request, another CRM Task, or a Visit |
 | **Related Task** | Point at a parent task and its task information, subject and assignee are copied down |
-| **Task Type** | Visit, Call, Support, training or preparation — a label only |
+| **Task Type** | Visit, Call, Support, training or preparation — a label you filter and report on |
 | **Planned Start Date**, **Planned Time** (from/to) | What you intend |
 | **Actual Start Date**, **Actual Time** (from/to) | What happened — typed by hand, see the warning below |
-| **Status** | Planned, In Progress or Finished — a label only |
+| **Status** | Planned, In Progress or Finished — a label you set by hand |
 
 Below that is a full contact block, **Task Information** (*موقع المهمة*): address with map location,
 phones, mobile, fax, e-mail and website. It is there for tasks that are about going somewhere or
@@ -74,11 +74,6 @@ nothing advances it.
 If your site reports on task effort, read the grid rows, not the header.
 :::
 
-The Net Time figure has the same small quirk as the work plan's: the value shown while you type is
-computed in the browser and the value stored on save is computed on the server, and the two use
-slightly different rules. Same-day rows agree to within seconds; a row that crosses midnight looks
-wrong until you save it and then corrects itself.
-
 ### Actions on this screen
 
 All five buttons need the task **saved** first.
@@ -98,12 +93,6 @@ All five buttons need the task **saved** first.
   above.
 
 The four Create buttons never save anything for you — you review the pop-up and save it yourself.
-
-::: info A small quirk when a task is created from another screen
-When a task is opened from a lead, a potential or another task with a Create Task button, the
-**escaleted to** box in the pop-up arrives either blank or holding something that is not an employee
-at all. Clear it and pick the employee you meant.
-:::
 
 ### What a CRM Task is not
 
@@ -135,24 +124,18 @@ then **Follow Up Date**, **Follow Up Time**, **Related Record**, **Follow Up Typ
 
 Like the Visit, this screen shows its Description box twice; both are the same field.
 
-::: danger Nothing in the system reads any of this
-The Follow Up Document is inert, and it is important not to plan around it:
+The Follow Up Document is a log of a contact attempt:
 
-- **Choosing a Follow Up Type sends nothing.** Picking *SMS*, *Email* or *WhatsApp* does not send an
-  SMS, an e-mail or a message. The field is a label describing something the user did outside the
-  system.
-- **Status and Sub Status drive nothing.** Setting a follow-up to *Ongoing / Expected Visit* changes
-  no other record. In particular the lead or potential in Related Record is **not** touched — no
-  status, no classification, no activity type. Only [Calls](/modules/crm/activities/crm-calls) and
-  [Visits](/modules/crm/activities/crm-visits) do that.
-- **It does not chain.** A follow-up cannot point at the previous follow-up, so there is no sequence
-  and no "next contact due" anywhere.
-- **Nothing creates one and nothing consumes one.** No screen lists follow-ups except the Follow Up
-  Document's own list view.
+- **Follow Up Type** records the channel the user contacted the customer through — the SMS, e-mail or
+  WhatsApp message itself is sent outside the system.
+- **Status** and **Sub Status** are labels you can filter and report on in the list view.
+- When the **Related Record** is a lead, the saved follow-up appears on that lead's
+  [Actions tab](/modules/crm/sales-pipeline/crm-leads.md#The-Actions-Tab) timeline, alongside its calls,
+  visits and tasks.
 
-Document it to your users for what it is: a manual log of a contact attempt. If you need a follow-up
-process that actually moves the pipeline, log a Call or a Visit instead — those change the lead.
-:::
+To move the lead or potential itself forward — its status, classification and activity type — log a
+[Call](/modules/crm/activities/crm-calls) or a [Visit](/modules/crm/activities/crm-visits); those
+update the lead.
 
 ::: warning The Trouble Ticket's "Create CRM Follow Up" button opens a different screen
 On the Trouble Ticket there is a button labelled *عمل متابعة / Create CRM Follow Up*. It does **not**

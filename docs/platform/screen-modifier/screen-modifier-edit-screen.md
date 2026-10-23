@@ -98,6 +98,8 @@ The **Embedded Records Editor** lets the user edit a *referenced* record directl
 
 For example, on a Sales Order you could embed the customer's edit screen so a clerk can update the customer's data without leaving the order.
 
+One view name does something different: with the entity type set to **Technician Appointment**, the view **TechnicianAppointmentCreator** embeds the technician booking calendar for the open document instead of an edit screen — see [the calendar embedded in the document](/modules/crm/technician-appointments/crm-technician-appointment-calendar.md#The-calendar-embedded-in-the-document).
+
 ## In-screen reports and dashboards
 
 You can surface analytics and printouts right inside an edit screen:

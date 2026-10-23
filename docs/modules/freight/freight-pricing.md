@@ -1,4 +1,5 @@
 ---
+description: "The freight Service Purchase Price List and Service Sales Price List: their fields and service-type lines, markups, how operation orders pick up prices, and how a sale is linked to its cost."
 entities: [FRMSalesPriceList, FRMPurchasePriceList, FRMEditPurchasePriceList]
 ---
 # Price Lists & Markups
@@ -32,6 +33,8 @@ Records what you sell services to the customer for. It stands out in that it bui
 
 ::: tip How the markup is calculated
 Each tab's markup uses **one** of its two fields, never both: the **fixed value** when one is filled, otherwise the **percentage**. That is how ocean freight runs at "cost + $60 a container" while clearance runs at "cost + 10%". A tab cannot add both — fill in 10% and $50 and the price is cost + $50 — so fill only the field you mean.
+
+Every line of a service grid also has its own **Markup Percentage** and **Markup Value** columns. Fill either one on a line and that line uses its own markup instead of the tab's, by the same rule — the value when it is filled, otherwise the percentage. Lines left empty keep following the tab's markup, so one expensive route can carry a thinner margin without touching the rest.
 
 To price one line by hand, fill its **SalesPrice | Manual Edit**: on saving, it replaces whatever the markup gave that line.
 :::

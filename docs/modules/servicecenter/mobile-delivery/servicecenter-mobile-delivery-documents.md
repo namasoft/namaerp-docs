@@ -1,4 +1,5 @@
 ---
+description: "The Mobile Delivery Document (one courier's daily route sheet) and the Multi Mobile Delivery Document that builds route sheets in bulk from invoices and work tasks, with their grids and buttons."
 entities: [MobDeliveryDoc, MultiMobDeliveryDoc]
 ---
 # Delivery Documents
@@ -43,7 +44,7 @@ Four buttons sit above the grid — **اختيار الكل / Select All**, **ا
 
 ### The time-check grid
 
-A second grid, **timeCheckLines**, records the courier's shift: courier, check-in date and time with the GPS position at attendance, and check-out date and time with the GPS position at departure. The app writes these; you do not normally type them.
+A second grid, **Courier Check In And Out** (*متابعة خروج ورجوع المندوب*), records the courier's visits, one line per stop: the courier and the deliver-to party; the **Move Date Time**, **Move Date**, **Move Time** and **Move Location** recorded when the courier moved the order out of the branch; the check-in date and time with the **Attendance Location**; and the check-out date and time with the **Departure Location**. The app writes these; you do not normally type them. The [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md#The-couriers-day) walks through the move, check-in and check-out steps.
 
 A dimensions block closes the screen.
 

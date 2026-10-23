@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Architecture
+description: "Landing page for the technical architecture of Nama ERP: application architecture, infrastructure and deployment, and security architecture, written for IT and server administrators."
 ---
 
 # Architecture

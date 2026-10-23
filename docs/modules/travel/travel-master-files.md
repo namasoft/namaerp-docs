@@ -345,10 +345,8 @@ and offers three short booking markers:
 | RQ |
 | WL |
 
-These are the standard shorthand a reservations desk writes next to a booking line. The system stores
-whatever you pick and shows it back to you, but it does not act on the value — nothing is blocked,
-released or recalculated because a line says RQ instead of OK. Treat the column as a note to the
-operations team, and settle on one house meaning for each code so everyone reads it the same way.
+These are the standard shorthand a reservations desk writes next to a booking line. The column is a
+note to the operations team: settle on one house meaning for each code so everyone reads it the same way.
 
 ## What you will not find here
 

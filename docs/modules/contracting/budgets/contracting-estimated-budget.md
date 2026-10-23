@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Estimated Budget screen: recording the expected cost of each contract work item, its header and Terms page, save checks, actions, how it differs from the executive budget, and turning it into a contract."
 entities: [ContractingEstimatedBudget]
 menu: Contracting → Master Files → Contracting Estimated Budget
 ---

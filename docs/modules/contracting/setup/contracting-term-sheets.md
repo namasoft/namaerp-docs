@@ -46,7 +46,7 @@ columns on contracts, extracts and executions.
 
 **The Conditions grid** lists the clauses attached to the sheet — retention, an advance recovery
 schedule, a penalty — each optionally tied to one term code and one phase, with its value, value type
-and completion percentage. They do nothing on the sheet itself; they are carried forward when the
+and completion percentage. The sheet holds them; they are carried forward when the
 sheet is picked up by an assay and eventually a contract, which is where they start moving money. See
 [Contract Conditions](/modules/contracting/setup/contracting-conditions).
 

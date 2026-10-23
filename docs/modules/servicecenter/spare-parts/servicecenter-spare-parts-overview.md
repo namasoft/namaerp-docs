@@ -1,4 +1,5 @@
 ---
+description: "How spare parts move on a job order: planned materials, the issue request, Spare Parts Issue and Spare Parts Return, cost versus price, and the system parts ledger."
 entities: [SrvCRawMaterialIssue, SrvcRawMaterialReturn, SrvCRawMaterialIssueRequest]
 ---
 # Parts on a Job Order
@@ -68,9 +69,7 @@ This is the single most common configuration mistake in the module, and it produ
 of any kind. Before going live, commit one test issue and confirm the generated stock issue appears
 on the document's **الحركات / Actions** page.
 
-Note too that the **أنشاء مستندات تلقائيا / Generate Document(s)** tick on the term does not control
-this. It is ignored on these documents. The only way to stop generation is to clear the book or the
-term — and the only way to start it is to fill them both.
+To stop generation, clear the book or the term; to start it, fill them both.
 :::
 
 Because the stock movement belongs to the generated document, that is also where you look when
@@ -135,9 +134,16 @@ to Job Order From Other Documents** decides which of the two regimes you are in,
 consequential option in this whole area.
 
 **Switched off — the plan rules.** Every line on an issue must name a **task**; the item must be
-planned on the job order for that task, or you get *"The item is not planned with task"*; and the
-cumulative issued quantity for that item and task may not exceed the planned quantity, or you get
-*"Issued Qty for item … exceeds its allowed limit"*. Returns are netted off before the comparison, so
+planned on the job order for that task, or you get
+
+*The item {0} is not planned with task {1}*
+
+and the cumulative issued quantity for that item and task may not exceed the planned quantity, or
+you get
+
+*Issued Qty for item {0} for operation {1} exceeds its allowed limit*
+
+Neither message has an Arabic text, so both appear in English on Arabic screens too. Returns are netted off before the comparison, so
 issuing 6 litres, returning 1 and issuing 1 more is fine against a plan of 6.
 
 That limit only applies to job order material lines whose **المطابقة في السحب / Restrict In Issuing**
@@ -164,15 +170,8 @@ the standard *Generate Doc* action, which carries the job order across.
 
 That is the whole of it.
 
-::: warning The request has no effects whatsoever
-Committing an issue request moves no stock, generates no document, posts nothing, writes nothing to
-the parts ledger and changes nothing on the job order. It is a record of a request and a source
-document for the issue.
-
-Its term screen nevertheless shows *Transfer Not Issue*, *Transfer Book/Term*, *Generation Book/Term*
-and a pair of accounting sides. **None of them does anything on this document.** Fill in a generation
-book on a request term and you will wait for a stock document that is never coming.
-:::
+The request is a record of what was asked for and a source document for the issue: the stock
+movement, the parts ledger and the job order updates all come from the issue built from it.
 
 The request does still run the full plan, limit and job order status validation described above — so
 a request that is refused tells you something real about the plan before the storekeeper wastes a

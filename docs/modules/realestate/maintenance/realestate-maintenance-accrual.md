@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Accrual document that splits a compound's annual maintenance budget over its units pro-rata by area: filling it, the three accrual bases and what happens when it is processed."
 entities: [REMaintenanceAccrual]
 menu: Real Estate and Property → Documents → Maintenance Accrual
 ---

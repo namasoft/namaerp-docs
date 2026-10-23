@@ -29,7 +29,7 @@ Manual execution when determining basic salary components to achieve specific ne
 
 ## Parameters
 
-**Parameter 1:** Max Number of Trials (Optional) - Maximum iterations for convergence (default: 25)
+**Parameter 1:** Max Number of Trials (Required) - Maximum iterations for convergence, for example `25`. When it is empty, the action does nothing
 
 **Parameter 2:** Minimum Accepted Difference (Optional) - Acceptable difference between target and actual net salary (default: 0.01)
 

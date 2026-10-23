@@ -1,6 +1,6 @@
 ---
 entities: [AlwataniaDistConfig]
-menu: integrations → Master Files → Alwatania Distributors Config
+menu: Integrations → Master Files → Alwatania Distributors Config
 ---
 # Alwatania Distributors Integration
 
@@ -26,7 +26,7 @@ refused with a reason). Nothing on the platform changes records in Nama.
   of three ready-made actions runs, from a Task Schedule of type *Action* or from an Entity Flow.
   [Sending master data and invoices](./alwatania-sending-data) shows how to set them up.
 
-You find the configuration under **integrations → Master Files → Alwatania Distributors Config**.
+You find the configuration under **Integrations → Master Files → Alwatania Distributors Config**.
 
 ![The Integrations menu in the sidebar](../../../ar/modules/integrations/images/integrations-menu-en.png)
 

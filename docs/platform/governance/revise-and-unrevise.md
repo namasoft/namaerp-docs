@@ -1,4 +1,5 @@
 ---
+description: "How to revise and unrevise committed records: what revising locks, how many sign-offs are needed, who may revise, the four ways to revise, Detailed Revision Settings and the revision history."
 entities: [RevisionDoc, DetailedRevisionConfig]
 ---
 # Revise and Unrevise
@@ -105,7 +106,7 @@ Only committed settings take effect. A rule left as a draft is invisible to the 
 
 ### Describing the steps
 
-The **Steps** grid is the heart of the screen. Each line is one sign-off:
+The **Revision Steps** grid is the heart of the screen. Each line is one sign-off:
 
 | Column | What it does |
 |---|---|

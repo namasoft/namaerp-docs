@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Video Tutorials
+description: "Landing page for Nama ERP video tutorials with timestamped written summaries: featured walkthroughs and the supply chain, Report Wizard and HR payroll collections."
 ---
 
 # Video Tutorials

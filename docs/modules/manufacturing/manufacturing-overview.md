@@ -1,3 +1,6 @@
+---
+description: "Overview of the Manufacturing module: its core and add-on licences, the setup building blocks, how production flows from order to delivery, how costs are built, and where to start."
+---
 # Manufacturing Module Overview
 
 ## What Manufacturing is All About
@@ -112,11 +115,11 @@ This is where the **Order Close Voucher** comes in. When you close an order, Nam
 
 1. **Adds up all the actual costs** - everything you spent on materials, labor, machine time, and other resources
 2. **Applies overhead costs** - those indirect costs like factory rent, utilities, and supervisors' salaries that can't be tied to a specific product but still need to be allocated
-3. **Compares to standard costs** - if you have standard costs set up, it shows you the variances (where you spent more or less than expected)
+3. **Compares to standard prices** - if you record standard prices and switch deviations on, it shows you the variances (where you spent more or less than expected)
 4. **Updates inventory values** - your finished goods get valued based on the actual costs of production
 5. **Locks the order** - once closed, the order can't be modified, ensuring your historical records stay intact
 
-If for some reason you need to cancel an order that wasn't completed, you can terminate it instead of doing a normal close. The system writes off the work-in-process and handles the accounting appropriately.
+If for some reason you need to cancel an order that wasn't completed, you can terminate it instead of doing a normal close. Terminating skips the check for quantities still waiting at an operation and marks the order Terminated; the costing and the accounting are the same as for a normal close.
 
 ## Understanding Costs in Manufacturing
 
@@ -152,7 +155,7 @@ You can mix and match different allocation methods to match how your factory act
 
 ### Actual vs. Standard: Getting Real Numbers
 
-Many companies use standard costing - they estimate what production should cost, then compare actual costs to find variances. This is incredibly valuable for spotting problems early.
+Inventory is always valued at actual cost - FIFO or moving average, company-wide. But many companies also want to know what production *should* have cost. Record standard prices for your products and materials, and each closed order is compared against them, so the variances show up order by order. This is incredibly valuable for spotting problems early.
 
 Maybe your material costs are running 10% higher than expected - is it because prices went up, or because you're wasting material? Maybe labor is taking longer than standard - do workers need more training, or is the standard time unrealistic?
 
@@ -200,7 +203,7 @@ The beauty of this module is that you can start simple and grow into the advance
 
 **As you mature:**
 - Add quality check lists to operations
-- Implement standard costing and variance analysis
+- Record standard prices and use variance analysis
 - Set up complex overhead allocations
 - Use MRP for automated planning
 - Track resources and capacity in detail

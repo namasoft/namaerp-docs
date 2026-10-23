@@ -1,3 +1,6 @@
+---
+description: "Utilities that act on a list of records read from a text file on the server: recommit, re-replicate, delete, regenerate ledger or inventory effects, export to another server, and compare two files."
+---
 # Batch Utilities That Work From a List File
 
 Some repairs are the same action applied to hundreds of records: recommit these 800 invoices, delete these 40 drafts, send these 300 records to the new server again. Doing that by hand from the list view is slow and leaves no trail of what was done. The utilities on this page do it from a plain text file instead — one record per line — and keep a second file listing every line that succeeded, so a run that stops halfway can be started again without repeating the work.

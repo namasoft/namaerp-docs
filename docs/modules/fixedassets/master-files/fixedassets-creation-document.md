@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Creation Document: turning a contracting project into fixed assets, its screen, the rule it enforces, the term it needs, what committing creates and why it does not set cost; needs the contracting licence."
 entities: [FACreationDoc]
 menu: Assets → Master Files → Fixed Asset Creation Document
 ---

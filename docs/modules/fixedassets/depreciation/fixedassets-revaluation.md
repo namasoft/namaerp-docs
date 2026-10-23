@@ -1,4 +1,5 @@
 ---
+description: "Fixed asset revaluation: setting an asset to the Revaluation depreciation method, the Fixed Asset Revaluation document, the gain or loss entries it books, where its accounts come from, and cancelling it."
 entities: [FARevaluation]
 menu: Assets → Documents → Fixed Asset Revaluation
 ---
@@ -24,8 +25,8 @@ is locked.
 From that moment the asset drops out of the ordinary depreciation cycle entirely. The
 [depreciation run](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md) does not
 collect it, and if you managed to get a line for it onto a depreciation document the commit would
-refuse it and point you at this document instead. Its remaining life and salvage value sit on the
-master file untouched — nothing reads them for a revaluation asset.
+refuse it and point you at this document instead. Remaining life and salvage value belong to
+straight-line depreciation, so a revaluation asset does not need them.
 
 ## The Document
 

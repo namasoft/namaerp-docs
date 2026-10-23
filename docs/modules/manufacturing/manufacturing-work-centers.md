@@ -1,4 +1,5 @@
 ---
+description: "How to set up Work Centers and Standard Operations, the master files that hold the resources, rates, tolerances and molds that routings point to."
 entities: [WorkCenter, StandardOperation]
 ---
 # Work Centers and Standard Operations

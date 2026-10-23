@@ -1,4 +1,5 @@
 ---
+description: "Fields and Entities Settings grids for outside access: Integrator Config and Import Integrators web endpoints that create records, Invoice Retriever public PDF links, and error message logging."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---

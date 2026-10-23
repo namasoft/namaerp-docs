@@ -1,5 +1,6 @@
 ---
-entities: [AttendanceShift, AttendancePlan]
+description: "Attendance Shift (normal and automatic weekly-hours templates), the Attendance Plan that assigns a shift to employees for a period, and the Weekend Document for weekly rest overrides."
+entities: [AttendanceShift, AttendancePlan, WeekendDoc]
 ---
 # Attendance Plans & Shifts
 
@@ -13,9 +14,9 @@ A shift is keyed by Code / Group / Arabic Name / English Name like any master fi
 
 | Shift type | How it works |
 |---|---|
-| Normal (عادية) | A single fixed weekly pattern — the **Main** tab lists Saturday through Friday, each day with a **Work day** (يوم عمل) or **Weekly Rest** (راحة إسبوعية) switch and up to three Start/End time pairs (a split shift with a midday break, for example). |
+| Normal (عادية) | A single fixed weekly pattern — the **Main** tab lists Saturday through Friday, each day with a **Work day** (يوم عمل) or **Weekly Rest** (راحة إسبوعية) switch and up to three Start/End time pairs (a split shift with a midday break, for example). Each day also has two optional clock times: **Earliest Allowed Time Before Shift Start** (أبكر وقت مسموح قبل بداية الوردية) and **Latest Allowed Time After Shift End** (آخر وقت مسموح بعد نهاية الوردية) — the bounds within which early arrival and overtime are counted (see [Overtime & Lateness](overtime-and-lateness.md)). |
 | Automatic (تلقائي) | Instead of one fixed pattern, the **Auto Shifts** grid lists several candidate windows — each one pointing at an underlying **Shift** and carrying the arrival window (Start Time, End Time, Checkout From/To Time) that routes a punch to it. Nama reads the employee's actual punch and files it under whichever window it matches, and one row can be flagged as the **Default Shift** (دوام إفتراضى) to fall back on. Ideal when the same employees might work either a morning or an evening turn, and you want the system to recognise which one they worked instead of docking them (see the worked example below). |
-| Rotational (دورية) | The **Rotational Shift** tab defines a **Group Details** grid (working hours per rotation group) and a **Rotation Details** grid (when each group's rotation starts and which rotation line it follows) — for shift patterns that cycle employees through different weeks on a schedule, rather than repeating the same week forever. |
+| Rotational (دورية) | The **Rotational Shift** tab defines a **Group Details** grid (working hours per rotation group, with the same two earliest/latest allowed times per line) and a **Rotation Details** grid (when each group's rotation starts and which rotation line it follows) — for shift patterns that cycle employees through different weeks on a schedule, rather than repeating the same week forever. |
 
 Two more switches apply regardless of type:
 
@@ -70,7 +71,7 @@ The **Collect Employees** action (تجميع الموظفين) does the matching
 ![Attendance Plan, with the employee-range criteria used to collect matching employees](../../../ar/modules/hr/images/attendance/attendance-plan-en.png)
 
 ::: tip A plan can also override weekly rest days
-A second tab, **Weekends**, lets the same plan carry a separate set of lines — scoped by employee, department, job position, or department section, over a date range — that override an employee's normal weekly rest days (up to three weekend days per line) without touching their assigned shift. This is handled entirely within the Attendance Plan record; it doesn't require a separate document.
+A second tab, **Weekends**, lets the same plan carry a separate set of lines — scoped by employee, department, job position, or department section, over a date range — that override an employee's normal weekly rest days (up to three weekend days per line) without touching their assigned shift. This tab is used only while HR Configuration's **Take Weekends from the Weekend Document Instead of the Attendance Plan** is off; with that option on, the plan's Weekends tab must stay empty and the overrides go on a [Weekend Document](#Weekend-Document-weekly-rest-overrides-on-their-own) instead.
 :::
 
 A plan, like a shift, can be scoped with the standard **Dimensions** (legal entity, branch, sector, department, analysis set).
@@ -81,7 +82,15 @@ A plan, like a shift, can be scoped with the standard **Dimensions** (legal enti
 2. **Raise an Attendance Plan** with the date range and priority it should apply for.
 3. **Define the employee range** and use **Collect Employees** to preview and populate the matching employees.
 4. **Assign the shift** (and, if needed, an added shift) on each collected line.
-5. **Optionally add Weekends overrides** on the same plan for employee groups whose weekly rest days differ from the default.
+5. **Optionally add Weekends overrides** for employee groups whose weekly rest days differ from the default — on the plan's Weekends tab, or on a Weekend Document when HR Configuration takes weekends from the Weekend Document.
+
+## Weekend Document: weekly rest overrides on their own
+
+Found at **Payroll > Time Attendance > Weekend Document**.
+
+Some companies change rest days often — a department that rests on Friday and Saturday this month and on Saturday and Sunday the next — and would rather not reopen the attendance plan each time. For them, HR Configuration has **Take Weekends from the Weekend Document Instead of the Attendance Plan** (اعتماد الراحات الأسبوعية من سندها الخاص بدلاً من خطة الدوام). With it on, attendance reads weekly rest overrides only from saved **Weekend Documents** (سند الراحات الأسبوعية) and ignores the plans' Weekends tabs.
+
+The header carries an optional **Attendance Plan**, **Employee Department**, **Department Section**, **Job Position**, **Employee**, **From Date** and **To Date**. Whatever is filled in the header is copied to every line on save, so one header can scope a whole document. Each line of the **Weekends** grid names who it covers and for which dates, and up to three rest days: **Weekend 1**, **Weekend 2** and **Weekend 3** (راحة أسبوعية 1 / 2 / 3). The lines take effect when the document is saved, and stop when it is cancelled.
 
 ## Actions on this screen
 
@@ -97,7 +106,8 @@ The **Shift** screen has no buttons of its own — you fill in its weekly patter
 | *The date {0} is repeated* — «التاريخ {0} مكرر» | Two rows in a rotational shift's **Rotation Details** start their rotation on the same date. | Give each rotation row its own start date. |
 | *The date {0} is in wrong order* — «التاريخ {0} في ترتيب غير صحيح» | The **Rotation Details** rows are not in ascending date order, so the cycle cannot be read top to bottom. | Re-order the rows so the rotation start dates run forwards. |
 | *Field {0} - {1} can not be greater than list size {2}* — «الحقل {0} - {1} لا يمكن ان يكون اكبر من حجم الجريد {2}» | A rotation row points at a rotation-group line number that does not exist — the number is larger than the count of rows in **Group Details**. | Point the row at one of the existing group lines, or add the missing group line first. |
-| *You cannot add weekend lines while the option {0} is enabled, weekends are taken from the weekend document instead* — «لا يمكنك إضافة سطور راحات أسبوعية طالما أن الخيار {0} مفعل، حيث يتم اعتماد الراحات الأسبوعية من سند الراحات الأسبوعية» | HR Configuration's **Take Weekends From Weekend Doc Not Att Plan** is on, so weekly rest days come from the weekend document — and the plan's **Weekends** tab must stay empty. | Empty the Weekends tab and record the override on the weekend document, or switch that configuration option off if overrides belong on the plan. |
+| *You cannot add weekend lines while the option {0} is enabled, weekends are taken from the weekend document instead* — «لا يمكنك إضافة سطور راحات أسبوعية طالما أن الخيار {0} مفعل، حيث يتم اعتماد الراحات الأسبوعية من سند الراحات الأسبوعية» | HR Configuration's **Take Weekends from the Weekend Document Instead of the Attendance Plan** is on, so weekly rest days come from the weekend document — and the plan's **Weekends** tab must stay empty. | Empty the Weekends tab and record the override on the weekend document, or switch that configuration option off if overrides belong on the plan. |
+| *You cannot save the document if the option {0} is not enabled* — «لا يمكنك حفظ المستند إذا لم يكن الخيار {0} مفعلاً» | Raised on a **Weekend Document** while HR Configuration's **Take Weekends from the Weekend Document Instead of the Attendance Plan** is off — the document would have no effect. | Switch the option on if rest-day overrides should come from Weekend Documents, or record them on the attendance plan's Weekends tab instead. |
 | *Repeated lines ({0},{1}) with same employee {2}, priority {3}, from date {4} and to date {5}* — «السطور رقم ({0} و {1}) مكررة لنفس الموظف {2} والأولوية {3} من تاريخ {4} إلى تاريخ {4}» | Two lines in the plan grid carry the same employee, the same priority and the same date range, so there is no way to tell which shift wins. | Delete one of the two lines, or separate them by priority or by date range. |
 | *From Date should be less than To Date* | A plan line's **From Date** is after its **To Date**. This message has no Arabic string, so it stays in English on Arabic screens. | Correct the line's dates. |
 | *Department section {0} belongs to employee department {1}, and you are using employee department {2}* — «القسم الوظيفي {0} ينتمي إلى إدارة الموظف {1}، قد تم اختيار إدارة الموظف {2}» | A plan line names a **Department Section** that sits under a different **Employee Department** from the one chosen on the same line. | Pick a section that belongs to the chosen department, or change the department to the section's own. |

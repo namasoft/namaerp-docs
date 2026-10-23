@@ -1,4 +1,5 @@
 ---
+description: "How to open the Screen Modifier visual layout editor and use it to edit pages, blocks, fields and actions on a drag-and-drop canvas, then save the result into a Screen Modifier record."
 entities: [ScreenModifier]
 menu: Administration → Display Customization → Screen Modifier
 ---

@@ -1,4 +1,5 @@
 ---
+description: "The Custody Purchase Document: buying custody items on a full purchase invoice, why the cost is not expensed at once, what committing it does, paying and correcting it."
 entities: [FACustodyPurchaseDocument]
 menu: Assets → Custodys → Custody purchase document
 ---

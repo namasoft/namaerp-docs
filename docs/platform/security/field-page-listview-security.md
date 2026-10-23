@@ -1,4 +1,5 @@
 ---
+description: "How to hide or lock individual fields, pages (tabs) and list views for a role or a user with the Field Settings, Page Security and List View Security pages of the Security Profile and User screens."
 entities: [SecurityProfile, User]
 ---
 # Field, Page, and List View Security

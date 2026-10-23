@@ -1,4 +1,5 @@
 ---
+description: "The Education Course Contract: its parties, student lines and prices, currency, what committing it does in the ledger, and the checks before commit."
 entities: [EDCourseContract]
 menu: Education → Master Files → Course Contract
 ---

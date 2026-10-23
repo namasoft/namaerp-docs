@@ -1,4 +1,5 @@
 ---
+description: "Education master files: stages, classrooms and ranks, the Student and Guardian records, lecturers and contractors, Update Student Information and the Expense list."
 entities: [EDStudent, EDGuardian, EDEducationalStage, EDStageType, EDClassRoom, EDRank, EDLecturer, EDContractor, EDStudentInfoUpdater, EDExpense, EDMainLevel, EDSubLevel]
 ---
 # Students, Guardians and the Academic Structure
@@ -23,8 +24,8 @@ sections of about thirty pupils. Nama models exactly that shape, in four master 
 
 **Stage Type** is a small lookup: a code and the two names, nothing more. It categorises the stages
 themselves — you might create *General*, *Vocational* and *Language* stage types, or *Basic* and
-*Higher*. Nothing else in the module uses it, so keep the list short and meaningful; it exists so
-that a school with many stages can group them.
+*Higher*. Keep the list short and meaningful; it exists so that a school with many stages can group
+them.
 
 ![The Stage Type screen](../../ar/modules/education/images/master-files/stage-type-en.png)
 

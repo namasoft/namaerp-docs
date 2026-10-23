@@ -1,6 +1,6 @@
 ---
 entities: [CPAProjectStageExtension, CPAStageExtensionReason, CPAStageExtensionReasonType]
-menu: ECPA → Projects → Project Stage Extension
+menu: Project Management → Projects → Project Stage Extension
 ---
 # Stage Extensions
 

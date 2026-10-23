@@ -1,4 +1,5 @@
 ---
+description: "How the Create Rents button builds a rent contract's Rents grid: frequency, commission and insurance, yearly increases, water, maintenance and expense lines, taxes, Hijri leases and opening many leases at once."
 entities: [RERentContract, REMultiRentContract]
 ---
 # Generating the Rent Schedule

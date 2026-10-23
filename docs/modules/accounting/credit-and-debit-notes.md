@@ -1,4 +1,5 @@
 ---
+description: "How the Credit Note and Debit Note documents adjust a customer's or supplier's balance without cash: the screen fields, settling the related invoice, the accounting effect, actions and reports."
 entities: [CreditNote, DebitNote]
 menu: Accounting → Documents → CreditNote
 ---

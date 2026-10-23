@@ -1,4 +1,5 @@
 ---
+description: "Document term settings for the commercial paper (cheque) documents: opening papers, bank portfolio, bank notice, partial payment, cancellation, agio and FP transfer, and the accounts each one moves value between."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -98,6 +99,7 @@ The **Payment Effect** tab has two parallel pairs on each line's value — **Deb
 | Option | Field | What it does |
 |---|---|---|
 | **Prevent Save If Paper Status Is Finally Bounced** | `termConfig.preventSaveIfPaperStatusIsFinallyBounced` | Without it, a partial payment may be recorded against a paper that is partly paid, received, temporarily bounced or finally bounced. With it, finally bounced papers are refused — the message drops "finally bounced" from the list. |
+| **Use Issued Commercial Paper Instead Of Receipt** | `termConfig.useIssuedFPInsteadOfReceipt` | Makes the document pay off the company's own issued papers instead of received ones: the paper list on the lines offers issued, partly paid and bounced papers rather than received ones. |
 | **Shorten Ledger Effect**, **Apply effects on installments**, **installment Effect**, **Validate Remaining And Installments Total Equality** | | As above. |
 
 ## Commercial Paper Cancel

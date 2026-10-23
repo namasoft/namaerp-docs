@@ -1,6 +1,6 @@
 ---
 entities: [EltezamCodeTable]
-menu: integrations ← الملفات ← جدول أكواد التزام
+menu: التكاملات ← الملفات ← جدول أكواد التزام
 ---
 # جداول أكواد التزام
 

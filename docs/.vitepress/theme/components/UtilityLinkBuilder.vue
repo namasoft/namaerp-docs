@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {computed, ref} from 'vue'
 import {serverUrl} from "./server-url";
 import ServerBaseURL from "./ServerBaseURL.vue";
 import CopyIcon from "./CopyIcon.vue";
@@ -50,16 +50,12 @@ const props = defineProps({
   }
 })
 
-const paramInputs = ref([])
-
-onMounted(() => {
-
-  paramInputs.value = props.params.map(p => ({
-    title: p.title,
-    value: p.default || '',
-    id: p.id,
-  }))
-})
+// Filled at setup, not in onMounted, so the server-rendered HTML already carries the default link with its parameters.
+const paramInputs = ref(props.params.map(p => ({
+  title: p.title,
+  value: p.default || '',
+  id: p.id,
+})))
 
 const generatedUrl = computed(() => {
   const namedParams = paramInputs.value

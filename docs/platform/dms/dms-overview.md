@@ -1,3 +1,6 @@
+---
+description: "Overview of the Document Management System: its seven screens (archives, folders, topics, archived documents, document and folder movements, ZIP import), the basic-dms licence and how a document moves."
+---
 # Document Management Overview
 
 Most of what an ERP stores is data you typed. But every business also has a room full of paper
@@ -58,8 +61,8 @@ somebody doing the wrong thing.
 Worth knowing before you design a process around it, because each of these is a reasonable thing
 to expect and none of them is there:
 
-- **No expiry reminders.** A document carries a Renewal Date and an Expiration Date, and nothing
-  reads them. No alert, no notification, no scheduled scan. If you need to be warned that a
+- **No expiry reminders.** A document carries a Renewal Date and an Expiration Date, but DMS sends
+  no alert or notification of its own. If you need to be warned that a
   licence lapses next month, build it yourself with a [scheduled task](/platform/automation-and-rules/scheduled-tasks.md)
   over a filtered list.
 - **No searching inside files.** You can find documents by folder, topic, owner, archive or code.

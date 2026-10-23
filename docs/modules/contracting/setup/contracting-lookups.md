@@ -1,4 +1,5 @@
 ---
+description: "Reference for the small Contracting lookup files: Contracting Units of Measure, Contracting Tasks, Term Categories 1 and 2, Fine Reasons, Direct-Cost Items and Tax Extract Terms."
 entities: [ContractingUOM, ContractingTask, ContrTermCategory, ContrTermCategory2, ContractingFineReason, ContractingDirectCost, ContractingTaxExtractTerm]
 ---
 # Units, Tasks and Other Lookups

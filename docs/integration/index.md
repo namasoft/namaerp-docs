@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: External Integrations
+description: "Landing page for connecting Nama ERP to other systems: the REST API, integration scenarios, sending documents by link, attendance machines and external databases."
 ---
 
 # External Integrations

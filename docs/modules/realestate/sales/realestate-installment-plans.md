@@ -1,4 +1,5 @@
 ---
+description: "The installment plan on Real Estate sales documents: the price block, the installment construction block, the installment grid column by column, creating and merging installments, and installment types."
 entities: [RESalesDoc]
 ---
 # Building the Installment Plan

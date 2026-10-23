@@ -1,4 +1,5 @@
 ---
+description: "The Performance Optimizer screen that drops chosen security conditions (legal entity, branch, view capability) from lists and lookups for chosen record types and users, with a worked example."
 entities: [PerformanceOptimizer]
 menu: Basic → Settings → Performance Optimizer
 ---

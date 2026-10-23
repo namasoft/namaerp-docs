@@ -104,7 +104,7 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
     // Badge (optional delta indicator)
     "badge": {
       "field":      "deltaPercent",
-      "formatting": { "type": "percent", "decimals": 1 },
+      "formatting": { "type": "percent", "decimals": 1, "percentScale": "fraction" },  // SQL returns 0.125 → 12.5%
       "prefixIcon": { "positive": "trending_up", "negative": "trending_down", "zero": "remove" },
       "colorRules": { "rules": [
         { "when": { "type": "threshold", "op": ">=", "value": 0 }, "style": { "color": "#065f46" } },
@@ -152,6 +152,8 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
   "clickAction":       { "type": "crossFilter", "targetKey": "..." }
 }
 ```
+
+تُعرض قيمة `percent` **كما هي** ما لم يقل التنسيق غير ذلك: `12.5` تصبح `12.5%`. وإذا كان الاستعلام يرجع كسراً (`0.125`) فأضف `"percentScale": "fraction"` كما في الشارة أعلاه، وإلا ظهرت الشارة `0.1%`. أما بقية خيارات التنسيق — المنازل العشرية والعملة والتواريخ و`nullDisplay` — فهي نفسها في EnhancedTable؛ راجع [التنسيق](/ar/platform/bi/bi-reference-enhanced-table.md#41-formatting).
 
 ### `cardLayout.direction`
 

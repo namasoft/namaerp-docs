@@ -62,19 +62,18 @@ One page.
 | Mediator / الوسيط | Optional. |
 | Product / المنتج | **Required.** An inventory item, or a rental unit. |
 | Attachment 1 … Attachment 6 | Six slots here, rather than the usual five — room for a photograph of the fault or a wiring sheet. |
-| **Criteria** / السؤال | **The question.** See the warning below. |
+| **Criteria** / السؤال | **The question.** See the note below. |
 | **Result** / الإجابة | **The answer.** |
 
 Then the **Dimensions / محددات** group.
 
-::: warning The English labels say "Criteria" and "Result"
+::: tip The English labels say "Criteria" and "Result"
 On an English interface the two large boxes at the bottom of the screen are labelled **Criteria**
-and **Result**. They are not criteria and they are not a result — they are the **question** and the
-**answer**, and they are the two boxes the *Convert To FAQ* button fills. The Arabic interface reads
+and **Result**. They hold the **question** and the **answer**, and they are the two boxes the *Convert To FAQ* button fills. The Arabic interface reads
 correctly: **السؤال** and **الإجابة**.
 
-Nothing is wrong with the data; only the two English captions are wrong. Tell new English-language
-agents this once, or they will hunt for a Question box that is not there.
+Tell new English-language agents this once, so they look for **Criteria** rather than a Question
+box.
 :::
 
 ## Getting entries back out

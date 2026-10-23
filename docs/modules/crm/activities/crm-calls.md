@@ -1,4 +1,5 @@
 ---
+description: "The CRM Call screen: what a call can be logged against, how committing it updates a lead or potential's status and next activity, call-backs, the products and responses grids, and its buttons."
 entities: [CRMCall]
 menu: Customer Relationship Management → Support → CRM Call
 ---
@@ -36,9 +37,9 @@ against a trouble ticket or a customer is a plain record of a conversation.
 Beside it sits **Connected Person** (*المتصل به*), which is the person you actually spoke to: a
 contact, a customer, or the lead itself. On `CALL-0342` the subject is the lead `LD-00417` and the
 connected person is `CNT-0905`, Ms. Mona Shaaban in purchasing. Two more boxes, **Related Record 1**
-and **Related Record 2**, accept a reference to anything at all; nothing in the product reads them,
-so treat them as free storage and narrow them with a generic reference overrider if your site uses
-them.
+and **Related Record 2**, accept a reference to any record, so you can link the call to whatever else
+it concerns; narrow them with a generic reference overrider if your site wants them limited to
+particular record types.
 
 **Responsible Employee** and **Assignee** are stamped with the logged-in user's employee on every new
 Call, always. The CRM setting *Fill Responsible Employee With Current Employee* does not switch this
@@ -139,15 +140,9 @@ box **Selected Product** matters in exactly one place — the real-estate shortc
 The grid at the bottom of the first tab holds question-and-answer rows: a question, a text answer, a
 numeric answer, a date answer and a description.
 
-::: warning Type the questions in yourself
-There is a **Template** (*القالب*) field on the Call that offers questionnaire templates. Choosing
-one does **nothing**: no question rows appear and nothing is copied. The Responses grid is a manual
-grid, row by row. If you need a real questionnaire with a template behind it, use
-[the Questionnaire screens](/modules/crm/questionnaires/crm-questionnaire-templates) instead.
-
-The English column heading also reads **Criteria** where it means *question* — the Arabic label
-(*السؤال*) is the correct one. Do not go hunting for a criteria feature; there is none.
-:::
+You type the rows in yourself, one by one. For a survey built from a question template, use
+[the Questionnaire screens](/modules/crm/questionnaires/crm-questionnaire-templates). The question
+column's English heading reads **Criteria** on screen; it holds the question.
 
 ## The buttons
 

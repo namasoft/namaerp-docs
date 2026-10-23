@@ -1,4 +1,5 @@
 ---
+description: "Performance Indicator, Manual Measure, Performance Measure and System Indicator Approval: defining a measured value, its manual, system or script sources, the 73 system indicators, and how it reaches the salary."
 entities: [PerformanceIndicator, PerformanceMeasure, ManualMeasures, SysIndicatorApproval]
 ---
 # Performance Indicators

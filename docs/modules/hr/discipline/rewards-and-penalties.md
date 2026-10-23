@@ -1,4 +1,5 @@
 ---
+description: "The Reward / Penalty catalog and the (Reward / Penalty) Document in Payroll: defining one-off bonuses and deductions, applying one to an employee on a date, and how it reaches the salary or the ledger."
 entities: [RewardAndPenaltieDocument, RewardAndPenalty]
 ---
 # Rewards & Penalties
@@ -92,6 +93,7 @@ The Reward / Penalty catalog and the single (Reward / Penalty) Document have no 
 | *You Must Choose (Reward/Penaltie) Type* — «يجب إختيار نوع المكافأة / الجزاء» | The catalog entry has neither **Power** (in-kind) nor **Cash** ticked, so nothing says what kind of value it carries. | Tick **Cash** for a monetary reward or penalty, **Power** for an in-kind one. |
 | *Debit accounts distribution type must be fixed value in reward and penalty {0}* — «طريقة توزيع الحسابات المدينة يجب أن تكون ثابت في نوع المكافأة / الجزاء {0}» | The document's term is set to **Issued Immediately** — the document posts on its own rather than waiting for the salary run — and in that mode the catalog entry's **Debit Accounts** distribution type has to be **Fixed**. | Set the type's debit distribution to **Fixed**, or change the term's issue method so the value is carried into the next salary document instead. |
 | *Credit accounts distribution type must be fixed value in reward and penalty {0}* — «طريقة توزيع الحسابات الدائنة يجب أن تكون ثابت في نوع المكافأة / الجزاء {0}» | The same rule on the **Credit Accounts** side. | As above, for the credit distribution type. |
+| *The employee {0} with reward / penalty {1} at line {2} is repeated with line {3}* — «الموظف {0} مع المكافأة / الجزاء {1} في السطر {2} مكرر مع السطر {3}» | On the **Aggregated Reward And Penaltie Document**, two lines carry the same employee and the same reward or penalty — usually a double entry. | Delete or merge the duplicate line. If the employee really gets the same reward twice in this run, tick **Allow Repeating Employee With The Same Reward / Penalty** on the document's term (see [Loan, Reward and Penalty Document Terms](../document-terms/hr-terms-loans-rewards-and-penalties.md)). |
 
 ## Related pages
 

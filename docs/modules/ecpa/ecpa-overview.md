@@ -1,3 +1,6 @@
+---
+description: "Overview of the Project Management (ECPA) module for engineering and consulting offices: its licence, how it differs from Contracting, the setup vocabulary, the quotation-to-invoice flow and the menu group by group."
+---
 # Project Management (ECPA) Overview
 
 ::: info Required licence

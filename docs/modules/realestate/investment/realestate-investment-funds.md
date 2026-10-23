@@ -1,4 +1,5 @@
 ---
+description: "Real Estate investment funds built on investor money balances: the fund record, Finance Addition for money in, Investor Exit for money out, and where the fund's profit comes from."
 entities: [REInvestmentFund, REFundFinanceAddition, REInvestorExit]
 ---
 # Real Estate Investment Funds

@@ -1,4 +1,5 @@
 ---
+description: "The Vacation Type master file and its accrual, consumption and carry-forward rules, the Vacation Balance Range File for seniority-based entitlement, and the Opening Vacation Balance Document."
 entities: [VacationType, VacationBalanceRange, OpeningVacationBalanceDoc]
 ---
 # Vacation Types & Balances
@@ -31,6 +32,23 @@ A **Vacation Type** (نوع الأجازة) is not just a label like "Annual" or
 Annual leave is normally set up as `Vacation Class = Annual Vacation`, credited `With Month Start` (a twelfth of the year accrues every month) with a `Default Vacation Days` of, say, 21 or 30 — or, better, pointed at a **Vacation Balance Range File** so a 2-year employee earns fewer days than a 15-year one. Sick leave is usually a separate `Other` type with its own `Applicable After` and a `Vacation Days (Max)` per episode, and no balance-range dependency at all.
 :::
 
+### Which days a vacation consumes
+
+A vacation that starts on a Sunday with a return date two Sundays later spans fourteen calendar days, but whether the balance drops by fourteen depends on what those days are. The first group on the screen decides it separately for three kinds of day: **weekends** (shift days that are neither a work day nor a weekly rest), **official holidays** from the holiday calendar, and **weekly rest** days (days marked *Weekly Rest* on the employee's shift). The *(Balance)* settings decide what comes off the vacation balance; the *(Salary)* settings decide how many vacation days payroll sees.
+
+| Field | Arabic | What it controls |
+|---|---|---|
+| Include Weekend (Balance) | تشمل العطلة الأسبوعية (أرصدة) | On (the default): weekend days inside the vacation are deducted from the balance like any other day. Off: they are skipped. |
+| Exclude Last Weekend If Immediately Before Return | لا تشمل العطلة الأسبوعية إذا كانت قبل يوم العودة مباشرة | Weekend days that run right up to the return date are not deducted. Example: with a Friday–Saturday weekend, a vacation from Sunday the 1st returning Sunday the 15th consumes 12 days instead of 14. It works only while **Include Weekend (Balance)** is on — with that flag off, no weekend is counted anyway. |
+| Include Holiday (Balance) | تشمل العطلة الرسمية (أرصدة) | The same choice for official holidays. On by default. |
+| Exclude Last Holiday If Immediately Before Return | لا تشمل العطلة الرسمية إذا كانت قبل يوم العودة مباشرة | Holidays that run right up to the return date are not deducted. Works only while **Include Holiday (Balance)** is on. With both *Exclude Last* flags on, a mixed run of weekend and holiday days before the return date is skipped as a whole. |
+| Weekend Policy (Salary) | معاملة أجازة اسبوعية (رواتب) | `Like Balances` (مثل الأرصدة — the default) makes payroll follow **Include Weekend (Balance)**. `Include` (تشمل) or `Exclude` (لاتشمل) makes payroll count or skip weekend days whatever the balance flag says. |
+| Holiday Policy (Salary) | معاملة عطلة رسمية (رواتب) | The same three choices for official holidays. |
+| Week Rest Policy (Balance) | معاملة راحة اسبوعية (أرصدة) | How weekly rest days count against the balance: `Like Weekend` (مثل العطلة الأسبوعية — the default) treats them as weekend days; `Include` or `Exclude` decides on its own. |
+| Week Rest Policy (Salary) | معاملة راحة اسبوعية (رواتب) | The same choice for payroll; `Like Weekend` follows the weekend's salary treatment. |
+
+The two *Exclude Last* flags apply to the balance and to payroll alike.
+
 ### What happens to leftover balance and to pay
 
 | Field | Arabic | Meaning |
@@ -60,6 +78,8 @@ Annual leave is normally set up as `Vacation Class = Annual Vacation`, credited 
 - **Must Added To Contract** (يجب إضافته الى العقد) — the type only applies to employees whose employment contract explicitly lists it.
 - **Change Employee State To** (تغير حالة الموظف إلى) — automatically flips the employee's working state (for example to *In Vacation*/في أجازة, or *Suspended*/موقوف) for the duration of this leave, and back again on return. This is the same state machine used by [Change Employee State](change-employee-state.md).
 - **Reason Is Required** (عدم الحفظ إذا كان سبب الأجازة فارغاً) — blocks saving a vacation document of this type without a leave reason.
+- **Prevent Generate Salary If Working Start Document Not Registered** (منع إصدار الراتب إذا لم يتم تسجيل سند مباشرة عمل) — a salary document is refused for an employee who has a vacation of this type whose return date is on or before the end of the salary period but which has no [Work Starting Document](../recruitment/work-starting.md) yet. Register the employee's return first, then generate the salary.
+- **Do Not Show In Mobile App** (عدم الإظهار فى تطبيق الموبايل) — hides this vacation type from the vacation-type list in the [mobile app](../../mobile/mobile-hr-self-service.md), so employees cannot request it from their phones; HR can still record it on the desktop screens.
 
 This module requires the `humanresource-payroll` license component.
 

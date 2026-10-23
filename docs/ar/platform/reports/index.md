@@ -30,4 +30,5 @@ title: التقارير والنماذج المطبوعة
 
 <LandingGrid>
   <LandingCard icon="🔧" title="مرجع تعبيرات NamaRep" link="/ar/platform/reports/reports-namarep-reference.md" details="كتالوج التعبيرات لكاتبي التقارير: الأسماء والتواريخ والأرقام والتفقيط والأسعار والروابط والحماية ورموز QR." />
+  <LandingCard icon="🗄️" title="الاستعلام من جداول نما بلغة SQL" link="/ar/platform/reports/querying-nama-tables.md" details="القواعد التي يحتاجها كل استعلام لتقرير أو Widget أو اعتماد: المستندات المحفوظة فعليًا فقط، وربط الرأس، وأين تقع المبالغ والكميات." />
 </LandingGrid>

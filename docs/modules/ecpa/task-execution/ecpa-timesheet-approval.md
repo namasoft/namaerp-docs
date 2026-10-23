@@ -1,6 +1,6 @@
 ---
 entities: [CPATimeSheetApproval]
-menu: ECPA → Task Execution / Approvals → TimeSheet Approval
+menu: Project Management → Task Execution / Approvals → TimeSheet Approval
 ---
 # Approving Worked Hours
 

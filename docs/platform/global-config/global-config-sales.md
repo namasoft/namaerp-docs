@@ -34,5 +34,3 @@ Support tickets can be exchanged with a Nama CRM instance. These three settings 
 **Nama CRM Server URL** `value.info.namaServerUrl` *(default `https://crm.namasoft.com/`)* — The address of the CRM instance.
 
 **Customer User Name** / **Customer Password** `value.info.customerUserName`, `value.info.customerPassword` — The credentials this installation uses to authenticate against it.
-
-**Use English Trouble Ticket Change Template** `value.info.useEnglishCRMTroubleTicketChangeTemplate` — Sends the English version of the ticket-change notification instead of the Arabic one.

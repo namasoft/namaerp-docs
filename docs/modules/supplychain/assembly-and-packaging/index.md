@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Assembly & Packaging
+description: "Landing page for assembly and packaging under Inventory → Assembly Documents: Assembly BOMs, Assembly Request, Assembly Document, Multi Assembly Document and Aggregated Packaging Document."
 ---
 
 # Assembly & Packaging

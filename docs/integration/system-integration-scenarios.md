@@ -1,3 +1,6 @@
+---
+description: "A framework for answering whether Nama can integrate with another system, by direction of data flow (reading from or writing to Nama, or Nama calling the other system), with questions to ask and who bears the cost."
+---
 # Integration Scenarios Between Nama and Other Systems
 
 ## Introduction

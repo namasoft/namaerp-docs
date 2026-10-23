@@ -42,6 +42,40 @@ title: إعادة المعالجة والأدوات
 
 كثير من الأدوات في هذه الصفحات تُشغَّل من رابط لا من قائمة. ويظهر كل منها كنموذج صغير: خانة لكل مُدخل من مُدخلات الأداة، والرابط الجاهز تحتها، وزرّان بجانبه — **نسخ**، الذي ينسخ الرابط كما هو، و**إظهار عنوان الخادم** (أيقونة العين)، الذي يفتح خانة تكتب فيها عنوان خادم العميل. ويُعاد بناء الرابط أثناء الكتابة، ويحفظ المتصفح العنوان الذي أدخلته لكل روابط التشغيل في الموقع، فتضبطه مرة لكل خادم لا مرة لكل صفحة.
 
+### بناء رابط التشغيل يدوياً
+
+في مصدر الصفحة (ملف markdown) يظهر كل رابط تشغيل كوسم `<UtilityLinkBuilder>` فيه `className`، وأحياناً قائمة `:params`، وفي بعضها `:gui="true"`. والرابط الذي يعرضه يُبنى دائماً بالطريقة نفسها، فتستطيع كتابته بنفسك من المصدر:
+
+```text
+<server address>/utils?util=<className>-<value 1>,<value 2>,<id>=<value>&gui=true
+```
+
+- **عنوان الخادم** — عنوان نظام العميل حتى `/erp` ضمناً، مثل `http://localhost:8080/erp` على الخادم نفسه.
+- **`className`** — يُنسخ كما هو في الوسم تماماً.
+- **القيم** — علامة `-`، ثم قيم قائمة `:params` مفصولة بفواصل `,`: أولاً كل مُدخل ليس له `id` بقيمته وحدها وبترتيب القائمة، ثم كل مُدخل له `id` بالشكل `id=value`. استعمل القيمة `default` ما لم تحتج حالة العميل غيرها. والقيمة الفارغة تُحذف، وإن لم تبقَ قيم حُذفت علامة `-` أيضاً. وكل ما بعد أول `-` يصل إلى الأداة كما هو، فيجوز أن تحتوي القيمة على `-` (أكواد موظفين مثل `E001-E002-E003`) ولا يجوز أن تحتوي على فاصلة.
+- **`&gui=true`** — تُضاف فقط إذا كان الوسم يحمل `:gui="true"`.
+
+افتح الرابط في متصفح سجّلت فيه الدخول إلى ذلك الخادم بمستخدم مدير، ويظهر رد الأداة صفحةً.
+
+مثال: رابط **إعادة الاعتماد من ملف (Recommit From File)** في صفحة [أدوات تعمل على دفعة سجلات من ملف](/ar/admin/reprocessing/batch-utilities-from-file.md) مكتوب هكذا:
+
+```text
+className="com.namasoft.erp.gui.server.RecommitFromFile"
+:params="[
+{ title: 'Main File', default: 'e:/rc/recommit.txt' },
+{ title: 'Done File', default: 'e:/rc/done.txt' },
+{ title: 'Errors File', default: 'e:/rc/errors.txt' }
+]" :gui = "true"
+```
+
+ورابطه بالقيم الافتراضية:
+
+```text
+http://localhost:8080/erp/utils?util=com.namasoft.erp.gui.server.RecommitFromFile-e:/rc/recommit.txt,e:/rc/done.txt,e:/rc/errors.txt&gui=true
+```
+
+والمُدخل الذي له `id` مثل `{ title: 'Types To Process File', default: 'e:/rc/toProcessTypes.txt', id:'file' }` يصير `-file=e:/rc/toProcessTypes.txt`، ورابط التشغيل الذي ليس له `:params` هو `<server address>/utils?util=<className>` فقط.
+
 ## اكتشف المشكلة أولاً
 
 <LandingGrid>

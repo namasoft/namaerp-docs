@@ -19,7 +19,7 @@ The map of the module, the settings, and the order to build a fresh installation
 <LandingGrid>
   <LandingCard icon="🗺️" title="CRM Overview" link="/modules/crm/crm-overview.md" details="The five products, the menu tree, the five licences, and the nine screens that look like documents but are not." />
   <LandingCard icon="🚀" title="Getting Started" link="/modules/crm/crm-getting-started.md" details="A separate setup sequence for each half of the module, and the one status setting that decides whether maintenance records anything at all." />
-  <LandingCard icon="⚙️" title="CRM Settings" link="/modules/crm/crm-configuration.md" details="The module settings option by option — including the two that are on the screen and change nothing." />
+  <LandingCard icon="⚙️" title="CRM Settings" link="/modules/crm/crm-configuration.md" details="The module settings option by option, and the one that is narrower than its name suggests." />
   <LandingCard icon="📊" title="Reports and Printed Forms" link="/modules/crm/crm-reports-and-forms.md" details="What ships for reporting, which is one print form, and the four routes to everything else." />
 </LandingGrid>
 
@@ -38,14 +38,14 @@ Chasing a lead from first contact to a customer record — and what the pipeline
 
 ## Activities
 
-The calls, visits and plans that move a relationship forward — and the only two screens in CRM that change anything.
+The calls, visits and plans that move a relationship forward.
 
 <LandingGrid>
   <LandingCard icon="📞" title="Calls" link="/modules/crm/activities/crm-calls.md" details="Logging a call, the call-back chain, and how a call rewrites the lead's status and classification." />
   <LandingCard icon="🚪" title="Visits" link="/modules/crm/activities/crm-visits.md" details="The visit document, the mobile check-in with its coordinates and signature, and the module's one printed form." />
   <LandingCard icon="📝" title="Visit Requests" link="/modules/crm/activities/crm-visit-requests.md" details="A prefill template for a visit — with no approval step and no link back." />
   <LandingCard icon="🗓️" title="Work Plans" link="/modules/crm/activities/crm-work-plans.md" details="The one screen that generates work in bulk: tick the lines and it creates the calls and visits." />
-  <LandingCard icon="✅" title="Tasks and Follow-Ups" link="/modules/crm/activities/crm-tasks-and-follow-ups.md" details="A to-do card with a timesheet, and a follow-up document nothing reads." />
+  <LandingCard icon="✅" title="Tasks and Follow-Ups" link="/modules/crm/activities/crm-tasks-and-follow-ups.md" details="A to-do card with a timesheet, and a follow-up log of contact attempts." />
 </LandingGrid>
 
 ## Marketing and Surveys
@@ -55,7 +55,7 @@ Campaigns, plans, quotas and questionnaires — and an honest account of what ea
 <LandingGrid>
   <LandingCard icon="📣" title="Campaigns" link="/modules/crm/marketing/crm-campaigns.md" details="Recording a campaign and attributing a lead to it — and why a won deal can never be traced back." />
   <LandingCard icon="🗺️" title="Marketing Plans" link="/modules/crm/marketing/crm-marketing-plans.md" details="A planning grid with monthly figures and deviations you maintain by hand." />
-  <LandingCard icon="🎯" title="Target Plans" link="/modules/crm/marketing/crm-target-plans.md" details="Activity-count quotas per salesperson, and why the Actual update button cannot fill them in." />
+  <LandingCard icon="🎯" title="Target Plans" link="/modules/crm/marketing/crm-target-plans.md" details="Activity-count quotas per salesperson, planned against actual month by month." />
   <LandingCard icon="❓" title="Questionnaire Templates" link="/modules/crm/questionnaires/crm-questionnaire-templates.md" details="Building the question set, the answer choices and the HTML templates behind a survey." />
   <LandingCard icon="📋" title="Questionnaires" link="/modules/crm/questionnaires/crm-questionnaires.md" details="Issuing a survey, getting it answered, and reading the answers back one at a time." />
 </LandingGrid>
@@ -70,7 +70,7 @@ Complaints, trouble tickets, the work done against them, and the contracts that 
   <LandingCard icon="🔀" title="Ticket Follow-Ups" link="/modules/crm/support/crm-ticket-follow-ups.md" details="The status gateway — eight of the thirteen ticket statuses are reachable only from here." />
   <LandingCard icon="⏱️" title="Ticket Executions" link="/modules/crm/support/crm-ticket-executions.md" details="Recording who worked on a ticket and for how long, and how the hours reach the ticket." />
   <LandingCard icon="📮" title="Complaints" link="/modules/crm/support/crm-complaints.md" details="Taking a complaint, linking it to the document it came from, and converting it to a ticket." />
-  <LandingCard icon="📜" title="Service Contracts" link="/modules/crm/support/crm-service-contracts.md" details="The contract that is also the invoice — what it covers, what it bills, and what its status does not enforce." />
+  <LandingCard icon="📜" title="Service Contracts" link="/modules/crm/support/crm-service-contracts.md" details="The contract that is also the invoice — what it covers, what it bills, and how its status is set." />
 </LandingGrid>
 
 ## Machine Maintenance
@@ -115,7 +115,7 @@ A self-contained booking system for businesses that send crews to customer addre
 
 ## Reference
 
-The files everything else points at, the term settings behind the buttons, and one register that belongs to nothing.
+The files everything else points at, the term settings behind the buttons, and an internal risk register.
 
 <LandingGrid>
   <LandingCard icon="🤝" title="Mediators and Agents" link="/modules/crm/master-files/crm-mediators-and-agents.md" details="The introducer file referenced across the module, and its near-identical twin." />
@@ -125,5 +125,5 @@ The files everything else points at, the term settings behind the buttons, and o
   <LandingCard icon="⚖️" title="Competitors" link="/modules/crm/master-files/crm-competitors.md" details="Recording who you are bidding against, and the honest limits of that capture." />
   <LandingCard icon="❔" title="FAQ" link="/modules/crm/master-files/crm-faq.md" details="The answer file created from a ticket — and why it is not a knowledge base." />
   <LandingCard icon="📐" title="Document Terms" link="/modules/crm/document-terms/crm-terms-basics.md" details="Which CRM documents have terms, the accounts behind them, and the generation pairs that drive every button." />
-  <LandingCard icon="⚠️" title="Risk Register" link="/modules/crm/risk-register/crm-risk-register.md" details="An FMEA-style register of problems, likelihood and solutions — connected to nothing else in the menu." />
+  <LandingCard icon="⚠️" title="Risk Register" link="/modules/crm/risk-register/crm-risk-register.md" details="An FMEA-style register of the company's own problems, likelihood and solutions." />
 </LandingGrid>

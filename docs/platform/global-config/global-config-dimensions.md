@@ -15,7 +15,7 @@ The five master files themselves are covered in [Dimensions and Composite Dimens
 
 The legal entity is the only dimension that cannot be switched off — it is the company, and every record belongs to one (or to none, which means *public*).
 
-**Show Public Documents to All** `value.info.showPublicDocumentsToAll` — A record saved with an empty legal entity is public. Normally a public record is still hidden from users working inside a specific legal entity. Turn this on and public records become visible from every legal entity, which is what you want for shared master data such as a common item catalogue.
+**Show Public Documents to All** `value.info.showPublicDocumentsToAll` — Matters only on a server whose `nama.properties` contains `preventViewingPublicDocuments=true`. There, documents saved with PUBLIC in a dimension are hidden from users working inside a specific value of that dimension; turning this on shows them to everyone again. It applies to every dimension type, and master files are never hidden this way. Without that line in `nama.properties` public records are visible to all and this option changes nothing.
 
 **Ignore Legal Entity Matching If No Matching Is Specified for Any Other Dimension** `value.info.ignoreDimensionsConsistency` — Skips the storage-dimension consistency check entirely. It only has an effect when all four consistency levels below are set to None; it is an escape hatch for installations that deliberately don't use dimension consistency at all, not a way to silence individual errors.
 

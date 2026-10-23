@@ -22,7 +22,7 @@ Usually because the two documents are counting different things, and both of the
 
 ## Does the budget stop overspending?
 
-Not by itself, and this is the honest answer people usually do not expect. Nothing on the estimated or executive budget screen blocks anything: creating a budget of 180,000 does not prevent 200,000 of purchase orders. There is exactly one real ceiling in the module, and it lives on the **spending** document, not on the budget — open that document's document term (توجيه) and tick the option that prevents saving when the actual cost exceeds the planned cost. From then on the document refuses to save whenever the accumulated actual cost booked against a budget term code exceeds that term line's planned total cost. The companion quantity option does not bite on budget lines, and on a contracting purchase order you can additionally cap the ordered quantity with **Do Not Exceed Quantity**. Which documents expose the option, and the one indirect control on the executive budget item request, are set out in [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).
+Not by itself, and this is the honest answer people usually do not expect. Nothing on the estimated or executive budget screen blocks anything: creating a budget of 180,000 does not prevent 200,000 of purchase orders. There is exactly one real ceiling in the module, and it lives on the **spending** document, not on the budget — open that document's document term (توجيه) and tick the option that prevents saving when the actual cost exceeds the planned cost. From then on the document refuses to save whenever the accumulated actual cost booked against a budget term code exceeds that term line's planned total cost. To cap quantity against a budget line, tick **Do Not Exceed Quantity** on the contracting purchase order's term; it limits the ordered quantity to the line's planned quantity. Which documents expose the option, and the one indirect control on the executive budget item request, are set out in [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).
 
 ## Why is material issued to a subcontractor deducted from his extract?
 
@@ -44,7 +44,7 @@ Because the **Project Contract Update** replaces the contract's conditions whole
 A partially filled conditions grid deletes the conditions you did not list. Fill it completely or leave it empty.
 :::
 
-One related surprise: for conditions whose value is a percentage of the term's due or net value, or of the total due value, the master condition's own percentage always wins — editing the percentage on the contract's condition line has no effect. Set those percentages on the condition master file instead. See [Contract Conditions](/modules/contracting/setup/contracting-conditions.md) and [Project Contract Updates](/modules/contracting/project-contracting/contracting-project-contract-updates.md).
+One related point: conditions whose value is a percentage of the term's due or net value, or of the total due value, take their percentage from the condition master file, so set those percentages there. See [Contract Conditions](/modules/contracting/setup/contracting-conditions.md) and [Project Contract Updates](/modules/contracting/project-contracting/contracting-project-contract-updates.md).
 
 ## Where are the terms I copied? There is no "copy terms" button
 

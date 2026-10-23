@@ -44,13 +44,9 @@ The same grid also carries the serial number, the machine's own warranty dates, 
 
 **Collect All Machines Related To The Customer** is a shortcut worth knowing: it replaces the grid with every machine belonging to that customer that is not a sub-machine of another. On a customer with forty split units that saves an afternoon — but it *replaces*, so use it before you start hand-editing lines, not after.
 
-::: warning The Visit schedule grid does nothing
-Further down the main page there is a grid headed **Visit schedule**, holding a machine and a visit date. It looks exactly like the place you would enter "chiller 1, 1 April; chiller 1, 1 May; …" — and nothing reads it. The only code that touches it is a validation checking that the machine you picked also appears in the Machines grid.
+The visit series comes from the **Visit Type** columns above and the contract's start and end dates.
 
-No work plan, no order and no visit is ever produced from it. The visit series comes from the **Visit Type** columns above and the contract's start and end dates. Leave the visit-schedule grid empty.
-:::
-
-The **Terms** page is in the same category: a grid of trouble level, trouble description, response time and remarks. It is an SLA table, it prints nicely if your implementer builds a form for it, and no code in the module reads it. Nothing measures a response time against it.
+The **Terms** page holds the contract's service levels: a grid of trouble level, trouble description, response time and remarks. On a [maintenance notice](/modules/crm/maintenance-cycle/crm-maintenance-notices-and-requests) raised against the contract, the Trouble Level and Trouble Description lookups offer only the rows of this grid, and picking either one fills the other together with the response time and the two remarks.
 
 ## Pre-Paid Entitlement
 
@@ -187,6 +183,6 @@ It is a genuinely useful "has anyone actually been there?" view, with one honest
 | Message | Why | What to do |
 |---|---|---|
 | *Total of payment values {0} not equal the total price {1}* — «إجمالي مبلغ الدفعات {0} لايساوي السعر الإجمالي {1}» | The contract has payment-schedule lines on the Billing page and they do not add up to the money **net value**. | Make the schedule sum to the net value (71,136.00 on `MC-0021`), not to the figure the message prints — the message shows the total before tax while the check uses the net value. |
-| *Can not use the machine {0} because it was not found in the machines grid* — «لا يمكن استخدام الاّلة {0} لأنها غير موجودة في جدول الالاّت» | A row in the Visit schedule grid names a machine that is not listed in the Machines grid. | Add the machine to the Machines grid, or clear the visit-schedule row — that grid drives nothing and is best left empty. |
+| *Can not use the machine {0} because it was not found in the machines grid* — «لا يمكن استخدام الاّلة {0} لأنها غير موجودة في جدول الالاّت» | A row in the Visit schedule grid names a machine that is not listed in the Machines grid. | Add the machine to the Machines grid, or remove the row from the Visit schedule grid. |
 | *The Item {0} in line {1} is repeated* — «البند {0} في السطر {1} مكرر» | The same spare part, or the same service, is listed twice on the Spare parts and services page. | Merge the two rows into one carrying the combined quantity; entitlement is tracked per row. |
 | *Main Quantity can not be less than the Sold Quantity* — «الكمية الأساسية لا يمكن ان تقل عن الكمية المباعة» | A spare-part or service row has a Quantity below the Sold Quantity already drawn against it. | Raise the Quantity to at least what has been consumed; reducing entitlement below what documents have already taken is refused. |

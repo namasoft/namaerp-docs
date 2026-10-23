@@ -1,3 +1,6 @@
+---
+description: "The Pending System Action queue of background work, such as salary document regeneration and outgoing HTTP calls, and the Auto System Action journal of what the system already did."
+---
 # System Actions
 
 Two screens sit next to each other in the menu with almost the same name, and they have nothing to

@@ -1,6 +1,6 @@
 ---
 entities: [CPATask, CPATaskType]
-menu: ECPA ← المهام ← مهمة مشروع
+menu: ادارة المشاريع ← المهام ← مهمة مشروع
 ---
 
 # مهام المشروع

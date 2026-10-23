@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Type master file: the accounts, useful life, salvage value and depreciation settings it gives each asset, what is copied when a type is chosen, overriding it on one asset, and a full setup example."
 entities: [FAType]
 menu: Assets → Master Files → Fixed Asset Type
 ---

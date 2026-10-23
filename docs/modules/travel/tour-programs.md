@@ -60,10 +60,9 @@ accommodation grid: the nights on all your hotel stays must add up to exactly th
 the program will save.
 
 ::: tip Status is a label you keep for yourself
-The status pick-list — **Initial**, **In Progress**, **Finished**, **Canceled** — is informational.
-The system never acts on it: nothing is blocked, hidden or triggered by it, and it is copied onto
-tours built from the program. Use it to mark which of your templates are live and which are
-retired, and to filter the list screen when you have fifty of them.
+The status pick-list — **Initial**, **In Progress**, **Finished**, **Canceled** — is a label you
+set by hand, and it is copied onto tours built from the program. Use it to mark which of your
+templates are live and which are retired, and to filter the list screen when you have fifty of them.
 :::
 
 ### Guest Details (تفاصيل الضيف)
@@ -120,7 +119,7 @@ the Marriott Cairo is a single line with `3` in Nights.
 | **TPL / DBL / SGL / PAX** | The room split for this stay |
 | **Hotel Voucher** (قسيمة الفندق) | A link to a [hotel voucher](./travel-vouchers) |
 | **Meals** (وجبات) | Free text for the meal basis — `BB`, `HB`, `FB`, `AI` — written the way your contracts write it |
-| **Situation** (الموقف) | **OK**, **RQ** or **WL** — the booking's standing. Informational only |
+| **Situation** (الموقف) | **OK**, **RQ** or **WL** — the booking's standing, a label for your own follow-up |
 
 The order of the lines *is* the order of the trip. The first line is where the group sleeps on
 arrival night, the second line follows it, and so on — which is exactly how a real tour turns them

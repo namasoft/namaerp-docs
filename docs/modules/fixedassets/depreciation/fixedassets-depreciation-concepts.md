@@ -20,9 +20,8 @@ can hold one of exactly two values:
 | Straight Line | *Straight Line* / قسط ثابت | The system computes the periodic charge from the formula below. This is the default on every new asset. |
 | Revaluation | *Revaluation* / إعادة تقييم | The system computes nothing. You state the asset's appraised value each time it is re-appraised, and the difference is booked as a gain or a loss. |
 
-There is no reducing balance, no sum-of-digits, no units-of-production and no declining-balance
-option — those methods are not implemented and no setting turns them on. If your accounting policy
-requires one of them, it has to be handled outside the module.
+These are the only two methods the module offers. If your accounting policy requires reducing
+balance, sum-of-digits or units-of-production, handle that depreciation outside the module.
 
 The method is chosen on the asset and cannot be swapped once the asset has any history behind it,
 so it is a decision made when the asset is created rather than an ongoing setting. It also decides

@@ -1,4 +1,5 @@
 ---
+description: "The receipt and payment chain: requests, orders and vouchers, the receipt voucher screen, its accounting effect, consolidated requests, actions, reports, and preventing a payment from overdrawing the cash box."
 entities: [ReceiptVoucher, PaymentVoucher, ReceiptOrder, PaymentOrder, RVRequest, PVRequest, ConsolidatedRVRequest, ConsolidatedPVRequest]
 menu: Accounting → Documents → Receipt Voucher
 ---

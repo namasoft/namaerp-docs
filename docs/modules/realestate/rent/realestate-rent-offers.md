@@ -1,4 +1,5 @@
 ---
+description: "The Rent offer, a priced quotation for one estate that can also reserve the unit, creating a rent contract from it, and the Rent offer Cancel document that releases the reservation."
 entities: [RERentOffer, RERentOfferCancel]
 menu: Real Estate and Property → Rents → Rent offer
 ---

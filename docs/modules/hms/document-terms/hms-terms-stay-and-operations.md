@@ -101,9 +101,8 @@ What turns its lines into stock movements is the last group on its **Effect** ta
 | **Assembly Document Book** / **Assembly Document Term** | `termConfig.assemblyDocumentBook` / `termConfig.assemblyDocumentTerm` | A meal line that carries a recipe (the feeding type's bill of materials) becomes an **Assembly Document** that consumes the ingredients and produces the meal — one per line. |
 | **Stock Issue Book** / **Stock Issue Term** | `termConfig.stockIssueBook` / `termConfig.stockIssueTerm` | Lines without a recipe are issued together on one **Stock Issue**. |
 
-The feeding issue bills nobody, so the patient/insurer sides higher up on its Effect tab are not used;
-leave them empty. Its cost reaches the ledger through the stock issue and assembly documents it
-creates.
+The feeding issue bills nobody: its cost reaches the ledger through the stock issue and assembly
+documents it creates.
 
 ## Messages you may see
 

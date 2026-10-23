@@ -111,17 +111,38 @@ http://localhost:8080/erp/browseapi/openapi/Item.json
 
 ### التعامل مع collections الكيانات
 
-تتضمن كثير من الكيانات collections تفصيلية (علاقات one-to-many):
+تتضمن كثير من الكيانات collections تفصيلية (علاقات one-to-many). فبنود فاتورة المبيعات مثلاً هي الـ collection المسماة `details`، وكل بند يضم الصنف والكمية والسعر ككائنات متداخلة:
 
 ```json
 {
-  "invoiceLines": {
+  "details": {
     "type": "array",
     "items": {
       "properties": {
-        "itemCode": { "type": "string" },
-        "quantity": { "type": "number" },
-        "unitPrice": { "type": "number" }
+        "item": {
+          "properties": {
+            "item": { "type": "string" }
+          }
+        },
+        "quantity": {
+          "properties": {
+            "quantity": {
+              "properties": {
+                "primeQty": {
+                  "properties": {
+                    "value": { "type": "number" },
+                    "uom": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "properties": {
+            "unitPrice": { "type": "number" }
+          }
+        }
       }
     }
   }
@@ -187,7 +208,7 @@ http://localhost:8080/erp/browseapi/openapi/SalesInvoice.json?X-API-Key={your-ap
 
 يستطيع **مسؤول النظام** إنشاء API Keys عبر شاشة **API Credentials**:
 
-1. افتح شاشة API Credentials
+1. افتح شاشة API Credentials (**الأساسيات ← المستندات ← API Credentials**)
 2. أنشئ سجلاً جديداً يتضمن:
    - **الكود**: معرّف فريد لبيانات اعتماد الواجهة البرمجية
    - **الاسم**: اسم وصفي للتكامل
@@ -202,6 +223,10 @@ http://localhost:8080/erp/browseapi/openapi/SalesInvoice.json?X-API-Key={your-ap
 - صلاحيات الوحدات
 - قواعد رؤية البيانات
 - قيود الشركة/الفرع
+:::
+
+::: info كل سجل ملك لمستخدمه
+سجل API Credentials ملك للمستخدم المذكور في حقل **المستخدم**. مدير النظام يرى سجلات الجميع ويديرها؛ وأي مستخدم آخر لا يرى إلا سجلاته، وحقل **المستخدم** الفارغ يُملأ بمن يحفظ السجل. وحفظ سجل يذكر مستخدمًا آخر، من غير مدير النظام، يُرفض بالرسالة *You can only create or edit records that belong to you* (بالإنجليزية فقط — لا ترجمة عربية لها).
 :::
 
 ### عرض API Keys بعد الإنشاء
@@ -329,13 +354,20 @@ responseFields: code,id      # الحقول المُرجَعة بعد الحفظ
   "name1": "Customer Name",
   "contactInfo": {
     "email": "customer@example.com",
-    "phone": "+966501234567"
-  },
-  "invoiceLines": [
+    "mobile": "+966501234567"
+  }
+}
+```
+
+وتُرسل بنود المستند في الجسم نفسه داخل الـ collection الخاصة به — لفاتورة المبيعات مثلاً:
+
+```json
+{
+  "details": [
     {
-      "itemCode": "ITEM001",
-      "quantity": 5,
-      "unitPrice": 100
+      "item": { "item": "ITEM001" },
+      "quantity": { "quantity": { "primeQty": { "value": 5 } } },
+      "price": { "unitPrice": 100 }
     }
   ]
 }
@@ -539,7 +571,7 @@ updateRecord: false
   "name1": "Customer Name",
   "contactInfo": {
     "email": "customer@example.com",
-    "phone": "+966501234567"
+    "mobile": "+966501234567"
   }
 }
 ```

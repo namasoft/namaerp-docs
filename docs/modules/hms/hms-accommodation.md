@@ -1,4 +1,5 @@
 ---
+description: "The HMS Accommodation, Accommodation Transfer, Accommodation Exit and Feeding Issue screens: booking a patient's bed, the stay history, how the stay is billed, room transfers, discharge and meals."
 entities: [HMSAccommodation, HMSAccommodationTransfer, HMSAccommodationExit, HMSFeedingIssue]
 menu: Hospital Management System → Documents → Accommodation
 ---
@@ -82,6 +83,8 @@ on demand: the final ones if the patient has left, otherwise the temporary ones 
 after correcting a price or a date. A line ticked **Do not Allow System To Edit Selected Line** on an
 invoice is kept as it is.
 
+For a patient who is still in hospital, the button leaves an admission's invoices untouched when the stay began on or before the date of the last **Closing Entry** of the admission's company — those days belong to a closed year. It says so with a warning naming the admission, the first day of the stay and the closing date, and moves on to the next admission.
+
 ::: tip Supervision is billed on its own invoice
 The accommodation invoice posts the bed price. The medical-supervision fee of the same days is billed
 by a **Supervision Invoice** that the accommodation invoice creates when its term has *Auto Generate
@@ -145,3 +148,4 @@ the rest are issued on one **Stock Issue**, under the books and terms named on t
 | *You can not delete this doc {0} before delete transfer doc {1}* — «لا يمكن حذف هذا السند {0} , حيث هناك سند نقل تسكين {1} بعد هذا السند» | A transfer exists after the document you are deleting. | Delete the transfer named in the message first. |
 | *Previous document {0} in date [{1} , {2}] Must Be Out for bed {3}, intersect with same bed* — «السند السابق {0} بتاريخ [{2} , {1}] يجب أن يكون خروج للغرفة {3} , لأنه متقاطع مع نفس الغرفة» | The chosen bed is still occupied by the stay named in the message. | Choose another bed, or move the other patient out first. |
 | *Can not create Accommodation Invoice, please add DocumentBook and DocumentTerm in Accommodation Doc Term.* — «لا يمكن إنشاء فاتورة إقامة، برجاء إضافة دفتر وتوجية الفاتورة فى توجية مستند تسكين المريض.» | The invoices were to be built but the accommodation's term has no invoice book or term. | Fill *Accommodation Invoice Book* and *Term* on the accommodation's term. |
+| *Accommodation invoice of admission {0} was not updated because it starts at {1}, before the closing entry on {2}* | A warning from **Re-create Accommodation Invoice** for a patient still in hospital: the stay began on or before the last closing entry of the company, so its invoices are left as they are. The message has no Arabic translation. | Nothing to fix on the stay. Correct the closed-year invoices by hand if they really need a change. |

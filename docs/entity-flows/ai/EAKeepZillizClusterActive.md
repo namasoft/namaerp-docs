@@ -15,7 +15,7 @@ Executes a lightweight query on the configured Zilliz (Milvus) vector database t
 ## When This Action Runs
 
 - **Trigger:** Scheduled task or manual execution through entity flows
-- **Target:** Any entity (entity content is not used)
+- **Target:** Any entity (the query does not depend on the record)
 - **Purpose:** Prevent Zilliz cluster suspension due to inactivity
 - **Timing:** Recommended to run periodically via scheduled task (e.g., once every day)
 

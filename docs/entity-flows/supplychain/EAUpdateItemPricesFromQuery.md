@@ -41,7 +41,7 @@ It can be attached to any record's event, or run from a Task Schedule. The recor
 
 **Parameter 7:** Default revision code (Optional) - Used when a query row's revision column is empty.
 
-**Parameter 8:** Items Finder Query (Required) - SQL that returns the items to update. The columns must come in this order: id, color, size, revision. Select `NULL` (or leave the column out) when the item does not use that dimension. Put the query in parameter 8. The labels on the entity flow line show "Items Finder Query" against parameter 5, but the action reads parameter 5 as the default color code.
+**Parameter 8:** Items Finder Query (Required) - SQL that returns the items to update. The columns must come in this order: id, color, size, revision. Select `NULL` (or leave the column out) when the item does not use that dimension.
 
 ## Example
 

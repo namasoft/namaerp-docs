@@ -1,4 +1,5 @@
 ---
+description: "The Raw Materials Issue, Raw Materials Return and Raw Material Change documents that move material to and from a production order: header, lot collection, details grid and what happens on save."
 entities: [RawMaterialIssue, RawMaterialReturn, RawMaterialChangeDoc]
 menu: Manufacturing → Documents → Raw Materials Issue
 ---

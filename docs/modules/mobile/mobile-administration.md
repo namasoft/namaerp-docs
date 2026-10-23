@@ -39,6 +39,15 @@ Three things are different, because the server applies them at the moment the ap
 For the screen modifier and the entity title modifier, keep a single active record (or a single line) for each app screen. When two active ones apply to the same screen, only one of them is used, and which one is not something you can rely on. Untick **Inactive** on the one you want and tick it on the others.
 :::
 
+## The API Credentials record each app user gets
+
+The first time a user logs in to the app, the server creates an **API Credentials** record for that user (**Basic → Documents → API Credentials**) and hands its key to the phone. From then on the app signs its requests with that key rather than with the password. The record is named *Mobile App Access For* followed by the user's English name (Arabic name: «دخول تطبيق الموبايل لـ» followed by the user's Arabic name), and its code is the user's internal id followed by `-Mobile-API-Key`. Later logins reuse the same record, so each user has one.
+
+These records are expected — nobody created them by hand, and they should not be deleted to tidy up. Because the phone works through this key, the record governs that user's app access:
+
+- Ticking **Prevent Login** on it, or a **Valid to** date that has passed, stops the app's requests from that user.
+- Deleting it cuts the phone off until the user logs out of the app and logs in again, which creates a fresh record.
+
 ## The Mobile Application Dashboard
 
 The app's **Dashboard** screen draws charts. Which charts is decided by a **Mobile Application Dashboard** record, and which record a user gets is decided on the **user's own record**, in its **Mobile Application Dashboard** field. A user with no dashboard on their record sees an empty dashboard screen.

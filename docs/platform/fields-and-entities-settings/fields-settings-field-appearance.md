@@ -1,4 +1,5 @@
 ---
+description: "Fields and Entities Settings grids that change how fields are drawn: display masks, field styles, rich text, text-to-link, colour fields, signatures and scanner input, seen after users sign in again."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---

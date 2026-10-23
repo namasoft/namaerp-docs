@@ -1,4 +1,5 @@
 ---
+description: "How to add help to fields and messages: Entity Help for fixed explanations of fields and error messages, and Tooltip Definition for query-based answers shown on demand in a field."
 entities: [EntityHelp, TooltipDefinition]
 ---
 # Field Help and Tooltips

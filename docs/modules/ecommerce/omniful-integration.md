@@ -19,7 +19,7 @@ The integration operates in two directions:
 
 ### 1. Omniful Configuration Entity
 
-Navigate to **Magento → Omniful Configuration** to create and configure the integration settings.
+Navigate to **e-Commerce Integration → Master Files → Omniful Configuration** to create and configure the integration settings.
 
 #### Required Fields
 
@@ -45,6 +45,33 @@ These fields map Omniful IDs to specific fields in Nama ERP entities:
 | Omniful Reference Field For Purchase Order | حقل مرجع أومنيفل في أمر شراء | Maps purchase orders |
 | Omniful Reference Field For Stock Transfer Request | حقل مرجع أومنيفل في طلب التحويل المخزني | Maps stock transfer requests |
 | Omniful Reference Field For Stock Receipt | حقل مرجع أومنيفل في التوريد المخزني | Maps stock receipts |
+
+#### Prices, discounts and shipping
+
+These fields shape the lines of the documents that come in from Omniful:
+
+| Field | Arabic Name | Purpose |
+|-------|-------------|---------|
+| Item Tax Plan Id Or Code | معرف أو كود ملف سياسة ضريبة الأصناف | The code (or ID) of the item tax plan whose items arrive from Omniful with VAT-inclusive prices. For an item on this plan, Nama divides the Omniful unit price by 1.15 — unless Omniful sends a tax amount on a line that is not marked tax-inclusive. Items on any other plan keep Omniful's price as it is. Empty means no price is ever divided. |
+| Discount Location | مكان التخفيض | Which discount column of the line receives Omniful's line discount (Discount 1 to Discount 8). Empty puts it in Discount 3. |
+| Shipping Item | صنف الشحن | A **service** item; the configuration will not save with a stock item here. When it is set, an incoming sales order whose Omniful invoice carries a shipping price gets one extra line of this item, quantity 1, priced at the shipping price (divided by 1.15 when Omniful marks the shipping as tax-inclusive). Re-reading the order replaces that line instead of adding a second one. |
+
+#### Accepted Order Statuses Per Sales Channel
+
+Omniful sends an order event every time an order changes, and by default **every** order status
+creates or updates the Sales Order — `new_order` included. This grid narrows that per sales channel.
+Each line has two columns:
+
+| Column | Arabic Name | What to put there |
+|--------|-------------|-------------------|
+| Sales Channel | قناة البيع (مصدر الطلب) | Part of the sales channel name as Omniful sends it, for example `Salla`. Case does not matter, and the line applies to every channel whose name contains this text. Leave it empty for a line that applies to orders that come with no sales channel. |
+| Accepted Order Statuses (CSV) | حالات الطلب المقبولة (CSV) | The Omniful order statuses that may create or update a document for that channel, separated by commas, exactly as Omniful names them. Case does not matter. |
+
+Nama takes the **first** line that matches the order's sales channel. If the order's status is in
+that line's list, the order is saved; if not, the event is skipped silently and nothing is created. A
+channel that matches no line — and every channel, while the grid is empty — accepts every status. The
+same rule applies to stock transfer orders that would create an Issue Stock Transfer, and to the
+on-demand reading actions further down.
 
 ### 2. Document Generation Configuration
 
@@ -72,7 +99,7 @@ For each document type that will be received from Omniful, configure the Documen
 ::: warning Important
 - At least one configuration line must be defined for the integration to work
 - Either Webhook Secret Key or Nama API Key must be configured
-- All reference fields are required and must point to valid custom fields in the respective entities
+- Five of the six reference fields are required (**Omniful Reference Field For Stock Transfer Request** may stay empty), and each must point to a valid custom field in the respective entity
 :::
 
 ## Outbound Data Synchronization (Nama ERP → Omniful)
@@ -151,6 +178,7 @@ Configure Omniful to send webhooks to your Nama ERP webhook endpoint with the fo
 #### Supported Events
 
 1. **Order Events**
+   - `sto.request-approve.event` → Creates a Stock Transfer Request when an STO request is approved in Omniful (once per request; a repeated event creates nothing)
    - `order.*` with `type: "sto"` → Creates Stock Transfer Requests or Issue Stock Transfers
    - `order.*` (non-STO) → Creates Sales Orders
 
@@ -163,13 +191,15 @@ Configure Omniful to send webhooks to your Nama ERP webhook endpoint with the fo
 ### Document Creation Logic
 
 #### Sales Orders
-- Created when receiving `order` events (non-STO type) with status ≠ "new_order"
+- Created when receiving `order` events (non-STO type) in any status that the [Accepted Order Statuses Per Sales Channel](#Accepted-Order-Statuses-Per-Sales-Channel) grid accepts — with an empty grid, every status
+- A later event for the same Omniful order updates the Sales Order that already holds its Omniful order ID instead of creating a second one
+- The Omniful sales channel name is written into **Description 6**
 - Maps customer information, billing/shipping addresses, and order items
 - Links to existing Sales Quotations if `order_alias` is provided
 
 #### Stock Transfer Operations
 - **Stock Transfer Request**: Created for STO orders with status "new_order"
-- **Issue Stock Transfer**: Created for STO orders with status ≠ "new_order"
+- **Issue Stock Transfer**: Created for STO orders with status ≠ "new_order", subject to the accepted-statuses grid
 - **Receipt Stock Transfer**: Created from GRN events when matching Issue Stock Transfer exists
 
 #### Purchase Orders
@@ -189,6 +219,8 @@ The webhook handler:
 4. Maps Omniful data to Nama ERP entities
 5. Saves documents according to the Document Generation Info configuration
 6. Updates reference fields with Omniful IDs for future synchronization
+
+To see exactly what Omniful sent, set `log-omniful-requests=true` in `nama.properties`: every webhook body is then written to the server log.
 
 ## Reading Orders From Omniful On Demand
 

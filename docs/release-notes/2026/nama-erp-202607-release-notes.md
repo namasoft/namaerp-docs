@@ -87,7 +87,7 @@
 
 ### Reports
 
-- In the (Financial Statement Settings - FSSettingsFile) screen, added the choice (Show Zero Values as Empty Text - showZeroAsEmptyText) to work the same way as reports created with the Report Builder, in the system reports (SYSR-FNS010 through SYSR-FNS017).
+- The financial statement system reports (SYSR-FNS010 through SYSR-FNS017) now show zero values as empty text, the same way as reports created with the Report Builder when its option (Show Zero As Empty Text - showZeroAsEmptyText) is ticked.
 - Added a table in Global Config to control which subsidiary types appear in the Subsidiary Type input in reports, instead of showing all the types available under the license.
 
 ### New GUI

@@ -1,4 +1,5 @@
 ---
+description: "The Modify Contractor Info Request document for updating an existing contractor or adding a new one: its fields, the two apply buttons, what is copied, the draft option on the term and its messages."
 entities: [ModifyContractorInfoReq]
 menu: Contracting → Master Files → Modify Contractor Info Request
 ---

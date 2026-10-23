@@ -115,7 +115,7 @@ the **Prepaid Expense Payment** documents that pay it.
 |---|---|---|
 | **Debit / Credit**, **Discount Debit / Credit**, **Tax Debit / Credit** | `termConfig.valueDebit`/`…Credit`, `termConfig.discountDebit1`/`…Credit1`, `termConfig.taxDebit1`/`…Credit1` | Each line's total, discount and tax. |
 | **Prepaid Expense Ledger Book / Term** | `termConfig.generatedLedgerBook`, `termConfig.generatedLedgerTerm` | Book and term of the generated monthly ledger documents. Required. |
-| **Prepaid Expense Payment Book / Term** | `termConfig.generatedPaymentBook`, `termConfig.generatedPaymentTerm` | Book and term of the generated payment documents. Required. |
+| **Prepaid Expense Payment Book / Term** | `termConfig.generatedPaymentBook`, `termConfig.generatedPaymentTerm` | Book and term of the generated payment documents. Required when the contract's **Prepaid Expense Payments** grid has lines. |
 | **Use Fixed Monthly Amount** | `termConfig.useFixedMonthlyAmount` | Each month's amount is worked out from the calendar month it covers, instead of days in the period × daily cost. |
 | **Repeat Installments Monthly on Contract Start Date Day** | `termConfig.repeatInstallmentsOnStartDateDay` | Months run from the contract's start day (the 15th to the 14th, say) instead of calendar months. Unless **Use Fixed Monthly Amount** is also ticked, each month gets the total divided by the number of months. |
 | **Delete Related Documents With Contract Deletion** | `termConfig.deleteRelatedDocsWithContractDeletion` | Cancelling or deleting the contract deletes the ledger and payment documents it generated. |
@@ -132,6 +132,6 @@ documents can be deleted only through their contract, never by hand.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Field {0} in term can not be empty* — «الحقل {0} الموجود في التوجية لا يمكن أن يكون فارغاً» | A prepaid-expense contract's term lacks one of the generated books or terms. | Fill the four book/term fields on the contract term. |
+| *Field {0} in term can not be empty* — «الحقل {0} الموجود في التوجية لا يمكن أن يكون فارغاً» | A prepaid-expense contract's term lacks one of the generated books or terms. | Fill the ledger book and term, and — when the contract has payment lines — the payment book and term. |
 | *You can not manually delete expense ledger documents.* | **Prevent Deletion of Generated Documents** is on the ledger's term. This message has no Arabic text in the product. | Delete or change the contract instead. |
 | *You can not manually delete prepaid expense payment documents.* — «لا يمكن حذف مستندات سداد المصروفات المقدمة يدويًا.» | The same option, on the payment's term. | Delete or change the contract instead. |

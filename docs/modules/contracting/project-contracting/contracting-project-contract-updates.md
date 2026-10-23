@@ -1,4 +1,5 @@
 ---
+description: "The Project Contract Update (variation order) that changes a project contract after its first extract: filling it in, actions, refreshing the snapshot and what blocks commit or delete."
 entities: [ProjectContractUpdate]
 menu: Contracting → Project Contracting → Project Contract Update
 ---

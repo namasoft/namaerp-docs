@@ -17,11 +17,11 @@ The order close, resource voucher and standard price terms belong to the core `m
 
 The order close voucher posts two kinds of entry.
 
-**Overheads.** For every overhead line on the voucher, the amount is posted to the debit and credit sides defined **on the overhead type**, not on the term. The amount is the line's actual value, or its overhead value where no actual value has been filled in. **Do Not Update Accounting Effects With Actual Values** (عدم تحديث القيود بالقيم الفعلية), in the **Overhead** block, makes it always post the planned overhead value instead — useful where actual overheads are distributed for analysis but the books must keep the standard figure.
+**Overheads.** For every overhead line on the voucher, the amount is posted to the debit and credit sides defined **on the overhead type**, not on the term. The amount is the line's actual value, or its overhead value where no actual value has been filled in. **Do Not Update Accounting Effects With Actual Values** (عدم تحديث القيود بالقيم الفعلية), in the **Overhead** block, makes it always post the planned overhead value instead — useful where actual overheads are distributed for analysis but the books must keep the planned figure.
 
 **Overhead** (التكاليف الغير مباشرة), in the same block, is the voucher's default overhead type. It takes priority over the production order term's overhead.
 
-**Standard cost deviation.** **Standard Deviation Debit** (مدين الإنحراف) and **Standard Deviation Credit** (دائن الإنحراف) post the gap between actual and standard cost. They post only when both are filled, the deviation is not zero, and the production order's term has **Calculate Deviations With Save** ticked — without that option no deviation is ever worked out. The block they sit in shows an untranslated title on screen.
+**Standard cost deviation.** **Standard Deviation Debit** (مدين الإنحراف) and **Standard Deviation Credit** (دائن الإنحراف) are the accounts of the standard cost deviation entry. The entry is made only when both are filled, the deviation is not zero, and the production order's term has **Calculate Deviations With Save** ticked — without that option no deviation is ever worked out. The block they sit in shows an untranslated title on screen.
 
 How the close works is on [Production Costing](/modules/manufacturing/production-costing).
 

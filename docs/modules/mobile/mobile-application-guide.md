@@ -36,6 +36,8 @@ The first time you open the app the login screen appears, and you need:
 
 After a successful login the app fetches the **user settings and licensed modules** from the server and builds the menus and shortcuts accordingly — so what each user sees differs by their permissions and the modules enabled for their organization.
 
+The password is used only for that first login. The server then gives the phone an API key of the user's own — an **API Credentials** record it creates automatically the first time — and the app signs every later request with that key instead. See [The API Credentials record each app user gets](./mobile-administration.md#The-API-Credentials-record-each-app-user-gets).
+
 ### Biometric login
 
 The app can ask for a **fingerprint or face scan** on every launch as an extra layer of protection. This is controlled by a server-side setting, and biometric login can be **disabled** or made mandatory from the mobile app configuration (see the last section of this page).

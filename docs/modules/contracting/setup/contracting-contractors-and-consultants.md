@@ -1,4 +1,5 @@
 ---
+description: "The Subcontractor and Consultant master files in Contracting: what each records, the subcontractor's accounts, retention and advances, and how both are attached to a project."
 entities: [Contractor, ContractingAdvisory, ContractorClassification]
 ---
 # Contractors and Consultants

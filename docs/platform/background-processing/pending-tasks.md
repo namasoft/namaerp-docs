@@ -1,4 +1,5 @@
 ---
+description: "The Pending Tasks screen, the outbox for email, SMS, WhatsApp and mobile push messages: what queues them, reading status, trials and errors, what to do about a failure, and when nothing is sent at all."
 menu: Administration → Settings → Pending Tasks
 ---
 # Pending Tasks
@@ -63,6 +64,16 @@ With the default ceiling that works out at about fifty attempts for a message th
 rejected, and about twenty-five for one that keeps breaking. So a task showing Trials of 40 has not
 been tried forty times, and a jump of ten between two glances is one failure, not ten.
 :::
+
+The ceiling is not the only road to **Blocked**. An e-mail whose sender address or any of whose To/CC
+addresses is malformed can never be sent, so it is blocked on its first attempt, with Trials of 1. Fix the
+address where it came from — the customer, supplier or employee record, the user's own e-mail, or the
+e-mail settings in Global Configuration — then use **Retry Selected Tasks**.
+
+| Message | Why | What to do |
+|---|---|---|
+| *Invalid sender email address: {0}* — «عنوان البريد الإلكتروني للمرسل غير صحيح: {0}» | The address the e-mail is sent from is malformed. | Correct the sender address in the e-mail settings (or on the user, when the e-mail is sent from the user's address), then retry the task. |
+| *Invalid email address(es): {0}* — «عناوين بريد إلكتروني غير صحيحة: {0}» | One or more To/CC addresses are malformed; `{0}` lists them. | Correct those addresses on the source record, then retry the task. |
 
 ## What you can do about it
 

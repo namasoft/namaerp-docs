@@ -1,3 +1,6 @@
+---
+description: "Map of the Real Estate module: the estate tree from project to unit, the four licences, the menu group by group, the core ideas behind it and the cycle from an empty plot to a fully collected contract."
+---
 # Real Estate Module Overview
 
 A property company has a problem that ordinary trading companies do not: its stock is a tree. You do not buy "ten units" the way you buy ten laptops — you buy a plot inside a block inside a square inside a project, you build a tower on it, you carve the tower into floors and the floors into flats, and then you sell or lease each flat individually, on a payment plan that runs for years. Meanwhile the cost of the lift, the landscaping and the site office was incurred once, for the whole building, and somebody still has to answer the question "what did flat 12 cost us?"
@@ -119,7 +122,7 @@ Here is Flat 12's whole life, in the order the work actually happens.
 10. **And on day one, load the history.** An existing portfolio arrives through three opening documents — already-sold units, already-running leases and historical cost — entered in an opening fiscal period. → [Going Live: Opening Balances](/modules/realestate/opening/realestate-opening-balances.md)
 
 ::: tip Not every document in the chain touches the ledger
-The pre-documents are deliberately inert. A temporary hold, an initial sales contract and a sale-cancellation request record intent and nothing else — no journal entry, and in most cases no lock on the unit either. A sales offer normally behaves the same way, though unlike the others it does carry a document term with a full set of accounts, so it will post if someone fills them in. The documents that genuinely create accounting effects on the sales side are the reservation, its cancellation, the sales contract, the purchase contract, the waiver, the post-handover cost and — when configured — the handover. Knowing which is which saves a lot of hunting for a missing entry.
+The pre-documents record intent by design. A temporary hold, an initial sales contract and a sale-cancellation request record intent and nothing else — no journal entry, and in most cases no lock on the unit either. A sales offer normally behaves the same way, though unlike the others it does carry a document term with a full set of accounts, so it creates a journal entry if someone fills them in. The documents that genuinely create accounting effects on the sales side are the reservation, its cancellation, the sales contract, the purchase contract, the waiver, the post-handover cost and — when configured — the handover. Knowing which is which saves a lot of hunting for a missing entry.
 :::
 
 ## Where to Go Next

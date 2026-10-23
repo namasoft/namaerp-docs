@@ -1,4 +1,5 @@
 ---
+description: "The Technician Service and Technician Procedure master files: what each is, how procedures group services, and the order to build them in."
 entities: [TechnicianService, TechnicianProcedure]
 ---
 # Services and Procedures

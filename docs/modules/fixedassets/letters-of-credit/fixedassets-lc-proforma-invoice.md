@@ -6,10 +6,7 @@ menu: Assets → Fixed Asset Letter of Credits → Fixed Asset ProformaInvoice
 
 The **Fixed Asset ProformaInvoice** is the shortest document in the chain and the most
 misunderstood. It lists the machines coming in under the credit and what the supplier is charging for
-each of them, and then it does nothing at all — no accounting entry, no change to any asset, no value
-written anywhere.
-
-That is not a limitation. It is the document's whole purpose. What it produces is a **ratio**.
+each of them. It creates no journal entry and changes no asset: what it produces is a **ratio**.
 
 ::: danger Say it once more
 The prices on this invoice are a **distribution base, not a cost**.

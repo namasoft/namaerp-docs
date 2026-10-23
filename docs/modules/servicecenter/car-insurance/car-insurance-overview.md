@@ -9,7 +9,7 @@ entities: [SIInsuranceProgram, InsuranceCompany, ExternalAgency]
 
 Layla Al-Harbi signs for her NAWA Rimal 2.4 at Al-Sahra Motors on 24 February 2026, at the end of the usual [car sales cycle](/modules/servicecenter/car-sales/car-sales-cycle.md). She cannot drive it off the forecourt uninsured, and she does not want to spend a morning at an insurer's office, so Al-Sahra does what most dealerships do: it arranges the policy on her behalf with **Wafa Insurance** (`INS-02`), hands her the paperwork with the keys, and settles up with the insurer separately.
 
-The Car Insurance area exists to keep a record of that arrangement. It is reached from **cars → Car Insurance** and is built around one master record — the **Car Insurance Policy** (*وثيقة تأمين سيارة*) — plus a chain of documents that move that policy through its life: ordering it from the insurer, receiving the paper, handing it to the customer, then later renewing it, adjusting it or cancelling it. A separate purchase invoice books what Al-Sahra owes Wafa Insurance.
+The Car Insurance area exists to keep a record of that arrangement. It is reached from **cars → Car Insurance** and is built around one master record — the **Car Insurance Policy** (*وثيقة تأمين سيارة*) — plus a chain of documents that move that policy through its life: ordering it from the insurer, receiving the paper, handing it to the customer, then later renewing it, adjusting it or cancelling it. A separate purchase invoice books what Al-Sahra owes Wafa Insurance, and a purchase return undoes it.
 
 Before you read any further, there are two things about this area you must know, because everything else on these four pages depends on them.
 
@@ -25,22 +25,18 @@ The whole `cars` menu root is gated the same way, so both the **Car Insurance** 
 **In practice: order both codes together.** If a customer asks for "just insurance and instalments", the answer is that the feature cannot be delivered on that licence alone.
 :::
 
-::: danger The premium is never calculated — and the cycle posts zero without manual entry
-This is the single most important sentence on these pages. **Nothing in this area works out what the policy costs.**
+::: warning Know where each money figure comes from
+The Car Insurance Program looks like a rate card, and it is natural to assume that choosing a programme prices the whole policy. Only one document uses it that way. Each figure the cycle books has its own source:
 
-The Car Insurance Program looks exactly like a rate card. It has price bands, an *Insurance Percentage* on every band, and a picker that finds the right band from the car's price. It is natural to assume that choosing a programme produces a premium.
+| Figure | Where it comes from | Booked by |
+|---|---|---|
+| **Insurance Price** (*سعر التأمين*) on the grid of the order, receipt and renewal | **Typed** on each row. Nothing fills it. | Order, receipt, renewal |
+| **Policy Value** on the policy | **Typed** on the policy | The delivery, as the price the customer is charged |
+| **Initial Cost** on the policy | Car price × the percentage typed beside it, or typed directly when no percentage is given | Receipt and delivery, as the cost — until the policy is bought |
+| **Actual Cost** on the policy | The net value of the policy's line on the purchase invoice | Receipt and delivery, as the cost — once the policy is bought |
+| **Purchase Value** on the purchase invoice | Car sale price × the programme band's percentage, filled when you pick the policy | The purchase invoice |
 
-It does not. The only figure that ever reaches the general ledger is the **Insurance Price** (*سعر التأمين*) column on the policy document's grid, and **no code anywhere fills that column** — not from the programme, not from the car price, not from anything. It is a plain typed number. Run the whole cycle without typing it and every journal entry the insurance documents produce is a zero.
-
-There is a second, separate defect layered on top. The same *Insurance Percentage* is treated as a whole number on one screen and as a percentage on another: the figure you watch being calculated in front of you and the figure that is stored when you press save can differ by a factor of one hundred. The [insurance purchase invoice page](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md) shows exactly where.
-
-**How to work with this area safely:**
-
-1. Treat the insurance programme as a **reference table you read**, not as a calculator. It tells the person filling the form which band the car falls into and what rate was negotiated for it.
-2. **Type the money by hand** — the policy value on the policy, and the insurance price on every grid row of every policy document.
-3. **Reopen the document after saving** and read the stored figures before you rely on them or before you let the entry reach accounting.
-
-No page in this documentation derives a premium from a programme's percentage, and neither should you.
+**Type the insurance price on every grid row** of the order, receipt and renewal, and the policy value on the policy. Left empty, those documents book zero.
 :::
 
 ## What the area is made of
@@ -50,8 +46,8 @@ No page in this documentation derives a premium from a programme's percentage, a
 | **Insurance Company** | شركة تأمين | The insurer. A master file with a subsidiary account, contact, tax and bank details. Lives under **cars → Car Files**. |
 | **Car Insurance Program** | برنامج تأمين سيارة | The rate card: one row per car-price band, each carrying the negotiated percentages and the policy category. |
 | **Car Insurance Policy** | وثيقة تأمين سيارة | The policy itself, one record per insured car. Covered on [the policy record page](/modules/servicecenter/car-insurance/car-insurance-policy.md). |
-| **Seven policy documents** | — | Order, receipt, delivery, renewal, value adjustment, period adjustment, cancellation. Covered on [the policy cycle page](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md). |
-| **Car Insurance Purchase Invoice** | فاتورة شراء تأمين سيارة | What the dealer owes the insurer. Covered on [its own page](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md). |
+| **Nine policy documents** | — | Order, receipt, receipt cancellation, delivery, delivery cancellation, renewal, value adjustment, period adjustment, cancellation. Covered on [the policy cycle page](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md). |
+| **Car Insurance Policy Purchase Invoice** | فاتورة شراء وثيقة تامين سيارة | What the dealer owes the insurer. Its counterpart, the **Car Insurance Policy Purchase Return** (*مرتجع شراء وثيقة تامين سيارة*), undoes it. Both are covered on [their own page](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md). |
 
 ## The insurance company file
 
@@ -59,21 +55,19 @@ Three master files in this module share one screen and one field list: **Insuran
 
 The **Main** page carries the code and names, the **subsidiary accounts** block, and the dimensions. The **Contact Info** page carries contact details, the tax block and a bank block (bank name, branch, account title, country, SWIFT, IBAN and an intermediary bank).
 
-Only one field on the whole record has any downstream effect: the **subsidiary account** (*الذمة*). That is what makes the insurer addressable in accounting, so [the purchase invoice's term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) can post the amount owed against it. Everything else is reference data you keep because it is useful to have the insurer's IBAN on file, not because the system consumes it.
+The **subsidiary account** (*الذمة*) makes the insurer addressable in accounting, so [the purchase invoice's term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) can book the amount owed against it. The contact, tax and bank details are kept for reference.
 
 ![The Insurance Company screen](../../../ar/modules/servicecenter/images/car-insurance/sc-insurance-company-en.png)
 
 Al-Sahra creates one record: `INS-02` **Wafa Insurance** / *وفاء للتأمين*, with a supplier-style subsidiary account.
 
-::: info The External Agency file is not part of any flow
-**External Agency** (*معرض خارجي*) sits next to the insurance company in the same menu folder and uses the same screen, and readers often assume it plays a part in the car or insurance cycle. It does not. No document anywhere in the system has a field pointing at it. It is a master file you can create, give a subsidiary account and tax data to, and use as an accounting party — and nothing more.
-:::
+**External Agency** (*معرض خارجي*) sits next to the insurance company in the same menu folder and uses the same screen. It is a master file with a subsidiary account and tax data that you can use as an accounting party.
 
 ## The insurance programme — a rate card you read
 
 An insurance programme records a deal Al-Sahra has struck with one insurer: *for cars in this price band, of this brand or this model, the policy costs this percentage and the buyer's share is that percentage*. Al-Sahra sets up **`INSP-WAFA-COMP` Wafa Comprehensive** / *وفاء الشامل* against `INS-02`.
 
-The header is short — the insurance company (required), a validity period, a priority number, two commission percentages, and five attachment slots for the signed agreement.
+The header is short — the insurance company (required) and five attachment slots for the signed agreement.
 
 The value is in the grid: **one row per price band**.
 
@@ -91,39 +85,20 @@ The value is in the grid: **one row per price band**.
 
 Al-Sahra's Rimal 2.4 sells at 87,000, so the row that covers it is the **50,000 → 150,000** band, with an insurance rate of **3.75 %** and a buyer rate of **3.6 %**.
 
-Those two numbers are what the service advisor quotes to the customer and what the accounts clerk checks the insurer's statement against. They are not what the system posts. Read the danger box above again if that is not yet settled in your mind.
+Those two numbers are what the service advisor quotes to the customer and what the accounts clerk checks the insurer's statement against. The system uses the band in one place only: the purchase invoice, where it fills the policy purchase percentage that prices the policy bought from the insurer. The order, receipt and renewal book the insurance price typed on their rows — see the table in the box above.
 
 The programme's only validation is that a band's lower bound may not exceed its upper bound. Overlapping bands, gaps between bands and a band that covers every car ever sold are all accepted.
 
-### How a programme is chosen — and what is ignored
+### How a programme is chosen
 
 When you pick a programme on a policy, the picker offers the programmes that match on three things: the **insurance company**, the **car price falling inside a band**, and the **brand and item matching or being left empty**. When more than one band of the chosen programme covers the price, the more specific one wins — a band naming both the brand and the item beats one naming only the brand, which beats one naming neither. Ties are broken arbitrarily.
 
-Three fields that look like selection criteria take no part in that:
+To take an old rate card out of circulation, remove its bands or delete the record.
 
-- **From Date** and **To Date** on the programme header are never consulted. A programme whose validity ended last year is still offered exactly as if it were current. If you want an old rate card out of circulation, remove its bands or delete the record — changing its dates achieves nothing.
-- **Priority** is a required field that nothing reads. It cannot break a tie between two overlapping programmes, because it is never looked at.
-
-::: warning Two columns you should ignore
-The band grid carries a required column whose English label reads **Insurance Expiry Date** and whose Arabic label, *تاريخ سريان التأمين*, says the opposite — an effective date. You must fill it because it is required, but no code ever reads it, so neither reading is right or wrong. It has no bearing on any policy's dates.
-
-The grid also carries a **Customer** column in the underlying model that is not placed on the screen and is never read.
-:::
-
-## There is no commission mechanism anywhere
-
-This deserves its own heading because the screens promise it so convincingly.
-
-The insurance programme header shows **Company Commission %** (*نسبة عمولة الشركة*) and **Salesman Commission %** (*نسبة عمولة المندوب*). The [instalment programme](/modules/servicecenter/car-installments/car-installment-programs.md) shows six commission fields. The insurance purchase invoice has a **Commission Value** column that posts to its own pair of accounts.
-
-**None of these percentages is ever applied to anything.** No calculation reads them, no document derives a figure from them, no salesperson's commission is accrued, and nothing is posted on their account. The commission percentages are stored text on a screen.
-
-The one commission figure that does reach accounting is the **Commission Value** column on the insurance purchase invoice — and that is a number somebody types by hand, line by line. It is not derived from the programme's percentage, and nothing checks it against one.
-
-If your dealership pays commission on insurance sales, the calculation happens outside Nama and the result is typed in.
+The commission that reaches accounting is the **Commission Value** column on the [insurance purchase invoice](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md), typed line by line.
 
 ## Where to read next
 
 - [The Insurance Policy Record](/modules/servicecenter/car-insurance/car-insurance-policy.md) — the policy file itself, what is typed on it and what its documents stamp.
-- [Moving a Policy Through Its Cycle](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md) — the seven documents, the order they must be committed in, and which of them can be undone.
-- [Settling with the Insurer](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md) — the purchase invoice and its three independent postings.
+- [Moving a Policy Through Its Cycle](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md) — the nine documents, the order they must be committed in, and which of them can be undone.
+- [Settling with the Insurer](/modules/servicecenter/car-insurance/car-insurance-purchase-invoice.md) — the purchase invoice, the purchase return and what they book.

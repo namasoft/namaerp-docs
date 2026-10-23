@@ -1,4 +1,5 @@
 ---
+description: "The Rental Asset and Rental Asset Classification master files: booking durations, working hours, tiered hourly and daily pricing, the invoiced service item and the bookings list."
 entities: [RentalAsset, RentalAssetClassification]
 menu: Service Center → Rental Assets → Rental Asset
 ---
@@ -22,16 +23,12 @@ What the record actually holds is: how long it may be booked for, how much of a 
 |---|---|---|
 | Code / Arabic Name / English Name / Group | الكود / الاسم العربي / الاسم الإنجليزي / المجموعة | Standard master-file identity. |
 | Classification | التصنيف | Points at a Rental Asset Classification. Supplies fallback price tiers and default durations — see below. |
-| Asset Value | قيمة الأصل | **Informational only.** Nothing reads it: not the pricing, not the invoice, not [any report](/modules/servicecenter/servicecenter-reports-and-forms.md). Al-Sahra records 62,000 here for its own reference. |
+| Asset Value | قيمة الأصل | The asset's value, kept on the record for your own reference. Al-Sahra records 62,000 here. |
 | Service Item | صنف الخدمة | **Required.** The item that becomes the revenue line on every invoice generated for this asset. Al-Sahra uses `SRV-RENT-CAR` *Vehicle rental / تأجير مركبة*. |
 | Rest Time | فترة الراحة | A buffer in minutes added on **both** sides of every existing booking when the system checks for an overlap. Al-Sahra sets 60 — an hour to clean and refuel between customers. |
-| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Despite the label, this has nothing to do with price lists. See the warning below. |
+| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Lets a booking through when the price tiers do not cover its whole duration. See [Pricing](#Pricing--a-tier-table-walked-in-order) below. |
 | Default Number of Hours | عدد الساعات الافتراضي | Visible only when the installation prices By Hour. The booking length that fills in when someone picks this asset. |
 | Default Number of Days | عدد الأيام الافتراضي | Visible only when the installation prices By Day. |
-
-::: warning "Default Number of Days" on its own does not work
-When a booking document is filled from the asset, the screen checks whether *Default Number of Hours* has a value before it copies *Default Number of Days*. An asset that has only the days figure filled therefore always defaults to **one day**. On a By Day installation, fill both fields — or expect to type the duration on every booking.
-:::
 
 ## Working hours — the only thing that makes an asset unavailable
 
@@ -81,25 +78,24 @@ Two behaviours round out the picture:
 
 There is no price list, no rate card and no weekend or seasonal rate beyond what you can express with the rows' date ranges and the five price classifiers.
 
-::: warning "Ignore Pricing List For Rental Asset" does not ignore price lists
-The label promises something the option does not do. Its **only** effect is to suppress that
-*Could not handle pricing for {0} hours, rental asset {1} - remaining hours: {2}* failure when the tier grid does not cover the whole booking; the ordinary sales price-list validation still runs on the generated lines exactly as before.
+::: warning What "Ignore Pricing List For Rental Asset" does
+This option suppresses that
+*Could not handle pricing for {0} hours, rental asset {1} - remaining hours: {2}* failure when the tier grid does not cover the whole booking; the ordinary sales price-list validation still runs on the generated lines.
 
-The consequence of leaving it off matters more than the label does: **an asset with an empty Details grid and no classification to fall back on refuses every booking.** If a newly created asset rejects everything you try to book on it, an empty tier grid is the first thing to check.
+With it off, **an asset with an empty Details grid and no classification to fall back on refuses every booking.** If a newly created asset rejects everything you try to book on it, an empty tier grid is the first thing to check.
 :::
 
 ## The classification — a fallback, not a policy
 
 **Rental Asset Classification** / *تصنيف أصل تأجيري* (**Service Center → Rental Assets → Rental Asset Classification**) groups assets that price alike. Al-Sahra keeps `RACL-COMPACT` *Compact / اقتصادي* for its courtesy cars.
 
-It carries default durations, its own *Ignore Pricing List* flag, a day price, and the same tier grid as the asset. Its role is strictly fallback:
+It carries default durations, its own *Ignore Pricing List* flag, and the same tier grid as the asset. Its role is strictly fallback:
 
 ![Rental Asset Classification screen](../../../ar/modules/servicecenter/images/rental/rental-asset-classification-en.png)
 
-- **Price tiers** — used only when the asset's own Details grid is empty. Fill the asset's grid and the classification's tiers are never consulted for it.
+- **Price tiers** — used only when the asset's own Details grid is empty. Fill the asset's grid and the asset prices from its own tiers.
 - **Ignore Pricing List** — inherited when the asset's own flag is off.
 - **Default number of days / hours** — copied onto the asset at the moment you pick the classification, and thereafter belong to the asset.
-- **Day Price** — recorded and read by nothing. The day price that is actually used comes from a tier row or from the document header, never from this field.
 
 So the sensible setup is: put the standard tiers on the classification, and override on an individual asset only where that vehicle genuinely prices differently.
 

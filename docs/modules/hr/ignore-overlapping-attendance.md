@@ -1,4 +1,5 @@
 ---
+description: "How to ignore incomplete or overlapping lines from fingerprint imports: enabling the option in Payroll Settings, the header option on the Time Attendance voucher, the overlap rules and the effect on working hours."
 entities: [TimeAttendance]
 menu: Payroll → Time Attendance → Time Attendance
 ---

@@ -1,4 +1,5 @@
 ---
+description: "Getting fingerprint punches into Nama: the Attendance Machine Configuration for scheduled automatic collection through attcron, importing an exported time-sheet file, and handling missed or overlapping punches."
 entities: [AttendanceMachineConfig]
 menu: Payroll → Time Attendance → Attendance Machine Config
 ---
@@ -63,7 +64,7 @@ For sites running the vendor's own ZkBioTime platform, which publishes its trans
 | Machine URL (رابط الماكينة) | The address of the ZkBioTime web application, e.g. `http://192.168.1.50:8081`. |
 | Username / Password | A ZkBioTime login with permission to read transactions. |
 
-The agent signs in, then reads transactions page by page until it has caught up. The SQL Query, Read For Period Query and Mapping grid shown on this tab are **not used** by the ZkBioTime connection — its data format is fixed and needs no mapping.
+The agent signs in, then reads transactions page by page until it has caught up. ZkBioTime delivers its readings in a fixed format, so this connection needs no SQL Query, no Read For Period Query and no mapping lines.
 
 #### SQLSERVER
 
@@ -100,7 +101,7 @@ The key comes from **Timetaag, not from Nama**. Sign in to the Timetaag dashboar
 
 The tab presents the key field twice, because Timetaag expects two things on every request: an API key identifying your company, and an authorization token. The agent sends the first field as the API key and the second as the token. If Timetaag issued you a single value, put it in both fields; if it issued two, keep them in that order.
 
-As with ZkBioTime, readings arrive in a fixed format, so the SQL Query, Read For Period Query and Mapping grid on this tab are **not used**.
+As with ZkBioTime, readings arrive in a fixed format, so this connection needs no SQL Query, no Read For Period Query and no mapping lines.
 
 ::: tip Timetaag needs the internet, not the local network
 The other three types need the agent to sit on the same network as the machine or its database. Timetaag needs the opposite: the computer running the agent must be able to reach `app.timetaag.com` over the internet. A branch locked down to internal traffic only will fail here even though everything is configured correctly.

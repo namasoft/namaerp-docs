@@ -1,4 +1,5 @@
 ---
+description: "The Custodies Delivery Receipt Document: handing custody items and fixed assets from one employee to another, what committing it does and what it books."
 entities: [FADeliveryReceiptDoc]
 menu: Assets → Custody Of Assets → Custodies Delivery Receipt Document
 ---

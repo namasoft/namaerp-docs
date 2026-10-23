@@ -1,4 +1,5 @@
 ---
+description: "Connecting the freight module's postal documents to the IPS international postal system: the IPS settings, look-ups that fill receptacle and mail item lines, and the events reported on save."
 entities: [IPSEvent, IPSReceptaclesReceipt, IPSTransferReceptacles, IPSMailItemManifest, IPSManifestForCustody, IPSMailRetentionDocument, IPSMailItemTransfer, IPSMailItemStockTaking, IPSMailItemAdjustment, IPSPostalParcelsSort]
 ---
 # IPS Integration

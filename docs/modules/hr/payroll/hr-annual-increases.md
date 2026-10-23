@@ -1,4 +1,5 @@
 ---
+description: "The Annual Increases Document for a raise round: its period and employee scope, the rule for which salary components rise and by how much, its workflow and the per-employee changes it generates."
 entities: [AnnualIncreasesDoc]
 menu: Payroll → Main → Annual Increases Document
 ---

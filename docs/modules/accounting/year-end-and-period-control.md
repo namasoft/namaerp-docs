@@ -1,11 +1,11 @@
 ---
-entities: [ClosingEntry, PreventAccTransactions, LedgerReviseDoc, PurgeJournal]
+entities: [ClosingEntry, PreventAccTransactions, LedgerReviseDoc]
 menu: Accounting → Documents → Closing Entry
 ---
 
 # Year-End Closing & Period Control
 
-At the end of each fiscal year comes the moment of closing: carrying the year's profit/loss into equity, and closing the result accounts in preparation for a new year. And throughout the year you need tools to control who posts, where, and when. This page gathers those tools: the **Closing Entry**, **year and period status control**, **Prevent Accounting Transactions**, the **Ledger Revise Document**, and **purging transactions**.
+At the end of each fiscal year comes the moment of closing: carrying the year's profit/loss into equity, and closing the result accounts in preparation for a new year. And throughout the year you need tools to control who posts, where, and when. This page gathers those tools: the **Closing Entry**, **year and period status control**, **Prevent Accounting Transactions**, and the **Ledger Revise Document**.
 
 ::: info Required license
 These tools are part of the core `accounting` license.
@@ -24,6 +24,11 @@ Its key fields:
 - **Max Lines Per Generated Document** — splits the generated entry into several documents if it exceeds this limit (useful with many accounts).
 - **Close All Fiscal Year Periods** — automatically closes all the year's periods after closing.
 - The **Check Data Before Closing** button — the readiness check you run before executing the close. It asks for an optional **from period**: leave it empty to check the closing entry's own period, or name an earlier period to cover a whole range. That period must not start after the closing entry's period and must belong to the same calendar — give it one that breaks either rule and it says so instead of running. The closing entry must be saved before the button will work.
+- **Skip Close Validations** — commits the close without the pre-close data checks (the cancelled-document, currency and subsidiary-type rows in [Messages you may see](#Messages-you-may-see)). Ticking it is not an ordinary edit: the field sits at a protected security level, and a save that turns it on from a normal session is refused with
+  *"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"* — «انت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمى لمستوى الأمان {1} برجاء التواصل مع الدعم الفنى»
+  with `L2Dangerous` as the level. Only a Namasoft support session can tick it. It does not skip the unprocessed-transactions check or the fixed-asset depreciation check.
+
+A large close runs as background batches, and four read-only fields show how far it has got: **Generation Status**, **Total Batches**, **Executed Batches** and **Failed Batches**. Watch them rather than the journal-entry list while a close is running.
 
 ::: warning Before closing
 - The period the closing entry falls in must be of type **Adjustment** or **Closing** (see [Concepts & setup](./accounting-concepts-and-setup.md)).
@@ -60,6 +65,8 @@ So "post the adjustment and then re-run the close" is not a sequence the system 
 
 ::: danger Do not reach for the option that lifts the lock
 There is a global-config switch — **Do Not Prevent Modifying Documents Before Last Closing Entry** ([Documents tab](../../platform/global-config/global-config-documents.md)) — that turns this check off, and there is a fiscal-year flag, **Allow Cost, Quantity, and Ledger Processing For Documents Before Closing Entry**, that lets business requests dated before the close carry on processing. Both exist for recovery situations and neither belongs in normal year-end work: with them on, a document can change a period that has already been closed, audited and reported, and the closing entry's own figures are left describing balances that no longer exist. Delete the close, make the corrections in the open year, close again.
+
+The fiscal-year flag does not stay on: every time a closing entry is saved, it is switched off again on every fiscal year.
 :::
 
 ::: info The same message with no closing entry in sight
@@ -86,10 +93,6 @@ In the document's lines you specify, per rule: the **Account**, the **Subsidiary
 
 The **Ledger Revise Document** (`Accounting > Documents > Ledger Revise Document`) is an internal-review tool: you set the **Auditor** and **Accountant** and a date range (**From/To**), and record review remarks on the transactions in that period in its lines. It's a control record that produces no accounting effect; it documents that the books were reviewed and by whom.
 
-## Purging transactions
-
-As years of transactions accumulate, you may need to **purge/archive** the old ones to lighten the database. The **Purge Journal** document (`Administration > Purge Documents > Purge Journal`) handles this. It's a sensitive administrative operation carried out on periods of type **Purge Period**, and is best performed under technical supervision and after taking a backup.
-
 ## Printed forms
 
 - Closing Entry: `SYSF-ACC020`.
@@ -110,6 +113,8 @@ As years of transactions accumulate, you may need to **purge/archive** the old o
 
 ## Messages you may see
 
+The four closing-entry refusals quoted without Arabic below have no Arabic text in the product, so they appear in English on Arabic screens too.
+
 | Message | Why | What to do |
 |---|---|---|
 | *There are unprocessed or failed transactions, please fix them first (you can use bizRequestView screen to find them)* — «يوجد طلبات نظامية فشلت معالجتها او لم تعالج بعد. يرجي اصلاح هذه الطلبات اولا (يمكنك معرفتها من خلال شاشة bizRequestView(» | The **Closing Entry** found ledger transaction requests for this company that are not in **Processed** status. Closing on top of them would close the wrong balances. | Open the **Business Requests** list view, filter on the failed/unprocessed statuses, fix the cause and reprocess, then save the closing entry again. |
@@ -120,5 +125,11 @@ As years of transactions accumulate, you may need to **purge/archive** the old o
 | *The account {0} foreign amount is {1} - {2} and the local amount is {3} - {4}. Please use {5} document to fix this account* — «الحساب {0} العملة الاجنبية {1} - {2} والعملة المحلية {3} - {4}. الرجاء استخدام مستند {5} لحل مشكلة الحساب» | The stronger form of the same problem: the account's foreign side and local side sit on opposite sides — one debit, one credit — which no rate can reconcile. | Use the document type the message names (**Exchange Rate Update**) on that account before closing. |
 | *The account {0} has invalid subsidiary type* — «الحساب {0} لديه نوع ذمة غير صحيح» | Entries exist on an account whose subsidiary type does not match the types the account allows — usually a detail account carrying a subsidiary, or a subsidiary type removed from the account after the entries were written. | Restore the subsidiary type on the account, or correct the entries, before closing. |
 | *There is no fiscal year defined for posted profit date {0}, legal entity {1}* — «لا توجد سنة مالية معرفة للتاريخ الفعلي {0} لسند القيد، والشركة {1}» | The closing entry posts the carried profit on the day after the period ends, and no fiscal period exists for that date in this legal entity. | Create the next fiscal year (and its periods) for the company, then run the closing entry. |
+| *Fiscal period must be adjustment or closing period only* | The closing entry's fiscal period is a normal period. | Point it at the year's **Adjustment** or **Closing** period. |
+| *Account {0} chart class must be balance sheet* | The **Profit-Loss Account** is an income-statement account; the year's result cannot be carried into an account that is itself being closed. | Choose a balance-sheet account (normally retained earnings). |
+| *Account {0} currency must be {1}* | The **Profit-Loss Account** is kept in a currency other than the legal entity's main ledger currency. | Choose an account in the main currency the message names. |
+| *You can have one closing entry per period per legal entity* | This company already has a closing entry in the same period. | Open and correct the existing one (save it again), or delete it first. |
+| *The term {0} settles rounding differences, so its rounding difference account is required* — «التوجيه {0} يقوم بتسوية فروق التقريب، لذا يجب تحديد حساب فروق التقريب فيه» | The closing entry's term has **Settle Rounding Difference** ticked but no **Rounding Difference Account**. | Fill the account on the term — see [Journal, Closing and Other Accounting Document Terms](./document-terms/acc-terms-journals-and-closing.md) — or untick the option. |
+| *Asset {0} is not depreciated in period {1}* — «الأصل {0} غير مُهلك في الفترة {1}» | A running fixed asset of this company, whose depreciation start falls before the end of the closing period, has not been depreciated in the period just before it (the one the message names). | Run the missing depreciation for that period. Fixed Assets configuration has two options that let the close through anyway: **Allow Creating Closing Entry If Non Depreciated Assets Found**, and **Allow Closing If Asset Is Prevented From Depreciation** for assets stopped with a prevent-depreciation document. |
 | *You must at least provide account or subsidiary* — «يجب علي الأقل إدخال الحساب او الذمة» | A **Prevent Accounting Transactions** detail line names neither an account nor a subsidiary, so it would block everything. | Fill the **Account** column, the **Subsidiary** column, or both on that line. |
 | *The Account {0} is detail account can not have subsidiary* — «الحساب {0} حساب فرعي لايمكن ان يكون له ذمة» | A prevention line pairs a **detail** account with a subsidiary; only subsidiary-type accounts take a party. | Remove the subsidiary from the line, or point the line at the subsidiary account you meant. |

@@ -1,6 +1,7 @@
 ---
+description: "The ECPA Tasks Executing document (timesheet): recording worked hours per task, the stopwatch, what committing does including the labour cost entry, and the Time Sheet Request."
 entities: [CPATimeSheet, CPATimeSheetRequest]
-menu: ECPA → Task Execution / Approvals → Tasks Executing
+menu: Project Management → Task Execution / Approvals → Tasks Executing
 ---
 # Recording Worked Hours
 
@@ -185,8 +186,8 @@ Read that last row twice, because it is the point of the screen and the thing th
 
 That combination makes it useful for capturing work loosely — hours claimed for a period before anyone has decided which task they belong to, or work by people who are not yet on the task's executers grid — while still getting the cost onto the books. Approval and billing run off the Tasks Executing document, so a firm that needs its hours approved and invoiced records them there.
 
-::: warning The request is a dead end, not a first step
-There is no way to turn a Time Sheet Request into a Tasks Executing document: nothing converts it, and no approval or invoice ever sees its lines — *Collect Sheets* and *Collect Executions* both read timesheet lines only. Use the request for cost capture and nothing else, and record anything that has to be approved or billed on a Tasks Executing document from the start.
+::: info The request is for cost capture
+Approval and invoicing collect from Tasks Executing documents: *Collect Sheets* and *Collect Executions* both read timesheet lines. Use the request to capture cost, and record anything that has to be approved or billed on a Tasks Executing document from the start.
 :::
 
 ## What happens next

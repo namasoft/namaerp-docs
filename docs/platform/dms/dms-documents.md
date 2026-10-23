@@ -36,7 +36,7 @@ The fastest route is to pick the folder first and let it do the work for you.
 | **Name1** / **Name2** | الاسم العربي / الاسم الإنجليزي | Arabic name and English name respectively. |
 | **Document Owner** | مالك المستند | Who the paper belongs to. Limited to **Customer, Employee, Supplier, Third Party** and **Fixed Asset**. New records start with the type set to Customer — change it if that is not what you want. |
 | **Folder** | المجلد | Where it is filed. Drives the defaults described above. |
-| **Importance** | الأهميه | A number you can filter and sort on. Nothing acts on it automatically. |
+| **Importance** | الأهميه | A number you can filter and sort on. |
 | **Document State** | حالة المستند | Filled in by the system; always read-only. See below. |
 | **Copy Of** | نسخة من | Points at the original when this record was produced by **Copy To**. |
 | **Topic** | موضوع | The subject classification. |
@@ -46,10 +46,10 @@ The fastest route is to pick the folder first and let it do the work for you.
 | **Expiration Date** | تاريخ الانتهاء | When it lapses. |
 | **Current Version** | النسخة الحالية | The main attached file — the scan of the document itself. |
 
-::: warning Nothing watches the dates
-Renewal Date and Expiration Date are recorded and nothing else. There is no reminder, no
-notification and no scheduled check anywhere in DMS. To be warned about lapsing licences, build a
-[scheduled task](/platform/automation-and-rules/scheduled-tasks.md) over a filtered document list, or keep a saved
+::: tip Getting warned about lapsing documents
+To be warned about lapsing licences, build a
+[scheduled task](/platform/automation-and-rules/scheduled-tasks.md) over a document list filtered on
+Renewal Date or Expiration Date, or keep a saved
 [quick filter](/platform/list-views/quick-filters.md) that people actually look at.
 :::
 
@@ -113,8 +113,8 @@ Two panels live here, and **both open collapsed** — click the header of either
 
 - **History / تاريخ الحركات** — one row per movement this document has been through, showing the
   date, the movement type, the responsible employee and the archive position recorded at the time.
-- **Related Recods** — the copies made from this document with **Copy To**. (The missing "r" is a
-  typo in the interface, not in your data.)
+- **Related Recods** — the copies made from this document with **Copy To**. (The label is spelled
+  this way on screen.)
 
 ::: warning History records where a document came from, not where it went
 Each history row stores the position the document was at **before** the movement, together with

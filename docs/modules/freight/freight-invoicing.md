@@ -1,4 +1,5 @@
 ---
+description: "Freight sales and purchase documents: the Sales Order, Sales Invoice and Sales Return, the Purchase Invoice and Purchase Return, how they link to the operation order, and their term configuration and accounting effect."
 entities: [FRMSalesInvoice, FRMPurchaseInvoice, FRMSalesOrder, FRMSalesReturn, FRMPurchaseReturn]
 ---
 # Invoices & Returns

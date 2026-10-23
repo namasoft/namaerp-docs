@@ -1,4 +1,5 @@
 ---
+description: "The My Appointments screen: the read-only weekly schedule of technician crews, who sees which crews, setting up supervisors, filtering and opening an appointment."
 entities: [TechnicianAppointment, TechnicianCrew, DepartmentSection]
 menu: Customer Relationship Management → Technician Appointments → My Appointments
 ---
@@ -100,6 +101,6 @@ Filters are not saved. When you leave the screen and come back, it opens unfilte
 
 **Left-click** a block to open that appointment, read-only, in the same tab. There you can read the customer, the address on the Customer Address page, the materials in Items And Services and the other periods of the booking.
 
-**Right-click** a block for a small menu headed by the appointment code. Its only item, **Open the record** (*فتح المستند*), opens the appointment in a new tab.
+**Right-click** a block for a small menu headed by the appointment code. **Open the record** (*فتح المستند*) opens the appointment in a new tab, and **Open the from document** (*فتح مستند بناءا على*) opens the document the visit was booked for — the sales invoice, order or contract — in a new tab.
 
 Nothing on this screen changes a booking. To move, cancel or close a visit, use the [booking calendar](/modules/crm/technician-appointments/crm-technician-appointment-calendar) or the [appointment](/modules/crm/technician-appointments/crm-technician-appointment) itself.

@@ -77,11 +77,10 @@ The chassis is named in the **السياره (Customer Car)** column of the line
 document in this family. When the invoice is built on an allocation or an order through **From
 Document**, the picker offers only the cars on that source.
 
-::: warning Nothing checks who the car was allocated to
-The invoice happily sells a car that was allocated to somebody else. The allocation fields are an
-informational stamp and no rule reads them — see
-[Allocating a Chassis](/modules/servicecenter/car-sales/car-allocation.md). The only thing that can
-refuse the sale is the car's own status configuration, or the **منع البيع (Prevent Sales)** flag on
+::: info What can refuse the sale
+The allocation fields record who the car is promised to; they do not hold it — see
+[Allocating a Chassis](/modules/servicecenter/car-sales/car-allocation.md). What refuses a sale is
+the car's own status configuration, or the **منع البيع (Prevent Sales)** flag on
 [the car record](/modules/servicecenter/cars-setup/car-master-file.md).
 :::
 
@@ -126,11 +125,8 @@ problem.
 If the invoice is your stock-out document — the normal choice for an ordinary sale, and the one
 Al-Sahra makes — leave the final-delivery term's generation book and term **empty**.
 
-Unticking *أنشاء مستندات تلقائيا (Generate Document)* on the final-delivery term does **not** stop
-it: that switch is ignored there. Only blanking the book and the term works. The invoice, by
-contrast, does honour the switch — but relying on that asymmetry is how sites get into trouble, so
-publish the simple rule instead. The invoice and the final delivery are **alternatives** for moving
-stock, never a sequence.
+To stop the final delivery generating, clear the generation book or the generation term on its
+term. The invoice and the final delivery are **alternatives** for moving stock, never a sequence.
 :::
 
 ## Actions on these screens

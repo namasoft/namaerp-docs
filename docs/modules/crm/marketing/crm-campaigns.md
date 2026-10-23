@@ -1,4 +1,5 @@
 ---
+description: "The CRM Campaign master file and Campaign Type: what to fill in, the expectations and actuals fields, how campaigns link to leads, and what the screen does not measure."
 entities: [CRMCampaign]
 menu: Customer Relationship Management → Marketing → CRM Campaign
 ---
@@ -53,20 +54,16 @@ The **CRM Campaign** group underneath is the campaign itself:
 | الحجم المستهدف / Target Size | **free text** — `120 qualified visitors` is a perfectly normal value |
 | الراعي / Sponsor | **free text** — a department, a partner, a budget holder |
 | حالة الحملة / Campaign Status | Planning, Active, InActive, Completed, Cancelled |
-| مجموعة موظفين / Employee Group | present on the screen but read by nothing — see the note below |
 | مرفق / Attachment | one file slot |
 
 For our expo, that reads: type `CT-03` معرض / Exhibition, start 8 January 2026, expected closing
 31 March 2026, target kind Trade Shows, target size `120 qualified visitors`, sponsor
 `Marketing Department`, status Active.
 
-::: tip Two things that are not on this screen at all
-There is **no channel field** — nothing records whether this was e-mail, SMS, social media, print or
+::: tip There is no channel field
+Nothing on the campaign records whether it was e-mail, SMS, social media, print or
 a stand at a fair. If channel matters to you, put it in the campaign name or use the Campaign Type
 file for it, which is what most sites end up doing.
-
-And there is **no employee-group behaviour**. The *Employee Group* box accepts a value and no part
-of the system ever reads it. The grid below is what actually assigns people.
 :::
 
 ### The products grid — mandatory, and easy to be surprised by
@@ -177,21 +174,11 @@ What works in practice:
 ## Campaign Type
 
 The **Campaign Type** file (نوع حملة) is a plain label — a code, an Arabic and English name, a
-responsible employee and a mediator. It carries no defaults, no cost account, no channel and no
-behaviour; picking a type on a campaign changes nothing else on the screen. It is covered with the
+responsible employee and a mediator — a label for grouping and filtering campaigns. It is covered with the
 other CRM classification files in
 [Classification Files](/modules/crm/master-files/crm-lead-classification-files.md).
 
-## Two smaller things worth knowing
-
-::: warning Two extra fields exist outside the screen
-Besides the *Target Kind* list and the *Sponsor* text box, the campaign record carries two further
-stored fields that look like a target-audience text and a sponsor text. They are not on the screen
-and nothing reads them — but they **do** appear in imports, exports and list-view column pickers,
-where they are indistinguishable from the real ones. When you build an import file or a list layout,
-make sure you picked *Target Kind* and *Sponsor*, not their look-alikes; data written into the other
-two is silently invisible.
-:::
+## The responsible employee
 
 Unlike every other screen in this area, the campaign does **not** fill the Responsible Employee with
 the logged-in user's employee when you create it. If you want an owner on the card, set it yourself.

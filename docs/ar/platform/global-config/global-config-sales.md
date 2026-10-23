@@ -34,5 +34,3 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 **رابط خادم Nama CRM** `value.info.namaServerUrl` *(الافتراضي `https://crm.namasoft.com/`)* — عنوان نسخة الـ CRM.
 
 **إسم المستخدم للعميل** / **كلمة سر العميل** `value.info.customerUserName`, `value.info.customerPassword` — بيانات الدخول التي تستعملها هذه التركيبة للتوثّق لديه.
-
-**إستخدام قالب تغير طلب الدعم الإنجليزي** `value.info.useEnglishCRMTroubleTicketChangeTemplate` — يرسل النسخة الإنجليزية من إشعار تغيّر التذكرة بدل العربية.

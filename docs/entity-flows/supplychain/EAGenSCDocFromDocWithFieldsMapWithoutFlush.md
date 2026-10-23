@@ -60,10 +60,10 @@ description5=n1
 
 **Parameter 7:** Save as Draft (Optional) - true/false to save as draft
 
-**Parameter 8:** Conditional Execution (Optional) - Only run if condition returns non-zero
+**Parameter 8:** Run Only If number greater not zero (Optional) - A value expression evaluated on the source document, such as a field or a `totalizesql(...)` query; the document is generated only when the result is not zero
 
-```sql
-select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end
+```
+totalizesql(select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end)
 ```
 
 **Parameter 9:** Line Criteria Filter (Optional) - Criteria definition code for line filtering

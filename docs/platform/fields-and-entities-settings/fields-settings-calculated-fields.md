@@ -1,4 +1,5 @@
 ---
+description: "Fields and Entities Settings grids that add query-calculated fields and columns to a screen (Calculated Fields Queries) and colour grid rows by a query (Style Overrider Details)."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -24,8 +25,8 @@ Once a slot has a query behind it, it behaves like any other field. You can plac
 | Detail Field | Leave empty for the record's own header. Fill it with a grid's field ID (for example `details`) to define the slots for the **rows** of that grid instead, so every line gets its own calculated columns. |
 | Field 1 Query … Field 20 Query | The query behind each of the twenty slots. |
 
-::: warning A line with no type does nothing
-Unlike most grids on this screen, these lines are **not** generic. A line with both **For Type** and **For Type List** empty is ignored completely. Always name the entity type, or point at a list of types.
+::: warning Always name the entity type
+Unlike most grids on this screen, these lines are **not** generic: a line applies only to the entity types it names. Fill **For Type**, or point **For Type List** at a list of types.
 :::
 
 ### Where the values show up
@@ -99,8 +100,8 @@ Keep these queries narrow: one aggregate, filtered on an indexed column, with no
 The twenty slots belong to the entity type, not to the line. If two lines both name Sales Invoice and both fill **Field 3 Query**, the two queries collide: a critical error is written to the server log and one of them wins, with no way to predict which. Keep a single line per entity type and fill all twenty slots on it. The same applies across records — do not configure Sales Invoice slots in one record and more Sales Invoice slots in another.
 :::
 
-::: warning The line's Inactive tick is ignored here
-Ticking **Inactive** on an individual line of this grid does **not** switch the query off; it keeps running. To retire a calculated field, clear its query or delete the line. Ticking **Inactive** on the whole record does work — every calculated field and row colour in that record stops immediately.
+::: tip Retiring a calculated field
+To retire one calculated field, clear its query or delete the line. To switch off everything at once, tick **Inactive** on the whole record — every calculated field and row colour in that record stops immediately.
 :::
 
 ## Style Overrider Details

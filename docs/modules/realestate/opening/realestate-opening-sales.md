@@ -1,4 +1,5 @@
 ---
+description: "The Opening sales doc for unit sales completed before go-live: the screen it shares with the sales contract, the Fully Paid column, the opening fiscal period, no commissions and licensing."
 entities: [REOpeningSales]
 menu: Real Estate and Property → Sales → Opening sales doc
 ---

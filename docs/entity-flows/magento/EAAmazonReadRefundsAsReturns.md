@@ -21,7 +21,7 @@ Manually, usually from a Task Schedule run on demand with **Run Now**, whenever 
 
 1. **Finds the site** - Looks up the Amazon e-commerce site (`MAGMagentoSite`) by the code in parameter 1.
 2. **Reads the order IDs** - Splits parameter 2 on commas, spaces and new lines, removes blanks and duplicates. If no ID is left, the run fails with "No order IDs provided".
-3. **Reads the refunds** - For each order ID, asks the Amazon Finances API for the order's refunds and turns each one into a return.
+3. **Reads the refunds** - For each order ID, asks the Amazon Finances API for the order's refunds and turns them into returns. Refunds of the same order made on the same day are merged into one return, so an order refunded twice on one day gives one return with both refunds' items, while refunds on different days give one return per day.
 4. **Skips orders that already have a return** - For each order, looks for an existing return of the site whose source ID is the order ID (or starts with the order ID followed by `-`). Such orders are skipped with a warning: "Order ... already has an imported return, skipped".
 5. **Saves the returns** - The remaining returns are saved as the document type set in the site's return generation settings (Sales Return when none is set).
 6. **One import at a time** - Only one returns import runs per site at a time; if another one is already running for the site, the run fails with "Another returns import is already running for site ...".

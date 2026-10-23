@@ -9,11 +9,11 @@ entities: [EntityFlow]
 
 # EAFieldsValuesCalculator
 
-Please review the page at [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md)
-
 ## Overview
 
 Performs bulk field assignments and calculations on entities using flexible mapping syntax. Supports field copying, static values, SQL calculations, and entity commands for data manipulation and automation.
+
+Please review the page at [Field Values Calculator](../../entity-flows/core/ai-generated-field-maps-documentation.md)
 
 ## When This Action Runs
 

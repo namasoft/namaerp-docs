@@ -1,6 +1,6 @@
 ---
 entities: [EltezamSubmissionDoc]
-menu: integrations → Documents → MCS Eltezam Submission
+menu: Integrations → Documents → MCS Eltezam Submission
 ---
 # Eltezam Submissions and Sending
 
@@ -158,9 +158,9 @@ again, list it in the `EASubmitEltezamData` task schedule or use **Resend Failed
 Once the data or the code tables are fixed, press **Resend Failed Employees** (إعادة إرسال
 الموظفين الذين فشل إرسالهم), in the actions block of the submission and in the More Actions menu.
 
-It asks one question — **MCS Server (leave empty to use the configuration Service URL)** (خادم
-الوزارة (اتركه فارغا لاستخدام عنوان الخدمة بالإعدادات)) — and then resends every line that is not
-**Succeeded**. Only those employees' old log rows are replaced; the successful employees' rows are
+It asks nothing: it sends straight to the **Service URL** of the submission's Eltezam configuration
+and resends every line that is not **Succeeded**. To send to a different server, correct the Service
+URL on the configuration first. Only those employees' old log rows are replaced; the successful employees' rows are
 kept. The counts are recalculated, and a summary appears, one line per employee:
 
 ```

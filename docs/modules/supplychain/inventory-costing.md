@@ -7,7 +7,7 @@ Inventory quantity is only half the truth; the other half is its **value**. This
 
 ## How the System Tracks Cost
 
-The system keeps each item's cost and updates it with every movement according to the adopted costing method - such as **First In First Out (FIFO)**, **moving average cost**, and **last purchase cost**. Each receipt adds to the cost layers and each issue takes from them the same way, so cost of goods sold and inventory value stay consistent.
+The system keeps each item's cost and updates it with every movement according to the company's costing method. There are exactly two: **First In First Out (FIFO)** and **moving average cost**. The choice is made once for the whole company in the **Issue Cost Policy** of [Costing Configuration](/modules/supplychain/configuration/costing-configuration#Costing-Method); there is no per-item or per-sector method. Each receipt adds to the cost layers and each issue takes from them the same way, so cost of goods sold and inventory value stay consistent.
 
 That work does not happen inside the save. Saving a stock document raises an **inventory transaction request**, and the costing runs when that request is processed, moments later. It is why a freshly saved issue can show no cost yet, and why a costing question is often really a processing question: the request is queued, or it failed. [Business Requests](/platform/background-processing/business-requests) is where you look at it, and [Costing Configuration](/modules/supplychain/configuration/costing-configuration) covers what the system does with a receipt whose own cost has not been settled yet — the usual reason an issue comes out at zero.
 

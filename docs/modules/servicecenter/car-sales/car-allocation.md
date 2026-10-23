@@ -1,4 +1,5 @@
 ---
+description: "The Car Allocation document and its cancellation: assigning a specific chassis for a customer, branch, salesperson and warehouse after a car sales order, and what stops a second sale of the same car."
 entities: [SIAllocation, SIAllocationCancel]
 menu: cars → Car Sales → Car Allocation
 ---
@@ -39,16 +40,11 @@ and the allocation cancel document is the only thing that clears them.
 The document also writes a status line on the car — typically moving it to *مخصص (Allocated)* — if
 the configuration has a status updater line targeting the allocation.
 
-::: warning An allocation does not reserve the car
-This is the sentence readers most often get wrong, so it is worth being blunt: **no business rule
-anywhere reads *Allocated To Customer*.** It is written, it is displayed on the car's screen, and
-that is the end of it.
-
-Concretely: a car allocated to Layla Al-Harbi can be
-[invoiced](/modules/servicecenter/car-sales/car-sales-invoice.md) to a completely different
-customer, and nothing warns anybody. No validator checks it, no picker uses it, no report is driven by it.
-Treat the five fields as an **informational stamp** — extremely useful for "who is this car
-promised to?" questions on screen and in reports, and useful for nothing else.
+::: info The allocation fields are a stamp, not a lock
+The five fields answer "who is this car promised to?" on the car's screen and in reports. They do not
+hold the car: a car allocated to Layla Al-Harbi can still be
+[invoiced](/modules/servicecenter/car-sales/car-sales-invoice.md) to another customer. The next
+section shows what does stop a second sale.
 :::
 
 ## What actually stops a second salesman selling the same car
@@ -82,16 +78,9 @@ this is almost always why.
 
 | | |
 |---|---|
-| Accounting | **None.** The document never posts, whatever accounts are configured on its term |
+| Accounting | **None.** The allocation and the allocation cancel create no journal entry |
 | Inventory | **None**, unless the term's **Reserve** switch is on — which creates an ordinary quantity reservation, entirely separate from the allocation fields |
 | Documents generated | None |
-
-::: warning The account block on the allocation term is ignored
-[The document term screen](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
-for the allocation — and for the allocation cancel — shows a full set of
-debit, credit, cash, tax and discount accounts. **Neither document ever posts.** Anything entered
-there is silently ignored; do not spend time configuring it and do not expect a journal entry.
-:::
 
 ## The worked example
 
@@ -143,5 +132,5 @@ The Car Allocation and the Car Allocation Cancel carry one action each, in the M
 - **Create Sub Item From Line Information** (*إنشاء صنف فرعي من السطر*) — for every line whose item
   has sub items, creates the car record (or refreshes the one already on the line) from the line's
   data and writes it back onto the line. The car record is saved straight away, even before you save
-  the document. It does nothing, and shows no message, unless the term's *Create Sub Item From Line
-  Info* option is on.
+  the document. It runs only when the term's *Create Sub Item From Line Info*
+  option is on.

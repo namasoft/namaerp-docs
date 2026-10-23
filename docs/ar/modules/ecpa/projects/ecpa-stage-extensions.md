@@ -1,6 +1,6 @@
 ---
 entities: [CPAProjectStageExtension, CPAStageExtensionReason, CPAStageExtensionReasonType]
-menu: ECPA ← مشاريع ← تمديد مرحلة مشروع
+menu: ادارة المشاريع ← مشاريع ← تمديد مرحلة مشروع
 ---
 
 # تمديد مراحل المشروع
