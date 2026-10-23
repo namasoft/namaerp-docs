@@ -1,3 +1,6 @@
+---
+description: "Setting up Fixed Assets in a new database in the right order: asset types and accounts, classifications, locations, component types, document books and terms, the assets, opening balances and the first depreciation run."
+---
 # Getting Started with Fixed Assets
 
 Setting up Fixed Assets in a fresh database is not hard, but the order matters more than in most modules. Almost everything an asset knows about itself — its accounts, its expected life, its residual value, even its components — is copied down from something you set up earlier. Build the pieces in the wrong order and you end up creating assets that carry no accounts, then discovering it after the first depreciation run refuses to commit.
@@ -38,7 +41,7 @@ While you are on that screen, settle the dimension questions too — whether the
 
 ## Step 1 — Asset Types, and Their Accounts
 
-Start here, always. The **fixed asset type** (نوع أصل) is the template every asset of a family copies from, and the three accounts it carries are the ones the whole module will post against.
+Start here, always. The **fixed asset type** (نوع أصل) is the template every asset of a family copies from, and the three accounts it carries are the ones the whole module's journal entries will use.
 
 Al-Waha creates three types to begin with:
 
@@ -166,7 +169,7 @@ Check three things on the first run before you trust the setup:
 
 - **Is everything there that should be?** An asset is collected only if it is running, depreciable, has not already been depreciated for this period, and its depreciation start date has been reached. An asset missing from the first run is nearly always an asset still sitting in its initial state because no purchase or opening document ever gave it a cost.
 - **Do the instalments look right?** A zero instalment means either no remaining life or a book value already at the salvage value.
-- **Did the entries actually post?** Committing the document raises a **business request** (طلب أعمال) that is processed in the background, so the journal appears a moment after the save. If it does not, open the Business Requests list view, filter for failures, select the rows and use the **More** menu → *Reprocess* or *Recommit*.
+- **Were the entries actually created?** Committing the document raises a **business request** (طلب أعمال) that is processed in the background, so the journal appears a moment after the save. If it does not, open the Business Requests list view, filter for failures, select the rows and use the **More** menu → *Reprocess* or *Recommit*.
 
 Once the first run is clean, the rhythm is set: one depreciation document per period, before the period is closed. See [Running Depreciation](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md), and [Aggregated Depreciation](/modules/fixedassets/depreciation/fixedassets-aggregated-depreciation.md) when the register grows large enough that you want one action to produce many documents.
 

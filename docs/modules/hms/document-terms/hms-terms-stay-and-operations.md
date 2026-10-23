@@ -13,7 +13,7 @@ documents on this page. A chain that "stops" (an admission with no accommodation
 invoice) almost always has an empty book or term somewhere along it.
 
 Terms are edited in **Basic → Settings → Document Term**. The invoice terms — the patient/insurer
-sides every priced document posts with — are on [Invoice Document Terms](./hms-terms-invoices.md).
+sides every priced document records its values on — are on [Invoice Document Terms](./hms-terms-invoices.md).
 
 ## Patient Admission — creating the accommodation
 
@@ -59,22 +59,22 @@ term above. Its own term has a single option, under **Origin Document Effect**:
 
 ## Closing Invoice — the discharge adjustments
 
-The closing invoice does not post the stay's invoices again — each of them has already posted itself.
-It posts only the **admission-level adjustments** typed on its header, and its term names their
+The closing invoice does not record the stay's invoices again — each of them has already created its own entry.
+It records only the **admission-level adjustments** typed on its header, and its term names their
 sides:
 
-| Pair | Field ids | Posts |
+| Pair | Field ids | Records |
 |---|---|---|
 | **Tax1 Debit / Credit**, **Tax2 Debit / Credit** | `termConfig.tax1Debit` … `termConfig.tax2Credit` | The Tax 1 and Tax 2 values of the closing invoice. |
 | **Fees 1 Debit / Credit**, **Fees 2 Debit / Credit** | `termConfig.fees1Debit` … `termConfig.fees2Credit` | The Fees 1 and Fees 2 values. |
 | **Discount1 Debit / Credit**, **Discount2 Debit / Credit** | `termConfig.discount1Debit` … `termConfig.discount2Credit` | The Discount 1 and Discount 2 values. |
 
-As on the invoices, a pair posts only when both sides are filled, and a side can take its account from
+As on the invoices, a pair is recorded only when both sides are filled, and a side can take its account from
 the **Patient**.
 
 ## Surgery Package Invoice — settling the package
 
-| Field | Field id | Posts / does |
+| Field | Field id | Records / does |
 |---|---|---|
 | **Difference Debit / Credit** | `termConfig.differenceDebit` / `termConfig.differenceCredit` | The total of the lines' *Difference* — agreed price against actual price. |
 | **Revenue Difference Debit / Credit** | `termConfig.revenueDebit` / `termConfig.revenueCredit` | The total of the lines' *Revenue Difference*. |

@@ -1119,6 +1119,7 @@ Because a preset stores the period rather than the dates, a dashboard saved with
 | `EnhancedMetricsCard` | JSON-driven KPI card strip — cards, slots, sparklines, conditional colouring. See Section 15. | Yes |
 | `MetricsCards` | Legacy KPI cards driven by `metricsCardConfig` fields on the widget record, not by `chartConfigJSON`. | No |
 | `PieChart`, `ColumnWithRotatedLabels`, etc. | Legacy Highcharts types (auto-translated to ECharts server-side) | No |
+| `Calendar`, `ResourceView`, `Timeline`, `Report`, `HTML`, `CardMenu`, `RecentVisits` | Configured through the `params` grid, the `htmlArabic` / `htmlEnglish`, `cardMenus`, `metricsCardConfig` + `timelineConfig` fields, or `definition` + `launchType`. See [Calendar, Timeline, Report and Other Widgets](./bi-reference-more-widget-types.md). | No |
 
 For `Table` widgets, the SQL column names become the grid column headers. No `chartConfigJSON` is needed — just provide the `dataSource` SQL and `crossFilterBindings`.
 

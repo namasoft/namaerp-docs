@@ -28,6 +28,8 @@ These options must be enabled first for the ignore flag to be read from the ware
 |------|----------|
 | Ignore in reservation quantity check by date | `ignoreInReservationQtyCheckByDate` |
 
+![Ignore In Reservation Qty Check By Date on the Warehouse screen](../../ar/modules/supplychain/images/reservation/warehouse-ignore-reservation-check-en.png)
+
 ## Settings in Locator
 
 | Name | Field ID |

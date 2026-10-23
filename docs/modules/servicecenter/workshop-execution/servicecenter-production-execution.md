@@ -1,4 +1,5 @@
 ---
+description: "The Job Order Execution document: clocking real start and finish times per task, its tabs and rules, the two clocking methods that must not be mixed, choosing the technician, what it produces, and the Service Center Attendance sheet."
 entities: [SrvCProductionExecution, SrvCAttendance]
 menu: Service Center → Documents → Production Review
 ---
@@ -10,7 +11,7 @@ the floor — who picked the car up, when the compressor job started, whether th
 on it at closing time. That is what the **Job Order Execution** document records: a time sheet for
 the shop, one row per task, with a real start and a real finish stamped by the person doing the work.
 
-You will find it at **Service Center > Documents > Production Review**.
+You will find it at **Service Center → Documents → Production Review**.
 
 ::: info Required licence
 `srvcenter`
@@ -216,7 +217,7 @@ with no finish stamp — a reasonable way of steering a foreman towards someone 
 
 ## What the document does — and does not — produce
 
-It moves **no stock** and posts **no accounting entry**. There is no material line on it at all: parts
+It moves **no stock** and creates **no accounting entry**. There is no material line on it at all: parts
 are handled entirely by the
 [spare parts documents](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md).
 
@@ -227,14 +228,28 @@ order closing, and only when you press the button.
 
 ## The attendance sheet
 
-**Service Center Attendance** (حضور / انصراف مركز الخدمة) sits under **Service Center > Documents**
-on the same `srvcenter` licence. It is a plain capture sheet: one grid of employee, time from, time
-to, and the resulting total time, with the document's value date used for any line you leave undated.
+**Service Center Attendance** (حضور / انصراف مركز الخدمة) sits under **Service Center → Documents →
+Service Center Attendance** on the same `srvcenter` licence. It is the workshop's own register of who
+was on the floor and for how long — typically one document per day, filled by the foreman.
 
-It is the workshop's own record of who was present and for how long. Attendance that feeds payroll
-is captured in the HR module.
+The header is an ordinary document header: book and code, issue date, value date, fiscal period, a
+description and the dimensions. A term is optional. The **Details** grid has one line per stint:
+
+| Column | Arabic | What it holds |
+|---|---|---|
+| Employee | الموظف | Required. Any employee, picked from the HR employee file. |
+| Time / From | الوقـت / من | Clock-in time. |
+| Time / To | الوقـت / إلى | Clock-out time. |
+| Total Time Value | اجمالى الوقت | Filled for you: the hours between the two times, as a decimal (08:00–16:30 gives 8.5). |
+
+Every line belongs to the document's **value date**; there is no date column on the grid. So a
+technician who comes back after a break simply gets a second line on the same document.
+
+Saving does nothing beyond storing the sheet. It produces no payroll attendance, no cost on any job
+order and no accounting entry, and no other screen reads it. Attendance that feeds payroll is
+captured in the HR module; the hours that count against a job are the ones clocked on the execution
+document above.
 
 ::: tip Enter a night shift as two lines
-Both times on a line belong to the same day. Enter a shift that crosses midnight as two lines on two
-days: 22:00–23:59 and 00:00–06:00.
+Both times on a line are read on the same day. Enter a shift that crosses midnight as two lines instead: 22:00–23:59 and 00:00–02:00.
 :::

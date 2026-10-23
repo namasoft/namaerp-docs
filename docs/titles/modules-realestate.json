@@ -49,7 +49,8 @@
     "/modules/realestate/opening",
     "/modules/realestate/opening/realestate-opening-balances.md",
     "/modules/realestate/opening/realestate-opening-sales.md",
-    "/modules/realestate/opening/realestate-opening-rent-contracts.md"
+    "/modules/realestate/opening/realestate-opening-rent-contracts.md",
+    "/modules/realestate/realestate-reports.md"
   ],
   "folderTitles": {
     "/modules/realestate": {

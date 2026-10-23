@@ -42,6 +42,7 @@ these before the first send, because every gap turns into a failed request:
 | **Read Timeout Seconds** (مهلة القراءة بالثانية) | How long to wait for the ministry's answer. Empty means 120 seconds |
 | **Do Not Send Records Having Validation Errors** (عدم إرسال السجلات التي بها أخطاء تحقق) | See below |
 | **Do Not Store Request XML** (عدم حفظ ملف الإرسال) | Leave it off to keep a copy of every request and response on the submission document; tick it to save space once the integration is stable |
+| **Log Sending Details** (تسجيل تفاصيل الإرسال) | Tick it while you follow a send: each run then writes to the server log which document or group it is sending, the operations it sends, how many system entries it saved and where they are linked, and — when the run fails and rolls back — the errors. Leave it off in normal use |
 
 ### Checking records before they leave Nama
 

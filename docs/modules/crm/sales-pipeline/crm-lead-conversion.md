@@ -13,6 +13,8 @@ All four buttons live on screens unlocked by the licence code `crm`.
 
 We follow Marina Plaza Hotels from lead `LD-00417` through to customer `C-01188`.
 
+![A CRM Lead](../../../ar/modules/crm/images/sales-pipeline/crm-lead-en.png)
+
 ## Convert To Potential
 
 **On:** CRM Lead. **Label:** تحويل إلي فرصة / Convert To Potential.

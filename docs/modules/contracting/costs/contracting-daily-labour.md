@@ -1,4 +1,5 @@
 ---
+description: "The Daily Labor Book and Daily Engineering Diary: recording site workers and their wages, allocating the wage bill across terms, what committing books, raising fines from the labour book, why it has no link to payroll, and the diary as a record only."
 entities: [DailyLaborBook, DailyEngineeringDoings]
 menu: Contracting → Contractor Contracting → Daily Labor Book
 ---

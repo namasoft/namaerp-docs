@@ -1,6 +1,7 @@
 ---
 description: "The Travel Service Purchase Order, Purchase Invoice and Purchase Return: buying tour services from hotels, restaurants, guides and suppliers, and carrying a document forward."
 entities: [TRPurchaseInvoice, TRPurchaseOrder, TRPurchaseReturn]
+menu: Travel → Documents → Travel Service Purchase Invoice
 ---
 # Buying from Suppliers
 
@@ -115,8 +116,8 @@ behaviour of the button, and which tour lines feed which pass, is covered on [To
 ::: warning The order is a real financial document
 Unlike the operations documents, a purchase order takes a **document term**, and its effects are
 processed like any other financial document. Whatever debit and credit sides that term carries will
-be booked when the order is saved. Decide deliberately what you want the order to do — many
-installations want it to book nothing and leave all the accounting to the invoice, which is achieved
+be recorded when the order is saved. Decide deliberately what you want the order to do — many
+installations want it to create no ledger entry and leave all the accounting to the invoice, which is achieved
 simply by leaving the term's account sides empty. See [Document Terms](./travel-document-terms).
 :::
 

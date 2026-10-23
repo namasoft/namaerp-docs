@@ -36,7 +36,7 @@ Three buttons sit on the HR Year screen, above the periods grid. The first two a
 ## Salary Issuance: a payroll-stream tag, not a payment
 
 ::: warning Salary Issuance does not pay anyone
-A **Salary Issuance** (صرفية راتب, **Payroll > Settings > Salary Issuance**) does **not** post accounting and does **not** move money. It is a **classifier — a tag on a stream of pay** that lets the same period produce more than one parallel salary run. Think of it as a label, not a payment step; the money still flows entirely through the salary sheet and salary document described in [How Salary Is Calculated](../concepts/hr-salary-engine.md).
+A **Salary Issuance** (صرفية راتب, **Payroll > Settings > Salary Issuance**) does **not** create any accounting entry and does **not** move money. It is a **classifier — a tag on a stream of pay** that lets the same period produce more than one parallel salary run. Think of it as a label, not a payment step; the money still flows entirely through the salary sheet and salary document described in [How Salary Is Calculated](../concepts/hr-salary-engine.md).
 :::
 
 ![Salary Issuance, with its repeat-control flags](../../../ar/modules/hr/images/setup/salary-issuance-en.png)

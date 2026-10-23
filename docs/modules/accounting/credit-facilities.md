@@ -29,8 +29,8 @@ A credit facility is a revolving-drawdown instrument, and its cycle runs like th
 
 1. **Credit Facility Setting** — the shared template: the interest-calculation method, the rule for allocating a payment between principal and interest, and the accounts.
 2. **Credit Facility** — the master file in its "Not Started" status.
-3. **Credit Facility Issuance** — activates the facility (it posts to the ledger, and the status flips to "In Progress").
-4. **Credit Facility Payment** — repaying an installment that gets split between principal and interest per the setting (it posts to the ledger).
+3. **Credit Facility Issuance** — activates the facility (it creates a journal entry, and the status flips to "In Progress").
+4. **Credit Facility Payment** — repaying an installment that gets split between principal and interest per the setting (it creates a journal entry).
 5. **Credit Facility Termination** — terminating the facility (status "Terminated").
 
 ### The facility master file
@@ -49,7 +49,7 @@ The **Credit Facility Setting** gathers the rules shared by similar facilities: 
 
 ### Issuance, payment and termination
 
-**Issuance** activates the instrument and posts its effect (a **debit/credit** pair). Then each **payment document** splits its installment between principal and interest per the setting, posting via the sides: **payment of credit-facility value debit/credit**, **payment of interest value debit/credit**, and **payment value debit/credit**. Finally, the **termination document** closes the facility. (Where the accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
+**Issuance** activates the instrument and creates its accounting effect (a **debit/credit** pair). Then each **payment document** splits its installment between principal and interest per the setting, recording it on the sides: **payment of credit-facility value debit/credit**, **payment of interest value debit/credit**, and **payment value debit/credit**. Finally, the **termination document** closes the facility. (Where the accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
 
 ## Actions on this screen
 

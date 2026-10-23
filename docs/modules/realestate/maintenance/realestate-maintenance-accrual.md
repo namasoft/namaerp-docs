@@ -84,7 +84,7 @@ Every line now carries its unit's area multiplied by the cost basis:
 | Studio C-104 | 90 | 9,000 | the studio's tenant |
 
 The buyer-or-tenant column is filled from the unit's buyer, falling back to the buyer on the unit's
-contract. It matters more than it looks: it is the party the receivable is posted against, so a
+contract. It matters more than it looks: it is the party the receivable is recorded against, so a
 unit with nobody in that column will accrue against nothing.
 
 If sales tax is switched on for your installation, two tax percentage/value column pairs appear as
@@ -128,7 +128,7 @@ Each detail line produces:
 
 Every line's entry is stamped with the unit as its source, so a unit that carries its own subsidiary
 accounts can drive the account selection, and with the buyer or tenant as the line's subsidiary.
-The amounts post in the legal entity's ledger main currency — the accrual has no currency field of
+The amounts are recorded in the legal entity's ledger main currency — the accrual has no currency field of
 its own.
 
 As with any pair on a Real Estate term, **a pair only fires when both its debit and its credit side

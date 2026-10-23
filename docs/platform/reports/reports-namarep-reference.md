@@ -1,4 +1,5 @@
 ---
+description: "Catalogue of NamaRep calls for report expressions: translation, dates and Hijri dates, numbers and amounts in words, prices, links to records and reports, creating records, vacation balances, reward points, database queries, security, QR codes, audit trail and system parameters."
 entities: [ReportDefinition]
 ---
 

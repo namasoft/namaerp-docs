@@ -1,4 +1,5 @@
 ---
+description: "How document terms work for fixed asset documents: where terms live and how a document finds one, the account side block, the asset as the account source, what each document type's term controls, and which documents have no term."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -11,7 +12,7 @@ record should be created on the spot, or what to do with the VAT.
 
 That is the document term's job. The book gives a document its number and its scope; the **term**
 (`توجيه المستند`) gives it its accounting wiring and its behaviour switches. Two purchase documents
-in the same book but on different terms can post to completely different accounts.
+in the same book but on different terms can record their entries on completely different accounts.
 
 ![The Document Terms list, filtered to a Fixed Assets document type](../../../ar/modules/fixedassets/images/terms/document-term-list-en.png)
 
@@ -62,7 +63,7 @@ Every fixed asset carries an accounts bag, normally inherited from its
 [asset type](/modules/fixedassets/master-files/fixedassets-asset-types.md). Three slots in that bag
 have a fixed meaning in this module:
 
-| Slot | Label | What the module posts to it |
+| Slot | Label | What the module records on it |
 |---|---|---|
 | Main Account | `حساب الأصل` — the asset account | The asset's cost: acquisition, letter-of-credit cost, additions and deductions, opening, disposal |
 | Account 01 | `حساب الإهلاك` — the depreciation account | The depreciation expense of each period |

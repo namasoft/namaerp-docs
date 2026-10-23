@@ -1,4 +1,5 @@
 ---
+description: "إدارة الاعتمادات المستندية للاستيراد: ملف الاعتماد، ودورة الفتح، والشحنات، والتكاليف والمصروفات التي تدخل في التكلفة الواصلة، وسجل الأحداث، والإجراءات والرسائل في هذه الشاشات."
 entities: [LetterOfCredit, LCShipment, LCOpeningDoc, LcExpenseDocument, LetterOfCreditRequest, LCOpeningRequest, LCCostDoc, LCAction, LCProformaInvoice, LCShipmentProformaInvoice]
 menu: الإعتمادات ← الملفات ← الإعتماد المستندي
 ---

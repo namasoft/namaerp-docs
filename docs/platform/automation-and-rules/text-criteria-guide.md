@@ -75,6 +75,8 @@ warehouse.id,In,id1@A=@Xid2@A=@Xid3,AND;
 The separator `@A=@X` must be used exactly as shown (case-sensitive). Do not add spaces around the separator.
 :::
 
+![A Criteria Definition; Convert To Text turns the tree into text criteria](../../ar/platform/images/criteria-definitions/criteria-definition-screen-en.png)
+
 ## Period Operators (WithinPeriod/OutsidePeriod)
 
 The `WithinPeriod` and `OutsidePeriod` operators apply only to **date** and **date-time** fields. They check whether the field's date falls inside (`WithinPeriod`) or outside (`OutsidePeriod`) a date range. For date-time fields, only the date part is considered.

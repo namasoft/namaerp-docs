@@ -58,6 +58,8 @@ One record, one physical vehicle. It carries:
 
 All of it is described field by field on [The Car File](/modules/servicecenter/cars-setup/car-master-file.md).
 
+![A car record](../../../ar/modules/servicecenter/images/cars-setup/sub-item-car-record-en.png)
+
 ## The two registers are separate
 
 Nama holds **two** vehicle files, and they are not connected.

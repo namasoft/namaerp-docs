@@ -106,7 +106,7 @@ procedure, not as predefined semantics.
 ## How it's processed
 
 Evacuation approval is a **workflow**, not a ledger document — it generates **no accounting effect**
-and posts nothing to the general ledger. Its only "processing" is the state machine: approvals roll
+and creates no general-ledger entry. Its only "processing" is the state machine: approvals roll
 up into the party document's approval state, and that state is what a settlement can be made to
 respect. Because the clearance and the money are deliberately separate, you can run the two in
 parallel and simply require the clearance to be **Approved** before the dues liquidation is paid.

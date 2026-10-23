@@ -167,6 +167,24 @@ If you want each change to take effect immediately, tick **Confirm each change i
 - If an immediate save fails, the errors are shown and the period goes back to where it was.
 - Ticking the box does not save changes that are already waiting, and it hides the bar with the **Discard** button. Save them with **Save changes**, or untick the box to get **Discard** back.
 
+## Who can use the calendar
+
+The calendar follows the same security profile as the **Technician Appointment** screen itself:
+
+- **Opening it** needs **Record View** on Technician Appointment. Without it the menu entry is hidden, and a link or
+  bookmark to the calendar returns you to the home page with
+  *The user {0} does not have the capability {1} on the type {2}* — «المستخدم {0} ليس لديه الصلاحية {1} للنوع {2}».
+- **The crew list** needs **List View** on **Technician Crew**. Without it, the crew panel shows a lock and the same
+  message instead of the crews.
+- **Booking and changing** need **Can Edit** at **Commit** level or higher on Technician Appointment. Without it you
+  can still read the week, but drawing a period, dragging one, the right-click actions and **Save** are refused with
+  the same message naming *Commit*; the blocked right-click items are shown faded.
+- **Removing a period** also needs **Delete** on Technician Appointment.
+- **A field disabled for you** in your security profile or user settings blocks the change that would edit it: the
+  status (cancel, close, no-show), the period's day and times (drawing or moving), or its remark (adding a reason). The
+  calendar then says *"You are not allowed to change the field {0}"* (*«غير مسموح لك بتعديل الحقل {0}»*) with the
+  field's name, and a dragged period goes back to where it was.
+
 ## Opening the calendar from a link or a button
 
 A notification, email or SMS can carry a link that opens this calendar with the section, the procedure and the From Document already filled in. A typical use is right after a sale: when a sales invoice for an installation is committed, the booking team gets a message with a link that opens the calendar on that invoice, and all they have left to do is draw the periods.

@@ -85,7 +85,7 @@ It lives under **Human Resources → Work List → Definition Letter**
 | Hiring Date | تاريخ التعيين | The employment start date. |
 | Monthly Salary (Amount / Currency) | الراتب الشهري (المبلغ / العملة) | The salary the certificate confirms. |
 
-A Definition Letter is a **statement, not a posting** — issuing one does not touch the general
+A Definition Letter is a **statement, not an accounting entry** — issuing one does not touch the general
 ledger. It is governed by its own document term, but that term names print and numbering settings
 rather than accounting accounts.
 
@@ -112,7 +112,7 @@ charges can be logged on one document.
 
 ![Payment Request](../../../ar/modules/hr/images/government-relations/ho-payment-request-en.png)
 
-::: warning The payment request records a fee — it does not post to the ledger by itself
+::: warning The payment request records a fee — it does not create a ledger entry by itself
 This is the single most important accounting point in the whole area. A **Payment Request only
 tracks and records** that a government fee was paid — the beneficiary, the receiving party, the
 amount. It **does not, by itself, produce a general-ledger entry.** Saving it debits and credits
@@ -120,7 +120,7 @@ nothing; the accounting for the money is driven **downstream** by the actual tre
 voucher that settles it. So do not read a Payment Request as the journal entry for the fee — it
 is the record that the fee exists and was paid, and the ledger movement comes from elsewhere.
 
-This is deliberately **different** from a government **penalty**: a penalty document *does* post a
+This is deliberately **different** from a government **penalty**: a penalty document *does* create a
 real ledger entry when it is committed. If you need the accounting behaviour of fines and
 disciplinary charges, see [Government Penalties](./government-penalties) — do not assume the two
 behave the same way.
@@ -153,4 +153,4 @@ read-only-docs → record → update-back cycle described above:
 - [Social Insurance & Sponsorship](./social-insurance-and-sponsorship) — GOSI register / deregister
   and Kafala sponsorship transfers.
 - [Government Penalties](./government-penalties) — the violation-and-penalty disciplinary code — and
-  the one document in this area that **does** post a real ledger entry.
+  the one document in this area that **does** create a real ledger entry.

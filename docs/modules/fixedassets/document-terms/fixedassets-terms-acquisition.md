@@ -1,4 +1,5 @@
 ---
+description: "The document terms for acquiring fixed assets: the purchase term's settings, invoice, other and discount effects, plus the terms for offers, orders, the initial receipt, opening balances, custody delivery and receipt, and asset creation."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -138,7 +139,7 @@ The amount is the same on every side you configure: the total value of the **cus
 document. Fixed assets on the document move custodian without contributing a value, so a hand-over of
 machinery alone moves the paperwork without moving money.
 
-That symmetry is worth understanding before you configure it. Each side you fill in is posted with that
+That symmetry is worth understanding before you configure it. Each side you fill in is recorded with that
 same total, so configure the pair that represents the entry you actually want — filling in all four
 sides books the value twice.
 

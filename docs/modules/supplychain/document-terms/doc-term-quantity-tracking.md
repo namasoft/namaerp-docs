@@ -14,6 +14,8 @@ Open the document's **Document Term** (توجيه), then the **Track Quantities*
 `trackInvoiceQuantity` controls **this document's own** quantity policy. `relatedDocQtyPolicy` controls the policy applied **against the related/source document** this one was created from (بناءً على). They are independent — set each according to whether you are checking the document itself or its link back to the order/receipt that spawned it.
 :::
 
+![The quantity tracking tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-quantity-tracking-en.png)
+
 ## Tracking This Document's Quantities
 
 This group is hidden entirely when the supply-chain configuration option to hide it is enabled; otherwise it is shown for all inventory document terms.

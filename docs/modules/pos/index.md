@@ -3,15 +3,7 @@ description: "Landing page for Nama POS, the offline-first desktop register with
 ---
 # Point of Sale
 
-Most of Nama ERP runs in a web browser. **Nama POS** is the exception: a dedicated **desktop application** that runs right on the cash register, with a companion **Captain Order** mobile app for waiters. It is built this way for one simple reason — a point of sale cannot stop selling just because the internet went down.
-
-![Nama POS main screen](../../ar/modules/pos/images/overview/pos-app-overview-en.png)
-
-## Offline-first by design
-
-A shop floor is a demanding place: the connection drops, a busy night brings a queue to the counter, and the customer in front of you still expects a receipt in seconds. So every register keeps its own **local database**, records every sale, return, payment and shift **locally first**, and **syncs** in the background up to the central Nama ERP — flushing any queued documents automatically once the connection returns.
-
-This is the single most important idea about Nama POS, and it has its own page below.
+Most of Nama ERP runs in a web browser. **Nama POS** is the exception: a dedicated **desktop application** that runs right on the cash register, with a companion **Captain Order** mobile app for waiters. It is built this way for one simple reason — a point of sale cannot stop selling just because the internet went down. Every register sells from its own local database and syncs with the central Nama ERP in the background, so it keeps selling through an outage.
 
 ## How this guide is organized
 
@@ -64,7 +56,3 @@ This guide is a tour of the register, roughly in the order you meet each part.
   <LandingCard icon="👆" title="Fingerprint Login in Point of Sale" link="/modules/pos/pos-fingerprint-login.md" details="Signing in with a fingerprint reader." />
   <LandingCard icon="❓" title="Point of Sale FAQ" link="/modules/pos/pos-faq.md" details="Quick answers to common questions." />
 </LandingGrid>
-
-::: tip Configuration is a separate topic
-This guide is about **using** Nama POS day to day. Setting it up — defining registers, payment methods, security profiles, screen layouts, and the many POS settings — is covered in [POS — Server-Side Setup](./erp-setup/).
-:::

@@ -18,4 +18,5 @@ Every ERP deployment runs into the same questions sooner or later: who can log i
   <LandingCard icon="🎯" title="Record-Level Security (Dimensions and Filters)" link="/platform/security/record-level-security.md" details="Decide which records a user sees through Dimensions, creator-only restrictions, and extra filters." />
   <LandingCard icon="👤" title="Users and Login" link="/platform/security/users-and-login.md" details="Create users and manage passwords, LDAP, two-factor authentication, sessions, and per-user permission overrides." />
   <LandingCard icon="🤝" title="Temporary Additional Permissions (Delegation)" link="/platform/security/security-delegation.md" details="Hand a stand-in someone else's permissions for a bounded period that expires on its own." />
+  <LandingCard icon="🖐️" title="User Fingerprints" link="/platform/security/user-fingerprints.md" details="The server-side record of each user's fingerprints for POS fingerprint login: where it comes from and how to remove a fingerprint." />
 </LandingGrid>

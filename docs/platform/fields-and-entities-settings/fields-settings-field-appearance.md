@@ -46,6 +46,8 @@ The first line it finds wins. That makes a single line with `details.*` in the O
 Set the mask on one specific field first and confirm it renders the way you expect. Only then replace it with a `details.*` or `*` line. Debugging a wildcard that is quietly winning over the exact field you meant to change is far harder than building up from a single field.
 :::
 
+![The Display Masks grid](../../ar/platform/images/fields-settings/fields-settings-display-masks-grid-en.png)
+
 ## Field Styles
 
 Some fields need a fixed look no matter who is typing in them. An item code that must always be captured in English capitals, left to right, is a good example: leaving it to the user's keyboard state produces a file full of `abc-100`, `ABC-100` and Arabic-typed lookalikes that never match. A password-like field that anyone can read over a shoulder is another. **Field Styles** pins those decisions to the field itself.
@@ -164,6 +166,39 @@ This grid supports the full wildcard chain, so a single line with `*` in the fie
 **Use Normal Upload By Default** is worth thinking about rather than leaving to chance: put the scan button first where most attachments come from paper, and leave normal upload first where most come from e-mail. Both buttons remain available either way — this only decides which one the user reaches without thinking.
 
 The scanner application and its profile are not configured here; they are set in global configuration, on the [Attachments and Storage](/platform/global-config/global-config-attachments) page.
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `displayMasks` | Display Masks | Display Masks | [Display Masks](#Display-Masks) |
+| `displayMasks.displayMask` | Display Mask | Display Mask | [Display Masks](#Display-Masks) |
+| `displayMasks.g2DisplayMask` | GUI 2 Display Mask | GUI 2 Display Mask | [Display Masks](#Display-Masks) |
+| `fieldStyles` | Field Styles | Field Styles | [Field Styles](#Field-Styles) |
+| `fieldStyles.textDirection` | Text Direction | اتجاه الكتابة | [Field Styles](#Field-Styles) |
+| `fieldStyles.fixedInputLanguage` | Fixed Input Language | تثبيت لغة الإدخال | [Field Styles](#Field-Styles) |
+| `fieldStyles.fixedLetterCase` | Fixed Letter Case | تثبيت حالة الحروف | [Field Styles](#Field-Styles) |
+| `fieldStyles.suggestionDirection` | Text Direction in Suggestion Menu (Search) | اتجاة النص في قائمة المقترحات(البحث) | [Field Styles](#Field-Styles) |
+| `fieldStyles.listColumnDirection` | Text Direction in List Column | اتجاه النص في العرض بالقائمة | [Field Styles](#Field-Styles) |
+| `fieldStyles.showAsPassword` | Show As Password | إخفاء النص (كلمة مرور) | [Field Styles](#Field-Styles) |
+| `fieldStyles.foregroundColor` | Foreground Color | لون الكتابة | [Field Styles](#Field-Styles) |
+| `fieldStyles.backgroundColor` | Background Color | لون الخلفية | [Field Styles](#Field-Styles) |
+| `fieldStyles.disableSuggestionProvider` | Disable Suggestion Provider | Disable Suggestion Provider | [Field Styles](#Field-Styles) |
+| `fieldStyles.doNotGoToNextWithEnter` | Do Not Go To Next With Enter(Big Text Only) | عدم التحرك إلى الحقل التالي عند الضغط على انتر(Big Text Only) | [Field Styles](#Field-Styles) |
+| `richTextFields` | Rich Text Fields | Rich Text Fields | [Rich Text Fields](#Rich-Text-Fields) |
+| `textToLinkFields` | Text To Link Fields | الحقول النصية المحوله الي روابط | [Text To Link Fields](#Text-To-Link-Fields) |
+| `textToLinkFields.linkType` | Link Type | نوع الرابط | [Text To Link Fields](#Text-To-Link-Fields) |
+| `notColorFields` | Not Color Fields | ليست حقول ألوان | [Not Color Fields](#Not-Color-Fields) |
+| `signatures` | Signatures | Signatures | [Signatures](#Signatures) |
+| `signatures.backgroundImage` | Background Image | صورة الخلفية | [Signatures](#Signatures) |
+| `signatures.width` | Pixels Dimension \| Width | الأبعاد (بالبيكسيل) \| العرض | [Signatures](#Signatures) |
+| `signatures.height` | Pixels Dimension \| Height | الأبعاد (بالبيكسيل) \| الأرتفاع | [Signatures](#Signatures) |
+| `signatures.signatureLineWidth` | Signature Line Width | عرض خط التوقيع | [Signatures](#Signatures) |
+| `signatures.epadInk` | ePad Ink | ePad Ink | [Signatures](#Signatures) |
+| `useScannerInFields` | Use Scanner In Fields | Use Scanner In Fields | [Use Scanner In Fields](#Use-Scanner-In-Fields) |
+| `useScannerInFields.useNormalUploadByDefault` | Use Normal Upload By Default | استخدم التحميل العادي افتراضيًا | [Use Scanner In Fields](#Use-Scanner-In-Fields) |
 
 ## Related pages
 

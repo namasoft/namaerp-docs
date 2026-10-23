@@ -1,4 +1,5 @@
 ---
+description: "The car cancellation documents for allocations, sales orders, final deliveries, receipts and traffic letters: where they are in the menu, what each one actually reverses, and how a step is really undone through the status move."
 entities: [SISalesOrderCancel, SIAllocationCancel, SIFinalDeliveryCancel, SIReceiptCancel, SITrafficLetterCancel, SITrafficLetterReqCancel]
 ---
 # Cancellation Documents
@@ -68,7 +69,7 @@ cancellations — that is not a mistake in this page.
 | Cancellation document | Marks the source cancelled | Reverses accounting | Reverses inventory | Anything else |
 |---|---|---|---|---|
 | Car Sales Order Cancel | Yes | **No** — the order's journal entry, including the booking deposit, stays exactly where it is | No | Its own status line |
-| Car Allocation Cancel | Yes | No — neither document posts | No | **Clears the five allocation fields on the car** |
+| Car Allocation Cancel | Yes | No — neither document creates an entry | No | **Clears the five allocation fields on the car** |
 | Car Final Delivery Cancel | Yes | No | **No** — the delivery's stock issue is left in place | Its own status line |
 | Car Receipt Cancel | — | No | **No** — the receipt's stock receipt is left in place | Its own status line |
 | Car Traffic Letter Cancel / Request Cancel | Yes | No | No | Its own status line |

@@ -1,4 +1,5 @@
 ---
+description: "The purchasing cycle step by step: Item Request and consolidated requests, quotation requests and price comparison, the Purchase Order and proforma, receiving goods, the Purchase Invoice and three-way matching, payment, and purchase returns."
 entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate]
 ---
 # The Purchasing Journey

@@ -60,6 +60,8 @@ so several terms can point at the same side. You will meet them on the header-di
 pre-handover sides of a sales term, on the tax sides almost everywhere, and on the whole *Remaining
 Effects* page of the lease-termination term.
 
+![A debit and credit pair on the Effects tab of the Maintenance Expense term](../../../ar/modules/realestate/images/config/re-term-maintenance-expense-effects-en.png)
+
 ## A pair only fires when both sides are filled
 
 This is the single rule that explains most "why is my journal entry missing a line?" calls.
@@ -128,7 +130,7 @@ one routing row.
 **The merged components.** *Merge Value 1 Debit / Credit* through *Merge Value 5 Debit / Credit*
 exist for terms that switch on *Merge Similar Payment Lines*. When that option collapses several
 generated installments of the same type and due date into one line, the original amounts are kept as
-five component values on the surviving line, and these five pairs let you post each component to its
+five component values on the surviving line, and these five pairs let you record each component on its
 own accounts instead of losing the breakdown.
 
 ### How a row is matched
@@ -142,7 +144,7 @@ create by accident:
 3. If **all ten** type slots are empty — the five include slots and the five exclude slots — the row
    matches **every** installment line. An empty row is a catch-all, not a no-op.
 4. Otherwise the include and exclude slots decide.
-5. A bucket is only posted when its debit side is filled.
+5. A bucket is only recorded when its debit side is filled.
 6. When the term's year-splitting option is on, installments that span a fiscal-year boundary are
    split first and each half is matched separately.
 

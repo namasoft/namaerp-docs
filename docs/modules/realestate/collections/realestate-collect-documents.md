@@ -1,4 +1,5 @@
 ---
+description: "The Real Estate collect document, collect request and aggregated collect document: filling them in, collecting several contracts in one document, turning the collection into cash and an invoice, and running a monthly bulk collection across many contracts."
 entities: [RECollectDoc, RECollectReq, AggrRECollectDoc]
 ---
 # Collect Documents and Bulk Collection

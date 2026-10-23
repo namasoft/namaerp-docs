@@ -1,4 +1,5 @@
 ---
+description: "The CRTN Specification screen: the specification types, building a carton step by step from dimensions, sheet size and layers to production stages, molds, routings and packaging, plus assembled cartons, formulas, weights, validation rules and messages."
 entities: [CRTNSpecification]
 menu: Manufacturing → Cartoon → CRTN Specification
 ---

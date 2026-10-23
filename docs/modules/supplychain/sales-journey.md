@@ -1,4 +1,5 @@
 ---
+description: "The sales cycle step by step: the customer file and credit control, inquiries and quotations, the Sales Order and proforma, reservation and delivery, the Sales Invoice and e-invoicing, collection, returns and replacements, and sales forecasting."
 entities: [SalesInvoice, SalesOrder, SalesQuotation, SalesQuotationRequest, ProformaSalesInvoice, SalesReturn, SalesReturnRequest, SalesReplacement, SalesForecast]
 ---
 # The Sales Journey

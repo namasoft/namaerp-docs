@@ -1,4 +1,5 @@
 ---
+description: "The Project Stage Extension document: how a phase delay is recorded against a Project Stage without editing its targeted dates, what committing it changes, and the extension reasons and reason types."
 entities: [CPAProjectStageExtension, CPAStageExtensionReason, CPAStageExtensionReasonType]
 menu: Project Management → Projects → Project Stage Extension
 ---

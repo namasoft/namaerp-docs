@@ -14,6 +14,8 @@ entities: [CRMLead, CRMPotential]
 
 ونتابع فنادق مارينا بلازا من خيط البيع `LD-00417` حتى العميل `C-01188`.
 
+![عميل محتمل](../images/sales-pipeline/crm-lead-ar.png)
+
 ## تحويل إلي فرصة
 
 **على:** شاشة خيط البيع. **الاسم:** تحويل إلي فرصة / Convert To Potential.

@@ -1,4 +1,5 @@
 ---
+description: "The document term settings behind Service Center car, insurance, rental and courier documents: how the Sub Item block creates and stamps car records, the From Doc, Reservation and Generation tabs, and which car documents create journal entries."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -94,6 +95,8 @@ Al-Sahra types plate `ر ط ص 8318` onto `CAR-000318` by hand on 5 March, after
 There is no term option that changes this.
 :::
 
+![The Sub Item Documents Configurations tab of the Car Purchase Invoice term](../../../ar/modules/servicecenter/images/document-terms/sc-term-car-purchase-sub-item-en.png)
+
 ## The From Doc tab
 
 Two options, and the first is the one that keeps a document chain honest:
@@ -153,7 +156,7 @@ generation book and term **empty**, so `SIFD-2026-0357` is purely the hand-over 
 The invoice and the final delivery are **alternatives** for stock purposes, not a sequence.
 :::
 
-## Which car documents actually post
+## Which car documents actually create journal entries
 
 The car sales term screen carries the full accounting block — debit and credit, cash, invoice and
 line discount, seven further discount accounts, approximation discount, the tax accounts, service-fee
@@ -161,7 +164,7 @@ pairs, and for the sales order a pair of reservation-value accounts.
 
 Three of the fourteen documents in the family create a journal entry from it:
 
-| Document | Posts? |
+| Document | Creates an entry? |
 |---|---|
 | Sales Order | **Yes** — this is where Al-Sahra's 5,000 booking deposit lands, against the reservation-value accounts |
 | Sales Approval | **Yes** |
@@ -174,7 +177,7 @@ documents create no journal entry. On the purchasing side, neither does the **Ca
 Purchase Invoice**.
 
 The genuinely financial car documents are the **Car Purchase Invoice**, the **Car Purchase Return**,
-the **Car Sales Invoice** and the **Car Sales Return** — those post from their term's accounts every
+the **Car Sales Invoice** and the **Car Sales Return** — those create an entry from their term's accounts every
 time, unconditionally.
 
 ## Purchase-side extras
@@ -243,18 +246,18 @@ book's *توجيه* tab is empty by design.
 account block: debit and credit sides, cash, invoice and line discount, the seven extra discount
 accounts, approximation discount, the tax accounts and the service-fee pairs.
 
-The rule to remember is that both documents post through the same engine, and **only when the debit
+The rule to remember is that both documents create their entries through the same engine, and **only when the debit
 or the credit side is filled**. Leave the pair empty and neither the request nor the invoice produces
 an entry. Al-Sahra bills the 520 for Fahad's twelve-hour courtesy car on `RARI-2026-0061` through
 these accounts.
 
 Because the two share one term record, a change made for the invoice applies to the request as well.
-If you want the request to hold a booking without posting anything, give the request its own term
+If you want the request to hold a booking without creating any entry, give the request its own term
 with the accounts left empty.
 
 **Reservation Cancel** has its own small term with one pair: *Cancel Discount Value Debit* / *Cancel
 Discount Value Credit*. The cancellation charge — a figure typed by hand on the document, say 100 —
-posts as one debit and one credit against that pair. If either side is unset, nothing posts at all,
+is recorded as one debit and one credit on that pair. If either side is unset, nothing is recorded at all,
 and no receivable is raised against the customer in any case.
 
 ## Courier terms

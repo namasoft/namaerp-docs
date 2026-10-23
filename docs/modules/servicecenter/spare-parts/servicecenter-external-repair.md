@@ -57,7 +57,7 @@ type 400 and the expense account against it.
 
 Two things, and only two.
 
-**It books the money.** The document posts as a purchase: the supplier — or the subsidiary named on
+**It books the money.** The document is recorded as a purchase: the supplier — or the subsidiary named on
 the line — is credited and the line's expense account is debited, with discounts, taxes and cash
 following the accounts on the
 [document's term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md). (The term

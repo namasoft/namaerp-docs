@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Job Order screen: the operations grid and labour pricing, payer percentages, resources and spare parts, statuses and what they block, its validations, adding tasks mid-job, and what committing it does."
 entities: [SrvCJobOrder, SrvcAddTaskToJobOrder]
 menu: Service Center → Documents → Service Center Job Order
 ---
@@ -9,7 +10,7 @@ everything after it is consequence. It is the document that says: *this vehicle,
 these parts, this workshop, this technician, and this division of the bill between the customer, the
 insurer, the warranty provider and ourselves.*
 
-It is worth being clear from the start about what a job order is **not**. It posts nothing — there is
+It is worth being clear from the start about what a job order is **not**. It has no accounting effect — there is
 no journal entry anywhere on this document. It moves no stock — it is a *demand* document that plans
 which parts the job needs; the parts leave the store on separate
 [spare-parts issue documents](/modules/servicecenter/spare-parts/servicecenter-spare-parts-issue.md). What it
@@ -209,7 +210,7 @@ On commit the document checks:
 5. **One open job order per vehicle**, if the module setting *Do Not Allow Multiple Opened Job Orders
    On Product* is on. A second order for the same vehicle is refused while an earlier one is neither
    Finished, Cancelled nor Closed.
-6. **Recall campaigns.** If the vehicle appears on an active recall campaign that is inside its
+6. **Recall campaigns.** If the vehicle appears on an active [recall campaign](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md) that is inside its
    validity window and has not yet been executed, the commit is refused. There are two ways past it:
    tick *Ignore Recall Campaign Validation* on the header, or name the campaign in the header's
    **Recall Campaign** field — which is what you do when this job order *is* the recall work.

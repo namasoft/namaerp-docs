@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: تكامل التجارة الإلكترونية
+description: "أدلة ربط نما بالمتاجر الإلكترونية ومنصات التنفيذ: الإعدادات المشتركة لتكامل التجارة الإلكترونية، ثم سلة وزد وشوبيفاي وووكومرس وBigCommerce وأثير وسلاسه وOTO وأمازون وOmniful، وما ينتقل في كل اتجاه."
 ---
 
 # تكامل التجارة الإلكترونية

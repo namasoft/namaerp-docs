@@ -1,7 +1,7 @@
 ---
 description: "The Service Center settings screen: capacity shares, pricing, job orders and invoicing, the execution screen, vehicle history and car options."
 entities: [ConfigEntry]
-menu: Service Center → Settings
+menu: Administration → Settings → System Settings
 ---
 
 # Service Center Settings
@@ -9,7 +9,7 @@ menu: Service Center → Settings
 Almost everything that changes how this module behaves is configured **per document book**, on the document term. What is left over — the handful of decisions that have to be the same everywhere — lives on one settings screen, and this page walks through its options group by group.
 
 ::: info Required licence
-The settings screen belongs to the module as a whole. You reach it under **Service Center → ` Settings`** — the folder label really does begin with a space, so it renders slightly indented. Which options are meaningful depends on which of the six licence codes you hold; the rental pricing method, for instance, matters only with `srvcenter-rental-assets`.
+The settings screen belongs to the module as a whole. It has no entry in the Service Center menu (that menu's **Settings** folder holds the loading table, inspection and visit-type lists instead): open **Administration → Settings → System Settings** and pick the record named **Service Center Settings**. Which options are meaningful depends on which of the six licence codes you hold; the rental pricing method, for instance, matters only with `srvcenter-rental-assets`.
 :::
 
 ::: warning Save this screen once before using the module
@@ -32,6 +32,8 @@ These four percentages seed the capacity split that a [loading table](/modules/s
 Al-Sahra Motors leaves these at 80 / 5 / 5 / 10, which turns the mechanical hall's forty available hours into **32 appointment hours** a day.
 
 The two English-only rows are not a mistake in this table: *Walk In Percent* and *Carry Over Percent* have no Arabic translation and display in raw English on the Arabic screen, sitting next to two neighbours that are translated properly. Look for the English words.
+
+![The Settings tab of Service Center Settings](../../ar/modules/servicecenter/images/settings/servicecenter-config-screen-en.png)
 
 ## Pricing
 

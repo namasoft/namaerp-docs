@@ -72,9 +72,11 @@ https://<your server>/erp/integrator?integrator=<Integrator Id>&user=<URL User I
 **Fields Map must be empty when Run Entity Flow is used.** Pick one or the other: either the endpoint fills fields from a map, or it hands everything to a flow. Filling both is rejected.
 :::
 
+![The Integrator Config grid](../../ar/platform/images/fields-settings/fields-settings-integrator-config-grid-en.png)
+
 ## Import Integrators
 
-This is the import-flavoured twin of the grid above. Instead of a single record's worth of values, the caller sends a **file** — a JSON payload or an Excel sheet — and the endpoint runs it through Nama's normal record import. A supplier posts a price list every night; a shipping company posts the day's delivery statuses as a spreadsheet; a branch system uploads a batch of stock counts. Nobody opens the import screen.
+This is the import-flavoured twin of the grid above. Instead of a single record's worth of values, the caller sends a **file** — a JSON payload or an Excel sheet — and the endpoint runs it through Nama's normal record import. A supplier sends a price list every night; a shipping company sends the day's delivery statuses as a spreadsheet; a branch system uploads a batch of stock counts. Nobody opens the import screen.
 
 The first eight columns are the same as the grid above and behave identically: the endpoint's name, the credentials, the generated address, and the fields to return. What is added is everything the import screen would normally ask a person.
 
@@ -199,6 +201,55 @@ The same logic applies to the invoice links. They are deliberately public: anyon
 [Security System Overview](/platform/security/security-overview) explains how permissions are structured, and [Security Profiles](/platform/security/security-profiles) is where the restricted account is actually built.
 
 All three grids are applied by the server, so changes take effect as soon as the record is saved — no restart, and nothing to press.
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `integratorConfig` | Integrator Config | Integrator Config | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.integratorId` | Integrator Id | Integrator Id | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.createdType` | Created Type | نوع المستند المنشأ | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.urlUserId` | URL User ID | URL User ID | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.urlPassword` | URL Password | URL Password | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.finderQuery` | Finder Query(Retriever) | Finder Query(Retriever) | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.fieldsMap` | Fields Map | Fields Map | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.createdTypeParam` | Created Type Parameter | Created Type Parameter | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.saveAsUser` | Save As User | Save As User | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.runEntityFlow` | Run Entity Flow | Run Entity Flow | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.exportIntegrator` | Export Integrator | Export Integrator | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.createOnly` | Create Only (No-Updates) | Create Only (No-Updates) | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.authenticateFromURL` | Authenticate From URL User and Pass | Authenticate From URL User and Pass | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.authenticateFromSession` | Authenticate From Session | Authenticate From Session | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.integratorUrl` | Integrator URL | Integrator URL | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.responseFields` | Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.responseTemplate` | Response Template (Tempo) | Response Template (Tempo) | [Integrator Config](#Integrator-Config) |
+| `importIntegratorLines` | Import Integrators | Import Integrators | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.integratorId` | Integrator Id | Integrator Id | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.urlUserId` | URL User ID | URL User ID | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.urlPassword` | URL Password | URL Password | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.saveAsUser` | Save As User | Save As User | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.authenticateFromURL` | Authenticate From URL User and Pass | Authenticate From URL User and Pass | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.authenticateFromSession` | Authenticate From Session | Authenticate From Session | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.importingType` | Importing Type | نوع الاستيراد | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.addRecord` | Add | إضافة | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.updateRecord` | Update | تحديث | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.ignoreUnfoundRefs` | Ignore not found references | تجاهل مراجع السجلات الغير موجودة | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.continueOnErrors` | Continue On Errors | المتابعة عند حدوث خطأ | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.trimExtraSpaces` | Trim Extra Spaces | حذف المسافات الزائدة | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.saveAsDraft` | Save As Draft | الحفظ كمسودة | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.useUserDimensions` | Use User Dimensions While Importing | استعمال محددات المستخدم اثناء الاستيراد | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.integratorUrl` | Integrator URL | Integrator URL | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.responseFields` | Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | [Import Integrators](#Import-Integrators) |
+| `invoiceRetrieverLines` | Invoice Retriever Lines | Invoice Retriever Lines | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.reportDefinition` | Report Definition | تعريف التقرير | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.outputFormat` | Output Format | الصيغة | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.saveFilesInFolder` | Save Files In Folder | Save Files In Folder | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.urlPrefix` | URL Prefix | URL Prefix | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.doNotCache` | Do Not Cache | Do Not Cache | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `errorMessageLoggingConfigs` | Error Message Logging Configurations | Error Message Logging Configurations | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
+| `errorMessageLoggingConfigs.targetQueueId` | Target Queue ID | نوع الرسالة | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
 
 ## Related pages
 

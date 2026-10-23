@@ -28,21 +28,21 @@ Once files live on disk, a database backup no longer contains them. The folder m
 
 **External Attachments Folder** `value.info.externalAttachmentsFolder` *(default `c:/nama/attachments` on Windows, `/var/nama/attachments` elsewhere)* — The root folder for those files.
 
-**Attachment Share Drive Letter** / **Attachment Share URL** / **Attachment Share User** / **Attachment Share Password** `value.info.attachmentShareDriveLetter`, `value.info.attachmentShareURL`, `value.info.attachmentShareUser`, `value.info.attachmentSharePassword` — When the folder is a network share rather than a local disk, these mount it. Fill in any one of them and the drive letter and URL become required; the system tells you which is missing when you save.
+**Attachment Shared Folder Drive Letter** / **Attachment Shared Folder URL** / **Attachment Shared Folder User Name** / **Attachment Shared Folder User Password** `value.info.attachmentShareDriveLetter`, `value.info.attachmentShareURL`, `value.info.attachmentShareUser`, `value.info.attachmentSharePassword` — When the folder is a network share rather than a local disk, these mount it. Fill in any one of them and the drive letter and URL become required; the system tells you which is missing when you save.
 
-**Allow Download Attachment Without Authentication** `value.info.allowDownloadAttachmentWithoutAuthentication` — Attachment links work without a session. Needed by some external viewers and portals, but it means anyone holding a link can fetch the file — turn it on only when you know that is acceptable.
+**Allow Downloading Attachment Without Authentication** `value.info.allowDownloadAttachmentWithoutAuthentication` — Attachment links work without a session. Needed by some external viewers and portals, but it means anyone holding a link can fetch the file — turn it on only when you know that is acceptable.
 
 **Create Attachment Info Table** `value.info.createAttachmentInfoTable` — Maintains a separate table describing attachments, and exposes it in menus and screens, so you can report on what is attached where and how much space it occupies.
 
 **Create Attachment Preview and Thumbnail** `value.info.createAttachmentPreviewAndThumbnail` — Generates a preview and a thumbnail for each uploaded file. Thumbnails make an attachments list far easier to scan, at the cost of some processing on upload and a little extra storage.
 
-**Do Not Use Google Docs to Preview Office Files** `value.info.dontUseGoogleDocsForOfficeFilesPreview` — A browser cannot render Word, Excel or PowerPoint files itself, so by default Nama previews them by embedding Google's public document viewer and pointing it at the file's address. That works, but it hands the address to an outside service, and the file has to be reachable from the public internet — which it usually is not on an internal server, so the preview never loads. Turn this on and the viewer is no longer embedded: the preview window says the file cannot be previewed and asks the user to download it instead. Switch it on wherever the server is not reachable from outside, or wherever handing document addresses to a third party is not acceptable.
+**Do Not Use Google Docs To Preview Office Files** `value.info.dontUseGoogleDocsForOfficeFilesPreview` — A browser cannot render Word, Excel or PowerPoint files itself, so by default Nama previews them by embedding Google's public document viewer and pointing it at the file's address. That works, but it hands the address to an outside service, and the file has to be reachable from the public internet — which it usually is not on an internal server, so the preview never loads. Turn this on and the viewer is no longer embedded: the preview window says the file cannot be previewed and asks the user to download it instead. Switch it on wherever the server is not reachable from outside, or wherever handing document addresses to a third party is not acceptable.
 
 ## Disk space monitoring
 
-**Folders to Check Space** `value.info.foldersToCheckSpace` — The folders whose free space the system watches. List the attachment folder here, and anywhere else that filling up would stop work.
+**Check The Following Folders for Empty Space (CSV)** `value.info.foldersToCheckSpace` — The folders whose free space the system watches. List the attachment folder here, and anywhere else that filling up would stop work.
 
-**Notify When Empty Space Reaches (GB)** `value.info.notifyWhenEmptySpaceReachesGB` *(default 20)* — Below this many free gigabytes, the system raises a critical message. Set it high enough that someone has time to react — a disk that fills completely stops attachments, exports and often the database itself.
+**Warn Users When Empty Space Is Less Than (GB)** `value.info.notifyWhenEmptySpaceReachesGB` *(default 20)* — Below this many free gigabytes, the system raises a critical message. Set it high enough that someone has time to react — a disk that fills completely stops attachments, exports and often the database itself.
 
 ## Database backup
 
@@ -84,10 +84,36 @@ These settings decide *how* scanning works; they do not put a scanner button any
 
 Nama converts Office files and images to PDF for previewing and printing, using two external tools.
 
-**ImageMagick Path** `value.info.docConverterSettings.imageMagicPath` — The path to the ImageMagick executable on the server, used for image conversion.
+**Image Magick Path** `value.info.docConverterSettings.imageMagicPath` — The path to the ImageMagick executable on the server, used for image conversion.
 
-**OpenOffice Server Address** / **OpenOffice Server Port** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — The address and port of the LibreOffice or OpenOffice conversion service that turns Word, Excel and similar files into PDF.
+**OpenOffice Server Address** / **Open Office Server Port** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — The address and port of the LibreOffice or OpenOffice conversion service that turns Word, Excel and similar files into PDF.
 
 ::: tip These are server paths, not user paths
 Both settings point at software installed on the application server, not on the user's machine. If document previews stop working after a server move, these are the first two values to check.
 :::
+
+## Settings on this tab
+
+Every field on this tab with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it.
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `value.info.externalizeAttachments` | Externalize Attachments | تخزين المرفقات خارج قاعدة البيانات | [Attachment storage](#Attachment-storage) |
+| `value.info.externalAttachmentsFolder` | External Attachments Folder | مجلد تخزين المرفقات | [Attachment storage](#Attachment-storage) |
+| `value.info.attachmentShareDriveLetter` | Attachment Shared Folder Drive Letter | Attachment Shared Folder Drive Letter | [Attachment storage](#Attachment-storage) |
+| `value.info.attachmentShareURL` | Attachment Shared Folder URL | Attachment Shared Folder URL | [Attachment storage](#Attachment-storage) |
+| `value.info.attachmentShareUser` | Attachment Shared Folder User Name | Attachment Shared Folder User Name | [Attachment storage](#Attachment-storage) |
+| `value.info.attachmentSharePassword` | Attachment Shared Folder User Password | Attachment Shared Folder User Password | [Attachment storage](#Attachment-storage) |
+| `value.info.allowDownloadAttachmentWithoutAuthentication` | Allow Downloading Attachment Without Authentication | السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما | [Attachment storage](#Attachment-storage) |
+| `value.info.createAttachmentInfoTable` | Create Attachment Info Table | إنشاء جدول بيانات المرفقات | [Attachment storage](#Attachment-storage) |
+| `value.info.createAttachmentPreviewAndThumbnail` | Create Attachment Preview and Thumbnail | إنشاء نسخة مطالعة للمرفقات | [Attachment storage](#Attachment-storage) |
+| `value.info.dontUseGoogleDocsForOfficeFilesPreview` | Do Not Use Google Docs To Preview Office Files | عدم استعمال Google Docs لعرض مرفقات الأوفيس | [Attachment storage](#Attachment-storage) |
+| `value.info.foldersToCheckSpace` | Check The Following Folders for Empty Space (CSV) | المجلدات التي يجب أن يقوم النظام بالتحقق من المساحة المتبقية فيها (CSV) | [Disk space monitoring](#Disk-space-monitoring) |
+| `value.info.notifyWhenEmptySpaceReachesGB` | Warn Users When Empty Space Is Less Than (GB) | تحذير المستخدمين عندما تصل المساحة المتبقية لأقل من (GB) | [Disk space monitoring](#Disk-space-monitoring) |
+| `value.info.backupFolder` | Backup Folder | مجلد النسخ الاحتياطي | [Database backup](#Database-backup) |
+| `value.info.doNotCheckForBackupExistence` | Do Not Check For Backup Existence | عدم التحقق من وجود نسخة احتياطية | [Database backup](#Database-backup) |
+| `value.info.scannerApp` | Scanner App | Scanner App | [Scanner](#Scanner) |
+| `value.info.scannerProfile` | Scanner Profile | Scanner Profile | [Scanner](#Scanner) |
+| `value.info.docConverterSettings.imageMagicPath` | Image Magick Path | مسار Image Magick | [Documents converter](#Documents-converter) |
+| `value.info.docConverterSettings.openOfficeServerAddress` | OpenOffice Server Address | عنوان خادم OpenOffice | [Documents converter](#Documents-converter) |
+| `value.info.docConverterSettings.openOfficeServerPort` | Open Office Server Port | منفذ OpenOffice | [Documents converter](#Documents-converter) |

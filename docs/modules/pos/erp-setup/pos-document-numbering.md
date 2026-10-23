@@ -1,4 +1,5 @@
 ---
+description: "How each POS register numbers its own documents while offline: the parts of a document code, the prefix, digits and date settings in the register's coding grid, where a sequence starts, and the related messages."
 entities: [NamaPOSRegister]
 menu: Point of sale → Register → Register
 ---

@@ -42,6 +42,8 @@ Even with 2FA on, three cases go straight through, and every "why was I not aske
 Open **Administration → Settings → System Settings**, choose the **Global Configurations** file,
 then the **Security And Login** tab — the settings are in its **Two-Factor Authentication** group.
 
+![The Two-Factor Authentication group on the Security And Login tab of Global Configurations](../ar/getting-started/images/global-config-2fa-method-en.png)
+
 ### Configuration Validation Rules
 
 The system enforces the following validation rules when configuring 2FA:

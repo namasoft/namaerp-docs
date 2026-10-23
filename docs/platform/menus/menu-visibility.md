@@ -42,6 +42,8 @@ So when one person's menu looks wrong, the first question is not "what is missin
 "which menu are they even on" — check their user record, then their security profile, then the legal
 entity they signed in to.
 
+![The Menu Definition screen](../../ar/platform/menus/images/menu-definition-screen-en.png)
+
 ## Why an entry is missing from a menu that has it
 
 Having the right menu is not enough. Entries are filtered out on the way to the screen, and two

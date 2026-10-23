@@ -49,7 +49,7 @@ The setup that makes custody reporting work is this: make the **debit** an accou
 **credit** the account the purchase parked the value in — "custodies in store", or whatever you called
 it. Handing the laptop to Khaled Al-Mutairi then moves 6,000 out of store and onto Khaled.
 
-The amount posted is the custody's price multiplied by the percentage of it that holder takes, so a car
+The amount recorded is the custody's price multiplied by the percentage of it that holder takes, so a car
 shared 60/40 between two staff produces two lines that add up to its price.
 
 ### The custody transfer term
@@ -76,6 +76,8 @@ accounts you nominate on the two pairs have to absorb it. Choose them with that 
 point the disposal pair at a write-off account precisely so the difference has somewhere sensible to
 land.
 :::
+
+![The Effect tab of the Custody Delivery Document term](../../../ar/modules/fixedassets/images/custody/fa-term-custody-delivery-effect-en.png)
 
 ## Letter of Credit Terms
 

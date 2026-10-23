@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Cost Execution document: why its value date matters, collecting terms and entering the current quantity, what processing it does, choosing cost slices yourself, the Statistics page, and turning term cost into a unit cost to compare with the estimate."
 entities: [ContractingCostExecution]
 menu: Contracting → Costs → Contracting Cost Execution
 ---

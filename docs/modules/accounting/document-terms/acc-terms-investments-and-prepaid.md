@@ -1,4 +1,5 @@
 ---
+description: "The document term account sides for treasury bills, investment documents (bonds and fund certificates), investment portfolios and prepaid expenses: the debit and credit pairs for face value, return, tax, premium and discount."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -13,8 +14,10 @@ sides for each component — face value, return, tax, premium, discount — rath
 one credit.
 
 Almost every side on these screens is a single reference to a saved
-[Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. A pair posts
+[Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. A pair creates a ledger entry
 only when both its debit and its credit are filled in.
+
+![The Effects tab of the Treasury Bill Purchase Document term](../../../ar/modules/accounting/images/document-terms/acc-term-investments-and-prepaid-en.png)
 
 ## Treasury bills
 
@@ -56,7 +59,7 @@ and an issue premium or discount. They are on
 |---|---|---|
 | **Total ROI Value** | `termConfig.totalROIValueDebit`, `…Credit` | The total return received. |
 | **total Tax Value** | `termConfig.totalTaxValueDebit`, `…Credit` | The total tax on it. |
-| **Name Value** | `termConfig.nameValueDebit`, `…Credit` | The face value — posted only when the claim's value date is the document's maturity date. |
+| **Name Value** | `termConfig.nameValueDebit`, `…Credit` | The face value — recorded only when the claim's value date is the document's maturity date. |
 | **Period Tax Value** | `termConfig.periodTaxValueDebit`, `…Credit` | The tax for the period. |
 | **Decreasing Value** | `termConfig.decreasingValueDebit`, `…Credit` | The decreasing value. |
 

@@ -85,7 +85,7 @@ With both on, a payment voucher that would turn the cash account's debit balance
 
 ## For Support
 
-- **"The request/order has no effect in the accounts"** — that's expected; the request doesn't post, and the accounting effect is recorded at the **voucher**.
+- **"The request/order has no effect in the accounts"** — that's expected; the request creates no journal entry, and the accounting effect is recorded at the **voucher**.
 - **"The received amount didn't settle the invoice"** — check the **Invoices** tab and that the line is matched to the correct invoice.
 - **"The wrong cash/party account in the entry"** — the accounts' source is the **document term**; review the receipt/payment voucher term in the [Document terms](./support/accounting-document-terms.md) reference.
 - **"Tax/fees fields don't appear"** — their switches are in the [Accounting configuration](./support/accounting-configuration.md) catalog.

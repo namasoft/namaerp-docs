@@ -1,6 +1,6 @@
 # Consolidated Statements
 
-The consolidated statements give a group of companies one trial balance, one income statement and one balance sheet, in one reporting currency, with the business the companies did with each other taken out. They are three system reports, and they read the books of every company in the database each time they run, so there is nothing to post or close beforehand.
+The consolidated statements give a group of companies one trial balance, one income statement and one balance sheet, in one reporting currency, with the business the companies did with each other taken out. They are three system reports, and they read the books of every company in the database each time they run, so there is no entry to record and nothing to close beforehand.
 
 A group that keeps several companies in one Nama database already has every company's books in one place. Filtering a report on several legal entities does not consolidate them, though: it adds up local amounts, and once the companies keep their books in different currencies, an Egyptian pound and a Saudi riyal end up in the same total. It also counts the group twice. When the head office sells books to its Egyptian company, the head office shows the sale and Egypt shows the purchase, but the group as a whole has sold nothing. The consolidated reports deal with both problems. They **translate** each company into one currency, and they **eliminate** what the companies owe, sell and charge each other.
 
@@ -81,7 +81,7 @@ A few details decide the exact figure:
 
 ### The currency translation reserve
 
-Translating one company's balanced trial balance at three different rates leaves it out of balance. If assets are at today's rate, capital at the rate of the day it was paid in and profit at the monthly averages, the pieces no longer add up to zero, even though the company's own books do. The report puts that difference in each company's column as the **Currency translation reserve**. It is the figure IAS 21 shows in equity, and it is computed each time the report runs: nothing is posted. A company whose currency is the reporting currency has no reserve, and with **Single closing rate** the reserve is normally zero.
+Translating one company's balanced trial balance at three different rates leaves it out of balance. If assets are at today's rate, capital at the rate of the day it was paid in and profit at the monthly averages, the pieces no longer add up to zero, even though the company's own books do. The report puts that difference in each company's column as the **Currency translation reserve**. It is the figure IAS 21 shows in equity, and it is computed each time the report runs: no journal entry is created. A company whose currency is the reporting currency has no reserve, and with **Single closing rate** the reserve is normally zero.
 
 ## How intercompany business is eliminated
 
@@ -113,7 +113,7 @@ This works because the item master is shared. The same item is sold by one compa
 - The seller's margin is the sales value less the cost of the items issued. It is averaged per item over all group sellers in the period, because nothing links a customer record to a group company, so there is no margin per pair of companies.
 - The quantity still held is the buyer's closing quantity of the item, capped at what it bought from group companies in the period. Group stock is assumed to be held before stock bought locally.
 - Only purchases in the period count, so there is no unrealised profit carried in from earlier years. Only Sales Invoices count: other invoice types, point-of-sale sales and intercompany returns are not adjusted, and their margin shows in the elimination difference instead.
-- Each buyer's stock account and cost-of-sales account are the ones its own postings used most for those items.
+- Each buyer's stock account and cost-of-sales account are the ones its own journal entries used most for those items.
 
 ### An asset sold within the group
 

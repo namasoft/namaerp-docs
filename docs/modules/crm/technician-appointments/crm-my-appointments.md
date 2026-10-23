@@ -16,6 +16,10 @@ The [booking calendar](/modules/crm/technician-appointments/crm-technician-appoi
 
 ## Who sees what
 
+Opening the screen at all needs **List View** on **Technician Appointment** in your security profile. Without it the
+menu entry is hidden, and a link to the screen returns you to the home page with
+*The user {0} does not have the capability {1} on the type {2}* — «المستخدم {0} ليس لديه الصلاحية {1} للنوع {2}».
+
 The screen works out what to show from your login. It asks these questions in this order and stops at the first one that fits:
 
 1. **Are you an administrator?** Your security profile has **Full Authority** (*صلاحيات كاملة*) — see [security profiles](/platform/security/security-profiles#Full-Authority) — or your user has **Allow Access to Admin Restricted Functionality (utils.html, kill tasks, logout users and so on)** ticked. If so, you see every committed crew, and your user does not need to be linked to an employee.

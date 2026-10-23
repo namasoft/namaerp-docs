@@ -40,6 +40,8 @@ Very little, and that is the honest answer.
 
 Everything else the sub-module does is record-keeping: which stop belongs to which courier, when the courier arrived, what state the drop ended in, and what the courier said about it.
 
+![A Mobile Delivery Document with six invoices on two couriers](../../../ar/modules/servicecenter/images/mobile-delivery/mobile-delivery-doc-screen-en.png)
+
 ## The courier's day
 
 The delivery document is written for a phone app the courier carries, not for the Nama screen. The flow, from the courier's side:

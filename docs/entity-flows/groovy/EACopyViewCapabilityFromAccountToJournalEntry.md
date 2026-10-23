@@ -10,7 +10,7 @@ description: Two Groovy scripts that give a journal entry, or a receipt or payme
 
 # Hide Entries and Vouchers Behind Their Account's View Capability
 
-These two Groovy scripts give a document the **View Capability** of the account it posts to. One works on journal entries, the other on receipt and payment vouchers. Once the document carries the capability, only users who hold it can open the document.
+These two Groovy scripts give a document the **View Capability** of the account it debits or credits. One works on journal entries, the other on receipt and payment vouchers. Once the document carries the capability, only users who hold it can open the document.
 
 ::: tip Recommended pattern
 These scripts are not tied to any customer's setup. You can paste them as they are; they take no parameters.
@@ -26,7 +26,7 @@ These scripts are not tied to any customer's setup. You can paste them as they a
 
 ## When to use it
 
-A capability on an account protects the account itself, but not the documents that post to it. Suppose the board's expense account carries the View Capability *Board Confidential*. Anybody who can open journal entries can still open the entry that charged a board trip to that account, and read the amount and the narration.
+A capability on an account protects the account itself, but not the documents that debit or credit it. Suppose the board's expense account carries the View Capability *Board Confidential*. Anybody who can open journal entries can still open the entry that charged a board trip to that account, and read the amount and the narration.
 
 With this script on the journal entry, the entry takes the account's capability when it is saved. Users without *Board Confidential* are then refused the entry itself, exactly as if someone had set its **View Capability** by hand through **More → Change Capabilities**. How capabilities are held and checked is explained in [Users Counter and Capability Types](/admin/users-counter-and-security-capabilities#Locking-one-record-with-a-capability).
 

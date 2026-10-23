@@ -1,4 +1,5 @@
 ---
+description: "The Stock Ages tab: the Track Stock Ages switch and its item and item section inheritance, the tracking dimensions that split aged stock, and how background processing builds the aging records."
 entities: [ConfigEntry]
 menu: Inventory → Settings → Supply Chain Configurations
 ---
@@ -7,6 +8,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 This page documents the **Stock Ages** tab. "Stock ages" is the inventory-aging feature: it tracks how long stock has been held so you can report on aging buckets. The aging records are built by a background processor, and these settings decide whether aging is tracked at all and how finely the held stock is broken down.
 
 **Track Stock Ages** *(`value.stockAgesPolicy`)* — The master switch for aging tracking, resolved through an inheritance chain (item → item section → this configuration), so an item can follow the global policy or override it. Set it to **Yes** to enable inventory aging, **No** to disable it, or **Inherited** at lower levels to follow the global setting.
+
+![The Stock Ages tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-stock-ages-en.png)
 
 ## Tracking Dimensions
 

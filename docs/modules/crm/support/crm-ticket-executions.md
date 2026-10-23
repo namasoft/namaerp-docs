@@ -1,4 +1,5 @@
 ---
+description: "The Ticket Execution timesheet: raising one from a Trouble Ticket, the Details grid, the checks it applies, how it adds hours to the ticket and changes its status, and why it moves no stock and creates no entries."
 entities: [CRMTicketExecution]
 menu: Customer Relationship Management → Support → Ticket Execution
 ---
@@ -13,7 +14,7 @@ The **Ticket Execution** (*تنفيذ طلب دعم*) is a timesheet. A technici
 That is genuinely all it is. It is worth saying up front what it is **not**:
 
 - It **moves no stock.** Spare parts consumed on the visit are not on this document and cannot be. If parts were used, somebody issues them with an ordinary stock document and nothing links that document back to the ticket.
-- It **posts nothing.** There is no rate, no labour cost, no invoice. Net Time is captured for reporting only.
+- It **creates no ledger entry.** There is no rate, no labour cost, no invoice. Net Time is captured for reporting only.
 - It has **no document term**, so there is nothing to configure on it.
 
 ## Raising one

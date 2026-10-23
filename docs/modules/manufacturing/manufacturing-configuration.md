@@ -1,4 +1,5 @@
 ---
+description: "The Manufacturing Settings screen: database-wide options for production orders and BOMs, raw material issue and return, production execution and MRP, grouped by what they affect, with the messages they cause."
 entities: [ConfigEntry]
 ---
 

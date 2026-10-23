@@ -1,4 +1,5 @@
 ---
+description: "جداول إعدادات الحقول والشاشات التي تحدّ مما يكتبه المستخدم: تنسيقات الحقول مع شروطها الاختيارية، والقيم المسموح بها، والحقول المعطلة، وأقصى عدد لسطور السندات والملفات، وأقصى طول للحقول في قاعدة البيانات وفي نقاط البيع."
 entities: [GenericReferenceOverrider]
 menu: الأساسيات ← الإعدادات ← أعدادات الحقول و الشاشات
 ---
@@ -22,7 +23,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 [إعدادات الحقول والشاشات — نظرة عامة](/ar/platform/fields-and-entities-settings/fields-settings-overview)؛
 هذه الصفحة لا تعيد شرحه.
 
-## تنسيقات الحقول (Field Formats)
+## Field Formats — تنسيقات الحقول
 
 هذا هو الجدول الرئيسي لقواعد الإدخال، وأكثر ما ستستخدمه. تصف فيه الشكل الذي يجب أن تكون عليه
 القيمة، وعندما يحفظ أحدهم سجلًا تخالف قيمته هذا الشكل يُرفض الحفظ برسالة توضح بالضبط أي قاعدة
@@ -117,6 +118,8 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 [التحقق بالمعايير](/ar/platform/governance/criteria-based-validation) و
 [المعايير من محلل النصوص](/ar/platform/automation-and-rules/text-criteria-guide).
 
+![جدول Field Formats](../images/fields-settings/fields-settings-field-formats-grid-ar.png)
+
 ## القيم المسموح بها للحقول (Field Allowed Values)
 
 بعض الحقول نصية حرة لمجرد أن أحدًا لم يتفرغ لتقييدها. حقل «نوع مرجع السداد» الذي يملؤه الناس بـ
@@ -149,7 +152,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 تسجيل الخروج والدخول من جديد. ويجدر أن تعرف أن القيد فحص من جانب المتصفح: يمنع كتابة الخطأ على
 الشاشة، لكنه لا يصفّي البيانات الواردة عبر استيراد أو تكامل.
 
-## الحقول المعطلة (Disabled Fields)
+## Disabled Fields — الحقول المعطلة
 
 أبسط جدول في الشاشة. تسمّي كيانًا وحقلًا فيُعرض ذلك الحقل للقراءة فقط: القيمة ظاهرة، لكن المستخدم
 لا يستطيع تغييرها.
@@ -171,7 +174,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 [تأمين الحقول والصفحات وشاشات العرض](/ar/platform/security/field-page-listview-security).
 :::
 
-يوجد كذلك خيار في الإعدادات العامة اسمه **Allow Filling Disabled Fields with Creators** يتيح لأدوات
+يوجد كذلك خيار في الإعدادات العامة اسمه **Allow Filling Disabled Fields With Creators** يتيح لأدوات
 الملء التلقائي في النظام أن تكتب في حقل لا يُسمح للمستخدم بتعديله بيده. ويُترك عادةً مفعَّلًا:
 المستخدم الذي لا يجوز له كتابة الفرع يدويًا ينبغي مع ذلك أن يُملأ له تلقائيًا. تجده في تبويب
 [التأمين وتسجيل الدخول](/ar/platform/global-config/global-config-security) في الإعدادات العامة.
@@ -203,7 +206,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 يُوقف المستند المولَّد بحد وُضع أصلًا للإدخال اليدوي. والأمر نفسه أثناء نقل السجلات بين قواعد
 البيانات عبر Replication. وإلا لصار حدٌّ وُضع لراحة موظفي الإدخال يكسر المسارات الآلية في الخلفية.
 
-## أقصى طول للحقول في قاعدة البيانات (Max Fields Length In DB)
+## Max Fields Length In DB — أقصى طول للحقول في قاعدة البيانات
 
 هذا الجدول يفعل أمرين مترابطين لكنهما مختلفان تمامًا، وعليك فهم الاثنين قبل استخدامه، لأن أحدهما
 غير مؤذٍ والآخر يغيّر قاعدة البيانات.
@@ -241,7 +244,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 مربع اختيار أو مرجع إلى سجل آخر — يُرفض، ويخبرك الإجراء بأي حقل رفضه ولماذا بدل أن يفشل بصمت. كما
 يخبرك إن لم يجد الكيان أو الحقل الذي سميته، وهو المؤشر المعتاد على خطأ إملائي في عمود الحقل.
 
-## أقصى طول لحقول نقاط البيع (Max POS Fields Length In DB)
+## Max POS Fields Length In DB — أقصى طول لحقول نقاط البيع في قاعدة البيانات
 
 لأجهزة نقاط البيع تخزينها الخاص وقيودها الخاصة. طابعة الإيصال عرضها عدد ثابت من الأحرف، وشاشة اللمس
 عند كاشير مزدحم أضيق من شاشة المكتب، والجهاز الذي يجب أن يعمل والشبكة مقطوعة يحتفظ بنسخته الخاصة من
@@ -269,6 +272,49 @@ Replication ويُطبَّق هناك، فسلسلة بأربعين فرعًا �
 
 لمعرفة موضع الأجهزة في الصورة الأوسع، انظر
 [نقاط البيع — نظرة عامة](/ar/modules/pos/pos-overview).
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| Field Formats | Field Formats | `fieldFormats` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| اقل طول | Min length | `fieldFormats.minLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| اقصي طول | Max length | `fieldFormats.maxLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| بادئة التكويد | Prefix | `fieldFormats.prefix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| نهاية التكويد | Suffix | `fieldFormats.suffix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| السماح بالحروف | Allow alpha | `fieldFormats.allowAlpha` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| السماح بالارقام | Allow numbers | `fieldFormats.allowNumbers` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| الحروف المسموح بها | Letter Case Type | `fieldFormats.letterCaseType` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| تجاهل لاحقة المسودة | Ignore Draft Suffix | `fieldFormats.ignoreDraftSuffix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| منع وجود مسافة في البداية | Prevent Leading White Space | `fieldFormats.preventLeadingWhiteSpace` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| منع وجود مسافة في النهاية | Prevent Trailing White Space | `fieldFormats.preventTrailingWhiteSpace` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| المعايير | Criteria | `fieldFormats.criteriaDefinition` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| تطبيق عند التوافق مع الاستعلام | Apply When Query | `fieldFormats.applyWhenQuery` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| يجب مطابقة السطور | Lines Should Match | `fieldFormats.linesShouldMatch` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| Regular Expression | Regular Expression | `fieldFormats.regularExpression` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| القيم المسموح بها للحقول | Field Allowed Values | `fieldAllowedValues` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| عدم السماح بكتابة القيم يدويا | Restrict Selection | `fieldAllowedValues.restrictValues` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 1 | Allowed Value 1 | `fieldAllowedValues.allowedValue1` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 2 | Allowed Value 2 | `fieldAllowedValues.allowedValue2` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 3 | Allowed Value 3 | `fieldAllowedValues.allowedValue3` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 4 | Allowed Value 4 | `fieldAllowedValues.allowedValue4` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 5 | Allowed Value 5 | `fieldAllowedValues.allowedValue5` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 6 | Allowed Value 6 | `fieldAllowedValues.allowedValue6` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 7 | Allowed Value 7 | `fieldAllowedValues.allowedValue7` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 8 | Allowed Value 8 | `fieldAllowedValues.allowedValue8` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 9 | Allowed Value 9 | `fieldAllowedValues.allowedValue9` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| القيمة المسموح بها 10 | Allowed Value 10 | `fieldAllowedValues.allowedValue10` | [القيم المسموح بها للحقول (Field Allowed Values)](#lqym-lmsmwH-bh-llHqwl-Field-Allowed-Values) |
+| Disabled Fields | Disabled Fields | `disabledFields` | [Disabled Fields](#Disabled-Fields----lHqwl-lmaaTl) |
+| أقصى عدد لسطور السندات والملفات | Max Lines Counts For Documents And Files | `maxLinesCounts` | [أقصى عدد لسطور السندات والملفات (Max Lines Counts For Documents And Files)](#qS-aadd-lsTwr-lsndt-wlmlft-Max-Lines-Counts-For-Documents-And-Files) |
+| أقصى عدد لسطور السندات والملفات | Max Lines Count For Documents And Files | `maxLinesCounts.maxLinesCount` | [أقصى عدد لسطور السندات والملفات (Max Lines Counts For Documents And Files)](#qS-aadd-lsTwr-lsndt-wlmlft-Max-Lines-Counts-For-Documents-And-Files) |
+| Max Fields Length In DB | Max Fields Length In DB | `maxFieldsLengthInDB` | [Max Fields Length In DB](#Max-Fields-Length-In-DB----qS-Twl-llHqwl-fy-qaad-lbynt) |
+| اقصي طول | Max length | `maxFieldsLengthInDB.maxLength` | [Max Fields Length In DB](#Max-Fields-Length-In-DB----qS-Twl-llHqwl-fy-qaad-lbynt) |
+| Max POS Fields Length In DB | Max POS Fields Length In DB | `maxPOSFieldsLengthInDB` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
+| النوع | Entity Type | `maxPOSFieldsLengthInDB.posEntityType` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
+| نوع الحقل | Field Type | `maxPOSFieldsLengthInDB.fieldType` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
+| اقصي طول | Max length | `maxPOSFieldsLengthInDB.maxLength` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
 
 ## صفحات ذات صلة
 

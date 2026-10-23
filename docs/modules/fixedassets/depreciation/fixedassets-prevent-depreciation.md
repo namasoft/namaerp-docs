@@ -1,4 +1,5 @@
 ---
+description: "The Prevent Assets Depreciation Document: freezing an asset's depreciation for a range of periods, why skipping a period does not work, how the range must meet the asset's history, period closing while frozen, and ending or extending a block."
 entities: [FAPreventAssetsDeprec]
 menu: Assets → Documents → Prevent Assets Depreciation Document
 ---

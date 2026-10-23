@@ -48,7 +48,7 @@ The search covers every book and every legal entity, and nothing stores the numb
 
 ## Example
 
-A payment voucher in fiscal year 2026 pays supplier S0001 on two lines and posts a third line to an expense account with no subsidiary. No earlier voucher this year carries a number for S0001.
+A payment voucher in fiscal year 2026 pays supplier S0001 on two lines and records a third line on an expense account with no subsidiary. No earlier voucher this year carries a number for S0001.
 
 | Line | Subsidiary | N1 | Narration after saving |
 |---|---|---|---|

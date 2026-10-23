@@ -1,4 +1,5 @@
 ---
+description: "The Item master file: codes and names, categories, primary and secondary units of measure, serial, batch, expiry and warranty tracking, variants, item types, stock control and overdraft, costing and sales pricing, and accounting integration."
 entities: [InvItem]
 menu: Inventory → Master Files → Item
 ---
@@ -296,7 +297,7 @@ When a product changes design but the old version is still in stock, switch **Ha
 **On the Item screen itself:**
 
 - **Add Item To Sales Price List**, **Add Item To Purchase Price List**, **Add Item To Item Voting File** and **Add Item To Price Voting File** — each asks which list or file to add to, then puts this item on it. They save the round trip of opening the price list and hunting for the item.
-- **Reverse Delete Case** — on the keywords grid, flips the delete flag on every keyword line, so a whole set can be marked for removal or spared in one press.
+- **Reverse Delete Case** — on the keywords grid, flips the delete flag on every keyword line, so a whole set can be marked for removal or spared in one press. Keywords and the templates that fill them are explained in [Keywords and Keyword Templates](/platform/shared-master-files/keyword-templates).
 
 **On the Item Update document:** **Copy To Item** — writes the changes the document carries onto the items it targets. Nothing moves onto the items until this is run.
 
@@ -314,7 +315,7 @@ A well-configured item definition means:
 - Purchasing flows smoothly (the system knows the supplier, units, and accounts)
 - Sales flow smoothly (the system knows the price, units, and accounts)
 - Inventory is tracked accurately (the system knows serials, batches, and locations)
-- Accounting is automatic (the system knows which accounts to post to)
+- Accounting is automatic (the system knows which accounts to record each amount on)
 - Reports are meaningful (the system knows categories and classifications)
 
 ::: tip Start Simple

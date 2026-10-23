@@ -30,6 +30,7 @@ title: خدمة العملاء
 <LandingGrid>
   <LandingCard icon="🎯" title="مسار البيع" link="/ar/modules/crm/sales-pipeline/crm-pipeline-overview.md" details="السلسلة الحقيقية من خيط البيع إلى العميل، ولماذا تقع العروض والتحليل والمشروعات خارجها." />
   <LandingCard icon="🌱" title="خيوط البيع" link="/ar/modules/crm/sales-pipeline/crm-leads.md" details="تسجيل العميل المحتمل وتصنيفه وإسناده، والمنتجات التي يهتم بها." />
+  <LandingCard icon="📣" title="إعلانات فيسبوك لجمع العملاء المحتملين" link="/ar/modules/crm/sales-pipeline/crm-facebook-lead-ads.md" details="حفظ كل نموذج تسجيل من فيسبوك كخيط بيع أو فرصة لحظة وصوله." />
   <LandingCard icon="📈" title="الفرص" link="/ar/modules/crm/sales-pipeline/crm-potentials.md" details="ترقية خيط البيع إلى فرصة قائمة، وماذا تقود مرحلة البيع وماذا لا تقود." />
   <LandingCard icon="🔄" title="تحويل خيط البيع" link="/ar/modules/crm/sales-pipeline/crm-lead-conversion.md" details="ماذا ينتج كل زر تحويل فعلاً — بما في ذلك عرض السعر الذي يصل فارغاً." />
   <LandingCard icon="📦" title="العروض" link="/ar/modules/crm/sales-pipeline/crm-offers.md" details="حزمة عمل من موظفين مسندين وزمن تحضير — لا عرض سعر مسعّر." />

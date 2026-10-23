@@ -1,4 +1,5 @@
 ---
+description: "Importing data from Excel sheets and SQL statements: preparing the sheet, the special import functions, advanced Excel import, and the field-map lines that let an Entity Flow or screen button read an attached sheet or a query into records."
 entities: [EntityFlow]
 ---
 # Importing Data from Excel or Queries

@@ -32,7 +32,7 @@ The ledger is the heart of the setup. You'll find it under **Accounting → Sett
 ![The Ledger screen](../../ar/modules/accounting/images/setup/ledger-en.png)
 
 - **Main Currency** — the currency your balances are held in and your financial statements are prepared in. Any transaction in another currency is translated to this currency when recorded.
-- **Reporting Currency** — optional. It is the currency the [consolidated statements](./consolidated-statements.md) present the group in by default, when they are run from a company on this ledger. Nothing is posted in it: balances are kept in the main currency only, and the consolidated reports translate them each time they run.
+- **Reporting Currency** — optional. It is the currency the [consolidated statements](./consolidated-statements.md) present the group in by default, when they are run from a company on this ledger. No entries are recorded in it: balances are kept in the main currency only, and the consolidated reports translate them each time they run.
 - **Chart Type** — links the ledger to the chart of accounts it works on (see the next section).
 - **Calendar** — the calendar on which this ledger's years and periods are built.
 - **Current Year** — the fiscal year currently adopted for the ledger.

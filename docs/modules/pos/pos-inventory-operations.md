@@ -11,6 +11,21 @@ The same group also holds the **Cash Count** screen, which `Ctrl+F2` opens direc
 
 ![The Cash Count screen, opened with Ctrl+F2](../../ar/modules/pos/images/inventory/pos-inventory-screen-en.png)
 
+### Buttons on the Cash Count screen
+
+The Cash Count screen has its own row of icon buttons under the title bar, and three buttons under the grid. Icon buttons show their name when you hover over them.
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **RePrint Document** | «إعادة طباعة المستند» | Shown only when the security profile has **Can RePrint Documents**. A saved cash count closes the screen, so this prints the register's last cash count again — when **Print Last Document If No Current Open Document** is ticked in POS Settings. |
+| **Sign out** | «خروج» | Returns to the login screen. |
+| **Show Document** | «عرض مستند» | Lists the earlier cash counts so you can open one. Needs **Can Open Old Document**. The same button sits beside **Ok** under the grid. |
+| **Settings** | «الإعدادات» | Opens the register's settings window. Needs **Can Edit Settings**. |
+| **Send All** | «إرسال الكل» | Opens a small window with two buttons. **Force Send** («إرسال إجباري») sends every document that has not reached the server yet; with nothing waiting it says *No Data to send* — «لا توجد بيانات للإرسال». **Reset and Force Send** («إعادة تعيين وإرسال إجباري») sends again the documents that used up their automatic retries; with none it says *No failed documents exceeding retry limit* — «لا توجد سندات تجاوزت الحد الأقصى لمحاولات الإرسال». |
+| **Arabic** / **English** | «العربية» / «الإنجليزية» | Switches the interface language. The button is named after the other language. |
+| **Ok** (`F2`) | «موافق» | Saves the cash count, prints it and goes back to the sales screen. `F2` does nothing when **Prevent Saving Shift By F2 Shortcut** is ticked in POS Settings. |
+| **NO** | «لا» | Goes back to the sales screen without saving. |
+
 ## Receiving stock
 
 When goods arrive — from a supplier, head office, or another branch — a **stock receipt** records them into the store's warehouse. Add each item and the quantity received, add a note if needed, and save. The receipt updates the store's stock and is sent up to the central system.
@@ -41,6 +56,14 @@ Whether either one actually takes the quantity out of stock is decided on the se
 ![Scrap document](../../ar/modules/pos/images/inventory/pos-scrap-doc-en.png)
 
 ![Shortfalls document](../../ar/modules/pos/images/inventory/pos-shortfalls-doc-en.png)
+
+## Buttons on the stock document screens
+
+The stock receipt, stock transfer request, stock taking, scrap and shortfalls screens use the same toolbar as the sales invoice — see [Buttons on the sales screen](./pos-sales-invoice.md#Buttons-on-the-sales-screen). The one difference is that no money changes hands, so the **Payment** button is replaced by **Save**:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Save** (`F5`) | «حفظ» | Checks the document, saves it under its next code, prints it and opens a new blank document of the same kind. |
 
 ::: info Why do this from the register?
 Doing stock work where the goods physically are — at the store, on the device already in the staff's hands — means the count or the write-off happens at the moment it is observed, not hours later back at a desk. And because it all syncs to the central system, head office sees the same picture the store does.

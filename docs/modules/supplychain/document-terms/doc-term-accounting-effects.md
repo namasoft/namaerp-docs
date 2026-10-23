@@ -4,11 +4,13 @@ menu: Basic → Settings → Document Term
 ---
 # Accounting Effects Configuration
 
-Supply Chain documents that carry accounting effects post to the general ledger through configurable debit and credit **account sides**. Each account side is a small self-contained block (an *account-side config*) that defines which GL account to hit plus where the account's subsidiary (portfolio) and cost-center dimensions are sourced from. A document term adds one or more **Effect** / **Invoice Effect** pages, and the groups shown on those pages differ by document type — an invoice exposes tax, discount and service-fee sides; a stock receipt exposes only a debit/credit pair and a few toggles; a Letter-of-Credit opening exposes coverage and fees sides.
+Supply Chain documents that carry accounting effects record them in the general ledger through configurable debit and credit **account sides**. Each account side is a small self-contained block (an *account-side config*) that defines which GL account to hit plus where the account's subsidiary (portfolio) and cost-center dimensions are sourced from. A document term adds one or more **Effect** / **Invoice Effect** pages, and the groups shown on those pages differ by document type — an invoice exposes tax, discount and service-fee sides; a stock receipt exposes only a debit/credit pair and a few toggles; a Letter-of-Credit opening exposes coverage and fees sides.
 
 ::: info Where to find it
 Open the document's **Document Term** (توجيه), then the **Effect** / **Invoice Effect** (التأثير / تأثير الفاتوره) tab. All field ids below are under `DocumentTerm.termConfig.…` — the searchable prefix is `termConfig.`.
 :::
+
+![The Invoice effect tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-accounting-effects-en.png)
 
 ## Anatomy of an Account Side
 
@@ -17,7 +19,7 @@ Every debit, credit, tax, discount, cash, fees, warehouse, coverage and service-
 **Side Configuration** `termConfig.config.debit.sideConfig` — Points the side at an [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record: the same block of settings saved once as a master file and shared by as many terms as need it.
 
 ::: warning A Side Configuration replaces the block, it does not merge with it
-Once this field is filled in, every other field in the same block is ignored — the account, the subsidiary type, the narrations, the dimension sources, all of it. The fields stay on screen showing whatever was typed there before, so a side can read as though it books to one account while actually booking somewhere else entirely. Clear the Side Configuration to go back to the values typed in the block.
+Once this field is filled in, every other field in the same block is ignored — the account, the subsidiary type, the narrations, the dimension sources, all of it. The fields stay on screen showing whatever was typed there before, so a side can read as though it records to one account while actually recording somewhere else entirely. Clear the Side Configuration to go back to the values typed in the block.
 :::
 
 **Account source / Account** `termConfig.config.debit.accountSource.type` + `termConfig.config.debit.accountRef` — How the GL account is resolved: either a fixed account (`accountRef`) or pulled from a source on the document. When the account comes from a referenced entity, `termConfig.config.debit.accountSource.entityType` names that entity type and `termConfig.config.debit.accountSource.fieldID` names the field on it that yields the account. `termConfig.config.debit.accountSource.accFrmBagCrrncy` resolves the account using the bag (portfolio) currency.
@@ -56,7 +58,7 @@ In the groups below, "account side" always means a full block with the sub-field
 
 The two primary ledger sides of the document. For an invoice the debit is typically the receivable/inventory side and the credit the revenue/supplier side; the actual account is resolved through the account-side sub-fields above.
 
-**Debit** `termConfig.config.debit` — The main debit account side. Applies to nearly every Supply Chain document that posts to the ledger (all invoices and orders, sales/purchase return, stock receipt/issue/transfer, order delivery/execution/finished, LC cost, cost revaluation, receipt additional cost, etc.). On a Letter-of-Credit opening this side carries the *Down Payment Debit* title; on a cost revaluation it carries the *Adjustment Side* title.
+**Debit** `termConfig.config.debit` — The main debit account side. Applies to nearly every Supply Chain document that creates a journal entry (all invoices and orders, sales/purchase return, stock receipt/issue/transfer, order delivery/execution/finished, LC cost, cost revaluation, receipt additional cost, etc.). On a Letter-of-Credit opening this side carries the *Down Payment Debit* title; on a cost revaluation it carries the *Adjustment Side* title.
 
 **Credit** `termConfig.config.credit` — The main credit account side, the counterpart to the debit above. On a Letter-of-Credit opening it carries the *Down Payment Credit* title; on a cost revaluation it carries the *Inventory Side* title.
 
@@ -64,7 +66,7 @@ The two primary ledger sides of the document. For an invoice the debit is typica
 JOrderExpense uses the bare `termConfig.debit` / `termConfig.credit` ids (not under `config`); ReceiptAdditionalCost uses `termConfig.config.debit` / `termConfig.config.credit`.
 :::
 
-**Shorten Ledger** `termConfig.config.shortenLedger` — Summarize the entry instead of booking one line per document line. Lines that are alike are merged into a single line, and where a debit and a credit meet in the same group only the difference survives. A ten-line invoice that debits the same customer ten times books one customer line for the total.
+**Shorten Ledger** `termConfig.config.shortenLedger` — Summarize the entry instead of recording one line per document line. Lines that are alike are merged into a single line, and where a debit and a credit meet in the same group only the difference survives. A ten-line invoice that debits the same customer ten times produces one customer line for the total.
 
 Two lines are "alike" only when everything about them matches: the account, the subsidiary, the entity dimension, the four cost-centre dimensions, the three generic references, both narration lines, the currency and the rate. Anything that varies per line keeps the lines apart — a narration template that prints the item name is the usual reason an entry that was expected to collapse comes out at full length.
 
@@ -76,7 +78,7 @@ Applies to invoices, sales/purchase return, stock receipt/issue/transfer and sal
 
 ## Control Journals
 
-A second (control/memo) journal pair posted in parallel to the main entry, for control-journal accounting.
+A second (control/memo) journal pair recorded in parallel to the main entry, for control-journal accounting.
 
 **Debit 2** `termConfig.debit2` — The control-journal debit account side.
 
@@ -115,7 +117,7 @@ Taxes are configured two ways depending on the document. Invoices use account-si
 
 **Tax 1..4 other side** `termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide` — Each of these fields holds an [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. It is a reference to a saved account side, not a tick box and not a block you fill in here, so redirecting a tax counter-entry always starts by creating that master record.
 
-The field answers one question — when the tax leg posts, what does it post against? — and two rules decide the answer.
+The field answers one question — when the tax leg is recorded, what is it recorded against? — and two rules decide the answer.
 
 **A counter-entry exists only for a tax that is added on top of the total.** Whether a tax is included in the total is decided by the tax configuration behind the document's tax plan, not here. When the tax is included in the price, the customer's own line already carries it and no counter-entry is generated at all — whatever is in this field is then simply never used. When the tax is added on top, the counter-entry appears and this field says where it goes.
 
@@ -133,7 +135,7 @@ Take a sales invoice with one line of 1,000 and 15% VAT that is **not** included
 With **Shorten Ledger** on, the two customer lines merge and the entry reads customer 1,150 debit, revenue 1,000 credit, VAT payable 150 credit — the ordinary three-line invoice entry everyone expects.
 
 ::: tip The same three lines arrive by two different routes
-Had the tax been *included* in the total, the customer's own line would already have been 1,150 and no counter-entry would have been generated — the same three-line entry, reached without this field being involved at all. That is why a term can look misconfigured and still post correctly, and why a change to the tax configuration can change an entry that nobody touched.
+Had the tax been *included* in the total, the customer's own line would already have been 1,150 and no counter-entry would have been generated — the same three-line entry, reached without this field being involved at all. That is why a term can look misconfigured and still produce the correct entry, and why a change to the tax configuration can change an entry that nobody touched.
 :::
 
 Point the field at a record for, say, a tax-clearing account, and only that last line moves: the customer is debited 1,000 and the clearing account carries the 150.
@@ -160,7 +162,7 @@ Invoices expose eight discount **account sides** plus a header-discount side on 
 
 **Discount other sides** `termConfig.taxesOtherSide.discount1OtherSide` … `termConfig.taxesOtherSide.discount8OtherSide`, and `termConfig.taxesOtherSide.headerDiscountOtherSide` — Like the tax other sides, each of these holds an [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. What it does with it is different: it does not redirect a line, it adds two.
 
-A discount normally posts on one side only. On a sales invoice with a line of 1,000 and a discount of 50, revenue is credited 1,000, the discount account is debited 50, and the customer — whose line is already net of the discount — is debited 950. (If no account side is configured for the discount itself, that 50 debit falls back to the document's main credit side, which is to say the discount is netted straight off revenue.)
+A discount is normally recorded on one side only. On a sales invoice with a line of 1,000 and a discount of 50, revenue is credited 1,000, the discount account is debited 50, and the customer — whose line is already net of the discount — is debited 950. (If no account side is configured for the discount itself, that 50 debit falls back to the document's main credit side, which is to say the discount is netted straight off revenue.)
 
 Fill in the discount's other side and two more lines join the entry: the named record is credited 50, and the document's own main side is debited 50. The customer now carries the full 1,000 and the discount is funded by the named account instead of quietly reducing what the customer owes.
 
@@ -170,18 +172,18 @@ Cash counters rarely settle to the last piastre. An invoice of 199.97 gets 200.0
 
 Support tickets often call this the **rounding discount**. On the term screen it is the **Approximation Discount** group on the **Invoice effect** tab.
 
-**Approximation Discount** `termConfig.approximationDiscount` — The account side that absorbs the leftover. When the outstanding amount on a document falls within the globally configured approximation value, that leftover is posted here instead of staying on the customer's (or supplier's) account, and the invoice closes clean. Leave it empty and no rounding happens on documents using this term, however the global settings are set.
+**Approximation Discount** `termConfig.approximationDiscount` — The account side that absorbs the leftover. When the outstanding amount on a document falls within the globally configured approximation value, that leftover is recorded here instead of staying on the customer's (or supplier's) account, and the invoice closes clean. Leave it empty and no rounding happens on documents using this term, however the global settings are set.
 
 **Consider Payments Not Affecting Remaining With Approximation Discount** `termConfig.considerDoNotAffectRemainingWithApproxDisc` — Sales-side terms only.
 
-A payment line can be marked **Do Not Affect Remaining** (either on the line or on the payment method itself). Such a payment is recorded and posted, but deliberately does not reduce the document's **Remaining** — that is the whole point of the flag, and it is how deferred, third-party-collected and similar payments are handled. The side effect is that the *Remaining* figure no longer reflects what the customer actually still owes.
+A payment line can be marked **Do Not Affect Remaining** (either on the line or on the payment method itself). Such a payment is recorded and reaches the ledger, but deliberately does not reduce the document's **Remaining** — that is the whole point of the flag, and it is how deferred, third-party-collected and similar payments are handled. The side effect is that the *Remaining* figure no longer reflects what the customer actually still owes.
 
 That matters here, because rounding is decided by comparing the outstanding amount against the approximation value. Take a 200.03 invoice settled with a 200.00 payment on a method flagged *Do Not Affect Remaining*: the customer's account is square apart from three piastres, but *Remaining* still reads 200.03. Against an approximation value of 0.05 that is nowhere near "close enough", so no rounding happens and the three piastres sit on the customer's account forever.
 
-Tick this box and those payments are taken out of the comparison first, leaving the 0.03 that is genuinely outstanding — which does fall within the approximation value, so it posts to the approximation discount account and the invoice closes. Leave it unticked and the term keeps behaving as before.
+Tick this box and those payments are taken out of the comparison first, leaving the 0.03 that is genuinely outstanding — which does fall within the approximation value, so it is recorded on the approximation discount account and the invoice closes. Leave it unticked and the term keeps behaving as before.
 
 ::: tip Interaction with voucher payments
-The global **Consider Vouchers Payment with Approximation Discount** rounds against the voucher-payment side of the entry. When this term option is on *and* the document actually carries payments that don't affect the remaining, rounding takes the customer/supplier route instead, because that is the side the leftover really sits on. On documents with no such payments nothing changes and the global setting applies as usual.
+The global **Consider Vouchers Payment With Activate Approximation Discount** rounds against the voucher-payment side of the entry. When this term option is on *and* the document actually carries payments that don't affect the remaining, rounding takes the customer/supplier route instead, because that is the side the leftover really sits on. On documents with no such payments nothing changes and the global setting applies as usual.
 :::
 
 ## Service Fees
@@ -209,7 +211,7 @@ Different documents add (landed) additional cost and purchase-return cost differ
 
 **Additional Cost Debit / Credit (stock receipt)** `termConfig.config.additionalCostDebit` / `termConfig.config.additionalCostCredit` — The account sides for the two lines a stock receipt's entry gains when a Receipt Additional Cost document spreads a charge onto it. They are not on/off switches: an empty debit falls back to the receipt's main debit side (the inventory account), and an empty credit falls back to its main credit side. Set the credit to the account the additional-cost document debits, or the two entries will not offset each other. See [Freight, Customs and Landed Cost](/modules/servicecenter/car-purchasing/car-landed-cost#Where-the-accounting-goes) for a worked example.
 
-**Additional Cost side (transfers)** `termConfig.additionalCostConfig` — On Stock Transfer / Receipt Stock Transfer / Issue Stock Transfer, the account side used to post additional (landed) cost added to transferred stock, under the *Additional Cost* group.
+**Additional Cost side (transfers)** `termConfig.additionalCostConfig` — On Stock Transfer / Receipt Stock Transfer / Issue Stock Transfer, the account side used to record additional (landed) cost added to transferred stock, under the *Additional Cost* group.
 
 **Purchase Return Difference Debit / Credit** `termConfig.config.purchaseRetDiffDebit` / `termConfig.config.purchaseRetDiffCredit` — Account sides for the purchase-return cost-difference debit and credit. Stock issue only.
 
@@ -239,7 +241,7 @@ Toggles on expense/cost documents (JOrderExpense, ReceiptAdditionalCost, LcExpen
 
 **Allow Empty Sys Distribution Lines** `termConfig.allowEmptySysDistributionLines` — Permit saving when the system cost-distribution lines are empty. ReceiptAdditionalCost only.
 
-**Expense Type** `termConfig.expenseType` — Classifies the job-order expense, controlling how it posts/distributes. JOrderExpense only.
+**Expense Type** `termConfig.expenseType` — Classifies the job-order expense, controlling how it is recorded/distributed. JOrderExpense only.
 
 ## Which Documents Expose Which Effect Pages
 

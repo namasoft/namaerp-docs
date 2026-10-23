@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Properties document: revising an asset's useful life and salvage value from now on, the three things it can change, why it is not retroactive and books no entry, and re-estimating a whole fleet at once."
 entities: [FAPropertiesDocument, AggrFAPropertiesDocument]
 menu: Assets → Documents → Fixed Asset Properties
 ---

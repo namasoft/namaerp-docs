@@ -1,3 +1,6 @@
+---
+description: "The architecture of Nama ERP as one Java web application on one server and one database: its technology stack, layers, functional modules, what happens when a document is saved, client apps, integrations, multi-company data and reporting."
+---
 # Application Architecture
 
 Nama ERP is a single Java web application. Users reach it with a browser, all of its modules share one database, and there is nothing to install on an ordinary user's machine. That sentence is most of the architecture; the rest of this page fills in what sits behind it.
@@ -87,7 +90,7 @@ The business functionality is divided into modules. They are separately licensed
 | Sector-specific | Health Care, Service Centre, and others |
 | Platform | Reporting and BI, approvals, notifications, security, import and export |
 
-Because there is a single data model, an item sold in Point of Sale, costed by Supply Chain and posted by Accounting is one record, not three copies synchronised between systems. This is the central design decision of the product and the source of most of its behaviour.
+Because there is a single data model, an item sold in Point of Sale, costed by Supply Chain and processed into the accounts by Accounting is one record, not three copies synchronised between systems. This is the central design decision of the product and the source of most of its behaviour.
 
 ## What happens when a document is saved
 

@@ -42,6 +42,7 @@
   <LandingCard icon="🛒" title="المشتريات المتنوعة وتشغيل المعدات" link="/ar/modules/accounting/misc-purchasing.md" details="المشتريات المتنوعة وتشغيل المعدات." />
   <LandingCard icon="⭐" title="تقييم الجهات" link="/ar/modules/accounting/party-evaluation.md" details="تقييم الجهات." />
   <LandingCard icon="🔗" title="التسوية مع الذمم" link="/ar/modules/accounting/subsidiary-reconciliation.md" details="التسوية مع الذمم." />
+  <LandingCard icon="🤝" title="أسهم الشركاء وتوزيع الأرباح" link="/ar/modules/accounting/partner-shares-and-profit-distribution.md" details="من يملك كم سهمًا، وتقسيم صافي ربح الفترة بين الشركاء والإدارة." />
 </LandingGrid>
 
 ### البنوك والشيكات

@@ -22,7 +22,7 @@ The assistant has no capability of its own — everything it does goes through a
 
 - Answer questions from your data ("How many sales invoices this month?", "Who are the top five customers by balance?").
 - Run a report with parameters it infers from your question, and read its output.
-- Perform an action on a document through an entity flow (approve, post, ...).
+- Perform an action on a document through an entity flow (approve, save, ...).
 - Read a record or import new records, if the import tools are enabled.
 - Search the Nama ERP documentation, if the docs system tool is enabled.
 

@@ -1105,6 +1105,7 @@ h.value_date <= :ToDocDate
 | `EnhancedMetricsCard` | شريط بطاقات مؤشرات مقاد بالـJSON — بطاقات وخانات وخطوط اتجاه مصغّرة وتلوين شرطي. انظر القسم 15. | نعم |
 | `MetricsCards` | بطاقات مؤشرات قديمة تُقاد بحقول `metricsCardConfig` على سجل الـwidget لا بـ`chartConfigJSON`. | لا |
 | `PieChart` و`ColumnWithRotatedLabels` إلخ | أنواع Highcharts القديمة (تُترجم تلقائياً إلى ECharts من جانب الخادم) | لا |
+| `Calendar` و`ResourceView` و`Timeline` و`Report` و`HTML` و`CardMenu` و`RecentVisits` | تُضبط عبر جدول `params`، أو الحقول `htmlArabic` / `htmlEnglish`، أو `cardMenus`، أو `metricsCardConfig` مع `timelineConfig`، أو `definition` مع `launchType`. انظر [التقويم والخط الزمني والتقرير وعناصر أخرى](./bi-reference-more-widget-types.md). | لا |
 
 بالنسبة لـwidgets `Table`، تصبح أسماء أعمدة SQL رؤوس أعمدة الشبكة. لا يلزم `chartConfigJSON` — فقط أدرج `dataSource` بـSQL و`crossFilterBindings`.
 

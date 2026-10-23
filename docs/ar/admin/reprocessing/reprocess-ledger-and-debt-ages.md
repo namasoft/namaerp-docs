@@ -156,7 +156,7 @@ where b.id is null
 ```
 :::
 ::: warning
-يجب إعادة ترحيل نتيجة الاستعلام السابق
+يجب إعادة حفظ نتيجة الاستعلام السابق
 :::
 
 ::: details البحث عن عدم التطابق بين دفتر الأستاذ وأرصدة المحددات (حسب الفترة والكيان والحساب) (Find Mismatch in Ledger vs DimensionsBalance (By Period, Entity, Account))

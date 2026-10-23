@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Invoicing, Taxes & Discounts
+description: "The Invoicing, Taxes & Discounts module: discounts and tax calculation, pricing and offers, loyalty and customer payments, e-invoicing for each country, and the rules and reports behind the sales invoice."
 ---
 
 # Invoicing, Taxes & Discounts

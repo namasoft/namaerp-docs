@@ -43,6 +43,10 @@ features:
     title: Mobile QR Integrator
     details: استجابة النظام لرموز QR الممسوحة لإنشاء الكيانات وتحديثها وتنفيذ إجراءات مخصصة ديناميكياً
     link: /ar/modules/mobile/mobile-qr-integrator
+  - icon: 🎫
+    title: تطبيق طوابير الخدمة
+    details: أجهزة استقبال مركز الخدمة — جهاز التذاكر وشاشة صالة الانتظار ومكاتب المستشارين وتسجيل حضور العملاء — تثبيتها واختيار دور كل منها
+    link: /ar/modules/mobile/mobile-service-queue-app
 ---
 
 <rtl>

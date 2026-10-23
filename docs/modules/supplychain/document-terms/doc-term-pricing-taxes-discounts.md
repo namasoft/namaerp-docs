@@ -10,6 +10,8 @@ This tab controls how unit prices, discounts, and taxes are calculated on docume
 Open the document's **Document Term** (توجيه), then the **Pricing, Taxes & Discounts** tab.
 :::
 
+![The Prices tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-pricing-taxes-discounts-en.png)
+
 ## Taxes
 
 Tax basics surface for any taxable `IInvoice` document (sales and purchase) and require the **Sales Tax** feature to be enabled.
@@ -125,7 +127,9 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Apply Free Items On Invoice With Save** `termConfig.applyFreeItemsOnInvoiceWithSave` — Applies free-item offers to the invoice value automatically on save.
 
-**Force Item Prices From Units** `termConfig.forceItemPricesFromUnits` — Forces the sale price to come from the item's unit-of-measure table prices.
+**Force Item Prices From Units** `termConfig.forceItemPricesFromUnits` — Keeps every line's unit price inside the **Min Price** and **Max Price** of the matching row in the item's unit-of-measure table; a price outside that range is refused on save with
+*Unit price cannot be less than {0} as force prices from units is activated* — «سعر الوحده لا يمكن ان يكون أقل من {0} حيث الألتزام بالاسعار من جدول الواحدات مفعله», or
+*Unit price cannot be greater than {0} as force prices from units is activated* (no Arabic text; it shows in English on Arabic screens). An empty Max Price sets no ceiling. A free line with a zero or empty price is not checked.
 
 **Prevent Sales If Quantity Less Than UOM Min Quantity** `termConfig.preventSalesIfQtyLessThanUOMMinQty` — Blocks saving when a line quantity is below the item's minimum sale quantity defined in the unit table.
 

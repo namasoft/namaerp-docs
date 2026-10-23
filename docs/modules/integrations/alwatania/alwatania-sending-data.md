@@ -1,3 +1,6 @@
+---
+description: "How master data and sales invoices reach Alwatania Distributors: preparing the master data, the three ready-made actions run from a scheduled task or an entity flow, example setups for each, and what happens when a parameter is wrong."
+---
 # Sending Master Data and Invoices to Alwatania
 
 The Alwatania config screen has no Send button. Data leaves Nama only when one of three

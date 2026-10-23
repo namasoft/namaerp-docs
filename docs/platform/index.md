@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Platform Features
+description: "The system-wide tools shared by every Nama ERP module: records and numbering, global configuration, screen and menu customisation, security and governance, automation and data import, reports, dashboards and notifications, and everyday shortcuts."
 ---
 
 # Platform Features
@@ -16,7 +17,7 @@ documents and master files alike.
 <LandingGrid>
   <LandingCard icon="📄" title="Documents and Records" link="/platform/documents-and-records/" details="The life of a document, numbering books, cancelling, master groups, attachments, why a record will not save or delete, and the spare documents kept for one-off needs." />
   <LandingCard icon="🧭" title="Shared Master Files" link="/platform/shared-master-files/" details="Dimensions, customers and suppliers, currencies and exchange rates, and reusable account sides — the master files every module reads." />
-  <LandingCard icon="💳" title="Payments and Card Terminals" link="/platform/payments/" details="Payment methods and where they post, receipt books, and connecting card machines through PGW." />
+  <LandingCard icon="💳" title="Payments and Card Terminals" link="/platform/payments/" details="Payment methods and the accounts they are recorded on, receipt books, and connecting card machines through PGW." />
 </LandingGrid>
 
 ## Tailoring the System

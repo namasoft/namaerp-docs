@@ -1,4 +1,5 @@
 ---
+description: "Renewing an employee's Iqama with the Residence Renew Request: the renewal period and new end date, the fee breakdown, writing the new dates back to the employee, and renewing a whole batch with the Aggregated Residence Renew Request."
 entities: [ResidenceRenewReq, AggrResidenceRenewReq]
 menu: Human Resources → ADMINISTRATIVE TRANSACTIONS → Residence Renew Request
 ---

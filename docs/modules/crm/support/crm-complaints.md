@@ -1,4 +1,5 @@
 ---
+description: "The Complaint - Suggestion screen: what a new complaint fills in, finding the customer's product from sales invoices or service contracts, converting it to a trouble ticket, status and escalation, and whether you need complaints at all."
 entities: [CRMComplaint]
 menu: Customer Relationship Management → Support → Complaint - Suggestion
 ---
@@ -102,4 +103,4 @@ What you must not do is treat the complaint as a case that progresses through st
 
 ## Effects and reporting
 
-The complaint **posts nothing, moves no stock and uses no document term.** For reporting, use the Complaint list screen with its criteria, or export to Excel — CRM ships no system reports and no dashboards at all, and none of the built-in printed forms covers complaints.
+The complaint **creates no ledger entry, moves no stock and uses no document term.** For reporting, use the Complaint list screen with its criteria, or export to Excel — CRM ships no system reports and no dashboards at all, and none of the built-in printed forms covers complaints.

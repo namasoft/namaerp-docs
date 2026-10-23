@@ -42,7 +42,7 @@ A **Salary Component** (مفرد راتب) is the priced element itself. The cru
 
 ![Salary component with its value method](../../../ar/modules/hr/images/concepts/salary-component-en.png)
 
-A component also carries **applicability filters** (which employees, branches, or job positions it applies to) and its **debit/credit account lines** — this is what lets the salary document post to the general ledger later.
+A component also carries **applicability filters** (which employees, branches, or job positions it applies to) and its **debit/credit account lines** — this is what lets the salary document create its general-ledger entry later.
 
 ### Formulas: where variable amounts come from
 
@@ -107,10 +107,10 @@ Finally, the **Salary Sheet** (سجل الرواتب) is the batch run for one H
 
 ![A per-employee salary document](../../../ar/modules/hr/images/concepts/salary-document-en.png)
 
-The full detail of sheets and documents — including exactly what posts to the ledger — is on the **[salary documents](../payroll/salary-documents.md)** page.
+The full detail of sheets and documents — including exactly what is recorded in the ledger — is on the **[salary documents](../payroll/salary-documents.md)** page.
 
 ::: warning "Salary Issuance" is a classifier, not a payment
-A **Salary Issuance** (صرفية راتب) does **not** pay anyone and does **not** post accounting. It is a **stream/tag** that lets you run parallel payrolls for the same period (for example, a main monthly salary alongside a separate commissions run). Think of it as a label on the payroll stream, not the payment step — the money still flows through the salary document.
+A **Salary Issuance** (صرفية راتب) does **not** pay anyone and does **not** create any accounting entry. It is a **stream/tag** that lets you run parallel payrolls for the same period (for example, a main monthly salary alongside a separate commissions run). Think of it as a label on the payroll stream, not the payment step — the money still flows through the salary document.
 :::
 
 ## When a component comes out as zero

@@ -20,7 +20,7 @@ This is the first thing a reader asks, so it goes at the top rather than in a fo
 - The **Vendor** is a name you **type**. It is not a reference to the supplier master file, so a Material Receipt cannot be listed "by supplier" and cannot be matched to a supplier's invoice.
 - The purchase-order and consignment numbers in the header are **typed text** too. They are not references to a [contracting purchase order](/modules/contracting/costs/contracting-purchasing.md) or to any purchasing document, so nothing reconciles the quantity received against the quantity ordered.
 - The lines carry a quantity, a unit and a **written description** of the material. There is no item reference, so the document cannot tell you *which* stock item arrived.
-- Committing it **moves no stock and posts no journal entry**. Nothing enters or leaves a warehouse.
+- Committing it **moves no stock and creates no journal entry**. Nothing enters or leaves a warehouse.
 
 None of that makes the document useless — a signed, dated, numbered receiving inspection with a physical-condition verdict per line is exactly what a consultant wants to see, and having it in the system instead of in a lever-arch file is worth having. But it means you should be clear about which job you are doing:
 

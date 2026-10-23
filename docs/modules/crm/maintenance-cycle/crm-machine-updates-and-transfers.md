@@ -1,5 +1,7 @@
 ---
+description: "The Machine Update, Machine Ownership Transfer and Pre-Installation Preview documents: changing a machine's data or owner with a dated, numbered record, and recording a site survey before an installation."
 entities: [MnMachineUpdate, MnMachineOwnerTransferDoc, MnPreInstallationPreview]
+menu: Customer Relationship Management → Maintenance Documents → Machine Update Document
 ---
 # Machine Updates, Transfers and Site Previews
 

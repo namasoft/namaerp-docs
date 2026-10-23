@@ -1,4 +1,5 @@
 ---
+description: "Car Status Configurations: designing a car's lifecycle with status updaters, allowed status movements, car groups and document filters, what saving checks, why back-dating hurts, and a worked configuration."
 entities: [SubItemStatusConfigurations]
 menu: cars → Car Files → Car Status Configurations
 ---

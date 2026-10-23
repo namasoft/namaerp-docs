@@ -26,6 +26,8 @@ The practical consequence: if the same physical Saif 1.6 is also a customer vehi
 The invoice line the system builds carries the service item and nothing else — the *Customer Car* column on the details grid is always left blank on a system-generated rental line. If you need the specific vehicle recorded for a customer, put it in the line's remarks or in the document description.
 :::
 
+![A rental asset with its hourly price tiers and working hours](../../../ar/modules/servicecenter/images/rental/rental-asset-screen-en.png)
+
 ## The three documents
 
 The sub-module is small enough to describe in one breath.
@@ -34,7 +36,7 @@ The sub-module is small enough to describe in one breath.
 |---|---|---|
 | **Rental Asset Request** | طلب حجز تأجيرى | The reservation. Holds the slot. |
 | **Rental Asset Invoice** | فاتورة حجز تأجيرى | The bill for the booked period. |
-| **Rental Asset Reservation Cancel** | إلغاء حجز أصل تأجيري | Frees the slot and posts a typed cancellation charge. |
+| **Rental Asset Reservation Cancel** | إلغاء حجز أصل تأجيري | Frees the slot and records a typed cancellation charge. |
 
 Both the request and the invoice are full sales documents underneath — they carry taxes, discounts, payment lines, an instalment schedule, sales terms and dimensions, exactly like an ordinary sales invoice. Neither moves stock: the line they generate is a service item, so there is nothing to issue.
 

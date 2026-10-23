@@ -1,4 +1,5 @@
 ---
+description: "The custody delivery and custody transfer documents: handing a custody item to one or more employees for the first time, moving it to another holder, what committing each one does, and how to undo them."
 entities: [FACustodyDeliveryDoc, FACustodyTransferDocument]
 ---
 # Delivering and Transferring Custody

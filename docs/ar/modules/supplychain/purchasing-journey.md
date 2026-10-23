@@ -1,4 +1,5 @@
 ---
+description: "دورة الشراء خطوة بخطوة: طلب الصنف وتجميع الطلبات، وطلب عروض الأسعار ومقارنتها، وأمر الشراء والفاتورة المبدئية، واستلام البضائع، وفاتورة المشتريات والمطابقة الثلاثية، والدفع، ومرتجعات المشتريات."
 entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate]
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: "The Procedure screen in Project Management (ECPA): a follow-up record of the next action due on a job, its fields, procedures raised from a timesheet, and where they appear."
 entities: [CPAProcedure]
 menu: Project Management → Projects → Procedure
 ---

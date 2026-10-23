@@ -103,6 +103,8 @@ The most useful group for external MCP clients is the export/import system tools
 
 The tools are named with a prefix taken from the tool definition (the Tool Name, Alt Code, or code field). The examples below assume the prefix is `import`.
 
+![The system-tools AI Tool Definition that publishes these tools](../../ar/modules/ai/images/ai-tool-definition-system-tools-en.png)
+
 ### import_ResolveEntityType — resolve a term to an entity type
 
 The starting point for any client that does not know Nama's internal entity names. Send an Arabic or English term and receive the matching entity types with their translated names.

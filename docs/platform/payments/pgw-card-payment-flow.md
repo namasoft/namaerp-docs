@@ -25,6 +25,8 @@ The invoice is **not** saved automatically. The cashier still saves it, as with 
 
 If no row of the Method Group matches the card, the line is still filled in, but without a payment method. The cashier picks one by hand.
 
+![A Payment Terminal](../../ar/platform/images/payments/payment-terminal-main-en.png)
+
 ## In Nama POS
 
 Nama POS does not run in a browser. The POS program calls PGW on `localhost:7842` itself, but the idea is the same:

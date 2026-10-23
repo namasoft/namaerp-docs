@@ -1,5 +1,7 @@
 ---
+description: "إعداد وتشغيل توصيل الشحنات لتطبيق السائق: إعدادات التوصيل، والمناطق والسيارات وتوزيع السائقين، ثم الدورة اليومية من خطة وتوصيل ومرتجع، وما يحدد حالة الشحنة، وأزرار الشاشات، والرسائل التي قد تظهر لك."
 entities: [DLVDeliveryPlan, DLVDeliveryDocument, DLVDeliveryReturn, DLVDeliveryConfig, DLVDeliveryArea, DLVDriverCarAreaAssignment, DeliveryCar]
+menu: الأساسيات ← إعدادات التوصيل ← خطة توصيل شحنات
 ---
 # توصيل الشحنات: الخطة والتوصيل والمرتجع
 

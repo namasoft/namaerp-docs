@@ -1,3 +1,6 @@
+---
+description: "The buttons shared by every Nama ERP screen: the edit screen toolbar and its More menu, printing and the export dialog, the list screen toolbar, the buttons on a grid, and why a button can be missing."
+---
 # Buttons on Every Screen
 
 Nama has hundreds of screens, and almost none of them have their own buttons. A sales invoice, an
@@ -93,7 +96,7 @@ again as soon as the page is reloaded.
 ### Show System Transaction: the entries a document produced
 
 "Where is the journal entry this invoice made?" is answered from the More menu, not from a report.
-On any saved document that posts to the ledger, **Show System Transaction** opens the journal entry
+On any saved document that has an accounting effect, **Show System Transaction** opens the journal entry
 the document produced in a window over the screen — accounts, amounts and dimensions, read-only. The
 item only appears once the document has been saved; a new, unsaved document has nothing to show yet.
 
@@ -173,7 +176,9 @@ Reading from the left: find text inside the grid, add a line, copy the current l
 line many times over, delete the line, jump to a line by its number, the two auto-fit buttons, row
 drag, column drag, view the sorted columns, and clear the grid's filters. Last comes **Print**, which
 downloads the grid's lines, with the columns you can see, as a PDF file. It works only for users whose
-security profile grants **Print Once** on that screen; for everyone else it is greyed out.
+security profile grants **Print Once** on that screen; for everyone else it is greyed out. The browser downloads the
+PDF's Arabic-capable font from the internet the first time, so on a computer with no internet access the button answers
+*Could not export to PDF, please check your internet connection and try again* — «تعذر التصدير إلى PDF، برجاء التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى».
 
 Multi Line Copy is the one people miss. It asks how many copies you want and makes them all at once —
 if you are entering twenty lines that differ only in item code, filling in the first and copying it

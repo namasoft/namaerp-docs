@@ -1,4 +1,5 @@
 ---
+description: "The two ways to bring attendance machine data into Nama, the attcron application or a direct SQL Server link with a scheduled import, plus re-importing and recalculating attendance on a Time Attendance document and sending the results to employees."
 entities: [AttendanceMachineConfig, TimeAttendance]
 ---
 

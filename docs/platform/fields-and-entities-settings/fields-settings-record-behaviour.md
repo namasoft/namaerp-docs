@@ -1,4 +1,5 @@
 ---
+description: "Five Fields and Entities Settings grids that act on the whole record: fields cleared on duplicate, audited fields, adding the discussion and related documents panels to a screen, and which record types can receive it by e-mail."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -58,6 +59,8 @@ This grid is applied by the server, so it takes effect the moment you save. The 
 ::: info Where audit trails earn their keep
 Detailed auditing pairs naturally with the two other places where "who changed what" decides an argument: [Revise and Unrevise](/platform/governance/revise-and-unrevise), where a saved document is pulled back and edited, and the [Approvals System](/platform/approvals/approvals-system), where a value may be changed after somebody has already approved it.
 :::
+
+![The Audit Fields grid](../../ar/platform/images/fields-settings/fields-settings-audit-fields-grid-en.png)
 
 ## Add Discussion To
 
@@ -120,6 +123,28 @@ Five types per line is not the limit, because lines for the same box **merge** r
 ::: warning Users must sign out and back in
 This grid is applied by the browser, not the server. After you save your changes, a user who is already signed in keeps seeing the old recipient list until they **sign out and sign back in** (or force a hard reload). Test your line in a fresh session before concluding it did not work.
 :::
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `auditFields` | Audit Fields | Audit Fields | [Audit Fields](#Audit-Fields) |
+| `addDiscussionTo` | Add Discussion To | إضافة النقاش إلي | [Add Discussion To](#Add-Discussion-To) |
+| `addDiscussionTo.addToPage` | Add To Page | إضافة إلي صفحة | [Add Discussion To](#Add-Discussion-To) |
+| `addDiscussionTo.insertAt` | Insert At | إضافة في | [Add Discussion To](#Add-Discussion-To) |
+| `addRelatedDocumentsTo` | Add Related Documents To | إضافة المستندات المرتبطة إلى | [Add Related Documents To](#Add-Related-Documents-To) |
+| `addRelatedDocumentsTo.addToPage` | Add To Page | إضافة إلي صفحة | [Add Related Documents To](#Add-Related-Documents-To) |
+| `addRelatedDocumentsTo.insertAt` | Insert At | إضافة في | [Add Related Documents To](#Add-Related-Documents-To) |
+| `lines` | Details | التفاصيل | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes` | Email Send To Types | أنواع المراجع في نافذة ارسال بريد الكترونى | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.sendType` | Send Type | نوع الارسال | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType1` | Type 1 | النوع 1 | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType2` | TypE 2 | النوع 2 | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType3` | Type 3 | النوع 3 | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType4` | Type 4 | النوع 4 | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType5` | Type 5 | النوع 5 | [Email Send To Types](#Email-Send-To-Types) |
 
 ## Related pages
 

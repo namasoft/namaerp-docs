@@ -1,5 +1,6 @@
 ---
 entities: [EDStudent, EDGuardian, EDEducationalStage, EDStageType, EDClassRoom, EDRank, EDLecturer, EDContractor, EDStudentInfoUpdater, EDExpense, EDMainLevel, EDSubLevel]
+menu: التعليم ← الملفات ← طالب
 ---
 
 # الطلاب وأولياء الأمور والهيكل الدراسي

@@ -22,6 +22,8 @@ entities: [IPSMailClass, IPSMailCategory, IPSMailSubclass, IPSMailCondition, IPS
 
 حاوية تجمع عدّة مواد بريدية للنقل بين المكاتب — كيس أو صندوق مختوم برقم ختم (Seal). يتعامل النظام مع الأكياس كوحدة نقل، ومع المواد بداخلها كوحدة تسليم.
 
+![سجل فئة بريد](images/ips/ips-mail-class-screen-ar.png)
+
 ### مناطق الاستلام والتسليم (Delivery & Receipt Areas)
 
 المكاتب البريدية والمناطق التي تنتقل بينها المواد: **المُستلَم منه (Received From)**، و**المُستلَم فيه (Received In)**، و**المكتب التالي (Next Office)**. تتبُّع هذه الحقول في كل مستند يرسم مسار المادة عبر شبكة المكاتب.

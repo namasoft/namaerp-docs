@@ -10,12 +10,14 @@ that hires them, the update that changes their salary or their department, the r
 termination, and — in the Gulf countries — the residence, sponsorship and visa paperwork that keeps
 them legally employed.
 
-Almost none of them post. Their terms are about what else gets created and what the document is
+Almost none of them has an accounting effect. Their terms are about what else gets created and what the document is
 allowed to change.
 
 The shared mechanics — what a term is, why most aggregated terms only name a book and a term, and
 the three differently-named accounting switches — are on
 [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues#How-HR-document-terms-work).
+
+![The Effect tab of the Definition Letter term](../../../ar/modules/hr/images/document-terms/hr-term-employment-and-government-en.png)
 
 ## Job offers
 
@@ -58,7 +60,7 @@ being repeated per person.
 ## Relocation and termination
 
 **The Employee Relocate term** carries a single *Without Accounting Effect*
-`termConfig.withoutAccountingEffect`, for implementations where a relocation does post something —
+`termConfig.withoutAccountingEffect`, for implementations where a relocation does have an accounting effect —
 a relocation allowance, typically — and others where it does not.
 
 **The firing terms** — both the aggregated firing document and the aggregated firing request — share

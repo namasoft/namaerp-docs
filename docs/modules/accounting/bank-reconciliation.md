@@ -1,4 +1,5 @@
 ---
+description: "How Bank Reconciliation matches a bank statement against your bank account transactions in three steps, how unmatched lines become entries, and how it differs from subsidiary reconciliation; the document itself has no accounting effect."
 entities: [BankReconciliation]
 menu: Banks → Cheques → Bank Reconciliation
 ---
@@ -11,7 +12,7 @@ Your bank balance in your books rarely matches the bank statement moment for mom
 Bank reconciliation is part of the banks license `accounting-banks`.
 :::
 
-::: warning Reconciliation doesn't post by itself
+::: warning Reconciliation creates no journal entry by itself
 The bank reconciliation document produces **no accounting effect**; it's a comparison and difference-detection process only. The differences it finds (fees, interest...) are then recorded via a [bank adjustment](./banks-and-bank-accounts.md) or the appropriate document. Don't confuse "reconciliation" (comparison) with "adjustment" (an entry).
 :::
 
@@ -33,7 +34,7 @@ Most unmatched lines are the bank's own movements — a charge, an interest cred
 
 Standing on the **Reconciliation** step, select the row in the unmatched lines grid and press **Create Journal Entry**. A new journal entry opens in a popup already carrying that line: the line's value date, the fiscal year and period worked out from it, and one entry line holding the line's account, the bank account as its subsidiary, and the line's debit or credit amount.
 
-You complete the other side of the entry, then save it. That is what actually records the difference — the reconciliation itself still posts nothing, and the entry you have just created is an ordinary journal entry with its own life. Collect the data again afterwards and the newly recorded movement is there to match against.
+You complete the other side of the entry, then save it. That is what actually records the difference — the reconciliation itself still creates no journal entry, and the entry you have just created is an ordinary journal entry with its own life. Collect the data again afterwards and the newly recorded movement is there to match against.
 
 ::: tip The button only works mid-reconciliation
 It needs the document to be on the **Reconciliation** step with a row selected. On the Collect Data or Finished step it will tell you so rather than open anything.
@@ -72,6 +73,6 @@ Reconciliation results and the related bank statements are in the bank reports (
 
 ## For Support
 
-- **"The reconciliation didn't move the bank balance"** — that's correct; reconciliation doesn't post. Record the differences yourself: **Create Journal Entry** from the unmatched line is the quickest route, or use a bank adjustment.
+- **"The reconciliation didn't move the bank balance"** — that's correct; reconciliation creates no journal entry. Record the differences yourself: **Create Journal Entry** from the unmatched line is the quickest route, or use a bank adjustment.
 - **"Many lines won't match even though they actually match"** — review the **value tolerance**, the **date-difference tolerance**, and the reference/narration matching rules.
 - **"I can't edit an old document"** — because it's linked to a later document that locks it; this is expected, to preserve the reconciliation sequence.

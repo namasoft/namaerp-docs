@@ -1,4 +1,5 @@
 ---
+description: "The three Service Center classification files, Accessories Kit, Visit Type and Standard Operation Classification: what each one classifies, how the visit type affects the booking capacity check, and why to fill them in."
 entities: [AccessoriesKit, SrvCVisitType, SrvCOperationClassification]
 ---
 # Tags and Classification Files

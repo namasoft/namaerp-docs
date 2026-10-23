@@ -1,4 +1,5 @@
 ---
+description: "The Job Estimation quote: pricing the work and splitting it between payers before the job starts, what the estimation does not check, committing it, revising it with an Estimation Update, and the next step."
 entities: [SrvCJobEstimation, SrvCJobEstimationUpdate]
 menu: Service Center → Documents → Job Estimation
 ---

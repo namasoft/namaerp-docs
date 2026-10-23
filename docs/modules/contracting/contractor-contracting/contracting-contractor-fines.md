@@ -53,7 +53,7 @@ The header then repeats the same recovery block you know from an
   extract, a percentage of the fine, a percentage of each extract's value, or nothing until the Final
   extract. As on the advance, the **Payment Percentage** field is only enabled for the percentage
   methods and **Payment Value** only for the fixed-value method.
-- **Condition** — required. The clause the recovery posts through, and the thing that decides which
+- **Condition** — required. The clause the recovery is recorded through, and the thing that decides which
   accounts the deduction line on the extract lands on.
 - **Total Fines**, **Total Paid** and **Remaining** — read-only, maintained as the extracts consume
   the fine.
@@ -110,7 +110,7 @@ Committing the fine sends an accounting **business request** (طلب أعمال)
 the background and retryable from the **Business Requests** view under **More > Reprocess /
 Recommit**.
 
-The entry is one pair, posted **per fine line** — so a fine with four penalties produces four rows,
+The entry is one pair, recorded **per fine line** — so a fine with four penalties produces four rows,
 each carrying its own line's references. The accounts come from the document term, with one
 alternative: a term option takes the accounts from the document's **condition** instead, falling back
 to the term's own pair when the condition has none. That is useful when your penalty accounts are

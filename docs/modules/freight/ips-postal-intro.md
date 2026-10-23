@@ -21,6 +21,8 @@ The smallest unit: an individual parcel or letter. A mail item carries a unique 
 
 A container that gathers several mail items for transport between offices — a sealed bag or box with a seal number. The system treats receptacles as a transport unit, and the items inside them as a delivery unit.
 
+![An IPS Mail Class record](../../ar/modules/freight/images/ips/ips-mail-class-screen-en.png)
+
 ### Delivery & Receipt Areas
 
 The postal offices and areas the items move between: **Received From**, **Received In**, and **Next Office**. Tracking these fields on every document traces the item's path across the office network.

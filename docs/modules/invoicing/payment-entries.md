@@ -32,6 +32,8 @@ Payment vouchers in this context refer to any **receipt or payment of cash or it
 
   This option is found in the return's توجيه (Term Config) to specify whether it will be added to payment vouchers and deducted from the remaining balance.
 
+![A receipt voucher; the Invoices tab holds the linked invoices](../../ar/modules/invoicing/images/receipt-voucher-screen-en.png)
+
 ## What Does Linking Invoices to Vouchers Mean?
 
 When an invoice is linked to a payment voucher, the system updates the `Remaining` field (`money.remaining`) in the invoice, which represents the outstanding balance to be collected or paid.

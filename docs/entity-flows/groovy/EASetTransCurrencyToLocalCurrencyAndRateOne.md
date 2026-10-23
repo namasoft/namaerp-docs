@@ -28,7 +28,7 @@ This script is not tied to any customer's setup. You can paste it as it is and c
 
 Each ledger line remembers the currency it was entered in. When a document is entered in US dollars at a rate of 50, every one of its lines carries *100 USD at 50*, even on an account the company only ever follows in Egyptian pounds. Statements and reports that work in the transaction currency then show dollar amounts on an account where nobody expects them.
 
-This script lets one such account be posted in local currency only. Suppose the expense account `53010202` (maintenance) should always read in pounds. A journal entry in dollars debits it with 100 USD at 50 and credits another account with the same amount. With the script set to `53010202`, the maintenance line is sent as *5,000 EGP at rate 1*. The other line stays *100 USD at 50*. The local amounts, and so the balances in local currency, do not change at all.
+This script lets one such account be recorded in local currency only. Suppose the expense account `53010202` (maintenance) should always read in pounds. A journal entry in dollars debits it with 100 USD at 50 and credits another account with the same amount. With the script set to `53010202`, the maintenance line is sent as *5,000 EGP at rate 1*. The other line stays *100 USD at 50*. The local amounts, and so the balances in local currency, do not change at all.
 
 ## How it works
 

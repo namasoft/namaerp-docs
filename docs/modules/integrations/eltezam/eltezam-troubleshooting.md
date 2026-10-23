@@ -93,7 +93,8 @@ message says where to fill it, that is the place to look; the tables on
 | *A vacation request accepts at most 100 vacations* | More than 100 vacation documents fall in the period for one employee | Narrow the period |
 | *A qualification request accepts at most 100 qualifications* | The employee has more than 100 qualification lines | Remove duplicate qualification lines |
 | *UniversityName is required when the university code is 998 or 999* | The institute text is empty on a qualification mapped to "other" | Fill the institute on the qualification line |
-| *Result (the evaluation has no final percentage, so it was never calculated) is required* | The evaluation was committed without a final percentage | Calculate the evaluation |
+| *Result (N3 of the employee evaluation, the score out of 5, is empty) is required* | The evaluation's **Number 3** (N3) score is empty or zero | Fill **Number 3** on the evaluation |
+| *StartDate (Date 1 of the employee evaluation) is required* / *EndDate (Date 2 of the employee evaluation) is required* | The evaluation's Date 1 or Date 2 is empty | Fill both dates on the evaluation |
 | *{0} ({1}) falls outside the configured hijri calendar, so it cannot be sent. Load the hijri calendar files back far enough to cover it* | The Hijri calendar table does not cover this date | Extend the Hijri calendar table |
 | *Could not build the request: {0}* | Nama could not assemble the request from the data | Read the rest of the message; check the server log line for the employee |
 
@@ -122,7 +123,7 @@ message says where to fill it, that is the place to look; the tables on
 | *From Date ({0}) must be written as yyyy-MM-dd, for example 2026-01-31* (or *To Date …*) | A date parameter is in another format | Rewrite it as `yyyy-MM-dd` |
 | *Save the Eltezam submission document before retrying it* | Resend was pressed on an unsaved document | Save and commit first |
 | *An Eltezam configuration is required before sending* | Resend on a document with no configuration | Fill **Eltezam Configuration** |
-| *Enter the MCS server, or fill the Service URL of the Eltezam configuration {0}* | Resend with an empty server answer and no Service URL | Type the server, or fill the Service URL |
+| *Fill the Service URL of the Eltezam configuration {0}, resending the failed employees sends to it* | Resend on a document whose configuration has no Service URL; the resend always sends there | Fill the Service URL |
 | *Every employee of the document {0} was already sent successfully, there is nothing to retry* | All lines are Succeeded | Nothing to do |
 
 ### Setting up

@@ -10,6 +10,8 @@ The **from document** (بناءً على) is the source document a new document 
 Open the document's **Document Term** (توجيه), then the **From Document** (بناءً على) tab.
 :::
 
+![The From Document tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-from-document-en.png)
+
 ## Copying from the Source Document
 
 These switches govern what is pulled from the origin document and how quantities and prices are carried over.

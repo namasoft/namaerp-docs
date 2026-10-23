@@ -1,4 +1,5 @@
 ---
+description: "The Scrap Receipt: booking production offcuts and waste back into stock as items that still have value, its header and details grid, and its effect on cost."
 entities: [ScrapReceipt]
 menu: Manufacturing → Documents → Scrap Receipt
 ---

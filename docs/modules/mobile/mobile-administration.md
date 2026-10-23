@@ -1,4 +1,5 @@
 ---
+description: "Administering Nama Mobile from the ERP: a map of every screen under Basic → Mobile Apps, when a change reaches the phone, the API Credentials record each app user gets, and the Mobile Application Dashboard."
 entities: [MobileAppDashboard]
 menu: Basic → Mobile Apps → Mobile Application Dashboard
 ---

@@ -26,5 +26,5 @@ Empty documents and files kept back for the one-off thing a single customer need
 
 <LandingGrid>
   <LandingCard icon="🚪" title="Form Documents — the Escape Hatch" link="/platform/documents-and-records/form-documents.md" details="Sixteen deliberately empty documents you can turn into whatever one-off thing a single customer needs — and when to call development instead." />
-  <LandingCard icon="🗄️" title="Spare Master Files" link="/platform/documents-and-records/spare-master-files.md" details="The same escape hatch for files rather than documents — five spare subsidiaries that post to the ledger, and the remarks family." />
+  <LandingCard icon="🗄️" title="Spare Master Files" link="/platform/documents-and-records/spare-master-files.md" details="The same escape hatch for files rather than documents — five spare subsidiaries that can appear in the ledger, and the remarks family." />
 </LandingGrid>

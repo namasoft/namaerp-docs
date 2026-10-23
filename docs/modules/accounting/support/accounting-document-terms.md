@@ -1,4 +1,5 @@
 ---
+description: "What a document term is and how it decides the debit and credit accounts of accounting documents: account sources, conditional sources, taxes and dimension modifiability, the must, may and cannot use options, and an option-by-option reference."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -15,13 +16,15 @@ The edit screen's tabs depend on the document type: most terms have an **Effect*
 
 ## Where does each side come from?
 
-Most terms hold one or more **pairs** of account sides — a debit and a credit for each amount the document posts: the voucher amount, the fees, the tax, the cash cover of a letter of guarantee, and so on. A side is either a full account-side block, whose **account source** decides how the account is derived (a fixed account, the document's party with its **subsidiary account type** and **account bag code**, a field of the document…), or a single reference to a saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record.
+Most terms hold one or more **pairs** of account sides — a debit and a credit for each amount the document records: the voucher amount, the fees, the tax, the cash cover of a letter of guarantee, and so on. A side is either a full account-side block, whose **account source** decides how the account is derived (a fixed account, the document's party with its **subsidiary account type** and **account bag code**, a field of the document…), or a single reference to a saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record.
 
 Receipt and payment vouchers work differently. Their cash side comes from the **account resource type**: a fixed account (**Specific**), a **Bank Account**, a **Safe Deposit**, the **Current User Subsidiary** or an **Employee**; a payment method chosen on the voucher must belong to that safe or bank (see [Payment Methods](/platform/payments/payment-methods-and-terminals)). The **related subsidiary** field on the other side names the kind of party on the lines, and you can constrain the user with **prevent inserting values different from the term's** so everyone sticks to the term's setup.
 
 ### Conditional sources (based on "from doc")
 
 When a document is created **based on** another (e.g. a voucher based on a request or order), the accounts needed may differ. So the term offers an **Account and Subsidiary Source Settings** grid that maps a **from-doc type** to a different account/subsidiary source, optionally applied conditionally when the **from doc matches a criteria** or **a query**, or by **calculating the subsidiary from a field** of the source document.
+
+![A credit note term: the credit side reads the account from the customer](../../../ar/modules/accounting/images/document-terms/acc-term-credit-note-effect-en.png)
 
 ## Taxes and dimension modifiability
 
@@ -40,7 +43,7 @@ Many term features (like invoice usage or commercial-paper usage) aren't set wit
 
 ## A term per document
 
-Each document that posts has its own term with its own sides — a receipt voucher's sides aren't a loan issue's sides. This quick map links each document to the page where its sides are described in detail:
+Each document that creates a journal entry has its own term with its own sides — a receipt voucher's sides aren't a loan issue's sides. This quick map links each document to the page where its sides are described in detail:
 
 | Document | Page                                                        |
 |---|-------------------------------------------------------------|
@@ -62,7 +65,7 @@ Every option of every accounting term — with its field id, its label in both l
 
 ## For Support
 
-- **"The document posts to the wrong account"** — check the **Debit/Credit** sides in the document type's term, specifically the **account resource type**; the change in the term applies to all documents of that type.
+- **"The document records its entry on the wrong account"** — check the **Debit/Credit** sides in the document type's term, specifically the **account resource type**; the change in the term applies to all documents of that type.
 - **"A document created based on another takes a different account"** — that's usually intended; inspect the **Account and Subsidiary Source Settings** grid in the term.
 - **"The tax field doesn't appear"** — tax fields appear depending on the [Accounting configuration](./accounting-configuration.md), and their sides are set in the term's **Taxes** block.
 - The processing mechanism itself is explained in [How documents are processed into accounting effects](./accounting-request-processing.md).

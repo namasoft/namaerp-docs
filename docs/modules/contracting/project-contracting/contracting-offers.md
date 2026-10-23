@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Offer: where its content comes from, the terms grid, building cost from materials, labour, subcontractors and expenses, turning cost into price with a margin, and converting the winning offer into a project contract."
 entities: [ContractingOffer]
 menu: Contracting → Project Contracting → Contracting Offer
 ---
@@ -8,7 +9,7 @@ Every contract in this module starts as a number somebody had to justify. The co
 
 That makes the offer the only place in the owner-side chain where **cost drives price**. Everywhere afterwards — the assay, the contract, the extract — the price is simply carried forward. Get the offer right and the rest of the chain is arithmetic.
 
-You will find it at **Contracting > Project Contracting > Contracting Offer**, under licence `contracting`. It is a document, so it has a book, a code, an issue date and a value date. It has **no contracting term options** — the *Document Term* field is there because every document has one, but there is nothing for this document type to configure and nothing it posts. An offer creates no journal entry and moves no stock.
+You will find it at **Contracting > Project Contracting > Contracting Offer**, under licence `contracting`. It is a document, so it has a book, a code, an issue date and a value date. It has **no contracting term options** — the *Document Term* field is there because every document has one, but there is nothing for this document type to configure and nothing it records in the ledger. An offer creates no journal entry and moves no stock.
 
 Our worked example is the **Tower A** project for **Al-Fanar Development**: four items of work, **200,000** of analysed cost, a **15%** margin overall, and therefore a bid of **230,000** — the bid that becomes contract `PC-2026-001`.
 
@@ -31,7 +32,7 @@ The header's **Contract Type** (نوع العقد) has three values: *Contract* 
 
 ## The terms grid — what you are selling
 
-The Terms grid is the bill of quantities: one row per item of work, each pointing at a **Standard Term** from [the standard-term catalogue](/modules/contracting/setup/contracting-standard-terms.md), which is what supplies the unit, the default rate and the accounts the eventual extract will post to. Rows form a tree through their dotted **term codes**, and only leaf rows carry money — parent rows are pure roll-ups, and the system zeroes them and re-totals them from their children on every save.
+The Terms grid is the bill of quantities: one row per item of work, each pointing at a **Standard Term** from [the standard-term catalogue](/modules/contracting/setup/contracting-standard-terms.md), which is what supplies the unit, the default rate and the accounts the eventual extract will record on. Rows form a tree through their dotted **term codes**, and only leaf rows carry money — parent rows are pure roll-ups, and the system zeroes them and re-totals them from their children on every save.
 
 For Tower A:
 

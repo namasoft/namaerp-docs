@@ -1,5 +1,7 @@
 ---
+description: "The Hotel Voucher and Restaurant Voucher documents: recording who the booking is for, the dates, head count, room split, meal plan and included or excluded extras, how vouchers get created, and why they carry no money."
 entities: [TRHotelVoucher, TRRestaurantVoucher]
+menu: Travel → Documents → Hotel Voucher
 ---
 # Hotel & Restaurant Vouchers
 

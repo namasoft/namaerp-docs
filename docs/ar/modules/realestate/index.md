@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: العقارات
+description: "دليل وحدة العقارات: بناء شجرة العقار، وبيع الوحدات وتأجيرها، وتحصيل الأقساط والإيجارات، وتشغيل العقار وصيانته، وصناديق الاستثمار، والتقارير، وبدء التشغيل."
 ---
 
 # العقارات
@@ -53,6 +54,14 @@ title: العقارات
   <LandingCard icon="🔧" title="الصيانة" link="/ar/modules/realestate/maintenance/" details="ودائع الصيانة وصناديقها، وإثبات استحقاق الصيانة السنوية، وطلبات الصيانة ومصروفاتها." />
   <LandingCard icon="📈" title="الاستثمار" link="/ar/modules/realestate/investment/" details="صناديق الاستثمار والمستثمرون، وقيم شراء العقارات والتعلية وإعادة التقييم، وعقود الاستثمار الزراعي." />
   <LandingCard icon="🧮" title="التكاليف" link="/ar/modules/realestate/costs/" details="توزيع تكاليف المشروع على العقارات، وأنواع الرسوم والعمولات والوسطاء والمصروفات." />
+</LandingGrid>
+
+## التقارير
+
+التقارير السبعة الجاهزة — وكلها في جانب البيع.
+
+<LandingGrid>
+  <LandingCard icon="📊" title="تقارير العقارات" link="/ar/modules/realestate/realestate-reports.md" details="المبيعات حسب المبنى، والوحدات المباعة والمتبقية، وأسعار النماذج، وحالة الوحدات، والأقساط غير المسددة، وما يبقى على كل عقد." />
 </LandingGrid>
 
 ## بدء التشغيل والمساعدة

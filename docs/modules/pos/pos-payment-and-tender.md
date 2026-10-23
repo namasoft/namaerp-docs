@@ -1,4 +1,5 @@
 ---
+description: "The POS tender screen and every way a customer can pay: cash, card, split payments, deferred payment, credit notes and coupons, and reward points, plus the money rules worth knowing and the receipt."
 entities: [NamaPOSSalesInvoice]
 ---
 
@@ -19,6 +20,25 @@ The layout is built for speed:
 You confirm to finish the sale, the receipt prints, and you are back on a clean sales screen for the next customer.
 
 ![Cash payment with change](../../ar/modules/pos/images/payment/pos-tender-cash-en.png)
+
+### Buttons on the tender screen
+
+Most buttons on this screen are icons; hover over one to see its name. The row buttons sit to the right of each payment method's **Process Number** field, and which of them a row gets depends on the method.
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Load Remaining To Method** (hand-and-coin icon, on every method row) | «تحويل المبلغ لطريقة الدفع» | Empties every amount on the screen and puts the whole invoice value on this method — the one-tap way to say "all of it by card". From the keyboard, `Alt+1` does the same for the first method row, `Alt+2` for the second, and so on up to `Alt+0` for the tenth; a method can also have its own key, set with the register's payment methods. |
+| **Add** (`+`, on every row except cash) | «إضافه» | Adds a second row for the same method, so two cards of the same type can be taken on one invoice, each with its own process number. |
+| **Remove** (on a row added with **Add**) | «حذف» | Removes that extra row and recalculates the remaining. |
+| Card-terminal icon (only on methods linked to a payment terminal) | — | Sends the amount typed on that row to the terminal and records the terminal's answer on the row — see [Card / payment terminal](#Card--payment-terminal) below. |
+| **UnLock** / **Lock** (only on a method marked **Critical Pos Payment Method**, for a cashier whose profile lacks **Can Use Critical Methods**) | «فتح القفل» / «قفل» | The row opens locked. **UnLock** checks the permission — and, if that permission is on the register's [authorization list](./erp-setup/pos-security-profiles.md#Asking-a-supervisor-instead-of-refusing), asks a supervisor to sign in — then lets you type on the row. **Lock** locks it again. |
+| Pencil icon (only on the **Credit Note** row, for a cashier whose profile has **Can Not Modify Credit Note Value In Payment**) | — | The credit-note amount is filled from the note and cannot be typed over. When that restriction is on the register's authorization list, the pencil asks for a supervisor who is not under it and, once one signs in, makes the amount editable; otherwise the pencil is refused. |
+| **Redeem Reward Points** (rosette icon, on the **Coupon** row) | «استبدال نقاط المكافأة» | Opens the reward-points window described under [Reward / loyalty points](#Reward--loyalty-points) below (`Alt+R`). |
+| **Show Additional payment Methods** (under the keypad; only when some methods are marked **Show In Additional Methods**) | «عرض طرق الدفع الإضافية» | Methods marked that way are kept off the main list. This opens a window with one button per such method; pressing one adds its row to the tender screen and puts the cursor in it. |
+| **Keyboard** (under the keypad) | «لوحة المفاتيح» | Opens the Windows on-screen keyboard, for touch registers with no physical keyboard. |
+| Keypad `0`–`9`, `.`, `C`, `.25`, `.5`, `.75` | — | Types into the field that has the cursor. `C` deletes the last character; the three fraction keys type `0.25`, `0.5` and `0.75`. |
+| **Confirm** (`F5` or `Alt+Enter`) | «تأكيد» | Checks the amounts and completes the sale: the invoice is saved and the receipt prints. A **Debit Value** with no customer on the invoice is refused. |
+| **Cancel** | «إلغاء» | Closes the tender screen and returns to the invoice, unpaid. |
 
 ## Ways to pay
 
@@ -59,6 +79,14 @@ A customer can pay with a **credit note** (store credit, often issued from an ea
 If the customer is on a loyalty programme, press `Alt+R` to redeem points toward the bill. The dialog shows their points balance and its cash value, and you enter how much to redeem (up to the invoice total). Where the programme requires it, a **one-time password** is requested and entered before the redemption is accepted; the system also supports the STC loyalty programme. The redeemed value comes off the bill and the rest is paid as usual.
 
 ![Reward points redemption](../../ar/modules/pos/images/payment/pos-reward-points-dialog-en.png)
+
+#### Buttons in the Redeem Amount window
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Request OTP** | «إرسال OTP» | Asks the loyalty programme to send the customer a one-time password. **Redeem** and the OTP field stay disabled until this succeeds. The button is not shown when the register's reward-points setup allows redeeming without an OTP. |
+| **Redeem** | «إستبدال\|صرف» | Checks the amount (not negative, not above the remaining reward amount, not above the invoice total), redeems it, and puts the resulting coupon code on the tender screen's **Coupon** row, so the redeemed value is paid as a coupon. With the STC programme you type the amount in **Redeem With Amount** after requesting the OTP. |
+| **Cancel** | «إلغاء» | Closes the window without redeeming. |
 
 ## Money rules worth knowing
 

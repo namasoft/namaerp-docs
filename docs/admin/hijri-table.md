@@ -1,4 +1,5 @@
 ---
+description: "The Hijri Table screen that Nama uses to convert dates to the Hijri calendar: what depends on it, how to enter the start date and month lengths, an example, extending the calendar later, and the messages you may see."
 entities: [HijriTable]
 menu: Basic → Settings → Hijri Table
 ---

@@ -33,6 +33,7 @@
     "/modules/servicecenter/spare-parts/servicecenter-external-repair.md",
     "/modules/servicecenter/inspections-and-campaigns",
     "/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md",
+    "/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md",
     "/modules/servicecenter/inspections-and-campaigns/servicecenter-trips.md",
     "/modules/servicecenter/service-queues",
     "/modules/servicecenter/service-queues/servicecenter-queue-overview.md",
@@ -101,8 +102,8 @@
       "en": "Spare Parts"
     },
     "/modules/servicecenter/inspections-and-campaigns": {
-      "ar": "الفحوصات والرحلات",
-      "en": "Inspections and Trips"
+      "ar": "الفحوصات وحملات الاستدعاء والرحلات",
+      "en": "Inspections, Recalls and Trips"
     },
     "/modules/servicecenter/service-queues": {
       "ar": "طوابير الخدمة",

@@ -67,7 +67,7 @@ The small classification files — accessories kits, visit types, operation clas
 
 If you are replacing an existing system, the workshop's [vehicle files](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) come across with their identity, plate, owner and current odometer. What does not come across automatically is *what was last done to them and when*, which is what the system needs in order to tell you what is due.
 
-That is what the product task opening document is for: one per vehicle, listing the last date and odometer of each recurring task. Post those before go-live and the service-interval projections work from day one. Skip them and every vehicle looks as though it has never been serviced. See [Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md).
+That is what the product task opening document is for: one per vehicle, listing the last date and odometer of each recurring task. Commit those before go-live and the service-interval projections work from day one. Skip them and every vehicle looks as though it has never been serviced. See [Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md).
 
 ### 5. Document books and terms
 
@@ -77,7 +77,7 @@ One thing to know before you fill them in: where a term generates a stock docume
 
 ### 6. Publish capacity, and start taking work
 
-Post a [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md) for the work centre and the date range, splitting the day's total available hours into appointments, carry-over, walk-ins and emergencies. Al-Sahra's split is 80 / 10 / 5 / 5, which puts **32 of the 40 hours** into the appointment bucket.
+Commit a [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md) for the work centre and the date range, splitting the day's total available hours into appointments, carry-over, walk-ins and emergencies. Al-Sahra's split is 80 / 10 / 5 / 5, which puts **32 of the 40 hours** into the appointment bucket.
 
 Understand what that buys you: **only the appointment bucket is enforced** when a booking is saved. The other three buckets are planning information.
 

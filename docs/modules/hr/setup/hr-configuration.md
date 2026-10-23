@@ -486,8 +486,8 @@ The group the screen labels `ProvisionCalculation` is small and consequential.
 | **Consider Opening Vacation Document In First Liquidation Document** | `value.considerOpeningVacDocInFirstLiquidationDoc` | The opening vacation balance document is taken into account by the first liquidation. |
 | **Termination Calculation Based On Whole Period** | `value.terminationCalculationBasedOnWholePeriod` | End-of-service is computed over the whole service period rather than period by period. |
 
-See [HR Provisions](/modules/hr/end-of-service/hr-provisions) for what the provisions are and how
-they post.
+See [HR Provisions](/modules/hr/end-of-service/hr-provisions) for what the provisions are and what
+accounting effect they have.
 
 ## Attendance machines
 

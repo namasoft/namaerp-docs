@@ -41,7 +41,7 @@ page that explains it.
 | "The system refused to save and showed a message." | [Messages and Refusals](/platform/documents-and-records/messages-and-refusals) |
 | "I cannot delete or edit this record." | [Why a Record Will Not Save or Delete](/platform/documents-and-records/why-a-record-will-not-save-or-delete) |
 | "It says a field is required, but it never was before." | [Required Fields](/platform/governance/required-fields) |
-| "The period is closed, but I need to post into it." | [Fiscal Period Control](/platform/governance/fiscal-period-control-guide) |
+| "The period is closed, but I need to record documents in it." | [Fiscal Period Control](/platform/governance/fiscal-period-control-guide) |
 | "Who changed this record, and when?" | [Audit Trail and Version History](/platform/governance/audit-trail) |
 
 ### Work that happens in the background

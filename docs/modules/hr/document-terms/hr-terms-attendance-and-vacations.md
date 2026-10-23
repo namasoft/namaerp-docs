@@ -5,7 +5,7 @@ menu: Basic → Settings → Document Term
 
 # Attendance and Vacation Document Terms
 
-Vacation and attendance documents rarely post anything by themselves — a vacation does not move
+Vacation and attendance documents rarely create an accounting entry by themselves — a vacation does not move
 money, it moves a balance, and the money follows later on a salary document. So the terms on this
 family are mostly about **what else gets created** when the document is saved, and only occasionally
 about accounts.
@@ -13,6 +13,8 @@ about accounts.
 The shared mechanics — what a term is, why most aggregated terms only name a book and a term, and
 the three differently-named accounting switches — are on
 [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues#How-HR-document-terms-work).
+
+![The Settings tab of the Aggregated Vacation Document term](../../../ar/modules/hr/images/document-terms/hr-term-attendance-and-vacations-en.png)
 
 ## The Vacation Document term
 
@@ -43,7 +45,7 @@ usually do — name the book and term of what they create.
 ## The Vacation Compensation term
 
 Paying an employee for vacation they did not take is one of the few attendance-family documents that
-does post, so its term carries account sides — *Debit* and *Credit*, plus a second pair *Debit 2*
+does have an accounting effect, so its term carries account sides — *Debit* and *Credit*, plus a second pair *Debit 2*
 `termConfig.debit2` and *Credit 2* `termConfig.credit2` for implementations that split the
 compensation across two entries.
 

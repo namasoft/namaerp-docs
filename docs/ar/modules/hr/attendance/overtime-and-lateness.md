@@ -46,6 +46,8 @@ entities: [TimeAttendance, AttendancePlan, PerformanceIndicator]
 الداخلي بدل عنوانه. وترتيبها هو ترتيب الجدول أعلاه.
 :::
 
+![خطة دوام والموظفون الذين تشملهم](../images/attendance/attendance-plan-ar.png)
+
 ## طريقتا قياس الوقت الإضافي
 
 مفتاح واحد في [إعدادات الموارد البشرية](/ar/modules/hr/setup/hr-configuration) يقرر أي القاعدتين

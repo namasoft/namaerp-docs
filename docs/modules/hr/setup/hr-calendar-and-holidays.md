@@ -1,4 +1,5 @@
 ---
+description: "Setting up the HR Calendar, HR Holidays and weekly rest days, which are set on the Attendance Plan, and how together they decide the working days used by attendance, vacation-day counts and payroll."
 entities: [HRCalendar, HRHolidays]
 ---
 # HR Calendar, Holidays & Weekends

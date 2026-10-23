@@ -1,4 +1,5 @@
 ---
+description: "The server screens that shape what a POS register receives: which items it gets, stock checks, the item barcode parser for scale and GS1 barcodes, documents that must reach the server first, extra search filters, the read queue and the update statement runner."
 entities: [NaMaPosItemsToSend, NamaPOSItemQtyUpdateConfig, NamaPOSItemBarcodeParser, NamaPOSReadQueuePriorityConfig, NamaPOSInvSavingSettings, NamaPOSExtraFilter, NamaPOSDBUpdateStatement]
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: "Setting up a Recurring Document to reproduce a template document on a fixed rhythm: building the definition and choosing the date, how a run decides what to create, running it on a schedule or manually in a batch, and tracing the copies."
 entities: [RecuringDocument]
 menu: Basic → Documents → Recuring Document
 ---

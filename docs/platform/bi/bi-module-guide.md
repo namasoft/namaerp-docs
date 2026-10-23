@@ -226,13 +226,13 @@ While ECharts are the star of the show, dashboards support several other widget 
 | **Table v2 (Enhanced)** | A richer data table — columns are defined explicitly in JSON with formatting, cell renderers, and conditional styling. See the [Enhanced Table](#Enhanced-Table-Widget) section. |
 | **Metrics Cards** | KPI summary cards (value + label + trend)                               |
 | **Metrics Cards v2 (Enhanced)** | A richer KPI card strip — cards, slots and sparklines defined in JSON. See the [Enhanced Metrics Card reference](./bi-reference-enhanced-metrics-card.md) |
-| **Timeline** | Chronological event stream                                              |
-| **Calendar** | Event calendar                                                          |
-| **Report** | Embedded JasperReport                                                   |
-| **HTML** | Custom HTML content                                                     |
-| **Recent Visits** | Shows recently viewed records                                           |
-| **Card Menu** | Navigation cards                                                        |
-| **Resource View** | Resource scheduler                                                      |
+| **Timeline** | Chronological event stream. See [Timeline](./bi-reference-more-widget-types.md#Timeline) |
+| **Calendar** | Event calendar. See [Calendar](./bi-reference-more-widget-types.md#Calendar) |
+| **Report** | Embedded JasperReport. See [Report](./bi-reference-more-widget-types.md#Report) |
+| **HTML** | Custom HTML content built from the query rows. See [HTML](./bi-reference-more-widget-types.md#HTML) |
+| **Recent Visits** | Shows the screens the user opens most. See [Recent Visits](./bi-reference-more-widget-types.md#Recent-Visits) |
+| **Card Menu** | Navigation cards. See [Card Menu](./bi-reference-more-widget-types.md#Card-Menu) |
+| **Resource View** | Resource scheduler. See [Resource View](./bi-reference-more-widget-types.md#Resource-View) |
 | **CrossFilterControl** | A slicer — renders one cross-filter as a picker sitting on the dashboard grid, so users set the filter without opening the Filters dialog |
 | **TextBlock** | Static rich text — section headers, subtitles, and instructions placed between the data widgets. Its content is written once per language |
 
@@ -262,6 +262,9 @@ A group puts its dashboards on the menu in one of two ways (see [Menu structure]
   shows every ticked group as its own sub-menu, named after the group and listing its dashboards. The
   Auto Dash Boards item must be the only item in its menu group. New groups then appear without
   editing the menu.
+
+Which licence the BI screens need, how a user's home dashboard is chosen, and how to hide a widget
+or a tab from some users are on [BI Menus, Licence and Access](./bi-menu-licence-and-access.md).
 
 ## Tabbed Dashboards
 
@@ -601,38 +604,18 @@ The classic `Table` widget is quick to set up but shows columns exactly as the S
 Enhanced Table is an opt-in upgrade. The classic `Table` widget continues to work exactly as before. Pick Enhanced Table when you need one or more of: currency/percent/date formatting, green-for-positive / red-for-negative coloring, status badges, in-row progress bars, sparklines, grouped column headers, or column pinning.
 :::
 
-### What You Can Do Per Column
+### What It Can Do
 
-Each column in an Enhanced Table is defined in `chartConfigJSON` with its own set of options:
+Every column is configured on its own, so one table can mix:
 
-- **Data source** — either a raw SQL column name (`field`) or a wizard field ID (`wizardFieldId`). Same split as anywhere else in the BI module.
-- **Formatting** — pick from `text`, `number`, `currency`, `percent`, `date`, `datetime`, `duration`. Control decimals, thousand separators, currency symbols and placement (prefix or suffix), date format patterns.
-- **Cell renderer** — how the cell is painted:
-  - `text` — plain formatted value (default)
-  - `html` — renders raw HTML from the cell value (for rich formatting that already comes from SQL)
-  - `badge` — pill or square label, background color driven by conditional formatting
-  - `bar` — horizontal bar filled proportionally between a min and max (e.g., "qty out of 50")
-  - `progress` — same as bar, semantically "progress toward target"
-  - `sparkline` — inline mini-chart (line, column, or area) fed by a separate column in the result set
-  - `icon` — shows an icon based on the cell value (e.g., a checkmark for "Approved", a warning for "Pending")
-- **Conditional formatting** — rule-based cell background / text color / bold / italic based on the value. Rules include:
-  - **Thresholds** — "if value ≥ 10,000 show green; if < 0 show red"
-  - **Ranges** — "if value is between 0 and 100 show amber"
-  - **Column comparison** — "if this column's value exceeds the budget column, show red"
-  - **Enum matching** — "if status is Cancelled show gray and italic"
-  - **Null checks** — "if empty, show a subtle 'no data' style"
+- **Formatting** — number, currency (symbol before or after), percent, date, date-time and duration, with your own decimals and separators.
+- **Cell renderers** — plain text, HTML coming from the query, coloured badges, bars and progress bars, inline sparklines, and icons picked by the value.
+- **Conditional formatting** — colour, bold or italic a cell by threshold, range, comparison with another column, a list of values, or an empty value. The rules run on the server, so numbers compare as numbers and dates as dates.
+- **Row styling** — the same rules applied to the whole row, for example every row with a negative margin.
+- **Column groups, pinned columns, widths, row grouping and totals**, and a **pivot (cross-tab) layout**.
+- **The usual interactions** — cross-filters, drill-downs and record links work as on any widget, and each one can be limited to clicks on a single column.
 
-  Rules are evaluated on the server, so the comparison is always numeric when it should be (no more "2 > 10 because they're compared as strings"). Dates are compared as dates when the column's formatting type is `date` or `datetime`.
-- **Column groups** — give several columns a shared group header (e.g., a "Customer" group above `Customer Name` and `Branch`).
-- **Pinning, width, row grouping, aggregation** — standard AG Grid controls, exposed declaratively in the JSON.
-
-### Row-Level Styling
-
-In addition to per-cell rules, you can style whole rows based on any column's value. For example: highlight every row where margin is negative, or grey out cancelled orders across the whole row. The rule vocabulary is the same as per-cell conditional formatting — you just name the column to test.
-
-### Interactions — Same As The Rest
-
-Everything you know about BI interactions still works: cross-filter emission on click, drill-down to widgets or dashboards on right-click, entity links in the "Navigate To" menu, and the single-click `clickAction` override. The only addition is that each click/drill/link mapping can optionally include a `column` field — when set, the mapping fires only when the user clicks a cell in that specific column. When `column` is absent, the mapping fires on any cell in the row (classic Table behavior).
+The exact settings for each of these are in the [Enhanced Table reference](./bi-reference-enhanced-table.md).
 
 ### Large Tables — Paging From the Server
 
@@ -665,7 +648,7 @@ From that tab you can:
 
 A companion **Table Options** tab covers the grid-level switches (pagination, row grouping, grand total row, row loading, etc.).
 
-For more advanced configuration — specifically column groups, per-renderer options like bar min/max or icon mappings, and the full conditional-formatting rule DSL — use the **Raw JSON** tab. The [Technical Reference §14](./bi-module-technical-reference.md#14-EnhancedTable----JSON-Driven-Grid) has the complete schema.
+For more advanced configuration — specifically column groups, per-renderer options like bar min/max or icon mappings, and the full conditional-formatting rule DSL — use the **Raw JSON** tab. The [Enhanced Table reference](./bi-reference-enhanced-table.md) has the complete schema.
 
 ### When To Use Which
 

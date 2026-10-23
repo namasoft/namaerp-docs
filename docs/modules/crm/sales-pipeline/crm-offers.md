@@ -1,4 +1,5 @@
 ---
+description: "The CRM Offer screen, a work package rather than a price offer: its Basic Information and Offers tabs, type and status, copying from an analysis, what is not validated, and why it has no effects."
 entities: [CRMOffers]
 menu: Customer Relationship Management → Marketing → Offer
 ---

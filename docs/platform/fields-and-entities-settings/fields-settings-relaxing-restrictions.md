@@ -38,6 +38,8 @@ The system looks the exception up by entity type **and** field. If you name an e
 That is almost never what you want. Name the entity type.
 :::
 
+![The Allow Usage Of Prevented Records grid](../../ar/platform/images/fields-settings/fields-settings-allow-prevented-records-grid-en.png)
+
 ## Ignore Dimensions Consistency for Fields
 
 Nama normally insists that a record you reference belongs to the same organisational dimensions as the document you are writing — the same legal entity, branch, sector, department and analysis set. It is a quiet, constant check, and it stops a clerk in the Riyadh branch from accidentally issuing stock out of the Jeddah warehouse, or booking a cost against another company's department. Most of the time nobody notices it, because most of the time the combination is correct anyway.
@@ -102,6 +104,24 @@ Making a record type public changes what every user of every company in the data
 
 Decide this when you are designing the group's structure, with the people who own the data, rather than in response to a single user who cannot find a record. If the real problem is one user's access, [record-level security](/platform/security/record-level-security) is the tool for that.
 :::
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `allowUsageOfPreventedRecords` | Allow Usage Of Prevented Records | السماح باستعمال السجلات الممنوعة من الاستعمال | [Allow Usage Of Prevented Records](#Allow-Usage-Of-Prevented-Records) |
+| `allowUsageOfPreventedRecords.owner` | Document Owner | مالك المستند | [Allow Usage Of Prevented Records](#Allow-Usage-Of-Prevented-Records) |
+| `dimensionsConsistency` | Ignore Dimensions Consistency for Fields | تجاهل تناسق المحددات لحقول | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreLegalEntity` | Ignore Legal Entity | تجاهل الشركة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreAnalysisSet` | Ignore Analysis Set | تجاهل المجموعة التحليلة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreBranch` | Ignore Branch | تجاهل الفرع | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreSector` | Ignore Sector | تجاهل القطاع | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreDepartment` | Ignore Department | تجاهل الإدارة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreDraft` | Ignore Drafts | تجاهل المسودات | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `publicEntitiesLines.targetEntity` | Tooltip Target Type | النوع المستهدف | [Public Entities](#Public-Entities) |
+| `publicEntitiesLines.targetEntities` | Entity Type List | قائمة الأنواع | [Public Entities](#Public-Entities) |
 
 ## Related pages
 

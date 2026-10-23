@@ -1,5 +1,6 @@
 ---
-entities: [FSSettingsFile, FSIssueFile, FSAccountGroup, FSEquation]
+description: "Building income statements, balance sheets and cash-flow reports with the financial-statements engine: FS Account Groups, FS Equations, the FS Settings File template, issuing a statement for a period, and drilling down from a figure."
+entities: [FSSettingsFile, FSIssueFile, FSAccountGroup, FSEquation, FSIssueLinkConfig]
 menu: Accounting → Financial Statement → FS Settings File
 ---
 
@@ -44,6 +45,26 @@ A settings file is just the design; the numbers come from an **issue**. The **Is
 
 ![The Issuing Financial Statement File screen](../../ar/modules/accounting/images/fs/fs-issue-file-en.png)
 
+## Drilling down from a figure (link configurations)
+
+An accountant reading the income statement sees "Operating expenses: 184,500" and immediately asks *which* entries make that up. A **link configuration** answers the question from inside the report: it turns each figure of the issue-driven statements into a link that opens another report, already filled in with the right period, accounts and dimensions for that figure.
+
+You build one on **Issuing Financial Statement Link Configuration** (`Accounting > Financial Statement > Issuing Financial Statement Link Configuration`):
+
+- **Report Definition** — the report the link opens. The list offers the reports your team designed (user reports); system reports are not offered.
+- the **Sources** grid — one row per parameter of that report. **Parameter Name** suggests the chosen report's own parameters; **Parameter Source** says where the value comes from:
+  - the statement line itself: **Source** (the account, account group or category the line reads), **Source Accounts** (every account behind that source, as a list), and **Group By 1** to **Group By 5** (the dimension values the line is grouped by),
+  - the period of the figure that was clicked: **Fiscal Period**, **Fiscal Period Start Date**, **Fiscal Period End Date**, **Fiscal Year**, **Fiscal Year Start Date**, **Fiscal Year End Date**, **Fiscal Year First Period** and **Fiscal Year Last Period**,
+  - the issue file's own header: **From/To Date**, **From/To Period** (each with a **1** and **2** variant for the first and second year of a two-year comparison; the plain one follows the column clicked), **From/To Legal Entity**, **Branch**, **Sector**, **Department**, **Analysis Set**, and **Settings File**,
+  - a typed **Constant Value**, or an **Expression** — a field of the issue file written as a field path — for anything else. A row whose source is Constant Value must have its **Constant Value** filled, and an Expression row its **Expression**.
+
+You then attach the configuration on the **FS Settings File**:
+
+- **period values link configuration**, on each line of the details grid, links that line's figures — the year column on the one- and two-year statements, and each month's column on the monthly ones. Lines left empty print as plain numbers.
+- **Trial Balance Link Configuration**, in the header's **Trial Balance** group, does the same for every row when the statement is issued as a trial balance.
+
+The links are worked out when the statement is generated, so after adding or changing a link configuration press **Generate Financial Statement** on the issue file again. The issue-driven reports — `SYSR-FNS010` to `SYSR-FNS015` and the FS trial balances `SYSR-FNS016` and `SYSR-FNS017` — then show each linked figure as a clickable value.
+
 ## Actions on these screens
 
 Designing a statement from an empty settings file is a long job, so the screen offers both a starting point and tools for editing many lines at once.
@@ -79,6 +100,7 @@ The printed statements all come out of this engine, under the report menu (`Acc-
 - **"A subtotal isn't adding up"** — totals lines use the **totals equation** and reference other lines by **source line code**; verify those references and the line **levels**.
 - **"The comparison columns are missing/wrong"** — that's the **comparison type** (One Year / Two Years / Period Set / Two Period Sets) on the settings file.
 - **"The figures are out of date"** — the issue-driven reports print a saved **issue**; re-issue the settings file for the period to refresh the snapshot.
+- **"The figures in the statement are not clickable"** — the line needs a **period values link configuration** (or the settings file a **Trial Balance Link Configuration**), and the issue must be generated again after that was set; links are worked out at generation time.
 - **"Zero/empty rows clutter the statement"** — turn on **hide zero-value balances** (and **show to level** to collapse deep detail).
 
 ## Messages you may see

@@ -1,11 +1,12 @@
 ---
+description: "The Account screen: Detail versus Subsidiary accounts, the debit and credit chart links, consolidation settings, subsidiary types, control flags, budget control, closing an account by date, and its buttons and reports."
 entities: [Account]
 menu: Accounting → Master Files → Account
 ---
 
 # Accounts
 
-If the chart of accounts is the structure, the **Account** is the unit balances are actually recorded on. Every accounting entry — whatever its source — ends up posting a debit or credit amount to an account. And because most posting errors and reversed "subsidiary" balances trace back to the account's own setup, this is one of the most important screens for support staff to understand well.
+If the chart of accounts is the structure, the **Account** is the unit balances are actually recorded on. Every accounting entry — whatever its source — ends up recording a debit or credit amount on an account. And because most ledger-entry errors and reversed "subsidiary" balances trace back to the account's own setup, this is one of the most important screens for support staff to understand well.
 
 You'll find accounts under **Accounting → Master Files → Account**.
 
@@ -53,7 +54,7 @@ The **Allow Transactions Without Subsidiary** option lets you, when needed, reco
 
 ## The control flag set
 
-The part that makes this screen pivotal for support is the set of flags (checkboxes) that govern the account's behavior during posting:
+The part that makes this screen pivotal for support is the set of flags (checkboxes) that govern the account's behavior when entries are recorded on it:
 
 - **System Account** — marks an account whose balance the system builds by itself, and locks it against manual entry: a journal entry, receipt/payment voucher, bank transfer or inter-company transfer naming it is refused with *"The Account … Can Be Used Only By The System"*. Documents generated automatically are unaffected. Three things can reopen it — a module option per document type, the flag below, or a dated exception record; all three are on [System Accounts & Transaction Exceptions](./system-accounts-and-exceptions.md).
 - **Allow System Account In Opening** — a companion to the flag above: it lets the account be used manually in any period that is **not** a Normal one (opening, adjustment, closing), so opening balances and year-end adjustments can be recorded on it while it stays locked during the year.
@@ -62,7 +63,7 @@ The part that makes this screen pivotal for support is the set of flags (checkbo
 - **Do Not Auto-Include In Exchange Rate Update** — excludes the account from periodic foreign-currency revaluation.
 - **Use Transaction Local Currency** — makes the account keep its value in the transaction's local currency.
 - Dimension restrictions: **Must Use With Public Sector/Branch/Department/Analysis Set Only**, or their opposites **Do Not Use With Public ...**, require or forbid using a public dimension with this account.
-- Data enforcement: **Do Not Allow Empty Reference/Narration** forces the user to fill the reference or narration fields when posting to the account.
+- Data enforcement: **Do Not Allow Empty Reference/Narration** forces the user to fill the reference or narration fields when recording an entry on the account.
 
 ## Budget control on the account
 
@@ -100,7 +101,7 @@ One button on the account does real work, and it is the one you reach for after 
 
 *{0} can not be changed after transactions, old value was {1}, new value is {2}* — «لا يمكن تغيير {0} بعد انشاء حركات - القيمة السابقة {1} و تم تغييرها الي {2}»
 
-The field unlocks in two cases: when the account has no transactions left, or when *Allow Changing Subsidiary Accounts After Usage In Accounts* is on in [accounting configuration](./support/accounting-configuration.md). That switch also unlocks the account type and the subsidiary types. The lock only protects a value that is already set: an empty **Subsidiary Type 2** to **Subsidiary Type 5** can be filled in on an account that already has transactions, without the switch. After you change the currency, run **Update Balances Currency**. Then recommit the documents that post to this account, from the [Business Requests list](/platform/background-processing/business-requests), so their entries are rebuilt in the new currency. You do not need to reprocess the whole database.
+The field unlocks in two cases: when the account has no transactions left, or when *Allow Changing Subsidiary Accounts After Usage In Accounts* is on in [accounting configuration](./support/accounting-configuration.md). That switch also unlocks the account type and the subsidiary types. The lock only protects a value that is already set: an empty **Subsidiary Type 2** to **Subsidiary Type 5** can be filled in on an account that already has transactions, without the switch. After you change the currency, run **Update Balances Currency**. Then recommit the documents that record entries on this account, from the [Business Requests list](/platform/background-processing/business-requests), so their entries are rebuilt in the new currency. You do not need to reprocess the whole database.
 
 ## Reports
 
@@ -108,9 +109,9 @@ This account's statements and balances (general/subsidiary/detail account statem
 
 ## For Support
 
-Most "the entry won't post" or "the balance is wrong" tickets are resolved from this screen:
+Most "the entry won't save" or "the balance is wrong" tickets are resolved from this screen:
 
-- **"Blocking message on posting: change of balance nature"** — the account has **Prevent Change Account Balance Nature** enabled and the transaction would have flipped its balance to the unnatural side. Review the transaction logic or the setup.
+- **"Blocking message on save: change of balance nature"** — the account has **Prevent Change Account Balance Nature** enabled and the transaction would have flipped its balance to the unnatural side. Review the transaction logic or the setup.
 - **"The system asks for a subsidiary/customer and won't save"** — the account is of type **Subsidiary** and no party was specified; either specify it or (only if necessary) enable **Allow Transactions Without Subsidiary**.
 - **"The system mandatorily requires a reference/narration"** — one of the **Do Not Allow Empty Reference/Narration** flags is enabled on the account.
 - **"The account doesn't appear in the debt-age report"** — the **Track Debt Ages** flag is off.

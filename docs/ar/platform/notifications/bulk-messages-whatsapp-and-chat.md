@@ -1,4 +1,5 @@
 ---
+description: "إرسال الرسائل بنفسك خارج تعريفات التنبيهات: شاشة الرسالة المجمعة، وشاشتا WhatsApp Message Configuration وWhatsApp Message، وسجل رسالة خطأ، والمحادثات الداخلية بمجموعاتها وكتابة الرسائل والرسائل التي قد تظهر لك."
 entities: [BulkMessage, WhatsAppMessage, WhatsAppMessageConfiguration, ErrorMessage]
 ---
 # الرسائل المجمعة ورسائل واتساب والمحادثات الداخلية

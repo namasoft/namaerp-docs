@@ -23,7 +23,7 @@ of the menu as the form documents:
 The two sets look similar and are built from the same set of unnamed spare fields, but they differ
 in one way that decides which you should use: **one of them can carry an account.**
 
-## Subsidiary 1 to 5 — spare files that can post to the ledger
+## Subsidiary 1 to 5 — spare files that can appear in the ledger
 
 There are five of them. Each is a full master file with a code, a name, dimensions and the same
 bank of spare fields a form document carries — fifty numbers, thirty texts, twenty dates, twenty

@@ -1,4 +1,5 @@
 ---
+description: "The Carton Material Issue: issuing the paper reels a material plan calls for to the shop floor, the three rules that govern the screen, what the document generates, filling it in, what committing does, and the messages shown."
 entities: [CRTNMaterialIssue]
 menu: Manufacturing → Cartoon → Carton Material Issue
 ---

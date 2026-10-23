@@ -10,6 +10,8 @@ A **sub-item** (الصنف الفرعي) is a serialized/tracked sub-unit of an 
 Open the document's **Document Term** (توجيه), then the **Sub-Item** tab.
 :::
 
+![The Sub Item Documents Configurations tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-sub-item-en.png)
+
 ## Creating & Spreading Sub-Items
 
 These toggles control how many sub-item records a line produces and where their warehouse/locator come from.

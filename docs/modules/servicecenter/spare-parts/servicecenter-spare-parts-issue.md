@@ -75,7 +75,7 @@ copied onto the header where you can see it.
 
 **Issue mode (the default).** Committing generates a **Stock Issue** out of the line's warehouse
 using the term's Generation Book and Term. That document raises the inventory business request,
-relieves the quantity and posts the cost-of-sales entry under its own term's accounts. On the
+relieves the quantity and creates the cost-of-sales entry under its own term's accounts. On the
 canonical job, issue `SCRMI-2026-1902` generates stock issue `STI-2026-1188` out of `WH-PARTS`.
 
 **Transfer mode.** Committing generates a **Stock Transfer** instead, using the term's **Transfer
@@ -95,7 +95,7 @@ To stop this document generating a stock document, clear the book or the term.
 ::: tip Different warehouses, several stock issues
 The generated stock documents are grouped by the **line's** warehouse. If some lines draw from
 `WH-PARTS` and others from a second store, one spare parts issue produces **more than one** stock
-issue. Both appear on the Actions page; both post separately.
+issue. Both appear on the Actions page; both are processed separately.
 :::
 
 ## What the price on the line does
@@ -151,8 +151,8 @@ rather than a deletion.
 
 ## Accounting
 
-The spare parts issue itself posts **nothing** unless you deliberately configure the debit and credit
+The spare parts issue itself creates **no entry** unless you deliberately configure the debit and credit
 sides on its own term. Leave them empty — which is the normal setup — and the only accounting entry
-in the whole chain is the one the **generated stock issue** posts under its own term: inventory
+in the whole chain is the one the **generated stock issue** creates under its own term: inventory
 relieved at the item's cost, cost of sales charged. The customer's revenue arrives later, from the
 invoices raised after the job order closing.

@@ -40,7 +40,7 @@ Available when the grid find bar is open.
 - **Alt + F**: Toggle the find bar
 
 ## Reference Field Shortcuts
-Available when a reference (lookup) field is focused, both on edit screens and in grid cells.
+Available when a reference (lookup) field is focused, both on edit screens and in grid cells. What the pop-up window can do is on [Quick Create and Quick Edit from a Field](/platform/everyday-tools/quick-create-and-quick-edit).
 
 - **F4**: Open the search / browse picker
 - **F6** (or **Ctrl + Click** on the link): Open the referenced record in a new tab

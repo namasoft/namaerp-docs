@@ -1,4 +1,5 @@
 ---
+description: "Moving a property's title from one owner to another without a sale, using the OwnerShip Transfer Document: its fields, what committing it changes and the journal entry it makes, and where transfers show up afterwards."
 entities: [REOwnerShipTransfer]
 menu: Real Estate and Property → Documents → OwnerShip Transfer Document
 ---

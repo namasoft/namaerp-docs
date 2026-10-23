@@ -1,4 +1,5 @@
 ---
+description: "عقد مقاول الباطن: الطرق التي يصل بها محتواه، وقوائم الترويسة، وجداول البنود والشروط والدفعات، وصفحة الموظفين، وسقف المراحل، والفحصان الخاصان بجانب مقاول الباطن، ولماذا يتجمّد العقد بمجرد وجود مستخلص."
 entities: [ContractorContract]
 menu: المقاولات ← مقاولة مقاول باطن ← عقد مقاول باطن
 ---
@@ -168,7 +169,7 @@ menu: المقاولات ← مقاولة مقاول باطن ← عقد مقا�
 
 - [دورة مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-cycle.md) — موضع هذا السجل، والقائمة الكاملة لأوجه اختلاف هذا الجانب عن جانب المالك.
 - [تعديل عقد مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md) — أمر التغيير.
-- [حصر كميات مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-execution.md) و[مستخلص مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) — ما يُرحَّل على سطور البنود هذه، وما يُثبت في النهاية.
+- [حصر كميات مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-execution.md) و[مستخلص مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) — ما يُكتب على سطور البنود هذه، وما يُنشئ القيد في النهاية.
 - [دفعات مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md) و[غرامات مقاول الباطن](/ar/modules/contracting/contractor-contracting/contracting-contractor-fines.md) و[صرف الخامات لمقاول الباطن](/ar/modules/contracting/costs/contracting-contractor-materials.md) — المستندات التي تصل إلى شهاداته كاستقطاعات.
 - [عقد المشروع](/ar/modules/contracting/project-contracting/contracting-project-contract.md) — السجل نفسه في جانب الإيراد، مشروحاً بالتفصيل.
 - [البنود القياسية](/ar/modules/contracting/setup/contracting-standard-terms.md) و[الشروط التعاقدية](/ar/modules/contracting/setup/contracting-conditions.md) و[المراحل ومناطق العمل](/ar/modules/contracting/setup/contracting-phases-and-work-areas.md) و[نماذج العقود](/ar/modules/contracting/setup/contracting-contract-templates.md) — المفردات التي بُنيت منها هذه الشاشة.

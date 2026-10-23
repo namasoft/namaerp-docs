@@ -1,4 +1,5 @@
 ---
+description: "What the Report Wizard and Printing Form Wizard share and how they differ: the skills that carry over between them, the features unique to each, choosing which one to use, and editing the report record each one generates."
 entities: [ReportWizard, PrintingFormWizard]
 ---
 # Report and Form Wizards
@@ -27,6 +28,8 @@ The difference is what comes out and where it lands:
 
 That single difference — a range of records versus one record — explains nearly every other
 difference between the two screens. Hold onto it and the rest follows.
+
+![A Report Wizard record](../../ar/platform/images/reports/report-wizard-screen-en.png)
 
 ## What you learn once
 

@@ -1,3 +1,6 @@
+---
+description: "Which accounting system report answers which question: the chart of accounts, account and subsidiary statements, trial balances, account analysis, debt ages, voucher and entry statements, tax rebate analysis, and on-screen inquiries."
+---
 # Account Statements, Trial Balance & Analysis
 
 Once transactions are recorded, the moment of questions arrives: What is this account's balance? What moved on this customer's subsidiary? Are my books balanced? The **account reports** family (`SYSR-ACC*`) answers that — ready-made system reports invoked from the reports menu. This page is their guide: what each report answers and its key parameters.

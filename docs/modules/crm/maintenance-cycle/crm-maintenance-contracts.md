@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Contract: the warranty date fields that hold the contract period, the Machines grid that sets the visit schedule, pre-paid entitlement, payments, its accounting effect, generating work plans, and warranty contracts."
 entities: [MnContract]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Contract
 ---

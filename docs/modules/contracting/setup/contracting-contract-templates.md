@@ -1,4 +1,5 @@
 ---
+description: "The Contract Template master file: saving a priced term tree, its clauses and its cost build-up once, rolling cost back down to term prices, and how selecting a template on a new contract copies its terms."
 entities: [ContractTemplate]
 menu: Contracting → Master Files → Contract Template
 ---

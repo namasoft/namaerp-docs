@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Budget Execution Document: a quantity survey taken against a budget rather than a variance report, how to fill it in, what it writes back to the budget's term lines, the one check that can stop it, and where actual cost comes from instead."
 entities: [ContractingBudgetExecution]
 menu: Contracting → Costs → Contracting Budget Execution Document
 ---

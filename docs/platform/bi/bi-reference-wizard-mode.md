@@ -1,4 +1,5 @@
 ---
+description: "Reference for dashboard widgets built on a wizard data source, whose settings use wizard field IDs instead of SQL columns: metadata caching, data-mapping keys, click and drill-down, active dimensions, cross-filters, legacy coexistence, a complete example and runtime slot selection."
 entities: [DashBoardWidgetWizard, DashBoardWidget]
 ---
 # BI Reference — Wizard Mode

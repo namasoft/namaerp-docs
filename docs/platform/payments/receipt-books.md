@@ -1,4 +1,5 @@
 ---
+description: "The Receipt Book and Receipt Paper screens for controlling collectors' pre-printed receipt pads: setting up a book, its three counters, naming the receipt used on a voucher or other document, receipts given against cheques, and the messages you may see."
 entities: [ReceiptBook, ReceiptPaper]
 menu: Basic → Master Files → Receipt Book
 ---

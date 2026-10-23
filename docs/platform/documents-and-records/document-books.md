@@ -1,4 +1,5 @@
 ---
+description: "The Document Book screen: how a book numbers one document type, building the number and restarting it each year, drafts, running out of numbers, what locks after use, retiring a book, who may use it, and the behaviour it sets for its documents."
 entities: [DocumentBook]
 menu: Basic → Settings → Document Book
 ---
@@ -96,7 +97,7 @@ fit in a suffix length of `4`); and the suffix length itself cannot exceed 20.
 With automatic coding on, the prefix is mandatory. With automatic coding off it is still required by
 default — the idea being that a hand-typed number should at least be recognisable as belonging to
 this book. If you have a book whose numbers really should stand alone, the global option
-**Allow Empty Prefix for Manual Book** on the
+**Allow Empty Prefix For Manual Book** on the
 [Documents tab](/platform/global-config/global-config-documents) relaxes that.
 :::
 
@@ -306,7 +307,7 @@ with any book of its document type.
 Choosing a book on every document is a click users resent, especially when there is only one book
 they could possibly pick.
 
-The global option **If Single Book Is Defined for Entity Use It with New**, on the
+The global option **If Single Book Is Defined For Entity Use It With New**, on the
 [Documents tab](/platform/global-config/global-config-documents), handles that case: when exactly one
 book exists for the document type being created, Nama selects it automatically on the new document —
 and applies its template and dimensions at the same time. The moment a second book exists for that

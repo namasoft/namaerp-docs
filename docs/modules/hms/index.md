@@ -1,3 +1,6 @@
+---
+description: "Overview of the Hospital Management module: the patient journey from registration and admission through medical services to the closing invoice, split billing between patient and insurer, licensing, and how the guide is organized."
+---
 # Hospital Management System
 
 Welcome to the Hospital Management module of Nama ERP — the module that runs the full patient lifecycle: from the moment a patient is registered, through admission and a bed assignment, then consultations, lab tests, radiology and surgeries, all the way to the final closing invoice at discharge. It's a complete hospital system built on top of Nama's solid accounting and inventory engine.
@@ -23,7 +26,7 @@ Each of these services produces its own **invoice** (lab test invoice, radiology
 ## How documents work in Nama ERP
 
 ::: tip Understanding document states
-Unlike systems that require a separate "posting" step, Nama ERP acts immediately:
+Unlike systems that require a separate step before a saved document reaches the accounts, Nama ERP acts immediately:
 
 **Draft:** create and edit the document with no accounting effect.
 
@@ -75,6 +78,6 @@ The module is large, so we've split it into pages that follow the way hospital d
 ### Document terms
 
 <LandingGrid>
-  <LandingCard icon="📑" title="Invoice Document Terms" link="/modules/hms/document-terms/hms-terms-invoices.md" details="The accounting sides every hospital invoice posts with, the price and tax options, and what each invoice family adds." />
+  <LandingCard icon="📑" title="Invoice Document Terms" link="/modules/hms/document-terms/hms-terms-invoices.md" details="The accounting sides every hospital invoice records its entry on, the price and tax options, and what each invoice family adds." />
   <LandingCard icon="📋" title="Stay and Operations Document Terms" link="/modules/hms/document-terms/hms-terms-stay-and-operations.md" details="The terms that make an admission create its accommodation, a stay create its invoices, and a feeding issue create its stock documents; plus the closing and surgery package invoices." />
 </LandingGrid>

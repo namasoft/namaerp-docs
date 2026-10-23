@@ -1,6 +1,7 @@
 ---
 description: "Education master files: stages, classrooms and ranks, the Student and Guardian records, lecturers and contractors, Update Student Information and the Expense list."
 entities: [EDStudent, EDGuardian, EDEducationalStage, EDStageType, EDClassRoom, EDRank, EDLecturer, EDContractor, EDStudentInfoUpdater, EDExpense, EDMainLevel, EDSubLevel]
+menu: Education → Master Files → Student
 ---
 # Students, Guardians and the Academic Structure
 

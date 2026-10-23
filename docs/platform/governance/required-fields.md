@@ -1,4 +1,5 @@
 ---
+description: "The Required Fields screen: making a field mandatory always or only when criteria match, including grid fields and minimum line counts, exempting users or cases, what counts as empty, when the check runs, and worked examples."
 entities: [RequiredFields]
 menu: Administration → Display Customization → Required Fields
 ---

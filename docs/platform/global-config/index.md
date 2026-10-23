@@ -1,3 +1,6 @@
+---
+description: "The Global Configuration file, the one settings record shared by every module and the whole database: where to find it and a guide to each of its tabs, from decimals, taxes and discounts to documents, security and replication."
+---
 # Global Configuration
 
 Almost every other configuration file in Nama belongs to one module — supply chain settings shape inventory, HR settings shape payroll. **Global Configuration** is the one that belongs to all of them. It decides how many decimal places a number carries, whether stock documents may be edited after a closing entry, how a tax is calculated on an invoice line, who is allowed to log in and how, what a printed report looks like, and where attachments are stored.

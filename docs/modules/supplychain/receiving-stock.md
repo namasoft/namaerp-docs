@@ -139,7 +139,7 @@ Understanding a receipt document's journey helps you use the system effectively:
 ::: tip Draft vs. Saved
 - **Save as draft**: the document is stored with no effect on inventory or accounting. Use it for preparation and review.
 - **Save (not draft)**: the document updates inventory, accounting, and all related accounts immediately.
-- Any future edits to saved documents update the system immediately - no separate "post" step needed.
+- Any future edits to saved documents update the system immediately - no separate confirmation step needed.
 :::
 
 ![Stock receipt screen in NaMa ERP](../../ar/modules/supplychain/images/receiving/stock-receipt-edit-en.png)

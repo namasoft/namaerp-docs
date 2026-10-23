@@ -47,7 +47,7 @@ asks, who negotiates, who commits and who pays.
 | Fixed Asset Offer | عرض سعر أصل | No | Records a supplier's quotation with prices, discounts and taxes |
 | Fixed Asset Purchase Order | أمر شراء أصل | No | Records the commitment; ticks off the request's quantities |
 | Fixed Asset Initial Receipt | سند استلام أصل مبدئي | No | Records that the goods arrived before the invoice did |
-| **Fixed Asset Purchase Document** | **سند شراء أصل ثابت** | **Yes** | **Capitalises the asset and posts to the ledger** |
+| **Fixed Asset Purchase Document** | **سند شراء أصل ثابت** | **Yes** | **Capitalises the asset and creates a journal entry** |
 | Fixed Asset Receipt Document | مستند استلام أصل | No | Writes the asset's location and adds a row to its custody history |
 | Fixed Asset Opening Document | افتتاح أصل ثابت | Yes | Brings an already-owned asset in with its accumulated depreciation |
 
@@ -132,7 +132,7 @@ keeps using.
    ![Fixed Asset Purchase Document screen](../../../ar/modules/fixedassets/images/acquisition/fa-purchase-document-main-en.png)
 
 5. **The hand-over.** A *Fixed Asset Receipt Document* records that the machine now stands in
-   `LOC-R2 — Riyadh Plant, Hall 2` and that Khaled Al-Mutairi signed for it. Nothing is posted; this
+   `LOC-R2 — Riyadh Plant, Hall 2` and that Khaled Al-Mutairi signed for it. No journal entry is created; this
    is the custody and location trail. See
    [receipts](/modules/fixedassets/acquisition/fixedassets-receipts.md).
 

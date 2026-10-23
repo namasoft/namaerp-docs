@@ -1,6 +1,7 @@
 ---
 description: "Payment schedules on an Education Course Contract: how instalment plans are created, instalment codes, the Payments grid, collecting money and refunds."
 entities: [EDCourseContract]
+menu: Education → Master Files → Course Contract
 ---
 # Payment Schedules and Collection
 

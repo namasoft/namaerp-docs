@@ -65,7 +65,7 @@ The real safety catch is `serverid`. Change it **before** the first startup, the
 | `prevent-login-of-ips` | A comma-separated list of blocked addresses, matched by prefix — `192.168` blocks the whole range. |
 | `prevent-login-of-ips-msg` | The message they see, with `{0}` for the address. |
 | `use-ldap-for-authentication` | Hand password checking to the customer's LDAP directory. |
-| `preventViewingPublicDocuments` | When `true`, documents saved with PUBLIC in a dimension are hidden from users working inside a specific value of that dimension, unless **Show Public Documents to All** is on in [global configuration](/platform/global-config/global-config-dimensions). Master files are not affected. |
+| `preventViewingPublicDocuments` | When `true`, documents saved with PUBLIC in a dimension are hidden from users working inside a specific value of that dimension, unless **Show Public Document To All** is on in [global configuration](/platform/global-config/global-config-dimensions). Master files are not affected. |
 
 ```properties
 prevent-login-of-login-ids=user1,user2

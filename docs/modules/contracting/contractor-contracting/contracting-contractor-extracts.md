@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract Extract: filling the details and conditions grids, previous extracts and line pricing, retention, advance recovery and fines, material charged back as a deduction, taxes, what the extract books, extract types and their order, and paying it."
 entities: [ContractorContrExtract]
 menu: Contracting → Contractor Contracting → Contractor Contract Extract
 ---

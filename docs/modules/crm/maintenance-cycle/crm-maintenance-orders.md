@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Order: where orders come from, its pages and statuses, where prices come from, contract entitlement, its effect on the contract and the ledger, the contract an Installation order creates, the Maintenance Order Request, and the spare-parts issue buttons."
 entities: [MnOrder]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Order
 ---

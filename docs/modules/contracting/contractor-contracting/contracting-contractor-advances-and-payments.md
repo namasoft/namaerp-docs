@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Advance Payment and Contractor Other Payment: paying a subcontractor before his work is measured, what each document books, how the advance is recovered extract by extract, what can still be changed afterwards, and when to use the other payment."
 entities: [ContractorAdvancePayment, ContractorOtherPayment]
 menu: Contracting → Contractor Contracting → Contractor Advance Payment
 ---
@@ -60,7 +61,7 @@ The screen follows your choice: the **Payment Percentage** field is only enabled
 percentage methods, and the **Payment Value** field only for the fixed-value method. Whichever the
 method needs is required before the document will save.
 
-**Condition** is the clause the recovery will post through — the same kind of clause that carries
+**Condition** is the clause the recovery will be recorded through — the same kind of clause that carries
 retention, from the
 [contract conditions](/modules/contracting/setup/contracting-conditions.md) catalogue. It is required,
 and it is what decides which accounts the recovery entry lands on when the extract collects it. The
@@ -89,7 +90,7 @@ Committing the advance sends an accounting **business request** (طلب أعما
 the background; failures are visible and retryable from the **Business Requests** view under
 **More > Reprocess / Recommit**.
 
-The entry is deliberately simple — two pairs on the document term, and each pair only posts if both
+The entry is deliberately simple — two pairs on the document term, and each pair only creates ledger lines if both
 sides are configured:
 
 - the amount, on the main debit and credit pair;
@@ -161,8 +162,8 @@ sequential number. Ask it to behave differently and it will not.
 
 What it gives you is **separation**. It is a different document type with its own book, its own
 numbering and — because the accounts come from the document term, and the term is per document type —
-**its own pair of accounts**. So you post a mobilisation advance to "Advances to subcontractors" and
-an accommodation payment, a fuel float, a loan or a one-off settlement to "Other receivables —
+**its own pair of accounts**. So you record a mobilisation advance on "Advances to subcontractors" and
+an accommodation payment, a fuel float, a loan or a one-off settlement on "Other receivables —
 subcontractors", and your trial balance tells the two apart without anybody reading document
 descriptions. If your chart of accounts does not care about the distinction, you do not need the
 document.

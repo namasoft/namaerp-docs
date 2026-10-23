@@ -1,4 +1,5 @@
 ---
+description: "The Car Receipt document: recording cars physically arriving in the showroom yard, what it does on commit and when it creates a stock receipt, the stock-in rule, and undoing it with the receipt cancel."
 entities: [SIReceipt, SIReceiptCancel]
 menu: cars → Car Inventory → Car Receipt
 ---

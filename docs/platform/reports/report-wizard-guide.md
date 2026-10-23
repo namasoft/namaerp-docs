@@ -1,4 +1,5 @@
 ---
+description: "Building reports with the Report Wizard: a first sales invoice report, the main fields, parameters and custom parameters, calculated columns, grouping, data sources, show all values, reporting on several tables, unit of measure conversion and the messages you may see."
 entities: [ReportWizard]
 menu: Administration → Reports → Report Wizard
 ---
@@ -206,25 +207,10 @@ A parameter row carries a default value column for each kind of value: **Default
 **Time Default Value** — each with its "(works with Between)" twin. Fill the one that matches your
 parameter's type; when you save, the wizard folds whichever you used into **Default Value**.
 
-**Default Value** also understands a family of moving tokens. They are resolved at the moment the run
-screen opens, not when you build the report, so a report written in January still opens on the right
-period in December.
-
-| Token | Resolves to |
-|---|---|
-| `$today()`, `$now()` | Today / the current moment |
-| `$monthStart()`, `$monthEnd()` | First and last day of the current month |
-| `$previousMonthStart()`, `$previousMonthEnd()` | The month before |
-| `$nextMonthStart()`, `$nextMonthEnd()` | The month after |
-| `$yearStart()`, `$yearEnd()` | First and last day of the current year |
-| `$previousYearStart()`, `$previousYearEnd()`, `$nextYearStart()`, `$nextYearEnd()` | The year before / after |
-| `$quarterStart()`, `$quarterEnd()` | The current quarter |
-| `$halveStart()`, `$halveEnd()`, `$thirdStart()`, `$thirdEnd()` | The current half-year / third of the year |
-| `$todayPlusDays(7)`, `$todayMinusDays(7)` | A number of days either side of today |
-| `$todayPlusWeeks(2)`, `$todayMinusWeeks(2)` | The same in weeks |
-| `$todayPlusMonths(3)`, `$todayMinusMonths(3)` | The same in months |
-| `$todayPlusYears(1)`, `$todayMinusYears(1)` | The same in years |
-| `$currentUser()`, `$currentUserEmployee()`, `$currentUserRelatedSubsidiary()`, `$currentFiscalPeriod()` | The lookup parameters: the user running the report, their employee file, their subsidiary, the open fiscal period |
+**Default Value** also understands a family of moving tokens — `$monthStart()`, `$todayMinusDays(30)`,
+`$currentUser()` and the rest. They are resolved at the moment the run screen opens, not when you build
+the report, so a report written in January still opens on the right period in December. The full list
+is under [Default values](/platform/reports/reports-guide#Default-values) in the reports guide.
 
 The pairing readers like most is `$monthStart()` in **Default Value** and `$today()` in **Default
 Value (works with Between)**: the report opens on month-to-date every time it is run.

@@ -13,7 +13,7 @@ A **CRM Service Contract** (*عقد خدمة*) is a priced, period-bounded agree
 Before anything else, two facts that decide whether this document fits your business at all.
 
 ::: warning The contract *is* the invoice
-This is not a contract that later produces invoices. It carries the full money block itself — line prices, eight discount levels, four taxes, net value, paid and remaining — and when it is processed it posts **one ledger line per contract line**. Committing the contract is the billing event. There will never be another one.
+This is not a contract that later produces invoices. It carries the full money block itself — line prices, eight discount levels, four taxes, net value, paid and remaining — and when it is processed it records **one ledger line per contract line**. Committing the contract is the billing event. There will never be another one.
 :::
 
 ::: danger There is no payment schedule and nothing generates a recurring invoice
@@ -28,7 +28,7 @@ If you are selling a subscription, plan the recurring billing outside this docum
 
 You reach it from **Customer Relationship Management → Support → CRM Service Contract**.
 
-**Start with the document term.** The term is what decides whether the contract will post anything at all, and picking it also fills in the **نوع العقد / Contract Type** — *Ordinary* for a new contract, or *Renewal*, *Extension*, *Upgrade* or *Transfer* for one that supersedes an earlier contract. The field stays editable afterwards.
+**Start with the document term.** The term is what decides whether the contract will create any ledger entry at all, and picking it also fills in the **نوع العقد / Contract Type** — *Ordinary* for a new contract, or *Renewal*, *Extension*, *Upgrade* or *Transfer* for one that supersedes an earlier contract. The field stays editable afterwards.
 
 **The header** — Customer, Responsible Employee (pre-filled with the current user's employee), the Mediator, Document category, the contract type, the contract this one updates, a read-only **حالة العقد / Service Contract Status**, currency and rate, and a description. Below it a small **Details** block holds the header **يبدأ في / Start In**, **ينتهى / End In** and **مدة العقد / Contract Period**.
 
@@ -62,13 +62,13 @@ On commit, the contract raises its accounting effect as a **business request** h
 
 The entry produced for `CSC-0044` is **one ledger line per Details line** — 18,000.00, 14,000.00 and 8,000.00 — debiting the customer's receivable account for 45,600.00 and crediting service-contract revenue 40,000.00 and sales tax payable 5,600.00. Subsidiary accounts are drawn from the customer, the responsible employee, the line's product and the product's item section.
 
-::: danger A term with only one accounting side posts nothing, silently
-The accounting effect runs **only when the document term carries both a debit side and a credit side.** Configure one and leave the other empty and the contract commits perfectly happily, reports no error, produces no business request and posts nothing at all. There is no warning anywhere on screen.
+::: danger A term with only one accounting side creates no entry, silently
+The accounting effect runs **only when the document term carries both a debit side and a credit side.** Configure one and leave the other empty and the contract commits perfectly happily, reports no error, produces no business request and creates no ledger entry at all. There is no warning anywhere on screen.
 
 If contracts are committing and the ledger is empty, this is almost always why. Check the term first.
 :::
 
-Editing a committed contract re-posts the entry; cancelling it reverses the entry — both re-check the same both-sides condition.
+Editing a committed contract recreates the entry; cancelling it reverses the entry — both re-check the same both-sides condition.
 
 **Inventory: none.** The contract has no quantity, no warehouse and no stock document. It is also recognised as a tax-authority document, so the standard e-invoicing actions are available on it.
 
@@ -94,7 +94,7 @@ Its one functional consumer is the trouble ticket. When an agent raises a ticket
 **Practical advice:** always fill Serial Number on serialised items, or one contract line registered without a serial will cover every ticket raised on that product, for every customer, in every branch.
 :::
 
-**Contract or warranty?** A [CRM warranty](/modules/crm/master-files/crm-warranties.md) is the free cover a product shipped with — a master file with no price and no accounting. A service contract is paid cover the customer bought — a document with money that posts. Both feed the same lookup, and the contract wins.
+**Contract or warranty?** A [CRM warranty](/modules/crm/master-files/crm-warranties.md) is the free cover a product shipped with — a master file with no price and no accounting. A service contract is paid cover the customer bought — a document with money and an accounting effect. Both feed the same lookup, and the contract wins.
 
 ::: info Not the same thing as a maintenance contract
 The machine maintenance suite has its own, richer contract with visit schedules and instalments, under a different licence. Nothing links the two: no reference field, no shared status, no migration path, and a maintenance contract plays no part in trouble-ticket coverage. Which one you use is decided by which licence you own, not by which fits better. See [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md).
@@ -145,9 +145,9 @@ The Call and Visit buttons are shortcuts for logging a conversation, not a sched
 
 All meaningful configuration for this document lives in its **Document Term**, not in CRM Settings. Three pages:
 
-**التأثير / Effect** — the **Contract Type** pushed onto documents that use this term; **Use Payment Docs As Debt Ages**; the **Debit** and **Credit** account sides (both required for anything to post); the approximation-discount side; the **Tax Plan**, **Taxable**, **Modifiable Tax** and **Allow Editing Header Tax In Details** flags; **Allow Payment More Than Invoice Amount**, which caps receipt vouchers at the contract's net when unticked; and **Link With Invoice Lines In accounting Document**, which makes the contract selectable in the invoices grid of payment and receipt vouchers.
+**التأثير / Effect** — the **Contract Type** pushed onto documents that use this term; **Use Payment Docs As Debt Ages**; the **Debit** and **Credit** account sides (both required for any ledger entry to be created); the approximation-discount side; the **Tax Plan**, **Taxable**, **Modifiable Tax** and **Allow Editing Header Tax In Details** flags; **Allow Payment More Than Invoice Amount**, which caps receipt vouchers at the contract's net when unticked; and **Link With Invoice Lines In accounting Document**, which makes the contract selectable in the invoices grid of payment and receipt vouchers.
 
-**تأثيرات أخرى / Other effects** — the cash side and four tax sides, plus an **External Effects** grid that lets you post differently depending on which receipt voucher paid the contract.
+**تأثيرات أخرى / Other effects** — the cash side and four tax sides, plus an **External Effects** grid that lets you record the entry differently depending on which receipt voucher paid the contract.
 
 **تأثير الخصومات / Discount Effects** — the account sides for the line discount, the invoice discount and discounts 2 to 8.
 

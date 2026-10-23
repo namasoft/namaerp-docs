@@ -74,7 +74,7 @@ Covered above: one shared property record across eight levels, addressed by poin
 
 ### 2. The owner
 
-There is **one party master file** in the module, and it plays three roles that are chosen by three independent checkboxes: **owner** (the landlord or the seller), **buyer** (which is also the tenant — rent screens reuse the very same field), and **investor** (a participant in an investment fund). Every picker in the module filters on the matching flag, so a party that cannot be found on a lease screen is almost always a party whose buyer flag was never ticked. Owners can also be groups — joint heirs, for example — in which case postings are split between the members by share. See [Owners, Buyers and Standard Contract Clauses](/modules/realestate/properties/realestate-owners-and-contract-clauses.md).
+There is **one party master file** in the module, and it plays three roles that are chosen by three independent checkboxes: **owner** (the landlord or the seller), **buyer** (which is also the tenant — rent screens reuse the very same field), and **investor** (a participant in an investment fund). Every picker in the module filters on the matching flag, so a party that cannot be found on a lease screen is almost always a party whose buyer flag was never ticked. Owners can also be groups — joint heirs, for example — in which case ledger lines are split between the members by share. See [Owners, Buyers and Standard Contract Clauses](/modules/realestate/properties/realestate-owners-and-contract-clauses.md).
 
 ### 3. The installment line
 

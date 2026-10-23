@@ -1,4 +1,5 @@
 ---
+description: "Forecasting purchase quantities with the Purchase Forecast document: choosing quantity sources such as sales history, the forecast and sales source configurations, and turning the suggested quantities into a purchase order."
 entities: [NewPurchaseForecast, PurchaseForecastConfig, PFSalesSourceConfig, PFQuantitySource]
 menu: Purchases → New Purchase Forecast → New Purchase Forecast
 ---

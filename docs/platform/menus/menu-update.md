@@ -1,4 +1,5 @@
 ---
+description: "How to rearrange the menu so the change survives a rebuild: why the shipped menu must not be edited, and setting up a Menu Update step by step to remove, add, rename and position entries in a target menu, then pointing users at it."
 entities: [MenuModifier, MenuDefinition]
 menu: Administration → Display Customization → Menu Update
 ---

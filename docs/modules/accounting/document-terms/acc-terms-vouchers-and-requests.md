@@ -1,4 +1,5 @@
 ---
+description: "The document term options for receipt and payment vouchers, orders and bank transfers: where each side's account comes from, what the voucher may carry, copying from the source document and extra effects, plus payment and receipt requests, the Electronic Receipt Voucher and cashier documents."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -12,7 +13,7 @@ term is the longest in it — well over fifty options. Most of them answer one o
    user's custody, or an employee.
 2. **What may the voucher carry?** Commercial papers, payment methods, invoices, instalments.
 3. **What does the voucher copy** when it is created from an invoice, a request or another voucher?
-4. **What else does it post?** Taxes, payment-method fees, extra lines.
+4. **What else does it record?** Taxes, payment-method fees, extra lines.
 
 The same term class serves the **Receipt Voucher**, **Payment Voucher**, **Receipt Order**, **Payment
 Order** and **Bank Transfer**; the screen hides what does not apply to each. After it, this page
@@ -20,6 +21,8 @@ covers the payment and receipt **requests**, the **Electronic Receipt Voucher**,
 vouchers and shifts. The documents are on [Receipt & Payment Vouchers](/modules/accounting/receipts-and-payments),
 [Banks, Bank Accounts & Transfers](/modules/accounting/banks-and-bank-accounts) and
 [Cashier Shifts](/modules/accounting/cashier-shifts).
+
+![The Effect tab of a cash receipt voucher term](../../../ar/modules/accounting/images/document-terms/acc-term-vouchers-and-requests-en.png)
 
 ## The two sides of a voucher
 
@@ -130,19 +133,19 @@ in on screen, not what the server checks.
 | **Update Details Rate With Updating Header Rate…** | `termConfig.updateDetailsRateWithHeaderRate` | Changing the header rate updates the lines in the same currency. |
 | **Can not modify Sector / Branch / Department / Analysis Set** | `termConfig.detailSectorNotModifiable` … `termConfig.detailAnalysisSetNotModifiable` | Locks that dimension on the lines on screen. |
 
-## What else the voucher posts
+## What else the voucher records
 
 | Option | Field | What it does |
 |---|---|---|
-| **Tax1 / Tax2 Debit / Credit** | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Saved [side records](/platform/shared-master-files/accounting-side-config) that post line taxes as their own lines; the tax is then taken out of the line amount. |
+| **Tax1 / Tax2 Debit / Credit** | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Saved [side records](/platform/shared-master-files/accounting-side-config) that record line taxes as their own lines; the tax is then taken out of the line amount. |
 | **Tax 1 / Tax 2 Is Deduction** | `termConfig.tax1IsDeduction`, `termConfig.tax2IsDeduction` | The tax is subtracted from the line net instead of added — withholding tax. |
 | **Add Tax 1 / 2 To Total Debit / Credit** | `termConfig.addTax1ToTotalDebit` … `termConfig.addTax2ToTotalCredit` | Adds the line taxes into the voucher's total debit or total credit. |
 | **Calculate Subsidiary From Parent If Needed** | `termConfig.calcSubsidiaryFromParentIfExist` | Ledger lines carry the line party's parent as subsidiary. |
 | **Repeat Credit Side In Payment voucher Or Debit Side In Receipt voucher** | `termConfig.repeatCreditSideInPvOrDebitSideInRv` | The first-side entry is split into one line per voucher line, each with its own amount and narration, instead of one total. |
-| **Expand Payment Method Effect** | `termConfig.expandPaymentMethodEffect` | Payment-method fees post as their own lines; without it the first side is netted by the fees. |
+| **Expand Payment Method Effect** | `termConfig.expandPaymentMethodEffect` | Payment-method fees are recorded as their own lines; without it the first side is netted by the fees. |
 | **Add Line With Payment Method Fees Value / Fees Tax Value For Document Header** | `termConfig.addLineWithPaymentMethodFeesValueForHeader`, `…FeesTaxValueForHeader` | (Payment Method Fees and Tax Handling group) An extra line charges the fees, or the tax on them, to the header party. |
 | **Fees Value For Dimensions Source And References Only** | `termConfig.feesValForDimensionsSourceAndReferences` | (Effect tab) The dimension sources and references used for the fee lines. |
-| **Create Accounting Effects** | `termConfig.createAccountingEffects` | Receipt and payment orders: without it, the order posts nothing. |
+| **Create Accounting Effects** | `termConfig.createAccountingEffects` | Receipt and payment orders: without it, the order creates no ledger entry. |
 | **Treated As Receipt / Payment Voucher Document With All Effects** | `termConfig.treatedAsReceiptVoucherDocWithAllEffects`, `…PaymentVoucherDocWithAllEffects` | The order behaves as a full voucher — papers, requests and ledger. |
 
 ## Payment and receipt requests

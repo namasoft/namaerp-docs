@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Service master file used by the service documents: its fields, why the customer field matters, where the location comes from, creating records by hand or from a services sales order, and how documents use them."
 entities: [MnService]
 menu: Customer Relationship Management → Service Documents → Maintenance Service
 ---

@@ -96,7 +96,7 @@ The **Effect** tab holds the **Debit** and **Credit** sides of the payment. On t
 
 ### Shifts and cash count
 
-The shift opening, shift closing and cash drawer terms post the **differences** between the counted and expected amounts (**Increase** and **Decrease** sides). The shift closing also has the **Cash** tab used when the cash is reset at close. Both are explained, with examples, in [Shift Opening, Closing & Cash-Reset Settings](./pos-shift-close-settings.md#How-differences-are-posted).
+The shift opening, shift closing and cash drawer terms record the **differences** between the counted and expected amounts (**Increase** and **Decrease** sides). The shift closing also has the **Cash** tab used when the cash is reset at close. Both are explained, with examples, in [Shift Opening, Closing & Cash-Reset Settings](./pos-shift-close-settings.md#How-differences-are-recorded).
 
 ## When a document arrives with the wrong term
 

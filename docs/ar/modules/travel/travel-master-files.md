@@ -1,5 +1,7 @@
 ---
+description: "إعداد الملفات الرئيسية للسفر والرحلات بالترتيب: دول ومدن السفر، وتصنيفات الفنادق والمطاعم والخدمات السياحية، والفنادق والمطاعم والمرشدين السياحيين والخدمات السياحية، وكيف يصبح الفندق والمطعم طرفاً محاسبياً تُستحق له المبالغ."
 entities: [TRHotel, TRRestaurant, TRTourService, TRTourGuide, TRCity, TRCountry, TRHotelClass, TRRestaurantClass, TRTourServiceClass]
+menu: السفر والرحلات ← الملفات ← فندق
 ---
 
 # الملفات الرئيسية للسفر والرحلات

@@ -45,6 +45,8 @@ If **Generate Stock Receipt For Unsatisfied Quantities** is on but the **Stock R
 
 All three of these fields live together on the **Generation** tab of the Purchase Order's Document Term.
 
+![The Generation tab of the Purchase Order document term, with Generate Stock Receipt For Unsatisfied Quantities](../../../ar/modules/supplychain/images/document-terms/po-term-unsatisfied-receipt-en.png)
+
 ## Hiding Orders That Are Already Fully Executed
 
 The second piece helps at data-entry time rather than at generation time. When you create a downstream document and reach for an order in the **from document** (بناءً على) or the line's **origin document** field, the default lookup shows every matching order — including ones that have already been fully received and have nothing left to give.

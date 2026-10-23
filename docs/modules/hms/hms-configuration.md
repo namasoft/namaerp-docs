@@ -1,4 +1,5 @@
 ---
+description: "The Hospital Management System Settings screen: how the check-in and check-out options turn a stay into billable days, which discount, tax and price-classifier fields the hospital screens show, and when a change takes effect."
 entities: [ConfigEntry]
 menu: Hospital Management System → Settings → Hospital Management System Settings
 ---
@@ -7,7 +8,7 @@ menu: Hospital Management System → Settings → Hospital Management System Set
 
 The hospital module has one settings record, and it is small: seventeen options on a single tab.
 Four of them change how a stay is counted into billable days, and the rest decide which discount, tax
-and price-classifier fields the hospital screens show at all. Nothing here posts anything or blocks a
+and price-classifier fields the hospital screens show at all. Nothing here creates a ledger entry or blocks a
 save — but the first block decides how many nights every inpatient is charged for, so it is worth
 setting deliberately before the first admission.
 
@@ -68,7 +69,7 @@ options hide the parts you do not use.
 | **Use Tax 2 Value** | Tax 2 value in price blocks and totals | Off |
 
 These options only show or hide fields. A discount or tax that comes from a price list, a medical
-discount or a tax plan is still calculated and still posted when its field is hidden, so turn on the
+discount or a tax plan is still calculated and still recorded in the entry when its field is hidden, so turn on the
 fields for every discount and tax you actually use.
 
 ## Classifiers Configurations — the five price classifiers

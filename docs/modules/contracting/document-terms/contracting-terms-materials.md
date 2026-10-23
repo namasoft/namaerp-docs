@@ -1,4 +1,5 @@
 ---
+description: "Document term settings for Contracting material and payment documents: which term serves which document, material issued to your own project versus to a subcontractor, advance and other payments, and fines, with one month on Tower A as the example."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -49,13 +50,15 @@ A contracting material issue with no generation book and term is a document that
 
 The three term-code options above are also honoured on the return, even though the return's own screen does not offer them. If a return refuses to save because a line has no executive-budget term code, the setting responsible is on the term of the document family, not on the return's own screen — the practical answer is to fill the code.
 
+![The Settings tab of the Contracting Material Issue Req term](../../../ar/modules/contracting/images/terms/contracting-term-material-issue-request-en.png)
+
 ## Material to a subcontractor
 
 This is a sale, and its term is the supply chain **invoice** term. The full option set is documented under supply chain; what matters on the contracting side is which parts of it you must actually fill in.
 
 | What to set | Why it matters here |
 |---|---|
-| The main accounting sides | The debit is the subcontractor's receivable, the credit is inventory going out. Leave them empty and the sale posts nothing, while the stock still moves |
+| The main accounting sides | The debit is the subcontractor's receivable, the credit is inventory going out. Leave them empty and the sale creates no journal entry, while the stock still moves |
 | The tax sides | VAT on material sold to the subcontractor |
 | The invoice-discount and line-discount sides | Where discounts given on the sale land |
 | **Generation book** and **generation term** | As above — without both, no stock issue or receipt is generated |
@@ -105,8 +108,8 @@ The fine's subsidiary is the one on the **document header**, so fill it there; t
 
 **Material to the project.** Term `CMI-STD` for Contracting Material Issue: generation book `SI-CNTR` and generation term `SI-CNTR-STD`, project term code compulsory, executive-budget term code compulsory. The site engineer issues 200 blocks against term `3.01`. No money is booked by the issue. The generated stock issue moves 200 blocks out of the site warehouse; inventory costing prices them at 4.00 each, so term `3.01` of the contract picks up **800** of actual material cost. Five blocks come back on a material return under term `CMR-STD` and the term's cost drops by 20.
 
-**Material to the subcontractor.** Term `CTI-STD` for Contractor Material Issue: the main sides post the subcontractor's receivable against inventory going out, the tax sides carry VAT, generation book and term are set, and the default condition is `MATDED` — "material deducted from extract". Eighty bags of cement worth **2,400** are issued to the blockwork subcontractor. This one *does* book: a receivable on the subcontractor, inventory out, VAT. Because the term carried `MATDED`, the subcontractor's next extract collects a condition line of `MATDED` with a deduction of 2,400, and his net payable falls by exactly that. Nobody typed the deduction.
+**Material to the subcontractor.** Term `CTI-STD` for Contractor Material Issue: the main sides debit the subcontractor's receivable and credit inventory going out, the tax sides carry VAT, generation book and term are set, and the default condition is `MATDED` — "material deducted from extract". Eighty bags of cement worth **2,400** are issued to the blockwork subcontractor. This one *does* book: a receivable on the subcontractor, inventory out, VAT. Because the term carried `MATDED`, the subcontractor's next extract collects a condition line of `MATDED` with a deduction of 2,400, and his net payable falls by exactly that. Nobody typed the deduction.
 
 **The advance.** Term `PAP-STD` for Project Advance Payment: debit bank, credit *advances received from customers*, default condition `ADV-REC`, payment method *percentage with every extract*, payment percentage 25. The owner pays **46,000**. Every subsequent extract collects 25% of it — 11,500 a time — as a deduction, and the advance draws down 46,000 → 34,500 → 23,000 without anyone tracking it by hand. The [extract term](/modules/contracting/document-terms/contracting-terms-extracts.md) option that collects payment documents on save is what makes those condition lines appear on their own.
 
-**The fine.** Term `PCF-STD` for Project Contract Fine, with *Calculate Accounting Effects From Contracting Condition* ticked so that each fine reason posts to its own account through its condition. Fine `PCF-001`, a 5,000 delay penalty, is raised. It posts its own entry immediately, **and** appears as a 5,000 deduction on the next extract's conditions grid — both, which is the behaviour worth knowing before the first month closes.
+**The fine.** Term `PCF-STD` for Project Contract Fine, with *Calculate Accounting Effects From Contracting Condition* ticked so that each fine reason is recorded on its own account through its condition. Fine `PCF-001`, a 5,000 delay penalty, is raised. It creates its own entry immediately, **and** appears as a 5,000 deduction on the next extract's conditions grid — both, which is the behaviour worth knowing before the first month closes.

@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Product, used as the vehicle file: chassis, plate, owner and insurer, how the odometer fields behave, the read-only status, what documents write back to it, and how to create one."
 entities: [SrvCProduct]
 menu: Service Center → Master Files → Product
 ---
@@ -80,7 +81,7 @@ Everything lives on one page, in two blocks and three lists.
 | Current Odometer / Current Odometer Date | قراءة العداد الحالية / تاريخها | 45,300 on 3 March 2026. |
 | Difference Between Current OdoMeter and Last OdoMeter | الفرق بين القراءة الحالية وأخر قراءة | 3,700 km. |
 | Average KM Daily Consumption | متوسط استهلاك الكيلومتر يوميا | **Calculated** — 3,700 ÷ 61 days = **60.7 km/day**. |
-| Recall Campaign | حملة الإستدعاء | The campaign this vehicle is caught by, if any. |
+| Recall Campaign | حملة الإستدعاء | The [recall campaign](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md) this vehicle was serviced under. A committed job document that names a campaign fills it when it is empty. |
 | Insurance Kilometer | كيلومتر الضمان | The mileage limit on the cover. |
 | Insurance Start Date / Insurance Period / Insurance End Date | تاريخ بداية التأمين / فترة التأمين / تاريخ انتهاء الضمان | The cover's window. |
 | Item Brand / Item Model / Production Year | الماركة / الموديل / سنة الموديل | Repeated here for convenience — the same values as the block above. |

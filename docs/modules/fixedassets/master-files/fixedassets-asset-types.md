@@ -5,7 +5,7 @@ menu: Assets → Master Files → Fixed Asset Type
 ---
 # Fixed Asset Types
 
-Al-Waha Industries owns forty machines. Every one of them has to be posted to the same cost account, depreciated into the same expense account, and accumulated against the same contra account. Every one of them is expected to last five years and to be worth a tenth of its price at the end. Typing that set of decisions forty times is how registers go wrong.
+Al-Waha Industries owns forty machines. Every one of them has to be recorded on the same cost account, depreciated into the same expense account, and accumulated against the same contra account. Every one of them is expected to last five years and to be worth a tenth of its price at the end. Typing that set of decisions forty times is how registers go wrong.
 
 The **Fixed Asset Type** (نوع أصل) exists so that you decide it once. It is the accounting template for a family of assets — machinery, vehicles, buildings, computers — and it is the first master file a finance manager sets up, before anybody creates a single asset.
 

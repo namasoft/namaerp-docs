@@ -1,11 +1,12 @@
 ---
+description: "The three layers of fiscal period control: the period's open or closed status, Fiscal Year Status Update for closing a period selectively by user or document type, and Ignore Closed Periods exceptions, with how the layers interact and worked examples."
 entities: [FiscalYearStatusUpdate, FiscalYear]
 menu: Basic → Master Files → Fiscal Year Status Update
 ---
 
 # Fiscal Period Control
 
-In many organizations, simply marking an accounting period as "open" or "closed" for everyone is not enough. The accounting department may need to complete adjustment entries in a period that is about to close, while the sales team must be prevented from issuing any invoice in that same period. Sometimes the reverse is true: the period is closed for everyone, but you want to allow a single user to post an urgent corrective entry.
+In many organizations, simply marking an accounting period as "open" or "closed" for everyone is not enough. The accounting department may need to complete adjustment entries in a period that is about to close, while the sales team must be prevented from issuing any invoice in that same period. Sometimes the reverse is true: the period is closed for everyone, but you want to allow a single user to record an urgent corrective entry.
 
 Nama ERP provides three integrated layers of period control that cover all these cases:
 
@@ -25,6 +26,8 @@ Nama ERP provides three integrated layers of period control that cover all these
 Each accounting period has a default status: **Opened** or **Closed**. When a period is closed at the base level, the system prevents any user from saving a document dated within it. This is the "general" close — it is the starting point on top of which the two remaining layers operate.
 
 ---
+
+![The Fiscal Year screen and its periods](../../ar/modules/accounting/images/setup/fiscal-year-en.png)
 
 ## Part One: Fiscal Year Status Update — Selective Closing
 

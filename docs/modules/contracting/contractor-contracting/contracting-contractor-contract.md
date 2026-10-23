@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract (subcontract): the routes that give it content, its header lists, terms, conditions and payments grids, the Employees page, the phase ceiling, the checks unique to the subcontractor side, and why it freezes once an extract exists."
 entities: [ContractorContract]
 menu: Contracting → Contractor Contracting → Contractor Contract
 ---
@@ -10,7 +11,7 @@ Structurally the two records are the same thing. The subcontract is built from t
 
 You will find it at **Contracting > Contractor Contracting > Contractor Contract**, under licence `contracting`.
 
-::: tip Master file, no term, nothing posted
+::: tip Master file, no term, no journal entry
 A subcontract has **no document book, no document code, no value date, no fiscal period and no document term (توجيه)** — it has a code, a group, an Arabic name and an English name. Because there is no term there are no accounts on it, so **saving or amending a subcontract produces no journal entry and no stock movement**. Cost and the payable reach the ledger only when a [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) is issued against it, using the accounts on the [standard terms](/modules/contracting/setup/contracting-standard-terms.md) and on the extract's own document term.
 :::
 
@@ -50,7 +51,7 @@ Then the familiar ones: **Project** and **Customer** — the *client's* project 
 
 The dates — contracting date, start, end, project period in days — and the **Payment Period** (مدة السداد) matter more here than they look: the payment period is what the extract uses to work out when his certificate falls due.
 
-Two blocks follow that are easy to skip past. The five **attachments** and the *calculate price from profit when save* checkbox sit together in an untitled group. And the **Accounts** and **Taxes** blocks make *the subcontract itself* an accounting subsidiary, so a company that wants each package's balance separately visible can post to the contract rather than to the contractor.
+Two blocks follow that are easy to skip past. The five **attachments** and the *calculate price from profit when save* checkbox sit together in an untitled group. And the **Accounts** and **Taxes** blocks make *the subcontract itself* an accounting subsidiary, so a company that wants each package's balance separately visible can record its entries on the contract rather than on the contractor.
 
 Then comes the part that has no owner-side equivalent, and it is the reason this screen is the first one a site accountant opens: **nine collapsible lists**, all filtered to this subcontract, sit directly on the main page rather than on a Statistics page.
 
@@ -81,7 +82,7 @@ Nothing on this screen pulls terms in — see [How a subcontract gets its conten
 
 ### The terms grid
 
-This is the bill of quantities you are buying, and it behaves exactly as it does on a project contract: every row points at a mandatory **Standard Term** which supplies the unit, the default rate and the accounts the extract will post to; dotted **term codes** form a tree in which only leaf rows carry money and parent rows are zeroed and re-totalled from their children on every save; **Treat As Detail** forces a heading term to behave as a priced line here; **Update Codes** and **Update Empty Term Codes Only** sit above the grid, the second being the safe one.
+This is the bill of quantities you are buying, and it behaves exactly as it does on a project contract: every row points at a mandatory **Standard Term** which supplies the unit, the default rate and the accounts the extract will record on; dotted **term codes** form a tree in which only leaf rows carry money and parent rows are zeroed and re-totalled from their children on every save; **Treat As Detail** forces a heading term to behave as a priced line here; **Update Codes** and **Update Empty Term Codes Only** sit above the grid, the second being the safe one.
 
 ![The terms and conditions page: the priced lines, the conditions, and the instalment schedule](../../../ar/modules/contracting/images/contractor-contracting/contractor-contract-terms-en.png)
 

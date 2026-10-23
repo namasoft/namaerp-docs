@@ -1,6 +1,6 @@
 ---
-description: "Three approval records around the contracting billing chain: Measurements Request (site visit before pricing), Customer Submittal (material approval) and Project Deliver Letter (handover); none of them books anything."
-entities: [MeasurementsRequest, CustomerSubmittal, ProjectDeliverLetter]
+description: "Records around the contracting billing chain: Application Form (the customer's fit-out request), Measurements Request (site visit before pricing), Customer Submittal (material approval) and Project Deliver Letter (handover); none of them books anything."
+entities: [MeasurementsRequest, ApplicationForm, AppFormElement, CustomerSubmittal, ProjectDeliverLetter]
 ---
 # Measurements, Submittals and Handover
 
@@ -8,13 +8,69 @@ Three documents sit around the edges of the billing chain: one before the contra
 
 Because two of them are filed in an unexpected place in the menu, each section says plainly where to click.
 
+Finishing and fit-out businesses that sell marble and stone work often start one step earlier still,
+with an **Application Form** that writes down what the customer wants before anyone is sent to
+measure. It comes first below.
+
+## Application Form — what the customer is asking for
+
+A customer walks into the showroom wanting a marble kitchen counter, a staircase in granite and a
+water-jet medallion in the hall floor. Before the measuring visit is booked, the salesperson writes
+that down area by area: which zone, which finish, roughly what price was quoted. The **Application
+Form** (نموذج طلب) is that sheet.
+
+| | |
+|---|---|
+| Menu | Sales → Documents → Application Form |
+| Kind | Document — no document term |
+| Licence | `contracting` |
+
+::: info It is under Sales in the menu
+Although it belongs to the contracting module, the Application Form and its **ApplForm Element**
+list sit under **Sales → Documents**, next to the sales invoice.
+:::
+
+**The header.** **Raise Format Request** says what kind of job this is: *Supply*, *Supply And
+Installation* or *Factory Recieving*. Then the **Client**, the **Client Interior** (the engineer on
+the customer's side, typed as text), the **Adress**, and three of your own employees: the **Sales
+Responsible**, the **Interior Engineer** and the **Site Engineer**.
+
+**Four tabs, one per kind of work.** Each tab repeats the header and holds one grid:
+
+| Tab | What a line records |
+|---|---|
+| Zones | An area of the job: Type, Price, finishing Code, height, and whether there is a Galaya (*Found* / *Not Found*). |
+| Stairs | A staircase: the stair, thickness, Price, finishing Code. |
+| Waterjet | A water-jet cut piece: description, place or region, Price. |
+| Conters | A counter top: its Type, thickness, eltakhana (edge thickness), Price and finishing Code, whether there is a Curtain or Mirrors, and where the Basin Slot is cut (*Water Jet* / *In Site*). |
+
+A fifth tab, **Another requests**, takes anything that fits none of the four (Type, Description,
+Price) and two free-text reports — one from the sales responsible and one from the site engineer.
+
+**ApplForm Elements fill the lines for you.** An **ApplForm Element** (بند نموذج طلب) is a small
+master file: a name, an **Element Type** (*Zone*, *Stairs*, *Waterjet* or *Conter*) and a
+**Details** list of titles. A "Kitchen" zone element might list *Floor*, *Walls* and *Back splash*.
+Each grid's **Element** column only offers elements of its own type, and picking one adds a line
+under it for every title in the element's list, ready for the price and finish. Set up one element
+per room or piece you sell often, and the form becomes a checklist instead of a blank page.
+
+**What saving does.** Nothing beyond storing the sheet — no ledger entry, no stock, no prices
+anywhere else. Its one link is forward: a [Measurements Request](#Measurements-Request----the-site-visit-before-the-price)
+can name the Application Form as its source, and once one does, the form is locked. Trying to
+save it again is refused with:
+
+*Cannot be updated, there is measurements request on it* — «لا يمكن التعديل حيث هناك طلب رفع مقاسات عليه»
+
+Correct the form before the measuring visit is booked, or remove the source from the measurements
+request first.
+
 ## Measurements Request — the site visit before the price
 
 You cannot price a fit-out contract from a drawing. Somebody has to go to the customer's premises with a tape measure and establish how many square metres of floor there actually are, how many openings, how many metres of skirting. The **Measurements Request** (طلب رفع مقاسات) is the document that asks for that visit and records that it happened.
 
 | | |
 |---|---|
-| Menu | Contracting > **Contractor Contracting** > Measurements Request |
+| Menu | Contracting → **Contractor Contracting** → Measurements Request |
 | Kind | Document — no document term, and nothing to configure on one |
 | Licence | `contracting` |
 
@@ -25,6 +81,11 @@ The measurements request is a customer-facing document — it is the front door 
 ![The measurements request: who is measuring, when, the delivery promise, and the customer's address](../../../ar/modules/contracting/images/project-contracting/measurements-request-main-en.png)
 
 **What is on it.** The **Project** and **Customer**. Four people: the supervisor who will do the measuring, the responsible engineer, the sales responsible and the salesman. Two appointments, each a date and a time — when the measuring will be done, and when the results are promised back. A **Recipient**, a **Status**, two attachments, and a description. Below that, a full address block including a map location, because somebody has to actually find the place.
+
+**Starting from an Application Form.** Fill the **Customer** first, then pick the customer's
+[Application Form](#Application-Form----what-the-customer-is-asking-for) in **From Document** — the
+list offers only that customer's forms. The request takes the form's sales responsible as its
+**Salesman**. From then on that form can no longer be changed.
 
 The grid at the bottom has just two columns, an attachment and a description. That is deliberate: **the measurement sheets are attached as files, not typed in as data.** The supervisor comes back with photographs of a marked-up drawing and a sketch on squared paper, and those go on as attachments, one row each.
 
@@ -40,7 +101,7 @@ On a specified job, the contractor does not simply buy tiles. He submits a speci
 
 | | |
 |---|---|
-| Menu | Contracting > Project Contracting > Customer Submittal |
+| Menu | Contracting → Project Contracting → Customer Submittal |
 | Kind | Document, with a document term |
 | Licence | `contracting` |
 
@@ -95,7 +156,7 @@ The **Project Deliver Letter** (خطاب تسليم مشروع) is the formal re
 
 | | |
 |---|---|
-| Menu | Contracting > **Contractor Contracting** > Project Deliver Letter |
+| Menu | Contracting → **Contractor Contracting** → Project Deliver Letter |
 | Kind | Document, with a document term |
 | Licence | `contracting` |
 

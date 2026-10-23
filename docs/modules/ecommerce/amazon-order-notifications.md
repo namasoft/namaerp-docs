@@ -1,6 +1,7 @@
 ---
 entities: [MAGMagentoSite]
 title: Amazon Order Notifications
+description: "Setting up Amazon order-change notifications so shipped Amazon orders become Sales Orders in Nama automatically: the AWS SQS queue and IAM user, the Amazon site settings in Nama, the scheduled polling task, and how to check it works."
 ---
 
 # Amazon Order Notifications

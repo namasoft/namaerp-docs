@@ -1,11 +1,12 @@
 ---
+description: "Document terms of the Production Order, Production Order Request, aggregated production orders, deliveries and closings, and the MRP planning document: required fields, allowed changes, costing, raw material issue requests, BOM choice by classifier and planned deliveries."
 entities: [ProductionOrder, ProductionOrderRequest, AggregatedProductionOrder, AggregatedProductDelivery, AggregatedProductionOrderClosing, MRPDocument]
 menu: Basic → Settings → Document Term
 ---
 
 # Production Order and Planning Document Terms
 
-Every manufacturing document has a **document term** (توجيه المستند) behind it, and the term is where most of the module's rules live: whether an order may be saved without a BOM, which book a generated delivery is written into, what posts to which account at order close. Two production orders that behave differently on the same screen almost always have different terms.
+Every manufacturing document has a **document term** (توجيه المستند) behind it, and the term is where most of the module's rules live: whether an order may be saved without a BOM, which book a generated delivery is written into, what is recorded on which account at order close. Two production orders that behave differently on the same screen almost always have different terms.
 
 This page covers the terms of the documents that *plan* production — the production order, its request, the three aggregated documents and the MRP planning document. The documents that record what happened on the floor are on [Execution and Delivery Document Terms](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery); materials are on [Raw Material Document Terms](/modules/manufacturing/document-terms/mfg-terms-materials); costing and accounting are on [Costing, Resource and Mold Document Terms](/modules/manufacturing/document-terms/mfg-terms-costing); and the carton screens on [Carton Document Terms](/modules/manufacturing/document-terms/mfg-terms-carton).
 
@@ -52,7 +53,7 @@ The production order term is the longest in the module, and the one most worth r
 | Option | What it does |
 |---|---|
 | **Overhead** (التكاليف الغير مباشرة) | The default overhead type for these orders. The order close voucher takes its overhead from the order close term first and falls back to this one. |
-| **Calculate Deviations With Save** (حساب الانحرافات مع الحفظ) | At order close, compares actual unit cost with standard unit cost and fills the close voucher's deviation figures — quantity, material, resource and overhead. The Order Close term's **Standard Deviation Debit / Credit** post only when this is on. |
+| **Calculate Deviations With Save** (حساب الانحرافات مع الحفظ) | At order close, compares actual unit cost with standard unit cost and fills the close voucher's deviation figures — quantity, material, resource and overhead. The Order Close term's **Standard Deviation Debit / Credit** are recorded only when this is on. |
 | **Cost Per Batch** | Costs the order separately for each lot delivered, instead of as one pool. **Lot ID** then becomes required on raw material issues, raw material returns and resource vouchers for the order. It cannot be combined with *Calculate Deviations With Save*: closing such an order fails with *Cost Per Batch Not Supported for deviation calculation*. The option's label is English on Arabic screens too. |
 
 Costing itself is explained on [Production Costing](/modules/manufacturing/production-costing).

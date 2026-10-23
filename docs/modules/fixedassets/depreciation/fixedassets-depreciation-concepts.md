@@ -1,3 +1,6 @@
+---
+description: "How Fixed Assets calculates depreciation: the two methods, the single per-period formula, life counted in periods, the full first period, the self-correcting schedule, when depreciation stops, and what a run needs before it touches an asset."
+---
 # How Depreciation Works
 
 Everything the Fixed Assets module does with depreciation comes out of a single line of arithmetic
@@ -155,7 +158,7 @@ or what the run is willing to collect:
   takes the carrying amount to zero, sets remaining life to zero and moves the asset to *Disposed*.
 
 That last one has a string attached, and it is worth knowing before you plan a disposal: the
-dependency runs both ways. A disposal reads the asset's posted balances rather than computing a
+dependency runs both ways. A disposal reads the asset's balances in the ledger rather than computing a
 catch-up instalment, so it refuses to commit while the asset's depreciation is behind — if a fiscal
 period has been left un-depreciated between the asset's last depreciation and the disposal, you have
 to run and process those periods first. See

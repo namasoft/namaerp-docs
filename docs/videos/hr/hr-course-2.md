@@ -1,3 +1,6 @@
+---
+description: "Notes for part 2 of the payroll training course: calculation formulas for social insurance, Egyptian tax brackets and deductions, performance indicators, attendance and shifts, absences, holidays, overtime and lateness, and missing fingerprint records."
+---
 # Detailed Explanation of the Payroll Management System in Nama ERP - 2
 
 # Detailed Video Content: Calculation Formulas and Performance Indicators in HR and Payroll Systems

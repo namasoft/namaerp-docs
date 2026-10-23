@@ -1,4 +1,5 @@
 ---
+description: "Contracting phases, phase groups and work areas: how phases mark milestones on a line of work and their five-slot limit, how a phase group serves as a progress-billing template for term lines, and how work areas record where on site the work is."
 entities: [ContractingPhase, ContractingPhasesGroup, ContrWorkArea]
 ---
 # Phases and Work Areas

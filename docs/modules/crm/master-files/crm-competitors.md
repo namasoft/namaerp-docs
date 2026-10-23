@@ -1,5 +1,7 @@
 ---
+description: "The Competitor Company and Competitor Company Item files: recording which rival and which of its products was quoted against yours, where these files are used, setting them up, and how to get the data back out."
 entities: [CRMCompetitor, CRMCompetitorItem]
+menu: Customer Relationship Management → Marketing → Competitor Company
 ---
 # Competitors
 

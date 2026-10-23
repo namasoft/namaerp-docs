@@ -26,7 +26,7 @@ What the record actually holds is: how long it may be booked for, how much of a 
 | Asset Value | قيمة الأصل | The asset's value, kept on the record for your own reference. Al-Sahra records 62,000 here. |
 | Service Item | صنف الخدمة | **Required.** The item that becomes the revenue line on every invoice generated for this asset. Al-Sahra uses `SRV-RENT-CAR` *Vehicle rental / تأجير مركبة*. |
 | Rest Time | فترة الراحة | A buffer in minutes added on **both** sides of every existing booking when the system checks for an overlap. Al-Sahra sets 60 — an hour to clean and refuel between customers. |
-| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Lets a booking through when the price tiers do not cover its whole duration. See [Pricing](#Pricing--a-tier-table-walked-in-order) below. |
+| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Lets a booking through when the price tiers do not cover its whole duration. See [Pricing](#Pricing----a-tier-table-walked-in-order) below. |
 | Default Number of Hours | عدد الساعات الافتراضي | Visible only when the installation prices By Hour. The booking length that fills in when someone picks this asset. |
 | Default Number of Days | عدد الأيام الافتراضي | Visible only when the installation prices By Day. |
 

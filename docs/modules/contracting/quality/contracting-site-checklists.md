@@ -20,7 +20,7 @@ What varies is the middle:
 
 A line list adapts to any job because you write the questions as you go. A questionnaire cannot be changed, but it guarantees the same twelve things get looked at every time. Both are useful; they simply suit different work.
 
-None of the eight has any behaviour: committing one posts nothing, moves nothing, and gates nothing. That is covered once on the [overview page](/modules/contracting/quality/contracting-quality-overview.md) and applies here without exception.
+None of the eight has any behaviour: committing one creates no journal entry, moves nothing, and gates nothing. That is covered once on the [overview page](/modules/contracting/quality/contracting-quality-overview.md) and applies here without exception.
 
 ## The Two General Activity Checklists
 

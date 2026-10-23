@@ -15,7 +15,7 @@ Treasury bills are part of the `accounting-investment-documents` license — the
 
 Every screen hangs off the **Banks > Treasury Bill** root:
 
-1. **Treasury Bill Purchase Document** — the starting point: it creates the bill automatically in "Running" status and posts its value to the ledger.
+1. **Treasury Bill Purchase Document** — the starting point: it creates the bill automatically in "Running" status and records its value in the ledger.
 2. **Treasury Bill ROI Proof Document** — locking in the due return periodically (allocated pro-rata to the elapsed time), with any tax on it.
 3. **Aggregate Treasury Bill Proof Document** — the batch version for proving the return on several bills at once.
 4. Then one of two mutually exclusive paths:
@@ -38,7 +38,7 @@ On the **Treasury Bill** screen (`Banks > Treasury Bill > Treasury Bill`) — wh
 
 ## Purchase and proving the return
 
-When a **Treasury Bill Purchase Document** (`Banks > Treasury Bill > Treasury Bill Purchase Document`) is recorded, the bill is created and its effect posts via the **current value debit/credit** sides.
+When a **Treasury Bill Purchase Document** (`Banks > Treasury Bill > Treasury Bill Purchase Document`) is recorded, the bill is created and its effect is recorded on the **current value debit/credit** sides.
 
 ![Treasury Bill Purchase screen](../../ar/modules/accounting/images/treasury/treasury-bill-purchase-en.png)
 

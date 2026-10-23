@@ -35,6 +35,8 @@ A **Security Profile** is a reusable permissions template. Typically you create 
 
 See [Security Profile](/platform/security/security-profiles.md) for the full walkthrough.
 
+![The Security Profile screen](../../ar/platform/security/images/security-profile-main-en.png)
+
 ### User
 
 The **User** record carries the login identity (user code, password, email), the link to an employee, and the assigned security profile — and, most importantly: **its own local copies of the same permission tables**: standard security lines, custom capabilities, field settings, page security, and extra filters.

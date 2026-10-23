@@ -1,5 +1,6 @@
 ---
-menu: Assets → Settings
+description: "The Fixed Assets module settings screen: the salvage floor, which dimensions reach the ledger and where they come from, period closing, purchase taxes, opening balances, creating asset records from documents and the disposal grid."
+menu: Assets → Settings → Fixed Assets Settings
 ---
 # Module Configuration
 

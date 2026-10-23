@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Documents & Details** tab — how stock document lines are laid out, which dimensions can be entered per line, the extra columns and grids you can add to documents, delivery handling, and warehouse/locator filtering.
 
+![The Documents & Details tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-documents-and-details-en.png)
+
 ## Dimensions & Warehouse on Lines
 
 By default a stock document carries one warehouse and one set of accounting dimensions for the whole document. These switches let each **line** carry its own value instead.

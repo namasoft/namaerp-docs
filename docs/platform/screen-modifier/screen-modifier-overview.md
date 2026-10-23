@@ -1,4 +1,5 @@
 ---
+description: "How the Screen Modifier changes a screen's default design without code: how a modifier is structured, choosing the screens it applies to, modify or copy, priority and activation, layout codes, saving to an Implementation Repository, and making changes take effect."
 entities: [ScreenModifier]
 menu: Administration → Display Customization → Screen Modifier
 ---
@@ -72,7 +73,7 @@ The **Modified Layout Id** field lets you state which existing layout your chang
 A few flags target screens other than the normal desktop edit screen:
 
 - **Use In Mobile and Tablet Devices** — the modifier applies to the mobile/tablet rendering of the screen rather than the desktop one.
-- **For Quick Creator View** — the modifier applies to the compact "quick create" pop-up used to create a record inline from another screen.
+- **For Quick Creator View** — the modifier applies to the compact "quick create" pop-up used to create a record inline from another screen (see [Quick Create and Quick Edit from a Field](/platform/everyday-tools/quick-create-and-quick-edit)).
 
 ## Layout codes and overriding the default
 

@@ -1,5 +1,6 @@
 ---
-entities: [HRIssuedVisas, HRVisasDelegation, HRVisaHandling]
+description: "Managing the company's pool of Gulf hiring visas: recording the quota with Issued Visas, allocating part of it to a PRO office with Visas Delegation, spending it with Visa Handling, and registering the hire's arrival with Employee Advent Registeration."
+entities: [HRIssuedVisas, HRVisasDelegation, HRVisaHandling, HREmpAdventRegisteration]
 ---
 # Visa Pool
 
@@ -8,13 +9,13 @@ Saudi / Gulf recruiting, those visas are not requested one at a time. A company 
 **pool** of hiring visas by nationality, job and other quotas, and the PRO desk's job is to manage
 that pool as a small piece of inventory: know how many visas of each kind are sitting in stock, hand
 a slice of them to a PRO office to work with, and record each one actually spent on a real
-government visa. Three documents model that funnel end to end: **Issued Visas** (the stock),
-**Visas Delegation** (allocating some of it to an office) and **Visa Handling** (spending an
-allocation on an actual visa).
+government visa. Four documents model that funnel end to end: **Issued Visas** (the stock),
+**Visas Delegation** (allocating some of it to an office), **Visa Handling** (spending an
+allocation on an actual visa) and **Employee Advent Registeration** (the hire has arrived).
 
 ::: info Gulf / KSA-specific
 This is a Saudi / Gulf recruitment procedure and needs the Gulf visa licence
-(`humanresource-gulf-visa`). Unlike the rest of the government-relations desk, these three
+(`humanresource-gulf-visa`). Unlike the rest of the government-relations desk, these four
 documents are not about an existing employee's paperwork — they track the company's own supply of
 hiring visas before anyone is hired. They are found under **Human Resources → Recruiting**, not
 **Administrative Transactions**.
@@ -65,8 +66,9 @@ at the header, then break the quantity down by job in the **Details** grid.
 | **Details** — Number Of Visas | عدد التأشيرات | How many visas of that job / nationality are being delegated. |
 
 Saving and committing the delegation moves that quantity out of **Remaining** and into **Under
-Delegation** on the matching Issued Visas row — Nama checks the same job-and-nationality
-combination exists in the stock and refuses the line if the remaining balance cannot cover it.
+Delegation** on the matching Issued Visas row. Nama checks that the same job-and-nationality
+combination exists in the stock and refuses the line if it does not (see
+*Messages you may see* below).
 
 ![Visas Delegation](../../../ar/modules/hr/images/government-relations/visa-delegation-en.png)
 
@@ -90,20 +92,51 @@ the same **Issued Visa** grant), and each **Details** line records the visa actu
 
 Committing a Visa Handling moves the quantity out of **Under Delegation** and into **Under
 Procedure** on the Issued Visas row — the visa has stopped being a mere allocation and has become a
-real, numbered visa in progress. A later step in the recruitment process (when the hire actually
-arrives) is what finally moves a visa from **Under Procedure** into **Finished**, closing out that
-unit of the pool for good.
+real, numbered visa in progress.
+
+## Step 3 — the hire arrives: Employee Advent Registeration
+
+**Employee Advent Registeration** (`تسجيل قدوم موظف`, *Human Resources → Recruting → Employee Advent
+Registeration*) is the last step of the funnel: the person has landed, cleared the border and
+joined. "Advent" here simply means *arrival*. You pick the **Issued Visa** grant once at the
+header, then add one **Details** line per arriving person — so a group that arrives on the same
+flight can be registered on one document.
+
+| Field (English) | Arabic label | Purpose |
+|---|---|---|
+| Issued Visa | التأشيرة الصادرة | The stock grant these hires' visas came from. |
+| **Details** — Employee / Employee Name | الموظف / إسم الموظف | The arriving person's employee file. Picking the employee fills in the name; you can type over it. |
+| **Details** — Nationality / job | الجنسية / الوظيفة | Which quota row of the grant this person used. Both are required to find the row. |
+| **Details** — Date Of Entry | تاريخ الدخول | The day the person entered the country. |
+| **Details** — Entrance Airport | مطار الدخول | Where they entered, as free text. |
+| **Details** — Visa Number / Border Number | رقم التأشيرة / رقم الحدود | The visa they travelled on and the border number they were given on entry. |
+
+At least one line is required. Each line counts as **one** visa: committing the document moves one
+visa per line from **Under Procedure** to **Finished** on the Issued Visas row that matches the
+line's job and nationality, closing out that unit of the pool for good. If the grant has no row for
+that job and nationality, the line is refused with the same message as a delegation.
+
+The arrival details stay on this document. Saving it does not change anything on the employee's own
+file, so the visa and border numbers still need to be entered there if you track them per
+employee.
 
 ## Actions on this screen
 
-**Issued Visas**, **Visas Delegation** and **Visa Handling** have no buttons of their own; you fill them in and save.
+**Issued Visas**, **Visas Delegation**, **Visa Handling** and **Employee Advent Registeration** have no buttons
+of their own; you fill them in and save.
 
 ## How it's processed
 
-None of the three documents in this funnel post to the general ledger — they move quantities
-between the counters on the Issued Visas stock row, not money. Saving and committing is instant,
-and cancelling or editing a Delegation or Handling reverses its quantity move on the same row, so
-the counters always reflect exactly what is currently allocated, in progress or finished.
+None of the documents in this funnel create ledger entries — they move quantities between the
+counters on the Issued Visas stock row, not money. Saving and committing is instant, and cancelling
+or editing a Delegation, Handling or Advent Registeration reverses its quantity move on the same
+row, so the counters always reflect exactly what is currently allocated, in progress or finished.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *Can not find visas for job {0} and nationality {1} in issued visa* — «لايوجد تاشيرات للوظيفه  {0} من الجنسية {1} فى التأشيرة الصادرة» | A Visas Delegation or Employee Advent Registeration line names a job and nationality that has no row on the chosen Issued Visas grant. | Correct the line's job or nationality, or pick the grant that holds that quota. |
 
 ## Related pages
 

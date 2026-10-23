@@ -120,7 +120,7 @@ These rebuild each asset's location and properties history — cost, additions a
 - **Recreate all entries and recalculate depreciation installments.** As above, and also recalculates the depreciation values on the documents and regenerates the accounting effect of every depreciation document.
 
   ::: danger Depreciation values WILL change
-  Every depreciation document is recalculated with today's rules and posts a new journal. Agree the result with the customer's accountant before running it on a closed year.
+  Every depreciation document is recalculated with today's rules and creates a new journal entry. Agree the result with the customer's accountant before running it on a closed year.
   :::
 
   <UtilityLinkBuilder

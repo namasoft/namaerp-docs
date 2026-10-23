@@ -1,9 +1,12 @@
 ---
+description: "Ready-made Entity Flow recipes: recalculating resource rates, editing a field two documents up, filling a receipt line, creating production order requests or purchase orders per line or supplier, recalculating attendance, expanding serial numbers, converting digits and deleting the source document."
 entities: [EntityFlow]
 menu: Administration → Display Customization → Entity Flow
 ---
 
 # Entity Flow Examples
+
+![An Entity Flow that runs after commit on stock issues, with retries](../../ar/platform/images/entity-flows/entity-flow-stock-cost-rebuild-en.png)
 
 ### Create an Entity Flow to change the resource rate in resource vouchers in the system (simulates the user clicking the "Recalculate Rate with Save" option in the resource voucher)
 Create an Entity Flow with the action "Manual" of type [`EAFieldsValuesCalculator`](/entity-flows/core/EAFieldsValuesCalculator) and place it in the edit screen. Enter the following in Parameter 1:

@@ -1,4 +1,5 @@
 ---
+description: "The Car Sales Return, the only way to undo a car sales invoice: what it reverses in money and stock, what it does not do, two points about its screen, and a worked example."
 entities: [SISalesReturn]
 menu: cars → Car Sales → Car Sales Return
 ---

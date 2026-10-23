@@ -1,4 +1,5 @@
 ---
+description: "The Freeze Processing Document, which stops anything dated before a set date from being changed or recalculated, and the Dates Overrider, which sets the issue and value dates a new document opens with: how each works and how a line is chosen."
 entities: [FreezeProcessingDoc, DatesOverrider]
 ---
 # Freezing the Past and Overriding Document Dates
@@ -14,7 +15,7 @@ record nobody remembers creating.
 **Accounting → Documents → Freeze Processing Document**
 
 Imagine the auditors have signed off the first half of the year. The figures are final, the tax
-returns are filed, and nobody should be able to post, edit or recalculate anything dated before
+returns are filed, and nobody should be able to record, edit or recalculate anything dated before
 30 June — but the year is not over, so there is no closing entry to draw that line. The **Freeze
 Processing Document** draws it.
 
@@ -57,7 +58,7 @@ the messages.
 
 ### Freeze document or closed period?
 
-Both stop people posting into the past, but they work differently. A closed **fiscal period**
+Both stop people recording transactions in the past, but they work differently. A closed **fiscal period**
 ([Fiscal Period Control](/platform/governance/fiscal-period-control-guide)) rejects new transactions in that
 period and can be re-opened from the **Fiscal Year** screen. A freeze document is a
 single date for the whole legal entity, also stops background recalculation, and only support can

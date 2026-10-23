@@ -8,6 +8,8 @@ Task Scheduler lets you automate recurring operations in Nama ERP. Whether you n
 
 A task starts running on its own schedule a few minutes after the server starts (see [Initial Delay](#Initial-Delay)), and you can also trigger any task instantly with the [Run Now](#Running-a-Task-on-Demand) button.
 
+![A Task Schedule record](../../ar/platform/images/automation-and-rules/task-schedule-screen-en.png)
+
 ## Understanding Task Types
 
 When you create a scheduled task, the first decision you'll make is choosing the **Schedule Type**. This determines what kind of action the task performs when it runs. Let's walk through each type:
@@ -144,7 +146,7 @@ You can't use both a **Query** and the **Params** grid on the same task. Choose 
 
 **Choosing the channel.** Each iteration respects two switches:
 - **Send As Mail** (on by default) → emails the rendered report.
-- **Send As Notification** → also posts the report to the recipients as an in-app notification.
+- **Send As Notification** → also sends the report to the recipients as an in-app notification.
 
 ::: tip Skip the email when an iteration has no data
 If you don't want a message sent for an iteration whose report comes out empty, control this in the **report template (JasperReports)** itself rather than in the task. Set the template's **"When No Data"** behavior to **No Pages** (instead of "Blank Page" or a "No Data" section). A report that produces no pages generates nothing to attach, so that recipient is simply skipped—no empty email goes out. This applies to the plain **Report** type as well.
@@ -253,12 +255,13 @@ You can customize email subjects and attachment filenames using templates with p
 - **Attachment Name Query** — a SQL query that supplies values for the attachment name.
 
 ### Output Format
-Choose the format for email attachments:
-- HTML
-- PDF
-- Excel
-- Word
-- CSV
+**Attached File Format** picks the format of the report file attached to the email; left empty, it is HTML:
+- HTML, PDF
+- Excel (XLSX, XLS), Word (DOCX), RTF, PowerPoint (PPTX), OpenDocument (ODT, ODS)
+- TXT — the report laid out as plain text
+- CSV — the report's grid as comma-separated values
+- JSON — one entry per printed line of the report, with its cells lined up under the column headers; useful when the
+  file is read by another system rather than by a person
 
 ### Preferred Email Sender
 Select a specific configured email sender to use for outgoing emails from this task.
@@ -348,6 +351,8 @@ Tasks can be saved to the Implementation Repository for deployment across enviro
 For Parameterized Report tasks, you can define the parameter rows in the **Params** grid instead of a SQL query. Each line specifies:
 - **Send To** — the recipient (a reference or email) for this parameter set.
 - **P1 through P15** — the parameter values. Each can be a reference, a date/time, a static value, or a dynamic expression evaluated against the task.
+
+For a report parameter that accepts several values, save the values once as a [Multi Value Report Parameter](/platform/reports/multi-value-report-parameters) and pick that record in the slot's **Ref** column.
 
 ::: warning
 You cannot use both a Query and the Params collection on the same task. Choose one approach.

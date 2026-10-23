@@ -14,6 +14,8 @@ Open the document's **Document Term** (توجيه), then the **Reservation** gro
 The core `reserve*` fields below are **excluded** for `StockReceipt`, `StockIssue`, and the three transfer documents (`ReceiptStockTransfer`, `IssueStockTransfer`, `StockTransfer`). The delivery-password fields apply to **Delivery Document terms only**.
 :::
 
+![The Reservation tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-reservation-and-delivery-en.png)
+
 ## Reservation Behavior
 
 These six options are added for all inventory document terms and govern how reservations are sequenced, cancelled, and updated across linked documents.

@@ -1,10 +1,12 @@
 ---
-menu: Module Configurations → Account Configurations
+menu: Accounting → Settings → Accounting Configurations
 ---
 
 # Accounting Configuration (module option catalog)
 
-Many of the accounting module's behaviors aren't coded — they're **configured** from the accounting module's configuration screen (Module Configurations → Account Configurations). This page is a reference catalog of the most important of these options, grouped by purpose: what each option does, and which behavior it changes. It's designed to answer the recurring support question: "where do I set this behavior?"
+Many of the accounting module's behaviors aren't coded — they're **configured** from the accounting module's configuration screen (Accounting → Settings → Accounting Configurations). This page is a reference catalog of the most important of these options, grouped by purpose: what each option does, and which behavior it changes. It's designed to answer the recurring support question: "where do I set this behavior?"
+
+![The Account Configurations tab of Accounting Configurations](../../../ar/modules/accounting/images/setup/accounting-configuration-screen-en.png)
 
 ## Dimensions in details
 

@@ -1,4 +1,5 @@
 ---
+description: "The CRM internal risk register: the SMF Problem Declaration, Solution Suggestion and Initial Operation documents, the three scoring factors and the priority number, and what the register does not connect to."
 entities: [SMFProblemDeclarationDoc, SMFSolutionSuggestionDoc, SMFInitialOperationDoc]
 ---
 # CRM Risk Register

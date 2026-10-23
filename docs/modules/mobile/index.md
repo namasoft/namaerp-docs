@@ -44,6 +44,10 @@ features:
     title: Mobile QR Integrator
     details: The system's response to scanned QR codes to create and update entities and run custom actions dynamically
     link: /modules/mobile/mobile-qr-integrator
+  - icon: 🎫
+    title: Service Queue App
+    details: The reception devices of a Service Center — ticket tablet, waiting-room screen, advisor desks and customer check-in — installing them and choosing each one's role
+    link: /modules/mobile/mobile-service-queue-app
 ---
 
 ## One app for every field team

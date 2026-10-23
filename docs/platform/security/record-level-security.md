@@ -39,7 +39,7 @@ Inside the user screen you will find:
 - **Login Context** — the default set of five dimensions the session starts with.
 - **Login Context Table** — complete alternative sets the user can switch between at login (for example, an accountant who serves two branches).
 - **Prevent Modify Context** — when enabled the user *cannot* choose freely at login; they are restricted to the header dimensions or one of the table rows. The system then requires every set to be fully filled in, and every value must fall within the user record's own dimensions.
-- When not enabled, the login context works as a default only, and the user can adjust their session dimensions after login (within their record's dimensions).
+- When not enabled, the login context works as a default only, and the user can adjust their session dimensions after login (within their record's dimensions) from the dimensions switcher on the top bar — see [Changing company, branch or department](/platform/everyday-tools/top-bar-and-user-menu#Changing-company-branch-or-department).
 
 ::: tip Start restrictions at the user record
 Setting the user record's dimensions (for example Branch = Jeddah) is the strongest fence: all login contexts — and therefore everything the user creates and sees — must fall within them. Leaving the user dimensions public and relying solely on the login context gives more flexibility, at the cost of letting the user switch their own context.

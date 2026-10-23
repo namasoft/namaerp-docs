@@ -64,6 +64,8 @@ Nama ships some help of its own the same way, and a user can be opted out of the
 **Do Not Display System Help Messages** (عدم عرض رسائل المساعدة النظاميه) on their user record or
 security profile — which does not affect the help your own implementation wrote.
 
+![An Entity Help record with field explanations](../../ar/platform/images/automation-and-rules/entity-help-screen-en.png)
+
 ## Permission and authority
 
 Refusals from the security layer name the permission, not the row that withheld it. The row is

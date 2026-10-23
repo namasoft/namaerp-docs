@@ -1,4 +1,5 @@
 ---
+description: "The Production Execution document: recording each operation step's output as to-move, rejected, scrap or sample quantities, filling lines and time, auto-delivery, the issues, resource vouchers, quality documents and deliveries that committing generates, and common scenarios."
 entities: [ProductionExecution]
 menu: Manufacturing → Documents → Production Execution
 ---

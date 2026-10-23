@@ -1,4 +1,5 @@
 ---
+description: "Following an employee's Gulf health insurance from start to end: the policy and insurance offer, enrolling employees and dependants, medical claims, mid-term category upgrades, moving a batch to a new insurer with Credence, and removing someone from the insurance."
 entities: [EmployeeHealthInsurance, HealthInsuranceOffer, HealthInsuranceClaimDoc, HealthInsuranceUpgrade, HealthInsuranceCredence, EmpHealthInsurDelete]
 ---
 # Employee Health Insurance
@@ -41,7 +42,7 @@ Period** (From Date / To Date) the quote covers, and note the insurer's own refe
 — a free-text field, not a link to the Social Insurance Policy master file above.
 
 The offer's **Details** grid is the actual price list: one line per combination of **Insurance
-Category** (the tier — VIP Plus, VIP, A, AA, B, B Plus, C, CC), who it insures (**Insured
+Category** (the tier — VIP Plus, VIP, A, AA, B, B Plus, C, CC, or the spare tiers Other 1 to Other 5), who it insures (**Insured
 From** — Employees, Wifes, Husbands, Childrens, and so on down to named children Child 1–5), an
 age bracket (**Age | From/To**), and **Gender**. Each line carries its own **Value**, the resulting
 **Total Cost**, and a **Coverage** cap (percentage and/or maximum value) — the portion the insurer
@@ -52,7 +53,7 @@ pays versus what falls back on the company or employee.
 | Type | النوع | Insurance line of business — choose Healthy for this area. |
 | Policy | الوثيقة | The insurer's own reference number (free text). |
 | Insurance Period | فترة التأمين | The from/to dates this quote covers. |
-| Insurance Category | فئة التأمين | The coverage tier (VIP Plus, VIP, A, AA, B, B Plus, C, CC). |
+| Insurance Category | فئة التأمين | The coverage tier (VIP Plus, VIP, A, AA, B, B Plus, C, CC, Other 1 to Other 5). |
 | Insured From | المؤمن عليهم من | Who this price line covers — employee, spouse, child, etc. |
 | Coverage | التحمل | The percentage and/or maximum value the insurer covers on this line. |
 
@@ -206,17 +207,17 @@ The **Health Insurance Offer**, the **Health Insurance Claim Document** and the 
 ## How it's processed
 
 Every document on this page — enrolment, upgrade, credence and deletion — shares the same
-underlying accounting logic and posts through the term's configured sides: a **covering**
+underlying accounting logic and records its entry on the term's configured sides: a **covering**
 debit/credit pair for the base premium, a matching **tax** debit/credit pair, an **employee tax**
 pair for any tax portion recovered from the employee, and — where **Administrative Fees** were
 filled in — their own **Administrative Fees Value** and **Administrative Fees Tax Value**
-debit/credit pairs. The **Health Insurance Upgrade** additionally posts a **Previous Insurance
+debit/credit pairs. The **Health Insurance Upgrade** additionally records a **Previous Insurance
 Category** debit/credit pair and a **Refund Tax** pair for the value credited back from the old
 tier. All of it runs as a background **business request** with a **processing status**, exactly like
-postings elsewhere in Nama — retry a failed one from the **Business Requests** view rather than
+accounting effects elsewhere in Nama — retry a failed one from the **Business Requests** view rather than
 re-saving the document.
 
-The **Health Insurance Claim Document** posts separately and more simply: a single **Credit 2** /
+The **Health Insurance Claim Document** is recorded separately and more simply: a single **Credit 2** /
 **Debit 2** pair sized to the claim's **Repaid Total Amount**, moving the reimbursed medical cost
 between the accounts configured on the claim document's own term.
 
@@ -226,7 +227,7 @@ between the accounts configured on the claim document's own term.
 |---|---|---|
 | *Employee {0} is repeated in line {1}* — «الموظف {0} مكرر فى السطر رقم {1}» | The same employee appears twice in the details grid under the same name — one enrolment line per person (attendants are separate lines with their own names). | Delete the duplicate line, or correct the name if the second line is meant to be a dependant. |
 | *The employee {0} Has valid Health Insurance* — «الموظف {0} لم ينتهى تأمينه بعد» | The employee's current health-insurance cover has not expired yet at this document's value date, so enrolling them again would leave two overlapping covers. | Wait until the current cover ends, remove the employee from the existing policy first, or use the upgrade document if the aim is a better category. |
-| *Cant upgrade To Low or same Category* — «لايمكن الترقية إلى نفس الفئة او فئة اقل» | On a Health Insurance Upgrade line the **New Category** is the same as, or lower than, the employee's present one. The ladder runs B, B+, A, AA, VIP, VIP+. | Pick a higher category, or drop the line — moving someone down is done by removing them and re-enrolling, not by an upgrade. |
+| *Cant upgrade To Low or same Category* — «لايمكن الترقية إلى نفس الفئة او فئة اقل» | On a Health Insurance Upgrade line the **New Category** is the same as, or lower than, the employee's present one. The ladder runs C, CC, B, B+, A, AA, VIP, VIP+, then Other 1 up to Other 5, so every Other tier counts as higher than VIP+. | Pick a higher category, or drop the line — moving someone down is done by removing them and re-enrolling, not by an upgrade. |
 
 ## Related pages
 

@@ -91,7 +91,7 @@ more than usual. Treat fuel as a property of the route, not of the journey.
 A trip has **no** connection to anything else in Service Center. It does not link to a
 [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md), a
 [service request](/modules/servicecenter/job-cycle/servicecenter-service-request.md) or the courier
-delivery documents. It creates no document, posts nothing to the ledger and moves no stock. And
+delivery documents. It creates no document, creates no journal entry and moves no stock. And
 although it records two odometer readings, it does **not** update the vehicle's odometer on the
 vehicle file —
 [service intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md)

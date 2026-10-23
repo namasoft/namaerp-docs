@@ -1,4 +1,5 @@
 ---
+description: "Reference for the EnhancedMetricsCard and legacy MetricsCards dashboard widgets: when to use which, the JSON configuration, mapping rows to cards, partition mode and sparklines, Tempo subtitles, conditional backgrounds and icons, interactions, wizard mode and the designer."
 entities: [DashBoardWidget]
 menu: Administration → DashBoards → DashBoard Widget
 ---

@@ -1,4 +1,5 @@
 ---
+description: "Why an Entity Flow did not run: the checks the system makes in order, from the flow's target and the user's action to header conditions, the line switch and background runs, plus the order flows run in, failed saves and the messages you may see."
 entities: [EntityFlow]
 menu: Administration → Display Customization → Entity Flow
 ---

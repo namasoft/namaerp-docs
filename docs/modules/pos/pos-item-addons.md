@@ -23,6 +23,16 @@ An item can have up to **ten groups** of add-ons, each with its own title in the
 
 ![Required add-on prompt](../../ar/modules/pos/images/addons/pos-addons-required-en.png)
 
+### Buttons on the add-ons dialog
+
+The dialog's title reads **Additional Items** («الاصناف الإضافية للصنف») followed by the item's name. Each choice is a button of its own: tap it to select it, tap it again to clear it. In a single-choice group, selecting one choice clears the others.
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Previous** / **Next** | «السابق» / «التالي» | Shown on a group's title bar when the group has browse buttons: move one page back or forward through that group's choices. |
+| **Confirm** | «تأكيد» | Checks that every required group has a choice, then applies the selection: each chosen extra is added to the invoice as its own line with quantity 1, and a chosen size, colour or revision is set on the item's own line. |
+| **Cancel** | «إلغاء» | Closes the dialog. The item stays on the invoice without any add-ons. |
+
 ## Sizes, colours and revisions
 
 Beyond free-form groups, an item can also offer its built-in **sizes**, **colours**, and **revisions** (variants) as choices in the same dialog. Each can be shown by name, by code, or both, and in the order your business prefers. This is how a clothing store rings up "blue, medium" or a workshop picks the right variant of a part.

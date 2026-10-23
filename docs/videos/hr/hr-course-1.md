@@ -1,3 +1,6 @@
+---
+description: "Notes for part 1 of the payroll training course: salary components and component types, fixed and variable items, absences, bonuses, penalties and advances, the base for tax and insurance, rounding, priority and order, and the accounting effect of components."
+---
 # Detailed Explanation of the Payroll Management System in Nama ERP - 1
 > A comprehensive tutorial video on payroll management details, salary components, advances, bonuses, penalties, and calculation formulas in Nama ERP  
 > [Watch the video on YouTube](https://youtu.be/LYDjJMvG2JQ)

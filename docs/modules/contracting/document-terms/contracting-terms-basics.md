@@ -4,9 +4,9 @@ menu: Basic → Settings → Document Term
 ---
 # Document Terms Basics
 
-A **document term** (توجيه المستند) is the small configuration record that tells one document type how to behave — and, above everything else in Contracting, **which accounts it posts to**. The accounts are not on the document and not on the contract: they live on the term. So when a project extract debits the owner's receivable and credits contract revenue, it is because someone once set those two accounts on the extract's term.
+A **document term** (توجيه المستند) is the small configuration record that tells one document type how to behave — and, above everything else in Contracting, **which accounts it records its entries on**. The accounts are not on the document and not on the contract: they live on the term. So when a project extract debits the owner's receivable and credits contract revenue, it is because someone once set those two accounts on the extract's term.
 
-The consequence is worth stating before anything else: **a document whose term has no accounts on it posts nothing.** It will save, it will commit, it will show correct totals on screen, and the ledger will stay silent. In a module where [signing a contract books nothing and the extract books everything](/modules/contracting/contracting-overview.md), a half-configured extract term is the single most common reason a support call begins with "the contract is signed, the extract is committed, and the accountant says nothing arrived".
+The consequence is worth stating before anything else: **a document whose term has no accounts on it creates no journal entry.** It will save, it will commit, it will show correct totals on screen, and the ledger will stay silent. In a module where [signing a contract books nothing and the extract books everything](/modules/contracting/contracting-overview.md), a half-configured extract term is the single most common reason a support call begins with "the contract is signed, the extract is committed, and the accountant says nothing arrived".
 
 Terms are also where a business keeps its variants. One project extract term for ordinary interim certificates, another that collects advances and fines automatically on save, a third for a joint venture that reports to a different revenue account — same document type, three terms, and the user picks one in the document's **Document Term** field. This page covers what every contracting term has in common; the pages after it take the terms document family by document family.
 
@@ -46,7 +46,7 @@ This is the fact that surprises implementers most, and it makes contracting term
 On an extract, before Nama uses the term's debit and credit for a detail line, it looks at the line's **standard term** (بند قياسي). If that catalogue record carries its own debit or credit account, **the standard term wins for that line**. So a chart of accounts can be driven per work item — excavation to an earthworks revenue account, concrete to a concrete revenue account — from the [standard-term catalogue](/modules/contracting/setup/contracting-standard-terms.md), while the document term supplies only the fallback for terms that have nothing of their own.
 
 ::: tip Set the fallback on the term, the exceptions on the standard terms
-Put the general-purpose accounts on the document term so that nothing can post to nowhere, then override only the handful of work items that genuinely need their own account. A term with a blank debit and a standard-term catalogue that is also blank in places is how lines go missing from a journal entry.
+Put the general-purpose accounts on the document term so that no amount is ever left without an account, then override only the handful of work items that genuinely need their own account. A term with a blank debit and a standard-term catalogue that is also blank in places is how lines go missing from a journal entry.
 :::
 
 ## Conditions bring their own accounts
@@ -57,9 +57,9 @@ Both arrangements work. The choice is presentational: a dedicated *retention pay
 
 ## The effects are processed in the background
 
-Nothing on a term posts synchronously. When a contracting document is committed it raises a **business request** (طلب أعمال) which is processed in the background, so the save returns immediately whether or not the accounts resolve. A term with an account that cannot be resolved therefore produces a *failed business request*, not a failed save.
+Nothing on a term takes effect synchronously. When a contracting document is committed it raises a **business request** (طلب أعمال) which is processed in the background, so the save returns immediately whether or not the accounts resolve. A term with an account that cannot be resolved therefore produces a *failed business request*, not a failed save.
 
-Power users watch and retry these from the **Business Requests** list view: filter by processing status, select the failed rows, then **More → Reprocess** or **Recommit**. Fix the term first, then reprocess — the request is re-used rather than duplicated, so a document does not end up posted twice.
+Power users watch and retry these from the **Business Requests** list view: filter by processing status, select the failed rows, then **More → Reprocess** or **Recommit**. Fix the term first, then reprocess — the request is re-used rather than duplicated, so a document does not end up with two journal entries.
 
 ## Which documents have contracting term options
 
@@ -92,13 +92,13 @@ For everything shared, read the supply chain term reference: [General](/modules/
 - Term Sheet, Contracting Job Order, Customer Submittal, Measurements Request, Daily Engineering Doings, Project Deliver Letter
 - Every document in the Quality family
 
-That list is not an oversight. None of those documents reaches the ledger, so none of them needs accounts. It is also the reason the answer to *"which term makes my contract post?"* is always **the extract's**.
+That list is not an oversight. None of those documents reaches the ledger, so none of them needs accounts. It is also the reason the answer to *"which term makes my contract create a journal entry?"* is always **the extract's**.
 
 ## Worked example — one term for the Tower A extracts
 
 Tower A is a residential tower contracted with **Al-Fanar Development** at **230,000** on contract `PC-2026-001`, across four work items: excavation `1.01` (1,000 m³ at 50), reinforced concrete `2.01` (60 m³ at 900), blockwork `3.01` (2,000 m² at 46) and plastering `3.02` (1,000 m² at 34). The contract carries a 10% retention condition and the owner has paid a 46,000 advance.
 
-One term, code `EXT-STD`, targeted at Project Contract Extract, is all that is needed to make every extract on that contract post:
+One term, code `EXT-STD`, targeted at Project Contract Extract, is all that is needed to make every extract on that contract create its journal entry:
 
 | On the term | Set to | Why |
 |---|---|---|
@@ -114,6 +114,6 @@ The first extract certifies 400 m³ of excavation, 20 m³ of concrete and 500 m�
 
 ## Where to go next
 
-- [Extract Document Terms](/modules/contracting/document-terms/contracting-terms-extracts.md) — the two extract screens, what each posting is for, and the pricing modes
+- [Extract Document Terms](/modules/contracting/document-terms/contracting-terms-extracts.md) — the two extract screens, what each effect group is for, and the pricing modes
 - [Material and Payment Document Terms](/modules/contracting/document-terms/contracting-terms-materials.md) — material issues and returns on both sides, advances and fines
 - [Other Contracting Document Terms](/modules/contracting/document-terms/contracting-terms-other.md) — cost execution, labour, equipment, purchasing, miscellaneous spend, the analysis card and the assay

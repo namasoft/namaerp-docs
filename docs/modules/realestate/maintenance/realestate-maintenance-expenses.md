@@ -28,7 +28,7 @@ the `realestate` licence.
 
 What it deliberately does **not** have is just as important:
 
-- **no document term and no accounting effect** — nothing is posted, no ledger line exists, nothing
+- **no document term and no accounting effect** — no entry is created, no ledger line exists, nothing
   is committed to a supplier;
 - **no payment voucher buttons** — you cannot pay from a request;
 - **no distribution** — nothing is spread over units yet.
@@ -113,12 +113,12 @@ document is pushed to the tax authority or offered for online payment, the amoun
 **only the customer's share** — the company's share never appears on the invoice. Set the split
 before you send anything.
 
-## What gets posted
+## What gets recorded
 
 When the expense is saved, its accounting effect is created as a business request processed in the
 background. Working from each **detail line**, five independent debit/credit pairs are available:
 
-| The value posted | Comes from |
+| The value recorded | Comes from |
 |---|---|
 | the line value | the main debit and credit pair on the term |
 | tax 1 value | the tax 1 pair |
@@ -202,7 +202,7 @@ the cost belongs to*. They answer different questions and are not combined.
 ## The lift, end to end
 
 1. The site manager raises a request against Building C: one line, lift controller card, 4,200,
-   quotes attached, company endure 100%. Nothing is posted.
+   quotes attached, company endure 100%. No entry is created.
 2. The request is approved and the property manager creates the Maintenance Expense from it — every
    line copies across.
 3. Committing books 4,200 to the maintenance-cost account against the lift company, and the

@@ -1,4 +1,5 @@
 ---
+description: "The Executive Budget Item Request: how the site asks to purchase raw materials approved on the executive budget, what kind of document it is, whether the budget stops overspending, its quantity limits, and the messages it can show."
 entities: [ExecutiveBudgetItemRequest]
 menu: Contracting → Project Contracting → Executive Budget Item Request
 ---

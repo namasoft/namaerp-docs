@@ -1,10 +1,13 @@
+---
+description: "Answers to the questions that come up most on live Contracting installations: why a contract books nothing, where an extract's journal entry is, whether execution is required, extract versus execution values, budgets, subcontractor material deductions and project cost."
+---
 # Contracting FAQ
 
 These are the questions that come up again and again on live Contracting installations. Most of them have the same root: the module separates the *agreement* from the *money*, and separates *what was built* from *what is being billed*. Once those two separations are clear, the rest follows.
 
 The examples below use the same contract as the rest of the documentation: **Tower A**, a 230,000 project contract with **Al-Fanar Development**, 10% retention and a 46,000 advance.
 
-## Why did my contract not post anything?
+## Why did my contract not create any journal entry?
 
 Because a project contract is not meant to. It is a **master file**, not a document: it has a code and a name rather than a book and a value date, it has no document term (توجيه), and signing it — even for 230,000 — produces no journal entry, no receivable and no stock movement. The same is true of a subcontract and of a subcontractor offer. Money reaches the ledger only when an **extract** (مستخلص) is issued against the contract, using the accounts on the standard terms and on the extract's own document term. If you are looking for the contract's financial footprint, look at its extracts: [Project Contracts](/modules/contracting/project-contracting/contracting-project-contract.md) and [Project Extracts](/modules/contracting/project-contracting/contracting-project-extracts.md).
 
@@ -52,4 +55,4 @@ There isn't one, and this is the setup step people miss most often. Terms reach 
 
 ## Does approving a quality inspection unblock anything?
 
-No. The quality family — ITPs and their registers, concrete inspections, checklists, pressure tests, material receipt inspections — records what was inspected and who signed it off. None of those records gates an extract, a material issue or a payment, and none of them posts anything. They are the electronic version of the paper forms the site keeps, and they are valuable for exactly that reason; just do not build a process that expects an unapproved inspection to stop work downstream. Note also that most of the group needs the separate `contracting-qc` licence, while three of the screens in the same menu group need only `contracting`. See [Site Quality Control](/modules/contracting/quality/contracting-quality-overview.md).
+No. The quality family — ITPs and their registers, concrete inspections, checklists, pressure tests, material receipt inspections — records what was inspected and who signed it off. None of those records gates an extract, a material issue or a payment, and none of them creates a journal entry. They are the electronic version of the paper forms the site keeps, and they are valuable for exactly that reason; just do not build a process that expects an unapproved inspection to stop work downstream. Note also that most of the group needs the separate `contracting-qc` licence, while three of the screens in the same menu group need only `contracting`. See [Site Quality Control](/modules/contracting/quality/contracting-quality-overview.md).

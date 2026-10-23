@@ -1,4 +1,5 @@
 ---
+description: "مستند تمديد مرحلة مشروع: كيف يُسجَّل تأخير المرحلة على مستند مرحلة المشروع دون تعديل تواريخه المستهدفة، وماذا يغيّر اعتماده، وأسباب التمديد وأنواعها."
 entities: [CPAProjectStageExtension, CPAStageExtensionReason, CPAStageExtensionReasonType]
 menu: ادارة المشاريع ← مشاريع ← تمديد مرحلة مشروع
 ---

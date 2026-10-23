@@ -66,7 +66,7 @@ sales contracts, opening sales, collect documents, waivers on both the owner and
 reservations, the buildings, units, squares, blocks and plots they own, their fund investments and
 their transactions.
 
-## Individual and Group — how joint ownership is posted
+## Individual and Group — how joint ownership is recorded
 
 The **owner type** field has two values, *Individual* (فرد) and *Group* (مجموعة), and a new record
 starts as *Individual*. The choice does something real.
@@ -98,7 +98,7 @@ deliberately.
 ::: tip Two different "shares" grids
 The *Owners details* grid on the **party** record splits **money** — it is what the accounting
 follows. The similarly-named *Owner Details* grid on a **block** or a **land plot** records
-percentages of the physical property for reference. If you need the postings split, it is the party
+percentages of the physical property for reference. If you need the ledger lines split, it is the party
 record you edit.
 :::
 

@@ -4,7 +4,7 @@ entities: [RevisionDoc, DetailedRevisionConfig]
 ---
 # Revise and Unrevise
 
-Every business has records that someone other than the person who entered them is supposed to look at. The storekeeper writes the issue voucher, the stores supervisor checks it. The accountant posts the payment, the financial manager glances over it before month-end. Nama gives that "someone checked this" moment a formal place: **revising** a record.
+Every business has records that someone other than the person who entered them is supposed to look at. The storekeeper writes the issue voucher, the stores supervisor checks it. The accountant records the payment, the financial manager glances over it before month-end. Nama gives that "someone checked this" moment a formal place: **revising** a record.
 
 Revising is deliberately lighter than an approval cycle. An approval happens *before* a document takes effect — it routes the document to people, collects decisions, and can send it back. Revising happens *after* the record is already committed and working: nothing is routed, nothing is pending, and the record's effects are already in the ledger and in the warehouse. What revising adds is a stamp — a named person, a date, and a lock that stops anyone from quietly changing the record afterwards.
 
@@ -22,7 +22,7 @@ Once you revise, three things happen:
 
 **Unrevising** is the exact mirror: it steps the record back down one level, and once it reaches zero the record is editable again. Someone who revised at L2 gives back L2; the L1 sign-off underneath stays until its own owner takes it back.
 
-::: tip Revising is not posting
+::: tip Revising is not processing
 A revised document has already done its work — the journal entry and the stock movement happened when it was committed. Revising changes nothing about the document's effects; it only records that a human checked it and freezes it in that state.
 :::
 
@@ -74,7 +74,7 @@ The revise buttons act on one record at a time and leave nothing behind but a hi
 
 You will find it under **Basic → Documents → Revision Document**. Choose the **Revision Type** — *Revise* or *UnRevise* — then list the records in the **Details** grid, one **Revised Record** per line, with optional remarks. Committing the document applies the chosen action to every listed record; deleting or cancelling it reverses what it did, so a revision document taken back also takes back the sign-offs it granted.
 
-If you want *all* revising to go through documents, turn on **Use Revise Document for All Entities** in Global Configuration, or tick the same option for individual entity types in the Revise Levels table. The plain Revise button then steps aside and the record's More menu offers **Create Revision Document**, **Create Unrevision Document** and **View Revision Documents** instead.
+If you want *all* revising to go through documents, turn on **Use Revision Document For All Entities** in Global Configuration, or tick the same option for individual entity types in the Revise Levels table. The plain Revise button then steps aside and the record's More menu offers **Create Revision Document**, **Create Unrevision Document** and **View Revision Documents** instead.
 
 ::: tip Revising in bulk from a query
 For clean-up campaigns — "seal every sales invoice older than two days" — there is an entity flow, [EAReviseUnReviseFromQuery](/entity-flows/core/EAReviseUnReviseFromQuery), that revises or unrevises everything a query returns. Run it from a scheduled task when you need it to happen unattended.

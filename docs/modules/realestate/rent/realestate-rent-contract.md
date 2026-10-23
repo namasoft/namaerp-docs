@@ -1,4 +1,5 @@
 ---
+description: "The Rent Contract screen page by page: contract values, the Rents payment schedule grid, fees, yearly discounts and increases, terms, what committing it does and its accounting entry, and the validations you will meet."
 entities: [RERentContract]
 menu: Real Estate and Property → Rents → Rent Contract
 ---

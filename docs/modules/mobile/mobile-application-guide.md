@@ -1,4 +1,5 @@
 ---
+description: "Getting started with the Nama Mobile app: logging in and connecting to the server, the home screen, menu and module groups, approvals and notifications, settings, customising the menu and shortcut cards, offline syncing, and the server settings that control the app."
 entities: [MobileAppMenuDefinition, MobileAppShortcut]
 ---
 

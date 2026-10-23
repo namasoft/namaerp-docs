@@ -104,6 +104,8 @@ The twenty slots belong to the entity type, not to the line. If two lines both n
 To retire one calculated field, clear its query or delete the line. To switch off everything at once, tick **Inactive** on the whole record — every calculated field and row colour in that record stops immediately.
 :::
 
+![The calculated Fields Queries grid](../../ar/platform/images/fields-settings/fields-settings-calculated-fields-grid-en.png)
+
 ## Style Overrider Details
 
 Numbers in a grid have to be read. Colour does not. A purchase order whose lines are half received, a claim grid where two rows are past their due date, a lines grid where one item is below its minimum stock — all of these are obvious in a fraction of a second if the row is painted, and invisible if it is not.
@@ -141,6 +143,37 @@ A calculated field line and a row-colour line for the same entity and the same g
 ::: info Row colouring is for grids, not for the record file
 This grid paints the rows of a grid **inside an edit screen**. It is not the way to colour rows in a record file's list view. If what you want is "show me the overdue invoices", a saved filter on the record file or a dashboard widget is the right tool — see [Quick Filters](/platform/list-views/quick-filters) and the [BI Module](/platform/bi/bi-module-guide).
 :::
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `queryBasedScreenField` | calculated Fields Queries | استعلامات الحقول المحسوبة | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.detailField` | Detail Field | معرف السطور | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field1Query` | Field1 Query | استعلام الحقل  المحسوب 1 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field2Query` | Field2 Query | استعلام الحقل  المحسوب 2 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field3Query` | Field3 Query | استعلام الحقل  المحسوب 3 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field4Query` | Field4 Query | استعلام الحقل  المحسوب 4 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field5Query` | Field5 Query | استعلام الحقل  المحسوب 5 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field6Query` | Field6 Query | استعلام الحقل  المحسوب 6 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field7Query` | Field7 Query | استعلام الحقل  المحسوب 7 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field8Query` | Field8 Query | استعلام الحقل  المحسوب 8 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field9Query` | Field9 Query | استعلام الحقل  المحسوب 9 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field10Query` | Field10 Query | استعلام الحقل  المحسوب 10 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field11Query` | Field1 Query | استعلام الحقل  المحسوب 11 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field12Query` | Field2 Query | استعلام الحقل  المحسوب 12 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field13Query` | Field3 Query | استعلام الحقل  المحسوب 13 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field14Query` | Field4 Query | استعلام الحقل  المحسوب 14 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field15Query` | Field5 Query | استعلام الحقل  المحسوب 15 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field16Query` | Field6 Query | استعلام الحقل  المحسوب 16 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field17Query` | Field7 Query | استعلام الحقل  المحسوب 17 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field18Query` | Field8 Query | استعلام الحقل  المحسوب 18 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field19Query` | Field9 Query | استعلام الحقل  المحسوب 19 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field20Query` | Field20 Query | استعلام الحقل  المحسوب 20 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `styleOverriderLines` | Style Overrider Details | Style Overrider Details | [Style Overrider Details](#Style-Overrider-Details) |
+| `styleOverriderLines.rowBackgroundColorQuery` | Row Background Color Query | استعلام لون خلفية السطر | [Style Overrider Details](#Style-Overrider-Details) |
 
 ## Related pages
 

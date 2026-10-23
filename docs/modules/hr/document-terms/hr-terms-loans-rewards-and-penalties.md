@@ -6,12 +6,14 @@ menu: Basic → Settings → Document Term
 # Loan, Reward and Penalty Document Terms
 
 These documents all move money that is not salary — an advance paid out, an instalment collected, a
-bonus granted, a fine deducted — so unlike the vacation family, most of them post, and their terms
+bonus granted, a fine deducted — so unlike the vacation family, most of them have an accounting effect, and their terms
 are mostly about accounts.
 
 The shared mechanics — what a term is, why most aggregated terms only name a book and a term, and
 the three differently-named accounting switches — are on
 [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues#How-HR-document-terms-work).
+
+![The Settings tab of the Loan Document term](../../../ar/modules/hr/images/document-terms/hr-term-loans-rewards-and-penalties-en.png)
 
 ## The loan family
 
@@ -24,7 +26,7 @@ and *Shorten Ledger* switches inside it — plus three options of its own:
 
 | Option | Field | What it does |
 |---|---|---|
-| **Without Accounting Effect** | `termConfig.withoutAccountingEffect` | Suppresses the document's entry. Note that the effect block inside `config` has its own switch of the same sense; either will stop the posting, which is worth knowing when one is set and the other is not. |
+| **Without Accounting Effect** | `termConfig.withoutAccountingEffect` | Suppresses the document's entry. Note that the effect block inside `config` has its own switch of the same sense; either will stop the entry, which is worth knowing when one is set and the other is not. |
 | **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | Skips the loan-type conditions — length of service, maximum amount, the employee-state list on [HR Configuration](/modules/hr/setup/hr-configuration) and the rest. This is the exception term, for the loan that management approved despite the rules. |
 | **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | The instalment schedule is built automatically when the document is saved, instead of waiting for the user to press *Generate Installments*. |
 
@@ -47,13 +49,13 @@ Loans themselves are on [Loan Documents](/modules/hr/loans/hr-loan-documents) an
 ## The Reward and Penalty term
 
 A reward or a penalty is an amount attached to an employee for something they did. Its term decides
-where it posts and, importantly, **when the employee actually feels it**.
+which accounts it hits and, importantly, **when the employee actually feels it**.
 
 | Option | Field | What it does |
 |---|---|---|
 | **Debit** / **Credit** | `termConfig.debit`, `termConfig.credit` | The two account sides. |
-| **With Accounting Effect** | `termConfig.withAccountingEffect` | Ticked means the document **does** post — the opposite sense to the salary document's *Without Accounting Effect*. |
-| **Calculate Debit And Credit From Reward And Penalty** | `termConfig.calcDebitAndCreditFromRewardAndPenalty` | The accounts come from the reward or penalty **type** rather than from the two sides above. This is how one term serves a catalogue of reward types that each post somewhere different. |
+| **With Accounting Effect** | `termConfig.withAccountingEffect` | Ticked means the document **does** create an accounting entry — the opposite sense to the salary document's *Without Accounting Effect*. |
+| **Calculate Debit And Credit From Reward And Penalty** | `termConfig.calcDebitAndCreditFromRewardAndPenalty` | The accounts come from the reward or penalty **type** rather than from the two sides above. This is how one term serves a catalogue of reward types that each go to different accounts. |
 | **Reward And Penalty Issue Method** | `termConfig.issueMethod` | Either **Issued Immediately** — the amount is paid or deducted on its own, at once — or **Issued With Salary**, where it waits and appears on the next payslip. |
 
 ::: warning The issue method changes who pays and when
@@ -83,7 +85,7 @@ The government penalty document — the fine that arrives from an authority rath
 manager — has the shortest term in the module: a second pair of account sides, *Debit 2*
 `termConfig.debit2` and *Credit 2* `termConfig.credit2`, on top of the first pair it inherits.
 
-This document **does** post, which is worth stating because its sibling the government payment
+This document **does** have an accounting effect, which is worth stating because its sibling the government payment
 request does not. If a customer asks why a government penalty appears in the ledger and a payment
 request does not, that is the reason, and it is by design.
 

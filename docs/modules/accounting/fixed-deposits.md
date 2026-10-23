@@ -5,7 +5,7 @@ menu: Banks → Fixed Deposits → Fixed Deposit
 
 # Fixed Deposits
 
-A fixed deposit is the mirror image of a loan: instead of borrowing from the bank, you place an amount with it for a set term in return for interest. Nama tracks it with the same logic it uses for [Bank Loans](./bank-loans.md): a master file holding the deposit terms, then an issue document that posts it, then periodic interest-payment documents that lock in the interest.
+A fixed deposit is the mirror image of a loan: instead of borrowing from the bank, you place an amount with it for a set term in return for interest. Nama tracks it with the same logic it uses for [Bank Loans](./bank-loans.md): a master file holding the deposit terms, then an issue document that records it in the ledger, then periodic interest-payment documents that lock in the interest.
 
 ::: info Required license
 Fixed deposits are part of the `accounting-loans` license — the same license that covers [Bank Loans](./bank-loans.md) and [Credit Facilities](./credit-facilities.md).
@@ -16,7 +16,7 @@ Fixed deposits are part of the `accounting-loans` license — the same license t
 Every screen hangs off the **Banks > Fixed Deposits** root:
 
 1. **Fixed Deposit** — the master file in its initial status "Initial".
-2. **Fixed Deposit Issue** — the moment the amount actually goes out into the deposit (it posts to the ledger, and the status flips to "Released").
+2. **Fixed Deposit Issue** — the moment the amount actually goes out into the deposit (it creates a journal entry, and the status flips to "Released").
 3. **Interest Payment Document** — locking in the periodic interest payments (the same document used for loans).
 4. **Fixed Deposit Changing** — amending the deposit data after it's been issued.
 
@@ -32,7 +32,7 @@ On the **Fixed Deposit** screen (`Banks > Fixed Deposits > Fixed Deposit`) the t
 
 ## Issuing and paying interest
 
-When a **Fixed Deposit Issue** (`Banks > Fixed Deposits > Fixed Deposit Issue`) is recorded, the amount goes out of your account into the deposit with the bank, the accounting effect posts via the **interest value debit/credit** sides alongside the principal, and the deposit's status flips to "Released".
+When a **Fixed Deposit Issue** (`Banks > Fixed Deposits > Fixed Deposit Issue`) is recorded, the amount goes out of your account into the deposit with the bank, the accounting effect is recorded on the **interest value debit/credit** sides alongside the principal, and the deposit's status flips to "Released".
 
 ![Fixed Deposit Issue screen](../../ar/modules/accounting/images/deposits/fixed-deposit-issue-en.png)
 

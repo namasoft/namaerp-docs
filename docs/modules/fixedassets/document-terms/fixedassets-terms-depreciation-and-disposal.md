@@ -10,7 +10,7 @@ needs very little from you, while the disposal side needs real decisions about w
 should land.
 
 Read [how terms work](/modules/fixedassets/document-terms/fixedassets-terms-basics.md) first if you have
-not — the account slots on the asset, described there, are the accounts most of these documents post to.
+not — the account slots on the asset, described there, are the accounts most of these documents record their entries on.
 
 ## The Depreciation Term
 
@@ -161,6 +161,8 @@ at the **same** receivable account, so the two lines add up on the customer's ba
 both halves of a tax pair or neither: a half-configured tax pair drops out of the entry silently.
 :::
 
+![The Settings tab of the Fixed assets disposal document term, with its debit side](../../../ar/modules/fixedassets/images/disposal/fa-term-disposal-settings-en.png)
+
 ## The Partial Disposal Term
 
 The partial disposal takes some units off a countable asset — three of Al-Waha's ten desks in
@@ -195,5 +197,5 @@ term in the term.
 
 This is the pattern across every aggregated document in the module, and it has one consequence worth
 remembering — **the accounting is on the generated term, not the aggregate's.** If your aggregated
-disposals are posting to the wrong gain account, the term to fix is the disposal term the aggregate
+disposals are recording gains on the wrong account, the term to fix is the disposal term the aggregate
 points at.

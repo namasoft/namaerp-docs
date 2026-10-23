@@ -84,7 +84,8 @@ entities: [EltezamSubmissionDoc, EltezamConfiguration, EltezamCodeTable]
 | *A vacation request accepts at most 100 vacations* | أكثر من 100 سند أجازة في الفترة لموظف واحد | ضيّق الفترة |
 | *A qualification request accepts at most 100 qualifications* | للموظف أكثر من 100 سطر مؤهلات | احذف سطور المؤهلات المكررة |
 | *UniversityName is required when the university code is 998 or 999* | نص جهة التخرج فارغ في مؤهل مربوط بـ«أخرى» | املأ جهة التخرج في سطر المؤهل |
-| *Result (the evaluation has no final percentage, so it was never calculated) is required* | اعتُمد التقييم دون نسبة نهائية | احسب التقييم |
+| *Result (N3 of the employee evaluation, the score out of 5, is empty) is required* | الحقل **رقم 3** (N3، الدرجة من 5) في التقييم فارغ أو صفر | املأ **رقم 3** في التقييم |
+| *StartDate (Date 1 of the employee evaluation) is required* / *EndDate (Date 2 of the employee evaluation) is required* | التاريخ 1 أو التاريخ 2 في التقييم فارغ | املأ التاريخين في التقييم |
 | *{0} ({1}) falls outside the configured hijri calendar, so it cannot be sent. Load the hijri calendar files back far enough to cover it* | الجدول الهجري لا يغطي هذا التاريخ | مدّ الجدول الهجري |
 | *Could not build the request: {0}* | تعذر على «نما» تجميع الطلب من البيانات | اقرأ بقية الرسالة؛ وراجع سطر سجل الخادم الخاص بالموظف |
 
@@ -113,7 +114,7 @@ entities: [EltezamSubmissionDoc, EltezamConfiguration, EltezamCodeTable]
 | *From Date ({0}) must be written as yyyy-MM-dd, for example 2026-01-31* (أو *To Date …*) | مُدخل تاريخ بصيغة أخرى | أعد كتابته بصيغة `yyyy-MM-dd` |
 | *Save the Eltezam submission document before retrying it* | ضُغط زر إعادة الإرسال على مستند غير محفوظ | احفظه واعتمده أولاً |
 | *An Eltezam configuration is required before sending* | إعادة إرسال مستند بلا إعدادات | املأ **إعدادات التزام** |
-| *Enter the MCS server, or fill the Service URL of the Eltezam configuration {0}* | إعادة إرسال بإجابة خادم فارغة ودون عنوان خدمة | اكتب الخادم، أو املأ عنوان الخدمة |
+| *Fill the Service URL of the Eltezam configuration {0}, resending the failed employees sends to it* | إعادة إرسال لمستند ليس في إعداداته عنوان خدمة؛ فإعادة الإرسال ترسل إليه دائماً | املأ عنوان الخدمة |
 | *Every employee of the document {0} was already sent successfully, there is nothing to retry* | كل السطور نجح | لا شيء يُفعل |
 
 ### الإعداد

@@ -1,3 +1,6 @@
+---
+description: "Overview of carton manufacturing: carton specifications, carton orders, material planning that cuts paper rolls with minimum trim waste across layers and orders, the move to production, and the setup it needs."
+---
 # Carton Manufacturing: Smart Material Planning for Corrugated Products
 
 ## The Challenge of Carton Manufacturing

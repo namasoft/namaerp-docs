@@ -1,4 +1,5 @@
 ---
+description: "إعداد الخدمة السياحية ورسم التوصيل والحد الأدنى للطلب لنقاط البيع على الخادم، لكل منها صنفه وسجل إعداداته، مع أسباب الإرجاع وأسباب الهالك التي يختار منها الكاشير حين ترجع البضاعة."
 entities: [POSServiceChargeSettings, PosMinChargeSettings, NamaPOSDeliveryCost, NamaPOSDepreciationReason, NamaPOSReturnReason]
 ---
 

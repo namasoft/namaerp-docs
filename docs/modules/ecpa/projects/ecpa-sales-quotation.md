@@ -1,4 +1,5 @@
 ---
+description: "The Project Sales Quotation in Project Management (ECPA): building the offer from a template, pricing tasks, expected costs, the payment schedule, and accepting the quotation to create the project and its tasks."
 entities: [CPASalesQuotation]
 menu: Project Management → Projects → CPA Projects Sales Quotation
 ---

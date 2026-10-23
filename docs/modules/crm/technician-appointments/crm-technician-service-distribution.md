@@ -51,7 +51,7 @@ On commit, the appointment named on the header is set to **Executed** (*تم ا�
 
 One distribution per appointment is a habit, not a rule: the system accepts a second one. Keep in mind that cancelling or deleting **any** distribution of an appointment sets the appointment back to Booked, even when another committed distribution still exists. Also, if a period of an executed appointment is later moved or removed on the appointment's own screen, the appointment becomes *Rescheduled*.
 
-That is the whole of this document's effect. It records effort — it does not price the work, does not move stock and does not post to the ledger. Invoicing continues to run off the sales document the appointment was raised from.
+That is the whole of this document's effect. It records effort — it does not price the work, does not move stock and creates no ledger entry. Invoicing continues to run off the sales document the appointment was raised from.
 :::
 
 ## Fitting it into the day

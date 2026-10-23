@@ -42,6 +42,7 @@ Accounting features are sold as licensed sub-modules, so some screens may not ap
   <LandingCard icon="🛒" title="Misc Purchasing & Machine Rent" link="/modules/accounting/misc-purchasing.md" details="Misc purchasing and machine rent." />
   <LandingCard icon="⭐" title="Party Evaluation" link="/modules/accounting/party-evaluation.md" details="Party evaluation." />
   <LandingCard icon="🔗" title="Subsidiary Reconciliation" link="/modules/accounting/subsidiary-reconciliation.md" details="Subsidiary reconciliation." />
+  <LandingCard icon="🤝" title="Partner Shares & Profit Distribution" link="/modules/accounting/partner-shares-and-profit-distribution.md" details="Who owns how many shares, and splitting a period's net profit between the partners and management." />
 </LandingGrid>
 
 ### Banks & Cheques

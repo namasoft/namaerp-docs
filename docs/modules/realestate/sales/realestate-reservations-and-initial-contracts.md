@@ -62,13 +62,13 @@ releases the unit again. Cancelling or deleting the reservation document itself 
 
 ### What it books
 
-The reservation document does post to the ledger, but only for the deposit. One debit line and one
+The reservation document does create a ledger entry, but only for the deposit. One debit line and one
 credit line are produced for the amount paid — 20,000 in our example — from the *Paid Debit* and
 *Paid Credit* accounts on the document term (توجيه). The owner is used as the supplier and the buyer
 as the customer on those lines, and the salesman and the estate come along as analysis sources, so
 the entry can be reported by unit and by salesman.
 
-Nothing else on the screen is posted. The 1,200,000 price sits on the document as information; it
+Nothing else on the screen is recorded. The 1,200,000 price sits on the document as information; it
 becomes a receivable only when the sales contract is committed.
 
 If both account sides are left empty, no entry is produced at all — which is a legitimate
@@ -153,7 +153,7 @@ exactly as a confirmed reservation would. If you want that to be the rule rather
 the flag on. Cancelling or deleting the document releases the unit again.
 
 **It creates no accounting effects whatsoever.** Not a deferred entry, not a memo entry — nothing.
-Its document term has a settings page and no accounts at all, because there is no posting for
+Its document term has a settings page and no accounts at all, because there is no entry for
 accounts to control. This surprises people, because the document carries a 1,200,000 price and sixty
 installments and looks in every way like a contract. Those installments are a plan, not a receivable.
 Nothing is owed to you in the ledger until the sales contract is committed.

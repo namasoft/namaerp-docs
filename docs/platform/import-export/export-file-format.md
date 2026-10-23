@@ -1,3 +1,6 @@
+---
+description: "How to read and write the export workbook layout: the marker rows on the main sheet, detail sheets and the header connector column, column heading forms for references, names, any-type references and errors, identifier columns, and the JSON shape."
+---
 # Anatomy of the Export File
 
 The first time you open an exported workbook you will wonder what happened to it. Two rows start with `//`. The third starts with `:-record:SalesInvoice`. There are extra sheets called `details` and `paymentLines`, each with a mysterious `#headerconnector` column. And several fields appear twice — once as a code, once as a name.

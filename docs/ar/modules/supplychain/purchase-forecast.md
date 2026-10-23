@@ -1,4 +1,5 @@
 ---
+description: "التنبؤ بكميات الشراء بمستند التنبؤ بالمشتريات: اختيار مصادر الكمية كتاريخ المبيعات، وإعداد التنبؤ وإعداد مصدر المبيعات، وتحويل الكميات المقترحة إلى أمر شراء."
 entities: [NewPurchaseForecast, PurchaseForecastConfig, PFSalesSourceConfig, PFQuantitySource]
 menu: المشتريات ← توقعات مشتريات ← توقعات مشتريات
 ---

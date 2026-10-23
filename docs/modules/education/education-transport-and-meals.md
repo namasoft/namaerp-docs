@@ -1,5 +1,6 @@
 ---
-entities: [EDBus, EDBusAction, EDMealType, EDMealsDetails, EDMealDeliveryPlan, EDSchoolTrip]
+description: "The Education registers for school buses, meals and trips: Bus, Bus Action, Pickup Plan, Bus Info Updater, Meal Type, meal entitlements and delivery plans, and School Trip, all of which record information without creating accounting entries."
+entities: [EDBus, EDBusAction, EDBusPickupPlan, EDBusInfoUpdater, EDMealType, EDMealsDetails, EDMealDeliveryPlan, EDSchoolTrip]
 ---
 # Buses, Meals and School Trips
 
@@ -12,7 +13,8 @@ Before you open any of them, it helps to know exactly what kind of screens these
 
 ::: info These screens are registers
 Everything on this page **records** rather than **moves**. A bus record says what you own, a bus
-action says what happened to it and what it cost, a meal plan says what was served to whom, and a
+action says what happened to it and what it cost, a pickup plan says who rides which bus and when, a
+bus info update says what changed on a vehicle, a meal plan says what was served to whom, and a
 school trip says who went where. None of these screens creates an accounting entry, and none of them
 moves stock. The amounts you type on them — a repair cost, a meal cost, a trip expense — are figures
 kept for reference and reporting; they never reach the ledger, never become an expense document, and
@@ -28,9 +30,9 @@ needs to answer "when does bus 4's licence expire?", "how much did last term's a
 that information, and the ordinary list-view search, export and audit-trail tools apply to it like
 any other Nama screen.
 
-Two of these screens are **master files** (Bus, Meal Type, School Trip) — permanent cards with a
-code and a name that you create once and reuse. Three are **documents** (Bus Action, Education Meals
-Details, Education Meals Delivery Plan) — they carry a document book, a code and a value date, and
+Three of these screens are **master files** (Bus, Meal Type, School Trip) — permanent cards with a
+code and a name that you create once and reuse. Five are **documents** (Bus Action, Pickup Plan, Bus
+Info Updater, Education Meals Details, Education Meals Delivery Plan) — they carry a document book, a code and a value date, and
 they follow the usual draft-then-commit lifecycle. All of them carry the standard **Dimensions**
 group (legal entity, analysis set, branch, sector, department), so a school with three branches can
 keep each branch's vehicles and meals apart and report on them separately.
@@ -135,6 +137,67 @@ why.
 The same is true of a licence renewal of 1,200 or a 300 speeding fine: the bus action is the place
 you write down what it cost, and its value is in the history it builds up. After a year you can list
 every accident on the fleet, total the repairs by bus, and see which vehicle is costing you the most.
+
+## Who rides which bus, and when (Pickup Plan)
+
+**Education → Vehicles → PickupPlan** (the English menu shows the name written as one word) is the
+route sheet: which bus collects whom, at what time, from where, and where it drops them off again.
+
+The header describes the run as a whole. Beside the usual **document code**, **value date** and
+**description**, you name the **bus**, the **driver** (an employee), a free-text **driver name** for
+a driver who is not on your employee file — a hired driver who comes with a leased bus, for example —
+and the **from date** and **to date** the plan covers, typically one term.
+
+The grid below holds one line per person collected:
+
+| Column | What you record |
+|---|---|
+| Employee | The person the bus collects — required on every line |
+| Bus | The bus that collects them — required on every line |
+| Driver Name | The driver of that run, in free text |
+| Pickup Time / Pickup Place | When and where they are picked up in the morning |
+| Return Time / Return Place | When and where they are dropped off on the way back |
+| Description | Anything the driver should know ("wait at the side gate") |
+
+Two things are worth knowing before you fill it in. The **Employee** column points at the employee
+file, not the student file, so the screen is built for staff transport — the teachers and staff the
+school bus collects — and has no column for a pupil. And each line carries its **own bus**, which is
+required even when it matches the header: nothing copies the header's bus onto the lines, and a
+plan can mix buses, so one document can describe the whole morning round across the fleet.
+
+Say the school runs two buses for its staff in the first term. One pickup plan from 1 September to
+31 January, with BUS-01 and BUS-02 on the lines, tells anyone who asks that Ms Hala is collected by
+BUS-02 at 06:45 from Nasr City and dropped back there at 15:10.
+
+Saving and committing the plan stores the timetable and nothing else: it does not check the bus's
+seat count, does not stop the same employee appearing on two buses, and does not change the bus card.
+
+## Recording a change on a vehicle (Bus Info Updater)
+
+**Education → Vehicles → InfoUpdater** (again written as one word in the English menu) records that
+something about a vehicle changed: it got a new driver, its status changed, or its odometer was read.
+The header is a plain document header — **document code**, **value date** and **description** — and
+each line of the grid is one change to one bus:
+
+| Column | What you record |
+|---|---|
+| Bus | The vehicle — required |
+| Update Date | The date the change took effect |
+| Current Driver / New Driver | Who drove it before, and who drives it from now on |
+| Current Status / New Status | The vehicle's status before and after the change |
+| Current Running KM / New Running KM | The odometer reading before, and the new reading |
+
+Every column is typed by you; picking a bus does not fill in its current values for you. The status
+columns use a list of their own (Active, Accident, Suspended and a few spare slots), which is not the
+status list on the bus card.
+
+::: info The update is a record of the change, not the change itself
+Committing a Bus Info Updater keeps the before-and-after on the document; it does **not** write the
+new driver, status or reading onto the bus card. An update that takes BUS-01 from 40,000 km to
+41,500 km and gives it a new driver leaves the bus card reading 40,000 km, with its old custodian. When the change is real, edit the **custodian**, **status** and
+**distance covered** on the [bus card](#The-vehicle-register-Bus) itself as well; the info updater is
+the dated history of when and why those values changed.
+:::
 
 ## The meal catalogue (Meal Type)
 

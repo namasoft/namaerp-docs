@@ -1,4 +1,5 @@
 ---
+description: "How stock reservation works: the Reservation Document, pre-out and pre-in quantities by document type, reservation statuses, satisfied quantities, item and document term settings, the overdraft policy, cancellation and troubleshooting."
 entities: [ReservationDocument]
 menu: Inventory → Reservation Documents → Reservation Document
 ---
@@ -41,7 +42,7 @@ The reservation system affects inventory quantities differently based on the doc
 
 **However, these documents support:**
 - **Cancelling reservation of upper documents:** When a stock issue is created from a sales order, it should cancel the sales order's reservation
-- **Updating reservation of related documents:** Through the `updateReservationOfRelatedDocs` configuration
+- **Updating reservation of related documents:** Through the **Update Reservation Of Related Docs** configuration
 
 **Example:** Creating a stock issue from a sales order should cancel the sales order's Pre-Out reservation since the items are now actually issued (moved from reserved to actual Out quantities).
 
@@ -107,7 +108,7 @@ Each reservation document contains detail lines that specify:
 By default, the reservation status has no effect on whether a line is reserved. However, when combined with the **reservationCriteria** configuration in the document term, the reservation status can be used to selectively apply reservations to specific lines.
 
 **Usage Pattern:**
-1. Configure `reservationCriteria` in the document term to filter lines based on status
+1. Configure **Reservation Lines Criteria** in the document term to filter lines based on status
 2. Set line-level reservation status to control which lines get reserved
 3. Only lines matching the criteria will have reservation effects applied
 
@@ -145,24 +146,16 @@ The reservation system includes a sophisticated quantity tracking mechanism that
 
 #### Configuration for Quantity Tracking
 
-**Document Term Configuration:**
-- **forceTrackQtyOfRelatedDocs:** Enable mandatory quantity tracking
-- **updateTrackQtyInRelatedDoc:** Update tracking quantities in source documents
-- **relatedDocQtyPolicy:** Policy for handling quantity variances
-- **relatedDocQtyFields:** Which fields to use for tracking (first or second quantity)
-
-**Reservation-Specific Configuration:**
-- **reservationSatisfiedFields:** Which quantity fields track reservation satisfaction
-- **updateReservationOfRelatedDocs:** Enable reservation updates when tracking quantities
+The term settings behind this — quantity tracking against the source document, plus **Reservation Satisfied Fields** and **Update Reservation Of Related Docs** for the reservation itself — are listed in the [Configuration Reference](#Configuration-Reference) below.
 
 ## Item-Level Reservation Configuration
 
-Items can be configured with specific reservation behaviors through `ItemConfigurations`:
+Each item's **Item Configurations** record (**Inventory → Settings → Item Configurations**) carries two reservation settings:
 
 ### Core Reservation Settings
 
-- **includeReservedInBalance:** Whether reserved quantities affect available balance calculations
-- **allowOverdraftInReservation:** Lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
+- **Include Reserved In Balance:** the availability check counts other documents' reservations
+- **Allow Overdraft In Reservation:** lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents
 
 ### Overdraft Policy Hierarchy
 
@@ -181,47 +174,6 @@ The system decides whether a line may go below zero in this order:
 - **No:** Prevent overdraft
 - **Inherited:** Use parent level policy
 
-## Comprehensive Configuration Options
-
-### Document Term Configuration (InvDocTermConfig)
-
-#### Basic Reservation Control
-- **reserve:** Enable/disable reservation functionality
-- **reserveFromReservationQty:** Reserve from existing reservation quantities instead of document quantities
-- **preventCancelReservation:** Disable reservation cancellation
-
-#### Reservation Sequentiality
-- **checkReservationSequentiality:** Enforce proper reservation order
-- **checkReservationSequentialityInFirstSaveOnly:** Apply sequentiality check only on initial save
-
-#### Warehouse and Location Management
-- **reservationWarehouseSource:**
-  - `NormalWarehouse`: Use the document's normal warehouse
-  - `ReservationWarehouse`: Use specialized reservation warehouse
-- **reservationLocatorSource:**
-  - `NormalLocator`: Use the document's normal locator
-  - `ReservationLocator`: Use specialized reservation locator
-
-#### Quantity Tracking Integration
-- **reservationSatisfiedFields:**
-  - `TrackInFirst`: Track satisfied quantities in first quantity field
-  - `TrackInSecond`: Track satisfied quantities in second quantity field
-- **reservationCriteria:** Filter criteria for which lines can be reserved
-
-#### Related Document Handling
-- **cancelReservationOfRelatedDocs:** Auto-cancel related reservations
-- **updateReservationOfRelatedDocs:** Update connected reservations when quantities change
-- **updateReservationStatusInFromDoc:** Sync status with source documents
-
-#### Validation and Quality Control
-- **checkAvailableQties:** Validate before saving
-- **forceDoNotIncludeReserved:** Exclude reserved quantities from validation
-
-#### Delivery System Integration
-- **useDelivSysEntriesForReserv:** Use delivery system for reservations
-- **reserveFromDeliveryEntryQty:** Reserve based on delivery quantities
-- **rootDeliveryDocument:** Link to primary delivery document
-
 ## Reservation Process Flow
 
 ### 1. Document Creation and Setup
@@ -235,18 +187,16 @@ The system decides whether a line may go below zero in this order:
 
 When a document with reservations is saved:
 
-1. **InvTransReq Creation:** System generates inventory transaction requests
+1. **Inventory request:** the system creates the document's inventory transaction request
 2. **Line Processing:** Converts document lines to reservation request lines
 3. **Quantity Calculation:** 
    - For new reservations: Uses full document quantities
    - For updates with satisfied quantities: Subtracts fulfilled amounts
 4. **Dimension Transfer:** Copies item dimensions, warehouse, locator, and tracking information
 
-**Code Reference:** `InvSystemFilesUtils.addRequestLine:354-373`
-
 ### 3. Quantity Validation and Effects
 
-The `setIdAndValidateQtyEffects` method performs comprehensive validation:
+Saving runs these checks:
 
 1. **Available Quantity Check:** Verifies sufficient quantities exist
 2. **Overdraft Validation:** Checks item, section, and system-level overdraft policies
@@ -254,8 +204,6 @@ The `setIdAndValidateQtyEffects` method performs comprehensive validation:
    - For Sales/Issue documents: Increases Pre-Out quantities
    - For Purchase/Receipt documents: Increases Pre-In quantities
 4. **Balance Calculation:** Updates available balance based on item configuration
-
-**Code Reference:** `QtyTransUtils.setIdAndValidateQtyEffects:154-285`
 
 ### 4. Satisfied Quantity Updates (For Related Documents)
 
@@ -267,13 +215,11 @@ When a document is created from another document with reservations:
 4. **Reservation Adjustment:** Reduces source document's reservation by satisfied amount
 5. **New Reservation Creation:** Creates new reservation for the current document
 
-**Code Reference:** `SCRelatedQtiesUtil.updateSatisfiedQtiesd:80-149`
-
 ### 5. Reservation Cancellation
 
 #### Automatic Cancellation Triggers
 - **Document Deletion:** Automatically cancels all reservation effects
-- **CancelReservation Flag:** Manual cancellation through document interface
+- **Cancel Reservation:** manual cancellation from the document's screen
 - **Related Document Processing:** Cascading cancellation through document chains
 
 #### Cancellation Process
@@ -282,19 +228,13 @@ When a document is created from another document with reservations:
 3. **Effect Reversal:** Removes Pre-In/Pre-Out quantities
 4. **Related Updates:** Updates all connected documents in the chain
 
-**Code Reference:** `BasicSCDocument.cancelReservationOfRelatedIfNeeded`
-
 ## System Integration Points
 
 ### Inventory Management Integration
 
 #### Quantity Effects
-- **ItemDimensionsQty Records:** Store reservation effects per item/dimension combination
-- **ItemDimensionsQty.data:** Track in/out/pre-in/pre-out quantities
+- **Item balances:** reservation effects are kept per item and dimension combination, as in, out, pre-in and pre-out quantities
 - **Balance Calculation:** Consider reserved quantities based on item configuration
-
-#### Transaction Processing
-- **ReservationTransLine:** Manages reservation transaction lines
 
 
 ### Document Workflow Integration
@@ -313,11 +253,9 @@ When a document is created from another document with reservations:
 ### Delivery System Integration
 
 #### Delivery-Based Reservations
-- **DeliverySysEntry Integration:** Use delivery system quantities instead of document quantities
+- **Delivery system table:** Use delivery system quantities instead of document quantities
 - **Root Entry Processing:** Creates reservation lines from delivery entries
 - **Remaining Quantity Management:** Reserves based on delivery system remaining quantities
-
-**Code Reference:** `InvSystemFilesUtils.createInvReqLinesFromEntries`
 
 ## User Interface and Operations
 
@@ -365,20 +303,20 @@ The details grid provides comprehensive item management:
 **Root Causes:**
 1. **Actual Shortage:** Item doesn't have enough available quantity
 2. **Reserved Quantity Blocking:** Previous reservations are consuming availability
-3. **Configuration Issue:** Item's `includeReservedInBalance` setting affecting calculations
+3. **Configuration Issue:** Item's **Include Reserved In Balance** setting affecting calculations
 4. **Dimension Mismatch:** Specific warehouse/locator/lot doesn't contain the item
 5. **Overdraft Policy:** Item or system settings preventing overdraft
 
 **Diagnostic Steps:**
 1. Check actual inventory quantities in specified warehouse/locator
-2. Review item configuration for `includeReservedInBalance` setting
-3. Verify item's `allowOverdraftInReservation` configuration
+2. Review item configuration for **Include Reserved In Balance** setting
+3. Verify item's **Allow Overdraft In Reservation** configuration
 4. Check dimension specifications match available inventory
 5. Review system-level overdraft policies
 
 **Solutions:**
 1. **Transfer Inventory:** Move items from other locations
-2. **Adjust Item Configuration:** Modify `includeReservedInBalance` if appropriate
+2. **Adjust Item Configuration:** Modify **Include Reserved In Balance** if appropriate
 3. **Cancel Competing Reservations:** Review and cancel unnecessary reservations
 4. **Adjust Dimensions:** Modify warehouse, locator, or other dimension requirements
 
@@ -387,12 +325,12 @@ The details grid provides comprehensive item management:
 **Problem:** System rejects reservation due to sequentiality rules
 
 **Causes:**
-1. **Term Configuration:** `checkReservationSequentiality` enabled
+1. **Term Configuration:** **Check Reservation Sequentiality** enabled
 2. **Document Order:** Documents not created in required sequence
 3. **Chain Breaks:** Missing intermediate documents in the workflow
 
 **Solutions:**
-1. **Review Sequentiality Settings:** Check if `checkReservationSequentialityInFirstSaveOnly` can be used
+1. **Review Sequentiality Settings:** Check if **Check Reservation Sequentiality In First Save Only** can be used
 2. **Document Order:** Ensure documents are created in proper sequence
 3. **Configuration Adjustment:** Consider relaxing sequentiality requirements if business allows
 4. **Workflow Review:** Ensure complete document chain exists
@@ -403,9 +341,9 @@ The details grid provides comprehensive item management:
 
 **Diagnostic Checklist:**
 1. **Document Relationships:** Verify proper "From Document" linkage
-2. **Term Configuration:** Check `updateReservationOfRelatedDocs` setting
-3. **Quantity Tracking:** Verify `reservationSatisfiedFields` configuration
-4. **Status Updates:** Confirm `updateReservationStatusInFromDoc` is enabled
+2. **Term Configuration:** Check **Update Reservation Of Related Docs** setting
+3. **Quantity Tracking:** Verify **Reservation Satisfied Fields** configuration
+4. **Status Updates:** Confirm **Update Reservation Status In From Doc** is enabled
 
 **Solutions:**
 1. **Configure Relationships:** Ensure proper document chain setup
@@ -418,8 +356,8 @@ The details grid provides comprehensive item management:
 **Problem:** Satisfied quantities not updating correctly between documents
 
 **Common Causes:**
-1. **Configuration Missing:** `forceTrackQtyOfRelatedDocs` not enabled
-2. **Field Mapping:** Wrong `relatedDocQtyFields` or `reservationSatisfiedFields` setting
+1. **Configuration Missing:** **Force Qty** not enabled
+2. **Field Mapping:** Wrong **Related Doc Qty Fields** or **Reservation Satisfied Fields** setting
 3. **Unit Conversion:** UOM conversion failures between documents
 4. **Chain Breaks:** Document relationship issues
 
@@ -429,157 +367,71 @@ The details grid provides comprehensive item management:
 3. **UOM Setup:** Ensure proper unit of measure conversions exist
 4. **Relationship Verification:** Check document chain integrity
 
-## Complete Configuration Reference
+## Configuration Reference
 
-This section provides a comprehensive list of all configuration options related to the reservation system, organized by their location in the system.
+Reservation is switched on and shaped in four places. The tables below list the settings that matter for reservation, with the label you see on screen; each group links to the page that explains it in full.
 
-### Document Term Configuration (InvDocTermConfig)
-**Location:** Document Term > Term Configuration Tab
+### Document term
 
-#### Basic Reservation Settings
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `reserve` | حجز | Enable/disable reservation functionality for this document type |
-| `reserveFromReservationQty` | حجز من كميات الحجز وليس من كمية المستند | Reserve from existing reservation quantities instead of document quantities |
-| `preventCancelReservation` | منع إلغاء الحجز | Disable reservation cancellation for this document type |
+Open the document's term (**Basic → Settings → Document Term**). The full descriptions are on [Reservation & Delivery System](/modules/supplychain/document-terms/doc-term-reservation-and-delivery) and [Quantity Tracking](/modules/supplychain/document-terms/doc-term-quantity-tracking). The terms of Stock Issue, Stock Receipt and the three stock-transfer documents do not offer the reserve fields, because those documents move real stock instead of reserving it.
 
-#### Reservation Sequentiality Control
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `checkReservationSequentiality` | التاكد من تسلسل الحجز | Enforce proper reservation order across document chain |
-| `checkReservationSequentialityInFirstSaveOnly` | التاكد من التسلسل في الحفظ اول مرة فقط | Apply sequentiality check only on initial document save |
+| Setting | Arabic label | What it does |
+|---|---|---|
+| **Reserve** `reserve` | حجز | The master switch: documents of this term reserve stock for their lines. |
+| **Reserve From Reservation** `reserveFromReservationQty` | حجز من كميات الحجز وليس من كمية المستند | Sales documents only: reserves the line's reserved quantity instead of its main quantity. |
+| **Reservation Lines Criteria** `reservationCriteria` | فلتر سطور الحجز | Reserves only the lines that match this criteria — for example by the line's reservation status. |
+| **Reservation Warehouse Source** `reservationWarehouseSource` | مصدر مخزن الحجز | Reserves against the line's normal warehouse, or against its separate reservation warehouse. |
+| **Reservation Locator Source** `reservationLocatorSource` | مصدر موقع الحجز | The same choice for the locator. |
+| **Reservation Satisfied Fields** `reservationSatisfiedFields` | حقول الكمية الملغي حجزها | Reserves only what is still open on the line: the quantity already satisfied by later documents (first or second tracking quantity) is taken off the reservation. |
+| **Prevent Cancel Reservation** `preventCancelReservation` | منع إلغاء الحجز | Later documents cannot cancel this document's reservation. |
+| **Cancel Reservation Of Related Docs** `cancelReservationOfRelatedDocs` | إلغاء حجز المستندات المرتبطة | Saving this document releases the reservation held by the document it was created from — invoicing an order frees the order's reservation. |
+| **Update Reservation Of Related Docs** `updateReservationOfRelatedDocs` | تحديث حجز المستندات المرتبطة | Instead of releasing it, recalculates the source document's reservation so it covers only what is still open. Cannot be on together with the cancel option. |
+| **Check Reservation Sequentiality** `checkReservationSequentiality` | التاكد من تسلسل الحجز | First reserved, first served: a document that delivers against a reservation is refused when the stock on hand, after setting aside the reservations made before its source document, does not cover it. |
+| **Check Reservation Sequentiality In First Save Only** `checkReservationSequentialityInFirstSaveOnly` | التاكد من التسلسل في الحفظ اول مرة فقط | Runs that check on the document's first save only. |
+| **Check Available Quantities Before Save** `checkAvailableQties` | التاكد من الكميات المتاحة قبل الحفظ | Checks that the quantities are available when the document is saved, even when the document does not reserve them itself. |
+| **Force Do Not Include Reserved With Qty Validation** `forceDoNotIncludeReserved` | عدم اعتبار المحجوز عند التأكد من الكميات | For this document, other documents' reservations are left out of the availability check, even for items set to count them. |
+| **Update Reservation Status In From Doc** `updateReservationStatusInFromDoc` | تحديث حالة الحجز في المستند المرتبط | Reservation Document terms only: writes each line's reservation status back to the document it was created from. |
+| **Reserve Using Delivery System Table** `useDelivSysEntriesForReserv` | الحجز بأستخدام جدول التوصيل النظامي | Reserves from the delivery system table instead of the document lines. |
+| **Reserve From Delivery System Table Quantity** `reserveFromDeliveryEntryQty` | حجز من كمية جدول التوصيل النظامي | Which quantity column of the delivery system table is reserved. |
 
-#### Warehouse and Location Management
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `reservationWarehouseSource` | مصدر مخزن الحجز | Define warehouse selection rules for reservations |
-| `reservationLocatorSource` | مصدر موقع الحجز | Define locator selection rules for reservations |
+### Item Configurations
 
-**Warehouse Source Values:**
-- `NormalWarehouse`: Use the document's normal warehouse
-- `ReservationWarehouse`: Use specialized reservation warehouse
+The item's **Item Configurations** record (**Inventory → Settings → Item Configurations**).
 
-**Locator Source Values:**
-- `NormalLocator`: Use the document's normal locator  
-- `ReservationLocator`: Use specialized reservation locator
+| Setting | Arabic label | What it does |
+|---|---|---|
+| **Include Reserved In Balance** `includeReservedInBalance` | خصم المحجوز من المتاح للبيع | The availability check counts other documents' reservations: reserved-out quantities reduce what is available, reserved-in quantities add to it. |
+| **Allow Overdraft In Reservation** `allowOverdraftInReservation` | السماح بالسحب على المكشوف في الحجز | Lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents. |
 
-#### Quantity Tracking and Satisfaction
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `reservationSatisfiedFields` | حقول الكمية الملغي حجزها | Configure which fields track satisfied reservation quantities |
-| `reservationCriteria` | فلتر سطور الحجز | Filter criteria for which lines can be reserved |
+### Supply Chain Configurations
 
-**Satisfied Fields Values:**
-- `TrackInFirst`: Track satisfied quantities in first quantity field
-- `TrackInSecond`: Track satisfied quantities in second quantity field
+**Inventory → Settings → Supply Chain Configurations**. Each setting is explained in full on [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking).
 
-#### Related Document Processing
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `cancelReservationOfRelatedDocs` | إلغاء حجز المستندات المرتبطة | Automatically cancel related document reservations |
-| `updateReservationOfRelatedDocs` | تحديث حجز المستندات المرتبطة | Update connected reservations when quantities change |
-| `updateReservationStatusInFromDoc` | تحديث حالة الحجز في المستند المرتبط | Sync reservation status with source documents |
+| Setting | Arabic label | What it does |
+|---|---|---|
+| **Check Quantities In Reservation Documents** `checkQtiesInReservationDocs` | التأكد من الكميات في المستندات التي تقوم بالحجز | Whether reserving documents are checked for available quantity at all. |
+| **Cancel Reservation Of Direct Parent Only When Using (Cancel Reservation Option) In Document Terms** `cancelReservationOfDirectParentsOnly` | إلغاء حجز المستند الأعلى فقط عند استعمال خيار إلغاء الحجز بالتوجيه | Cancelling releases only the direct source document's reservation, not the whole chain above it. |
+| **Transfer Request Reserve Quantity Out Only** `transReqReserveQtyOutOnly` | طلب التحويل يقوم بحجز الكميات للخارج فقط | A transfer request reserves only the outgoing side; off, it also reserves the incoming side at the destination. |
+| **Update Reservation Quantity With Prime Quantity Change** `updateReservationQtyWithPrimeQtyChange` | تحديث كمية الحجز مع تغيير كمية المستند | Editing a sales line's quantity updates its reserved quantity to match. |
+| **Over Draft Policy** `overDraftPolicy` | إمكانية السحب على المكشوف | The company-wide fallback when the item and its section inherit. |
+| **Dimensions With Allowed Over Draft** `dimensionsWithAllowedOverdraft` | محددات تسمح بالسحب على المكشوف | Allows or refuses overdraft for lines in matching warehouses, locators and dimensions. |
+| **Include Reservation In Check Overdraft By Date** `includeReservationInCheckOverdraftByDate` | تضمين الحجز عند التأكد من السحب على المكشوف بالتاريخ | The by-date check also counts reservations as of the document date. |
+| **Do Not Check Overdraft By Date For Reservation** `doNotCheckOverdraftByDateForReservation` | عدم التاكد من السحب على المكشوف بالتاريخ في الحجز | Reserving documents skip the by-date check. |
+| **Check Overdraft By Date Only With Reservation** `checkQtyByDateOnlyWithReservation` | التأكد من الكميات بالتاريخ فقط مع الحجز (تسمح بتجاهل المخازن مثلا) | The by-date-only choice for reserving documents, separate from the one for real stock movements. |
+| **Ignore Settings With Reservation** `reservationSettings` | إعدادات التجاهل مع الحجز | Whether reservations ignore the same dimensions as real movements, or a set of their own. |
+| **Do Not Consider Dimensions In Overdraft By Date With Reservation** `doNotConsiderDimensionsInOverdraftByDateWithReservation` | تجاهل المحددات التالية عند التأكد من الكميات بالتاريخ مع الحجز | That separate set of dimensions for reservations. |
 
-#### Quantity Tracking Configuration
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `forceTrackQtyOfRelatedDocs` | متابعة كمية المستند المرتبط إجبارياً | Enable mandatory quantity tracking between documents |
-| `updateTrackQtyInRelatedDoc` | تحديث متابعة الكميات في السند المرتبط | Update tracking quantities in source documents |
-| `relatedDocQtyPolicy` | متابعة كمية المستند المرتبط | Policy for handling quantity variances |
-| `relatedDocQtyFields` | حقول متابعة الكميات في السند المرتبط | Which fields to use for tracking (first or second quantity) |
+### Item section
 
-#### Validation and Quality Control
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `checkAvailableQties` | التاكد من الكميات المتاحة قبل الحفظ | Validate available quantities before saving |
-| `forceDoNotIncludeReserved` | عدم اعتبار المحجوز عند التأكد من الكميات | Exclude reserved quantities from validation |
-
-#### Delivery System Integration
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `useDelivSysEntriesForReserv` | الحجز بأستخدام جدول التوصيل النظامي | Use delivery system entries for reservations |
-| `reserveFromDeliveryEntryQty` | حجز من كمية جدول التوصيل النظامي | Reserve based on delivery system quantities |
-| `rootDeliveryDocument` | مستند توصيل رئيسي | Link to primary delivery document |
-
-### Item Configuration (ItemConfigurations)
-**Location:** Item Master > Item Configuration Tab
-
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `includeReservedInBalance` | خصم المحجوز من المتاح للبيع | Whether reserved quantities affect available balance calculations |
-| `allowOverdraftInReservation` | السماح بالسحب على المكشوف في الحجز | Lets the item go below zero in every document except Stock Issue, Stock Receipt and the three stock-transfer documents |
-| `overDraftPolicy` | إمكانية السحب على المكشوف | Item-level overdraft policy (Yes/No/Inherited) |
-
-### Supply Chain Configuration (SupplyChainConfigurations)  
-**Location:** System Configuration > Supply Chain Configurations
-
-#### Core Reservation Settings
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `checkQtiesInReservationDocs` | التأكد من الكميات في المستندات التي تقوم بالحجز | Check quantities in reservation documents |
-| `cancelReservationOfDirectParentsOnly` | إلغاء حجز المستند الأعلى فقط عند استعمال خيار إلغاء الحجز بالتوجيه | Cancel reservation of direct parent documents only |
-
-#### Overdraft Control
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `overDraftPolicy` | إمكانية السحب على المكشوف | System-level overdraft policy |
-| `dimensionsWithAllowedOverdraft` | محددات تسمح بالسحب على المكشوف | Dimensions with allowed overdraft configurations |
-| `checkOverdraftByDate` | التاكد من السحب على المكشوف بالتاريخ | Check overdraft by date |
-| `includeReservationInCheckOverdraftByDate` | تضمين الحجز عند التأكد من السحب على المكشوف بالتاريخ | Include reservation in overdraft check by date |
-| `doNotCheckOverdraftByDateForReservation` | عدم التاكد من السحب على المكشوف بالتاريخ في الحجز | Do not check overdraft by date for reservations |
-
-#### Quantity Check Configuration
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `checkQtyByDateOnly` | التأكد من الكميات بالتاريخ فقط (تسمح بتجاهل المخازن مثلا) | Check quantity by date only |
-| `checkQtyByDateOnlyWithReservation` | التأكد من الكميات بالتاريخ فقط مع الحجز (تسمح بتجاهل المخازن مثلا) | Check quantity by date only with reservation |
-| `reservationSettings` | إعدادات التجاهل مع الحجز | Reservation-specific settings for ignoring certain validations |
-| `doNotConsiderDimensionsInOverdraftByDate` | تجاهل المحددات التالية عند التأكد من الكميات بالتاريخ | Do not consider dimensions in overdraft by date |
-| `doNotConsiderDimensionsInOverdraftByDateWithReservation` | تجاهل المحددات التالية عند التأكد من الكميات بالتاريخ مع الحجز | Do not consider dimensions in overdraft by date with reservation |
-
-#### Quantity Tracking System
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `useEntriesForTrackQuantities` | إستخدام الجدول النظامي لمتابعة الكميات | Use system entries for quantity tracking |
-| `ignoreQtyTrackingWhithDocumentDelete` | تجاهل اخطاء متابعة الكميات مع حذف المستندات | Ignore quantity tracking when deleting documents |
-| `updateReservationQtyWithPrimeQtyChange` | تحديث كمية الحجز مع تغيير كمية المستند | Update reservation quantity with primary quantity changes |
-
-#### Transfer and Stock Document Settings
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `transReqReserveQtyOutOnly` | طلب التحويل يقوم بحجز الكميات للخارج فقط | Transfer request reserves outbound quantity only |
-| `showToItemDimensionsInTransfer` | عرض الي محددات الصنف في التحويل و استعمالها | Show destination item dimensions in transfers |
-| `doNotUpdateItemLotAndBoxFromIssueAndSales` | Do Not Update Item Lot And Box From Issue And Sales | Do not update item lot and box from issue and sales |
-
-#### Performance and Processing
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `checkOverdraftNextTransCount` | عدد الحركات اللاحقة للسند التي يجب التاكد من انها لم تصبح مكشوفة | Number of next transactions to check for overdraft |
-| `doNotCheckOverdraftWithRecommit` | Do Not Check Over Draft With Recommit | Do not check overdraft with recommit operations |
-
-### Item Section Configuration
-**Location:** Item Section Master > Configuration
-
-| Configuration Field | Arabic label on screen | Description |
-|---------------------|-------------------|-------------|
-| `overDraftPolicy` | إمكانية السحب على المكشوف | Section-level overdraft policy (Yes/No/Inherited) |
+The item section's **Over Draft Policy** (إمكانية السحب على المكشوف) applies when the item's own policy is **Inherited**.
 
 ### Which setting wins
 
 Whether a line may take an item below zero is decided in a fixed order: the item's **Allow Overdraft In Reservation**, then the matching *Dimensions With Allowed Overdraft* row, the item's policy, the item section's policy and finally the company-wide policy. **Prevent Overdraft** on the document term can only make the check stricter, never looser. [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking) walks through the order step by step.
 
-### Configuration Validation Rules
+### Combinations the system refuses
 
-#### Required Configurations for Basic Reservation
-- Document Term: `reserve = true`
-- Item Configuration: Valid `overDraftPolicy` setting
-
-#### Required Configurations for Quantity Tracking
-- Document Term: `forceTrackQtyOfRelatedDocs = true`
-- Document Term: `relatedDocQtyFields` must be specified
-- System Configuration: `useEntriesForTrackQuantities` (optional)
-
-#### Required Configurations for Reservation Updates
-- Document Term: `updateReservationOfRelatedDocs = true`
-- Document Term: `reservationSatisfiedFields` must be specified
-- Source Document Term: `reserve = true`
+- **Cancel Reservation Of Related Docs** and **Update Reservation Of Related Docs** on the same term. Saving a document of that term is refused with
+*You have selected two conflicting options in the term {0} for document {1}: update reservation and cancel reservation, please uncheck one of them* — «لقد قمت بالتعليم علي اختيارين متعارضين في التوجيه {0} للمستند {1}: تحديث الحجز و الغاء الحجز. يرجي ازالة العلامة من أحدهما»
+- A reserving document created from another reserving document when its term has neither option on, so both would hold the same stock. It is refused with
+*Cannot create reserve document based on other reserve document* — «لا يمكن إنشاء مستند يقوم بالحجز بناءا على مستند حجز اخر»

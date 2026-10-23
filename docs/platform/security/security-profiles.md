@@ -1,4 +1,5 @@
 ---
+description: "The Security Profile screen tab by tab: full authority, standard security lines for viewing, editing, printing and revision, menu, field, page, list view, action and custom capability security, extra filters, deliberately hidden fields, assigned users and the messages you may see."
 entities: [SecurityProfile]
 menu: Administration → Security → Security Profile
 ---

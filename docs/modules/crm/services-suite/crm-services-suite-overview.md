@@ -1,3 +1,6 @@
+---
+description: "Choosing between the machine maintenance and service maintenance products: how the two licensed suites differ, what the services branch lacks, the labour-charging question that decides it, naming clashes, and what the folder contains."
+---
 # Services or Machines?
 
 If you have already read the maintenance pages and then opened the **Service Documents** folder, you will have felt an odd sense of déjà vu. The screens look the same. The tabs carry the same names. The buttons say almost the same words. And then, in the middle of a document about servicing a bank branch, there is a grid headed **Machines**.

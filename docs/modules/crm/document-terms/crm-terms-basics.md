@@ -131,6 +131,8 @@ One honest note about this screen: the service-fee sides and the second debit/cr
 other invoice terms offer are structurally unavailable on a CRM Service Contract. They are not
 hidden by a licence or a setting — the document simply cannot use them, so don't go looking.
 
+![The Effect tab of the CRM Service Contract term](../../../ar/modules/crm/images/document-terms/crm-term-service-contract-en.png)
+
 ## The Work Plan term
 
 The simplest term in the module. In our example, book `WPLAN` carries `T-WPLAN-STD`

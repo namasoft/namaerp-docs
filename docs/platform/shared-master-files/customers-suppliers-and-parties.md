@@ -84,10 +84,10 @@ Covered in its own section below — it is the part of the screen most often mis
 
 ### KeywordTemplates
 
-Keywords are free search terms that make a customer findable by something other than its name — a
-trade name, a former name, a branch nickname. Pick a **Keyword Template** to inherit a set of them,
-or type rows directly into the grid, each with its Arabic and English wording and a relative weight
-that ranks the match.
+Keywords are descriptive tags — a trade name, a former name, "export", "wholesale only" — that list
+views and reports can filter customers by. Pick a **Keyword template** to copy in a ready set of them,
+or type rows directly into the grid, each with its Arabic and English wording. See
+[Keywords and Keyword Templates](/platform/shared-master-files/keyword-templates).
 
 ### Statistics
 

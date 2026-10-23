@@ -1,4 +1,5 @@
 ---
+description: "The Car Final Delivery document for handing a sold car to the customer: what it does, the stock rule to read before configuring, what it does not write, and undoing it with the delivery cancel."
 entities: [SIFinalDelivery, SIFinalDeliveryCancel]
 menu: cars → Car Inventory → Car Final Delivery
 ---

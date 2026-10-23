@@ -1,11 +1,12 @@
 ---
+description: "Document terms of the hospital invoices: how an invoice becomes a ledger entry, the Effect group sides and options, issuing a service invoice's supplies, what each invoice family adds, and why an invoice can save with no entry."
 entities: [HMSPatientCheckInvoice, HMSAttendantInvoice, HMSLabTestInvoice, HMSRadiologyInvoice, HMSPhysicalTherapyInvoice, HMSServicesInvoice, HMSSupervisionInvoice, HMSAccommodationInvoice, HMSSurgeryInvoice, HMSPharmacyInvoice, HMSPharmacyReturn, HMSSuppliesInvoice, HMSSupplyReturn, HMSServiceSupplyInvoice, HMSBloodBankInvoice, HMSBloodBankReturn]
 menu: Basic → Settings → Document Term
 ---
 
 # Invoice Document Terms
 
-A hospital invoice posts nothing on its own. Every account it touches — the patient's receivable, the
+A hospital invoice creates no ledger entry on its own. Every account it touches — the patient's receivable, the
 insurer's receivable, the revenue, the discounts, the taxes, the doctor's share — is named on its
 **document term**, and an invoice saved under a term with empty sides is saved, priced and printed
 without a single ledger line. When support is asked "why did this lab invoice not reach the patient's
@@ -22,31 +23,31 @@ shorter terms, on [Stay and Operations Document Terms](./hms-terms-stay-and-oper
 Every priced line on a hospital invoice carries a price block: the price, two discounts, the patient's
 share and the insurer's share, Tax 1 and Tax 2 each split between the two, the cost and up to three
 subsidiary shares (see [Invoicing & Billing](../hms-invoicing.md)). When the invoice is saved, each
-line is posted pair by pair from the Effect group:
+line is recorded in the ledger pair by pair from the Effect group:
 
-- **A pair posts only when both sides are filled.** *Patient Value Debit* without *Patient Value
-  Credit* posts nothing for the patient's share — there is no warning, the value simply never reaches
+- **A pair is recorded only when both sides are filled.** *Patient Value Debit* without *Patient Value
+  Credit* records nothing for the patient's share — there is no warning, the value simply never reaches
   the ledger.
-- **Every main line, every supplies line and every services line is posted**, unless the term's *Do
+- **Every main line, every supplies line and every services line is recorded**, unless the term's *Do
   Not Add Supplies To Invoice* or *Do Not Add Services To Invoice* keeps that grid out.
 - Each side is an ordinary account side — a fixed account or one taken from a source on the document —
   described on [Accounting Effects Configuration](/modules/supplychain/document-terms/doc-term-accounting-effects).
   HMS adds its own sources: **Patient**, **Doctor**, **Medical Insurance Company** and **Medical
   Specialty** from the invoice header, and the line's own **Laboratory Test Type**, **Radiology
   Type**, **Surgery Type**, **Physical Therapy Type**, **Medical Service**, **Pharmacy** or **Blood
-  Bank**. A side sourced from one of these posts to that record's account, which is how a lab test
+  Bank**. A side sourced from one of these is recorded on that record's account, which is how a lab test
   type or a pharmacy gets its own revenue account.
 
 ::: tip Patient or doctor?
 When the invoice's **Medical Document Category** has *Use Doctor Instead Of Patient In
-Accounting Effects* ticked, every side whose source is **Patient** posts to the **doctor's** account
+Accounting Effects* ticked, every side whose source is **Patient** is recorded on the **doctor's** account
 instead. This is the switch behind doctor revenue-sharing arrangements — see
 [Medical Master Files](../hms-medical-master-files.md).
 :::
 
 ## The Effect group — the sides
 
-| Pair | Field ids | What it posts, per line |
+| Pair | Field ids | What it records, per line |
 |---|---|---|
 | **Patient Value Debit / Credit** | `termConfig.patientValueDebit` / `termConfig.patientValueCredit` | The patient's share of the price. |
 | **Insurance Value Debit / Credit** | `termConfig.insuranceValueDebit` / `termConfig.insuranceValueCredit` | The insurer's share. |
@@ -61,14 +62,14 @@ instead. This is the switch behind doctor revenue-sharing arrangements — see
 | **Subsidiary 1 Debit / Credit**, **Subsidiary 2 Debit / Credit** | `termConfig.subsidiary1Debit` … `termConfig.subsidiary2Credit` | The second and third subsidiary shares. |
 
 **Other Cost Debit / Credit** also sits in this group, but only the surgery invoice uses it — it is
-the "other" fee component of an operation (see below). On every other invoice it posts nothing.
+the "other" fee component of an operation (see below). On every other invoice it records nothing.
 
 A typical cash-and-insurance setup: *Patient Value* debits the patient (source Patient) and credits a
 revenue account; *Insurance Value* debits the insurer (source Medical Insurance Company) and credits
 the same revenue; the two tax pairs debit the patient or insurer and credit the output-tax account.
 
-::: info Overhead lines post through their own item
-The estimated or actual overhead carried on an invoice's overhead grid is not posted by the term. Each
+::: info Overhead lines are recorded through their own item
+The estimated or actual overhead carried on an invoice's overhead grid is not recorded by the term. Each
 **Overhead Item** names its own estimated-value and actual-value sides, and the invoice uses the
 actual ones once an [Actual Overhead Calculation](../hms-pricing.md#Indirect-overhead-costing) has
 given it an actual value.
@@ -122,7 +123,7 @@ service, so the field on their terms can stay empty.
 
 ### Accommodation invoice
 
-The accommodation invoice posts the **accommodation price** of each of its day lines through the Effect
+The accommodation invoice records the **accommodation price** of each of its day lines through the Effect
 group. The medical-supervision part of the same lines is billed separately, by a **Supervision Invoice**
 the accommodation invoice can create for you. The group **Generated Supervision Invoice** («فاتورة
 الإشراف الطبى المنشأة») sets that up:
@@ -130,12 +131,12 @@ the accommodation invoice can create for you. The group **Generated Supervision 
 | Field | Field id | What it does |
 |---|---|---|
 | **Auto Generate Supervision Invoice** | `termConfig.autoGenSupervisionInvoice` | On save, create (or rebuild) one Supervision Invoice holding a line per day of each accommodation line. Rooms ticked *Do Not Create Room Supervision Invoice* are skipped. |
-| **Supervision Invoice Book** / **Supervision Invoice Term** | `termConfig.supervisionInvoiceBook` / `termConfig.supervisionInvoiceTerm` | The book and term of the generated Supervision Invoice — whose own term then posts it. |
+| **Supervision Invoice Book** / **Supervision Invoice Term** | `termConfig.supervisionInvoiceBook` / `termConfig.supervisionInvoiceTerm` | The book and term of the generated Supervision Invoice — whose own term then creates its entry. |
 | **Tax Authority Item** | `termConfig.taxAuthorityItem` | The item the accommodation invoice's lines are reported under to the tax authority. |
 | **Accommodation Invoice Type** | `termConfig.accommodationInvoiceType` | Shown here, but what splits the stay into invoices is the same field on the **Accommodation** term — see the stay terms page. |
 
 The accommodation invoice's term also carries a **Medical Effects** group; leave it empty, since the
-supervision charge is posted by the generated Supervision Invoice.
+supervision charge is recorded by the generated Supervision Invoice.
 
 ![The Generated Supervision Invoice group of the Accommodation Invoice term](../../../ar/modules/hms/images/document-terms/hms-term-accommodation-invoice-en.png)
 
@@ -146,11 +147,11 @@ Effect group. An operation's price is made of components — open surgery, surge
 assistant, anaesthesia and other — each with a cost for the standard hours and an extra cost for
 additional time, and each component has its own pair:
 
-| Pair | What it posts |
+| Pair | What it records |
 |---|---|
 | **Open Surgery Cost**, **Surgeon Fees Cost**, **Surgeon Assistant Cost**, **Anesthesia Fees Cost**, **Other Cost** (Debit / Credit) | The cost of that component for the standard hours. |
 | **Open Surgery Addition Time Cost**, **Surgeon Fees Addition Time Cost**, **Surgeon Assist Addition Time Cost**, **Anesthesia Fees Addition Time Cost**, **Other Addition Time Cost** (Debit / Credit) | The extra cost of that component for hours beyond the standard. |
-| **Subsidiary Addition Time** (Debit / Credit) | Shown on the screen; the surgery entry does not post it. |
+| **Subsidiary Addition Time** (Debit / Credit) | Shown on the screen; the surgery entry does not record it. |
 
 The same group holds the two rules that limit surgery invoices per admission: **Do Not Create More
 Than One Invoice On The Same Admission** and **Do Not Create More Than One Invoice for The Same Surgery
@@ -174,11 +175,11 @@ Two things differ from the service invoices:
 
 - **The stock document comes from the Generation tab.** A *Generation Book* and *Generation Term* make
   the invoice issue its items (and the return receive them back).
-- **A return does not reverse the sides for you.** It posts the same pairs as the invoice, in the
+- **A return does not reverse the sides for you.** It records the same pairs as the invoice, in the
   direction its own term gives them, so a return term needs each pair set the other way round from
   the invoice term — patient value on the credit side where the invoice debits it, and so on.
 
-Of the Effect group, these terms post the patient and insurance values, both discounts, the four tax
+Of the Effect group, these terms record the patient and insurance values, both discounts, the four tax
 pairs, the cost and the first subsidiary share.
 
 ![The Generation tab of the Pharmacy Invoice term](../../../ar/modules/hms/images/document-terms/hms-term-pharmacy-generation-en.png)

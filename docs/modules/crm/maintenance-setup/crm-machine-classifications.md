@@ -27,6 +27,8 @@ All three Marina Plaza units are tagged `MC1-CRIT`; the two roof-mounted chiller
 
 Using two of five is normal. There is no penalty for leaving three files empty, and there is no way to add a sixth, so pick the five distinctions that matter most to the business and stop there.
 
+![A Machine Classification1 record](../../../ar/modules/crm/images/maintenance-setup/crm-machine-classification-1-en.png)
+
 ## Where They Show Up
 
 The five classifications appear on far more screens than their modest master files suggest:

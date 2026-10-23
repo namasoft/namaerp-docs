@@ -1,4 +1,5 @@
 ---
+description: "The Car Purchase Invoice: its four tabs, what it books and brings into stock, landed-cost expense lines, setting it up so a car record is created for each chassis, and what follows the invoice."
 entities: [SIPurchaseInvoice]
 menu: cars → Car Purchases → Car Purchase Invoice
 ---

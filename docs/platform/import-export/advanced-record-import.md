@@ -1,4 +1,5 @@
 ---
+description: "Importing spreadsheets that are not in Nama's own layout with Advanced Record Import: how the Record Import List, Record Import Configuration and Record Import Document fit together, header settings, field mapping grids, cell expressions, and when to use it instead of Import Records."
 entities: [RecordImportConfig, RecordImportList, RecordImportDoc]
 ---
 # Advanced Record Import

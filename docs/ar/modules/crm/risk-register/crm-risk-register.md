@@ -1,4 +1,5 @@
 ---
+description: "سجل المخاطر الداخلي في خدمة العملاء: مستند التصريح بمشكلة ومستند اقتراح حل ومستند العمليات المبدئية، والعوامل الثلاثة ورقم أولوية الخطر، وما لا يمسّه السجل."
 entities: [SMFProblemDeclarationDoc, SMFSolutionSuggestionDoc, SMFInitialOperationDoc]
 ---
 

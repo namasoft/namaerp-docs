@@ -51,6 +51,8 @@ The net columns were only ever translated into French, so on an English or Arabi
 them show their internal name instead of a caption. The order is the one in the table above.
 :::
 
+![An Attendance Plan and the employees it covers](../../../ar/modules/hr/images/attendance/attendance-plan-en.png)
+
 ## The two ways overtime is measured
 
 One switch on [HR Configuration](/modules/hr/setup/hr-configuration) decides which rule runs:

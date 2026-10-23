@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Stock Taking** tab — settings that govern how physical counts (stock taking) are entered, validated, ended, and turned into adjustment documents. For the count process itself, see the [Stock Taking guide](../stock-taking.md).
 
+![The Stock Taking Configuration tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-stock-taking-en.png)
+
 **Make Ended Stock Taking Documents Editable** `value.makeEndedSTakingDocsEditable` — Normally an End Stock Taking that has ended is locked against editing or deletion. When on, ended documents can still be edited/deleted. Generally left off to protect reconciled counts.
 
 **Do not Re-Calculate Sales Return and Stock Taking, Uncosted Receipt Cost From Overdraft** `value.calculateSalesReturnCostFromOverdraft` — When on, the cost of sales returns, stock-taking receipts and uncosted receipts is not re-derived from overdraft coverage during cost processing; whatever cost they already carry is left alone. It is a cost-processing option that lives on this tab rather than the [Costing tab](./costing-configuration.md), so this is where to look for it. Enable it when overdraft-driven recalculation keeps changing costs you want left as they were entered.

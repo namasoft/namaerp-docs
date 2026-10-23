@@ -40,6 +40,8 @@ Pick one of these seven in **Cloud Provider** (the labels are as the field shows
 | **Zhipu AI** | Zhipu AI |
 | **Opean AI Compatible** (spelled that way on screen) | Any endpoint that speaks the OpenAI API — a self-hosted model such as Ollama, or another vendor's compatible service; put its address in **Model URL** |
 
+![The Settings tab of the AI Module configuration, with the Models Definition grid](../../ar/modules/ai/images/ai-module-config-settings-en.png)
+
 ## Semantic Search and Embedding Setup
 
 Many of the module's capabilities rest on **semantic search**: instead of matching text literally, the system turns records and documents into numeric representations (embeddings) stored in a **vector store**, making it possible to find the record "closest" to a meaning rather than just its text. This is what lets the assistant understand an approximate customer name, and pick the right tools for a question (see [How the assistant picks its tools](./ai-assistant.md#How-the-assistant-picks-its-tools)).

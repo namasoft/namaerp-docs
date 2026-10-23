@@ -11,8 +11,8 @@ A company carries many recurring obligations that aren't invoices yet but are ve
 Financial commitments are part of the `accounting-financial-commitments-regulation` license.
 :::
 
-::: tip A tracking layer, not a posting document
-The commitment and its payment document **do not post to the general ledger themselves**. They track the obligation and its settlement against the schedule; the actual money movement is recorded by your normal receipt/payment vouchers. Think of this system as the planner and watchdog over those obligations, not a replacement for the vouchers that move the cash.
+::: tip A tracking layer, not an accounting document
+The commitment and its payment document **create no general-ledger entry themselves**. They track the obligation and its settlement against the schedule; the actual money movement is recorded by your normal receipt/payment vouchers. Think of this system as the planner and watchdog over those obligations, not a replacement for the vouchers that move the cash.
 :::
 
 ## The pieces
@@ -49,7 +49,7 @@ Plans change — an installment is deferred, the amounts are renegotiated. The *
 
 ## For Support
 
-- **"The commitment didn't create a journal entry"** — that's expected; commitments and their payment documents don't post to the ledger. Record the actual cash movement with a normal receipt/payment voucher.
+- **"The commitment didn't create a journal entry"** — that's expected; commitments and their payment documents create no ledger entry. Record the actual cash movement with a normal receipt/payment voucher.
 - **"The paid/remaining figures look wrong"** — they're driven by the **payment documents** linked to the commitment; check that each payment is committed and points at the right installment.
 - **"I need to change the schedule"** — use a **Reschedule** document rather than editing the original commitment; it preserves the before/after history.
 - **"An installment still shows unpaid after I paid it"** — confirm the payment document fully covered the installment value; partial payments leave a **remaining** balance until topped up.

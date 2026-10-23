@@ -1,4 +1,5 @@
 ---
+description: "The BOM screen: defining what one unit of a product consumes, the header and details grid, multi-level products, where the BOM is used next, and the messages shown."
 entities: [BOM]
 menu: Manufacturing → Master Files → BOM
 ---

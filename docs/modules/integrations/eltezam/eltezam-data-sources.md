@@ -94,9 +94,12 @@ employee with no vacations in the period is skipped.
 ## Appraisal Info
 
 One request for **each committed employee evaluation** in the period: the evaluation code as the
-appraisal ID, the HR period's start and end dates (or the evaluation's value date when it has no
-HR period), the appraisal type from the AppraisalTypeCode table keyed on the evaluation type, the
-**final percentage** rounded to a whole number, and the rating from the RatingCode thresholds.
+appraisal ID, the evaluation's **Date 1** and **Date 2** as the appraisal start and end dates, the
+appraisal type from the AppraisalTypeCode table keyed on the evaluation type, the result taken from
+the evaluation's **Number 3** (N3) — the score out of 5 — sent as a percentage with two decimals (4.1 goes as
+`82.00`), and the rating from the RatingCode table keyed on the evaluation's **Description 1** (or the
+table's Default MCS Code when Description 1 matches no row). Date 1, Date 2 and Number 3 must be
+filled on the evaluation, or the employee is refused before sending.
 
 ## Which documents count as "in the period"
 

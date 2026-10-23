@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Opening Document: entering assets already owned with their original cost, accumulated depreciation, life and salvage value, what the system computes and checks, the entry it produces, and correcting it with the Opening Document Update."
 entities: [FAOpeningDocument, FAOpeningDocumentUpdate]
 menu: Assets → Documents → Fixed Asset Opening Document
 ---
@@ -11,7 +12,7 @@ spreadsheet that has to be transplanted into Nama without losing a single figure
 That transplant is the **Fixed Asset Opening Document** (افتتاح أصل ثابت). For each asset you state
 what it originally cost, how much depreciation has already been taken, how long it was meant to last,
 what it will be worth as scrap and when its depreciation clock started. The system works out where in
-its life the asset currently stands, posts the balancing entry against a suspense account, and from
+its life the asset currently stands, records the balancing side on a suspense account, and from
 the next period onwards depreciates it as if it had always been here.
 
 It is the single most common go-live task in this module, so it is worth doing slowly and once.
@@ -97,7 +98,7 @@ is also a purchase being settled.
 The two columns that matter most are the two value columns, so say it once more plainly:
 **Acquire opening value is the original cost of the asset, and Acc. Depreciation opening value is
 everything depreciated on it so far.** Do not enter the net book value in the first column. The
-system needs both figures separately because it posts them to two different accounts and depreciates
+system needs both figures separately because it records them on two different accounts and depreciates
 from their difference.
 
 ## Worked example: a truck bought in 2023, entered in 2026
@@ -234,7 +235,7 @@ Once depreciation has run, you no longer cancel. You correct.
 
 Despite its position in the menu this is not a second opening document. It is an **editor for a
 committed opening document** — the supported way to say "the truck's useful life was 72 months, not
-60" after the opening has already been posted and depreciated against.
+60" after the opening has already been processed into the accounts and depreciated against.
 
 It has no accounting effect of its own. What it does instead is rewrite the original opening document
 and replay the asset's figures from it, so the original entry is regenerated rather than supplemented.

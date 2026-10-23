@@ -8,7 +8,7 @@ entities: [QueueServiceConfig, QueueServiceBranch]
 `srvcenter-service-queues`. Nothing on these pages is available on a base installation, and the licence also gates the endpoint the queue devices talk to — without it the kiosk, the display screen and the advisor stations are refused by the server.
 :::
 
-At 08:12 on 3 March 2026, Fahad Al-Otaibi walks into Al-Sahra Motors' reception hall with his Saif 1.6. He presses a button on a small tablet by the door and it prints him a slip that says **`A014`**. He sits down. A screen on the wall shows which numbers are being served and at which desk, with the dealership's own adverts rotating underneath. A few minutes later `A014` appears on that screen next to Majed Al-Qahtani's desk, Fahad walks over, and the visit begins — from there it is the ordinary [workshop job cycle](/modules/servicecenter/job-cycle/servicecenter-job-cycle-overview.md).
+At 08:12 on 3 March 2026, Fahad Al-Otaibi walks into Al-Sahra Motors' reception hall with his Saif 1.6. He presses a button on a small tablet by the door and it prints him a slip that says **`A014`**. He sits down. A screen on the wall shows which numbers are being served and at which desk, with the dealership's own advert beside them. A few minutes later `A014` appears on that screen next to Majed Al-Qahtani's desk, Fahad walks over, and the visit begins — from there it is the ordinary [workshop job cycle](/modules/servicecenter/job-cycle/servicecenter-job-cycle-overview.md).
 
 That is the whole of the Service Queues sub-module: a ticket, a display, and an advisor who calls the next customer. It is a small, self-contained feature and — unusually for something this peripheral — it works end to end.
 
@@ -28,12 +28,14 @@ A configuration is reusable — several branches may share the same rulebook. Al
 Around those two records sit **three client roles**. They are not three products and not three licences — they are three modes that the same queue application registers itself in when it connects to the server. Setting up a reception counter means deciding which device plays which role:
 
 - **Ticket creator** — the tablet or kiosk by the door. Its only job is to issue and print tickets. Al-Sahra keeps one at the reception desk, operated by the receptionist, and could add a self-service one facing the customer.
-- **Display screen** — the wall screen in the waiting area. It shows the tickets currently in progress and rotates the banners you loaded onto the configuration. It carries the title you typed in *Screen Title*.
+- **Display screen** — the wall screen in the waiting area. It shows the tickets currently in progress and the first active banner you loaded onto the configuration. It carries the title you typed in *Screen Title*.
 - **Service provider** — the advisor's or engineer's station. This is the one that pulls the next customer. The advisor signs in with an **engineer number** (positions 1 to 12), which is what the display uses to say *"ticket `A014`, desk 3"*. The same engineer number cannot be signed in twice at once, so two advisors cannot both claim desk 3.
 
-::: info The queue apps are not Nama screens
-The kiosk, the wall display and the advisor station are separate applications that talk to the ERP server. They are not screens inside Nama and they are not documented here — what *is* documented is everything you configure on the Nama side, which is all of it. If a device shows nothing, the question to ask is always the same: can it reach the server, and does the installation carry the `srvcenter-service-queues` licence?
+::: info The queue app is not a Nama screen
+The kiosk, the wall display and the advisor station are one separate application — the Service Queue app — that talks to the ERP server. Installing it, signing in and choosing each device's role are covered in [The Service Queue App](/modules/mobile/mobile-service-queue-app.md); these pages cover everything you configure on the Nama side. If a device shows nothing, the question to ask is always the same: can it reach the server, and does the installation carry the `srvcenter-service-queues` licence?
 :::
+
+![The Queue Service Configurations screen: queues and providers](../../../ar/modules/servicecenter/images/queues/queue-service-config-screen-en.png)
 
 ## The life of a ticket
 
@@ -84,11 +86,11 @@ Each queue has a letter and a suffix length. Numbering restarts at the branch's 
 
 ## Printing
 
-The ticket slip is a [report](/modules/servicecenter/servicecenter-reports-and-forms.md). The configuration names a **Ticket Design** — a report definition — and it is mandatory: no design, no configuration. When a ticket is issued, that report is rendered for the new ticket and is handed the **number of people still waiting in the same queue**, which is how a slip can print *"you are 6th in line"*. Set the ticket's font size on the configuration, and give the ticket-creator device the address of its local printer in **Printer URL** so the slip comes out of the counter printer rather than a server-side one.
+The ticket slip is a [report](/modules/servicecenter/servicecenter-reports-and-forms.md). The configuration names a **Ticket Design** — a report definition — and it is mandatory: no design, no configuration. When a ticket is issued, that report is rendered for the new ticket and is handed the **number of people still waiting in the same queue**, which is how a slip can print *"you are 6th in line"*. Give the configuration the address of the machine that runs the Nama Printing Server for the counter printer in **Printer URL**, so the slip comes out of the counter printer rather than a server-side one.
 
 ## What the queue does not touch
 
-Nothing here posts to the ledger, nothing moves stock, and nothing generates a document. The queue only annotates a job order that already exists. Tickets themselves are not documents either — they have no book, no code series, no draft-and-commit and no term. They are lightweight rows you can see, add, edit and delete from the branch record, and nothing more.
+Nothing here creates a journal entry, nothing moves stock, and nothing generates a document. The queue only annotates a job order that already exists. Tickets themselves are not documents either — they have no book, no code series, no draft-and-commit and no term. They are lightweight rows you can see, add, edit and delete from the branch record, and nothing more.
 
 ## Where to read next
 

@@ -1,4 +1,5 @@
 ---
+description: "The two fixed asset receipt documents compared: the Initial Receipt as a priced receiving note before the supplier invoices, and the Receipt Document recording custody and location, with what committing the Receipt Document writes."
 entities: [FAInitialReceipt, FAReceiptDoc]
 ---
 # Taking Delivery: Initial Receipt and Receipt Document

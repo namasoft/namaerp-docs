@@ -1,4 +1,5 @@
 ---
+description: "The document term account sides for bank loan issue, instalment payment and interest calculation, for credit facilities and for fixed deposits: which amount of the document each debit and credit pair picks up."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -8,12 +9,14 @@ menu: Basic → Settings → Document Term
 Borrowing from a bank and lending to one are mirror images, and their terms look alike: a pair of
 sides for the principal, a pair for the interest, and sometimes a pair for the fees. What makes each
 term worth reading is *which* amount of the document each pair picks up — a loan payment, for
-example, can post the same instalment twice through two different pairs, and that is by design.
+example, can record the same instalment twice through two different pairs, and that is by design.
 
 The two kinds of side on these screens — a full account-side block, and a single reference to a
 saved side marked *(record)* below — are explained on
 [Letter of Guarantee and Letter of Credit Document Terms](/modules/accounting/document-terms/acc-terms-guarantees-and-credits).
-As everywhere, a pair posts only when both its debit and its credit are filled in.
+As everywhere, a pair creates a ledger entry only when both its debit and its credit are filled in.
+
+![The Effect tab of the Loan Issue term](../../../ar/modules/accounting/images/document-terms/acc-term-loans-deposits-facilities-en.png)
 
 ## Bank loans
 
@@ -25,7 +28,7 @@ The documents are on [Bank Loans](/modules/accounting/bank-loans).
 |---|---|---|
 | **Loan Value Debit / Credit** | `termConfig.loanValDebit`, `termConfig.loanValCredit` | The loan's value — usually the bank account debited and the loan liability credited. |
 | **Fees Value Debit / Credit** | `termConfig.feesValDebit`, `termConfig.feesValCredit` | The fees value on the issue document. |
-| **Interest Value Debit / Credit** | `termConfig.interestValDebit`, `termConfig.interestValCredit` | The total interest the loan will carry over its life, calculated from the loan. Customers who recognise interest only as it falls due leave this pair empty and post interest through the interest-calculation document instead. |
+| **Interest Value Debit / Credit** | `termConfig.interestValDebit`, `termConfig.interestValCredit` | The total interest the loan will carry over its life, calculated from the loan. Customers who recognise interest only as it falls due leave this pair empty and record interest through the interest-calculation document instead. |
 | **Fees Tax** group: **Fees Tax Debit / Credit** *(record)* | `termConfig.feesTaxDebit`, `termConfig.feesTaxCredit` | The tax on the fees. |
 
 ### Loan Installment Payment
@@ -41,11 +44,11 @@ each.
 | **Other effects**: **Interest Payment Value Debit2 / Credit2** *(record)* | `termConfig.interestValueDebit2`, `termConfig.interestValueCredit2` | The interest paid amount again, through a second pair. |
 | **Fines**: **Fine Debit / Credit** *(record)* | `termConfig.fineDebit`, `termConfig.fineCredit` | The fine value on each instalment line. |
 
-The second pairs post the same amounts a second time, to a second pair of accounts — use them only
+The second pairs record the same amounts a second time, on a second pair of accounts — use them only
 when one payment must move two sets of balances at once. Leave them empty otherwise.
 
 Two options in the **Other effects** group change how the document behaves rather than where it
-posts:
+records its entries:
 
 | Option | Field | What it does |
 |---|---|---|
@@ -62,7 +65,7 @@ each line — the periodic accrual of interest expense against interest payable.
 The documents are on [Credit Facilities](/modules/accounting/credit-facilities).
 
 **Credit Facility Issuance** has a single **Debit / Credit** pair *(record)*
-(`termConfig.debit`, `termConfig.credit`), and it posts two amounts through it: the facility value
+(`termConfig.debit`, `termConfig.credit`), and it records two amounts through it: the facility value
 and the fees value. Both land on the same accounts.
 
 **Credit Facility Payment** has three pairs, all *(record)*:
@@ -97,7 +100,7 @@ one of them:
 | **Cancel Fixed Deposit Effect** | `termConfig.cancelDepositDebit`, `termConfig.cancelDepositCredit` | **Cancel Deposit** is ticked — the deposit is broken and its value returns. |
 | **Changing Fixed Deposit Effect** | `termConfig.changingDepositDebit`, `termConfig.changingDepositCredit` | **Cancel Deposit** is not ticked — the deposit is amended. |
 
-Either way the amount posted is the deposit value.
+Either way the amount recorded is the deposit value.
 
 **Interest Payment Document** — the document that books the profit a deposit earns — has a
 **Settings** tab with the term's basic data and an **Effect** tab whose **Debit / Credit**

@@ -1,4 +1,5 @@
 ---
+description: "Form Documents, the sixteen spare documents for one-off customer needs: what is on the screen, a worked example of renaming, laying out, calculating and validating one, their accounting effects, and the limits to know before promising anything."
 entities: [FormDoc1, FormDoc2, FormDoc3]
 menu: Basic → Remarks → Form Document 1
 ---
@@ -289,7 +290,7 @@ A **Document Term** is optional, and mostly only needed for the accounting switc
 
 ## Accounting effects
 
-Out of the box a form document posts **nothing**. It creates no journal entry, and its document
+Out of the box a form document records **nothing** in the accounts. It creates no journal entry, and its document
 term has no accounts to configure — the entire Settings tab of a form document's term is a single
 checkbox:
 
@@ -298,7 +299,7 @@ checkbox:
 That checkbox, **Create Accounting Effects**, does not itself decide any accounts. What it does is
 make the document raise an accounting request at all — an empty one. The lines are then supplied
 by an entity flow using the *Add Accounting Effect* action, which reads an amount out of a field
-and posts it to two account sides you name:
+and records it on two account sides you name:
 
 ```
 details.number1=10,09
@@ -311,15 +312,15 @@ account, the subsidiary and the narration are decided.
 
 ::: warning No switch, no entry
 The two halves are independent and each is silent on its own. With the flow in place but the
-checkbox off, there is no request for the flow to add lines to and nothing is posted. With the
-checkbox on but no flow, the document raises an empty request that books nothing.
+checkbox off, there is no request for the flow to add lines to and nothing is recorded. With the
+checkbox on but no flow, the document raises an empty request that records nothing.
 
 If a form document is not reaching the ledger, check the checkbox first — it is on the term, and a
 document saved without a term never had it.
 :::
 
 This is also the reason a form document is a poor choice for anything with real financial
-consequence. It will post, but nothing about it is checked: there is no validation that the entry
+consequence. It will create the entry, but nothing about it is checked: there is no validation that the entry
 balances against a source, no debt ages, no cost effect, no standard report that knows what the
 document means. For money that matters, use the document built for it.
 

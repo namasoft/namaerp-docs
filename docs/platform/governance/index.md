@@ -6,7 +6,7 @@ The controls that keep finished work trustworthy: signing records off level by l
 
 <LandingGrid>
   <LandingCard icon="🖊️" title="Revise and Unrevise" link="/platform/governance/revise-and-unrevise.md" details="Sign off committed records level by level, name each step and its owner, and lock what has been checked." />
-  <LandingCard icon="🗓️" title="Fiscal Period Control" link="/platform/governance/fiscal-period-control-guide.md" details="Lock accounting periods so no one can post into a closed month." />
+  <LandingCard icon="🗓️" title="Fiscal Period Control" link="/platform/governance/fiscal-period-control-guide.md" details="Lock accounting periods so no one can record transactions in a closed month." />
   <LandingCard icon="🧊" title="Freezing the Past and Overriding Document Dates" link="/platform/governance/freeze-processing-and-dates-overrider.md" details="The Freeze Processing Document that locks everything before a date, and the Dates Overrider that sets the dates a new document opens with." />
 </LandingGrid>
 

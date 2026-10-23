@@ -124,23 +124,23 @@ employee, period and violation lines, and a computed **Financial Penalty Total**
 
 None of these screens — **Violation List**, **Violation Item**, **Penalty Request** and **Penalty Document** — has buttons of its own; you fill them in and save.
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
 This is the accounting point that sets government penalties apart from the rest of the
 government-relations desk, so it is worth stating plainly.
 
-::: warning The Penalty Document DOES post a real ledger entry — the request does not
+::: warning The Penalty Document DOES create a real ledger entry — the request does not
 When a **Penalty Document** is committed, it raises a genuine general-ledger entry for the penalty
 total: a balanced journal with a **debit** side and a **credit** side, both taken from the document's
 **term** (`توجيه المستند`) and valued at the document's Financial Penalty Total. This is a real
-posting, processed like any other through a **business request** (`طلب أعمال`) with its own
+entry, processed like any other through a **business request** (`طلب أعمال`) with its own
 **processing status** (`حالة المعالجة`) that you can retry from the **Business Requests** view.
 
-The **Penalty Request** posts **nothing** — it is only a proposal. And this is the opposite of the
+The **Penalty Request** creates **no entry** — it is only a proposal. And this is the opposite of the
 [Payment Request](./government-relations-overview), which merely *records* that a government fee was
-paid and does **not** post to the ledger by itself. So within this one area you have two documents
-that look similar but behave oppositely: the payment request tracks a fee without posting; the penalty
-document actually posts. Do not assume they are the same.
+paid and does **not** create a ledger entry by itself. So within this one area you have two documents
+that look similar but behave oppositely: the payment request tracks a fee without creating an entry; the penalty
+document actually creates one. Do not assume they are the same.
 :::
 
 The penalty total the entry carries is the sum of each line's computed penalty — flat fine, plus any
@@ -152,6 +152,6 @@ the violation item, so the deduction and the payroll record stay in step.
 ## Related
 
 - [Government Relations Overview](./government-relations-overview) — the PRO desk, the fee catalogue,
-  and why the Payment Request does **not** post while this document does.
+  and why the Payment Request does **not** create an entry while this document does.
 - [Rewards & Penalties](../discipline/rewards-and-penalties) — the payroll bonus/deduction family,
   which is a different thing from these code-driven violation penalties.

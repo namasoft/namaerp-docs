@@ -1,4 +1,5 @@
 ---
+description: "The Service Request appointment document: booking a visit and its services, the main and details pages, how the daily capacity check works, what committing it does, and moving from booking to job estimation."
 entities: [SrvCServiceRequest]
 menu: Service Center → Documents → Service Request
 ---
@@ -7,8 +8,8 @@ menu: Service Center → Documents → Service Request
 The service request (طلب خدمة) is the appointment book. A customer telephones, you agree a day and a
 time, you write down which services they are asking for, and the system tells you whether the shop
 can actually take the work that day. It is the only document in the whole module that acts as a
-capacity control, and that is really its whole job — it prices nothing that matters, it posts
-nothing, and it moves nothing.
+capacity control, and that is really its whole job — it prices nothing that matters, it creates
+no journal entry, and it moves nothing.
 
 Menu: **Service Center > Documents > Service Request** (مركز خدمة > المستندات > طلب خدمة).
 

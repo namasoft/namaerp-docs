@@ -34,7 +34,9 @@ Make sure to install the SDK before launching the POS application. If the reader
 2. Enable the **"Enable Fingerprint"** option.
 3. Save the settings.
 
-This option is the master switch — without enabling it, none of the fingerprint features will work in the system, and the fingerprint enrollment button will not appear in the menu.
+This option is the master switch — without enabling it, none of the fingerprint features will work in the system, and the menu's **Fingerprint Enrollment** entry refuses with this message:
+
+*Fingerprint is not enabled. Please check the option in POSConfiguration file.* — «البصمة غير مفعلة. يرجى التأكد من أوبشن باسم تفعيل البصمة في إعدادات نقاط البيع»
 
 ### Step 2: Grant the Fingerprint Enrollment Permission
 
@@ -58,6 +60,8 @@ After setup, authorized users can enroll new fingerprints. The process is done d
 
 The enrollment window will appear, containing:
 
+![The User Fingerprints screen on the server, where enrolled fingerprints are kept](../../ar/platform/security/images/user-fingerprints-screen-en.png)
+
 ### Selecting the User
 - In the **"User"** field, choose the user whose fingerprint is to be enrolled.
 - Once the user is selected, the system displays the **previously enrolled fingerprints** for that user (if any), along with the date of each fingerprint and its attached remarks.
@@ -72,6 +76,16 @@ The enrollment window will appear, containing:
 3. With each successful scan, one of the progress indicators turns green.
 4. If the scan quality is poor, the system asks you to try again without losing the previous successful scans.
 5. After all four scans are complete, the message **"Fingerprint enrolled successfully!"** appears.
+
+### Buttons on the enrollment window
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Start Enrollment** | «بدء التسجيل» | Starts listening to the reader for the four scans. With no user chosen it stops with *Please select a user first* («يرجى اختيار المستخدم أولاً»). |
+| **Retry** | «إعادة المحاولة» | Takes the place of **Start Enrollment** when an enrollment fails: starts the four scans again from the beginning. |
+| **Done** | «تم» | Takes the place of **Start Enrollment** after a successful enrollment: closes the window. The new fingerprint is already saved. |
+| **Cancel** | «إلغاء» | Stops listening to the reader and closes the window. |
+| **✕** | ✕ | Beside a fingerprint in the existing list: deletes that fingerprint. |
 
 ::: info
 You can enroll more than one fingerprint for the same user — for example, one fingerprint per hand. Each fingerprint is stored as a separate row with its own remarks and date.
@@ -100,5 +114,5 @@ Fingerprint data follows the same synchronization mechanism as other POS data wi
 
 - When a new fingerprint is enrolled or an existing one is deleted, the record is flagged as **not sent** (sent = false).
 - The system automatically sends unsent fingerprints to the server within the regular synchronization cycle.
-- On the server, fingerprints are stored in the **"User Fingerprint"** file within the core system.
+- On the server, fingerprints are stored in the **"User Fingerprint"** file within the core system — see [User Fingerprints](/platform/security/user-fingerprints) for that screen and for removing a fingerprint from every register at once.
 - The fingerprint file ID is recorded in the **Action History** for tracking and auditing purposes.

@@ -1,4 +1,5 @@
 ---
+description: "The CRM Potential screen: how a lead is promoted to a potential, which fields it adds and drops compared with the Lead, what the system refuses, its buttons and list screen, and how to report on potentials."
 entities: [CRMPotential]
 menu: Customer Relationship Management → Marketing → CRM Potential
 ---

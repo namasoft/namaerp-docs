@@ -1,4 +1,5 @@
 ---
+description: "Using the Screen Modifier to reshape the List View and the Selector Pop-up: replacing or adding columns, showing a pop-up column only for some lookups, and the code, name and image columns of reference fields."
 entities: [ScreenModifier]
 menu: Administration → Display Customization → Screen Modifier
 ---

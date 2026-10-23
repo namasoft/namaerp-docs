@@ -112,6 +112,8 @@ They are **not**:
 After you edit a single line, the header fields are stale and mean nothing. Use them as a fast way to
 paint a grid, then forget them.
 
+![The eight header percentage fields on the Details tab of a job order](../../../ar/modules/servicecenter/images/job-cycle/job-order-payer-percentages-en.png)
+
 ## The worked example
 
 Fahad's job order `SCJO-2026-0417` is the canonical case. The story behind the numbers: *the routine
@@ -158,7 +160,7 @@ able to read them:
 
 | Share | Where it ends up |
 |---|---|
-| **Customer** | The customer invoice; the closing's *Total Customer* box; **and the only amount the closing posts to the ledger** |
+| **Customer** | The customer invoice; the closing's *Total Customer* box; **and the only amount the closing records in the ledger** |
 | **Insurance** | The insurance invoice, raised against the header's insurance company as the accounting الذمة; the closing's *Total Insurance* box |
 | **Warranty** | The warranty invoice, raised against the header's warranty company as the accounting الذمة; the closing's *Total Warranty* box |
 | **Internal** | The closing's *Total Internal* box, and nothing else |
@@ -173,7 +175,7 @@ general ledger by no route at all. If you need the cost of goodwill work in your
 to raise that entry yourself.
 
 The insurance and warranty shares are better off — but only because their
-**[invoices](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md)** post them.
+**[invoices](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md)** record them.
 Skip the invoice and that money never reaches accounting either.
 :::
 

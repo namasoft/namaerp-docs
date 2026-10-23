@@ -62,4 +62,4 @@ Instead of billing an operation item by item, you can agree a **fixed all-in pri
 
 ![Surgery package](../../ar/modules/hms/images/catalog/surgery-package-en.png)
 
-A **Package Item** is the line that appears inside the package, carrying flags that define **what this line covers** (supplies, check, accommodation, attendant, supervision, lab, radiology, physiotherapy, pharmacy, service, surgery, blood bank…) — i.e. it maps the package line to the real service category it represents. The package is later billed via the **[Surgery Package Invoice](./hms-invoicing.md)**, which compares the agreed price to the actual price and posts the difference.
+A **Package Item** is the line that appears inside the package, carrying flags that define **what this line covers** (supplies, check, accommodation, attendant, supervision, lab, radiology, physiotherapy, pharmacy, service, surgery, blood bank…) — i.e. it maps the package line to the real service category it represents. The package is later billed via the **[Surgery Package Invoice](./hms-invoicing.md)**, which compares the agreed price to the actual price and records the difference.

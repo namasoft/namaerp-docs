@@ -1,4 +1,5 @@
 ---
+description: "Moving a fixed asset between two companies with the transfer document: the mediator accounts it needs, the same-currency rule, the two journal entries, what the register and ledger show afterwards, and depreciation after the move."
 entities: [FATransferDocument]
 menu: Assets → Custody Of Assets → Transfer document
 ---
@@ -35,7 +36,7 @@ The two entries are separate — separate companies, separate ledgers — so eac
 counterpart. That counterpart is the **mediator account** (حساب وسيط الشركة): an inter-company
 account through which the transfer passes.
 
-There are two of them, one for each entry, and each company posts against the **other** company's
+There are two of them, one for each entry, and each company records its side on the **other** company's
 account, the same convention as the Inter Company Transfer and inter-company stock transfers:
 
 | Field | Used in the entry of | Falls back to |

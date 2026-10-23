@@ -14,7 +14,7 @@ You will find the chain at **Contracting > Contractor Contracting**, under licen
 ::: tip The rule that governs the chain
 **Signing a subcontract books nothing. The extract (مستخلص) books everything.** The offer and the subcontract are both master files, the execution and the update produce no journal entry, and cost, payables, retention, advance recovery and tax all reach the ledger through the subcontractor extract.
 
-The qualifier matters, though, because this side has more documents standing *beside* the chain than the owner side does. Advance payments, other payments, fines, material sold to the subcontractor, the daily labour book and the miscellaneous purchase invoices all post in their own right the moment they are committed. What the rule really says is: **within the contract chain**, only the extract posts.
+The qualifier matters, though, because this side has more documents standing *beside* the chain than the owner side does. Advance payments, other payments, fines, material sold to the subcontractor, the daily labour book and the miscellaneous purchase invoices all create their own journal entries the moment they are committed. What the rule really says is: **within the contract chain**, only the extract creates one.
 :::
 
 And one thing about signing that surprises people who have just learned that rule:
@@ -55,6 +55,8 @@ Payment vouchers
 
 **7. Pay him.** Payment vouchers (سند صرف) settle the extract, and the extract itself shows how much of the certificate has actually been paid. Separately, [advances and other payments](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md) are paid outside the extract and recovered inside it.
 
+![A Contractor Contract for a subcontracted package](../../../ar/modules/contracting/images/contractor-contracting/contractor-contract-screen-en.png)
+
 ## What is optional, and what books
 
 | Step | Optional? | Books anything? |
@@ -88,7 +90,7 @@ This is the list to read before you assume a screen behaves the way its twin doe
 | Owner-side fines | deducted from the client's extracts | deliberately **excluded** — a penalty on your client can never be charged to a subcontractor |
 | An extra payment document | — | **Other Payment**, a second advance-shaped document with its own accounts and numbering |
 | Taxes on the extract | a tax-term mechanism derives the tax lines, with its own tax detail grid | **percentages typed on the document**; no tax-term derivation and no tax detail grid |
-| Actual-cost accounting entries on the extract | yes | **no** — actual-cost postings are an owner-side feature |
+| Actual-cost accounting entries on the extract | yes | **no** — actual-cost entries are an owner-side feature |
 | Cost analysis on extract lines | — | the extract fills the **analysis term code and analysis card** from the matching subcontract term |
 | Closing the contract | — | a **Final** extract marks the subcontract *finished*, and it then stops appearing in contract pickers |
 

@@ -12,6 +12,7 @@ title: ذكاء الأعمال (BI)
 
 <LandingGrid>
   <LandingCard icon="📈" title="وحدة BI — لوحات المعلومات والتحليلات" link="/ar/platform/bi/bi-module-guide.md" details="الشرح الكامل: مصمم الرسوم البيانية، والفلترة المتقاطعة، ونوافذ التنقل التفصيلي، والروابط — كل ما تقدمه وحدة BI." />
+  <LandingCard icon="🔐" title="قوائم وحدة BI وترخيصها وصلاحياتها" link="/ar/platform/bi/bi-menu-licence-and-access.md" details="أين توجد شاشات BI، والترخيص الذي تحتاجه، وكيف يصل المستخدمون إلى اللوحات، وكيف تخفي عنصرًا أو تبويبًا عن بعضهم." />
 </LandingGrid>
 
 ## المراجع التقنية
@@ -20,5 +21,6 @@ title: ذكاء الأعمال (BI)
   <LandingCard icon="🛠️" title="المرجع التقني لوحدة BI" link="/ar/platform/bi/bi-module-technical-reference.md" details="تراكيب JSON وأنماط SQL وصيغ الاستيراد اللازمة لبناء لوحات المعلومات برمجيًا." />
   <LandingCard icon="🃏" title="EnhancedMetricsCard" link="/ar/platform/bi/bi-reference-enhanced-metrics-card.md" details="مرجع بطاقة المقاييس المعتمدة على JSON بخط مؤشر ووضع تقسيم، إضافة إلى widget المقاييس القديم MetricsCards." />
   <LandingCard icon="📋" title="EnhancedTable" link="/ar/platform/bi/bi-reference-enhanced-table.md" details="مرجع widget الجدول EnhancedTable وخيارات إعداده." />
+  <LandingCard icon="📅" title="التقويم والخط الزمني والتقرير وعناصر أخرى" link="/ar/platform/bi/bi-reference-more-widget-types.md" details="متى تستعمل عناصر التقويم وResource View والخط الزمني والتقرير وHTML وقائمة البطاقات والزيارات الأخيرة، وكيف تضبط كلًا منها." />
   <LandingCard icon="🧙" title="وضع المعالج (Wizard Mode)" link="/ar/platform/bi/bi-reference-wizard-mode.md" details="مرجع بناء الـ widgets في وضع المعالج باستخدام معرّفات الحقول لربط الفلترة المتقاطعة والتنقل التفصيلي." />
 </LandingGrid>

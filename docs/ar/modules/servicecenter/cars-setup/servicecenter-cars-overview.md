@@ -54,6 +54,8 @@ entities: [SubItem, SubItemStatusConfigurations, ExternalAgency]
 وكل ذلك مشروح حقلاً حقلاً في
 [ملف السيارة](/ar/modules/servicecenter/cars-setup/car-master-file.md).
 
+![سجل سيارة](../images/cars-setup/sub-item-car-record-ar.png)
+
 ## السجلّان منفصلان
 
 يحتفظ Nama بملفَّي مركبات **اثنين**، ولا رابط بينهما.

@@ -1,5 +1,6 @@
 ---
-entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject]
+description: "Tracking investment assets with Investment Portfolios: the portfolio, investor and project master files, share and stake types, and the lifecycle from Investment Opportunity and Investment Start through updates, capital increases and profit distribution to Investment End."
+entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject, IPShareType, IPStakeType]
 menu: Accounting → Investment Portfolios → Investment Portfolio
 ---
 
@@ -25,6 +26,14 @@ Before recording activity you set up the players and the asset:
 
 There are also building-block files — **shares**, **stakes**, **cash deposits**, **investment funds** and **fund types** — that describe the make-up of what's held.
 
+### Share types and stake types
+
+A portfolio that holds listed shares in a dozen companies soon needs to tell ordinary shares from preferred ones, or local from foreign. **Share Type** (`Banks > Investment Documents > Share Type`) is that classification list: each type has a code, Arabic and English names and a free-text **Description**. You pick one in the **Share Type** field of each **Share** (`Banks > Investment Documents > Share`), next to its investment company, purchase price and purchase date.
+
+**Stake Type** (`Banks > Investment Documents > Stake Type`) is the same list for **Stakes** — partnership interests that are not shares — and is picked in the stake's **Stake Type** field.
+
+Both are labels only: they change no amount, account or status, and no document reads them while processing. Their use is to sort, filter and group shares and stakes in list views and in the reports you build.
+
 ![The Investment Portfolio master file](../../ar/modules/accounting/images/ipfolio/investment-portfolio-en.png)
 
 ## The lifecycle
@@ -32,7 +41,7 @@ There are also building-block files — **shares**, **stakes**, **cash deposits*
 The portfolio's life is driven by a sequence of documents:
 
 1. **Investment Opportunity** (`Banks > Investment Documents > Investment Opportunity`) — the planning stage: a candidate investment being studied before any money moves.
-2. **Investment Start** (`Accounting > Investment Portfolios > Investment Start`) — deploys the capital. This is the document that **posts**: it moves the portfolio to **Ongoing** and records the investment. Its effect runs through the **Debit / Credit** sides (the investment asset against the funding bank/cash), the **Investment Expense** sides for any acquisition costs, and the **Tax** sides.
+2. **Investment Start** (`Accounting > Investment Portfolios > Investment Start`) — deploys the capital. This is the document that **starts the investment**: it moves the portfolio to **Ongoing** and records the investment. Its effect runs through the **Debit / Credit** sides (the investment asset against the funding bank/cash), the **Investment Expense** sides for any acquisition costs, and the **Tax** sides.
 
    ![The Investment Start screen](../../ar/modules/accounting/images/ipfolio/investment-start-en.png)
 

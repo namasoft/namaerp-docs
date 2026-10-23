@@ -1,4 +1,5 @@
 ---
+description: "The Car Purchase Return for sending cars back to the supplier: what it reverses on commit, what happens to the car record, reversing a car already in stock, and what the return leaves untouched."
 entities: [SIPurchaseReturn]
 menu: cars → Car Purchases → Car Purchase Return
 ---
@@ -37,7 +38,7 @@ leave switched off on this term, for the reason given below.
 
 ## What it does on commit
 
-- **Accounting: always.** The return posts through its **own**
+- **Accounting: always.** The return records its entry on its **own**
   [document term's](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
   accounts — the debit and credit sides plus the dedicated **purchase return difference** accounts, the discount stages and the
   taxes. It does not re-read the original invoice's term. The price basis for the reversal is

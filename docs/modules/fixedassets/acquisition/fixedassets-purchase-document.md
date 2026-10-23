@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Purchase Document: the two ways the asset record is created, the screen and what it fills in, what must be true before it commits, the journal entry it produces, cancelling, and the messages you may see."
 entities: [FAPurchaseDocument]
 menu: Assets → Documents → Fixed Asset Purchase Document
 ---
@@ -7,7 +8,7 @@ menu: Assets → Documents → Fixed Asset Purchase Document
 Everything before this document is paperwork. The Fixed Asset Purchase Document
 (سند شراء أصل ثابت) is where the money moves and where an asset record stops being an empty shell and
 starts being an asset: it puts the acquisition value on the asset, starts the depreciation clock,
-records the supplier's invoice, and posts the journal entry.
+records the supplier's invoice, and creates the journal entry.
 
 It is, in other words, the supplier invoice for a machine — with the difference that the debit does
 not go to an expense account chosen on the term. It goes to **the asset's own cost account**, taken

@@ -1,4 +1,5 @@
 ---
+description: "Setting up automatic codes and names for master files in Fields and Entities Settings: choosing which line applies, writing Tempo and ${ } formulas, the running number and code validity query, worked examples, keeping assigned codes, and item coding."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -19,6 +20,8 @@ kind of formula.
 
 On the **Main** tab the grid is headed **Automatic Coding**; its own list and search screen is
 called **Files Auto Coding**.
+
+![The Automatic Coding grid](../../ar/platform/images/fields-settings/fields-settings-auto-coding-grid-en.png)
 
 ## What this grid does not cover
 
@@ -318,6 +321,29 @@ This is server-side behaviour. The moment the **Fields and Entities Settings** r
 next master file saved anywhere in the system uses the new formula — no restart, no sign-out, and
 no action to press. Existing records are not touched: automatic coding only ever runs while a
 record is being saved.
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `autoCodingLines` | Automatic Coding | التكويد الآلي | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.criteriaDefinition` | Criteria | المعايير | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.reversedCriteriaDefinition` | Reversed Criteria Definition | معيار عدم التفيذ | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.applyWhenQuery` | Apply When Query | تطبيق عند التوافق مع الاستعلام | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.doNotApplyWhenQuery` | Do Not Apply When Query | منع التطبيق عند التوافق مع الاستعلام | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.codingFormula.codeCalculationFormula` | Code Calculation Formula | صيغة حساب الكود | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.codeValidityQuery` | Code Validity Query (Skip code if 1 is returned, and calculate next) | Code Validity Query (Skip code if 1 is returned, and calculate next) | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.name1CalculationFormula` | Name1 Calculation Formula | صيغة حساب الاسم العربي | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.name2CalculationFormula` | Name2 Calculation Formula | صيغة حساب الاسم الإنجليزي | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.altCodeFormula` | Alternate Code Formula | صيغه الكود البديل | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.szName1Formula` | Name 1 Encoding Formula For Colour And Size | صيغة تكويد اسم 1 للون والمقاس | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.szName2Formula` | Name 2 Encoding Formula For Colour And Size | صيغة تكويد اسم 2 للون والمقاس | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.rvName1Formula` | Name 1 Encoding Formula For Revision | صيغة تكويد اسم 1 للاصدارة | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.rvName2Formula` | Name 2 Encoding Formula For Revision | صيغة تكويد اسم 2 للاصدارة | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.codeSequencePrefix` | Code Sequence Prefix | بادئة حساب التسلسل | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.codeSuffixLength` | Code Suffix Length | طول لاحقة الكود | [The formula columns](#The-formula-columns) |
 
 ## Related pages
 

@@ -68,7 +68,7 @@ WHERE fp.startDate <= DATEADD(day, 0, GETDATE())
 ## Business Impact
 
 ### Financial Operations
-- **Transaction Entry:** Enables posting to previously closed periods
+- **Transaction Entry:** Allows transactions to be recorded in previously closed periods
 - **Period Corrections:** Allows adjustments in historical periods
 - **Audit Flexibility:** Provides ability to reopen for compliance adjustments
 

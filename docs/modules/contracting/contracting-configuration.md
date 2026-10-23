@@ -1,10 +1,11 @@
 ---
 entities: [ConfigEntry]
+menu: Administration → Settings → System Settings
 ---
 
 # Contracting Configuration
 
-The Contracting module keeps its settings in a single record, and that record shapes the behaviour of every contract, extract and cost document in the database. A handful of the switches on it change arithmetic rather than appearance — whether an extract prices this month's quantity or the cumulative quantity, whether term codes are typed or generated, which cost figure a subcontract inherits — so it is worth one careful read before the first live contract rather than a puzzled read afterwards.
+The Contracting module keeps its settings in a single record, and that record shapes the behaviour of every contract, extract and cost document in the database. A handful of the switches on it change arithmetic rather than appearance — whether an extract prices this month's quantity or the cumulative quantity, whether term codes are typed or generated, which cost figure a subcontract inherits — so it is worth one careful read before the first live contract rather than a puzzled read afterwards. You open it from **Administration → Settings → System Settings**, where it is the **Contracting Settings** record.
 
 There are around ninety options on the screen, and almost all of them arrive as one long alphabet soup in declaration order: **one page, no tabs, and a single untitled block** holding nearly every switch. Only two small titled groups follow it — *Discount Calculation* (the eight discount-percentage switches) and *Tax Calculation Terms* (the two tax terms) — and then three grids. That is why this page ignores the screen order entirely and groups the options by what they affect. If you are hunting for one option, use your browser's find rather than scrolling the screen.
 
@@ -32,7 +33,7 @@ A term code is the dotted outline number — `1`, `1.1`, `1.2`, `2` — that ide
 | **Do Not Allow Auto Code Analysis Card Term Codes** | Suppresses the automatic analysis-term code on a term analysis card. | Only if your cost analysts maintain their own analysis coding scheme. |
 | **Add Parent Terms Codes When Suggest Terms** | Term-code suggestion offers parent (roll-up) codes as well as leaf codes. | When users habitually bill or cost against header lines. Leave it off to force everyone onto leaf terms. |
 | **Consider Terms Project Remarks While Suggesting Term Code** | Term-code suggestion also matches on the project remarks typed against a term line, not just the code and description. | When term descriptions are generic ("brickwork") and the useful distinguisher is in the remarks ("brickwork — block C stairwell"). |
-| **Show Main Terms Codes** | Header (roll-up) lines appear on extracts as well as leaf lines. Off by default. | Only when the extract has to be printed with the client's full outline visible. Roll-up lines complicate the postings, so leave it off unless a client demands the layout. |
+| **Show Main Terms Codes** | Header (roll-up) lines appear on extracts as well as leaf lines. Off by default. | Only when the extract has to be printed with the client's full outline visible. Roll-up lines complicate the journal entry, so leave it off unless a client demands the layout. |
 | **Show Main Term Code In Executions** | The same, for quantity execution documents. | Same reasoning. |
 
 ## Phases

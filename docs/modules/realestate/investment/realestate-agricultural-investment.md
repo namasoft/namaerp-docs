@@ -178,7 +178,7 @@ profit installments and the sales document's installments both have their system
 raised and their remaining value reduced, through payment entries the system writes and removes
 with the document. Cancelling the claim removes them again.
 
-### What it posts
+### What it records
 
 The claim carries **two completely independent ledger blocks**, and each one fires only if both of
 its account sides are configured on the term:
@@ -193,7 +193,7 @@ paid-installments block as that payable being settled against the sales receivab
 exactly the netting the document describes. But you can configure the profits block alone, which
 turns the document into a pure profit accrual with no offset.
 
-Amounts post in the legal entity's ledger main currency, and processing happens as a background
+Amounts are recorded in the legal entity's ledger main currency, and processing happens as a background
 business request — retry a failure from the Business Requests list view with **More menu →
 Reprocess / Recommit**. The term itself is documented in
 [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other).
@@ -224,7 +224,7 @@ button.
 3. On 31/03/2026 a profit claim for 01/01–31/03 loads one 25,000 installment.
 4. The investor's villa contract is picked as the installment document, so the 25,000 is allocated
    against his oldest unpaid villa installments.
-5. Committing marks both sets of installments as system-collected, and the term posts the profit and
+5. Committing marks both sets of installments as system-collected, and the term records the profit and
    the settlement as two separate blocks.
 6. Nineteen quarters later the schedule is exhausted; if the terms had changed on the way, an
    *Edit For Existing Contract* would have carried the unpaid remainder into a fresh contract and

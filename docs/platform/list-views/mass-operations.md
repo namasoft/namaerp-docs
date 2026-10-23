@@ -1,3 +1,6 @@
+---
+description: "The More menu actions that run over selected rows on any list screen: deleting records, committing drafts, retiring records from use, exporting to Excel, adding to a favourite, watching or stopping the run, and what is kept in the history."
+---
 # Acting on Several Records at Once
 
 A list screen does more than show you records. Tick a few rows and the **More** menu offers a set of

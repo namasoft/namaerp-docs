@@ -1,4 +1,5 @@
 ---
+description: "Why Nama refuses to delete or edit a record, check by check in the order they run: the record is used or system-generated, documents are built on it, user permissions, closed periods, revision, usage prevention and approvals, with what to do about each."
 entities: [DocumentFile, MasterFile]
 ---
 # Why a Record Will Not Save or Delete

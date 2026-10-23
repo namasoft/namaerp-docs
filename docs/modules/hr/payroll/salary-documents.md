@@ -12,7 +12,7 @@ Everything on the [salary components](salary-components.md), [formulas](salary-c
 |---|---|---|
 | Scope | One **period + issuance** for many employees | **One employee** for one period |
 | Role | The batch run: collect employees, generate their payslips | The individual payslip, and the accounting source |
-| Posts to the ledger? | No — it orchestrates | **Yes** — the GL entry lives here |
+| Creates the ledger entry? | No — it orchestrates | **Yes** — the GL entry lives here |
 
 The sheet is the button you press once a month; the documents are what come out of it, one per employee. You review and adjust on the sheet, but the money is defined, line by line, on each document.
 
@@ -43,7 +43,7 @@ Once collected, each employee appears as a line in the **Salary Sheet Lines** gr
 
 ### Salary Generation Range — a reusable selection
 
-Typing the same employee-selection criteria every month is wasted effort, so Nama lets you save it once as a **Salary Generation Range** — a named master record holding exactly the same *from / to* criteria block a sheet uses, plus an optional **Limit To Employees** (قصر الإصدار على الموظفين التاليين) whitelist for pinning the run to a specific list. A sheet then just points at the range instead of re-entering the filters. It is pure selection configuration; it computes nothing and posts nothing.
+Typing the same employee-selection criteria every month is wasted effort, so Nama lets you save it once as a **Salary Generation Range** — a named master record holding exactly the same *from / to* criteria block a sheet uses, plus an optional **Limit To Employees** (قصر الإصدار على الموظفين التاليين) whitelist for pinning the run to a specific list. A sheet then just points at the range instead of re-entering the filters. It is pure selection configuration; it computes nothing and creates no entry.
 
 ![Salary Sheet, with its collected employee lines](../../../ar/modules/hr/images/payroll/salary-sheet-en.png)
 
@@ -189,14 +189,14 @@ From the Salary Sheet **list**, **Generate Salary Documents** and **Regenerate C
 
 The **Salary Generation Range** has no buttons of its own.
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
-The **Salary Document** is the accounting source — the sheet itself posts nothing; it only orchestrates. Once a salary document is committed, its ledger effect is built as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails.
+The **Salary Document** is the accounting source — the sheet itself creates no entry; it only orchestrates. Once a salary document is committed, its ledger effect is built as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails.
 
-The document carries **no accounting logic of its own**. Instead, it posts **line by line through the account lines of the components that make it up**: for every [salary component](salary-components.md) on the document, that component's own **debit account lines** and **credit account lines** produce the entry — an addition-effect component debiting a salary-expense account and crediting a payable, a deduction crediting the relevant liability, and so on. Reward/penalty lines post through their own account lines the same way. This is exactly why the accounting is configured on the components, not here: the salary document simply totals its lines and drives each one through its component's accounts.
+The document carries **no accounting logic of its own**. Instead, it records its entry **line by line through the account lines of the components that make it up**: for every [salary component](salary-components.md) on the document, that component's own **debit account lines** and **credit account lines** produce the entry — an addition-effect component debiting a salary-expense account and crediting a payable, a deduction crediting the relevant liability, and so on. Reward/penalty lines are recorded through their own account lines the same way. This is exactly why the accounting is configured on the components, not here: the salary document simply totals its lines and drives each one through its component's accounts.
 
 ::: info Optional: contracting cost allocation
-Beyond the per-component postings, a salary document's term can additionally allocate the labor cost as a **contracting cost** — a **Contracting Cost Debit / Contracting Cost Credit** (مدين / دائن تكلفة المقاولات) pair configured on the document term — for organizations that carry employee time onto project/contract costing. This is an add-on to the main component-driven posting, not a replacement for it, and only applies when the contracting module is in use.
+Beyond the per-component ledger lines, a salary document's term can additionally allocate the labor cost as a **contracting cost** — a **Contracting Cost Debit / Contracting Cost Credit** (مدين / دائن تكلفة المقاولات) pair configured on the document term — for organizations that carry employee time onto project/contract costing. This is an add-on to the main component-driven entry, not a replacement for it, and only applies when the contracting module is in use.
 :::
 
 ## Messages you may see

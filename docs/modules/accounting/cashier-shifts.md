@@ -1,11 +1,12 @@
 ---
+description: "The cashier shift cycle: Open Shift, the simplified Cashier Receipt and Payment Vouchers recorded during it, Close Shift with the cash count and its difference, and the Electronic Receipt Voucher for field collection."
 entities: [CSHOpenShift, CSHCloseShift, CSHReceiptVoucher, CSHPaymentVoucher, ElectronicReceiptVoucher]
 menu: Accounting → Cashiers → Open Shift
 ---
 
 # Cashier Shifts (Cash Drawer)
 
-The general receipt and payment vouchers ([see their page](./receipts-and-payments.md)) are flexible but more detailed than a cashier needs when handling dozens of quick payments a day. So Nama provides a simplified **cashier system** built on the idea of a **shift**: the cashier opens a shift at the start of the duty, records simple single-amount receipts and payments during it, then closes the shift — at which point the cash is reconciled and the difference is posted.
+The general receipt and payment vouchers ([see their page](./receipts-and-payments.md)) are flexible but more detailed than a cashier needs when handling dozens of quick payments a day. So Nama provides a simplified **cashier system** built on the idea of a **shift**: the cashier opens a shift at the start of the duty, records simple single-amount receipts and payments during it, then closes the shift — at which point the cash is reconciled and the difference is recorded in the accounts.
 
 ::: info Required license
 The cashier is part of the `accounting-cashier` license. The **Electronic Receipt Voucher** for field collection is part of the `accounting-electronic-receipt` license.
@@ -29,7 +30,7 @@ During the shift the cashier records **Cashier Receipt Vouchers** and **Cashier 
 
 ### 3) Close Shift
 
-At the end of the duty a **Close Shift** document (`Accounting > Cashiers > Close Shift`) is issued: the system reconciles the **system balance** (the sum of the shift's transactions) against the **counted amount** actually in the drawer, and posts the result through a main safe (**Main Safe Deposit**). The closing's accounting effect covers two cases: the shift **difference** (overage/shortage) via the **Difference Debit/Credit** sides, and the **transferred amount** to the main safe via the **Transferred Debit/Credit** sides.
+At the end of the duty a **Close Shift** document (`Accounting > Cashiers > Close Shift`) is issued: the system reconciles the **system balance** (the sum of the shift's transactions) against the **counted amount** actually in the drawer, and records the result through a main safe (**Main Safe Deposit**). The closing's accounting effect covers two cases: the shift **difference** (overage/shortage) via the **Difference Debit/Credit** sides, and the **transferred amount** to the main safe via the **Transferred Debit/Credit** sides.
 
 ![The Close Shift screen](../../ar/modules/accounting/images/cashier/close-shift-en.png)
 
@@ -47,7 +48,7 @@ For collection away from the office (a field rep with a phone), the **Electronic
 
 - **"I can't open a shift"** — the cashier already has an open shift; close it first with a Close Shift document.
 - **"The cashier receipt voucher won't let me pick an account"** — that's intentional; the simplified voucher takes its accounts from the shift and the term, not manually.
-- **"A difference at closing"** — the gap between counted and system is posted via the **Difference Debit/Credit** sides in the Close Shift term.
+- **"A difference at closing"** — the gap between counted and system is recorded on the **Difference Debit/Credit** sides in the Close Shift term.
 - **"Where do the difference/transfer accounts come from?"** — from the **Close Shift** term (see the [Document terms](./support/accounting-document-terms.md) reference).
 - Processing mechanics are in [How documents are processed into accounting effects](./support/accounting-request-processing.md).
 

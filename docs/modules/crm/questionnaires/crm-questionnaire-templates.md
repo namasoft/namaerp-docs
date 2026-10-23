@@ -1,5 +1,7 @@
 ---
+description: "Building a CRM survey: the Question library of reusable questions, the Questionair Template that orders them into a survey, and the template settings that only affect the public web link."
 entities: [CRMQuestionairTemplate, CRMQuestion]
+menu: Customer Relationship Management → Questionairs → Questionair Template
 ---
 # Questionnaire Templates and Questions
 

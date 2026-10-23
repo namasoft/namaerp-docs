@@ -1,4 +1,5 @@
 ---
+description: "The Car Sales Order and Car Sales Approval: the order's lines, payment plan and financing block, what the order does, a worked example, and the approval document."
 entities: [SISalesOrder, SISalesApproval]
 menu: cars → Car Sales → Car Sales Order
 ---
@@ -84,7 +85,7 @@ For a financed deal the order carries an instalment block: the instalment progra
 bank or finance company and the reservation value — the details the salesperson enters from a
 [car instalment quotation](/modules/servicecenter/car-installments/car-installment-quotation.md).
 
-**قيمة الحجز (Reservation Value) is the booking deposit, and it posts.** When the document term has
+**قيمة الحجز (Reservation Value) is the booking deposit, and it creates a journal entry.** When the document term has
 its reservation-value debit and credit accounts filled and the value is not zero, the order produces
 a journal entry for it. This is the only accounting effect anywhere in the car sales chain before
 the invoice, and the only place in the whole module where those two accounts are used.
@@ -116,7 +117,7 @@ Layla Al-Harbi agrees to buy `CAR-000318`, a NAWA Rimal 2.4, on **24 February 20
 | Agreed price | **87,000** |
 | قيمة الحجز (Reservation Value) | **5,000** |
 
-The 5,000 posts against the reservation-value accounts on the order's term. Nothing else on this
+The 5,000 is recorded on the reservation-value accounts on the order's term. Nothing else on this
 document reaches the ledger, and the car does not move an inch in inventory.
 
 ## The Car Sales Approval
@@ -141,8 +142,8 @@ feature.
 
 Two smaller differences from the sales order are worth knowing:
 
-- The approval can post its **generic debit and credit pair** if the term fills them, but the
-  **reservation-value accounts do not work on it**. The booking deposit posting belongs to the sales
+- The approval can record an entry on its **generic debit and credit pair** if the term fills them, but the
+  **reservation-value accounts do not work on it**. The booking deposit entry belongs to the sales
   order alone.
 - **No cancellation document targets the sales approval.** The cancelled fields exist on it, but
   nothing can ever set them. To undo an approval, delete it.

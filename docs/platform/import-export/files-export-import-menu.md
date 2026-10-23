@@ -1,4 +1,5 @@
 ---
+description: "The Files Export / Import Menu screen: saving named export and import definitions you run with one button from a list screen, and designing a custom Excel sheet with your own headings, calculated columns, record filter and company logo."
 entities: [FilesExportMenu]
 menu: Basic → Settings → Files Export / Import Menu
 ---

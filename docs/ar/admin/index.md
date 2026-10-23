@@ -48,6 +48,7 @@ title: إدارة النظام
 
 <LandingGrid>
   <LandingCard icon="🗂️" title="إعدادات النظام وقائمة الإعدادات وتعديل ملف" link="/ar/admin/system-settings-and-configuration-group.md" details="أين يوجد سجل إعدادات كل موديول، والقائمة الوحيدة التي تُخفي الشاشات والمميزات عن كل الشركات، ومحرّر ملفات التخطيط الخام." />
+  <LandingCard icon="🔎" title="البحث عن الخيارات" link="/ar/admin/options-search.md" details="اكتب كلمة فتجد كل خيار توجيه وإعداد موديول وحقل إعداد يحملها، مع رابط مباشر إلى الحقل." />
   <LandingCard icon="⚡" title="إعدادات لتحسين الأداء" link="/ar/admin/performance-optimizer.md" details="سرّع شاشات العرض والبحث بإسقاط شروط محددات أو صلاحية مطالعة بعينها عن أنواع سجلات أو مستخدمين بعينهم." />
   <LandingCard icon="🔢" title="عداد المستخدمين وأنواع الصلاحيات" link="/ar/admin/users-counter-and-security-capabilities.md" details="حدّد عدد المستخدمين المتزامنين لكل مجموعة، وأنشئ صلاحيات مسمّاة تقفل بها السجلات والتقارير والأسعار." />
   <LandingCard icon="⌨️" title="تعريف الاختصارات ومفضلة المستخدم" link="/ar/admin/shortcuts-and-user-favourites.md" details="أي خريطة اختصارات يحصل عليها كل مستخدم، ومفاتيح عامة تفتح قائمة أو سجلًا جديدًا أو رابطًا، وكيف تُبنى مفضلة كل مستخدم في القائمة." />

@@ -1,3 +1,6 @@
+---
+description: "Overview of the Freight Management module for shipping, forwarding, customs-clearance and postal companies: service items instead of stock, the Operation Order at the centre, how a forwarder earns its margin, key terms, licensing and the guide's sections."
+---
 # Freight Management
 
 Welcome to the Freight Management module of Nama ERP — the module built specifically for shipping, forwarding, customs-clearance, postal, and logistics companies, where the "goods" you sell aren't items on a shelf but a **service**: moving a container from port to port, clearing a shipment through customs, delivering a parcel to a customer's door.
@@ -71,7 +74,7 @@ Forwarders use these terms every day, and the screens use them too.
 ## How documents work in Nama ERP
 
 ::: tip Understanding document states
-Unlike systems that require a separate "posting" step, Nama ERP acts immediately:
+Unlike systems where a saved document needs a separate step before it reaches the accounts, Nama ERP acts immediately:
 
 **Draft mode:** Create and edit a document with no accounting effect.
 

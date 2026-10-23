@@ -119,7 +119,7 @@ group by dimensionCost,item_id
 update r set transStatus = 'Retry', costTransStatus = 'Retry' from reproceess rp inner join InvTransReq  r on r.originId = rp.originId
 ```
 :::
-### البحث عن المستندات التي تحتاج إلى إعادة الترحيل لإصلاح مشكلة كمية صفر مع وجود تكلفة
+### البحث عن المستندات التي تحتاج إلى إعادة الحفظ لإصلاح مشكلة كمية صفر مع وجود تكلفة
 ::: details
 ```sql
 with x as (

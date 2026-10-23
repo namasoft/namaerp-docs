@@ -86,7 +86,7 @@ A buyer was charged 15,000 in fees on his villa contract and the company agrees 
 
 The result: the buyer's fee entitlement is settled, and 15,000 of his future installments are settled at the same time. Both grids feed the contract's installment tracking, so both sides of the swap show up on the contract's paid columns; when the term leaves *installment Effect* empty this document falls back to the *System Paid* column rather than doing nothing.
 
-The accounting effect is one debit and one credit **per return line**, taken from the term's single pair of return-value sides. One detail to plan around: the entry is posted in the **legal entity's main ledger currency**, whatever currency the document itself carries. On a single-currency installation this never comes up; on a multi-currency one it decides how the rebate is measured.
+The accounting effect is one debit and one credit **per return line**, taken from the term's single pair of return-value sides. One detail to plan around: the entry is recorded in the **legal entity's main ledger currency**, whatever currency the document itself carries. On a single-currency installation this never comes up; on a multi-currency one it decides how the rebate is measured.
 
 Everything else about the document behaves the way the rest of the family does — the effect is a business request processed in the background, and a failure is retried from the Business Requests list view rather than re-entered. The [collect documents page](/modules/realestate/collections/realestate-collect-documents.md) covers the ordinary, money-in direction.
 

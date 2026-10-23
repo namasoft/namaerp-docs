@@ -1,3 +1,6 @@
+---
+description: "Timestamped notes for the Nama ERP installation video: installing SQL Server and its tools, running several Tomcat instances on one server, restoring databases, database users, backup folders and schedules, SSL certificates, DNS and testing the installation."
+---
 # Documentation for the Nama ERP Installation Video and Supporting Software
 - Installing Nama ERP
 

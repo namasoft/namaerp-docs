@@ -4,7 +4,7 @@ entities: [FAClassification1, FAClassification2, FAClassification3, FAClassifica
 ---
 # Classifications
 
-Al-Waha Industries has three hundred assets and one asset type for all of its machinery. That is fine for the accounting — every machine posts to the same three accounts — but it is useless the moment the plant manager asks what the company has invested in cutting equipment specifically, or the insurer asks for a schedule of production equipment by sub-family.
+Al-Waha Industries has three hundred assets and one asset type for all of its machinery. That is fine for the accounting — every machine is recorded on the same three accounts — but it is useless the moment the plant manager asks what the company has invested in cutting equipment specifically, or the insurer asks for a schedule of production equipment by sub-family.
 
 The five **Fixed Asset Classification** levels exist for exactly that. They are five independent master files that chain into each other, giving you a five-level tree to slice the register with.
 
@@ -18,7 +18,7 @@ The five **Fixed Asset Classification** levels exist for exactly that. They are 
 
 Before setting them up it is worth stating plainly what they do *not* do, because the name suggests more than the system delivers:
 
-- They **do not resolve accounts.** No posting anywhere in the module looks at a classification. The accounts always come from the asset, which inherited them from its [type](/modules/fixedassets/master-files/fixedassets-asset-types.md).
+- They **do not resolve accounts.** No journal entry anywhere in the module looks at a classification. The accounts always come from the asset, which inherited them from its [type](/modules/fixedassets/master-files/fixedassets-asset-types.md).
 - They **supply no defaults.** Choosing a classification never fills a useful life, a salvage value, a depreciation method or anything else on the asset.
 - They **change no behaviour.** No document, no validation and no calculation behaves differently because of them.
 
@@ -84,4 +84,4 @@ Decide the levels top-down before you create any record, and keep them shallow:
 2. **Level 2 — the sub-family that gets asked about.** Cutting Machines, Presses, Forklifts.
 3. **Level 3 and below — only if a real question needs them.** Most installations stop at two levels, and there is nothing wrong with that.
 
-Because classifications feed nothing but selection, adding a level later costs only the work of classifying the existing records; nothing recalculates and nothing needs reposting. That makes them the safest part of the setup to start small on — the opposite of the [asset types](/modules/fixedassets/master-files/fixedassets-asset-types.md), where the accounts you pick on day one are the accounts every posting will use.
+Because classifications feed nothing but selection, adding a level later costs only the work of classifying the existing records; nothing recalculates and nothing needs reprocessing. That makes them the safest part of the setup to start small on — the opposite of the [asset types](/modules/fixedassets/master-files/fixedassets-asset-types.md), where the accounts you pick on day one are the accounts every journal entry will use.

@@ -15,7 +15,7 @@ Salaries don't stay still. Once a year — or whenever a company decides on a ra
 
 A raise round has two moving parts that this document keeps together in one place: the **scope** (which employees are in the round) and the **rule** (what happens to their pay). Rather than editing hundreds of employee records by hand, you state the rule once, let the document harvest the eligible employees from filter criteria, and — for each one — it produces the actual per-employee change that carries the new figures onto the employee's record.
 
-::: info This document does not post to the ledger
+::: info This document creates no ledger entry
 An Annual Increases Document is a **payroll-configuration** action, not an accounting one. It changes what employees will be *paid going forward*; it does not itself create any general-ledger entry. The financial effect only shows up later, when the next [salary documents](salary-documents.md) are generated with the raised figures.
 :::
 
@@ -82,7 +82,7 @@ Like other batch documents in Nama, the per-employee changes an Annual Increases
 
 ## How it's processed
 
-When saved, the document resolves its scope into employee lines and, per line, produces a per-employee change that writes the raised figures back onto each employee's record. This happens as background **business requests** with a **processing status**; if a line fails to process, it can be retried from the **Business Requests** view like any other request. No amount is posted to the general ledger by this document — the money only moves when the *next* salary run picks up the new figures.
+When saved, the document resolves its scope into employee lines and, per line, produces a per-employee change that writes the raised figures back onto each employee's record. This happens as background **business requests** with a **processing status**; if a line fails to process, it can be retried from the **Business Requests** view like any other request. No amount is recorded in the general ledger by this document — the money only moves when the *next* salary run picks up the new figures.
 
 ![Annual Increases Document, with its increase rule and collected employee lines](../../../ar/modules/hr/images/payroll/annual-increases-en.png)
 

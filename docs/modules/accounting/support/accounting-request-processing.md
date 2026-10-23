@@ -1,4 +1,5 @@
 ---
+description: "Why a saved accounting document has no journal entry: checking the document status, document terms that write no lines, and the reasons a ledger request fails, such as a closed period, a blocked account or an incomplete document term."
 menu: Administration → Settings → Business Requests
 ---
 # When a Document Has No Accounting Effect
@@ -11,6 +12,8 @@ How requests work, what each processing status means, how to find the failed one
 **Reprocess** and **Recommit** each do is one page for the whole product:
 **[Business Requests](/platform/background-processing/business-requests)**. Read it first — nothing
 on this page repeats it.
+
+![A ledger request that failed processing, with its error message, in the Business Requests list](../../../ar/platform/background-processing/images/business-requests-failed-en.png)
 
 Two checks come before you go looking for a failed request, because in both cases there is none:
 
@@ -36,7 +39,7 @@ What is specific to accounting is the list of reasons a ledger request refuses:
   balance nature is protected and would be broken by this entry — see
   [Accounts](/modules/accounting/accounts).
 - **The document term is incomplete.** A side the term needs has no account on it, so there is
-  nothing to post to.
+  nowhere to record the amount.
 
 Each of these is fixed on the thing that caused it, not on the request. Fixing the cause does not
 retry anything by itself: the request stays failed until somebody reprocesses it.

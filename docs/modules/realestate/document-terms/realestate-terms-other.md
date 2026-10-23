@@ -66,11 +66,13 @@ links in the chain always answered.
 | Split Installment Value If It Spans More Than Two Years | The same pro-rata year-split as the rent family, applied to the routing-grid effects. |
 | Confiuration List | Per-installment-type routing, exactly as described on the basics page. |
 
+![The Effect tab of the Collect Document term](../../../ar/modules/realestate/images/collections/re-term-collect-doc-effect-en.png)
+
 ## The aggregated collect term — where the real accounting lives
 
 The aggregated collect document is a batch runner: it pulls every unpaid installment in a date range
 and, on commit, **generates one ordinary collect document per line**. Because of that, its own term is
-almost empty — it does not post anything itself. What it does instead is name the book and term the
+almost empty — it creates no entry itself. What it does instead is name the book and term the
 generated documents are created with, and that is where the accounting actually happens.
 
 | Field | What it does |
@@ -121,9 +123,9 @@ plus two familiar options:
 | Option | What it does |
 |---|---|
 | installment Effect | Which bucket the returned amount is written back to. Unlike the collect document, this one has a sensible default: leave it empty and the return is recorded as system paid. |
-| Do not apply effects on installments | On, the return posts to the ledger without touching the contract's installment figures. |
+| Do not apply effects on installments | On, the return is recorded in the ledger without touching the contract's installment figures. |
 
-One behaviour worth knowing when you read the resulting entry: the return payment posts in the legal
+One behaviour worth knowing when you read the resulting entry: the return payment is recorded in the legal
 entity's ledger main currency rather than in the document's currency. See
 [Exemptions and Returning Money to the Buyer](/modules/realestate/collections/realestate-exemptions-and-returns).
 
@@ -224,7 +226,7 @@ A third group controls what ends up in the capitalised cost:
 ### Page 1 — Other effects
 
 Full accounting-side blocks for the cash portion and for the four taxes — Tax 1, Tax 2, Tax 3 and
-Tax 4 — each with its own "other side" selector so that a tax can be posted against something other
+Tax 4 — each with its own "other side" selector so that a tax can be recorded against something other
 than the document's main credit.
 
 ### Page 2 — Discount Effects
@@ -260,8 +262,8 @@ Ownership transfer, the bank payout request and the owner payout request each ha
 term: **one page titled Effect, one Debit block, one Credit block, and no options whatsoever.**
 
 That is not a gap in the configuration — it reflects what these documents are. An ownership transfer
-moves title between two owners at an agreed price and posts one pair for that price. A bank payout
-sweeps collected cash to the bank and posts one pair for the header total. An owner payout settles a
+moves title between two owners at an agreed price and records one pair for that price. A bank payout
+sweeps collected cash to the bank and records one pair for the header total. An owner payout settles a
 landlord's share and does the same. There is nothing to decide beyond which two accounts.
 
 - [Transferring Ownership Between Owners](/modules/realestate/properties/realestate-ownership-transfer)

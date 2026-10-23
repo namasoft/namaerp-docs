@@ -1,5 +1,6 @@
 ---
 entities: [TRPurchaseInvoice, TRPurchaseOrder, TRPurchaseReturn]
+menu: السفر والرحلات ← المستندات ← فاتورة مشتريات خدمات سياحية
 ---
 
 # الشراء من الموردين

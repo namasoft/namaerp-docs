@@ -1,6 +1,7 @@
 ---
 description: "The Travel Service Sales Order, Sales Invoice and Sales Return: selling tour services without stock, collecting payment, taxes and e-invoicing, and messages you may see."
 entities: [TRSalesInvoice, TRSalesOrder, TRSalesReturn]
+menu: Travel → Documents → Travel Service Sales Invoice
 ---
 # Selling to the Client
 
@@ -59,7 +60,7 @@ agreed at order time and copied forward.
 ::: warning The order takes a document term, and that term is a financial one
 This is the point people miss. A Travel Service Sales Order is not a memo — it carries a **Term**
 just like the invoice does, and when it is committed its effects are created and processed exactly
-the way an invoice's are. If that term carries debit and credit account sides, the order books to
+the way an invoice's are. If that term carries debit and credit account sides, the order creates entries in
 the general ledger.
 
 So set the order's term up deliberately. Give the order its **own** term rather than pointing it
@@ -154,7 +155,7 @@ What that request contains, for our 40-pax invoice:
    rules.
 
 Every one of those accounts comes from the document **Term**. A term with no debit and credit sides
-configured produces a request with nothing in it, and the invoice books nothing at all — which is
+configured produces a request with nothing in it, and the invoice creates no ledger entry at all — which is
 occasionally what you want, and never what you want by accident. Again, see
 [Document Terms](./travel-document-terms).
 
@@ -182,7 +183,7 @@ the invoice before the document will commit.
 **Standard Terms** are the contractual clauses attached to the sale — cancellation policy, visa
 responsibility, the deadline for the balance — each with its planned end date and, where the clause
 is one that has to be fulfilled, the date it was fulfilled. These lines are contractual text; they
-book nothing.
+create no ledger entry.
 
 Alongside those, the **Payment Documents** grid shows the receipt vouchers raised against this
 invoice. You do not type into it: when a receipt voucher is committed against the invoice its line

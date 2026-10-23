@@ -14,6 +14,8 @@ touches.
 The documents are on [Credit & Debit Notes](/modules/accounting/credit-and-debit-notes) and
 [Misc Purchasing & Machine Rent](/modules/accounting/misc-purchasing).
 
+![The Effect tab of a debit note term: the credit side taken from the supplier](../../../ar/modules/accounting/images/document-terms/acc-term-notes-and-misc-invoices-en.png)
+
 ## Credit Note and Debit Note
 
 The two notes share one term layout with a **Settings** tab and an **Effect** tab.
@@ -59,7 +61,7 @@ These options decide how the note settles the party's open debts.
 
 | Option | Field | What it does |
 |---|---|---|
-| **Tax1 Debit / Credit**, **Tax2 Debit / Credit** | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Each pair is a saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record, posting the note's header tax 1 or tax 2 value. |
+| **Tax1 Debit / Credit**, **Tax2 Debit / Credit** | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Each pair is a saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record, recording the note's header tax 1 or tax 2 value. |
 | **Tax Plan** | `termConfig.taxPlan` | Fills the note's tax percentages; a tax-exempt customer or supplier gets zero. |
 | **Modifiable Tax** | `termConfig.modifiableTax` | Leaves the percentages as the user typed them instead of applying the plan. |
 | **Tax Item** | `termConfig.taxItem` | The item reported as the note's single line when it is sent as an electronic invoice. Without it the electronic document has no lines. |
@@ -85,7 +87,7 @@ What is particular to the miscellaneous term:
 |---|---|---|
 | **Is Sales Not Purchase** | `termConfig.isSalesNotPurchase` | Makes the document a sale: the entry, payments and electronic invoice run in the sales direction. Use it to bill a customer for a service with this document. |
 | **Invoice Return** | `termConfig.returnInvoice` | Turns the document into a return — it runs in the opposite direction, and is sent electronically as a credit note. |
-| **Expand Payment Method Effect** | `termConfig.expandPaymentMethodEffect` | Posts the payment-method fees as their own lines instead of netting them. |
+| **Expand Payment Method Effect** | `termConfig.expandPaymentMethodEffect` | Records the payment-method fees as their own lines instead of netting them. |
 | **Taxable**, **Modifiable Tax**, **Tax Plan**, **Allow Editing Header Tax In Details** | `termConfig.taxable`, `termConfig.modifiableTax`, `termConfig.taxPlan`, `termConfig.allowEditingHdrTaxInDetails` | Copied onto the document: whether the tax plan applies, whether the user may change the percentages, which plan, and whether a line may carry a different tax from the header. |
 | **Pay Installments In Order** | `termConfig.payInstallmentsInOrder` | Payments must settle the oldest instalment first. |
 | **Allow Payment More Than Invoice Amount** | `termConfig.allowPaymentMoreThanInvoiceAmount` | Lets payments exceed the invoice, leaving a negative remaining. |

@@ -1,4 +1,5 @@
 ---
+description: "The Queue Service Configurations screen: defining queues and ticket codes, which providers serve which queue, waiting-room banners, the self-service kiosk decision flow and its step types, and the messages it shows."
 entities: [QueueServiceConfig]
 menu: Service Center → Queue Service → Queue Service Configurations
 ---
@@ -8,7 +9,7 @@ menu: Service Center → Queue Service → Queue Service Configurations
 `srvcenter-service-queues`.
 :::
 
-The configuration is the rulebook for a reception counter. It says how many queues there are and what they are called, who is allowed to serve which one, what the printed slip looks like, what rotates on the waiting-room screen, and — if you want a self-service kiosk — what questions to ask a customer before handing them a ticket.
+The configuration is the rulebook for a reception counter. It says how many queues there are and what they are called, who is allowed to serve which one, what the printed slip looks like, what the waiting-room screen shows, and — if you want a self-service kiosk — what questions to ask a customer before handing them a ticket.
 
 It holds no tickets and belongs to no particular reception hall. That separation is deliberate: **one configuration can serve several branches.** A dealer group with four identical reception halls writes the rules once and points four branch records at them.
 
@@ -27,8 +28,8 @@ The whole rulebook lives on one page: the header block first, then the Queues, Q
 | Code, Name1, Name2, Group | الكود، الاسم العربي، الاسم الإنجليزي، المجموعة | Standard master-file identification. |
 | **Ticket Design** | تصميم التذكرة المطبوعه | **Required.** The [report](/modules/servicecenter/servicecenter-reports-and-forms.md) that prints the customer's slip. |
 | Screen Title | عنوان شاشة العرض | The heading shown at the top of the waiting-room display. Al-Sahra uses *استقبال الصحراء — الرياض*. |
-| Ticket Information Font Size | حجم خط بيانات التذكرة | How large the ticket data prints on the slip. |
-| Printer URL | رابط الطابعة | The address of the local printing service the ticket-creator device should push the slip to — typically something like `http://localhost:9100` on the counter machine itself, not a server address. |
+| Ticket Information Font Size | حجم خط بيانات التذكرة | How large the ticket codes appear on the waiting-room display (30 when empty). The printed slip takes its look from the Ticket Design instead. |
+| Printer URL | رابط الطابعة | The address of the machine that runs the Nama Printing Server with the counter printer attached, such as `http://192.168.1.20:9494` — not a server address. When the address carries no port, the app adds `:9494`. Every ticket-creator device of the branches using this configuration prints there. |
 
 A configuration also carries the usual **Dimensions** group (Legal Entity, Analysis Set, Branch, Sector, Department).
 
@@ -92,7 +93,7 @@ Modifying, assigning and deleting tickets from the branch record's ticket list a
 
 ## Banners — what the waiting room sees
 
-The **Banners / إعلانات** grid is a small advert rotation for the display screen: an image, a description of it for your own reference, and an **Inactive / غير نشط** tick to retire one without deleting it. Al-Sahra rotates a service-offer image and a NAWA warranty image, and ticks the Ramadan one inactive for eleven months of the year.
+The **Banners / إعلانات** grid holds the advert for the display screen: an image, a description shown under it, and an **Inactive / غير نشط** tick to retire one without deleting it. The display shows the **first active line** of the grid, so to change the advert, tick the current one inactive or move the new one to the top. Al-Sahra keeps a service-offer image first and a Ramadan offer below it, ticked inactive for eleven months of the year.
 
 ## Automatic Ticketing — the self-service decision flow
 

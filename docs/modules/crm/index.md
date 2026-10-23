@@ -30,6 +30,7 @@ Chasing a lead from first contact to a customer record — and what the pipeline
 <LandingGrid>
   <LandingCard icon="🎯" title="The Sales Pipeline" link="/modules/crm/sales-pipeline/crm-pipeline-overview.md" details="The real chain from lead to customer, and why offers, analysis and projects sit outside it." />
   <LandingCard icon="🌱" title="Leads" link="/modules/crm/sales-pipeline/crm-leads.md" details="Capturing a prospect, classifying it, assigning it, and the products it is interested in." />
+  <LandingCard icon="📣" title="Facebook Lead Ads" link="/modules/crm/sales-pipeline/crm-facebook-lead-ads.md" details="Saving every Facebook lead-form submission as a lead or potential, the moment it arrives." />
   <LandingCard icon="📈" title="Potentials" link="/modules/crm/sales-pipeline/crm-potentials.md" details="Promoting a lead to a live opportunity, and what the sales stage does and does not drive." />
   <LandingCard icon="🔄" title="Converting a Lead" link="/modules/crm/sales-pipeline/crm-lead-conversion.md" details="What each conversion button actually produces — including the quotation that arrives empty." />
   <LandingCard icon="📦" title="Offers" link="/modules/crm/sales-pipeline/crm-offers.md" details="A work package of assigned staff and preparation time — not a priced quotation." />

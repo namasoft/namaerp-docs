@@ -1,4 +1,5 @@
 ---
+description: "The nine Fields and Entities Settings grids that control reference field lookups: allowed values, extra filters, descriptors, extra search fields and operators, extra codes, name search by code, and opening a new record or popup when a code is not found."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -63,6 +64,8 @@ Before wiring a criteria definition into this grid, open the record file it appl
 :::
 
 Field filtering has a dedicated screen of its own with a fuller feature set; this grid is the quick, per-field version of the same idea. See [Field Filter with Criteria](/platform/field-filtering/field-filter-with-criteria) for the full picture (its worked examples cover the mistakes that make a filter return nothing), [Criteria Based Validation](/platform/governance/criteria-based-validation) for how criteria definitions are written, and the [Tempo Language Manual](/admin/tempo) for the dynamic version.
+
+![The Extra Filter grid](../../ar/platform/images/fields-settings/fields-settings-extra-filter-grid-en.png)
 
 ## Descriptors
 
@@ -251,6 +254,41 @@ The nine grids on this page split into two halves, and the half a grid belongs t
 ::: warning Keep one field's settings in one record
 There can be several Fields and Entities Settings records, and all their active lines are combined. That is convenient until the same field is configured in two different records — at which point which line wins becomes unpredictable, and grids that keep only the first matching line become genuinely hard to reason about. Keep everything about a given field in a single record.
 :::
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `details` | Allowed Values For Generic References | القيم المسموح بها للمراجع | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntity1` | Allowed Entity 1 | النوع المسموح 1 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntity2` | Allowed Entity 2 | النوع المسموح 2 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntity3` | Allowed Entity 3 | النوع المسموح 3 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntity4` | Allowed Entity 4 | النوع المسموح 4 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntity5` | Allowed Entity 5 | النوع المسموح 5 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.defaultEntityType` | Default Entity Type | النوع الافتراضي | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.addToExisting` | Add To Existing | إضافة الى الموجود | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.allowedEntityList` | Allowed Entity List | قائمة الأنواع المسموح بها | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `extraFilter` | Extra Filter | Extra Filter | [Extra Filter](#Extra-Filter) |
+| `extraFilter.filteredType` | Apply Filter with Type | تطبيق الفلتر مع النوع | [Extra Filter](#Extra-Filter) |
+| `extraFilter.criteriaDefinition` | Criteria | المعايير | [Extra Filter](#Extra-Filter) |
+| `extraFilter.dynamicTempoCriteria` | Dynamic Tempo Criteria | Dynamic Tempo Criteria | [Extra Filter](#Extra-Filter) |
+| `descriptors` | Descriptors | Descriptors | [Descriptors](#Descriptors) |
+| `descriptors.descriptorType` | Descriptor Type | استخدام الوصف | [Descriptors](#Descriptors) |
+| `descriptors.arabic` | Arabic | عنوان عربي | [Descriptors](#Descriptors) |
+| `descriptors.english` | English | عنوان إنجليزي | [Descriptors](#Descriptors) |
+| `extraReferenceSearchFields` | Extra Reference Search Fields | حقول البحث الإضافية عند البحث عن مرجع | [Extra Reference Search Fields](#Extra-Reference-Search-Fields) |
+| `extraReferenceSearchFields.searchOperator` | Search Operator | معامل البحث | [Extra Reference Search Fields](#Extra-Reference-Search-Fields) |
+| `referenceSearchingOperators` | Reference Searching Operators | معامل البحث عن المراجع | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
+| `referenceSearchingOperators.codeSearchOperator` | Code Search Operator | معامل البحث في الكود | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
+| `referenceSearchingOperators.name1SearchOperator` | Name 1 Search Operator | معامل البحث في الاسم العربي | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
+| `referenceSearchingOperators.name2SearchOperator` | Name 2 Search Operator | معامل البحث في الاسم الإنجليزي | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
+| `searchInNameInFindByCode` | Search In Name In Find By Code | البحث في الأسم العربى والانجليزى عند كتابة كود ملف | [Search In Name In Find By Code](#Search-In-Name-In-Find-By-Code) |
+| `extraCodes` | Extra Codes | Extra Codes | [Extra Codes](#Extra-Codes) |
+| `openCreateFields` | Fields that open Edit Screen when code not found | الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود | [Fields that open Edit Screen when code not found](#Fields-that-open-Edit-Screen-when-code-not-found) |
+| `openCreateFields.fieldToSetValueIn` | Field To Set Value In | الحقل الذي سيتم وضع القيمة به | [Fields that open Edit Screen when code not found](#Fields-that-open-Edit-Screen-when-code-not-found) |
+| `openInPopups` | Open Reference In Popup | Open Reference In Popup | [Open Reference In Popup](#Open-Reference-In-Popup) |
 
 ## Related pages
 

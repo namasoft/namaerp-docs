@@ -1,3 +1,6 @@
+---
+description: "Timestamped notes for the manufacturing video on actual indirect costs: defining the indirect cost file and cost types, calculating actual overheads from purchase invoices and accounts, closing production orders, and distributing the costs over time."
+---
 # Documentation: Explaining Actual and Indirect Costs in the Manufacturing System
 
 ---

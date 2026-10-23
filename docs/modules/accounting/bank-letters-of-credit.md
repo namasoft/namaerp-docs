@@ -17,7 +17,7 @@ Every screen hangs off the **Banks > Bank LC** root:
 
 1. **Bank LC Request** — documenting the LC request before opening it (no accounting effect).
 2. **Bank LC** — the master file in its initial status "Initial".
-3. **Bank LC Opening** — the moment the bank actually opens the LC (it posts to the ledger, reserves the facility, and the status flips to "Issued").
+3. **Bank LC Opening** — the moment the bank actually opens the LC (it creates a journal entry, reserves the facility, and the status flips to "Issued").
 4. **Bank LC Changing** — changing the value, term or fees (updates the current values).
 5. **Bank LC Closing** — closing the LC and releasing the reserved facility.
 
@@ -37,7 +37,7 @@ The LC moves through the same statuses as a letter of guarantee: **Initial** →
 
 ## Opening and reserving the facility
 
-When a **Bank LC Opening** (`Banks > Bank LC > Bank LC Opening`) is recorded the accounting effect posts and the facility portion is reserved. The opening term covers the sides: **LC amount debit/credit**, **facilities amount debit/credit**, **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where the accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
+When a **Bank LC Opening** (`Banks > Bank LC > Bank LC Opening`) is recorded its accounting effect is created and the facility portion is reserved. The opening term covers the sides: **LC amount debit/credit**, **facilities amount debit/credit**, **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where the accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
 
 ![Bank LC Opening screen](../../ar/modules/accounting/images/lc/blc-opening-en.png)
 
@@ -54,7 +54,7 @@ At opening, the system checks that the total reserved doesn't exceed the **facil
 As with letters of guarantee, the request carries the two buttons that build the rest of the chain:
 
 - **Create Bank LC** — turns the approved request into the LC's master file, carrying over its type, amount, bank, bank account, dates, covered amount, facilities and fees, and opening it as a new record for you to review and save.
-- **Create Bank LC Opening Document** — opens the **Bank LC Opening** document directly, pre-filled from the request's account, bank and bank account. Use it at the moment the bank actually opens the LC, so the effect posts and the facility is reserved in one step.
+- **Create Bank LC Opening Document** — opens the **Bank LC Opening** document directly, pre-filled from the request's account, bank and bank account. Use it at the moment the bank actually opens the LC, so the accounting effect is created and the facility is reserved in one step.
 
 Both need the request **saved** first.
 
@@ -69,7 +69,7 @@ Both need the request **saved** first.
 
 Nama has two letters of credit that share a name but serve different purposes:
 
-- **The Bank LC (this page)** is a *treasury/banking* instrument: it cares about your commitment to the bank — how much of your **facility limit** it reserves, the opening and amendment **fees**, and the **ledger postings**. It tracks no shipments, no proforma invoices, no goods, and never touches inventory.
+- **The Bank LC (this page)** is a *treasury/banking* instrument: it cares about your commitment to the bank — how much of your **facility limit** it reserves, the opening and amendment **fees**, and the **journal entries**. It tracks no shipments, no proforma invoices, no goods, and never touches inventory.
 - **The Supply-Chain LC** (`LC > Master Files > Letter of Credit`) is an *import/procurement* process: it manages the supplier, the **shipments** (containers, bills of lading, customs), and the **proforma invoices**, and accumulates insurance, freight, and customs charges onto the goods to reach the true **landed cost**, then receives them into inventory.
 
 In short: the Bank LC answers "what does this LC do to my facility and my ledger?", while the Supply-Chain LC answers "how do I run this import shipment and its costs all the way into the warehouse?" They are two independent features — different entities and licenses — not two views of one document.

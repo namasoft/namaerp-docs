@@ -1,4 +1,5 @@
 ---
+description: "Setting up medical insurance: insurance companies and their classes, and the Insurance Company Approval that sets the agreed service prices and how each is split between the patient's and the insurer's share."
 entities: [InsuranceCompanyApproval, HMSInsuranceCompany, HMSInsuranceClass, HMSInsuranceCompanyClass]
 menu: Hospital Management System → Master Files → Insurance Company Approval
 ---
@@ -17,7 +18,7 @@ These files have no buttons of their own.
 
 ## Insurance companies and their classes
 
-A **Medical Insurance Company** is the payer we bill for the covered portion of patients' invoices. It is a full accounting party — with a ledger account where coverage liability is posted and aged like any receivable. Besides Accounts, Taxes and Contact info, it carries the **Do Not Endure From Tax 1/2** flags.
+A **Medical Insurance Company** is the payer we bill for the covered portion of patients' invoices. It is a full accounting party — with a ledger account where coverage liability is recorded and aged like any receivable. Besides Accounts, Taxes and Contact info, it carries the **Do Not Endure From Tax 1/2** flags.
 
 ![Medical insurance company](../../ar/modules/hms/images/insurance/insurance-company-en.png)
 

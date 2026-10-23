@@ -1,4 +1,5 @@
 ---
+description: "The Routing screen: the operations a product goes through, the resources each step consumes and refreshing them from the standard operations, the Conversions tab, and how a routing gets used."
 entities: [Routing]
 menu: Manufacturing → Master Files → Routing
 ---

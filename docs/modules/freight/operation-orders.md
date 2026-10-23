@@ -1,4 +1,5 @@
 ---
+description: "The FRM Operation Order, the complete shipment file: parties, voyage and container data, service lines with costs and selling prices, its buttons, the operation order status, the Delivery, Receipt and Transfer documents, and the messages shown."
 entities: [FRMOperationOrder, FRMOOStatus, FRMOODelivery, FRMOOReceipt, FRMOOTransfer]
 menu: Freight Management System → Documents → FRM Operation Order
 ---

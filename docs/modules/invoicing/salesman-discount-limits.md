@@ -1,4 +1,5 @@
 ---
+description: "How the discount limits on the Employee record cap line and document discounts in sales documents and on the POS, how they interact with Sales Offer ranges and permissions, the exceptions, and POS supervisor approval."
 entities: [Employee]
 ---
 # Salesman Discount Limits
@@ -31,11 +32,13 @@ A few rules apply to all of them:
 - **The percentage and the amount are separate checks.** When both are filled, the discount has to stay within both.
 - **The POS uses the same fields.** They are sent to the POS devices with the rest of the employee data, so after you change a limit, the next data sync brings it to the tills.
 
+![The Allowed Sales Discounts Percentages group on the Employee screen](../../ar/modules/invoicing/images/employee-discount-limits-en.png)
+
 ## Whose limits are checked
 
 The limits belong to an employee, but a document passes through several hands. The two sides choose the employee differently.
 
-**In the ERP** (sales quotation, sales order, sales invoice, sales replacement), the global setting **Use Current User as Salesman** (*System Settings → Customers and Sales*, on by default) decides:
+**In the ERP** (sales quotation, sales order, sales invoice, sales replacement), the global setting **use Current User As Sales Man** (*System Settings → Customers and Sales*, on by default) decides:
 
 - When it is **on**, the employee linked to the logged-in user is checked, whoever the document names as salesman.
 - When it is **off**, the employee in the document's **Salesman** field is checked.

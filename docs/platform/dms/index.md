@@ -7,20 +7,9 @@ description: "Landing page for Document Management, the register of physical pap
 
 # Document Management
 
-Every business keeps paper it cannot throw away: signed contracts, commercial registrations, title
-deeds, copies of national IDs. Somebody has to know which cabinet each one is in, who borrowed the
-original last March, and when the licence needs renewing.
-
-The Document Management System is the register for exactly that. The useful way to think about it
-is **a catalogue of physical paperwork that happens to carry scans** — not a place to store files.
-Nama already lets you attach a file to any record; these seven screens are for the documents that
-also have a shelf, a custodian and a borrowing history.
-
-Two things are worth knowing before you build a process on it. First, the document state is a
-**label rather than a lock** — it tells you what the last movement said, and it stops nobody from
-doing anything. Second, a **transfer does not actually relocate a document**: it records the
-intention on the voucher and leaves the document's own shelf reference untouched. Both are covered
-where they matter, and both change how you would design the day-to-day routine.
+The Document Management System is the register of the paperwork a business cannot throw away —
+signed contracts, commercial registrations, title deeds — and of who holds each original. The
+[overview](/platform/dms/dms-overview) explains the idea and walks through its seven screens.
 
 ## Start Here
 

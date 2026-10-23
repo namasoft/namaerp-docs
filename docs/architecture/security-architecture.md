@@ -1,3 +1,6 @@
+---
+description: "Nama ERP security for reviewers: login controls (LDAP, two-factor, lockout, session limits), the layered permission checks deciding what a user can reach, audit trails proving who did what, data protection, and where responsibility sits."
+---
 # Security Architecture
 
 Security questions arrive in a predictable order. Who can get in? Once in, what can they reach? How do we prove afterwards who did what? And what protects the data while it is in transit and at rest? This page answers those four questions at the level a reviewer needs, and points to the pages where each control is actually configured.

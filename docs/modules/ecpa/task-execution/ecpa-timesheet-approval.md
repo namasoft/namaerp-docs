@@ -1,4 +1,5 @@
 ---
+description: "The TimeSheet Approval document: how a manager collects hours recorded on Tasks Executing, accepts, cuts or rejects them, what committing writes back to the tasks and project cost, and how to reverse a decision."
 entities: [CPATimeSheetApproval]
 menu: Project Management → Task Execution / Approvals → TimeSheet Approval
 ---

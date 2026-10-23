@@ -1,4 +1,5 @@
 ---
+description: "Creating and managing User records: user and login dimensions, self-service user requests, user-level permission overrides, login control, passwords, LDAP and Active Directory, two-factor authentication, administrative privileges and the messages you may see."
 entities: [User]
 menu: Administration → Security → User
 ---
@@ -96,7 +97,7 @@ Two settings in Global Configuration drive that lock: **Max Failed Login Attempt
 
 - Passwords are stored **hash-encrypted** (irreversible) unless the organization explicitly operates in legacy plaintext mode.
 - The **Password Must Be Changed** flag forces a new password on next login; the system tracks **Last Password Change Date** for auditing and policy enforcement.
-- The **changePassword** action on the user screen is the administrative reset path; users change their own passwords from the session menu.
+- The **changePassword** action on the user screen is the administrative reset path; users change their own passwords from the user menu on the top bar — see [The Top Bar and Your User Menu](/platform/everyday-tools/top-bar-and-user-menu#Settings).
 
 ## Actions on this screen
 

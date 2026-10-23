@@ -35,6 +35,8 @@ Just as on a document term, the dimension, entity-dimension and reference rows o
 An account side typed directly into a term may be left completely empty — the term then simply contributes nothing on that side, and saves without complaint. A master record cannot: it refuses to save until **Account source type** is filled in, and if that type is *Specific* it also insists on the account itself. That is deliberate — an empty shared side would silently produce nothing everywhere it is used.
 :::
 
+![An Accounting Side Config with a specific account](../../ar/platform/images/shared-master-files/accounting-side-config-screen-en.png)
+
 ## Where a saved record is used
 
 **As the Side Configuration of a term's account side.** Every account side on a document term's Effect tab opens with a **Side Configuration** field. Point it at a record here and the term stops describing that side itself.
@@ -46,7 +48,7 @@ An account side typed directly into a term may be left completely empty — the 
 ::: danger A Side Configuration replaces the block — it does not merge with it
 When a side's **Side Configuration** is filled in, everything else typed into that same block is ignored: the account, the subsidiary type, the narrations, the dimension sources, all of it. The system uses the referenced record as it stands.
 
-This matters because the fields stay on screen and keep showing whatever was there before. A term that used to credit account 4100 directly, and later had a Side Configuration added, still *reads* as though it credits 4100 — but it posts wherever the referenced record says. If an entry lands on an account nobody recognises, check the Side Configuration field before checking anything else, and clear it to go back to the values typed in the block.
+This matters because the fields stay on screen and keep showing whatever was there before. A term that used to credit account 4100 directly, and later had a Side Configuration added, still *reads* as though it credits 4100 — but its amounts go wherever the referenced record says. If an entry lands on an account nobody recognises, check the Side Configuration field before checking anything else, and clear it to go back to the values typed in the block.
 :::
 
 ## Sharing a side, and when not to

@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Work Plan: how Generate Work Plans on a contract produces the dated visit rows and groups them into documents, the work plan screen, and generating maintenance orders from it."
 entities: [MnWorkPlan]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Work Plan
 ---

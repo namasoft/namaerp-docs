@@ -38,7 +38,7 @@ screen:
 
 - **Link a supplier** when the same firm also invoices you outside contracting — he sells you material
   as well as labour, say. The supplier then acts as the accounting parent of the contractor, so
-  postings can resolve to the supplier's accounts and his purchasing and contracting balances stay in
+  ledger lines can resolve to the supplier's accounts and his purchasing and contracting balances stay in
   one place. When an extract needs the payable side, it uses the contractor's own accounts if they are
   set up and falls back to the linked supplier's otherwise.
 - **Leave it empty** for a pure subcontractor. His own accounts are used and his balance lives entirely
@@ -96,7 +96,7 @@ documents resolve their subsidiary to him — or to his linked supplier:
 - [Subcontracts](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) — the
   agreement, which like the owner contract books nothing on signature.
 - [Subcontractor Extracts](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md)
-  — his payment application, and the only document in that chain that posts.
+  — his payment application, and the only document in that chain that creates a journal entry.
 - [Subcontractor Advances and Other Payments](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md)
   and [Subcontractor Fines](/modules/contracting/contractor-contracting/contracting-contractor-fines.md)
   — the deductions and pre-payments that reach his extract.
@@ -174,9 +174,9 @@ consultant.
 | Tax Information | commercial registration and tax registration number, for the e-invoice |
 | Attachments | his trade licence and his insurance certificate, scanned |
 
-Because the supplier field is empty, his subsidiary is the one the module posts to. From here his
+Because the supplier field is empty, his subsidiary is the one the module records entries on. From here his
 package proceeds exactly as the owner side does but in the opposite direction: his 80,000 blockwork
-subcontract `CC-0042` books nothing when signed; his first extract posts the cost and the payable;
+subcontract `CC-0042` books nothing when signed; his first extract records the cost and the payable;
 retention is withheld and his 16,000 mobilisation advance is recovered through the conditions grid; and
 when we sell him cement out of our own store, the charge comes back as a deduction on his next extract.
 

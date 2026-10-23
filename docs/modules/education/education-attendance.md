@@ -1,5 +1,6 @@
 ---
 entities: [EDAttendance, EDDailyMonitoring, EDLeavePermission, EDLeaveReason]
+menu: Education → Time Attendance → Education Attendance
 ---
 # Attendance, Daily Monitoring and Leave
 

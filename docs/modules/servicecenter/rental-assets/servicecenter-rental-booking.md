@@ -16,7 +16,7 @@ Three documents, all under **Service Center → Rental Assets**:
 |---|---|---|
 | Rental Asset Request | طلب حجز تأجيرى | Holds the slot. |
 | Rental Asset Invoice | فاتورة حجز تأجيرى | Bills the planned period. |
-| Rental Asset Reservation Cancel | إلغاء حجز أصل تأجيري | Frees the slot, posts a typed charge. |
+| Rental Asset Reservation Cancel | إلغاء حجز أصل تأجيري | Frees the slot, records a typed charge. |
 
 ## The request — holding the slot
 
@@ -89,7 +89,7 @@ There is no actual return date on this document. The invoice prices the **planne
 
 The pair *request → invoice* is not registered as a standard next-document step, so in practice the link is either set by hand or set up as a document-generation rule on the توجيه.
 
-Both the request and the invoice post through the standard sales-invoice financial effects, and both share a single [توجيه](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) configuration. They post **only when that توجيه has a debit or a credit side filled**; with both blank, committing produces no journal entry at all. Neither document moves stock — the generated line is a service item.
+Both the request and the invoice create their entries through the standard sales-invoice financial effects, and both share a single [توجيه](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) configuration. They create an entry **only when that توجيه has a debit or a credit side filled**; with both blank, committing produces no journal entry at all. Neither document moves stock — the generated line is a service item.
 
 ## Actions on these screens
 
@@ -117,10 +117,10 @@ It refuses two things: a *From Document* that is not a rental request or rental 
 
 Its only effect is a journal entry: one debit line and one credit line, both for that amount, against the two accounting sides configured on the cancel document's توجيه, with the الذمة taken from the document's subsidiary or its customer.
 
-::: warning No receivable is raised, and nothing posts unless both sides are set
+::: warning No receivable is raised, and nothing is recorded unless both sides are set
 The cancellation charge is a pure journal entry. It does **not** raise a receivable against the customer and it does **not** produce an invoice — if you intend to collect the 100, invoice it separately.
 
-And if **either** accounting side is left blank on the توجيه, the document posts nothing at all, silently. It still frees the slot; it just books no money. Set both sides, or accept that the charge is a note on a document.
+And if **either** accounting side is left blank on the توجيه, the document records nothing at all, silently. It still frees the slot; it just books no money. Set both sides, or accept that the charge is a note on a document.
 :::
 
 ## The cycle in nine steps

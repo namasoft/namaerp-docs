@@ -1,4 +1,5 @@
 ---
+description: "Document term settings for the remaining Contracting documents: cost execution, daily labour book, equipment statement and cost distribution, purchase requests and orders, budget item requests, the analysis card and assay, and two purchasing terms whose defaults work in opposite directions."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -6,7 +7,7 @@ menu: Basic → Settings → Document Term
 
 Once the extracts, the material streams and the payment documents are configured, what remains is a long tail of terms that are mostly very small: one debit, one credit, and a guard or two. This page takes them in the order a reader is likely to meet them — cost capture first, then purchasing, then the two estimating documents.
 
-There is a pattern worth holding on to. **A contracting term is short when the document's job is short.** The cost execution rolls figures up and needs one switch. The equipment statement books one journal entry and needs one pair of accounts. The analysis card posts nothing at all, so its term is about how lines are built rather than where they land. Only where a document is genuinely an invoice — the miscellaneous purchase invoice, the labour-and-plant invoice, the contracting purchase order — does the term grow into the full supply chain shape, and in those cases the right thing to read is the [supply chain reference](/modules/supplychain/document-terms/doc-term-accounting-effects.md) rather than this page.
+There is a pattern worth holding on to. **A contracting term is short when the document's job is short.** The cost execution rolls figures up and needs one switch. The equipment statement books one journal entry and needs one pair of accounts. The analysis card creates no journal entry at all, so its term is about how lines are built rather than where they land. Only where a document is genuinely an invoice — the miscellaneous purchase invoice, the labour-and-plant invoice, the contracting purchase order — does the term grow into the full supply chain shape, and in those cases the right thing to read is the [supply chain reference](/modules/supplychain/document-terms/doc-term-accounting-effects.md) rather than this page.
 
 The other thing to carry into this page is a caution about defaults. Two of the purchasing terms control the same idea — whether a document writes contracting cost and quantity figures at all — but one is phrased positively and the other negatively, so **out of the box they behave in opposite directions.** That is spelled out below, and it is the single most common surprise in this group.
 
@@ -54,6 +55,8 @@ Leave the first option off and the cost lines are typed by hand, which is what a
 This document's term is the supply chain **invoice** term — read it under [supply chain](/modules/supplychain/document-terms/doc-term-accounting-effects.md). Set the main accounting sides, the tax sides and the discount sides there, exactly as for a purchase invoice.
 
 One fact belongs here rather than there, because readers assume the opposite: **this invoice books a payable and contributes no project actual cost.** Project cost from an allocation comes from the cost-distribution document above, not from the invoice. So a project whose crane hire shows on the invoice but not in the cost reports is behaving correctly — the missing step is the distribution document.
+
+![The Settings tab of the Employee And Equipment Project Cost Distribution term](../../../ar/modules/contracting/images/terms/contracting-term-cost-distribution-en.png)
 
 ## Purchasing and spending
 
@@ -120,7 +123,7 @@ The fact to hold on to: **of the three, only the invoice contributes project cos
 
 ### Term Analysis Card
 
-The [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md) posts nothing, so its term is not about accounts at all. It is about how the card's lines are built and how the components roll into a unit cost.
+The [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md) creates no journal entry, so its term is not about accounts at all. It is about how the card's lines are built and how the components roll into a unit cost.
 
 | Option | What it does |
 |---|---|
@@ -134,14 +137,14 @@ The grid is the reason the analysis card can express "labour is 40% of material"
 
 ### Contracting Assay
 
-The [assay](/modules/contracting/project-contracting/contracting-assays.md) — the priced bill of quantities — does post, but it uses a deliberately narrow set of effects. Its term screen is a single page, and what the assay actually books is:
+The [assay](/modules/contracting/project-contracting/contracting-assays.md) — the priced bill of quantities — does create journal entries, but it uses a deliberately narrow set of effects. Its term screen is a single page, and what the assay actually books is:
 
-| Group | What it posts |
+| Group | What it records |
 |---|---|
 | **Debit** and **Credit** | The main value of the assay's lines |
 | **Tax 1** | The first tax |
 | **Tax 2** | The second tax |
-| The discount effects | One discount posting only. The assay draws on the **first discount debit** and the **second discount credit**, so those are the two sides to fill — set both or the discount line arrives one-sided |
+| The discount effects | One discount entry only. The assay draws on the **first discount debit** and the **second discount credit**, so those are the two sides to fill — set both or the discount line arrives one-sided |
 
 Tax 3, tax 4, the cost pair, the actual-cost pair, the cost-variance pair and the variance groups are not part of what an assay books, so leave them out of your set-up plan for this document. The cumulative-pricing options belong to extracts.
 

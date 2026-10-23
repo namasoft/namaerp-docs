@@ -1,4 +1,5 @@
 ---
+description: "The Tour Program screen: building a reusable day-numbered itinerary with its header, accommodation, services and flights grids, the checks made on save, a worked 10-day example, and how a program becomes a dated tour."
 entities: [TRTourProgram]
 menu: Travel → Master Files → Tour Program
 ---

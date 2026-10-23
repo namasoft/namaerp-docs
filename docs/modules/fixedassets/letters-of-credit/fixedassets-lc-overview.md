@@ -42,16 +42,16 @@ Fixed asset Letter of Credit          the file card for one import deal
         │  exactly one
         ▼
 Fixed Asset ProformaInvoice           the machines and their supplier prices
-        │                              = the distribution base. Books nothing.
+        │                              = the distribution base. Creates no entry.
         │  as many as you need
         ▼
 Fixed Asset Expense Document          every cost that lands on the shipment
         │                              goods value, freight, customs, clearance…
-        │                              spreads each cost over the machines. Posts.
+        │                              spreads each cost over the machines. Creates an entry.
         ▼
 Fixed Asset Letter of Credit cost     sums each machine's share, writes it as the
                                        asset's cost, starts depreciation, closes
-                                       the credit. Posts.
+                                       the credit. Creates an entry.
 ```
 
 The credit itself is a **master file**, not a document — it has no book, no term and no accounting
@@ -151,7 +151,7 @@ is very often the supplier's own invoice.
 
 ![The list of letters of credit](../../../ar/modules/fixedassets/images/lc/fa-letter-of-credit-list-en.png)
 
-Both posting documents create their entries as **business requests** processed in the background, so
+Both documents that book to the ledger create their entries as **business requests** processed in the background, so
 saving is instant and a failed entry is retried from the Business Requests list view rather than by
 re-typing the document.
 

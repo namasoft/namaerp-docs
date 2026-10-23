@@ -1,4 +1,5 @@
 ---
+description: "How e-invoicing works in Nama for every country: the Electronic Tax Authority Configuration, the Tax Authority Submission Document, switching it on, collecting, checking and sending documents, what the statuses mean, and where to look when a document does not arrive."
 entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc]
 menu: Basic → Electronic Tax Authority Configuration → Electronic Tax Authority Configuration
 ---
@@ -55,6 +56,8 @@ The configuration is long, but it answers only five questions. Knowing which que
 **When may we send?** — **Start Sending From Date** draws the line before which nothing is submitted, so switching the feature on does not sweep up last year's invoices. **Max Days To Send Invoices** and **Max Days To Cancel Sent Invoices** hold you to the authority's deadlines, and a separate from/to pair opens a deliberate window when you have permission to send older documents.
 
 **How much at a time?** — how many documents go in one request to the authority, and how many lines a single collection may pull in. Both matter on high-volume days: too large and the authority times out, too small and you are creating submission documents all afternoon.
+
+![An Electronic Tax Authority Configuration record](../../ar/modules/invoicing/images/einvoice-taxpayer-config-egypt-en.png)
 
 ## Sending: collect, check, send
 

@@ -1,4 +1,5 @@
 ---
+description: "Recording manual entries with the Journal Entry: header, lines, balancing and the difference account, and cost allocation, plus the Currency Diff Journal, the Exchange Rate Update and the Inter-Company Transfer."
 entities: [JournalEntry, CurrencyDiffJournal, ExchangeRateUpdate, InterCompanyTransfer]
 menu: Accounting → Documents → Journal Entry
 ---
@@ -69,7 +70,8 @@ Each line names the legal entity it belongs to. Each company's journal is balanc
 The transfer also works between companies whose ledgers keep different currencies, for example a head office in US dollars and a subsidiary in Egyptian pounds. Three things differ from a same-currency transfer:
 
 - **One currency on every line.** All lines must use the same transaction currency. Otherwise the save is refused with *An inter-company transfer between companies with different currencies must use one currency on all lines* — «التحويل بين شركات بعملات مختلفة يجب أن يستخدم عملة واحدة في جميع السطور».
-- **Each company's own rate.** A line of another company is always converted at that company's own exchange rate on the document's value date, so its local amount is in that company's currency; a rate typed on such a line is replaced when the document is saved. If that company has no rate for the currency on that date, the document cannot be committed.
+- **Each company's own rate.** A line of another company is always converted at that company's own exchange rate on the document's value date, so its local amount is in that company's currency; a rate typed on such a line is replaced when the document is saved. If that company has no rate for the currency on that date, the document cannot be committed:
+  *Legal entity {0} has no exchange rate for {1} on {2}* — «لا يوجد سعر صرف للعملة {1} في الشركة {0} بتاريخ {2}».
 - **The same amount on both mediator accounts.** The balancing line on the mediator account is in that account's own currency when it has one, otherwise in the transfer's currency. Both companies' mediator accounts then hold the same amount.
 
 So when Egypt sends USD 10,000 to the head office, Egypt books USD 10,000 at its own dollar rate, in pounds. The head office books USD 10,000 at rate 1. Both mediator accounts hold USD 10,000, and the consolidated reports eliminate them exactly.

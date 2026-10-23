@@ -38,5 +38,5 @@ title: مواعيد الفنيين
 
 <LandingGrid>
   <LandingCard icon="📝" title="سند توزيع الخدمات" link="/ar/modules/crm/technician-appointments/crm-technician-service-distribution.md" details="ما نُفِّذ فعلاً ومن نفّذه وفي كم من الوقت، وكيف ينقل الموعد إلى «تم التنفيذ»." />
-  <LandingCard icon="🔀" title="سندات نقل الفنيين" link="/ar/modules/crm/technician-appointments/crm-technician-transfers.md" details="نقل شخص بين الفرق في مستند واحد مرحَّل، وما الذي لا تمسّه النقلة عمداً." />
+  <LandingCard icon="🔀" title="سندات نقل الفنيين" link="/ar/modules/crm/technician-appointments/crm-technician-transfers.md" details="نقل شخص بين الفرق في مستند واحد يُحفظ مرة واحدة، وما الذي لا تمسّه النقلة عمداً." />
 </LandingGrid>

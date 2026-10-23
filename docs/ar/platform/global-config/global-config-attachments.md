@@ -19,29 +19,29 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 تُخزَّن محتويات المرفق داخل قاعدة البيانات افتراضياً. وهذا بسيط ويجعل النسخ الاحتياطية مكتفية بذاتها، لكن بضع سنوات من الفواتير الممسوحة ستجعل قاعدة البيانات أكبر بكثير من بيانات العمل التي تحملها.
 
-**تخزين المرفقات خارجياً** `value.info.externalizeAttachments` — يخزّن محتوى المرفقات على القرص بدل قاعدة البيانات، فلا تحتفظ القاعدة إلا بالبيانات الوصفية ومؤشر إلى الملف.
+**تخزين المرفقات خارج قاعدة البيانات** `value.info.externalizeAttachments` — يخزّن محتوى المرفقات على القرص بدل قاعدة البيانات، فلا تحتفظ القاعدة إلا بالبيانات الوصفية ومؤشر إلى الملف.
 
 ::: warning التخزين الخارجي يغيّر خطة النسخ الاحتياطي
 بمجرد أن تعيش الملفات على القرص، لم تعد النسخة الاحتياطية لقاعدة البيانات تحتويها. فيجب أخذ نسخة من المجلد أيضاً واستعادته مع القاعدة — فقاعدة تُستعاد بلا مجلد مرفقاتها ستُظهر كل مرفق مفقوداً.
 :::
 
-**مجلد المرفقات الخارجي** `value.info.externalAttachmentsFolder` *(الافتراضي `c:/nama/attachments` على ويندوز و`/var/nama/attachments` على غيره)* — المجلد الجذر لتلك الملفات.
+**مجلد تخزين المرفقات** `value.info.externalAttachmentsFolder` *(الافتراضي `c:/nama/attachments` على ويندوز و`/var/nama/attachments` على غيره)* — المجلد الجذر لتلك الملفات.
 
-**حرف محرك المشاركة** / **رابط المشاركة** / **مستخدم المشاركة** / **كلمة سر المشاركة** `value.info.attachmentShareDriveLetter`, `value.info.attachmentShareURL`, `value.info.attachmentShareUser`, `value.info.attachmentSharePassword` — حين يكون المجلد مشاركة شبكية لا قرصاً محلياً، فهذه الحقول تربطه. واملأ أياً منها يصر حرف المحرك والرابط مطلوبين؛ ويخبرك النظام أيها ناقص عند الحفظ.
+**Attachment Shared Folder Drive Letter** / **Attachment Shared Folder URL** / **Attachment Shared Folder User Name** / **Attachment Shared Folder User Password** `value.info.attachmentShareDriveLetter`, `value.info.attachmentShareURL`, `value.info.attachmentShareUser`, `value.info.attachmentSharePassword` — حين يكون المجلد مشاركة شبكية لا قرصاً محلياً، فهذه الحقول تربطه. واملأ أياً منها يصر حرف المحرك والرابط مطلوبين؛ ويخبرك النظام أيها ناقص عند الحفظ.
 
-**السماح بتحميل المرفقات دون توثيق** `value.info.allowDownloadAttachmentWithoutAuthentication` — تعمل روابط المرفقات دون جلسة. ويحتاجه بعض العارضين والبوابات الخارجية، لكنه يعني أن كل من يملك الرابط يستطيع جلب الملف — فلا تفعّله إلا حين تعلم أن ذلك مقبول.
+**السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما** `value.info.allowDownloadAttachmentWithoutAuthentication` — تعمل روابط المرفقات دون جلسة. ويحتاجه بعض العارضين والبوابات الخارجية، لكنه يعني أن كل من يملك الرابط يستطيع جلب الملف — فلا تفعّله إلا حين تعلم أن ذلك مقبول.
 
-**إنشاء جدول معلومات المرفقات** `value.info.createAttachmentInfoTable` — يصون جدولاً منفصلاً يصف المرفقات ويعرضه في القوائم والشاشات، فتستطيع رفع تقارير عمّا هو مرفق وأين وكم يشغل من مساحة.
+**إنشاء جدول بيانات المرفقات** `value.info.createAttachmentInfoTable` — يصون جدولاً منفصلاً يصف المرفقات ويعرضه في القوائم والشاشات، فتستطيع رفع تقارير عمّا هو مرفق وأين وكم يشغل من مساحة.
 
-**إنشاء معاينة ومصغّرة للمرفق** `value.info.createAttachmentPreviewAndThumbnail` — ينتج معاينة وصورة مصغّرة لكل ملف مرفوع. والمصغّرات تجعل تصفح قائمة المرفقات أيسر بكثير، مقابل بعض المعالجة عند الرفع وقليل من المساحة الإضافية.
+**إنشاء نسخة مطالعة للمرفقات** `value.info.createAttachmentPreviewAndThumbnail` — ينتج معاينة وصورة مصغّرة لكل ملف مرفوع. والمصغّرات تجعل تصفح قائمة المرفقات أيسر بكثير، مقابل بعض المعالجة عند الرفع وقليل من المساحة الإضافية.
 
 **عدم استعمال Google Docs لعرض مرفقات الأوفيس** `value.info.dontUseGoogleDocsForOfficeFilesPreview` — لا يستطيع المتصفح وحده عرض ملفات وورد وإكسل وباوربوينت، فيعرضها النظام افتراضياً بتضمين عارض المستندات العام من Google موجَّهاً إلى عنوان الملف. وهذا يعمل، لكنه يسلّم العنوان إلى خدمة خارجية، ويشترط أن يكون الملف قابلاً للوصول من الإنترنت العامة — وهو ما لا يتحقق عادةً على خادم داخلي، فلا تُحمَّل المعاينة أصلاً. وبتفعيل هذا الخيار يكفّ النظام عن تضمين العارض: فتقول نافذة المعاينة إن الملف غير قابل للعرض وتطلب من المستخدم تنزيله. فعّله حيثما كان الخادم غير مرئي من الخارج، أو حيثما كان تسليم عناوين المستندات إلى طرف ثالث غير مقبول.
 
 ## مراقبة المساحة الحرة
 
-**المجلدات المراد فحص مساحتها** `value.info.foldersToCheckSpace` — المجلدات التي يراقب النظام مساحتها الحرة. اذكر هنا مجلد المرفقات وكل موضع يوقف امتلاؤه العمل.
+**المجلدات التي يجب أن يقوم النظام بالتحقق من المساحة المتبقية فيها (CSV)** `value.info.foldersToCheckSpace` — المجلدات التي يراقب النظام مساحتها الحرة. اذكر هنا مجلد المرفقات وكل موضع يوقف امتلاؤه العمل.
 
-**التنبيه عند وصول المساحة الفارغة إلى (جيجابايت)** `value.info.notifyWhenEmptySpaceReachesGB` *(الافتراضي 20)* — دون هذا العدد من الجيجابايتات الحرة يرفع النظام رسالة حرجة. اضبطه عالياً بما يكفي ليجد أحدهم وقتاً للتصرف — فالقرص الذي يمتلئ تماماً يوقف المرفقات والتصدير وقاعدة البيانات نفسها في الغالب.
+**تحذير المستخدمين عندما تصل المساحة المتبقية لأقل من (GB)** `value.info.notifyWhenEmptySpaceReachesGB` *(الافتراضي 20)* — دون هذا العدد من الجيجابايتات الحرة يرفع النظام رسالة حرجة. اضبطه عالياً بما يكفي ليجد أحدهم وقتاً للتصرف — فالقرص الذي يمتلئ تماماً يوقف المرفقات والتصدير وقاعدة البيانات نفسها في الغالب.
 
 ## النسخ الاحتياطي لقاعدة البيانات
 
@@ -68,9 +68,9 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 ## الماسح الضوئي
 
-**تطبيق المسح الضوئي** `value.info.scannerApp` — أي تكامل مسح يستعمله إجراء «إرفاق من الماسح»: **cScanTwain** أو **DynamicWebTWAIN**.
+**Scanner App** `value.info.scannerApp` — أي تكامل مسح يستعمله إجراء «إرفاق من الماسح»: **cScanTwain** أو **DynamicWebTWAIN**.
 
-**ملف تعريف المسح** `value.info.scannerProfile` — إعدادات المسح الافتراضية: **مستند أبيض وأسود** أو **مستند ملون** أو **تدرج رمادي** أو **إظهار واجهة الماسح** ليختار المستخدم في كل مرة. والأبيض والأسود يبقي مسح المستندات صغير الحجم؛ ولا تستعمل الألوان إلا حيث يحمل اللون معلومة، كأصل مختوم أو موقّع.
+**Scanner Profile** `value.info.scannerProfile` — إعدادات المسح الافتراضية: **مستند أبيض وأسود** أو **مستند ملون** أو **تدرج رمادي** أو **إظهار واجهة الماسح** ليختار المستخدم في كل مرة. والأبيض والأسود يبقي مسح المستندات صغير الحجم؛ ولا تستعمل الألوان إلا حيث يحمل اللون معلومة، كأصل مختوم أو موقّع.
 
 ::: tip زر مسح لحقل بعينه — أو مكان للتوقيع
 تحدد هذه الإعدادات *كيف* يعمل المسح، لكنها لا تضع زر مسح في أي مكان. ولإضافة زر، علّم حقل المرفق كحقل مسح ضوئي في [أعدادات الحقول و الشاشات](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) — فيحصل الحقل على زره الخاص الذي يمسح مباشرة إليه بدل المرور بقائمة المرفقات العامة. والشاشة نفسها تحوّل حقل المرفق إلى **لوحة توقيع**، فيوقّع العميل على إذن التسليم على الشاشة بإصبعه أو بقلم، ويُحفظ الرسم كمرفق.
@@ -80,10 +80,36 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 يحوّل النظام ملفات أوفيس والصور إلى PDF للمعاينة والطباعة، مستعملاً أداتين خارجيتين.
 
-**مسار ImageMagick** `value.info.docConverterSettings.imageMagicPath` — مسار ملف ImageMagick التنفيذي على الخادم، ويُستعمل لتحويل الصور.
+**مسار Image Magick** `value.info.docConverterSettings.imageMagicPath` — مسار ملف ImageMagick التنفيذي على الخادم، ويُستعمل لتحويل الصور.
 
-**عنوان خادم OpenOffice** / **منفذ خادم OpenOffice** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — عنوان ومنفذ خدمة التحويل LibreOffice أو OpenOffice التي تحوّل ملفات وورد وإكسل وأمثالها إلى PDF.
+**عنوان خادم OpenOffice** / **منفذ OpenOffice** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — عنوان ومنفذ خدمة التحويل LibreOffice أو OpenOffice التي تحوّل ملفات وورد وإكسل وأمثالها إلى PDF.
 
 ::: tip هذه مسارات على الخادم لا على جهاز المستخدم
 يشير الإعدادان إلى برامج مثبّتة على خادم التطبيق لا على جهاز المستخدم. فإن توقفت معاينة المستندات بعد نقل الخادم، فهاتان أول قيمتين تفحصهما.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل حقول هذه الصفحة باسمها الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه.
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| تخزين المرفقات خارج قاعدة البيانات | Externalize Attachments | `value.info.externalizeAttachments` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| مجلد تخزين المرفقات | External Attachments Folder | `value.info.externalAttachmentsFolder` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| Attachment Shared Folder Drive Letter | Attachment Shared Folder Drive Letter | `value.info.attachmentShareDriveLetter` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| Attachment Shared Folder URL | Attachment Shared Folder URL | `value.info.attachmentShareURL` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| Attachment Shared Folder User Name | Attachment Shared Folder User Name | `value.info.attachmentShareUser` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| Attachment Shared Folder User Password | Attachment Shared Folder User Password | `value.info.attachmentSharePassword` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما | Allow Downloading Attachment Without Authentication | `value.info.allowDownloadAttachmentWithoutAuthentication` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| إنشاء جدول بيانات المرفقات | Create Attachment Info Table | `value.info.createAttachmentInfoTable` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| إنشاء نسخة مطالعة للمرفقات | Create Attachment Preview and Thumbnail | `value.info.createAttachmentPreviewAndThumbnail` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| عدم استعمال Google Docs لعرض مرفقات الأوفيس | Do Not Use Google Docs To Preview Office Files | `value.info.dontUseGoogleDocsForOfficeFilesPreview` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| المجلدات التي يجب أن يقوم النظام بالتحقق من المساحة المتبقية فيها (CSV) | Check The Following Folders for Empty Space (CSV) | `value.info.foldersToCheckSpace` | [مراقبة المساحة الحرة](#mrqb-lmsH-lHr) |
+| تحذير المستخدمين عندما تصل المساحة المتبقية لأقل من (GB) | Warn Users When Empty Space Is Less Than (GB) | `value.info.notifyWhenEmptySpaceReachesGB` | [مراقبة المساحة الحرة](#mrqb-lmsH-lHr) |
+| مجلد النسخ الاحتياطي | Backup Folder | `value.info.backupFolder` | [النسخ الاحتياطي لقاعدة البيانات](#lnskh-lHtyTy-lqaad-lbynt) |
+| عدم التحقق من وجود نسخة احتياطية | Do Not Check For Backup Existence | `value.info.doNotCheckForBackupExistence` | [النسخ الاحتياطي لقاعدة البيانات](#lnskh-lHtyTy-lqaad-lbynt) |
+| Scanner App | Scanner App | `value.info.scannerApp` | [الماسح الضوئي](#lmsH-lDwyy) |
+| Scanner Profile | Scanner Profile | `value.info.scannerProfile` | [الماسح الضوئي](#lmsH-lDwyy) |
+| مسار Image Magick | Image Magick Path | `value.info.docConverterSettings.imageMagicPath` | [محول المستندات](#mHwl-lmstndt) |
+| عنوان خادم OpenOffice | OpenOffice Server Address | `value.info.docConverterSettings.openOfficeServerAddress` | [محول المستندات](#mHwl-lmstndt) |
+| منفذ OpenOffice | Open Office Server Port | `value.info.docConverterSettings.openOfficeServerPort` | [محول المستندات](#mHwl-lmstndt) |

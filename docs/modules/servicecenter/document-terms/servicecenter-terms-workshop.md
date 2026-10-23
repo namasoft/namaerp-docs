@@ -85,7 +85,7 @@ Leave a pair empty and that payer's button has nothing to build with. Three more
 comes out:
 
 - **Save Invoices As Draft** — the generated invoice arrives uncommitted, so somebody reviews it
-  before it posts. Sensible where the service advisor prices the job and accounts commits it.
+  before it is committed. Sensible where the service advisor prices the job and accounts commits it.
 - **Generate Sales Orders Not Invoices** — produces sales orders instead of invoices, for
   installations that invoice from the sales side.
 - **Use Today For Invoice Value Date** — dates the invoice on the day it is generated rather than
@@ -109,6 +109,8 @@ issued, and every plan validation stops applying.
 
 The term also carries the vehicle-status trio, the tax quartet and *Add Spare Parts With Task
 Selection*.
+
+![The invoice books and terms on the Effect tab of the Job Order term](../../../ar/modules/servicecenter/images/document-terms/sc-term-job-order-invoice-pairs-en.png)
 
 ## The Job Order Closing term
 
@@ -197,7 +199,7 @@ Al-Faisal Auto Electric for a bench test, 400 on document `SCER-2026-0061`.
 
 Its term carries the standard invoice account block: the debit and credit sides, cash, line and
 invoice discounts, the seven extra discount accounts, approximation discount, the tax accounts and
-four service-fee pairs. All of this is genuinely read — the external repair really does post.
+four service-fee pairs. All of this is genuinely read — the external repair really does create a journal entry.
 
 One switch changes the direction of the entry:
 
@@ -206,7 +208,7 @@ supplier; on, it books a receivable instead, for the rare installation that does
 others through this screen.
 
 ::: warning The external repair's value never reaches the job order
-The 400 posts to the ledger against the supplier and the line's account, and it marks the covered
+The 400 is recorded in the ledger against the supplier and the line's account, and it marks the covered
 tasks *Finished*. It does **not** join the job order's 3,215, it does not appear on any of the three
 invoices, and no term option makes it. To recover it from the customer, add a task or material value
 on the job order by hand.

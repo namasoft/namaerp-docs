@@ -16,6 +16,21 @@ You can run reports right inside the POS. Open the reports screen, pick a report
 
 ![Report viewer](../../ar/modules/pos/images/reports/pos-report-viewer-en.png)
 
+### Buttons on the reports screens
+
+The reports list opens from the slide menu (**Actions → Reports**). Its icon buttons show their name when you hover over them.
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Search** | «بحث» | Lists the reports that match the filters typed at the top. |
+| **Previous** / **Next** | «السابق» / «التالي» | Move one page back or forward through the list. The arrows beside them jump to the first and the last page. |
+| **Ok** (`Enter`) | «موافق» | Opens the selected report; double-clicking a report does the same. The prompts window opens first, unless the report has nothing to ask. |
+| **Cancel** | «إلغاء» | Closes the list. |
+| **Confirm** | «تأكيد» | On the prompts window: runs the report with the values entered and opens it in the viewer. |
+| **Cancel** | «إلغاء» | On the prompts window: closes it without running the report. |
+
+The viewer has its own toolbar for saving the report to a file, printing it, moving between pages and zooming.
+
 Which reports appear here is decided centrally — any report in the main Nama system can be made available to the POS. A report can run against the **local** register database (fast, and works offline, but only this register's data) or against the **server** database (a complete, up-to-date picture across all points). The [POS FAQ](./pos-faq.md) walks through making a report available in POS.
 
 ## Internal messages and notifications
@@ -24,7 +39,21 @@ Staff can send short **internal messages** to one another — to a few named emp
 
 ![Internal message](../../ar/modules/pos/images/reports/pos-internal-message-en.png)
 
-Those pop-ups are part of a wider **notifications** stream — incoming messages, system alerts, order arrivals. Press `Ctrl+F11` to see them all in one place and clear them.
+The message screen opens from the slide menu (**Documents → Write Internal Message**). Pick up to five employees, type the message, then:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Send** | «إرسال» | Checks that at least one employee and a message body are filled in, saves the message, sends it to the server and returns to the sales screen. |
+| **Cancel** | «إلغاء» | Returns to the sales screen without sending. |
+
+Those pop-ups are part of a wider **notifications** stream. `Ctrl+F11` fetches your own notifications from the server and lists them; **Cancel** («إلغاء») closes the list.
+
+The bell at the top of the screen is the register's own feed: it counts the documents this register has sent to the server, and the ones that failed to go, for users whose security profile lets them see data-transfer errors. Pressing the bell opens the **Notifications** window:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Delete** | «مسح» | Empties the list and resets the bell's count. |
+| **Close** | «إغلاق» | Closes the window and leaves the list as it is. |
 
 
 ## The price checker
@@ -46,6 +75,13 @@ A register becomes a price-checker station through its `nama.properties` file (i
 Now and then a supervisor needs to run a one-off **utility** on a register — a maintenance or fix-up routine named by the support team. The utilities dialog takes the utility's name and any parameters, runs it, and reports the result.
 
 ![Run utility dialog](../../ar/modules/pos/images/reports/pos-utils-dialog-en.png)
+
+The menu entry is kept out of sight until it is needed: in the slide menu, press **Data Settings → Activate Server Log** first, and **Actions → Run POS Utility** then appears. In the dialog, type the utility's name in the first box and its parameters in the second, then:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Confirm** | «تأكيد» | Runs the utility. *Done* («تم التنفيذ») means it finished; anything else is the utility's error message. |
+| **Cancel** | «إلغاء» | Closes the dialog without running anything. |
 
 You would normally only do this when asked to by support, with the exact name they give you. One common example appears in the [POS FAQ](./pos-faq.md): a utility that fixes a payment method whose cash/non-cash setting was changed after it had already been used.
 

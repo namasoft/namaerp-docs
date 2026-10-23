@@ -1,5 +1,7 @@
 ---
+description: "Customising Nama Mobile screens without a new app version: choosing and requiring fields with Mobile App Screen Modifier, list card text with Mobile Entity Title Modifier, label wording with Mobile App Translation Override, and lookup filters with Mobile App Fields Extra Filter."
 entities: [MobileAppScreenModifier, MobileEntityTitleModifier, MobileAppTranslationOverride, MobileAppFieldsSearcherContext]
+menu: Basic → Mobile Apps → Mobile App Screen Modifier
 ---
 # Shaping the App's Screens: Fields, Card Titles, Labels and Lookups
 

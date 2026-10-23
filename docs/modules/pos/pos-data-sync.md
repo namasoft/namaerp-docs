@@ -1,3 +1,6 @@
+---
+description: "How a POS register works on its own local database and syncs with the central Nama ERP: unsent versus sent documents, working online or offline, and what to do when a document will not go up to the server."
+---
 # How POS Data Syncs with the Server
 
 This is the idea that makes Nama POS what it is, so it is worth understanding even if you never touch the technical side. A register works on its **own local database** and syncs with the central Nama ERP in the background. That is why a power cut or a dropped connection does not stop you selling.
@@ -6,7 +9,7 @@ This is the idea that makes Nama POS what it is, so it is worth understanding ev
 
 Everything you do at the register — an invoice, a return, a payment, a shift open or close, a stock count — is written to the register's **local database first**. It is saved, it is on screen, it can be printed for the customer. At that point it is **unsent**: it exists here but has not yet reached the server.
 
-In the background the register keeps trying to **send** unsent documents up to the central system. Once a document is sent, it becomes a permanent record in the main system — visible to head office, posted to accounting, included in company-wide reports.
+In the background the register keeps trying to **send** unsent documents up to the central system. Once a document is sent, it becomes a permanent record in the main system — visible to head office, processed into the accounts, included in company-wide reports.
 
 So every document lives one of two lives:
 

@@ -1,12 +1,13 @@
 ---
+description: "Answers to common Notification Definition questions: notifying every customer on a multi-line receipt, sending all invoice lines in a text message, showing who approved the document, and alerting sales supervisors about quotations not converted to sales orders."
 entities: [NotificationDefinition]
 menu: Administration → Display Customization → Notification Definition
 ---
 # Frequently Asked Questions: Notifications and Messages
 
-## How do I send a notification to each customer when posting a receipt that contains multiple lines for multiple customers?
+## How do I send a notification to each customer when saving a receipt that contains multiple lines for multiple customers?
 
-When posting a receipt that contains multiple lines for multiple customers, you may notice that the notification is sent only to the first customer and not to the remaining customers in the other lines.
+When saving a receipt that contains multiple lines for multiple customers, you may notice that the notification is sent only to the first customer and not to the remaining customers in the other lines.
 
 ### Reason
 

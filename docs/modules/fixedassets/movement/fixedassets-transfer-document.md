@@ -83,7 +83,7 @@ moves the balances off the old account and onto the new one.
 
 ::: warning The document's own legal entity decides which ledger is read
 The **Dimensions** group at the bottom is not decoration. When the transfer works out how much cost
-and accumulated depreciation to move, it reads the posted balances of the asset **in the company
+and accumulated depreciation to move, it reads the asset's ledger balances **in the company
 named in that group**. Set it to the company the asset is *leaving*. If it names some other company —
 the destination, or whatever your user defaults to — the lookup finds nothing, every line comes out
 at zero, and the document commits without an entry.

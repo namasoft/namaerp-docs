@@ -1,4 +1,5 @@
 ---
+description: "The Car Insurance Policy record: filling it from the sales order, which fields you type and which the documents set, its three status fields, the expiry date, and the Related Documents page."
 entities: [SICustomerInsurancePolicy]
 menu: cars → Car Insurance → Car Insurance Policy
 ---
@@ -84,7 +85,7 @@ The policy carries three independent status axes, all system-written, and it hel
 
 Type the **effective date** and the **expiry date** on the policy.
 
-Al-Sahra types Layla's dates directly: effective **12 March 2026**, expiry **11 March 2027**. The record checks that the expiry date is not earlier than the effective date.
+Al-Sahra types Layla's dates directly: effective **12 March 2026**, expiry **11 March 2027**. The record checks that the expiry date is not earlier than the effective date, and refuses one that is with *Effective start date must be before expiry date* — «تاريخ بداية السريان يجب أن يكون قبل تاريخ الانتهاء».
 
 ## The Related Documents page
 

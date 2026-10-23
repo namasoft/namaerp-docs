@@ -1,4 +1,5 @@
 ---
+description: "ملفات التصنيف الثلاثة في مركز الخدمة، مجموعة الملحقات ونوع الزيارة وتصنيف الخدمة: ما يصنّفه كل منها، وأثر نوع الزيارة في فحص طاقة الحجز، ولماذا تملؤها."
 entities: [AccessoriesKit, SrvCVisitType, SrvCOperationClassification]
 ---
 

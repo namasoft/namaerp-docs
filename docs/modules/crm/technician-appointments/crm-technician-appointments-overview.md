@@ -59,7 +59,7 @@ Do this for every section that takes bookings, then work through the pages in th
 
 Worth being clear about early, because it decides where the rest of your process lives:
 
-**An appointment is a scheduling document.** It reserves people and time. It carries the usual document frame — book, term, value date, fiscal period, dimensions and an approval cycle — but it does not price the work, does not move stock and does not post to the ledger. Neither does the service distribution: it is a record of effort, not an invoice.
+**An appointment is a scheduling document.** It reserves people and time. It carries the usual document frame — book, term, value date, fiscal period, dimensions and an approval cycle — but it does not price the work, does not move stock and creates no ledger entry. Neither does the service distribution: it is a record of effort, not an invoice.
 
 **Materials are listed, not moved.** The appointment's Items And Services grid records which materials the visit uses and which service each is for. The materials are copied from the document the visit was booked from when you pick it on the appointment screen, and the grid also records the actual and remaining quantities. It is a list for the crew and for analysis; issuing the stock and billing it still happen on the supply-chain and sales documents. The link back to those is the **From Document** (*بناءا على*) field: an appointment is normally raised from the sales invoice, sales order or contract that promised the visit, so anyone looking at the booking can jump straight to what was sold.
 

@@ -1,4 +1,5 @@
 ---
+description: "The Running Reports and View Report Results screens: telling a slow report from a hung one, how the two screens differ, ending a run that will not finish, and what the report log records and what it does not."
 menu: Reports → Reports Monitoring
 ---
 

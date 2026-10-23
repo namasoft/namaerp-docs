@@ -1,4 +1,5 @@
 ---
+description: "كيف تضع مهام أمر الشغل على الانتظار بمستند إيقاف خدمة وتعيدها إلى العمل بمستند إستكمال خدمة، وملف أسباب توقف العمل، وما يفعله الإيقاف وما لا يفعله."
 entities: [SrvcPendingOperation, SrvcResumeOperation, SrvCWorkStopReason]
 ---
 

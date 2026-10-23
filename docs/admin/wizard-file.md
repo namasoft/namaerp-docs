@@ -24,6 +24,8 @@ Most installations have a single Wizard File. In the demo database it is the one
 Saving the record stamps each account's **Wizard Classification** on the account itself; removing a
 line clears it from that account. An account can appear only once in the grid.
 
+![A Wizard File record](../ar/admin/images/administration/wizard-file-screen-en.png)
+
 ## Running the wizard
 
 Save the record, then press **Go To Wizard**. The wizard opens in a new tab with one step per area —

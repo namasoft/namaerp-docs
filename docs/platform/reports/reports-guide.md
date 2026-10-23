@@ -60,7 +60,7 @@ A **system report** is one of the reports and printed forms that Namasoft ships 
 
 **Where they come from.** **Update System Reports** downloads the current catalogue from Namasoft's server, so the server needs internet access. You find it on the utilities page under *System Update*, or in the More menu of the Report Definition screen after pressing **Ctrl + Alt + X** (see [Keyboard shortcuts](/platform/everyday-tools/shortcuts)). It asks for confirmation. For every module you have installed it creates the reports you are missing. It also overwrites the existing ones: their layout, type, security type, names and group. Your own **Security Capability Types** lines, **For User** and **Report Groups** survive. Afterwards it deletes the system reports whose module is no longer installed or that Namasoft has withdrawn, and removes system groups left empty. The same run also refreshes the shipped notifications, dashboards, tooltips and scheduled tasks.
 
-**Changing one.** The design of a system report is frozen. Saving a change to it is refused — see [Messages you may see](#Messages-you-may-see). Use **Duplicate** instead: the copy is your own report, with **System** cleared, and for printed forms a non-system form always [beats a system one](/platform/reports/printed-form-selection#The-order-the-survivors-are-tried-in). A report of your own that carries a system report's code is overwritten by the next update and turned back into a system report. That happens to a report converted with **Allow Change System Report To Non System**, for instance. The only exception is when **Do Not Update Report That Is Not a System Report but Has the Same Code** is on in the global configuration.
+**Changing one.** The design of a system report is frozen. Saving a change to it is refused — see [Messages you may see](#Messages-you-may-see). Use **Duplicate** instead: the copy is your own report, with **System** cleared, and for printed forms a non-system form always [beats a system one](/platform/reports/printed-form-selection#The-order-the-survivors-are-tried-in). A report of your own that carries a system report's code is overwritten by the next update and turned back into a system report. That happens to a report converted with **Allow Change System Report To Non System**, for instance. The only exception is when **Do Not Update Report Not A System Report But Have Same Code Of System Report** is on in the global configuration.
 
 **Deleting one.** Deleting a system report is allowed, but it does not last: the next update creates it again. To keep a shipped report away from people, add **Prevent** lines to its security grid instead.
 
@@ -268,6 +268,9 @@ Sometimes one value is not enough — the user wants five employees, or every br
 <parameter name="MultiDate_csv" class="java.lang.String" isForPrompting="false"/>
 ```
 :::
+
+A scheduled task has no user to tick the values, so it passes a list parameter a saved
+[Multi Value Report Parameter](/platform/reports/multi-value-report-parameters) record instead.
 
 ### Date Range Parameters
 
@@ -575,26 +578,23 @@ These properties only change what the prompt lets the user find. They grant no p
 
 - **`defaultValue`** — a string, read according to the type of the parameter: a date as `dd-MM-yyyy`, a time as `yyyy-MM-dd'T'HH:mm:ss.SSS`, a reference as `id:entityType:code`.
 
-::: details Dynamic default functions
-```
-$now()                  $today()
-$monthStart()           $monthEnd()
-$yearStart()            $yearEnd()
-$quarterStart()         $quarterEnd()
-$thirdStart()           $thirdEnd()
-$halveStart()           $halveEnd()
-$previousMonthStart()   $previousMonthEnd()
-$nextMonthStart()       $nextMonthEnd()
-$previousYearStart()    $previousYearEnd()
-$nextYearStart()        $nextYearEnd()
-$currentFiscalPeriod()  $currentUser()
-$currentUserEmployee()  $currentUserRelatedSubsidiary()
-$todayPlusDays(n)       $todayMinusDays(n)
-$todayPlusWeeks(n)      $todayMinusWeeks(n)
-$todayPlusMonths(n)     $todayMinusMonths(n)
-$todayPlusYears(n)      $todayMinusYears(n)
-```
-:::
+The moving default tokens below are resolved when the run screen opens, not when the report is written, so a report written in January still opens on the right period in December. The report wizard's **Default Value** column takes the same tokens.
+
+| Token | Resolves to |
+|---|---|
+| `$today()`, `$now()` | Today / the current moment |
+| `$monthStart()`, `$monthEnd()` | First and last day of the current month |
+| `$previousMonthStart()`, `$previousMonthEnd()` | The month before |
+| `$nextMonthStart()`, `$nextMonthEnd()` | The month after |
+| `$yearStart()`, `$yearEnd()` | First and last day of the current year |
+| `$previousYearStart()`, `$previousYearEnd()`, `$nextYearStart()`, `$nextYearEnd()` | The year before / after |
+| `$quarterStart()`, `$quarterEnd()` | The current quarter |
+| `$halveStart()`, `$halveEnd()`, `$thirdStart()`, `$thirdEnd()` | The current half-year / third of the year |
+| `$todayPlusDays(7)`, `$todayMinusDays(7)` | A number of days either side of today |
+| `$todayPlusWeeks(2)`, `$todayMinusWeeks(2)` | The same in weeks |
+| `$todayPlusMonths(3)`, `$todayMinusMonths(3)` | The same in months |
+| `$todayPlusYears(1)`, `$todayMinusYears(1)` | The same in years |
+| `$currentUser()`, `$currentUserEmployee()`, `$currentUserRelatedSubsidiary()`, `$currentFiscalPeriod()` | The lookup parameters: the user running the report, their employee file, their subsidiary, the current fiscal period |
 
 These functions belong to `defaultValue` and nowhere else. `$currentUser()` in particular fills in a default — it is not a value you can read with `$P{}` from inside the report.
 

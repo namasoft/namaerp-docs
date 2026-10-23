@@ -1,3 +1,6 @@
+---
+description: "The only shipped Service Center report and print form, the rental-asset schedule and the reception inspection slip, plus what is missing (no job order form, no dashboards) and where to find the figures instead."
+---
 # Reports and Print Forms
 
 Set your expectations before you go looking: **this module ships almost no reporting at all.** Across 85 record types and two complete business cycles there is exactly **one** system report and exactly **one** printed form, and no dashboard of any kind.

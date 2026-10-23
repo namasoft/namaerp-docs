@@ -21,7 +21,7 @@ The مقايسة and the [contracting offer](/modules/contracting/project-contra
 | Who it is for | internal — the priced bill of quantities the company works from | the customer — the quotation you submit |
 | Cost build-up | no cost-analysis grids | four grids: material, labour, subcontractors, expenses |
 | Instalment plan | none | payment template plus a payments grid |
-| Accounting | **can post to the ledger**, when its document term carries accounts | posts nothing, ever |
+| Accounting | **can create a journal entry**, when its document term carries accounts | creates no journal entry, ever |
 
 In practice organisations use them in one of two ways. Either the estimating department builds the مقايسة straight from the tender's [term sheet](/modules/contracting/setup/contracting-term-sheets.md) and it becomes the internal record of what was bid, with the offer produced from it for the client; or the offer is priced first and **Convert to Assay** produces the مقايسة afterwards as the record that goes forward to contract. Both routes are supported and the module does not prefer either.
 
@@ -49,7 +49,7 @@ The term-sheet picker is filtered by the document's customer and project, so onc
 
 ## The terms grid
 
-The columns are the ones you already know from the rest of the module: term code, term categories, the **standard term** that supplies the unit, the default rate and the eventual posting accounts, *Treat As Detail* for a heading term you want to price as an ordinary line here, work area as a reporting dimension, the physical dimensions and the quantity derived from them, unit cost and total cost, unit price, discount, taxes, profit and total price.
+The columns are the ones you already know from the rest of the module: term code, term categories, the **standard term** that supplies the unit, the default rate and the accounts the eventual entry uses, *Treat As Detail* for a heading term you want to price as an ordinary line here, work area as a reporting dimension, the physical dimensions and the quantity derived from them, unit cost and total cost, unit price, discount, taxes, profit and total price.
 
 Two columns exist here that the contract's grid does not have:
 
@@ -78,23 +78,23 @@ The **Status** field has two values, *Initial* (مبدئي) and *Confirmed* (م�
 
 ## What it books
 
-This is the one pre-contract document in the owner-side chain that can reach the ledger, and it is easy to miss because it does so **only if you configure it to**. The [document term](/modules/contracting/document-terms/contracting-terms-other.md) carries the accounts, and if none of them is filled the document posts nothing at all — which is how most installations run it.
+This is the one pre-contract document in the owner-side chain that can reach the ledger, and it is easy to miss because it does so **only if you configure it to**. The [document term](/modules/contracting/document-terms/contracting-terms-other.md) carries the accounts, and if none of them is filled the document creates no journal entry at all — which is how most installations run it.
 
 When the accounts are configured, committing the document raises an accounting business request that is processed in the background, and produces one ledger line per priced (leaf) term line:
 
-| Amount from the line | Posted to |
+| Amount from the line | Recorded on |
 |---|---|
 | Total price | the primary debit and credit accounts on the term |
 | Tax 1 value | the tax 1 debit and credit accounts |
 | Tax 2 value | the tax 2 debit and credit accounts |
 
-Each pair posts only when both of its sides are configured. The subsidiary on the entry comes from the document — the customer, the project, and the main contract when the document is an addendum.
+Each pair creates ledger lines only when both of its sides are configured. The subsidiary on the entry comes from the document — the customer, the project, and the main contract when the document is an addendum.
 
 ::: info "Debit 2" and "Credit 2" are the primary pair
 On every contracting term screen the main accounts are labelled *Debit 2* (مدين 2) and *Credit 2* (دائن 2). There is no *Debit 1* to find — the numbering is historical. These are the accounts to set.
 :::
 
-If the document is posting and you cannot see the entry immediately, that is expected: the effect is a background business request. Failed requests are visible in the **Business Requests** list view, where you filter by status and use **More → Reprocess / Recommit**.
+If the document has accounts configured and you cannot see the entry immediately, that is expected: the effect is a background business request. Failed requests are visible in the **Business Requests** list view, where you filter by status and use **More → Reprocess / Recommit**.
 
 ## Actions on this screen
 

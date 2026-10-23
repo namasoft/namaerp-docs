@@ -82,6 +82,8 @@ Each row of the **Legal Entity Taxes** grid holds:
 | **Revision ID** | `revisionId` | Item revision this rate applies to; empty applies to every revision |
 | **Tax Configuration** | `taxConfiguration` | Override configuration for this entity |
 
+![A Tax Plan with its legal entity taxes](../../ar/modules/invoicing/images/tax-plan-screen-en.png)
+
 ## Discount System Configuration
 
 ### Types of Discounts
@@ -173,10 +175,10 @@ These are the options a tax configuration carries, whichever of the three places
 
 | Field Name | Database Field | Description | Impact |
 |------------|---------------|-------------|---------|
-| **Tax 1 Location** | `tax1Location` | When Tax1 is calculated | Controls sequence position |
-| **Tax 2 Location** | `tax2Location` | When Tax2 is calculated | Controls sequence position |
-| **Tax 3 Location** | `tax3Location` | When Tax3 is calculated | Controls sequence position |
-| **Tax 4 Location** | `tax4Location` | When Tax4 is calculated | Controls sequence position |
+| **Tax 1 Location** | `tax1Location` | Where Tax1 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 1 Is Discount** |
+| **Tax 2 Location** | `tax2Location` | Where Tax2 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 2 Is Discount** |
+| **Tax 3 Location** | `tax3Location` | Where Tax3 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 3 Is Discount** |
+| **Tax 4 Location** | `tax4Location` | Where Tax4 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 4 Is Discount** |
 
 Available Location Values:
 - `MainPrice`: Applied to original line total
@@ -336,7 +338,7 @@ Because the unit price survives while the value drops out of the total, the chec
 |------------|---------------|-------------|---------|
 | **No Taxes For Free Item** | `noTaxesForFreeItem` | Disable taxes on free items | All taxes zeroed for lines marked as free |
 
-**Net value on a free line is not automatically zero.** Discounts are forced to zero, but tax percentages are not — a free line still contributes its tax to the document's Net value even though it contributed nothing to the Total. Switch **No Taxes for Free Item** on when a giveaway is meant to cost nothing at all; leaving it off is the usual reason a total comes out slightly higher than anyone can account for.
+**Net value on a free line is not automatically zero.** Discounts are forced to zero, but tax percentages are not — a free line still contributes its tax to the document's Net value even though it contributed nothing to the Total. Switch **No Taxes For Free Item** on when a giveaway is meant to cost nothing at all; leaving it off is the usual reason a total comes out slightly higher than anyone can account for.
 
 ::: danger Force Price List refuses hand-made free lines
 When the document term has **Force Price List** on, a free line that no offer produced is rejected on save with *Invalid Free Item {0}* — «الصنف المجاني غير صحيح {0}». The system assumes a free line arrived from a promotion, checks it against the offers engine, and finds nothing that would have generated this one.

@@ -79,8 +79,8 @@ A return carries the same price columns as the issue, and they are the right one
 Nothing on the return writes a price back onto the job order — the value the customer is credited is
 simply the planned unit price multiplied by the smaller quantity.
 
-The return also posts nothing of its own by default. The only accounting entry in the chain is the
-one the **generated stock receipt** posts under its own term: the item back into inventory at cost,
+The return also creates no entry of its own by default. The only accounting entry in the chain is the
+one the **generated stock receipt** creates under its own term: the item back into inventory at cost,
 and the cost-of-sales charge relieved by the same amount.
 
 ## Before you invoice a job that had returns

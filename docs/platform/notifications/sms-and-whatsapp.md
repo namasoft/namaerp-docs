@@ -255,7 +255,7 @@ WasenderAPI can also be used as an SMS provider through the SMS settings screen 
 
 Some companies already run their WhatsApp Business number through a Yeastar P-Series PBX, so that agents answer customers from their extensions. Nama can send its template messages through that same number, and each message can be attributed to the extension of the employee responsible for the record: a quotation sent to a customer shows up in the PBX under the sales representative who owns it.
 
-Nama does not talk to the PBX directly. The company publishes a small web endpoint in front of the PBX, protected by a token, and Nama posts every message to that endpoint. The endpoint then hands the message to Yeastar.
+Nama does not talk to the PBX directly. The company publishes a small web endpoint in front of the PBX, protected by a token, and Nama sends every message to that endpoint. The endpoint then hands the message to Yeastar.
 
 ::: info Templates only
 This provider sends **approved WhatsApp templates** only. There is no free-text message and no media type to choose: the attachment, when there is one, travels as the template's document.

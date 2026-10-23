@@ -1,4 +1,5 @@
 ---
+description: "How the Multi Assembly Document builds a multi-level product by generating one Assembly Document per sub-assembly, and how the Aggregated Packaging Document records a day of packing with its recipe, issued spare parts, costs and messages."
 entities: [MultiAssemblyDoc, AggrAssemblyDocument]
 ---
 

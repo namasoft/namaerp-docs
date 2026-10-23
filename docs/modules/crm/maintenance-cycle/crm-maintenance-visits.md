@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Visit, a hand-typed log of a visit that happened: why to record one (it moves the contract's performed-visit counter and the machine odometer), its screen, the two rules it enforces, and how it differs from a CRM Visit."
 entities: [MnVisit]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Visit
 ---

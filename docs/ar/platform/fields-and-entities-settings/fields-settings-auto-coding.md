@@ -1,4 +1,5 @@
 ---
+description: "إعداد الترقيم التلقائي لأكواد وأسماء الملفات من شاشة أعدادات الحقول و الشاشات: اختيار السطر الذي يُنفَّذ، وكتابة الصيغ بلغة Tempo و${ }، والرقم المتسلسل واستعلام صلاحية الكود، وأمثلة عملية، وتثبيت الكود بعد إعطائه، وترقيم الأصناف."
 entities: [GenericReferenceOverrider]
 menu: الأساسيات ← الإعدادات ← أعدادات الحقول و الشاشات
 ---
@@ -17,6 +18,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 في تبويب **الرئيسية** يظهر الجدول بعنوان **التكويد الآلي** (Automatic Coding)، بينما تحمل شاشة
 العرض والبحث الخاصة به اسم **التكويد الالي للملفات** (Files Auto Coding).
+
+![جدول التكويد الآلي](../images/fields-settings/fields-settings-auto-coding-grid-ar.png)
 
 ## ما لا يشمله هذا الجدول
 
@@ -299,6 +302,29 @@ then 1 else 0 end
 هذا سلوك من جانب الخادم. فبمجرد حفظ سجل **أعدادات الحقول و الشاشات** يستخدم أول ملف رئيسي يُحفظ في
 أي مكان في النظام الصيغةَ الجديدة — بلا إعادة تشغيل، وبلا تسجيل خروج، وبلا زر يُضغط. أما السجلات
 القائمة فلا تُمَس: فالترقيم التلقائي لا يعمل إلا أثناء حفظ السجل.
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| التكويد الآلي | Automatic Coding | `autoCodingLines` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| المعايير | Criteria | `autoCodingLines.criteriaDefinition` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| معيار عدم التفيذ | Reversed Criteria Definition | `autoCodingLines.reversedCriteriaDefinition` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| تطبيق عند التوافق مع الاستعلام | Apply When Query | `autoCodingLines.applyWhenQuery` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| منع التطبيق عند التوافق مع الاستعلام | Do Not Apply When Query | `autoCodingLines.doNotApplyWhenQuery` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| صيغة حساب الكود | Code Calculation Formula | `autoCodingLines.codingFormula.codeCalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
+| Code Validity Query (Skip code if 1 is returned, and calculate next) | Code Validity Query (Skip code if 1 is returned, and calculate next) | `autoCodingLines.codingFormula.codeValidityQuery` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة حساب الاسم العربي | Name1 Calculation Formula | `autoCodingLines.codingFormula.name1CalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة حساب الاسم الإنجليزي | Name2 Calculation Formula | `autoCodingLines.codingFormula.name2CalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغه الكود البديل | Alternate Code Formula | `autoCodingLines.codingFormula.altCodeFormula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 1 للون والمقاس | Name 1 Encoding Formula For Colour And Size | `autoCodingLines.codingFormula.szName1Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 2 للون والمقاس | Name 2 Encoding Formula For Colour And Size | `autoCodingLines.codingFormula.szName2Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 1 للاصدارة | Name 1 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName1Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 2 للاصدارة | Name 2 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName2Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| بادئة حساب التسلسل | Code Sequence Prefix | `autoCodingLines.codingFormula.codeSequencePrefix` | [أعمدة الصيغ](#aamd-lSyG) |
+| طول لاحقة الكود | Code Suffix Length | `autoCodingLines.codingFormula.codeSuffixLength` | [أعمدة الصيغ](#aamd-lSyG) |
 
 ## صفحات ذات صلة
 

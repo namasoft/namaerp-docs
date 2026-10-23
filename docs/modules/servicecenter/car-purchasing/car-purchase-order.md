@@ -48,7 +48,7 @@ This is where the commercial terms of the order live:
 - **Stock: nothing.** No receipt, no issue. The one exception is a **reservation** — if the term's
   *حجز (Reserve)* flag is on, the order raises an expected-in reservation, which is a claim on
   incoming quantity, not a movement.
-- **Accounting: normally nothing.** Unlike an ordinary purchase order, this document *can* post: it
+- **Accounting: normally nothing.** Unlike an ordinary purchase order, this document *can* have an accounting effect: it
   builds a journal entry if — and only if — the term's debit or credit side is filled in. Most sites
   leave them empty and get no entry, which is the sensible default. Clearing the sides on a term
   later removes the entry from documents that are re-processed.

@@ -96,6 +96,8 @@ opening sales contract, the waiver, the purchase contract and the handover. The 
 the reservation and the reservation cancellation have no account blocks of any kind, so there is
 nothing to tax there either.
 
+![The Effect tab of the Sales Contract term](../../../ar/modules/realestate/images/config/re-term-sales-doc-effect-en.png)
+
 ## The behavioural switches
 
 These are the options that change what the document does rather than where the money goes. They sit
@@ -104,15 +106,15 @@ in a group at the bottom of page 0, with two of them on a second page titled **S
 
 | Option | What it does |
 |---|---|
-| Create Accounting Effects For Handoverd Documents Only | Suppresses the contract's whole journal entry until the unit has actually been handed over. Nothing is posted at signature; the handover document releases it later. *(The shipped English label really does read "Handoverd".)* |
+| Create Accounting Effects For Handoverd Documents Only | Suppresses the contract's whole journal entry until the unit has actually been handed over. No entry is created at signature; the handover document releases it later. *(The shipped English label really does read "Handoverd".)* |
 | Validate Remaining And Installments Total Equality | On by default. Blocks the commit when the installment total does not match the remaining value, within the tolerance set in the [module configuration](/modules/realestate/realestate-configuration). Turn it off only for contracts whose installment plan deliberately does not add up to the price. |
 | Shorten Ledger Effect | Compresses the journal entry: lines sharing the same account and analysis are merged instead of producing one line per installment. On a 60-installment contract this is the difference between a two-line entry and a sixty-line one. |
 | Manual Coding | Off by default, meaning the system numbers the installment lines itself. Turn it on when installment codes must match an external or legacy numbering the user types by hand. |
 | Has Buyer | On by default; makes the Buyer field mandatory. Turned off for company-owned initial contracts where no buyer exists yet. |
 | Pay Installments In Order | Forces collections against this contract to settle installments oldest first. A collection term can override it for a specific collection book — see [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other). |
 | Calculate Maintenance From Details | Changes where the maintenance deposit total comes from. On: it is summed from the maintenance-cost installment lines, and the percentage field is cleared. Off: it is totalled from the installment-construction rows. A mismatch between the two is what produces "Total maintenance costs {0} not equal maintenance cost {1}". |
-| Merge Similar Payment Lines | When the installment plan is generated, lines with the same type and the same due date are collapsed into one. The original amounts survive as the five merged-value components, which the routing grid can post separately. |
-| Prevent Accounting Effects For Other Fees Lines | Skips the Other Fees postings entirely, for companies that invoice those fees separately. |
+| Merge Similar Payment Lines | When the installment plan is generated, lines with the same type and the same due date are collapsed into one. The original amounts survive as the five merged-value components, which the routing grid can record separately. |
+| Prevent Accounting Effects For Other Fees Lines | Skips the Other Fees ledger lines entirely, for companies that invoice those fees separately. |
 | Force Price List | Blocks the commit unless the contract price equals the price the price list produces for that estate. |
 | Consider Paid With Reservation Paid From Installments | Treats the reservation deposit as already collected against the first installment instead of as a separate credit: the generated down-payment line carries the deposit as its paid value and only the balance stays outstanding. |
 
@@ -126,8 +128,8 @@ This is the most-asked configuration in the module, and it takes **two** terms, 
 3. When the handover document is committed in September, the contract's suppressed entry is generated
    at that moment. Cancelling or deleting the handover reverses it again.
 
-Configuring only step 1 gives you a contract that never posts. Configuring only step 2 gives you a
-contract that posts at signature and a handover that posts a second time. They belong together.
+Configuring only step 1 gives you a contract that never creates an entry. Configuring only step 2 gives
+you a contract that creates its entry at signature and a handover that creates a second one. They belong together.
 :::
 
 ## Where each document differs
@@ -211,7 +213,7 @@ transferring the contract to a new buyer. Page 1 is **Settings**. The option tha
 
 | Option | What it does |
 |---|---|
-| Reverse Commissions Accounting Effects | Posts every commission line on the waiver with its commission type's debit and credit sides swapped, so the original contract's commission entry is reversed when the buyer waives ownership. |
+| Reverse Commissions Accounting Effects | Records every commission line on the waiver with its commission type's debit and credit sides swapped, so the original contract's commission entry is reversed when the buyer waives ownership. |
 
 Worked through: a customer who paid 3 of 10 installments on a 1,200,000 villa waives it to a friend,
 and the company charges 2% — 24,000 — for the transfer. The waiver-price pair books the 24,000; if

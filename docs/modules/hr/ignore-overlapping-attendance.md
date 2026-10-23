@@ -57,6 +57,8 @@ At the line level, you will find a new field called **Line was ignored due to ov
 
 This field is **automatically flagged on save**, and you do not need to edit it manually. The system checks the lines when the voucher is saved and marks every line that overlaps with a line in another voucher that has the ignore option enabled.
 
+![Ignore Overlapping Attendance With This Document on a Time Attendance document](../../ar/modules/hr/images/attendance/time-attendance-ignore-overlapping-en.png)
+
 ## Overlap Rules Between Lines
 
 ### Rule 1: Lines in the Voucher with Ignore Enabled Are Not Subject to the Rule

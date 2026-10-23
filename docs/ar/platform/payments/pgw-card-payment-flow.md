@@ -25,6 +25,8 @@ entities: [PaymentTerminal, PGWMethodGroup]
 
 وإذا لم يطابق أي سطر في Method Group البطاقة، يُملأ السطر مع ذلك لكن بلا طريقة دفع، ويختارها الكاشير يدويًا.
 
+![جهاز دفع](../images/payments/payment-terminal-main-ar.png)
+
 ## في نقاط البيع
 
 برنامج نقاط البيع لا يعمل في متصفح، فهو يتصل ببرنامج PGW على `localhost:7842` بنفسه، لكن الفكرة واحدة:

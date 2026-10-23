@@ -35,6 +35,18 @@ The system also handles quantities intelligently:
 * If the entitlement is "one free unit" and the cashier scans one unit → the entire line becomes free.
 * If the cashier scans a **larger quantity** than the entitlement (for example, 3 units while the entitlement is only 1) → the system automatically splits the line: one unit in a free line, and the remaining two units in a paid line at the regular price.
 
+#### When the cashier changes the quantity
+
+A quantity the cashier types on the qualifying line is the quantity being bought, so that line stays as typed and is never
+turned into free units the way a scan is. What the invoice is owed is then worked out again:
+
+* **Lower quantity** — free lines already claimed beyond the new entitlement are cut down, or removed when nothing is
+  left of them, with the notice
+  *Free quantity of item {0} - {1} has been reduced to {2} as offer changed* — «تم تخفيض الكمية المجانية للصنف {0} {1} إلى {2} حيث ان العرض تغير».
+* **Higher quantity** — a free item already claimed grows to the new entitlement, and an item that is free with itself
+  gets its free line straight away. A different free item not claimed yet, and a free group, stay pending until they are
+  scanned.
+
 ### Second Method: Reconciliation at Payment
 
 What if the cashier completely forgets about the free items and presses the payment button directly? Here the system intervenes in two steps:
@@ -43,11 +55,13 @@ What if the cashier completely forgets about the free items and presses the paym
 
 > The following free items were automatically added to the invoice:
 
-**Second — Pending free items screen:** If after reconciliation there are still unfulfilled entitlements, a screen appears showing the cashier a list of the remaining free items and their quantities, along with a barcode scan field. The customer picks up the items from the shelf, the cashier scans them one by one, and each scanned item is added as a free line while the remaining quantity shown decreases.
+**Second — Pending free items screen:** If after reconciliation there are still unfulfilled entitlements, the **Pending Free Items** window («أصناف مجانية لم تُضف») appears. Under *Customer is entitled to the following free items:* it lists the remaining free items and their quantities, with a barcode scan field below. The customer picks up the items from the shelf, the cashier scans them one by one, and each scanned item is added as a free line while the remaining quantity shown decreases. To add several units at once, type the quantity and the code with a star between them, in either order — `3*6221234567890` or `6221234567890*3`; a quantity above what is owed is added only up to what is owed.
 
-The screen also includes a search button that opens an item search screen **restricted to eligible items only** — useful if an item's barcode is damaged or the cashier wants to select manually.
+When the last owed item is scanned, the window closes on its own and payment carries on as usual.
 
-When all items are complete, the message "All free items have been added" appears, and the cashier can press **Continue to Payment** to complete the payment normally.
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Continue Payment** | «استكمال الدفع» | Closes the window and goes on to payment with the free items still owed left off the invoice. Disabled while items are still owed if **Free items must be added before payment** is on (see below). |
 
 ::: tip
 If the cashier scans an item that does not match any pending entitlement, the system rejects it with the message "The scanned item is not part of any pending free offer" — so there is no way to accidentally add unentitled free items.
@@ -57,15 +71,28 @@ If the cashier scans an item that does not match any pending entitlement, the sy
 
 This is where the **"Free items must be added before payment"** option comes in:
 
-* **Disabled:** The "Continue to Payment" button on the pending items screen remains always available, and the cashier can proceed and complete the invoice without the remaining free items (the customer waived them).
-* **Enabled:** The "Continue to Payment" button is disabled until all free items are fulfilled — suitable for businesses that consider the free item an inseparable part of the promotion.
+* **Disabled:** The **Continue Payment** button on the pending items screen remains always available, and the cashier can proceed and complete the invoice without the remaining free items (the customer waived them).
+* **Enabled:** The **Continue Payment** button is disabled until all free items are fulfilled — suitable for businesses that consider the free item an inseparable part of the promotion.
 
 ## Free Item Groups
 
 Promotions are not limited to a specific free item; a promotion might be "buy X and choose a free item from a group of items." In this case:
 
 * Any item from the group that the cashier scans is accepted as a valid claim.
-* On the pending items screen, the group name is shown with the phrase "Choose an item from:" followed by a list of the group's items.
+* On the pending items screen, the group name is shown with the phrase "Choose one of:" followed by a list of the group's items.
+
+## Offer prompts at payment
+
+Some offers are not added while you scan but offered when the cashier presses payment: an offer on a count of items, and free items earned by the invoice's value. In both cases a small window says *There is a free item offer*, and the payment screen does not open yet:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Confirm** | «تأكيد» | Adds the offer's free lines to the invoice. Press payment again to go on. |
+| **Cancel** | «إلغاء» | Leaves the invoice without the offer's lines. Press payment again to go on. |
+
+The window also carries a *Don't show offer again* tick box («عدم إظهار عروض مره اخري»); on the item-count offer it appears only for users whose security profile has **Allow Hide Offers Dialog**. Ticking it stops that kind of offer from being offered on this screen.
+
+When the free item is "any item from a group", the **Free Items Group** window («مجموعة أصناف مجانية») lists the group's items and says how many you may take. Double-click an item, or select it and press `Enter`, to add one to its quantity, or type the quantity in the **Quantity** column. **Confirm** («تأكيد») adds the chosen items as free lines; it is disabled while the quantities add up to more than the offer allows. **Cancel** («إلغاء») adds none.
 
 ## Notes Worth Paying Attention To
 

@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Real Estate
+description: "The Real Estate module's map: building the estate tree, selling and leasing units, collecting installments and rent, running and maintaining the estate, investment funds, reports and going live."
 ---
 
 # Real Estate
@@ -53,6 +54,14 @@ What happens after the contract is signed — the buildings still have to be loo
   <LandingCard icon="🔧" title="Maintenance" link="/modules/realestate/maintenance/" details="Maintenance deposits and funds, the annual service-charge accrual, and maintenance requests and expenses." />
   <LandingCard icon="📈" title="Investment" link="/modules/realestate/investment/" details="Investment funds and investors, estate purchase values, additions and revaluation, and agricultural investment contracts." />
   <LandingCard icon="🧮" title="Costs" link="/modules/realestate/costs/" details="Distributing project cost over individual properties, and the fee, commission, broker and expense catalogues." />
+</LandingGrid>
+
+## Reports
+
+The seven shipped reports — all on the selling side.
+
+<LandingGrid>
+  <LandingCard icon="📊" title="Real Estate Reports" link="/modules/realestate/realestate-reports.md" details="Sales by building, sold and remaining units, model prices, unit status, unpaid installments and what each contract still owes." />
 </LandingGrid>
 
 ## Going Live and Help

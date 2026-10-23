@@ -37,6 +37,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 وهذا ليس مطلوبًا في الغالب الأعم. اذكر نوع الكيان.
 :::
 
+![جدول السماح باستعمال السجلات الممنوعة من الاستعمال](../images/fields-settings/fields-settings-allow-prevented-records-grid-ar.png)
+
 ## تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)
 
 يشترط Nama عادةً أن ينتمي السجل الذي تشير إليه إلى نفس المحددات التنظيمية للمستند الذي تكتبه — نفس الشركة والفرع والقطاع والإدارة والمجموعة التحليلية. إنه فحص صامت ودائم، وهو الذي يمنع موظفًا في فرع الرياض من صرف مخزون من مخزن جدة بالخطأ، أو من تحميل تكلفة على إدارة شركة أخرى. وفي معظم الوقت لا ينتبه إليه أحد، لأن التركيبة صحيحة أصلًا في معظم الوقت.
@@ -101,6 +103,24 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 احسم هذا وأنت تصمم هيكل المجموعة، ومع من يملكون البيانات، لا استجابةً لمستخدم واحد لا يجد سجلًا. فإن كانت المشكلة الحقيقية هي صلاحية مستخدم واحد، فإن [تأمين مستوى السجلات](/ar/platform/security/record-level-security) هو الأداة المناسبة لذلك.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| السماح باستعمال السجلات الممنوعة من الاستعمال | Allow Usage Of Prevented Records | `allowUsageOfPreventedRecords` | [السماح باستعمال السجلات الممنوعة من الاستعمال (Allow Usage Of Prevented Records)](#lsmH-bstaaml-lsjlt-lmmnwaa-mn-lstaaml-Allow-Usage-Of-Prevented-Records) |
+| مالك المستند | Document Owner | `allowUsageOfPreventedRecords.owner` | [السماح باستعمال السجلات الممنوعة من الاستعمال (Allow Usage Of Prevented Records)](#lsmH-bstaaml-lsjlt-lmmnwaa-mn-lstaaml-Allow-Usage-Of-Prevented-Records) |
+| تجاهل تناسق المحددات لحقول | Ignore Dimensions Consistency for Fields | `dimensionsConsistency` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل الشركة | Ignore Legal Entity | `dimensionsConsistency.ignoreLegalEntity` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل المجموعة التحليلة | Ignore Analysis Set | `dimensionsConsistency.ignoreAnalysisSet` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل الفرع | Ignore Branch | `dimensionsConsistency.ignoreBranch` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل القطاع | Ignore Sector | `dimensionsConsistency.ignoreSector` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل الإدارة | Ignore Department | `dimensionsConsistency.ignoreDepartment` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل المسودات | Ignore Drafts | `dimensionsConsistency.ignoreDraft` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| النوع المستهدف | Tooltip Target Type | `publicEntitiesLines.targetEntity` | [الملفات المسموح بحفظها على العام (Public Entities)](#lmlft-lmsmwH-bHfZh-aal-laam-Public-Entities) |
+| قائمة الأنواع | Entity Type List | `publicEntitiesLines.targetEntities` | [الملفات المسموح بحفظها على العام (Public Entities)](#lmlft-lmsmwH-bHfZh-aal-laam-Public-Entities) |
 
 ## صفحات ذات صلة
 

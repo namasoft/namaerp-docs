@@ -43,6 +43,8 @@ entities: [SrvCRawMaterialIssue, SrvcRawMaterialReturn, SrvCRawMaterialIssueRequ
 | `SP-PAD-FR` طقم تيل فرامل أمامي | 1 | — | **1** |
 | `SP-CMP-AC` كمبروسر تكييف | 1 | — | **1** |
 
+![صرف قطع غيار على أمر شغل](../images/spare-parts/raw-material-issue-screen-ar.png)
+
 ## لا مستند في مركز الخدمة يحرّك المخزون بنفسه
 
 هذه هي الجملة التي ينبغي تذكّرها قبل إعداد أي شيء.

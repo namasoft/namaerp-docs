@@ -1,4 +1,5 @@
 ---
+description: "The document terms for Project Management (ECPA) documents: the seven documents and five term screens, account sides, what the invoice, expense and Tasks Executing terms book, the TimeSheet Approval term's one setting, and the options that change behaviour."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---

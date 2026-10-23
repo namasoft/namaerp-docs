@@ -1,4 +1,5 @@
 ---
+description: "How attendance punches are recorded and reach the payslip: the Time Attendance document for fingerprint or card machine punches, Electronic Attendance from the mobile app with its geofence zones, and how a punch becomes an addition or a deduction."
 entities: [TimeAttendance, ElectronicAttendance, ElectronicAttendanceZone]
 ---
 # Time Attendance
@@ -99,7 +100,7 @@ When Electronic Attendance flags **Forgot Check In** or **Forgot Check Out**, re
 
 Neither Time Attendance nor Electronic Attendance touches the payslip directly — they only establish, per employee per day, when work started and ended. That raw record is then rolled up into daily figures (worked time, lateness, early leave, overtime, absence), and those figures reach salary through **performance indicators**: a [Salary Calculation Formula](../payroll/salary-calculation-formulas.md) of the "Related To Performance Indicator" type reads a [Performance Indicator](../performance/performance-indicators.md) built on the day's attendance figures and turns it into an addition (e.g. an overtime component) or a deduction (e.g. a lateness penalty). See **[How Salary Is Calculated](../concepts/hr-salary-engine.md)** for the full pipeline this step (Step 4) belongs to.
 
-::: warning Attendance documents never post accounting on their own
+::: warning Attendance documents never create accounting entries on their own
 Time Attendance and Electronic Attendance have no ledger effect of their own — they are pure attendance data. The accounting entry, if any, is always carried by the **Salary Document** that later reads the resulting performance-indicator figures, not by the attendance record itself.
 :::
 

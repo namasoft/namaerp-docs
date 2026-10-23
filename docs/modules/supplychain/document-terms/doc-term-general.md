@@ -12,6 +12,8 @@ The rest of the term's behavior lives on the other tabs — From-Document, Sub-I
 Open the document's **Document Term** (توجيه), then the **General** tab.
 :::
 
+![The Basic Information tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-general-en.png)
+
 ## Identity & Basic Information
 
 These fields identify the term and define which document type it configures. They are shared by virtually every supply-chain term.

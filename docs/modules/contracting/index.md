@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Contracting
+description: "Landing page for Nama Contracting: the project-owner and subcontractor sides of the module, the rule that contracts book nothing and extracts book everything, and links to every page from setup and estimating through contracts, costs and site records."
 ---
 
 # Contracting
@@ -19,7 +20,7 @@ The map of the module and the settings that shape everything else.
 <LandingGrid>
   <LandingCard icon="🗺️" title="Contracting Overview" link="/modules/contracting/contracting-overview.md" details="The two mirrored sides, the five menu groups, the two licences, and the path from a project to a certified extract." />
   <LandingCard icon="⚙️" title="Contracting Configuration" link="/modules/contracting/contracting-configuration.md" details="The single Contracting settings record — one set per database — and what each option actually changes." />
-  <LandingCard icon="❓" title="Frequently Asked Questions" link="/modules/contracting/contracting-faq.md" details="Why a contract posts nothing, why an extract differs from an execution, whether budgets stop overspending, and where actual cost meets contract value." />
+  <LandingCard icon="❓" title="Frequently Asked Questions" link="/modules/contracting/contracting-faq.md" details="Why a contract creates no journal entry, why an extract differs from an execution, whether budgets stop overspending, and where actual cost meets contract value." />
 </LandingGrid>
 
 ## The Vocabulary
@@ -29,7 +30,7 @@ Terms, conditions and prices — the master files every document references. Sta
 <LandingGrid>
   <LandingCard icon="📐" title="Master Files and Setup" link="/modules/contracting/setup/contracting-standard-terms.md" details="Projects, standard terms, term sheets, analysis cards, contract conditions, price lists, phases, work areas, templates, contractors and consultants." />
   <LandingCard icon="✏️" title="Modify Contractor Info Request" link="/modules/contracting/setup/contracting-modify-contractor-info-request.md" details="How a requested change to a subcontractor's file is written down, then applied or turned into a new contractor with one button." />
-  <LandingCard icon="🧾" title="Document Terms" link="/modules/contracting/document-terms/contracting-terms-basics.md" details="The توجيه behind each document: which accounts it posts to, and the options that change how an extract is priced." />
+  <LandingCard icon="🧾" title="Document Terms" link="/modules/contracting/document-terms/contracting-terms-basics.md" details="The توجيه behind each document: which accounts it records its entries on, and the options that change how an extract is priced." />
 </LandingGrid>
 
 ## Winning and Planning the Work

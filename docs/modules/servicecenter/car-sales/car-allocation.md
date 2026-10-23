@@ -121,8 +121,8 @@ was allocated by the allocation it names, so a cancel pointed at the wrong docum
 the fields of the car on its own lines.
 :::
 
-Everything else stays exactly where it was: no accounting is reversed (neither document posts
-anything to reverse), no stock moves, no reservation is released. For the broader pattern, see
+Everything else stays exactly where it was: no accounting is reversed (neither document creates
+an entry to reverse), no stock moves, no reservation is released. For the broader pattern, see
 [Cancellation Documents](/modules/servicecenter/car-sales/car-cancellation-documents.md).
 
 ## Actions on these screens

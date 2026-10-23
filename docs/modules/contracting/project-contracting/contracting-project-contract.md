@@ -1,4 +1,5 @@
 ---
+description: "The Project Contract master file: how terms arrive on it, the terms, conditions, tasks and payments grids, contract versus addendum or modification, what blocks a save, why it freezes once extracts exist, and carving out a subcontract."
 entities: [ProjectContract]
 menu: Contracting → Project Contracting → Project Contract
 ---
@@ -65,7 +66,7 @@ Page 2, *Terms and conditions and Payment*, is where the contract is actually bu
 
 ### The Terms grid — the priced bill of quantities
 
-This is the heart of the record. One row per item of work, each pointing at a **Standard Term** — which is mandatory, and which is what supplies the unit of measure, the default rate, the permitted percentage, the phases group and, crucially, the **debit and credit accounts** the eventual extract will post to. Rows form a tree through their dotted term codes, and only **leaf** rows carry money; **parent** rows are zeroed and re-totalled from their children on every save.
+This is the heart of the record. One row per item of work, each pointing at a **Standard Term** — which is mandatory, and which is what supplies the unit of measure, the default rate, the permitted percentage, the phases group and, crucially, the **debit and credit accounts** the eventual extract will record on. Rows form a tree through their dotted term codes, and only **leaf** rows carry money; **parent** rows are zeroed and re-totalled from their children on every save.
 
 For `PC-2026-001`:
 
@@ -210,7 +211,7 @@ Untouched term lines stay editable, and you can still add new lines. But for any
 
 ## Two side effects on commit
 
-Committing a contract does not post anything, but it can start two things off.
+Committing a contract does not create any journal entry, but it can start two things off.
 
 **Financial papers.** Instalment lines configured to do so mint their commercial papers, as described above.
 

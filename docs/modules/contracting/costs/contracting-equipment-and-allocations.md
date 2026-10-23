@@ -26,7 +26,7 @@ altogether, and the section on it below explains why.
 
 ![The Employee And Equipment Project Allocation: the project contract header and the dated allocation lines](../../../ar/modules/contracting/images/costs/employee-equipment-alloc-main-en.png)
 
-An allocation is a posting order in document form: *from 1 April to 30 April, engineer Hani and
+An allocation is an assignment order in document form: *from 1 April to 30 April, engineer Hani and
 excavator FA-0112 are working on project contract PC-2026-001, on these terms.* It carries no money at
 all, no accounting effect, and no document term — there is nothing to configure on it.
 

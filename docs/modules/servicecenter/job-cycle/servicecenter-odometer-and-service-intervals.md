@@ -1,4 +1,5 @@
 ---
+description: "How Service Center tracks vehicle mileage: the odometer figures on the vehicle file, the Kilo Metrage document and its due-task columns, the last-service register, seeding history with the Product Task Opening Document, and what mileage does not drive."
 entities: [SrvCKiloMetrage, SrvCProductTaskOpeningDoc]
 menu: Service Center → Documents → Kilo Metrage
 ---
@@ -158,7 +159,7 @@ Two things worth stating so nobody goes looking for them:
 
 - **Recall campaigns are matched by vehicle, not by mileage.** A campaign lists individual vehicles;
   the odometer plays no part in whether a job order is blocked. See
-  [The Job Order](/modules/servicecenter/job-cycle/servicecenter-job-order.md).
+  [Recall Campaigns](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md).
 - **Nothing schedules a visit for you.** The next-visit date is a projection written onto the job
   order and its closing. It raises no reminder, no task and no service request — following it up is a
   job for whoever runs your customer-contact process, working from the expected next visit date on

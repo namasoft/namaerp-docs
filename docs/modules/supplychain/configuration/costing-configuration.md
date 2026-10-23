@@ -1,4 +1,5 @@
 ---
+description: "The Costing tab of the Supply Chain configuration: costing method, quantity and cost tracking, uncosted receipts, cost reprocessing, cost sources, and using item dimensions in LC, receipt cost and tender prices."
 entities: [ConfigEntry]
 menu: Inventory → Settings → Supply Chain Configurations
 ---
@@ -9,6 +10,8 @@ This page documents the **Costing** tab of the Supply Chain configuration. These
 ::: info Where to find it
 Open the Supply Chain module **Configuration** file and go to the **Costing** tab. The configuration is cached, so a change takes effect once you save it (the system refreshes the cached values automatically).
 :::
+
+![The Costing tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-costing-en.png)
 
 ## Costing Method
 

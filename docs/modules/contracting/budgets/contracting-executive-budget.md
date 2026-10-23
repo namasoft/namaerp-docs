@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Executive Budget: how it differs from the estimated budget, its extra header option and Terms page, naming items on budget lines, customer submittals that only it supports, related documents, and what the system does and does not check."
 entities: [ContractingExecutiveBudget]
 menu: Contracting → Master Files → Contracting Executive Budget
 ---

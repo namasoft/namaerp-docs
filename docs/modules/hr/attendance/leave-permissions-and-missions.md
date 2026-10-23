@@ -4,7 +4,7 @@ entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, Aggregat
 ---
 # Leave Permissions & Missions
 
-Not every departure from the schedule needs a full [vacation](../vacations/vacation-documents.md). Sometimes an employee just needs to leave two hours early, arrive late, or step out on company business for the afternoon. Nama covers these short, intra-day exceptions with two lightweight documents: **Leave Permission** (إذن إنصراف) for authorized time away from the desk, and **Mission Document** (سند مأمورية) for time spent out of the office on business. Neither posts to the ledger by itself — their whole job is to make sure that short absence is *explained* on the attendance record rather than showing up as unexplained lateness or a gap in the day.
+Not every departure from the schedule needs a full [vacation](../vacations/vacation-documents.md). Sometimes an employee just needs to leave two hours early, arrive late, or step out on company business for the afternoon. Nama covers these short, intra-day exceptions with two lightweight documents: **Leave Permission** (إذن إنصراف) for authorized time away from the desk, and **Mission Document** (سند مأمورية) for time spent out of the office on business. Neither creates a journal entry by itself — their whole job is to make sure that short absence is *explained* on the attendance record rather than showing up as unexplained lateness or a gap in the day.
 
 ## Leave Permission — authorized short absence
 
@@ -41,7 +41,7 @@ The body of the document pins down exactly how long the absence is:
 ![Leave Permission document, showing the permission type and duration](../../../ar/modules/hr/images/attendance/leave-permission-en.png)
 
 ::: info No accounting effect
-A Leave Permission does not generate any ledger entry by itself. Its effect is entirely on the attendance record — an hour marked here is an hour that will not be flagged as unexplained lateness or absence when the period's performance indicators are calculated. If the reason or the component setup calls for a deduction (an unpaid leave reason, for instance), that shows up later as a salary component driven by the resulting performance-indicator figure, not as something the permission itself posts.
+A Leave Permission does not generate any ledger entry by itself. Its effect is entirely on the attendance record — an hour marked here is an hour that will not be flagged as unexplained lateness or absence when the period's performance indicators are calculated. If the reason or the component setup calls for a deduction (an unpaid leave reason, for instance), that shows up later as a salary component driven by the resulting performance-indicator figure, not as an entry the permission itself creates.
 :::
 
 ## Leave Permission Configuration — the guardrails
@@ -100,7 +100,7 @@ A Mission Document records an employee being away from their normal workplace **
 | From Date / To Date, From Hour / To Hour | The span of the mission. |
 | Mission Period — Value / Unit (مدة المأمورية) | The computed length of the mission. |
 | Allowance Value (قيمة البدلات) | A monetary allowance associated with the mission (e.g. transport or per-diem), which a salary formula can pick up. |
-| Not Include Week Ends (لا تشمل العطله الأسبوعية) | On a mission whose hours span several days — a two-week posting to Alexandria — leaves the weekly rest days inside that span out of the counted period. A mission that fits inside one day always counts, rest day or not: it happened. Cannot be combined with Full Day Mission. |
+| Not Include Week Ends (لا تشمل العطله الأسبوعية) | On a mission whose hours span several days — a two-week assignment in Alexandria — leaves the weekly rest days inside that span out of the counted period. A mission that fits inside one day always counts, rest day or not: it happened. Cannot be combined with Full Day Mission. |
 | Full Day Mission (مهمه يوم كامل) | The mission runs around the clock rather than for set hours — a three-day delivery run to Aswan — so every day between From Date and To Date counts as worked, weekly rest days among them. |
 | Reason (السبب) | A Leave Reason scoped to **Mission**. |
 | Attachment 1–5 | Supporting documents (a travel order, a client visit report, and so on). |

@@ -1,8 +1,8 @@
 # Accounting Document Terms
 
-Every accounting document that posts takes its accounts from its **document term** (توجيه) — so when
+Every accounting document that creates a journal entry takes its accounts from its **document term** (توجيه) — so when
 a voucher lands on the wrong account, a cheque moves to an unexpected status, or a letter of
-guarantee posts nothing, the answer is almost always on the term. The idea of a term, and how a
+guarantee creates no journal entry, the answer is almost always on the term. The idea of a term, and how a
 document chooses one, is explained on
 [Document Terms (per-type processing rules)](/modules/accounting/support/accounting-document-terms).
 The pages below are the option-by-option reference, grouped by document family.
@@ -26,6 +26,6 @@ Some pairs on these screens are a full account-side block, described in
 [Anatomy of an Account Side](/modules/supplychain/document-terms/doc-term-accounting-effects#Anatomy-of-an-Account-Side);
 others are a single reference to a saved
 [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. Either way, on
-most terms a pair posts only when both its debit and its credit are set, and a half-filled pair is
+most terms a pair creates a ledger entry only when both its debit and its credit are set, and a half-filled pair is
 skipped without a message. The few exceptions are noted on their pages.
 :::

@@ -9,7 +9,8 @@
     "/modules/mobile/mobile-administration.md",
     "/modules/mobile/mobile-screen-customisation.md",
     "/modules/mobile/mobile-device-binding.md",
-    "/modules/mobile/mobile-qr-integrator.md"
+    "/modules/mobile/mobile-qr-integrator.md",
+    "/modules/mobile/mobile-service-queue-app.md"
   ],
   "folderTitles": {
     "/modules/mobile": {

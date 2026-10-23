@@ -1,4 +1,5 @@
 ---
+description: "Sending messages yourself outside notification definitions: the Bulk Message screen, WhatsApp Message Configuration and WhatsApp Message, the Error Message log, and the internal chat with its groups, message writing and the messages you may see."
 entities: [BulkMessage, WhatsAppMessage, WhatsAppMessageConfiguration, ErrorMessage]
 ---
 # Bulk Messages, WhatsApp Messages and Internal Chat

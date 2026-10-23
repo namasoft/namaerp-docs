@@ -29,6 +29,8 @@ On the **Nama Rewards** page:
 
 Finally, point the sales document terms at the configuration: **Reward Points Configuration** on the term's [pricing page](/modules/supplychain/document-terms/doc-term-pricing-taxes-discounts). For the point of sale, set it on the register or on the POS settings. A document whose term names no configuration earns nothing.
 
+![A Reward Points Configuration record](../../ar/modules/invoicing/images/reward-points-config-en.png)
+
 ## 2. The earning rate: Customer Reward Point Calculator
 
 The rate lives in a separate screen, **Customer Reward Point Calculator**, and one configuration can have several of them. Each calculator names its **Reward Points Configuration**, a **Priority**, an optional **From Date** / **To Date**, and the rule itself:
@@ -41,6 +43,8 @@ The rate lives in a separate screen, **Customer Reward Point Calculator**, and o
 Values filled in the header are copied into every line of the grid, so the header holds what the lines share. Calculators are tried in ascending **Priority** order, and for each invoice line the first rule that matches the item, the customer and the date gives the rate. A line that no rule matches earns nothing. The share of an invoice paid with discount coupons, which is how redeemed points are paid, earns no points.
 
 **Expired Points Task Schedule**: when it is left empty, saving the calculator links it to a daily task schedule coded `PurgeExpiredRewardPoints` (and creates the schedule if needed). That task moves expired points out of each customer's balance.
+
+![A Customer Reward Point Calculator: 1 point per 10 EGP](../../ar/modules/invoicing/images/reward-point-calculator-config-en.png)
 
 ## 3. What happens on save, return and cancel
 

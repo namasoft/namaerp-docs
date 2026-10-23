@@ -11,7 +11,7 @@ There is one rule that explains the whole of this screen, and reading it first w
 
 Cost, additions, deductions, accumulated depreciation, book value, remaining life, the current instalment, the disposal value, the purchase date, the location — none of them can be edited here. They are outputs. Behind the record sits a transaction history, one row per financial event, and every time a document touches the asset the whole history is replayed in date order and the figures on the screen are rebuilt from it. That is why they always reconcile, and why correcting a wrong number means finding the document that wrote it, not editing the asset.
 
-What you *do* type is the asset's identity: its code and names, its type, its serial number, its classifications, who holds it, its insurance paperwork, and the accounts it posts against. Roughly speaking, the top half of the first page is yours and everything else is a report.
+What you *do* type is the asset's identity: its code and names, its type, its serial number, its classifications, who holds it, its insurance paperwork, and the accounts its entries are recorded on. Roughly speaking, the top half of the first page is yours and everything else is a report.
 
 > The record we walk through is **`MCH-0007` — CNC Cutting Machine / ماكينة قص CNC**, bought by Al-Waha Industries on 1 January 2026 for **240,000**, with a **60-month** life and a **24,000** salvage value, standing in **Riyadh Plant, Hall 2**. We look at it as it stood at the end of December 2026, after twelve depreciation runs.
 
@@ -89,7 +89,7 @@ For `MCH-0007` this group reads: purchase invoice `FAPD-0031`, purchase date 1 J
 
 ![The account slots on the asset](../../../ar/modules/fixedassets/images/master/fixed-asset-accounts-en.png)
 
-The three accounts every posting in the module reaches for:
+The three accounts every journal entry in the module reaches for:
 
 | Slot | Arabic label | Used for |
 |---|---|---|
@@ -202,7 +202,7 @@ Beyond commit time, the module also protects the asset's history: a document can
 
 Put together, an experienced user reads `MCH-0007` in three glances:
 
-1. **Page 1** — what is it, whose is it, where does it post to.
+1. **Page 1** — what is it, whose is it, which accounts it is recorded on.
 2. **Page 4** — what is it worth now, and how much life is left.
 3. **The Asset Transactions list** — how it got that way, and which document to open next.
 

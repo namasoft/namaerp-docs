@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Type master file: the four type natures, how the repeat interval proposes the next expected maintenance date, which types an asset accepts through its component types, and a worked set of types."
 entities: [FAMaintenanceType]
 menu: Assets → Fixed Asset Maintenance → Maintenance Type
 ---

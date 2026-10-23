@@ -101,7 +101,9 @@ their own:
 | Option | What it does |
 |---|---|
 | Reservation Status | Reserve or Without Reservation. Picking the term pre-fills the offer's own reservation field, so the term effectively decides whether quoting a unit blocks it. |
-| Create Accounting Effects | Off, the offer posts nothing at all — the normal setting for a quotation. A rent contract always posts; only offers can be silenced this way. |
+| Create Accounting Effects | Off, the offer creates no entry at all — the normal setting for a quotation. A rent contract always creates its entry; only offers can be silenced this way. |
+
+![The Total contract effect tab of the Rent Contract term](../../../ar/modules/realestate/images/rent/re-term-rent-contract-effect-en.png)
 
 ## Generating the accrual ledgers
 
@@ -246,7 +248,7 @@ page titled **Settings** carrying just two fields: the **book** and the **term**
 rent contracts will be created with. Both are **mandatory**, and their pickers only offer books and
 terms belonging to the rent contract, so you cannot point them at the wrong document type by accident.
 All the real accounting configuration lives in the term you name here — the batch document itself
-posts nothing. See [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule).
+creates no entry. See [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule).
 
 **The opening lease term** is the ordinary rent contract term with one extra page, **Pre paid effects
 · تأثيرات المدفوع مسبقا**, for rent that the tenant paid before the system went live. Everything else

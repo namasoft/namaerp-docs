@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset ProformaInvoice under a letter of credit: one invoice per credit, the header, one line per machine, and why its prices only set the ratio for distributing import costs rather than the assets' cost."
 entities: [FALCProformaInvoice]
 menu: Assets → Fixed Asset Letter of Credits → Fixed Asset ProformaInvoice
 ---

@@ -133,12 +133,12 @@ Read this before you design your chart of accounts around the cycle, because the
 one most people assume.
 
 - The service request, the estimation, the estimation update, the job order, the add-task document
-  and the gate pass are **all financially silent**. None of them posts anything and none of them
+  and the gate pass are **all financially silent**. None of them creates a journal entry and none of them
   moves stock. The job order in particular is a *demand* document: it plans the parts, it does not
   issue them.
-- The **closing** is the only document in the cycle that posts a journal entry of its own — and it
-  posts the **customer share only**.
-- The **invoices** carry the rest into accounting: the customer, insurance and warranty invoices post
+- The **closing** is the only document in the cycle that creates a journal entry of its own — and it
+  records the **customer share only**.
+- The **invoices** carry the rest into accounting: the customer, insurance and warranty invoices record
   revenue, tax and receivable in the ordinary way.
 - The **internal share reaches accounting nowhere at all.**
 
@@ -152,7 +152,7 @@ recovery has to come from the warranty **invoice**, not from the closing.
 
 ## What each document does behind the scenes
 
-| Document | Posts to the ledger | Moves stock | Also does |
+| Document | Creates a journal entry | Moves stock | Also does |
 |---|---|---|---|
 | Service Request (طلب خدمة) | no | no | Reserves hours against the day's appointment capacity; fills in empty fields on the vehicle file |
 | Job Estimation (مقايسة) | no | no | Moves its source service request to *Under Processing* |
@@ -173,7 +173,7 @@ Only three: the **job order**, the **closing** and the **gate pass**. For the jo
 closing the term is not optional in practice, because the
 [invoice books, the invoice terms and the accounting sides](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md)
 all live on it — a job order on a term with no customer invoice book cannot be
-invoiced, and a closing on a term with no debit and credit posts nothing.
+invoiced, and a closing on a term with no debit and credit creates no entry.
 
 The service request, the estimation, the estimation update, the add-task document and the kilo
 metrage document require no term at all. They still *show* a **Term** (توجيه المستند) field; filling

@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Sales & Offers** tab — settings for sales documents, offers and coupons, discounts, free items, and the price classifiers used in pricing.
 
+![The Sales & Offers tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-sales-and-offers-en.png)
+
 ## Sales
 
 **Activate Invoice Items Count Offers** `value.activateInvoiceItemsCountOffers` — Master switch for "buy-X-get-Y" item-count promotions on the invoice. When off, offers that use item-count rules are rejected at validation; turn it on to evaluate and apply them.

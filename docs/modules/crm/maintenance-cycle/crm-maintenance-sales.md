@@ -1,5 +1,7 @@
 ---
+description: "The Maintenance Sales Quotation and Maintenance Sales Order: what they record and what they do not create, their shared screen and Machines grid, the Generate Machine button, and moving on to the maintenance contract."
 entities: [MnSalesQuotation, MnSalesOrder]
+menu: Customer Relationship Management → Maintenance Documents → Maintenance Sales Quotation
 ---
 # Maintenance Sales Quotations and Orders
 

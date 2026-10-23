@@ -1,4 +1,5 @@
 ---
+description: "The chain of real estate sales documents from offer to handover, which step takes a unit off the market or moves money in the ledger, and the Sales Offer and Temporary Reservation screens in detail."
 entities: [RESalesOffer, RETempReservation]
 ---
 # The Property Sales Cycle
@@ -97,7 +98,7 @@ What makes it safe to hand out freely is that it does not commit anything:
 - It reaches the ledger only if you deliberately configure it to. The offer carries its own
   document term with the same full set of accounting sides as the contract, and on commit it
   raises an accounting request exactly as the contract does — but with those sides left empty,
-  as they normally are, nothing is written. Fill them in and the offer will post like any other
+  as they normally are, nothing is written. Fill them in and the offer will create its entry like any other
   document, so leave the offer's term unconfigured unless you mean it.
 - The buyer field is not mandatory. An offer is normally addressed instead to a CRM lead or
   opportunity through the *Offer For* field — the only point in the whole sales chain that reaches

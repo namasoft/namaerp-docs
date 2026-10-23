@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: Service Center
+description: "Landing page for the Service Center module: the workshop, the car showroom, insurance and instalment paperwork, the rental register and reception queues, and where to start reading for each."
 ---
 
 # Service Center
@@ -34,6 +35,7 @@ Setting up the shop, then taking a car in, quoting the work, doing it, and handi
   <LandingCard icon="🛠️" title="Workshop Execution" link="/modules/servicecenter/workshop-execution/servicecenter-production-execution.md" details="Recording who worked on what and for how long, pausing and resuming work, and the daily loading table." />
   <LandingCard icon="🔩" title="Spare Parts" link="/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md" details="Requesting, issuing and returning parts against a job, how they are costed and priced, and sending work to an outside workshop." />
   <LandingCard icon="🔍" title="Inspections and Trips" link="/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md" details="Checklist inspections against a vehicle, and the fleet trip log." />
+  <LandingCard icon="📢" title="Recall Campaigns" link="/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md" details="Listing the vehicles a manufacturer recall covers, blocking job orders until the recall is done, and ticking each vehicle off." />
 </LandingGrid>
 
 ## The Showroom

@@ -31,6 +31,8 @@ entities: [Warehouse, Locator, ConfigEntry]
 |----------------|----------------------|
 | التجاهل في التحقق من كمية الحجز بالتاريخ | `ignoreInReservationQtyCheckByDate` |
 
+![خيار التجاهل في التحقق من كمية الحجز بالتاريخ في شاشة المخزن](images/reservation/warehouse-ignore-reservation-check-ar.png)
+
 ## الإعدادات في الموقع (Locator)
 
 | الاسم بالعربية | معرف الحقل (Field ID) |

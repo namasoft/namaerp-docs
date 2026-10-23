@@ -65,7 +65,7 @@ timezone=Africa/Cairo
 | `prevent-login-of-ips` | قائمة عناوين ممنوعة مفصولة بفواصل، وتُطابق ببدايتها — فـ`192.168` يمنع المدى كله. |
 | `prevent-login-of-ips-msg` | الرسالة التي يرونها، وفيها `{0}` للعنوان. |
 | `use-ldap-for-authentication` | يسلّم التحقق من كلمات المرور إلى دليل LDAP عند العميل. |
-| `preventViewingPublicDocuments` | إذا كانت `true` أُخفيت المستندات المحفوظة بقيمة PUBLIC في أحد المحددات عن المستخدمين العاملين داخل قيمة محددة من ذلك المحدد، ما لم يكن **إظهار المستندات العامة للجميع** مفعّلاً في [الإعدادات العامة](/ar/platform/global-config/global-config-dimensions). ولا تتأثر الملفات. |
+| `preventViewingPublicDocuments` | إذا كانت `true` أُخفيت المستندات المحفوظة بقيمة PUBLIC في أحد المحددات عن المستخدمين العاملين داخل قيمة محددة من ذلك المحدد، ما لم يكن **عرض المستندات العامة لكل المستخدمين** مفعّلاً في [الإعدادات العامة](/ar/platform/global-config/global-config-dimensions). ولا تتأثر الملفات. |
 
 ```properties
 prevent-login-of-login-ids=user1,user2

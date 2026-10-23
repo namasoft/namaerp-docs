@@ -27,6 +27,8 @@ entities: [MnClassification1, MnClassification2, MnClassification3, MnClassifica
 
 واستخدام اثنين من خمسة أمر طبيعي. فلا غرامة على ترك ثلاثة ملفات فارغة، ولا سبيل إلى إضافة سادس، فاختر التمييزات الخمسة الأهم للعمل وقف عندها.
 
+![سجل تصنيف آلة 1](../images/maintenance-setup/crm-machine-classification-1-ar.png)
+
 ## أين تظهر
 
 تظهر التصنيفات الخمسة في شاشات أكثر بكثير مما توحي به ملفاتها المتواضعة:

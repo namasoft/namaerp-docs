@@ -12,7 +12,7 @@ A customer or supplier almost always keeps their own account of your dealings �
 Subsidiary reconciliation is part of the core `accounting` license. Its screen is under **Accounting > Reconciliations**.
 :::
 
-::: warning Reconciliation doesn't post by itself
+::: warning Reconciliation creates no journal entry by itself
 The subsidiary reconciliation document produces **no accounting effect**; it's a comparison and difference-detection process only. Any genuine differences it surfaces are corrected with the appropriate document (a credit/debit note, a voucher…) afterwards. "Reconciliation" is comparison, not an entry.
 :::
 
@@ -43,7 +43,7 @@ The toolbar is the same one bank reconciliation uses, and the same rule applies:
 - **Automatic Match** — runs the matching engine over both grids, honouring the **value tolerance**, the **date-difference tolerance** and the **narration match sequence**, and working from whichever side **match from subsidiary lines** points at. This clears the bulk.
 - **Manual Match** — the same engine restricted to the pairings you have set up, for what automatic matching could not resolve.
 - **Macth** — applies what you typed into the unmatched grids: fill a row's **matched with** (or **reverse of**) column, press it, and those rows are matched and leave the unmatched lists. The label reads exactly like that on screen.
-- **Create Journal Entry** — records a selected unmatched line as a journal entry carrying that line's account, subsidiary, value date and amount, ready for you to complete the other side and save. Note that the reconciliation still posts nothing itself — the entry does.
+- **Create Journal Entry** — records a selected unmatched line as a journal entry carrying that line's account, subsidiary, value date and amount, ready for you to complete the other side and save. Note that the reconciliation still records nothing itself — the entry does.
 
 **Any time:**
 
@@ -51,7 +51,7 @@ The toolbar is the same one bank reconciliation uses, and the same rule applies:
 
 ## For Support
 
-- **"The reconciliation didn't change the party's balance"** — correct; it doesn't post. Record any true difference with the appropriate document (note/voucher) afterwards.
+- **"The reconciliation didn't change the party's balance"** — correct; it creates no journal entry. Record any true difference with the appropriate document (note/voucher) afterwards.
 - **"Lines that clearly match aren't matching"** — review the **value tolerance**, the **date-difference tolerance**, and the **narration match sequence**.
 - **"I can't edit an old reconciliation"** — it's chained to a later document that locks it, preserving the reconciliation sequence; this is expected.
 - **"Which side is which?"** — **system lines** are your books; **subsidiary lines** are the party's external statement.

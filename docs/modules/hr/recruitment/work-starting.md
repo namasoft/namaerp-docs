@@ -55,7 +55,7 @@ Committing a Work Starting Document is the moment the person is actually put bac
 
 - For a **New Hiring** start with **Create Employee** checked, saving does not just flag an existing record — it creates the **Employee** record and its companion [Employee HR Information](../setup/employee-hr-information.md) record from scratch, copying the candidate's name and salary component lines across. This is the exact moment a candidate becomes a real employee.
 - For a **Back From Vacation** start generated from a vacation document, Nama also writes the actual return date back onto that vacation document, closing the loop between "how long the leave was supposed to be" and "when the person actually came back."
-- The document itself has no accounting effect — it is purely an HR/payroll-eligibility event, not a posting document.
+- The document itself has no accounting effect — it is purely an HR/payroll-eligibility event, not an accounting document.
 
 ## Aggregated Vacation Work Starting Document
 

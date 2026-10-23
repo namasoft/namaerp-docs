@@ -1,4 +1,5 @@
 ---
+description: "Setting up assembly recipes: the Assembly BOM header and component lines, coproducts and dated alternatives, Components, Partial Assembly BOMs, Alternative Materials and the Packaging Method File."
 entities: [AssemblyBOM, AssemblyComponent, PartialAssemblyBOM, AssemblyAltMaterial, PackagingMethodFile, MaterialClassification]
 menu: Inventory → Assembly Documents → Assembly BOM
 ---

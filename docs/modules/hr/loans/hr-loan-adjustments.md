@@ -20,13 +20,13 @@ The **Loan Relief Document** (سند أعفاء سلفة) forgives all or part o
 
 ![Loan Relief Document](../../../ar/modules/hr/images/loans/loan-relief-en.png)
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
-On commit, the Loan Relief Document generates its ledger effect as a background **business request** with a **processing status**, retryable from the **Business Requests** view. Each relieved installment line posts its **Relief Amount** through the debit/credit sides configured on the relief document's own term (التوجيه) — typically debiting a relief/write-off expense account and crediting down the same employee-loans account the original [Loan Document](hr-loan-documents.md) debited, so the receivable is cleared without any further cash movement.
+On commit, the Loan Relief Document generates its ledger effect as a background **business request** with a **processing status**, retryable from the **Business Requests** view. Each relieved installment line records its **Relief Amount** on the debit/credit sides configured on the relief document's own term (التوجيه) — typically debiting a relief/write-off expense account and crediting down the same employee-loans account the original [Loan Document](hr-loan-documents.md) debited, so the receivable is cleared without any further cash movement.
 
 ## Rescheduling installments: Loan Installment Reschedule
 
-The **Loan Installment Reschedule** document (سند إعاده جدوله اقساط سلفه) changes *when* — or how — unpaid installments of a loan are collected, without changing the total amount owed or posting anything to the ledger; it is a pure scheduling change. It works in one of two modes, chosen through **Postpone Type** (طريقة جدوله الاقساط):
+The **Loan Installment Reschedule** document (سند إعاده جدوله اقساط سلفه) changes *when* — or how — unpaid installments of a loan are collected, without changing the total amount owed or creating any ledger entry; it is a pure scheduling change. It works in one of two modes, chosen through **Postpone Type** (طريقة جدوله الاقساط):
 
 - **Postpone Installment** (تأجيل) — pick a date range (`From Date`/`To Date`, من تاريخ / إلى تاريخ) and a time period (`Time Period`, الفترة, e.g. one month); every not-yet-paid, not-exempt installment whose payment date falls in that range is simply shifted forward by that period. Nothing about the installment values changes, only their dates.
 - **Reschedule Installment** (إعاده جدوله) — pick specific installments to draw value **from** in the **To Schedule Lines** grid (الاقساط المعاد جدولتها) and specific installments to add that value **onto** in the **To Schedule Over Lines** grid (الاقساط الموزع عليها); the two sides must total the same amount. An installment in the second grid can either be one that already exists on the loan, or — by checking **Generate New Installment** (إنشاء قسط جديد) — a brand-new installment line created on the fly with its own payment date.

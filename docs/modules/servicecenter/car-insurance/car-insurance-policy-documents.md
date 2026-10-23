@@ -1,4 +1,5 @@
 ---
+description: "The car insurance policy documents and their enforced order: issuance order, receipt, delivery, renewal, cancellation, their cancels and the two adjustments, what each one does, and what reaches the ledger."
 entities: [SIInsurancePolicyOrder, SIInsurancePolicyReceipt, SIInsurancePolicyReceiptCancel, SIInsurancePolicyDelivery, SIInsurancePolicyDeliveryCancel, SIInsurancePolicyRenewal, SIInsurancePolicyValueAdjustment, SIInsurancePolicyPeriodAdjustment, SIInsurancePolicyCancellation]
 ---
 # Moving a Policy Through Its Cycle
@@ -49,6 +50,9 @@ A refused commit names the documents and the policy:
 - *Document {0} can not be the first document in the cycle of insurance policy {1}* — «المستند {0} لا يمكن أن يكون أول مستند في دورة وثيقة التأمين {1}»
 - *Document {0} can not come after document {1} in the cycle of insurance policy {2}* — «المستند {0} لا يمكن أن يأتي بعد المستند {1} في دورة وثيقة التأمين {2}»
 
+A policy may also appear on only one line of the same document; a second line naming it is refused with
+*The same insurance policy is used in more than one line* — «تم استخدام نفس وثيقة التأمين في أكثر من سطر».
+
 Because the check is re-run on every commit against the whole history, back-dating matters: a document you insert with an earlier value date is placed at that point in the sequence, and if that makes the sequence illegal the commit fails even though nothing about the document itself is wrong.
 
 ## What each document does
@@ -76,6 +80,10 @@ If the supplier is left empty, it is copied from the first policy in the grid th
 On commit it sets each policy's *Physical Status* to **Received From Supplier**, ticks its **Received** flag and writes the received date onto the policy. Cancelling or deleting the document clears the received date and puts the status back to *Requested From Supplier*.
 
 Its picker offers only policies with no received date, narrowed to the header's insurance company when one is set.
+
+To stop the paper being received for a policy the customer has not paid for, tick **Prevent Saving  If Policy Is Unpaid**
+on the receipt's term. A row whose policy still has the *Payment Status* *Unpaid* is then refused with
+*Cannot save receipt {0}. Insurance policy {1} is not paid by the customer* — «لا يمكن حفظ مستند الاستلام {0}. وثيقة التأمين {1} غير مسددة من العميل».
 
 **Accounting:** yes — three things:
 

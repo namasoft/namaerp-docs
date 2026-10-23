@@ -1,4 +1,5 @@
 ---
+description: "How the Menu Definition screen builds the side menu from two flat tables of folders and entries: the three levels, what an entry can open, naming, ordering and icons, finding an entry quickly, and what to check before changing anything."
 entities: [MenuDefinition]
 menu: Administration → Display Customization → Menu Definition
 ---

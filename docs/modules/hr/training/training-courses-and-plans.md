@@ -1,4 +1,5 @@
 ---
+description: "Setting up and running training: the Training Course catalog, Training Plans that match employees to courses, Course Enrollment for delivering a course, and End Training Course for recording the skill level each employee reached."
 entities: [TrainingCourse, TrainingPlan, CourseEnrollment, EndTrainingCourse]
 ---
 # Training Courses & Plans

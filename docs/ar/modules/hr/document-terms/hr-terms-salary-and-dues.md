@@ -1,4 +1,5 @@
 ---
+description: "كيف تعمل توجيهات مستندات الموارد البشرية، وما الذي تتحكم فيه توجيهات سند الراتب وسجل الراتب والراتب اليومي وتصفية المستحقات والزيادات السنوية ومخصصات الموظفين: الحسابات والأثر المحاسبي وسلوك المستند."
 entities: [SalaryDocument, SalarySheet, DailySalary, DuesLiquidationDoc, AggrDuesLiquidationDoc, AnnualIncreasesDoc, EmployeeProvisionsOpening, EmployeeProvisionsRecalc, AggrEmpProvisionsRecalc]
 menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
@@ -16,6 +17,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 تتناول هذه الصفحة توجيهات مستندات المال: سندات الرواتب وسجلاتها، والراتب اليومي، وتصفية المستحقات،
 والزيادات السنوية، ومستندات مخصصات الموظفين. وبقية توجيهات الموارد البشرية في الصفحات الشقيقة
 المذكورة في آخر الصفحة.
+
+![تبويب الإعدادات في توجيه سند الراتب](../images/document-terms/hr-term-salary-and-dues-ar.png)
 
 ## كيف تعمل توجيهات الموارد البشرية
 

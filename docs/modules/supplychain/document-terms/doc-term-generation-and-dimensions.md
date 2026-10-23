@@ -10,6 +10,8 @@ This page covers two related areas of the supply-chain **Document Term**: how a 
 Open the document's **Document Term** (توجيه), then the **Dimensions**, **Generation**, and **Auto-Generate With Save** groups.
 :::
 
+![The Dimensions tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-generation-and-dimensions-en.png)
+
 ## Dimensions
 
 By default a stock document carries one warehouse and one set of accounting dimensions for the whole document. These switches govern how the document's dimensions relate to the warehouse, and how lines pulled from a from-document may be edited.

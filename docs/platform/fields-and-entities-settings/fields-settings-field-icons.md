@@ -1,4 +1,5 @@
 ---
+description: "The Icons tab of Fields and Entities Settings: changing or adding the icon and colour shown for an entity type, an enum value or a single field, choosing an icon, the light and dark colour columns, and how your line overrides the built-in default."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -14,6 +15,8 @@ or the one field on a crowded screen that everybody keeps missing.
 
 Three grids live on this tab, and all three feed the same visual system: one for whole entity types,
 one for single values of a drop-down list, and one for individual fields.
+
+![The Icons tab](../../ar/platform/images/fields-settings/fields-settings-icons-tab-en.png)
 
 ## Entity Icons
 
@@ -141,6 +144,27 @@ lines are combined. That is convenient until two records both decorate the same 
 field — then which one wins is not something you can predict from reading them. Keep everything
 about one target in one record.
 :::
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `entityIcons` | Entity Icons | Entity Icons | [Entity Icons](#Entity-Icons) |
+| `entityIcons.iconCode` | Icon Code | كود الأيقونة | [Entity Icons](#Entity-Icons) |
+| `entityIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Entity Icons](#Entity-Icons) |
+| `entityIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Entity Icons](#Entity-Icons) |
+| `enumIcons` | Enum Icons | Enum Icons | [Enum Icons](#Enum-Icons) |
+| `enumIcons.enumType` | Enum Type | Enum Type | [Enum Icons](#Enum-Icons) |
+| `enumIcons.allowedValue` | Allowed Value | القيمة المسموح بها | [Enum Icons](#Enum-Icons) |
+| `enumIcons.iconCode` | Icon Code | كود الأيقونة | [Enum Icons](#Enum-Icons) |
+| `enumIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Enum Icons](#Enum-Icons) |
+| `enumIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Enum Icons](#Enum-Icons) |
+| `fieldIcons` | Field Icons | Field Icons | [Field Icons](#Field-Icons) |
+| `fieldIcons.iconCode` | Icon Code | كود الأيقونة | [Field Icons](#Field-Icons) |
+| `fieldIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Field Icons](#Field-Icons) |
+| `fieldIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Field Icons](#Field-Icons) |
 
 ## Related pages
 

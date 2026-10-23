@@ -1,4 +1,5 @@
 ---
+description: "The Fields and Entities Settings grids that limit what users may type: field formats with optional conditions, allowed values, disabled fields, the maximum number of lines on documents and files, and maximum field lengths in the database and on POS."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -124,6 +125,8 @@ For help building the criteria and the query, see
 [Criteria Based Validation](/platform/governance/criteria-based-validation) and
 [Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide).
 
+![The Field Formats grid](../../ar/platform/images/fields-settings/fields-settings-field-formats-grid-en.png)
+
 ## Field Allowed Values
 
 Some fields are free text only because nobody ever got round to constraining them. A "Payment
@@ -184,7 +187,7 @@ enforced on the server. See
 [Field, Page, and List View Security](/platform/security/field-page-listview-security).
 :::
 
-There is also a global configuration option, **Allow Filling Disabled Fields with Creators**, that
+There is also a global configuration option, **Allow Filling Disabled Fields With Creators**, that
 lets the system's own automatic value fillers write into a field the user is not allowed to edit by
 hand. It is normally left on: a user who may not type the branch manually should still get it
 filled in for them. You will find it on the
@@ -295,6 +298,49 @@ The same is true of Field Formats lines that target Customer.
 
 For how the terminals fit into the wider picture, see
 [Nama POS — Overview](/modules/pos/pos-overview).
+
+## Settings on this tab
+
+Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `fieldFormats` | Field Formats | Field Formats | [Field Formats](#Field-Formats) |
+| `fieldFormats.minLength` | Min length | اقل طول | [Field Formats](#Field-Formats) |
+| `fieldFormats.maxLength` | Max length | اقصي طول | [Field Formats](#Field-Formats) |
+| `fieldFormats.prefix` | Prefix | بادئة التكويد | [Field Formats](#Field-Formats) |
+| `fieldFormats.suffix` | Suffix | نهاية التكويد | [Field Formats](#Field-Formats) |
+| `fieldFormats.allowAlpha` | Allow alpha | السماح بالحروف | [Field Formats](#Field-Formats) |
+| `fieldFormats.allowNumbers` | Allow numbers | السماح بالارقام | [Field Formats](#Field-Formats) |
+| `fieldFormats.letterCaseType` | Letter Case Type | الحروف المسموح بها | [Field Formats](#Field-Formats) |
+| `fieldFormats.ignoreDraftSuffix` | Ignore Draft Suffix | تجاهل لاحقة المسودة | [Field Formats](#Field-Formats) |
+| `fieldFormats.preventLeadingWhiteSpace` | Prevent Leading White Space | منع وجود مسافة في البداية | [Field Formats](#Field-Formats) |
+| `fieldFormats.preventTrailingWhiteSpace` | Prevent Trailing White Space | منع وجود مسافة في النهاية | [Field Formats](#Field-Formats) |
+| `fieldFormats.criteriaDefinition` | Criteria | المعايير | [Field Formats](#Field-Formats) |
+| `fieldFormats.applyWhenQuery` | Apply When Query | تطبيق عند التوافق مع الاستعلام | [Field Formats](#Field-Formats) |
+| `fieldFormats.linesShouldMatch` | Lines Should Match | يجب مطابقة السطور | [Field Formats](#Field-Formats) |
+| `fieldFormats.regularExpression` | Regular Expression | Regular Expression | [Field Formats](#Field-Formats) |
+| `fieldAllowedValues` | Field Allowed Values | القيم المسموح بها للحقول | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.restrictValues` | Restrict Selection | عدم السماح بكتابة القيم يدويا | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue1` | Allowed Value 1 | القيمة المسموح بها 1 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue2` | Allowed Value 2 | القيمة المسموح بها 2 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue3` | Allowed Value 3 | القيمة المسموح بها 3 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue4` | Allowed Value 4 | القيمة المسموح بها 4 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue5` | Allowed Value 5 | القيمة المسموح بها 5 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue6` | Allowed Value 6 | القيمة المسموح بها 6 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue7` | Allowed Value 7 | القيمة المسموح بها 7 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue8` | Allowed Value 8 | القيمة المسموح بها 8 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue9` | Allowed Value 9 | القيمة المسموح بها 9 | [Field Allowed Values](#Field-Allowed-Values) |
+| `fieldAllowedValues.allowedValue10` | Allowed Value 10 | القيمة المسموح بها 10 | [Field Allowed Values](#Field-Allowed-Values) |
+| `disabledFields` | Disabled Fields | Disabled Fields | [Disabled Fields](#Disabled-Fields) |
+| `maxLinesCounts` | Max Lines Counts For Documents And Files | أقصى عدد لسطور السندات والملفات | [Max Lines Counts For Documents And Files](#Max-Lines-Counts-For-Documents-And-Files) |
+| `maxLinesCounts.maxLinesCount` | Max Lines Count For Documents And Files | أقصى عدد لسطور السندات والملفات | [Max Lines Counts For Documents And Files](#Max-Lines-Counts-For-Documents-And-Files) |
+| `maxFieldsLengthInDB` | Max Fields Length In DB | Max Fields Length In DB | [Max Fields Length In DB](#Max-Fields-Length-In-DB) |
+| `maxFieldsLengthInDB.maxLength` | Max length | اقصي طول | [Max Fields Length In DB](#Max-Fields-Length-In-DB) |
+| `maxPOSFieldsLengthInDB` | Max POS Fields Length In DB | Max POS Fields Length In DB | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
+| `maxPOSFieldsLengthInDB.posEntityType` | Entity Type | النوع | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
+| `maxPOSFieldsLengthInDB.fieldType` | Field Type | نوع الحقل | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
+| `maxPOSFieldsLengthInDB.maxLength` | Max length | اقصي طول | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
 
 ## Related pages
 

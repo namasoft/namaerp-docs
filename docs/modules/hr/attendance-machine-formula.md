@@ -1,4 +1,5 @@
 ---
+description: "How to write an attendance and departure formula that teaches Nama to read a time attendance machine's export file: separators, rows and columns, column tokens, pairing entries with exits, cleaning up readings, and the buttons under the formula field."
 entities: [TimeAttendance]
 ---
 # Attendance and Departure Formulas

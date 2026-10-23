@@ -1,4 +1,5 @@
 ---
+description: "The Criteria Definition screen: building a saved filter from conditions with AND, OR, brackets and grid columns, values that follow the logged-in user, testing a criteria, its text form, where saved criteria are used, and what the screen does not check."
 entities: [CriteriaDefinition]
 menu: Administration → Display Customization → Criteria Definition
 ---

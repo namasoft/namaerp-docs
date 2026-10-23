@@ -1,4 +1,5 @@
 ---
+description: "The CRM Warranty register: its screen, how the dates and period fill each other in, the serial number switch, what a warranty shows on a trouble ticket and what it does not do, and how it differs from the machine-maintenance warranties."
 entities: [CRMWarranty]
 menu: Customer Relationship Management → Support → CRM Warranty
 ---

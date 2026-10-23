@@ -1,3 +1,6 @@
+---
+description: "Overview of the Education module for schools and training centres: the school register (students, guardians, classes, attendance, marks, buses, meals, trips) that records information only, the Course Contract that carries the money, one enrolment followed end to end, licensing and a map of the guide."
+---
 # Education
 
 Welcome to the Education module of Nama ERP — the module for organisations whose customers are
@@ -56,14 +59,14 @@ Suppose a training centre runs "Advanced Excel for Accountants" three times a ye
 5. Saving the contract creates its ledger entries in the background: the fee owed by the party on one
    side, the training revenue on the other.
 6. One student withdraws in week three. A **Course Contract Cancel** copies the contract down, you
-   keep only that student's line, and processing it books the mirror-image entry and settles the
+   keep only that student's line, and processing it records the mirror-image entry and settles the
    instalments that no longer apply.
 
 A school follows the same money path for its tuition, and runs the register half in parallel —
 attendance sheets each morning, marks at the end of term.
 
 ::: tip How documents work in Nama ERP
-There is no separate "post" step. Once a document is saved out of draft, its effects are created
+There is no separate step that pushes a document into the accounts. Once a document is saved out of draft, its effects are created
 straight away as a **business request** processed in the background — so saving is instant and the
 work happens behind you. If an effect fails, you can find and retry it from the **Business Requests**
 list view. Later edits to a saved document flow through the same way.
@@ -106,5 +109,5 @@ and **School Trips** — and this guide follows the shape of the work rather tha
 ### Around the school
 
 <LandingGrid>
-  <LandingCard icon="🚌" title="Buses, Meals and School Trips" link="/modules/education/education-transport-and-meals.md" details="The vehicle register and its incident log, the meal catalogue and delivery record, and the school trip file." />
+  <LandingCard icon="🚌" title="Buses, Meals and School Trips" link="/modules/education/education-transport-and-meals.md" details="The vehicle register, its incident log, pickup plans and info updates, the meal catalogue and delivery record, and the school trip file." />
 </LandingGrid>

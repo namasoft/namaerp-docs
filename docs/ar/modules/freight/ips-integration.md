@@ -29,6 +29,8 @@ entities: [IPSEvent, IPSReceptaclesReceipt, IPSTransferReceptacles, IPSMailItemM
 | **حقل الجهاز على IPS** | الشيء نفسه لمعرّف الجهاز. |
 | **Allowed Mail Item Prefix To Send To IPS** | قائمة بادئات مفصولة بفواصل. إذا مُلئت لا يُبلَّغ إلا عن المواد التي يبدأ رقمها بإحداها، ويُتخطّى الباقي بصمت. والفراغ يعني كل المواد. أمّا الأكياس فيُبلَّغ عنها دائمًا. |
 
+![استلام الكيس](images/ips/receptacles-receipt-ar.png)
+
 ## القراءة من IPS
 
 تحدث القراءة أثناء الكتابة:

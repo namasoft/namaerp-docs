@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Transfer Request: recording a request to move an asset to a new location or holder without changing the register, filling it in, turning it into an actual transfer, and raising many requests at once."
 entities: [FATransferRequest, AggFATransferRequest]
 menu: Assets → Custody Of Assets → Fixed Asset Transfer Request
 ---

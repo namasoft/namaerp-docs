@@ -1,4 +1,5 @@
 ---
+description: "What POS shift openings and closings become on the server: resetting the cash at close and why it may not happen, how cash differences reach the accounts, and the settings and payment-method options that shape the close."
 entities: [POSShiftOpening, POSShiftClosing, POSCashDrawer]
 menu: Point of sale → Documents → POS Shift Closing
 ---
@@ -63,7 +64,7 @@ Work through these in order:
 The **Payment Method** screen has an option with a similar name, **Reset Balance With Shift Close** (*تصفير الرصيد مع غلق الوردية*). It belongs to the accounting module's own **Open Shift** / **Close Shift** documents. POS shifts follow **Shift Close Reset Cash** on POS Settings.
 :::
 
-## How differences are posted
+## How differences are recorded
 
 When a closing (or opening) line has a difference, the server processes it through the document term's **Effect** tab:
 

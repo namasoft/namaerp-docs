@@ -3,7 +3,7 @@
 إصلاح واحد بـ SQL لعقود العقارات: إعادة حساب قيم المدفوع من النظام وطلب التحصيل والمحصّل بالأوراق المالية حين تفقد قيود سداد الأقساط مرجعها.
 
 ## إصلاح المدفوع من النظام وطلب التحصيل والمحصّل بالأوراق المالية في العقود
-::: details أولاً: نفّذ الاستعلام التالي ثم ضع المخرجات في ملف إعادة الترحيل:
+::: details أولاً: نفّذ الاستعلام التالي ثم ضع المخرجات في ملف إعادة الحفظ:
  ```sql
 select distinct paymentDocEntityType,paymentDocId from InstallmentPaymentEntry where refid is null
 
@@ -87,4 +87,4 @@ from SalesInvScheduledPayLine l left join paidValues pv on pv.installmentCode = 
 go
 ```
 :::
-- أعد ترحيل الملفات الآن
+- أعد حفظ الملفات الآن

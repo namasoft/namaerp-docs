@@ -1,4 +1,5 @@
 ---
+description: "The single Real Estate Configurations record for the whole module: carrying paid money between documents, tax in what an installment owes, cheques, the migration cut-off date, the maintenance deposit, the rounding tolerance and its three grids."
 entities: [ConfigEntry]
 menu: Real Estate and Property → Settings → Real estate Configurations
 ---

@@ -31,6 +31,8 @@ change; everything left empty is ignored when the request is applied.
 | **Tax Information** page | The tax registration details. |
 | **Updated** (تم التحديث) | Ticked by the system once the request has been applied. You never tick it yourself. |
 
+![A Modify Contractor Info Request with its two buttons](../../../ar/modules/contracting/images/setup/modify-contractor-info-request-en.png)
+
 ## The two buttons
 
 Both need the request saved first.

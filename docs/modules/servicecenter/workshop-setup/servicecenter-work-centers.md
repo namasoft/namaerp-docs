@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Work Center file: its spare-parts store, hour price, bays-times-hours capacity and dimensions, the Job Orders tab, why the hour price is only a fallback, and how to set one up."
 entities: [SrvCWorkCenter]
 menu: Service Center → Master Files → Service Center Work Center
 ---

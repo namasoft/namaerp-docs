@@ -116,11 +116,11 @@ When a qualification's institute maps to the university code `998` or `999` ("ot
 the institute's own name alongside the code, so an institute that is not on the ministry's list
 can still be reported. Map any unlisted institute to `999` rather than leaving it without a code.
 
-### Ratings work as thresholds
+### Ratings come from Description 1
 
-The **RatingCode** table is read differently from all the others. Its NaMa Value is a
-percentage: the **lowest** final evaluation percentage that earns that rating. With rows at `0`,
-`60`, `75` and `90`, an evaluation of 82% gets the code of the `75` row. An evaluation with no
-final percentage falls back to the Default MCS Code.
+The **RatingCode** table is keyed on the **Description 1** of the employee evaluation: type the
+rating there in the same words as the table's NaMa Value — for example `Excellent`, `Very Good` —
+and the row's MCS code is sent. An evaluation whose Description 1 matches no row gets the Default
+MCS Code; with no default, it is refused before sending.
 
 Next: [send a submission](./eltezam-submissions-and-sending).

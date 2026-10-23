@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Purchase Request and Purchase Order: where they sit in the menu, how they tie a purchase to a contract term and budget line, what the order does when processed and refuses to save, its link to site consumption, and why there is no contracting purchase invoice."
 entities: [ContractingPurchaseRequest, ContractingPurchaseOrder]
 ---
 # Contracting Purchase Requests and Orders
@@ -122,7 +123,7 @@ of the contracting spine. A second page holds three grids that matter on a const
 
 Two effects, and both are configurable in a way that surprises people the first time.
 
-**It posts to the ledger only if you tell it to.** The order looks at the debit and credit sides on
+**It creates a journal entry only if you tell it to.** The order looks at the debit and credit sides on
 its document term. If neither is configured, the order books nothing at all — which is the normal
 setting, because a purchase order is a commitment, not an expense. If they *are* configured it
 produces a full invoice-style entry, taxes and discounts included. Change your mind and clear the

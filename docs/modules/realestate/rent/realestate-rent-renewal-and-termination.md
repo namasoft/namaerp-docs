@@ -1,4 +1,5 @@
 ---
+description: "How a rent contract is renewed or ended: the Extend Contract button that creates a new contract for the next term, the Cancel Contract settlement document and what it computes, early termination, money still owing and the buttons on both screens."
 entities: [RECancelContract, RERentContract]
 menu: Real Estate and Property → Rents → Cancel Contract
 ---

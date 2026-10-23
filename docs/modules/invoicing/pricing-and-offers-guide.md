@@ -42,6 +42,8 @@ Sales Price Lists define standardized pricing structures for inventory items, al
 - **Invoice Classification** - Apply to specific invoice types
 - **Price Classifiers 1-5** - Multi-dimensional classification system
 
+![A sales price list header](../../ar/modules/invoicing/images/sales-price-list-screen-en.png)
+
 #### Price List Details
 
 Each price list contains comprehensive detail lines with extensive configuration options:

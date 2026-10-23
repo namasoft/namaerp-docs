@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: e-commerce Integration
+description: "Guides for connecting Nama ERP to online storefronts and fulfilment platforms: the shared e-commerce integration settings, then Salla, Zid, Shopify, WooCommerce, BigCommerce, Atheer, Salasa, OTO, Amazon and Omniful, and what moves in each direction."
 ---
 
 # e-commerce Integration

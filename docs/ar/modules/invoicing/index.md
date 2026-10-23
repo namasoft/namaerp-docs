@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: الفواتير والضرائب والخصومات
+description: "وحدة الفواتير والضرائب والخصومات: الخصومات وحساب الضريبة، والتسعير والعروض، والولاء ومدفوعات العملاء، والفوترة الإلكترونية لكل دولة، والقواعد والتقارير التي وراء فاتورة المبيعات."
 ---
 
 # الفواتير والضرائب والخصومات

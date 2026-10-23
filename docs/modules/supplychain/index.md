@@ -1,3 +1,6 @@
+---
+description: "Overview of the Supply Chain module: how purchasing, stock movement, production and sales documents fit together, how documents work in Nama, and a map of the guides on items, purchases, sales, sub-modules, configuration and reports."
+---
 # Supply Chain Management
 
 Welcome to the Supply Chain Management module - the heart of how NaMa ERP helps you track, manage, and control the flow of goods through your organization.
@@ -29,7 +32,7 @@ Throughout this journey, the system does much more than just track numbers; it:
 ## How Documents Work in NaMa ERP
 
 ::: tip Understanding Document States
-Unlike some systems that require "posting" documents, NaMa ERP works differently:
+Unlike some systems where a saved document needs a separate step before it takes effect, NaMa ERP works differently:
 
 **Draft Mode**: Create and edit documents with no effect on inventory or accounting. Perfect for preparation and review.
 
@@ -39,13 +42,13 @@ Unlike some systems that require "posting" documents, NaMa ERP works differently
 - Customer and supplier accounts
 - Available stock calculations
 
-**Edits**: Any changes you make to saved documents appear in the system immediately, with no separate "post" or "confirm" step needed.
+**Edits**: Any changes you make to saved documents appear in the system immediately, with no separate confirmation step needed.
 :::
 
 This immediate approach means:
 - Real-time inventory accuracy
 - Up-to-date accounting at all times
-- No delays from periodic posting
+- No delays from periodic batch updates
 - Instant visibility of changes
 
 But it also means you need to be careful - once saved (out of draft), a document has a real effect!

@@ -53,7 +53,7 @@ This is the part worth slowing down for, because the two settings live on **diff
 |---|---|---|
 | off | off | The contract books everything when it commits. The handover is purely a status change — no accounting at all. This is the common setup. |
 | **on** | off | The contract commits with **no journal entry**. The receivable schedule exists, the unit is sold, and the ledger is silent until delivery. The handover then re-runs the contract's accounting, producing the contract's own entry through the **contract's** term. This is how "recognise revenue on delivery" is configured. |
-| **on** | **on** | The contract's suppressed entry is released **and** the handover produces a second, separate entry built from the contract's figures through the **handover's** term. Only choose this when the two terms are deliberately posting different things. |
+| **on** | **on** | The contract's suppressed entry is released **and** the handover produces a second, separate entry built from the contract's figures through the **handover's** term. Only choose this when the two terms are deliberately recording different things. |
 | off | **on** | The contract books at commit and the handover books again. Unless the handover term is pointed at genuinely different accounts, this counts the sale twice. |
 
 The account sides behind both flags are described on the [sales document terms page](/modules/realestate/document-terms/realestate-terms-sales.md). Note that the second entry, when it exists, is built from the **sales contract's** data — its price, fees, deposit and installments — and only the accounts come from the handover term.
@@ -88,13 +88,13 @@ Each row carries the estate, its handover date, and three figures that the syste
 
 | Column | How it is worked out |
 |---|---|
-| **Total Cost Post Handover** | the actual post-handover cost recorded for that property in the Contracting module |
+| **Total Cost Post-Hand Over** | the actual post-handover cost recorded for that property in the Contracting module |
 | **Previously Calculated Cost** | the sum of the *Remaining Cost* of every **earlier committed** post-handover-cost document for the same property |
-| **Remaining Cost** | total minus previously calculated — **this is the amount that is posted** |
+| **Remaining Cost** | total minus previously calculated — **this is the amount that is recorded** |
 
 Villa B-12 was handed over in March. In June, 40,000 of contracting cost has accumulated against it: previously calculated is zero, so the remaining cost is 40,000 and that is what the June document books. In September the total has reached 55,000; the September document sees 40,000 already calculated and books only the **15,000** increment. Each cost is booked once, however many times you run the document.
 
-The accounting is as small as the arithmetic: the term has a single page with a *Remaining Cost Debit* and a *Remaining Cost Credit*, and the analysis on the posting comes from the property (which stands in as the item), the header subsidiary and the line subsidiary. See the [other document terms page](/modules/realestate/document-terms/realestate-terms-other.md).
+The accounting is as small as the arithmetic: the term has a single page with a *Remaining Cost Debit* and a *Remaining Cost Credit*, and the analysis on the entry comes from the property (which stands in as the item), the header subsidiary and the line subsidiary. See the [other document terms page](/modules/realestate/document-terms/realestate-terms-other.md).
 
 ### Order matters
 

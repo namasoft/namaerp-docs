@@ -1,4 +1,5 @@
 ---
+description: "صفحة الأيقونات في إعدادات الحقول والشاشات: تغيير أو إضافة الأيقونة واللون لنوع كيان أو قيمة قائمة منسدلة أو حقل بعينه، واختيار الأيقونة، وعمودا اللون للوضعين الفاتح والداكن، وكيف يتغلب سطرك على القيمة الافتراضية."
 entities: [GenericReferenceOverrider]
 menu: الأساسيات ← الإعدادات ← أعدادات الحقول و الشاشات
 ---
@@ -14,7 +15,9 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 ويضم هذا التبويب ثلاثة جداول، وكلها تغذّي النظام البصري نفسه: واحد لأنواع الكيانات كاملة، وواحد
 لقيمة واحدة من قائمة منسدلة، وواحد للحقول المفردة.
 
-## أيقونات الأنواع (Entity Icons)
+![تبويب الأيقونات](../images/fields-settings/fields-settings-icons-tab-ar.png)
+
+## Entity Icons — أيقونات الكيانات
 
 يربط هذا الجدول أيقونة ولوناً بنوع كيان كامل. وما تضبطه هنا يتبع النوع أينما ظهر — في القوائم،
 وفي شاشات مطالعة القوائم، وفي نتائج البحث، وفي نوافذ اختيار المراجع حين يختار المستخدم سجلاً.
@@ -30,7 +33,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | كود اللون في الوضع النهاري (Light Color Code) | اللون المستعمل ما دام المستخدم على الوضع النهاري. |
 | كود اللون في الوضع الداكن (Dark Color Code) | اللون المستعمل ما دام المستخدم على الوضع الداكن. |
 
-## أيقونات القوائم المنسدلة (Enum Icons)
+## Enum Icons — أيقونات القوائم المنسدلة
 
 أنفع الأيقونات ليست على الأنواع أصلاً، بل على *قيم* القوائم المنسدلة. فحالة الاعتماد، وحالة
 المستند، والأولوية: علامة ملونة صغيرة بجوار «مرفوض» تقول للمراجع في نصف ثانية أكثر مما تقوله
@@ -55,7 +58,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 «مرفوض» و«تحت الإجراء» كذلك — فالشاشة التي زُيّنت فيها قيمة واحدة من أربع تبدو كخطأ لا كنظام.
 :::
 
-## أيقونات الحقول (Field Icons)
+## Field Icons — أيقونات الحقول
 
 يربط الجدول الأخير أيقونة ولوناً بعنوان حقل لا بسجل. وهو الجواب على شاشة كبرت: ثلاثون حقلاً كلها
 متساوية في الشكل، وواحد منها — حد الائتمان، أو تاريخ الاستحقاق، أو علامة إيقاف العميل — هو الذي
@@ -130,6 +133,27 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 مريح إلى أن يزيّن سجلان النوع نفسه أو الحقل نفسه — فحينئذ لا يمكنك أن تتوقع أيهما يفوز بقراءتهما.
 فاجمع كل ما يخص هدفاً واحداً في سجل واحد.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| Entity Icons | Entity Icons | `entityIcons` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
+| كود الأيقونة | Icon Code | `entityIcons.iconCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
+| كود اللون في الوضع النهاري | Light Color Code | `entityIcons.lightColorCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
+| كود اللون في الوضع الداكن | Dark Color Code | `entityIcons.darkColorCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
+| Enum Icons | Enum Icons | `enumIcons` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| Enum Type | Enum Type | `enumIcons.enumType` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| القيمة المسموح بها | Allowed Value | `enumIcons.allowedValue` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| كود الأيقونة | Icon Code | `enumIcons.iconCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| كود اللون في الوضع النهاري | Light Color Code | `enumIcons.lightColorCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| كود اللون في الوضع الداكن | Dark Color Code | `enumIcons.darkColorCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| Field Icons | Field Icons | `fieldIcons` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
+| كود الأيقونة | Icon Code | `fieldIcons.iconCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
+| كود اللون في الوضع النهاري | Light Color Code | `fieldIcons.lightColorCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
+| كود اللون في الوضع الداكن | Dark Color Code | `fieldIcons.darkColorCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
 
 ## صفحات ذات صلة
 

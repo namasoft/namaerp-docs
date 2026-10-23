@@ -1,5 +1,7 @@
 ---
+description: "The two Travel document term shapes: the invoice term shared by the sales and purchase orders, invoices and returns (Effect, Other Effects and Discount Effects tabs), and the tour term that drives the tour's purchase-order button."
 entities: [TRSalesInvoice, TRSalesOrder, TRSalesReturn, TRPurchaseInvoice, TRPurchaseOrder, TRPurchaseReturn, TRTour]
+menu: Basic → Settings → Document Term
 ---
 # Travel Document Terms
 
@@ -65,11 +67,11 @@ meaning lands in which of the two follows the direction of the document, not you
 | Travel Service Purchase Return | the **payable** account | the **cost** account |
 
 The two sides are also valued differently, and this surprises people. The party side (customer or
-supplier) is booked at **what is still owed** — the line's net value minus cash taken at the
+supplier) is recorded at **what is still owed** — the line's net value minus cash taken at the
 counter, minus the payment-method rows, minus any voucher row flagged not to affect the remaining.
-The company side (revenue or cost) is booked at the line's **gross price, before discounts and
+The company side (revenue or cost) is recorded at the line's **gross price, before discounts and
 taxes**. That is deliberate: the discounts and the taxes each get their own pair of sides on the
-other two tabs, so booking the gross price here keeps them from being counted twice.
+other two tabs, so recording the gross price here keeps them from being counted twice.
 
 ![The Effect tab of a travel invoice term — the debit and credit sides, and the service-fees group beneath them](../../ar/modules/travel/images/terms/invoice-term-effect-en.png)
 
@@ -98,10 +100,10 @@ switch to skip the effect entirely when no account side has been configured for 
 This tab is where the money that is not the deal itself gets its accounts.
 
 - **Cash** — the account for money taken at the counter. It is also the fallback for payment-method
-  rows: a card or wallet row books to the account named on its own **Payment Method** master file,
+  rows: a card or wallet row is recorded on the account named on its own **Payment Method** master file,
   and only falls back to this Cash side when the method names none.
 - **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** — one group each, and each group carries both the tax
-  side and its **other side**, the contra account the tax is booked against. On a sales document the
+  side and its **other side**, the contra account the tax is recorded against. On a sales document the
   tax lands on the credit side (output tax); on a purchase document it lands on the debit side
   (recoverable input tax). You configure the account; the direction takes care of itself.
 
@@ -117,7 +119,7 @@ and its **other side**. On a sale a discount is a debit; on a purchase it is a c
 At the bottom of the tab sits the **External Effects** grid — the one place on the term that is a
 grid rather than a group. It gives payment and receipt vouchers landing in the document's
 [Payment Documents grid](./travel-payments-and-terms) accounting of their own. Each row says: for
-vouchers of *this type*, matching *these criteria* or *this query*, book *this debit* against *this
+vouchers of *this type*, matching *these criteria* or *this query*, record *this debit* against *this
 credit*. Leave the grid empty and the vouchers simply reduce the remaining without producing entries
 of their own.
 
@@ -129,7 +131,7 @@ of their own.
 The engine that builds the journal entry only builds the lines the term describes. A term with an
 empty Debit and Credit produces a ledger transaction with **no lines at all** — the document
 commits, it processes cleanly, no error appears anywhere, and nothing reaches the general ledger. A
-term with taxes configured but no discount sides books the taxes and silently skips the discounts.
+term with taxes configured but no discount sides records the taxes and silently skips the discounts.
 
 This is the single most common travel support call. A freshly created term is completely empty, so
 **fill it in before the first live document is written against it**. When a document has already
@@ -139,16 +141,16 @@ Effects** action on the document — it re-issues the entry against the correcte
 
 ### Give the orders their own terms
 
-It is easy to assume that only invoices post. In Travel that is not so: the **Travel Service Sales
+It is easy to assume that only invoices create ledger entries. In Travel that is not so: the **Travel Service Sales
 Order and the Travel Service Purchase Order carry a Term field and are processed exactly like the
 invoices**, using the same term shape and the same engine. Point an order at the invoice's term and
-the order will book a full receivable-and-revenue entry, and the invoice raised from it afterwards
-will book it a second time.
+the order will create a full receivable-and-revenue entry, and the invoice raised from it afterwards
+will create it a second time.
 
 So create separate terms for the two order documents. Most agencies want their orders to be purely
 commercial documents — a booking confirmation, a supplier commitment — and an order term with its
 Debit and Credit left empty gives exactly that: the order commits, carries prices, instalments and
-contractual clauses, and books nothing. If instead you do want orders reflected in the ledger, give
+contractual clauses, and creates no ledger entry. If instead you do want orders reflected in the ledger, give
 them a term pointing at commitment accounts rather than the ones the invoice uses.
 
 ### What the invoice term does not hold
@@ -203,7 +205,7 @@ all — without one the button produces nothing. The pairs for the kinds of orde
 must be filled. And Hotel Service and Flight Service must be set if you want accommodation and
 flight orders. Since the generated orders are created and committed straight away, the purchase
 order terms you name here also need their own accounts configured, or the orders will process
-silently and book nothing.
+silently and create no ledger entry.
 :::
 
 The book and term pickers only offer books and terms belonging to the Travel Service Purchase Order,

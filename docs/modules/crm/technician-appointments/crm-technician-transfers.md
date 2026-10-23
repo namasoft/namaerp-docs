@@ -1,4 +1,5 @@
 ---
+description: "The Technician Transfer document: moving technicians between crews in one step with a dated record, the Details grid, what is checked, what it does to the crews, and the usual sequence."
 entities: [TechnicianTransfer]
 menu: Customer Relationship Management → Technician Appointments → Technician Transfer
 ---

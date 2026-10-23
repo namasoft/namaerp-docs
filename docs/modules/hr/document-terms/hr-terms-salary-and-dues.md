@@ -1,4 +1,5 @@
 ---
+description: "How HR document terms work, and what the terms of the salary document, salary sheet, daily salary, dues liquidation, annual increases and employee provisions documents control: accounts, accounting effect and document behaviour."
 entities: [SalaryDocument, SalarySheet, DailySalary, DuesLiquidationDoc, AggrDuesLiquidationDoc, AnnualIncreasesDoc, EmployeeProvisionsOpening, EmployeeProvisionsRecalc, AggrEmpProvisionsRecalc]
 menu: Basic → Settings → Document Term
 ---
@@ -7,7 +8,7 @@ menu: Basic → Settings → Document Term
 
 A salary document knows everything about the month it pays for. It knows the employee, the basic
 salary, the overtime hours, the loan instalment and the absence deduction. The one thing it does not
-know is which account any of those figures belongs in, or whether it should post at all.
+know is which account any of those figures belongs in, or whether it should create an accounting entry at all.
 
 That is the job of the **document term** («توجيه المستند»). Every HR document carries a Term field
 beside its book, and the term is the record that answers the accounting and behaviour questions the
@@ -18,6 +19,8 @@ This page covers the terms behind the money documents: salary documents and shee
 dues liquidation, annual increases and the employee provisions documents. The other HR terms are on
 the sibling pages listed at the end.
 
+![The Settings tab of the Salary Document term](../../../ar/modules/hr/images/document-terms/hr-term-salary-and-dues-en.png)
+
 ## How HR document terms work
 
 Three things are worth knowing before you open any HR term, because they are true of all of them.
@@ -25,21 +28,21 @@ Three things are worth knowing before you open any HR term, because they are tru
 **A term belongs to one document type.** The Term screen shows different fields depending on the
 document type it is for; a salary document's term and a vacation document's term have almost
 nothing in common. Most implementations end up with a handful of terms per document type, each
-paired with its own book — one for monthly staff and one for daily labour, one that posts and one
+paired with its own book — one for monthly staff and one for daily labour, one that creates an entry and one
 that does not.
 
 **Most aggregated terms only name a book and a term.** Half the HR document types come in pairs: an
 *aggregated* document that processes a batch of employees, and the individual documents it creates
 for each of them. The aggregated document's term is usually very short, because its whole job is to
 say **which book and which term the generated documents get**. If a batch produces documents that
-post to the wrong accounts, the term to fix is almost never the aggregated one — it is the term the
+hit the wrong accounts, the term to fix is almost never the aggregated one — it is the term the
 aggregated one hands out.
 
-::: warning The switch that turns posting off has three different names
+::: warning The switch that turns the accounting effect off has three different names
 The same idea is spelled three ways across HR terms, and the sense is inverted between them:
 
-- **Without Accounting Effect** («بدون تاثير محاسبي») — tick it to stop posting.
-- **Generate Accounting Effects** («إنشاء تأثير محاسبي») — tick it to **start** posting.
+- **Without Accounting Effect** («بدون تاثير محاسبي») — tick it to stop the accounting entry.
+- **Generate Accounting Effects** («إنشاء تأثير محاسبي») — tick it to **start** creating the entry.
 - **With Accounting Effect** on the reward and penalty term — same sense as the second.
 
 So a ticked box means "no entry" on a salary document and "an entry" on a salary sheet. Read the
@@ -81,7 +84,7 @@ mostly about **which documents get created and what they inherit**.
 
 **The generated documents' identity.** *Generated Doc Term* `termConfig.generatedDocTerm` and
 *Generated Doc Book* `termConfig.generatedDocBook` name the term and book every salary document
-created by this sheet is given. This is the pairing to check first when documents post wrongly.
+created by this sheet is given. This is the pairing to check first when documents hit the wrong accounts.
 
 **Or a book per dimension.** The *Details* grid `termConfig.lines` holds dimension/book pairs, and
 *Calculate Book From Employee* `termConfig.calcBookFromEmployee` makes the sheet pick a book from
@@ -107,7 +110,7 @@ reliable way to get the last-document deduction rules applied; setting the flag 
 applies it to everybody.
 
 **Generate Accounting Effects** `termConfig.generateAccountingEffects` — remember that here a tick
-means "do post", the opposite of the salary document's own switch. *Salary Range Must be Specified*
+means "do create the entry", the opposite of the salary document's own switch. *Salary Range Must be Specified*
 and *Allow Issue Salary Documents For Employees In Vacation Without Salary* repeat the salary
 document's options at sheet level.
 
@@ -116,7 +119,7 @@ Which employees a sheet collects at all is a longer story, told on
 
 ## The Daily Salary term
 
-Daily Salary is the one payroll document that posts from its term rather than from components, so
+Daily Salary is the one payroll document whose entry comes from its term rather than from components, so
 its term is a plain set of five debit/credit pairs:
 
 | Pair | Fields |
@@ -144,9 +147,9 @@ per liquidation component, each with:
 - **Liquidation Component** — the component itself (required).
 - **Debit** and **Credit** — the two account sides (both required).
 - **Included Component Effects In** — *Dues Liquidation Doc Effect*, *Payment Voucher Creation
-  Event*, or *Both*. This is the subtle one: it decides whether the row posts when the liquidation
+  Event*, or *Both*. This is the subtle one: it decides whether the row is recorded when the liquidation
   is processed, when the payment voucher for it is created, or on both occasions. Getting it wrong
-  is how a settlement ends up posted twice or not at all.
+  is how a settlement ends up recorded twice or not at all.
 
 **Rounding.** *Rounding Mode* `termConfig.roundingMode` and *Decimal Fractional Places*
 `termConfig.fractionalPlaces` apply to the settlement's arithmetic.
@@ -156,7 +159,7 @@ and unusually so: most documents shorten their ledger entries by netting off lin
 account. A settlement keeps them separate, so each component stays visible in the entry.
 
 **Subsidiary accounts.** Ten *Subsidiary Account Type* slots and ten more prefixed `tr…` let each
-posting side resolve its subsidiary differently, plus *Subsidiary Employee Accounts For Salary
+account side resolve its subsidiary differently, plus *Subsidiary Employee Accounts For Salary
 Documents* `termConfig.subsidiaryEmpAccount` for the employee's own account.
 
 **What the settlement counts.**

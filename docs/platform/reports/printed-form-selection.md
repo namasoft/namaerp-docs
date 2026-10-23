@@ -1,4 +1,5 @@
 ---
+description: "How the system picks which printed form comes out when you press Print: which forms are candidates, the hard filter, the order they are tried in, why a chosen form may still not print, multiple layouts, list printing, and tracing a printing complaint to its cause."
 entities: [ReportDefinition]
 menu: Administration → Reports → Report Definition
 ---
@@ -219,7 +220,7 @@ last hop failed.
 
 **Through the browser.** Otherwise the output is fetched as an ordinary download. By default it is
 loaded in a hidden frame and cleaned up a few seconds later, which is why nothing visibly happens
-beyond the print dialog; with the global option **Open Print in Browser Window** on, it opens in a
+beyond the print dialog; with the global option **Open Print In Browser Window** on, it opens in a
 real window and the user prints from the browser's own dialog. Whether a dialog appears at all
 follows the user's direct-printing setting. When several prints are produced at once — related
 forms, or a row-by-row list print — they are dispatched in batches with a short pause between them,

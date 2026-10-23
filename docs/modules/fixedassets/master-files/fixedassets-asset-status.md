@@ -1,4 +1,5 @@
 ---
+description: "The five fixed asset statuses: what each one means, how an asset moves between them, what each status blocks, and how to use the status as a working filter."
 entities: [FixedAsset]
 menu: Assets → Master Files → Fixed Asset
 ---

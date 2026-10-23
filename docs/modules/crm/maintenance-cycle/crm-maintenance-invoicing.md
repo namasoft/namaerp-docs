@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Invoice and its return: raising the invoice from an order or execution, where prices come from, how it issues the spare parts and charges the customer, the rules it enforces, and payments on the invoice."
 entities: [MnInvoice, MnInvoiceReturn]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Invoice
 ---

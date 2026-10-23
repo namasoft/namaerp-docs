@@ -2,6 +2,7 @@
 # صفحة مُعدّة يدويًا — يتجاهلها GenNamaDocsIndex بسبب علامة .custom-index
 # الموجودة في هذا المجلد (راجع hasHandcraftedHomePage في GenNamaDocsIndex.java)
 title: مركز الخدمة
+description: "الصفحة الرئيسية لوحدة مركز الخدمة: الورشة ومعرض السيارات وأوراق التأمين والتقسيط وسجل التأجير وطوابير الاستقبال، ومن أين تبدأ القراءة في كل منها."
 ---
 
 # مركز الخدمة
@@ -34,6 +35,7 @@ title: مركز الخدمة
   <LandingCard icon="🛠️" title="التنفيذ في الورشة" link="/ar/modules/servicecenter/workshop-execution/servicecenter-production-execution.md" details="تسجيل من نفّذ ماذا وكم استغرق، وإيقاف العمل واستئنافه، وجدول التحميل اليومي." />
   <LandingCard icon="🔩" title="قطع الغيار" link="/ar/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md" details="طلب القطع وصرفها وإرجاعها على أمر الشغل، وكيف تُكلَّف وتُسعَّر، وإرسال العمل إلى ورشة خارجية." />
   <LandingCard icon="🔍" title="الفحوصات والرحلات" link="/ar/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md" details="فحوصات بقوائم تدقيق على المركبة، وسجلّ رحلات الأسطول." />
+  <LandingCard icon="📢" title="حملات الاستدعاء" link="/ar/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md" details="إدراج المركبات التي يشملها استدعاء المصنّع، ومنع أوامر الشغل حتى يُنفَّذ الاستدعاء، وشطب كل مركبة عند تنفيذه." />
 </LandingGrid>
 
 ## المعرض

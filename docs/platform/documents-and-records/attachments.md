@@ -152,7 +152,7 @@ Attachment fields are ordinary fields, so **field-level security** applies to th
 not see a scanned salary letter can have the field hidden through
 [field, page and list-view security](/platform/security/field-page-listview-security).
 
-The global option **Allow Download Attachment Without Authentication** is the one to be careful with.
+The global option **Allow Downloading Attachment Without Authentication** is the one to be careful with.
 It makes attachment links work without a session, which some external viewers and customer portals
 need — but it also means anyone holding the link can fetch the file. Turn it on only when you have
 decided that is acceptable for every attachment in the system, because it is not a per-field setting.

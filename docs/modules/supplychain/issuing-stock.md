@@ -1,7 +1,7 @@
 ---
 description: "Issuing stock: the Stock Issue for internal use, samples, losses and damage, the Stock Issue Request, cutting two-dimensional materials, batch and serial selection, the accounting effect and corrections."
 entities: [StockIssue, StockIssueReq, ItemCuttingDoc]
-menu: Inventory → Receipt Documents → Stock Issue
+menu: Inventory → Issue Documents → Stock Issue
 ---
 # Issuing Stock
 
@@ -147,6 +147,7 @@ A: Use a stock issue directed to a loss account. This is the system's adopted wa
 | *Can not save stock document {0} because the document cost effects are frozen by the record {1}* — «لا يمكن تعديل السند {0} بسبب السجل {1}» | A **Freeze Of Cost Effects On Accounts** record covers the document's company and a date range that contains its value date, and that record is set to prevent saving frozen documents. Moving a document *into* the frozen range or *out* of it both count. | Use a value date outside the frozen range, or ask whoever owns the freeze to narrow it or to allow saving. |
 | *The document {0} supplier is {1}, while the invoice supplier is {2}* — «المورد بالمستند {0} هو {1} بينما المورد بالفاتورة هو {2}» | The issue names a supplier, and the purchase return it was generated from names a different one. | Make the two agree, or clear the supplier on the issue. |
 | *The document {0} customer is {1}, while the invoice customer is {2}* — «العميل بالمستند {0} هو {1} بينما العميل بالفاتورة هو {2}» | The issue names a customer, and the sales invoice it was generated from names a different one. | Make the two agree, or clear the customer on the issue. |
+| *The system document {0} is not linked to its invoice {1}* — «المستند الآلي {0} غير مرتبط بفاتورته {1}» | A stock issue (or stock receipt) that an invoice generated as its system document has lost its link back to that invoice, so its stock effect would no longer belong to any invoice. It is refused when it is processed. | Save the invoice named in the message again so it brings its stock document back in line; if the message repeats, have support check the pair. |
 | *Item {0} measures type must be single dimension or two dimensions* — «الصنف {0} يجب أن يكون أحادي أو ثنائي الأبعاد» | A cutting document line names an item whose measures type is neither single dimension nor two dimensions — cutting only makes sense for material measured by length, or by length and width. | Remove the line, or fix the item's measures type on its file. |
 | *Required length and required width must be bigger than zero* — «الطول و العرض المطلوبين يجب أن يكون أكبر من صفر» | The line's item is two-dimensional and one of the required length or required width is empty or zero. | Enter both required measures on the line. |
 | *Required length must be bigger than zero* — «الطول المطلوب يجب أن يكون أكبر من صفر» | The line's item is measured by length only, and the required length is empty or zero. | Enter the length you want cut. |

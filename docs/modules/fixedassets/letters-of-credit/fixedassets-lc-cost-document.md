@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Letter of Credit cost document: how it totals the costs distributed to each machine, sets each asset's cost and depreciation parameters, puts it into service, closes the credit, what it books, and how to undo it."
 entities: [FALCCostDoc]
 menu: Assets → Fixed Asset Letter of Credits → Fixed Asset Letter of Credit cost
 ---

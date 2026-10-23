@@ -1,4 +1,5 @@
 ---
+description: "The Contracting Project master file: what the record carries, why it has no accounting of its own, how one project groups several contracts and the documents of its site, and the actions on its screen."
 entities: [Project]
 menu: Contracting → Master Files → Contracting Project
 ---
@@ -21,7 +22,7 @@ money.
 
 ## A Project Has No Accounting Life of Its Own
 
-Creating a project posts nothing. Neither does creating a contract against it — that is the
+Saving a project produces no journal entry. Neither does creating a contract against it — that is the
 [rule that governs the whole module](/modules/contracting/contracting-overview.md): revenue reaches
 the ledger only when an extract (مستخلص) is raised. So the project record is a container and a
 reporting key, not an accounting event.
@@ -29,7 +30,7 @@ reporting key, not an accounting event.
 That said, a project *can* be an account holder, which is a different thing and easy to confuse with
 the first. The screen carries the standard **Accounts** block, so a project may be used as an
 accounting subsidiary (ذمة) in its own right: give it a main account and an accounts bag and every
-posting that resolves its subsidiary "from the project" lands on that project's own balance. Sites
+ledger line that resolves its subsidiary "from the project" lands on that project's own balance. Sites
 run as separate cost and revenue centres are usually set up this way; sites that only need dimension
 reporting are not.
 

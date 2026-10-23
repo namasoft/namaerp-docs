@@ -1,4 +1,5 @@
 ---
+description: "The Quantity Suggestion tab: the order in which lots, serials, sizes, warehouses and locators are suggested on document lines, what gets suggested and shown, and how similar lines are merged when documents are copied or consolidated."
 entities: [ConfigEntry]
 menu: Inventory → Settings → Supply Chain Configurations
 ---
@@ -8,6 +9,8 @@ This page documents the **Quantity Suggestion** tab. It controls two related beh
 
 - **Quantity suggestion** — when a user enters an item (or one of its properties) on a document line, the system looks up where that item currently sits in stock (lots, serials, sizes/colors, revisions, measures, warehouses, locators) and *suggests* the available quantities and which property to pull from.
 - **Collect similar lines** — when documents are copied or consolidated, identical lines can be *merged* so the resulting document is shorter.
+
+![The Qty Suggestion tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-quantity-suggestion-en.png)
 
 ## Suggestion Order
 

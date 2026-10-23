@@ -12,7 +12,7 @@ You will find it at **Contracting > Contractor Contracting > Contractor Contract
 ::: tip It is a master file, and it is shaped like the subcontract, not like a bid
 Two things distinguish it from the [contracting offer](/modules/contracting/project-contracting/contracting-offers.md) on the owner side, and both matter.
 
-**It is a master file.** No book, no document number, no value date, no fiscal period, no document term — a code, a group, an Arabic name and an English name, like any other master file. Nothing is posted and nothing is reserved when you save one.
+**It is a master file.** No book, no document number, no value date, no fiscal period, no document term — a code, a group, an Arabic name and an English name, like any other master file. No journal entry is created and nothing is reserved when you save one.
 
 **It carries no cost build-up.** The owner-side offer is the document where cost *becomes* price: four grids explode each item into materials, labour, subcontractors and expenses, and a margin turns the total into a quotation. There is nothing like that here, and there is no need for it — the subcontractor's price *is* your cost. What this record carries instead is the subcontract's own shape: the same terms grid, the same conditions grid, the same instalment schedule.
 :::
@@ -58,7 +58,7 @@ Alongside them sit the accounts and taxes blocks — an offer can be an accounti
 
 ### The terms grid
 
-One row per item of work, each pointing at a **Standard Term** — which supplies the unit of measure, the default rate and the accounts the eventual extract will post to — with dotted **term codes** forming a tree in which only leaf rows carry money and parent rows are re-totalled from their children.
+One row per item of work, each pointing at a **Standard Term** — which supplies the unit of measure, the default rate and the accounts the eventual extract will record on — with dotted **term codes** forming a tree in which only leaf rows carry money and parent rows are re-totalled from their children.
 
 For `CCO-0031` there is a single priced line:
 

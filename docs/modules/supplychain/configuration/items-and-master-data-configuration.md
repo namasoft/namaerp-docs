@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Items & Master Data** tab — settings that affect the item master, item codes and coding, item search (including button/level browsers), the item–warehouse–locator relationships, and item links to customers and suppliers.
 
+![The Items & Master Data tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-items-and-master-data-en.png)
+
 ## Items
 
 **Activate Item Categories** `value.activateItemCategories` *(default on)* — Turns on the item-category field so items can be assigned to categories. Turn off to hide it when unused.

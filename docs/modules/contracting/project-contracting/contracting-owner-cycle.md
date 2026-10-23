@@ -1,4 +1,5 @@
 ---
+description: "The project-owner side of Contracting step by step: measuring the site, pricing it on an offer or assay, the project contract, the job order and execution, the project extract that books revenue, and collection, plus which steps are optional."
 entities: [ContractingJobOrder]
 menu: Contracting → Project Contracting → Contracting Job Order
 ---

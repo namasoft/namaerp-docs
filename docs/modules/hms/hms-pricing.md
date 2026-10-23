@@ -63,7 +63,7 @@ Not every cost is direct — there's electricity, cleaning, administration. The 
 
 ### The period-end routine
 
-Each invoice already carries an **estimated** overhead from the overhead list, posted through the
+Each invoice already carries an **estimated** overhead from the overhead list, recorded through the
 overhead item's estimated-value sides. At period end, the **Actual Overhead Calculation** works out
 what the overhead really cost and spreads it back over the same invoices. Its three buttons are meant
 to be pressed in order:
@@ -80,7 +80,7 @@ to be pressed in order:
 Committing the document is what writes the result back: each overhead item's actual total is split
 between invoice types by the **shares** on the item, and each invoice of that type receives the part
 proportional to its own estimate. From then on the invoice's overhead line holds an actual value, and
-its overhead is posted through the item's **actual-value** sides instead of the estimated ones.
+its overhead is recorded through the item's **actual-value** sides instead of the estimated ones.
 Cancelling the calculation clears those actual values again.
 
 ![Actual overhead calculation](../../ar/modules/hms/images/pricing/actual-overhead-en.png)

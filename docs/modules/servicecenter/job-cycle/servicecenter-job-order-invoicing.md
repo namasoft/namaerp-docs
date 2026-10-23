@@ -1,4 +1,5 @@
 ---
+description: "How a job order is invoiced: the three buttons that create separate customer, insurer and warranty invoices, how their lines are built, sales orders as an alternative, editing a generated invoice, and the gate pass."
 entities: [SrvCJobOrder]
 ---
 # Invoicing a Job Order
@@ -54,6 +55,8 @@ For Fahad's job the three come out as:
 | `SINV-2026-3312` | Warranty | 2,400 | 360.00 | 2,760.00 |
 | `SINV-2026-3313` | Insurance | 60 | 9.00 | 69.00 |
 | — | Internal | 60 | — | **never invoiced** |
+
+![The three invoice buttons above the Operations grid of a job order](../../../ar/modules/servicecenter/images/job-cycle/job-order-invoice-buttons-en.png)
 
 ## How the lines are built
 

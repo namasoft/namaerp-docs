@@ -1,5 +1,7 @@
 ---
+description: "Setting up and running shipment delivery for the driver app: the delivery configuration, areas, cars and driver assignments, then the daily plan, delivery and return cycle, what decides a shipment's state, the screen buttons and the messages you may see."
 entities: [DLVDeliveryPlan, DLVDeliveryDocument, DLVDeliveryReturn, DLVDeliveryConfig, DLVDeliveryArea, DLVDriverCarAreaAssignment, DeliveryCar]
+menu: Basic → delivery Setting → Shipment Delivery Plan
 ---
 # Shipment Delivery: Plan, Deliver, Return
 
@@ -27,7 +29,7 @@ Every time a document you want delivered is saved — a sales invoice, say — t
 | **Shipment Delivery  Document** | سند توصيل شحنات | The proof of delivery, normally created from the driver app. |
 | **Delivery Return** | مستند مرتجع توصيل | Shipments that came back: retry later, or return for good. |
 
-None of these documents posts anything to the ledger or moves stock.
+None of these documents creates a journal entry or moves stock.
 
 ## Setting up
 

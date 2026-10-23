@@ -1,4 +1,5 @@
 ---
+description: "The Asset Location master file: building a tree of places from site to room, why an asset's location field is written only by documents, which documents write it, an asset move worked through, and reading the location history."
 entities: [FALocation]
 menu: Assets → Master Files → Asset Location
 ---

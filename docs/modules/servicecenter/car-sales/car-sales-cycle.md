@@ -1,4 +1,5 @@
 ---
+description: "How a car is sold, from quotation request through order, invoice and final delivery: what configuration decides, the point of no return, how each car's history is built, and each document's effect on money and stock."
 entities: [SISalesQuotationReq, SISalesQuotation]
 ---
 # The Car Sales Cycle
@@ -87,7 +88,7 @@ Car Final Delivery              optional   the hand-over record
 
 The **Car Sales Quotation Request** (`سيارات > مبيعات السيارات > طلب عرض أسعار سيارة`) and the
 **Car Sales Quotation** (`… > عرض أسعار سيارة`) are exactly what they look like: paperwork. They
-post nothing to the ledger and they move no stock. What they *do* give you is a searchable record of
+create no journal entry and they move no stock. What they *do* give you is a searchable record of
 the enquiry and the offered price, a status movement on the car if you configured one, and — if the
 document term switches it on — a reference stamped back onto the car record's Statistics tab, so
 anyone opening `CAR-000318` can see which quotation it was offered on.
@@ -122,6 +123,8 @@ term. Treat the invoice and the final delivery as **alternatives for moving stoc
 sequence**.
 :::
 
+![A Car Sales Order on instalments](../../../ar/modules/servicecenter/images/car-sales/sc-car-sales-order-en.png)
+
 ## The showroom thread, end to end
 
 Al-Sahra Motors, the authorised NAWA dealer in Riyadh, has six Rimal 2.4s in the showroom, each
@@ -141,7 +144,7 @@ walks in on 20 February 2026 and leaves in March with `CAR-000318`.
    against a **76,500** cost of sales, a **10,500** gross margin, and stock issue `STI-2026-1201`
    out of `WH-SHOW`. Past this point, only a return will unwind it.
 6. **1–2 March — the paperwork.** Traffic letter request `SITLR-2026-0288` then traffic letter
-   `SITL-2026-0296`, so the car can be registered and plated. Neither posts anything.
+   `SITL-2026-0296`, so the car can be registered and plated. Neither creates any journal entry.
 7. **3 March — the hand-over.** Final delivery `SIFD-2026-0357`. Its term has **no** generation book
    or term, so it issues nothing — the invoice already did that.
 8. **5 March — the plates come back.** Plate `ر ط ص 8318` is typed on the car's own screen by hand.
@@ -185,7 +188,7 @@ The honest summary, which the rest of the folder expands:
 | Sales Order | the generic pair if filled, **plus** the booking deposit | none | status line; sales-order and salesman stamps |
 | Allocation | **none** | none | writes the five allocation fields; status line |
 | Proforma Sales Invoice | only the generic pair if the term fills it | **none** | status line |
-| **Sales Invoice** | **full sales posting, always** | **out, via a stock issue** | status line; sales-invoice stamp |
+| **Sales Invoice** | **full sales entry, always** | **out, via a stock issue** | status line; sales-invoice stamp |
 | Final Delivery | **none** | **out, via a stock issue — only if its term names a generation book and term** | status line; delivery-date stamp |
 | Sales Return | full reversal | **in, via a stock receipt** | status line |
 | The cancellation documents | **none** | **none** | mark the source cancelled; status line |
@@ -195,7 +198,7 @@ entry. Fill accounts on the
 [document terms](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) of the
 sales order, the sales approval, the pro-forma sales invoice, the sales invoice and the sales return.
 
-Where a document does post or move stock, the effect is created as a **business request** processed
+Where a document does create a journal entry or move stock, the effect is created as a **business request** processed
 in the background, so the document itself saves instantly. If an effect fails, it is retried from
 the **Business Requests** list view — filter by failed, select the rows, and use **More →
 Reprocess / Recommit**.

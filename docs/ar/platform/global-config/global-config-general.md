@@ -47,10 +47,37 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **الفاصل** `value.measuresConfiguration.seperator` *(الافتراضي `*`)* — الحرف المستخدم حين تُكتب المقاسات الثلاثة كنص وصفي واحد، فتصبح `2*1.5`. ويعيد النظام القيمة الافتراضية إذا حفظته فارغاً.
 
-**حساب العدد بناء على الكمية** `value.info.calculateCountBasedOnQty` *(مفعل افتراضياً)* — عند تفعيله يُشتق *العدد* على السطر من ضرب الكمية في المقاسات بدل كتابته يدوياً، فإدخال 10 ألواح مقاس 2 × 1.5 يعطي عدداً قدره 30 متراً مربعاً آلياً. ووحدة القياس هي التي تحدد المقاسات المشاركة: فالوحدة الموسومة بتجاهل الطول أو العرض تُخرج ذلك العامل من عملية الضرب.
+**حساب العدد بناءا على الكمية في الفواتير** `value.info.calculateCountBasedOnQty` *(مفعل افتراضياً)* — عند تفعيله يُشتق *العدد* على السطر من ضرب الكمية في المقاسات بدل كتابته يدوياً، فإدخال 10 ألواح مقاس 2 × 1.5 يعطي عدداً قدره 30 متراً مربعاً آلياً. ووحدة القياس هي التي تحدد المقاسات المشاركة: فالوحدة الموسومة بتجاهل الطول أو العرض تُخرج ذلك العامل من عملية الضرب.
 
 ## الملاحظات وإعادة التحميل
 
 **ملاحظات** `info` — حقل نص حر على سجل الإعدادات نفسه. ومن المفيد أن تسجّل فيه *سبب* تفعيل خيار غير معتاد وتاريخه.
 
 ويجبر إجراء **إعادة تحميل الإعدادات** في شريط الأدوات كل خوادم النظام على إهمال نسختها المخزّنة وإعادة قراءة السجل. ونادراً ما تحتاجه لأن الحفظ يحدّث المخزون المؤقت أصلاً، لكنه أول ما تجربه إذا بدا أن أحد الخوادم يتصرف على نحو مختلف عن غيره.
+
+## الإعدادات في هذه الصفحة
+
+كل حقول هذه الصفحة باسمها الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه.
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| استعمال الفرنسية بدلا من الإنجليزية | Use French Instead Of English | `value.info.useFrenchInsteadOfEnglish` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
+| لغة التعرف على الصوت | Audio Speech Context Language | `value.info.audioSpeechContextLanguage` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
+| الساعات المضافة للوقت (Time Zone Diff) | Added Hours To Time (Time Zone Diff) | `value.info.addedHoursToTime` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
+| عدد خانات الكسر الافتراضي | Default Display Decimal Places | `value.info.defaultDisplayDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
+| عدد خانات النسب المئوية | Percentage Fractional Decimal Places | `value.info.percentageFractionalDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
+| عدد خانات معدل العملة | Rate Fractional Decimal Places | `value.info.rateFractionalDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
+| عدم استعمال اليوم و الأمس في التواريخ بعرض القوائم | Do Not Use Today and Yesterday in List Views | `value.info.doNotUseTodayAndYesterdayForDates` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
+| موقع اليوم | Day Position | `value.info.hijriFormat.dayPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| موقع الشهر | Month Position | `value.info.hijriFormat.monthPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| موقع السنة | Year Position | `value.info.hijriFormat.yearPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| الفاصل | Seperator | `value.info.hijriFormat.seperator` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| إضافة صفر قبل الارقام اقل من 10 | Add Zero To Numbers Less Than 10 | `value.info.hijriFormat.addZeroToNumbersLessThan10` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| الحقول الهجري دائما | Hijri Fields | `value.info.hijriFields` | حقول التاريخ التي تُعرض بالتاريخ الهجري دائماً، أياً كان التقويم الذي دخل به المستخدم. |
+| النوع | Entity Type | `value.info.hijriFields.entityType` | الشاشة التي ينطبق عليها السطر؛ اتركه فارغاً ليشمل الحقل في كل الشاشات. |
+| الحقل | On Field | `value.info.hijriFields.fieldId` | حقل التاريخ الذي يُعرض هجرياً. |
+| الأبعاد \| الطول | Measures \| Length | `value.measuresConfiguration.length` | [المقاسات](#lmqst) |
+| الأبعاد \| العرض | Measures \| Width | `value.measuresConfiguration.width` | [المقاسات](#lmqst) |
+| الأبعاد \| الارتفاع | Measures \| Height | `value.measuresConfiguration.height` | [المقاسات](#lmqst) |
+| الفاصل | Seperator | `value.measuresConfiguration.seperator` | [المقاسات](#lmqst) |
+| حساب العدد بناءا على الكمية في الفواتير | Calculate Count Based On Qty in Invoices | `value.info.calculateCountBasedOnQty` | [المقاسات](#lmqst) |

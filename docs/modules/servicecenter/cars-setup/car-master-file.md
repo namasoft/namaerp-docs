@@ -1,4 +1,5 @@
 ---
+description: "The Customer Car file for one physical vehicle in the showroom: the one required field, its five tabs from basic information to statistics, what documents write onto the car, and creating one by hand."
 entities: [SubItem]
 menu: cars → Car Files → Customer Car
 ---

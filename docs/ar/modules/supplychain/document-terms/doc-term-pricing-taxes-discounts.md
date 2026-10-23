@@ -11,6 +11,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 افتح **توجيه المستند** (Document Term) ثم تبويب **الأسعار والضرائب والخصومات** (Pricing, Taxes & Discounts).
 :::
 
+![تبويب الأسعار في توجيه فاتورة المبيعات](../images/document-terms/doc-term-pricing-taxes-discounts-ar.png)
+
 ## الضرائب (Taxes)
 
 تظهر أساسيات الضريبة لأي مستند `IInvoice` خاضع للضريبة (مبيعات ومشتريات) وتتطلب تفعيل خاصية **ضريبة المبيعات** (Sales Tax).
@@ -126,7 +128,9 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **تطبيق الأصناف المجانية على قيمة الفاتورة مع الحفظ (Apply Free Items On Invoice With Save)** `termConfig.applyFreeItemsOnInvoiceWithSave` — يطبّق عروض الأصناف المجانية على قيمة الفاتورة تلقائياً عند الحفظ.
 
-**الالتزام بالأسعار في جدول الوحدات للصنف (Force Item Prices From Units)** `termConfig.forceItemPricesFromUnits` — يفرض أن يأتي سعر البيع من أسعار جدول وحدات القياس للصنف.
+**الالتزام بالأسعار في جدول الوحدات للصنف (Force Item Prices From Units)** `termConfig.forceItemPricesFromUnits` — يُبقي سعر الوحدة في كل سطر بين **أقل سعر** و**اقصي سعر** في السطر المطابق من جدول وحدات القياس للصنف، ويُرفض الحفظ إذا خرج السعر عن هذا المدى برسالة
+«سعر الوحده لا يمكن ان يكون أقل من {0} حيث الألتزام بالاسعار من جدول الواحدات مفعله» أو
+*Unit price cannot be greater than {0} as force prices from units is activated* (هذه الرسالة ليس لها نص عربي فتظهر بالإنجليزية). إذا كان «اقصي سعر» فارغًا فلا حد أعلى. ولا يُفحص السطر المجاني الذي سعره صفر أو فارغ.
 
 **منع البيع بكمية أقل من أقل كمية بيع في جدول الوحدات للصنف (Prevent Sales If Quantity Less Than UOM Min Quantity)** `termConfig.preventSalesIfQtyLessThanUOMMinQty` — يمنع الحفظ عندما تقل كمية السطر عن أقل كمية بيع للصنف المحددة في جدول الوحدات.
 

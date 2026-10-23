@@ -27,6 +27,8 @@ Forty grids on one record is a lot of scrolling, so every one of those grids als
 The list screens are named after the grid, not after the master record. If you know the grid title — *Field Formats*, *Extra Codes*, *Audit Fields* — search for that title in the menu or in the global search box.
 :::
 
+![The Main tab of Fields and Entities Settings](../../ar/platform/images/fields-settings/fields-settings-main-tab-en.png)
+
 ## Scope: telling a line where it applies
 
 This is the single most important idea on the screen, and it is the same in almost every grid. The first few columns of a line do not say *what* to change — they say *where* the change applies.
@@ -162,6 +164,21 @@ Every grid on the four tabs is covered on one of the sibling pages below.
 The header of the record is deliberately thin, because the value is in the lines. Besides the code, the group and the two names — `name1` is the Arabic name, `name2` the English one — there is the **Inactive** flag described above, and a colour swatch when colour coding is switched on for this screen in Global Configuration.
 
 The record also carries a set of documentation fields: remarks, a screenshot, a PDF sample, five attachments, the names of the related entity and module, and a link to an **Implementation Repository** record. The Implementation Repository is Nama's shared catalogue of ready-made configurations — reports, notifications, dashboards, tooltips, scheduled tasks and settings records — where a configuration is stored together with its screenshot, sample and attachments so the same setup can be found and reused on another installation. These fields are for documenting and archiving a configuration, not for changing behaviour, and they all sit together on the **Implementation Repository Info** tab — which appears only when the server is configured to talk to the implementation catalogue. If you do not see the tab, that is why.
+
+## Settings on this tab
+
+The scope columns that most grids on this screen share, with their exact on-screen labels in both languages. Each grid prefixes the field id with its own name (for example `displayMasks.forType`).
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `*.forType` | For Type | للنوع | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.entityList` | Entity List | قائمة الأنواع | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.fieldID` | On Field | الحقل | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.applicableFor` | Applicable For | مطبق على | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.forTypeList` | For Type List | لقوائم أنواع | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.fieldId` | On Field | الحقل | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.entityType` | Entity Type | النوع | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
+| `*.entityTypeList` | Entity Type List | قائمة الأنواع | [Scope: telling a line where it applies](#Scope-telling-a-line-where-it-applies) |
 
 ## Related pages
 

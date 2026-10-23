@@ -17,6 +17,10 @@ A return sends items back and gives the customer their money (or store credit) i
 
 The usual case: you have the original receipt. Look up that invoice, and its lines appear for you to choose from. Pick the items and the quantities coming back — partial returns are fine, and any free items that came with a returned item are brought back with it. The register works out the refund.
 
+Next to **Quantity**, a read-only **From Doc Quantity** column shows how many of the item the original invoice line
+sold, so the cashier can see at a glance how far each line may go. It is saved with the return and appears in the same
+column on the POS Sales Return screen in the ERP.
+
 #### Full or partial return
 
 When most of a long invoice comes back, it is quicker to remove the few lines that stay with the customer. When only a few items come back, it is quicker to scan just those. The **Return Type** field (*نوع المرتجع*) chooses between the two:
@@ -51,7 +55,7 @@ How the money goes back mirrors how it came in. You can refund cash from the dra
 ![Return refund](../../ar/modules/pos/images/returns/pos-return-refund-en.png)
 
 ::: tip Return windows
-Businesses usually allow returns only within a set number of days. A return past that window is blocked for an ordinary cashier — but a supervisor can authorize it on the spot (`Ctrl+R`), the same way other restricted actions are approved.
+A register accepts a return only within the number of days set on its register record. When the manager agrees to take an older invoice back, they give that invoice extra days on the server with a **Nama POS Return Period Extension** (see [POS documents on the server](./erp-setup/pos-documents-on-the-server.md#Returns-and-replacements)). The cashier then uses **Return After Allowed Period** (`Ctrl+R`): the register fetches the extra days from the server, so it must be online. Using it needs the **Allow Return After Allowed Period** permission, or a supervisor's approval in the authorization window.
 :::
 
 ### Returns waiting for the server
@@ -67,7 +71,7 @@ A pending return left behind needs the cashier's attention, and it **blocks the 
 3. **The server does not have it** — the return opens as usual. Complete it at the tender screen so it is sent again. If the customer already took the money, do not hand it over a second time; completing the return only records it.
 4. **The server has it with different items or quantities**, or the server cannot be reached — the register refuses to open it. Check the connection and try again; a mismatch needs support.
 
-Deleting a pending return also asks the server first. If the server has it, deleting is refused — open it and confirm it instead. If the server does not have it, the register asks once more before deleting: delete it only if the customer did not get their money. Deleting all held documents (`Shift+F6`) and **Delete Held Invoices On Shift Closing** both leave pending returns alone.
+Deleting a pending return also asks the server first. If the server has it, deleting is refused — open it and confirm it instead. If the server does not have it, the register asks once more before deleting: delete it only if the customer did not get their money. **Delete Held Invoices On Shift Closing** leaves pending returns alone too.
 
 ## Replacements (exchanges)
 
@@ -85,6 +89,16 @@ You settle that single difference at the tender screen, in either direction.
 ![Replacement settlement](../../ar/modules/pos/images/returns/pos-replacement-settlement-en.png)
 
 > **Example.** A customer brings back a size-L shirt (50) and takes a size-M shirt (50) plus a pair of trousers (80). The return is 50, the new sale is 130, so the customer simply pays the 80 difference.
+
+## Buttons on the return and replacement screens
+
+The return and replacement screens use the same toolbar as the sales invoice: the **Home**, **Shortcuts** and **Favourite Documents** tabs, the line buttons and the slide menu are described in [Buttons on the sales screen](./pos-sales-invoice.md#Buttons-on-the-sales-screen). Their title bar is red instead of blue, so the cashier can tell at a glance that goods are coming back. Icon buttons show their name when you hover over them. These buttons work differently here:
+
+| Button | Arabic caption | What pressing it does |
+|---|---|---|
+| **Payment** (`F5`) | «الدفع» | Opens the tender screen to refund the customer on a return, or to settle the difference on a replacement. |
+| **Depreciate** | «تحويل إلى هالك» | A button on each line. Applies a depreciation reason to that line, as described in [Deducting for wear](#Deducting-for-wear-depreciation). |
+| **Return After Allowed Period** (`Ctrl+R`) | «عمل مردود بعد تجاوز مدة المردود المسموح بها» | In the slide menu under **Invoice Actions**. Asks for the invoice's code, fetches from the server the extra days granted to that invoice, and loads it. See the *Return windows* tip above. |
 
 ## Credit notes
 

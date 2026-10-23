@@ -1,4 +1,5 @@
 ---
+description: "The Custody record: one record per physical item handed to staff, the identity fields you fill, the fields documents write, the Details grid of who holds it and how much, and reading what one employee is holding."
 entities: [FACustody]
 menu: Assets → Custodys → Custody
 ---

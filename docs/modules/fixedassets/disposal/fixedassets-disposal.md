@@ -68,7 +68,7 @@ design: the entry that removes the asset must remove exactly what is there, to t
 cost account would never empty.
 
 But it means the figures are only right if **every depreciation instalment up to the disposal has
-actually been posted**. So before it will commit, the document checks that the asset has no
+actually been recorded in the ledger**. So before it will commit, the document checks that the asset has no
 un-depreciated fiscal period sitting between its last depreciation entry and the period of the
 disposal. If there is one, the commit is refused.
 

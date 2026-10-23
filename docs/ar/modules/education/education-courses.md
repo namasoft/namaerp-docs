@@ -1,5 +1,6 @@
 ---
 entities: [EDCourse, EDCourseDefinition, EDMainLevel, EDSubLevel]
+menu: التعليم ← الملفات ← مادة دراسية
 ---
 
 # تعريفات الدورات والمواد الدراسية

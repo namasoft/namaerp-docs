@@ -1,4 +1,5 @@
 ---
+description: "The Managed Project screen in Project Management (ECPA): its main page, milestones, disciplines, tasks and team work pages, the status list, where its figures come from, and the action buttons that build a project's breakdown."
 entities: [CPAProject]
 menu: Project Management → Projects → Managed Project
 ---

@@ -1,5 +1,6 @@
 ---
 entities: [EDAttendance, EDDailyMonitoring, EDLeavePermission, EDLeaveReason]
+menu: التعليم ← الحضور / الإنصراف ← الحضور / الإنصراف الدراسي
 ---
 
 # الحضور والمتابعة اليومية وأذون الانصراف

@@ -28,7 +28,7 @@ They ship as five separate master files under `Basic → Dimensions`, each with 
 | **Department** | `Basic → Dimensions → Department` | The administrative unit: finance, sales, maintenance. |
 | **Analysis Set** | `Basic → Dimensions → Analysis Set` | The free-form one. It is the usual home of the **cost centre** or the project code, because nothing in the system dictates what it means. |
 
-Nothing enforces that reading. Sector, branch and department are ordinary lists you fill in yourself, and the containment the system assumes between them (a sector holds branches, a branch holds departments) is only the default **Order** in global configuration, which you can change.
+Nothing enforces that reading. Sector, branch and department are ordinary lists you fill in yourself, and the containment the system assumes between them (a sector holds branches, a branch holds departments) is only the default **Sector Order**, **Branch Order** and **Department Order** in global configuration, which you can change.
 
 ## PUBLIC: the dimension that means "all of them"
 
@@ -37,7 +37,7 @@ Every dimension type owns one record the system creates for itself, with the cod
 PUBLIC means *not restricted on this axis*. A record saved with `Branch = PUBLIC` belongs to no branch in particular, and a user whose session runs with `Branch = PUBLIC` is not restricted to one. The item catalogue shared by the whole group is the classic case: leave its dimensions PUBLIC and everybody can use it.
 
 ::: info When public documents are hidden
-A PUBLIC record is visible to everybody, with one exception that is off unless the server is set up for it. When `nama.properties` contains `preventViewingPublicDocuments=true` (see [nama.properties](/getting-started/nama-properties)), **documents** saved with PUBLIC in a dimension are hidden from users who work inside a specific value of that dimension — for any dimension type, not only the legal entity. Switching on **Show Public Documents to All** in [global configuration](/platform/global-config/global-config-dimensions) shows them again. Master files such as items and customers are never hidden this way.
+A PUBLIC record is visible to everybody, with one exception that is off unless the server is set up for it. When `nama.properties` contains `preventViewingPublicDocuments=true` (see [nama.properties](/getting-started/nama-properties)), **documents** saved with PUBLIC in a dimension are hidden from users who work inside a specific value of that dimension — for any dimension type, not only the legal entity. Switching on **Show Public Document To All** in [global configuration](/platform/global-config/global-config-dimensions) shows them again. Master files such as items and customers are never hidden this way.
 :::
 
 **Seeing is not saving.** A user logged in to a specific legal entity can open a record whose legal entity is PUBLIC but cannot save it: neither a change to it nor a new record with PUBLIC in that field. The save is refused with *{0} with code {1} is not accessible from this context* followed by *Invalid {0} - the record carries {1} while the current context allows {2}*. Log in with the legal entity set to PUBLIC to maintain shared records. Record types listed under [Public Entities](/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions#Public-Entities) are exempt.
@@ -68,8 +68,8 @@ The **Dimensions** group on a Branch offers Legal Entity, Analysis Set, Sector a
 ![The Legal Entity screen: identity, logos, the parent company, its ledger and configuration group, and the registration and tax numbers](../../ar/platform/images/dimensions/dimension-legal-entity-en.png)
 
 - **Parent Legal Entity** builds a group structure out of companies.
-- **Ledger** is the set of books this company posts into, and **Configuration Group** is the settings list it follows — two companies in one database can therefore keep different books and different configuration.
-- **Mediator account** is the account used when a transaction crosses from one legal entity to another: the other companies post against it when they deal with this one. Make it an account flagged **Intercompany**, so the [consolidated statements](/modules/accounting/consolidated-statements) eliminate its balances. When you set or change it to an account without that flag, the record still saves, with a warning that the consolidated reports will not eliminate it.
+- **Ledger** is the set of books this company's entries are recorded in, and **Configuration Group** is the settings list it follows — two companies in one database can therefore keep different books and different configuration.
+- **Mediator account** is the account used when a transaction crosses from one legal entity to another: the other companies record their entries on it when they deal with this one. Make it an account flagged **Intercompany**, so the [consolidated statements](/modules/accounting/consolidated-statements) eliminate its balances. When you set or change it to an account without that flag, the record still saves, with a warning that the consolidated reports will not eliminate it.
 - **Commercial Registration Number**, **Foundation Year**, **Practice Start Date**, **Social Insurance Number**, **Tax File ID**, **Tax Registration Issuing Office** and **Tax Registration Number** are the statutory identifiers printed on documents and sent to the tax authority.
 - **Default Menu** gives the company its own menu, and **Use This Legal Entity Logo For Public** decides whose logo greets a user logged in on PUBLIC.
 - **Unused Entities** and **Unused Features** hide screens and features that this company does not use.
@@ -98,7 +98,7 @@ What you gain is three things:
 **Occasionally, a value on a document.** By default a composite dimension cannot be used on a transaction at all — a document or a warehouse carrying one is refused on save. Ticking **Allow Use Composite Dimension In Transaction** on the composite lifts that, and the tick is then frozen: once documents reference the composite you can no longer flip it back to a normal dimension.
 
 ::: warning A composite Legal Entity can never carry transactions
-The **Allow Use Composite Dimension In Transaction** tick exists on Sector, Branch, Department and Analysis Set only — the Legal Entity screen has no such field, and the system forces the answer to *no* every time the record is saved. A composite legal entity is a reporting and security grouping, never a company you post into.
+The **Allow Use Composite Dimension In Transaction** tick exists on Sector, Branch, Department and Analysis Set only — the Legal Entity screen has no such field, and the system forces the answer to *no* every time the record is saved. A composite legal entity is a reporting and security grouping, never a company you record transactions in.
 :::
 
 ## The System Tables tab
@@ -113,7 +113,7 @@ At the bottom sits **Purge The Dimension Data From The System Tables**. It asks 
 
 Two refusals catch people out, and both exist for the same reason: a dimension is referenced by thousands of records, so changing one quietly re-files all of them.
 
-The first is **the dimensions of a dimension**. Once master files point at a branch, the branch's own legal entity, sector and department are frozen. **Allow Changing Dimensions of Dimensions** in [global configuration](/platform/global-config/global-config-dimensions) unlocks it, and is meant for a deliberate restructuring — expect to review what moved afterwards.
+The first is **the dimensions of a dimension**. Once master files point at a branch, the branch's own legal entity, sector and department are frozen. **Allow Changing Dimensions Of Dimensions** in [global configuration](/platform/global-config/global-config-dimensions) unlocks it, and is meant for a deliberate restructuring — expect to review what moved afterwards.
 
 The second is **the composite tick itself**. Once documents reference the dimension, it can no longer be turned from normal into composite or back, unless **Allow Use Composite Dimension In Transaction** is on.
 
@@ -125,7 +125,7 @@ Neither refusal has an Arabic translation, so both appear in English on an Arabi
 |---|---|---|
 | *Can not set {0} of another {0}* — «لا يمكن تحديد {0} لـ{0} آخر» | A dimension was given a value of its own type — a branch filed under another branch; `{0}` is the type. | Leave that field empty; a dimension is filed under the *other* four types only. |
 | *Sub dimension must be normal not composite* — «لا يمكن السماح بمحددات مركبة داخل محدد مركب» | A row in **Sub Dimensions** points at another composite. | Replace it with the real dimensions. Composites do not nest. |
-| *Entity of type {0} can not use composite dimension of type {1}* — «لا يمكن استعمال المحدد المركب من النوع {1} للسجل {0}» | A document or a warehouse was saved carrying a composite dimension. | Use one of the real dimensions, or tick **Allow Use Composite Dimension In Transaction** on the composite if it is genuinely meant to be posted to. |
+| *Entity of type {0} can not use composite dimension of type {1}* — «لا يمكن استعمال المحدد المركب من النوع {1} للسجل {0}» | A document or a warehouse was saved carrying a composite dimension. | Use one of the real dimensions, or tick **Allow Use Composite Dimension In Transaction** on the composite if it is genuinely meant to carry transactions. |
 | *Cannot change dimension if other Documents are referenced From this dimension.* | The **Composite dimension** tick was changed on a dimension that documents already use. | Leave the tick alone, or create a new dimension for the new purpose. |
-| *Cannot change dimensions of dimension if other Master Files are referenced From this dimension.* | The dimension's own legal entity, sector, branch or department was changed after master files started pointing at it. | Switch on **Allow Changing Dimensions of Dimensions** only if the restructuring is deliberate, and review the affected records afterwards. |
+| *Cannot change dimensions of dimension if other Master Files are referenced From this dimension.* | The dimension's own legal entity, sector, branch or department was changed after master files started pointing at it. | Switch on **Allow Changing Dimensions Of Dimensions** only if the restructuring is deliberate, and review the affected records afterwards. |
 | *Please select at least one table to purge* — «برجاء اختيار جدول واحد على الأقل لتفريغه» | The purge action was confirmed without ticking any of the five tables. | Tick the tables to empty, then confirm again. |

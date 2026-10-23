@@ -1,4 +1,5 @@
 ---
+description: "Late-payment fines in Real Estate: the fine document and how its amount is set, billing and collecting it separately from the installment, raising a fine from the contract, fine types, generating fines automatically and the accounts they affect."
 entities: [REFineDoc, REFineDocType]
 menu: Real Estate and Property → Fines → Real state fine Doc
 ---

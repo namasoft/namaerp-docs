@@ -14,7 +14,7 @@ When you define a service item you set its nature through a set of flags:
 
 - **Ocean Freight / Custom Clearance / Trucking / Genset / Courier / Other** — classify the item under the right service type, so it appears in the correct section inside the operation order and price lists.
 - **Tax Plan** — how tax is calculated on this service.
-- **Subsidiary Accounts** — the revenue/cost accounts the item posts to.
+- **Subsidiary Accounts** — the revenue/cost accounts the item is recorded on.
 - **Default quantity and unit** — to speed up line entry.
 
 ::: info Fields related to e-invoicing

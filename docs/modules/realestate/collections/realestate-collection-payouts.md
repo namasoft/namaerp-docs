@@ -1,4 +1,5 @@
 ---
+description: "The Pay Request For Bank and Pay Request For Owner documents: how collected rent is deposited in the bank or paid to the landlord, and how the transferred-amount fields on each collect document stop the same money being paid out twice."
 entities: [REBankPay, REOwnerPay]
 ---
 # Paying Collected Money to the Bank or the Owner
@@ -42,7 +43,7 @@ This is the agency side of the business: the company has been collecting rent on
 
 **The details grid is entirely read-only.** Unlike the bank request, even the amount column is closed: an owner settlement is all-or-nothing per collection. If you need to pay a landlord only part of what you hold, the practical route is to settle the collect documents you want to release and leave the others for next month.
 
-Commit posts one debit and one credit on the header total, exactly as the bank request does, and raises each collect document's *Transfered To Owner Amount*. Cancelling reverses it.
+Commit records one debit and one credit on the header total, exactly as the bank request does, and raises each collect document's *Transfered To Owner Amount*. Cancelling reverses it.
 
 So Ahmed's settlement is: pick Ahmed, press *Collect*, get every unpaid collection against his shops, see 42,000 in the total, commit — and next month those collections are gone from the sweep while any new ones appear automatically.
 

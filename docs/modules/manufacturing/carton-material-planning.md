@@ -1,4 +1,5 @@
 ---
+description: "The CRTN Material Planning document: adding orders, how the optimizer matches paper reels in centimetres, companion orders and collecting materials, reading the cutting plan, totals and available stock, the planning configuration, and moving to production."
 entities: [CRTNMaterialPlanning, CRTNPlanningConfiguration]
 menu: Manufacturing → Cartoon → CRTN Material Planning
 ---

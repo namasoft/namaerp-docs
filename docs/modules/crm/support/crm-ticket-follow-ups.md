@@ -1,4 +1,5 @@
 ---
+description: "The Ticket Follow Up document: the only way to set eight of the Trouble Ticket's thirteen statuses, how to raise one, why only the latest follow-up counts, and what a follow-up does not do."
 entities: [CRMTroubleTicketFollowUp]
 menu: Customer Relationship Management → Support → Ticket Follow Up
 ---
@@ -81,7 +82,7 @@ The status is written straight onto the committed ticket rather than through a n
 
 ## What a follow-up does not do
 
-- **No effects.** It posts nothing, moves no stock, and has no document term — so there is nothing to configure.
+- **No effects.** It creates no ledger entry, moves no stock, and has no document term — so there is nothing to configure.
 - **No notification.** Nobody is told that a follow-up was filed, including the ticket's responsible employee and the concerned party named on it.
 - **No reminder.** Nothing alerts when the Expected Execution Date it stamps on the ticket arrives or passes.
 - **No chaining.** A follow-up does not create the next follow-up, and there is no "next contact date" process anywhere in CRM.

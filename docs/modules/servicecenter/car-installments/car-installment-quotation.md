@@ -1,4 +1,5 @@
 ---
+description: "The Car Installment Quotation screen for answering a customer's monthly-cost question: its grid, how the monthly instalment is calculated from a typed financing amount, and how to use it well."
 entities: [SIInstallmentQuotation]
 menu: cars → Car Installment → Car Installment Quotation
 ---

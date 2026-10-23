@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Processes offline payments for GoPay digital wallet transactions, either posting payment directly or crediting customer balance based on configuration for receipt vouchers linked to GoPay-enabled invoices.
+Processes offline payments for GoPay digital wallet transactions, either recording the payment directly or crediting customer balance based on configuration for receipt vouchers linked to GoPay-enabled invoices.
 
 ## When This Action Runs
 

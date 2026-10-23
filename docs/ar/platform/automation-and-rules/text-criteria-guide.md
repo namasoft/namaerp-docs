@@ -75,6 +75,8 @@ warehouse.id,In,id1@A=@Xid2@A=@Xid3,AND;
 يجب استخدام المحدد `@A=@X` بالضبط كما هو موضح (حساس لحالة الأحرف). لا تضف مسافات حول المحدد.
 :::
 
+![تعريف معايير؛ يحوّل زر التحويل إلى نص الشجرة إلى معايير نصية](../images/criteria-definitions/criteria-definition-screen-ar.png)
+
 ## معاملات الفترة (WithinPeriod/OutsidePeriod)
 
 ينطبق المعاملان `WithinPeriod` و`OutsidePeriod` على **حقول التاريخ** و**حقول التاريخ والوقت** فقط. يتحققان مما إذا كان تاريخ الحقل يقع داخل الفترة (`WithinPeriod`) أو خارجها (`OutsidePeriod`). بالنسبة لحقول التاريخ والوقت، يُؤخذ جزء التاريخ فقط في الاعتبار.

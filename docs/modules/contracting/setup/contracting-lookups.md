@@ -7,7 +7,7 @@ entities: [ContractingUOM, ContractingTask, ContrTermCategory, ContrTermCategory
 Six small master files sit under **Contracting > Master Files** and do not deserve a page each. They
 are the vocabulary the bigger screens are built from: you fill them once during implementation, add to
 them occasionally, and otherwise forget them. All six need only the `contracting` licence, and none of
-them posts anything.
+them creates any journal entry.
 
 This page is a reference. Each section says what the file is, what is on it, and what reads it.
 

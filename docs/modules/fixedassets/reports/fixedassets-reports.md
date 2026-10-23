@@ -1,3 +1,6 @@
+---
+description: "The five shipped Fixed Assets reports: where to run them, and how the General Assets report, consolidated trial balance, depreciation matrix, detailed depreciation listing and depreciation by type and location answer register-wide questions."
+---
 # Fixed Assets Reports
 
 The asset register answers questions one asset at a time. Open `MCH-0007` and you can read its cost, its accumulated depreciation, its book value and every transaction that produced them. Reports answer the other kind of question — the ones that span the whole register. What did the machinery account do over the year? Which asset took how much depreciation in March? Does the register still agree with the ledger?

@@ -1,3 +1,6 @@
+---
+description: "Notes for the first report wizard webinar: the parts of a report, choosing tables and fields, hyperlinks, grouping and aggregation, parameters and filters, sorting, calculated expressions, and exporting the finished report."
+---
 # Video (1): Report Designer Tool Walkthrough
 
 [Watch the video](https://youtu.be/EUY4PkQbwp0)

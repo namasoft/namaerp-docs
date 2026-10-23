@@ -1,5 +1,5 @@
 ---
-entities: [InvestmentDoc, InvestmentDocumentFund, InvestmentDocPurchase, InvestmentDocROIProof, AggregatedInvestmentDocROIProof, InvestmentDocClaiming, InvestmentDocumentPurchase, InvestmentDocumentSale, InvestmentDocumentPriceUpdate, ProfitDistributationDoc]
+entities: [InvestmentDoc, InvestmentDocumentFund, InvestmentDocPurchase, InvestmentDocROIProof, AggregatedInvestmentDocROIProof, InvestmentDocClaiming, InvestmentDocumentPurchase, InvestmentDocumentSale, InvestmentDocumentPriceUpdate]
 menu: البنوك ← سندات الاستثمار ← سند استثمار
 ---
 
@@ -28,7 +28,7 @@ menu: البنوك ← سندات الاستثمار ← سند استثمار
 
 ويُبعَث السند بسلسلةٍ من المستندات:
 
-1. **مستند شراء سند استثمار** (`Banks > Investment Documents > Investment Doc Purchase Document`) — الشراء، وهو المستند الذي **يُرحِّل**. يحمل أثرُه جانبَي **القيمة الاسمية** مدين/دائن، إضافةً إلى جانبَي **خصم الإصدار** و**علاوة الإصدار** — فالسند نادرًا ما يُشترى بقيمته الاسمية تمامًا.
+1. **مستند شراء سند استثمار** (`Banks > Investment Documents > Investment Doc Purchase Document`) — الشراء، وهو المستند الذي **يُنشئ القيد**. يحمل أثرُه جانبَي **القيمة الاسمية** مدين/دائن، إضافةً إلى جانبَي **خصم الإصدار** و**علاوة الإصدار** — فالسند نادرًا ما يُشترى بقيمته الاسمية تمامًا.
 
    ![شاشة شراء سند الاستثمار](images/invdocs/investment-doc-purchase-ar.png)
 
@@ -51,7 +51,7 @@ menu: البنوك ← سندات الاستثمار ← سند استثمار
 
 ## توزيع الأرباح
 
-حين تدرّ الاستثماراتُ ربحًا يُوزَّع على الشركاء، يسجّله ويوزّعه **مستند توزيع أرباح** (`Accounting > Documents > Profits Distribution Doc`). ونموذجه المطبوع `SYSF-ACC023`.
+حين تدرّ الاستثماراتُ ربحًا يُوزَّع على الشركاء، يسجّله ويوزّعه **مستند توزيع أرباح** (`Accounting > Documents > Profits Distribution Doc`) وفق سجل **أسهم الشركاء**. وطريقة حساب التقسيم وما يقيّده مشروحان في [أسهم الشركاء وتوزيع الأرباح](./partner-shares-and-profit-distribution).
 
 ## للدعم الفني
 

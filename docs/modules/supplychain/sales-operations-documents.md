@@ -150,7 +150,7 @@ To retire a set of rules, tick **Inactive** on the file rather than deleting it 
 
 ![Discount Update document screen in Nama ERP](../../ar/modules/supplychain/images/sales-ops/discount-update-en.png)
 
-The quarter is closed, the purchase invoices are booked, and the supplier now grants 3% back on one brand across everything you bought from them since January. Editing those invoices by hand is not really an option: purchase discounts feed item cost, and cost feeds everything downstream.
+The quarter is closed, the purchase invoices are saved, and the supplier now grants 3% back on one brand across everything you bought from them since January. Editing those invoices by hand is not really an option: purchase discounts feed item cost, and cost feeds everything downstream.
 
 **Discount Update** is a document (no term needed) that says "this discount, on these purchase documents". It has three parts.
 

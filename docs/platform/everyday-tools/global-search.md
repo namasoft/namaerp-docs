@@ -1,3 +1,6 @@
+---
+description: "How the top-bar search box (Ctrl + K) finds screens, records and fields: why screen names are matched before records, narrowing the search to one kind of record, jumping to a field with f:, and the settings that configure it."
+---
 # Searching From the Top Bar
 
 Nama has two search boxes that are always within reach. The one in the **side menu** finds menu
@@ -87,10 +90,10 @@ On a large database, a search that is not limited to one type has to look throug
 system. Two options on the **Performance** tab of Global Configuration control that — see
 [Search behaviour](/platform/global-config/global-config-performance#Search-behaviour):
 
-- **Must Select Entity in Search In Before Search on Server** stops the box from searching records at
+- **Must Select Entity In "Search In" Before Search On Server** stops the box from searching records at
   all until a type is chosen under **Search In** — typing the type with a colon is not enough while it
   is on. Screens and the `f:` field search keep working, because they never reach the server.
-- It only takes effect together with **Show Search In for Top Panel**; the Search In filter icon itself
+- It only takes effect together with **Show "Search In" For Top Panel**; the Search In filter icon itself
   is always on the box.
 
 Which records a user can then open is decided as everywhere else, by their security profile.

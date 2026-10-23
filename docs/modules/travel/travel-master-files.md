@@ -1,5 +1,7 @@
 ---
+description: "Setting up the Travel master files in order: travel countries and cities, hotel, restaurant and tour service classes, hotels, restaurants, tour guides and tour services, including how hotels and restaurants act as account parties you owe money to."
 entities: [TRHotel, TRRestaurant, TRTourService, TRTourGuide, TRCity, TRCountry, TRHotelClass, TRRestaurantClass, TRTourServiceClass]
+menu: Travel → Master Files → Hotel
 ---
 # Travel Master Files
 

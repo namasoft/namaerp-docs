@@ -1,4 +1,5 @@
 ---
+description: "How the System Account flag keeps manual accounting documents off control accounts, and the three ways to allow them: the module option, opening periods, and the System Accounts Transactions Exceptions screen."
 entities: [SystemAccountTransException, Account]
 menu: Accounting → Master Files → System Accounts Transactions Exceptions
 ---

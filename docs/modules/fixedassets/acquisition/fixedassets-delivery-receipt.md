@@ -15,7 +15,7 @@ hands over, another receives, and the document lists everything that changes han
 [fixed assets](/modules/fixedassets/master-files/fixedassets-asset-master.md) side by side. It is the
 only place in the module where those two registers meet on one screen.
 
-It also, unlike most hand-over paperwork, **posts to the ledger**.
+It also, unlike most hand-over paperwork, **creates a journal entry**.
 
 ![Custodies Delivery Receipt Document screen](../../../ar/modules/fixedassets/images/acquisition/fa-delivery-receipt-main-en.png)
 
@@ -98,7 +98,7 @@ The term is organised as two pages — one for the side handing over, one for th
 offering a debit and a credit account. All of them carry the same amount, the custodies total. In
 practice you configure **the one pair you actually want**: typically a debit on the receiving
 employee's custody account and a credit on the outgoing employee's, so that the value of what a person
-holds follows the person. Configure both pairs and the value is posted twice.
+holds follows the person. Configure both pairs and the value is recorded twice.
 
 Because the accounts are resolved per side, the entry can tell the two employees apart: the receiving
 employee is the document's counterparty, and the employee handing over is available to the outgoing

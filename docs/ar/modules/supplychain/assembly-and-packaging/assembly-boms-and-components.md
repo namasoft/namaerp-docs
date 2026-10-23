@@ -1,4 +1,5 @@
 ---
+description: "إعداد وصفات التجميع: رأس طريقة تجميع أصناف وجدول مكوناتها، والأصناف الأخرى والطرق البديلة المؤرخة، والمكون، وطريقة التجميع الجزئية، وخامات التجميع البديلة، وملف طريقة تعبئة."
 entities: [AssemblyBOM, AssemblyComponent, PartialAssemblyBOM, AssemblyAltMaterial, PackagingMethodFile, MaterialClassification]
 menu: المخازن ← التجميع ← طريقة تجميع أصناف
 ---

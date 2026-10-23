@@ -1,4 +1,5 @@
 ---
+description: "How Entity Flows work: when a flow is triggered, creating one and its detail components, the most used elements, running a flow in the background, and what each event does, from creating a record through save, delete and revision to e-invoicing, record view, manual and automatic runs."
 entities: [EntityFlow]
 menu: Administration → Display Customization → Entity Flow
 ---
@@ -21,6 +22,8 @@ An Entity Flow is automatically executed after the user performs a specific acti
 ::: tip A flow can also be started from outside the system
 Not every trigger is a person clicking something. An **integrator endpoint**, registered in [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-integrations), gives an external system an address it can call; what arrives there is handed to an Entity Flow, which decides what to do with it. That is how a web shop, a payment gateway or a supplier's system feeds data straight into Nama with nobody sitting at a screen.
 :::
+
+![An Entity Flow that runs on Validate On Save for customers](../../ar/platform/images/entity-flows/entity-flow-customer-code-check-en.png)
 
 ## How to Create an Entity Flow
 

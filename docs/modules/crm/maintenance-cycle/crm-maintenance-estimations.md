@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Estimation: a costing sheet built from existing maintenance orders rather than a quotation, its screen and Copy All From MnOrders button, and how to use it."
 entities: [MnEstimation]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Estimation
 ---

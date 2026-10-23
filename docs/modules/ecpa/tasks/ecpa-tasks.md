@@ -1,4 +1,5 @@
 ---
+description: "The Project Task screen: the header and task type, the Executers grid of people with planned hours and rates, task status, what saving changes, the rules that block a save, and the executions, approvals and procedures linked to a task."
 entities: [CPATask, CPATaskType]
 menu: Project Management → Tasks → Task
 ---

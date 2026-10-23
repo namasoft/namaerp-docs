@@ -14,13 +14,15 @@ Accounting time is divided into a **Fiscal Year** (`Basic > Master Files > Fisca
 
 This is why the value date matters so much: change it and you change which period (and which year) the document belongs to.
 
+![The Fiscal Year screen and its periods](../../../ar/modules/accounting/images/setup/fiscal-year-en.png)
+
 ## Opening and locking periods
 
 A period can be **open** (documents allowed) or **closed** (locked). You open and close periods on the **Fiscal Year** screen (Basic → Master Files → Fiscal Year): change a period line's status, or use the **Open Periods** / **Close Periods** buttons, then save — so after a month is reviewed and reported, you close it and nothing can change underneath the numbers you've already published.
 
 Two finer tools sit on top of that. **Fiscal Year Status Update** (Basic → Master Files → Fiscal Year Status Update) only *narrows*: it closes an open period further for chosen users, permission files, document types or dimensions, and it does nothing at all unless **Enable Fiscal Year Status Update** is ticked in Global Configuration. It cannot reopen a closed period. **Ignore Closed Periods** works the other way: it lets a chosen user or document type work in a period that is closed. Both are explained in [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
-For finer control than a whole period, **Prevent Transactions On Accounts Or Subsidiaries** (`Accounting > Master Files > Prevent Transactions On Accounts Or Subsidiaries`) locks postings on **specific accounts or subsidiaries** (optionally within a date range) — useful for freezing a single account while the rest of the period stays open. The year-end workflow that uses these is described in [Year-end closing & period control](../year-end-and-period-control.md).
+For finer control than a whole period, **Prevent Transactions On Accounts Or Subsidiaries** (`Accounting > Master Files > Prevent Transactions On Accounts Or Subsidiaries`) locks transactions on **specific accounts or subsidiaries** (optionally within a date range) — useful for freezing a single account while the rest of the period stays open. The year-end workflow that uses these is described in [Year-end closing & period control](../year-end-and-period-control.md).
 
 ## Working in more than one currency
 
@@ -28,7 +30,7 @@ Multi-currency rests on the **Ledger** (`دفتر حسابات`), which defines 
 
 Rates move, though, and that creates **currency differences** on open foreign balances. Two documents handle this:
 
-- **Exchange Rate Update** (`Accounting > Documents > Exchange Rate Update`) — revalues foreign-currency account balances at a new rate and posts the resulting gain/loss, so the local value of those balances reflects today's rate.
+- **Exchange Rate Update** (`Accounting > Documents > Exchange Rate Update`) — revalues foreign-currency account balances at a new rate and records the resulting gain/loss, so the local value of those balances reflects today's rate.
 - **Currency Diff Journal** (`Accounting > Documents > Currency Diff Journal`) — records a currency-difference entry directly (see also [Journal entries & adjustments](../journal-entries.md), where currency-difference journals are covered).
 
 Two account-level flags shape this behavior: one makes an account **keep its transaction's local currency** (rather than being revalued), and another **excludes the account from the automatic exchange-rate update** — so accounts that shouldn't be revalued (a fixed-rate settlement account, say) are left alone.

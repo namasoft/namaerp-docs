@@ -94,7 +94,7 @@ On top of that, two things are specific to a waiver.
 
 **The waiver price gets its own pair of account sides** on the waiver's document term — the page where you set where the waiver charge is booked. The 24,000 charged to the outgoing buyer lands there.
 
-**Commissions can be reversed.** A term option, ***Reverse Commissions Accounting Effects*** (عكس التأثير المحاسبي للعمولات), posts every commission line on the waiver with its debit and credit sides **swapped**. This is the counterpart to a fact from the sales contract: commissions are recognised in full when the **contract** commits, out of the commission type's own accounts, and not when the broker is eventually paid. If the sale is undone, that recognition has to come back out, and this switch is what does it.
+**Commissions can be reversed.** A term option, ***Reverse Commissions Accounting Effects*** (عكس التأثير المحاسبي للعمولات), records every commission line on the waiver with its debit and credit sides **swapped**. This is the counterpart to a fact from the sales contract: commissions are recognised in full when the **contract** commits, out of the commission type's own accounts, and not when the broker is eventually paid. If the sale is undone, that recognition has to come back out, and this switch is what does it.
 
 Which way you want it depends on the type of waiver:
 

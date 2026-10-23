@@ -1,4 +1,5 @@
 ---
+description: "The document terms of the employee health insurance and car insurance documents: the accounts, tax and accounting switches each term carries, and what each health insurance document adds to their shared term layout."
 entities: [EmployeeHealthInsurance, HealthInsuranceUpgrade, EmpHealthInsurDelete, HealthInsuranceClaimDoc, HealthInsuranceCredence, CarInsurancePolicy, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc]
 menu: Basic → Settings → Document Term
 ---
@@ -11,13 +12,15 @@ against it — needs the Gulf health-insurance licence (`humanresource-gulf-heal
 **Car insurance** — a fleet policy, cars added to and removed from it, and the instalments proved
 against it — needs the car-insurance licence (`humanresource-car-insurance`).
 
-What they have in common is that both genuinely post, both involve a third party who invoices you,
+What they have in common is that both genuinely have an accounting effect, both involve a third party who invoices you,
 and both carry tax. Their terms are therefore the most account-heavy in the module after dues
 liquidation.
 
 The shared mechanics — what a term is, why most aggregated terms only name a book and a term, and
 the three differently-named accounting switches — are on
 [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues#How-HR-document-terms-work).
+
+![The Effect tab of the Employee Health Insurance term](../../../ar/modules/hr/images/document-terms/hr-term-insurance-en.png)
 
 ## The health insurance terms
 
@@ -33,7 +36,7 @@ Neither covering field carries a translated label, so both show their internal n
 does *first Discount Acc* `termConfig.firstDiscountAcc`.
 
 **Tax.** *Tax Plan* `termConfig.taxPlan` names the plan; *Tax* `termConfig.tax` and *Tax 2*
-`termConfig.tax2` are the sides it posts to; *Modifiable Tax* `termConfig.modifiableTax` lets a user
+`termConfig.tax2` are the sides it is recorded on; *Modifiable Tax* `termConfig.modifiableTax` lets a user
 override the computed tax on the document; and *Tax After Discount* `termConfig.taxAfterDiscount`
 decides whether tax is calculated on the gross or on the net after discount. The employee's own
 share of tax has its own pair, *Employee Tax Debit* and *Employee Tax Credit*.
@@ -106,8 +109,8 @@ daily figure is what gets charged when a car joins or leaves the policy part-way
 | Option | Field | What it does |
 |---|---|---|
 | **Generate Insurance Installment Proof Document** | `termConfig.generateInsuranceInstallmentProofDoc` | Saving the document also creates the entry that proves the premium instalment is due. |
-| **Proof Document Book** / **Proof Document Term** | `termConfig.proofDocBook`, `termConfig.proofDocTerm` | Where that proof document is filed and how it posts. |
-| **Save Insurance Installment Proof Document As Draft** | `termConfig.saveInsuranceInstallmentProofDocAsDraft` | The proof is created as a draft, so somebody reviews it before it posts. |
+| **Proof Document Book** / **Proof Document Term** | `termConfig.proofDocBook`, `termConfig.proofDocTerm` | Where that proof document is filed and what accounting effect it has. |
+| **Save Insurance Installment Proof Document As Draft** | `termConfig.saveInsuranceInstallmentProofDocAsDraft` | The proof is created as a draft, so somebody reviews it before it reaches the accounts. |
 
 **Allow Adding Insurances Without Insurance Request or Insurance Offer**
 `termConfig.allowAddingInsuranceWithoutRequestOrOffer` is the car-side equivalent of the health

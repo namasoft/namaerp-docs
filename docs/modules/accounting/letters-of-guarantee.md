@@ -17,7 +17,7 @@ Every screen hangs off the **Banks > Letters Of Guarantee** root:
 
 1. **LGT Request** — documenting the request before issuing (no accounting effect).
 2. **Letter Of Guarantee** — the master file in its initial status "Initial".
-3. **LGT Issue** — the moment the bank actually issues the letter (it posts to the ledger, and the status flips to "Issued").
+3. **LGT Issue** — the moment the bank actually issues the letter (it creates a journal entry, and the status flips to "Issued").
 4. **LGT Receipt / Delivery** — tracking the circulation of the paper copy with the beneficiary.
 5. **LGT Changing** — extending the term or changing the value or fees (updates the current values and records the change fees).
 6. **LGT Closing** — closing the letter when it ends or is canceled.
@@ -41,7 +41,7 @@ The **guarantee type** classifies the letter's purpose: **initial guarantee** (t
 | Status | When |
 |---|---|
 | Initial | when saved before issuing. |
-| Issued | after the issue document posts. |
+| Issued | after the issue document is saved. |
 | Received / Totally Delivered | after tracking the circulation of the letter copy. |
 | Finished | after a normal close. |
 | Canceled | on cancellation. |
@@ -49,7 +49,7 @@ The **guarantee type** classifies the letter's purpose: **initial guarantee** (t
 
 ## Issuing and reserving the facility
 
-When an **LGT Issue** (`Banks > Letters Of Guarantee > LGT Issue`) is recorded the accounting effect posts and the facility portion is reserved. The issue term covers several sides: **LGT amount debit/credit**, **facilities amount debit/credit** (the reserved portion of the facility limit), **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where these accounts come from is explained in the [Document terms](./support/accounting-document-terms.md) reference.)
+When an **LGT Issue** (`Banks > Letters Of Guarantee > LGT Issue`) is recorded its accounting effect is created and the facility portion is reserved. The issue term covers several sides: **LGT amount debit/credit**, **facilities amount debit/credit** (the reserved portion of the facility limit), **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where these accounts come from is explained in the [Document terms](./support/accounting-document-terms.md) reference.)
 
 ![LGT Issue screen](../../ar/modules/accounting/images/lg/lgt-issue-en.png)
 
@@ -80,7 +80,7 @@ either, for the same reason: the chain, not the master file, is what they read.
 The request is where the chain starts, and two buttons on it save re-keying the whole letter twice:
 
 - **Create Letter Of Guarantee** — turns the approved request into the letter's master file, carrying over its type, amount, bank, bank account, dates, covered amount, facilities and fees. The letter opens as a new record for you to review and save.
-- **Create LGTIssue** — goes one step further and opens the **LGT Issue** document for the letter, pre-filled from the request's account, bank and bank account. Reach for it when the bank has actually issued the letter and you want to post the effect straight away.
+- **Create LGTIssue** — goes one step further and opens the **LGT Issue** document for the letter, pre-filled from the request's account, bank and bank account. Reach for it when the bank has actually issued the letter and you want to record the accounting effect straight away.
 
 Both need the request **saved** first — an unsaved request has nothing for the new document to be built from.
 

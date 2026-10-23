@@ -1,4 +1,5 @@
 ---
+description: "How the Rent Installment Ledger recognises rent revenue period by period: generating it from the rent contract, how the schedule is cut into accrual documents, moving an installment's accrual date, and what happens when a lease ends early."
 entities: [RERentInstallmentLedger]
 menu: Real Estate and Property → Rents → Rent Installment Ledger
 ---
@@ -105,7 +106,7 @@ that has already been committed once is not pushed back to draft on a later rege
 
 ## Why the split matters: the same term, a different date
 
-The accrual document posts through the same accounting logic as the contract, and that is precisely
+The accrual document creates its entry through the same accounting logic as the contract, and that is precisely
 the point. The contract's entry splits its installments into **income** for lines due inside the
 document's own fiscal year and **advance income** for lines due in later years — evaluated against
 the *contract's* date, which is the start of the lease. The accrual document runs the same split, but

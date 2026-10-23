@@ -1,4 +1,5 @@
 ---
+description: "Where Project Management (ECPA) shows project cost and revenue: labour cost on the Managed Project, out-of-pocket cost in the general ledger, revenue against cost on the Project Stage sheet, and why the two hourly rates differ."
 entities: [CPAProject, CPAProjectStage]
 ---
 # Where Project Cost and Revenue Come From

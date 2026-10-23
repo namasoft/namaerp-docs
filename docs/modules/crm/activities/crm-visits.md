@@ -1,4 +1,5 @@
 ---
+description: "The CRM Visit document: its screen, what a visit writes onto the lead or potential, mobile check-in and check-out, the print form, where visits come from, and the buttons on the screen."
 entities: [CRMVisit]
 menu: Customer Relationship Management → Support → Visit
 ---

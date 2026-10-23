@@ -39,6 +39,8 @@ A definition with **no event ticked at all** is rejected — the system answers 
 
 Two of those events are how administrators hear about trouble rather than about business. **Use With Processing Failure** fires when a document's [business request](/platform/background-processing/business-requests) fails, and **Use With Replication Failure** fires when a record fails to reach another site. Point them at the systems administrator and the first person to know about a stuck ledger is the person who can fix it.
 
+![A Notification Definition and its triggers](../../ar/platform/images/notifications/notification-definition-screen-en.png)
+
 ## Narrowing it down
 
 Ticking *Update* on the sales invoice means every edit of every invoice sends a message, which is how a notification definition becomes noise nobody reads. Four filters narrow it, and they are ANDed — the definition fires only if all the ones you filled in agree:

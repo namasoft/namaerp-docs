@@ -33,6 +33,8 @@ What follows is only what manufacturing adds.
 
 **Copy Remaining Quantity Considering Previously Issued Quantity** (نسخ الكمية المتبقية واعتبار ما تم صرفه سابقا), on the **From Document** tab, makes the lines copied from a production order carry only what is still to be issued, after earlier issues against the same order, instead of the full planned quantity. Turn it on wherever an order is issued in several instalments.
 
+![The Settings tab of the Raw Materials Issue term](../../../ar/modules/manufacturing/images/document-terms/mfg-term-raw-material-issue-en.png)
+
 ## Raw Materials Return
 
 A raw materials return moves material back into stock through a **stock receipt** it generates. Its book and term are the **Generation Book** and **Generation Term** in the **Generation** block of the **Generation** tab; fill both.

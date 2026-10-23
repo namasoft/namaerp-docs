@@ -1,4 +1,5 @@
 ---
+description: "شاشات الخادم التي تحدد ما تستلمه ماكينة نقاط البيع: الأصناف التي تصلها، والتحقق من المخزون، ومواصفات باركود الأصناف للميزان وGS1، والمستندات التي يجب أن تصل إلى الخادم أولًا، والمرشحات الإضافية، ورسائل بيانات نما، وتصحيح قاعدة بيانات الماكينة."
 entities: [NaMaPosItemsToSend, NamaPOSItemQtyUpdateConfig, NamaPOSItemBarcodeParser, NamaPOSReadQueuePriorityConfig, NamaPOSInvSavingSettings, NamaPOSExtraFilter, NamaPOSDBUpdateStatement]
 ---
 

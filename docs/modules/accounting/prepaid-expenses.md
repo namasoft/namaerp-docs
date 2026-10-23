@@ -1,4 +1,5 @@
 ---
+description: "How prepaid expenses are recorded and expensed month by month: the Prepaid Expense Item, the Prepaid Expense Contract, its monthly ledger entries, paying in instalments, and the accounting effect of the contract and of each month."
 entities: [PrepaidExpenseContract, PrepaidExpenseItem, PrepaidExpenseLedger, PrepaidExpensePayment]
 menu: Accounting → Prepaid Expense Contracts → Prepaid Expense Contract
 ---
@@ -32,7 +33,7 @@ The **Prepaid Expense Item** (`Accounting > Prepaid Expense Contracts > Prepaid 
 
 On the **Prepaid Expense Contract** (`Accounting > Prepaid Expense Contracts > Prepaid Expense Contract`) the header carries the **Document Term** and **Value Date** (which sets the **Period**), the **Currency**, and the contract's **from/to dates**. Each **details** line then describes one prepaid expense:
 
-- the **Prepaid Expense Item** and the **account** it posts to,
+- the **Prepaid Expense Item** and the **account** it is recorded on,
 - the line's own **from/to dates** and **month count** — the span over which it's recognized,
 - the amount, expressed one of three ways: a fixed **monthly amount** × month count, a **day cost** × **days count** (so a contract that doesn't start on the first of the month is prorated by actual days), or a **Yearly Amount** — the line total is then the yearly amount × the line's month count ÷ 12, which is handy when the contract price is quoted per year,
 - an optional **discount** and **tax** (percentage or value), giving the **value after discount**, **value after tax**, and the line **total amount**,
@@ -41,7 +42,7 @@ On the **Prepaid Expense Contract** (`Accounting > Prepaid Expense Contracts > P
 
 ### Where the credit comes from
 
-The line's **credit side** tells the system where to take the offsetting credit when the contract posts — you're not limited to one fixed account. The options are a **specific account**, a **specific subsidiary**, the **current user's subsidiary**, the **supplier account**, a **bank account**, the customs / insurance / shipping **company accounts** (handy for import-related prepaids), or the account taken **from the purchase item** itself.
+The line's **credit side** tells the system where to take the offsetting credit when the contract is committed — you're not limited to one fixed account. The options are a **specific account**, a **specific subsidiary**, the **current user's subsidiary**, the **supplier account**, a **bank account**, the customs / insurance / shipping **company accounts** (handy for import-related prepaids), or the account taken **from the purchase item** itself.
 
 ## Paying the contract in instalments
 
@@ -67,9 +68,9 @@ The button refuses to run without what it needs:
 | *Add the prepaid expense details first* — «أضف تفاصيل المصروف المقدم أولاً» | The details grid is empty, so there is nothing to split. | Enter the contract lines first. |
 | *The details lines have no valid period to generate payments for* — «لا توجد فترة صالحة في سطور التفاصيل لإنشاء سداد لها» | No details line has both a from date and a to date, with the from date not after the to date. | Correct the lines' dates. |
 
-## How it posts: contract then monthly recognition
+## The accounting effect: contract then monthly recognition
 
-The prepaid system posts in two stages, and that's the whole point:
+The prepaid system records its effect in two stages, and that's the whole point:
 
 - **When the contract is committed**, it records the prepaid amount as an asset — its effect runs through the **Debit / Credit** sides (plus **Discount** and **Tax** sides when present) for the line totals.
 - **Each monthly Prepaid Expense Ledger** then recognizes that month's share: it moves the month's portion out of the prepaid asset and into the expense account. Twelve months of an annual contract therefore produce twelve recognition entries, each carrying one-twelfth (or its day-prorated share).

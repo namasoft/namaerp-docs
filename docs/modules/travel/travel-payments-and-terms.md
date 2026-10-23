@@ -94,7 +94,7 @@ Which kind of voucher a document listens to follows the direction of the money:
 
 Like payment lines, these rows lower *Total Paid* and *Remaining*. Unlike payment lines, they can
 also carry accounting of their own: the document term has an **External Effects** grid where you can
-say "a voucher of this type, matching these criteria, books to these two accounts" — see
+say "a voucher of this type, matching these criteria, is recorded on these two accounts" — see
 [Document Terms](./travel-document-terms).
 
 If you want the full picture of how vouchers are raised and matched in the first place, the
@@ -126,9 +126,11 @@ Each row carries:
 | **Payment Date** | The generator, or you — required |
 | **Paid Value**, **Collected by System**, **Remaining**, **Paid** | The system, as vouchers settle the instalment |
 
+![The instalment plan — what is promised and when, with the paid and remaining amounts kept up to date for you](../../ar/modules/travel/images/payments/schedule-lines-column-en.png)
+
 
 ::: warning A schedule is a plan, not a settlement
-Creating instalment rows collects nothing and books nothing. The grid produces no journal entry of
+Creating instalment rows collects nothing and records nothing in the accounts. The grid produces no journal entry of
 its own — no receivable is split, no revenue is deferred, nothing is scheduled to happen on a date.
 It is a written promise plus a set of targets that payment vouchers can later be matched against,
 which is what fills the Paid Value, Collected by System, Remaining and Paid columns.
@@ -166,7 +168,7 @@ raised against the clause, and the system writes the fulfilment date and the doc
 into the row. The general mechanism is described in
 [Standard Terms and Conditions](/modules/invoicing/standard-terms-feature-documentation).
 
-These lines are contractual bookkeeping only — **they book nothing**. A clause that has been
+These lines are contractual bookkeeping only — **they create no ledger entry**. A clause that has been
 breached does not create a fine entry by itself; the fine, if any, is a separate document.
 
 ## How the four grids meet the header totals

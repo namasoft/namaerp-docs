@@ -1,4 +1,5 @@
 ---
+description: "The document terms for the machine and service maintenance suites: the generation pairs behind every generate button, which maintenance documents create journal entries, stock issue from the invoice term, and the warranty contract an installation order creates."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -104,6 +105,8 @@ Only some of them, and always through the term's Debit and Credit sides.
 As on every CRM term, the effect only happens when **both** sides are configured. One side alone
 means no journal entry, no error message and nothing in Business Requests, because no request was
 ever raised.
+
+![The Invoice effect tab of the Maintenance Invoice term](../../../ar/modules/crm/images/document-terms/crm-term-maintenance-invoice-en.png)
 
 ## Stock issue: the invoice term or the manual buttons
 

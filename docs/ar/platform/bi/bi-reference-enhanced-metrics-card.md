@@ -1,4 +1,5 @@
 ---
+description: "مرجع عنصري اللوحة EnhancedMetricsCard وMetricsCards القديم: متى تستخدم كلًا منهما، وإعدادات JSON، وربط الصفوف بالبطاقات، ووضع Partition والـ sparklines، والعناوين الفرعية بـ Tempo، والخلفية الشرطية وتبديل الأيقونة، والتفاعل، ووضع Wizard، والمصمم."
 entities: [DashBoardWidget]
 menu: إدارة النظام ← لوحات ← عنصر اللوحة
 ---

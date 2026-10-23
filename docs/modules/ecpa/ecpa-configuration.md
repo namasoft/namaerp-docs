@@ -1,4 +1,5 @@
 ---
+description: "The Project Management (ECPA) settings screen: how an hour of work is priced twice, as cost on the timesheet and as revenue on the invoice, with a worked example, each option, and how the payroll hour-cost lookup behaves."
 entities: [ConfigEntry]
 ---
 # Project Management Settings

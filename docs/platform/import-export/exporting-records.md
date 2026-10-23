@@ -1,3 +1,6 @@
+---
+description: "How to export records from a list screen to a file: the four export commands and where they live, the export options, what happens after you press OK, and why the workbook can be edited and imported back."
+---
 # Exporting Records
 
 Every list screen in Nama can hand you its records as a file. You will reach for this constantly: to send a customer list to an auditor, to check three hundred item prices in Excel where sorting and filtering are easier, or — most often — to produce a template you can edit and upload straight back.

@@ -1,4 +1,5 @@
 ---
+description: "بيع الخامات لمقاول الباطن بمستندات صرف خامات مقاول باطن ومردودها وطلب صرفها: شروط السداد في الترويسة، وما يفعله اعتماد الصرف، وكيف يصل المبلغ إلى مستخلصه استقطاعاً، والإعداد الذي يُضبط مرة واحدة."
 entities: [ContractorMaterialIssue, ContractorMaterialReturn, ContractorMaterialIssueRequest]
 menu: المقاولات ← التكاليف ← صرف خامات مقاول باطن
 ---

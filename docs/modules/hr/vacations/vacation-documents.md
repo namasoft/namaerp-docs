@@ -40,7 +40,7 @@ The document also has a small "contact info during vacation" block (address, mob
 
 ## How it's processed
 
-A vacation document does not post to the general ledger — the accounting effect of an employee's salary is worked out later, on the salary document for the period. What a vacation document *does* do is register the leave against the employee's attendance record for those dates, and against their balance. When the [salary engine](../concepts/hr-salary-engine.md) later calculates that period, it reads the recorded leave to decide whether those days are paid as normal, paid partially, or unpaid — exactly as configured on the vacation type (`Without Salary...` / `Deduct Percentage From Salary Components`). In other words: the vacation document's effect surfaces in attendance and then in salary, not in the ledger directly.
+A vacation document creates no general-ledger entry — the accounting effect of an employee's salary is worked out later, on the salary document for the period. What a vacation document *does* do is register the leave against the employee's attendance record for those dates, and against their balance. When the [salary engine](../concepts/hr-salary-engine.md) later calculates that period, it reads the recorded leave to decide whether those days are paid as normal, paid partially, or unpaid — exactly as configured on the vacation type (`Without Salary...` / `Deduct Percentage From Salary Components`). In other words: the vacation document's effect surfaces in attendance and then in salary, not in the ledger directly.
 
 ## Postponing loans during the vacation
 

@@ -110,7 +110,7 @@ A **Telegram Message** is the template of what gets sent — the wording, the fo
 
 ## Step 7 — Send it from a notification or approval
 
-A Telegram Message on its own doesn't do anything until you attach it to an event. In a **Notification Definition** or an **Approval Definition**, set the **Telegram Message** so that when the underlying event fires — an invoice is posted, an approval is requested — Nama sends it.
+A Telegram Message on its own doesn't do anything until you attach it to an event. In a **Notification Definition** or an **Approval Definition**, set the **Telegram Message** so that when the underlying event fires — an invoice is saved, an approval is requested — Nama sends it.
 
 Here is the crucial part, and the reason all the linking work above matters: **Nama delivers a Telegram message by contact, not by phone number.** When the notification targets a customer, Nama looks for that customer's **Linked** chat on the bot and sends there. If the customer has never started the bot, or their chat is still Pending, or they have opted out, no Telegram message goes out — the customer simply won't receive it on this channel until their chat is linked. That is by design: Telegram is a contact-only channel, so a bare phone number with nobody behind it is never messaged.
 

@@ -15,7 +15,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 كل جدول أدناه يبدأ بأعمدة النطاق نفسها — **للنوع** و**قائمة الأنواع** و**الحقل** — وهي التي تحدد *أي* الشاشات و*أي* حقل ينطبق عليه السطر، وشرحها كاملاً في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview). والجداول هنا تعيدها باختصار ثم تركّز على الأعمدة الخاصة بكل جدول.
 
-## أقنعة العرض (Display Masks)
+## Display Masks — أقنعة العرض
 
 الشاشات المالية تُقرأ لا تُملأ فقط. والإجمالي `1250000.5` صحيح تقنياً وعديم الفائدة عملياً، لأن العين مضطرة إلى عدّ الخانات. وقناع العرض يحل هذا بتنسيق القيمة وهي تُرسم، بينما يظل الرقم المحفوظ في قاعدة البيانات كما كان تماماً. فلا شيء يُقرَّب، ولا شيء يُقتطع، والذي يتغير هو الرسم وحده.
 
@@ -45,7 +45,9 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 اضبط القناع على حقل واحد بعينه أولاً وتأكد أنه يُرسم كما تتوقع، ثم استبدله بسطر `details.*` أو `*`. فتتبّع رمز بديل يفوز بهدوء على الحقل الذي قصدت تغييره أصعب كثيراً من البناء تصاعدياً من حقل واحد.
 :::
 
-## أنماط الحقول (Field Styles)
+![جدول Display Masks](../images/fields-settings/fields-settings-display-masks-grid-ar.png)
+
+## Field Styles — أنماط الحقول
 
 بعض الحقول تحتاج شكلاً ثابتاً مهما كان الذي يكتب فيها. وكود الصنف الذي يجب التقاطه دائماً بحروف إنجليزية كبيرة من اليسار إلى اليمين مثال جيد: فترْك الأمر لحالة لوحة مفاتيح المستخدم ينتج ملفاً فيه `abc-100` و`ABC-100` وأشباهها المكتوبة بالعربية، ولا يتطابق منها شيء. والحقل الحساس الذي يقرؤه كل من نظر فوق الكتف مثال آخر. و**أنماط الحقول** تثبّت هذه القرارات على الحقل نفسه.
 
@@ -79,7 +81,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 ولا تخلط بين هذا الجدول و**صيغ الحقول (Field Formats)**، وهو جدول آخر في الشاشة نفسها: فأنماط الحقول شكلية يطبّقها المتصفح، أما الصيغ فقواعد **تُفرض عند حفظ السجل**. فإن كان مطلبك الحقيقي «هذا الكود يجب أن يطابق نمطاً وإلا رُفض»، فانظر [قيود الإدخال والتحقق](/ar/platform/fields-and-entities-settings/fields-settings-input-validation).
 
-## حقول النص المنسق (Rich Text Fields)
+## Rich Text Fields — حقول النص المنسق
 
 حقول النص الطويل تُرسم صندوقاً عادياً: فما يكتبه المستخدم يصل كما كُتب تماماً، بلا عناوين ولا خط عريض ولا قوائم. وهذا صحيح للملاحظة الداخلية، وخطأ للنص الذي ينتهي في مستند مطبوع — كشروط العقد، وتمهيد عرض السعر، ووصف صنف مفصّل سيقرؤه العميل.
 
@@ -126,7 +128,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | قائمة الأنواع (Entity List) | قائمة مسماة من أنواع الكيانات، فيغطي السطر الواحد عدة أنواع. |
 | الحقل (On Field) | الحقل الذي يجب **ألا** يُرسم مربع لون. |
 
-## التوقيعات (Signatures)
+## Signatures — التوقيعات
 
 أخذ التوقيع على الورق يعني طباعة المستند وتوقيعه ومسحه ضوئياً وإرفاق الصورة — أربع خطوات وتأخير ساعات أو أيام. وهذا الجدول يلغيها. وجّهه إلى حقل مرفق أو حقل ثنائي فيصير زر الرفع في الحقل زر **توقيع**: وضغطه يفتح لوحة رسم يوقّع عليها المستخدم بالفأرة أو بإصبعه أو بقلم، ويُحفظ الرسم في ذلك الحقل.
 
@@ -147,7 +149,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 اللوحة المضبوطة على مقاس شاشة مكتبية ثقيلة على الهاتف، وأثر القلم الرفيع المرسوم بطرف الإصبع يبدو مهترئاً. فإن كانت التوقيعات تُؤخذ على أجهزة لوحية، فاضبط عرضاً وارتفاعاً يناسبانها وزد سمك خط التوقيع قليلاً — فالإصبع يحتاج قلماً أثخن من القلم الرقمي.
 :::
 
-## استخدام الماسح الضوئي في الحقول (Use Scanner In Fields)
+## Use Scanner In Fields — استخدام الماسح الضوئي في الحقول
 
 الفكرة نفسها مطبّقة على الورق الموجود سلفاً. فحقول المرفقات تفتح عادةً نافذة اختيار ملف، وهذا يفترض أن المستند مُسح ضوئياً وحُفظ في مكان ما. فإن كان بجهاز المستخدم ماسح ضوئي موصول، أعطى إدراجُ الحقل هنا زرَّ **مسح ضوئي** موصولاً بذلك الماسح مباشرة: فيضع المستخدم الورقة ويضغط الزر، ويُرفق الناتج دون أن يصير ملفاً سائباً على سطح المكتب أصلاً.
 
@@ -163,6 +165,39 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 و**استخدام الرفع العادي افتراضياً** يستحق تفكيراً لا تركاً للمصادفة: ضع زر المسح أولاً حيث تأتي أغلب المرفقات من الورق، واترك الرفع العادي أولاً حيث تأتي أغلبها من البريد. والزران يبقيان متاحين في الحالين — وهذا يقرر أيهما يبلغه المستخدم دون تفكير فحسب.
 
 أما تطبيق الماسح الضوئي وإعداداته فلا يُضبط هنا، وإنما في الإعدادات العامة، في صفحة [المرفقات والتخزين](/ar/platform/global-config/global-config-attachments).
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| Display Masks | Display Masks | `displayMasks` | [Display Masks](#Display-Masks----qnaa-laarD) |
+| Display Mask | Display Mask | `displayMasks.displayMask` | [Display Masks](#Display-Masks----qnaa-laarD) |
+| GUI 2 Display Mask | GUI 2 Display Mask | `displayMasks.g2DisplayMask` | [Display Masks](#Display-Masks----qnaa-laarD) |
+| Field Styles | Field Styles | `fieldStyles` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| اتجاه الكتابة | Text Direction | `fieldStyles.textDirection` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| تثبيت لغة الإدخال | Fixed Input Language | `fieldStyles.fixedInputLanguage` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| تثبيت حالة الحروف | Fixed Letter Case | `fieldStyles.fixedLetterCase` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| اتجاة النص في قائمة المقترحات(البحث) | Text Direction in Suggestion Menu (Search) | `fieldStyles.suggestionDirection` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| اتجاه النص في العرض بالقائمة | Text Direction in List Column | `fieldStyles.listColumnDirection` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| إخفاء النص (كلمة مرور) | Show As Password | `fieldStyles.showAsPassword` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| لون الكتابة | Foreground Color | `fieldStyles.foregroundColor` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| لون الخلفية | Background Color | `fieldStyles.backgroundColor` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| Disable Suggestion Provider | Disable Suggestion Provider | `fieldStyles.disableSuggestionProvider` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| عدم التحرك إلى الحقل التالي عند الضغط على انتر(Big Text Only) | Do Not Go To Next With Enter(Big Text Only) | `fieldStyles.doNotGoToNextWithEnter` | [Field Styles](#Field-Styles----nmT-lHqwl) |
+| Rich Text Fields | Rich Text Fields | `richTextFields` | [Rich Text Fields](#Rich-Text-Fields----Hqwl-lnS-lmnsq) |
+| الحقول النصية المحوله الي روابط | Text To Link Fields | `textToLinkFields` | [الحقول النصية المحوله الي روابط (Text To Link Fields)](#lHqwl-lnSy-lmHwlh-ly-rwbT-Text-To-Link-Fields) |
+| نوع الرابط | Link Type | `textToLinkFields.linkType` | [الحقول النصية المحوله الي روابط (Text To Link Fields)](#lHqwl-lnSy-lmHwlh-ly-rwbT-Text-To-Link-Fields) |
+| ليست حقول ألوان | Not Color Fields | `notColorFields` | [ليست حقول ألوان (Not Color Fields)](#lyst-Hqwl-lwn-Not-Color-Fields) |
+| Signatures | Signatures | `signatures` | [Signatures](#Signatures----ltwqyaat) |
+| صورة الخلفية | Background Image | `signatures.backgroundImage` | [Signatures](#Signatures----ltwqyaat) |
+| الأبعاد (بالبيكسيل) \| العرض | Pixels Dimension \| Width | `signatures.width` | [Signatures](#Signatures----ltwqyaat) |
+| الأبعاد (بالبيكسيل) \| الأرتفاع | Pixels Dimension \| Height | `signatures.height` | [Signatures](#Signatures----ltwqyaat) |
+| عرض خط التوقيع | Signature Line Width | `signatures.signatureLineWidth` | [Signatures](#Signatures----ltwqyaat) |
+| ePad Ink | ePad Ink | `signatures.epadInk` | [Signatures](#Signatures----ltwqyaat) |
+| Use Scanner In Fields | Use Scanner In Fields | `useScannerInFields` | [Use Scanner In Fields](#Use-Scanner-In-Fields----stkhdm-lmsH-lDwyy-fy-lHqwl) |
+| استخدم التحميل العادي افتراضيًا | Use Normal Upload By Default | `useScannerInFields.useNormalUploadByDefault` | [Use Scanner In Fields](#Use-Scanner-In-Fields----stkhdm-lmsH-lDwyy-fy-lHqwl) |
 
 ## صفحات ذات صلة
 

@@ -15,7 +15,7 @@ Throughout, we follow one worked example:
 
 The single most useful thing to understand before you open any screen is that the module has exactly two kinds of object, and they play very different roles.
 
-The **fixed asset record** is the identity of the thing: its code and names, its type, its serial number, its classifications, where it sits, who holds it, its insurance paperwork, and the ledger accounts it will be posted against. All of that you type.
+The **fixed asset record** is the identity of the thing: its code and names, its type, its serial number, its classifications, where it sits, who holds it, its insurance paperwork, and the ledger accounts its entries will be recorded on. All of that you type.
 
 ![The main page of a fixed asset record: identity, accounts and dimensions](../../ar/modules/fixedassets/images/master/fixed-asset-main-en.png)
 
@@ -63,7 +63,7 @@ The machine gets a new control unit costing **30,000**, and the cost is genuine 
 
 > (196,800 + 30,000 − 24,000) ÷ 48 = **4,225** per period
 
-The machine still finishes its life on the same date — it simply depreciates faster from here on. That prospective re-levelling, with no catch-up entry ever posted, is the behaviour to expect from every value change in the module: additions, deductions, revaluations and life changes all work this way. See [Additions and Deductions](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions.md).
+The machine still finishes its life on the same date — it simply depreciates faster from here on. That prospective re-levelling, with no catch-up entry ever created, is the behaviour to expect from every value change in the module: additions, deductions, revaluations and life changes all work this way. See [Additions and Deductions](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions.md).
 
 ::: tip Maintenance is not the same thing
 Servicing the machine — the quarterly inspection, replacing the coolant pump — is recorded as maintenance, and maintenance cost is history, not capital. It does not touch the asset's value or its depreciation. Only an addition document capitalises. See [Maintenance](/modules/fixedassets/maintenance/fixedassets-maintenance-overview.md).
@@ -88,7 +88,7 @@ By the end of 2027 the machine has cost 270,000, accumulated depreciation of 93,
 | Asset cost account | | 270,000 |
 | Gain on disposal | | 23,900 |
 
-There is no "reason" list on the document. A sale, a scrap and a donation are the same document with a different term and a different value — enter 0 as the disposal value and the whole book value falls into the loss account instead. One rule surprises people and is worth knowing now: **a disposal will not commit while the asset's depreciation is behind.** The document reads the posted balances of the asset's cost and accumulated-depreciation accounts, so it insists that no fiscal period has been left un-depreciated before the disposal. See [Disposing of an Asset](/modules/fixedassets/disposal/fixedassets-disposal.md).
+There is no "reason" list on the document. A sale, a scrap and a donation are the same document with a different term and a different value — enter 0 as the disposal value and the whole book value falls into the loss account instead. One rule surprises people and is worth knowing now: **a disposal will not commit while the asset's depreciation is behind.** The document reads the ledger balances of the asset's cost and accumulated-depreciation accounts, so it insists that no fiscal period has been left un-depreciated before the disposal. See [Disposing of an Asset](/modules/fixedassets/disposal/fixedassets-disposal.md).
 
 After the disposal the machine's status is **Disposed** and nothing else in the module will accept it.
 
@@ -139,7 +139,7 @@ There is also one item in the Assets menu that none of these four codes controls
 
 ## Two Things to Know Before You Start
 
-**Effects are processed, not written on the spot.** Committing a document that has an accounting effect creates a **business request** (طلب أعمال) that the server processes in the background. The document saves instantly; the journal entry appears a moment later. When a posting is missing, that is where to look — open the Business Requests list view, filter for the failed ones, select the rows and use the **More** menu → *Reprocess* or *Recommit*. This module raises only accounting requests; nothing in Fixed Assets creates an inventory transaction, and no asset document moves stock.
+**Effects are processed, not written on the spot.** Committing a document that has an accounting effect creates a **business request** (طلب أعمال) that the server processes in the background. The document saves instantly; the journal entry appears a moment later. When a journal entry is missing, that is where to look — open the Business Requests list view, filter for the failed ones, select the rows and use the **More** menu → *Reprocess* or *Recommit*. This module raises only accounting requests; nothing in Fixed Assets creates an inventory transaction, and no asset document moves stock.
 
 **The accounts come from the asset, not from the term.** In most Nama modules the document term chooses both sides of an entry. Here the asset side is different: the module always takes the asset's own cost account and its own accumulated-depreciation account, straight from the asset record — which is itself inherited from the asset type. The term configures the *other* side: the supplier, the cash, the depreciation expense, the gain and loss accounts, the taxes. Getting the accounts onto the asset types before anyone creates an asset is therefore the first job of a new installation, and it is the subject of [Getting Started](/modules/fixedassets/fixedassets-getting-started.md).
 

@@ -40,7 +40,7 @@ Which of them a collection document feeds is set on the document's term (توج�
 The collect family reads this option and nothing else. **If the term leaves *installment Effect* empty, the collection lands nowhere** — the ledger entry is still created, the document still looks committed, and the contract's paid and remaining columns do not move at all. This is the single most common cause of the complaint "I collected the money but the contract still shows it as outstanding". Configure it on every collect, exemption and bulk-collection term you create.
 :::
 
-The same term also carries *Do not apply effects on installments* — the deliberate way to say "this document posts accounting but must not touch the schedule". That is a choice; an empty *installment Effect* is an accident that looks like the same thing.
+The same term also carries *Do not apply effects on installments* — the deliberate way to say "this document creates its accounting effect but must not touch the schedule". That is a choice; an empty *installment Effect* is an accident that looks like the same thing.
 
 ## The Three Rules People Fight With
 

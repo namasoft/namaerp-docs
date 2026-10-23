@@ -1,4 +1,5 @@
 ---
+description: "Scoring a finished training course with the Course Evaluation document: rating the course, the student or the instructor against Evaluation Elements and their training-specific weights."
 entities: [CourseEvaluation, EvaluationElement]
 menu: Human Resources → Training → Course Evaluation
 ---

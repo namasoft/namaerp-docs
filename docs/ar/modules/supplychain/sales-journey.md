@@ -1,4 +1,5 @@
 ---
+description: "دورة المبيعات خطوة بخطوة: ملف العميل وضبط الائتمان، واستفسار العميل وعرض الأسعار، وأمر البيع والفاتورة المبدئية، والحجز والتسليم، وفاتورة المبيعات والفوترة الإلكترونية، والتحصيل، والمرتجعات والاستبدالات، والتنبؤ بالمبيعات."
 entities: [SalesInvoice, SalesOrder, SalesQuotation, SalesQuotationRequest, ProformaSalesInvoice, SalesReturn, SalesReturnRequest, SalesReplacement, SalesForecast]
 ---
 

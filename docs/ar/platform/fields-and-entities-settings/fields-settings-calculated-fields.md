@@ -103,7 +103,9 @@ where s.customer_id = {customer.id}
 لإيقاف حقل محسوب واحد، امسح استعلامه أو احذف السطر. ولإيقاف كل شيء دفعة واحدة، أشّر على **غير نشط** في السجل كله — فتتوقف فوراً كل الحقول المحسوبة وألوان الصفوف في ذلك السجل.
 :::
 
-## تلوين خلفية الصفوف (Style Overrider Details)
+![جدول استعلامات الحقول المحسوبة](../images/fields-settings/fields-settings-calculated-fields-grid-ar.png)
+
+## Style Overrider Details — تلوين خلفية الصفوف
 
 الأرقام في الجدول لا بد أن تُقرأ، أما اللون فلا. أمر شراء نُفِّذ نصفه، أو جدول مطالبات فيه صفان تجاوزا موعد استحقاقهما، أو جدول سطور فيه صنف نزل تحت حده الأدنى — كل ذلك يصير واضحاً في جزء من الثانية إن كان الصف ملوَّناً، وغير مرئي إن لم يكن.
 
@@ -140,6 +142,37 @@ select case
 ::: info تلوين الصفوف للجداول لا لشاشات القوائم
 هذا الجدول يلوّن صفوف جدول **داخل شاشة تحرير**. وليس هو الطريق لتلوين صفوف شاشة قائمة سجلات. فإذا كان مرادك «أرِني الفواتير المتأخرة»، فالفلتر المحفوظ على شاشة القائمة أو عنصر لوحة معلومات هو الأداة الصحيحة — راجع [الفلاتر السريعة](/ar/platform/list-views/quick-filters) و[وحدة BI](/ar/platform/bi/bi-module-guide).
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| استعلامات الحقول المحسوبة | calculated Fields Queries | `queryBasedScreenField` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| معرف السطور | Detail Field | `queryBasedScreenField.detailField` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 1 | Field1 Query | `queryBasedScreenField.field1Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 2 | Field2 Query | `queryBasedScreenField.field2Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 3 | Field3 Query | `queryBasedScreenField.field3Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 4 | Field4 Query | `queryBasedScreenField.field4Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 5 | Field5 Query | `queryBasedScreenField.field5Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 6 | Field6 Query | `queryBasedScreenField.field6Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 7 | Field7 Query | `queryBasedScreenField.field7Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 8 | Field8 Query | `queryBasedScreenField.field8Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 9 | Field9 Query | `queryBasedScreenField.field9Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 10 | Field10 Query | `queryBasedScreenField.field10Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 11 | Field1 Query | `queryBasedScreenField.field11Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 12 | Field2 Query | `queryBasedScreenField.field12Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 13 | Field3 Query | `queryBasedScreenField.field13Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 14 | Field4 Query | `queryBasedScreenField.field14Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 15 | Field5 Query | `queryBasedScreenField.field15Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 16 | Field6 Query | `queryBasedScreenField.field16Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 17 | Field7 Query | `queryBasedScreenField.field17Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 18 | Field8 Query | `queryBasedScreenField.field18Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 19 | Field9 Query | `queryBasedScreenField.field19Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 20 | Field20 Query | `queryBasedScreenField.field20Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| Style Overrider Details | Style Overrider Details | `styleOverriderLines` | [Style Overrider Details](#Style-Overrider-Details----tlwyn-khlfy-lSfwf) |
+| استعلام لون خلفية السطر | Row Background Color Query | `styleOverriderLines.rowBackgroundColorQuery` | [Style Overrider Details](#Style-Overrider-Details----tlwyn-khlfy-lSfwf) |
 
 ## صفحات ذات صلة
 

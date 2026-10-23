@@ -1,4 +1,5 @@
 ---
+description: "Setting up an AI assistant for Nama support step by step: installing Claude Desktop and Git, downloading the documentation knowledge base, asking questions, keeping it current, connecting it to a live system through the MCP server, and choosing which tools to give it."
 entities: [AIToolDefinition]
 ---
 
@@ -105,6 +106,8 @@ The endpoint, the authentication headers, the **API Credentials** record the key
 ## Step 8: Give the assistant the right tools
 
 An MCP connection on its own exposes nothing. The assistant can only call the tools an administrator has defined on the **AI Tool Definition** screen, so this step is where you decide how capable — and how dangerous — it is. Four groups of ready-made [system tools](./ai-tool-definitions.md) are worth setting up deliberately.
+
+![The system-tools AI Tool Definition and the tool groups it switches on](../../ar/modules/ai/images/ai-tool-definition-system-tools-en.png)
 
 ### The record tools — for everyone, bounded by permissions
 

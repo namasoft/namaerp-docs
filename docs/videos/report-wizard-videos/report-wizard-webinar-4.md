@@ -1,3 +1,6 @@
+---
+description: "Timestamped notes for the fourth report wizard webinar: building a sales invoice report with a date parameter, hyperlinks to an account statement, merged headers, conditional styling, cross tab reports, a per-salesman filter, and a tour of the new interface."
+---
 # Documentation for the Sales Invoice Report Training Video and New GUI Features
 
 [Watch the video](https://youtube.com/watch?v=524hzeG10Ic)

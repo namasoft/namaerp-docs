@@ -1,4 +1,5 @@
 ---
+description: "The DMS Document screen: registering an archived document and its fields, attaching scanned pages and owners, document states, copying a document, the history tab, finding documents, and extra fields for your own metadata."
 entities: [DMSDocument]
 menu: Basic → Document Management System → DMS Document
 ---

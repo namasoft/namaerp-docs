@@ -1,4 +1,5 @@
 ---
+description: "How Nama tracks inventory cost by FIFO or moving average, what to do when a receipt carries the wrong cost, and the documents that adjust cost: additional costs on receipts, Cost Revaluation, Finished Product Pricing and freezing cost at close."
 entities: [ReceiptAdditionalCost, CostRevaluation, FinishedProductPricing, FrozenCostAccounts]
 ---
 # Inventory Costing & Revaluation

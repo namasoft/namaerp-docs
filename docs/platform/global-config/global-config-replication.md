@@ -1,4 +1,5 @@
 ---
+description: "The Replication tab of Global Configuration for installations that keep several Nama sites in step: the dimensions that decide which records travel where, message delivery and failure handling, and what not to replicate."
 entities: [ConfigEntry]
 menu: Administration → Settings → System Settings
 ---
@@ -25,22 +26,49 @@ Branch is on by default because the usual topology is one server per branch. Ena
 
 ## Message delivery
 
-**Maximum Trials for Messages** `value.info.maxTrialsForMessages` *(default 0, meaning unlimited)* — How many times delivery of a replication message is attempted before it is given up on.
+**Max Trials When Replication Failures Occur** `value.info.maxTrialsForMessages` *(default 0, meaning unlimited)* — How many times delivery of a replication message is attempted before it is given up on.
 
-**Request Re-commit After Failures** `value.info.requestReCommitAfterFailures` — After repeated failures, asks the originating site to commit the record again rather than continuing to retry the same message.
+**Request ReCommit After Messages Fail** `value.info.requestReCommitAfterFailures` — After repeated failures, asks the originating site to commit the record again rather than continuing to retry the same message.
 
-**Replication Clean-up Time** `value.info.replicationCleanUpTime` — The time of day when delivered messages are purged. Set it to a quiet hour: the clean-up touches a lot of rows.
+**Replication Clean Up Time** `value.info.replicationCleanUpTime` — The time of day when delivered messages are purged. Set it to a quiet hour: the clean-up touches a lot of rows.
 
 **Do Not Replicate Attachments** `value.info.donotReplicateAttachments` — Leaves attachments out of replication payloads. Frequently the right choice on a slow or metered link, where a few scanned pages can hold up every other message behind them.
 
-**Prevent Using Branches When Head Office Is Online** `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` — Branch servers refuse to work locally while the head office is reachable, so everyone writes to one place and there is nothing to reconcile. The branch server becomes a fallback for when the link is down rather than a peer.
+**Prevent Using Branches When Headoffice Is Online** `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` — Branch servers refuse to work locally while the head office is reachable, so everyone writes to one place and there is nothing to reconcile. The branch server becomes a fallback for when the link is down rather than a peer.
 
-**Prevent Using Branches When Head Office Is Online Timeout** `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` *(default 60)* — How many seconds without an answer before the head office counts as unreachable and the branch takes over. Too short and a slow link flips the branch into local mode repeatedly; too long and staff wait a minute before they can work during a genuine outage.
+**Prevent Using Branches Timeout** `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` *(default 60)* — How many seconds without an answer before the head office counts as unreachable and the branch takes over. Too short and a slow link flips the branch into local mode repeatedly; too long and staff wait a minute before they can work during a genuine outage.
 
-**Replication Book Arabic Error** / **English Error** `value.info.replicationBookArabicError`, `value.info.replicationBookEnglishError` — The message shown when someone tries to create a record on the wrong site for its auto-coder's replication site. Both accept two placeholders: `{0}` is the server the record should have been created on, and `{1}` is the replication site the coder belongs to. The defaults already name both, which is what makes this error self-explanatory to a branch user.
+**Replication Autocoding Arabic Error** / **Replication Autocoding English Error** `value.info.replicationBookArabicError`, `value.info.replicationBookEnglishError` — The message shown when someone tries to create a record on the wrong site for its auto-coder's replication site. Both accept two placeholders: `{0}` is the server the record should have been created on, and `{1}` is the replication site the coder belongs to. The defaults already name both, which is what makes this error self-explanatory to a branch user.
 
 ## What not to replicate
 
 **Do Not Replicate** `value.info.doNotReplicate` *(table)* — Entity types that never replicate. Each row names an entity type, or a list of them. Use it for anything genuinely local — a site's own hardware configuration, for instance.
 
-**No Replication in Sites** `value.info.noReplicationInSites` *(table)* — More selective: each row names an entity type *and* a replication site, so a record type can be shared with most sites but withheld from one. This is how you keep, say, payroll data out of a site that has no business seeing it.
+**Do Not Replicate Entities In Sites** `value.info.noReplicationInSites` *(table)* — More selective: each row names an entity type *and* a replication site, so a record type can be shared with most sites but withheld from one. This is how you keep, say, payroll data out of a site that has no business seeing it.
+
+## Settings on this tab
+
+Every field on this tab with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it.
+
+| Field id | English label | Arabic label | Meaning |
+|---|---|---|---|
+| `value.info.useLegalEntityInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
+| `value.info.useSectorInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
+| `value.info.useBranchInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
+| `value.info.useDepartmentInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
+| `value.info.useAnalysisSetInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
+| `value.info.maxTrialsForMessages` | Max Trials When Replication Failures Occur | أقصي عدد محاولات عند فشل الرسائل | [Message delivery](#Message-delivery) |
+| `value.info.requestReCommitAfterFailures` | Request ReCommit After Messages Fail | طلب إعادة الارسال بعد فشل الرسائ | [Message delivery](#Message-delivery) |
+| `value.info.replicationCleanUpTime` | Replication Clean Up Time | وقت مسح الرسائل المرسلة التي تم معالجتها | [Message delivery](#Message-delivery) |
+| `value.info.donotReplicateAttachments` | Do Not Replicate Attachments | Do Not Replicate Attachments | [Message delivery](#Message-delivery) |
+| `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | Prevent Using Branches When Headoffice Is Online | منع استعمال سيرفرات الفروع حال عمل الرئيسي | [Message delivery](#Message-delivery) |
+| `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` | Prevent Using Branches Timeout | اقل توقيت لمنع استعمال سيرفرات الفروع | [Message delivery](#Message-delivery) |
+| `value.info.replicationBookArabicError` | Replication Autocoding Arabic Error | رسالة خطا التكويد الالي مع موقع التكرار - عربي | [Message delivery](#Message-delivery) |
+| `value.info.replicationBookEnglishError` | Replication Autocoding English Error | رسالة خطا التكويد الالي مع موقع التكرار - إنجليزي | [Message delivery](#Message-delivery) |
+| `value.info.doNotReplicate` | Do Not Replicate | Do Not Replicate | [What not to replicate](#What-not-to-replicate) |
+| `value.info.doNotReplicate.entityType` | Entity Type | النوع | [What not to replicate](#What-not-to-replicate) |
+| `value.info.doNotReplicate.entityTypeList` | Entity Type List | قائمة الأنواع | [What not to replicate](#What-not-to-replicate) |
+| `value.info.noReplicationInSites` | Do Not Replicate Entities In Sites | Do Not Replicate Entities In Sites | [What not to replicate](#What-not-to-replicate) |
+| `value.info.noReplicationInSites.entityType` | Entity Type | النوع | [What not to replicate](#What-not-to-replicate) |
+| `value.info.noReplicationInSites.entityTypeList` | Entity Type List | قائمة الأنواع | [What not to replicate](#What-not-to-replicate) |
+| `value.info.noReplicationInSites.replicationSite` | Replication Site | موقع التكرار | [What not to replicate](#What-not-to-replicate) |

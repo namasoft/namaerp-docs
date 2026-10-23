@@ -1,4 +1,5 @@
 ---
+description: "The CRM Trouble Ticket, the support desk's case file: opening a ticket, the ticket time group and discussion thread, warranty and contract coverage, the assign, change-status and close lifecycle, the stopwatch, and the buttons."
 entities: [CRMTroubleTicket]
 menu: Customer Relationship Management → Support → Trouble Ticket
 ---
@@ -174,7 +175,7 @@ The **Assigned To** tab carries two more buttons, **بدء / Start** and **إن�
 
 ## No effects, no term
 
-The Trouble Ticket **posts nothing and moves no stock.** It has no document term, so there is nothing to configure. If a repair consumes spare parts, they are issued with an ordinary stock document raised separately, and no link back to the ticket exists.
+The Trouble Ticket **creates no ledger entry and moves no stock.** It has no document term, so there is nothing to configure. If a repair consumes spare parts, they are issued with an ordinary stock document raised separately, and no link back to the ticket exists.
 
 ::: info The "Create Trouble Ticket" button on other screens is something else entirely
 Nama's own toolbar carries a generic *Create Trouble Ticket* action that can appear on any screen. That action does **not** create a ticket in your installation — it files a support request with NaMaSoft's own support desk over the internet, and it only works when your Global Config carries the Nama server address and credentials. What you see locally is a queue entry, not a CRM document. It has nothing to do with the tickets described on this page.

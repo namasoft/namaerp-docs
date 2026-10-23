@@ -45,12 +45,14 @@ stock issue `STI-2026-1188`; step 4 is return `SRMR-2026-0344` bringing one litr
 | `SP-PAD-FR` Front brake pad set | 1 | — | **1** |
 | `SP-CMP-AC` A/C compressor | 1 | — | **1** |
 
+![A Spare Parts Issue against a job order](../../../ar/modules/servicecenter/images/spare-parts/raw-material-issue-screen-en.png)
+
 ## No Service Center document moves stock by itself
 
 This is the sentence to remember before configuring anything.
 
 The spare parts issue, the return and the request are all **paper documents in inventory terms**.
-None of them changes a quantity on hand, and none of them posts an inventory or cost-of-sales entry.
+None of them changes a quantity on hand, and none of them creates an inventory or cost-of-sales entry.
 What the issue does is **generate a supply-chain document** — a stock issue, or a stock transfer if
 its term says *Transfer Not Issue* — and it is that generated document which raises the inventory
 business request, moves the quantity and books the cost. The return generates a stock receipt (or the
@@ -81,7 +83,7 @@ against the spare parts issue, and it is retried from the Business Requests list
 Readers almost always assume the second is derived from the first. It is not.
 
 **Cost** is the item's inventory cost. The generated stock issue is valued by the standard costing
-engine using the item's own cost method, and the entry it posts is the one that relieves inventory
+engine using the item's own cost method, and the entry it creates is the one that relieves inventory
 and charges cost of sales. Nothing in Service Center overrides that valuation with the price on the
 line.
 

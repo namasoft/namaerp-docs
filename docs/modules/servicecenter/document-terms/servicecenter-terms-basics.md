@@ -22,6 +22,8 @@ documents `srvcenter-insurance-and-installments`, the rental documents `srvcente
 the courier documents `srvcenter-mobile-delivery`.
 :::
 
+![The Service Center Job Order document term](../../../ar/modules/servicecenter/images/document-terms/sc-term-job-order-basic-en.png)
+
 ## What a term actually decides
 
 A term is a saved rulebook for one document type. You can have as many as you like — a term per

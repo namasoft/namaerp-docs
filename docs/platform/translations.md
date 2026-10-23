@@ -11,7 +11,7 @@ Each line of a Translation OverRider names the label it changes and gives the ne
 
 ## Supported languages
 
-The lines carry Arabic and English only. French is not a third column: when **Use French Instead of English** is switched on in [Global Configuration → General](/platform/global-config/global-config-general), the English side of the interface is replaced by French.
+The lines carry Arabic and English only. French is not a third column: when **Use French Instead Of English** is switched on in [Global Configuration → General](/platform/global-config/global-config-general), the English side of the interface is replaced by French.
 
 ## Translating screen names (singular and plural)
 

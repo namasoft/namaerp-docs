@@ -11,13 +11,13 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 ## الموافقات
 
-**تفعيل الموافقات** `value.approvalEnabled` *(مفعل افتراضياً)* — المفتاح الرئيسي لمنظومة الموافقات كلها. ومع إيقافه تُتجاهل قواعد الموافقة في كل مكان.
+**تفعيل الموافقة** `value.approvalEnabled` *(مفعل افتراضياً)* — المفتاح الرئيسي لمنظومة الموافقات كلها. ومع إيقافه تُتجاهل قواعد الموافقة في كل مكان.
 
 وتحدد الخيارات التالية الأزرار التي يراها المعتمِد فعلاً. وكل خيار تتركه مفعّلاً قرار إضافي على المعتمِد أن يزنه، ولذلك تُنتج القائمة القصيرة المقصودة قراراتٍ أسرع وأكثر اتساقاً في الغالب.
 
-**استخدام قرار الرفض** `value.info.useRejectDecision` *(مفعل افتراضياً)* — يُظهر **رفض**، وهو ينهي الموافقة ويرفض المستند.
+**استعمال قرار الرفض** `value.info.useRejectDecision` *(مفعل افتراضياً)* — يُظهر **رفض**، وهو ينهي الموافقة ويرفض المستند.
 
-**استخدام قرار الإرجاع** `value.info.useReturnDecision` *(مفعل افتراضياً)* — يُظهر **إرجاع**، وهو يعيد المستند إلى كاتبه ليصححه ويعيد تقديمه بدل إنهائه.
+**استعمال قرار الارجاع** `value.info.useReturnDecision` *(مفعل افتراضياً)* — يُظهر **إرجاع**، وهو يعيد المستند إلى كاتبه ليصححه ويعيد تقديمه بدل إنهائه.
 
 **استخدام قرار تصعيد إلى المدير الأعلي** `value.info.useEscalateToSupervisor` *(مفعل افتراضياً)* — يُظهر **تصعيد إلى المدير الأعلي**، فيرفع القرار في الهيكل التنظيمي.
 
@@ -31,11 +31,11 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **استخدام التوقيع في مرفق الموافقة** `value.info.useSignatureInApprovalAttachment` — يطبع صورة توقيع المعتمِد المحفوظة على المرفق الناتج عن الموافقة، فيحمل السجل المطبوع توقيعاً مرئياً.
 
-**منع تعديل المستند والمستندات المرتبطة أثناء الموافقة** `value.info.preventUpdateDocAndRelatedDocInApproval` — يقفل المستند *والمستندات المرتبطة به* أثناء انتظار القرار. وبدونه يستطيع الكاتب أن يغيّر في صمت ما ينظر إليه المعتمِد.
+**منع التعديل في مستند مرتبط بمستد أخر بإنتظار الموافقه** `value.info.preventUpdateDocAndRelatedDocInApproval` — يقفل المستند *والمستندات المرتبطة به* أثناء انتظار القرار. وبدونه يستطيع الكاتب أن يغيّر في صمت ما ينظر إليه المعتمِد.
 
 **السماح بعمل موافقات لتعديل المستندات** `value.info.allowApprovalsOnDocumentsUpdate` — يسمح لتعريفات الموافقة التي عليها **مع التعديل** بأن تسري على المستندات. وما دام موقوفًا فتعديل مستند محفوظ لا يبدأ موافقة أبدًا، ويُرفض حفظ تعريف موافقة لنوع مستند عليه علامة **مع التعديل**؛ فتقتصر موافقات التعديل على الملفات. راجع [موافقة «مع التعديل» على مستند لا تُحفظ](/ar/platform/approvals/approvals-system#mwfq-maa-ltaadyl-aal-mstnd-l-tuHfZ).
 
-**إضافة خطوات الموافقة لسجل الإجراءات** `value.info.addApprovalStepsToActionHistory` — يكتب كل خطوة موافقة في سجل إجراءات السجل، فيعطي أثراً دائماً لمن قرر ماذا ومتى. ويستحق تكلفته التخزينية الصغيرة حيثما كان للموافقات وزن.
+**إضافة خطوات الموافقة في سجل التعديل** `value.info.addApprovalStepsToActionHistory` — يكتب كل خطوة موافقة في سجل إجراءات السجل، فيعطي أثراً دائماً لمن قرر ماذا ومتى. ويستحق تكلفته التخزينية الصغيرة حيثما كان للموافقات وزن.
 
 ## المراجعة
 
@@ -43,7 +43,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **مستويات المراجعة الافتراضية** `value.info.defaultReviseLevel` — عدد مستويات المراجعة التي تسري على الكيانات التي ليست لها قاعدة خاصة. والقيم السالبة مرفوضة.
 
-**استخدام مستند المراجعة لكل الكيانات** `value.info.useReviseDocumentForAllEntities` — تُراجع كل الكيانات عبر مسار مستند المراجعة المنفصل بدل مراجعتها في مكانها على السجل نفسه.
+**استخدام مستند المراجعه لكل الأنواع** `value.info.useReviseDocumentForAllEntities` — تُراجع كل الكيانات عبر مسار مستند المراجعة المنفصل بدل مراجعتها في مكانها على السجل نفسه.
 
 **مستويات المراجعة** `value.info.entitiesReviseLevels` *(جدول)* — قواعد لكل كيان. كل سطر يذكر نوع كيان (أو قائمة أنواع)، وعدد مستويات المراجعة التي يحتاجها، وهل يستعمل مستند المراجعة. وبهذا تشترط اعتمادين على قيود اليومية ولا شيء على التحويل المخزني.
 
@@ -54,3 +54,30 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 ::: danger إيقافه يُفقدك سجل التعديل أيضًا
 تُكتب صورة النسخة وسطر سجل التعديل معًا، فمع إيقاف هذا الخيار لا تعرف بعدها من غيّر السجل، لا أنك تفقد استعادة نسخة سابقة فحسب. راجع [تشغيل تتبع النسخ وإيقافه](/ar/platform/governance/audit-trail#tshGyl-ttbaa-lnskh-wyqfh).
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل حقول هذه الصفحة باسمها الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه.
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| تفعيل الموافقة | Enable Approval | `value.approvalEnabled` | [الموافقات](#lmwfqt) |
+| استعمال قرار الرفض | Use Reject Decision | `value.info.useRejectDecision` | [الموافقات](#lmwfqt) |
+| استعمال قرار الارجاع | Use Return Decision | `value.info.useReturnDecision` | [الموافقات](#lmwfqt) |
+| استخدام قرار تصعيد إلى المدير الأعلي | Use Escalate To Supervisor | `value.info.useEscalateToSupervisor` | [الموافقات](#lmwfqt) |
+| استخدام قرار تصعيد إلى المشرف المباشر | Use Escalate To Direct Supervisor | `value.info.useEscalateToDirectSupervisor` | [الموافقات](#lmwfqt) |
+| استخدام قرار تصعيد الي موظف بعينه | Use Escalate To Specific Employee | `value.info.useEscalateToSpecificEmployee` | [الموافقات](#lmwfqt) |
+| استخدام قرار إرجاع إلي الخطوة السابقة | Use Return To Previous Step | `value.info.useReturnToPreviousStep` | [الموافقات](#lmwfqt) |
+| استخدام قرار الإرجاع لخطوة محددة | Use Return To Specific Step | `value.info.useReturnToSpecificStep` | [الموافقات](#lmwfqt) |
+| استخدام التوقيع في مرفق الموافقة | Use Signature In Approval Attachment | `value.info.useSignatureInApprovalAttachment` | [الموافقات](#lmwfqt) |
+| منع التعديل في مستند مرتبط بمستد أخر بإنتظار الموافقه | Prevent Update Document And Related Document In Approval Cycle | `value.info.preventUpdateDocAndRelatedDocInApproval` | [الموافقات](#lmwfqt) |
+| السماح بعمل موافقات لتعديل المستندات | Allow Approvals On Documents Update | `value.info.allowApprovalsOnDocumentsUpdate` | [الموافقات](#lmwfqt) |
+| إضافة خطوات الموافقة في سجل التعديل | Add Approval Steps To Action History | `value.info.addApprovalStepsToActionHistory` | [الموافقات](#lmwfqt) |
+| مستويات المراجعة الافتراضية | Default Revise Level | `value.info.defaultReviseLevel` | [المراجعة](#lmrjaa) |
+| استخدام مستند المراجعه لكل الأنواع | Use Revision Document For All Entities | `value.info.useReviseDocumentForAllEntities` | [المراجعة](#lmrjaa) |
+| مستويات المراجعة | Revise Levels | `value.info.entitiesReviseLevels` | [المراجعة](#lmrjaa) |
+| النوع | Entity Type | `value.info.entitiesReviseLevels.entityType` | [المراجعة](#lmrjaa) |
+| قائمة الأنواع | Entity Type List | `value.info.entitiesReviseLevels.targetEntities` | [المراجعة](#lmrjaa) |
+| مستويات المراجعة | Revise Levels | `value.info.entitiesReviseLevels.reviseLevels` | [المراجعة](#lmrjaa) |
+| استخدام مستند المراجعه | Use Revise Document | `value.info.entitiesReviseLevels.useReviseDocument` | [المراجعة](#lmrjaa) |
+| تفعيل تتبع نسخ السجلات | Track Records Versions | `value.trackVersionsEnabled` | [نسخ السجلات](#nskh-lsjlt) |

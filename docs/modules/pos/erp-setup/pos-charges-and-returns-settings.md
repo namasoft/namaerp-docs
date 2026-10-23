@@ -1,4 +1,5 @@
 ---
+description: "Setting up the POS service charge, delivery charge and minimum charge on the server, each with its item and settings record, plus the return reasons and depreciation reasons cashiers pick from when goods come back."
 entities: [POSServiceChargeSettings, PosMinChargeSettings, NamaPOSDeliveryCost, NamaPOSDepreciationReason, NamaPOSReturnReason]
 ---
 

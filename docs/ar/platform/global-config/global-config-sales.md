@@ -34,3 +34,20 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 **رابط خادم Nama CRM** `value.info.namaServerUrl` *(الافتراضي `https://crm.namasoft.com/`)* — عنوان نسخة الـ CRM.
 
 **إسم المستخدم للعميل** / **كلمة سر العميل** `value.info.customerUserName`, `value.info.customerPassword` — بيانات الدخول التي تستعملها هذه التركيبة للتوثّق لديه.
+
+## الإعدادات في هذه الصفحة
+
+كل حقول هذه الصفحة باسمها الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه.
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| استخدام الموظف الحالي كبائع آليا | use Current User As Sales Man | `value.info.useCurrentUserAsSalesMan` | [المندوب](#lmndwb) |
+| عدم تغيير المندوب في الفواتير ان وجد مع اختيار العميل | Do Not Override Sales Man When Changing Customer In Invoices | `value.info.doNotOverrideSalesManWithCustomer` | [المندوب](#lmndwb) |
+| البحث عن بائع للعميل في سند تحديث مندوب مبيعات | Search for sales man for customer at update sales man document | `value.info.salesManSearch` | [المندوب](#lmndwb) |
+| استعمال البائع بدلا من المستخدم للأسعار | Use Sales Man For Price Lists | `value.info.useSalesManAsEmployeeForPriceLists` | [المندوب](#lmndwb) |
+| أستخدام هاتف المستخدم ككود | Use Phone As Code | `value.info.useUserPhoneAsCode` | [تكويد العملاء](#tkwyd-laaml) |
+| هيئة الكود | Code Mask | `value.info.userCodeMask` | [تكويد العملاء](#tkwyd-laaml) |
+| رابط خادم Nama CRM | Nama CRM Server URL | `value.info.namaServerUrl` | [الاتصال بنظام Nama CRM](#ltSl-bnZm-Nama-CRM) |
+| إسم المستخدم للعميل | Customer User Name | `value.info.customerUserName` | [الاتصال بنظام Nama CRM](#ltSl-bnZm-Nama-CRM) |
+| كلمة سر العميل | Customer Password | `value.info.customerPassword` | [الاتصال بنظام Nama CRM](#ltSl-bnZm-Nama-CRM) |
+| إستخدام قالب تغير طلب الدعم الإنجليزي | Use English CRM Trouble Ticket Change Template | `value.info.useEnglishCRMTroubleTicketChangeTemplate` | التنبيه الذي يصل المستخدم حين تتغير حالة طلب الدعم الخاص به على Nama CRM يُكتب من القالب الإنجليزي بدلاً من العربي. |

@@ -1,4 +1,5 @@
 ---
+description: "How Contracting project cost is built: which documents record cost on a project and which do not, why cost hangs on a term code, the Contracting Direct Cost catalogue, and the screens where cost is compared with contract value."
 entities: [ContractingDirectCost]
 ---
 # How Project Cost Is Built

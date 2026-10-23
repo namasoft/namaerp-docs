@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Pricing & Price Lists** tab — how the system falls back to the last price an item was traded at, how price lists behave, and the default units for new items.
 
+![The Pricing & Price Lists tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-pricing-and-price-lists-en.png)
+
 ## Last Sales Price
 
 When you add an item to a sales document, the system looks for a unit price. If no price list applies and **Use Last Sales Price** is on, it reuses the price from the most recent processed sales invoice for the same item and customer. The "Consider …" switches make that search stricter by adding matching conditions — each one only applies when the current line actually carries that property, so enabling more of them gives a closer match but finds a price less often.

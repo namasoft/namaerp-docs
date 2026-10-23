@@ -1,4 +1,5 @@
 ---
+description: "Answers to three common payroll and HR questions: excusing a late arrival with a leave permission so it is not deducted, how lateness and overtime are calculated on weekly days off and public holidays, and producing one consolidated journal entry per payroll run."
 entities: [LeavePermission, SalaryDocument, SalarySheet]
 ---
 
@@ -48,13 +49,13 @@ calculations.
 
 ## How do we produce one consolidated journal entry for a payroll run instead of one per employee?
 
-Salaries are confidential, and by default each salary document posts its own entry, so anyone with
+Salaries are confidential, and by default each salary document creates its own entry, so anyone with
 access to the ledger can read individual salaries. Moving the entry up to the sheet takes two
 settings that look contradictory and are not:
 
 1. On the **salary document term**, tick **Without Accounting Effect**. The individual documents stop
-   posting.
-2. On the **salary sheet term**, tick **Generate Accounting Effects**. The sheet posts one entry for
+   creating entries.
+2. On the **salary sheet term**, tick **Generate Accounting Effects**. The sheet creates one entry for
    the whole run.
 
 The two switches read as opposites because they are named in opposite senses — a ticked box means

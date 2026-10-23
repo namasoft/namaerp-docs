@@ -19,6 +19,8 @@ An Approval Definition is the master configuration that defines when, how, and w
 - **Conditions**: When the approval should be triggered
 - **Notification Templates**: How approvers are notified
 
+![An Approval Definition](../../ar/platform/images/approvals/approval-definition-screen-en.png)
+
 ### Approval Case
 When a transaction meets approval criteria, an Approval Case is automatically created. This represents an active approval request that tracks:
 

@@ -44,6 +44,8 @@ Each half can be expressed in two ways, and you can use both at once:
 The queries are what most implementations end up using, so the rest of this page concentrates on
 them.
 
+![A Criteria Based Validator with one rule line](../../ar/platform/images/governance/criteria-based-validator-screen-en.png)
+
 ## Choosing what the validator watches
 
 The header of the validator answers one question: *which records does this thing look at?* You

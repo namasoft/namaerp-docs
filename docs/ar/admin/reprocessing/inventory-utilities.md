@@ -93,7 +93,7 @@ update q set quantityPUom_id = i.primBaseUnit_id from SalesInvoiceLine q left jo
  update q set quantityPUom_id = i.primBaseUnit_id from StockTransferLine q left join InvItem i on i.id = q.item_id  where i.code = @icode
 ```
 :::
-## استعلام لعرض المستندات التي يجب إعادة ترحيلها بعد تغيير وحدة القياس الأساسية للصنف:
+## استعلام لعرض المستندات التي يجب إعادة حفظها بعد تغيير وحدة القياس الأساسية للصنف:
 ::: details
 ```sql
 select distinct h.entityType,h.id,h.code from StockIssue h  left join StockIssueLine q on q.stockIssue_id = h.id left join InvItem i on i.id = q.item_id where q.quantityBaseUom_id <> i.primBaseUnit_id and h.generationType <> 'GeneratedFinal'

@@ -1,4 +1,5 @@
 ---
+description: "Recording Gulf visa procedures for expatriate employees: exit / re-entry visas, single or in a batch, and their extension, final-exit and family-visit visas, passport delivery, and how each visa's end date is calculated."
 entities: [HOExitReEntryVisaReq, AggrHOExitReEntryVisaReq, HOExtendingVisaReq, HOFinalExitVisaReq, HOFamilyVisitVisaRequest, HOPassportDeliveringReq]
 ---
 # HR Visas
@@ -135,7 +136,7 @@ None of the visa and passport requests on this page — single or aggregated —
 
 ## How it's processed
 
-None of these visa documents post to the general ledger — they are records and date-carriers, not
+None of these visa documents creates a general-ledger entry — they are records and date-carriers, not
 accounting entries. Saving one is instant, and any background effect (the write-back of the new visa
 number and dates onto the employee once the transaction is complete) runs as a **business request**
 (`طلب أعمال`) with its own **processing status** (`حالة المعالجة`), retryable from the **Business

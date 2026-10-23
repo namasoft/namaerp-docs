@@ -49,7 +49,7 @@ This script asks the system directly and prints the answer, so you can see in se
 2. Set **Target Type** to any screen you have open often, for example **Employee**, and **Target Action** to **Manual**.
 3. In the **Details** grid, paste the whole script into **Groovy Script**. Leave **Class Name** empty: it is filled in when you save.
 4. Fill in the parameters and save the flow.
-5. Add the flow to the screen through **Edit Screen**, in the "Actions and Notifications" table, as for any [manual flow](/platform/entity-flows/introduction-to-entity-flows#Manual--Manual-Execution). Then open any record on that screen and run the flow.
+5. Add the flow to the screen through **Edit Screen**, in the "Actions and Notifications" table, as for any [manual flow](/platform/entity-flows/introduction-to-entity-flows#Manual----Manual-Execution). Then open any record on that screen and run the flow.
 
 | Parameter | Title shown after saving | What to enter |
 |---|---|---|

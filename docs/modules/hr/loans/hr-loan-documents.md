@@ -71,20 +71,20 @@ The schedule is generated, not typed, and repayment can start from the loan itse
 
 The **Loan Payment Document** has no buttons of its own.
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
 Both documents generate their ledger effect as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails.
 
-- **Loan Document** — on commit, the full **Loan Amount** is posted as a single line, debited and credited to whichever accounts are configured as the *debit* and *credit* sides on the document's own term (التوجيه), tied to the employee's subsidiary accounts. In a typical setup this debits an employee-loans/advances account (an asset — the company now has a receivable from the employee) and credits cash/bank (the money actually handed out). Cancelling or deleting the document reverses the same entry.
-- **Loan Payment Document** — on commit, each installment line posts its own **Paid Amount** through the debit/credit sides configured on the *payment* document's own term — normally the mirror of the disbursement, crediting down the employee-loans account by the amount collected and debiting cash/bank (or whichever account the repayment channel uses).
+- **Loan Document** — on commit, the full **Loan Amount** is recorded as a single line, debited and credited to whichever accounts are configured as the *debit* and *credit* sides on the document's own term (التوجيه), tied to the employee's subsidiary accounts. In a typical setup this debits an employee-loans/advances account (an asset — the company now has a receivable from the employee) and credits cash/bank (the money actually handed out). Cancelling or deleting the document reverses the same entry.
+- **Loan Payment Document** — on commit, each installment line records its own **Paid Amount** on the debit/credit sides configured on the *payment* document's own term — normally the mirror of the disbursement, crediting down the employee-loans account by the amount collected and debiting cash/bank (or whichever account the repayment channel uses).
 
-::: info Automatic payroll recovery posts through the salary document, not here
-When a loan's installment is recovered automatically, no Loan Payment Document is created at all — the outstanding amount is simply picked up as a deduction line on the employee's ordinary [salary document](../payroll/salary-documents.md) for the period, and posts through that deduction component's own account lines exactly like any other salary component.
+::: info Automatic payroll recovery is recorded through the salary document, not here
+When a loan's installment is recovered automatically, no Loan Payment Document is created at all — the outstanding amount is simply picked up as a deduction line on the employee's ordinary [salary document](../payroll/salary-documents.md) for the period, and is recorded through that deduction component's own account lines exactly like any other salary component.
 :::
 
 ## Where this fits
 
 - **[Loan Types](hr-loan-types.md)** — the eligibility rules and the recovery component every loan here follows.
 - **[HR Requests, Documents & Aggregated Documents](../concepts/hr-requests-and-documents.md)** — the general request → document pattern this page applies.
-- **[Salary Documents](../payroll/salary-documents.md)** — where an automatically-recovered installment actually shows up and posts.
+- **[Salary Documents](../payroll/salary-documents.md)** — where an automatically-recovered installment actually shows up and reaches the ledger.
 - **[Loan Adjustments](hr-loan-adjustments.md)** — writing off, rescheduling, or pausing a loan that is already running.

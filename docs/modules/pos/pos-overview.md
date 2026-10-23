@@ -23,7 +23,9 @@ This is the single most important idea to understand about Nama POS, and it is c
 
 **Captain Order (the mobile app).** Waiters take orders at the table on a phone or tablet and send them straight to the kitchen and the register, instead of walking back and forth. It shares the same items, favourites and tables as the desktop register. See [Tables, reservations & Captain Order](./pos-tables-and-restaurant.md).
 
-**The central Nama ERP (the server).** This is the web system where head office lives. It is where each register is defined, where staff logins and their permissions are configured, and where every document a register creates eventually lands — to be posted to accounting, reconciled, and reported on. Operators rarely touch it; managers and IT do.
+**The self-checkout kiosk.** The same Captain Order app, switched to its kiosk mode on an Android device, lets shoppers scan their own items and pay by card with no cashier. Every kiosk sale is saved on an ordinary register on the shop network. See [Self-Checkout Kiosk](./pos-self-checkout-kiosk.md).
+
+**The central Nama ERP (the server).** This is the web system where head office lives. It is where each register is defined, where staff logins and their permissions are configured, and where every document a register creates eventually lands — to be processed into accounting, reconciled, and reported on. Operators rarely touch it; managers and IT do.
 
 **Payment terminals and peripherals.** Nama POS talks to card terminals (through a built-in payment gateway layer), receipt printers, cash drawers, customer-facing pole displays, fingerprint readers, and barcode scanners.
 

@@ -1,4 +1,5 @@
 ---
+description: "The Service Center Gate Pass: the seven checks that a job order is invoiced and paid for every payer before the car is released, what it does when committed, how to configure it, and the messages it shows."
 entities: [SrvCGatePass]
 menu: Service Center → Documents → Service Center Gate Pass
 ---

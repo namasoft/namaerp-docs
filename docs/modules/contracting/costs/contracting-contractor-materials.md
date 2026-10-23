@@ -1,4 +1,5 @@
 ---
+description: "Selling material to a subcontractor with the Contractor Material Issue, Return and Issue Request: the settlement terms on the header, what committing an issue does, how the charge reaches his extract as a deduction, and the one-time setup."
 entities: [ContractorMaterialIssue, ContractorMaterialReturn, ContractorMaterialIssueRequest]
 menu: Contracting → Costs → Contractor Material Issue
 ---

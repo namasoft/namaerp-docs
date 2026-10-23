@@ -37,7 +37,9 @@ On a normal installation every row has the type **Global**, because each module'
 the whole database. A database with twenty modules installed has twenty-odd rows; that is the
 whole list. Opening a row opens that module's settings screen — the same screen you reach from
 the module's own *Settings* menu — so this list is the quickest way to find a module's settings
-when you do not know which menu hides them.
+when you do not know which menu hides them. When you do not even know which module holds an option,
+the **Options Search Module** row in the same list searches every module's settings and every
+document term at once — see [Options Search](/admin/options-search).
 
 The records are created by the system, not by you. When a module is installed, its settings record
 is created at the next server start, and it stays for as long as the database does. That is why

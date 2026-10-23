@@ -1,4 +1,5 @@
 ---
+description: "The Term Analysis Card: breaking one contract term into material, labour, subcontract and other-expense costs, analysis term codes, filling the card automatically, deriving the selling price, comparing actual with estimated cost, and what blocks a save."
 entities: [TermAnalysisCard]
 menu: Contracting → Project Contracting → Term Analysis Card
 ---

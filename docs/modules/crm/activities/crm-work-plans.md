@@ -1,4 +1,5 @@
 ---
+description: "The CRM Work Plan: setting up its document term, listing planned contacts on the grid, generating Calls and Visits from selected lines, how the link back stays current, and why it gives no plan-versus-actual comparison."
 entities: [CRMWorkPlan]
 menu: Customer Relationship Management → Support → Work Plan
 ---

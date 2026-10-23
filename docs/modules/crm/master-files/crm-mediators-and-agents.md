@@ -1,5 +1,7 @@
 ---
+description: "The CRM mediator and Agent files: why the two screens are identical, which one to use based on where each can be picked, their basic, contact and subsidiary-account groups, and setting them up."
 entities: [CRMMediator, CRMAgent]
+menu: Customer Relationship Management → Support → mediator
 ---
 # Mediators and Agents
 
@@ -91,10 +93,10 @@ Two consequences worth knowing before you plan your data:
 
 Both files carry a **Subsidiary Accounts / حافظة الحسابات** block, and both are registered as
 accounting subsidiary types. That means a mediator or an agent can be a party on an accounting entry
-exactly like a customer or a supplier — fill this block in if the accounts team will ever post
-against them.
+exactly like a customer or a supplier — fill this block in if the accounts team will ever record
+entries against them.
 
-::: warning Nothing in CRM ever posts to a mediator or an agent
+::: warning Nothing in CRM ever records an entry against a mediator or an agent
 Filling in the subsidiary block makes the party *available* to Accounting. It does not make CRM use
 it. In particular, the mediator share, agent share and main-centre share percentages on the
 [CRM service contract](/modules/crm/support/crm-service-contracts.md) are free-typed numbers: they

@@ -1,5 +1,7 @@
 ---
+description: "Setting up the document terms of the Course Contract and Course Contract Cancel, the module's only accounting configuration: the Effect, Other Effects and Discount Effects tabs, where each account comes from, a worked example, and how books pick a term."
 entities: [EDCourseContract, EDCourseContractCancel]
+menu: Basic → Settings → Document Term
 ---
 # Education Document Terms
 
@@ -13,7 +15,7 @@ top of the screen.
 That matters more in Education than in most modules, because only two documents in the whole module
 ever reach the ledger — the [Course Contract](./education-course-contracts) and its
 [Cancel](./education-contract-cancellation). Everything else in Education records information and
-books nothing. So the term on those two documents is, in practice, the module's entire accounting
+creates no ledger entry. So the term on those two documents is, in practice, the module's entire accounting
 configuration.
 
 ## One screen, two terms
@@ -45,7 +47,7 @@ and the same block of fields repeats over and over. It is worth reading once, he
 
 ## The Effect tab — the pair that carries the deal
 
-The tab holds two groups, **Debit** (مدين) and **Credit** (دائن). Between them they book the fees
+The tab holds two groups, **Debit** (مدين) and **Credit** (دائن). Between them they record the fees
 themselves; everything on the other two tabs is a refinement.
 
 Which business meaning goes in which group is decided by the **direction of the document**, not by
@@ -62,9 +64,9 @@ same accounts — only the group they sit in changes. Get that backwards and a c
 reinforce the contract's entry instead of reversing it.
 :::
 
-The two sides are also valued differently, which catches people out. The party side is booked at
+The two sides are also valued differently, which catches people out. The party side is recorded at
 **what is still owed** — the line's net value less anything collected on the document's payment
-lines. The company side is booked at the line's **gross amount, before discounts and taxes**, because
+lines. The company side is recorded at the line's **gross amount, before discounts and taxes**, because
 the discounts and the taxes each get their own pair of sides on the other two tabs and would
 otherwise be counted twice.
 
@@ -79,6 +81,8 @@ hits:
 |---|---|
 | **Pay Installments In Order** | Forces the instalments on the [payment schedule](./education-payment-schedules) to be settled oldest first. Leave it off and any instalment can be settled at any time |
 | **Allow Payment More Than Invoice Amount** | Applies when an outside receipt voucher pays this contract's instalments — with it on, the voucher may pay more than the contract still shows as remaining |
+
+![The Effect tab of the Course Contract term](../../ar/modules/education/images/contracts/education-term-course-contract-effect-en.png)
 
 ## Where the account actually comes from
 
@@ -110,7 +114,7 @@ This tab gives accounts to the money that is not the deal itself.
 - **Cash** (النقدي) — the side used for money taken at signing. Leave it empty and that amount stays
   on the main Debit or Credit side instead of getting a line of its own.
 - **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** — one group each, and each group carries both the tax
-  side and its **other side**, the contra account the tax is booked against. These are where the tax
+  side and its **other side**, the contra account the tax is recorded against. These are where the tax
   amounts typed into the detail lines' tax columns land.
 
 ## The Discount Effects tab
@@ -121,7 +125,7 @@ with no side configured simply produces no entry, and the discount stays folded 
 
 ## A worked example — tuition receivable against fees revenue
 
-A training centre in Riyadh bills trainees directly and posts all training income to one revenue
+A training centre in Riyadh bills trainees directly and records all training income on one revenue
 account.
 
 **Term "Training Contract – Riyadh"**, created for the Course Contract:
@@ -133,7 +137,7 @@ account.
 
 A contract enrolling two trainees at 12,000 each is committed. The entry is 24,000 debit on the
 payer's receivable account — stamped with that payer as the subsidiary — against 24,000 credit on
-4201. If 4,000 of it was taken by card at signing on the contract's payment lines, that 4,000 books
+4201. If 4,000 of it was taken by card at signing on the contract's payment lines, that 4,000 goes
 to the account named on the payment method itself and the payer's side carries the remaining 20,000.
 
 **Term "Training Contract Cancel – Riyadh"**, created for the Course Contract Cancel, is the same
@@ -144,7 +148,7 @@ configuration with the groups exchanged:
 | Debit | Account Source = a **fixed account**, 4201 Training Fees Revenue |
 | Credit | Account Source = **Document Subsidiary**, same subsidiary account type as above |
 
-Cancelling 15,000 of that contract then books 15,000 debit on 4201 against 15,000 credit on the
+Cancelling 15,000 of that contract then records 15,000 debit on 4201 against 15,000 credit on the
 payer — the exact mirror of the part being undone.
 
 ::: info Change a term, and old documents keep their old entry
@@ -158,7 +162,7 @@ re-issues the ledger entry for the documents you select using the term as it sta
 
 Every Education document carries two records at the top of its screen and they are easy to confuse.
 The **book** decides the document's numbering series and a few small behaviours; the **term** decides
-how the document behaves and what it books. A term can restrict which books it will work with,
+how the document behaves and what ledger entry it creates. A term can restrict which books it will work with,
 through its Allowed Books grid or an allowed-books rule, and that is how each book ends up paired
 with the term that belongs to it — a Riyadh book with the Riyadh term, a corporate-training book with
 the corporate term. The details are on the [Document Books](/platform/documents-and-records/document-books) page, and the

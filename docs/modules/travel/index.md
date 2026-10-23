@@ -1,3 +1,6 @@
+---
+description: "Overview of the Travel module for tour operators and travel agencies: the operations half (tour programs, tours, hotel and restaurant vouchers), the purchase and sales documents that carry the money, the master files, licensing and a map of the guide."
+---
 # Travel
 
 Welcome to the Travel module of Nama ERP — the module built for tour operators and travel
@@ -83,7 +86,7 @@ service is not an inventory item. It has no warehouse, no unit of measure and no
 hand, and nothing in this module ever moves stock.
 
 ::: tip How documents work in Nama ERP
-There is no separate "post" step. Once a document is saved out of draft, its effects are created
+There is no separate step that pushes a document into the accounts. Once a document is saved out of draft, its effects are created
 straight away as a **business request** processed in the background — so saving is instant and
 the work happens behind you. If an effect fails, you can find and retry it from the **Business
 Requests** list view. Later edits to a saved document flow through the same way.

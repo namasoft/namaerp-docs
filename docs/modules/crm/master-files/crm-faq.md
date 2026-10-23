@@ -1,4 +1,5 @@
 ---
+description: "The CRM FAQ file, an internal question-and-answer notebook tied to products: where entries come from, the screen, how to find entries again, and why no other screen shows them."
 entities: [CRMFAQ]
 menu: Customer Relationship Management → Support → CRM FAQ
 ---

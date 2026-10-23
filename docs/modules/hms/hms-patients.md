@@ -1,4 +1,5 @@
 ---
+description: "The hospital patient file, outpatient reservations and clinic schedules, admitting an inpatient through the Patient Admission form, and recording diagnosis and health status."
 entities: [HMSPatient, HMSPatientAdmission, HMSOutpatientReservation, HMSOutpatientSchedule, HMSPatientDiagnosis, HMSPatientHealthStatus, HMSQuestionnaireTemplate, HMSQuestion]
 menu: Hospital Management System → Master Files → Patient
 ---

@@ -49,6 +49,7 @@ The settings and security screens an administrator reaches for when something is
 
 <LandingGrid>
   <LandingCard icon="🗂️" title="System Settings, Configuration Group and Edit File" link="/admin/system-settings-and-configuration-group.md" details="Where every module's settings record lives, the one group that hides screens and features for every company, and the raw layout file editor." />
+  <LandingCard icon="🔎" title="Options Search" link="/admin/options-search.md" details="Type a word and find every document term option, module setting and configuration field that holds it, with a link straight to the field." />
   <LandingCard icon="⚡" title="Performance Optimizer" link="/admin/performance-optimizer.md" details="Speed up busy lists and lookups by dropping chosen dimension or view-capability checks for chosen record types or users." />
   <LandingCard icon="🔢" title="Users Counter and Capability Types" link="/admin/users-counter-and-security-capabilities.md" details="Cap how many users from one group may be signed in at once, and create your own named capabilities to lock records, reports and prices." />
   <LandingCard icon="⌨️" title="Shortcuts Definition and User Favourites" link="/admin/shortcuts-and-user-favourites.md" details="Which keyboard map each user gets, global keys that open a list, a new record or a link, and how each user's Favourites menu is built." />

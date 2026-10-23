@@ -79,9 +79,9 @@ To reverse a purchase invoice fully or partially when cancelling a service you b
 
 ## Term Config and accounting effect
 
-The document's **Term Config** controls how each invoice is posted to accounting: revenue/cost accounts, tax accounts (Tax / Tax 2 / addition and discount taxes), the various discount accounts, and cash. The sales invoice term config also carries two freight-specific settings:
+The document's **Term Config** controls each invoice's accounting effect: revenue/cost accounts, tax accounts (Tax / Tax 2 / addition and discount taxes), the various discount accounts, and cash. The sales invoice term config also carries two freight-specific settings:
 
-- **Status** — the operation-order status that is recorded automatically when the invoice is posted, so you track which shipment has been invoiced.
+- **Status** — the operation-order status that is recorded automatically when the invoice is saved, so you track which shipment has been invoiced.
 - **Do not send a cost line for commission items** — an option for the agent model in [E-Invoicing](./freight-einvoicing.md).
 
 Every option on the freight invoice terms is explained on [Freight Document Terms](./freight-document-terms.md).

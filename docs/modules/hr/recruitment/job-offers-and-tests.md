@@ -1,4 +1,5 @@
 ---
+description: "Recording the terms offered to a candidate with the Job Offer, Candidate Job Offer and Aggregated Job Offer documents, defining HR Tests and recording HR Test Results, and how an accepted offer leads to a new employee."
 entities: [JobOffer, CandidateJobOffer, AggregatedJobOffer, HRTest, HRTestResult]
 ---
 # Job Offers & Tests

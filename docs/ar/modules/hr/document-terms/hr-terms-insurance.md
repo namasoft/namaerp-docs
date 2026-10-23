@@ -1,4 +1,5 @@
 ---
+description: "توجيهات مستندات التأمين الصحي للموظفين ومستندات تأمين السيارات: الحسابات والضريبة ومفاتيح الأثر المحاسبي في كل توجيه، وما يضيفه كل مستند تأمين صحي إلى الشكل المشترك لتوجيهاتها."
 entities: [EmployeeHealthInsurance, HealthInsuranceUpgrade, EmpHealthInsurDelete, HealthInsuranceClaimDoc, HealthInsuranceCredence, CarInsurancePolicy, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc]
 menu: الأساسيات ← الإعدادات ← توجيه مستند
 ---
@@ -16,6 +17,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 أما الآليات المشتركة — ما التوجيه، ولماذا لا تسمّي معظم التوجيهات المجمعة إلا دفترًا وتوجيهًا،
 والمفاتيح المحاسبية الثلاثة المختلفة الأسماء — ففي
 [توجيهات الرواتب والتصفية](/ar/modules/hr/document-terms/hr-terms-salary-and-dues).
+
+![تبويب التأثير في توجيه سند إضافة موظف للتأمين](../images/document-terms/hr-term-insurance-ar.png)
 
 ## توجيهات التأمين الصحي
 

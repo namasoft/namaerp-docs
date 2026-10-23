@@ -32,6 +32,8 @@ Configurations**:
 | **IPS Workstation Field Id** | The same for the workstation identifier. |
 | **Allowed Mail Item Prefix To Send To IPS** | A comma-separated list of prefixes. When filled, only mail items whose number starts with one of them are reported; the rest are skipped silently. Empty means every mail item. Receptacles are always reported. |
 
+![An IPS Receptacles Receipt](../../ar/modules/freight/images/ips/receptacles-receipt-en.png)
+
 ## Reading from IPS
 
 The look-ups happen as you type:

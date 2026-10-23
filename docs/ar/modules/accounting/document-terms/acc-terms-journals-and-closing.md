@@ -15,6 +15,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 و[تسوية أعمار الديون](/ar/modules/accounting/aging-allocation)
 و[الالتزامات المالية](/ar/modules/accounting/financial-commitments).
 
+![تبويب التأثير في توجيه سند القيد](../images/document-terms/acc-term-journals-and-closing-ar.png)
+
 ## سند قيد وسند قيد فرق عملة
 
 في التوجيهين تبويب **الإعدادات** بالبيانات الأساسية للتوجيه ومجموعة **محددات السطور و إمكانية تعديلها**:

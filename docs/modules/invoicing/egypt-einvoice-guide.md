@@ -1,4 +1,5 @@
 ---
+description: "Sending e-invoices and e-receipts to the Egyptian Tax Authority: connecting to the portal, EGS and GS1 item codes, bank details and payment terms, registering POS devices, signing with the e-seal, what to do when the portal does not answer, and cancelling an accepted e-invoice."
 entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc, DocumentCancelDocument, Bank, BankAccount, DocumentTerm]
 menu: Basic → Electronic Tax Authority Configuration → Electronic Tax Authority Configuration
 ---

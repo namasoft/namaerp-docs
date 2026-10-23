@@ -20,7 +20,7 @@ Menu: **Service Center > Documents > Job Order Closing**
 ::: info Required licence
 `srvcenter`. A **[document term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md)
 is required**, and it is the term that carries the two accounting
-sides and the stock-issue book — without them the closing posts nothing and issues nothing.
+sides and the stock-issue book — without them the closing creates no entry and issues nothing.
 :::
 
 ![The Job Order Closing screen](../../../ar/modules/servicecenter/images/job-cycle/sc-job-order-closing-en.png)
@@ -58,8 +58,8 @@ Together, 3,215 — the job total. The full derivation is on
 
 ## What reaches the ledger
 
-::: danger Only the customer amount is posted
-The four money boxes look like a four-way posting. They are not. The journal entry this closing
+::: danger Only the customer amount is recorded
+The four money boxes look like a four-way entry. They are not. The journal entry this closing
 produces is **two lines** — one debit, one credit, taken from the term's debit and credit sides —
 and **both carry the customer amount only**.
 

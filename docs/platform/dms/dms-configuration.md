@@ -1,4 +1,5 @@
 ---
+description: "Setting up Document Management: the licence, its three own settings in System Settings, and where the shared storage, scanning, preview, security and integration settings that shape DMS live, plus how other screens reach archived documents."
 entities: [ConfigEntry]
 menu: Administration → Settings → System Settings
 ---
@@ -57,6 +58,8 @@ group. **On by default.**
 Controls the **Create Archive** action described below: on, the new document opens in a popup over
 the record you started from; off, the system navigates to the full document screen and you lose
 your place.
+
+![Create DMS Doc In Pop Up Window in the Popups And Editors group of Global Configurations](../../ar/platform/dms/images/dms-global-config-settings-en.png)
 
 ## Storage, Scanning and Previews
 

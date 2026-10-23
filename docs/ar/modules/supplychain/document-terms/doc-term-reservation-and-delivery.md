@@ -15,6 +15,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 حقول `reserve*` الأساسية أدناه **مستثناة** من `StockReceipt` و`StockIssue` ومستندات التحويل الثلاثة (`ReceiptStockTransfer` و`IssueStockTransfer` و`StockTransfer`). أما حقول كلمة سر التوصيل فتنطبق على **توجيهات مستند التوصيل فقط**.
 :::
 
+![تبويب الحجز في توجيه فاتورة المبيعات](../images/document-terms/doc-term-reservation-and-delivery-ar.png)
+
 ## سلوك الحجز (Reservation Behavior)
 
 تُضاف هذه الخيارات الستة لجميع توجيهات المستندات المخزنية، وتحكم كيفية تسلسل الحجوزات وإلغائها وتحديثها عبر المستندات المرتبطة.

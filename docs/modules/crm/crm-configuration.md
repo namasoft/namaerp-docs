@@ -1,10 +1,11 @@
 ---
 entities: [ConfigEntry]
+menu: Administration → Settings → System Settings
 ---
 
 # CRM Settings
 
-The CRM module has its own settings screen, reached from the configuration area rather than from the CRM menu itself. It is refreshingly short — six options and one grid.
+The CRM module has its own settings screen, reached from the configuration area rather than from the CRM menu itself: open **Administration → Settings → System Settings** and pick the **CRM Settings** record. It is refreshingly short — six options and one grid.
 
 Two of the options change how staff enter data every day, so it is worth setting them deliberately rather than leaving the defaults.
 
@@ -19,6 +20,8 @@ Two of the options change how staff enter data every day, so it is worth setting
 | **Allow Editing CRM Lead After Connection** | السماح بتعديل خيط البيع بعد ربطه | Lets a lead stay editable after it has been converted. Without it, a converted lead is locked. |
 | **Do Not Filter Machine By Customer** | عدم الفلترة على الآلة بالعميل | Removes the customer filter from the machine picker on maintenance documents, so any machine can be selected regardless of who owns it. |
 | **Add Questionairs Page To** (grid) | إضافة صفحة الاستبيانات الي | Lists the screens that should gain a related-questionnaires page. Add an entity type here and its edit screen grows a page showing questionnaires linked to that record. |
+
+![The Settings tab of CRM Settings](../../ar/modules/crm/images/config/crm-settings-tab-en.png)
 
 ## One option that is narrower than it sounds
 

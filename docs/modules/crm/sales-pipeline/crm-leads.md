@@ -82,6 +82,8 @@ The *Currency* group shows a currency and a rate only — the amount that goes w
 
 **Lead Source** offers Cold Call, Existing Customer, Self Generated, Employee, Partner, Public Relations, Direct Mail, Conference, Trade Show, Web site, Word Of Mouth, Campaign, Mediator, Grant, Social Networks and Other. **Platform** offers Broker, WhatsApp, SMS Campaign, Customer Call Center, Owner, Freelance, Personal, Hotline, Walk-In, Instagram, Google, Outdoor, Facebook, Empty Platform and three spare labels. **Lead Type** offers only Fresh, Cold Call (which reads **إتصال ارتجالي** in Arabic) and three spare labels.
 
+Leads can also arrive on their own from Facebook lead forms, with **Lead Source** set to Social Networks — see [Facebook Lead Ads](/modules/crm/sales-pipeline/crm-facebook-lead-ads.md).
+
 ::: warning The campaign picker offers every campaign
 The Campaign field looks as though it excludes cancelled and inactive campaigns. It does not — the filter behind it never removes anything, so every campaign in the system is offered. Check the campaign's own status before you pick it.
 :::

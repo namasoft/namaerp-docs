@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Purchasing** tab — settings that affect purchase orders, purchase invoices, purchase returns, and the letter-of-credit / proforma workflow.
 
+![The Purchases tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-purchasing-en.png)
+
 ## Purchasing
 
 **Copy Sector / Branch / Department / Analysis Set from Item** — When on, the line takes the corresponding accounting dimension from the **item's** own setup instead of inheriting it from the document header. Turn one on when items are pre-assigned to a dimension and you want lines stamped per item rather than by a single header value. *(These four switches are shared by sales and purchasing.)*

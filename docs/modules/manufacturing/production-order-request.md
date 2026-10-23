@@ -1,4 +1,5 @@
 ---
+description: "The Production Order Request: asking for a product to be made before a production order exists, its deliberately small screen, request status, the BOM, Co Products and Routings tabs, and turning a request into an order."
 entities: [ProductionOrderRequest]
 menu: Manufacturing → Documents → Production Order Request
 ---

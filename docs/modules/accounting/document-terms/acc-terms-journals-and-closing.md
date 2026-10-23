@@ -16,6 +16,8 @@ The documents are on [Journal Entries & Adjustments](/modules/accounting/journal
 [Aging Allocation](/modules/accounting/aging-allocation) and
 [Financial Commitments](/modules/accounting/financial-commitments).
 
+![The Effects tab of the Journal Entry term](../../../ar/modules/accounting/images/document-terms/acc-term-journals-and-closing-en.png)
+
 ## Journal Entry and Currency Diff Journal
 
 Both terms have a **Settings** tab with the term's basic data and a **Details Dimensions and
@@ -37,7 +39,7 @@ The **Journal Entry** term adds:
 | Option | Field | What it does |
 |---|---|---|
 | **Do Not Copy Dimensions With New Lines** | `termConfig.doNotCopyDimensionsWithNewLines` | A new line starts with empty dimensions instead of the header's. |
-| **Tax1 / Tax2 Debit / Credit** *(Effects tab)* | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Saved [side records](/platform/shared-master-files/accounting-side-config) that post the line taxes as their own ledger lines. |
+| **Tax1 / Tax2 Debit / Credit** *(Effects tab)* | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Saved [side records](/platform/shared-master-files/accounting-side-config) that record the line taxes as their own ledger lines. |
 | **Add Tax 1 / 2 To Total Debit / Credit** *(Effects tab)* | `termConfig.addTax1ToTotalDebit` … `termConfig.addTax2ToTotalCredit` | Adds the line taxes into the entry's total debit or total credit. |
 
 ## Exchange Rate Update

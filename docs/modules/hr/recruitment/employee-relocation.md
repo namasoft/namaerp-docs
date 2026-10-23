@@ -1,4 +1,5 @@
 ---
+description: "Changing an employee's placement and data after hiring: the Employee Relocate document and its request, which move an employee and their balances to another branch or department, Update Employee Info, single or aggregated, and Work Place Update."
 entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUpdateEmpInfo, WorkPlaceUpdate]
 ---
 # Employee Relocation
@@ -23,12 +24,12 @@ The Legal Entity under New Dimensions must match the employee's current one — 
 
 ![Employee Relocate edit screen, showing current dimensions and new dimensions](../../../ar/modules/hr/images/recruitment/employee-relocate-en.png)
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
 Committing an Employee Relocate document does two things at once:
 
 1. It immediately updates the employee's own master record so their branch, department, sector, and analysis set become the New Dimensions.
-2. It looks back through the employee's accounting history for any **balance-sheet account** (not income-statement accounts like expenses or revenue) whose debit and credit don't net to zero under the *old* dimension combination — typically an accrued or provisioned balance carried against that employee — and posts a reallocating journal entry that debits one dimension combination and credits the other, so the balance follows the employee to their new placement instead of being silently split across two locations.
+2. It looks back through the employee's accounting history for any **balance-sheet account** (not income-statement accounts like expenses or revenue) whose debit and credit don't net to zero under the *old* dimension combination — typically an accrued or provisioned balance carried against that employee — and creates a reallocating journal entry that debits one dimension combination and credits the other, so the balance follows the employee to their new placement instead of being silently split across two locations.
 
 A **Without Accounting Effect** switch on the document term can turn off step 2 for organisations that don't want relocation to touch the ledger at all; step 1 (updating the employee's own record) always happens regardless.
 
@@ -76,7 +77,7 @@ Found at **Payroll > Main > Aggregated Update Employee Info**, this is the batch
 
 ## Work Place Update
 
-Found at **Human Resources > Main > Work Place Update**, this is a lighter, narrower tool than either of the above: it changes only where an employee is physically working, for a bounded date range, without touching anything else on their record — useful for a temporary project assignment or a short-term posting to another site.
+Found at **Human Resources > Main > Work Place Update**, this is a lighter, narrower tool than either of the above: it changes only where an employee is physically working, for a bounded date range, without touching anything else on their record — useful for a temporary project assignment or a short-term assignment to another site.
 
 | Field | Purpose |
 |---|---|

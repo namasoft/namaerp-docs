@@ -111,8 +111,8 @@ The social-insurance add and remove documents and the sponsorship transfer docum
 
 Saving any of these documents is instant; like every document in Nama, any follow-on work is raised
 as a **business request** (`طلب أعمال`) with its own **processing status** (`حالة المعالجة`) that can
-be retried from the **Business Requests** view if it fails. None of the documents on this page posts
-to the general ledger — they **record** a government fact (an enrolment, a withdrawal, a sponsorship
+be retried from the **Business Requests** view if it fails. None of the documents on this page creates
+a general-ledger entry — they **record** a government fact (an enrolment, a withdrawal, a sponsorship
 move) and, where relevant, feed the employee's official-document details. Any fee attached to a
 sponsorship transfer is tracked and settled the same way as every other government charge: through the
 fee-recording flow described in the [Government Relations Overview](./government-relations-overview),

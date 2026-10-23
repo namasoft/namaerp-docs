@@ -1,3 +1,6 @@
+---
+description: "Diagnosing a slow system step by step: narrowing down the complaint, seeing what the server is doing now, reports and background work that hold users up, slow searches, database health, and what to send to Namasoft."
+---
 # When the System Is Slow
 
 "The system is slow" is the most common ticket support receives, and it is rarely one problem. It

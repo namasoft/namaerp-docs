@@ -46,13 +46,13 @@ three open "Other" categories) and then a specific **Action** drawn from the **C
 
 A related **Car Action Request** (`طلب إجراء سيارة`) exists for the same events but without an
 accounting effect — a lighter intake form (who processed it, what happened, the estimated cost) that
-can be raised before a formal, ledger-posting Car Action is written up.
+can be raised before a formal Car Action, which creates the ledger entry, is written up.
 
 ::: tip How it's processed
-Saving a Car Action raises a background **business request** (`Business Request`) that posts the
-cost split to the ledger: the debit side covers the action's cost (net of the responsible employee's
-share), the responsible employee's share and its tax are posted separately, and the tax on the whole
-action is posted on its own pair of accounts. If that request fails, retry it from the
+Saving a Car Action raises a background **business request** (`Business Request`) that records the
+cost split in the ledger: the debit side covers the action's cost (net of the responsible employee's
+share), the responsible employee's share and its tax are recorded separately, and the tax on the whole
+action is recorded on its own pair of accounts. If that request fails, retry it from the
 **Business Requests** view.
 :::
 
@@ -61,7 +61,7 @@ action is posted on its own pair of accounts. If that request fails, retry it fr
 **Car Problem** (`عطل سيارة`) is the master file both Car Action and Car Action Request draw their
 **Action** field from — the actual list of accidents, services and repairs a company car can go
 through, each carrying its own accounting configuration (accounts bag, tax exemptions) so every
-action of the same kind posts consistently. Maintain it under
+action of the same kind is recorded consistently. Maintain it under
 **Human Resources → Vehicles → Car Problem** before logging actions against it.
 
 ### Moving a car between drivers or departments: Car Info Updater
@@ -72,7 +72,7 @@ need correcting — record that with a **Car Info Updater** (`تحديث بيا�
 built as **current value / new value** pairs, one line per car, so the change is explicit and
 auditable rather than a silent overwrite: current driver vs. new driver, current status vs. new
 status, current running KM vs. new running KM, and the same before/after pairing for legal entity,
-branch, sector, department and analysis set. It does not post to the ledger — it only rewrites the
+branch, sector, department and analysis set. It creates no ledger entry — it only rewrites the
 car's own master data.
 
 ## Car insurance
@@ -114,9 +114,9 @@ Insuring the company fleet runs through its own small lifecycle, separate from d
 
 ::: tip How it's processed
 The **Cars Insurance Policy**, the **Adding** and **Removing** documents, and the **Installment
-Proof Document** each raise a background business request that posts the contracting cost, discount
+Proof Document** each raise a background business request that records the contracting cost, discount
 and any fees (plus tax on the fees) to the accounts configured on their document term. Only the
-**Insurance Offer Document** has no ledger effect — it is a quote, not yet a commitment. If a posting
+**Insurance Offer Document** has no ledger effect — it is a quote, not yet a commitment. If that processing
 fails, retry it from the **Business Requests** view.
 :::
 
@@ -126,7 +126,7 @@ A **Pickup Plan** (`خط سير`, literally "route") is a company driver's daily
 driver, over what date range, and — line by line in its Details grid — which employees are picked up
 from where and dropped off where, at what time, and how far each leg is. It is found under
 **Human Resources → Vehicles → Pickup Plan**
-(`الموارد البشرية > السيارات > خط سير`) and does not post to the ledger; it is purely an operational
+(`الموارد البشرية > السيارات > خط سير`) and creates no ledger entry; it is purely an operational
 schedule for HR and transport staff to know who is riding which route.
 
 | Field (English) | Arabic label | Purpose |
@@ -176,7 +176,7 @@ Feeding employees runs on the same catalog-then-apply pattern as most other empl
    (`تحديث الحالة`) moves lines from one status to another in bulk. Both buttons are described under
    *Actions on this screen* below.
 
-None of the three meal documents post to the general ledger — meal cost here is an operational and
+None of the three meal documents creates a general-ledger entry — meal cost here is an operational and
 allowance-tracking figure, not an accounting entry.
 
 ## Actions on this screen

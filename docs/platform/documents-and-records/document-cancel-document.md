@@ -1,4 +1,5 @@
 ---
+description: "The Document Cancel Document screen: how a committed document is cancelled since there is no un-commit, what committing the cancellation does, what blocks it, restoring the documents, documents sent to a tax authority, and the messages you may see."
 entities: [DocumentCancelDocument]
 menu: Basic → Documents → Document Cancel Document
 ---

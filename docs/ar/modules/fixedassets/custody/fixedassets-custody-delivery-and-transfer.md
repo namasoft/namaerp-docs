@@ -1,4 +1,5 @@
 ---
+description: "مستندا تسليم عهدة ونقل عهدة: تسليم الصنف لموظف أو أكثر لأول مرة، وتحويله إلى حائز آخر، وما يفعله اعتماد كل منهما، وكيف يُنقَض."
 entities: [FACustodyDeliveryDoc, FACustodyTransferDocument]
 ---
 

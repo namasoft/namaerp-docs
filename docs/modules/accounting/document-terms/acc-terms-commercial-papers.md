@@ -15,16 +15,18 @@ The paper lifecycle itself is on [Cheques & Financial Papers](/modules/accountin
 Every side on these screens is a full account-side block — account source, subsidiary type,
 narrations and dimension sources — described once in
 [Anatomy of an Account Side](/modules/supplychain/document-terms/doc-term-accounting-effects#Anatomy-of-an-Account-Side).
-A pair posts only when both its debit and its credit are set.
+A pair creates a ledger entry only when both its debit and its credit are set.
+
+![The Endorsing Effect tab of the Openning Commercial Paper term](../../../ar/modules/accounting/images/document-terms/acc-term-commercial-papers-en.png)
 
 ## Options several paper terms share
 
 | Option | Field | What it does |
 |---|---|---|
-| **Shorten Ledger Effect** | `termConfig.shortenLedgerEffect` | Merges ledger lines that share the same account, dimensions and narration, so a portfolio of fifty cheques to one bank posts as one line per side instead of fifty. |
+| **Shorten Ledger Effect** | `termConfig.shortenLedgerEffect` | Merges ledger lines that share the same account, dimensions and narration, so a portfolio of fifty cheques to one bank is recorded as one line per side instead of fifty. |
 | **Apply effects on installments** | `termConfig.applyEffectsOnInstallments` | When the papers pay instalments of an invoice or contract, the document also updates those instalments. |
 | **installment Effect** | `termConfig.installmentEffect` | Which instalment figure the document moves: **Requested Collect**, **Collected By Commercial Paper**, **System Paid** or **None**. |
-| **Reverse Installments Effect** | `termConfig.reverseInstallmentsEffect` | Posts the instalment movement with the opposite sign — for documents that undo an earlier collection. |
+| **Reverse Installments Effect** | `termConfig.reverseInstallmentsEffect` | Records the instalment movement with the opposite sign — for documents that undo an earlier collection. |
 | **Validate Remaining And Installments Total Equality** | `termConfig.validateInstallmentsTotal` | Refuses the save when the instalment lines do not add up to the document: *Total installments does not equal document total*. |
 
 Which of these each term shows is listed with the term below.
@@ -33,7 +35,7 @@ Which of these each term shows is listed with the term below.
 
 The opening document loads papers that existed before go-live, and each line carries the paper's
 current status. So the term has one tab per status, each with a **Debit** and **Credit** side, and a
-line posts on the tab that matches its status:
+line is recorded using the tab that matches its status:
 
 | Tab | Fields | Lines with status |
 |---|---|---|
@@ -73,8 +75,8 @@ Each document then adds its own:
 
 The bank notice tells you what happened to deposited papers, and each line has its own **notice
 type**. The term has a tab per type, and each tab has *two* pairs — **Debit / Credit** and
-**Debit 2 / Credit 2** — that post side by side on the same paper value. Use the second pair only when the
-same paper value must also be posted to a second pair of accounts; leave it empty otherwise.
+**Debit 2 / Credit 2** — that are recorded side by side on the same paper value. Use the second pair only when the
+same paper value must also be recorded on a second pair of accounts; leave it empty otherwise.
 
 | Tab | Fields | Lines of type |
 |---|---|---|
@@ -135,14 +137,14 @@ with an empty pair refuses the save: *Please enter deduction 1 account sides* (2
 
 ## FP Transfer
 
-Moving papers from one party to another posts a "from" side and a "to" side:
+Moving papers from one party to another records a "from" side and a "to" side:
 
 | Group on screen | Field | Account of |
 |---|---|---|
 | **From Debit / From Credit** | `termConfig.debit`, `termConfig.credit` | The party the papers leave. |
 | **To Debit / To Credit** | `termConfig.issuedDebit`, `termConfig.issuedCredit` | The party the papers go to. |
 
-Each side posts when it is set, so you may fill, say, From Credit and To Debit only. The term refuses
+Each side is recorded when it is set, so you may fill, say, From Credit and To Debit only. The term refuses
 to save unless the number of debit sides equals the number of credit sides: *Debit and Credit sides
 count must be equal*.
 

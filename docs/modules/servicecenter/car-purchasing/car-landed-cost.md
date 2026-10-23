@@ -72,6 +72,8 @@ The chain, step by step:
 If the condition later stops holding — you remove the service lines, or untick the term option — the
 generated document is deleted again on re-processing.
 
+![The Generation tab of the Car Purchase Invoice term, with Create Receipt Additional Cost With Service Items](../../../ar/modules/servicecenter/images/car-purchasing/car-purchase-term-additional-cost-en.png)
+
 ## The worked example
 
 `SIPI-2026-021`, 10 February 2026. Six cars at 74,000, and three service lines:

@@ -16,13 +16,15 @@ Purchase invoices are not sent to the authority (a purchase isn't an invoice iss
 The most distinctive thing about a freight invoice is that it keeps two sets of lines:
 
 1. **Service lines (Details)** — the operational lines the user enters, with their cost, selling price, and all their keys (port, container, commodity…).
-2. **E-Invoice Details** — an **automatically generated** list, rebuilt on every posting, and the one actually sent to the authority.
+2. **E-Invoice Details** — an **automatically generated** list, rebuilt on every save, and the one actually sent to the authority.
 
-Why two lists? Because what you need operationally (a line per service per port and container) differs from what the authority expects (clean, consolidated items). At posting, the system consolidates the operational lines into e-invoice lines by: **service item, currency, exchange rate, the four tax percentages, and the discount percentages** — lines matching on these keys are merged into a single e-invoice line. Any e-invoice line with a zero price is dropped before sending.
+Why two lists? Because what you need operationally (a line per service per port and container) differs from what the authority expects (clean, consolidated items). On save, the system consolidates the operational lines into e-invoice lines by: **service item, currency, exchange rate, the four tax percentages, and the discount percentages** — lines matching on these keys are merged into a single e-invoice line. Any e-invoice line with a zero price is dropped before sending.
 
 ::: info Don't edit the e-invoice lines manually
-These lines are a computed result, regenerated on every posting from the operational lines. Edit the operational lines and let the system build the electronic version.
+These lines are a computed result, regenerated on every save from the operational lines. Edit the operational lines and let the system build the electronic version.
 :::
+
+![An FRM Sales Invoice](../../ar/modules/freight/images/einvoicing/frm-sales-invoice-screen-en.png)
 
 ## The agent model: cost versus commission
 

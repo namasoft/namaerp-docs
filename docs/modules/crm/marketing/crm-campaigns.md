@@ -94,7 +94,7 @@ The group titled **المتوقع والفعلى / Expectations And Actuals** lo
 expected and actual cost, expected and actual sales count, expected and actual response count,
 expected and actual return on investment.
 
-::: danger Nothing here is calculated, and nothing here is posted
+::: danger Nothing here is calculated, and nothing here creates a ledger entry
 All eight boxes are **free-typed numbers**. Nothing sums the campaign's real spend, nothing counts
 responses, nothing counts sales, and nothing divides one number by another to produce a return on
 investment. The *actual* boxes are not filled by the system at any point, under any condition —

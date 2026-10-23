@@ -1,4 +1,5 @@
 ---
+description: "Managing bank loans from request to repayment: loan types, the Bank Loan master file and its statuses, Loan Issue, interest calculation, instalment payments, rescheduling and amendment, with the related buttons and reports."
 entities: [BankLoan, BankLoanRequest, LoanIssue, LoanInstallmentPayment, LoanInterestsCalculation, BankLoanScheduling, BankLoanChangingDoc, BankLoanType]
 menu: Banks → Bank Loans → Bank Loan
 ---
@@ -17,15 +18,15 @@ Every screen hangs off the **Banks > Bank Loans** root in the menu tree. The loa
 
 1. **Bank Loan Request** — an optional first step to document the loan request before it's approved.
 2. **Bank Loan** — the master file holding the full loan terms (its initial status is "Initial").
-3. **Loan Issue** — the moment the loan amount actually arrives (it posts to the ledger, and the loan's status flips to "Released").
+3. **Loan Issue** — the moment the loan amount actually arrives (it creates a journal entry, and the loan's status flips to "Released").
 4. **Bank Loan Scheduling** — to redistribute the installments when needed.
 5. **Loan Interests Calculation** — to compute and lock in the period's interest.
-6. **Loan Installment Payment** — repaying one (or more) installments with its principal, interest and any late fine (it posts to the ledger).
+6. **Loan Installment Payment** — repaying one (or more) installments with its principal, interest and any late fine (it creates a journal entry).
 7. **Bank Loan Changing Document** — to amend the loan after it's been issued.
 
 ## Loan type
 
-Before recording loans, a **Bank Loan Type** (`Banks > Bank Loans > Bank Loan Type`) is created as a classifying file that groups similar loans and unifies their accounting terms. It's an organizational matter that makes later reporting and posting easier.
+Before recording loans, a **Bank Loan Type** (`Banks > Bank Loans > Bank Loan Type`) is created as a classifying file that groups similar loans and unifies their accounting terms. It's an organizational matter that makes later reporting and accounting easier.
 
 ## The loan master file
 
@@ -54,14 +55,14 @@ The loan moves through these statuses, which advance automatically with the move
 | Status | When |
 |---|---|
 | Initial | when the loan is saved before being issued. |
-| Released | after the loan issue document posts. |
+| Released | after the loan issue document is saved. |
 | In Progress | while installments are being paid. |
 | Finished | after all installments and interest are fully paid. |
 | Cancelled | on cancellation. |
 
 ## Issuing the loan
 
-As long as the loan is in its initial status it's just an agreement on paper. When a **Loan Issue** (`Banks > Bank Loans > Loan Issue`) is recorded the amount actually arrives: the document posts to the ledger so the loan is booked against the bank and deposited into the account, and the loan's status flips to "Released". The issue term covers the sides: **loan value debit/credit**, **fees value debit/credit** (with **fees tax**), and **interest value debit/credit** — i.e. where the accounts for the loan principal, its fees and its interest come from. (The detail of where these accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
+As long as the loan is in its initial status it's just an agreement on paper. When a **Loan Issue** (`Banks > Bank Loans > Loan Issue`) is recorded the amount actually arrives: the document creates a journal entry that records the loan against the bank and deposited into the account, and the loan's status flips to "Released". The issue term covers the sides: **loan value debit/credit**, **fees value debit/credit** (with **fees tax**), and **interest value debit/credit** — i.e. where the accounts for the loan principal, its fees and its interest come from. (The detail of where these accounts come from is in the [Document terms](./support/accounting-document-terms.md) reference.)
 
 ![Loan Issue screen](../../ar/modules/accounting/images/loans/loan-issue-en.png)
 
@@ -69,7 +70,7 @@ As long as the loan is in its initial status it's just an agreement on paper. Wh
 
 As the loan periods pass, a **Loan Interests Calculation** is recorded to lock in the period's due interest according to the chosen interest type.
 
-Then comes the **Loan Installment Payment** (`Banks > Bank Loans > Loan Installment Payment`) to repay one or more installments. The document shows the loan totals (total installments, interest, paid and remaining), and its lines separate the **installment principal**, the **interest paid** and the **late fine** (computed automatically from the late days and fine percent). The document posts via the sides: **fine debit/credit**, **interest payment value debit/credit**, plus the collected-principal side.
+Then comes the **Loan Installment Payment** (`Banks > Bank Loans > Loan Installment Payment`) to repay one or more installments. The document shows the loan totals (total installments, interest, paid and remaining), and its lines separate the **installment principal**, the **interest paid** and the **late fine** (computed automatically from the late days and fine percent). The document records its entry on the sides: **fine debit/credit**, **interest payment value debit/credit**, plus the collected-principal side.
 
 ![Loan Installment Payment screen](../../ar/modules/accounting/images/loans/loan-installment-payment-en.png)
 
@@ -113,7 +114,7 @@ Almost nothing in the loan system is typed line by line — the schedules are ge
 
 ## For Support
 
-- **"The loan is still Initial and the amount hasn't arrived"** — the loan issue document hasn't been recorded yet; issuing is what posts the amount and moves the status to "Released".
+- **"The loan is still Initial and the amount hasn't arrived"** — the loan issue document hasn't been recorded yet; issuing is what records the amount in the ledger and moves the status to "Released".
 - **"Where do the loan, fees and interest accounts come from?"** — from the **Loan Issue** and **Installment Payment** terms; see [Document terms](./support/accounting-document-terms.md).
 - **"The late fine isn't computed"** — make sure the **allowed late days** and **late fine percent** are set on the loan.
 - **"The loan doesn't draw down the facility limit"** — make sure the loan is linked to the correct **facility limit**; details in [Credit Facilities](./credit-facilities.md).

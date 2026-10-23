@@ -15,6 +15,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 [إعدادات التأثيرات المحاسبية](/ar/modules/supplychain/document-terms/doc-term-accounting-effects).
 ولا يُنشئ الزوج قيدًا إلا إذا ضُبط مدينه ودائنه كلاهما.
 
+![تبويب تأثير التظهير في توجيه إفتتاح ورقة تجارية](../images/document-terms/acc-term-commercial-papers-ar.png)
+
 ## خيارات تشترك فيها عدة توجيهات
 
 | الخيار | الحقل | ماذا يفعل |

@@ -28,7 +28,7 @@ The master files that describe what you own, and the screen where you read an as
 
 <LandingGrid>
   <LandingCard icon="🏭" title="Master Files and Setup" link="/modules/fixedassets/master-files/fixedassets-asset-master.md" details="The Fixed Asset screen, asset types, the five classification levels, locations, components, statuses, and the creation document." />
-  <LandingCard icon="🧾" title="Document Terms" link="/modules/fixedassets/document-terms/fixedassets-terms-basics.md" details="The توجيه behind each document: which accounts it posts to, and the options that change what a document does." />
+  <LandingCard icon="🧾" title="Document Terms" link="/modules/fixedassets/document-terms/fixedassets-terms-basics.md" details="The توجيه behind each document: which accounts its journal entries use, and the options that change what a document does." />
 </LandingGrid>
 
 ## Getting Assets In

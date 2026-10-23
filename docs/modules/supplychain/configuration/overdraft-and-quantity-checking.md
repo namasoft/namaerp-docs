@@ -1,4 +1,5 @@
 ---
+description: "The Overdraft & Quantity Checking tab: when stock may go negative, the immediate and by-date balance checks, the overdraft policy and the document and term switches, manufacturing and assembly exceptions, reservation, and the messages shown."
 entities: [ConfigEntry]
 menu: Inventory → Settings → Supply Chain Configurations
 ---
@@ -19,6 +20,8 @@ Whether a line is subject to these checks is decided by an overdraft policy, eva
 
 So an item whose policy is **No** is blocked on its own (unless step 1 lets it through); nothing on the document term is needed for that.
 :::
+
+![The Overdraft & Quantity Checking tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-overdraft-and-quantity-checking-en.png)
 
 ## Switches on the document and its term
 

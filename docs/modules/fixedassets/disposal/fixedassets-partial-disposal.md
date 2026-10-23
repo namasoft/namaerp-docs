@@ -153,7 +153,7 @@ one — the new asset record for the salvaged part. All of it happens on commit.
 | The count must be consistent with what the asset actually holds | you cannot dispose of more units than exist, or more than are currently in |
 | Nothing may be recorded on the asset **after** the document's value date | the pro-rata figures are computed against balances at that date; a later document would be built on the wrong base |
 | The asset may not be in its initial state, and may not already be fully disposed of | there is no value on the books to take out |
-| Depreciation must be sequential up to the document's period | the accumulated depreciation removed must be the real posted figure |
+| Depreciation must be sequential up to the document's period | the accumulated depreciation removed must be the figure really recorded in the ledger |
 | If the created-assets grid is filled, the term must name a fixed asset purchase book and term | those rows become a real acquisition document |
 
 The depreciation rule is the only one with an escape hatch. The partial disposal's term carries an
@@ -162,7 +162,7 @@ option — written in Arabic as *السماح بعمل سند تخلص جزئي 
 
 ::: tip Think before switching that option on
 It does not change the arithmetic; it only removes the check. The accumulated depreciation the entry
-takes out is still whatever is actually posted in the ledger up to the value date, so with earlier
+takes out is still whatever is actually recorded in the ledger up to the value date, so with earlier
 periods missing you will remove less depreciation than the desks really carry, and the gain will come
 out correspondingly higher. Use the option when you genuinely need to record a disposal ahead of a
 backlog, and expect to fix the difference afterwards; do not leave it switched on as a convenience.

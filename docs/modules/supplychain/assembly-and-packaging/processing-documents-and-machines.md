@@ -1,4 +1,5 @@
 ---
+description: "The Assembly Machine and Processing Document screens: describing a machine's inputs, outputs and hourly cost once, then recording each run as a Processing Document, what it calculates, what saving creates, and direct labour."
 entities: [ProcessingDoc, AssemblyMachine]
 menu: Inventory → Assembly Documents → Processing Document
 ---

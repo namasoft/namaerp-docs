@@ -1,4 +1,5 @@
 ---
+description: "Selling car insurance with a car sale: the two required licences, the records the area is made of, the insurance company file, insurance programmes as rate cards and how one is chosen, and where the policy pages continue."
 entities: [SIInsuranceProgram, InsuranceCompany, ExternalAgency]
 ---
 # Selling Insurance with a Car
@@ -76,7 +77,7 @@ The value is in the grid: **one row per price band**.
 | Column | Arabic | What it holds |
 |---|---|---|
 | **From Car Sale Price** | من سعر بيع السيارة | Lower bound of the band. Required. |
-| **To Car Sale Price** | إلى سعر بيع السيارة | Upper bound. Required. |
+| **To Car Sale Price** | إلى سعر بيع السيارة | Upper bound. Required. A row whose From is above its To is refused with *From car price {0} must be less than  to car price {1}* — «سعر السيارة من {0} يجب أن يكون أقل من سعر السيارة إلى {1}». |
 | **Item** | الصنف | Optional. Narrows the row to one model. |
 | **Brand** | الماركة | Optional. Narrows the row to one [brand](/modules/servicecenter/workshop-setup/servicecenter-brands-and-models.md). |
 | **Insurance Percentage** | نسبة التأمين | The negotiated rate for the band. Required. |

@@ -1,4 +1,5 @@
 ---
+description: "Creating a Virtual Entity from one SQL SELECT so it can be used like a real table in the Report Wizard and Dashboard Widget Wizard: the Edit Mappings dialog, column mapping, what happens on save, a worked report example, pitfalls and who should have access."
 entities: [VirtualEntity]
 menu: Administration → Reports → Virtual Entity
 ---

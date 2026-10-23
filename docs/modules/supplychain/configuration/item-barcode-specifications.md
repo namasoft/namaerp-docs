@@ -6,6 +6,8 @@ menu: Inventory → Settings → Supply Chain Configurations
 
 This page documents the **Barcode Specifications** tab — the rules that tell the system how to read a composite/structured barcode and turn it into an item plus its properties and quantity.
 
+![The Item Barcode Specs tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-item-barcode-specifications-en.png)
+
 ## The Concept
 
 A retail or warehouse barcode is often **not** just the item code. It can be a single string that packs the item code together with extra properties and a quantity, weight, or price. A classic example is a deli/produce scale label where one scanned barcode contains the item code plus the weighed quantity or the total price.

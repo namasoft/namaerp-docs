@@ -10,7 +10,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Automatically creates journal entries (accounting vouchers) from any document in the system, enabling automatic posting of accounting effects to the ledger.
+Automatically creates journal entries (accounting vouchers) from any document in the system, so that their accounting effects are recorded in the ledger automatically.
 
 ## When This Action Runs
 

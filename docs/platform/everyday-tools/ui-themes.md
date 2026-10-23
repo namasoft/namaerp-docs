@@ -1,4 +1,5 @@
 ---
+description: "Themes in the modern interface: picking a theme and switching between light and dark, the dark top bar and menu, setting a company's default theme, building custom themes, and the thirteen built-in system themes."
 entities: [GUITheme]
 menu: Administration → Display Customization → New GUI Theme
 ---

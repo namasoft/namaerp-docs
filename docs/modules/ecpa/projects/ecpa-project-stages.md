@@ -1,4 +1,5 @@
 ---
+description: "The Project Stage document: scheduling phases with targeted and expected dates, late days, attaching income and cost documents, the profit roll-up, committing without double counting, and extending a stage."
 entities: [CPAProjectStage]
 menu: Project Management → Projects → Project Stage
 ---

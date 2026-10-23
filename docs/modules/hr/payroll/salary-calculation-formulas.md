@@ -120,7 +120,7 @@ Not every employee is paid a monthly component-driven salary. For daily-wage sta
 | Document Code (Book / Code) | The document's own numbering. |
 | Term (توجيه المستند) | The document term that governs its numbering and accounting. |
 | Issue Date / Value Date | When it was written up, and the accounting date it takes effect on. |
-| Fiscal Period / Subsidiary | The accounting period and the ledger subsidiary it posts against. |
+| Fiscal Period / Subsidiary | The accounting period and the ledger subsidiary it is recorded against. |
 | From Date / To Date | The date range this daily-wage run covers. |
 
 A **Collect Employees** block (from/to employee, department, branch, sector, job/organization position, nationality, health-insurance company, and more) combined with the **Collect Employees** (تجميع الموظفين) button pulls in every matching employee in one pass, rather than adding them one at a time.
@@ -137,9 +137,9 @@ Each collected employee gets a **Details** line with: **Daily Wage** (days count
 
 The **Component Calculation Formula** screen has no buttons of its own.
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
-Unlike a Salary Component — which relies entirely on the component's own account lines carried through a monthly [Salary Document](salary-documents.md) — **Daily Salary posts its own accounting effect directly**. Its document term configures separate debit and credit sides for the Daily Wage Total, the Overtime Total, Other Additions, Deduction Total, and Other Deductions, each posted as its own background business request. If a Daily Salary document's processing fails, it is retried the same way as any other business request, from the Business Requests view.
+Unlike a Salary Component — which relies entirely on the component's own account lines carried through a monthly [Salary Document](salary-documents.md) — **Daily Salary creates its own accounting effect directly**. Its document term configures separate debit and credit sides for the Daily Wage Total, the Overtime Total, Other Additions, Deduction Total, and Other Deductions, each processed as its own background business request. If a Daily Salary document's processing fails, it is retried the same way as any other business request, from the Business Requests view.
 
 ## Messages you may see
 

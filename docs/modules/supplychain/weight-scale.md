@@ -1,4 +1,5 @@
 ---
+description: "Setting up the Weight Scale Configuration (barcode formats and station terminals) and using the Issue Preparation Document to turn scale readings into stock movements, including what to do when the scale gives no reading."
 entities: [WeightScaleConfig, WeightScalePreparationDoc, WeightScalePrepGenerator]
 menu: Inventory → Weight Scale → Weight Scale Configuration
 ---
@@ -38,7 +39,25 @@ Sometimes the scale is out of order or the load cannot sit on it, and the operat
 
 Every line of the preparation document records where its weight came from in the **Weight Sent By Device** column: ticked for a scale reading, clear for a typed one. Filter on it to review manual entries.
 
+### Which lot a preparation line takes
+
+When lots are collected for the lines of a Weight Scale Preparation Document, they are normally taken in the usual
+lot order. Tick **Collect Lots From Smallest Sufficient Quantity, Otherwise From Largest** (group **Collect Lots** on the
+document's term) to keep big lots intact: for each line the lot whose available quantity is the smallest one that still
+covers the whole line is taken first; when no single lot covers it, the largest lot comes first and the same rule is
+repeated for the rest.
+
 ## Actions on this screen
+
+**On the Stock Issue Request and the Raw Material Issue Request:**
+
+- **Split Line By Maximum Quantity** — breaks a long line into lines the scale can handle one by one. Tick the lines in
+  the **Selected** column (or just stand on one line), press the action and enter the **Maximum Quantity Per Line**: a
+  line of 2,500 kg split at 1,000 becomes lines of 1,000, 1,000 and 500, placed right under the original. The new lines
+  start fresh — no line code, no status, no preparation document — and get their own line codes when the request is
+  saved. Lines already *Packaged* or *Canceled* are left as they are. One split may create at most 200 lines.
+  Split the line here rather than copying it on the preparation document: a copied line carries the same line code, and
+  the preparation document refuses it.
 
 **On the Weight Scale Preparation Generator:**
 
@@ -54,6 +73,11 @@ Every line of the preparation document records where its weight came from in the
 | *The [Average Time Taken Field] returned {0} rows for the issue request {1}, it should return {2} rows* — «تم إيجاد عدد سطور {0} للحقل {الوقت المستغرق} في طلب الصرف المخزني {1}, ولكن ينبغي أن يوجد {2} سطر» | The **Average Time Taken Field** in the scale configuration reads a field on the issue request, and it gave back a different number of values than the request has lines, so the generator cannot pair them up. | Point the setting at a field that sits on the request's own lines, so it yields exactly one value per line. |
 | *The field {Average Time Taken Query} returned {0} rows for the issue request {1}, it should return {2} rows* — «تم إيجاد عدد سطور {0} للحقل {إستعلام الوقت المستغرق} في طلب الصرف المخزني {1}, ولكن ينبغي أن يوجد {2} سطر» | The same mismatch when the average time comes from the configuration's **Average Time Taken Query** instead of a field — the query returned the wrong number of rows. | Fix the query so it returns one row per line of the issue request. |
 | *The {Order By Field} returned {0} rows for the issue request {1}, it should return {2} rows* — «تم إيجاد عدد سطور {0} للحقل {الترتيب بناءاً على حقل} في طلب الصرف المخزني {1}, ولكن ينبغي أن يوجد {2} سطر» | The same mismatch on one of the sorting rules: an **Order By Field** in the configuration's ordering methods did not yield one value per line. | Use a line-level field in the ordering method, or remove that ordering line. |
+| *Please select the line you want to split* — «من فضلك اختر السطر المراد تقسيمه» | **Split Line By Maximum Quantity** was pressed with no line ticked and no line under the cursor. | Tick the lines in **Selected**, or click a line, then press the action again. |
+| *Maximum quantity per line must be greater than zero* — «أقصى كمية للسطر يجب أن تكون أكبر من صفر» | The **Maximum Quantity Per Line** was left empty, zero or negative. | Enter a positive quantity. |
+| *You cannot split a line whose status is Packaged or Canceled* — «لا يمكن تقسيم سطر حالته تم التعبئة أو ألغيت» | Every line you chose has already been packed or canceled at the scale. When only some of them are, the others are split and you see *Lines whose status is Packaged or Canceled were not split* — «لم يتم تقسيم السطور التي حالتها تم التعبئة أو ألغيت». | Nothing to do for packed or canceled lines; choose the lines still waiting. |
+| *Splitting would create too many lines. Please increase the maximum quantity per line* — «التقسيم سينشئ عدداً كبيراً جداً من السطور. من فضلك قم بزيادة أقصى كمية للسطر» | The line quantity divided by the maximum gives more than 200 lines. | Enter a larger maximum quantity per line. |
+| *Line code {0} is repeated at line {1}. Split the line from the issue request instead of copying it* — «كود السطر {0} مكرر في السطر {1}. قم بتقسيم السطر من طلب الصرف بدلاً من نسخه» | A new line on the preparation document was copied from another one, so both carry the same line code, which must be unique. | Delete the copy and split the line on the issue request with **Split Line By Maximum Quantity**. |
 | *Already prepared* — «تم التحضير بالفعل» | Every line of every issue request in the generator's grid is already attached to a preparation document, so there is nothing left to prepare. | Refresh the grid with **Documents To Prepare**; the requests you are looking at have been through the scale already. |
 | *Maximum execution time for each weight preparation document is zero. Please check average execution time of issue requests Lines* — «أقصى وقت تنفبذ لسند تحضير الميزان صفر. يرجى مراجعة متوسط وقت التنفيذ لسطور طلبات الصرف» | The generator adds up the average execution time of the lines it is about to prepare and gets zero, so it has no basis on which to split them into documents. | Fill the average time — through the field or the query in the scale configuration — on the issue request lines, then generate again. |
 

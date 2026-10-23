@@ -1,4 +1,5 @@
 ---
+description: "Reference for the EnhancedTable dashboard widget: the JSON structure, table options and server-side paging, column definitions, formatting and renderers, conditional formatting, a complete example, moving from the classic Table widget, and the pivot (cross-tab) layout."
 entities: [DashBoardWidget]
 menu: Administration → DashBoards → DashBoard Widget
 ---

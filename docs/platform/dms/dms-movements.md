@@ -116,7 +116,7 @@ Editing a committed movement does not rewrite its history rows or re-derive the 
 and cancelling one leaves the history rows behind and leaves the document stuck in the state the
 movement gave it.
 
-Get movements right the first time. If you do post a wrong one, the only remedy is a compensating
+Get movements right the first time. If you do commit a wrong one, the only remedy is a compensating
 movement in the opposite direction — the erroneous history row stays on the record permanently.
 :::
 

@@ -35,7 +35,7 @@ It also carries the insurance context the invoice will need — **Medical Insura
 Class**, **Company Endurance Percent** and **Patient Endurance Percent**, the price classifiers — plus the
 patient's **Accommodation Info** (building, section, floor, room, bed) and a **Price Info** block.
 
-The request posts nothing and has no buttons of its own. Its read-only **Surgery Invoice** field stays empty
+The request creates no accounting effect and has no buttons of its own. Its read-only **Surgery Invoice** field stays empty
 until an invoice is saved from it, and is what tells you the request has been billed.
 
 ![Surgery request](../../ar/modules/hms/images/clinical/surgery-req-en.png)
@@ -59,7 +59,7 @@ the option ticked, the room's gap field becomes mandatory too, so the room file 
 
 A **Surgery Approval** records that the patient (or guardian) agreed to the operation: **Patient Admission**,
 **Patient**, **Doctor**, **Surgery Type**, **Medical Document Category** and up to five attachments for the
-signed forms. It has no buttons, posts nothing, and no other document checks for it — it is the hospital's
+signed forms. It has no buttons, creates no accounting effect, and no other document checks for it — it is the hospital's
 record, kept against the admission.
 
 ![Surgery approval](../../ar/modules/hms/images/clinical/surgery-approval-en.png)
@@ -193,10 +193,10 @@ which has no agreed price, so its whole actual price is required. The header sho
 each filling the other) gives **Required Net After Discount**. The lines are rebuilt from the admission's
 invoices on every save.
 
-On save, the invoice posts three amounts, each only when the term has both sides of its pair: the total
+On save, the invoice records three amounts, each only when the term has both sides of its pair: the total
 **Difference** (Difference Debit / Credit), the total **Revenue Difference** (Revenue Difference Debit /
 Credit) and the header discount (Invoice Discount Debit / Credit). The individual invoices have already
-posted the patient's and insurer's receivables; this document posts only the settlement against the
+recorded the patient's and insurer's receivables; this document records only the settlement against the
 package.
 
 The package invoice has no buttons of its own.

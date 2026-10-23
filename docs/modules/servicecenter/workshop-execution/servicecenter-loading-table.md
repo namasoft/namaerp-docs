@@ -85,6 +85,6 @@ is left over. Keep the four shares within 100 % so the sheet reads as a real spl
 
 ## Effects
 
-The loading table moves no stock and posts no accounting entry. Its only footprint is the set of
+The loading table moves no stock and creates no accounting entry. Its only footprint is the set of
 day-capacity rows described above — which is also why deleting or re-issuing a sheet is something to
 do deliberately, with an eye on the days it covers.

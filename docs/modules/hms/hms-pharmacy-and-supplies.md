@@ -29,7 +29,7 @@ A **Pharmacy** (Hospital Management System → Pharmacies → Pharmacy) is the d
 invoice is issued from — the main pharmacy, an inpatient pharmacy, an outpatient window. The file is
 deliberately small: a code, a group, the Arabic and English names, a **Subsidiary Accounts** block and the
 dimensions. That accounts block is the point of the file — it makes each pharmacy an accounting party, so
-the pharmacy's revenue or stock movement can be posted to its own account.
+the pharmacy's revenue or stock movement can be recorded on its own account.
 
 A **Blood Bank** (Hospital Management System → Blood Banks → Blood Bank) has the same shape — basic
 information, Subsidiary Accounts and dimensions — and plays the same role for blood units.
@@ -68,7 +68,7 @@ the stock issue goes with it. If you empty the grid, the stock issue is deleted.
 For the pharmacy invoice and the other stock invoices on this page, the stock document is created only
 when the document term's **Generation** tab names a **Generation Book** and a **Generation Term**. Those
 two fields decide which book and term the stock issue (or, for a return, the stock receipt) is saved
-under. Leave either one empty and the invoice still bills and posts, but no stock moves.
+under. Leave either one empty and the invoice still bills and creates its entry, but no stock moves.
 :::
 
 ![The Related Documents tab of a pharmacy invoice](../../ar/modules/hms/images/invoicing/hms-pharmacy-invoice-related-en.png)
@@ -80,7 +80,7 @@ under. Leave either one empty and the invoice still bills and posts, but no stoc
 item grid, but saving it creates a **stock receipt** instead of a stock issue — the Related documents
 tab lists it under **Stock Receipt**. It has no overhead grid.
 
-The return posts through the same accounting sides as the invoice (patient value, insurance value,
+The return is recorded through the same accounting sides as the invoice (patient value, insurance value,
 discounts, taxes, cost), and nothing in it reverses the direction for you: the return's own document term
 must hold the sides the other way round from the invoice's term. Give the return term the patient value
 on the credit side where the invoice term has it on the debit side, and so on for each pair.

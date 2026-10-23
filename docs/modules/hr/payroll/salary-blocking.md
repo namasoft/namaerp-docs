@@ -1,4 +1,5 @@
 ---
+description: "How to hold and release an employee's pay: the Salary Block Rule that holds pay automatically, the Salary Block and Salary UnBlock documents, and Partial Salary Payment templates for paying out only part of a salary."
 entities: [SalaryBlockRule, SalaryBlockDocument, SalaryUnBlockDocument, PartialSalaryPayment]
 ---
 # Salary Blocking & Partial Payment
@@ -61,19 +62,19 @@ Notice there is **no amount** on the template — it selects *which components* 
 
 ![Partial Salary Payment template](../../../ar/modules/hr/images/payroll/partial-salary-payment-en.png)
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
-::: info The partial-payment template drives a Payment Voucher — and the voucher is what posts
-This is the part worth getting right. Neither the block document, the unblock document, nor the partial-payment template posts anything to the general ledger by itself — the block/unblock documents are pure HR controls that gate *whether* salary can be paid, and the partial-payment record is only a component-selection template.
+::: info The partial-payment template drives a Payment Voucher — and the voucher is what creates the entry
+This is the part worth getting right. Neither the block document, the unblock document, nor the partial-payment template creates any general-ledger entry by itself — the block/unblock documents are pure HR controls that gate *whether* salary can be paid, and the partial-payment record is only a component-selection template.
 
-The real cash-out is a **Payment Voucher** (a standard accounting payment document): when an operator pays part of a salary, they issue a payment voucher and attach the **Partial Salary Payment** template to it, which tells the voucher *which* salary components (and rewards/penalties) are being paid out in this instalment. It is the **payment voucher** that posts the actual debit/credit to the ledger — crediting cash/bank and settling the salary payable for the selected components — as a background **business request** with a **processing status**, retryable from the **Business Requests** view. The partial-payment file supplies the *what*; the voucher does the paying and the posting.
+The real cash-out is a **Payment Voucher** (a standard accounting payment document): when an operator pays part of a salary, they issue a payment voucher and attach the **Partial Salary Payment** template to it, which tells the voucher *which* salary components (and rewards/penalties) are being paid out in this instalment. It is the **payment voucher** that records the actual debit/credit in the ledger — crediting cash/bank and settling the salary payable for the selected components — as a background **business request** with a **processing status**, retryable from the **Business Requests** view. The partial-payment file supplies the *what*; the voucher does the paying and creates the entry.
 :::
 
 ## Workflow
 
 1. **(Optional) Define a block rule** under **Payroll > Settings > Salary Block Rule** with the conditions that should automatically hold pay, and choose Any / All.
 2. **Block the pay** — either let a rule generate the **Salary Block**, or raise one by hand for the employee and period. Set *Regenerate Committed Salary Documents* if the pay was already calculated.
-3. **Pay partially if needed** — set up a **Partial Salary Payment** template listing the components to release, then issue a **Payment Voucher** referencing it to actually pay (and post) that portion.
+3. **Pay partially if needed** — set up a **Partial Salary Payment** template listing the components to release, then issue a **Payment Voucher** referencing it to actually pay (and record) that portion.
 4. **Release the hold** — when the situation resolves, raise a **Salary UnBlock** from the block, restoring normal payment.
 
 ## Actions on this screen

@@ -1,4 +1,5 @@
 ---
+description: "The Queue Service Branch record and its counter console: the service day and its start time, the two ticket lists and their actions, why tickets are not documents, and how the job order closes a ticket."
 entities: [QueueServiceBranch, SrvCJobOrder]
 menu: Service Center → Queue Service → Queue Service Branch
 ---

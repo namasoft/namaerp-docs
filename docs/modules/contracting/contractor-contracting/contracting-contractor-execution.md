@@ -1,4 +1,5 @@
 ---
+description: "The Contractor Contract Execution: recording measured subcontractor quantities per period rather than as a running total, filling the grid, what saving checks and committing changes, and how the subcontractor extract picks the quantities up."
 entities: [ContractorContractExecution]
 menu: Contracting → Contractor Contracting → Contractor Contract Execution
 ---

@@ -7,7 +7,7 @@ description: "Landing page for POS server-side setup: the register master file, 
 
 # POS — Server-Side Setup
 
-The rest of the POS guide is about the register: selling, taking payment, closing a shift. But every register is set up — and everything it does is collected — on the Nama server, under the **Point of sale** menu. That is where you decide which warehouse a register sells from, how its invoices are numbered, what happens to the cash when a shift closes, which accounts a sale posts to and what each cashier is allowed to do.
+The rest of the POS guide is about the register: selling, taking payment, closing a shift. But every register is set up — and everything it does is collected — on the Nama server, under the **Point of sale** menu. That is where you decide which warehouse a register sells from, how its invoices are numbered, what happens to the cash when a shift closes, which accounts a sale is recorded on and what each cashier is allowed to do.
 
 These pages are for the people who configure and support registers. They answer the questions that arrive as tickets: *"the shift is not reset at close"*, *"how do we change the invoice prefix?"*, *"why can't the cashier close the shift?"*.
 
@@ -31,7 +31,7 @@ Every change you make here reaches the registers through the normal data sync, s
 
 <LandingGrid>
   <LandingCard icon="🔢" title="Numbering POS Documents" link="/modules/pos/erp-setup/pos-document-numbering.md" details="How a register builds invoice and shift codes, and how to change the prefix, digits, date part and starting number." />
-  <LandingCard icon="💵" title="Shift Opening, Closing & Cash-Reset Settings" link="/modules/pos/erp-setup/pos-shift-close-settings.md" details="What shift documents hold, Shift Close Reset Cash, the settings that block a close, and how differences post." />
+  <LandingCard icon="💵" title="Shift Opening, Closing & Cash-Reset Settings" link="/modules/pos/erp-setup/pos-shift-close-settings.md" details="What shift documents hold, Shift Close Reset Cash, the settings that block a close, and how differences are recorded." />
 </LandingGrid>
 
 ## Accounting and control

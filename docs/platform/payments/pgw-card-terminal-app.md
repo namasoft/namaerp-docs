@@ -1,3 +1,6 @@
+---
+description: "Installing and setting up PGW, the Windows program that links Nama on the cashier's PC to a Geidea, Neoleap or InterPay card machine: prerequisites in Nama, COM and TCP/IP connections, testing, upgrading, the transaction log and messages."
+---
 # PGW: Installing and Setting Up the Card Terminal Program
 
 A card machine on the counter cannot talk to a web page. Nama runs in the cashier's browser, and the Geidea, Neoleap or InterPay machine is connected to the cashier's PC by a cable or sits on the shop network. **PGW** (Namasoft Payment Gateway) connects the two. It is a small Windows program installed on the cashier's PC. On one side it waits for Nama on port `7842` of that PC. On the other side it speaks the card machine's own language. When the cashier presses **Pay Invoice**, the browser hands the amount to PGW. PGW sends it to the machine, waits for the customer's card, and returns the result.

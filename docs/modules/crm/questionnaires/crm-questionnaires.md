@@ -1,4 +1,5 @@
 ---
+description: "The CRM Questionair document, one respondent's filled-in survey: how to create and fill one, how to get the survey to the respondent, and what is available for reading the results."
 entities: [CRMQuestionair]
 menu: Customer Relationship Management → Questionairs → Questionair
 ---

@@ -12,7 +12,7 @@ menu: Basic → Documents → Exchange Rate
 
 Every legal entity points at a **Ledger** (دفتر الحسابات), and the ledger's **Main Currency** is that legal entity's local currency — the currency the books are kept in. Every amount on a document is stored twice: in the document's own currency, and as a **Local amount** in the main currency. The link between the two is the **Currency Rate** on the document: *local amount = amount × rate*. A rate of 48.5 on a USD invoice means one dollar is worth 48.5 units of the local currency.
 
-The ledger also has a **Reporting Currency** field. It is the default currency of the [consolidated statements](../../modules/accounting/consolidated-statements.md): when their own Reporting Currency is left empty, they present the group in the reporting currency of the ledger of the company you are logged into. Nothing is posted in it, so unlike the main currency it can be changed at any time, even after the ledger is in use.
+The ledger also has a **Reporting Currency** field. It is the default currency of the [consolidated statements](../../modules/accounting/consolidated-statements.md): when their own Reporting Currency is left empty, they present the group in the reporting currency of the ledger of the company you are logged into. Nothing is recorded in it, so unlike the main currency it can be changed at any time, even after the ledger is in use.
 
 Once a legal entity uses a ledger, its main currency is fixed — changing it is refused with *Cannot change record after using it*.
 
@@ -102,5 +102,5 @@ Most of these have no Arabic text in the product and appear in English on Arabic
 | *Fiscal year does not belong to the ledger calendar {0}* | The fiscal year belongs to another calendar than the ledger's. | Pick a year of the ledger's calendar. |
 | *Fiscal period does not belong to the selected fiscal year {0}* | The period and the year do not match. | Pick a period of that year. |
 | *Cannot change record after using it* — «لا يمكن تعديل السجل بعد إستخدامه» | You changed the main currency, chart type or calendar of a ledger that a legal entity uses. | These cannot change once the ledger is in use. |
-| *Currency must be the account currency ({0}) or the local currency ({1}). Account {2}, transaction currency {3}* — «يجب ان تكون العملة عملة الحساب {0} أو العملة المحلية {1}. الحساب {2} - عملة الحركة {3}» | A line posts to an account held in one foreign currency using a different foreign currency. | Use the account's currency or the local currency on that line. |
+| *Currency must be the account currency ({0}) or the local currency ({1}). Account {2}, transaction currency {3}* — «يجب ان تكون العملة عملة الحساب {0} أو العملة المحلية {1}. الحساب {2} - عملة الحركة {3}» | A line records an amount on an account held in one foreign currency using a different foreign currency. | Use the account's currency or the local currency on that line. |
 | *Rate must be 1 because the currency is the same as the local currency* — «المعدل يجب ان يكون 1.0» | A line in the local currency carries a rate other than 1. | Set the rate to 1. |

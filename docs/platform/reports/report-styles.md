@@ -1,4 +1,5 @@
 ---
+description: "Creating Report Styles that hold a reusable look for wizard report and form fields: where a style applies and where it does not, attaching one to a field, what an empty style means, the appearance, font, paragraph, border and padding settings, and a practical set."
 entities: [ReportStyle]
 menu: Administration → Reports → Report Style
 ---

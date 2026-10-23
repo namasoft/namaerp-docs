@@ -1,3 +1,6 @@
+---
+description: "How the Nama ERP licence works: where it lives, what it limits (modules, concurrent users, user levels, legal entities, POS machines), how to read it, and every reason a screen or field can be missing, in checking order."
+---
 # Licensing, and Why a Screen or Field Is Missing
 
 Most "I can't see it" tickets have the same handful of causes: a customer who bought a module but cannot find its screens, a field that was added but never appears, a morning when nobody can log in, a user refused while colleagues work normally. The licence decides some of these outright, and the rest are settings that sit right next to it. This page covers the licence — where it lives, what it limits, how to read it — and then works through every reason a screen or a field can be missing, in the order worth checking them.

@@ -1,4 +1,5 @@
 ---
+description: "إرسال الفواتير والإيصالات الإلكترونية إلى مصلحة الضرائب المصرية: الاتصال بالبوابة، وأكواد الأصناف EGS وGS1، والبيانات البنكية وشروط الدفع، وتسجيل أجهزة نقاط البيع، والتوقيع بالختم الإلكتروني، والتصرف حين لا ترد البوابة، وإلغاء فاتورة مقبولة."
 entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc, DocumentCancelDocument, Bank, BankAccount, DocumentTerm]
 menu: الأساسيات ← إعدادات مصلحة الضرائب ← إعدادات مصلحة الضرائب
 ---

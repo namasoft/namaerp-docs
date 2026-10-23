@@ -29,7 +29,7 @@ Every time an execution is saved, it rebuilds the documents it is responsible fo
 
 A generated document that ends up with no lines is deleted. One that has lines but no book or term stops the save with *To generate {0}, you must define book and term for it* — an English-only message — so fill the blocks for every document your executions will really produce.
 
-Each block has a **Consider Approval For Generating …** switch (اعتبار الموافقة على إنشاء …). Ticked, the generated document goes through its own approval cycle instead of being committed straight away — useful when, say, resource vouchers must be checked by cost accounting before they post.
+Each block has a **Consider Approval For Generating …** switch (اعتبار الموافقة على إنشاء …). Ticked, the generated document goes through its own approval cycle instead of being committed straight away — useful when, say, resource vouchers must be checked by cost accounting before they are committed.
 
 ![The Settings tab of a Production Execution term with its generation blocks](../../../ar/modules/manufacturing/images/document-terms/mfg-term-execution-en.png)
 

@@ -1,3 +1,6 @@
+---
+description: "How cost recorded against contract terms is pushed onto Real Estate units: a second route into estate cost, where the estate link comes from, the queued background run, the recursive split down the estate hierarchy, and cost before and after hand-over."
+---
 # Pushing Cost onto Real Estate Units
 
 A contractor working on somebody else's land only ever needs cost per **term**: what did the blockwork

@@ -95,7 +95,7 @@ alongside the hand-over:
 | 1 March | `SITLR-2026-0288` — traffic letter request | Asks for the letter; pushes the chassis, engine and key data onto `CAR-000318`; status → *Traffic Letter Requested* |
 | 2 March | `SITL-2026-0296` — traffic letter | Records the issued letter; refreshes the same technical data; status → *Traffic Letter Issued* |
 
-Neither posts anything. The plate, `ر ط ص 8318`, is typed onto the car record on 5 March when the
+Neither creates any journal entry. The plate, `ر ط ص 8318`, is typed onto the car record on 5 March when the
 plates come back — by a person, on the car's own screen.
 
 ## Actions on these screens

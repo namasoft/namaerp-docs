@@ -1,10 +1,13 @@
 ---
+description: "The Item Properties tab: in which documents lot, serial, revision, size and color, and measures are entered, item dimension options, production and expiry dates, active and inactive percentages, and the checks when editing linked stock documents."
 entities: [ConfigEntry]
 menu: Inventory → Settings → Supply Chain Configurations
 ---
 # Item Properties Configuration
 
 This page documents the **Item Properties** tab. It controls the tracking properties carried on each stock line — **lot** (shipment), **serial number**, **revision**, **size & color**, and **measures** — plus the active/inactive percentages and sub-item. These settings decide where each property is entered, how it is suggested and validated, and how strictly it is checked when documents are edited or matched to invoices.
+
+![The Item Properties tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-item-properties-en.png)
 
 ## Where Each Property Is Entered
 

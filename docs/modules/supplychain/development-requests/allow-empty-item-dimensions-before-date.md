@@ -34,6 +34,8 @@ On each tracking dimension in the item configuration you'll find two new fields:
 Both fields are treated as **critical (dangerous) fields**. Turning them on, or changing the cut-off date, requires the appropriate privilege and is recorded as a critical-field change. They directly affect what the system will and won't accept on inventory documents, so they're not meant to be flipped casually on a live database.
 :::
 
+![Allow Empty Values Before Date on the Lot Configurations block of Item Configurations](../../../ar/modules/supplychain/images/items/item-config-allow-empty-before-date-en.png)
+
 ## How It Behaves in Practice
 
 The key distinction the feature draws is between stock **leaving or moving** and stock **being created**.

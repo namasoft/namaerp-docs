@@ -28,7 +28,7 @@ title: الأصول الثابتة
 
 <LandingGrid>
   <LandingCard icon="🏭" title="الملفات والإعدادات" link="/ar/modules/fixedassets/master-files/fixedassets-asset-master.md" details="شاشة الأصل الثابت، وأنواع الأصول، ومستويات التصنيف الخمسة، والمواقع، والمكونات، والحالات، وسند إنشاء الأصول." />
-  <LandingCard icon="🧾" title="توجيهات المستندات" link="/ar/modules/fixedassets/document-terms/fixedassets-terms-basics.md" details="التوجيه وراء كل مستند: الحسابات التي يرحّل إليها، والخيارات التي تُغيّر ما يفعله المستند." />
+  <LandingCard icon="🧾" title="توجيهات المستندات" link="/ar/modules/fixedassets/document-terms/fixedassets-terms-basics.md" details="التوجيه وراء كل مستند: الحسابات التي تستعملها قيوده، والخيارات التي تُغيّر ما يفعله المستند." />
 </LandingGrid>
 
 ## إدخال الأصول
@@ -53,7 +53,7 @@ title: الأصول الثابتة
 نقل الأصول بين المواقع والإدارات والشركات — وإثبات وجودها فعليًا مرة كل عام.
 
 <LandingGrid>
-  <LandingCard icon="🚚" title="نقل الأصول والجرد" link="/ar/modules/fixedassets/movement/fixedassets-transfer-document.md" details="ما ينقله سند النقل فعليًا وما يرحّله، وطلبات النقل، والنقل بين الشركات بالقيمة الدفترية، والخروج المؤقت والرجوع، ومستند جرد الأصول." />
+  <LandingCard icon="🚚" title="نقل الأصول والجرد" link="/ar/modules/fixedassets/movement/fixedassets-transfer-document.md" details="ما ينقله سند النقل فعليًا وأثره المحاسبي، وطلبات النقل، والنقل بين الشركات بالقيمة الدفترية، والخروج المؤقت والرجوع، ومستند جرد الأصول." />
 </LandingGrid>
 
 ## إخراج الأصول

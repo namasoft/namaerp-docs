@@ -1,4 +1,5 @@
 ---
+description: "How to put job order tasks on hold with the Pending Operation document and back to work with Resuming Operation, the Work Stop Reasons file, and what a suspension does and does not do."
 entities: [SrvcPendingOperation, SrvcResumeOperation, SrvCWorkStopReason]
 ---
 # Suspending and Resuming Work
@@ -119,7 +120,7 @@ order on the shop-floor screen, the first thing to check is whether it is still 
 
 ## Both documents in one sentence each
 
-Neither document moves stock, neither posts an accounting entry, and neither generates any other
+Neither document moves stock, neither creates an accounting entry, and neither generates any other
 document. Both belong to the
 [workshop document term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md)
 family and show a **توجيه المستند / Term** field that they do not actually require — you may leave

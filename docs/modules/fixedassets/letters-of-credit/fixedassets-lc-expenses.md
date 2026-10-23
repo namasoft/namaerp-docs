@@ -252,7 +252,7 @@ remainder.
 
 ## What reaches the ledger
 
-The expense document posts. One debit-and-credit pair per system line — that is, per machine per
+The expense document creates a journal entry: one debit-and-credit pair per system line — that is, per machine per
 expense item — plus any tax and discount lines the term configures:
 
 | | Account | Debit | Credit |

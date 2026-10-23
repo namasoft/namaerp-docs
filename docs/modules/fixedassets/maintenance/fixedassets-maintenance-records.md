@@ -138,7 +138,7 @@ The **Maintenance Value** field holds what the visit cost. It is saved, it is se
 and it is exactly the number you want when you compare this quarter's service bill with last
 quarter's or one contractor with another.
 
-It is not accounting. The maintenance record posts nothing to the general ledger, and the amount
+It is not accounting. The maintenance record creates no entry in the general ledger, and the amount
 does not touch the asset: cost stays where it was, accumulated depreciation stays where it was, and
 next month's depreciation instalment is calculated as though the visit never happened. The contractor's
 invoice reaches the ledger through the ordinary purchasing and payables route, as an expense, like

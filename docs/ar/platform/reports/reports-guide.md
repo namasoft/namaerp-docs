@@ -268,6 +268,9 @@ NamaRep.getAttachment($F{attachmentId})
 ```
 :::
 
+المهمة المجدولة ليس فيها مستخدم يختار القيم، فتمرّر لمدخل القائمة سجل
+[قيم متعددة لمدخل تقرير](/ar/platform/reports/multi-value-report-parameters) محفوظًا بدلًا من ذلك.
+
 ### مدخلات نطاق التاريخ
 
 مدخلا «من تاريخ» و«إلى تاريخ» منفصلين يعملان بلا مشكلة، لكنهما يشغلان صفَّين ولا شيء على الشاشة يخبر المستخدم أنهما مرتبطان. وخاصية `showAsDateRange` تعطي المستخدم منتقيَ نطاق واحداً بينما يحتفظ الاستعلام بمدخلَي التاريخ الحقيقيين اللذين يحتاجهما.
@@ -574,26 +577,23 @@ OpenBracket, CloseBracket
 
 - **`defaultValue`** — نص يُقرأ بحسب نوع المدخل: التاريخ بصيغة `dd-MM-yyyy`، والوقت بصيغة `yyyy-MM-dd'T'HH:mm:ss.SSS`، والمرجع بصيغة `id:entityType:code`.
 
-::: details دوال القيم الافتراضية الديناميكية
-```
-$now()                  $today()
-$monthStart()           $monthEnd()
-$yearStart()            $yearEnd()
-$quarterStart()         $quarterEnd()
-$thirdStart()           $thirdEnd()
-$halveStart()           $halveEnd()
-$previousMonthStart()   $previousMonthEnd()
-$nextMonthStart()       $nextMonthEnd()
-$previousYearStart()    $previousYearEnd()
-$nextYearStart()        $nextYearEnd()
-$currentFiscalPeriod()  $currentUser()
-$currentUserEmployee()  $currentUserRelatedSubsidiary()
-$todayPlusDays(n)       $todayMinusDays(n)
-$todayPlusWeeks(n)      $todayMinusWeeks(n)
-$todayPlusMonths(n)     $todayMinusMonths(n)
-$todayPlusYears(n)      $todayMinusYears(n)
-```
-:::
+تُحسب الرموز المتحرّكة أدناه لحظة فتح شاشة التشغيل لا لحظة كتابة التقرير، فيظلّ تقرير كُتب في يناير يفتح على الفترة الصحيحة في ديسمبر. ويقبل عمود **القيمة الافتراضية** في معالج التقارير الرموز نفسها.
+
+| الرمز | ما يتحوّل إليه |
+|---|---|
+| `$today()` و `$now()` | تاريخ اليوم / اللحظة الحالية |
+| `$monthStart()` و `$monthEnd()` | أول وآخر يوم في الشهر الحالي |
+| `$previousMonthStart()` و `$previousMonthEnd()` | الشهر السابق |
+| `$nextMonthStart()` و `$nextMonthEnd()` | الشهر التالي |
+| `$yearStart()` و `$yearEnd()` | أول وآخر يوم في السنة الحالية |
+| `$previousYearStart()` و `$previousYearEnd()` و `$nextYearStart()` و `$nextYearEnd()` | السنة السابقة / التالية |
+| `$quarterStart()` و `$quarterEnd()` | الربع الحالي |
+| `$halveStart()` و `$halveEnd()` و `$thirdStart()` و `$thirdEnd()` | نصف السنة الحالي / ثلث السنة الحالي |
+| `$todayPlusDays(7)` و `$todayMinusDays(7)` | عدد من الأيام بعد اليوم أو قبله |
+| `$todayPlusWeeks(2)` و `$todayMinusWeeks(2)` | المثل بالأسابيع |
+| `$todayPlusMonths(3)` و `$todayMinusMonths(3)` | المثل بالشهور |
+| `$todayPlusYears(1)` و `$todayMinusYears(1)` | المثل بالسنوات |
+| `$currentUser()` و`$currentUserEmployee()` و`$currentUserRelatedSubsidiary()` و`$currentFiscalPeriod()` | مدخلات المراجع: المستخدم الذي يشغّل التقرير، وملفه كموظف، وذمته، والفترة المالية الحالية |
 
 وهذه الدوال تخص `defaultValue` وحدها. و`$currentUser()` على وجه الخصوص يملأ قيمة افتراضية — وليست قيمة تستطيع قراءتها بـ `$P{}` من داخل التقرير.
 

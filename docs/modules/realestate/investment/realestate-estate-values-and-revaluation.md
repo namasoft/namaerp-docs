@@ -1,4 +1,5 @@
 ---
+description: "How an investment fund's estate carrying value is built: the value chain and its sequence rules, the Estate Purchase Contract, the Estate Addition, revaluation that restates estates and splits the profit across investors, and selling out of the fund."
 entities: [RERevaluationDoc, REPurchaseContract, REEstateAddition]
 ---
 # Estate Values, Additions and Revaluation
@@ -224,12 +225,12 @@ management percentage on the fund or the investor's settings on a finance additi
 the grid.
 :::
 
-### What gets posted
+### What gets recorded
 
-The revaluation is the one document in this chain with a full accounting effect, and it posts **per
+The revaluation is the one document in this chain with a full accounting effect, and it records it **per
 investor line**, not per estate. Its term offers four pairs:
 
-| Value posted | Pair |
+| Value recorded | Pair |
 |---|---|
 | management profit value | the management-profit pair |
 | main investor commission value | the main-investor-commission pair |
@@ -237,7 +238,7 @@ investor line**, not per estate. Its term offers four pairs:
 | reinvested profit | the reinvested-profit pair |
 
 Each pair fires only when both of its sides are configured, and if all four pairs are left empty the
-document posts nothing at all. Amounts are in the legal entity's ledger main currency, and the
+document creates no entry at all. Amounts are in the legal entity's ledger main currency, and the
 investor on the line is the subsidiary on both sides of the entry.
 
 The term is described in

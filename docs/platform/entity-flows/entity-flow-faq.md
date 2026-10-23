@@ -1,4 +1,5 @@
 ---
+description: "Answers to common Entity Flow questions: setting a generic reference field, fixing doubled accounting effects, deleting related documents with a purchase invoice, adding a bank charges effect, fetching selling and last purchase prices, calculating the warehouse, and saved records that skip approval."
 entities: [EntityFlow]
 menu: Administration → Display Customization → Entity Flow
 ---

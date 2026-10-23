@@ -1,4 +1,5 @@
 ---
+description: "How production cost is built and closed: direct materials, labour and machine time, overhead types and the Actual Production Overhead document, closing or terminating an order with the Order Close, variance analysis, cost per batch, and the terms that control it."
 entities: [OrderCloseVoucher, OverheadType, ActualOverheadCalculator, ActualProductionOverhead]
 menu: Manufacturing → Documents → Order Close
 ---
@@ -388,7 +389,7 @@ Several settings control how costing works:
 
 **Overhead**: If specified, overrides the production order's overhead type. Useful if you have a special overhead allocation for certain situations.
 
-**Do Not Update Accounting Effects With Actual Values**: The overhead lines always post their planned overhead value, even after an Actual Production Overhead document has distributed actual figures onto the voucher. Use it when the actual overheads are distributed for analysis but the books must keep the planned figure.
+**Do Not Update Accounting Effects With Actual Values**: The overhead lines always record their planned overhead value, even after an Actual Production Overhead document has distributed actual figures onto the voucher. Use it when the actual overheads are distributed for analysis but the books must keep the planned figure.
 
 ### Overhead Type Configuration
 

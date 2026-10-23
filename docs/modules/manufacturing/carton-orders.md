@@ -38,7 +38,7 @@ Start a new carton order and fill in the essentials:
 
 **Book** (الدفتر) and **Term** (الشرط): These control numbering and automatic document generation settings
 
-**Subsidiary**: If this order should post to a specific subsidiary account (advanced accounting feature)
+**Subsidiary**: If this order's entries should be recorded on a specific subsidiary account (advanced accounting feature)
 
 **Tax Plan**: If sales taxes apply, select the tax plan
 
@@ -246,7 +246,7 @@ Carton orders are full invoicing documents. They implement the standard Nama inv
 **Tax integration**: Tax plans with multiple tax types (VAT, local taxes, etc.)
 **Payment tracking**: Link to payment receipts (if configured)
 **Accounting effects**: Can generate accounting entries when committed (if term is configured)
-**Subsidiary accounting**: Can post to customer subsidiary ledgers
+**Subsidiary accounting**: Can record entries on customer subsidiary ledgers
 
 The **Money** section calculates exactly like a sales invoice. Discounts reduce prices, taxes apply to after-discount amounts, and the total matches what you'd invoice the customer.
 

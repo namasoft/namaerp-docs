@@ -86,7 +86,7 @@ invoice is kept as it is.
 For a patient who is still in hospital, the button leaves an admission's invoices untouched when the stay began on or before the date of the last **Closing Entry** of the admission's company — those days belong to a closed year. It says so with a warning naming the admission, the first day of the stay and the closing date, and moves on to the next admission.
 
 ::: tip Supervision is billed on its own invoice
-The accommodation invoice posts the bed price. The medical-supervision fee of the same days is billed
+The accommodation invoice records the bed price. The medical-supervision fee of the same days is billed
 by a **Supervision Invoice** that the accommodation invoice creates when its term has *Auto Generate
 Supervision Invoice* ticked — one line per day, skipping rooms ticked *Do Not Create Room Supervision
 Invoice*. See [Invoice Document Terms](./document-terms/hms-terms-invoices.md).

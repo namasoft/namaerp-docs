@@ -1,10 +1,11 @@
 ---
+description: "The real estate Sales Contract: filling its blocks and commissions grid, what committing it does to the unit and the receivable, its journal entry including advance income and installment tax, contracts versus extensions, and its validations."
 entities: [RESalesDoc]
 menu: Real Estate and Property → Sales → Sales Contract
 ---
 # The Sales Contract
 
-Everything before this point in the [sales cycle](/modules/realestate/sales/realestate-sales-cycle.md) is about intent. A sales offer is a price on paper. A temporary reservation is a promise to hold a unit for a few days. Even a confirmed reservation only books the deposit the customer handed over, and a preliminary contract — however detailed — posts nothing at all.
+Everything before this point in the [sales cycle](/modules/realestate/sales/realestate-sales-cycle.md) is about intent. A sales offer is a price on paper. A temporary reservation is a promise to hold a unit for a few days. Even a confirmed reservation only books the deposit the customer handed over, and a preliminary contract — however detailed — creates no entry at all.
 
 The sales contract is where the sale becomes real. Committing it marks the unit sold, writes the buyer onto it, turns the payment plan into a receivable, and produces the one journal entry that recognises the price of the property. **It is the only document in the sales family that books the revenue of the sale itself**, and every downstream document — collection vouchers, fines, handover, waiver — hangs off it.
 
@@ -38,7 +39,7 @@ Four party fields and one employee:
 | **Broker** (وسيط) | the real-estate broker |
 | **Sales Man** (مندوب المبيعات) | your own employee, or a third party |
 
-Two things are worth knowing here. First, the **Buyer** is mandatory unless the term switches *Has Buyer* (له مشتري) off — it is on by default, and you want it on for a real sale. Second, the **Broker** field is informational: naming a broker in the header does not create a commission line and does not post anything. Commissions are entered by hand in the commissions grid further on, and they are what actually books money. The broker master file itself is described in the [catalogue page](/modules/realestate/costs/realestate-fee-commission-and-expense-types.md).
+Two things are worth knowing here. First, the **Buyer** is mandatory unless the term switches *Has Buyer* (له مشتري) off — it is on by default, and you want it on for a real sale. Second, the **Broker** field is informational: naming a broker in the header does not create a commission line and does not create any entry. Commissions are entered by hand in the commissions grid further on, and they are what actually books money. The broker master file itself is described in the [catalogue page](/modules/realestate/costs/realestate-fee-commission-and-expense-types.md).
 
 Just below the parties sits a small group of three read-only fields — the waiver document, a *waivered* marker and a *handed over* marker. You never fill these; they light up when a [waiver](/modules/realestate/sales/realestate-waiver-and-cancellation.md) or a [handover](/modules/realestate/sales/realestate-handover.md) is issued against the contract.
 
@@ -56,7 +57,7 @@ Page 1, *Terms And Fees*, carries three grids that all end up as money.
 
 **Fees Info Lines** is a generator, not a list of charges. One line describes a *recurring* fee — a percentage or a value, how many of them, over what period, starting when, rounded to what multiple, and of which fee type. Pressing **Create Fees** (إنشاء الرسوم) expands those descriptions into the real **Other Fees** grid, dating the generated lines from the down-payment date (or the document value date if there is none) and sorting them by fee date.
 
-**Other Fees** is where the actual charges live, whether they were generated or typed straight in: fee type, fee value, the line's own subsidiary, the fee date, and *Add To Installments* (إضافة إلى الأقساط), which folds the fee into the generated schedule instead of leaving it standing alone. The accounts for these lines come from **the fee type's own Fee Debit and Fee Credit** — one of the few places in the module where accounts are read from a master file rather than from the document term. A term option, *Prevent Acc Effects For Other Fees Lines*, suppresses those postings entirely if you would rather account for fees another way.
+**Other Fees** is where the actual charges live, whether they were generated or typed straight in: fee type, fee value, the line's own subsidiary, the fee date, and *Add To Installments* (إضافة إلى الأقساط), which folds the fee into the generated schedule instead of leaving it standing alone. The accounts for these lines come from **the fee type's own Fee Debit and Fee Credit** — one of the few places in the module where accounts are read from a master file rather than from the document term. A term option, *Prevent Accounting Effects For Other Fees Lines*, suppresses those ledger lines entirely if you would rather account for fees another way.
 
 **Terms** (the clause grid on the same page) holds the contract's own conditions text, usually copied in from a standard-terms master file. The separate *Terms* page at index 3 is the structured version — one row per standard clause with a planned end date, an extended end date, a fulfilment date and any extension fines. Both are described on the [owners and standard clauses page](/modules/realestate/properties/realestate-owners-and-contract-clauses.md).
 
@@ -87,7 +88,7 @@ Paying the broker afterwards is a completely separate step: an ordinary payment 
 Because both sides come from the commission type, a commission type with only one side configured books **nothing at all** — silently. If commissions are missing from a journal entry, check the commission type's accounts first.
 :::
 
-If the sale is later given up, the [waiver document](/modules/realestate/sales/realestate-waiver-and-cancellation.md) can post the same commission types with their sides swapped, which is how a commission recognised here is unwound.
+If the sale is later given up, the [waiver document](/modules/realestate/sales/realestate-waiver-and-cancellation.md) can record the same commission types with their sides swapped, which is how a commission recognised here is unwound.
 
 ## What committing the contract does
 
@@ -105,7 +106,7 @@ Saving the contract is instant; the effects are produced as a **business request
 
 The entry is assembled from a series of independent blocks, each drawing its accounts from a different pair of sides on the [sales document term](/modules/realestate/document-terms/realestate-terms-sales.md). The universal rule applies throughout: **a block is only produced when both of its sides are configured.** A half-configured pair is skipped in silence, which is the single most common reason for a journal entry that looks short.
 
-| What is posted | Where its accounts come from |
+| What is recorded | Where its accounts come from |
 |---|---|
 | Installment lines routed per installment type | the **Confiuration List** (سطور إعدادات التوجيه) grid on the term — each row routes one installment type to its own pair |
 | Installments due **in this fiscal year** | *Income Debit* / *Income Credit* |

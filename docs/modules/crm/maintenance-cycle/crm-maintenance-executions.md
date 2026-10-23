@@ -1,4 +1,5 @@
 ---
+description: "The Maintenance Order Execution, the technician's sheet for each machine: producing executions from an order, what the technician sees, what it records, and how the fitted spare parts leave the store through the invoice or the issue button."
 entities: [MnOrderExecution]
 menu: Customer Relationship Management → Maintenance Documents → Maintenance Order Execution
 ---

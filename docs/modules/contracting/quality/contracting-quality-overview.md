@@ -1,3 +1,6 @@
+---
+description: "Site Quality Control in Contracting: the thirteen quality screens as records rather than approval gates, where they live and their licence, their shared shape and document term, who signs and what that means, and the answer choices."
+---
 # Site Quality Control
 
 Every construction site runs on paper. Before a slab is poured somebody signs that the steel is right; when a lorry of cement arrives somebody signs that it is the cement that was ordered; when the fire loop is pressurised somebody writes down what the gauge said. Those signed sheets live in a folder in the site office, and when the consultant asks "who checked this?", the folder is the answer.
@@ -15,7 +18,7 @@ Start here, because it is the assumption that most often needs correcting.
 - Committing a **Pre-Concrete Inspection** does not permit the pour. The pour is permitted by the engineer on site who decides to permit it.
 - Approving an **Activity Inspection Request** does not release the corresponding quantities for certification. [Project Execution](/modules/contracting/project-contracting/contracting-project-execution.md) and the [extract](/modules/contracting/project-contracting/contracting-project-extracts.md) do not look for an inspection and never will.
 - A failed inspection does not hold up a payment. The [extract](/modules/contracting/project-contracting/contracting-project-extracts.md) does not read quality documents, so an unacceptable verdict costs the subcontractor nothing until somebody raises a [fine](/modules/contracting/contractor-contracting/contracting-contractor-fines.md) or withholds a quantity by hand.
-- No quality document creates another document, changes another document's state, posts a journal entry or moves stock. Not one of the thirteen has an accounting or inventory effect.
+- No quality document creates another document, changes another document's state, creates a journal entry or moves stock. Not one of the thirteen has an accounting or inventory effect.
 
 That is not a shortcoming to work around silently — it is worth telling your site team, because the natural expectation is the opposite.
 

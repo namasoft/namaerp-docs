@@ -1,4 +1,5 @@
 ---
+description: "ملف المريض، وحجز مواعيد العيادات الخارجية وجداولها، وتنويم المريض الداخلي عبر إستمارة دخول المريض، وتوثيق التشخيص والحالة الصحية."
 entities: [HMSPatient, HMSPatientAdmission, HMSOutpatientReservation, HMSOutpatientSchedule, HMSPatientDiagnosis, HMSPatientHealthStatus, HMSQuestionnaireTemplate, HMSQuestion]
 menu: نظام إدارة المستشفيات ← الملفات ← مريض
 ---

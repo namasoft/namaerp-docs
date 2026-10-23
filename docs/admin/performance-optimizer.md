@@ -63,7 +63,7 @@ Use this when only some users suffer from slow screens, such as head-office staf
 
 Each line must tick at least one of the six "Ignore …" boxes. The two "Apply Ignore To …" boxes only extend the dimension ignores. They do nothing for **Ignore View Capability**, which only ever affects lists, searches and lookups.
 
-A dimension is only filtered at all when it takes part in access control: the legal entity always does, and the other four do only when **Prevent Access on Inconsistency** is on for them in [Global Configuration → Dimensions](/platform/global-config/global-config-dimensions). Ticking **Ignore Sector** while sectors are not used for access changes nothing.
+A dimension is only filtered at all when it takes part in access control: the legal entity always does, and the other four do only when **Accessibility Enabled** is on for them in [Global Configuration → Dimensions](/platform/global-config/global-config-dimensions). Ticking **Ignore Sector** while sectors are not used for access changes nothing.
 
 ## How the lines combine
 

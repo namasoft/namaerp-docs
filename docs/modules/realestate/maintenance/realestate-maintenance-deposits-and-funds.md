@@ -1,4 +1,5 @@
 ---
+description: "The two maintenance money streams in Real Estate: the maintenance deposit agreed on the sales contract, collected as installment lines and the accounts it hits, the maintenance fund record and how units join it, and booking the return earned on the parked money."
 entities: [REMaintenanceFund, REMaintenanceDepositProfit, RESalesDoc]
 ---
 # Maintenance Deposits and Maintenance Funds

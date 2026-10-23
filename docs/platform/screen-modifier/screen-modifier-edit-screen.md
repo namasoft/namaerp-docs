@@ -14,6 +14,8 @@ Most of these changes are far easier to make visually. The [Visual Layout Editor
 
 Throughout this page, anywhere you are asked for a field, you enter its **field id** (the property path, such as `lines.item` or `customer.name`), not its on-screen label. Most of these fields offer suggestions as you type, scoped to the type(s) in *For Type* / *For Type List*.
 
+![The Screen Modifier screen and its tabs](../../ar/platform/screen-modifier/images/screen-modifier-full-en.png)
+
 ## Working with pages (tabs)
 
 | Collection | What it does |

@@ -1,4 +1,5 @@
 ---
+description: "The Car Sales Invoice versus the Car Proforma Sales Invoice: which one is the sale, what the invoice books, its extra fields, the setup rule that keeps stock correct, and what follows the invoice."
 entities: [SISalesInvoice, SIProformaSalesInvoice]
 menu: cars → Car Sales → Car Sales Invoice
 ---
@@ -34,7 +35,7 @@ thing on this page.
 | Moves the car's status, stamps references | Yes | Yes |
 
 Read that table once more from the top: **the pro-forma is not a financial document.** Do not
-present it to anyone as a "provisional posting" or an "invoice awaiting confirmation" — nothing is
+present it to anyone as a "provisional entry" or an "invoice awaiting confirmation" — nothing is
 waiting, because nothing was booked. Its value is entirely that it is a complete, printable,
 priced document with a book and a number, safe to issue outside the company without touching your
 ledger, your tax return or your stock.
@@ -101,8 +102,8 @@ and customs spread over the six cars in the shipment. The invoice generates stoc
 `STI-2026-1201` out of the showroom store `WH-SHOW`, and that issue is what relieves the 76,500 to
 cost of sales.
 
-Note what has already happened before this document: the sales order posted a **5,000** booking
-deposit against its reservation-value accounts back on 24 February. That entry is not touched by the
+Note what has already happened before this document: the sales order recorded a **5,000** booking
+deposit on its reservation-value accounts back on 24 February. That entry is not touched by the
 invoice; it is settled the ordinary way, through the customer's account.
 
 ## The one setup rule that keeps stock correct

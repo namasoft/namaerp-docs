@@ -1,4 +1,5 @@
 ---
+description: "Integrating Nama with ZATCA Fatoora phase 2 in Saudi Arabia: preparing the server, onboarding with Approve System, standard versus simplified invoices, the seller and customer data sent, VAT categories, deadlines, and correcting a sent document."
 entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc]
 menu: Basic → Electronic Tax Authority Configuration → Electronic Tax Authority Configuration
 ---

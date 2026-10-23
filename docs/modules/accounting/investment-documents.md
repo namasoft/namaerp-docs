@@ -1,5 +1,5 @@
 ---
-entities: [InvestmentDoc, InvestmentDocumentFund, InvestmentDocPurchase, InvestmentDocROIProof, AggregatedInvestmentDocROIProof, InvestmentDocClaiming, InvestmentDocumentPurchase, InvestmentDocumentSale, InvestmentDocumentPriceUpdate, ProfitDistributationDoc]
+entities: [InvestmentDoc, InvestmentDocumentFund, InvestmentDocPurchase, InvestmentDocROIProof, AggregatedInvestmentDocROIProof, InvestmentDocClaiming, InvestmentDocumentPurchase, InvestmentDocumentSale, InvestmentDocumentPriceUpdate]
 menu: Banks → Investment Documents → Investment Document
 ---
 
@@ -28,7 +28,7 @@ The **Investment Document** master (`Banks > Investment Documents > Investment D
 
 The bond is brought to life by a chain of documents:
 
-1. **Investment Doc Purchase Document** (`Banks > Investment Documents > Investment Doc Purchase Document`) — the purchase, and the document that **posts**. Its effect carries the **nominal value** debit/credit, plus the **issue discount** and **issue premium (raise)** sides — because a bond is rarely bought exactly at par.
+1. **Investment Doc Purchase Document** (`Banks > Investment Documents > Investment Doc Purchase Document`) — the purchase, and the document that **creates the journal entry**. Its effect carries the **nominal value** debit/credit, plus the **issue discount** and **issue premium (raise)** sides — because a bond is rarely bought exactly at par.
 
    ![The Investment Doc Purchase screen](../../ar/modules/accounting/images/invdocs/investment-doc-purchase-en.png)
 
@@ -51,7 +51,7 @@ One button here saves real work, and it is on the batch document rather than the
 
 ## Profit distribution
 
-When investments yield profit to be shared out among partners, the **Profits Distribution Doc** (`Accounting > Documents > Profits Distribution Doc`) records and distributes it. Its printed form is `SYSF-ACC023`.
+When investments yield profit to be shared out among partners, the **Profits Distribution Doc** (`Accounting > Documents > Profits Distribution Doc`) records and distributes it according to a **Partner shares** record. How the split is calculated and what it books is on [Partner Shares & Profit Distribution](./partner-shares-and-profit-distribution).
 
 ## For Support
 

@@ -1,4 +1,5 @@
 ---
+description: "The Fixed Asset Purchase Request: how staff record an internal request for equipment by name and quantity, the actions on the screen, and how the request knows it has been answered."
 entities: [FAPurchaseRequest]
 menu: Assets → Documents → Fixed Asset Purchase Request
 ---

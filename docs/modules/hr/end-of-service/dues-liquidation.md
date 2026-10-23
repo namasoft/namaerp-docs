@@ -68,7 +68,7 @@ decides *how* its value is worked out and *where* it lands in the ledger.
 | Component Effect Type | نوع التأثير | Whether the line is an **addition**, a **deduction**, or an **other** entry. |
 | Component Calculation Type | طريقة حساب المكون | Fixed value versus a computed formula. |
 | Fixed Value / Maximum Value | القيمة الثابتة / أقصي قيمة | A constant amount, and a ceiling the result can't exceed. |
-| Debit / Credit | مدين / دائن | The GL accounts the component posts to. |
+| Debit / Credit | مدين / دائن | The GL accounts the component is recorded on. |
 | Criteria | المعايير | A filter deciding which employees the component applies to. |
 | Used Automatic with Termination | يستعمل اّليا مع تصفيات إنهاء الخدمة | Auto-add this line to every end-of-service settlement. |
 | Used Automatic with Annual Vacation | يستعمل اّليا مع تصفيات الأجازات السنوية | Auto-add this line to every annual-vacation cash-out. |
@@ -86,7 +86,7 @@ employee criteria.
 
 ### The document term
 
-Like every posting document, the settlement is governed by a **document term** (`توجيه المستند`)
+Like every document with an accounting effect, the settlement is governed by a **document term** (`توجيه المستند`)
 that names the books, the payment voucher settings and the accounting accounts (the gratuity
 expense, the provision-liability account being drawn down, and the loan-recovery account). The term
 is what connects the settlement to the general ledger — see the processing note below.
@@ -155,7 +155,7 @@ with the figure, press **Generate Payment Voucher** (`إنشاء سند صرف`)
 Voucher Request** (`إنشاء طلب صرف`) if payments go through an approval step — and the 21,900 is
 paid out through Treasury.
 
-## How it's processed / what it posts
+## How it's processed / its accounting effect
 
 Saving the settlement is instant; its effect on the general ledger is raised as a background
 **business request** (`طلب أعمال`) with its own **processing status** (`حالة المعالجة`), retryable
@@ -168,7 +168,7 @@ voucher** generated from the settlement: the liquidation books the obligation ag
 expense and liability accounts, and the voucher credits the cash / bank account when it pays. If a
 settlement is edited after it was first committed, Nama re-issues an **update** business request so
 the ledger stays in step; if the term is configured without an accounting effect, the document
-still calculates and pays but posts nothing itself.
+still calculates and pays but creates no entry itself.
 
 Committing the settlement is also the event that **resets the provision accrual**: the accumulated
 end-of-service and vacation liability has now been paid out, so the next accrual cycle starts fresh.

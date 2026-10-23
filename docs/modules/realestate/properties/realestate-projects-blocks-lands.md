@@ -1,4 +1,5 @@
 ---
+description: "Building the land side of the estate tree top-down: RE Projects, Squares, Blocks and RE Land plots, the buttons that generate each next level, block settings such as Accepts Elements and owner details, and where the costs land."
 entities: [REProject, RESquare, REBlock, RELand]
 ---
 # Projects, Squares, Blocks and Land Plots

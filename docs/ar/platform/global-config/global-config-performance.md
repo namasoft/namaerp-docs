@@ -47,7 +47,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **معامل البحث في الكود** `value.info.codeSearchOperator` *(الافتراضي «يحتوي»)* — كيف يُطابَق البحث في حقل الكود: **يحتوي** أو **يبدأ بـ** أو **ينتهي بـ**.
 
-**معامل البحث في الاسم العربي** / **الاسم الإنجليزي** `value.info.name1SearchOperator`, `value.info.name2SearchOperator` *(كلاهما «يحتوي» افتراضياً)* — والمثل مع حقلي الاسم العربي والإنجليزي.
+**معامل البحث في الاسم العربي** / **معامل البحث في الاسم الإنجليزي** `value.info.name1SearchOperator`, `value.info.name2SearchOperator` *(كلاهما «يحتوي» افتراضياً)* — والمثل مع حقلي الاسم العربي والإنجليزي.
 
 ::: tip «يبدأ بـ» أسرع بفارق كبير
 «يحتوي» لا يستطيع الاستفادة من فهرس قاعدة البيانات — فعلى الخادم أن يقرأ كل سطر ويفحص نصه. أما «يبدأ بـ» فيستطيع، وعلى جدول فيه ملايين السجلات يكون الفرق بين إجابة فورية وانتظار ملحوظ. فإن صار البحث بطيئاً مع نمو بياناتك، فتحويل الكود إلى «يبدأ بـ» هو أنجع تغيير مفرد متاح في هذه الشاشة عادةً.
@@ -57,16 +57,45 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 تسري المعاملات الثلاثة أعلاه على كل بحث في النظام. فإن كان ملف رئيسي واحد فقط هو الثقيل، فيمكن ضبط معامل البحث على حقل المرجع ذاك وحده من [أعدادات الحقول و الشاشات](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) — وهي أيضاً الشاشة التي تضيف فيها أعمدة وأكواداً إضافية يبحث فيها حقل المرجع، فيجد المستخدم العميل برقم هاتفه أو رقمه الضريبي بدل اسمه.
 :::
 
-**البحث العربي الذكي في يحتوي** `value.info.smartArabicSearchInContains` *(مفعل افتراضياً)* — تُكتب العربية بصور مختلفة: فالألف تُكتب أ وإ وآ وا بالتبادل، والتاء المربوطة والهاء كذلك، والألف المقصورة والياء أيضاً. ومع تفعيل هذا الخيار يوسّع النظام هذه الحروف إلى صورها، فيجد الباحث عن «محمد» الاسم مهما كُتب أصلاً. ويستحق الإبقاء عليه مفعّلاً مع البيانات العربية دائماً تقريباً.
+**استعمال البحث الذكي للغة العربية** `value.info.smartArabicSearchInContains` *(مفعل افتراضياً)* — تُكتب العربية بصور مختلفة: فالألف تُكتب أ وإ وآ وا بالتبادل، والتاء المربوطة والهاء كذلك، والألف المقصورة والياء أيضاً. ومع تفعيل هذا الخيار يوسّع النظام هذه الحروف إلى صورها، فيجد الباحث عن «محمد» الاسم مهما كُتب أصلاً. ويستحق الإبقاء عليه مفعّلاً مع البيانات العربية دائماً تقريباً.
 
-**البحث بالأسماء المرتبطة في المراجع** `value.info.searchWithConnectedNamesInRefs` — تطابق اقتراحات المراجع أسماء السجلات المرتبطة أيضاً، فكتابة اسم العميل قد تجد العقد الذي يخصه.
+**البحث في المراجع بالاسم متصل** `value.info.searchWithConnectedNamesInRefs` — تطابق اقتراحات المراجع أسماء السجلات المرتبطة أيضاً، فكتابة اسم العميل قد تجد العقد الذي يخصه.
 
-**إظهار «البحث في» في الشريط العلوي** `value.info.showSearchInForTopPanel` — يضيف قائمة اختيار الكيان «البحث في» إلى شريط البحث العلوي، فيضيّق المستخدم بحثه الشامل إلى نوع سجل واحد.
+**عرض حقل "البحث في"** `value.info.showSearchInForTopPanel` — يضيف قائمة اختيار الكيان «البحث في» إلى شريط البحث العلوي، فيضيّق المستخدم بحثه الشامل إلى نوع سجل واحد.
 
-**وجوب اختيار الكيان في «البحث في» قبل البحث على الخادم** `value.info.mustSelectEntityInSearchInBeforeSearchOnServer` — يشترط أن يختار المستخدم كياناً هناك قبل تشغيل أي بحث على الخادم. وعلى قاعدة بيانات كبيرة يمنع هذا بحثاً غير مركّز من مسح كل شيء. وهو يعتمد على الخيار السابق — فيرفض النظام حفظه دون إظهار القائمة، ويخبرك بذلك.
+**يجب اختيار ملف أو مستند في البحث في قبل البحث على الخادم** `value.info.mustSelectEntityInSearchInBeforeSearchOnServer` — يشترط أن يختار المستخدم كياناً هناك قبل تشغيل أي بحث على الخادم. وعلى قاعدة بيانات كبيرة يمنع هذا بحثاً غير مركّز من مسح كل شيء. وهو يعتمد على الخيار السابق — فيرفض النظام حفظه دون إظهار القائمة، ويخبرك بذلك.
 
 **تجاهل ترتيب الكلمات عند البحث** `value.info.ignoreWordOrderInSearch` — يجب في الوضع المعتاد أن يظهر النص الذي يكتبه المستخدم في السجل كما كتبه وبالترتيب نفسه، فلا يجد الباحث عن «محمد أحمد» شيئاً إذا أُدخل العميل باسم «أحمد علي محمد». وبتفعيل هذا الخيار يُقسَّم النص المكتوب إلى كلمات، فيطابِق السجلُ حين يحتوي عليها كلها بأي ترتيب. ويسري على اقتراحات حقول المرجع وعلى البحث في حقول الكود والاسمين في القوائم. وهو يستحق التفعيل حيث تطول الأسماء ويختلف ترتيبها — والأسماء الشخصية العربية قبل كل شيء، إذ يُدخل كل موظف الاسم نفسه بترتيب مختلف.
 
 ::: warning لا يجعل البحث أسرع
 مطابقة الكلمات بأي ترتيب لا تستطيع الاستفادة من فهرس قاعدة البيانات، فيقرأ الخادم كل سطر تماماً كما يفعل مع «يحتوي». فإن كان البحث بطيئاً فليس هذا علاجه، بل «يبدأ بـ» أعلاه. كذلك يظل معامل البحث المضبوط على حقل مرجع بعينه في [أعدادات الحقول و الشاشات](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) متقدماً على هذا الخيار.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل حقول هذه الصفحة باسمها الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه.
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| اقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبه | Max Minutes To Execute SqlField Query | `value.info.maxMinutesToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبه | Max Seconds To Execute SqlField Query | `value.info.maxSecondsToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ الاستعلامات الدورية | Max Seconds To Execute User Timed Queries | `value.info.maxSecondsToExecuteUserTimedQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ استعلام اللوحات | Max Seconds To Execute Dashboard Query | `value.info.maxSecondsToExecuteDashboardQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم | Max Seconds To Execute List View Queries | `value.info.maxSecondsToExecuteListViewQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع | Max Seconds To Execute Reference Suggestion Queries | `value.info.maxSecondsToExecuteListPageQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصى مدة بالثواني لتنفيذ استعلامات التقارير | Max Seconds To Execute Report Queries | `value.info.maxSecondsToExecuteReportsQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| Warn About SQL Statements Taking more than (milliseconds) | Warn About SQL Statements Taking more than (milliseconds) | `value.info.logSqlStatementsTakingMS` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| اقصي عدد من السجلات عند عرض الكل في القوائم | Maximum Records Per Page For List Views when using All | `value.info.maxRecordsPerPageForListViews` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| اقصي عدد مرات اجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت | Max Concurrent List View Operations Count Per User | `value.info.maxListViewCountPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| Max Concurrent List Page Matching Operations Count Per User | Max Concurrent List Page Matching Operations Count Per User | `value.info.maxListPageMatchingRefCountPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| الحد الأقصى لعدد مرات التصدير | Maximum Export Count | `value.info.maxExportCount` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| احتساب عدد مرات الطباعة لكل مستخدم | Count Number Of Prints Per User | `value.info.countPrintsPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| منع المستخدم من تشغيل نفس التقرير مرتين في نفس الوقت | prevent User To Run Same Report Multiple Times | `value.info.prevUserToRunSameRepMultipleTimes` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| معامل البحث في الكود | Code Search Operator | `value.info.codeSearchOperator` | [سلوك البحث](#slwk-lbHth) |
+| معامل البحث في الاسم العربي | Name 1 Search Operator | `value.info.name1SearchOperator` | [سلوك البحث](#slwk-lbHth) |
+| معامل البحث في الاسم الإنجليزي | Name 2 Search Operator | `value.info.name2SearchOperator` | [سلوك البحث](#slwk-lbHth) |
+| استعمال البحث الذكي للغة العربية | Smart Arabic Search In Contains | `value.info.smartArabicSearchInContains` | [سلوك البحث](#slwk-lbHth) |
+| البحث في المراجع بالاسم متصل | Search With Connected Names In References | `value.info.searchWithConnectedNamesInRefs` | [سلوك البحث](#slwk-lbHth) |
+| عرض حقل "البحث في" | Show "Search In" For Top Panel | `value.info.showSearchInForTopPanel` | [سلوك البحث](#slwk-lbHth) |
+| يجب اختيار ملف أو مستند في البحث في قبل البحث على الخادم | Must Select Entity In "Search In" Before Search On Server | `value.info.mustSelectEntityInSearchInBeforeSearchOnServer` | [سلوك البحث](#slwk-lbHth) |
+| تجاهل ترتيب الكلمات عند البحث | Ignore Word Order In Search | `value.info.ignoreWordOrderInSearch` | [سلوك البحث](#slwk-lbHth) |

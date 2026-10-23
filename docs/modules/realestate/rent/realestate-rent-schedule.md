@@ -233,7 +233,7 @@ commission, insurance, water expenses and maintenance you may fill **either** th
 **or** the value on a line, not both — filling both fails with *"One field must be filled"*. Second,
 and more important, the batch document is deliberately narrow. It has **no expenses grid, no other
 fees, no standard terms, no terms and conditions, no yearly rent types and no yearly increase**, and
-it posts no accounting entry of its own — the contracts it creates carry all of that. So it is the
+it creates no accounting entry of its own — the contracts it creates carry all of that. So it is the
 right tool when forty leases really are alike, and the wrong one when each shop has its own service
 charges; anything beyond the plain schedule has to be added on the generated contracts afterwards,
 which means pressing *Create Rents* on each of them and accepting the overwrite.

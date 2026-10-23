@@ -43,6 +43,8 @@ The **distribution type** is either **Normal** or **Composite** (a distribution 
 
 Finally, a distribution can be driven by the **other side** of the entry — "distribute based on the other side's branch / department / sector / subsidiary…" — and narrowed with **other-side criteria**, so the split mirrors how the opposite side of the transaction was analyzed.
 
+![The Account Distribution screen](../../../ar/modules/accounting/images/setup/account-distribution-screen-en.png)
+
 ## For Support
 
 - **"A line won't accept a department / analysis set"** — the account is restricted; check its dimension rules (**restrict to public only** / **don't use with public**).

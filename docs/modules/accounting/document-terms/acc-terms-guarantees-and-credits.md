@@ -1,4 +1,5 @@
 ---
+description: "The document term account sides for letter of guarantee issue, opening, changing and closing documents, and for letters of credit: which account is debited and credited for the value, cash cover, fees, tax and facility usage."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -23,8 +24,10 @@ narrations, dimension sources — described once in
 Others are a **single reference field** that points at an
 [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record. Below, a pair
 marked *(record)* is the second kind: you pick a saved side record rather than filling a block.
-A pair posts only when **both** its debit and its credit are filled in.
+A pair creates a ledger entry only when **both** its debit and its credit are filled in.
 :::
+
+![The Effects tab of the LG Issue term](../../../ar/modules/accounting/images/document-terms/acc-term-guarantees-and-credits-en.png)
 
 ## LG Issue
 
@@ -52,7 +55,7 @@ differ, the document refuses to save with:
 
 *Guarantee Type in the Term and the Document must be the same*
 
-So one term per guarantee type is the usual setup: the bid-bond term can post to bid-bond accounts
+So one term per guarantee type is the usual setup: the bid-bond term can record entries on bid-bond accounts
 without anybody remembering to choose them.
 
 **The Tax Effect tab** carries the tax on the bank's fees.
@@ -73,7 +76,7 @@ set of sides — it holds a grid.
 **LGT Open Lines** `termConfig.lgtopenLines` has one row per guarantee type, each with its own
 covering, fees and LG-value sides (`…guaranteeType`, `…coveringDebit`/`…coveringCredit`,
 `…feesDebit`/`…feesCredit`, `…lgtValueDebit`/`…lgtValueCredit`). For each line of the document the
-system finds the row whose guarantee type matches the line and posts:
+system finds the row whose guarantee type matches the line and records:
 
 - the line's **covered amount** on the row's covering sides,
 - the line's **fees value** on the row's fees sides,
@@ -102,8 +105,8 @@ amount and a pair for the new one.
 | **Guarantee Type** | `termConfig.guaranteeType` | The same type check as on the issue term, with the same message. |
 | **Shorten Ledger Effect** | `termConfig.shortenLedgerEffect` | Merges ledger lines that share the same account, dimensions and narration into one. |
 
-::: warning Old amounts post in the same direction as new ones
-The old-amount pairs are posted exactly as their debit and credit are set, the same way the
+::: warning Old amounts are recorded in the same direction as new ones
+The old-amount pairs are recorded exactly as their debit and credit are set, the same way the
 new-amount pairs are. Nothing reverses them for you. To release the old cover and take the new one,
 set the **Old Covering** pair with its accounts the other way round from **New Covering** — debit
 the account the issue credited, and credit the account the issue debited. The same goes for the old
@@ -117,7 +120,7 @@ the second.
 ## LG Closing
 
 A letter ends in one of three ways, and the closing document's **status** decides which pair of
-sides posts the covered amount:
+sides records the covered amount:
 
 | Status | Group on screen | Field |
 |---|---|---|
@@ -146,7 +149,7 @@ place of *LGT*.
 **Bank LC Opening** is laid out like the LG issue term: facilities, covering, fees (**Fess Debit /
 Fees Credit**), issue fees (**Issue Feeses Debit / Credit**) and the **Tax Effect** tab with tax 1
 and tax 2, **Tax Plan** and **Is Editable Tax**. The amounts come from the opening document in the
-same way, and are always posted in the legal entity's main currency.
+same way, and are always recorded in the legal entity's main currency.
 
 **Bank LC Closing** is laid out like the LG closing term: **Closed**, **Cancel** and **Liquied**
 pairs chosen by the document's status, **Bank LC Amount Debit / Credit**

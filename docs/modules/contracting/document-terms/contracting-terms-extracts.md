@@ -4,11 +4,11 @@ menu: Basic → Settings → Document Term
 ---
 # Extract Document Terms
 
-The extract is the only document in a contracting chain that reaches the ledger, which makes its term the most consequential piece of configuration in the module. Everything an extract posts — the certified work value, the taxes, the discounts, the planned cost, the actual cost, the variances — is a pair of accounts on this one screen. Get it right once per contract type and nobody ever thinks about it again; leave a pair blank and that part of the journal simply never appears.
+The extract is the only document in a contracting chain that reaches the ledger, which makes its term the most consequential piece of configuration in the module. Everything an extract records — the certified work value, the taxes, the discounts, the planned cost, the actual cost, the variances — is a pair of accounts on this one screen. Get it right once per contract type and nobody ever thinks about it again; leave a pair blank and that part of the journal simply never appears.
 
-There are two extract term screens, one for the [project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) you bill the owner with and one for the [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) you certify a subcontractor with. They are built from the same shared set of options, so almost everything below applies to both, and where a screen differs it is called out. Both are a **single page** — everything is on one tab, arranged as a run of small groups: the behavioural switches first, then one group per posting.
+There are two extract term screens, one for the [project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) you bill the owner with and one for the [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) you certify a subcontractor with. They are built from the same shared set of options, so almost everything below applies to both, and where a screen differs it is called out. Both are a **single page** — everything is on one tab, arranged as a run of small groups: the behavioural switches first, then one group per accounting effect.
 
-A useful way to read the screen is that the groups fall into two kinds. The **behavioural** options change the arithmetic of the document — what the quantity means, what the price is based on, what is netted off. The **effect** groups change nothing at all about the numbers; they only decide where those numbers land in the ledger. Configure the effect groups first, because that is what makes the document post; treat the behavioural switches as tuning you turn on when a particular owner or consultant demands a particular presentation.
+A useful way to read the screen is that the groups fall into two kinds. The **behavioural** options change the arithmetic of the document — what the quantity means, what the price is based on, what is netted off. The **effect** groups change nothing at all about the numbers; they only decide where those numbers land in the ledger. Configure the effect groups first, because that is what makes the document create its journal entry; treat the behavioural switches as tuning you turn on when a particular owner or consultant demands a particular presentation.
 
 ![The extract's document term: the target document type and the run of option groups that make up the Effect page](../../../ar/modules/contracting/images/terms/document-term-main-en.png)
 
@@ -21,11 +21,11 @@ A useful way to read the screen is that the groups fall into two kinds. The **be
 | Pages | One — *Effect* (التأثير) |
 | Related | [Document Terms Basics](/modules/contracting/document-terms/contracting-terms-basics.md) for what a side is and how the standard term overrides it |
 
-## What each posting is for
+## What each effect group is for
 
-Each group on the screen is one posting, and each posting is a debit side, a credit side, and a fixed amount that Nama measures from the document. You do not choose the amount — only where it goes. Leave both sides of a group empty and that posting is skipped entirely.
+Each group on the screen is one ledger entry, and each entry is a debit side, a credit side, and a fixed amount that Nama measures from the document. You do not choose the amount — only where it goes. Leave both sides of a group empty and that entry is skipped entirely.
 
-| The group is where you set the accounts for… | The amount posted | Per line or per document | On which screen |
+| The group is where you set the accounts for… | The amount recorded | Per line or per document | On which screen |
 |---|---|---|---|
 | **The main work value** — revenue on the owner side, cost/payable on the subcontractor side | the line's **due value**, i.e. what is being billed for that term this time | one pair per detail line | both |
 | **Planned cost** of the certified work | the line's **total cost** | one pair per detail line | both |
@@ -38,13 +38,13 @@ Each group on the screen is one posting, and each posting is a debit side, a cre
 
 Two things are deliberately **not** on this screen:
 
-- **Retention, advance recovery and fines.** They arrive as condition lines and take their accounts from the [condition record](/modules/contracting/setup/contracting-conditions.md), including the condition's own tax accounts. See [how conditions post](/modules/contracting/document-terms/contracting-terms-basics.md).
+- **Retention, advance recovery and fines.** They arrive as condition lines and take their accounts from the [condition record](/modules/contracting/setup/contracting-conditions.md), including the condition's own tax accounts. See [how conditions are recorded](/modules/contracting/document-terms/contracting-terms-basics.md).
 - **Per-work-item accounts.** A [standard term](/modules/contracting/setup/contracting-standard-terms.md) that carries its own debit or credit overrides the term's main pair for its own lines.
 
 There is one further side, used for conditions that carry an **other** value rather than an addition or a deduction: those credit a separate additional-cost side, falling back to the main credit if you leave it empty.
 
 ::: tip Parent term lines are headings, not money
-A parent (roll-up) term line never posts on the main pair or the cost pair — only leaf lines do. But parent lines *are* included when the tax, discount, actual-cost and variance amounts are gathered. So keep values on the leaf lines and use parents purely as headings; a parent line carrying its own rolled-up tax or discount would be counted alongside its children.
+A parent (roll-up) term line never creates ledger lines on the main pair or the cost pair — only leaf lines do. But parent lines *are* included when the tax, discount, actual-cost and variance amounts are gathered. So keep values on the leaf lines and use parents purely as headings; a parent line carrying its own rolled-up tax or discount would be counted alongside its children.
 :::
 
 ## Pricing modes — what the next extract is worth
@@ -56,7 +56,7 @@ Some owners and consultants insist on a cumulative presentation instead — "wor
 | Option | What it changes |
 |---|---|
 | **Calculate Prices Based On Total Quantity** | The line is priced on the **cumulative** quantity, and the previous extracts' values are subtracted to arrive at this certificate's amount |
-| **Calculate Prices Difference From Previous Extract Only** | Also prices on the cumulative quantity, but subtracts only the **immediately preceding** extract, and records the resulting differences in the variance columns — which is what the total-price-variance and per-discount-variance postings above exist for |
+| **Calculate Prices Difference From Previous Extract Only** | Also prices on the cumulative quantity, but subtracts only the **immediately preceding** extract, and records the resulting differences in the variance columns — which is what the total-price-variance and per-discount-variance groups above exist for |
 
 Two things to know before choosing cumulative pricing:
 
@@ -71,7 +71,7 @@ Three further options apply the same cumulative-then-net-off treatment to indivi
 | **Consider Previous Extracts Discount 2 Values** | The same for discount 2 | both |
 | **Consider Previous Tax Values** | Taxes 1 to 4 are treated cumulatively and the earlier extracts' tax is netted off | both |
 
-A fourth, **Previous Unit Price Difference Adjustment**, handles the case where the contract's unit price changed mid-project and earlier certificates were priced at the old rate: it posts the difference as its own adjustment. It depends on the module-level unit-price-difference setting being switched on — with that setting off, the term refuses to be saved with this option ticked, which is the system telling you to enable the feature first.
+A fourth, **Previous Unit Price Difference Adjustment**, handles the case where the contract's unit price changed mid-project and earlier certificates were priced at the old rate: it records the difference as its own adjustment. It depends on the module-level unit-price-difference setting being switched on — with that setting off, the term refuses to be saved with this option ticked, which is the system telling you to enable the feature first.
 
 ## Quantity, price and the previous extract
 
@@ -104,7 +104,7 @@ Contracting extracts carry a **payment percentage** — the proportion of a line
 |---|---|
 | **Automatic Collect Payment Document With Save** | Whether advances and fines are collected into the conditions grid automatically on save. The choices are never, on every extract, or on the final extract only |
 | **Copy Condition Document Lines With Remaining When Term Code And Condition Are Blank** | A condition row that names only a payment document, with no term code and no condition, is expanded into one row per remaining payment line on that document |
-| **Add Conditions Tax To Statement Value** | Folds every condition line's tax into the **Tax 1** posting, on top of the condition's own tax accounts. Read the option by that behaviour rather than by its caption, which suggests it changes the extract's value — it does not |
+| **Add Conditions Tax To Statement Value** | Folds every condition line's tax into the **Tax 1** entry, on top of the condition's own tax accounts. Read the option by that behaviour rather than by its caption, which suggests it changes the extract's value — it does not |
 | **Update Remaining In Contract Not Extract When Payment Or Receipt Voucher Created** | Settlement by receipt or payment voucher reduces the remaining balance on the **contract's** payment schedule rather than the extract's |
 | **Link With Invoice Lines In Accounting Document** | Receipt and payment vouchers carry this extract's lines in their invoice grid, so a collection can be matched line by line |
 | **Shorten Ledger Effect** | Collapses the per-line journal rows into one row per account. On a 200-line bill of quantities this is the difference between a readable entry and an unusable one |

@@ -10,6 +10,8 @@ Most term-config options are shared across document types and are covered on the
 Open the document's **Document Term** (توجيه). The options below show up only when the term's **Document Type** is one of the documents noted in each group.
 :::
 
+![Document-specific options on the Settings tab of the Stock Receipt document term](../../../ar/modules/supplychain/images/document-terms/doc-term-document-specific-en.png)
+
 ## Stock Receipt
 
 *Applies to: Stock Receipt (توريد مخزني).*
@@ -95,13 +97,13 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 
 **Use External Wares** `termConfig.useExtenalWares` — Treats stock as external/non-system wares, skipping internal stock validation (purchase invoice/return and sales return).
 
-**For Previous Year** `termConfig.previousYear` — Marks the invoice as belonging to the previous fiscal year for posting and aging.
+**For Previous Year** `termConfig.previousYear` — Marks the invoice as belonging to the previous fiscal year for accounting and aging.
 
 **Credit** `termConfig.creditInvoice` — Treats the invoice as a credit invoice (deferred/credit sale).
 
 **Spread Assembly Components With Save** `termConfig.spreadAssemblyComponentsWithSave` — For an item that has a **Disassembly Bom Components Spread Method**, saving the sales document adds that BOM's components as free lines under the item's line, and the item's own line is left out of the generated stock issue, so stock leaves as the components (sales documents).
 
-**Spread Assembly Components With Insert** `termConfig.spreadAssemblyComponentsWithInsert` — Adds the component lines as soon as the item is entered on the line, instead of at save. Keep **…With Save** ticked as well: it is the option that keeps the item's own line out of the stock issue (sales documents).
+**Spread Assembly Components With Insert** `termConfig.spreadAssemblyComponentsWithInsert` — Adds the component lines on screen, under the item's line, as soon as that line has both the item and a quantity, so the user sees the components before saving; saving then does not spread the item a second time. Keep **…With Save** ticked as well: it is the option that keeps the item's own line out of the stock issue (sales documents).
 
 **Bom Alt Item Field** `termConfig.bomAltItemField` — Names one of the line's reference columns (Ref 1–4) as the place for an alternative item. When that column holds an item, the line's stock and cost effect, on issue and on return, uses that item instead of the line's own item, with the line's size, colour and revision. The option is read from the document's own term, then from the terms up its From Document chain (invoices).
 

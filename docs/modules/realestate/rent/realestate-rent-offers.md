@@ -31,7 +31,7 @@ What is different is deliberately small:
 The buttons are the lease's own, plus one that exists only here — see [Actions on these screens](#Actions-on-these-screens) below.
 
 ::: tip Fill in the document term even though the offer can technically live without one
-The offer's [document term](/modules/realestate/document-terms/realestate-terms-rent.md) is where its two decisive settings come from — the default reservation status and whether it posts accounting at all. The edit screen asks for a term, and you should give it one; an offer raised without a term simply loses both of those behaviours.
+The offer's [document term](/modules/realestate/document-terms/realestate-terms-rent.md) is where its two decisive settings come from — the default reservation status and whether it creates an accounting effect at all. The edit screen asks for a term, and you should give it one; an offer raised without a term simply loses both of those behaviours.
 :::
 
 ## Reservation Status — does committing this offer hold the unit?
@@ -51,11 +51,11 @@ Once an offer holds a unit, a rent contract on that unit will only commit if its
 This is what protects a held quotation from a colleague leasing the unit out from under it. The clean way to satisfy it is not to type the From Document by hand — it is to press *Create Rent contract* on the offer itself, which fills it in for you. The whole timeline behind this rule is explained in [The Leasing Cycle](/modules/realestate/rent/realestate-rent-cycle.md).
 :::
 
-## Whether the offer posts anything at all
+## Whether the offer creates an accounting effect at all
 
 A quotation is not revenue, so an offer normally creates no accounting entry. That is controlled by **Create Accounting Effects** (إنشاء التأثير المحاسبى) on the offer's term, and on a quotation term you leave it off.
 
-If you do turn it on, the offer produces the same entry the contract would. And if you later switch the flag off on a term whose offers have already posted, Nama does not leave the old entries behind: the next time such an offer is updated, its existing entry is removed. Which means the flag is safe to correct after the fact — but also means you should not use it to "freeze" an entry you wanted to keep.
+If you do turn it on, the offer produces the same entry the contract would. And if you later switch the flag off on a term whose offers have already created entries, Nama does not leave the old entries behind: the next time such an offer is updated, its existing entry is removed. Which means the flag is safe to correct after the fact — but also means you should not use it to "freeze" an entry you wanted to keep.
 
 ## From offer to lease — the *Create Rent contract* button
 

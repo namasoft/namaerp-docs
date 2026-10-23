@@ -17,4 +17,5 @@ title: الصلاحيات والأمان
   <LandingCard icon="🎯" title="الصلاحيات على مستوى السجلات (المحددات والفلاتر)" link="/ar/platform/security/record-level-security.md" details="حدّد أي السجلات يراها المستخدم عبر المحددات، وقصر الرؤية على ما أنشأه، والفلاتر الإضافية." />
   <LandingCard icon="👤" title="المستخدمون وتسجيل الدخول" link="/ar/platform/security/users-and-login.md" details="أنشئ المستخدمين وأدِر كلمات المرور وLDAP والتحقق بخطوتين والجلسات وتجاوزات الصلاحيات لكل مستخدم." />
   <LandingCard icon="🤝" title="الصلاحيات الإضافية المؤقتة (التفويض)" link="/ar/platform/security/security-delegation.md" details="امنح من ينوب عن غيره صلاحيات شخص آخر لفترة محددة تنتهي تلقائيًا." />
+  <LandingCard icon="🖐️" title="بصمات المستخدم" link="/ar/platform/security/user-fingerprints.md" details="سجل بصمات كل مستخدم على الخادم للدخول بالبصمة في نقاط البيع: من أين يأتي وكيف تُحذف بصمة." />
 </LandingGrid>

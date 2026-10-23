@@ -1,4 +1,5 @@
 ---
+description: "خمسة جداول في شاشة أعدادات الحقول و الشاشات تتعامل مع السجل كله: الحقول التي تُمسح عند أخذ نسخة مماثلة، والحقول التي تُتابَع تعديلاتها، وإضافة لوحتي النقاش والمستندات المرتبطة إلى الشاشة، وأنواع المراجع في نافذة إرسال البريد الإلكتروني."
 entities: [GenericReferenceOverrider]
 menu: الأساسيات ← الإعدادات ← أعدادات الحقول و الشاشات
 ---
@@ -58,6 +59,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 ::: info أين تظهر فائدة سجل المتابعة
 تتزاوج المتابعة التفصيلية طبيعياً مع الموضعين الآخرين اللذين يحسم فيهما سؤال «من غيّر ماذا» الخلاف: [المراجعة وإلغاء المراجعة](/ar/platform/governance/revise-and-unrevise)، حيث يُسحب مستند مُعالَج ويُعدَّل، و[نظام الاعتمادات](/ar/platform/approvals/approvals-system)، حيث قد تتغير قيمة بعد أن يكون أحدهم قد اعتمدها بالفعل.
 :::
+
+![جدول Audit Fields](../images/fields-settings/fields-settings-audit-fields-grid-ar.png)
 
 ## إضافة النقاش إلي (Add Discussion To)
 
@@ -120,6 +123,28 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 ::: warning لا بد من الخروج وإعادة الدخول
 هذا الجدول يطبّقه المتصفح لا الخادم. وبعد حفظ تغييراتك، يظل المستخدم الذي دخل بالفعل يرى قائمة المستلمين القديمة حتى **يخرج من النظام ويدخل مرة أخرى** (أو يُحدّث الصفحة تحديثاً كاملاً). فجرّب سطرك في جلسة جديدة قبل أن تحكم بأنه لا يعمل.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| Audit Fields | Audit Fields | `auditFields` | [Audit Fields](#Audit-Fields) |
+| إضافة النقاش إلي | Add Discussion To | `addDiscussionTo` | [إضافة النقاش إلي (Add Discussion To)](#Df-lnqsh-ly-Add-Discussion-To) |
+| إضافة إلي صفحة | Add To Page | `addDiscussionTo.addToPage` | [إضافة النقاش إلي (Add Discussion To)](#Df-lnqsh-ly-Add-Discussion-To) |
+| إضافة في | Insert At | `addDiscussionTo.insertAt` | [إضافة النقاش إلي (Add Discussion To)](#Df-lnqsh-ly-Add-Discussion-To) |
+| إضافة المستندات المرتبطة إلى | Add Related Documents To | `addRelatedDocumentsTo` | [إضافة المستندات المرتبطة إلى (Add Related Documents To)](#Df-lmstndt-lmrtbT-l-Add-Related-Documents-To) |
+| إضافة إلي صفحة | Add To Page | `addRelatedDocumentsTo.addToPage` | [إضافة المستندات المرتبطة إلى (Add Related Documents To)](#Df-lmstndt-lmrtbT-l-Add-Related-Documents-To) |
+| إضافة في | Insert At | `addRelatedDocumentsTo.insertAt` | [إضافة المستندات المرتبطة إلى (Add Related Documents To)](#Df-lmstndt-lmrtbT-l-Add-Related-Documents-To) |
+| التفاصيل | Details | `lines` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| أنواع المراجع في نافذة ارسال بريد الكترونى | Email Send To Types | `emailSendToTypes` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| نوع الارسال | Send Type | `emailSendToTypes.sendType` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| النوع 1 | Type 1 | `emailSendToTypes.entityType1` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| النوع 2 | TypE 2 | `emailSendToTypes.entityType2` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| النوع 3 | Type 3 | `emailSendToTypes.entityType3` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| النوع 4 | Type 4 | `emailSendToTypes.entityType4` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
+| النوع 5 | Type 5 | `emailSendToTypes.entityType5` | [أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types)](#nwaa-lmrjaa-fy-nfdh-rsl-bryd-lktrwn-Email-Send-To-Types) |
 
 ## صفحات ذات صلة
 

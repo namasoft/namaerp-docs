@@ -1,4 +1,5 @@
 ---
+description: "The CRM Visit Request screen, a prefill template for a planned visit with no approval cycle: what it holds, converting it to a Visit, where requests come from, and what the system does not prevent."
 entities: [CRMVisitRequest]
 menu: Customer Relationship Management → Support → Visit Request
 ---

@@ -11,7 +11,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 ولأن الثلاثة يمكن الوصول إليها من خارج شبكتك، فإن أعمدة التحقق من الهوية فيها ليست تفصيلاً شكلياً. اقرأ هذه الصفحة بتمعّن قبل أن تملأ أياً منها.
 
-## تكوين المتكاملات (Integrator Config)
+## Integrator Config — إعدادات المتكاملات
 
 متجر إلكتروني يستقبل طلباً في الثانية صباحاً. لن يقوم أحد بإدخاله يدوياً في Nama ERP. ما تحتاجه هو عنوان يستطيع برنامج المتجر أن يستدعيه ويمرر إليه بيانات الطلب، فيظهر أمر البيع في Nama ERP فوراً — وإذا أعاد المتجر الاستدعاء لأن المحاولة الأولى انقطعت، فأنت تريد تحديث نفس الطلب لا إنشاء نسخة ثانية منه.
 
@@ -71,7 +71,9 @@ https://<عنوان الخادم لديك>/erp/integrator?integrator=<Integrator
 **يجب أن يكون Fields Map فارغاً عند استعمال Run Entity Flow.** اختر أحدهما: إما أن يملأ المنفذ الحقول من خريطة، وإما أن يسلّم كل شيء إلى مسار كيان. وملء الاثنين معاً مرفوض.
 :::
 
-## متكاملات الاستيراد (Import Integrators)
+![جدول Integrator Config](../images/fields-settings/fields-settings-integrator-config-grid-ar.png)
+
+## Import Integrators — متكاملات الاستيراد
 
 هذا هو التوأم ذو الطابع الاستيرادي للجدول السابق. فبدلاً من قيم سجل واحد، يرسل المستدعي **ملفاً** — حمولة JSON أو ورقة إكسل — ويمرره المنفذ على استيراد السجلات المعتاد في Nama ERP. مورّد ينشر قائمة أسعار كل ليلة؛ شركة شحن ترسل حالات التسليم اليومية في ملف؛ نظام فرع يرفع دفعة من نتائج الجرد. ولا يفتح أحد شاشة الاستيراد.
 
@@ -104,7 +106,7 @@ https://<عنوان الخادم لديك>/erp/integrator?integrator=<Integrator
 والعلاج يستغرق ثوانٍ: افتح السجل واحفظه مرة واحدة فيُملأ العمود. فإذا بدا تكوين ما صحيحاً ولم يُعثر عليه، أعد حفظ السجل قبل أن تبحث في أي شيء آخر.
 :::
 
-## أسطر استرجاع الفواتير (Invoice Retriever Lines)
+## Invoice Retriever Lines — سطور استرجاع الفواتير
 
 عميل يريد فاتورته. ليس لديه حساب في Nama ERP ولن يكون. يمكنك أن ترسل له ملف PDF بالبريد، لكن عندها يجب أن يولّده أحد ويرفقه، وإذا صُححت الفاتورة بعد ذلك فإن النسخة في بريد العميل تصبح خاطئة في صمت.
 
@@ -196,6 +198,55 @@ https://<your server>/erp/r/{retrieverFileId}
 صفحة [نظرة عامة على نظام الصلاحيات](/ar/platform/security/security-overview) تشرح كيف تُبنى الصلاحيات، وصفحة [ملف الصلاحيات](/ar/platform/security/security-profiles) هي المكان الذي يُبنى فيه الحساب المقيَّد فعلياً.
 
 الجداول الثلاثة يطبقها الخادم، فتسري التغييرات بمجرد حفظ السجل — دون إعادة تشغيل ودون أي زر يُضغط.
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| Integrator Config | Integrator Config | `integratorConfig` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Integrator Id | Integrator Id | `integratorConfig.integratorId` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| نوع المستند المنشأ | Created Type | `integratorConfig.createdType` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| URL User ID | URL User ID | `integratorConfig.urlUserId` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| URL Password | URL Password | `integratorConfig.urlPassword` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Finder Query(Retriever) | Finder Query(Retriever) | `integratorConfig.finderQuery` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Fields Map | Fields Map | `integratorConfig.fieldsMap` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Created Type Parameter | Created Type Parameter | `integratorConfig.createdTypeParam` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Save As User | Save As User | `integratorConfig.saveAsUser` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Run Entity Flow | Run Entity Flow | `integratorConfig.runEntityFlow` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Export Integrator | Export Integrator | `integratorConfig.exportIntegrator` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Create Only (No-Updates) | Create Only (No-Updates) | `integratorConfig.createOnly` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Authenticate From URL User and Pass | Authenticate From URL User and Pass | `integratorConfig.authenticateFromURL` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Authenticate From Session | Authenticate From Session | `integratorConfig.authenticateFromSession` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Integrator URL | Integrator URL | `integratorConfig.integratorUrl` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | `integratorConfig.responseFields` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Response Template (Tempo) | Response Template (Tempo) | `integratorConfig.responseTemplate` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| Import Integrators | Import Integrators | `importIntegratorLines` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Integrator Id | Integrator Id | `importIntegratorLines.integratorId` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| URL User ID | URL User ID | `importIntegratorLines.urlUserId` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| URL Password | URL Password | `importIntegratorLines.urlPassword` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Save As User | Save As User | `importIntegratorLines.saveAsUser` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Authenticate From URL User and Pass | Authenticate From URL User and Pass | `importIntegratorLines.authenticateFromURL` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Authenticate From Session | Authenticate From Session | `importIntegratorLines.authenticateFromSession` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| نوع الاستيراد | Importing Type | `importIntegratorLines.importingType` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| إضافة | Add | `importIntegratorLines.addRecord` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| تحديث | Update | `importIntegratorLines.updateRecord` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| تجاهل مراجع السجلات الغير موجودة | Ignore not found references | `importIntegratorLines.ignoreUnfoundRefs` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| المتابعة عند حدوث خطأ | Continue On Errors | `importIntegratorLines.continueOnErrors` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| حذف المسافات الزائدة | Trim Extra Spaces | `importIntegratorLines.trimExtraSpaces` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| الحفظ كمسودة | Save As Draft | `importIntegratorLines.saveAsDraft` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| استعمال محددات المستخدم اثناء الاستيراد | Use User Dimensions While Importing | `importIntegratorLines.useUserDimensions` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Integrator URL | Integrator URL | `importIntegratorLines.integratorUrl` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | `importIntegratorLines.responseFields` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| Invoice Retriever Lines | Invoice Retriever Lines | `invoiceRetrieverLines` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| تعريف التقرير | Report Definition | `invoiceRetrieverLines.reportDefinition` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| الصيغة | Output Format | `invoiceRetrieverLines.outputFormat` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| Save Files In Folder | Save Files In Folder | `invoiceRetrieverLines.saveFilesInFolder` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| URL Prefix | URL Prefix | `invoiceRetrieverLines.urlPrefix` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| Do Not Cache | Do Not Cache | `invoiceRetrieverLines.doNotCache` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
+| Error Message Logging Configurations | Error Message Logging Configurations | `errorMessageLoggingConfigs` | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
+| نوع الرسالة | Target Queue ID | `errorMessageLoggingConfigs.targetQueueId` | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
 
 ## صفحات ذات صلة
 

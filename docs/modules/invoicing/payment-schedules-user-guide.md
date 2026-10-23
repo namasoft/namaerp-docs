@@ -446,12 +446,12 @@ The installment lines grid in payment documents contains the following key field
 
 ### Payment Processing Logic
 
-When payment documents are committed, the system uses `InstallmentUtils` to:
+When a payment document is saved, the system goes back to every document whose installments it pays and:
 
-1. **Update System Paid Fields**: Automatically updates the `systemPaid` amount for each installment
-2. **Calculate Remaining Balances**: Recalculates remaining amounts across all related installments
-3. **Validate Payment Order**: Ensures payments follow proper sequence (earlier installments paid first)
-4. **Prevent Overpayments**: Validates that paid amounts don't exceed installment values
+1. **Updates the paid amount**: adds up every payment line against each installment (with any collection discount) into that installment's system-paid amount on the source document
+2. **Recalculates remaining balances**: across all related installments
+3. **Checks the payment order**: payments must follow the installment sequence (earlier installments paid first)
+4. **Prevents overpayments**: paid amounts may not exceed installment values
 
 ### Payment Tracking Process
 

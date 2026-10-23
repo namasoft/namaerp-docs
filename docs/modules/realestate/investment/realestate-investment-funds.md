@@ -115,12 +115,12 @@ retroactively, for every future distribution. If you want to top up an investor'
 changing their terms, copy the settings from the previous document onto the new one.
 :::
 
-### What it posts
+### What it records
 
 The finance addition does have an accounting effect: one debit/credit pair **per detail line**,
 valued at that line's added investment value, in the legal entity's ledger main currency, from the
 two account sides on the document's term. The usual setup debits cash or bank and credits the
-investor's partners-capital account. Leave both sides empty and nothing is posted.
+investor's partners-capital account. Leave both sides empty and nothing is recorded.
 
 One point to get right when configuring the term: for account sides that resolve from the customer,
 the customer used is the header's **Main Investor** — not the investor on the line. If your accounts

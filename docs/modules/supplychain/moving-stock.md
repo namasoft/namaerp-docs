@@ -66,7 +66,19 @@ The **Stock Transfer Request** adds a layer above: requesting the transfer befor
 
 **Workflow:** the north branch requests 50 units of item X from the main warehouse → the main warehouse reviews and approves → it ships 50 units → the items transit → the north branch receives 50 units (or fewer, with an explanation). This ensures planned transfers, coordination between locations, and visibility of upcoming movements.
 
-When transfer requests recur from several branches or for several items, the **Aggregated Transfer Request** (AggrStockTransferReq) consolidates them into a single document that makes planning and execution easier in one batch.
+When transfer requests recur from several branches or for several items, the **Aggregated Stock Transfer Request** (AggrStockTransferReq) consolidates them into a single document that makes planning and execution easier in one batch.
+
+Each of its lines names an item, a from warehouse and a to warehouse. Saving it generates the actual **Stock Transfer
+Requests** in the **Stock transfer Request Book** and **Stock transfer Request Term** set on its own term; with either
+left empty the save is refused with *You must fill stock transfer request book and term in term {0}* (no Arabic text; it
+shows in English on Arabic screens). The same term decides how the lines are shared out:
+
+- **Group by From Warehouse** / **Group by To Warehouse** — one generated request per source warehouse, per destination
+  warehouse, or per pair when both are ticked.
+- **Max Lines for Generated Stock Transfer Req** — caps the lines of each generated request; a bigger group is split into
+  several requests of at most that many lines, so each one stays a manageable picking list. Empty or zero means no cap.
+
+Saving the aggregated request again updates the requests it generated, and cancelling or deleting it removes them.
 
 ![Stock transfer screen in NaMa ERP](../../ar/modules/supplychain/images/moving/stock-transfer-edit-en.png)
 

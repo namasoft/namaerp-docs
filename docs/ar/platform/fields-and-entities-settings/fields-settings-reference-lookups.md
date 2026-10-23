@@ -1,4 +1,5 @@
 ---
+description: "الجداول التسعة في شاشة أعدادات الحقول و الشاشات التي تتحكم في البحث داخل حقول المراجع: القيم المسموح بها، والفلتر الإضافي، والأوصاف، وحقول ومعاملات البحث الإضافية، والأكواد الإضافية، والبحث في الاسم بالكود، وفتح الإنشاء أو نافذة منبثقة عند إدخال كود غير موجود."
 entities: [GenericReferenceOverrider]
 menu: الأساسيات ← الإعدادات ← أعدادات الحقول و الشاشات
 ---
@@ -41,7 +42,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 هذا الجدول يطبقه المتصفح. بعد الحفظ، يظل المستخدم المسجّل دخوله يرى قائمة الأنواع القديمة حتى يسجل خروجه ثم يدخل من جديد.
 :::
 
-## فلتر إضافي (Extra Filter)
+## Extra Filter — فلتر إضافي
 
 الجدول السابق يضيّق **أنواع** السجلات التي يقبلها الحقل العام. وهذا الجدول يضيّق **أي السجلات** يعرضها البحث — مشكلة مختلفة، وأكثر شيوعاً بكثير. ملف الأصناف يحتوي على 40,000 صنف و6,000 منها فقط قابلة للبيع؛ ملف المخازن يغطي الشركة كلها لكن هذا الفرع قد لا يصرف إلا من مخزنين. عرض كل شيء والاعتماد على انتباه المستخدم هو الطريق المباشر لوصول سجلات خاطئة إلى المستندات.
 
@@ -64,7 +65,9 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 لترشيح الحقول شاشة مخصصة بإمكانات أوسع؛ وهذا الجدول هو النسخة السريعة لكل حقل من الفكرة نفسها. راجع [ترشيح الحقول بالمعايير](/ar/platform/field-filtering/field-filter-with-criteria) للصورة الكاملة (وأمثلتها العملية تغطي الأخطاء التي تجعل الفلتر لا يعيد شيئًا)، و[التحقق بالمعايير](/ar/platform/governance/criteria-based-validation) لطريقة كتابة تعريفات المعايير، و[دليل لغة Tempo](/ar/admin/tempo) للنسخة الديناميكية.
 
-## الأوصاف (Descriptors)
+![جدول Extra Filter](../images/fields-settings/fields-settings-extra-filter-grid-ar.png)
+
+## Descriptors — الأوصاف
 
 حين يُعرض سجل في حقل مرجع أو قائمة منسدلة، يكون على النظام أن يختصره في سطر نصي واحد. السطر الافتراضي نادراً ما يكون خاطئاً، لكنه كثيراً ما يكون غير كافٍ. عميلان يحملان الاسم نفسه «أحمد محمد» يبدوان متطابقين تماماً في القائمة المنسدلة؛ وصنف يُعرض باسمه وحده لا يدل على مقاسه أو لونه. **الوصف** يستبدل ذلك السطر بسطر تكتبه أنت.
 
@@ -174,7 +177,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 هذه ليست تسهيلاً في المتصفح — الرجوع إلى الأسماء يحدث على الخادم، ما يعني أنه يسري كذلك حين تصل السجلات عبر ملف استيراد أو تكامل خارجي. عمود في ملف Excel كان يُفترض أن يحتوي أكواداً لكنه يحتوي أسماء سيُستورد الآن «بنجاح» بالمطابقة على الأسماء، ولن ينتبه أحد حتى يظهر السجل الخاطئ في تقرير. ولهذا السبب بالذات فإن الإعداد **مغلق افتراضياً**. فعّله لأنواع الكيانات التي يعمل عليها مستخدموك بالاسم، وفكّر مرتين قبل تفعيله للأنواع التي تُستورد بكثافة. راجع [استيراد السجلات](/ar/platform/import-export/importing-records).
 :::
 
-## أكواد إضافية (Extra Codes)
+## Extra Codes — أكواد إضافية
 
 لكل سجل كود واحد، وهذا الكود هو ما يتوقعه حقل المرجع. أما في الواقع فلدى المنشآت معرّفات أكثر من ذلك: للصنف باركود وربما رمز SKU لدى المورد، وللعميل رقم تسجيل ضريبي، وللمعدة رقم تسلسلي. المستخدمون يمسكون بهذه المعرّفات بأيديهم والنظام يرفض قبولها، لأنها ليست «الكود».
 
@@ -222,7 +225,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 هذا الجدول يطبقه المتصفح، فيظل المستخدم المسجّل دخوله على السلوك القديم حتى يسجل خروجه ثم يدخل من جديد.
 :::
 
-## فتح المرجع في نافذة منبثقة (Open Reference In Popup)
+## Open Reference In Popup — فتح المرجع في نافذة منبثقة
 
 كل حقل مرجع يحمل إجراءً لفتح السجل الذي يشير إليه. وهذا الإجراء ينقل المستخدم افتراضياً بعيداً عن الشاشة الحالية — وهو مقبول حين يكون المستخدم يتصفح، ومزعج حين يكون قد قطع ثلاثة أرباع مستند ولم يرد إلا التحقق من معلومة واحدة عن العميل.
 
@@ -251,6 +254,41 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 ::: warning اجعل إعدادات الحقل الواحد في سجل واحد
 يمكن أن توجد عدة سجلات من «أعدادات الحقول و الشاشات»، وتُجمع أسطرها النشطة كلها. وهذا مريح إلى أن يُضبط الحقل نفسه في سجلين مختلفين — عندها يصبح تحديد السطر الفائز أمراً غير متوقع، وتصبح الجداول التي تحتفظ بأول سطر مطابق فقط عصيّة على الفهم فعلاً. احتفظ بكل ما يخص حقلاً معيناً في سجل واحد.
 :::
+
+## الإعدادات في هذه الصفحة
+
+كل جدول وعمود تغطيه هذه الصفحة باسمه الظاهر على الشاشة باللغتين، لتجد الإعداد بالاسم الذي تراه. ويشير العمود الأخير إلى القسم الذي يشرحه. أما أعمدة النطاق (للنوع، قائمة الأنواع، الحقل وما يشبهها) فهي واحدة في كل الجداول ومدرجة في [صفحة النظرة العامة](/ar/platform/fields-and-entities-settings/fields-settings-overview).
+
+| الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
+|---|---|---|---|
+| القيم المسموح بها للمراجع | Allowed Values For Generic References | `details` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع المسموح 1 | Allowed Entity 1 | `details.allowedEntity1` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع المسموح 2 | Allowed Entity 2 | `details.allowedEntity2` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع المسموح 3 | Allowed Entity 3 | `details.allowedEntity3` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع المسموح 4 | Allowed Entity 4 | `details.allowedEntity4` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع المسموح 5 | Allowed Entity 5 | `details.allowedEntity5` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| النوع الافتراضي | Default Entity Type | `details.defaultEntityType` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| إضافة الى الموجود | Add To Existing | `details.addToExisting` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| قائمة الأنواع المسموح بها | Allowed Entity List | `details.allowedEntityList` | [القيم المسموح بها للمراجع (Allowed Values For Generic References)](#lqym-lmsmwH-bh-llmrjaa-Allowed-Values-For-Generic-References) |
+| Extra Filter | Extra Filter | `extraFilter` | [Extra Filter](#Extra-Filter----fltr-Dfy) |
+| تطبيق الفلتر مع النوع | Apply Filter with Type | `extraFilter.filteredType` | [Extra Filter](#Extra-Filter----fltr-Dfy) |
+| المعايير | Criteria | `extraFilter.criteriaDefinition` | [Extra Filter](#Extra-Filter----fltr-Dfy) |
+| Dynamic Tempo Criteria | Dynamic Tempo Criteria | `extraFilter.dynamicTempoCriteria` | [Extra Filter](#Extra-Filter----fltr-Dfy) |
+| Descriptors | Descriptors | `descriptors` | [Descriptors](#Descriptors----lwSf) |
+| استخدام الوصف | Descriptor Type | `descriptors.descriptorType` | [Descriptors](#Descriptors----lwSf) |
+| عنوان عربي | Arabic | `descriptors.arabic` | [Descriptors](#Descriptors----lwSf) |
+| عنوان إنجليزي | English | `descriptors.english` | [Descriptors](#Descriptors----lwSf) |
+| حقول البحث الإضافية عند البحث عن مرجع | Extra Reference Search Fields | `extraReferenceSearchFields` | [حقول البحث الإضافية عند البحث عن مرجع (Extra Reference Search Fields)](#Hqwl-lbHth-lDfy-aand-lbHth-aan-mrjaa-Extra-Reference-Search-Fields) |
+| معامل البحث | Search Operator | `extraReferenceSearchFields.searchOperator` | [حقول البحث الإضافية عند البحث عن مرجع (Extra Reference Search Fields)](#Hqwl-lbHth-lDfy-aand-lbHth-aan-mrjaa-Extra-Reference-Search-Fields) |
+| معامل البحث عن المراجع | Reference Searching Operators | `referenceSearchingOperators` | [معامل البحث عن المراجع (Reference Searching Operators/Strategies)](#maaml-lbHth-aan-lmrjaa-Reference-Searching-OperatorsStrategies) |
+| معامل البحث في الكود | Code Search Operator | `referenceSearchingOperators.codeSearchOperator` | [معامل البحث عن المراجع (Reference Searching Operators/Strategies)](#maaml-lbHth-aan-lmrjaa-Reference-Searching-OperatorsStrategies) |
+| معامل البحث في الاسم العربي | Name 1 Search Operator | `referenceSearchingOperators.name1SearchOperator` | [معامل البحث عن المراجع (Reference Searching Operators/Strategies)](#maaml-lbHth-aan-lmrjaa-Reference-Searching-OperatorsStrategies) |
+| معامل البحث في الاسم الإنجليزي | Name 2 Search Operator | `referenceSearchingOperators.name2SearchOperator` | [معامل البحث عن المراجع (Reference Searching Operators/Strategies)](#maaml-lbHth-aan-lmrjaa-Reference-Searching-OperatorsStrategies) |
+| البحث في الأسم العربى والانجليزى عند كتابة كود ملف | Search In Name In Find By Code | `searchInNameInFindByCode` | [البحث في الأسم العربى والانجليزى عند كتابة كود ملف (Search In Name In Find By Code)](#lbHth-fy-lsm-laarb-wlnjlyz-aand-ktb-kwd-mlf-Search-In-Name-In-Find-By-Code) |
+| Extra Codes | Extra Codes | `extraCodes` | [Extra Codes](#Extra-Codes----kwd-Dfy) |
+| الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود | Fields that open Edit Screen when code not found | `openCreateFields` | [الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود (Fields that open Edit Screen when code not found)](#lHqwl-lty-ytm-ftH-lnsh-aand-dkhl-kwd-Gyr-mwjwd-Fields-that-open-Edit-Screen-when-code-not-found) |
+| الحقل الذي سيتم وضع القيمة به | Field To Set Value In | `openCreateFields.fieldToSetValueIn` | [الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود (Fields that open Edit Screen when code not found)](#lHqwl-lty-ytm-ftH-lnsh-aand-dkhl-kwd-Gyr-mwjwd-Fields-that-open-Edit-Screen-when-code-not-found) |
+| Open Reference In Popup | Open Reference In Popup | `openInPopups` | [Open Reference In Popup](#Open-Reference-In-Popup----ftH-lmrjaa-fy-nfdh-mnbthq) |
 
 ## صفحات ذات صلة
 

@@ -2,6 +2,7 @@
 # صفحة رئيسية مُعدّة يدوياً — يتخطاها GenNamaDocsIndex بسبب علامة .custom-index
 # الموجودة في هذا المجلد (راجع hasHandcraftedHomePage في GenNamaDocsIndex.java)
 title: المقاولات
+description: "الصفحة الرئيسية لوحدة المقاولات في نما: جانب مالك المشروع وجانب مقاول الباطن، وقاعدة أن العقد لا يُحرّك شيئاً والمستخلص يُحرّك كل شيء، وروابط لكل الصفحات من الإعداد والتقدير إلى العقود والتكاليف وسجلات الموقع."
 ---
 
 # المقاولات
@@ -29,7 +30,7 @@ title: المقاولات
 <LandingGrid>
   <LandingCard icon="📐" title="الملفات والإعدادات" link="/ar/modules/contracting/setup/contracting-standard-terms.md" details="المشروعات، والبنود القياسية، وكراسات الشروط، وكروت التحليل، والشروط التعاقدية، وقوائم الأسعار، والمراحل، ومناطق العمل، والنماذج، والمقاولون والاستشاريون." />
   <LandingCard icon="✏️" title="طلب تعديل بيانات المقاول" link="/ar/modules/contracting/setup/contracting-modify-contractor-info-request.md" details="كيف يُكتب تغيير مطلوب في ملف مقاول الباطن، ثم يُطبَّق أو يتحول إلى مقاول جديد بزر واحد." />
-  <LandingCard icon="🧾" title="توجيهات المستندات" link="/ar/modules/contracting/document-terms/contracting-terms-basics.md" details="التوجيه وراء كل مستند: الحسابات التي يُرحَّل إليها، والخيارات التي تغيّر طريقة تسعير المستخلص." />
+  <LandingCard icon="🧾" title="توجيهات المستندات" link="/ar/modules/contracting/document-terms/contracting-terms-basics.md" details="التوجيه وراء كل مستند: الحسابات التي يُسجِّل عليها أثره، والخيارات التي تغيّر طريقة تسعير المستخلص." />
 </LandingGrid>
 
 ## الفوز بالعمل والتخطيط له
@@ -54,7 +55,7 @@ title: المقاولات
 من أين تأتي التكلفة الفعلية، وكيف تستقر على البند.
 
 <LandingGrid>
-  <LandingCard icon="💰" title="التكاليف" link="/ar/modules/contracting/costs/contracting-cost-model.md" details="نموذج التكلفة وحصر التكاليف، والخامات المنصرفة للمشروع أو المباعة لمقاول الباطن، والمشتريات، والمصروفات المتنوعة، والعمالة اليومية، وتسكين المعدات، وترحيل التكلفة إلى الوحدات العقارية." />
+  <LandingCard icon="💰" title="التكاليف" link="/ar/modules/contracting/costs/contracting-cost-model.md" details="نموذج التكلفة وحصر التكاليف، والخامات المنصرفة للمشروع أو المباعة لمقاول الباطن، والمشتريات، والمصروفات المتنوعة، والعمالة اليومية، وتسكين المعدات، ونقل التكلفة إلى الوحدات العقارية." />
 </LandingGrid>
 
 ## في الموقع

@@ -1,4 +1,5 @@
 ---
+description: "Managing import Letters of Credit: the LC file, the opening cycle, shipments, the costs and expenses that feed landed cost, the event log, and the actions and messages on these screens."
 entities: [LetterOfCredit, LCShipment, LCOpeningDoc, LcExpenseDocument, LetterOfCreditRequest, LCOpeningRequest, LCCostDoc, LCAction, LCProformaInvoice, LCShipmentProformaInvoice]
 menu: LC → Master Files → Letter Of Credit
 ---

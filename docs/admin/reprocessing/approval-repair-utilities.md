@@ -1,3 +1,6 @@
+---
+description: "Two admin utilities that repair stale approval cases: Regenerate Approvals Summary rewrites the summaries of in-progress cases, and Remove Zombie Approvals clears pending approvals left behind by deleted or already committed records."
+---
 # Approval Repair Utilities
 
 Every record that waits for approval has an **approval case** behind it. The case carries two things that approvers see without opening the record: a **summary** of what is being approved, and the list of **next candidates** — the people whose pending approvals show it. Both are written when the case moves forward, so they can go stale: a summary template changed after hundreds of cases were opened still shows the old wording on those cases, and a record that was deleted or committed by another route can stay in somebody's pending list long after there is nothing left to approve.

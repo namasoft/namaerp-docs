@@ -1,5 +1,6 @@
 ---
 entities: [TRSalesInvoice, TRSalesOrder, TRSalesReturn]
+menu: السفر والرحلات ← المستندات ← فاتورة مبيعات خدمات سياحية
 ---
 
 # البيع للعميل

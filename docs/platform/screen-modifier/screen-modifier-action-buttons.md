@@ -1,4 +1,5 @@
 ---
+description: "Adding custom buttons to a screen through the Screen Modifier: what a button can do, where it appears, URL Template links to any address, another record or a new pre-filled record, filling reference fields, and driving the link from a query."
 entities: [ScreenModifier]
 menu: Administration → Display Customization → Screen Modifier
 ---

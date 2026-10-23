@@ -2,6 +2,7 @@
 # Handcrafted landing — GenNamaDocsIndex skips this file because of the .custom-index
 # marker in this folder (see hasHandcraftedHomePage in GenNamaDocsIndex.java)
 title: الخصائص العامة للنظام
+description: "الأدوات العامة التي تشترك فيها كل وحدات نما: السجلات وترقيمها، والإعدادات العامة، وتخصيص الشاشات والقائمة، والأمان والحوكمة، والأتمتة واستيراد البيانات، والتقارير ولوحات المعلومات والتنبيهات، والأدوات اليومية."
 ---
 
 # الخصائص العامة للنظام
@@ -15,7 +16,7 @@ title: الخصائص العامة للنظام
 <LandingGrid>
   <LandingCard icon="📄" title="المستندات والسجلات" link="/ar/platform/documents-and-records/" details="حياة المستند، ودفاتر الترقيم، والإلغاء، والمجموعات، والمرفقات، ولماذا يرفض النظام حفظ سجل أو حذفه، والمستندات الاحتياطية المحفوظة للحاجات الخاصة." />
   <LandingCard icon="🧭" title="الملفات الرئيسية المشتركة" link="/ar/platform/shared-master-files/" details="المحددات، والعملاء والموردون، والعملات وأسعار الصرف، والجوانب المحاسبية الجاهزة — الملفات الرئيسية التي تقرؤها كل الوحدات." />
-  <LandingCard icon="💳" title="المدفوعات وأجهزة البطاقات" link="/ar/platform/payments/" details="طرق الدفع وأين تُرحَّل، ودفاتر الإيصالات، وربط أجهزة البطاقات عبر PGW." />
+  <LandingCard icon="💳" title="المدفوعات وأجهزة البطاقات" link="/ar/platform/payments/" details="طرق الدفع والحسابات التي تُسجَّل عليها، ودفاتر الإيصالات، وربط أجهزة البطاقات عبر PGW." />
 </LandingGrid>
 
 ## تطويع النظام
