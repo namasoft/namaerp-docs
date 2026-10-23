@@ -111,7 +111,7 @@ After saving the flow, **Class Name** shows `com.namasoft.entityactions.EAPreven
 
 ## Notes
 
-- To run a script from a task schedule, create a task of type **Action**, enter `com.namasoft.infor.domainbase.util.actions.EAGroovyAction` in **Class Name** and paste the script into **Parameter 1**, as in the older setup above. The script's first input is then **Parameter 2**.
+- To run a script from a task schedule, create a task of type **Action** and paste the script into **Groovy Script** on the **Action** tab, leaving **Class Name** empty. It works like the Groovy Script column: on save **Class Name** shows the script's class name and the parameter titles fill in, and **Parameter 1** is `parameters[0]`. The older setup, with `com.namasoft.infor.domainbase.util.actions.EAGroovyAction` in **Class Name** and the script in **Parameter 1**, still works too.
 - A script error (a typo, a wrong import, a missing method) appears when the flow is saved, because saving compiles the script to read its description and parameter titles.
 
 **Module:** core

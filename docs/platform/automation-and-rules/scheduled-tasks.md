@@ -30,7 +30,7 @@ Sends notifications to users based on a query and one or more templates. You can
 Executes a native SQL statement directly against the database. Use this for maintenance operations, data cleanup, or batch updates. The statement runs as-is, so use it with care.
 
 ### Action
-Runs a server action class. This is the most flexible option—you enter the fully qualified class name of the action and up to 15 parameters. The system validates the parameters before execution and shows a description of what the action does (and of each parameter it expects) directly on the screen.
+Runs a server action class. This is the most flexible option—you enter the fully qualified class name of the action and up to 15 parameters. The system validates the parameters before execution and shows a description of what the action does (and of each parameter it expects) directly on the screen. Instead of a class name, you can paste a Groovy script into **Groovy Script**: the task then runs the script, and **Class Name** shows the script's class name after saving. See [Groovy Script Examples](/entity-flows/groovy/) for ready-made scripts.
 
 ### Parameterized Report (Email)
 A powerful variation of the Report type. Instead of running the report once, it first collects a set of parameter rows—either from a SQL query or from the **Params** grid—then runs the report once for every row. Each iteration can carry different parameter values and go to different recipients. See [Parameterized Reports](#Parameterized-Reports).

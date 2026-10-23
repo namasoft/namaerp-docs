@@ -4,88 +4,90 @@ entities: [NamaPosPoleDisplaySpecs]
 
 # دليل استعمال النقاط الفنية في نقاط البيع
 
-Nama ERP is a web-based system, but its **Nama POS** module includes a dedicated **desktop application** for Points of Sale (POS), offering both online and offline capabilities:
+<rtl>
 
-* POS operates offline using a local POS database.
-* It automatically syncs with the Nama ERP central database.
-* Integrates with payment terminals, including an embedded credit-card processor for mobile phones.
-* POS functionality is available on Android and iOS via the **Captain Order** mobile app.
+نظام نما نظام ويب، لكن وحدة **نقاط البيع** فيه تضم **تطبيقًا مكتبيًا** مخصصًا لنقاط البيع يعمل متصلًا وغير متصل:
 
-## Nama POS Pole Display Configuration Using Tempo
+* تعمل نقطة البيع دون اتصال باستخدام قاعدة بيانات محلية خاصة بها.
+* تتزامن تلقائيًا مع قاعدة البيانات المركزية لنظام نما.
+* تتكامل مع أجهزة الدفع، ومنها معالج بطاقات ائتمان مدمج للهواتف المحمولة.
+* تتوفر وظائف نقاط البيع على Android وiOS من خلال تطبيق **Captain Order** للهاتف.
 
+## إعداد شاشة العميل (Pole Display) في نقاط البيع باستخدام Tempo
 
----
-
-## POS Pole Display Setup
-
-To configure a pole display for Nama POS, follow these steps:
-
-1. Go to the **"Pos Pole Display Specs"** screen.
-2. Set:
-
-* **Communication Type**: e.g., Serial, USB.
-* **Printer Name or Port Number**: to define the connection interface.
-3. Link the pole display configuration to a machine by setting the **"Pos Pole Display Specs"** field in the machine record.
 
 ---
 
-## Displaying Data on the Pole Display
+## إعداد شاشة العميل (Pole Display)
 
-Nama POS allows defining **template-based messages** for different events in the sales process. Templates are configured in the **"Pos Pole Display Specs"** screen.
+لإعداد شاشة العميل لنقاط البيع اتبع الخطوات التالية:
 
-### Supported Functions
+1. افتح شاشة **خصائص ال Pole Display لنقاط البيع**.
+2. اضبط:
 
-* **Clear Line:**
+* **نوع الاتصال**: **CommPort** أو **Printer**.
+* **اسم الطابعه او رقم المنفذ**: لتحديد واجهة الاتصال.
+3. اربط الإعداد بالماكينة باختياره في حقل **خصائص ال Pole Display لنقاط البيع** في سجل الماكينة.
+
+---
+
+## عرض البيانات على شاشة العميل
+
+تتيح نقاط البيع تعريف **رسائل بالقوالب** لكل حدث في عملية البيع. وتُضبط القوالب في شاشة **خصائص ال Pole Display لنقاط البيع**.
+
+### الدوال المتاحة
+
+* **مسح سطر:**
 
 ```
 @CLEARLINE@
 ```
 
-Use it to clear one line on the pole display.
+يمسح سطرًا واحدًا على شاشة العميل.
 
-**Example:**
+**مثال:**
 
 ```
 @CLEARLINE@@CLEARLINE@ Welcome
 ```
 
-Clears two lines, then displays: `Welcome`.
+يمسح سطرين ثم يعرض: `Welcome`.
 
-* **Last Modified Line:**
+* **آخر سطر معدَّل:**
 
 ```
 {lastModifiedLine}
 ```
 
-Use this to get the most recently added invoice line.
+يعطيك آخر سطر أُضيف إلى الفاتورة.
 
-**Example:**
+**مثال:**
 
 ```
 {lastModifiedLine.qty.value}
 ```
 
-Gets the quantity of the last added item.
+يعطيك كمية آخر صنف أُضيف.
 
 ---
 
-## Pole Display Templates
+## قوالب شاشة العميل
 
-### Idle Template
+### قالب البدأ (Idle Template)
 
-Displayed when the POS is idle, before any invoice is created.
+يظهر حين تكون نقطة البيع في وضع الانتظار، قبل إنشاء أي فاتورة.
 
 ```
 @CLEARLINE@@CLEARLINE@**** Welcome to Register {name2}
 ```
 
-Clears both lines and shows a welcome message with the register's name.
+يمسح السطرين ويعرض رسالة ترحيب باسم الماكينة.
 
 ---
 
-### Line Adding Template
+### قالب إضافة سطر (Line Adding Template)
 
-Displayed when a new item is added to the invoice.
+يظهر عند إضافة صنف جديد إلى الفاتورة.
 
 ```
 @CLEARLINE@@CLEARLINE@
@@ -93,39 +95,38 @@ Displayed when a new item is added to the invoice.
 {padleft(20)}Qty: {lastModifiedLine.qty.uom.name2} - {round(lastModifiedLine.qty.value,0)}{endpad}
 ```
 
-Shows item name and quantity info, padded for alignment.
+يعرض اسم الصنف وكميته، مع حشو لمحاذاة النص.
 
 ---
 
-### Total Template
+### قالب الإجمالي (Total Template)
 
-Displayed when the Tender screen is opened (before payment).
+يظهر عند فتح شاشة التحصيل (قبل الدفع).
 
 ```
 @CLEARLINE@@CLEARLINE@
 {padleft(20)}Total: {round(netPrice,2)}${endpad}
 ```
 
-Displays the invoice total amount.
+يعرض إجمالي مبلغ الفاتورة.
 
 ---
 
-### Remaining Template
+### قالب المتبقي (Remaining Template)
 
-Displayed after the customer pays and change is calculated.
+يظهر بعد أن يدفع العميل ويُحسب الباقي.
 
 ```
 @CLEARLINE@@CLEARLINE@
 {padleft(20)}Remaining: {round(change,2)}${endpad}
 ```
 
-Displays the remaining change to be returned to the customer.
+يعرض الباقي الذي يُردّ إلى العميل.
 
 ---
 
-These templates provide a flexible way to control real-time messaging on POS displays using Tempo syntax.
+تمنحك هذه القوالب طريقة مرنة للتحكم في الرسائل التي تظهر لحظيًا على شاشات نقاط البيع باستخدام صيغة Tempo.
 
-<rtl>
 
 
 ## فلترة البحث في شاشات نقاط البيع باستخدام محددات الماكينة
@@ -188,11 +189,19 @@ These templates provide a flexible way to control real-time messaging on POS dis
      apiKey=dddsbddhbskbsdhdd
      ```
 
+في نافذة الإعدادات المبدئية يُكتب المفتاح في حقل **API Key** ضمن مجموعة **إعدادات الخادم**، ويمكن عندها ترك حقلي **مستخدم خادم نما** و**كلمة سر خادم نما** فارغين.
+
+![حقل API Key في نافذة الإعدادات المبدئية لنقاط البيع](./images/getting-started/pos-login-apikey-ar.png)
+
 ---
 
 استخدام API Key يمنحك مرونة وأمانًا أكبر، خصوصًا عند الحاجة لتحديث كلمات المرور أو عند إدارة عدد كبير من نقاط البيع.
 
 ## طرق متطورة لتغيير عرض أعمدة جدول المبيعات في نظام نقاط البيع
+
+جدول المبيعات هو الجدول في منتصف شاشة المبيعات: صف لكل سطر في الفاتورة، وأعمدة مثل **الكود** و**اسم الصنف** و**الكمية** و**الوحدة** و**الصنف المجانى** و**سعر الوحدة** و**إجمالي السعر** و**الصافي**. الأعمدة الظاهرة تأتي من إعدادات واجهة نقاط البيع الخاصة بالماكينة، والطريقتان التاليتان تتحكمان في عرض كل عمود.
+
+![جدول المبيعات في شاشة المبيعات بنقاط البيع](./images/sales/pos-sales-table-columns-ar.png)
 
 ### الطريقة اليدوية (السحب والتعديل المباشر)
 

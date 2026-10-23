@@ -30,6 +30,8 @@ After that, the free item can be claimed in two ways:
 
 When the cashier scans a barcode of an item that matches one of the pending entitlements in the invoice, the system recognizes it immediately and converts the line into a **free line** (price zero) linked to the original qualifying item line.
 
+![A claimed free line in the sales table: Free Item ticked, price zero](../../ar/modules/pos/images/sales/pos-free-items-claimed-en.png)
+
 The system also handles quantities intelligently:
 
 * If the entitlement is "one free unit" and the cashier scans one unit → the entire line becomes free.
@@ -56,6 +58,8 @@ What if the cashier completely forgets about the free items and presses the paym
 > The following free items were automatically added to the invoice:
 
 **Second — Pending free items screen:** If after reconciliation there are still unfulfilled entitlements, the **Pending Free Items** window («أصناف مجانية لم تُضف») appears. Under *Customer is entitled to the following free items:* it lists the remaining free items and their quantities, with a barcode scan field below. The customer picks up the items from the shelf, the cashier scans them one by one, and each scanned item is added as a free line while the remaining quantity shown decreases. To add several units at once, type the quantity and the code with a star between them, in either order — `3*6221234567890` or `6221234567890*3`; a quantity above what is owed is added only up to what is owed.
+
+![The Pending Free Items window](../../ar/modules/pos/images/sales/pos-free-items-pending-en.png)
 
 When the last owed item is scanned, the window closes on its own and payment carries on as usual.
 
@@ -85,6 +89,8 @@ Promotions are not limited to a specific free item; a promotion might be "buy X 
 
 Some offers are not added while you scan but offered when the cashier presses payment: an offer on a count of items, and free items earned by the invoice's value. In both cases a small window says *There is a free item offer*, and the payment screen does not open yet:
 
+![The free item offer prompt at payment](../../ar/modules/pos/images/sales/pos-free-items-offer-prompt-en.png)
+
 | Button | Arabic caption | What pressing it does |
 |---|---|---|
 | **Confirm** | «تأكيد» | Adds the offer's free lines to the invoice. Press payment again to go on. |
@@ -93,6 +99,8 @@ Some offers are not added while you scan but offered when the cashier presses pa
 The window also carries a *Don't show offer again* tick box («عدم إظهار عروض مره اخري»); on the item-count offer it appears only for users whose security profile has **Allow Hide Offers Dialog**. Ticking it stops that kind of offer from being offered on this screen.
 
 When the free item is "any item from a group", the **Free Items Group** window («مجموعة أصناف مجانية») lists the group's items and says how many you may take. Double-click an item, or select it and press `Enter`, to add one to its quantity, or type the quantity in the **Quantity** column. **Confirm** («تأكيد») adds the chosen items as free lines; it is disabled while the quantities add up to more than the offer allows. **Cancel** («إلغاء») adds none.
+
+![The Free Items Group window](../../ar/modules/pos/images/sales/pos-free-items-group-en.png)
 
 ## Notes Worth Paying Attention To
 

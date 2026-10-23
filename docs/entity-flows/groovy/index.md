@@ -17,9 +17,9 @@ None of these scripts is built into the system. They are samples: you paste the 
 Each page has a **Script** link to a `.groovy` file and shows the same source at the bottom of the page. Copy the whole file, from the `package` line to the last brace.
 
 - **On an entity flow:** open **Administration → Display Customization → Entity Flow**, add a line to the **Details** grid with the target action the page gives, and paste the script into the line's **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
-- **On a task schedule:** open **Basic → Settings → Task Schedule**, create a task of type **Action**, enter `com.namasoft.infor.domainbase.util.actions.EAGroovyAction` in **Class Name**, and paste the script into **Parameter 1**.
+- **On a task schedule:** open **Basic → Settings → Task Schedule**, create a task of type **Action**, and paste the script into **Groovy Script** on the **Action** tab. Leave **Class Name** empty: it is filled in when you save.
 
-**Every script takes its first input from Parameter 2.** On an entity flow, Parameter 1 stays empty. On a task schedule, Parameter 1 holds the script. Either way the parameter table on each page starts at Parameter 2. When you save, the line's description and the titles above the parameters fill in from the script itself.
+**Every script takes its first input from Parameter 2.** Parameter 1 stays empty, on an entity flow and on a task schedule alike, and the parameter table on each page starts at Parameter 2. When you save, the line's description and the titles above the parameters fill in from the script itself.
 
 [EAGroovyAction](/entity-flows/core/EAGroovyAction) explains how the system compiles and runs these scripts.
 
@@ -35,6 +35,7 @@ Each page is marked one of two ways:
   <LandingCard icon="🔒" title="Reserve a Draft's Code When It Is Saved" link="/entity-flows/groovy/EACreateAliasesForDrafts.md" details="Registers a draft's codes at once, so no other record can take its code before it is committed." />
   <LandingCard icon="🧮" title="Recalculate an Invoice's Totals After a Field Map" link="/entity-flows/groovy/EACalculateMoneyFields.md" details="Recalculates line values, taxes and totals after a field map that changes prices on Validate On Save." />
   <LandingCard icon="📱" title="Keep Only a User's Last Mobile Device Token" link="/entity-flows/groovy/EARemoveAllFCMTokens.md" details="Stops push notifications reaching old phones by keeping only a user's newest device token." />
+  <LandingCard icon="▶️" title="Run Several Entity Flows on Records From a Query" link="/entity-flows/groovy/EARunEntityFlowFromQueryMultiEntityType.md" details="One task runs several manual flows on the records a query returns, each record getting the flows meant for its type." />
 </LandingGrid>
 
 ## Accounting and other modules
@@ -49,6 +50,7 @@ Each page is marked one of two ways:
   <LandingCard icon="🏠" title="Rebuild a Cancel Contract's Expense Lines From the Lease" link="/entity-flows/groovy/EAFillExpensesWithRecommitRECancelContract.md" details="Refills a lease termination's Expense grid from the lease's non-installment lines on every save." />
   <LandingCard icon="📮" title="Fill Postal Parcels Sort Lines From IPS" link="/entity-flows/groovy/EAIPSCDSFetchMailItemData.md" details="Looks up every line's mail item in IPS in one go, for lines that were scanned or imported without the look-up." />
   <LandingCard icon="🧾" title="Add a Service Fees Line to the Electronic Invoice" link="/entity-flows/groovy/EAEInvoiceCreationWithCustomServiceFees.md" details="Adds Service Fees 1 to the e-invoice as an item line with 15% tax. The document itself is unchanged." />
+  <LandingCard icon="📝" title="Stamp and Lock the Follow-Up Lines of a Complaint" link="/entity-flows/groovy/EAStampAndLockComplaintFollowUps.md" details="Customer-specific: new follow-ups get the user's employee and today's date; edits to saved ones are undone on save." />
 </LandingGrid>
 
 ## HR and the item master file
@@ -87,6 +89,8 @@ Each page is marked one of two ways:
   <LandingCard icon="🚗" title="Collect a Purchase Invoice's Stock Receipts From Its Car Receipts" link="/entity-flows/groovy/EACollectStockReceiptsByFromDoc.md" details="Fills Stock Documents with the receipts made from the car receipts." />
   <LandingCard icon="💲" title="Keep the Prices of the Document a Sales Document Was Made From" link="/entity-flows/groovy/EACopyLinePriceAndHeaderDiscountFromFromDoc.md" details="Lines take the source line's price, also through a stock issue." />
   <LandingCard icon="🛒" title="Create One Purchase Order per Supplier From a Purchase Quotation" link="/entity-flows/groovy/EAGenMultiplePurchaseOrdersFromQuotation.md" details="Splits a quotation into orders or invoices per supplier and keeps them in step." />
+  <LandingCard icon="📋" title="Create One Purchase Order per Recommended Supplier From a Purchase Request" link="/entity-flows/groovy/EAGenPurchaseOrdersPerRecommendedSupplier.md" details="Customer-specific: one order per Recommended Supplier, ordering each line's Number 2." />
+  <LandingCard icon="🔗" title="Point Invoice Lines Back at the From Document's Lines" link="/entity-flows/groovy/EAGuessInvoiceSourceLineOfSourceLineId.md" details="Lines taken from stock issues or receipts get the Source Line Id of the order line they came from." />
   <LandingCard icon="🟰" title="Refuse a Document Whose Quantities Differ From Its From Document" link="/entity-flows/groovy/EAQtyMustMatchFromDocPerItem.md" details="An item-by-item quantity check against the From Document." />
 </LandingGrid>
 

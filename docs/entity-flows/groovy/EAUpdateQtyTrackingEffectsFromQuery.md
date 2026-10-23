@@ -21,7 +21,7 @@ This script is not tied to any customer's setup. You control it entirely through
 | **Class name** | `EAUpdateQtyTrackingEffectsFromQuery` |
 | **Script** | [EAUpdateQtyTrackingEffectsFromQuery.groovy](/groovy-examples/EAUpdateQtyTrackingEffectsFromQuery.groovy) |
 | **Runs on** | A task schedule. |
-| **Uses** | Parameter 2. Parameter 1 holds the script. |
+| **Uses** | Parameter 2. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
 ## When to use it
@@ -47,16 +47,15 @@ The script is meant for installations where **Use System Table to Track Quantiti
 ## Setting it up as a task schedule
 
 1. Open **Basic → Settings → Task Schedule** and create a new task of type **Action**.
-2. In **Class Name** enter `com.namasoft.infor.domainbase.util.actions.EAGroovyAction`.
-3. Paste the whole script from the file above into **Parameter 1**.
-4. Fill in Parameter 2:
+2. On the **Action** tab, paste the whole script from the file above into **Groovy Script**. Leave **Class Name** empty: it is filled in when you save.
+3. Fill in Parameter 2:
 
 | Parameter | Title shown after saving | What to enter |
 |---|---|---|
-| Parameter 1 | The script's class name | The whole script. |
-| Parameter 2 | Query returning entityType, id | An SQL query whose first two columns are the entity type and the id of each document. |
+| Parameter 1 | Not used - leave empty | Nothing. |
+| Parameter 2 | Query returning entityType, id - eg: select entityType, id from SalesInvoice where valueDate >= '20260101' | An SQL query whose first two columns are the entity type and the id of each document. |
 
-5. Save, then click [Run Now](/platform/automation-and-rules/scheduled-tasks#Running-a-Task-on-Demand). For a one-off repair, tick **Inactive** first: **Run Now** still works, and the task does not run on a schedule.
+4. Save, then click [Run Now](/platform/automation-and-rules/scheduled-tasks#Running-a-Task-on-Demand). For a one-off repair, tick **Inactive** first: **Run Now** still works, and the task does not run on a schedule.
 
 ## Example
 

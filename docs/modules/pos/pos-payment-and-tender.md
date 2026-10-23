@@ -99,6 +99,8 @@ A few rules keep the till honest:
 
 ## The receipt
 
-Once payment is confirmed the **receipt prints**. There are options at the bottom of the tender screen for printing a fully itemized invoice, and — for those with permission — for suppressing the printout. Receipts can be reprinted later from the sales screen with `Alt+P`.
+Once payment is confirmed the **receipt prints**. There are options at the bottom of the tender screen for printing a fully itemized invoice, and — for those with permission — for suppressing the printout. Receipts can be reprinted later from the sales screen with `Alt+P`. On an empty sales screen `Alt+P` reprints the last invoice only when the POS setting **Print Last Document If No Current Open Document** is on.
+
+What the receipt shows is up to your print form: a **Report Definition** whose **Report Type** is **Form**, for the **POS Sales Invoice**, with **Used In POS** ticked. The receipt below comes from a simple form of that kind.
 
 ![Printed receipt](../../ar/modules/pos/images/payment/pos-payment-receipt-en.png)

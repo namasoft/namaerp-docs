@@ -76,8 +76,15 @@
   "EAGenMultiplePurchaseOrdersFromQuotation": {
     "source": "modules/supplychain/supplychaindomain/src/main/java/com/namasoft/modules/supplychain/domain/utils/plugnplay/groovy/EAGenMultiplePurchaseOrdersFromQuotation.groovy"
   },
+  "EAGenPurchaseOrdersPerRecommendedSupplier": {
+    "source": "modules/supplychain/supplychaindomain/src/main/java/com/namasoft/modules/supplychain/domain/utils/plugnplay/groovy/siescom/EAGenPurchaseOrdersPerRecommendedSupplier.groovy",
+    "customerPackage": "siescom"
+  },
   "EAGroovyUpdateRefInMiscPurchaseInvDetails": {
     "source": "modules/accounting/accountingdomain/src/main/java/com/namasoft/modules/accounting/domain/utils/actions/EAGroovyUpdateRefInMiscPurchaseInvDetails.groovy"
+  },
+  "EAGuessInvoiceSourceLineOfSourceLineId": {
+    "source": "modules/srvcenter/srvcenterdomain/src/main/java/com/namasoft/modules/srvcenter/domain/utils/EAGuessInvoiceSourceLineOfSourceLineId.groovy"
   },
   "EAIPSCDSFetchMailItemData": {
     "source": "modules/frm/frmservices/src/main/java/com/namasoft/modules/frm/contracts/impl/EAIPSCDSFetchMailItemData.groovy"
@@ -126,6 +133,9 @@
   "EARemoveSalaryDocsFromSalarySheetWithDifferentPeriod": {
     "source": "modules/hr/hrdomain/src/main/java/com/namasoft/modules/humanresource/utils/clientscripts/EARemoveSalaryDocsFromSalarySheetWithDifferentPeriod.groovy"
   },
+  "EARunEntityFlowFromQueryMultiEntityType": {
+    "source": "infra/domain-base/src/main/java/com/namasoft/infor/domainbase/util/actions/EARunEntityFlowFromQueryMultiEntityType.groovy"
+  },
   "EASerialNumberLen": {
     "source": "modules/supplychain/supplychaindomain/src/main/java/com/namasoft/modules/supplychain/domain/utils/plugnplay/groovy/EASerialNumberLen.groovy"
   },
@@ -160,6 +170,10 @@
   "EASpreadAssemblyBOMLineByItemClass": {
     "source": "modules/supplychain/supplychaindomain/src/main/java/com/namasoft/modules/supplychain/domain/utils/plugnplay/groovy/abella/EASpreadAssemblyBOMLineByItemClass.groovy",
     "customerPackage": "abella"
+  },
+  "EAStampAndLockComplaintFollowUps": {
+    "source": "modules/crm/crmdomain/src/main/java/com/namasoft/modules/crm/domain/entityactions/sws/EAStampAndLockComplaintFollowUps.groovy",
+    "customerPackage": "sws"
   },
   "EATimeAttendanceMakeInOutIfBeforeTime": {
     "source": "modules/hr/hrdomain/src/main/java/com/namasoft/modules/humanresource/utils/actions/EATimeAttendanceMakeInOutIfBeforeTime.groovy"

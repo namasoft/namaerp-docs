@@ -23,8 +23,8 @@ To configure a pole display for Nama POS, follow these steps:
 1. Go to the **"Pos Pole Display Specs"** screen.
 2. Set:
 
-* **Communication Type**: e.g., Serial, USB.
-* **Printer Name or Port Number**: to define the connection interface.
+* **Communication Type**: **CommPort** or **Printer**.
+* **Printer Name Or Port Number**: to define the connection interface.
 3. Link the pole display configuration to a machine by setting the **"Pos Pole Display Specs"** field in the machine record.
 
 ---
@@ -184,11 +184,19 @@ This method enables a smooth transition to API key login without any manual conf
      apiKey=dddsbddhbskbsdhdd
      ```
 
+In the initial settings window the key goes in the **API Key** field of the **Server Settings** group; the **Server Login Id** and **Server Login Password** fields can then stay empty.
+
+![The API Key field in the POS initial settings window](../../ar/modules/pos/images/getting-started/pos-login-apikey-en.png)
+
 ---
 
 Using an API Key gives you greater flexibility and security, especially when updating passwords or managing a large number of POS terminals.
 
 ## Advanced Methods for Changing Sales Table Column Widths in POS
+
+The sales table is the grid in the middle of the sales screen: one row per invoice line, with columns such as **Code**, **Item Name**, **Qty**, **Unit**, **Free Item**, **Unit Price**, **Total** and **Net Price**. Which columns appear comes from the register's POS interface settings; the two methods below control how wide each one is.
+
+![The sales table on the POS sales screen](../../ar/modules/pos/images/sales/pos-sales-table-columns-en.png)
 
 ### Manual Method (Drag and Direct Edit)
 

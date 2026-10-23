@@ -36,6 +36,8 @@ Two credentials identify you, and both come from your own account on the JoFotar
 
 They are sent with every request, so a rotated secret key on the portal has to be updated here on the same day or submissions start failing.
 
+![The Jordan page of the Electronic Tax Authority Configuration](../../ar/modules/invoicing/images/jofotara-config-jordan-page-en.png)
+
 ::: warning There is no trial platform for Jordan
 Saudi Arabia and Egypt both give you somewhere to rehearse. Jordan does not — the only tax payer type is the live one. Do your rehearsing on a small number of real, low-value documents that you are prepared to see on your tax record, and work through the **Validate Tax Authority Documents** action before anything is sent.
 :::

@@ -47,16 +47,18 @@ Create a new Tax Payer Configuration or edit an existing one.
 
 | Field          | Value |
 |----------------|-------|
-| taxPayerType | `UAE - Electronic Invoice Staging` (for testing) or `UAE - Electronic Invoice` (for production) |
-| TaxRegNo     | Your establishment's tax registration number |
+| Tax Payer Type | `UAE - Electronic Invoice Staging` (for testing) or `UAE - Electronic Invoice` (for production) |
+| Tax Registeration NO | Your establishment's tax registration number |
 
 #### Integration Settings
 
 | Field              | Description |
 |--------------------|-------------|
-| APIURL             | Auto-filled when Tax Payer Type is selected |
-| password           | API Key from Orchida (Bearer Token) |
-| orchidaCompanyID | Company ID from the Orchida dashboard |
+| API URL            | Auto-filled when Tax Payer Type is selected |
+| Password           | API Key from Orchida (Bearer Token) |
+| Orchida Company ID | Company ID from the Orchida dashboard |
+
+![The UAE page of the Electronic Tax Authority Configuration](../../ar/modules/invoicing/images/uae-orchida-config-uae-page-en.png)
 
 #### Tax Code Configuration
 
@@ -82,6 +84,8 @@ UAE tax codes follow the UN/EDIFACT 5305 standard (Aligned Tax Category Codes).
 When using code `S` (Standard rate), the VAT rate must be exactly `5.00`
 :::
 
+![Tax 1 codes on the UAE page](../../ar/modules/invoicing/images/uae-orchida-config-tax-codes-en.png)
+
 ### Step 3: Customer Setup
 
 For each customer that will receive electronic invoices, fill in the following fields:
@@ -90,19 +94,19 @@ For each customer that will receive electronic invoices, fill in the following f
 
 | Field        | Description |
 |--------------|-------------|
-| taxRegNo     | Customer's Tax Registration Number (TRN) |
-| specialNumber | Customer's Peppol Endpoint ID |
-| description4 | Agency ID (e.g. `TL`) |
-| description5 | Agency Name (e.g. company name) |
+| Tax Registeration NO | Customer's Tax Registration Number (TRN) |
+| Special Number | Customer's Peppol Endpoint ID |
+| `description4` (not on the standard Customer screen) | Agency ID (e.g. `TL`) |
+| `description5` (not on the standard Customer screen) | Agency Name (e.g. company name) |
 
 #### Address
 
 | Field       | Description |
 |-------------|-------------|
-| country     | Country code (e.g. `AE`) |
-| city        | City name |
-| street      | Street address |
-| governorate | Emirate code |
+| Country Code | Country code (e.g. `AE`); when it is empty, **Country** is sent instead |
+| City        | City name |
+| Street      | Street address |
+| State       | Emirate code |
 
 ::: tip Emirate Codes
 
@@ -138,29 +142,15 @@ Ensure a currency with tax authority code `AED` exists and is set as the default
 
 ### Creating a Tax Authority Submission Document
 
-1. Go to Tax Authority Submission Document
-2. Click "Collect Documents" to add the invoices to be sent
-3. Click "Send" to submit the invoices to Orchida
+1. Go to **Tax Authority Submission Document**
+2. Click **Collect Tax Authority Documents** to add the invoices to be sent
+3. Click **Send Selected Documents** or **Send Not Sent Documents** to submit the invoices to Orchida
 
 ### Submission Statuses
 
 After sending, the document status is set to:
 - **Sent**: Orchida accepted the invoice for processing
-- **NotValidSent**: The invoice was rejected — check the errors field for details
-
-### Checking Invoice Status from Orchida
-
-After submission, you can check the final status of the invoice with the tax authority:
-
-1. From the Tax Authority Submission Document, click "Check Documents Status"
-2. The system calls Orchida and retrieves the current status
-3. The following fields are updated automatically:
-   - **Status In Tax Authority**: `valid`, `invalid`, or `pending`
-   - **Tax Auth Entity Status Type**: updated based on Orchida's response
-
-::: warning
-Orchida may take some time to process the invoice. If the status is `pending`, wait and check again later.
-:::
+- **Not Send Correctly**: The invoice was rejected — check the errors field for details
 
 ## Supported Document Types
 
@@ -172,4 +162,4 @@ Orchida may take some time to process the invoice. If the status is `pending`, w
 
 ## Maximum Days to Send
 
-The default number of days allowed to send an invoice after its value date is **14 days**. This can be changed in the Tax Payer Configuration under "Max Days To Send Invoice".
+The default number of days allowed to send an invoice after its value date is **14 days**. This can be changed in the Tax Payer Configuration under **Max Days To Send Invoices**.
