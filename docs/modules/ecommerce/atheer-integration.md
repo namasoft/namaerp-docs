@@ -19,6 +19,8 @@ Atheer is set up as a record on the **Magento Site** screen. The screen keeps th
 4. On the **Atheer Site** tab, fill **Reset Order Link Template** (explained below). The record cannot be saved without it.
 5. Give Atheer a Nama user name and password for the calls. The calls run as that user, so it needs the right to create the documents in step 2.
 
+![The Atheer Site tab of a Magento Site, with the Reset Order Link Template](../../ar/modules/ecommerce/images/atheer-site-tab-en.png)
+
 ## The address Atheer calls
 
 Atheer sends each call as an HTTP `POST` with the order or request as JSON in the body, to:

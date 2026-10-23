@@ -58,6 +58,8 @@ A typical grid:
 
 Salasa uses only these two columns; leave **Entity Flow** empty. A status that has no line in the grid is recorded in the log but changes nothing on the document.
 
+![The Main tab of an Ecommerce Shipping Site of type Salasa, with the credentials, the Nama API key and the Status To Run Entity Flow grid](../../ar/modules/ecommerce/images/salasa-shipping-site-main-en.png)
+
 ### Salasa Auto Generation (Salasa tab)
 
 | Field | What it is for |

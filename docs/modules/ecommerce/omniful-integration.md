@@ -56,6 +56,8 @@ These fields shape the lines of the documents that come in from Omniful:
 | Discount Location | مكان التخفيض | Which discount column of the line receives Omniful's line discount (Discount 1 to Discount 8). Empty puts it in Discount 3. |
 | Shipping Item | صنف الشحن | A **service** item; the configuration will not save with a stock item here. When it is set, an incoming sales order whose Omniful invoice carries a shipping price gets one extra line of this item, quantity 1, priced at the shipping price (divided by 1.15 when Omniful marks the shipping as tax-inclusive). Re-reading the order replaces that line instead of adding a second one. |
 
+![An Omniful Configuration with its credentials, Nama API key, reference fields and one generation line for sales orders](../../ar/modules/ecommerce/images/omniful-configuration-en.png)
+
 #### Accepted Order Statuses Per Sales Channel
 
 Omniful sends an order event every time an order changes, and by default **every** order status

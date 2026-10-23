@@ -43,6 +43,8 @@ In this setup the merchant installs Namasoft's app from Salla. The Namasoft gate
 Salla tokens expire. Nama renews them automatically, and it uses **User Name (Consumer Key)** and **Password (Consumer Secret)** to do it. If those two fields are empty, the site works only until the first token expires. After that, every call fails with "User Name is missing" or "Password is missing".
 :::
 
+![The Salla Site tab with the Redirect URL and the Namasoft gateway fields filled](../../ar/modules/ecommerce/images/salla-site-tab-en.png)
+
 ### Through your own Salla app
 
 A customer who has registered their own app with Salla can connect it directly.

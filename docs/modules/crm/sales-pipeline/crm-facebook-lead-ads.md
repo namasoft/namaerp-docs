@@ -17,7 +17,7 @@ The configuration screen itself needs nothing beyond a base installation. The re
 
 There are two roads, and a working setup uses both:
 
-1. **Instantly, through the webhook.** Facebook calls your Nama server each time a lead form is submitted on the page. Nama looks up the configuration whose **Page** matches, reads the lead's answers from Facebook, and saves the lead. Nobody presses anything.
+1. **Instantly, through the webhook.** Facebook calls your Nama server each time a lead form is submitted on the page. Nama looks up the configuration whose **Page Id** matches, reads the lead's answers from Facebook, and saves the lead. Nobody presses anything.
 2. **On demand, with Update Leads.** The **Update Leads** button on the configuration reads every lead the page's forms collected in a date range and saves the ones Nama does not have yet. Use it the day you connect a page (to bring in the leads collected before), and whenever you suspect the server missed some — for example after it was down for maintenance.
 
 Either way, the same two settings decide what happens to each lead: the **Finder Query** decides whether this person already exists, and the **Fields Map** decides what goes into which field.
@@ -42,10 +42,10 @@ The screen has a single tab. Besides the usual code and names, it holds:
 
 | Field (English / Arabic) | What it does |
 |---|---|
-| Page (الصفحة) | The Facebook Page ID. This is how an incoming lead finds its configuration, so each page has exactly one record. |
+| Page Id (معرف الصفحة) | The Facebook Page ID. This is how an incoming lead finds its configuration, so each page has exactly one record. |
 | App ID (معرف التطبيق) | The ID of your company's Facebook app. |
 | App Secret (المفتاح السري للتطبيق) | The app's secret, stored as a password. It must be the real secret of the app the webhook belongs to: Facebook signs every lead it sends with it, and Nama drops any call whose signature does not match. |
-| Webhook Verify Token (رمز التحقق من الـ Webhook) | The same value you typed as the **Verify token** when you set up the webhook in Meta for Developers. It sits right after **Page** on the screen. |
+| Webhook Verify Token (رمز التحقق من الـ Webhook) | The same value you typed as the **Verify token** when you set up the webhook in Meta for Developers. It sits next to **Page Id** on the screen. |
 | Save Leads As | **CRM Lead** or **CRM Potential** — which record each form submission becomes. |
 | Finder Query(Retriever) | An SQL query that finds the existing record for this person, if there is one. |
 | Fields Map | One line per field to fill on the new record, in the same syntax entity flows use to fill a generated record. |

@@ -38,6 +38,8 @@ The gateway is a Namasoft server that receives the merchant's installation of Na
 
 If the connection later stops being accepted by Zid, pressing **Read Ecommerce Access Token** again fetches the current token from the gateway.
 
+![The Zid Site tab with the Ecommerce Store ID, the Ecommerce App Token and the gateway's Redirect URL](../../ar/modules/ecommerce/images/zid-site-tab-en.png)
+
 ## Connecting with the customer's own Zid app
 
 Here the customer's app does the authorising and the token comes straight from Zid. Zid sends the store owner's browser back to a small Namasoft page, which passes the approval on to your Nama server. Use a browser that can reach your Nama server's address.

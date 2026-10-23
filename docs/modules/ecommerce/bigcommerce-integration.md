@@ -35,6 +35,8 @@ the **store hash**.
    [e-commerce integration guide](/modules/ecommerce/ecommerce-integration-guide.md).
 7. Save.
 
+![A BigCommerce Site: the API address in URL, the store hash in User Name and the access token in Password](../../ar/modules/ecommerce/images/bigcommerce-site-main-en.png)
+
 ## Reading orders from BigCommerce
 
 **Read Sales** asks BigCommerce for the orders created since the start date: the date you give

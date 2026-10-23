@@ -53,6 +53,8 @@ inventory. Shopify then gives you its credentials in one of two forms, and Nama 
 7. Link your warehouses to Shopify locations (see [Stock quantities](#Stock-quantities) below).
 8. Save.
 
+![A Shopify Site with Use GraphQL Api ticked, the store address in URL and an Admin API access token](../../ar/modules/ecommerce/images/shopify-site-main-en.png)
+
 ## Reading orders from Shopify
 
 When **Read Sales** runs, Nama asks Shopify for orders newer than the last order it has already read and

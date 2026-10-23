@@ -45,6 +45,8 @@ With an `https://` address Nama sends the key and secret as standard authenticat
 encrypted connection. Use https for any shop that is reachable from the internet.
 :::
 
+![A Woo Commerce Site with the shop address, the REST API key and secret, and the Date Pattern WooCommerce needs](../../ar/modules/ecommerce/images/woocommerce-site-main-en.png)
+
 ## Reading orders from the shop
 
 ### Choose exactly one status

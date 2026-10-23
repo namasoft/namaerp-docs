@@ -57,6 +57,8 @@ A few general fields are worth knowing:
 - **Date Pattern** is the format of the dates the shop sends. Leave it empty unless the platform's page tells you to set it; the default is `yyyy-MM-dd HH:mm:ss`.
 - **Max Orders Per Read** is how many orders Nama asks for in one request (25 when empty). Nama keeps asking until it has read everything new, so this sets the size of each request, not a limit on the whole read.
 
+![A Magento Site for a Magento shop: the site type, the shop address and the connection fields on the Main tab](../../ar/modules/ecommerce/images/ecommerce-magento-site-main-en.png)
+
 ## Linking items to the shop
 
 Every order line, stock update and price update needs to know which Nama item a shop SKU means. Nama answers that question in this order:

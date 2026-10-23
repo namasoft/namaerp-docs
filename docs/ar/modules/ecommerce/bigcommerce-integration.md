@@ -35,6 +35,8 @@ BigCommerce. أما الإعدادات المشتركة بين كل المنصا
    [دليل تكامل التجارة الإلكترونية](/ar/modules/ecommerce/ecommerce-integration-guide.md).
 7. احفظ.
 
+![موقع BigCommerce: عنوان الواجهة في الرابط، ومعرّف المتجر في اسم المستخدم، ورمز الوصول في كلمة المرور](images/bigcommerce-site-main-ar.png)
+
 ## قراءة الطلبات من BigCommerce
 
 يطلب زر **قراءة المبيعات** من BigCommerce الطلبات التي أُنشئت منذ تاريخ البداية: التاريخ الذي تعطيه لزر

@@ -24,6 +24,8 @@ Like every other platform, OTO is set up on the **Magento Site** screen, which k
 Nama sends nothing to any shop or platform unless the server's `nama.properties` file contains `send-ecommerce-data=true`.
 :::
 
+![The Link Ecommerce Warehouses By Nama grid of an OTO site: each Nama warehouse with its OTO location code](../../ar/modules/ecommerce/images/oto-warehouse-links-en.png)
+
 ## What OTO receives
 
 Whenever the stock of an item changes in one of the linked warehouses, Nama calculates the item's quantity the same way it does for every platform: the quantity basis, the minimum-quantity rule and the rounding all come from the site's quantity settings. It then sends that figure to the OTO location linked to the warehouse.
