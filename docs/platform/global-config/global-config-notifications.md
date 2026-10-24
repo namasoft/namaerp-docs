@@ -35,7 +35,7 @@ For how notifications are defined and triggered, see the [Notifications system](
 When you restore a production database onto a test server, every scheduled notification comes with it. Because this field holds the *production* server's identifier and the test server's identifier is different, the test copy quietly declines to send anything. Leave it filled in, and when you deliberately move production to a new server, remember to update it — otherwise the new production server will stop sending too.
 :::
 
-**Max Retray Number For Pending Tasks** `value.info.maxRetrayNumForPendingTasks` *(default 250)* — How many times a pending task is retried before it is abandoned.
+**Max Retry Number For Pending Tasks** `value.info.maxRetrayNumForPendingTasks` *(default 250)* — How many times a pending task is retried before it is abandoned.
 
 **Failed Pending Tasks Notification** `value.info.failedPendingTasksNotification` — The notification raised when a task finally gives up, so a human learns that messages are not going out.
 
@@ -88,7 +88,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.ignoreEmployeeStateWhenSendingNotifications` | Ignore Employee State When Sending Notifications | تجاهل حالة الموظف عند إرسال التنبيهات | [Notifications](#Notifications) |
 | `value.info.rotateSenderEmails` | Rotate Sender Emails | Rotate Sender Emails | [Sending settings](#Sending-settings) |
 | `value.info.sendMailsAndSMSOnlyFromServers` | Send Mails And SMS Only From Servers (CSV) | ارسال البريد و الرسائل من الخوادم (CSV) | [Sending settings](#Sending-settings) |
-| `value.info.maxRetrayNumForPendingTasks` | Max Retray Number For Pending Tasks | Max Retray Number For Pending Tasks | [Sending settings](#Sending-settings) |
+| `value.info.maxRetrayNumForPendingTasks` | Max Retry Number For Pending Tasks | أقصى عدد محاولات للمهام المعلقة | [Sending settings](#Sending-settings) |
 | `value.info.failedPendingTasksNotification` | Failed Pending Tasks Notification | Failed Pending Tasks Notification | [Sending settings](#Sending-settings) |
 | `value.info.emailSettings` | Email Sender Settings | إعدادات البريد المرسل | [Email sender accounts](#Email-sender-accounts) |
 | `value.info.emailSettings.useOnlyIfPreferred` | Use Only If Specified in Preferred Sender | يتسعمل فقط اذا كان مضافا في المرسل المفضل | [Email sender accounts](#Email-sender-accounts) |

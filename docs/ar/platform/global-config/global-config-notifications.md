@@ -35,7 +35,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 حين تستعيد قاعدة بيانات الإنتاج على خادم اختبار، تأتي معها كل الإشعارات المجدولة. ولأن هذا الحقل يحمل معرّف خادم *الإنتاج* ومعرّف خادم الاختبار مختلف، تمتنع نسخة الاختبار في صمت عن إرسال أي شيء. اتركه مملوءاً، وحين تنقل الإنتاج عمداً إلى خادم جديد فتذكّر تحديثه — وإلا توقّف خادم الإنتاج الجديد عن الإرسال هو الآخر.
 :::
 
-**Max Retray Number For Pending Tasks** `value.info.maxRetrayNumForPendingTasks` *(الافتراضي 250)* — كم مرة يُعاد تنفيذ المهمة المعلقة قبل التخلي عنها.
+**أقصى عدد محاولات للمهام المعلقة** `value.info.maxRetrayNumForPendingTasks` *(الافتراضي 250)* — كم مرة يُعاد تنفيذ المهمة المعلقة قبل التخلي عنها.
 
 **Failed Pending Tasks Notification** `value.info.failedPendingTasksNotification` — الإشعار الذي يُرفع حين تستسلم المهمة أخيراً، فيعلم إنسانٌ أن الرسائل لا تخرج.
 
@@ -88,7 +88,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | تجاهل حالة الموظف عند إرسال التنبيهات | Ignore Employee State When Sending Notifications | `value.info.ignoreEmployeeStateWhenSendingNotifications` | [الإشعارات](#lshaart) |
 | Rotate Sender Emails | Rotate Sender Emails | `value.info.rotateSenderEmails` | [إعدادات الإرسال](#aaddt-lrsl) |
 | ارسال البريد و الرسائل من الخوادم (CSV) | Send Mails And SMS Only From Servers (CSV) | `value.info.sendMailsAndSMSOnlyFromServers` | [إعدادات الإرسال](#aaddt-lrsl) |
-| Max Retray Number For Pending Tasks | Max Retray Number For Pending Tasks | `value.info.maxRetrayNumForPendingTasks` | [إعدادات الإرسال](#aaddt-lrsl) |
+| أقصى عدد محاولات للمهام المعلقة | Max Retry Number For Pending Tasks | `value.info.maxRetrayNumForPendingTasks` | [إعدادات الإرسال](#aaddt-lrsl) |
 | Failed Pending Tasks Notification | Failed Pending Tasks Notification | `value.info.failedPendingTasksNotification` | [إعدادات الإرسال](#aaddt-lrsl) |
 | إعدادات البريد المرسل | Email Sender Settings | `value.info.emailSettings` | [حسابات إرسال البريد](#Hsbt-rsl-lbryd) |
 | يتسعمل فقط اذا كان مضافا في المرسل المفضل | Use Only If Specified in Preferred Sender | `value.info.emailSettings.useOnlyIfPreferred` | [حسابات إرسال البريد](#Hsbt-rsl-lbryd) |

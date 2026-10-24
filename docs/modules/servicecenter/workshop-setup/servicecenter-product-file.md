@@ -33,7 +33,6 @@ The menu calls it simply **Product** (`منتج`), which undersells it. Everywhe
 | Current owner | `CUS-1042` Fahad Al-Otaibi |
 | Insurance company | `INS-02` Wafa Insurance |
 | Warranty provider | `WRN-01` NAWA Warranty Programme |
-| Accessories kit | `AK-STD` Standard Kit |
 
 Every workshop page in this documentation is about this car.
 
@@ -76,7 +75,6 @@ Everything lives on one page, in two blocks and three lists.
 | Engine No | رقم المحرك | `S16-224471`. |
 | Gear Box | ناقل الحركة | Manual, automatic, and so on. |
 | Supplier Code | كود المورد | The supplier's own reference for the vehicle. |
-| Accessories | مجموعة المحلقات | The accessories kit the car came with — a descriptive tag. |
 | Last Odometer / Last Odometer Date | قراءة العداد السابقة / تاريخها | 41,600 on 1 January 2026. |
 | Current Odometer / Current Odometer Date | قراءة العداد الحالية / تاريخها | 45,300 on 3 March 2026. |
 | Difference Between Current OdoMeter and Last OdoMeter | الفرق بين القراءة الحالية وأخر قراءة | 3,700 km. |
@@ -132,7 +130,7 @@ The five **Other** slots exist so an installation can name stages the standard l
 
 ## What Documents Write Back
 
-Committing a job document fills in the vehicle's **empty** fields from what the document knows: chassis number, plate number, engine number, gear box, accessories kit, supplier code, recall campaign, brand, model, production year, and the three insurance fields.
+Committing a job document fills in the vehicle's **empty** fields from what the document knows: chassis number, plate number, engine number, gear box, supplier code, recall campaign, brand, model, production year, and the three insurance fields.
 
 The word *empty* is the whole rule. A field that already carries a value is left alone — the write-back is a convenience for cars whose file was created in a hurry at reception, not a synchronisation mechanism. If a value on the vehicle is wrong, correcting it on a document will not correct the file; open the file and fix it there.
 

@@ -11,10 +11,10 @@ does not balance. This page covers the journal family and the remaining accounti
 belong to a larger family: the exchange-rate update, the year-end closing entry, aging allocation,
 the inter-company transfer, financial commitments and profit distribution.
 
-The documents are on [Journal Entries & Adjustments](/modules/accounting/journal-entries),
-[Year-End Closing & Period Control](/modules/accounting/year-end-and-period-control),
-[Aging Allocation](/modules/accounting/aging-allocation) and
-[Financial Commitments](/modules/accounting/financial-commitments).
+The documents are on [Journal Entries & Adjustments](/modules/accounting/ledger-setup/journal-entries),
+[Year-End Closing & Period Control](/modules/accounting/ledger-setup/year-end-and-period-control),
+[Aging Allocation](/modules/accounting/money-in-and-out/aging-allocation) and
+[Financial Commitments](/modules/accounting/planning-and-commitments/financial-commitments).
 
 ![The Effects tab of the Journal Entry term](../../../ar/modules/accounting/images/document-terms/acc-term-journals-and-closing-en.png)
 

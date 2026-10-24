@@ -33,7 +33,7 @@ The five dimensions themselves — and the composite dimension — are covered i
 |---|---|
 | Allow using a system account in receipt / payment / bank transfer / journal entry | Permit manually picking a "system" account in each type individually. |
 
-Each of these switches the check off for a whole document type — every user, every account, every date — so it is the bluntest of the three ways to open a system account. Prefer a dated exception record instead; both routes, and the account flags behind them, are on [System Accounts & Transaction Exceptions](../system-accounts-and-exceptions.md).
+Each of these switches the check off for a whole document type — every user, every account, every date — so it is the bluntest of the three ways to open a system account. Prefer a dated exception record instead; both routes, and the account flags behind them, are on [System Accounts & Transaction Exceptions](../ledger-setup/system-accounts-and-exceptions.md).
 
 ## Prevent change of account balance nature
 
@@ -43,7 +43,7 @@ Each of these switches the check off for a whole document type — every user, e
 | Prevent balance-nature-change margin | A tolerance value at which the prevention is bypassed. |
 | Consider department/sector/analysis set/entity dimension/branch in the prevention | Choose which dimensions are accounted for when applying the prevention. |
 
-(This corresponds to the **Prevent Change Account Balance Nature** flag on the [account](../accounts.md) itself.)
+(This corresponds to the **Prevent Change Account Balance Nature** flag on the [account](../ledger-setup/accounts.md) itself.)
 
 ## Subsidiaries
 
@@ -115,5 +115,5 @@ Each of these switches the check off for a whole document type — every user, e
 ## For Support
 
 - For any "where do I enable/disable this behavior?" question, start from this screen before assuming it's a code issue.
-- Account and subsidiary options intersect with the [account](../accounts.md) setup itself; review both together.
-- Period and closing options are complemented by the [Year-end & period control](../year-end-and-period-control.md) page.
+- Account and subsidiary options intersect with the [account](../ledger-setup/accounts.md) setup itself; review both together.
+- Period and closing options are complemented by the [Year-end & period control](../ledger-setup/year-end-and-period-control.md) page.

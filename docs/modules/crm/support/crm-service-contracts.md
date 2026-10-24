@@ -110,6 +110,8 @@ Coverage follows the line dates, not the status: a contract covers tickets insid
 
 **CRM Update Contract Status** (*تغيير حالة عقد خدمة*) is a two-field document — the contract, and the status to apply — and its value date must be later than the contract's.
 
+The status it writes is not necessarily its own. On commit, the contract takes the status of the **newest CRM Update Contract Status document in the system** — newest by value date, then by creation time — whichever contract that document was entered for. Entered in date order, that newest document is the one you are committing, so the contract gets the status you chose. If another contract already has a status document with a later value date, the contract gets *that* document's status instead; date each status document on or after the latest one already entered. Cancelling the document, or pointing it at a different contract, resets the contract it leaves the same way: to the status of the newest such document in the system.
+
 The status document itself is this small:
 
 ![The CRM Update Contract Status screen](../../../ar/modules/crm/images/support/crm-update-contract-status-en.png)

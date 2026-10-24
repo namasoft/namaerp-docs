@@ -61,7 +61,7 @@ Then bundle them into [services](/modules/servicecenter/workshop-setup/servicece
 
 Give each task a per-model line carrying the labour time and rate for that model. It takes longer to set up, and it is what makes the figures the job order proposes agree with the figures a later recalculation produces.
 
-The small classification files — accessories kits, visit types, operation classifications — can wait. They are mostly labels you group, filter and report on; the visit type also decides which bookings may bypass the capacity check.
+The small classification files — visit types and operation classifications — can wait. They are mostly labels you group, filter and report on; the visit type also decides which bookings may bypass the capacity check.
 
 ### 4. Vehicles already on the road
 

@@ -96,19 +96,19 @@ When you commit a Document Movement, two things happen for each row:
    the responsible employee and the document's archive position.
 2. The document's **state** is updated according to the table above.
 
-That is the whole of it — and the omission matters:
+That is the whole of it. In particular, a Transfer never changes where the document itself says it is:
 
-::: warning A Transfer does not relocate the document
-The destination you typed into Moving Details is stored on the voucher and nowhere else. The
-document's own Location, Sub Location and Detailed Location are **not** updated, and the history
-row records the position the document moved *from*.
+::: info A Transfer records the move; the document keeps its position
+The destination you type into Moving Details is stored on the voucher. A Transfer never updates the
+document's own Location, Sub Location and Detailed Location, and the history row records the
+position the document moved *from*.
 
 So after transferring a licence from shelf A-01 to B-01, the document still reads A-01, and so
-does its history. Anyone searching by shelf will look in the wrong place.
+does its history row; B-01 is written on the transfer voucher.
 
-**Until this is fixed, open each transferred document and update its position fields by hand.**
-For a large transfer, an [import](/platform/import-export/importing-records.md) of the new
-positions is faster than editing them one at a time.
+To have the document show its new shelf, open it and update its position fields. For a large
+transfer, an [import](/platform/import-export/importing-records.md) of the new positions is faster
+than editing them one at a time.
 :::
 
 ::: warning Movements cannot be corrected or undone

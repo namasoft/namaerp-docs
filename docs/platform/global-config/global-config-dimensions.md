@@ -50,7 +50,7 @@ Many charts of accounts encode dimensions directly into the account code — `10
 
 **Sector Segment Order** *(1)*, **Branch Segment Order** *(2)*, **Department Segment Order** *(3)*, **Analysis Set Segment Order** *(4)* `value.accountDimensionConfigurations.sectorSegmentOrder` and friends — The position each dimension occupies in the code, counting from the left after the account number itself. A zero means that dimension is not part of the code.
 
-**Segment Seperator** `value.accountDimensionConfigurations.segmentSeperator` *(default `-`)* — The character the code is split on.
+**Segment Separator** `value.accountDimensionConfigurations.segmentSeperator` *(default `-`)* — The character the code is split on.
 
 ::: warning These describe your codes; they don't create them
 Changing a segment order doesn't renumber anything — it changes how existing codes are *interpreted*. Get them wrong and the system will read the branch segment as the sector. Set them to match the coding scheme you actually use, once, before accounts are created.
@@ -87,4 +87,4 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.accountDimensionConfigurations.branchSegmentOrder` | Branch Segment Order | ترتيب مقطع الفرع | [Account code segments](#Account-code-segments) |
 | `value.accountDimensionConfigurations.departmentSegmentOrder` | Department Segment Order | ترتيب مقطع الإدارة | [Account code segments](#Account-code-segments) |
 | `value.accountDimensionConfigurations.analysisSetSegmentOrder` | Analysis Set Segment Order | ترتيب جزء المجموعة التحليلية | [Account code segments](#Account-code-segments) |
-| `value.accountDimensionConfigurations.segmentSeperator` | Segment Seperator | فاصل المقطع | [Account code segments](#Account-code-segments) |
+| `value.accountDimensionConfigurations.segmentSeperator` | Segment Separator | فاصل المقطع | [Account code segments](#Account-code-segments) |

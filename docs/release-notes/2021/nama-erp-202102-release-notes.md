@@ -271,7 +271,7 @@ Added another place on the item for adding another image for the item (**two ima
 #### Additional Improvements
 
 - Improved so that, once a customer's registration request is completed, the message **"A message with the username and password will be sent to your phone as soon as possible"** appears
-- When logging in as a guest, the site name `www.kasshopping.com` appeared under the word Guest. Improved so that only the word Guest appears, without the site name under it
+- When logging in as a guest, the site name appeared under the word Guest. Improved so that only the word Guest appears, without the site name under it
 
 #### More Improvements
 

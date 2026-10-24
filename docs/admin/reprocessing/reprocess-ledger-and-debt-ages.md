@@ -85,7 +85,7 @@ delete b from DimensionsBalance b left join Account acc on acc.id = b.account_id
 ```
 :::
 ::: tip
-Then open the account, change its **Currency**, run **Update Balances Currency** from the More menu, and recommit the account's documents. The single-account procedure is on [Accounts](/modules/accounting/accounts#Actions-on-this-screen).
+Then open the account, change its **Currency**, run **Update Balances Currency** from the More menu, and recommit the account's documents. The single-account procedure is on [Accounts](/modules/accounting/ledger-setup/accounts#Actions-on-this-screen).
 :::
 
 ## Find and Remove zombie ledger transactions

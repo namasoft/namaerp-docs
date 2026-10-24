@@ -81,7 +81,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **Always Use Text Area In Serial Popup** `value.info.alwaysUseTextAreaInSerialPopup` — يستعمل إدخال الأرقام المسلسلة مربعاً متعدد الأسطر دائماً، وهو ما يناسب لصق قائمة طويلة من الأرقام الممسوحة.
 
-**عدم استعمال الوصف في عنوان** `value.info.doNotUseDescriptorsInFields` — تعرض حقول المرجع الكود والاسم فقط بدل النص الوصفي الأطول. فعّله حيث تكون الأوصاف طويلة إلى حد يدفع الجزء المفيد من الحقل خارج الشاشة.
+**عدم استعمال الوصف في الحقول** `value.info.doNotUseDescriptorsInFields` — تعرض حقول المرجع الكود والاسم فقط بدل النص الوصفي الأطول. فعّله حيث تكون الأوصاف طويلة إلى حد يدفع الجزء المفيد من الحقل خارج الشاشة.
 
 **استعمال محرر النصوص الجديد** `value.info.useKendoRichEditor` — تستعمل حقول النص الغني محرر Kendo.
 
@@ -143,7 +143,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | إخفاء عمود اختيار السطر في قوائم الاختيار | Hide Select Column In Selector Popup | `value.info.hideSelectColumnInSelectorPopup` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | إخفاء عمود عدد مرات الإدارج في قوائم الاختيار | Hide Count Column In Selector Popup | `value.info.hideCountColumnInSelectorPopup` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | Always Use Text Area In Serial Popup | Always Use Text Area In Serial Popup | `value.info.alwaysUseTextAreaInSerialPopup` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
-| عدم استعمال الوصف في عنوان | Do Not UseDescriptors In Fields | `value.info.doNotUseDescriptorsInFields` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
+| عدم استعمال الوصف في الحقول | Do Not Use Descriptors In Fields | `value.info.doNotUseDescriptorsInFields` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | استعمال محرر النصوص الجديد | Use New Rich Text Editor | `value.info.useKendoRichEditor` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | إنشاء المستند الارشيفي في شاشة منبثقة | Create DMS Doc In Pop Up Window | `value.info.createDMSDocInPopUpWindow` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | موضع المساعدة السريعة | Tooltip Position | `value.info.tooltipPosition` | [المساعدات السريعة](#lmsaadt-lsryaa) |

@@ -128,7 +128,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 |---|---|---|---|
 | عدم السماح بتغيير الكود في المستندات | Do Not Allow Changing Document Code | `value.info.doNotAllowSpecifyingDocCode` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
 | السماح بترك بادئة التكويد فارغة في الدفاتر اليدوية | Allow Empty Prefix For Manual Book | `value.info.allowEmptyPrefixForManualBook` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
-| السماح باستعمال دفاتر مسموح بها دون حد أقصى في التوجيه | Unlimeted Allowed Books in Terms | `value.info.unlimtedAllowedBooksInTerms` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
+| السماح باستعمال دفاتر مسموح بها دون حد أقصى في التوجيه | Unlimited Allowed Books in Terms | `value.info.unlimtedAllowedBooksInTerms` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
 | اذا وجد دفتر واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | If Single Book Is Defined For Entity Use It With New | `value.info.ifSingleBookIsDefinedForEntityUseItWithNew` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
 | اذا وجد توجيه واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | If Single Term Is Defined For Entity Use It With New | `value.info.ifSingleTermIsDefinedForEntityUseItWithNew` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |
 | تجاهل محددات الدخول عند البحث عن دفتر و توجيه واحد | Do Not Consider Dimensions When Searching For Single Term And Book | `value.info.doNotConsiderDimensionsWhenSearchingForSingleTermBook` | [الدفاتر والتوجيهات](#ldftr-wltwjyht) |

@@ -82,7 +82,7 @@ Banks charge VAT on their commission. The **Fees Tax** group (ضريبة الر�
 
 ## Cash, shifts and the POS counter
 
-These settings matter only where cash drawers and shifts are used, in [cashier shifts](/modules/accounting/cashier-shifts) and in [Nama POS](/modules/pos/).
+These settings matter only where cash drawers and shifts are used, in [cashier shifts](/modules/accounting/money-in-and-out/cashier-shifts) and in [Nama POS](/modules/pos/).
 
 | Setting | What it does |
 |---|---|

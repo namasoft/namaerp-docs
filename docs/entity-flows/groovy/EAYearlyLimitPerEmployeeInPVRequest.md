@@ -94,6 +94,6 @@ An empty **To** or **Ref 1** is refused with the system's usual message for a re
 ## Related
 
 - [EAGroovyAction](/entity-flows/core/EAGroovyAction): how Groovy scripts are attached to entity flows and task schedules.
-- [Receipt & Payment Vouchers](/modules/accounting/receipts-and-payments): payment requests and the vouchers made from them.
+- [Receipt & Payment Vouchers](/modules/accounting/money-in-and-out/receipts-and-payments): payment requests and the vouchers made from them.
 
 </div>

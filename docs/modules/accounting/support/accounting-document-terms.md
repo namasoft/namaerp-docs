@@ -47,17 +47,17 @@ Each document that creates a journal entry has its own term with its own sides â
 
 | Document | Page                                                        |
 |---|-------------------------------------------------------------|
-| Receipt / payment voucher | [Receipt & payment vouchers](../receipts-and-payments.md)   |
-| Cashier voucher & shift close | [Cashier shifts](../cashier-shifts.md)                      |
-| Credit / debit note | [Credit & debit notes](../credit-and-debit-notes.md)        |
-| Bank transfer & bank reconciliation | [Banks & bank accounts](../banks-and-bank-accounts.md)      |
-| Bank portfolio & financial papers | [Cheques & financial papers](../cheques-financial-papers.md) |
-| Loan issue & installment payment | [Bank loans](../bank-loans.md)                              |
-| LG issue | [Letters of guarantee](../letters-of-guarantee.md)          |
-| LC opening | [Letters of credit](../bank-letters-of-credit.md)           |
-| Credit-facility issuance & payment | [Credit facilities](../credit-facilities.md)                |
-| Deposit issue & interest payment | [Fixed deposits](../fixed-deposits.md)                      |
-| Treasury-bill purchase & ROI proof | [Treasury bills](../treasury-bills.md)                      |
+| Receipt / payment voucher | [Receipt & payment vouchers](../money-in-and-out/receipts-and-payments.md)   |
+| Cashier voucher & shift close | [Cashier shifts](../money-in-and-out/cashier-shifts.md)                      |
+| Credit / debit note | [Credit & debit notes](../money-in-and-out/credit-and-debit-notes.md)        |
+| Bank transfer & bank reconciliation | [Banks & bank accounts](../banks-and-cheques/banks-and-bank-accounts.md)      |
+| Bank portfolio & financial papers | [Cheques & financial papers](../banks-and-cheques/cheques-financial-papers.md) |
+| Loan issue & installment payment | [Bank loans](../bank-facilities/bank-loans.md)                              |
+| LG issue | [Letters of guarantee](../bank-facilities/letters-of-guarantee.md)          |
+| LC opening | [Letters of credit](../bank-facilities/bank-letters-of-credit.md)           |
+| Credit-facility issuance & payment | [Credit facilities](../bank-facilities/credit-facilities.md)                |
+| Deposit issue & interest payment | [Fixed deposits](../bank-facilities/fixed-deposits.md)                      |
+| Treasury-bill purchase & ROI proof | [Treasury bills](../investments/treasury-bills.md)                      |
 
 ## Option-by-option reference
 

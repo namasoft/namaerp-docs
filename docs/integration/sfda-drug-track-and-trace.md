@@ -147,7 +147,7 @@ Beside it sits the report list, which answers *"what exactly went to the Authori
 | **Failed** | The call itself did not succeed — no credentials for the warehouse, no location number, or the Authority's service refused the request outright |
 | **Blocked** | The Authority answered, but rejected every line on the report |
 
-A rejection is per line, and the Authority explains itself: each rejected pack is listed with its trade number, its serial or lot, and the Authority's own numbered reason, fetched from the Authority in your interface language. That detail is written to **Error Desciption**, which is not one of the columns shown by default — add it from the column chooser when you need to read it, or filter on it to find every document rejected for the same reason.
+A rejection is per line, and the Authority explains itself: each rejected pack is listed with its trade number, its serial or lot, and the Authority's own numbered reason, fetched from the Authority in your interface language. That detail is written to **Error Description**, which is not one of the columns shown by default — add it from the column chooser when you need to read it, or filter on it to find every document rejected for the same reason.
 
 ### Pack by pack: SFDA RSD Line Results
 
@@ -158,7 +158,7 @@ When you need the answer for one pack rather than for the whole document, open *
 | **Document #**, **Operation** | The document and the movement reported |
 | **Status**, **Succeeded** | Whether the Authority accepted this pack, or whether its report is still waiting to go |
 | **Item**, **GTIN**, **Batch Number**, **Serial Number**, **Expiry Date** | What was sent to the Authority |
-| **RSD Response Code**, **Error Desciption** | The Authority's numbered answer for this pack and its explanation |
+| **RSD Response Code**, **Error Description** | The Authority's numbered answer for this pack and its explanation |
 | **Document Batch Number**, **Document Serial Number**, **Document Expiry Date** | The same values as they stand on the document line, so a typing mistake shows up side by side with what the Authority expected |
 
 By default the list keeps only the packs that were rejected or are still waiting. Tick **Record Successful Lines** on the configuration to keep the accepted packs as well — useful while you are proving a new setup, noisy once it is running.

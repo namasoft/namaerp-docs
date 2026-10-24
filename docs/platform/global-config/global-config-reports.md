@@ -107,7 +107,7 @@ When a report is exported to Excel, the layout that looked right on a printed pa
 
 **Detect Cell Type** `value.info.excelExportConfig.detectCellType` *(default on)* — Writes numbers as numbers and dates as dates rather than as text. This is the one that decides whether the exported sheet can be summed and sorted, so leave it on.
 
-**White Background** `value.info.excelExportConfig.whiteBackground` *(on)*, **Prevent Row Span** `value.info.excelExportConfig.preventRowSpan` *(on)*, **Ignore Cell Border** `value.info.excelExportConfig.ignoreCellBorder` *(on)*, **Igonre Cell Background** `value.info.excelExportConfig.igonreCellBackground`, **Ignore Graphics** `value.info.excelExportConfig.ignoreGraphics` — Strip the visual styling that a spreadsheet doesn't need. Preventing row span in particular is what stops merged cells from breaking filters and sorting.
+**White Background** `value.info.excelExportConfig.whiteBackground` *(on)*, **Prevent Row Span** `value.info.excelExportConfig.preventRowSpan` *(on)*, **Ignore Cell Border** `value.info.excelExportConfig.ignoreCellBorder` *(on)*, **Ignore Cell Background** `value.info.excelExportConfig.igonreCellBackground`, **Ignore Graphics** `value.info.excelExportConfig.ignoreGraphics` — Strip the visual styling that a spreadsheet doesn't need. Preventing row span in particular is what stops merged cells from breaking filters and sorting.
 
 **Remove Empty Space Between Rows** / **Remove Empty Space Between Columns** `value.info.excelExportConfig.removeEmptySpaceBetweenRows`, `...removeEmptySpaceBetweenColumns` — Remove the spacer rows and columns that a print layout uses for margins.
 
@@ -167,7 +167,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.excelExportConfig.whiteBackground` | White Background | خلفية بيضاء | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.preventRowSpan` | Prevent Row Span | منع دمج السطور | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.ignoreCellBorder` | Ignore Cell Border | تجاهل إطار الخلايا | [Excel export](#Excel-export) |
-| `value.info.excelExportConfig.igonreCellBackground` | Igonre Cell Background | تجاهل خلفية الخلايا | [Excel export](#Excel-export) |
+| `value.info.excelExportConfig.igonreCellBackground` | Ignore Cell Background | تجاهل خلفية الخلايا | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.ignoreGraphics` | Ignore Graphics | تجاهل الرسومات | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.removeEmptySpaceBetweenRows` | Remove Empty Space Between Rows | بدون مسافات بين السطور | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.removeEmptySpaceBetweenColumns` | Remove Empty Space Between Columns | بدون مسافات بين الأعمدة | [Excel export](#Excel-export) |

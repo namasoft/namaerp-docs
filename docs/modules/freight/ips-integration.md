@@ -97,7 +97,7 @@ Each row is one call to IPS:
 | **Status** | **Initial** while waiting, **Executed** once IPS accepted it, **Failed** when it was refused or could not be delivered. |
 | **Last Shipment Status** | The outcome of the latest task for the same item, repeated on all of that item's rows — handy for filtering items whose last report failed. |
 | **Trials** | How many times it has been attempted. |
-| **Error Message** / **Error Desciption** | Why it failed — IPS's own error when it answered with one. |
+| **Error Message** / **Error Description** | Why it failed — IPS's own error when it answered with one. |
 | **Request JSON** / **Response JSON** | Exactly what was sent and what came back. |
 | **Submition Date**, **Execution Date**, **Requester** | When it was queued, when it ran, and by whom. |
 

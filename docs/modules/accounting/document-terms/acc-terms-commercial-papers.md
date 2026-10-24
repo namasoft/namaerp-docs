@@ -11,7 +11,7 @@ from a customer, deposited in a bank portfolio, collected or bounced, sometimes 
 bank (agio), sometimes partly paid or cancelled. Each of those steps is its own document, and each
 document's term says which accounts that step moves the paper's value between.
 
-The paper lifecycle itself is on [Cheques & Financial Papers](/modules/accounting/cheques-financial-papers).
+The paper lifecycle itself is on [Cheques & Financial Papers](/modules/accounting/banks-and-cheques/cheques-financial-papers).
 Every side on these screens is a full account-side block — account source, subsidiary type,
 narrations and dimension sources — described once in
 [Anatomy of an Account Side](/modules/supplychain/document-terms/doc-term-accounting-effects#Anatomy-of-an-Account-Side).

@@ -1,11 +1,11 @@
 ---
 description: "Overview of Service Center mobile delivery: courier route sheets for delivering sales invoices, returns and work tasks through the Nama Delivery app; it is not related to car delivery."
-entities: [MobDeliveryDoc, MultiMobDeliveryDoc]
+entities: [MobDeliveryDoc, MultiMobDeliveryDoc, ExternalDeliveryOrder]
 ---
 # Delivering with the Driver App
 
 ::: info Required licence
-`srvcenter-mobile-delivery`. All three documents in this folder are gated behind it.
+`srvcenter-mobile-delivery`. All three documents in this folder are gated behind it. The [External Delivery Order](#External-Delivery-Order) needs a licence of its own.
 :::
 
 ::: danger These documents have nothing to do with vehicles
@@ -29,6 +29,18 @@ That is the whole job of this sub-module. You reach it from **Service Center →
 | **Invoice Receipt Document** | مستند استلام الفاتورة | What the customer actually received against a delivered sales invoice, and what packaging came back. |
 
 The first two are covered on the [delivery documents page](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-documents.md); the third has [its own page](/modules/servicecenter/mobile-delivery/servicecenter-invoice-receipt-document.md).
+
+## External Delivery Order
+
+The same menu holds one more document, the **External Delivery Order** (*أمر توصيل خارجي*). It needs the licence `crm-united-pharma-app`, which was made for the United Pharma customer, and the screen is available only under it.
+
+An external delivery order is a delivery that did not start as a Nama sales invoice: an order whose invoice lives in another system, sent to a receiver who may not be the customer it is billed to. The order holds:
+
+- **who it is for** — a **Customer** from the customer file, or, for a customer who is not in the system, an **External Customer Code** and **External Customer Name**. One of the three must be filled;
+- **who receives it** — **Receiver Code** or **Receiver Name** (one of them), **Receiver Mobile**, and the **Receiver Address** with its first address line and map location. All of these are required, because they are everything the courier gets;
+- the **Invoice Code** and **Invoice Total** of the outside invoice, and the counts **Package 1 … Package 7**.
+
+The Multi Mobile Delivery Document collects these orders with its button **Collect External Delivery Orders By Chosen Date And Time** (*تجميع أوامر التوصيل الخارجية حسب الوقت والتاريخ المختارين*), using the same date and time window as for invoices. Each order becomes a delivery line that carries the order's own receiver, mobile, address and package counts; an order already on a delivery line is skipped. On a delivery line that points at an external delivery order, the receiver's address from the order is kept — it is never replaced by the customer's address from the customer file.
 
 ## What these documents change
 

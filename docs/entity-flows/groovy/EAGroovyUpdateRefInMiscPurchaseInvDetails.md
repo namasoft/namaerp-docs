@@ -72,6 +72,6 @@ Line 2 is the first ticked line, so the group is *Security*. Line 4 is ticked be
 ## Related
 
 - [EAGroovyAction](/entity-flows/core/EAGroovyAction): how Groovy scripts are attached to entity flows and task schedules.
-- [Misc Purchasing & Machine Rent](/modules/accounting/misc-purchasing)
+- [Misc Purchasing & Machine Rent](/modules/accounting/money-in-and-out/misc-purchasing)
 
 </div>

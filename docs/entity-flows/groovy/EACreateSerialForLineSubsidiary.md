@@ -65,6 +65,6 @@ The next payment voucher to S0001 continues the count: its line gets **N1** 3 an
 ## Related
 
 - [EAGroovyAction](/entity-flows/core/EAGroovyAction): how Groovy scripts are attached to entity flows and task schedules.
-- [Receipt & Payment Vouchers](/modules/accounting/receipts-and-payments)
+- [Receipt & Payment Vouchers](/modules/accounting/money-in-and-out/receipts-and-payments)
 
 </div>

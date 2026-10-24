@@ -78,7 +78,7 @@ When a customer pays by cheque, some companies still hand over a numbered receip
 2. On the **Commercial Paper Book** (دفتر أوراق تجارية), set its **Receipt Book** to that pad. Only pads with the box ticked are offered there.
 3. On each **Commercial Paper** (ورقة تجارية) in that book, pick the **Receipt Paper**. The lookup lists the unused papers of the book's pad.
 
-The two kinds of pads are kept apart. A commercial-papers receipt cannot be used on a voucher, and an ordinary receipt cannot be used on a commercial paper. Once one of its receipts has been used on a paper, a commercial-paper book cannot be switched to a different receipt book. The whole cheque cycle is described in [Cheques & Financial Papers](/modules/accounting/cheques-financial-papers).
+The two kinds of pads are kept apart. A commercial-papers receipt cannot be used on a voucher, and an ordinary receipt cannot be used on a commercial paper. Once one of its receipts has been used on a paper, a commercial-paper book cannot be switched to a different receipt book. The whole cheque cycle is described in [Cheques & Financial Papers](/modules/accounting/banks-and-cheques/cheques-financial-papers).
 
 ## Messages you may see
 

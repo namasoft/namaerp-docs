@@ -28,7 +28,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **أقصي عدد محاولات عند فشل الرسائل** `value.info.maxTrialsForMessages` *(الافتراضي 0، ومعناه بلا حد)* — كم مرة تُحاوَل تسلمة رسالة الـ Replication قبل التخلي عنها.
 
-**طلب إعادة الارسال بعد فشل الرسائ** `value.info.requestReCommitAfterFailures` — بعد إخفاقات متكررة، يطلب من الموقع المصدر إعادة حفظ السجل بدل الاستمرار في إعادة إرسال الرسالة نفسها.
+**طلب إعادة الإرسال بعد فشل الرسائل** `value.info.requestReCommitAfterFailures` — بعد إخفاقات متكررة، يطلب من الموقع المصدر إعادة حفظ السجل بدل الاستمرار في إعادة إرسال الرسالة نفسها.
 
 **وقت مسح الرسائل المرسلة التي تم معالجتها** `value.info.replicationCleanUpTime` — وقت اليوم الذي تُحذف فيه الرسائل المسلَّمة. اجعله ساعة هادئة: فالتنظيف يمسّ أسطراً كثيرة.
 
@@ -58,7 +58,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | مستخدم في التكرار | Use In Replication | `value.info.useDepartmentInReplication` | [المحددات المستخدمة في الـ Replication](#lmHddt-lmstkhdm-fy-l-Replication) |
 | مستخدم في التكرار | Use In Replication | `value.info.useAnalysisSetInReplication` | [المحددات المستخدمة في الـ Replication](#lmHddt-lmstkhdm-fy-l-Replication) |
 | أقصي عدد محاولات عند فشل الرسائل | Max Trials When Replication Failures Occur | `value.info.maxTrialsForMessages` | [توصيل الرسائل](#twSyl-lrsyl) |
-| طلب إعادة الارسال بعد فشل الرسائ | Request ReCommit After Messages Fail | `value.info.requestReCommitAfterFailures` | [توصيل الرسائل](#twSyl-lrsyl) |
+| طلب إعادة الإرسال بعد فشل الرسائل | Request ReCommit After Messages Fail | `value.info.requestReCommitAfterFailures` | [توصيل الرسائل](#twSyl-lrsyl) |
 | وقت مسح الرسائل المرسلة التي تم معالجتها | Replication Clean Up Time | `value.info.replicationCleanUpTime` | [توصيل الرسائل](#twSyl-lrsyl) |
 | Do Not Replicate Attachments | Do Not Replicate Attachments | `value.info.donotReplicateAttachments` | [توصيل الرسائل](#twSyl-lrsyl) |
 | منع استعمال سيرفرات الفروع حال عمل الرئيسي | Prevent Using Branches When Headoffice Is Online | `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | [توصيل الرسائل](#twSyl-lrsyl) |

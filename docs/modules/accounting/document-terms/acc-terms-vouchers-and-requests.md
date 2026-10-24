@@ -18,9 +18,9 @@ term is the longest in it — well over fifty options. Most of them answer one o
 The same term class serves the **Receipt Voucher**, **Payment Voucher**, **Receipt Order**, **Payment
 Order** and **Bank Transfer**; the screen hides what does not apply to each. After it, this page
 covers the payment and receipt **requests**, the **Electronic Receipt Voucher**, and the **cashier**
-vouchers and shifts. The documents are on [Receipt & Payment Vouchers](/modules/accounting/receipts-and-payments),
-[Banks, Bank Accounts & Transfers](/modules/accounting/banks-and-bank-accounts) and
-[Cashier Shifts](/modules/accounting/cashier-shifts).
+vouchers and shifts. The documents are on [Receipt & Payment Vouchers](/modules/accounting/money-in-and-out/receipts-and-payments),
+[Banks, Bank Accounts & Transfers](/modules/accounting/banks-and-cheques/banks-and-bank-accounts) and
+[Cashier Shifts](/modules/accounting/money-in-and-out/cashier-shifts).
 
 ![The Effect tab of a cash receipt voucher term](../../../ar/modules/accounting/images/document-terms/acc-term-vouchers-and-requests-en.png)
 
@@ -174,7 +174,7 @@ they mean on the receipt voucher.
 
 ## Cashier documents
 
-The cashier documents are on [Cashier Shifts](/modules/accounting/cashier-shifts).
+The cashier documents are on [Cashier Shifts](/modules/accounting/money-in-and-out/cashier-shifts).
 
 - **Cashier Receipt Voucher** and **Cashier Payment Voucher**: **Debit / Credit** (saved side
   records) `termConfig.debit`, `termConfig.credit`. A payment method can override one of the two —

@@ -10,10 +10,10 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 التي لا تنتمي إلى عائلة أكبر: تغيير سعر الصرف، والقيد الختامي، وتسوية أعمار الديون، وجاري تحويل الشركات،
 والالتزامات المالية، وتوزيع الأرباح.
 
-المستندات نفسها في [القيود والتسويات](/ar/modules/accounting/journal-entries)
-و[الإقفال السنوي والتحكم في الفترات](/ar/modules/accounting/year-end-and-period-control)
-و[تسوية أعمار الديون](/ar/modules/accounting/aging-allocation)
-و[الالتزامات المالية](/ar/modules/accounting/financial-commitments).
+المستندات نفسها في [القيود والتسويات](/ar/modules/accounting/ledger-setup/journal-entries)
+و[الإقفال السنوي والتحكم في الفترات](/ar/modules/accounting/ledger-setup/year-end-and-period-control)
+و[تسوية أعمار الديون](/ar/modules/accounting/money-in-and-out/aging-allocation)
+و[الالتزامات المالية](/ar/modules/accounting/planning-and-commitments/financial-commitments).
 
 ![تبويب التأثير في توجيه سند القيد](../images/document-terms/acc-term-journals-and-closing-ar.png)
 

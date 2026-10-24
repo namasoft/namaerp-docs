@@ -13,8 +13,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 تمر هذه الصفحة على توجيهات مستندات خطاب الضمان — الإصدار والمستند الافتتاحي والتعديل والإنهاء — ثم على
 توجيهات الاعتماد البنكي التي تنسخ شكلها. أما المستندات نفسها ففي
-[خطابات الضمان](/ar/modules/accounting/letters-of-guarantee) و
-[الاعتمادات المستندية](/ar/modules/accounting/bank-letters-of-credit).
+[خطابات الضمان](/ar/modules/accounting/bank-facilities/letters-of-guarantee) و
+[الاعتمادات المستندية](/ar/modules/accounting/bank-facilities/bank-letters-of-credit).
 
 ::: info نوعان من الجوانب على هذه الشاشات
 بعض الأزواج **كتلة جانب محاسبي** كاملة — إعداد الجانب ومصدر الحساب ونوع الحافظة والبيانات ومصادر

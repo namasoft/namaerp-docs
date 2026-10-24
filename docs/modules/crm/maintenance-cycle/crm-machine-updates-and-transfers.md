@@ -36,19 +36,18 @@ checks run afterwards, its warranty dates are recomputed at the same time.
 **Ledger: none. Stock: none.** The document has no term configuration of its own, so its Term
 carries only the generic document settings.
 
-::: warning Before you save a Machine Update
-**It writes every field on its screen onto the machine.** Picking the machine pre-fills most of the
-boxes from the current record. The alternative code, the manufacturing, sale, installation and
-last-visit dates, the default warranty start date and the warranty status start empty, and whatever
-they hold when you save is written onto the machine. An alternative code left empty is saved as the update's own
-number, so the machine takes that number as its alternative code. Treat this document as "retype the machine":
-before committing, work down the screen and make sure every box holds the value you want the
-machine to end up with.
+::: tip What a Machine Update changes
+**Only the boxes that hold a value are written onto the machine.** Picking the machine pre-fills most
+of the boxes from the current record. The alternative code, the manufacturing, sale, installation and
+last-visit dates, the default warranty start date and the warranty status start empty: fill one only
+when you want to change it. A box left empty leaves the machine's own value as it is, so an update
+that changes only the room touches nothing but the room. The flip side: a Machine Update cannot clear
+a value on the machine. To empty a field, edit the machine file itself.
 
-**Cancelling restores the previous update.** Cancelling a Machine Update restores the values of the
-**previous** Machine Update document for that machine. When there is no previous update, the machine
-keeps the values the cancelled document wrote — so note the old values down before you commit a
-first update.
+**Cancelling re-applies the previous update.** Cancelling a Machine Update writes the filled values
+of the **previous** Machine Update document for that machine back onto it. When there is no previous
+update, the machine keeps the values the cancelled document wrote, so note the old values down before
+you commit a first update.
 :::
 
 Two more behaviours worth knowing:

@@ -35,7 +35,7 @@ These options decide how a Hijri date is written when Nama writes one out — fo
 
 **Day Position** / **Month Position** / **Year Position** `value.info.hijriFormat.dayPosition`, `...monthPosition`, `...yearPosition` — Each part is placed First, Second or Third. The defaults give day-month-year; set day to Third and year to First for the year-first style.
 
-**Seperator** `value.info.hijriFormat.seperator` *(default `-`)* — The character between the parts.
+**Separator** `value.info.hijriFormat.seperator` *(default `-`)* — The character between the parts.
 
 **Add Zero To Numbers Less Than 10** `value.info.hijriFormat.addZeroToNumbersLessThan10` *(default on)* — Writes `05` instead of `5`, so dates line up in columns.
 
@@ -45,7 +45,7 @@ Many businesses describe an item by three physical measures rather than a single
 
 **Length** / **Width** / **Height** `value.measuresConfiguration.length`, `...width`, `...height` — The label shown for each measure. Leaving one empty hides that measure from the screens that use them, which is what you want when only two of the three are meaningful.
 
-**Seperator** `value.measuresConfiguration.seperator` *(default `*`)* — The character used when the three measures are written as one descriptive string, giving `2*1.5`. The system restores the default if you save this empty.
+**Separator** `value.measuresConfiguration.seperator` *(default `*`)* — The character used when the three measures are written as one descriptive string, giving `2*1.5`. The system restores the default if you save this empty.
 
 **Calculate Count Based On Qty in Invoices** `value.info.calculateCountBasedOnQty` *(default on)* — With this on, the *count* on a line is derived from the quantity multiplied by the measures rather than typed by hand, so entering 10 sheets of 2 × 1.5 gives a count of 30 square metres automatically. The unit of measure decides which measures participate: a unit flagged to ignore length or width leaves that factor out of the multiplication.
 
@@ -71,7 +71,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.hijriFormat.dayPosition` | Day Position | موقع اليوم | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFormat.monthPosition` | Month Position | موقع الشهر | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFormat.yearPosition` | Year Position | موقع السنة | [Hijri date format](#Hijri-date-format) |
-| `value.info.hijriFormat.seperator` | Seperator | الفاصل | [Hijri date format](#Hijri-date-format) |
+| `value.info.hijriFormat.seperator` | Separator | الفاصل | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFormat.addZeroToNumbersLessThan10` | Add Zero To Numbers Less Than 10 | إضافة صفر قبل الارقام اقل من 10 | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFields` | Hijri Fields | الحقول الهجري دائما | Date fields that are always shown as Hijri dates, whatever calendar the user logged in with. |
 | `value.info.hijriFields.entityType` | Entity Type | النوع | The screen the line applies to; leave it empty to cover the field on every screen. |
@@ -79,5 +79,5 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.measuresConfiguration.length` | Measures \| Length | الأبعاد \| الطول | [Measures](#Measures) |
 | `value.measuresConfiguration.width` | Measures \| Width | الأبعاد \| العرض | [Measures](#Measures) |
 | `value.measuresConfiguration.height` | Measures \| Height | الأبعاد \| الارتفاع | [Measures](#Measures) |
-| `value.measuresConfiguration.seperator` | Seperator | الفاصل | [Measures](#Measures) |
+| `value.measuresConfiguration.seperator` | Separator | الفاصل | [Measures](#Measures) |
 | `value.info.calculateCountBasedOnQty` | Calculate Count Based On Qty in Invoices | حساب العدد بناءا على الكمية في الفواتير | [Measures](#Measures) |

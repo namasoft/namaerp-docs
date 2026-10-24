@@ -32,7 +32,7 @@ A sales invoice normally raises both. A journal entry raises only the first. A s
 raises only the second.
 
 There is no third kind to learn. The **Request Name** column tells you which one a row is, and the
-**Reqyest Type** column — spelled that way on screen, so search for it as it appears — says whether
+**Request Type** column says whether
 the request was raised by creating the document, updating it, or deleting it. Deleting a committed
 document raises a request too: the effects have to be unwound, and that unwinding can fail exactly
 as the original could.
@@ -53,8 +53,7 @@ This is the column everything else hangs off.
 The difference between the last two matters when you are triaging. **Processing Failed** almost
 always names its own cause in the **Error Message** column and is fixable by an implementer:
 open the period, set the missing account, correct the term. **Failed By Exception** is more often
-something structurally wrong, and the detail you need is in **Error Desciption** — again, spelled
-that way on screen — which carries the full technical text rather than the one-line summary.
+something structurally wrong, and the detail you need is in **Error Description**, which carries the full technical text rather than the one-line summary.
 
 ::: warning Nothing retries a failed request on its own
 There is no attempt counter, no maximum, no backoff, no eventual give-up. The worker only ever

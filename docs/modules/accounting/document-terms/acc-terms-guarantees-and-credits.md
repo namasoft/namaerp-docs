@@ -14,8 +14,8 @@ term, so the term screen for these documents is long — but every pair answers 
 
 This page goes through the terms of the guarantee documents — issue, opening balance, changing and
 closing — and then the letter-of-credit terms that copy their shape. The documents themselves are on
-[Letters of Guarantee](/modules/accounting/letters-of-guarantee) and
-[Letters of Credit](/modules/accounting/bank-letters-of-credit).
+[Letters of Guarantee](/modules/accounting/bank-facilities/letters-of-guarantee) and
+[Letters of Credit](/modules/accounting/bank-facilities/bank-letters-of-credit).
 
 ::: info Two kinds of side on these screens
 Some pairs are a full **account-side block** — side configuration, account source, subsidiary type,

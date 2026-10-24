@@ -280,9 +280,9 @@ When a rule triggers approval, the affected lines are available in templates:
 
 ### Budget Exceeded Approvals
 
-A document that would push an account over its budget can be sent for approval instead of being refused. The budget check itself belongs to the accounting module — how budgets are built, which lines are checked and how a document is matched to a budget line is on [Financial Budgets](../../modules/accounting/financial-budgets.md). This section covers only the approval side.
+A document that would push an account over its budget can be sent for approval instead of being refused. The budget check itself belongs to the accounting module — how budgets are built, which lines are checked and how a document is matched to a budget line is on [Financial Budgets](../../modules/accounting/planning-and-commitments/financial-budgets.md). This section covers only the approval side.
 
-What happens on an overrun is decided **per account**, by the account's **Budget Exceeded Behavior** (see [Budget control on the account](../../modules/accounting/accounts.md#Budget-control-on-the-account)): **Prevent Saving** refuses the document outright, **Request Approval** sends it for approval, and **Allow** lets it through.
+What happens on an overrun is decided **per account**, by the account's **Budget Exceeded Behavior** (see [Budget control on the account](../../modules/accounting/ledger-setup/accounts.md#Budget-control-on-the-account)): **Prevent Saving** refuses the document outright, **Request Approval** sends it for approval, and **Allow** lets it through.
 
 To make **Request Approval** work:
 

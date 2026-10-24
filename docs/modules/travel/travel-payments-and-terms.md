@@ -98,7 +98,7 @@ say "a voucher of this type, matching these criteria, is recorded on these two a
 [Document Terms](./travel-document-terms).
 
 If you want the full picture of how vouchers are raised and matched in the first place, the
-accounting module's [Receipts and Payments](/modules/accounting/receipts-and-payments) page covers
+accounting module's [Receipts and Payments](/modules/accounting/money-in-and-out/receipts-and-payments) page covers
 that side.
 
 ## Payments — the instalment plan
@@ -120,11 +120,11 @@ Each row carries:
 
 | Column | Filled by |
 |---|---|
-| **Instalment Code** | You or the generator — required, and the codes must be unique on the document. A missing code is filled in automatically on save |
-| **Selection**, **Instalment Description**, **Remarks** | You |
-| **Payment Percentage** and **Value** | The generator, or you |
+| **Installment Code** | You or the generator — required, and the codes must be unique on the document. A missing code is filled in automatically on save |
+| **Selected** (the tick box), **Installment Description**, **Description** (free remarks, the last column) | You |
+| **Payment Percentage** and **Payment Value** | The generator, or you |
 | **Payment Date** | The generator, or you — required |
-| **Paid Value**, **Collected by System**, **Remaining**, **Paid** | The system, as vouchers settle the instalment |
+| **Paid Value**, **System paid**, **Remaining**, **Paid** | The system, as vouchers settle the instalment |
 
 ![The instalment plan — what is promised and when, with the paid and remaining amounts kept up to date for you](../../ar/modules/travel/images/payments/schedule-lines-column-en.png)
 
@@ -133,7 +133,7 @@ Each row carries:
 Creating instalment rows collects nothing and records nothing in the accounts. The grid produces no journal entry of
 its own — no receivable is split, no revenue is deferred, nothing is scheduled to happen on a date.
 It is a written promise plus a set of targets that payment vouchers can later be matched against,
-which is what fills the Paid Value, Collected by System, Remaining and Paid columns.
+which is what fills the Paid Value, System paid, Remaining and Paid columns.
 :::
 
 Because the plan and the money must agree, the document will not commit unless the schedule

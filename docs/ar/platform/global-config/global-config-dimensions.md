@@ -87,4 +87,4 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | ترتيب مقطع الفرع | Branch Segment Order | `value.accountDimensionConfigurations.branchSegmentOrder` | [أجزاء كود الحساب](#jz-kwd-lHsb) |
 | ترتيب مقطع الإدارة | Department Segment Order | `value.accountDimensionConfigurations.departmentSegmentOrder` | [أجزاء كود الحساب](#jz-kwd-lHsb) |
 | ترتيب جزء المجموعة التحليلية | Analysis Set Segment Order | `value.accountDimensionConfigurations.analysisSetSegmentOrder` | [أجزاء كود الحساب](#jz-kwd-lHsb) |
-| فاصل المقطع | Segment Seperator | `value.accountDimensionConfigurations.segmentSeperator` | [أجزاء كود الحساب](#jz-kwd-lHsb) |
+| فاصل المقطع | Segment Separator | `value.accountDimensionConfigurations.segmentSeperator` | [أجزاء كود الحساب](#jz-kwd-lHsb) |

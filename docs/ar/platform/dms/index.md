@@ -40,6 +40,6 @@ title: إدارة المستندات
 ويُضبط في [المرفقات والتخزين](/ar/platform/global-config/global-config-attachments.md) ولكل حقل في
 [إعدادات الحقول والكيانات](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance.md).
 وإن كنت تبحث عن طريقة لحذف السجلات القديمة بدل حفظها فذلك تنقية البيانات، وموضعها
-[إقفال السنة والتحكم في الفترات](/ar/modules/accounting/year-end-and-period-control.md) — وهو أمر
+[إقفال السنة والتحكم في الفترات](/ar/modules/accounting/ledger-setup/year-end-and-period-control.md) — وهو أمر
 مختلف تمامًا رغم تشابه المفردات.
 :::

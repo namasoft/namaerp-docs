@@ -22,7 +22,7 @@
 - In the Debit Note and Credit Note term config, added an option (Calculate Ledger Value From Header Amount Not Lines - calculateLedgerValueFromHeaderAmountNotLines), as the lines are then used only for tracking debt ages.
 - In the Debit Note and Credit Note term config, added an option (Add Taxes To Value Of Generated Debt Ages Line Whether From Header Or Lines - addTaxesToDebtAgesValue).
 - In the Closing Entry term config, added the fields (Settle Rounding Difference - settleRoundingDiff) and (Rounding Difference Account - roundingDiffAccount) to post the fraction differences caused by rounding to the selected account.
-- Added a new screen named (System Accounts Transactions Exceptions - SystemAccountTransException) that allows transactions on system accounts during a specified period, by document type, account, subsidiary, user or book, term and transaction nature (Debit / Credit / Debit and Credit). For details: [System Accounts & Transaction Exceptions](/modules/accounting/system-accounts-and-exceptions)
+- Added a new screen named (System Accounts Transactions Exceptions - SystemAccountTransException) that allows transactions on system accounts during a specified period, by document type, account, subsidiary, user or book, term and transaction nature (Debit / Credit / Debit and Credit). For details: [System Accounts & Transaction Exceptions](/modules/accounting/ledger-setup/system-accounts-and-exceptions)
 - In the Account file, it is now possible to set subsidiary type 2 after transactions have been made on the account if it was previously empty, while changing an already-set value is still prevented.
 
 ### E-Invoicing & Government Portals

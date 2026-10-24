@@ -37,7 +37,7 @@ before** its value date for that legal entity:
 The line is shared with closing entries. For each legal entity the system takes the latest
 **committed** closing entry and the latest **committed** freeze document and uses whichever is later
 — so the two never stack, and the later one always wins. Everything said in
-[Year-End Closing & Period Control](/modules/accounting/year-end-and-period-control) about working around a
+[Year-End Closing & Period Control](/modules/accounting/ledger-setup/year-end-and-period-control) about working around a
 closing entry applies here word for word.
 
 ::: warning Only Namasoft support can create or delete one

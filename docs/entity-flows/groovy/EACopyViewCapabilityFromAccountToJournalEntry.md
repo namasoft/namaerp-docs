@@ -76,7 +76,7 @@ The receipt and payment voucher script:
 
 - [EAGroovyAction](/entity-flows/core/EAGroovyAction): how Groovy scripts are attached to entity flows and task schedules.
 - [Users Counter and Capability Types](/admin/users-counter-and-security-capabilities)
-- [Journal Entries & Adjustments](/modules/accounting/journal-entries)
-- [Receipt & Payment Vouchers](/modules/accounting/receipts-and-payments)
+- [Journal Entries & Adjustments](/modules/accounting/ledger-setup/journal-entries)
+- [Receipt & Payment Vouchers](/modules/accounting/money-in-and-out/receipts-and-payments)
 
 </div>

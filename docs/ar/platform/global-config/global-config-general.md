@@ -71,7 +71,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | موقع اليوم | Day Position | `value.info.hijriFormat.dayPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
 | موقع الشهر | Month Position | `value.info.hijriFormat.monthPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
 | موقع السنة | Year Position | `value.info.hijriFormat.yearPosition` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
-| الفاصل | Seperator | `value.info.hijriFormat.seperator` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
+| الفاصل | Separator | `value.info.hijriFormat.seperator` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
 | إضافة صفر قبل الارقام اقل من 10 | Add Zero To Numbers Less Than 10 | `value.info.hijriFormat.addZeroToNumbersLessThan10` | [صيغة التاريخ الهجري](#SyG-ltrykh-lhjry) |
 | الحقول الهجري دائما | Hijri Fields | `value.info.hijriFields` | حقول التاريخ التي تُعرض بالتاريخ الهجري دائماً، أياً كان التقويم الذي دخل به المستخدم. |
 | النوع | Entity Type | `value.info.hijriFields.entityType` | الشاشة التي ينطبق عليها السطر؛ اتركه فارغاً ليشمل الحقل في كل الشاشات. |
@@ -79,5 +79,5 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | الأبعاد \| الطول | Measures \| Length | `value.measuresConfiguration.length` | [المقاسات](#lmqst) |
 | الأبعاد \| العرض | Measures \| Width | `value.measuresConfiguration.width` | [المقاسات](#lmqst) |
 | الأبعاد \| الارتفاع | Measures \| Height | `value.measuresConfiguration.height` | [المقاسات](#lmqst) |
-| الفاصل | Seperator | `value.measuresConfiguration.seperator` | [المقاسات](#lmqst) |
+| الفاصل | Separator | `value.measuresConfiguration.seperator` | [المقاسات](#lmqst) |
 | حساب العدد بناءا على الكمية في الفواتير | Calculate Count Based On Qty in Invoices | `value.info.calculateCountBasedOnQty` | [المقاسات](#lmqst) |

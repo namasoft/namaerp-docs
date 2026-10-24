@@ -114,7 +114,7 @@ To change a warranty, change the inputs: the sale date, the installation date, o
 ::: warning Warranty Status and Last Visit Date look automatic — they are not
 **حالة الضمان / Warranty Status** is a manual classification. Nothing recalculates it, so a machine whose Warranty End Date passed months ago still reads *Under Warranty* until somebody edits it. Read **Warranty End Date** for the real answer.
 
-**تاريخ آخر زيارة / Last Visit Date** is a manual note. Maintenance visits, orders, executions and work plans never touch it, no matter how many are carried out on the machine. The only thing that ever writes it is a [Machine Update document](/modules/crm/maintenance-cycle/crm-machine-updates-and-transfers) — and that document writes it whether you meant it to or not.
+**تاريخ آخر زيارة / Last Visit Date** is a manual note. Maintenance visits, orders, executions and work plans never touch it, no matter how many are carried out on the machine. The only thing that ever writes it is a [Machine Update document](/modules/crm/maintenance-cycle/crm-machine-updates-and-transfers), and only when you fill it in on that document.
 :::
 
 ## Warranty Period Types
@@ -196,7 +196,7 @@ Some things that sound as though they create machines do not. A **pre-installati
 
 ## Changing a Machine Later
 
-Two documents exist for changing a machine after it is in service, and both are covered on the [machine updates and transfers page](/modules/crm/maintenance-cycle/crm-machine-updates-and-transfers): the **Machine Update** document for attributes and the **Machine Ownership Transfer** document for the owner. Read that page before you use either — the update document writes every field on its screen to the machine, so fields you did not retype are blanked, and cancelling it does not necessarily put things back.
+Two documents exist for changing a machine after it is in service, and both are covered on the [machine updates and transfers page](/modules/crm/maintenance-cycle/crm-machine-updates-and-transfers): the **Machine Update** document for attributes and the **Machine Ownership Transfer** document for the owner. Read that page before you use either: the update document writes only the boxes you fill onto the machine, and cancelling it does not necessarily put things back.
 
 ## Messages you may see
 

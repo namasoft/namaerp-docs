@@ -58,7 +58,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.useDepartmentInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
 | `value.info.useAnalysisSetInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
 | `value.info.maxTrialsForMessages` | Max Trials When Replication Failures Occur | أقصي عدد محاولات عند فشل الرسائل | [Message delivery](#Message-delivery) |
-| `value.info.requestReCommitAfterFailures` | Request ReCommit After Messages Fail | طلب إعادة الارسال بعد فشل الرسائ | [Message delivery](#Message-delivery) |
+| `value.info.requestReCommitAfterFailures` | Request ReCommit After Messages Fail | طلب إعادة الإرسال بعد فشل الرسائل | [Message delivery](#Message-delivery) |
 | `value.info.replicationCleanUpTime` | Replication Clean Up Time | وقت مسح الرسائل المرسلة التي تم معالجتها | [Message delivery](#Message-delivery) |
 | `value.info.donotReplicateAttachments` | Do Not Replicate Attachments | Do Not Replicate Attachments | [Message delivery](#Message-delivery) |
 | `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | Prevent Using Branches When Headoffice Is Online | منع استعمال سيرفرات الفروع حال عمل الرئيسي | [Message delivery](#Message-delivery) |

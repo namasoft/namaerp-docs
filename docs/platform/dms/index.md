@@ -42,6 +42,6 @@ standard attachment field, configured in
 [Attachments and Storage](/platform/global-config/global-config-attachments.md) and per field in
 [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance.md).
 And if you are looking for a way to delete old records rather than file them, that is data purging,
-covered under [year-end and period control](/modules/accounting/year-end-and-period-control.md) —
+covered under [year-end and period control](/modules/accounting/ledger-setup/year-end-and-period-control.md) —
 a different thing entirely, despite the similar vocabulary.
 :::

@@ -88,7 +88,7 @@ A stock transfer can also move stock from one company of the group to another. W
 
 Processing then creates an entry in each company. The sender takes the stock off its books against the receiving company's **Mediator account**. The receiver puts it on its books against the sender's mediator account. Each company's mediator account comes from its Legal Entity record. The stock moves at its cost.
 
-This route is for companies that keep their books **in the same currency**. A Saudi company cannot take Egyptian stock at its pound cost as if pounds were riyals, so a transfer between companies whose ledgers use different currencies is refused. Between such companies, sell from one with a sales invoice and buy into the other with a purchase invoice, on intercompany accounts. Each side is then recorded in its own currency, and the [consolidated statements](../accounting/consolidated-statements.md) eliminate the sale and the margin on stock still held.
+This route is for companies that keep their books **in the same currency**. A Saudi company cannot take Egyptian stock at its pound cost as if pounds were riyals, so a transfer between companies whose ledgers use different currencies is refused. Between such companies, sell from one with a sales invoice and buy into the other with a purchase invoice, on intercompany accounts. Each side is then recorded in its own currency, and the [consolidated statements](../accounting/financial-reporting/consolidated-statements.md) eliminate the sale and the margin on stock still held.
 
 ## Actions on these screens
 

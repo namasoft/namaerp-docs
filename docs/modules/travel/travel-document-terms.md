@@ -6,8 +6,8 @@ menu: Basic → Settings → Document Term
 # Travel Document Terms
 
 Open the Travel menu and you will find exactly two groups: **Master Files** and **Documents**. There
-is no Settings screen, no configuration entry, nowhere to say "revenue from Nile cruises goes to
-account 4102". That is not an oversight. In Travel — as everywhere else in Nama — that decision
+is no Settings group, and the module's **Travel Settings** record has no settings in it: there is
+nowhere to say "revenue from Nile cruises goes to account 4102". That is not an oversight. In Travel — as everywhere else in Nama — that decision
 lives on the **document term** (توجيه المستند), the field sitting right next to the document's book
 on every travel document.
 

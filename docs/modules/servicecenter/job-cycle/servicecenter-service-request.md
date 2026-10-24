@@ -29,7 +29,7 @@ routine service, with a complaint about the air conditioning. The service adviso
 
 1. **Picks the vehicle.** Choosing `VEH-2031` in the **Product** (المنتج) field fills in most of the
    screen: the current owner becomes the customer, and the plate, chassis, engine number, colour,
-   accessories kit, brand, model, production year, insurance and warranty companies, the insurance
+   brand, model, production year, insurance and warranty companies, the insurance
    dates and the last odometer reading all arrive from the
    [vehicle file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md).
 2. **Sets the slot.** **Reservation Date** 3 March and **Reservation Time** 09:00, with an expected

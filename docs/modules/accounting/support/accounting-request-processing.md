@@ -32,12 +32,12 @@ Two checks come before you go looking for a failed request, because in both case
 What is specific to accounting is the list of reasons a ledger request refuses:
 
 - **The period is closed.** The document's date falls inside a closed accounting period — see
-  [Year-end and Period Control](/modules/accounting/year-end-and-period-control).
+  [Year-end and Period Control](/modules/accounting/ledger-setup/year-end-and-period-control).
 - **A Prevent Accounting Transactions document covers it** — the account, the subsidiary and the
   date range it names are all blocked while it is committed.
 - **The account is not ready.** A subsidiary account with no party on the line, or an account whose
   balance nature is protected and would be broken by this entry — see
-  [Accounts](/modules/accounting/accounts).
+  [Accounts](/modules/accounting/ledger-setup/accounts).
 - **The document term is incomplete.** A side the term needs has no account on it, so there is
   nowhere to record the amount.
 

@@ -56,8 +56,8 @@ moves. That is normal.
 ::: warning Trials is not a count of attempts
 The **Trials** column looks like an attempt counter and is not. It is a running cost, and different
 failures cost different amounts: a message rejected for a business reason adds five, and one that
-breaks unexpectedly adds ten. When the total passes the ceiling set in Global Configuration — **Max Retray
-Number For Pending Tasks**, spelled that way on screen, under Notifications And Messaging →
+breaks unexpectedly adds ten. When the total passes the ceiling set in Global Configuration — **Max Retry
+Number For Pending Tasks**, under Notifications And Messaging →
 Sending Settings — the task is **Blocked**.
 
 With the default ceiling that works out at about fifty attempts for a message that keeps being

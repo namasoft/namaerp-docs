@@ -20,6 +20,8 @@ Once the register is ready, the **login screen** appears.
 
 ![POS login screen](../../ar/modules/pos/images/getting-started/pos-login-screen-en.png)
 
+The title and picture on the other half of the screen come from the register's **Register Login Title** and **Register Logo** ([register setup](./erp-setup/pos-register-setup.md)). With no title, the register shows its legal entity's name. With no logo, it uses the logo of its branch, then of its legal entity, and finally the Nama ERP logo.
+
 | Button | Arabic caption | What pressing it does |
 |---|---|---|
 | **Login** | «دخول» | Signs in with the user name and password typed above (Enter does the same). |

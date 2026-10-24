@@ -90,7 +90,7 @@ delete b from DimensionsBalance b left join Account acc on acc.id = b.account_id
 ```
 :::
 ::: tip
-ثم افتح الحساب وغيّر **العملة**، وشغّل **تحديث عملة الأرصدة** من قائمة المزيد، ثم نفّذ إعادة الحفظ لمستندات الحساب. والخطوات لحساب واحد موجودة في صفحة [الحسابات](/ar/modules/accounting/accounts#ljrt-fy-hdhh-lshsh).
+ثم افتح الحساب وغيّر **العملة**، وشغّل **تحديث عملة الأرصدة** من قائمة المزيد، ثم نفّذ إعادة الحفظ لمستندات الحساب. والخطوات لحساب واحد موجودة في صفحة [الحسابات](/ar/modules/accounting/ledger-setup/accounts#ljrt-fy-hdhh-lshsh).
 :::
 
 ## البحث عن حركات دفتر الأستاذ الوهمية وحذفها (Find and Remove zombie ledger transactions)

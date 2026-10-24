@@ -20,7 +20,7 @@ As everywhere, a pair creates a ledger entry only when both its debit and its cr
 
 ## Bank loans
 
-The documents are on [Bank Loans](/modules/accounting/bank-loans).
+The documents are on [Bank Loans](/modules/accounting/bank-facilities/bank-loans).
 
 ### Loan Issue
 
@@ -62,7 +62,7 @@ each line — the periodic accrual of interest expense against interest payable.
 
 ## Credit facilities
 
-The documents are on [Credit Facilities](/modules/accounting/credit-facilities).
+The documents are on [Credit Facilities](/modules/accounting/bank-facilities/credit-facilities).
 
 **Credit Facility Issuance** has a single **Debit / Credit** pair *(record)*
 (`termConfig.debit`, `termConfig.credit`), and it records two amounts through it: the facility value
@@ -83,7 +83,7 @@ ticked on the document.
 
 ## Fixed deposits
 
-The documents are on [Fixed Deposits](/modules/accounting/fixed-deposits).
+The documents are on [Fixed Deposits](/modules/accounting/bank-facilities/fixed-deposits).
 
 **Fixed Deposit Issue**
 

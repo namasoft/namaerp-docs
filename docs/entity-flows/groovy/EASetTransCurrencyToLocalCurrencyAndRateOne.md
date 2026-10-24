@@ -82,6 +82,6 @@ Without the script, both lines would read 100 USD at 50.
 
 - [EAGroovyAction](/entity-flows/core/EAGroovyAction): how Groovy scripts are attached to entity flows and task schedules.
 - [Introduction to Entity Flows](/platform/entity-flows/introduction-to-entity-flows): the **Pre Send Business Request** moment.
-- [Accounts](/modules/accounting/accounts)
+- [Accounts](/modules/accounting/ledger-setup/accounts)
 
 </div>

@@ -16,9 +16,9 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 يخدم توجيهٌ واحد **سند القبض** و**سند الصرف** و**أمر القبض** و**أمر الصرف** و**التحويل البنكي**؛ وتُخفي
 الشاشة ما لا ينطبق على كل منها. وبعده تتناول الصفحة **طلبات** الصرف والقبض، و**سند القبض الإلكتروني**،
-وسندات **الكاشير** ووردياته. المستندات نفسها في [سندات القبض والصرف](/ar/modules/accounting/receipts-and-payments)
-و[البنوك والحسابات البنكية والتحويلات](/ar/modules/accounting/banks-and-bank-accounts) و
-[ورديات الكاشير](/ar/modules/accounting/cashier-shifts).
+وسندات **الكاشير** ووردياته. المستندات نفسها في [سندات القبض والصرف](/ar/modules/accounting/money-in-and-out/receipts-and-payments)
+و[البنوك والحسابات البنكية والتحويلات](/ar/modules/accounting/banks-and-cheques/banks-and-bank-accounts) و
+[ورديات الكاشير](/ar/modules/accounting/money-in-and-out/cashier-shifts).
 
 ![تبويب التأثير في توجيه سند قبض نقدي](../images/document-terms/acc-term-vouchers-and-requests-ar.png)
 
@@ -166,7 +166,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ## مستندات الكاشير
 
-المستندات نفسها في [ورديات الكاشير](/ar/modules/accounting/cashier-shifts).
+المستندات نفسها في [ورديات الكاشير](/ar/modules/accounting/money-in-and-out/cashier-shifts).
 
 - **سند قبض كاشير** و**سند صرف كاشير**: **مدين / دائن** (سجلات جوانب محفوظة) `termConfig.debit`،
   `termConfig.credit`. وقد تستبدل طريقة الدفع أحدهما — الجانب الذي تسمّيه إعداداتها.

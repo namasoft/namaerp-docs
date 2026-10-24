@@ -352,8 +352,8 @@ note to the operations team: settle on one house meaning for each code so everyo
 
 ## What you will not find here
 
-There is **no Settings screen for the Travel module**. If you go looking for one under the Travel
-menu you will not find it, and that is by design: the menu has exactly two groups, **Master Files**
+The Travel module **has no settings**. A **Travel Settings** record exists for it, but it holds no
+settings, and there is no settings entry under the Travel menu — by design: the menu has exactly two groups, **Master Files**
 and **Documents**, and nothing else. The whole module is unlocked by a single licence — there are no
 separate licences for hotels, tours or invoicing — so there is nothing to switch on either.
 

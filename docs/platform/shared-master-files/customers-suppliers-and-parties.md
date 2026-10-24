@@ -270,7 +270,7 @@ Arabic, which is why the English wording is the one to search for.
   other house rule about who may be invoiced.
 - [Prices, Offers and Coupons](/modules/supplychain/pricing-offers-and-coupons) — how the classes and
   categories on these files turn into prices.
-- [Accounts](/modules/accounting/accounts) — what the subsidiary accounts on a party do in the ledger.
+- [Accounts](/modules/accounting/ledger-setup/accounts) — what the subsidiary accounts on a party do in the ledger.
 - [The Sales Journey](/modules/supplychain/sales-journey) — where the customer file sits in the sales
   cycle.
 - [Users and Login](/platform/security/users-and-login) — portal users, and the User Add Request.

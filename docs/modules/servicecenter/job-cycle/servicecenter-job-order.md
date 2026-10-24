@@ -44,7 +44,7 @@ only she knows:
   customer drew at reception, `A014` at branch `QSB-RUH`.
 
 Picking the vehicle in the **Product** (المنتج) field is what fills the rest: the customer becomes
-the vehicle's current owner, and the plate, chassis, engine, gear box, colour, accessories kit,
+the vehicle's current owner, and the plate, chassis, engine, gear box, colour,
 brand, model, production year, insurance and warranty companies, insurance dates and the last
 odometer all arrive from the vehicle file.
 

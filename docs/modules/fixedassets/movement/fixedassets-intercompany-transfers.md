@@ -65,7 +65,7 @@ ledgers use different currencies is refused:
 
 Between such companies, do what the message says. Dispose of the asset in the selling company, and
 buy it in the other with a fixed asset purchase, each in its own currency. For the group, the asset
-has only moved, and the [consolidated statements](/modules/accounting/consolidated-statements.md)
+has only moved, and the [consolidated statements](/modules/accounting/financial-reporting/consolidated-statements.md)
 take the gain on the sale back out if it is booked on an intercompany gain account.
 
 ::: warning Set the document's own legal entity to the company the asset is leaving

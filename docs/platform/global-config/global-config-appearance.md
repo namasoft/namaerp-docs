@@ -81,7 +81,7 @@ Everything above paints the whole system the same way. When the meaning you want
 
 **Always Use Text Area In Serial Popup** `value.info.alwaysUseTextAreaInSerialPopup` — Serial entry always uses a multi-line box, which suits pasting a long list of scanned serials.
 
-**Do Not UseDescriptors In Fields** `value.info.doNotUseDescriptorsInFields` — Reference fields show only code and name rather than the longer descriptor text. Turn it on where descriptors are so long they push the useful part of the field off screen.
+**Do Not Use Descriptors In Fields** `value.info.doNotUseDescriptorsInFields` — Reference fields show only code and name rather than the longer descriptor text. Turn it on where descriptors are so long they push the useful part of the field off screen.
 
 **Use New Rich Text Editor** `value.info.useKendoRichEditor` — Rich-text fields use the Kendo editor.
 
@@ -143,7 +143,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.hideSelectColumnInSelectorPopup` | Hide Select Column In Selector Popup | إخفاء عمود اختيار السطر في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
 | `value.info.hideCountColumnInSelectorPopup` | Hide Count Column In Selector Popup | إخفاء عمود عدد مرات الإدارج في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
 | `value.info.alwaysUseTextAreaInSerialPopup` | Always Use Text Area In Serial Popup | Always Use Text Area In Serial Popup | [Popups and editors](#Popups-and-editors) |
-| `value.info.doNotUseDescriptorsInFields` | Do Not UseDescriptors In Fields | عدم استعمال الوصف في عنوان | [Popups and editors](#Popups-and-editors) |
+| `value.info.doNotUseDescriptorsInFields` | Do Not Use Descriptors In Fields | عدم استعمال الوصف في الحقول | [Popups and editors](#Popups-and-editors) |
 | `value.info.useKendoRichEditor` | Use New Rich Text Editor | استعمال محرر النصوص الجديد | [Popups and editors](#Popups-and-editors) |
 | `value.info.createDMSDocInPopUpWindow` | Create DMS Doc In Pop Up Window | إنشاء المستند الارشيفي في شاشة منبثقة | [Popups and editors](#Popups-and-editors) |
 | `value.info.tooltipPosition` | Tooltip Position | موضع المساعدة السريعة | [Tooltips](#Tooltips) |

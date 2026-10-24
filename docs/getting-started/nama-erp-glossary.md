@@ -67,7 +67,7 @@ first; it explains the two or three ideas the rest of this vocabulary hangs off.
 | **Legal Entity** — الشركة | The company. It is the only dimension that cannot be switched off, and every record belongs to one — or to none, which makes it **public**. |
 | **Sector / Branch / Department / Analysis Set** — القطاع / الفرع / الإدارة / المجموعة التحليلية | The four optional dimensions. Each can be switched off entirely if the business does not use it, and each can be made a security boundary as well as a reporting axis. |
 | **Public record** | A record saved with no legal entity. Depending on configuration it is either visible from every legal entity or hidden from all of them — which is the usual explanation for "why can't he see this item?". |
-| **Subsidiary** — الذمة | The *party* a balance breaks down by: a customer, a supplier, an employee, a bank, a safe. An account of type Subsidiary does not give you one number, it gives you a balance per party — see [Accounts](/modules/accounting/accounts). |
+| **Subsidiary** — الذمة | The *party* a balance breaks down by: a customer, a supplier, an employee, a bank, a safe. An account of type Subsidiary does not give you one number, it gives you a balance per party — see [Accounts](/modules/accounting/ledger-setup/accounts). |
 | **Entity Dimension** — السجل | An extra analysis axis that points at one specific *record* — a project, a contract, a vehicle — so entries can be filed under it and reports grouped by it, beyond the five standard dimensions. |
 
 ## Fields, screens and who may use them

@@ -89,7 +89,22 @@ const MOVED_PAGE_REDIRECTS = {
             'criteria-definitions', 'entity-type-lists', 'text-criteria-guide'],
         'everyday-tools': ['screen-buttons', 'remarks-and-agenda', 'default-values-templates', 'prevent-usage',
             'shortcuts', 'global-search', 'field-help-and-tooltips', 'ui-themes']
-    }).flatMap(([folder, pages]) => pages.map(p => [`/platform/${p}`, `/platform/${folder}/${p}`])))
+    }).flatMap(([folder, pages]) => pages.map(p => [`/platform/${p}`, `/platform/${folder}/${p}`]))),
+    // The flat accounting pages were grouped into folders (2026-10-24)
+    ...Object.fromEntries(Object.entries({
+        'ledger-setup': ['accounting-concepts-and-setup', 'chart-of-accounts', 'accounts',
+            'system-accounts-and-exceptions', 'journal-entries', 'year-end-and-period-control'],
+        'money-in-and-out': ['receipts-and-payments', 'credit-and-debit-notes', 'aging-allocation',
+            'subsidiary-reconciliation', 'cashier-shifts', 'misc-purchasing', 'party-evaluation',
+            'partner-shares-and-profit-distribution'],
+        'banks-and-cheques': ['banks-and-bank-accounts', 'bank-reconciliation', 'cheques-financial-papers'],
+        'bank-facilities': ['bank-loans', 'fixed-deposits', 'credit-facilities', 'letters-of-guarantee',
+            'bank-letters-of-credit'],
+        'investments': ['investment-portfolios', 'investment-documents', 'treasury-bills'],
+        'planning-and-commitments': ['prepaid-expenses', 'financial-commitments', 'financial-budgets'],
+        'financial-reporting': ['reports-account-statements-and-trial-balance', 'financial-statements',
+            'consolidated-statements']
+    }).flatMap(([folder, pages]) => pages.map(p => [`/modules/accounting/${p}`, `/modules/accounting/${folder}/${p}`])))
 }
 
 // Runs after writeRedirectsMap so the stubs never enter the basename map (they would collide with the

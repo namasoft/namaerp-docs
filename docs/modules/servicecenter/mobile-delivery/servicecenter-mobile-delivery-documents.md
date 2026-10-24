@@ -9,7 +9,7 @@ entities: [MobDeliveryDoc, MultiMobDeliveryDoc]
 :::
 
 ::: warning Not a car delivery document
-Neither document on this page has anything to do with vehicles or with the [Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md). A delivery line can point at a **sales invoice**, a **sales return**, a **work task** or an **invoice receipt document** — and at nothing else. See the [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md).
+Neither document on this page has anything to do with vehicles or with the [Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md). A delivery line can point at a **sales invoice**, a **sales return**, a **work task**, an **invoice receipt document** or, under its own licence, an [external delivery order](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md#External-Delivery-Order) — and at nothing else. See the [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md).
 :::
 
 Al-Sahra Motors runs one van out of the parts counter. Two documents serve it: the **Mobile Delivery Document** is the van's route sheet for the day, and the **Multi Mobile Delivery Document** is the tool that builds those route sheets in bulk from the day's invoices instead of by hand. Both live under **Service Center → Mobile Apps - Service Center**.
@@ -29,7 +29,7 @@ Each row is one drop. The columns that matter:
 | Column | What it holds |
 |---|---|
 | Selected | Ticked rows are what the four action buttons act on. |
-| Delivered Document | The sales invoice, sales return, work task or invoice receipt document being delivered. |
+| Delivered Document | The sales invoice, sales return, work task, invoice receipt document or external delivery order being delivered. |
 | Sales Invoice | The invoice behind the stop, where the delivered document is not itself the invoice. |
 | Courier | Who is taking it. |
 | Deliver To | The receiving party. |
@@ -62,7 +62,7 @@ It runs only when **all** of the following hold:
 
 - the توجيه carries a **stock transfer book** and a **stock transfer term**; and
 - at least one of the seven **transfer items** is filled on the توجيه; and
-- the line's delivered document is a **sales invoice** (lines for a work task, a return or an invoice receipt are ignored).
+- the line's delivered document is a **sales invoice** (lines for a work task, a return, an invoice receipt or an external delivery order are ignored).
 
 Given that, each line's *Package 1 … Package 7* counts become quantities of the correspondingly numbered transfer item, and the goods move from the توجيه's from-warehouse and from-locator to **the courier's own locator** — a locator whose *related to* is that courier's employee record. One stock transfer is produced per warehouse pair.
 
@@ -125,3 +125,6 @@ Both screens carry the *Copy Customer Locations From Selected Lines* action, but
 - **Collect Invoices By Chosen Date And Time** (*تجميع الفواتير حسب الوقت والتاريخ المختارين*) — fills
   the grid with the sales invoices and work tasks created inside the header's date and time window, as
   described under [Collecting](#Collecting).
+- **Collect External Delivery Orders By Chosen Date And Time** (*تجميع أوامر التوصيل الخارجية حسب الوقت والتاريخ المختارين*) —
+  fills the grid with the external delivery orders created inside the same window; see the
+  [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md#External-Delivery-Order).

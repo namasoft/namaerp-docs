@@ -167,7 +167,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | خلفية بيضاء | White Background | `value.info.excelExportConfig.whiteBackground` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
 | منع دمج السطور | Prevent Row Span | `value.info.excelExportConfig.preventRowSpan` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
 | تجاهل إطار الخلايا | Ignore Cell Border | `value.info.excelExportConfig.ignoreCellBorder` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
-| تجاهل خلفية الخلايا | Igonre Cell Background | `value.info.excelExportConfig.igonreCellBackground` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
+| تجاهل خلفية الخلايا | Ignore Cell Background | `value.info.excelExportConfig.igonreCellBackground` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
 | تجاهل الرسومات | Ignore Graphics | `value.info.excelExportConfig.ignoreGraphics` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
 | بدون مسافات بين السطور | Remove Empty Space Between Rows | `value.info.excelExportConfig.removeEmptySpaceBetweenRows` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |
 | بدون مسافات بين الأعمدة | Remove Empty Space Between Columns | `value.info.excelExportConfig.removeEmptySpaceBetweenColumns` | [التصدير إلى إكسل](#ltSdyr-l-ksl) |

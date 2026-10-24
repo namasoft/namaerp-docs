@@ -10,8 +10,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 تخلط توجيهاتها نوعين من الخيارات: جوانب محاسبية، وقواعد لكيفية سداد المستند للفواتير وأعمار الديون التي
 يمسّها.
 
-المستندات نفسها في [الإشعارات الدائنة والمدينة](/ar/modules/accounting/credit-and-debit-notes) و
-[مشتريات المتنوعات وتشغيل المعدات](/ar/modules/accounting/misc-purchasing).
+المستندات نفسها في [الإشعارات الدائنة والمدينة](/ar/modules/accounting/money-in-and-out/credit-and-debit-notes) و
+[مشتريات المتنوعات وتشغيل المعدات](/ar/modules/accounting/money-in-and-out/misc-purchasing).
 
 ![تبويب التأثير في توجيه إشعار مدين: الجانب الدائن مأخوذ من المورد](../images/document-terms/acc-term-notes-and-misc-invoices-ar.png)
 

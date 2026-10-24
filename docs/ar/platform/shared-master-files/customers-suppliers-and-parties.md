@@ -244,6 +244,6 @@ menu: المبيعات ← الملفات ← عميل
   أخرى عن من يجوز أن تُحرَّر له فاتورة.
 - [الأسعار والعروض والكوبونات](/ar/modules/supplychain/pricing-offers-and-coupons) — كيف تتحول الفئات
   والتصنيفات في هذه الملفات إلى أسعار.
-- [الحسابات](/ar/modules/accounting/accounts) — ما تفعله حسابات الذمة على جهةٍ ما في دفتر الأستاذ.
+- [الحسابات](/ar/modules/accounting/ledger-setup/accounts) — ما تفعله حسابات الذمة على جهةٍ ما في دفتر الأستاذ.
 - [دورة المبيعات](/ar/modules/supplychain/sales-journey) — موضع ملف العميل من دورة المبيعات.
 - [المستخدمون والدخول](/ar/platform/security/users-and-login) — مستخدمو البوابة وطلب إضافة مستخدم.

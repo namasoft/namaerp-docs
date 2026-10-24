@@ -21,7 +21,7 @@ only when both its debit and its credit are filled in.
 
 ## Treasury bills
 
-The documents are on [Treasury Bills](/modules/accounting/treasury-bills).
+The documents are on [Treasury Bills](/modules/accounting/investments/treasury-bills).
 
 | Document | Group on screen | Field | What it books |
 |---|---|---|---|
@@ -41,7 +41,7 @@ The documents are on [Treasury Bills](/modules/accounting/treasury-bills).
 
 The **Investment Doc** documents handle bond-like investments with a face value, a periodic return
 and an issue premium or discount. They are on
-[Investment Documents & Fund Certificates](/modules/accounting/investment-documents).
+[Investment Documents & Fund Certificates](/modules/accounting/investments/investment-documents).
 
 **Investment Doc Purchase Document** — an **Effect** tab with three groups, and a **Settings** tab:
 
@@ -97,7 +97,7 @@ and «مدين فرق السعر للوثائق المتبقية».
 
 ## Investment portfolios
 
-The investment-portfolio documents are on [Investment Portfolios](/modules/accounting/investment-portfolios).
+The investment-portfolio documents are on [Investment Portfolios](/modules/accounting/investments/investment-portfolios).
 Their terms share one **Effects** group:
 
 | Document | Fields | What they book |
@@ -108,7 +108,7 @@ Their terms share one **Effects** group:
 
 ## Prepaid expenses
 
-The documents are on [Prepaid Expenses](/modules/accounting/prepaid-expenses). A prepaid-expense
+The documents are on [Prepaid Expenses](/modules/accounting/planning-and-commitments/prepaid-expenses). A prepaid-expense
 contract generates the monthly **Prepaid Expense Ledger** documents that recognise the expense, and
 the **Prepaid Expense Payment** documents that pay it.
 

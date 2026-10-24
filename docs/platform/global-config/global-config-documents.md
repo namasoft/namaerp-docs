@@ -16,7 +16,7 @@ Every document in Nama gets its number from a **book** and its behaviour from a 
 
 **Allow Empty Prefix For Manual Book** `value.info.allowEmptyPrefixForManualBook` — A manually coded book normally needs a code prefix so its documents can be told apart. Turn this on if you have a book whose numbers should stand alone.
 
-**Unlimeted Allowed Books in Terms** `value.info.unlimtedAllowedBooksInTerms` — A document term lists the books it allows. That list is stored in a field capped at 700 characters, and a term that allows many books overflows it. Turning this on moves the list to a long field with no practical limit.
+**Unlimited Allowed Books in Terms** `value.info.unlimtedAllowedBooksInTerms` — A document term lists the books it allows. That list is stored in a field capped at 700 characters, and a term that allows many books overflows it. Turning this on moves the list to a long field with no practical limit.
 
 ::: warning Re-save your terms after enabling this
 The allowed-books list is written when a term is saved. Switching this option on does not rewrite existing terms — you must re-save every document term afterwards, or they will keep using the old short list.
@@ -129,7 +129,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 |---|---|---|---|
 | `value.info.doNotAllowSpecifyingDocCode` | Do Not Allow Changing Document Code | عدم السماح بتغيير الكود في المستندات | [Books and document terms](#Books-and-document-terms) |
 | `value.info.allowEmptyPrefixForManualBook` | Allow Empty Prefix For Manual Book | السماح بترك بادئة التكويد فارغة في الدفاتر اليدوية | [Books and document terms](#Books-and-document-terms) |
-| `value.info.unlimtedAllowedBooksInTerms` | Unlimeted Allowed Books in Terms | السماح باستعمال دفاتر مسموح بها دون حد أقصى في التوجيه | [Books and document terms](#Books-and-document-terms) |
+| `value.info.unlimtedAllowedBooksInTerms` | Unlimited Allowed Books in Terms | السماح باستعمال دفاتر مسموح بها دون حد أقصى في التوجيه | [Books and document terms](#Books-and-document-terms) |
 | `value.info.ifSingleBookIsDefinedForEntityUseItWithNew` | If Single Book Is Defined For Entity Use It With New | اذا وجد دفتر واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
 | `value.info.ifSingleTermIsDefinedForEntityUseItWithNew` | If Single Term Is Defined For Entity Use It With New | اذا وجد توجيه واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
 | `value.info.doNotConsiderDimensionsWhenSearchingForSingleTermBook` | Do Not Consider Dimensions When Searching For Single Term And Book | تجاهل محددات الدخول عند البحث عن دفتر و توجيه واحد | [Books and document terms](#Books-and-document-terms) |

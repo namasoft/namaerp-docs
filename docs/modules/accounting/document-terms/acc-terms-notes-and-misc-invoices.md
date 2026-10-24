@@ -11,8 +11,8 @@ hire. Both sit between the accounting module and the invoicing world, so their t
 of option: account sides, and rules about how the document settles the invoices and debt ages it
 touches.
 
-The documents are on [Credit & Debit Notes](/modules/accounting/credit-and-debit-notes) and
-[Misc Purchasing & Machine Rent](/modules/accounting/misc-purchasing).
+The documents are on [Credit & Debit Notes](/modules/accounting/money-in-and-out/credit-and-debit-notes) and
+[Misc Purchasing & Machine Rent](/modules/accounting/money-in-and-out/misc-purchasing).
 
 ![The Effect tab of a debit note term: the credit side taken from the supplier](../../../ar/modules/accounting/images/document-terms/acc-term-notes-and-misc-invoices-en.png)
 

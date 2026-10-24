@@ -19,7 +19,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ## القروض البنكية
 
-المستندات نفسها في [القروض البنكية](/ar/modules/accounting/bank-loans).
+المستندات نفسها في [القروض البنكية](/ar/modules/accounting/bank-facilities/bank-loans).
 
 ### سند إصدار قرض (LoanIssue)
 
@@ -59,7 +59,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ## التسهيلات الائتمانية
 
-المستندات نفسها في [التسهيلات الائتمانية](/ar/modules/accounting/credit-facilities).
+المستندات نفسها في [التسهيلات الائتمانية](/ar/modules/accounting/bank-facilities/credit-facilities).
 
 **إصدار تسهيل ائتمانى** فيه زوج **مدين / دائن** واحد *(سجل)* (`termConfig.debit`، `termConfig.credit`)،
 ويقيّد عبره مبلغين: قيمة التسهيل وقيمة الرسوم. وكلاهما يقع على الحسابين أنفسهما.
@@ -78,7 +78,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ## الودائع
 
-المستندات نفسها في [الودائع الثابتة](/ar/modules/accounting/fixed-deposits).
+المستندات نفسها في [الودائع الثابتة](/ar/modules/accounting/bank-facilities/fixed-deposits).
 
 **إصدار وديعة**
 

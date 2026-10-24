@@ -12,7 +12,7 @@ menu: Basic → Documents → Exchange Rate
 
 Every legal entity points at a **Ledger** (دفتر الحسابات), and the ledger's **Main Currency** is that legal entity's local currency — the currency the books are kept in. Every amount on a document is stored twice: in the document's own currency, and as a **Local amount** in the main currency. The link between the two is the **Currency Rate** on the document: *local amount = amount × rate*. A rate of 48.5 on a USD invoice means one dollar is worth 48.5 units of the local currency.
 
-The ledger also has a **Reporting Currency** field. It is the default currency of the [consolidated statements](../../modules/accounting/consolidated-statements.md): when their own Reporting Currency is left empty, they present the group in the reporting currency of the ledger of the company you are logged into. Nothing is recorded in it, so unlike the main currency it can be changed at any time, even after the ledger is in use.
+The ledger also has a **Reporting Currency** field. It is the default currency of the [consolidated statements](../../modules/accounting/financial-reporting/consolidated-statements.md): when their own Reporting Currency is left empty, they present the group in the reporting currency of the ledger of the company you are logged into. Nothing is recorded in it, so unlike the main currency it can be changed at any time, even after the ledger is in use.
 
 Once a legal entity uses a ledger, its main currency is fixed — changing it is refused with *Cannot change record after using it*.
 
@@ -76,7 +76,7 @@ The table is built from the rates you already enter, with a few rules:
 - **Each rate works both ways.** A rate of 49.9 Egyptian pounds per US dollar on the Egyptian ledger also gives the dollar value of a pound. Where no ledger rates two currencies against each other, the table crosses them through a third currency that the ledgers do link, for example Egyptian pounds to Saudi riyals through the dollar.
 - **A currency against itself** is always 1.
 
-Correcting a rate therefore changes the next run of every consolidated report straight away, with nothing to reprocess. How the reports use the table, and the warning they print when a rate is missing, is explained in [Consolidated statements](../../modules/accounting/consolidated-statements.md#Exchange-rates-the-reports-need). A report you design yourself can read the same rates through `NamaRep.findCurrencyExchangeRate` (see [Group exchange rates](../reports/reports-namarep-reference.md#Group-exchange-rates)).
+Correcting a rate therefore changes the next run of every consolidated report straight away, with nothing to reprocess. How the reports use the table, and the warning they print when a rate is missing, is explained in [Consolidated statements](../../modules/accounting/financial-reporting/consolidated-statements.md#Exchange-rates-the-reports-need). A report you design yourself can read the same rates through `NamaRep.findCurrencyExchangeRate` (see [Group exchange rates](../reports/reports-namarep-reference.md#Group-exchange-rates)).
 
 ## Related settings
 
@@ -87,7 +87,7 @@ Correcting a rate therefore changes the next run of every consolidated report st
 
 ## When rates move: revaluation
 
-The Exchange Rate screen only feeds new documents. To restate the local value of a foreign balance you already hold, use the **Exchange Rate Update** document, described in [Journal entries & adjustments](../../modules/accounting/journal-entries.md#Exchange-Rate-Update), with the background in [Fiscal periods, period locking & multi-currency](../../modules/accounting/support/accounting-periods-and-currency.md).
+The Exchange Rate screen only feeds new documents. To restate the local value of a foreign balance you already hold, use the **Exchange Rate Update** document, described in [Journal entries & adjustments](../../modules/accounting/ledger-setup/journal-entries.md#Exchange-Rate-Update), with the background in [Fiscal periods, period locking & multi-currency](../../modules/accounting/support/accounting-periods-and-currency.md).
 
 ## Messages you may see
 
