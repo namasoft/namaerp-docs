@@ -115,11 +115,33 @@ This grid turns a printed form into a public web address. Put that address in an
 
 | Column | What it does |
 |---|---|
-| Report Definition | **Required.** The printed form to run when the link is opened. |
+| Print Using System Defined Printing Form | Print each document with the form the system would pick for it when printed from its own screen, instead of one fixed form. Leave **Report Definition** empty when you tick it. |
+| Report Definition | The printed form to run when the link is opened. Required unless the line prints using the system defined printing form, and must stay empty when it does. |
 | Save Files In Folder | **Required.** The folder on the server where the generated files are kept. |
 | URL Prefix | A word in the address that selects this line, so one system can publish several kinds of document. |
 | Output Format | PDF, DOCX, ODS, ODT or XLSX. PDF is the sensible choice for anything a customer opens. |
 | Do Not Cache | Regenerate the file on every visit instead of serving the stored copy. |
+| Entity Type | Limits a system defined form line to documents of this type. Must stay empty on a line with a Report Definition. |
+| Entity Type List | Limits a system defined form line to documents whose type is in this list. Must stay empty on a line with a Report Definition. Fill one, both or neither: with both, a document matching either is accepted; with neither, the line serves every type. |
+
+### Printing with the system defined form
+
+Without this option, every document type you publish needs its own report definition and its own line, even though the same form already prints that document from its screen. Tick **Print Using System Defined Printing Form** and one line serves them all: when a link is opened, the system loads the document and picks its form exactly as the Print button would — by entity type, book, term, document category, dimensions and form criteria — then prints it in the line's output format.
+
+Two differences from printing on the screen come from the link having no signed-in user:
+
+- A form restricted to a user, user group or security profile is never picked, nor is a form restricted to a menu. The document gets its general form.
+- Draft documents follow the same draft printing rules as the Print button. Where drafts may not be printed, the link refuses them until the document is committed.
+
+If no form matches the document, the link answers with an error instead of a file.
+
+### Limiting a line to some entity types
+
+**Entity Type** and **Entity Type List** keep a system defined form line from serving documents it was not meant for. They are only allowed on such a line: a line with a Report Definition already serves just the documents its form was built for.
+
+A line is chosen by its prefix and then by the document's type: if the first line whose prefix matches does not accept the document's type, the next matching line is tried. So two lines can share a prefix — a system defined form line limited to the types you publish, followed by a line that runs a fixed form for whatever else arrives on that address.
+
+Always fill one of these columns on a system defined form line. Without them it will print any document whose link has ever been generated — payroll and HR documents included.
 
 ### Caching, and when to turn it off
 
@@ -196,7 +218,7 @@ Every other grid on this screen adjusts what a signed-in user sees. These three 
 
 The account named in **Save As User** is the one that actually does the work — it creates the Sales Orders, it commits the imported records. If that account is an administrator, then anyone who learns the endpoint's user name and password can do anything an administrator can do. Give integration accounts a security profile that permits exactly the records the integration touches and nothing else, and use a different account for each integration so that one leaked password does not open all of them.
 
-The same logic applies to the invoice links. They are deliberately public: anyone holding the address can download that document without signing in. That is the point of the feature, and it is fine for a customer's own invoice — but it is worth remembering when choosing which forms to publish, because the address is the only thing standing between the document and whoever the customer forwards the message to.
+The same logic applies to the invoice links. They are deliberately public: anyone holding the address can download that document without signing in. That is the point of the feature, and it is fine for a customer's own invoice — but it is worth remembering when choosing which forms to publish, because the address is the only thing standing between the document and whoever the customer forwards the message to. A line that prints using the system defined printing form publishes every type it accepts, so give it an **Entity Type** or **Entity Type List**.
 
 [Security System Overview](/platform/security/security-overview) explains how permissions are structured, and [Security Profiles](/platform/security/security-profiles) is where the restricted account is actually built.
 
@@ -243,7 +265,10 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `importIntegratorLines.integratorUrl` | Integrator URL | Integrator URL | [Import Integrators](#Import-Integrators) |
 | `importIntegratorLines.responseFields` | Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | [Import Integrators](#Import-Integrators) |
 | `invoiceRetrieverLines` | Invoice Retriever Lines | Invoice Retriever Lines | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.printUsingSystemForm` | Print Using System Defined Printing Form | طباعة بنموذج الطباعة المعرف بالنظام | [Printing with the system defined form](#Printing-with-the-system-defined-form) |
 | `invoiceRetrieverLines.reportDefinition` | Report Definition | تعريف التقرير | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
+| `invoiceRetrieverLines.entityType` | Entity Type | النوع | [Limiting a line to some entity types](#Limiting-a-line-to-some-entity-types) |
+| `invoiceRetrieverLines.entityTypeList` | Entity Type List | قائمة الأنواع | [Limiting a line to some entity types](#Limiting-a-line-to-some-entity-types) |
 | `invoiceRetrieverLines.outputFormat` | Output Format | الصيغة | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
 | `invoiceRetrieverLines.saveFilesInFolder` | Save Files In Folder | Save Files In Folder | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
 | `invoiceRetrieverLines.urlPrefix` | URL Prefix | URL Prefix | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
