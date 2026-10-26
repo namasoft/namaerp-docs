@@ -144,6 +144,15 @@ className="com.namasoft.modules.srvcenter.domain.utils.SubItemStatusSysEntryReca
 
 إصلاحات SQL للوحدة نفسه في [أدوات الأصول الثابتة](/ar/admin/reprocessing/fixed-asset-utilities.md).
 
+## المقاولات
+
+### إعادة احتساب حصر التكاليف وتكاليف المستخلصات (Recalculate Cost Executions and Project Extract Costs)
+
+تجمع قيود التكلفة لكل **حصر تكاليف مقاولات** من جديد، الأقدم أولاً، ثم تحدّث التكاليف في كل **مستخلص مشروع** للعقود نفسها. شغّلها حين يعرض حصر أو مستخلص تكاليف لم تعد تطابق المستندات التي وراءه. تتوقف عند أول حصر يفشل وتعرض السبب، دون أن تلمس المستخلصات. يمكن تشغيلها أكثر من مرة بأمان.
+
+<UtilityLinkBuilder
+className="com.namasoft.modules.contracting.domain.utils.util.RecalculateCostExecutionAndUpdateProjExtractCostsUtil"/>
+
 ## صفحات ذات صلة
 
 - [أدوات تعمل على دفعة سجلات من ملف](/ar/admin/reprocessing/batch-utilities-from-file.md)

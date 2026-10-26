@@ -28,6 +28,8 @@ The tools on these pages empty and rebuild whole tables. On a large database a f
 | Pending approvals show finished or deleted records, or an old summary | [Approval Repair Utilities](/admin/reprocessing/approval-repair-utilities.md) |
 | A site is out of step with head office | [Replication Utilities](/admin/reprocessing/replication.md) |
 | Everything is correct but painfully slow | [Suggest Indexes for Large Detail Tables](/admin/reprocessing/suggest-index-creation.md) |
+| The database is bigger than it should be, or support sees a critical error about 255-byte reference columns or origin indexes | [Database Size and Index Utilities](/admin/reprocessing/database-size-and-index-utilities.md) |
+| You know what you need to do but not which utility does it | [The Utilities Catalog](/admin/reprocessing/utilities-catalog.md) |
 
 ## The order to work in
 
@@ -37,6 +39,10 @@ The tools on these pages empty and rebuild whole tables. On a large database a f
 4. **A full rebuild is last**, with a backup, an agreed window and the server stopped.
 
 If step 1 does not explain the symptom, that is the moment to escalate rather than to widen the blast radius.
+
+## The utilities catalog
+
+The most used utilities are also gathered on one page on the server, each with a description and a button that opens it, grouped into numbered sections. Open it from the last section of `utils.html`; see [The Utilities Catalog](/admin/reprocessing/utilities-catalog.md).
 
 ## Launcher links on these pages
 
@@ -113,4 +119,6 @@ A parameter with an `id` such as `{ title: 'Types To Process File', default: 'e:
 <LandingGrid>
   <LandingCard icon="🗄️" title="Database Related Operations" link="/admin/reprocessing/db-operations.md" details="Server-level operations on the database itself — the most destructive page in this folder." />
   <LandingCard icon="🔁" title="Replication Utilities" link="/admin/reprocessing/replication.md" details="Diagnose and repair a site that has fallen out of step with head office." />
+  <LandingCard icon="📉" title="Database Size and Index Utilities" link="/admin/reprocessing/database-size-and-index-utilities.md" details="Narrow oversized reference columns, repair the origin indexes and drop duplicate indexes, dry run first and the support team's login to apply." />
+  <LandingCard icon="🧰" title="The Utilities Catalog" link="/admin/reprocessing/utilities-catalog.md" details="A page on the server listing the most used utilities in numbered sections, each with a description and an Open button." />
 </LandingGrid>

@@ -113,6 +113,8 @@ delete from StockAgesTrans
 :::
 
 ### إعادة معالجة جزئية للتكلفة المتوسطة (سريعة) (Partial Reprocess of Average Cost (Fast))
+تعيد معالجة التكلفة المتوسطة لكل الأصناف بدءاً من التاريخ الذي تدخله (بصيغة `yyyyMMdd`، مثل `20260101`) دون إيقاف السيرفر. وهي للتكلفة المتوسطة فقط: على نظام يعمل بطريقة FIFO ترفض بالرسالة *You are using FIFO costing method, this utility is for average cost*، وإذا كانت إعادة معالجة سريعة أخرى ما زالت تعمل ترفض بالرسالة *Can not start fast reprocessing from file, there is one already running*. الرسالتان بالإنجليزية فقط.
+
 <UtilityLinkBuilder
 className="com.namasoft.modules.supplychain.domain.utils.FastReprocessCostFromDate"
 :params="[
@@ -120,18 +122,37 @@ className="com.namasoft.modules.supplychain.domain.utils.FastReprocessCostFromDa
 ]"
 />
 
+### إعادة معالجة جزئية لتحويلات المخزون المختلفة التكلفة (سريعة) (Partial Reprocess of Stock Transfers Whose Costs Disagree (Fast))
+نسخة أضيق من الأداة نفسها. بدءاً من التاريخ الذي تدخله، تعيد معالجة الأصناف والمحددات التي خرج فيها تحويل مخزني من المخزن المصدر بتكلفة ودخل إلى المخزن المستلم بتكلفة أخرى، بفرق أكبر من الحد الأدنى للفرق، وهو `0.01` ما لم تُدخل قيمة أخرى. وتنطبق القاعدتان السابقتان نفسهما.
+
+<UtilityLinkBuilder
+className="com.namasoft.modules.supplychain.domain.utils.FastReprocessInvalidTransfersFromDate"
+:params="[
+{ title: 'Start Date (yyyyMMdd)', default: 'yyyyMMdd' },
+{ title: 'Minimum Cost Difference', default: '0.01' }
+]"
+/>
+
 ## إعادة معالجة أعمار المخزون (Reprocess Stock Ages)
 
 ### الطريقة الأولى (Method 1)
-- استخدام أداة إعادة المعالجة السريعة (Fast Reprocess Util)
+استخدم أداة إعادة المعالجة السريعة. تعيد بناء أعمار المخزون لكل صنف سياسة أعمار المخزون فيه «نعم» من طلبات المخزون المعالَجة الخاصة به، مئة طلب في كل مرة، وتكتب كل طلب انتهت منه في ملف متابعة، حتى يكمل التشغيل المتوقف من حيث توقف.
+
   <UtilityLinkBuilder
   className="com.namasoft.modules.supplychain.domain.utils.plugnplay.StockAgesFastReprocess"
   :params="[
   { title: 'Processed Ages File Path', default: 'E:/rc/stock-ages-done.txt' }
   ]"
   />
+
+فتح الرابط لا يغير شيئاً. تعرض الصفحة ملف المتابعة وعدد الطلبات المسجلة فيه، مع أزرار تطلب التأكيد قبل البدء:
+
+- **Start** — يظهر عندما يكون ملف المتابعة فارغاً أو غير موجود. يفرغ جداول أعمار المخزون ثم يعيد بناءها كلها.
+- **Resume** — يظهر عندما يكون في ملف المتابعة طلبات بالفعل، مثلاً بعد إعادة تشغيل السيرفر أثناء التشغيل. يُبقي الجداول كما هي ويعالج فقط الطلبات غير المسجلة في الملف. إعادة معالجة طلب مرة ثانية لا تضر، فالاستكمال بعد التوقف لا يُنتج تكراراً.
+- **Start from scratch** — يظهر بجوار Resume. يمسح ملف المتابعة أولاً ثم يعمل مثل Start.
+
 ::: warning
-  - تأكد من مسح ملف stock-ages-done قبل تشغيل الأداة، إذ سيتجاهل النظام جميع الطلبات المذكورة في الملف
+  - ملف متابعة متبقٍّ من تشغيل سابق اكتمل يجعل الأداة تعرض **Resume**، ولن يكون أمامها حينها ما تفعله تقريباً. لإعادة بناء كل شيء استخدم **Start from scratch** أو أدخل مسار ملف جديد.
   - تأكد من أنك تستخدم إصداراً بعد 21 أبريل
   - لا توجد أخطاء currentNetCost معروضة في النظام
 

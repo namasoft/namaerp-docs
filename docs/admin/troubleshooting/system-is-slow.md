@@ -145,11 +145,28 @@ for housekeeping: finding which tables are largest, cleaning up the recycle bin,
 notifications and old pending tasks, and keeping only the last few versions of each record. Large
 detail tables without an index on their parent link are a common cause of slow document loading;
 [Suggest Indexes for Large Detail Tables](/admin/reprocessing/suggest-index-creation) finds them.
+Databases created by older versions also carry oversized reference columns and indexes that make
+every large table bigger than it needs to be;
+[Database Size and Index Utilities](/admin/reprocessing/database-size-and-index-utilities) repairs them.
 
 ::: danger Back up before running any of the maintenance queries
 These scripts run directly against the database and several of them delete data. Take a backup
 first, and run them outside working hours.
 :::
+
+### Which SQL statements are slow
+
+Nama can keep a list of every SQL statement that took longer than a threshold you choose, set in
+Global Configuration as **Warn About SQL Statements Taking more than (milliseconds)** (an entity flow
+can set its own threshold for the work it runs). The list lives in the server's memory from the last
+restart and is shown by this link, sorted by how often each statement ran, with the slowest time, the
+last time it was seen, the tool that ran it and where in the program it came from. Opening it changes
+nothing; a link at the bottom re-sorts by the slowest time.
+
+<UtilityLinkBuilder
+className="com.namasoft.infra.domainbase.persistence.repos.QueryExecutionLogTracker"/>
+
+Copy the rows that stand out into the report you send to Namasoft (below).
 
 ## What to send to Namasoft
 

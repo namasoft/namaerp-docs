@@ -56,6 +56,11 @@ The list is hidden from a user in either of two ways:
 The `admin` user is the exception: it may not be shielded from them. Trying to save that
 configuration on `admin` is refused with *You can not disable critical errors for administrator*.
 
+A few entries are meant for the Namasoft support team alone — repairs only they should run, such as
+the [database schema fixes](#Database-schema-fixes-Namasoft-support-only) below. Those are shown only
+to an administrator who signed in through the Namasoft CRM, so the customer's own users and
+administrators never see them.
+
 ::: warning Switching the checks off is not the same as answering them
 `disable-critical-errors` in [nama.properties](/getting-started/nama-properties) turns the whole
 mechanism off, and a single check can be silenced with a key of its own. Both exist for servers where
@@ -187,6 +192,21 @@ and complains for as long as they are enabled. All of these appear in English on
 | *There are {0} documents type {1} with Errors. Please fix them.* — «يوجد عدد مستندات {0} من النوع {1} بها أخطاء. يرجى معالجتها.» | Point-of-sale documents are sitting as drafts. The POS keeps a document that fails validation as a draft rather than losing the sale, so a draft here means a real transaction that never reached the books. | Open each one, fix what it complains about, and commit it. A growing count means the cause is still there. |
 | *There are {0} undeleted online orders ({1}) older than 12 hours. Please review and process them.* — «يوجد {0} طلب أونلاين ({1}) منذ أكثر من 12 ساعة لم بتم حذفها بعد. يرجى مراجعتها ومعالجتها.» | Online-order entries are not being cleared. The check raises it when more than nine thousand entries are older than a day. | Process the backlog, and schedule the clean-up action that deletes old entries. |
 | *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بألاكواد {0} مفعلة» | An e-commerce site record is active but this server is not configured to send data to it — so the shop and the ERP are silently drifting apart. | Either set `send-ecommerce-data` on the server that should be publishing, or mark the site record inactive. It is normal to see this on a test copy of a live database. |
+
+### Database schema fixes (Namasoft support only)
+
+These two are shown only to an administrator signed in through the Namasoft CRM. They mean the
+database still has leftovers from older versions that make it bigger and slower than it needs to be.
+Fixing them locks tables for minutes on a large database, so they are not fixed automatically at
+start-up; the support team runs them outside working hours.
+
+| Message | What raised it | What to do |
+|---|---|---|
+| *{0} tables ({1} MB) still have 255-byte reference columns, run the utility {2} off-hours* — «يوجد {0} جدول ({1} ميجابايت) ما زالت أعمدة المراجع فيها بطول 255 بايت، يرجى تشغيل الأداة {2} خارج أوقات العمل» | Tables still store their dimension, author, capability or system entry references in 255 bytes instead of 16. | Run the [Reference Column Narrower](/admin/reprocessing/database-size-and-index-utilities#Reference-Column-Narrower) with the rebuild. |
+| *{0} origin indexes still cover more columns than they should, run the utility {1} off-hours* — «يوجد {0} فهرس أصل ما زال يشمل أعمدة أكثر من اللازم، يرجى تشغيل الأداة {1} خارج أوقات العمل» | Transaction line tables still have origin indexes built over 17 columns instead of one. | Run the [Origin Indexes Fixer](/admin/reprocessing/database-size-and-index-utilities#Origin-Indexes-Fixer). |
+
+Both are checked again whenever the critical errors are refreshed and as soon as either utility
+finishes a run, so they disappear once nothing is left to fix.
 
 ## See also
 

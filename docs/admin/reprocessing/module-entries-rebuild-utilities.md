@@ -144,6 +144,15 @@ These rebuild each asset's location and properties history — cost, additions a
 
 SQL repairs for the same module are on [Fixed Assets Utilities](/admin/reprocessing/fixed-asset-utilities.md).
 
+## Contracting
+
+### Recalculate Cost Executions and Project Extract Costs
+
+Collects the cost entries of every **Contracting Cost Execution** again, oldest first, then refreshes the costs on every **Project Contract Extract** of the same contracts. Run it when an execution or an extract shows costs that no longer match the documents behind them. It stops at the first execution that fails and shows why, without touching the extracts. Safe to run again.
+
+<UtilityLinkBuilder
+className="com.namasoft.modules.contracting.domain.utils.util.RecalculateCostExecutionAndUpdateProjExtractCostsUtil"/>
+
 ## Related pages
 
 - [Batch Utilities That Work From a List File](/admin/reprocessing/batch-utilities-from-file.md)

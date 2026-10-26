@@ -35,6 +35,8 @@ title: إدارة النظام
   <LandingCard icon="🏠" title="أدوات العقارات" link="/ar/admin/reprocessing/real-estate-utilities.md" details="استعلامات مساعدة لوحدة العقارات." />
   <LandingCard icon="⚙️" title="عمليات قاعدة البيانات" link="/ar/admin/reprocessing/db-operations.md" details="عمليات خاصة بقاعدة البيانات للحفاظ على التنصيب." />
   <LandingCard icon="🚀" title="اقتراح Indexes لجداول التفاصيل" link="/ar/admin/reprocessing/suggest-index-creation.md" details="اقتراح Indexes لتسريع جداول التفاصيل الكبيرة." />
+  <LandingCard icon="📉" title="أدوات حجم قاعدة البيانات والفهارس" link="/ar/admin/reprocessing/database-size-and-index-utilities.md" details="تقليل حجم قاعدة البيانات بإصلاح أعمدة المراجع العريضة وفهارس الأصل والفهارس المكررة." />
+  <LandingCard icon="🧰" title="دليل الأدوات المساعدة" link="/ar/admin/reprocessing/utilities-catalog.md" details="صفحة السيرفر التي تعرض أكثر الأدوات استخداماً مع أوصافها وأزرار فتحها." />
   <LandingCard icon="🧰" title="استعلامات عامة متعددة الأغراض" link="/ar/admin/reprocessing/general-purpose-utility-queries.md" details="مجموعة من الاستعلامات المساعدة العامة متعددة الأغراض." />
   <LandingCard icon="🔗" title="أدوات النسخ المتطابق" link="/ar/admin/reprocessing/replication.md" details="أدوات للتعامل مع النسخ المتطابق لقاعدة البيانات." />
   <LandingCard icon="📄" title="أدوات تعمل على دفعة سجلات من ملف" link="/ar/admin/reprocessing/batch-utilities-from-file.md" details="إعادة اعتماد قائمة سجلات من ملف أو حذفها أو إعادة إرسالها أو تصديرها." />

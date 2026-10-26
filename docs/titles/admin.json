@@ -17,6 +17,7 @@
     "/admin/troubleshooting/troubleshooting-system-hanging.md",
     "/admin/troubleshooting/general-faq.md",
     "/admin/reprocessing",
+    "/admin/reprocessing/utilities-catalog.md",
     "/admin/reprocessing/reprocess-qty-and-cost.md",
     "/admin/reprocessing/reprocess-ledger-and-debt-ages.md",
     "/admin/reprocessing/cost-and-qty-problems.md",
@@ -29,6 +30,7 @@
     "/admin/reprocessing/approval-repair-utilities.md",
     "/admin/reprocessing/db-operations.md",
     "/admin/reprocessing/suggest-index-creation.md",
+    "/admin/reprocessing/database-size-and-index-utilities.md",
     "/admin/reprocessing/general-purpose-utility-queries.md",
     "/admin/reprocessing/replication.md"
   ],

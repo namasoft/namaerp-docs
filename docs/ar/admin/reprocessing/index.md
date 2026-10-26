@@ -28,6 +28,8 @@ title: إعادة المعالجة والأدوات
 | الموافقات المعلقة تعرض سجلات منتهية أو محذوفة، أو ملخصاً قديماً | [أدوات إصلاح الموافقات](/ar/admin/reprocessing/approval-repair-utilities.md) |
 | موقع خرج عن التوافق مع المركز الرئيسي | [أدوات النسخ المتطابق](/ar/admin/reprocessing/replication.md) |
 | كل شيء صحيح لكن البطء شديد | [اقتراح Indexes لجداول التفاصيل الكبيرة](/ar/admin/reprocessing/suggest-index-creation.md) |
+| قاعدة البيانات أكبر مما ينبغي، أو ظهر لفريق الدعم خطأ حرج عن أعمدة مراجع بطول 255 بايت أو فهارس أصل | [أدوات حجم قاعدة البيانات والفهارس](/ar/admin/reprocessing/database-size-and-index-utilities.md) |
+| تعرف ما الذي تريد فعله لكن لا تعرف أي أداة تفعله | [دليل الأدوات المساعدة](/ar/admin/reprocessing/utilities-catalog.md) |
 
 ## ترتيب العمل
 
@@ -37,6 +39,10 @@ title: إعادة المعالجة والأدوات
 4. **وإعادة البناء الكاملة آخر شيء**، ومعها نسخة احتياطية ووقت متفق عليه وخادم موقَف.
 
 فإذا لم تفسّر الخطوة الأولى العَرَض، فتلك لحظة التصعيد لا لحظة توسيع دائرة الضرر.
+
+## دليل الأدوات المساعدة
+
+أكثر الأدوات استخداماً مجمّعة أيضاً في صفحة واحدة على السيرفر، لكل أداة وصف وزر يفتحها، مقسّمة إلى أقسام مرقمة. افتحها من آخر قسم في `utils.html`؛ راجع [دليل الأدوات المساعدة](/ar/admin/reprocessing/utilities-catalog.md).
 
 ## روابط التشغيل في هذه الصفحات
 
@@ -113,4 +119,6 @@ http://localhost:8080/erp/utils?util=com.namasoft.erp.gui.server.RecommitFromFil
 <LandingGrid>
   <LandingCard icon="🗄️" title="عمليات قاعدة البيانات" link="/ar/admin/reprocessing/db-operations.md" details="عمليات على قاعدة البيانات نفسها على مستوى الخادم — وهي أشد صفحات هذا المجلد تدميراً." />
   <LandingCard icon="🔁" title="أدوات النسخ المتطابق" link="/ar/admin/reprocessing/replication.md" details="تشخيص موقع تخلّف عن المركز الرئيسي وإصلاحه." />
+  <LandingCard icon="📉" title="أدوات حجم قاعدة البيانات والفهارس" link="/ar/admin/reprocessing/database-size-and-index-utilities.md" details="تضييق أعمدة المراجع العريضة وإصلاح فهارس الأصل وحذف الفهارس المكررة، بتشغيل تجريبي أولاً ودخول فريق الدعم للتطبيق." />
+  <LandingCard icon="🧰" title="دليل الأدوات المساعدة" link="/ar/admin/reprocessing/utilities-catalog.md" details="صفحة على السيرفر تعرض أكثر الأدوات استخداماً في أقسام مرقمة، لكل منها وصف وزر يفتحها." />
 </LandingGrid>

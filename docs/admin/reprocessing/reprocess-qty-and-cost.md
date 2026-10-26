@@ -113,6 +113,8 @@ delete from StockAgesTrans
 ```
 :::
 ### Partial Reprocess of Average Cost (Fast)
+Reprocesses the average cost of every item from the date you give (written as `yyyyMMdd`, for example `20260101`) without stopping the server. It works for average cost only: on a FIFO installation it refuses with *You are using FIFO costing method, this utility is for average cost*, and while another fast reprocess is still running it refuses with *Can not start fast reprocessing from file, there is one already running*.
+
 <UtilityLinkBuilder
 className="com.namasoft.modules.supplychain.domain.utils.FastReprocessCostFromDate"
 :params="[
@@ -120,17 +122,36 @@ className="com.namasoft.modules.supplychain.domain.utils.FastReprocessCostFromDa
 ]"
 />
 
+### Partial Reprocess of Stock Transfers Whose Costs Disagree (Fast)
+A narrower version of the same tool. From the date you give, it reprocesses only the items and dimensions where a stock transfer left the source warehouse at one cost and arrived at the destination at another — by more than the minimum difference, `0.01` unless you enter another one. The same average-cost and already-running rules apply.
+
+<UtilityLinkBuilder
+className="com.namasoft.modules.supplychain.domain.utils.FastReprocessInvalidTransfersFromDate"
+:params="[
+{ title: 'Start Date (yyyyMMdd)', default: 'yyyyMMdd' },
+{ title: 'Minimum Cost Difference', default: '0.01' }
+]"
+/>
+
 ## Reprocess Stock Ages
 ### Method 1:
-- Use Fast Reprocess Util
+Use the fast reprocess utility. It rebuilds the stock ages of every item whose stock ages policy is Yes from its processed inventory requests, a hundred requests at a time, and writes each finished request to a progress file so an interrupted run can carry on where it stopped.
+
   <UtilityLinkBuilder
   className="com.namasoft.modules.supplychain.domain.utils.plugnplay.StockAgesFastReprocess"
   :params="[
   { title: 'Processed Ages File Path', default: 'E:/rc/stock-ages-done.txt' }
   ]"
   />
+
+Opening the link changes nothing. It shows the progress file and how many requests it already lists, with buttons that ask for confirmation before they start:
+
+- **Start** — shown when the progress file is empty or missing. It empties the stock ages tables and rebuilds them all.
+- **Resume** — shown when the progress file already lists requests, for example after the server was restarted mid-run. It keeps the tables and processes only the requests that are not in the file yet. Running a request again is harmless, so resuming after a crash leaves no duplicates.
+- **Start from scratch** — shown next to Resume. It clears the progress file first, then behaves like Start.
+
 ::: warning
-  - Make sure to clear the stock-ages-done file before running the utility, The system will ignore all requests mentioned in the file
+  - A progress file left over from an earlier, finished run makes the tool offer **Resume**, which then has almost nothing to do. To rebuild everything, use **Start from scratch** or give a new file path.
   - Make sure that you are on a release after April 21st
   - There are no currentNetCost errors displayed in the system
 

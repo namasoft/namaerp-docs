@@ -36,6 +36,8 @@ When stored figures fall out of sync, these utilities recompute them and offer r
   <LandingCard icon="🏠" title="Real Estate Utilities" link="/admin/reprocessing/real-estate-utilities.md" details="Utility queries for the real estate module." />
   <LandingCard icon="⚙️" title="Database Operations" link="/admin/reprocessing/db-operations.md" details="Database-related operations for maintaining the installation." />
   <LandingCard icon="🚀" title="Suggest Indexes for Detail Tables" link="/admin/reprocessing/suggest-index-creation.md" details="Suggest indexes to speed up large detail tables." />
+  <LandingCard icon="📉" title="Database Size and Index Utilities" link="/admin/reprocessing/database-size-and-index-utilities.md" details="Shrink the database by fixing oversized reference columns, origin indexes and duplicate indexes." />
+  <LandingCard icon="🧰" title="The Utilities Catalog" link="/admin/reprocessing/utilities-catalog.md" details="The server page that lists the most used utilities with descriptions and Open buttons." />
   <LandingCard icon="🧰" title="General Purpose Utility Queries" link="/admin/reprocessing/general-purpose-utility-queries.md" details="A grab-bag of general-purpose utility queries." />
   <LandingCard icon="🔗" title="Replication Utilities" link="/admin/reprocessing/replication.md" details="Utilities for working with database replication." />
   <LandingCard icon="📄" title="Batch Utilities From a List File" link="/admin/reprocessing/batch-utilities-from-file.md" details="Recommit, delete, re-replicate or export a list of records read from a file." />
