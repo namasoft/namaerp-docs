@@ -32,7 +32,7 @@ Before answering the customer's question, we must know **which of these scenario
 
 ## Scenario 1: The Other System Reads from Nama
 
-This is the easiest and most common scenario. Nama already provides a complete REST API covering **all system entities**, with automatic documentation in OpenAPI 3.0 format and an interactive Swagger UI for exploring and testing the API directly.
+This is the easiest and most common scenario. Nama already provides a complete REST API covering **all system entities**, with automatic documentation in OpenAPI (Swagger 2.0) format and an interactive [API browser](./nama-erp-api.md#API-Browser-Overview) for exploring and testing the API directly.
 
 Therefore, the near-ready answer in this scenario is:
 
@@ -183,7 +183,7 @@ In light of the above, the financial policy for integrating Nama with other syst
 ### What is Available at No Additional Cost
 
 * **Using Nama's standard REST API** for all entities and all CRUD operations: available to every customer who has the system, at no additional cost, with no development required on our part.
-* **API documentation in OpenAPI 3.0 format and Swagger UI**: available automatically within the system.
+* **API documentation in OpenAPI (Swagger 2.0) format, browsable in Scalar or Swagger UI**: available automatically within the system.
 * **Quick and simple technical assistance** for the other party's team (answering a question here and there, clarifying a specific request structure): we provide this free of charge in most cases as a matter of good technical partnership.
 
 ### What Requires a Financial Proposal

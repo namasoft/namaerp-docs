@@ -4,7 +4,7 @@ entities: [APICredentials]
 
 # Nama ERP REST API
 
-Nama ERP has a REST API for creating, reading, updating and deleting records of any entity, and publishes an OpenAPI 3.0 description of each entity for third-party systems to build against.
+Nama ERP has a REST API for creating, reading, updating and deleting records of any entity, and publishes an OpenAPI (Swagger 2.0) description of each entity for third-party systems to build against.
 
 For a fast introduction, watch this video: [Nama ERP Rest API Introduction](https://youtu.be/lUxZMIoxxUY)
 
@@ -14,47 +14,55 @@ Before diving into the API details, you may want to read [Integration Scenarios 
 
 ## API Browser Overview
 
-The Nama ERP API Browser provides an interactive interface for exploring and testing all available REST APIs in your system.
+The API browser is a page on your own server that lists every entity the REST API can read and write, and opens a full reference for any of them: its operations, the fields it accepts, ready-to-copy code samples, and a button that sends a test call to your server. It is usually the first thing to show a developer who is about to integrate with Nama.
 
 ### Accessing the API Browser
 
-The API Browser is available through multiple endpoints:
+Administrators find it on the **Utilities** page as **Open API Browser**. You can also go straight to its address:
 
-#### Main API Browser (Router Page)
 ```
 http[s]://<server-ip-or-domain>/erp/browseapi/
 ```
-This displays the main router page with links to different API sections.
 
-#### Entity APIs Browser
-```
-http[s]://<server-ip-or-domain>/erp/browseapi/browseentitiesapi.html
-```
-Lists all available entity APIs with their Arabic and English names.
+That first page links to two lists:
 
-#### Special Purpose APIs Browser
-```
-http[s]://<server-ip-or-domain>/erp/browseapi/browsespecialpurposesapi.html
-```
-Lists specialized APIs for specific integrations (e.g., attendance machine synchronization).
+- **Entities API** (`/erp/browseapi/browseentitiesapi.html`): every entity on the server. This is the page described below.
+- **Special Purpose APIs** (`/erp/browseapi/browsespecialpurposesapi.html`): APIs built for one integration, such as attendance machine synchronization.
 
-![Rest API Browser Screenshot](../ar/integration/images/rest-api-browser.png)
+![The entities page of the API browser](../ar/integration/images/rest-api-browser.png)
 
-### Features of the API Browser
+### Finding an Entity
 
-The API Browser dynamically generates documentation based on your system configuration:
+The search box at the top is laid out like a request: `GET https://<your-server>/erp/rest/v1/` followed by what you type. Type an English name, an Arabic name or the entity ID: `SalesInvoice`, `Customer` and `فاتورة مبيعات` all work, and Arabic spelling variants match each other, so `فاتوره` finds `فاتورة`. The line under the box counts the matches and names the best one; press **Enter** to open it. Press `/` anywhere on the page to jump back to the search box.
 
-* **Entity List**: Displays all entities available to the current user based on:
-  - Module permissions
-  - User access rights
-  - Enabled features
-  - Customer-specific configurations
-  
-* **Multilingual Support**: Shows entity names in both Arabic and English
-* **For each entity, two primary resources are provided:**
+Under the search box, entities are grouped exactly as the main menu groups them (**Accounting / Master Files**, **Basic / Documents** and so on), because the list is built from the default menu itself. An entity the menu shows in two places appears in both. The list on the left narrows the page to one top-level menu group and shows how many entities in each group match your search. Entities that have an API but no menu entry are collected at the end under **Not in the menu**.
 
-  1. **OpenAPI JSON Specification**: Machine-readable API definition
-  2. **Swagger UI**: Interactive documentation and testing interface
+Only entities available on this server are listed: modules, features and entities that the license or your user's security settings leave out do not appear.
+
+Each row shows the English name, the Arabic name and the entity ID; click the ID to copy it. **Open** opens the entity's reference in a new tab.
+
+### Using a Real Record as the Example
+
+A reference is much easier to follow when the example body is a real document rather than empty fields. **With a record** opens a small panel under the row: type the code or ID of a saved record and choose **Open with this record**, and the reference shows that record's data as the example. Leave the box empty to use the first saved record. **Data model** next to it opens the entity's page on the data model site.
+
+![Opening the customer reference with a saved record as the example](../ar/integration/images/rest-api-browser-record.png)
+
+### Choosing Scalar or Swagger UI
+
+Two viewers can show an entity's reference, and **Open references in** at the top of the page chooses between them:
+
+- **Scalar** (the default) shows the operations on the left, their descriptions in the middle, and code samples on the right in curl, Python, Node.js, PHP, Ruby and more. **Test Request** sends the call to your server from the page.
+- **Swagger UI** is the classic interactive page; **Try it out** on each operation sends the call.
+
+Both read the same description and call the same server, so pick whichever you prefer. Your browser remembers the choice, so the page opens with the same viewer next time, and the Special Purpose APIs list follows it too.
+
+![An entity reference in Scalar, with a curl sample for saving a customer](../ar/integration/images/rest-api-browser-scalar.png)
+
+::: info Nothing leaves your server
+Both viewers are installed with Nama ERP. They load nothing from the internet and send your API key only to your own server, so they work on servers without internet access.
+:::
+
+To call an operation from either viewer, give it your API key first: **Authorize** in Swagger UI, or the authentication box at the top of the Scalar page. See [How to Generate an API Key](#How-to-Generate-an-API-Key).
 
 ### OpenAPI JSON Specifications
 
@@ -515,9 +523,9 @@ Read responses — a single record, or a list — show an attachment field as a 
 
 `size` is in bytes. An empty attachment field has no description. Because an object without `uploadId` or `url` is ignored on save, this description can travel back in a save request unchanged without touching the stored file.
 
-### Trying it from the Swagger UI
+### Trying it from the API Browser
 
-Each entity's Swagger page carries an **Attachments** section with the upload operation, which you can try directly from the page: pick a file, run it, and copy the `fileId` from the answer into `{"uploadId":"..."}` in the body of the save operation. The save operation's own description repeats the two object forms.
+Each entity's reference, in Scalar or Swagger UI, carries an **Attachments** section with the upload operation, which you can try directly from the page: pick a file, send the request, and copy the `fileId` from the answer into `{"uploadId":"..."}` in the body of the save operation. The save operation's own description repeats the two object forms.
 
 ## Testing APIs
 
@@ -538,8 +546,8 @@ curl -H "X-API-Key: {api-key}" \
 3. Add API Key to collection authentication
 4. Test all CRUD operations
 
-#### 3. Interactive Swagger UI
-Access the Swagger interface for interactive testing (if configured).
+#### 3. Interactive Reference
+Open the entity from the [API browser](#Finding-an-Entity) and send requests from its reference page: **Test Request** in Scalar, **Try it out** in Swagger UI.
 
 ### Example Request Formats
 
