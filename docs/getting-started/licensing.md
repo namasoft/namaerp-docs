@@ -103,7 +103,7 @@ The features you can switch off:
 | Issue Date | تاريخ التحرير | The issue-date field on documents |
 | Two / Three / Four Year Budget | موازنة السنتان / الثلاث سنوات / الأربع سنوات | Multi-year budget columns |
 | Gulf HR | الموارد البشرية للخليج | Gulf-specific HR screens and fields |
-| Detailed RV,PV documents | سندات صرف وقبض تفصيلية | The detailed receipt and payment vouchers |
+| Detailed RV,PV documents | سندات صرف وقبض تفصيلية | The **Detailed Voucher** option on receipt and payment document terms, and the per-line currency, amount and rate it unlocks on receipt and payment documents |
 | Create Assets In Disposal | إنشاء اصول في سندات التخلص | Creating assets from a disposal document |
 | cars | سيارات | Car fields on service-centre execution orders |
 | Instant Chat | المحادثات اللحظية | The in-app chat |
@@ -131,7 +131,7 @@ A screen reached but refused on save with *The user {0} level ({1}) does not inc
 2. **Was the screen rebuilt after the change?** A Screen Modifier does nothing until the screens are regenerated — run **Regenerate GUI For Applicable Types Only** on the modifier. After an upgrade that adds fields, run **Regenerate UI**.
 3. **Is the modifier active, and aimed at the right screen?** Only activated modifiers apply; a modifier with a higher priority can remove what yours added; and a modifier marked for mobile devices or for the quick creator does not change the desktop screen — see [Screen Modifier](/platform/screen-modifier/screen-modifier-overview).
 4. **Does the company have its own layout?** A layout saved as `dbdefault`, or as a company's own `<company code>default`, replaces the standard screen, so a change made to the standard one does not show there.
-5. **Does the field belong to an Unused Feature,** or point at a screen in **Unused Entities** or in a module that is not licensed? Then it is hidden on purpose — see [above](#Switching-screens-and-features-off-for-a-company).
+5. **Does the field belong to an Unused Feature,** or point at a screen in **Unused Entities** or in a module that is not licensed? Then it is hidden on purpose, and **a Screen Modifier cannot bring it back**: the feature is checked before the modifier is applied. Remove the line from **Unused Features** on the user's legal entity or on the Configuration Group, then have the user sign in again — see [above](#Switching-screens-and-features-off-for-a-company). A common case is the **Detailed Voucher** option on receipt and payment terms, which belongs to **Detailed RV,PV documents**. To find the feature a field belongs to, look the field up in the [data model](https://dm.namasoft.com/features.html): each feature-dependent field carries a badge naming its feature. On a cloud server the company's licence can also switch a feature off; that needs a change to the licence.
 6. **Is it hidden by security?** The **Field Settings** page of the security profile hides fields, and **Page Security** hides whole tabs — see [field, page and list-view security](/platform/security/field-page-listview-security).
 7. **Is it a dimension field?** A dimension switched off in the [Global Configuration](/platform/global-config/global-config-dimensions) is not shown anywhere.
 

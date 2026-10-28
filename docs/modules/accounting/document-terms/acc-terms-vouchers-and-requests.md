@@ -62,7 +62,7 @@ The **Account resource type** values:
 |---|---|---|
 | **Related Subsidiary** | `termConfig.otherSideRelatedEntity` | The kind of party on the lines — Customer, Supplier, Employee, Bank Account, Owner, Broker or Contractor — used to work out line accounts. |
 | **Subsidiary account type**, **Account Bag Code** | `termConfig.otherSideSubsidAccountType`, `termConfig.otherSideSubsidAccBagCode` | Which of the party's accounts the lines use. |
-| **Detailed Voucher** | `termConfig.detailedVoucher` | Lets each line carry its own currency, amount and rate. |
+| **Detailed Voucher** | `termConfig.detailedVoucher` | Lets each line carry its own currency, amount and rate. The option is hidden while the **Detailed RV,PV documents** feature is in Unused Features — see [Switching screens and features off](/getting-started/licensing#Switching-screens-and-features-off-for-a-company). |
 
 ### When the source document changes the accounts
 
