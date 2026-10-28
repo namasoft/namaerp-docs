@@ -1,5 +1,5 @@
 ---
-entities: [Remark, DetailedRemark, MeetingRemark, WorkTask, EmployeeAgenda, RemarkType]
+entities: [Remark, DetailedRemark, MeetingRemark, WorkTask, EmployeeAgenda, RemarkType, WorkTaskCategory]
 ---
 
 # الملحوظات والأجندة ومهام العمل

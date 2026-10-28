@@ -1,5 +1,5 @@
 ---
-entities: [FinancialPaper, FPBook, BankPortfolio, BankNotice, OpenningFinancialPaper, FinancialPaperAgio, FinancialPaperCancel, FPTransfer]
+entities: [FinancialPaper, FPBook, BankPortfolio, BankNotice, OpenningFinancialPaper, FinancialPaperAgio, FinancialPaperCancel, FPTransfer, PostponedBankPortfolio, PostponedPortfolioReturn, FinancialPaperAgioReturn, FPPartialPayment, FPReceiptRequest]
 menu: البنوك ← الملفات ← ورقة تجارية
 ---
 

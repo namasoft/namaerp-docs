@@ -164,7 +164,7 @@ them.
 1. Open the **Reward Points Configuration** that governs the points (**Basic → Documents → Reward
    Points Configuration**; how points are earned is explained in
    [Customer reward points](/modules/invoicing/reward-points.md)).
-2. In **Synchronize Reward Points With Woo Commerce Site**, pick the WooCommerce Magento Site
+2. In **Synchronize Reward Points With Woo Commerce Site** (`synchronizeRewardPointsWithWooCommerceSites`), pick the WooCommerce Magento Site
    record. Only a site whose Site Type is Woo Commerce Site takes part.
 3. Fill **Discount Coupon Book** on the same configuration — Nama needs it to create the coupons
    described below.

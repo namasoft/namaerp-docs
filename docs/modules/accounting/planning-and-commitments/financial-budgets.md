@@ -30,13 +30,13 @@ A budget only constrains spending if you tell it to. The switch is **"use this b
 - **Prevent Saving** — the document is blocked outright.
 - **Request Approval** — the over-budget document is routed for **approval**, so an authorized user can let it through.
 
-Two switches in the accounting configuration (see the [Accounting configuration](../support/accounting-configuration.md) catalog) unlock those choices: an account cannot be saved with **Prevent Saving** (or with **Prevent Save If No Budget Was Found For The Account**) until **Enable Prevent Saving For Budgets** is on, nor with **Request Approval** until **Enable Approvals For Budgets** is on. An account left on **Allow** is never stopped — its budget is informational only, tracked and reportable.
+Two switches in the accounting configuration (see the [Accounting configuration](../support/accounting-configuration.md) catalog) unlock those choices: an account cannot be saved with **Prevent Saving** (or with **Prevent Save If No Budget Was Found For The Account**) until **Enable Prevent Saving For Budgets** (`value.enablePreventSavingForBudgets`) is on, nor with **Request Approval** until **Enable Approvals For Budgets** (`value.enableApprovalsForBudgets`) is on. An account left on **Allow** is never stopped — its budget is informational only, tracked and reportable.
 
 Only movement that grows the account on its **natural side** is checked — a debit on a debit account, a credit on a credit account — and only against budget lines that are saved, not drafts, and have **Use This Budget For Validation and Approvals** ticked. If no such line matches, the budget total is zero and the document passes, unless the account has **Prevent Save If No Budget Was Found For The Account** ticked.
 
 ### Matching the right budget line
 
-When it validates, the system needs to know *which* budget line a document maps to. The **Budget Validation Options** include a set of **"consider…"** toggles — consider sector, branch, department, analysis set, subsidiary, record (entity dimension), references 1–3, and fiscal period — that define how precisely actuals are matched to budget lines. Turn on the dimensions you budget by; leave off the ones you don't, so the match isn't too narrow to find its line.
+When it validates, the system needs to know *which* budget line a document maps to. The **Budget Validation Options** include a set of **"consider…"** toggles — consider sector, branch, department, analysis set, subsidiary, record (entity dimension), references 1–3, and fiscal period (`value.budgetValidationOptions.considerSector`, `…considerBranch`, `…considerDepartment`, `…considerAnalysisSet`, `…considerSubsidiary`, `…considerEntityDimension`, `…considerRef1` – `…considerRef3`, `…considerFiscalPeriod`) — that define how precisely actuals are matched to budget lines. Turn on the dimensions you budget by; leave off the ones you don't, so the match isn't too narrow to find its line.
 
 ## Actions on this screen
 

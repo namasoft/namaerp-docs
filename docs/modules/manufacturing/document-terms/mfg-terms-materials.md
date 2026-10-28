@@ -27,24 +27,29 @@ What follows is only what manufacturing adds.
 
 ## Raw Materials Issue
 
-**The stock issue it can create.** When the **Generation** block of the **Generation** tab names both a **Generation Book** and a **Generation Term**, saving a raw materials issue also creates a **stock issue** with that book and term, and keeps it in step when the issue is changed. With either field empty, no stock issue is created.
+**The stock issue it can create.** When the **Generation** block of the **Generation** tab names both a **Generation Book** and a **Generation Term** (`termConfig.generationConfigurations.generationBook` /
+`termConfig.generationConfigurations.generationTerm`), saving a raw materials issue also creates a **stock issue** with that book and term, and keeps it in step when the issue is changed. With either field empty, no stock issue is created.
 
-**Material Classification** (تصنيف الخامة), in its own block on the Settings tab, ties the term to one material classification. Choosing the term fills the issue's **Material Classification**, and when a production order is then picked, only that order's component lines of that classification are copied in. It is how one factory keeps separate issue documents — and separate storekeepers — for, say, packaging and chemicals drawn against the same order.
+**Material Classification** (تصنيف الخامة, `termConfig.materialClassification`), in its own block on the Settings tab, ties the term to one material classification. Choosing the term fills the issue's **Material Classification**, and when a production order is then picked, only that order's component lines of that classification are copied in. It is how one factory keeps separate issue documents — and separate storekeepers — for, say, packaging and chemicals drawn against the same order.
 
-**Copy Remaining Quantity Considering Previously Issued Quantity** (نسخ الكمية المتبقية واعتبار ما تم صرفه سابقا), on the **From Document** tab, makes the lines copied from a production order carry only what is still to be issued, after earlier issues against the same order, instead of the full planned quantity. Turn it on wherever an order is issued in several instalments.
+**Copy Remaining Quantity Considering Previously Issued Quantity** (نسخ الكمية المتبقية واعتبار ما تم صرفه سابقا,
+`termConfig.copyRemainingQtyConsideringPreviouslyIssued`), on the **From Document** tab, makes the lines copied from a production order carry only what is still to be issued, after earlier issues against the same order, instead of the full planned quantity. Turn it on wherever an order is issued in several instalments.
 
 ![The Settings tab of the Raw Materials Issue term](../../../ar/modules/manufacturing/images/document-terms/mfg-term-raw-material-issue-en.png)
 
 ## Raw Materials Return
 
-A raw materials return moves material back into stock through a **stock receipt** it generates. Its book and term are the **Generation Book** and **Generation Term** in the **Generation** block of the **Generation** tab; fill both.
+A raw materials return moves material back into stock through a **stock receipt** it generates. Its book and term are the **Generation Book** and **Generation Term** in the **Generation** block of the **Generation** tab
+(`termConfig.generationConfigurations.generationBook` / `termConfig.generationConfigurations.generationTerm`); fill both.
 
 ## Raw material issue request
 
 The request's term adds a **Weight Scale** block (الميزان), for stores that weigh what they hand over:
 
-- **Generated Weight Scale Preparation Document Book** / **Term** (دفتر / توجيه سند تحضير الميزان المنشأ) — when a request line is weighed on the weight scale, a weight scale preparation document is created with this book and term.
-- **Generated Raw Material Issue Book** / **Term** (دفتر / توجيه مستند صرف المواد الخام المنشأ) — when that preparation document is saved, and its own term is set to generate documents, it creates or updates the raw materials issue from the weighed lines with this book and term.
+- **Generated Weight Scale Preparation Document Book** / **Term** (دفتر / توجيه سند تحضير الميزان المنشأ,
+  `termConfig.generatedWeightPreparationDocBook` / `termConfig.generatedWeightPreparationDocTerm`) — when a request line is weighed on the weight scale, a weight scale preparation document is created with this book and term.
+- **Generated Raw Material Issue Book** / **Term** (دفتر / توجيه مستند صرف المواد الخام المنشأ,
+  `termConfig.generatedRawMaterialIssueBook` / `termConfig.generatedRawMaterialIssueTerm`) — when that preparation document is saved, and its own term is set to generate documents, it creates or updates the raw materials issue from the weighed lines with this book and term.
 
 A request with no weight scale in the process needs neither.
 
@@ -56,8 +61,10 @@ The return request's term adds nothing of its own beyond the supply chain tabs.
 
 A manufacturing stock taking counts materials and then pushes each difference back onto the production orders that used the material. For every counted item with a difference, the difference is shared across the production orders that issued that item from the counted warehouse in the period, in proportion to what each consumed. Each order's share becomes a raw materials issue or a raw materials return, depending on its sign, and those come from the term:
 
-- **Raw Material Issue Book** / **Raw Material Issue Term** (دفتر / توجيه صرف المواد الخام)
-- **Raw Material Return Book** / **Raw Material Return Term** (دفتر / توجيه مرتجع المواد الخام)
+- **Raw Material Issue Book** / **Raw Material Issue Term** (دفتر / توجيه صرف المواد الخام,
+  `termConfig.rawMaterialIssueBook` / `termConfig.rawMaterialIssueTerm`)
+- **Raw Material Return Book** / **Raw Material Return Term** (دفتر / توجيه مرتجع المواد الخام,
+  `termConfig.rawMaterialReturnBook` / `termConfig.rawMaterialReturnTerm`)
 
 Documents it generated earlier that are no longer needed are deleted when it is saved again. An item that no production order issued in the period cannot be spread anywhere: *The item {0} was not issued in any production order within the specified period* — «لم يتم صرف العنصر {0} في أي أمر إنتاج خلال الفترة المحددة».
 

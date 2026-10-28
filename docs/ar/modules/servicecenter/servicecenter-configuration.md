@@ -21,12 +21,12 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 هذه النسب الأربع تُبذّر توزيع الطاقة الذي يقترحه [جدول التحميل](/ar/modules/servicecenter/workshop-execution/servicecenter-loading-table.md) عند إنشائه، ونسبة الحجز تعمل أيضًا كقيمة احتياطية يستعملها فحص الحجز حين لا يغطي اليومَ جدولُ تحميل.
 
-| الخيار (عربي / إنجليزي) | الافتراضي | ما يفعله |
-|---|---|---|
-| نسبة الحجز / **Appointments Percent** | 80 % | حصة ساعات اليوم المحجوزة للمواعيد. وهي السلة الوحيدة المُلزِمة فعلًا عند حجز [طلب خدمة](/ar/modules/servicecenter/job-cycle/servicecenter-service-request.md). |
-| نسبة الطوارئ / **Emergencies Percent** | 5 % | الحصة المخصصة للطوارئ. معلومات تخطيطية. |
-| **Walk In Percent** | 5 % | الحصة المخصصة للزيارات المفاجئة. معلومات تخطيطية. |
-| **Carry Over Percent** | 10 % | الحصة المخصصة للعمل المرحّل من أيام سابقة. معلومات تخطيطية. |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | الافتراضي | ما يفعله |
+|---|---|---|---|
+| نسبة الحجز / **Appointments Percent** | `value.appointmentsPercent` | 80 % | حصة ساعات اليوم المحجوزة للمواعيد. وهي السلة الوحيدة المُلزِمة فعلًا عند حجز [طلب خدمة](/ar/modules/servicecenter/job-cycle/servicecenter-service-request.md). |
+| نسبة الطوارئ / **Emergencies Percent** | `value.emergenciesPercent` | 5 % | الحصة المخصصة للطوارئ. معلومات تخطيطية. |
+| **Walk In Percent** | `value.walkInPercent` | 5 % | الحصة المخصصة للزيارات المفاجئة. معلومات تخطيطية. |
+| **Carry Over Percent** | `value.carryOverPercent` | 10 % | الحصة المخصصة للعمل المرحّل من أيام سابقة. معلومات تخطيطية. |
 
 وتترك شركة الصحراء هذه على 80 / 5 / 5 / 10، فتتحول ساعات صالة الميكانيكا الأربعون إلى **32 ساعة حجز** يوميًا.
 
@@ -36,43 +36,43 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 ## التسعير
 
-| الخيار (عربي / إنجليزي) | القيم | ما يفعله |
-|---|---|---|
-| سياسة تسعير الخدمات / **Service Price Strategy** | Normal · MSRP | يقرر هل يأتي سعر ساعة المهمة وسعر الخدمة الإجمالي من أعمدة الأسعار العادية أم من أعمدة السعر الموصى به من المصنّع. ويُطبَّق لحظة سحب السعر إلى المستند. |
-| طريقة التسعير / **Pricing Method** | بالساعة (الافتراضي) · باليوم | **للأصول التأجيرية فقط.** هل يُحاسَب التأجير بالساعة أم باليوم. ويغيّر الحساب *و*تخطيط شاشات التأجير معًا، وهو إعداد واحد للتركيب كله — لا لكل أصل ولا لكل حجز. |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | القيم | ما يفعله |
+|---|---|---|---|
+| سياسة تسعير الخدمات / **Service Price Strategy** | `value.servicePriceStrategy` | Normal · MSRP | يقرر هل يأتي سعر ساعة المهمة وسعر الخدمة الإجمالي من أعمدة الأسعار العادية أم من أعمدة السعر الموصى به من المصنّع. ويُطبَّق لحظة سحب السعر إلى المستند. |
+| طريقة التسعير / **Pricing Method** | `value.pricingMethod` | بالساعة (الافتراضي) · باليوم | **للأصول التأجيرية فقط.** هل يُحاسَب التأجير بالساعة أم باليوم. ويغيّر الحساب *و*تخطيط شاشات التأجير معًا، وهو إعداد واحد للتركيب كله — لا لكل أصل ولا لكل حجز. |
 
 ويستحق الاثنان الحسم قبل وجود أول مستند. فالأسعار المكتوبة على المستندات لا تُراجَع حين تقلب السياسة، فالتغيير في منتصف العمر يترك تركيبًا فيه جيلان من الأسعار بلا وسيلة للتمييز بينهما. وفي جانب التأجير راجع [تأجير الأصول](/ar/modules/servicecenter/rental-assets/servicecenter-rental-overview.md).
 
 ## أوامر الشغل والفوترة
 
-| الخيار (عربي / إنجليزي) | الافتراضي | ما يفعله |
-|---|---|---|
-| منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية / **Prevent Closing When Unfinished Task** | **مفعّل** | يرفض [إغلاق أمر الشغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) ما دامت هناك مهمة مسجّلة ينقصها وقت بدء أو انتهاء. اتركه مفعّلًا ما لم يكن لديك سبب متعمّد. |
-| عدم السماح بفتح اكتر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | معطّل | يرفض [أمر شغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order.md) ثانيًا لمركبة لها أمر مفتوح بالفعل. مفيد في ورشة مزدحمة قد يُدخل فيها مستشاران السيارة نفسها مرتين. |
-| الالتزام بأصناف وكميات وأسعار أمر الشغل في الفاتورة / **Force Service Center Order Invoice Quantities and Prices** | معطّل | يقيّد الفاتورة المُنشأة بأصناف أمر الشغل وكمياته وأسعاره، فلا يحرّرها أحد بعيدًا عن العمل الذي جاءت منه. |
-| عدم نسخ المخزن من سطور أمر الشغل الى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | معطّل | يمنع نقل المخزن من سطور أمر الشغل إلى سطور [الفاتورة المُنشأة](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md). فعّله حيث تكون الفوترة والمخزون في مخازن مختلفة. |
-| إظهار الضرائب في أوامر الشغل ومستنداتها / **Show Taxes Grid In Job Order and Other Documents** | معطّل | مفتاح تخطيط محض: يُظهر جدول الضرائب أو يخفيه على أمر الشغل وشاشاته المرتبطة. |
-| إعتبار المخزن و الموقع في جدول قطع الغيار النظامى / **Consider Warehouse And Locator In Material Entries** | معطّل | يجعل [جدول قطع الغيار النظامي](/ar/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) يعتمد على المخزن والموقع إضافة إلى الصنف، فتُتابَع القطعة الواحدة المصروفة من مخزنين متابعةً منفصلة. |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | الافتراضي | ما يفعله |
+|---|---|---|---|
+| منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية / **Prevent Closing When Unfinished Task** | `value.preventClosingWUnfinishTask` | **مفعّل** | يرفض [إغلاق أمر الشغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) ما دامت هناك مهمة مسجّلة ينقصها وقت بدء أو انتهاء. اتركه مفعّلًا ما لم يكن لديك سبب متعمّد. |
+| عدم السماح بفتح اكتر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | `value.doNotAllowMultipleOpenedJobOrderOnProduct` | معطّل | يرفض [أمر شغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order.md) ثانيًا لمركبة لها أمر مفتوح بالفعل. مفيد في ورشة مزدحمة قد يُدخل فيها مستشاران السيارة نفسها مرتين. |
+| الالتزام بأصناف وكميات وأسعار أمر الشغل في الفاتورة / **Force Service Center Order Invoice Quantities and Prices** | `value.forceSrvCOrderInvoiceQtyAndPrices` | معطّل | يقيّد الفاتورة المُنشأة بأصناف أمر الشغل وكمياته وأسعاره، فلا يحرّرها أحد بعيدًا عن العمل الذي جاءت منه. |
+| عدم نسخ المخزن من سطور أمر الشغل الى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | `value.doNotCopyWarehouseFromOrderToInvoiceLines` | معطّل | يمنع نقل المخزن من سطور أمر الشغل إلى سطور [الفاتورة المُنشأة](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md). فعّله حيث تكون الفوترة والمخزون في مخازن مختلفة. |
+| إظهار الضرائب في أوامر الشغل ومستنداتها / **Show Taxes Grid In Job Order and Other Documents** | `value.showTaxesGridInJobOrderAndOtherDocuments` | معطّل | مفتاح تخطيط محض: يُظهر جدول الضرائب أو يخفيه على أمر الشغل وشاشاته المرتبطة. |
+| إعتبار المخزن و الموقع في جدول قطع الغيار النظامى / **Consider Warehouse And Locator In Material Entries** | `value.considerWarehouseInMaterialEntries` | معطّل | يجعل [جدول قطع الغيار النظامي](/ar/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) يعتمد على المخزن والموقع إضافة إلى الصنف، فتُتابَع القطعة الواحدة المصروفة من مخزنين متابعةً منفصلة. |
 
 ## شاشة التنفيذ
 
-| الخيار (عربي / إنجليزي) | الافتراضي | ما يفعله |
-|---|---|---|
-| عدم نسخ السطور عند إختيار أمر الشغل / **Do Not Copy Details From Job Order** | معطّل | حين يُفعّل، فإن اختيار أمر شغل على [مستند التنفيذ](/ar/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) لا يملأ سطور مهامه وخاماته مسبقًا. مفيد حيث يسجّل الفنيون جزءًا من الأمر فقط. |
-| لا يمكن التعديل في السطر الذى حالته منتهى / **Can Not Edit Line Status Is Finished** | معطّل | يجعل كل أعمدة سطر التنفيذ المنتهي للقراءة فقط، فلا يُعدَّل تسجيل مكتمل في صمت بعد إتمامه. |
-| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Has Open Task In Job Order Execution** | **مفعّل** | يُخرج الفنيين الذين لديهم مهمة غير منتهية من منتقي الفنيين على مستند التنفيذ. |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | الافتراضي | ما يفعله |
+|---|---|---|---|
+| عدم نسخ السطور عند إختيار أمر الشغل / **Do Not Copy Details From Job Order** | `value.doNotCopyDetailsFromJobOrder` | معطّل | حين يُفعّل، فإن اختيار أمر شغل على [مستند التنفيذ](/ar/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) لا يملأ سطور مهامه وخاماته مسبقًا. مفيد حيث يسجّل الفنيون جزءًا من الأمر فقط. |
+| لا يمكن التعديل في السطر الذى حالته منتهى / **Can Not Edit Line Status Is Finished** | `value.canNotEditLineStatusIsFinished` | معطّل | يجعل كل أعمدة سطر التنفيذ المنتهي للقراءة فقط، فلا يُعدَّل تسجيل مكتمل في صمت بعد إتمامه. |
+| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Has Open Task In Job Order Execution** | `value.doNotShowTechniciansWhoHasOpenTaskInJobOrderExecution` | **مفعّل** | يُخرج الفنيين الذين لديهم مهمة غير منتهية من منتقي الفنيين على مستند التنفيذ. |
 
 ## تاريخ المركبة
 
-| الخيار (عربي / إنجليزي) | ما يفعله |
-|---|---|
-| أقل عدد من الأيام لحساب متوسط إستهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | أقل عدد أيام يجب أن يمر بين قراءتَي عداد قبل إعادة حساب متوسط المسافة اليومية للمركبة. يمنع قراءةً أُخذت صباح اليوم التالي للقراءة السابقة من إنتاج متوسط شاذ. راجع [قراءات العداد وفترات الصيانة](/ar/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
+|---|---|---|
+| أقل عدد من الأيام لحساب متوسط إستهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | `value.minDaysToCalcAvgKMConsump` | أقل عدد أيام يجب أن يمر بين قراءتَي عداد قبل إعادة حساب متوسط المسافة اليومية للمركبة. يمنع قراءةً أُخذت صباح اليوم التالي للقراءة السابقة من إنتاج متوسط شاذ. راجع [قراءات العداد وفترات الصيانة](/ar/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
 
 ## السيارات
 
-| الخيار (عربي / إنجليزي) | ما يفعله |
-|---|---|
-| إعدادات حالة الصنف الفرعي الإفتراضية / **Default SubItem Configuration** | يوفّر سطور فلترة الحالة التي يعرضها منتقي السيارة — وذلك فقط حين لا تكون لدى **الصنف** إعدادات حالة سيارة خاصة به. |
+| الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
+|---|---|---|
+| إعدادات حالة الصنف الفرعي الإفتراضية / **Default SubItem Configuration** | `value.defaultSubItemConfig` | يوفّر سطور فلترة الحالة التي يعرضها منتقي السيارة — وذلك فقط حين لا تكون لدى **الصنف** إعدادات حالة سيارة خاصة به. |
 
 ::: warning ما لا تفعله إعدادات الحالة الافتراضية
 يُقرأ هذا الخيار في موضع واحد بالضبط: قائمة الفلاتر على منتقي السيارة. وكثيرًا ما يُساء فهمه على أنه قيمة احتياطية تجعل دورة حياة السيارة تعمل للأصناف التي لم يضبطها أحد. وليس كذلك.

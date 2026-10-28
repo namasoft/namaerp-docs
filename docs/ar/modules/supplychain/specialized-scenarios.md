@@ -1,5 +1,5 @@
 ---
-entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, OrderExecution, GlassJobOrderStatusUpdate, OrderDelivery, OrderFinished, OutsourceRequest, OutsourceIssue, OutsourceReceipt, OrderDamage, JOrderExpense, Tender, TenderCondition, SCDocRuleSet, SCExtraDocCreationRule, SCCopierExtraFields, OrderStatusQtyTrackConfig, DeliveryConfiguration, Resource, Activity, MaterialClassification]
+entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, OrderExecution, GlassJobOrderStatusUpdate, OrderDelivery, OrderFinished, OutsourceRequest, OutsourceIssue, OutsourceReceipt, OrderDamage, JOrderExpense, Tender, TenderCondition, DeliveryNumber, GlassOrderList, JobOrderPartialDelivery, SCDocRuleSet, SCExtraDocCreationRule, SCCopierExtraFields, OrderStatusQtyTrackConfig, DeliveryConfiguration, Resource, Activity, MaterialClassification]
 ---
 
 # سيناريوهات متخصصة (Specialized Scenarios)
@@ -13,6 +13,10 @@ entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, O
 ![شاشة أمر عمل الزجاج في نما](images/specialized/glass-job-order-ar.png)
 
 يبدأ المسار بـ**طلب أمر العمل** (GlassJobOrderReq) لدراسة التكلفة وعرض السعر، ثم يتحوّل إلى **أمر عمل الزجاج** (GlassJobOrder) الذي يحمل قائمة المواد والعمليات وأصناف التسليم. وتُعرّف العمليات عبر **خريطة العمليات** (GlassOperationMap)، وتُسجَّل التنفيذات عبر **تنفيذ العملية** (OrderExecution) التي تتتبع الموظف المسؤول والوقت والتكلفة الفعلية وتولّد صرف المواد. وتُحدَّث الحالة عبر **تحديث حالة أمر العمل** (GlassJobOrderStatusUpdate)، ويُسلَّم الناتج عبر **تسليم الأمر** (OrderDelivery) و**إنهاء الأمر** (OrderFinished). كما يدعم المسار التعاقد الخارجي عبر **طلب/صرف/استلام التعهيد** (OutsourceRequest / OutsourceIssue / OutsourceReceipt)، وتوثيق التلف عبر **تلف الأمر** (OrderDamage)، والمصاريف عبر **مصروف أمر العمل** (JOrderExpense).
+
+وفي القائمة نفسها مستندان آخران. **تشغيلة يوم** (GlassOrderList) تجمع سطور عدة أوامر شغل زجاج، ضمن نطاق أصناف، في تشغيلة إنتاج يوم واحد، وتعرض لكل فرع إجمالي الكمية والقيمة وعدد الأوامر. وحفظها يعتمد العمل: كل أمر ما زالت حالته **مبدئي** يصبح **مقبول**، وكذلك سطور الأمر الواردة في التشغيلة وسطور الخدمات التابعة لها؛ وحذف التشغيلة يعيدها إلى **مبدئي**. ولا تحمل التشغيلة إلا أمر شغل واحدًا ما لم يُؤشَّر على **السماح بأكثر من أمر شغل**.
+
+أما **تسليم جزئي لأمر الشغل** (JobOrderPartialDelivery) فيسلّم جزءًا من أمر شغل الزجاج قبل اكتمال باقيه. تختار أمر الشغل وتسرد سطور قائمة المواد المسلَّمة بكمياتها مع **رقم** القطعة. وكل تسليم جزئي محفوظ يضيف إلى الكمية المسلَّمة في سطور الأمر، وبذلك يعرف الأمر ما بقي دون تسليم ومتى اكتمل تسليمه. ولا يقبل السطر كمية أكبر من الكمية غير المسلَّمة في الأمر، ولا يجوز أن يظهر رقم القطعة نفسه في تسليمين جزئيين.
 
 ::: info قطاع متخصص
 أوامر عمل الزجاج وحدة فرعية موجَّهة لقطاع محدد؛ إن لم يكن عملك في هذا المجال فلن تحتاج إليها. وتعتمد على نفس مفاهيم [التجميع](./assembly-and-packaging/) و[الموارد](#lmwrd-wlnshT) لكن بمسار أوامر مخصّص.
@@ -53,14 +57,16 @@ entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, O
 - **مجموعة قواعد المستندات** (SCDocRuleSet): محرّك قواعد مركزي يُطلق إنشاء مستندات تلقائيًا من مستندات مصدر وفق شروط محددة.
 - **قاعدة إنشاء مستند إضافي** (SCExtraDocCreationRule): تعرّف توليد مستند إضافي عند حدث معيّن.
 - **حقول النسخ الإضافية** (SCCopierExtraFields): تحدّد الحقول التي تُنسخ عند اشتقاق مستند من آخر، مع نصوص نسخ خاصة بنوع الكيان.
-- **إعداد تتبع حالة الكمية** (OrderStatusQtyTrackConfig): يضبط انتقالات حالة الأمر بناءً على الكميات المستلمة/المصروفة، فيؤتمت سير العمل المدفوع بالكمية.
-- **إعداد التسليم** (DeliveryConfiguration): يعرّف قيود التسليم وعلاقات الكميات ومعايير تجميعه عبر الأوامر.
+- **إعدادات مصدر متابعة الكميات** (OrderStatusQtyTrackConfig): يحدد الكمية التي يعيدها المستند إلى المستند الذي أُنشئ منه عند تحديث متابعة الكميات. ويشير إليه التوجيه في خيار **إعدادات مصدر متابعة الكميات** (`termConfig.orderStatusQtyTrackConfig`). وتُجرَّب سطوره (`details`) من الأعلى إلى الأسفل، وينطبق أول سطر يطابق المستند **معاييره** (`details.criteriaDefinition`)؛ ثم يختار **احتساب الكمية المستعملة في متابعة الكميات في بناءا على من الحقل** (`details.quantityValueCopyType`) من السطر: **الكمية**، أو **منفذه (نظامي + يدوي)**، أو **منفذه (نظامي فقط)**، أو نظيريهما في **منفذه 2**، أو **صفر**. والمستند الذي لا يطابق أي سطر يعيد كميته العادية.
+- **ملف إعدادات التوصيل** (DeliveryConfiguration): يحتفظ بإجماليات جارية لما طُلب ونُفّذ وأُلغي مقابل كل سطر في المستند الجذر — لخمس كميات: الحجز، والتوصيل، والتحميل، وكميتين احتياطيتين (أخرى 1، أخرى 2). ويشير إليه التوجيه في خيار **ملف إعدادات التوصيل** (`termConfig.deliveryConfiguration`)؛ ولا يُسهم المستند على هذا التوجيه إلا إذا طابق **معايير** الملف (`criteriaDefinition`). وتُفصل السطور حسب الصنف وحسب التفاصيل المفعّلة في **محددات متابعة التوصيل** في إعدادات الصنف.
+  - **سطور الكميات المتأثرة** (`affectedQtyLines`) تحدد ما يضيفه المستند: **التأثير في الكمية** (`affectedQtyLines.affectIn`، أي الكميات الخمس)، و**نوع الكمية** (`affectedQtyLines.quantityType`: مطلوبة أو منفذة أو ملغاة)، و**مصدر الكمية** (`affectedQtyLines.sourceQuantity`: الكمية المحجوزة، أو كمية المستند، أو حقل، أو جملة SQL — والأخيران يُذكران في **حقل الكمية**، `affectedQtyLines.sourceQtyFieldId`)، و**نوع التأثير** (`affectedQtyLines.effectType`: موجب أو سالب)، و**نوع مصدر المخزن** (`affectedQtyLines.warehouseSourceType`، مع **حقل المخزن**، `affectedQtyLines.sourceWarehouseFieldId`)، والشرطان **تطبيق عندما** / **عدم التطبيق عندما** (`affectedQtyLines.applyWhen`, `affectedQtyLines.doNotApplyWhen`) وصيغتاهما بالاستعلام (`affectedQtyLines.applyWhenQuery`, `affectedQtyLines.doNotApplyWhenQuery`).
+  - **العلاقات** (`relations`) حدود تُفحص مع كل حفظ: يجب ألا تتجاوز **الكمية** من نوع معيّن (`relations.theQuantity`, `relations.theQuantityType`) مجموع ما يصل إلى خمس كميات أخرى (`relations.lessThanOrEqual1` … `relations.lessThanOrEqual5`، لكل منها `quantity` و`quantityType` و`operator` موجب/سالب) — مثلاً أن يبقى المسلَّم في حدود المحجوز. وعند المخالفة يُرفض الحفظ بالرسالة «الكمية {0} - {1} {2} اكبر من مجموع كميات اقل من او يساوي {3}, وهذا ممنوع من خلال القاعدة في السطر رقم {4}  في الملف {5}».
 
 هذه الأدوات للمستخدمين المتقدمين ومسؤولي التطبيق الذين يفصّلون سلوك النظام دون برمجة.
 
 ## المناقصات (Tender)
 
-عندما يجري الشراء عبر منافسة رسمية، يوفّر النظام **المناقصة** (Tender): دعوة الموردين لتقديم عروضهم وفق مواصفات، وتتبّع العروض ومقارنتها، ودعم التقييم الموزون والاختيار. وتُعرّف الشروط والأحكام القياسية للعروض عبر **شرط المناقصة** (TenderCondition). يكمّل هذا [رحلة الشراء](./purchasing-journey.md) في الحالات التي تستلزم تنافسًا منظّمًا.
+حين تبيع بموجب مناقصة، كعقد توريد رسا عليك من جهة حكومية، تسجّل **المناقصة** (Tender) ما رسا عليك. وهي مستند مبيعات: العميل، و**تاريخ البداية** و**تاريخ النهاية**، والأصناف المرساة بكمياتها وأسعارها وضرائبها، وتُجمع إجمالياتها كما تُجمع الفاتورة. وتسرد صفحة **الشــروط والسداد** فيها **الشروط** المختارة من ملف **شرط المناقصة** (TenderCondition)، وسطور **الســداد** (التاريخ والمبلغ). وتسرد صفحة **التســـليم** سطور **التسليـــم**: أي صنف يُستحق في أي **تاريخ التسليم المتوقع**. ويشير الجدولان كلاهما إلى **مخالصة** (DeliveryNumber)، وهي قائمة بسيطة من كود واسم (*المخازن ← المناقصات ← مخالصة*) تسمّي كل دفعة تسليم، فيرتبط سطر السداد بالتسليم الذي يقابله. أما هل تؤثر المناقصة المحفوظة في حساب العميل أيضًا فيحدده توجيه المستند.
 
 ## الموارد والأنشطة
 
@@ -82,7 +88,7 @@ entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, O
 - **تجميع البيانات** (Collect Data) — النسخة المجمَّعة: تملأ السطور من النطاقات الموجودة في الرأس (من/إلى صنف، ومن/إلى أمر شغل، وغيرها) بدل إضافة أمر واحد في كل مرة.
 - **تفريغ أوامر الشغل** (Clear Job Orders) و**تفريغ سطور التفاصيل** (Clear Details Lines) — يفرّغان جدول أوامر الشغل وجدول التفاصيل على الترتيب، وبهما تبدأ التجميع من جديد بعد ضبط نطاقات مختلفة.
 
-**في قائمة أوامر الزجاج:** **تجميع الأوامر** (Collect Orders) يملأ القائمة، و**إظهار** (View) يفتح ما يشير إليه السطر، و**تصدير** (Export) يخرج القائمة في ملف.
+**في تشغيلة يوم:** **تجميع الأوامر** (Collect Orders) يملأ القائمة، و**إظهار** (View) يفتح ما يشير إليه السطر، و**تصدير** (Export) يخرج القائمة في ملف.
 
 ## سيناريوهات تتبعها وحدات أخرى
 
@@ -95,5 +101,5 @@ entities: [GlassJobOrder, GlassJobOrderReq, GlassOperationMap, ServiceItemBOM, O
 ## الخطوات التالية
 
 - [التجميع والتعبئة](./assembly-and-packaging/) - الأساس الذي تبني عليه أوامر العمل
-- [رحلة الشراء](./purchasing-journey.md) - المناقصات ضمن الشراء
+- [رحلة المبيعات](./sales-journey.md) - مستندات البيع المعتادة التي تقف المناقصة بجانبها
 - [الأسئلة الشائعة لسلسلة التوريد](./supply-chain-faq.md) - حالات وأسئلة متفرقة

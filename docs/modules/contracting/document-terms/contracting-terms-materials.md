@@ -27,15 +27,15 @@ These terms have no accounts to set, which regularly worries implementers. It sh
 
 | Option | What it does |
 |---|---|
-| **Generation book** and **generation term** | The book and term of the stock issue (or, on a return, the stock receipt) that the document generates. **Both are required for anything to be generated** — with either missing, the document commits and no stock moves |
-| **Project Term Code is Optional in Cost Documents** | Makes the contract's term code optional on the lines instead of compulsory |
-| **Executive Budget Term Code is Mandatory in Cost Documents** | Forces every line to name an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md) term code |
-| **Estimated Budget Term Code is Mandatory in Cost Documents** | The same for the estimated budget's term code |
-| **Prevent Save If Issued Item Quantity Exceeds Purchase Order Item Quantity** | Blocks issuing more of an item than the purchase order behind it ordered |
-| **Add Term Analysis Card Lines** | When a line names an [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md), its material lines are pulled in automatically |
-| **Do Not Copy Contract Terms When Selected** | Picking a contract on the document does *not* copy its terms onto the lines — for teams who select the few terms they need by hand |
+| **Generation book** and **generation term** `termConfig.generationConfigurations.generationBook` / `termConfig.generationConfigurations.generationTerm` | The book and term of the stock issue (or, on a return, the stock receipt) that the document generates. **Both are required for anything to be generated** — with either missing, the document commits and no stock moves |
+| **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Makes the contract's term code optional on the lines instead of compulsory |
+| **Executive Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryExecutiveBudgetTermCodeInCostDocuments` | Forces every line to name an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md) term code |
+| **Estimated Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryEstimatedBudgetTermCodeInCostDocuments` | The same for the estimated budget's term code |
+| **Prevent Save If Issued Item Quantity Exceeds Purchase Order Item Quantity** `termConfig.preventSaveIfIssuedItemQtyExceedsPurchaseOrderItemQty` | Blocks issuing more of an item than the purchase order behind it ordered |
+| **Add Term Analysis Card Lines** `termConfig.addTermAnalysisCardLines` | When a line names an [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md), its material lines are pulled in automatically |
+| **Do Not Copy Contract Terms When Selected** `termConfig.doNotCopyContractTermsWhenSelected` | Picking a contract on the document does *not* copy its terms onto the lines — for teams who select the few terms they need by hand |
 
-Two further options, **Do Not Save If Actual Quantity Greater Than Planned Quantity** and **Do Not Save If Actual Cost Greater Than Planned Cost**, act as spending ceilings. They bite when the line's target is an **analysis card** line: issue more material, or more value, than the card planned and the save is refused. Where a line targets a budget or a contract term line instead, the ceiling does not apply — so do not rely on these two as a budget control. The only budget-derived ceiling in the module is the one on the [budget item request](/modules/contracting/budgets/contracting-budget-item-requests.md).
+Two further options, **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` and **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost`, act as spending ceilings. They bite when the line's target is an **analysis card** line: issue more material, or more value, than the card planned and the save is refused. Where a line targets a budget or a contract term line instead, the ceiling does not apply — so do not rely on these two as a budget control. The only budget-derived ceiling in the module is the one on the [budget item request](/modules/contracting/budgets/contracting-budget-item-requests.md).
 
 ::: info The generation configuration is not optional in practice
 A contracting material issue with no generation book and term is a document that looks complete, commits without complaint, and moves no stock. Because the project's cost only arrives via the generated stock issue, the term code also ends up with no cost against it. Set the book and the term on every material term before it is used in anger.
@@ -45,8 +45,8 @@ A contracting material issue with no generation book and term is a document that
 
 | Option | What it does |
 |---|---|
-| **Allow Returned Quantity To Be Greater Than Issued Quantity For Contract** | Permits returning more than was issued against the contract — for sites that receive material through more than one route |
-| **Consider Executive Budget Term Code While Validating Return Item Quantity** | Narrows the issued-quantity check so it compares within one executive-budget term code rather than across the whole contract |
+| **Allow Returned Quantity To Be Greater Than Issued Quantity For Contract** `termConfig.allowReturnedQtyBeGreaterThanIssuedQty` | Permits returning more than was issued against the contract — for sites that receive material through more than one route |
+| **Consider Executive Budget Term Code While Validating Return Item Quantity** `termConfig.considerExecutiveTermCodeWhileValidateReturnItemQty` | Narrows the issued-quantity check so it compares within one executive-budget term code rather than across the whole contract |
 
 The three term-code options above are also honoured on the return, even though the return's own screen does not offer them. If a return refuses to save because a line has no executive-budget term code, the setting responsible is on the term of the document family, not on the return's own screen — the practical answer is to fill the code.
 
@@ -58,12 +58,12 @@ This is a sale, and its term is the supply chain **invoice** term. The full opti
 
 | What to set | Why it matters here |
 |---|---|
-| The main accounting sides | The debit is the subcontractor's receivable, the credit is inventory going out. Leave them empty and the sale creates no journal entry, while the stock still moves |
-| The tax sides | VAT on material sold to the subcontractor |
-| The invoice-discount and line-discount sides | Where discounts given on the sale land |
-| **Generation book** and **generation term** | As above — without both, no stock issue or receipt is generated |
-| **Project Term Code is Optional in Cost Documents** | Makes the line's term code optional |
-| The payment-details defaults — **Condition**, **Payment Method**, **Payment Percentage**, **Payment Value** | These are what make the charge-back automatic. See below |
+| The main accounting sides `termConfig.config.debit` / `termConfig.config.credit` | The debit is the subcontractor's receivable, the credit is inventory going out. Leave them empty and the sale creates no journal entry, while the stock still moves |
+| The tax sides `termConfig.tax`, `termConfig.tax2`, `termConfig.htax`, `termConfig.htax2` | VAT on material sold to the subcontractor |
+| The invoice-discount and line-discount sides `termConfig.invoiceDiscount`, `termConfig.lineDiscount`, `termConfig.firstDiscountAcc` … `termConfig.seventhDiscountAcc` | Where discounts given on the sale land |
+| **Generation book** and **generation term** `termConfig.generationConfigurations.generationBook` / `termConfig.generationConfigurations.generationTerm` | As above — without both, no stock issue or receipt is generated |
+| **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Makes the line's term code optional |
+| The payment-details defaults — **Condition** `termConfig.contractingCondition`, **Payment Method** `termConfig.paymentMethod`, **Payment Percentage** `termConfig.paymentPercent`, **Payment Value** `termConfig.paymentValue` | These are what make the charge-back automatic. See below |
 
 The payment-details block is the mechanism the whole [charge-back](/modules/contracting/costs/contracting-contractor-materials.md) rests on. When you set a default **condition** on the term — a "material deduction" condition on the subcontract — every material issue raised under that term arrives with that condition already filled in, and the subcontractor's next extract collects the outstanding value as a **deduction** on its conditions grid. A material return arrives the same way and lands as an **addition**. Get the default right and the site storekeeper never has to know that a deduction exists.
 
@@ -75,14 +75,14 @@ One term screen serves all three payment documents — the [advance received fro
 
 | Option | What it does |
 |---|---|
-| **Debit** | The debit side of the payment's entry — the advance receivable on the subcontractor side, or cash/bank on the owner side |
-| **Credit** | The credit side of the same entry |
-| **Condition** | The default [condition](/modules/contracting/setup/contracting-conditions.md) the payment is charged against. This is the field that decides *how the advance comes back*, because the condition is what a later extract collects |
-| **Payment Method** | Whether recovery is by percentage or by fixed value. The English caption on this one field is not resolved on screen; it is the payment method |
-| **Payment Percentage** | The default percentage when the method is percentage-based |
-| **Payment Value** | The default fixed amount when it is not |
-| **Tax Debit** and **Tax Credit** | The two sides for the payment's own tax |
-| **Allow Negative Remaining** | Permits the payment's remaining balance to go below zero, i.e. to be over-recovered |
+| **Debit** `termConfig.debit` | The debit side of the payment's entry — the advance receivable on the subcontractor side, or cash/bank on the owner side |
+| **Credit** `termConfig.credit` | The credit side of the same entry |
+| **Condition** `termConfig.contractingCondition` | The default [condition](/modules/contracting/setup/contracting-conditions.md) the payment is charged against. This is the field that decides *how the advance comes back*, because the condition is what a later extract collects |
+| **Payment Method** `termConfig.paymentMethod` | Whether recovery is by percentage or by fixed value. The English caption on this one field is not resolved on screen; it is the payment method |
+| **Payment Percentage** `termConfig.paymentPercent` | The default percentage when the method is percentage-based |
+| **Payment Value** `termConfig.paymentValue` | The default fixed amount when it is not |
+| **Tax Debit** and **Tax Credit** `termConfig.taxDebit` / `termConfig.taxCredit` | The two sides for the payment's own tax |
+| **Allow Negative Remaining** `termConfig.allowNegativeRemaining` | Permits the payment's remaining balance to go below zero, i.e. to be over-recovered |
 
 ::: tip The condition on the term is the whole design
 An advance payment on its own is only a transfer of money. What turns it into something that comes back is the condition: the extract's conditions grid collects the outstanding value of every payment document that points at a condition on the contract. Set a sensible default condition per term — "owner advance recovery", "subcontractor mobilisation recovery" — and users never have to remember to fill it in.
@@ -92,15 +92,15 @@ An advance payment on its own is only a transfer of money. What turns it into so
 
 The two fine documents — a [penalty on the owner contract](/modules/contracting/project-contracting/contracting-project-fines.md) and a [deduction against a subcontractor](/modules/contracting/contractor-contracting/contracting-contractor-fines.md) — share the same term shape as the payment documents, plus three options of their own. Both are a single page.
 
-The shared six are **Debit**, **Credit**, **Condition**, **Payment Method**, **Payment Percentage** and **Payment Value**, and they mean exactly what they mean on a payment document: the fine's own entry, and the condition through which the fine reaches the next extract. The three additions:
+The shared six are **Debit**, **Credit**, **Condition**, **Payment Method**, **Payment Percentage** and **Payment Value** (`termConfig.debit`, `termConfig.credit`, `termConfig.contractingCondition`, `termConfig.paymentMethod`, `termConfig.paymentPercent`, `termConfig.paymentValue`), and they mean exactly what they mean on a payment document: the fine's own entry, and the condition through which the fine reaches the next extract. The three additions:
 
 | Option | What it does |
 |---|---|
-| **Calculate Accounting Effects From Contracting Condition** | The debit and credit are taken from the linked condition record instead of from the term. Use it where different fine reasons must hit different accounts — the reason drives the condition, and the condition drives the accounts |
-| **Project Term Code is Optional in Cost Documents** | Despite its wording, what this actually relaxes is the requirement for a **term code** on the fine's lines. The **project** term code is required either way |
-| **Link With Invoice Lines In Accounting Document** | Receipt and payment vouchers carry the fine's lines in their invoice grid |
+| **Calculate Accounting Effects From Contracting Condition** `termConfig.calcAccEffectsFromContrCondition` | The debit and credit are taken from the linked condition record instead of from the term. Use it where different fine reasons must hit different accounts — the reason drives the condition, and the condition drives the accounts |
+| **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Despite its wording, what this actually relaxes is the requirement for a **term code** on the fine's lines. The **project** term code is required either way |
+| **Link With Invoice Lines In Accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument` | Receipt and payment vouchers carry the fine's lines in their invoice grid |
 
-The subcontractor fine's term adds one more, **Show Finished Contracts**, which lets the contract lookup on the fine also list subcontracts already marked finished. It exists on this one term only — on extracts, advances and the project fine, finished contracts are simply not offered.
+The subcontractor fine's term adds one more, **Show Finished Contracts** `termConfig.showFinishedContracts`, which lets the contract lookup on the fine also list subcontracts already marked finished. It exists on this one term only — on extracts, advances and the project fine, finished contracts are simply not offered.
 
 The fine's subsidiary is the one on the **document header**, so fill it there; the term's sides handle the accounts, not the party.
 

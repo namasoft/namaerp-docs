@@ -1,6 +1,6 @@
 ---
 description: "The Customer, Supplier, Contact and Third Party master files, customer credit limits, the Update Customer Information document, and customer change requests raised from the portal."
-entities: [Customer, Supplier, Contact, ThirdParty, UpdateCustomerInfo, ModifyCustomerInfoReq]
+entities: [Customer, Supplier, Contact, ThirdParty, UpdateCustomerInfo, ModifyCustomerInfoReq, ModifySupplierInfoReq, CustomerClass, CustomerClass1, CustomerClass2, CustomerClass3, CustomerClass4, CustomerClass5, CustomerCategory, SupplierClass]
 menu: Sales → Master Files → Customer
 ---
 # Customers, Suppliers and Other Parties

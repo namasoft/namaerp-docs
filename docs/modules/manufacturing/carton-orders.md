@@ -1,5 +1,5 @@
 ---
-entities: [CRTNOrder]
+entities: [CRTNOrder, CRTNSalesInvoice]
 menu: Manufacturing → Cartoon → Carton Order
 ---
 # Carton Orders: From Customer Request to Production Plan
@@ -249,6 +249,8 @@ Carton orders are full invoicing documents. They implement the standard Nama inv
 **Subsidiary accounting**: Can record entries on customer subsidiary ledgers
 
 The **Money** section calculates exactly like a sales invoice. Discounts reduce prices, taxes apply to after-discount amounts, and the total matches what you'd invoice the customer.
+
+To bill the order, open a **Carton Sales Invoice** (**Manufacturing → Cartoon → Carton Sales Invoice**) and pick the carton order in **From Document**. The invoice takes the order's customer, salesman, tax plan, subsidiary, currency and rate, and one line per order line carrying the carton specification, its item (taken from the specification when the order line has none), the quantity and the price. From there it is an ordinary sales invoice; its term is described on [Carton Document Terms](/modules/manufacturing/document-terms/mfg-terms-carton).
 
 ## Working With Orders in Practice
 

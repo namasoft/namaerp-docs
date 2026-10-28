@@ -1,6 +1,6 @@
 ---
 description: "The Freight master files: service items and their flags, containers with their types and sizes, vessels, ports and sailing schedules, commodities, countries, locations, bill of lading types and units."
-entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRMOceanVessel, ShippingPort, FRMSailingSchedule, FRMCommodity, FRMBillOfLadingType, FRMUOM, FRMCountry, FRMLocation]
+entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRMOceanVessel, ShippingPort, FRMSailingSchedule, FRMCommodity, FRMBillOfLadingType, FRMShippingType, FRMUOM, FRMCountry, FRMLocation]
 ---
 # Freight Master Files
 
@@ -51,6 +51,7 @@ The container is later selected on the operation order, bill of lading, and serv
 ## Bill of Lading Types and Units of Measure
 
 - **Bill of Lading Type** — classifies bills of lading (Master B/L, House B/L, etc.).
+- **Shipping Type** — a plain list (code and name) of the ways you ship, such as sea FCL, sea LCL or air; picked in the **Shipping Type** field of the operation order.
 - **FRM UOM** — freight-specific units of measure (weight, volume/CBM, count…) used in line quantities.
 
 ::: tip Start small

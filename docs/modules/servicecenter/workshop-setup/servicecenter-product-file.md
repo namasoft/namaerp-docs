@@ -1,6 +1,6 @@
 ---
 description: "The Service Center Product, used as the vehicle file: chassis, plate, owner and insurer, how the odometer fields behave, the read-only status, what documents write back to it, and how to create one."
-entities: [SrvCProduct]
+entities: [SrvCProduct, AccessoriesKit]
 menu: Service Center → Master Files → Product
 ---
 # The Serviced Product
@@ -75,6 +75,7 @@ Everything lives on one page, in two blocks and three lists.
 | Engine No | رقم المحرك | `S16-224471`. |
 | Gear Box | ناقل الحركة | Manual, automatic, and so on. |
 | Supplier Code | كود المورد | The supplier's own reference for the vehicle. |
+| Accessories | مجموعة المحلقات | The **Accessories Kit** (مجموعة ملحقات) that came with the vehicle. Accessories kits are a small master file under **Service Center → Master Files → Accessories Kit**: a code, a name and up to five attachments — photos or a checklist of what the kit contains. The kit is copied onto the job documents and gate passes opened for the vehicle. |
 | Last Odometer / Last Odometer Date | قراءة العداد السابقة / تاريخها | 41,600 on 1 January 2026. |
 | Current Odometer / Current Odometer Date | قراءة العداد الحالية / تاريخها | 45,300 on 3 March 2026. |
 | Difference Between Current OdoMeter and Last OdoMeter | الفرق بين القراءة الحالية وأخر قراءة | 3,700 km. |
@@ -130,7 +131,7 @@ The five **Other** slots exist so an installation can name stages the standard l
 
 ## What Documents Write Back
 
-Committing a job document fills in the vehicle's **empty** fields from what the document knows: chassis number, plate number, engine number, gear box, supplier code, recall campaign, brand, model, production year, and the three insurance fields.
+Committing a job document fills in the vehicle's **empty** fields from what the document knows: chassis number, plate number, engine number, gear box, accessories, supplier code, recall campaign, brand, model, production year, and the three insurance fields.
 
 The word *empty* is the whole rule. A field that already carries a value is left alone — the write-back is a convenience for cars whose file was created in a hurry at reception, not a synchronisation mechanism. If a value on the vehicle is wrong, correcting it on a document will not correct the file; open the file and fix it there.
 

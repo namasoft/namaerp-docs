@@ -51,6 +51,7 @@ title: التصنيع
 <LandingGrid>
   <LandingCard icon="📦" title="نظرة عامة على تصنيع الكرتون" link="/ar/modules/manufacturing/carton-manufacturing-overview.md" details="تخطيط ذكي للمواد مصمّم لمنتجات الكرتون والورق المموّج." />
   <LandingCard icon="📐" title="مواصفات الكرتونة" link="/ar/modules/manufacturing/carton-specifications.md" details="تعريف منتجات الكرتون ومواصفاتها الأبعادية." />
+  <LandingCard icon="🗂️" title="ملفات الكرتون المساعدة" link="/ar/modules/manufacturing/carton-lookup-files.md" details="أنواع الكرتون والريجة ومعاملات التضليع والأنماط وأنواع الطباعة التي تختار منها كل مواصفات." />
   <LandingCard icon="🧾" title="طلبيات الكرتون" link="/ar/modules/manufacturing/carton-orders.md" details="تحويل طلب العميل إلى خطة إنتاج كرتون ملموسة." />
   <LandingCard icon="🧠" title="تخطيط خامات الكرتون" link="/ar/modules/manufacturing/carton-material-planning.md" details="محرّك التحسين الذي يحدّد الاستخدام الأكفأ للمواد." />
   <LandingCard icon="🚚" title="صرف خامات الكرتون" link="/ar/modules/manufacturing/carton-material-issue.md" details="نقل المواد المخطّطة من المستودع إلى أرض الإنتاج." />

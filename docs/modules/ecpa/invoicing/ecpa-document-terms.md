@@ -104,14 +104,14 @@ entry uses, how discounts and taxes are directed, and how the collect buttons be
 Read down the page as a list of entries the document *may* produce. Each is a debit side and a
 credit side, and each produces nothing until both halves are filled.
 
-| Entry | Amount booked | When it is produced |
-|---|---|---|
-| **The main entry** | Each line's *Actual Value* | Always. Its two sides are required — the term cannot be saved without them. This is the receivable-versus-revenue entry. |
-| **The external-expense entry** | The value of the external (billable) expense claim lines behind an invoice line | Only when *Create Accounting Effect For External Expense* is ticked, and only on lines that were built by a collect button — a hand-typed line has no claim lines behind it |
-| **The header discount entry** | The discount typed on the document header | Only when both its sides are configured. Booked once, against the first line of the document |
-| **The four tax entries** | Each line's tax 1, 2, 3 and 4 values | Each of the four line taxes has its own debit side and credit side on this screen |
-| **The four line-discount entries** | Each line's discount 1, 2, 3 and 4 values | Configured differently — see below |
-| **The calculated-value entry** | Each line's *Calculated Value* | Only for lines with no expense item, and only when both sides are configured. *Calculated Value* is rewritten from the invoice's Executions grid on every save, so this entry carries an amount on invoices built with *Collect Executions* |
+| Entry | Field id | Amount booked | When it is produced |
+|---|---|---|---|
+| **The main entry** | `termConfig.config.debit` / `termConfig.config.credit` | Each line's *Actual Value* | Always. Its two sides are required — the term cannot be saved without them. This is the receivable-versus-revenue entry. |
+| **The external-expense entry** | `termConfig.externalConfig.debit` / `termConfig.externalConfig.credit` | The value of the external (billable) expense claim lines behind an invoice line | Only when *Create Accounting Effect For External Expense* is ticked, and only on lines that were built by a collect button — a hand-typed line has no claim lines behind it |
+| **The header discount entry** | `termConfig.discountConfig.debit` / `termConfig.discountConfig.credit` | The discount typed on the document header | Only when both its sides are configured. Booked once, against the first line of the document |
+| **The four tax entries** | `termConfig.debit2` / `termConfig.credit2` (tax 1), `termConfig.taxDebit2` / `termConfig.taxCredit2` (tax 2), `termConfig.taxDebit3` / `termConfig.taxCredit3` (tax 3), `termConfig.taxDebit4` / `termConfig.taxCredit4` (tax 4) | Each line's tax 1, 2, 3 and 4 values | Each of the four line taxes has its own debit side and credit side on this screen |
+| **The four line-discount entries** | `termConfig.discount1Debit` / `termConfig.discount1Credit` … `termConfig.discount4Debit` / `termConfig.discount4Credit` | Each line's discount 1, 2, 3 and 4 values | Configured differently — see below |
+| **The calculated-value entry** | `termConfig.calculatedValueDebit` / `termConfig.calculatedValueCredit` | Each line's *Calculated Value* | Only for lines with no expense item, and only when both sides are configured. *Calculated Value* is rewritten from the invoice's Executions grid on every save, so this entry carries an amount on invoices built with *Collect Executions* |
 
 The line-discount and calculated-value blocks are the odd ones out. Instead of a full account side
 filled in place, each is a **reference to an Accounting Side Config master record** — one field, not
@@ -130,7 +130,7 @@ credit swapped on every block you use — or the credit note will bill the custo
 Two ticks on this screen decide whether expense-bearing lines are booked once, twice, or through the
 external entry only. They work as a pair, and the second does nothing unless the first is on:
 
-| Create Accounting Effect For External Expense | Create Accounting Effect For Lines With Empty Expenses | What a committed invoice books |
+| Create Accounting Effect For External Expense `termConfig.createAccEffForExpense` | Create Accounting Effect For Lines With Empty Expenses `termConfig.createAccEffForLinesWithEmptyExpenses` | What a committed invoice books |
 |---|---|---|
 | off | either | The main entry for every line. No external-expense entry. |
 | **on** | off | The main entry for every line, **plus** an external-expense entry for the claim value behind each line. A line carrying an expense item is therefore booked twice — once at its billed value, once at its expense value. |
@@ -145,14 +145,14 @@ The last two options on the screen do not touch the ledger at all. They change w
 buttons put into the grid when a user presses them, which makes them quietly powerful — and it also
 means that changing them has no effect on any document that is already saved.
 
-**Consider Value Date When Collecting Times And Expenses.** With this ticked, *Collect Times*,
+**Consider Value Date When Collecting Times And Expenses** (`termConfig.considerValueDateWhenCollectingTimesAndExpenses`). With this ticked, *Collect Times*,
 *Collect Expenses* and *Collect Times And Expenses* only sweep up source lines dated on or before
 the invoice's Value Date. Left unticked, the sweep ignores dates entirely and takes every unbilled
 line in the project code range — including work dated after the invoice. This is the option that
 makes month-end billing behave: with it on, an invoice dated 31 January cannot accidentally bill
 February's timesheets. Most firms should tick it.
 
-**Calculated Value Collection Method.** This governs the *Calculated Value* column, the informational
+**Calculated Value Collection Method** (`termConfig.calcValueCollectionMethod`). This governs the *Calculated Value* column, the informational
 figure that sits beside the billed amount. Leave the option empty and Calculated Value simply repeats
 the collected total, which tells you nothing. Fill it in — with either of its two values — and
 Calculated Value is instead taken from a separate reading of the underlying timesheet cost for that
@@ -174,10 +174,10 @@ is also what keeps unapproved hours out of the Executions grid.
 These two are the easiest screens in the module. Each has one page and **four account sides**, and
 they have the same shape as each other:
 
-| Side pair | Applies to |
-|---|---|
-| **Internal Debit / Internal Credit** | Claim lines with **Internal Account** ticked — costs the firm absorbs |
-| **External Debit / External Credit** | Claim lines with **Internal Account** unticked — costs that will be re-billed to the client |
+| Side pair | Field id | Applies to |
+|---|---|---|
+| **Internal Debit / Internal Credit** | `termConfig.internalConfig.debit` / `termConfig.internalConfig.credit` | Claim lines with **Internal Account** ticked — costs the firm absorbs |
+| **External Debit / External Credit** | `termConfig.externalConfig.debit` / `termConfig.externalConfig.credit` | Claim lines with **Internal Account** unticked — costs that will be re-billed to the client |
 
 That is the whole screen. The single tick on the claim line chooses which pair is used, which is why
 [Project Expenses](/modules/ecpa/expenses/ecpa-project-expenses) treats Internal Account as the field
@@ -196,27 +196,27 @@ its own screen.
 
 The rest of it is one account pair and four settings:
 
-- **Debit / Credit** — the labour-cost entry. Each committed timesheet line becomes one journal line
+- **Debit / Credit** (`termConfig.debit` / `termConfig.credit`) — the labour-cost entry. Each committed timesheet line becomes one journal line
   valued at the line's Total Cost. A timesheet only produces an entry when **both** sides are
   configured; leave either empty and committing a timesheet books nothing. Typically the debit is a
   work-in-progress or labour cost account and the credit a salary accrual account.
-- **Generation Book** and **Generation Term** — the book and term used for the **expense request
+- **Generation Book** and **Generation Term** (`termConfig.genBook` / `termConfig.genTerm`) — the book and term used for the **expense request
   that a timesheet generates** when its lines carry expense items. Fill these in if your firm lets
   engineers claim expenses on the same sheet they record hours on; leave them empty and there is
   nothing to generate into.
-- **Procedures Group** — name a group here and every timesheet line carrying a next-procedure note
+- **Procedures Group** (`termConfig.proceduresGroup`) — name a group here and every timesheet line carrying a next-procedure note
   creates a Procedure record in that group when the document is committed, carrying the employee,
   customer, project and task. Leave it empty and no procedures are created at all.
-- **Create Accounting Effects For Approved Lines Only** — when ticked, only lines that have been
+- **Create Accounting Effects For Approved Lines Only** (`termConfig.createAccEffectsForApprovedLinesOnly`) — when ticked, only lines that have been
   approved are turned into journal lines. This is half of the "cost hits the ledger only after the
   manager signs off" arrangement; the other half is the approval term below.
-- **Consider Registered Time With Save** — when ticked, the check that compares a task executer's
+- **Consider Registered Time With Save** (`termConfig.considerRegisteredTimeWithSave`) — when ticked, the check that compares a task executer's
   hours against the planned hours also counts hours that are registered but not yet approved, so the
   warning arrives earlier.
 
 ## The TimeSheet Approval term
 
-One page, one option: **Regenerate Accounting Effect For Time Sheet Documents**.
+One page, one option: **Regenerate Accounting Effect For Time Sheet Documents** (`termConfig.regenAccEffectForTimeSheetDocs`).
 
 Small screen, real consequence. When a TimeSheet Approval is committed, it writes the approval
 results back onto the timesheets it covers. With this option ticked, each affected timesheet then has

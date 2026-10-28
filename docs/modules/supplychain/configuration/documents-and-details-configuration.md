@@ -57,7 +57,7 @@ By default a stock document carries one warehouse and one set of accounting dime
 
 **Default Delivery Status** (`value.defaultDeliveryStatus`) — The delivery status automatically stamped on every new sales document (e.g. "Not Delivered"). Leave empty for no default.
 
-**Use Delivery Organization Files** (`value.useDeliveryOrganization`) — Activates the Delivery Organization feature for drivers — the structure linking delivery zones to branches/warehouses and driving delivery/driver tracking. See the [Delivery & Loading guide](../delivery-and-loading.md).
+**Use Delivery Organization Files** (`value.useDeliveryOrganization`) — Turns on driver scheduling: a sales document whose term names a Delivery Organization File gets a driver, a car and a delivery day booked from the Delivery Driver Configuration schedule when it is saved. See the [Delivery & Loading guide](../delivery-and-loading.md).
 
 ## Document Grids & Extra Columns
 
@@ -69,7 +69,9 @@ These tables add optional grids or columns to specific document types. Each one 
 
 **Add Delete-on-Save Field To** (`value.addDeleteOnSaveFieldTo`) *(table)* — Adds a "delete on save" checkbox to each line (plus select-all/unselect-all actions) for the listed document types, so users can mark lines for removal and have them deleted on save.
 
-**Add Gross Weight and Net Weight Fields To** (`value.addGrossWeightAndNetWeightFieldsTo`) *(table)* — Adds gross-weight and tare-weight columns next to the quantity column for the listed document types.
+**Add Gross Weight and Net Weight Fields To** (`value.addGrossWeightAndNetWeightFieldsTo`) *(table)* — Adds gross-weight and tare-weight columns next to the quantity column for the listed document types. When a user types either weight, the line quantity becomes gross weight minus empty weight (a negative result is ignored).
+
+**Store Gross Weight Reading Time In** (`value.grossWeightTimeField`) / **Store Empty Weight Reading Time In** (`value.emptyWeightTimeField`) — Pick **Text 1**, **Text 2** or **Text 3** to keep a time stamp of each weight reading. Whenever a user enters the gross (or empty) weight on a line, the system writes the current date and time (`yyyy-MM-dd HH:mm:ss`) into the chosen text field of that line, and clears it if the weight is cleared or set to zero. The chosen field also appears as a **Gross Weight Time** / **Empty Weight Time** column next to the weight columns on the document types listed in the table above. Leave both empty if you don't need the reading times; pick different text fields for the two so one does not overwrite the other.
 
 **Dimensions by Suffix** (`value.dimensionsBySuffix`) *(table)* — Lets a piece of text glued to the front or the back of an item code stand for a set of accounting dimensions. Each row holds the text, whether it is a **prefix** or a **suffix**, and the dimensions it means: legal entity, sector, branch, department and analysis set. A row must carry at least one dimension, and the same text cannot appear on two rows. When somebody types or scans a code, the system tries the rows in order; the first one that matches has its text stripped off before the item is looked up, and that row's dimensions are written onto the line. Use it when one physical label has to route the same item to different branches or sectors — `B1-` in front of every code meant for Branch 1, say — so staff scan a single label and the dimension follows automatically.
 

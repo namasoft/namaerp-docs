@@ -1,6 +1,6 @@
 ---
 description: "Form Documents, the sixteen spare documents for one-off customer needs: what is on the screen, a worked example of renaming, laying out, calculating and validating one, their accounting effects, and the limits to know before promising anything."
-entities: [FormDoc1, FormDoc2, FormDoc3]
+entities: [FormDoc1, FormDoc2, FormDoc3, FormDoc4, FormDoc5, FormDoc6, FormDoc7, FormDoc8, FormDoc9, FormDoc10, FormDoc11, FormDoc12, FormDoc13, FormDoc14, FormDoc15, FormDoc16]
 menu: Basic → Remarks → Form Document 1
 ---
 # Form Documents — the Escape Hatch

@@ -45,16 +45,18 @@ The generation grid offers **Class 1–10** and nothing else. Item categories si
 
 Of all the screens on this page, **Item Configurations** (*Inventory → Settings → Item Configurations*) has the widest reach. It is a named, reusable profile that answers a question you would otherwise have to answer separately for every item: **which details must be captured when this stock moves, and what is tracked against them?**
 
-Ten tracking dimensions each get their own block — Revision, Size, Colour, Lot, Active Percentage, Inactive Percentage, SubItem, Measures, Serial, and Packaging. Each block asks the same six questions, and the first two are the ones that matter day to day:
+Ten tracking dimensions each get their own block — Revision (`revisionIdConfigurations`), Size (`sizeConfigurations`), Colour (`colorConfigurations`), Lot (`lotIdConfigurations`), Active Percentage (`activePercentConfig`), Inactive Percentage (`inActivePercentConfig`), SubItem (`subItemConfig`), Measures (`measuresConfigurations`), Serial (`serialNumberConfigurations`), and Packaging (`packagingConfigurations`). Each block asks the same six questions, and the first two are the ones that matter day to day. The field id is the block's id followed by the setting's — `colorConfigurations.issuePolicy`, for instance:
 
-| Setting | What it decides |
-|---|---|
-| **Issue Policy** | Whether the value must be supplied when stock goes out — **Required**, **Optional**, or **Prevented** |
-| **Receipt Policy** | The same question when stock comes in |
-| **Track Quantity** | Whether balances are kept separately per value of this dimension |
-| **Track Cost** | Whether cost is kept separately per value of this dimension |
-| **Allow Empty Values Before Date** | A cut-off date before which a blank value is accepted |
-| **Allow Admin To Receipt With Empty Value** | Lets an administrator receive stock without the value |
+| Setting | Field id | What it decides |
+|---|---|---|
+| **Issue Policy** | `….issuePolicy` | Whether the value must be supplied when stock goes out — **Required**, **Optional**, or **Prevented** |
+| **Receipt Policy** | `….receiptPolicy` | The same question when stock comes in |
+| **Track Quantity** | `….trackQuantity` | Whether balances are kept separately per value of this dimension |
+| **Track Cost** | `….trackCost` | Whether cost is kept separately per value of this dimension |
+| **Allow Empty Values Before Date** | `….allowEmptyValuesBeforeDate` | A cut-off date before which a blank value is accepted |
+| **Allow Admin To Receipt With Empty Value** | `….allowAdminToReceiptWithEmptyValue` | Lets an administrator receive stock without the value |
+
+The SubItem block has one more field, **SubItem Status Configurations** (`subItemStatusConfig`), which picks the sub-item status set used by items on this profile.
 
 The **Prevented** option is worth noticing, because people tend to assume the choice is only between required and optional. Setting a dimension to **Prevented** means the system will refuse a value there — useful when an item genuinely has no colours and you want to stop anyone recording one.
 
@@ -62,13 +64,22 @@ The **Prevented** option is worth noticing, because people tend to assume the ch
 The last two settings exist for a specific and very common situation: a client who has been trading for years decides to start tracking batches or expiry dates, and discovers the system now demands a batch number for stock that was received long before anyone thought about batches. [Allowing Items With Batch & Expiry to Hold Untagged Quantities](./development-requests/allow-empty-item-dimensions-before-date.md) explains how the cut-off date solves it.
 :::
 
+Above the dimension blocks sit four switches about balances and cost:
+
+- **Include Reserved In Balance** (`includeReservedInBalance`) — reserved quantities are counted when the system checks whether there is enough stock, so stock promised to one order is not offered to the next.
+- **Allow Overdraft In Reservation** (`allowOverdraftInReservation`) — the item may go negative in every document except real stock issues, receipts and transfers; see [Overdraft & Quantity Checking](./configuration/overdraft-and-quantity-checking.md).
+- **Track Cost On Wares** (`trackCostOnWares`) — cost is kept separately per warehouse rather than one cost for the whole company. Like the other tracking switches it cannot be changed once the profile's items have transactions.
+- **Ignore Cost For Item** (`ignoreCostForItem`) — the cost engine skips these items altogether, so their stock documents carry no cost. Turning it on or off is a critical change that needs the matching permission.
+
+The **Default Item Values** group — **Has Lot** (`hasLot`), **Has Expiry** (`hasExpiry`), **Has Packages** (`hasPackages`), **Purchasable** (`purchasable`), **Sellable** (`sellable`), **Manufacturable** (`manufacturable`), **Returnable** (`returnable`), **Has Size** (`hasSize`), **Has Colors** (`hasColor`), **Has Revisions** (`hasRevisions`), **Has Serial** (`hasSerial`), **Has Two Serials** (`hasTwoSerials`), **Has Measures** (`hasMeasures`), **Has SubItem** (`hasSubItem`), **Has Active Percentage** (`hasActivePercentage`), **Has Inactive Percentage** (`hasInActivePercentage`), **Over Draft Policy** (`overDraftPolicy`), **Type** (`itemType`, required) and **Replaceable** (`replaceable`) — is copied onto the item card the moment the profile is picked in the item's **Configurations** field. They are starting values: the item card can still be changed afterwards.
+
 Three more groups sit below the dimension blocks:
 
-**Quantity and cost by dimension.** **Track Qty On Sector**, **Track Cost On Sector** and their equivalents for Branch, Department and Analysis Set decide whether balances and costs are held separately per organisational dimension, rather than only per warehouse.
+**Quantity and cost by dimension.** **Track Qty On Sector** (`trackQtyOnSector`), **Track Cost On Sector** (`trackCostOnSector`) and their equivalents for Branch (`trackQtyOnBranch`, `trackCostOnBranch`), Department (`trackQtyOnDepartment`, `trackCostOnDepartment`) and Analysis Set (`trackQtyOnAnalysisSet`, `trackCostOnAnalysisSet`) decide whether balances and costs are held separately per organisational dimension, rather than only per warehouse.
 
-**Dimensions For Delivery.** A row of **Consider…** switches — Revision, Size, Colour, Lot, Active and Inactive Percentage, SubItem, Measures, Box, Warehouse, Locator. These decide which details have to match for delivered stock to count against what was ordered. If **Consider Colour** is off, delivering the blue one settles a line that ordered the red one; if it is on, it does not.
+**Dimensions For Delivery.** A row of **Consider…** switches (`dimensionsForDelivery.considerRevisionId`, `…considerSize`, `…considerColor`, `…considerLotId`, `…considerActivePerc`, `…considerInactivePerc`, `…considerSubItem`, `…considerMeasures`, `…considerBox`, `…considerWarehouse`, `…considerLocator`) — Revision, Size, Colour, Lot, Active and Inactive Percentage, SubItem, Measures, Box, Warehouse, Locator. These decide which details have to match for delivered stock to count against what was ordered. If **Consider Colour** is off, delivering the blue one settles a line that ordered the red one; if it is on, it does not.
 
-**Auto Sales Pricing Info.** Minimum, default and maximum profit percentages for automatic pricing, defined once on the profile rather than per item.
+**Auto Sales Pricing Info.** **Auto Sales Pricing** (`autoSalesPricingInfo.autoSalesPricing`) with minimum, default and maximum profit percentages (`autoSalesPricingInfo.autoPricingMinProfitPercent`, `…autoPricingDefaultProfitPercent`, `…autoPricingMaxProfitPercent`) for automatic pricing, defined once on the profile rather than per item.
 
 The profile reaches items in two ways. New items take it from the **Configurations** field on the item card, and for items that already exist there is **Copy Item Configuration To Item** in the **More** menu, which pushes the profile's settings onto items that are already in use.
 

@@ -8,6 +8,7 @@ Everything else in accounting stands on these pages: the ledger and fiscal years
   <LandingCard icon="🚀" title="Concepts & first-time setup" link="/modules/accounting/ledger-setup/accounting-concepts-and-setup.md" details="Defining the ledger and fiscal years before the first entry." />
   <LandingCard icon="🌳" title="Chart of Accounts" link="/modules/accounting/ledger-setup/chart-of-accounts.md" details="Building the chart of accounts." />
   <LandingCard icon="📒" title="Accounts" link="/modules/accounting/ledger-setup/accounts.md" details="Defining the accounts themselves." />
+  <LandingCard icon="👜" title="Accounts Bags, Safes & Partners" link="/modules/accounting/ledger-setup/accounts-bags-safes-and-partners.md" details="Shared account sets for parties, cash safes and cashier safes, and partner records." />
   <LandingCard icon="🔐" title="System Accounts & Transaction Exceptions" link="/modules/accounting/ledger-setup/system-accounts-and-exceptions.md" details="System accounts and the transaction exceptions on them." />
 </LandingGrid>
 

@@ -11,15 +11,15 @@ Two of the options change how staff enter data every day, so it is worth setting
 
 ## The options
 
-| Setting | Arabic label | What it does |
-|---|---|---|
-| **Compliant Source** | مصدر الشكوي | Pre-fills the *Source* field on a new complaint. Default is Sales Invoice. Set it to whatever your support desk sees most often. |
-| **fill Responsible Employee With Current Employee** | السماح بجعل القيمة الافتراضية للموظف بالمسئول بالحالي | On a new lead, defaults the responsible employee to the employee linked to the logged-in user. On by default. |
-| **Number Of Result Sources Of Complaint** | عدد مصادر الشكوى | Caps how many rows the complaint screen's search action brings back when it looks up a customer's source documents. |
-| **Allow Creating Maintenance Invoice With Customer Different From Machine Customer** | إنشاء فاتورة الصيانة بعميل مختلف عن العميل الموجود في الآلة | Relaxes the maintenance-invoice rule that the invoice customer must match the machine's customer. Switch this on if you bill a landlord, a head office or an insurer for work on someone else's machine. |
-| **Allow Editing CRM Lead After Connection** | السماح بتعديل خيط البيع بعد ربطه | Lets a lead stay editable after it has been converted. Without it, a converted lead is locked. |
-| **Do Not Filter Machine By Customer** | عدم الفلترة على الآلة بالعميل | Removes the customer filter from the machine picker on maintenance documents, so any machine can be selected regardless of who owns it. |
-| **Add Questionairs Page To** (grid) | إضافة صفحة الاستبيانات الي | Lists the screens that should gain a related-questionnaires page. Add an entity type here and its edit screen grows a page showing questionnaires linked to that record. |
+| Setting | Arabic label | Field id | What it does |
+|---|---|---|---|
+| **Compliant Source** | مصدر الشكوي | `value.compliantSource` | Pre-fills the *Source* field on a new complaint. Default is Sales Invoice. Set it to whatever your support desk sees most often. |
+| **fill Responsible Employee With Current Employee** | السماح بجعل القيمة الافتراضية للموظف بالمسئول بالحالي | `value.fillResponsibleEmployeeWithCurrentEmployee` | On a new lead, defaults the responsible employee to the employee linked to the logged-in user. On by default. |
+| **Number Of Result Sources Of Complaint** | عدد مصادر الشكوى | `value.numberOfRows` | Caps how many rows the complaint screen's search action brings back when it looks up a customer's source documents. |
+| **Allow Creating Maintenance Invoice With Customer Different From Machine Customer** | إنشاء فاتورة الصيانة بعميل مختلف عن العميل الموجود في الآلة | `value.createInvoiceWithDifferentCustomer` | Relaxes the maintenance-invoice rule that the invoice customer must match the machine's customer. Switch this on if you bill a landlord, a head office or an insurer for work on someone else's machine. |
+| **Allow Editing CRM Lead After Connection** | السماح بتعديل خيط البيع بعد ربطه | `value.allowEditingLeadAfterConnection` | Lets a lead stay editable after it has been converted. Without it, a converted lead is locked. |
+| **Do Not Filter Machine By Customer** | عدم الفلترة على الآلة بالعميل | `value.doNotFilterMachineByCustomer` | Removes the customer filter from the machine picker on maintenance documents, so any machine can be selected regardless of who owns it. |
+| **Add Questionairs Page To** (grid) | إضافة صفحة الاستبيانات الي | `value.addQuestionairsPageTo` | Lists the screens that should gain a related-questionnaires page. Add an entity type here and its edit screen grows a page showing questionnaires linked to that record. |
 
 ![The Settings tab of CRM Settings](../../ar/modules/crm/images/config/crm-settings-tab-en.png)
 

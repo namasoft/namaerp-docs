@@ -77,9 +77,7 @@ The cool-down is the switch for "do not message the customer twice in five minut
 
 ## Error Message: a log, not a message
 
-**Error Message** sits beside Bulk Message in the menu, but nobody writes one. Each record is a failed incoming replication message that the system was told to keep: it carries the **Error Message**, the **Error Desciption**, the record it was about, the **Document Author** it ran as, the **Target Queue ID** and the **Replication Site Code**. If the same message fails again, its existing record is updated rather than duplicated.
-
-Which failures are kept is decided in [Error Message Logging Configurations](/platform/fields-and-entities-settings/fields-settings-integrations#Error-Message-Logging-Configurations). If the list is always empty, that grid is empty.
+**Error Message** sits beside Bulk Message in the menu, but nobody writes one. Each record is a failed incoming replication message that the system kept: it carries the **Error Message**, the **Error Desciption**, the record it was about, the **Document Author** it ran as, the **Target Queue ID** and the **Replication Site Code**. If the same message fails again, its existing record is updated rather than duplicated.
 
 ## Internal chat
 

@@ -1,6 +1,6 @@
 ---
 description: "How attendance punches are recorded and reach the payslip: the Time Attendance document for fingerprint or card machine punches, Electronic Attendance from the mobile app with its geofence zones, and how a punch becomes an addition or a deduction."
-entities: [TimeAttendance, ElectronicAttendance, ElectronicAttendanceZone]
+entities: [TimeAttendance, ElectronicAttendance, ElectronicAttendanceZone, ElecAttendanceConfig, ElecAttendanceAllowedZone, ElectronicAttendanceZonesExclusion]
 ---
 # Time Attendance
 
@@ -96,6 +96,56 @@ When Electronic Attendance flags **Forgot Check In** or **Forgot Check Out**, re
 
 **Electronic Attendance Zone** (منطقة حضور إلكتروني, master file at **Payroll > Mobile App - HR > Electronic Attendance Zone**) is what "in zone" or "out of zone" is measured against. Each zone is a location — country, city, state/governorate, area, street, building number, and a point on the map (Map Location) — plus a **Max Distance Away** tolerance. When an employee checks in, Nama compares their GPS position to the zone's point; inside the tolerance, the punch is in-zone, outside it, Electronic Attendance flags it as out-of-zone.
 
+### Who may punch where: Electronic Attendance Allowed Zone Document
+
+A zone on its own applies to nobody. The **Electronic Attendance Allowed Zone Document**
+(مستند تحديد مناطق الحضور الإلكتروني, at **Payroll > Mobile App - HR > Electronic Attendance Allowed
+Zone Document**) links zones to employees, and it is the only place a punch looks for its zones. Each
+grid line names one **Attendance Zone** and the employees it serves, through any mix of **Employee**,
+**Employee Department**, **Employee Group**, **Department Section** and the dimension columns (legal
+entity, sector, branch, department, analysis set). A blank column matches everybody; every filled one
+must match the employee. A header **Priority** orders the documents when an employee is covered by
+several.
+
+When an employee checks in or out, Nama takes every line that matches them, measures the distance to
+each line's zone, and records the nearest one on the punch with its distance. The punch is in-zone as
+soon as one of those zones is within its **Max Distance Away**. With **Use Electronic Attendance Zone**
+switched on in the mobile-app settings, an employee no line covers gets *Could not find allowed zone to
+check in*; the document itself refuses to save while that option is off. Tick **Do Not Check Max
+Distance Away** on a line to let the employees it covers punch from anywhere: the nearest zone is still
+recorded, but no zone check blocks the punch.
+
+### Temporary exemptions: Electronic Attendance Zones Exclusion
+
+For an employee who works away from every zone for a while — a site visit, a week at a client — add a
+line to an **Electronic Attendance Zones Exclusion** (استثناء من مناطق الحضور و الانصراف, at
+**Payroll > Mobile App - HR > Electronic Attendance Zones Exclusion**): **Employee**, **From Date** and
+**To Date**, all required. Punches dated inside that range skip every zone check, while the nearest zone
+and distance are still written on the record for review.
+
+### Electronic Attendance Configuration per-employee rules
+
+**Electronic Attendance Configuration** (إعدادات الحضور الالكتروني, at **Payroll > Mobile App - HR >
+Electronic Attendance Configuration**) changes two mobile-app behaviours for chosen employees.
+
+The header carries a **Priority** `priority`. Below it, the **Attendance Configuration** grid
+`attendanceConfigLines` holds one row per group of employees:
+
+| Column | Field | What it does |
+|---|---|---|
+| **Employee** | `attendanceConfigLines.employee` | Limits the row to one employee. |
+| **Employee Department** | `attendanceConfigLines.employeeDepartment` | Limits the row to employees whose file names this employee department. |
+| **Employee Group** | `attendanceConfigLines.employeeGroup` | Limits the row to the members of an employee group. |
+| **Department Section** | `attendanceConfigLines.departmentSection` | Limits the row to one department section. |
+| **Hide Documents After Check In** | `attendanceConfigLines.hideDocumentsAfterCheckIn` | The mobile app hides the employee's attendance records once they have checked in, and the server no longer refuses a new check-in because an earlier one is still open — so the employee can check in without ever checking out. |
+| **Job Position** | `attendanceConfigLines.jobPosition` | Limits the row to one job position. |
+| **Number Of Hours Allowed Before Preventing CheckOut** | `attendanceConfigLines.numberOfHoursAllowedBeforePreventingCheckOut` | How many hours after checking in the mobile app still lets the employee check out. Empty or zero falls back to the employee's attendance shift, then to the mobile-app configuration, then to 24 hours. |
+| **Priority** | `attendanceConfigLines.priority` | Overwritten with the header's **Priority** every time the record is saved, so set the priority on the header. |
+
+A blank scope column matches everybody; every filled one must match. When an employee matches rows
+in several saved records, the row with the **lowest** priority number wins, and only that row
+applies. Records that are still drafts are ignored.
+
 ## How a punch becomes an addition or a deduction
 
 Neither Time Attendance nor Electronic Attendance touches the payslip directly — they only establish, per employee per day, when work started and ended. That raw record is then rolled up into daily figures (worked time, lateness, early leave, overtime, absence), and those figures reach salary through **performance indicators**: a [Salary Calculation Formula](../payroll/salary-calculation-formulas.md) of the "Related To Performance Indicator" type reads a [Performance Indicator](../performance/performance-indicators.md) built on the day's attendance figures and turns it into an addition (e.g. an overtime component) or a deduction (e.g. a lateness penalty). See **[How Salary Is Calculated](../concepts/hr-salary-engine.md)** for the full pipeline this step (Step 4) belongs to.
@@ -117,7 +167,7 @@ Time Attendance and Electronic Attendance have no ledger effect of their own —
 |---|---|---|
 | *Check out date {0} can not be before check in date {1}* — «تاريخ الخروج {0} لا يمكن ان يكون قبل تاريخ الدخول {1}» | On an Electronic Attendance record the check-out timestamp is earlier than the check-in timestamp. The values shown in the message are not the two timestamps, so read the record's own **Check In At** / **Check Out At** fields. | Correct whichever timestamp is wrong; a night shift that ends after midnight still needs the later date on the check-out side. |
 | *Total hours {0} for document {1} exceeded the maximum allowed hours {2}* — «إجمالي الساعات {0} للمستند {1} تجاوز الحد الأقصى المسموح به وهو {2}» | The computed **Attendance Total Time** is longer than the hours allowed before a check-out is blocked (24 hours unless the shift or HR Configuration sets a different ceiling) — usually a check-out that was never made on the day it belonged to. | Fix the check-out time, or handle the missing punch through **Convert To Leave Permission** instead. |
-| *There are opened attendance must be closed first* — «يوجد سندات حضور مفتوحة يجب غلقها أولا» | The employee already has a committed Electronic Attendance record with a check-in and no check-out inside the allowed window, so a second open punch would leave two unfinished pairs. | Close the earlier record — check out on it, or flag it **Forgot Check Out** and convert it to a leave permission — then punch again. |
+| *There are opened attendance must be closed first* — «يوجد سندات حضور مفتوحة يجب غلقها أولا» | The employee already has a committed Electronic Attendance record with a check-in and no check-out inside the allowed window, so a second open punch would leave two unfinished pairs. | Close the earlier record — check out on it, or flag it **Forgot Check Out** and convert it to a leave permission — then punch again. An employee whose [Electronic Attendance Configuration](#Electronic-Attendance-Configuration-per-employee-rules) row ticks **Hide Documents After Check In** never gets this message. |
 | *Could not find allowed zone to check in* — «لا يمكن إيجاد مناصق مسموح تسجيل دخول بها» | Attendance zones are switched on, but the check-in did not fall inside any defined **Electronic Attendance Zone**, so no zone could be attached to it. | Define a zone for that site, or widen an existing zone's **Max Distance Away**. |
 | *Could not find allowed zone to check out* — «لا يمكن إيجاد مناصق مسموح تسجيل خروج بها» | The same for the check-out half of the pair. | As above, for the location the employee checked out from. |
 | *You cannot check in from your current location. The distance between your location and the nearest zone ({0}) is {1}* — «لا يمكنك تسجيل دخول من الموقع الحالي, المسافة بين موقعك وأقرب منطقة ({0}) هي {1}» | The punch was flagged out of zone and the mobile-app configuration's **Prevent Save If Attendance Out Of Zone** is on. The message names the nearest zone and how far away the employee was. | Punch from inside the zone, or raise that zone's tolerance if the site is genuinely bigger than the geofence. |

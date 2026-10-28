@@ -185,12 +185,16 @@ menu: الرواتب ← الإعدادات ← أعدادات الموارد ا
 - **الحالات المسموح بإعادة إصدار سندات الرواتب** `value.regenSalaryDocsAllowedStatuses` — سطر لكل
   تركيبة من حالة السند وحالة سجل الراتب الذي يقع فيه، مع «السماح بالإصدار» وقالبي رسالة. وعمودا
   الرسالة — عربي وإنجليزي — هما النص الذي يراه المستخدم حين يرفض السطر، فيستطيع السطر أن يشرح نفسه
-  بكلمات الفريق الذي وضع القاعدة.
+  بكلمات الفريق الذي وضع القاعدة. الأعمدة: `value.regenSalaryDocsAllowedStatuses.criteriaDefinition`
+  و `value.regenSalaryDocsAllowedStatuses.status` و `value.regenSalaryDocsAllowedStatuses.salarySheetStatus` و `value.regenSalaryDocsAllowedStatuses.allowRegenerate` و `value.regenSalaryDocsAllowedStatuses.arabicMessage` و `value.regenSalaryDocsAllowedStatuses.englishMessage`.
 - **الحالات المسموح بإعادة إصدار سجلات الرواتب** `value.regenSalarySheetsAllowedStatuses` — المثل
-  للسجلات.
+  للسجلات، بلا عمود حالة السجل: `value.regenSalarySheetsAllowedStatuses.criteriaDefinition`
+  و `value.regenSalarySheetsAllowedStatuses.status` و `value.regenSalarySheetsAllowedStatuses.allowRegenerate` و `value.regenSalarySheetsAllowedStatuses.arabicMessage` و `value.regenSalarySheetsAllowedStatuses.englishMessage`.
 - **منع إصدار سندات الرواتب إذا وجد التالي** `value.preventRegenerateSalaryDocs` — الاختبار المعاكس:
-  سمِّ نوع مستند ومعيارًا فتُمنع إعادة الإصدار متى وُجد مستند مطابق. ويخفّف منه عمودان — «السماح بالإصدار إذا كان المستند مسودة» و«السماح بالإصدار إذا كان المستند بانتظار الاعتماد» — حتى لا يعطّل
-  مستند لاحق ما زال مسودة دورةَ الرواتب.
+  سمِّ نوع مستند (`value.preventRegenerateSalaryDocs.entityType`) ومعيارًا (`value.preventRegenerateSalaryDocs.criteriaDefinition`)
+  فتُمنع إعادة الإصدار متى وُجد مستند مطابق. ويخفّف منه عمودان — «السماح بالإصدار إذا كان المستند مسودة»
+  `value.preventRegenerateSalaryDocs.allowRegenIfDocIsDraft` و«السماح بالإصدار إذا كان المستند بانتظار الاعتماد»
+  `value.preventRegenerateSalaryDocs.allowRegenIfDocIsWaitingApproval` — حتى لا يعطّل مستند لاحق ما زال مسودة دورةَ الرواتب.
 
 ويستطيع كل سطر أن يحمل **معيارًا** فتنطبق القاعدة على بعض الموظفين أو المستندات دون بعض؛ والمعايير
 مشروحة في [تعريفات المعايير](/ar/platform/automation-and-rules/criteria-definitions).
@@ -415,9 +419,11 @@ menu: الرواتب ← الإعدادات ← أعدادات الموارد ا
 *departmentConfigurations* و *sectorConfigurations* — تقرر من أين يأتي كل محدد في **سطر سند الراتب**.
 وفي كل منها الحقلان نفسهما:
 
-- **المرجع** (`value.analysisSetConfig_sourceDimension` وأخواته الثلاثة) — إما **المستند** (تؤخذ
+- **المرجع** (`value.analysisSetConfig.sourceDimension` و `value.branchConfig.sourceDimension`
+  و `value.departmentConfig.sourceDimension` و `value.sectorConfig.sourceDimension`) — إما **المستند** (تؤخذ
   القيمة من ترويسة سند الراتب) أو **الموظف** (تؤخذ من بيانات الموظف بتاريخ ذلك السطر).
-- **النسخ دائما** (`value.analysisSetConfig_alwaysOverride` وأخواته) — تُكتب القيمة فوق قيمة موجودة
+- **النسخ دائما** (`value.analysisSetConfig.alwaysOverride` و `value.branchConfig.alwaysOverride`
+  و `value.departmentConfig.alwaysOverride` و `value.sectorConfig.alwaysOverride`) — تُكتب القيمة فوق قيمة موجودة
   في السطر، لا أن تملأ الفارغ فقط.
 
 والقاعدة التي يتبعها المحرك لكل محدد من الأربعة قصيرة ويستحق معرفتها بدقة:
@@ -495,6 +501,15 @@ menu: الرواتب ← الإعدادات ← أعدادات الموارد ا
 يحمل كل سطر **من تاريخ** و**إلى تاريخ** و**تقويم رواتب**، والحد الأدنى والأقصى للأساس التأميني الثابت
 والمتغير (**الحد الأدني/الاقصي للأساسي التأميني الثابت** و**المتغير**) وأربع نسب: حصة **الشركة**
 وحصة **العامل** في كل من الأساسين الثابت والمتغير.
+
+| العمود | الحقل |
+|---|---|
+| **من تاريخ** / **إلى تاريخ** | `value.insuranceInfo.fromDate` و `value.insuranceInfo.toDate` |
+| **تقويم رواتب** | `value.insuranceInfo.hrCalendar` |
+| **الحد الأدنى / الأقصى للأساسي التأميني الثابت** | `value.insuranceInfo.minFixedInsurance` و `value.insuranceInfo.maxFixedInsurance` |
+| **الحد الأدنى / الأقصى للأساسي التأميني المتغير** | `value.insuranceInfo.minVariableInsurance` و `value.insuranceInfo.maxVariableInsurance` |
+| نسبة **الشركة** الثابتة / المتغيرة | `value.insuranceInfo.companyFixedInsurancePercent` و `value.insuranceInfo.companyVariableInsurancePercent` |
+| نسبة **العامل** الثابتة / المتغيرة | `value.insuranceInfo.employeeFixedInsurancePercent` و `value.insuranceInfo.employeeVariableInsurancePercent` |
 
 ![صفحة التأمينات الاجتماعية — سطر مؤرَّخ لكل مدة من شرائح التأمين ونسبه](../images/setup/hr-config-social-insurance-ar.png)
 

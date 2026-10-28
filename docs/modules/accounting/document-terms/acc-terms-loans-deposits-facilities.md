@@ -1,5 +1,5 @@
 ---
-description: "The document term account sides for bank loan issue, instalment payment and interest calculation, for credit facilities and for fixed deposits: which amount of the document each debit and credit pair picks up."
+description: "The document term account sides for bank loan issue, instalment payment, interest calculation and changing, for credit facilities and for fixed deposits: which amount of the document each debit and credit pair picks up."
 entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
@@ -59,6 +59,25 @@ records its entries:
 
 **Debit / Credit** `termConfig.config.debit`, `termConfig.config.credit` book the interest value of
 each line — the periodic accrual of interest expense against interest payable.
+
+### Bank Loan Changing Document
+
+The document that amends or cancels an issued loan has a term with one **Effect** tab and one group,
+**Cancel Loan Effect**, holding three pairs, all *(record)*:
+
+| Group on screen | Field | What it books |
+|---|---|---|
+| **Cancel Loan Debit / Credit** | `termConfig.cancelLoanDebit`, `termConfig.cancelLoanCredit` | The **Loan Value** typed on the changing document. |
+| **Modification Fees Debit / Credit** | `termConfig.modificationFeesDebit`, `termConfig.modificationFeesCredit` | The sides for the modification fees. |
+| **Modification Fees Tax Debit / Credit** | `termConfig.modificationFeesTaxDebit`, `termConfig.modificationFeesTaxCredit` | The sides for the tax on the modification fees. |
+
+::: warning An entry only on cancellation, and only with all six sides
+The term records an entry only when the document's **Cancel Loan** box is ticked. A changing document
+that just amends the loan — its value, interest or schedule — records nothing, and unticking **Cancel
+Loan** on a saved document removes the entry it had written. Unlike the other terms on this page, the
+pairs are not independent: **all six sides must be filled**, or the document records no entry at all —
+not even the cancel pair.
+:::
 
 ## Credit facilities
 

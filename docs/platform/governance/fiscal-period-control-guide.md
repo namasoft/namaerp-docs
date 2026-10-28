@@ -1,6 +1,6 @@
 ---
 description: "The three layers of fiscal period control: the period's open or closed status, Fiscal Year Status Update for closing a period selectively by user or document type, and Ignore Closed Periods exceptions, with how the layers interact and worked examples."
-entities: [FiscalYearStatusUpdate, FiscalYear]
+entities: [FiscalYearStatusUpdate, FiscalYear, FiscalPeriod]
 menu: Basic → Master Files → Fiscal Year Status Update
 ---
 

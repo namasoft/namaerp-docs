@@ -1,5 +1,5 @@
 ---
-entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, AggregatedMissionDocument, LeavePermissionConfiguration, LeaveReason]
+entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, AggregatedMissionDocument, LeavePermissionConfiguration, LeaveReason, LeavePermissionReq]
 ---
 
 # الاستئذانات والمأموريات (Leave Permissions & Missions)
@@ -51,14 +51,34 @@ entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, Aggregat
 - **فترة تاريخ** تسري خلالها القاعدة (من/إلى التاريخ الفعلي).
 - **محددات سند الإذن** نفسه (الشركة، الفرع، القطاع، الإدارة، المجموعة التحليلية) أو استعلام/معيار حر.
 - **محددات الموظف** (الشركة، الفرع، القطاع، الإدارة، المجموعة التحليلية).
+- **إدارة الموظف** في الموارد البشرية — سجل *إدارة موظف* المختار في ملف الموظف، وهو غير محدد الإدارة.
+
+عمود النطاق الفارغ يطابق كل شيء، والمملوء يجب أن يطابق. وأعمدة النطاق بترتيب الشاشة:
+
+| العمود | الحقل |
+|---|---|
+| التاريخ الفعلي لسند الإذن — من تاريخ / إلى تاريخ | `details.fromValueDatePermission` و `details.toValueDatePermission` |
+| محددات سند الإذن — الشركة، الفرع، القطاع، الإدارة، المجموعة التحليلية | `details.permissionDocLegalEntity` و `details.permissionDocRelatedBranch` و `details.permissionDocSector` و `details.permissionDocDepartment` و `details.permissionDocAnalysisSet` |
+| معيار سند الإذن / استعلام سند الإذن | `details.permissionDocDefinition` و `details.permissionDocumentQuery` |
+| محددات الموظف — الشركة، الفرع، القطاع | `details.empLegalEntity` و `details.empBranch` و `details.empSector` |
+| إدارة موظف (محدد **الإدارة** في ملف الموظف) | `details.empDepartment` |
+| محددات الموظف — المجموعة التحليلية | `details.empAnalysisSet` |
+| إدارة موظف (سجل **إدارة الموظف** في الموارد البشرية) | `details.employeeDepartment` |
+
+::: warning عمودان بالعنوان نفسه
+يظهر `details.empDepartment` و `details.employeeDepartment` كلاهما على الشاشة بعنوان **إدارة موظف**.
+فالأول (العمود الخامس من أعمدة الموظف، قبل *المجموعة التحليلية*) يُقارَن بمحدد **الإدارة** للموظف،
+والثاني (بعد *المجموعة التحليلية*) يُقارَن بـ*إدارة الموظف* المختارة في ملفه. اختر العمود بموضعه لا
+بعنوانه.
+:::
 
 ثم تحدد كل قاعدة:
 
-| الحقل (عربي ← إنجليزي) | الغرض |
-|---|---|
-| أقصى عدد ساعات إذون انصراف شهريا (Max Permission Hours Per Month) | إجمالي ساعات إذن الانصراف التي يمكن للموظف أخذها في الشهر. |
-| أقصى عدد ساعات للإذن الواحد (Max Single Permission Hours) | أطول مدة يمكن أن يكون عليها إذن واحد. |
-| أقصى عدد إذون انصراف شهريا (Max Permissions Per Month) | عدد الأذون المنفصلة المسموح بها في الشهر، بصرف النظر عن طول كل منها. |
+| الحقل (عربي ← إنجليزي) | معرّف الحقل | الغرض |
+|---|---|---|
+| أقصى عدد ساعات إذون انصراف شهريا (Max Permission Hours Per Month) | `details.maxPermissionsHoursPerMonth` | إجمالي ساعات إذن الانصراف التي يمكن للموظف أخذها في الشهر. |
+| أقصى عدد ساعات للإذن الواحد (Max Single Permission Hours) | `details.maxSinglePermissionHours` | أطول مدة يمكن أن يكون عليها إذن واحد. |
+| أقصى عدد إذون انصراف شهريا (Max Permissions Per Month) | `details.maxPermissionsPerMonth` | عدد الأذون المنفصلة المسموح بها في الشهر، بصرف النظر عن طول كل منها. |
 
 ولأن القاعدة يمكن تحديد نطاقها بشكل ضيق (إدارة واحدة) أو واسع (الشركة بأكملها)، يمكن لجهة ما منح موظفي المبيعات مثلاً بدلاً أوسع من موظفي المكتب، كل ذلك من نفس سجل الإعدادات.
 

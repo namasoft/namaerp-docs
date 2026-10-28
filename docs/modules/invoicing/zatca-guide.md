@@ -82,7 +82,7 @@ ZATCA identifies the seller by its VAT number, its commercial registration and i
 | What ZATCA needs | Where Nama takes it from |
 |---|---|
 | Seller name | The Legal Entity's Arabic name |
-| Commercial registration (CRN) | The Legal Entity's **Tax Authority Code**, in its dimension information. Letters and digits only. |
+| Commercial registration (CRN) | The Legal Entity's **Tax Authority Code**, in its dimension information, unless the configuration's **Branch Tax Authority Code Template** builds it. Letters and digits only. |
 | National address | The address on the Legal Entity's contact information: **Country Code**, country, state, city, **District**, street, **Building Number** (exactly 4 digits), **Postal Code** (exactly 5 digits) and **Land Plot Number**. |
 
 ![ZATCA Legal Entity Info Screenshot](../../ar/modules/invoicing/images/zatca-legal-entity-info-en.png)
@@ -107,18 +107,20 @@ Then fill the **ZATCA Page**:
 
 | Field | What to put in it |
 |---|---|
-| **Password** | The OTP from the Fatoora portal, used by **Approve System**. The field is required on every save, so once onboarding is done any value may stay in it. |
-| **EGS Serial Number** | The serial of this sending unit. Required. ZATCA's format is shown below the table. |
-| **Standard Invoices** / **Simplified Invoices** | Which kinds this unit will issue. These ticks only decide which sample documents are submitted during onboarding. They do not route individual documents. |
-| **Organization Unit Name** | For a member of a VAT group (the 11th digit of the VAT number is 1), the 10-digit commercial registration of the member. Otherwise, any branch name. |
-| **ZATCA Exempt (E) Reason Code**, **ZATCA Zero Rate (Z) Reason Code**, **ZATCA Out Of Scope (O) Reason Text** | The reasons sent with exempt, zero-rated and out-of-scope lines. See [Taxes and VAT categories](#Taxes-and-VAT-categories). |
-| **Branch Id From** | **Legal Entity** — see above. |
-| **Activity Type** | Required. For ZATCA it is only sent during onboarding, as the business category. |
-| **Calculate Tax Codes Types From** | Where each tax's ZATCA category is read from. See [Taxes and VAT categories](#Taxes-and-VAT-categories). |
-| **Tax Registeration NO** | The seller's 15-digit VAT number. |
-| **Max Days To Send Invoices** | How old a document may be and still be sent. New configurations start at 3. |
-| **Start Sending From Date** | Documents dated before this day are never sent. Use it so switching ZATCA on does not sweep up old invoices. |
-| **Days To Allow Save Document In Future** | How far ahead a document that goes to ZATCA may be dated. |
+| **Password** (`password`) | The OTP from the Fatoora portal, used by **Approve System**. The field is required on every save, so once onboarding is done any value may stay in it. |
+| **EGS Serial Number** (`egsSerialNumber`) | The serial of this sending unit. Required. ZATCA's format is shown below the table. |
+| **Standard Invoices** / **Simplified Invoices** (`standardInvoices`, `simplifiedInvoices`) | Which kinds this unit will issue. These ticks only decide which sample documents are submitted during onboarding. They do not route individual documents. |
+| **Organization Unit Name** (`organizationUnitName`) | For a member of a VAT group (the 11th digit of the VAT number is 1), the 10-digit commercial registration of the member. Otherwise, any branch name. |
+| **ZATCA Exempt (E) Reason Code**, **ZATCA Zero Rate (Z) Reason Code**, **ZATCA Out Of Scope (O) Reason Text** (`vatExemptReasonCode`, `vatZeroRateReasonCode`, `vatOutOfScopeReasonText`) | The reasons sent with exempt, zero-rated and out-of-scope lines. See [Taxes and VAT categories](#Taxes-and-VAT-categories). |
+| **Branch Tax Authority Code Template** (`branchTaxAuthorityCodeTemplate`) | Optional. A template run on each document; its result is sent as the seller's commercial registration (CRN) in place of the Legal Entity's **Tax Authority Code**. Use it when branches of one Legal Entity hold their own commercial registrations — for example, a template that reads the document branch's **Tax Authority Code**. Left empty, or when the template produces nothing, the Legal Entity's code is sent. |
+| **Charge Fee Fields**, **Charge Fee Value**, **Charge Fee Tax Percent**, **Exclude Service Fees With No Configs** | How service fees are sent as a document-level charge. See [Service fees sent as a document charge](#Service-fees-sent-as-a-document-charge). |
+| **Branch Id From** (`branchIdDimension`) | **Legal Entity** — see above. |
+| **Activity Type** (`activityType`) | Required. For ZATCA it is only sent during onboarding, as the business category. |
+| **Calculate Tax Codes Types From** (`taxCodesType`) | Where each tax's ZATCA category is read from. See [Taxes and VAT categories](#Taxes-and-VAT-categories). |
+| **Tax Registeration NO** (`taxRegNo`) | The seller's 15-digit VAT number. |
+| **Max Days To Send Invoices** (`maxDaysToSendInvoice`) | How old a document may be and still be sent. New configurations start at 3. |
+| **Start Sending From Date** (`startSendingFromDate`) | Documents dated before this day are never sent. Use it so switching ZATCA on does not sweep up old invoices. |
+| **Days To Allow Save Document In Future** (`futureDaysToAllowSaveDoc`) | How far ahead a document that goes to ZATCA may be dated. |
 
 ZATCA expects the **EGS Serial Number** as three numbered parts — the solution's name, its model or version, and the unit's own serial:
 
@@ -223,11 +225,30 @@ Every document also needs a **payment means**. Nama takes the term's **Payment M
 - **The item** is identified by its **Tax Authority Code**, or by its code if that is empty. **Calculate Item Code From** can take the code from the item's group, brand or category instead, and **Item Code Template** can build it from a pattern. This value is what appears as the line's item name on ZATCA's side.
 - **The unit** is the unit's **Tax Authority Code**.
 - **The price** is the unit price before tax, at 2 decimals. Discounts before tax become a discount on the line, and the document's header discount is spread over the lines.
-- **Service fees** charged to the customer are sent as a document-level charge, unless they are set up to become item lines.
+- **Service fees** charged to the customer are sent as a document-level charge. See [Service fees sent as a document charge](#Service-fees-sent-as-a-document-charge).
+
+How the unit price, discounts and service fees are worked out is set by the settings every country shares — **Unit Price Source**, **Quantity Fractional Places**, the **Discount Configs** grid and the **Service Fees And What Is Charged To Customer** grid. They are described in the general guide under [Shared settings on every country page](./e-invoices-guide.md#Shared-settings-on-every-country-page). **Item Description Template** and **Item Internal Code Template** play no part for Saudi Arabia: the line's name is the item code.
 
 **Currency.** ZATCA wants the VAT total in riyals, so the database must have a default currency whose **Tax Authority Code** is `SAR`. A document in another currency is sent in its own currency, with the VAT total also converted to riyals at the document's rate.
 
 **Rounding.** The payable amount is rounded to the nearest whole riyal, and the difference is sent as a rounding amount, so the XML's amount due can differ from the document's net by up to half a riyal.
+
+### Service fees sent as a document charge
+
+A document's **Service Fees 1**–**4** reach ZATCA as one charge on the whole document. Four fields on the ZATCA page decide what that charge holds:
+
+| Field | Field ID | What it does |
+|---|---|---|
+| **Charge Fee Fields** | `chargesFeeFields` | Optional. The IDs of the document fields whose values make up the charge, separated by commas — for example `money.service1Fees,money.service2Fees`. Filled, it replaces the service fees as the source of the charge. Empty, the charge is the document's service fees 1–4, with the fees the term marks as deductions taken off. |
+| **Charge Fee Value** | `chargesFeeIncludeTax` | Tick when the fields in **Charge Fee Fields** hold amounts that include VAT. Nama then takes the VAT out before sending the charge. |
+| **Charge Fee Tax Percent** | `chargesFeeTaxPercent` | The VAT rate used to take the tax out. Empty means 15%. |
+| **Exclude Service Fees With No Configs** | `excludeServiceFeesWithNoConfigs` | Tick to send only the service fees that have a row for this document in the [Service Fees And What Is Charged To Customer](./e-invoices-guide.md#Service-Fees-And-What-Is-Charged-To-Customer) grid; the other fees are left out of the charge. It has no effect while **Charge Fee Fields** is filled. |
+
+::: tip Example
+A clinic keeps its service charge in **Service Fees 1** and enters it VAT-inclusive, so a 115 riyal charge holds 15 riyals of VAT. With **Charge Fee Fields** set to `money.service1Fees` and **Charge Fee Value** ticked, ZATCA receives a charge of 100.
+:::
+
+The same four fields apply to Jordan.
 
 ## Taxes and VAT categories
 
@@ -305,7 +326,7 @@ The generic validation messages — a field required, a code invalid, a value da
 | *Error while approving system {0}* | ZATCA refused the OTP or a compliance sample; {0} carries ZATCA's reasons. | An expired or used OTP is the usual cause — generate a new one. Otherwise fix what the reasons point at. |
 | *Error while validating tax authority document {0} - the seller VAT registration number is required by ZATCA (BR-KSA-39)* | **Tax Registeration NO** on the configuration is empty. | Fill it. |
 | *Error while validating tax authority document {0} - the seller VAT registration number {1} must be 15 digits starting and ending with 3 (BR-KSA-44)* | The VAT number is mistyped. | Correct **Tax Registeration NO** on the configuration. |
-| *Error while validating tax authority document {0} - the branch commercial registration field {1} is required by ZATCA (BR-KSA-08)* | The document's Legal Entity has no **Tax Authority Code**. | Enter the commercial registration number in the Legal Entity's **Tax Authority Code**. |
+| *Error while validating tax authority document {0} - the branch commercial registration field {1} is required by ZATCA (BR-KSA-08)* | The document's Legal Entity has no **Tax Authority Code**, and no **Branch Tax Authority Code Template** supplies one. | Enter the commercial registration number in the Legal Entity's **Tax Authority Code**, or correct the template. |
 | *Error while validating tax authority document {0} - the branch commercial registration {1} must contain only letters and digits (BR-KSA-08)* | The Legal Entity's **Tax Authority Code** has dashes, spaces or symbols. | Keep letters and digits only. |
 | *Error while validating tax authority document {0} - the seller building number {1} must contain 4 digits (BR-KSA-37)* | The Legal Entity's **Building Number** is not 4 digits. | Correct it from the national address. |
 | *Error while validating tax authority document {0} - the seller postal code {1} must be 5 digits (BR-KSA-66)* | The Legal Entity's **Postal Code** is not 5 digits. | Correct it. |

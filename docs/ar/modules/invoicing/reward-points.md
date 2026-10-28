@@ -5,7 +5,7 @@ menu: الأساسيات ← المستندات ← إعدادات نقاط ال
 
 # نقاط مكافآت العملاء (Customer Reward Points / Loyalty Points)
 
-تتناول هذه الصفحة الرسائل التي يرسلها نما للعملاء عن نقاط مكافآتهم والربط مع STC قطاف. أما كيف تُكتسب النقاط ومتى تنتهي وكيف تُصرف، وشاشات الرصيد الافتتاحي والمنح الفتري والمنع، فموجودة في [إعداد نقاط المكافأة في نما](/ar/modules/invoicing/reward-points-setup).
+تتناول هذه الصفحة الرسائل التي يرسلها نما للعملاء عن نقاط مكافآتهم، وإعدادات الاتصال بالمزوّدين الخارجيين (الراجحي وSTC وداتانيوم)، وشهادة STC قطاف. أما كيف تُكتسب النقاط ومتى تنتهي وكيف تُصرف، وشاشات الرصيد الافتتاحي والمنح الفتري والمنع، فموجودة في [إعداد نقاط المكافأة في نما](/ar/modules/invoicing/reward-points-setup).
 
 ![سجل إعدادات نقاط المكافأة](images/reward-points-config-ar.png)
 
@@ -43,6 +43,56 @@ To redeeem {rewardInfo.amount} {rewardInfo.currency.altCode} ({rewardInfo.redeem
 ::: tip يُنفَّذ OTP tempo مقابل سجل العميل
 - يمكنك الوصول إلى أي معلومات من سجل العميل، مثل name1 وname2 والبريد الإلكتروني وغيرها.
 :::
+
+## مزوّدو النقاط الخارجيون: إعدادات الاتصال
+
+حين يحدد **النوع** (`type`) مزوّدًا خارجيًا، يحتفظ المزوّد برصيد العميل ويقتصر دور نما على مخاطبته: يبلغه بما اشتراه العميل، ويطلب رمز تحقق لمرة واحدة، ويصرف النقاط نيابة عن العميل. اختر النوع الذي في اسمه *Test* أو *Pre Production* أثناء تجربة الاتصال، والنوع *Production* عند التشغيل الفعلي. ولا يُحفظ السجل حتى تُملأ الإعدادات التي يحتاجها ذلك المزوّد.
+
+### حقول الصفحة الأولى
+
+| الحقل | معرّف الحقل | ما يفعله |
+|---|---|---|
+| **رابط** (URL) | `url` | عنوان المزوّد. مطلوب لكل مزوّد خارجي. |
+| **اسم المستخدم** / **كلمة المرور** | `userName`، `password` | معرّف العميل وكلمة سره كما أصدرهما المزوّد. مطلوبان للراجحي والعربي الوطني وSTC وبونات وكانجارو؛ ولا يستعملهما داتانيوم. |
+| **Mobile Correction Query** | `mobileCorrectionQuery` | يتعرّف المزوّد على العميل برقم جواله. فإن لم تكن الأرقام في نما مخزّنة بالصيغة التي يتوقعها المزوّد، فاكتب هنا استعلامًا: يشغّله نما على القسيمة أو على العميل ويرسل العمود الأول من الصف الأول بدل الجوال المخزّن. اتركه فارغًا إن كانت الأرقام المخزّنة صحيحة أصلًا. |
+| **Terminal and Branch ID Config** | `branchesInfo` | انظر أدناه. |
+
+### جدول Terminal and Branch ID Config
+
+يحتاج STC إلى معرفة الفرع ونقطة البيع اللذين جاءت منهما العملية، ويحتاج الراجحي إلى معرفة الفرع. المحل الواحد يكفيه أن يضع **Branch ID** واحدًا (و**Terminal ID** مع STC) في صفحة المزوّد. أما السلسلة فتملأ هذا الجدول بدلًا من ذلك، سطرًا لكل فرع أو نقطة بيع: **الدفتر** (`branchesInfo.documentBook`) و**التوجيه** (`branchesInfo.documentTerm`) والمحددات الخمسة (`branchesInfo.dimensions.legalEntity`، `branchesInfo.dimensions.sector`، `branchesInfo.dimensions.branch`، `branchesInfo.dimensions.department`، `branchesInfo.dimensions.analysisSet`) تصف المستندات التي يغطيها السطر، و**Branch ID** (`branchesInfo.branchId`) و**Terminal Id / Device Serial No** (`branchesInfo.terminalId`) هما ما يرسله نما عنها.
+
+العمود الفارغ يطابق أي قيمة. وتُجرَّب السطور من الأعلى وأول سطر مطابق هو الذي يُطبَّق، فضع السطور الضيقة فوق الواسعة. والمستند الذي لا يطابق أي سطر يُرسَل بقيمتي Branch ID وTerminal ID من صفحة المزوّد.
+
+### صفحة Rajhi Rewards
+
+| الحقل | معرّف الحقل | ما يفعله |
+|---|---|---|
+| **معرف التاجر** (Merchant Token) | `merchantToken` | رمز التاجر الذي أصدره الراجحي. مطلوب. |
+| **Partner Code** | `partnerCode` | كود الشريك لدى الراجحي. |
+| **POS Register ID** | `posRegisterId` | معرّف نقطة البيع الذي ربطه الراجحي بك. ويستعمله العربي الوطني أيضًا، ويرفض العملية بدونه. |
+| **Branch ID** | `branchID` | كود الموقع الذي يُرسَل حين لا يطابق أي سطر في الجدول السابق. |
+| **Certificate** / **Private Key** / **Public Key** | `certificate`، `privateKey`، `publicKey` | زوج المفاتيح الذي يوقّع به نما طلباته إلى الراجحي. |
+
+زر **Generate Cetficate And Keys** ينشئ زوج مفاتيح جديدًا وشهادة ويحفظها في هذه الحقول الثلاثة. ولا يعمل إلا على إعداد من نوع الراجحي. نزّل الجزء العام من حقله وأرسله إلى الراجحي حسب تعليماتهم، ولا ترسل المفتاح الخاص أبدًا. وتعرض قائمة **عمليات اكتساب و تحديث نقاط ولاء** في الصفحة نفسها كل عملية اكتساب وتحديث أُرسلت إلى المزوّد.
+
+### صفحة STC Rewards
+
+| الحقل | معرّف الحقل | ما يفعله |
+|---|---|---|
+| **API Token** | `apiToken` | رمز التاجر السري الذي أصدره STC، ويُرسَل مع كل طلب. مطلوب. |
+| **معرف التاجر** (Merchant Token) | `merchantToken` | يجب ملؤه ليُحفظ السجل، لكن طلبات STC تستعمل **API Token**. |
+| **Branch ID** / **Terminal ID** | `branchID`، `terminalID` | يُرسلان حين لا يطابق أي سطر في جدول Terminal and Branch ID Config. |
+| **Certificate** / **Private Key** | `certificate`، `privateKey` | الشهادة التي وقّعها STC والمفتاح الخاص الذي صُنعت منه. كلاهما مطلوب، وطريقة توليدهما مشروحة في [إعداد التكامل مع STC Qitaf](#aadd-ltkml-maa-STC-Qitaf). |
+
+### صفحة Datanuum Rewards
+
+| الحقل | معرّف الحقل | ما يفعله |
+|---|---|---|
+| **API Token** | `apiToken` | الرمز الذي أصدره داتانيوم. مطلوب مع **رابط**. |
+| **Branch ID** | `branchID` | كود الفرع الذي يُرسَل إلى داتانيوم. وفي نقاط البيع يُرسَل كود الكاشير بدلًا منه. |
+| **عدد أحرف OTP** و**OTP Format** و**إنتهاء رمز التحقق اللحظي بعد (بالدقائق)** و**تنبية كود التحقق** | `otpCharacterCount`، `otpFormat`، `otpExpiresAfterInMinutes`، `otpNotification` | مع داتانيوم ينشئ نما بنفسه رمز التحقق الذي يؤكد الصرف ويرسله عبر هذا التنبيه. وتعمل كما في صفحة Nama Rewards؛ راجع [إعداد نقاط المكافأة في نما](/ar/modules/invoicing/reward-points-setup). |
+
+وتسجّل قائمة **Datanuum Request Log** في الصفحة كل طلب وردّه، وهي أول ما تنظر فيه حين يفشل الصرف.
 
 ## إعداد التكامل مع STC Qitaf
 
@@ -89,14 +139,14 @@ openssl req -newkey rsa:2048 -nodes \
 #### الخطوة الثالثة: الإعداد في نظام نما
 
 1. افتح شاشة **Reward Points Config**
-2. ارفع ملف الشهادة (المستلم من STC) في حقل **Certificate** - يُسمى الملف عادةً `qitaf-{YourPartnerID}-{SomeSerialNumber}.pem.txt`
-3. ارفع ملف مفتاحك الخاص (مثال: `qitaf-2244.key`) في حقل **Private Key**
+2. ارفع ملف الشهادة (المستلم من STC) في حقل **Certificate** (`certificate`) - يُسمى الملف عادةً `qitaf-{YourPartnerID}-{SomeSerialNumber}.pem.txt`
+3. ارفع ملف مفتاحك الخاص (مثال: `qitaf-2244.key`) في حقل **Private Key** (`privateKey`)
 4. أكمل بقية الإعدادات:
-   - API URL
-   - Client ID (Username)
-   - Client Password
-   - Merchant Token (API Token)
-   - تعيينات Branch و Terminal ID
+   - **رابط** (`url`) — عنوان واجهة STC
+   - **اسم المستخدم** (`userName`) — معرّف العميل
+   - **كلمة المرور** (`password`) — كلمة سر العميل
+   - **API Token** (`apiToken`) — رمز التاجر؛ واملأ **معرف التاجر** (`merchantToken`) أيضًا وإلا لن يُحفظ السجل
+   - **Branch ID** / **Terminal ID** (`branchID`، `terminalID`)، أو [جدول Terminal and Branch ID Config](#jdwl-Terminal-and-Branch-ID-Config) عند تعدد الفروع
 
 ::: tip احتفظ بنسخ احتياطية من ملفاتك (Backup Your Files)
 احتفظ بنسخ احتياطية آمنة من ملف مفتاحك الخاص وملف الشهادة الصادر من STC.

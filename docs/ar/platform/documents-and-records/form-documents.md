@@ -1,6 +1,6 @@
 ---
 description: "النماذج، المستندات الاحتياطية الستة عشر للحاجات الخاصة بعميل واحد: ما على الشاشة، ومثال عملي لتغيير أسمائها وترتيب حقولها والحساب والتحقق فيها، وتأثيراتها المحاسبية، والحدود التي تستحق المعرفة قبل أن تَعِد بشيء."
-entities: [FormDoc1, FormDoc2, FormDoc3]
+entities: [FormDoc1, FormDoc2, FormDoc3, FormDoc4, FormDoc5, FormDoc6, FormDoc7, FormDoc8, FormDoc9, FormDoc10, FormDoc11, FormDoc12, FormDoc13, FormDoc14, FormDoc15, FormDoc16]
 menu: الأساسيات ← الملاحظات ← نموذج 1
 ---
 # النماذج — باب الخروج الآمن

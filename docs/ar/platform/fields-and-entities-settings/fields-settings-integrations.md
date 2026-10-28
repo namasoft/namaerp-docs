@@ -188,27 +188,6 @@ https://<your server>/erp/r/{retrieverFileId}
 
 والنماذج التي تشغّلها هذه الأسطر نماذج طباعة عادية، تُصمَّم وتُصان في مكانها المعتاد — راجع [دليل Jasper Reports الشامل](/ar/platform/reports/reports-guide) — أما إعدادات الطباعة والإخراج العامة على مستوى الخادم فتجدها في [التقارير والطباعة](/ar/platform/global-config/global-config-reports).
 
-## Error Message Logging Configurations
-
-حين يصل سجل من موقع آخر — رسالة نسخ متماثل أو رسالة واردة على ناقل الرسائل — ويفشل تنفيذه، يظل الفشل
-ظاهراً ما بقيت الرسالة في طابورها ثم يزول. وهذا الجدول هو الذي يبقيه: فلأنواع الكيانات التي تدرجها،
-يُنسخ الفشل إلى سجل **رسالة خطأ (Error Message)** دائم يحمل نص الرسالة ووصفها والسجل الذي تخصه
-والمستخدم الذي جرت باسمه.
-
-ويقول كل سطر أي الإخفاقات تُحفظ، بعمودين وقائمة أنواع:
-
-| العمود | ماذا يفعل |
-|---|---|
-| **For Type** | نوع كيان واحد. واتركه فارغاً فيغطي السطر كل أنواع الكيانات على الطابور المذكور بجانبه. |
-| **Entity Type List** | قائمة أنواع مسماة بدل النوع الواحد — تُفرد القائمة كلها، مدخلاً مدخلاً. |
-| **Target Queue ID** | الطابور الذي تُحفظ إخفاقاته. واتركه فارغاً فيغطي السطر **كل** الطوابير للنوع المذكور بجانبه. |
-
-فالسطر الذي فيه نوع بلا طابور يحفظ إخفاقات ذلك النوع في كل مكان، والسطر الذي فيه طابور بلا نوع يحفظ
-كل ما يفشل على ذلك الطابور، والسطر الذي فيه الاثنان هو الحالة الضيقة. والسطر المعلَّم **غير نشط** يُهمل.
-
-ويُقرأ الجدول من ذاكرة مؤقتة تُسقَط كلما حُفظ سجل الإعدادات، فيعمل السطر الجديد مع أول إخفاق تالٍ —
-ولا إعادة تشغيل في هذا الجدول.
-
 ## ملاحظة أمنية
 
 كل جدول آخر في هذه الشاشة يعدّل ما يراه مستخدم مسجّل دخوله. أما هذه الثلاثة فتنشئ مسارات دخول وخروج تتجاوز شاشة الدخول تماماً، وهو ما يغيّر ثمن الخطأ.
@@ -270,8 +249,6 @@ https://<your server>/erp/r/{retrieverFileId}
 | Save Files In Folder | Save Files In Folder | `invoiceRetrieverLines.saveFilesInFolder` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
 | URL Prefix | URL Prefix | `invoiceRetrieverLines.urlPrefix` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
 | Do Not Cache | Do Not Cache | `invoiceRetrieverLines.doNotCache` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |
-| Error Message Logging Configurations | Error Message Logging Configurations | `errorMessageLoggingConfigs` | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
-| نوع الرسالة | Target Queue ID | `errorMessageLoggingConfigs.targetQueueId` | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
 
 ## صفحات ذات صلة
 

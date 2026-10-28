@@ -1,6 +1,6 @@
 ---
-description: "Administering Nama Mobile from the ERP: a map of every screen under Basic → Mobile Apps, when a change reaches the phone, the API Credentials record each app user gets, and the Mobile Application Dashboard."
-entities: [MobileAppDashboard]
+description: "Administering Nama Mobile from the ERP: a map of every screen under Basic → Mobile Apps, when a change reaches the phone, the API Credentials record each app user gets, the Mobile Application Dashboard and the Mobile Security Configuration."
+entities: [MobileAppDashboard, MobileSecurityConfig]
 menu: Basic → Mobile Apps → Mobile Application Dashboard
 ---
 # Administering Nama Mobile from the ERP
@@ -20,7 +20,8 @@ Nothing about Nama Mobile is configured on the phone beyond the server address a
 | **User Mobile Identifier Document** | سند تعريف هاتف مستخدِم | Which phone each user may save documents from | [Binding users to their phones](./mobile-device-binding.md) |
 | **Mobile Application Dashboard** | لوحة تطبيق الموبايل | The charts on the app's dashboard screen | [Below](#The-Mobile-Application-Dashboard) |
 | **Mobile QR Integrator** | Mobile QR Integrator | What happens when the app scans a QR code | [Mobile QR Integrator](./mobile-qr-integrator.md) |
-| Mobile apps module settings (last item in the menu) | إعدادات تطبيقات الجوال | Books, print templates, draft saving, attendance rules and the rest of the app's behaviour | [Overview, Navigation & Settings](./mobile-application-guide.md#Server-settings-that-control-the-apps-behavior) |
+| **Mobile Security Configuration** | إعدادات صلاحيات الموبايل | Extra app rights given to chosen users, such as seeing every driver's delivery status | [Below](#Mobile-Security-Configuration) |
+| **Mobile Apps Configurations** (last item in the menu) | إعدادات تطبيقات الهواتف المحمولة | Books, print templates, draft saving, attendance rules and the rest of the app's behaviour | [Mobile Apps Configurations — option reference](./mobile-apps-configuration.md) |
 
 All of these screens come with the basic licence, except the Mobile Application Dashboard, which needs `basic-mobile-ess`.
 
@@ -74,3 +75,17 @@ A widget the user has no right to view is skipped silently: the rest of the dash
 |---|---|---|
 | *Element Type {0} is not supported* — «نوع العنصر {0} غير مدعم» | A line's widget is of a kind the app cannot draw. | Pick a widget of one of the six supported kinds, or change the widget's type. |
 | *Only One Group Can be Main Group* — «مجموعة واحدة فقط يمكن ان تكون المجموعة الرئيسية» | **Basic Group** is ticked on lines that belong to two different groups. | Untick it everywhere except on the lines of the group the dashboard should open on. |
+
+## Mobile Security Configuration
+
+Most of what a user may do in the app follows from their ordinary rights in the ERP. A few app-only rights have no place there, so they are granted on a **Mobile Security Configuration** record (**Basic → Mobile Apps → Mobile Security Configuration**). Each line of its **Details** grid names who gets the right and ticks the rights given:
+
+| Column | Field id | What it does |
+|---|---|---|
+| **User** | `lines.user` | Who the line applies to: a user, a security profile (every user who has it) or an employee (the user linked to that employee). |
+| **Employee Group** | `lines.employeeGroup` | Applies the line to every user whose employee belongs to this employee group. Fill it instead of, or as well as, **User**. |
+| **See All Drivers Delivery Status** | `lines.seeAllDriversDeliveryStatus` | The delivery-status summary a driver asks for in the app counts the delivery documents by status. Normally it counts only the documents where the user's own employee is the driver; with this ticked the user gets the counts across all drivers — useful for a dispatcher or a delivery supervisor. |
+
+Only saved (committed) records count, and a user gets a right as soon as any one line that matches them grants it, whether the line names the user, their security profile, their employee or a group containing that employee. The server rereads the records each time one is saved or deleted, so a change applies to the user's next request without logging in again.
+
+A user who has no employee on their user record and has not been given **See All Drivers Delivery Status** is refused the summary with *The user {0} does not have an employee* — «المستخدم {0} ليس لديه موظف». Link the user to their employee, or grant them the right here.

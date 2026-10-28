@@ -8,6 +8,7 @@
   <LandingCard icon="🚀" title="المفاهيم الأساسية والإعداد المبدئي" link="/ar/modules/accounting/ledger-setup/accounting-concepts-and-setup.md" details="تعريف دفتر الأستاذ والسنوات المالية قبل أول قيد." />
   <LandingCard icon="🌳" title="شجرة الحسابات" link="/ar/modules/accounting/ledger-setup/chart-of-accounts.md" details="بناء شجرة الحسابات." />
   <LandingCard icon="📒" title="الحسابات" link="/ar/modules/accounting/ledger-setup/accounts.md" details="تعريف الحسابات نفسها." />
+  <LandingCard icon="👜" title="حقائب الحسابات والخزائن والشركاء" link="/ar/modules/accounting/ledger-setup/accounts-bags-safes-and-partners.md" details="مجموعات حسابات مشتركة للأطراف، وخزائن النقدية وخزائن الكاشير، وسجلات الشركاء." />
   <LandingCard icon="🔐" title="الحسابات النظامية واستثناءات الحركة عليها" link="/ar/modules/accounting/ledger-setup/system-accounts-and-exceptions.md" details="الحسابات النظامية واستثناءات الحركة عليها." />
 </LandingGrid>
 

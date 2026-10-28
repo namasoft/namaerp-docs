@@ -1,6 +1,6 @@
 ---
 description: "Tracking investment assets with Investment Portfolios: the portfolio, investor and project master files, share and stake types, and the lifecycle from Investment Opportunity and Investment Start through updates, capital increases and profit distribution to Investment End."
-entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject, IPShareType, IPStakeType]
+entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject, IPShare, IPStake, IPCashDeposit, IPInvestmentFund, InvestmentCompany, FundType, IPShareType, IPStakeType, IPInvestmentAllocation, IPInvestmentRefund, IPInvestmentBudget]
 menu: Accounting → Investment Portfolios → Investment Portfolio
 ---
 
@@ -25,6 +25,18 @@ Before recording activity you set up the players and the asset:
 - **Investment Project** (`Accounting > Investment Portfolios > Investment Project`) — a project that capital is allocated to.
 
 There are also building-block files — **shares**, **stakes**, **cash deposits**, **investment funds** and **fund types** — that describe the make-up of what's held.
+
+### Investment companies and the holdings
+
+Each thing the portfolio holds is a master file of its own, so it can carry its own accounts and be picked on the lifecycle documents' lines:
+
+- **Investment Company** (`Banks > Investment Documents > Investment Company`) — the company you invest in or through: **country**, **responsible name**, **phone number**, **email**, **company number**, remarks and attachments, plus its own accounts. It is picked on shares, stakes, investment funds and portfolios, and on the bonds of [Investment Documents](./investment-documents.md).
+- **Share** and **Stake** (`Banks > Investment Documents > Share` / `Stake`) — one record per holding in an investment company. You enter the company, the type, the currency and the **tax %**; the figures — **share (stake) count**, **purchase price** and **total purchase value**, **purchase date**, **current price** and its **last update date**, **current market value**, **average cost**, **sales price**, **profit** and **profit percentage** — are filled in by the lifecycle documents, not typed.
+- **Cash Deposit** (`Banks > Investment Documents > Cash Deposit`) — money placed on deposit: the **bank**, **bank account**, currency and **tax %**. Its **value in currency**, **value in local currency** and **purchase date** come from the documents that put capital into it.
+- **Investment Fund** (`Banks > Investment Documents > Investment Fund`) — a holding in a managed fund: the **investment company** that runs it and its **fund type**. Its **total fund in local currency** and **purchase date** are filled in from the documents.
+- **Fund Type** (`Banks > Investment Documents > Fund Type`) — a classification list (code, names, description) picked on each investment fund. Like share and stake types, it is a label only.
+
+Every holding has a **status** and a **profit amount** that follow the same lifecycle as the portfolio.
 
 ### Share types and stake types
 

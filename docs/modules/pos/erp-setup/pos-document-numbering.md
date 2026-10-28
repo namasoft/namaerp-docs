@@ -51,8 +51,8 @@ Three places control numbering, from the broadest to the most specific.
 
 **POS Settings** (**Point of sale → Settings → POS Settings**) holds the company-wide defaults:
 
-- **Pos Code Suffix Length** (*طول لاحقة كود مستندات نقاط البيع*) — how many digits the serial has. Empty means 8.
-- **POS Code Date Part Format** (*نمط جزء التاريخ الخاص بكود نقطة البيع*) — the date pattern for every register that does not set its own.
+- **Pos Code Suffix Length** (*طول لاحقة كود مستندات نقاط البيع*, `value.posCodeSuffixLength`) — how many digits the serial has. Empty means 8.
+- **POS Code Date Part Format** (*نمط جزء التاريخ الخاص بكود نقطة البيع*, `value.posCodeDatePartFormat`) — the date pattern for every register that does not set its own.
 
 **The register** (**Point of sale → Register → Register**) can set its own **POS Code Date Part Format** in its header; when filled, it replaces the one in POS Settings for that register.
 

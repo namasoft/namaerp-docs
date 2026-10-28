@@ -110,6 +110,10 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **عدم التحقق من خصم الفاتورة مع الالتزام بقوائم الأسعار (Do Not Check Header Discount While Force Price List)** `termConfig.doNotCheckDiscountsWhileForcePriceList` — عند تفعيل الالتزام بقوائم الأسعار، يتجاوز التحقق من خصم الرأس مقابل قائمة الأسعار.
 
+**التحقق من الحد الأدنى للسعر بعد تأثير (Check Min Price With Value After Effect)** `termConfig.checkMinPriceWithValueAfterEffect` — مع تفعيل فرض قائمة الأسعار يُفحص سعر الوحدة مقابل الحد الأدنى في قائمة الأسعار قبل أي خصم. اختر هنا مرحلة (خصمًا من 1 إلى 8، أو تخفيض الفاتورة، أو ضريبة من 1 إلى 4) ليُفحص أيضًا صافي سعر الوحدة بعد تلك المرحلة: قيمة السطر بعد المرحلة المختارة مقسومة على الكمية يجب ألا تقل عن الحد الأدنى للسعر. والسطر الذي يقل يُرفض بالرسالة
+«سعر الصنف {0} الصافي {1} بعد {2} أقل من الحد الأدنى للسعر {3}».
+الفارغ يعني عدم إجراء هذا الفحص؛ والصنف الذي ليس له حد أدنى في قائمة الأسعار لا يُفحص.
+
 **السعر الافتراضي في قائمة الأسعار (Price List Default Price)** `termConfig.priceListDefaultPrice` — يختار أي شريحة سعر من قائمة الأسعار (مثل الافتراضي/الأدنى/الأقصى) تُستخدم كسعر افتراضي عند تسعير السطور.
 
 **تجاهل الالتزام بقوائم الأسعار مع الصنف المجاني (Ignore Force Price List With Free Item)** `termConfig.ignoreForcePriceListWithFreeItem` — يتجاوز فحص الالتزام بقوائم الأسعار للأصناف المجانية، فلا تُرفض سطور الهدايا لعدم وجود سعر لها في القائمة.
@@ -154,6 +158,14 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **استخدام قواعد السحب (Use Pick List)** `termConfig.usePickList` — يفعّل قواعد السحب المخزني (Pick List) لفاتورة المبيعات. فاتورة المبيعات فقط.
 
+ثلاثة خيارات أخرى في هذه المجموعة خاصة بمتاجر ماجنتو. يعمل كل منها مرة واحدة لكل مستند عند حفظه أول مرة، ويصعد في سلسلة **بناءا على** حتى الأمر الذي جاء من ماجنتو. انظر [دليل تكامل التجارة الإلكترونية](/ar/modules/ecommerce/ecommerce-integration-guide).
+
+| الخيار | معرّف الحقل | ما يفعله |
+|---|---|---|
+| إنشاء فاتورة ماجنتو عند تطابق الشروط (Create Magento Invoice When Condition Applied) | `termConfig.createMagentoInvoiceWhenConditionApplied` | ينشئ الفاتورة في ماجنتو لذلك الأمر، إذا طابق المستند معايير إنشاء الفاتورة في الموقع. |
+| إنشاء شحن فاتورة ماجنتو عند تطابق الشروط (Create Magento Invoice Shipping When Condition Applied) | `termConfig.createMagentoInvoiceShippingWhenConditionApplied` | ينشئ الشحنة في ماجنتو لذلك الأمر، إذا طابق المستند معايير إنشاء الشحن في الموقع. |
+| تحديث حالة الأمر في ماجنتو عند تطابق الشروط في مستند بناءا علي (Update Magento Order Status When Condition Applied In From Doc) | `termConfig.updateMagentoStatusWhenConditionApplied` | يرسل حالة ذلك الأمر إلى ماجنتو، كما في قسم إرسال حالة الطلب إلى المتجر في الدليل نفسه. |
+
 ## التحكم في تحديث الأسعار (Price-Update Control)
 
 شكوى «غيّرت التوجيه فاختفت الخصومات» شائعة، وهي ليست فقدًا للبيانات. ففي مستند المبيعات تُحسب أسعار **كل السطور** وخصوماتها من جديد عندما يغيّر المستخدم **التوجيه** أو **التاريخ الفعلي** أو **الذمة**. وتُحسب من جديد أيضًا عند تغيير **العميل**، لكن فقط إذا فُعّل *تحديث السعر مع تغيير العميل* في إعدادات سلسلة التوريد. وكل سعر أو خصم كُتب يدويًا يُستبدل بما تعطيه قوائم الأسعار والعروض. أما تغيير كمية الصنف أو وحدته فيعيد تسعير ذلك السطر وحده. والخيارات التالية توقف إعادة الاحتساب هذه، إما لحدث واحد أو بالكامل.
@@ -165,6 +177,15 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 **عدم حساب الأسعار والخصومات والأصناف المجانية إذا وجد سعر الوحدة (Do Not Calculate Prices, Discounts, and Free Items If Unit Price Exists)** `termConfig.doNotCalcPricesIfUnitPriceExist` — يتخطى حساب السعر/الخصم/الصنف المجاني لأي سطر له سعر وحدة بالفعل.
 
 **تجاهل "عدم حساب الأسعار إذا وجد سعر الوحدة" قبل الحفظ أول مرة (Ignore "Do Not Calculate Prices If Unit Price Exists" Before First Save)** `termConfig.ignoreDoNotCalcPricesIfUnitPriceExistBeforeFirstSave` — يعلّق المفتاح أعلاه حتى أول حفظ للمستند، فيُجرى التسعير المبدئي.
+
+مع تفعيل *عدم حساب الأسعار … إذا وجد سعر الوحدة*، يعيد تغيير الصنف تسعير سطره، أما تغيير أي شيء آخر فيه فلا. تسمّي الخيارات الأربعة التالية حقولًا أخرى في السطر يعيد تغييرها تسعير السطر رغم ذلك، في مستندات المبيعات:
+
+| الخيار | معرّف الحقل |
+|---|---|
+| إعادة احتساب الأسعار دائما مع الوحدة (Recalculate Prices Always With UOM) | `termConfig.recalculatePricesAlwaysWithUOM` |
+| إعادة احتساب الأسعار دائما مع اللون (Recalculate Prices Always With Color) | `termConfig.recalculatePricesAlwaysWithColor` |
+| إعادة احتساب الأسعار دائما مع المقاس (Recalculate Prices Always With Size) | `termConfig.recalculatePricesAlwaysWithSize` |
+| إعادة احتساب الأسعار دائما مع الإصدار (Recalculate Prices Always With Revision) | `termConfig.recalculatePricesAlwaysWithRevisionId` |
 
 **عدم نزول سعر الوحدة للصنف تلقائياً (Do Not Automatically Add Unit Price)** `termConfig.doNotAddUnitPriceAuto` — يمنع تعبئة سعر الوحدة تلقائياً عند اختيار الصنف؛ فعلى المستخدم إدخاله.
 

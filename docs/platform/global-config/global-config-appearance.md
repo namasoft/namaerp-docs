@@ -83,8 +83,6 @@ Everything above paints the whole system the same way. When the meaning you want
 
 **Do Not Use Descriptors In Fields** `value.info.doNotUseDescriptorsInFields` — Reference fields show only code and name rather than the longer descriptor text. Turn it on where descriptors are so long they push the useful part of the field off screen.
 
-**Use New Rich Text Editor** `value.info.useKendoRichEditor` — Rich-text fields use the Kendo editor.
-
 **Create DMS Doc In Pop Up Window** `value.info.createDMSDocInPopUpWindow` *(default on)* — The **Create Archive** action opens the new [archived document](/platform/dms/dms-documents.md) in a popup instead of navigating away, so the user does not lose the record they were working on.
 
 ## Tooltips
@@ -144,7 +142,6 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.hideCountColumnInSelectorPopup` | Hide Count Column In Selector Popup | إخفاء عمود عدد مرات الإدارج في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
 | `value.info.alwaysUseTextAreaInSerialPopup` | Always Use Text Area In Serial Popup | Always Use Text Area In Serial Popup | [Popups and editors](#Popups-and-editors) |
 | `value.info.doNotUseDescriptorsInFields` | Do Not Use Descriptors In Fields | عدم استعمال الوصف في الحقول | [Popups and editors](#Popups-and-editors) |
-| `value.info.useKendoRichEditor` | Use New Rich Text Editor | استعمال محرر النصوص الجديد | [Popups and editors](#Popups-and-editors) |
 | `value.info.createDMSDocInPopUpWindow` | Create DMS Doc In Pop Up Window | إنشاء المستند الارشيفي في شاشة منبثقة | [Popups and editors](#Popups-and-editors) |
 | `value.info.tooltipPosition` | Tooltip Position | موضع المساعدة السريعة | [Tooltips](#Tooltips) |
 | `value.info.pinToolTip` | Pin Tool Tip | تثبيت المساعدة السريعة | [Tooltips](#Tooltips) |

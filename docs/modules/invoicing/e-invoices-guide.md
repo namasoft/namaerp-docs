@@ -53,11 +53,79 @@ The configuration is long, but it answers only five questions. Knowing which que
 
 **How do our items and taxes translate?** — authorities do not accept your internal item codes and tax names as they stand. Here you say where the item code comes from and how to build it, where the item's description comes from, and how each of the four tax slots maps to the authority's tax type and sub-type — including which code to send for exempt, zero-rated and out-of-scope lines, and whether a tax with a zero value should be sent at all.
 
-**When may we send?** — **Start Sending From Date** draws the line before which nothing is submitted, so switching the feature on does not sweep up last year's invoices. **Max Days To Send Invoices** and **Max Days To Cancel Sent Invoices** hold you to the authority's deadlines, and a separate from/to pair opens a deliberate window when you have permission to send older documents.
+**When may we send?** — **Start Sending From Date** draws the line before which nothing is submitted, so switching the feature on does not sweep up last year's invoices. **Max Days To Send Invoices** and **Max Days To Cancel Sent Invoices** hold you to the authority's deadlines.
 
 **How much at a time?** — how many documents go in one request to the authority, and how many lines a single collection may pull in. Both matter on high-volume days: too large and the authority times out, too small and you are creating submission documents all afternoon.
 
 ![An Electronic Tax Authority Configuration record](../../ar/modules/invoicing/images/einvoice-taxpayer-config-egypt-en.png)
+
+## Shared settings on every country page
+
+Each country page repeats a block of settings that work the same way whatever the country. They are described once here, and the country guides link back to this section. The field ID next to each one is what you search for in the import tools or quote to a developer.
+
+### Unit price, quantities and rounding
+
+An invoice line in Nama goes through several steps — the price, up to eight discounts, the header discount and four taxes — in the order the line's tax configuration sets. The authority receives a single unit price per line, so the configuration has to say which step that price is read from.
+
+| Field | Field ID | What it does |
+|---|---|---|
+| **Unit Price Source** | `unitPriceSource` | The step of the line's calculation the unit price is taken from: **Main Price** (the default), **Discount 1**–**Discount 8**, **Header Discount**, or **Tax 1**–**Tax 4**. Discounts up to and including that step are already inside the price, so they are not sent again as discounts. Taxes that the price includes are taken out. |
+| **Unit Price Source Type** | `unitPriceType` | Which amount of that step is used. **Unit Price Source After Value** (the default) is the line amount once the step has been applied. **Unit Price Source Apply Value** is the amount the step was calculated on. |
+| **Quantity Fractional Places** | `quantityFractionalPlaces` | How many decimal places the quantity is sent with. Zero or empty means the same number of decimals the country uses for amounts. |
+| **Ignore and Round Amount if Scale is Greater Than Allowed Scale** | `ignoreAndRoundAmountIfScaleIsInvalid` | When a unit price multiplied by the currency rate has more decimals than the authority allows, the document stops with the message below. Tick this to round the amount instead. |
+| **Max Number Of Lines When Collect Tax Auth Docs** | `maxNumberOfLinesWhenCollectTaxAuthDocs` | How many lines one **Collect Tax Authority Documents** may bring in. When it is empty, the Global Configuration field of the same name applies, and when that is empty too, 750. |
+
+::: tip Example
+A line has 10 units at 100, a 10% **Discount 1** and 15% VAT. With **Unit Price Source** set to **Main Price**, the authority receives a unit price of 100 and a discount of 100. Set it to **Discount 1** with **Unit Price Source After Value**, and the authority receives a unit price of 90 and no discount, because the discount is already inside the price.
+:::
+
+The rounding message has no Arabic text and appears in English on Arabic screens:
+
+*Unit price is {0} and currency rate is {1} multiplication result is {2} with {3} scale, result scale should be {4} or less*
+
+### Discount Configs
+
+By default Nama decides where each discount goes from its position in the line's calculation. A discount applied before the taxes is sent as a line discount, a discount applied after the taxes is sent as a discount after tax, and the header discount counts as before tax. The **Discount Configs** grid (`discountConfigs`) overrides that, discount by discount.
+
+| Column | Field ID | What it does |
+|---|---|---|
+| **Discount** | `discountConfigs.discount` | **Header Discount** or **Discount 1**–**Discount 8**. Leave it empty for a row that covers every discount. |
+| **E Invoice Discount Location** | `discountConfigs.einvoiceDiscountLocation` | **Before Tax**, **After Tax**, or **Ignore**, which leaves the discount out of the e-invoice. |
+| **Discount Value Query** | `discountConfigs.discountValueFormula` | A query run on the invoice line. Its result is sent as the discount's value instead of the value on the line. |
+| **Add To Unit Price** | `discountConfigs.addToUnitPrice` | Adds the discount back to the unit price sent, so the authority sees the price before that discount. |
+
+Nama reads the rows from the top and uses the first one that matches, so put a row for a particular discount above a row with an empty **Discount**. Each discount may appear only once. Saving refuses a repeat with *Discount {0} is repeated at line {1}* — «الخصم {0} مُكرر في السطر {1}», or, for a second row with an empty **Discount**, *Line {0} for all discounts is repeated* — «السطر {0} لكل الخصومات مكرر».
+
+### Service Fees And What Is Charged To Customer
+
+This grid (`serviceFeesAndChargesToCustomerConfigs`) sits on the **Main** page of the configuration, not on a country page. It tells Nama what to do with a document's **Service Fees 1**–**4**, and with lines ticked **Charged To Customer**, a column on sales return lines and contracting extracts. A line charged to the customer is never sent as a line of its own.
+
+The first five columns pick the documents a row applies to; an empty column matches everything. The rest say what to do with one amount.
+
+| Column | Field ID | What it does |
+|---|---|---|
+| **Entity Type** | `serviceFeesAndChargesToCustomerConfigs.entityType` | One document type the row applies to. |
+| **Entity Type List** | `serviceFeesAndChargesToCustomerConfigs.entityTypeList` | Several document types the row applies to. |
+| **Book** | `serviceFeesAndChargesToCustomerConfigs.book` | Limits the row to documents in this book. |
+| **Term** | `serviceFeesAndChargesToCustomerConfigs.term` | Limits the row to documents with this term. |
+| **Criteria** | `serviceFeesAndChargesToCustomerConfigs.criteriaDefinition` | Limits the row to documents that match the criteria. |
+| **Service Fees Or Customer Charges** | `serviceFeesAndChargesToCustomerConfigs.serviceFeesOrChargedToCustomer` | The amount the row handles: **Service Fees 1**–**4**, or **Charged To Customer**, the total of the lines charged to the customer. |
+| **Discount** | `serviceFeesAndChargesToCustomerConfigs.discount` | Tick to send the amount as a discount spread over the document's other lines, in proportion to their net value. Required for **Charged To Customer**. |
+| **Discount Case** | `serviceFeesAndChargesToCustomerConfigs.discountCase` | With **Discount** ticked: the discount slot, **Discount 1**–**8**, that carries each line's share. Required. |
+| **Addition Case** | `serviceFeesAndChargesToCustomerConfigs.additionCase` | With **Discount** cleared. **Item** sends the service fee as an extra invoice line. The other choices, **Service 1 Fees Tax**–**Service 4 Fees Tax**, need **Invoice tax apply on**. Required. |
+| **Item** | `serviceFeesAndChargesToCustomerConfigs.item` | For **Item**: the item the extra line is sent under. The line carries that item's code and a quantity of one, priced at the service fee. Required. |
+| **Invoice tax apply on** | `serviceFeesAndChargesToCustomerConfigs.taxLocation` | The tax slot, **Tax 1**–**Tax 4**, used with a **Service N Fees Tax** addition case. Required there. |
+
+::: tip Example
+A company adds a delivery charge to its sales invoices as **Service Fees 1**. A row with **Service Fees Or Customer Charges** = **Service Fees 1**, **Discount** cleared, **Addition Case** = **Item** and a "Delivery" item sends that charge as one more line on each e-invoice, under the Delivery item's code.
+:::
+
+Two messages guard the grid when you save:
+
+- *Field {0} must be true in case of field {1} is {2}* — «الحقل {0} يجب ان يكون مفعلا في حالة ان تكون قيمة الحقل {1} ب {2}». A **Charged To Customer** row has **Discount** cleared. Tick it.
+- *You should not select service fees tax in field {0} with the same service fees type in field {1}* — «لا يمكنك اختيار ضريبة خدمات في الحقل {0} لنفس نوع الخدمة في الحقل {1}». A row names its own service fee as its tax, such as **Service Fees 1** with **Service 1 Fees Tax**.
+
+A service fee with no row in the grid is handled the way each country does it. Saudi Arabia and Jordan send it as a document-level charge, described in the ZATCA guide under [Service fees sent as a document charge](./zatca-guide.md#Service-fees-sent-as-a-document-charge).
 
 ## Sending: collect, check, send
 

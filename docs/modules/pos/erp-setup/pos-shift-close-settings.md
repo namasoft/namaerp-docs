@@ -47,7 +47,7 @@ If the shop's cash is collected through a payment method that is not ticked as t
 
 ### What the reset does in the accounts
 
-With the setting on, the closing also produces an entry that **moves the counted cash** out of the register. The accounts come from the **Cash** tab of the POS Shift Closing document term (*توجيه* — the term's **Cash Debit** and **Cash Credit** groups). A typical setup debits the main treasury and credits the register's cash account. Both groups have to be filled; if either is empty, the register still resets its own balance but the server writes no cash-transfer lines.
+With the setting on, the closing also produces an entry that **moves the counted cash** out of the register. The accounts come from the **Cash** tab of the POS Shift Closing document term (*توجيه* — the term's **Cash Debit** `termConfig.closedDebit` and **Cash Credit** `termConfig.closedCredit` groups). A typical setup debits the main treasury and credits the register's cash account. Both groups have to be filled; if either is empty, the register still resets its own balance but the server writes no cash-transfer lines.
 
 ![The Cash tab of the POS Shift Closing term](../../../ar/modules/pos/images/erp-setup/pos-shift-close-term-cash-en.png)
 
@@ -68,8 +68,8 @@ The **Payment Method** screen has an option with a similar name, **Reset Balance
 
 When a closing (or opening) line has a difference, the server processes it through the document term's **Effect** tab:
 
-- an **overage** (counted more than expected) uses **Increase Debit** and **Increase Credit**;
-- a **shortage** (counted less) uses **Decrease Debit** and **Decrease Credit**.
+- an **overage** (counted more than expected) uses **Increase Debit** `termConfig.config.debit` and **Increase Credit** `termConfig.config.credit`;
+- a **shortage** (counted less) uses **Decrease Debit** `termConfig.debit2` and **Decrease Credit** `termConfig.credit2`.
 
 A payment method can override this with its own **Shift Difference Debit Side** and **Shift Difference Credit Side** (on the **Payment Method** screen); for a shortage those two are applied the other way round. Lines with no difference produce no entry at all.
 
@@ -77,24 +77,24 @@ A payment method can override this with its own **Shift Difference Debit Side** 
 
 All of these are on **POS Settings**. Where a register has its own field with the same name, the register's value wins.
 
-| Setting (English) | On screen (Arabic) | What it does |
-|---|---|---|
-| Shift Close Reset Cash | تصفير النقديه مع غلق الورديه | Clears the cash balance at every close (above). |
-| Delete Held Invoices On Shift Closing | مسح الفواتير المعلقه مع غلق الورديه | Deletes held invoices, returns and replacements on the register when the shift closes. |
-| Send Held Invoices On Shift Closing and On Deleting Held Invoices | إرسال الفواتير المعلقة عند غلق الوردية أو حذف الفاتورة المعلقة | Sends held invoices up to the server (as **Held Invoice** records) when the shift closes, so they are not lost. |
-| Prevent Close If Hold Documents Exist | منع الاغلاق في وجود مستندات معلقة | Refuses the close while any invoice, return or replacement is held. |
-| Prevent Shift Close On Held Invoices | منع إغلاق الوردية عند وجود فواتير معلقة | The same, but only held invoices block the close. |
-| Prevent Shift Close On Unused Credit Notes | منع إغلاق الوردية عند وجود إشعارات دائنة غير مستخدمة تم إنشاؤها أثناء الوردية | Refuses the close while a credit note issued in this shift still has an unused balance. |
-| Prevent Login Except For Shift Opener Or Users With Can-Use-Another-User-Shift Capability | منع تسجيل الدخول إلا لمنشئ الوردية أو من لديه صلاحية استخدام وردية مستخدم أخر | While a shift is open, only the user who opened it — or a user whose POS security profile has **Can Use Another User Shift** — can sign in. |
-| Count of added hours to last shift (After 00:00 O'clock) | عدد الساعات المضافه لاخر ورديه (بعد الساعه 00:00) | For businesses that close after midnight. Set it to 3 and a document saved at 01:30 is dated the previous day at 23:59, so the night's takings stay on one business day. |
-| Work Shift Time | وقت وردية العمل | The time a shift is expected to end. A shift opened before this time cannot keep selling after it — the cashier is told to close and open a new shift. Also on the register; the register's value wins. |
-| Shift Period | مدة الورديه | The expected length of a shift. Each POS Shift Closing then shows **Shift Period Differ By** — how much longer or shorter the shift ran, in hours. |
-| Fill Actual With System Value In Shifts | ملئ القيم الفعلية بالقيم الدفتريه في الورديات | Pre-fills each **Actual Remaining** with the system figure, so the cashier only changes the lines that differ. Leave it off if you want a blind count. |
-| Prevent Saving Shift By F2 Shortcut | منع حفظ سند الوردية باختصار F2 | The shift screen can only be saved with its button, not with F2. |
-| Cash Denominations (CSV) | الفئات النقدية (CSV) | The notes and coins shown in the denominations box on the closing screen, comma-separated, e.g. `200,100,50,20,10,5,1,0.5`. |
-| Taken Elements Per Shift | العناصر المجرودة مع كل وردية | Extra things to count with each opening or closing — keys, vouchers, a stock of gift cards. Each line names the document (opening or closing) and the element; the cashier enters a value for it, and it is saved in the **Taken Elements Per Shift Lines** grid of the document. Also on the register. |
-| Update Invoices Without ShiftOpening On Shift Save | تحديث الفواتير التي لا تحتوي على فتح وردية مع حفظ الوردية | When a shift opening reaches the server after its invoices, links the already-received invoices of that shift to it. |
-| Start With New Shift UI | البدء بالشكل الجديد لشاشة الورديات | Uses the newer shift-screen layout for the mid-shift cash count too. |
+| Setting (English) | On screen (Arabic) | Field id | What it does |
+|---|---|---|---|
+| Shift Close Reset Cash | تصفير النقديه مع غلق الورديه | `value.shiftCloseResetCash` | Clears the cash balance at every close (above). |
+| Delete Held Invoices On Shift Closing | مسح الفواتير المعلقه مع غلق الورديه | `value.deleteHeldOnShiftClosing` | Deletes held invoices, returns and replacements on the register when the shift closes. |
+| Send Held Invoices On Shift Closing and On Deleting Held Invoices | إرسال الفواتير المعلقة عند غلق الوردية أو حذف الفاتورة المعلقة | `value.sendHeldInvoicesOnShiftClosing` | Sends held invoices up to the server (as **Held Invoice** records) when the shift closes, so they are not lost. |
+| Prevent Close If Hold Documents Exist | منع الاغلاق في وجود مستندات معلقة | `value.preventCloseOnHoldDocExist` | Refuses the close while any invoice, return or replacement is held. |
+| Prevent Shift Close On Held Invoices | منع إغلاق الوردية عند وجود فواتير معلقة | `value.preventShiftCloseOnHeldInvoices` | The same, but only held invoices block the close. |
+| Prevent Shift Close On Unused Credit Notes | منع إغلاق الوردية عند وجود إشعارات دائنة غير مستخدمة تم إنشاؤها أثناء الوردية | `value.preventShiftCloseOnUnusedCreditNotes` | Refuses the close while a credit note issued in this shift still has an unused balance. |
+| Prevent Login Except For Shift Opener Or Users With Can-Use-Another-User-Shift Capability | منع تسجيل الدخول إلا لمنشئ الوردية أو من لديه صلاحية استخدام وردية مستخدم أخر | `value.preventLoginIfShiftOpenedByAnotherUserUnlessHasCapability` | While a shift is open, only the user who opened it — or a user whose POS security profile has **Can Use Another User Shift** — can sign in. |
+| Count of added hours to last shift (After 00:00 O'clock) | عدد الساعات المضافه لاخر ورديه (بعد الساعه 00:00) | `value.lastShiftClosingHour` | For businesses that close after midnight. Set it to 3 and a document saved at 01:30 is dated the previous day at 23:59, so the night's takings stay on one business day. |
+| Work Shift Time | وقت وردية العمل | `value.workShiftTime` | The time a shift is expected to end. A shift opened before this time cannot keep selling after it — the cashier is told to close and open a new shift. Also on the register; the register's value wins. |
+| Shift Period | مدة الورديه | `value.shiftPeriod.value` / `value.shiftPeriod.uom` | The expected length of a shift. Each POS Shift Closing then shows **Shift Period Differ By** — how much longer or shorter the shift ran, in hours. |
+| Fill Actual With System Value In Shifts | ملئ القيم الفعلية بالقيم الدفتريه في الورديات | `value.fillActualWithSystemValueInShifts` | Pre-fills each **Actual Remaining** with the system figure, so the cashier only changes the lines that differ. Leave it off if you want a blind count. |
+| Prevent Saving Shift By F2 Shortcut | منع حفظ سند الوردية باختصار F2 | `value.preventSavingShiftByShortcut` | The shift screen can only be saved with its button, not with F2. |
+| Cash Denominations (CSV) | الفئات النقدية (CSV) | `value.cashDenominations` | The notes and coins shown in the denominations box on the closing screen, comma-separated, e.g. `200,100,50,20,10,5,1,0.5`. |
+| Taken Elements Per Shift | العناصر المجرودة مع كل وردية | `value.takenElementsPerShift` | Extra things to count with each opening or closing — keys, vouchers, a stock of gift cards. Each line names the document (opening or closing) and the element; the cashier enters a value for it, and it is saved in the **Taken Elements Per Shift Lines** grid of the document. Also on the register. |
+| Update Invoices Without ShiftOpening On Shift Save | تحديث الفواتير التي لا تحتوي على فتح وردية مع حفظ الوردية | `value.updateInvoicesWithoutShiftOpeningOnShiftSave` | When a shift opening reaches the server after its invoices, links the already-received invoices of that shift to it. |
+| Start With New Shift UI | البدء بالشكل الجديد لشاشة الورديات | `value.startWithNewShiftUI` | Uses the newer shift-screen layout for the mid-shift cash count too. |
 
 Two things always block the close, whatever the settings: a delayed-payment invoice, and a return still waiting for the server to confirm it (see [Returns waiting for the server](../pos-returns-and-replacements.md#Returns-waiting-for-the-server)).
 

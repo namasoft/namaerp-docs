@@ -49,17 +49,17 @@ Service Order Execution has **no term configuration of any kind**.
 This is the single most important table in maintenance setup. Each row is a book-and-term pair
 that lives on one term and produces one kind of document.
 
-| Configured on the term for | Fields | Produces | When |
-|---|---|---|---|
-| Maintenance Contract | دفتر خطة العمل / Work Plan Book · توجيه خطة العمل / Work Plan Term | Maintenance Work Plans | Button *Generate maintenance work plans* |
-| Maintenance Service Contract | دفتر خطة عمل خدمة صيانة / Service Work Plan Book · توجيه خطة عمل خدمة صيانة / Service Work Plan Term | Maintenance Service Work Plans | The equivalent button |
-| Maintenance Work Plan | دفتر أمر الصيانة / Mn Order Book · توجيه أمر الصيانة / Mn Order Term | Maintenance Orders | Button *Generate maintenance orders* |
-| Maintenance Service Work Plan | دفتر أمر خدمة صيانة / Service Order Book · توجيه أمر خدمة صيانة / Service Order Term | Maintenance Service Orders | The equivalent button |
-| Maintenance Order / Order Request | دفتر سند التنفيذ / Mn Execution Doc Book · توجيه سند التنفيذ / Mn Execution Doc Term | Maintenance Order Executions | Buttons *create execution for all lines* / *for selected lines* |
-| Maintenance Service Order | the service execution book and term | Maintenance Service Order Executions | The equivalent buttons |
-| Maintenance Order / Order Request | دفتر عقد الضمان / Warranty Contract Book · توجيه عقد الضمان / Warranty Contract Term | A warranty Maintenance Contract | **Automatically**, on commit, when Order Type is *Installation* |
-| Maintenance Invoice / Service Invoice | دفتر سند صرف مخزني / Stock Issue Book · توجيه سند صرف مخزني / Stock Issue Term, plus *Generate Stock Issue With Spare Parts* and *Generate Stock Issue With Service Items* | A supply-chain Stock Issue | **Automatically**, on commit |
-| Maintenance Invoice Return / Service Invoice Return | دفتر سند توريد مخزني / Stock Receipt Book · توجيه سند توريد مخزني / Stock Receipt Term, plus the two *Generate Stock Receipt With…* switches | A supply-chain Stock Receipt | **Automatically**, on commit |
+| Configured on the term for | Fields | Field ids | Produces | When |
+|---|---|---|---|---|
+| Maintenance Contract | دفتر خطة العمل / Work Plan Book · توجيه خطة العمل / Work Plan Term | `termConfig.mnWorkPlanBook` / `termConfig.mnWorkPlanTerm` | Maintenance Work Plans | Button *Generate maintenance work plans* |
+| Maintenance Service Contract | دفتر خطة عمل خدمة صيانة / Service Work Plan Book · توجيه خطة عمل خدمة صيانة / Service Work Plan Term | `termConfig.mnSrvWorkPlanBook` / `termConfig.mnSrvWorkPlanTerm` | Maintenance Service Work Plans | The equivalent button |
+| Maintenance Work Plan | دفتر أمر الصيانة / Mn Order Book · توجيه أمر الصيانة / Mn Order Term | `termConfig.mnOrderBook` / `termConfig.mnOrderTerm` | Maintenance Orders | Button *Generate maintenance orders* |
+| Maintenance Service Work Plan | دفتر أمر خدمة صيانة / Service Order Book · توجيه أمر خدمة صيانة / Service Order Term | `termConfig.mnSrvOrderBook` / `termConfig.mnSrvOrderTerm` | Maintenance Service Orders | The equivalent button |
+| Maintenance Order / Order Request | دفتر سند التنفيذ / Mn Execution Doc Book · توجيه سند التنفيذ / Mn Execution Doc Term | `termConfig.mnExecutionBook` / `termConfig.mnExecutionTerm` | Maintenance Order Executions | Buttons *create execution for all lines* / *for selected lines* |
+| Maintenance Service Order | the service execution book and term | `termConfig.mnSrvExecutionBook` / `termConfig.mnSrvExecutionTerm` | Maintenance Service Order Executions | The equivalent buttons |
+| Maintenance Order / Order Request | دفتر عقد الضمان / Warranty Contract Book · توجيه عقد الضمان / Warranty Contract Term | `termConfig.warrantyContractBook` / `termConfig.warrantyContractTerm` | A warranty Maintenance Contract | **Automatically**, on commit, when Order Type is *Installation* |
+| Maintenance Invoice / Service Invoice | دفتر سند صرف مخزني / Stock Issue Book · توجيه سند صرف مخزني / Stock Issue Term, plus *Generate Stock Issue With Spare Parts* and *Generate Stock Issue With Service Items* | `termConfig.stockIssueBook` / `termConfig.stockIssueTerm`, `termConfig.genStockIssueWithSpareParts`, `termConfig.genStockIssueWithServiceItems` | A supply-chain Stock Issue | **Automatically**, on commit |
+| Maintenance Invoice Return / Service Invoice Return | دفتر سند توريد مخزني / Stock Receipt Book · توجيه سند توريد مخزني / Stock Receipt Term, plus the two *Generate Stock Receipt With…* switches | `termConfig.stockReceiptBook` / `termConfig.stockReceiptTerm`, `termConfig.genStockReceiptWithSpareParts`, `termConfig.genStockReceiptWithServiceItems` | A supply-chain Stock Receipt | **Automatically**, on commit |
 
 Read that table as a chain and the worked example falls straight out of it. Contract `MC-0021` is
 saved under book `MC` with term `T-MC-STD`; that term names work-plan book `WP` and term
@@ -93,9 +93,9 @@ Only some of them, and always through the term's Debit and Credit sides.
 
 | Document | Its term's accounting behaviour |
 |---|---|
-| Maintenance Order, Maintenance Order Request | An **Effect** (التأثير) page with a single Debit and Credit pair. Set both and the document creates a two-sided journal entry over its spare-part and service lines. |
-| Maintenance Contract, Maintenance Service Contract | An **Invoice effect** (تأثير الفاتوره) page — the full invoice shape, with tax, discount, cash and approximation-discount sides. |
-| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape, plus four extra Service Fees debit/credit pairs on the machine invoice. The machine invoice also has a **Services Debit** / **Services Credit** pair (مدين الخدمات / دائن الخدمات): fill both and the service lines are booked against them instead of the invoice's main sides, so labour revenue can sit apart from spare-parts revenue. Leave either empty and the service lines use the main sides. |
+| Maintenance Order, Maintenance Order Request | An **Effect** (التأثير) page with a single Debit and Credit pair (`termConfig.debit`, `termConfig.credit`). Set both and the document creates a two-sided journal entry over its spare-part and service lines. |
+| Maintenance Contract, Maintenance Service Contract | An **Invoice effect** (تأثير الفاتوره) page — the full invoice shape: Debit and Credit (`termConfig.config.debit`, `termConfig.config.credit`), with tax, discount, cash and approximation-discount (`termConfig.approximationDiscount`) sides. |
+| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape. The **Settings** page of **both** invoice terms adds the **Serivce Fees** group (the label is misspelt on screen) with four Service Fees debit/credit pairs (`termConfig.serviceFees1Debit` … `termConfig.serviceFees4Credit`) — see [the service-fee switches](#The-rest-of-the-machine-suite-settings) below. The machine invoice also has a **Services Debit** / **Services Credit** pair (مدين الخدمات / دائن الخدمات, `termConfig.servicesDebit` / `termConfig.servicesCredit`): fill both and the service lines are booked against them instead of the invoice's main sides, so labour revenue can sit apart from spare-parts revenue. Leave either empty and the service lines use the main sides. |
 | Maintenance Invoice Return, Maintenance Service Invoice Return | The same, in the opposite direction — including the Services Debit / Credit pair on the machine invoice return. |
 | Maintenance Estimation | It creates no accounting entry. |
 | Maintenance Service Order | Its term shows no account sides, and the document creates no accounting entry. |
@@ -145,17 +145,42 @@ own term with the sides left empty.
 ## The rest of the machine-suite settings
 
 The order term also carries **Do Not Copy Header Data Of From Doc** and **Do Not Copy Details Of
-From Doc**, the tax group (**Tax Plan**, **Taxable**, **Modifiable Tax**, **Allow Editing Header
-Tax In Details**), **Consider Task Templates Tasks When Creating Executions**
-(اعتبار مهام قوالب المهام عند إنشاء عمليات التنفيذ — take the checklist from the header task
-template rather than the machine line's), and on the machine order only, a reward-points
-configuration and a discount-coupon group and book.
+From Doc** (`termConfig.doNotCopyHeaderDataOfFromDoc`, `termConfig.doNotCopyDetailsOfFromDoc`), the
+tax group (**Tax Plan**, **Taxable**, **Modifiable Tax**, **Allow Editing Header Tax In Details** —
+`termConfig.taxPlan`, `termConfig.taxable`, `termConfig.modifiableTax`,
+`termConfig.allowEditingHdrTaxInDetails`), **Consider Task Templates Tasks When Creating Executions**
+(اعتبار مهام قوالب المهام عند إنشاء عمليات التنفيذ, `termConfig.considerTaskTemplatesTasksWhenCreatingExecutions`
+— take the checklist from the header task template rather than the machine line's), and on the
+machine order only, a reward-points configuration and a discount-coupon group and book
+(`termConfig.rewardPointsConfig`, `termConfig.discountCouponGroup`, `termConfig.discountCouponBook`).
 
-The invoice term adds **Consider Lines Of FromDoc**, **Copy Remaining To Cash**, **Price List
-Default Price**, the payment options, and the same reward-points and coupon fields.
+The invoice term adds **Consider Lines Of FromDoc** (`termConfig.considerLinesOfFromDoc`), **Copy
+Remaining To Cash** (`termConfig.copyRemainingToCash`), **Price List Default Price**
+(`termConfig.priceListDefaultPrice`), **Allow Payment More Than Invoice Amount**
+(`termConfig.allowPaymentMoreThanInvoiceAmount` — unticked, receipts are capped at the invoice's
+net), and on the machine invoice the same reward-points and coupon fields. The rest of its
+**Settings** page:
+
+| Option | Field id | What it does |
+|---|---|---|
+| **Use Payment Docs As Debt Ages** (استعال سندات الدفع في أعمار الديون) | `termConfig.usePaymentDocsAsDebtAges` | Machine invoice only. The invoice's external payment lines — the receipts recorded against it — also count as debt-age rows, so the debt-age analysis sees them. Unticked, they do not. |
+| **Service Fees 1 Deduction** … **Service Fees 4 Deduction** (خصم مصاريف خدمة 1 … 4) | `termConfig.serviceFees1Deduction` … `termConfig.serviceFees4Deduction` | Both invoices. Treats that service fee as a deduction from the invoice's net value instead of an addition, and reverses its entry accordingly. |
+| **Do Not Add Service Fees Effect Without Account Side** | `termConfig.doNotAddServiceFeesEffectWithoutAccSide` | Both invoices. A service-fee line whose own debit or credit side is empty is left out of the entry, instead of being booked to the term's main sides. |
+
+The **Discount Effects** page of the Maintenance Contract and Maintenance Invoice terms — and of the
+[CRM Service Contract term](/modules/crm/document-terms/crm-terms-basics#The-CRM-Service-Contract-term)
+— ends with the **External Effects** grid (تأثير سندات الدفع, `termConfig.externalEffectLines`). Each
+row adds a debit/credit pair to the document's own journal entry for every receipt recorded against
+it, using the receipt's value: **For Type** (`termConfig.externalEffectLines.forType`) limits the row
+to one payment-document type, **Apply When Payment Document Matches Criteria** / **… Query**
+(`termConfig.externalEffectLines.applyWhenPaymentDocMatchesCriteria`,
+`termConfig.externalEffectLines.applyWhenPaymentDocMatchesQuery`) filter the receipts, and **Debit** /
+**Credit** (`termConfig.externalEffectLines.debit`, `termConfig.externalEffectLines.credit`) are the
+sides of the added pair.
 
 Both the order term and the invoice term offer **Update Machine Dysfunction Warranties**
-(تحديث جدول ضمانات الأعطال في الآلة), which writes the machine's dysfunction-warranty rows.
+(تحديث جدول ضمانات الأعطال في الآلة, `termConfig.updateMachineDysfunctionWarranties`), which writes
+the machine's dysfunction-warranty rows.
 
 ::: warning Tick Update Machine Dysfunction Warranties on one term, not two
 If both the invoice's term and its source order's term have this option on, the invoice is
@@ -165,25 +190,23 @@ is the document that registers warranties at your site — in our example it is 
 :::
 
 The smaller terms hold almost nothing: the Maintenance Order Execution term has only the four tax
-settings, the Maintenance Visit term has only *Consider Lines Of FromDoc*, and the CRM Maintenance
-Plan term is completely empty.
-
-On the Maintenance Contract term, **Pay Installments In Order**
-appears **twice**, in two groups one after the other. It is one setting shown in two places, so
-either box sets it.
+settings, the Maintenance Visit term has only *Consider Lines Of FromDoc*
+(`termConfig.considerLinesOfFromDoc`), and the CRM Maintenance Plan term is completely empty.
 
 ## The services-suite terms
 
 Everything above applies to the services suite with the shared fields renamed. Two points are
 specific to the service terms:
 
-- On the **Maintenance Service Order** term, the service execution book and term drive the service
+- On the **Maintenance Service Order** term, the service execution book and term
+  (`termConfig.mnSrvExecutionBook`, `termConfig.mnSrvExecutionTerm`) drive the service
   order's execution buttons. They are the two fields immediately below the do-not-copy switches, and
   their labels appear untranslated on screen in both languages.
-- On the **Maintenance Service Invoice** term, tick **Generate Stock Issue With Spare Parts** to have
+- On the **Maintenance Service Invoice** term, tick **Generate Stock Issue With Spare Parts**
+  (`termConfig.genStockIssueWithSpareParts`) to have
   the invoice issue its spare parts from the warehouse. The generated stock issue carries the
   spare-part lines; on the **Maintenance Service Invoice Return** term, *Generate Stock Receipt With
-  Spare Parts* does the same in reverse.
+  Spare Parts* (`termConfig.genStockReceiptWithSpareParts`) does the same in reverse.
 
 See [Services or Machines?](/modules/crm/services-suite/crm-services-suite-overview) for the wider
 picture of what the services branch does.

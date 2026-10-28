@@ -47,7 +47,7 @@ and the same block of fields repeats over and over. It is worth reading once, he
 
 ## The Effect tab — the pair that carries the deal
 
-The tab holds two groups, **Debit** (مدين) and **Credit** (دائن). Between them they record the fees
+The tab holds two groups, **Debit** (مدين, `termConfig.config.debit`) and **Credit** (دائن, `termConfig.config.credit`). Between them they record the fees
 themselves; everything on the other two tabs is a refinement.
 
 Which business meaning goes in which group is decided by the **direction of the document**, not by
@@ -70,17 +70,16 @@ lines. The company side is recorded at the line's **gross amount, before discoun
 the discounts and the taxes each get their own pair of sides on the other two tabs and would
 otherwise be counted twice.
 
-The **Credit** group also carries **Shorten Ledger** (إختصار القيود), which merges identical ledger
+The **Credit** group also carries **Shorten Ledger** (إختصار القيود, `termConfig.config.shortenLedger`), which merges identical ledger
 lines so a contract enrolling thirty trainees on the same terms does not produce thirty near-identical
 pairs of entries.
 
-Two switches on this tab change how the document's own money behaves rather than which account it
+One switch on this tab changes how the document's own money behaves rather than which account it
 hits:
 
-| Option | What it does |
-|---|---|
-| **Pay Installments In Order** | Forces the instalments on the [payment schedule](./education-payment-schedules) to be settled oldest first. Leave it off and any instalment can be settled at any time |
-| **Allow Payment More Than Invoice Amount** | Applies when an outside receipt voucher pays this contract's instalments — with it on, the voucher may pay more than the contract still shows as remaining |
+| Option | Field id | What it does |
+|---|---|---|
+| **Pay Installments In Order** | `termConfig.payInstallmentsInOrder` | Forces the instalments on the [payment schedule](./education-payment-schedules) to be settled oldest first. Leave it off and any instalment can be settled at any time |
 
 ![The Effect tab of the Course Contract term](../../ar/modules/education/images/contracts/education-term-course-contract-effect-en.png)
 
@@ -111,16 +110,21 @@ one from an account bag.
 
 This tab gives accounts to the money that is not the deal itself.
 
-- **Cash** (النقدي) — the side used for money taken at signing. Leave it empty and that amount stays
+- **Cash** (النقدي, `termConfig.cash`) — the side used for money taken at signing. Leave it empty and that amount stays
   on the main Debit or Credit side instead of getting a line of its own.
-- **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** — one group each, and each group carries both the tax
-  side and its **other side**, the contra account the tax is recorded against. These are where the tax
+- **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** (`termConfig.tax`, `termConfig.tax2`, `termConfig.htax`,
+  `termConfig.htax2`) — one group each, and each group carries both the tax side and its **other
+  side** (`termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide`), the
+  contra account the tax is recorded against. These are where the tax
   amounts typed into the detail lines' tax columns land.
 
 ## The Discount Effects tab
 
 Every discount level on the detail lines gets a group here, and so does the header discount, each
-with its side and its other side. Configure only the levels your contracts actually use — a group
+with its side and its other side: **Discount 1** (`termConfig.lineDiscount`), **Invoice Discount**
+(`termConfig.invoiceDiscount`), **Discount 2** to **Discount 8** (`termConfig.firstDiscountAcc` …
+`termConfig.seventhDiscountAcc`), and their other sides (`termConfig.taxesOtherSide.discount1OtherSide`
+… `termConfig.taxesOtherSide.discount8OtherSide`, `termConfig.taxesOtherSide.headerDiscountOtherSide`). Configure only the levels your contracts actually use — a group
 with no side configured simply produces no entry, and the discount stays folded into the amounts.
 
 ## A worked example — tuition receivable against fees revenue

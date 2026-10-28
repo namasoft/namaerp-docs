@@ -1,10 +1,10 @@
 ---
-entities: [OnlinePaymentConfig, PaymentLinksCreationDoc]
+entities: [OnlinePaymentConfig, PaymentLinksCreationDoc, GoPayConfiguration, GoPayAccount]
 menu: Basic → Documents → Online Payment Configuration
 ---
 # Online Payments Integration
 
-Nama ERP's online payment module lets you accept payments directly from your customers through secure payment gateways. Whether you're sending a single invoice payment link or generating hundreds of payment links for outstanding balances, this module handles the entire flow from link generation to payment confirmation and automatic receipt creation.
+Nama ERP's online payment module lets you accept payments directly from your customers through secure payment gateways (KNet, MyFatoorah and Geidea) and through GoPay SADAD bills in Saudi Arabia. Whether you're sending a single invoice payment link or generating hundreds of payment links for outstanding balances, this module handles the entire flow from link generation to payment confirmation and automatic receipt creation.
 
 ## Understanding the Payment Flow
 
@@ -12,9 +12,9 @@ When a customer clicks a payment link, here's what happens behind the scenes:
 
 1. **Link Validation** - The system checks if the link is still valid (not expired) and if the document still requires payment
 2. **Payment Page Display** - The customer sees a customized payment page showing the amount due and document details
-3. **Gateway Redirect** - When ready to pay, the customer is redirected to the payment gateway (KNet or MyFatoorah)
+3. **Gateway Redirect** - When ready to pay, the customer is redirected to the payment gateway (KNet or MyFatoorah). Geidea works differently: the link opens Geidea's own page (see [Geidea](#Geidea))
 4. **Payment Processing** - The gateway processes the payment and returns the result
-5. **Success Handling** - On successful payment, Nama can automatically run entity flows, send notifications, and even create receipt vouchers
+5. **Success Handling** - On successful payment, Nama can automatically run entity flows, add the payment to the document, and even create receipt vouchers
 6. **Confirmation Page** - The customer sees a success or error page with transaction details
 
 ## Supported Payment Gateways
@@ -23,13 +23,13 @@ When a customer clicks a payment link, here's what happens behind the scenes:
 
 KNet is Kuwait's national payment network. To integrate KNet, you'll need:
 
-| Field | Description |
-|-------|-------------|
-| **User Name** | Your KNet portal ID (tranportal ID) |
-| **Terminal Alias** | The alias assigned to your terminal by KNet |
-| **GUI URL** | Your server's public URL where payment callbacks will be received |
-| **URL Prefix Identifier** | A unique identifier for your payment URLs (e.g., "mycompany") |
-| **Resource Files Path** | Server path containing `resource.cgn` and `keystore.bin` files from KNet |
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **User Name** | `userName` | Your KNet portal ID (tranportal ID) |
+| **Terminal Alias** | `terminalAlias` | The alias assigned to your terminal by KNet |
+| **GUI URL** | `guiUrl` | Your server's public URL where payment callbacks will be received |
+| **URL Prefix** | `urlPrefixIdentifier` | A unique identifier for your payment URLs (e.g., "mycompany") |
+| **Resource And Keystore Files Path** | `resourceAndKeystoreFilesPath` | Server path containing `resource.cgn` and `keystore.bin` files from KNet |
 
 ::: warning Important
 KNet requires two certificate files (`resource.cgn` and `keystore.bin`) that must be placed on your server. These files are provided by KNet during merchant registration and contain your encryption keys.
@@ -39,12 +39,26 @@ KNet requires two certificate files (`resource.cgn` and `keystore.bin`) that mus
 
 MyFatoorah is a popular payment gateway in the Middle East supporting multiple payment methods including cards, Apple Pay, and local payment options.
 
-| Field | Description |
-|-------|-------------|
-| **API Token** | Your MyFatoorah API token from the merchant dashboard |
-| **GUI URL** | Your server's public URL for payment callbacks |
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **API Token** | `apiToken` | Your MyFatoorah API token from the merchant dashboard |
+| **GUI URL** | `guiUrl` | Your server's public URL for payment callbacks |
 
 MyFatoorah is simpler to set up since it uses API-based authentication rather than certificate files.
+
+### Geidea
+
+Geidea is a card acquirer in Saudi Arabia, the UAE and Egypt. Unlike KNet and MyFatoorah, the customer does not pay on a Nama page: Nama asks Geidea for a payment link, Geidea hosts the payment page, and Nama asks Geidea whether the link was paid.
+
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **User Name** | `userName` | Your Geidea merchant public key. Required. |
+| **API Token** | `apiToken` | The API password Geidea issued with that key. Required. |
+| **API Base URL** | `apiBaseUrl` | Leave it empty and Nama picks Geidea's address from the document's currency: SAR goes to the Saudi platform, AED to the UAE one, EGP to the Egyptian one. Any other currency is refused. Fill it only to use another address, such as a test environment Geidea gave you. |
+| **Minimum Payment Amount** / **Maximum Payment Amount** | `minPaymentAmount`, `maxPaymentAmount` | The range of amounts Nama will send to Geidea. Empty or zero means no limit on that side. A zero or negative amount is always refused. |
+| **GUI URL** | `guiUrl` | Your server's public address. Geidea calls it back when a link is paid, but only when it is a public `https` address; on a local or plain `http` server Nama finds out about payments by asking Geidea instead (see [Taking payments with Geidea](#Taking-payments-with-Geidea)). |
+
+A Geidea configuration saves without a success entity flow or a payment method, because the invoice button and the point of sale take the payment before the document is saved. Links sent for documents that are already saved still apply the payment through the [payment actions](#Payment-Actions---Automating-Post-Payment-Workflows), so fill those when you use links.
 
 ## Setting Up Online Payment Configuration
 
@@ -53,9 +67,10 @@ Navigate to **Basic > Documents > Online Payment Configuration** to create your 
 ### Basic Setup
 
 1. **Create a new configuration** and give it a meaningful code (e.g., "KNET-MAIN" or "MYFATOORAH-PROD")
-2. **Select the Type** - Choose either KNet or MyFatoorah
+2. **Select the Type** (`type`) - Choose KNet, My Fatoorah or Geidea
 3. **Enter the gateway credentials** based on your provider (see fields above)
-4. **Set the GUI URL** - This is your server's public address, typically something like `https://yourcompany.com/erp/`
+4. **Set the GUI URL** (`guiUrl`) - This is your server's public address, typically something like `https://yourcompany.com/erp/`
+5. **Edit As User** (`editAsUser`) - The user Nama acts as when a KNet reply updates the document. Left empty, the `admin` user is used.
 
 ![An Online Payment Configuration for MyFatoorah, with the link expiry hours and the weekend days](../../ar/modules/invoicing/images/online-payment-config-myfatoorah-en.png)
 
@@ -63,12 +78,12 @@ Navigate to **Basic > Documents > Online Payment Configuration** to create your 
 
 Payment links don't last forever. You can control how long they remain valid:
 
-- **Expire Link After (Hours)** - Number of hours before the link expires. If left empty, links expire after one year.
+- **Expire Link After (Hours)** (`expireLinkAfter`) - Number of hours before the link expires. If left empty, links expire after one year.
 
 The system is smart about expiration - it can skip weekends and holidays when calculating expiry times. Configure this using:
 
-- **Weekend Days** - Check which days are weekends (Friday/Saturday for GCC, Saturday/Sunday elsewhere)
-- **Holidays Collection** - Add specific dates that should be excluded from expiry calculations
+- **Weekend Days** (`saturdayIsWeekend` … `fridayIsWeekend`) - Check which days are weekends (Friday/Saturday for GCC, Saturday/Sunday elsewhere)
+- **Holidays** (`holidays`: `holidays.holidayDate`, `holidays.remarks`) - Add specific dates that should be excluded from expiry calculations
 
 For example, if you set "Expire After 24 Hours" and Friday/Saturday are weekends, a link generated on Thursday at 10 AM won't expire until Sunday at 10 AM (skipping Friday and Saturday).
 
@@ -76,16 +91,16 @@ For example, if you set "Expire After 24 Hours" and Friday/Saturday are weekends
 
 Templates control what your customers see at each stage of the payment process. Each template supports dynamic placeholders that get replaced with actual document values.
 
-| Template | When It's Shown |
-|----------|-----------------|
-| **Payment Template** | The initial payment page showing invoice details and "Pay Now" button |
-| **Success Template** | Displayed after successful payment |
-| **Error Template** | Shown when the payment fails or is declined |
-| **Bad Transaction Template** | Displayed when the transaction isn't approved |
-| **Expired Link Template** | Shown when clicking an expired payment link |
-| **Totally Paid Template** | Displayed when the invoice has already been fully paid |
-| **Not Found Template** | Shown when the document doesn't exist |
-| **Type Not Supported Template** | Displayed when the document type doesn't support online payments |
+| Template | Field id | When It's Shown |
+|----------|----------|-----------------|
+| **Payment Template** | `paymentActions.paymentTemplate` | The initial payment page showing invoice details and "Pay Now" button |
+| **Success Template** | `paymentActions.successTemplate` | Displayed after successful payment |
+| **Error Template** | `paymentActions.errorTemplate` | Shown when the payment fails or is declined |
+| **Bad Transaction Template** | `paymentActions.badTransactionTemplate` | Displayed when the transaction isn't approved |
+| **Expired Link Template** | `paymentActions.expiredLinkTemplate` | Shown when clicking an expired payment link |
+| **Totally Paid Template** | `paymentActions.totallyPaidTemplate` | Displayed when the invoice has already been fully paid |
+| **Not Found Document Template** | `paymentActions.notFoundDocumentTemplate` | Shown when the document doesn't exist |
+| **Type Not Supported For Payment Template** | `paymentActions.typeNotSupportedForPaymentTemplate` | Displayed when the document type doesn't support online payments |
 
 ::: tip Loading Default Templates
 Click the **"Calculate Default Templates"** button to load the system's default HTML templates. You can then customize them to match your branding.
@@ -221,12 +236,13 @@ x=$map.opResponse.errorMessage   // Get error message (on failure)
 
 This is where the real power lies. When a payment succeeds (or fails), you can automatically trigger actions in the system.
 
-| Field | Purpose |
-|-------|---------|
-| **Success Entity Flow** | An entity flow to run after successful payment (e.g., mark invoice as paid, change status) |
-| **Success Notification** | Send an email/SMS notification after successful payment |
-| **Error Entity Flow** | Run this flow when payment fails |
-| **Payment Method** | Automatically add a payment line to the document using this method |
+| Field | Field id | Purpose |
+|-------|----------|---------|
+| **On Success Entity Flow** | `paymentActions.successEntityFlow` | An entity flow to run after successful payment (e.g., mark invoice as paid, change status, send a notification) |
+| **On Error Entity Flow** | `paymentActions.errorEntityFlow` | Run this flow when payment fails |
+| **Payment Method** | `paymentActions.paymentMethod` | Automatically add a payment line to the document using this method |
+| **When Matched Criteria** / **When Not Matched Criteria** | `paymentActions.entityWhenMatched`, `paymentActions.entityWhenNotMatched` | Limit the header's actions to documents that match (or do not match) a criteria definition |
+| **Apply When Query** / **Do Not Apply When Query** | `paymentActions.applyWhenQuery`, `paymentActions.doNotApplyWhenQuery` | The same, with a query |
 
 The **Payment Method** is particularly useful - when set, the system automatically adds a payment to the invoice upon successful online payment, which can trigger receipt voucher creation if configured.
 
@@ -234,14 +250,14 @@ The **Payment Method** is particularly useful - when set, the system automatical
 
 Sometimes you need different behaviors based on the document type or specific conditions. The **Details** collection lets you create conditional rules:
 
-| Field | Purpose |
-|-------|---------|
-| **For Type** | Apply this rule only to a specific document type (e.g., Sales Invoice, Sales Order) |
-| **Entity Type List** | Or apply to multiple document types from a predefined list |
-| **Apply When Query** | A query condition that must be true for this rule to apply |
-| **Do Not Apply When Query** | Skip this rule when this condition is true |
+| Field | Field id | Purpose |
+|-------|----------|---------|
+| **For Type** | `details.forType` | Apply this rule only to a specific document type (e.g., Sales Invoice, Sales Order) |
+| **Entity Type List** | `details.entityTypeList` | Or apply to multiple document types from a predefined list |
+| **Apply When Query** | `details.paymentActions.applyWhenQuery` | A query condition that must be true for this rule to apply |
+| **Do Not Apply When Query** | `details.paymentActions.doNotApplyWhenQuery` | Skip this rule when this condition is true |
 
-Each detail line has its own **Payment Actions** section, so you can have different success flows, notifications, and templates for different scenarios.
+Each detail line has its own payment actions (`details.paymentActions.*`: criteria, success and error flows, payment method and the eight templates), so you can have different success flows, payment methods and templates for different scenarios.
 
 **Example:** You might want:
 - Sales Invoices to trigger a "Mark as Paid" flow and send an email
@@ -257,7 +273,7 @@ For KNet integration, you can pass additional data to the payment gateway using 
 | **UDF1 - UDF5** | Custom fields that appear in your KNet settlement reports |
 | **CustomerId** | The customer identifier for the transaction |
 
-The **Value Template** column supports placeholders, so you can dynamically populate these fields:
+The grid is **Fields Map Lines** (`fieldsMapLines`); pick the gateway field in **Field** (`fieldsMapLines.field`). The **Value Template** column (`fieldsMapLines.valueTemplate`) supports placeholders, so you can dynamically populate these fields:
 
 ```
 {customer.code}
@@ -269,10 +285,10 @@ The **Value Template** column supports placeholders, so you can dynamically popu
 
 When using the **Payment Links Creation Document** for bulk link generation, you need to tell the system which field contains the customer/subsidiary for each document type:
 
-| Field | Purpose |
-|-------|---------|
-| **Entity Type** | The document type (e.g., SalesInvoice) |
-| **Field ID** | The field that contains the subsidiary reference (e.g., `customer`) |
+| Field | Field id | Purpose |
+|-------|----------|---------|
+| **Entity Type** | `paymentLinksCreationDocSubsidiarySourceLines.entityType` | The document type (e.g., SalesInvoice) |
+| **Field ID** | `paymentLinksCreationDocSubsidiarySourceLines.fieldId` | The field that contains the subsidiary reference (e.g., `customer`) |
 
 This mapping is used when aggregating invoices by customer for bulk payment link creation.
 
@@ -321,16 +337,16 @@ The system automatically:
 
 #### Link Lines Fields
 
-| Field | Description |
-|-------|-------------|
-| **Subsidiary** | The customer/vendor |
-| **Customer Name** | Auto-populated from the subsidiary |
-| **Customer Email** | Email for payment link delivery |
-| **Mobile Country Code** | Country code for SMS delivery |
-| **Mobile Number** | Phone number for SMS delivery |
-| **Value** | Total amount to collect |
-| **Payment Link** | The generated link (after clicking "Create Payment Links") |
-| **Invoice ID** | The MyFatoorah invoice ID (for tracking) |
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **Subsidiary** | `linksLines.subsidiary` | The customer/vendor |
+| **Customer Name** | `linksLines.customerName` | Auto-populated from the subsidiary |
+| **Customer Email** | `linksLines.customerEmail` | Email for payment link delivery |
+| **Mobile Country Code** | `linksLines.customerMobileCountryCode` | Country code for SMS delivery |
+| **Mobile Number** | `linksLines.customerMobileNumber` | Phone number for SMS delivery |
+| **Customer Reference** | `linksLines.customerReference` | Your own reference for the customer, passed to MyFatoorah with the link |
+| **Value** | `linksLines.value` | Total amount to collect |
+| **Payment Link** | `linksLines.paymentLink` | The generated link (after clicking "Create Payment Links") |
 
 #### Notification Options (MyFatoorah)
 
@@ -360,12 +376,82 @@ Every payment attempt is recorded in the **Online Payment Transaction System Ent
 
 ## Automatic Receipt Voucher Creation
 
-When configured through the document term settings, the system can automatically create receipt vouchers upon successful payment. This is particularly useful for the Payment Links Creation Document workflow where you're collecting payments for multiple invoices.
+When the customer pays a link from a **Payment Links Creation Document**, Nama can create the receipt vouchers for the documents that link covered. This is set on the document's term, on its **Settings** page:
 
-The receipt voucher creation respects your accounting configuration and can:
-- Create one voucher per payment
-- Apply the payment to the correct customer account
-- Link back to the original invoices
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **Receipt Voucher sCreation Method** | `termConfig.receiptVouchersCreationMethod` | **Without** creates nothing. **Receipt Voucher Per Invoice** creates one voucher for each paid document. **Receipt Voucher Per Subsidiary** creates one voucher per customer, covering all their documents in the link. |
+| **Receipt Voucher Term** | `termConfig.receiptVoucherTerm` | The term of the created vouchers. |
+| **Receipt Voucher Book** | `termConfig.receiptVoucherBook` | The book of the created vouchers. |
+| **Default Values Template** | `termConfig.defaultValuesTemplate` | Applied to each new voucher before anything else is filled. |
+| **Fields Map** | `termConfig.fieldsMap` | Copies further values from the Payment Links Creation Document to the voucher. |
+
+Each voucher gets one line per paid document, for the customer's account, and an installment line per installment, so the payment settles the right installments. The voucher is committed straight away. If a voucher already exists for the same document (or, per subsidiary, the same customer), Nama adds to it instead of creating a second one.
+
+## Taking payments with Geidea
+
+There are four ways to take a Geidea payment. The first two take the payment while the customer is in front of you, so the invoice is saved already paid. The last two send a link for a document that already exists.
+
+### Pay with Geidea on the sales invoice
+
+The sales invoice has a **Pay with Geidea** button beside its payments grid. To use it, create a **Payment Method** and set its **Online Payment Configuration** (`onlinePaymentConfig`) to the Geidea configuration. Then:
+
+1. Press **Pay with Geidea**. Nama uses the payment line you are standing on, or adds one. The amount is that line's value, or the invoice's amount when the line is empty.
+2. The dialog shows the amount and asks for the **Customer Mobile**. Press **Send Link by SMS** to have Geidea text the customer a link, or **Show QR Code** to let the customer scan it from your screen. **Copy Link** copies the link for any other channel.
+3. While the dialog shows *Waiting for the customer to pay*, Nama asks Geidea every five seconds.
+4. When the customer has paid, the dialog closes and fills the payment line: the payment method, Geidea's payment id in **Authorization Number** (`paymentLines.authorizationNumber`) and the amount actually paid.
+
+If you close the dialog before the customer pays, Nama deletes the link at Geidea so nobody can pay an invoice that was never saved. A link the customer paid in the meantime is kept and used.
+
+When the line's payment method is not linked to Geidea, Nama uses the first payment method that is. When the invoice is saved, every Geidea payment line is checked again with Geidea: it must be confirmed as paid, it must not be used by another document, and its value must not be more than the amount Geidea collected.
+
+### At the point of sale
+
+A POS payment method linked to a Geidea configuration shows a **Pay Through Payment Provider** button next to its payment line. It opens the same kind of dialog, with **Send Payment Link (SMS)** and **Show Payment QR Code**.
+
+### A link for a saved document
+
+The **EAGenerateGeideaPaymentLink** entity flow creates a Geidea link for a saved document that supports online payment, such as a sales invoice. Its parameters are: the configuration's code, the text field the link is written to, the field holding the customer's name (for example `customer.name1`), the mobile country code (a field, or a fixed value such as `'+966'`; empty takes the country of the currency), the mobile number field, the e-mail field, and whether Geidea sends the link by **SMS**, **Email** or **Both**. A document that is already totally paid is refused.
+
+When the customer pays, Geidea calls your **GUI URL** and Nama applies the payment through the configuration's payment actions, exactly as for the other gateways. If Geidea cannot reach your server, run the **EACheckGeideaPaymentLinks** entity flow: on a document it checks that document's open links, and from a scheduled task it checks every open Geidea link.
+
+### The Payment Links Creation Document
+
+With a Geidea configuration, **Create Payment Links** creates one Geidea link per customer line and has Geidea send it by both SMS and e-mail. The customer needs a mobile number or an e-mail address. When the link is paid, the amount is spread over that customer's documents in the details grid, in order, and receipt vouchers are created as the [document term](#Automatic-Receipt-Voucher-Creation) says.
+
+## GoPay: SADAD bills for Saudi Arabia
+
+GoPay works the other way round from the gateways above. Instead of a payment link, Nama uploads the document to GoPay as a **SADAD bill**. The customer pays it from any Saudi bank's SADAD service using the SADAD number, and GoPay tells Nama when the bill is paid. It is set up in **Basic → Documents → GoPay Configuration**.
+
+| Field | Field id | Description |
+|-------|----------|-------------|
+| **User Name** / **Password** | `userName`, `password` | Your GoPay credentials. Required. |
+| **GoPay URL Type** | `goPayURLType` | **Test URL** (the default) for GoPay's test platform, **Production URL** once you go live. |
+| **Entity Activity ID** | `entityActivityId` | The GoPay activity the bills are raised under. Required, and once the activities grid has lines it must be one of them. |
+| **Allow Partial Payment** | `allowPartialPayment` | Lets the customer pay a bill in several parts. |
+| **Use Recurring Invoicing** | `useRecurringInvoicing` | Raises the bills against a GoPay account per customer instead of as one-off bills; see below. |
+| **Public Key** | `publicKey` | The key GoPay gave you. Nama uses it to check that each payment notification really comes from GoPay. Required. |
+| **Create Receipt Voucher After Payment** | `createRVAfterPayment` | When GoPay reports a payment, Nama creates a draft receipt voucher for it. |
+| **Save Receipt As User** | `saveReceiptAsUser` | The user the receipt voucher is created as. It also gives the voucher its dimensions. Required when the switch above is on. |
+| **Receipt Voucher Fields Map** | `rvFieldsMap` | Copies values from the paid document to the receipt voucher, in the same form as an entity flow's fields map. It must give the voucher a **book**, or the voucher is not created. |
+
+**Fetch Activities From GoPay** fills the **GoPay Activities** grid (`goPayActivities`) with the activities GoPay holds for your account: **Entity Activity ID** (`goPayActivities.entityActivityId`), **Activity Name** (`goPayActivities.activityName`), **Arabic Activity Name** (`goPayActivities.activityNameAr`), **English Activity Name** (`goPayActivities.activityNameEn`), **IBAN** (`goPayActivities.iban`), **Code** (`goPayActivities.code`) and **Status** (`goPayActivities.status`). Copy the right id into **Entity Activity ID**.
+
+### Recurring invoicing and GoPay accounts
+
+With **Use Recurring Invoicing**, every customer gets a **GoPay Account** (**Basic → Documents → GoPay Account**) whose number is the SADAD number they pay to, and each bill is added to it with a due date. Nama creates the account the first time it uploads a bill for that customer. The **Account Creation Config** page (`accountCreationConfig`) says how, one line per document type:
+
+| Column | Field id | Description |
+|--------|----------|-------------|
+| **Document Type** / **Entity Type List** | `accountCreationConfig.documentType`, `accountCreationConfig.entityTypeList` | The documents the line covers. A document with no matching line is refused. |
+| **Reference Number Expression** | `accountCreationConfig.referenceNumberExpression` | The value that identifies the customer at GoPay, read from the document. Empty uses the customer's own id. A customer who already has an account under that reference reuses it. |
+| **Extra Fields Map** | `accountCreationConfig.extraFieldsMap` | Copies further values from the document to the new GoPay Account, such as the customer's name and ID number. |
+
+### Sending bills and receiving payments
+
+A document is sent with **Upload Invoice To GoPay**, which asks for the **GoPay Configuration** and an **Expiry Date**; **Cancel Invoice From GoPay** withdraws it, and **Upload Bulk Invoices To GoPay** in the list view's **More** menu sends several at once. These buttons are on the rent accrual ledger; see [Rent Installment Accrual Ledgers](/modules/realestate/rent/realestate-rent-accrual-ledger). Each bill sent is listed in **Invoices** on the configuration and on the customer's GoPay Account, with its SADAD number, amount, amount paid and remaining.
+
+Every payment GoPay reports is listed in **GoPay Payment Notification** on the configuration, failed ones included with their error. A cash receipt you record in Nama for a GoPay bill can be reported back to GoPay with the [EAPostGoPayOfflinePayment](/entity-flows/core/EAPostGoPayOfflinePayment) entity flow, so the bill does not stay open there.
 
 ## Security Considerations
 
@@ -397,7 +483,7 @@ The receipt voucher creation respects your accounting configuration and can:
 
 1. In Online Payment Configuration, add Detail lines
 2. Set different rules for Sales Invoices vs Sales Orders
-3. Configure different success flows and notifications for each
+3. Configure different success flows, payment methods and templates for each
 4. The system automatically applies the correct rules based on document type
 
 ## Error Codes (MyFatoorah)
@@ -429,3 +515,15 @@ These error codes help you and your customers understand why a payment failed an
 | *Payment links lines must be filled* — «لا يمكن ترك سطور روابط الدفع فارغة» | A **Payment Links Creation Document** is being saved with an empty links grid. | Fill the links lines (or run the button that fills them) before saving. |
 | *Subsidiary {0} has line in links lines but does not have detail line* — «الذمة {0} لها سطر في سطور روابط الدفع ولكن ليس لها سطر في التفاصيل» | A party appears in the links grid with no matching line in the document details, so there is no amount to build a link from. | Add the party to the details grid, or remove its links line. |
 | *You can not delete payment link lines which have payment link* — «لا يمكنك حذف سطور روابط الدفع التي لديها رابط دفع» | Lines that already carry a generated payment link are being removed from a saved document; the link is live with the provider. | Leave those lines in place. A link that must not be used is cancelled with the provider, not deleted here. |
+| *Amount {0} can not be paid with Geidea, allowed amounts are from {1} to {2}* — «لا يمكن دفع المبلغ {0} عن طريق جيديا، المبالغ المسموح بها من {1} إلى {2}» | The amount is outside the configuration's **Minimum Payment Amount** / **Maximum Payment Amount**, or is zero. A limit of 0 means none. | Take the rest another way, or change the limits. |
+| *Customer mobile number or email is required to create a Geidea payment link* — «رقم جوال العميل أو بريده الإلكتروني مطلوب لإنشاء رابط دفع جيديا» | Geidea needs a way to reach the customer. | Fill the mobile or the e-mail on the link line, or in the fields the entity flow reads. |
+| *Currency {0} is not supported by Geidea* — «العملة {0} غير مدعومة في جيديا» | The document is in a currency other than SAR, AED or EGP and **API Base URL** is empty. | Fill **API Base URL** with the address Geidea gave you for that currency. |
+| *Geidea rejected the request: {0}* — «رفضت جيديا الطلب: {0}» | Geidea refused the call; its own reason follows the colon. | Correct what Geidea's reason names and try again. |
+| *There is no payment method linked to a Geidea online payment configuration* — «لا توجد طريقة دفع مرتبطة بإعدادات دفع إلكتروني من نوع جيديا» | **Pay with Geidea** found no payment method whose **Online Payment Configuration** is a Geidea one. | Link a payment method to the Geidea configuration. |
+| *The payment with {0} is not confirmed by Geidea, use Pay with Geidea to take it* — «الدفع عن طريق {0} لم تؤكده جيديا، استخدم ادفع عن طريق جيديا لتحصيله» | A payment line uses a Geidea payment method, but its **Authorization Number** is not a payment Geidea confirmed. | Take the payment with **Pay with Geidea** instead of typing the line. |
+| *Geidea payment {0} is already used in document {1}* — «عملية الدفع {0} في جيديا مستخدمة بالفعل في المستند {1}» | The same Geidea payment is on another saved document. | Take a new payment for this document. |
+| *The payment value {0} is more than the amount paid through Geidea {1}* — «قيمة الدفع {0} أكبر من المبلغ المدفوع عن طريق جيديا {1}» | The line's value was raised after the payment was taken. | Put the line back to the amount paid, and take the difference separately. |
+| *The online payment config file is not My Fatoorah or Geidea online payment method* — «ملف إعدادات الدفع الإلكتروني ليس ماي فاتورة أو جيديا» | A Payment Links Creation Document points at a KNet configuration. | Choose a MyFatoorah or Geidea configuration. |
+| *Entity activity id {0} must exist in go-pay activities* | The GoPay configuration's **Entity Activity ID** is not one of the lines in **GoPay Activities**. This message shows in English on Arabic screens too. | Pick an id from the grid, or fetch the activities again. |
+| *You must choose document book for Receipt Voucher in GoPay configuration file* — «يجب اختيار دفتر لسند القبض فى ملف إعدادات GoPay» | A GoPay payment arrived but **Receipt Voucher Fields Map** gives the voucher no book. | Add the book to the fields map. |
+| *The entity type {0} does not support GoPay* — «النوع {0} لا يدعم خدمة GoPay» | The document type cannot be sent to GoPay. | Send only the documents described under [GoPay](#GoPay-SADAD-bills-for-Saudi-Arabia). |

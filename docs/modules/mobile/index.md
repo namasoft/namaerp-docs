@@ -40,6 +40,10 @@ features:
     title: Administering the App
     details: The Basic → Mobile Apps menu for administrators — screen layouts, card titles, labels, lookup filters, the mobile dashboard and binding users to their phones
     link: /modules/mobile/mobile-administration
+  - icon: ⚙️
+    title: Mobile Apps Configurations
+    details: Every option of the app settings screen, tab by tab — books per document, attendance and zone rules, stock taking, receipts, KAS, NAMA ORDERS and Mobile Delivery
+    link: /modules/mobile/mobile-apps-configuration
   - icon: 🔳
     title: Mobile QR Integrator
     details: The system's response to scanned QR codes to create and update entities and run custom actions dynamically

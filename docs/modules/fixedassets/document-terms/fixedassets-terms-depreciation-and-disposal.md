@@ -31,43 +31,45 @@ When `MCH-0007` is depreciated for January 2026, the instalment is 3,600 and the
 | Accumulated depreciation — `MCH-0007`'s Account 02 | | 3,600 |
 
 What the term *does* contribute to that entry is its wording — the narration templates and queries that
-compose the description on each ledger line — and the source of the analysis set. Those are worth
+compose the description on each ledger line — and the source of the analysis set, set in its Debit
+(`termConfig.config.debit`) and Credit (`termConfig.config.credit`) groups, which show only those fields. Those are worth
 setting: a depreciation run touches hundreds of lines a month and a good narration template is the
 difference between a readable ledger and a wall of identical rows.
 
 Beyond that, the term carries three behaviour switches:
 
-| Option | What it does |
-|---|---|
-| Allow a depreciation document dated before existing addition, deduction, transfer and partial-disposal documents | Relaxes the ordering rule so you can catch up on a missed month even though later documents already touched the asset |
-| Use As Cost Source Document In Contracting (`إستخدام المستند كمصدر تكلفة في المقاولات`) | Makes each period's depreciation feed the contracting cost of the project the asset is allocated to |
-| Calculate Contracting Cost Debit And Credit From Asset If Found (`حساب مدين ودائن تكلفة المقاولات من الاصل الثابت إن وجد`) | Takes the contracting cost accounts from the asset instead of the term, when the asset carries them |
+| Option | Field id | What it does |
+|---|---|---|
+| Allow a depreciation document dated before existing addition, deduction, transfer and partial-disposal documents | `termConfig.allowFADepBefAddDedPartial` | Relaxes the ordering rule so you can catch up on a missed month even though later documents already touched the asset |
+| Use As Cost Source Document In Contracting (`إستخدام المستند كمصدر تكلفة في المقاولات`) | `termConfig.useAsSourceCostDoc` | Makes each period's depreciation feed the contracting cost of the project the asset is allocated to |
+| Calculate Contracting Cost Debit And Credit From Asset If Found (`حساب مدين ودائن تكلفة المقاولات من الاصل الثابت إن وجد`) | `termConfig.calculateContractingCostDebitAndCreditFromAssetIfFound` | Takes the contracting cost accounts from the asset instead of the term, when the asset carries them |
 
-The last two work with the **Contracting Cost Debit** and **Contracting Cost Credit** fields on the same
-page, which name the accounts the contracting entry uses when the asset does not supply them.
+The last two work with the **Contracting Cost Debit** (`termConfig.contractingCostDebit`) and **Contracting Cost
+Credit** (`termConfig.contractingCostCredit`) fields on the same page, which name the accounts the contracting entry uses when the asset does not supply them.
 
 ### The aggregated depreciation term
 
 The aggregated document does not book anything itself — it produces one ordinary depreciation document
 per batch, and those do the booking. So its term has exactly one job: naming the **book and term the
-generated depreciation documents should use**. Point it at the depreciation term you configured above.
+generated depreciation documents should use** (`termConfig.aggrFADepreciationBook`, `termConfig.aggrFADepreciationTerm`). Point it at the depreciation term you configured above.
 
 ## The Revaluation Term
 
 Revaluation is where the asset's carrying amount is restated to an appraised value, and unlike
 depreciation, that produces a difference somebody has to own. The term is where you say who:
 
-| Group | What it is for |
-|---|---|
-| Profit Config (`حساب المكسب`) | The account that takes an upward revaluation |
-| Loss Config (`حساب الخسارة`) | The account that takes a downward one |
+| Group | Field id | What it is for |
+|---|---|---|
+| Profit Config (`حساب المكسب`) | `termConfig.profitConfig` | The account that takes an upward revaluation |
+| Loss Config (`حساب الخسارة`) | `termConfig.lossConfig` | The account that takes a downward one |
 
 Both are full account sides, so either can be a fixed account or one resolved per asset.
 
-The page also carries **Dimension From Document** (`المحددات من المستند`), deciding whether the ledger
+The page also carries **Dimension From Document** (`المحددات من المستند`, `termConfig.dimFromDocument`), deciding whether the ledger
 lines are stamped with the dimensions of the revaluation document or those of the asset, and a switch
 allowing straight-line assets to be revalued and converted to the revaluation method
-(`السماح بالأصول ذات الإهلاك الثابت و تغيير طريقة الإهلاك`).
+(`السماح بالأصول ذات الإهلاك الثابت و تغيير طريقة الإهلاك`, `termConfig.allowStraightLineAndChangeDepreciationMethod`), on
+the term's Settings page.
 
 ::: warning Converting a straight-line asset is not a small change
 Once that switch has let a revaluation convert an asset from straight-line to the revaluation method,
@@ -84,22 +86,28 @@ the term supplies everything facing it.
 
 Everything sits on one page, in this order:
 
-1. **The account facing the asset** — the first group on the page. This is where the value comes from
-   on an addition, and where it goes on a deduction.
-2. **Four tax pairs.** Two of them are the *addition* taxes, two the *discount* taxes, and each is a
+1. **The account facing the asset** (`termConfig.credOrDebitSide`) — the first group on the page. This is where the
+   value comes from on an addition, and where it goes on a deduction.
+2. **Four tax pairs.** Two of them are the *addition* taxes (`termConfig.collectDebit1` / `termConfig.collectCredit1`
+   and `termConfig.collectDebit2` / `termConfig.collectCredit2`), two the *discount* taxes (`termConfig.tempBounDebit1` /
+   `termConfig.tempBounCredit1` and `termConfig.tempBounDebit2` / `termConfig.tempBounCredit2`), and each is a
    debit account and a credit account. What the term groups call a discount tax is what the document
    screen calls **Discount Tax**, so the names line up once you know that.
-3. **Two more sides for the discount value itself**, immediately after the tax groups.
+3. **Two more sides for the discount value itself** (`termConfig.discountValueDebit` / `termConfig.discountValueCredit`),
+   immediately after the tax groups.
 
 Each tax group carries its own switch deciding whether that tax is folded into the asset's value or
-kept out of it — set it inside the group it belongs to, and the arithmetic on the document will follow.
+kept out of it — set it inside the group it belongs to, and the arithmetic on the document will follow. The
+switches sit in the debit group of each pair: `termConfig.addTax1ToAssetValue`, `termConfig.addTax2ToAssetValue`,
+`termConfig.subtractTax3FromAssetValue` and `termConfig.subtractTax4FromAssetValue`.
 
-The page also has **Shorten Ledger Effect** (`اختصار القيد`), which collapses the entry into fewer
+The page also has **Shorten Ledger Effect** (`اختصار القيد`, `termConfig.shortenLedgerEffect`), which collapses the entry into fewer
 lines.
 
 The aggregated version of this document generates one ordinary addition-and-deduction document per grid
-line, so its term names the **book and term of the generated documents**, plus an option to produce an
-accounting effect even when a line has no value to book.
+line, so its term names the **book and term of the generated documents** (`termConfig.additionDeductionDocBook`,
+`termConfig.additionDeductionDocTerm`), plus an option to produce an accounting effect even when a line has no value
+to book (`termConfig.createEmptyAccountingEffect`).
 
 ## The Disposal Term
 
@@ -112,17 +120,17 @@ itself.
 
 ### What is on the screen
 
-| Group | What it is for |
-|---|---|
-| Debit (`مدين`) | The proceeds side: the receivable, the bank, the cash account — whoever pays for the asset |
-| Profit Config (`حساب المكسب`) | The gain account |
-| Loss Config (`حساب الخسارة`) | The loss account |
-| Tax 1 debit and credit, Tax 2 debit and credit | Two tax pairs |
-| Dimension From Document (`المحددات من المستند`) | Whether the ledger lines take the document's dimensions or the asset's |
-| Taxable, Is Editable Tax, Tax Plan | The usual tax behaviour |
+| Group | Field id | What it is for |
+|---|---|---|
+| Debit (`مدين`) | `termConfig.debit` | The proceeds side: the receivable, the bank, the cash account — whoever pays for the asset |
+| Profit Config (`حساب المكسب`) | `termConfig.profitConfig` | The gain account |
+| Loss Config (`حساب الخسارة`) | `termConfig.lossConfig` | The loss account |
+| Tax 1 debit and credit, Tax 2 debit and credit | `termConfig.tax1Debit` / `termConfig.tax1Credit`, `termConfig.tax2Debit` / `termConfig.tax2Credit` | Two tax pairs |
+| Dimension From Document (`المحددات من المستند`) | `termConfig.dimFromDocument` | Whether the ledger lines take the document's dimensions or the asset's |
+| Taxable, Is Editable Tax, Tax Plan | `termConfig.taxable`, `termConfig.isEditableTax`, `termConfig.taxPlan` | The usual tax behaviour |
 
-The second page names the **Fixed Asset Purchase Document Book and Term** used for assets recovered from
-the disposal — when you strip a machine and keep its motor as a new asset, that is the book and term the
+The second page names the **Fixed Asset Purchase Document Book and Term** (`termConfig.faPurchaseBook`,
+`termConfig.faPurchaseTerm`) used for assets recovered from the disposal — when you strip a machine and keep its motor as a new asset, that is the book and term the
 generated acquisition document uses.
 
 Separate gain and loss accounts are the disposal's distinguishing feature. The partial disposal, below,
@@ -174,14 +182,14 @@ requires gains and losses to be kept apart, a partial disposal cannot do it; the
 
 The rest of the screen:
 
-| Group | What it is for |
-|---|---|
-| Profit & Loss Account (`حساب المكسب - الخسارة`) | The gain or the loss, whichever the arithmetic produces |
-| Debit (`مدين`) | The proceeds side |
-| Tax 1 debit and credit | The partial disposal's tax handling is a single pair |
-| Taxable, Is Editable Tax, Tax Plan | The usual tax behaviour |
-| An option allowing a partial disposal even when earlier months have not been depreciated | Relaxes the rule that depreciation must be caught up first |
-| Fixed Asset Purchase Book and Term | For assets recovered from the disposal, as on the full disposal |
+| Group | Field id | What it is for |
+|---|---|---|
+| Profit & Loss Account (`حساب المكسب - الخسارة`) | `termConfig.config.credit` | The gain or the loss, whichever the arithmetic produces |
+| Debit (`مدين`) | `termConfig.config.debit` | The proceeds side |
+| Tax 1 debit and credit | `termConfig.tax1Debit` / `termConfig.tax1Credit` | The partial disposal's tax handling is a single pair |
+| Taxable, Is Editable Tax, Tax Plan | `termConfig.taxable`, `termConfig.isEditableTax`, `termConfig.taxPlan` | The usual tax behaviour |
+| An option allowing a partial disposal even when earlier months have not been depreciated | `termConfig.disposalCanBeNotSequential` | Relaxes the rule that depreciation must be caught up first |
+| Fixed Asset Purchase Book and Term | `termConfig.faPurchaseBook`, `termConfig.faPurchaseTerm` | For assets recovered from the disposal, as on the full disposal |
 
 The cost and accumulated depreciation that come off the asset are not the term's business — they are
 computed from the asset's own accounts, pro-rata to the units disposed. For `FRN-0021`, disposing of
@@ -191,7 +199,8 @@ value of 19,600 and a count of seven.
 ## The Aggregated Disposal Term
 
 The aggregated disposal generates one ordinary disposal document per line, so its term names the
-**disposal book and disposal term** those generated documents use. Both are mandatory: leave either
+**disposal book and disposal term** those generated documents use (`termConfig.faDisposalBook`,
+`termConfig.faDisposalTerm`). Both are mandatory: leave either
 blank and the commit is refused with a message telling you to fill the fixed asset disposal book and
 term in the term.
 

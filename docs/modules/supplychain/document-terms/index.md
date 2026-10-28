@@ -16,7 +16,7 @@ Because the options are numerous, they are grouped into themed tabs. Each tab ha
 - **[Pricing, Taxes & Discounts](./doc-term-pricing-taxes-discounts.md)** — price-list forcing, recalculation, locking and exclusion of prices, taxes and discounts for sales and purchase documents.
 - **[Accounting Effects](./doc-term-accounting-effects.md)** — the debit/credit account sides and tax, discount, service-fee, control-journal and letter-of-credit effects each document records in the ledger.
 - **[Generation & Dimensions](./doc-term-generation-and-dimensions.md)** — automatic generation of downstream documents (on commit or async on save) and how the document's accounting dimensions relate to its warehouse.
-- **[Document-Specific Options](./doc-term-document-specific.md)** — options that surface only for particular document types (stock receipts, transfers, returns, replacement, assembly, job orders, stock taking, and more).
+- **[Document-Specific Options](./doc-term-document-specific.md)** — options that surface only for particular document types (stock receipts and issues, opening stock, transfer requests, returns, replacement, invoices, assembly and packaging, processing, job orders, price comparing, stock taking, weight-scale documents, post-sales offer claims, and more).
 
 ::: tip Field ids are stable
 Throughout these pages each option is cited by its field id in backticks. Use the id (not the translated label) when searching the term config or referencing an option — it is unambiguous and does not change between languages.

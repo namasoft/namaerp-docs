@@ -39,6 +39,10 @@ features:
     title: إدارة التطبيق
     details: قائمة الأساسيات ← إعدادات التطبيقات للمسؤول — تصميم الشاشات وعناوين البطاقات والتسميات وفلاتر البحث ولوحة التطبيق وربط المستخدمين بهواتفهم
     link: /ar/modules/mobile/mobile-administration
+  - icon: ⚙️
+    title: إعدادات تطبيقات الهواتف المحمولة
+    details: كل خيار في شاشة إعدادات التطبيقات تبويباً تبويباً — دفاتر كل مستند، وقواعد الحضور والمناطق، والجرد، وسندات القبض، وKAS، وNAMA ORDERS، وMobile Delivery
+    link: /ar/modules/mobile/mobile-apps-configuration
   - icon: 🔳
     title: Mobile QR Integrator
     details: استجابة النظام لرموز QR الممسوحة لإنشاء الكيانات وتحديثها وتنفيذ إجراءات مخصصة ديناميكياً

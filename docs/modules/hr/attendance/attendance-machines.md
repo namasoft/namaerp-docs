@@ -31,15 +31,15 @@ This split is deliberate. Fingerprint machines usually sit on a branch's local n
 
 A configuration is identified like any master file — Code, Group, Arabic Name, English Name — and then describes the connection and its schedule:
 
-| Field (English → Arabic) | Purpose |
-|---|---|
-| Machine Connection Type (نوع اتصال الماكينة) | **ZkBioTime**, **SQLSERVER**, **ACCESS** or **Timetaag**. Choosing one tells you which of the four tabs below to fill in. |
-| Cron Expression | How often the agent collects. See the warning below — the syntax has six fields, not five. |
-| Fetching Transaction Start Date (تاريخ بداية سحب الحركات) | The earliest moment worth collecting from, used only on the very first run. |
-| Only Work Manually (تشغيل يدوي فقط) | Turns the schedule off completely; the agent then collects only when someone presses a button in its own screen. |
-| Run Task Schedule After Fetching Transactions (المهمة المجدولة المراد تشغيلها بعد سحب البيانات من الماكينة) | The scheduled task to run after each successful collection — normally the one that turns raw punches into a Time Attendance document. |
-| Current Release Version (الإصدار الحالي) | Read-only. The version of the agent that last sent data, so you can tell at a glance whether a branch is running an old build. |
-| Last Connection Time / Last Log Count (اخر وقت اتصال / اخر عدد حركات) | Read-only. When the agent last delivered data and how many readings were in that delivery. |
+| Field (English → Arabic) | Purpose | Field id |
+|---|---|---|
+| Machine Connection Type (نوع اتصال الماكينة) | **ZkBioTime**, **SQLSERVER**, **ACCESS** or **Timetaag**. Choosing one tells you which of the four tabs below to fill in. | `machineConnectionType` |
+| Cron Expression | How often the agent collects. See the warning below — the syntax has six fields, not five. | `cronExpression` |
+| Fetching Transaction Start Date (تاريخ بداية سحب الحركات) | The earliest moment worth collecting from, used only on the very first run. | `fetchingTransactionStartDate` |
+| Only Work Manually (تشغيل يدوي فقط) | Turns the schedule off completely; the agent then collects only when someone presses a button in its own screen. | `onlyWorkManually` |
+| Run Task Schedule After Fetching Transactions (المهمة المجدولة المراد تشغيلها بعد سحب البيانات من الماكينة) | The scheduled task to run after each successful collection — normally the one that turns raw punches into a Time Attendance document. | `runScheduledTaskAfterFetch` |
+| Current Release Version (الإصدار الحالي) | Read-only. The version of the agent that last sent data, so you can tell at a glance whether a branch is running an old build. | `attCronCurrVersion` |
+| Last Connection Time / Last Log Count (اخر وقت اتصال / اخر عدد حركات) | Read-only. When the agent last delivered data and how many readings were in that delivery. | `lastConnectionTime`, `lastLogCount` |
 
 ::: warning The cron expression has six fields
 Nama uses six-field cron syntax — **seconds** first, then minutes, hours, day-of-month, month, day-of-week. `0 5 * * * *` means "at five minutes past every hour". The familiar five-field syntax from Unix (`5 */1 * * *`) is **not** valid here.
@@ -59,10 +59,10 @@ Each type gets its own tab. Fill in the tab that matches your **Machine Connecti
 
 For sites running the vendor's own ZkBioTime platform, which publishes its transactions over a web interface. Along with Timetaag, this is one of the two types that need no database access and no SQL to write.
 
-| Field | Value |
-|---|---|
-| Machine URL (رابط الماكينة) | The address of the ZkBioTime web application, e.g. `http://192.168.1.50:8081`. |
-| Username / Password | A ZkBioTime login with permission to read transactions. |
+| Field | Value | Field id |
+|---|---|---|
+| Machine URL (رابط الماكينة) | The address of the ZkBioTime web application, e.g. `http://192.168.1.50:8081`. | `machineUrl` |
+| Username / Password | A ZkBioTime login with permission to read transactions. | `username`, `password` |
 
 The agent signs in, then reads transactions page by page until it has caught up. ZkBioTime delivers its readings in a fixed format, so this connection needs no SQL Query, no Read For Period Query and no mapping lines.
 
@@ -70,19 +70,19 @@ The agent signs in, then reads transactions page by page until it has caught up.
 
 For any machine whose software stores its readings in a SQL Server database — ZK's older desktop software being the common case.
 
-| Field | Value |
-|---|---|
-| Machine URL | The SQL Server host, usually `localhost` when the agent runs on the same computer as the machine software. |
-| Database Port | Usually `1433`. |
-| Database Name | The machine software's database, e.g. `TATimeAttendance`. |
-| Username / Password | A database login that can read the punch tables. |
-| SQL Query | The query that fetches new readings — see below. |
-| Read For Period Query | The variant used when someone re-reads a specific date range by hand. |
-| Mapping grid | Which column of the result is which piece of information. |
+| Field | Value | Field id |
+|---|---|---|
+| Machine URL | The SQL Server host, usually `localhost` when the agent runs on the same computer as the machine software. | `machineUrl` |
+| Database Port | Usually `1433`. | `databasePort` |
+| Database Name | The machine software's database, e.g. `TATimeAttendance`. | `databaseName` |
+| Username / Password | A database login that can read the punch tables. | `username`, `password` |
+| SQL Query | The query that fetches new readings — see below. | `sqlQuery` |
+| Read For Period Query | The variant used when someone re-reads a specific date range by hand. | `readForPeriodQuery` |
+| Mapping grid | Which column of the result is which piece of information. | `mappingLines` |
 
 #### ACCESS
 
-For older machines that keep their log in a local Microsoft Access file. The tab is the same shape as SQL Server, with two differences: **Machine URL** is relabelled **File Path** and holds the full path to the `.mdb` or `.accdb` file on the computer where the agent runs, and **SQL Query** is relabelled **Access Query**.
+For older machines that keep their log in a local Microsoft Access file. The tab is the same shape as SQL Server, with two differences: **Machine URL** (`machineUrl`) is relabelled **File Path** and holds the full path to the `.mdb` or `.accdb` file on the computer where the agent runs, and **SQL Query** (`sqlQuery`) is relabelled **Access Query**.
 
 ::: warning Fill in the fields Access doesn't really need
 The agent refuses to start unless Machine URL, Username, Password **and** Cron Expression all have values, and the record itself won't save without Database Port and Database Name. An Access setup doesn't use the username, password, port or database name at all — but they still have to contain something. Put placeholder values in them.
@@ -92,10 +92,10 @@ The agent refuses to start unless Machine URL, Username, Password **and** Cron E
 
 For sites whose fingerprint devices report to **Timetaag**, a cloud attendance service. This one is different in kind from the other three: there is no machine database and no local machine software to read. The devices upload their readings to Timetaag themselves, and the agent simply asks Timetaag's servers for whatever has accumulated.
 
-| Field | Value |
-|---|---|
-| Timetaag Server URL (رابط خادم Timetaag) | The Timetaag service address, `https://app.timetaag.com`. |
-| Timetaag API Key (مفتاح Timetaag) | The key issued by Timetaag. The tab shows this field twice — see below. |
+| Field | Value | Field id |
+|---|---|---|
+| Timetaag Server URL (رابط خادم Timetaag) | The Timetaag service address, `https://app.timetaag.com`. | `machineUrl` |
+| Timetaag API Key (مفتاح Timetaag) | The key issued by Timetaag. The tab shows this field twice — see below. | `username`, `password` |
 
 The key comes from **Timetaag, not from Nama**. Sign in to the Timetaag dashboard as the company administrator and use **Generate API token**.
 
@@ -131,11 +131,11 @@ Pressing **Add Default Queries For Zk** while the connection type is ZkBioTime *
 
 The mapping grid answers one question per line: *which column of my query's result holds this piece of information?* It maps result columns to what Nama needs — it has nothing to do with matching employees.
 
-| Column | Meaning |
-|---|---|
-| Response Field (Response Field) | The piece of information this result column carries. |
-| Column Index (Column Index) | Its position in the result, counting from 1. Takes priority when filled in. |
-| Column Alias (Column Alias) | Its name in the result, used when Column Index is left empty. |
+| Column | Meaning | Field id |
+|---|---|---|
+| Response Field (Response Field) | The piece of information this result column carries. | `mappingLines.responseField` |
+| Column Index (Column Index) | Its position in the result, counting from 1. Takes priority when filled in. | `mappingLines.columnIndex` |
+| Column Alias (Column Alias) | Its name in the result, used when Column Index is left empty. | `mappingLines.columnAlias` |
 
 Give **one** of Column Index or Column Alias for every line; a line with neither is rejected when the record is saved, with both columns reported as required.
 

@@ -1,6 +1,6 @@
 ---
 description: "The item classification master files: Item Class 1 to 10, Item Category, Item Section, Item Brand, colours and sizes, item revisions, the size-colour-revision collection and item assortments."
-entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize, ItemColorClassification, ItemSizeClassification, ItemRevisionFile, ItemSizeColorCollection, ItemAssortment]
+entities: [ItemClass1, ItemClass2, ItemClass3, ItemClass4, ItemClass5, ItemClass6, ItemClass7, ItemClass8, ItemClass9, ItemClass10, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize, ItemColorClassification, ItemSizeClassification, ItemRevisionFile, ItemSizeColorCollection, ItemAssortment]
 ---
 # Item Classification Files
 

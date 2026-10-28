@@ -204,13 +204,17 @@ Then three grids decide *when* regeneration is allowed, and they are the useful 
   combination of document status and the status of the salary sheet the document sits in, with
   *Allow Regenerate* and a pair of message templates. The two message columns — Arabic and English —
   are the text the user sees when the row refuses, so a row can explain itself in the words of the
-  team that wrote the rule.
+  team that wrote the rule. Columns: `value.regenSalaryDocsAllowedStatuses.criteriaDefinition`,
+  `value.regenSalaryDocsAllowedStatuses.status`, `value.regenSalaryDocsAllowedStatuses.salarySheetStatus`, `value.regenSalaryDocsAllowedStatuses.allowRegenerate`, `value.regenSalaryDocsAllowedStatuses.arabicMessage`, `value.regenSalaryDocsAllowedStatuses.englishMessage`.
 - **Regenerate Salary Sheets Allowed Statuses** `value.regenSalarySheetsAllowedStatuses` — the same,
-  for sheets.
+  for sheets, without the sheet-status column: `value.regenSalarySheetsAllowedStatuses.criteriaDefinition`,
+  `value.regenSalarySheetsAllowedStatuses.status`, `value.regenSalarySheetsAllowedStatuses.allowRegenerate`, `value.regenSalarySheetsAllowedStatuses.arabicMessage`, `value.regenSalarySheetsAllowedStatuses.englishMessage`.
 - **Prevent Regenerate Salary Docs If Found** `value.preventRegenerateSalaryDocs` — the opposite
-  test: name a document type and a criteria, and regeneration is blocked when a matching document
-  exists. Two columns soften it — *Allow Regen If Doc Is Draft* and *Allow Regen If Doc Is Waiting
-  Approval* — so that a downstream document that is still a draft need not block the payroll.
+  test: name a document type (`value.preventRegenerateSalaryDocs.entityType`) and a criteria
+  (`value.preventRegenerateSalaryDocs.criteriaDefinition`), and regeneration is blocked when a matching document exists. Two columns
+  soften it — *Allow Regen If Doc Is Draft* `value.preventRegenerateSalaryDocs.allowRegenIfDocIsDraft` and *Allow Regen If Doc Is
+  Waiting Approval* `value.preventRegenerateSalaryDocs.allowRegenIfDocIsWaitingApproval` — so that a downstream document that is still
+  a draft need not block the payroll.
 
 Each grid row can carry a **Criteria** so the rule applies to some employees or documents and not
 others; criteria are written on [Criteria Definitions](/platform/automation-and-rules/criteria-definitions).
@@ -455,10 +459,12 @@ Four identical little groups — *analysisSetConfigurations*, *branchConfigurati
 *departmentConfigurations*, *sectorConfigurations* — decide where each dimension on a **salary
 document line** comes from. Each has the same two fields:
 
-- **Source Dimension** (`value.analysisSetConfig_sourceDimension` and its three siblings) — either
+- **Source Dimension** (`value.analysisSetConfig.sourceDimension`, `value.branchConfig.sourceDimension`,
+  `value.departmentConfig.sourceDimension`, `value.sectorConfig.sourceDimension`) — either
   **Document** (take the value from the salary document's header) or **Employee** (take it from the
   employee's information as at that line's date).
-- **Always Override** (`value.analysisSetConfig_alwaysOverride` and siblings) — overwrite a value
+- **Always Override** (`value.analysisSetConfig.alwaysOverride`, `value.branchConfig.alwaysOverride`,
+  `value.departmentConfig.alwaysOverride`, `value.sectorConfig.alwaysOverride`) — overwrite a value
   the line already has, instead of only filling an empty one.
 
 The rule the engine follows for each of the four dimensions is short and worth knowing exactly:
@@ -544,6 +550,15 @@ Each row carries **From Date**, **To Date**, an **HR Calendar**, the floor and c
 and the variable insurance base (**Min / Max Fixed Insurance**, **Min / Max Variable Insurance**) and
 four percentages — the **company** and the **employee** share of each of the fixed and variable
 bases.
+
+| Column | Field |
+|---|---|
+| **From Date** / **To Date** | `value.insuranceInfo.fromDate`, `value.insuranceInfo.toDate` |
+| **HR Calendar** | `value.insuranceInfo.hrCalendar` |
+| **Min / Max Fixed Insurance** | `value.insuranceInfo.minFixedInsurance`, `value.insuranceInfo.maxFixedInsurance` |
+| **Min / Max Variable Insurance** | `value.insuranceInfo.minVariableInsurance`, `value.insuranceInfo.maxVariableInsurance` |
+| **Company** fixed / variable percentage | `value.insuranceInfo.companyFixedInsurancePercent`, `value.insuranceInfo.companyVariableInsurancePercent` |
+| **Employee** fixed / variable percentage | `value.insuranceInfo.employeeFixedInsurancePercent`, `value.insuranceInfo.employeeVariableInsurancePercent` |
 
 ![The Social Insurance tab — one dated row per period of insurance bands and percentages](../../../ar/modules/hr/images/setup/hr-config-social-insurance-en.png)
 

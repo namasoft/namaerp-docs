@@ -1,5 +1,5 @@
 ---
-entities: [ReportDefinition]
+entities: [ReportDefinition, ReportGroup]
 menu: إدارة النظام ← التقارير ← تعريف تقرير
 ---
 

@@ -1,5 +1,5 @@
 ---
-entities: [LetterOfGuarantee, LGTIssue, LGTReceipt, LGTDelivery, LGTChanging, LGTClosing, LGTReq]
+entities: [LetterOfGuarantee, LGTIssue, LGTReceipt, LGTDelivery, LGTChanging, LGTClosing, LGTReq, LGTOpeningDoc]
 menu: Banks → Letters Of Guarantee → Letter Of Guarantee
 ---
 

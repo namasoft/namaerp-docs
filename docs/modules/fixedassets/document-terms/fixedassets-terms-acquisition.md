@@ -29,18 +29,18 @@ The screen has four pages.
 The first page carries the term's own identity — its document type, code and name — followed by the
 tax behaviour that every purchase on this term inherits:
 
-| Option | What changes |
-|---|---|
-| Taxable (`خاضع للضريبة`) | Turns the tax columns on for documents using this term |
-| Tax Plan (`سياسة الضريبة`) | The plan the header taxes are computed from |
-| Is tax modifiable (`الضريبة قابلة للتعديل`) | Whether the user may type over a computed tax value |
-| Header taxes editable per line | Whether a line may depart from the header's taxes |
-| Prevent adding tax 1 to 4 | Blocks a specific tax from being added on a line, whatever the plan says |
-| Link with invoice lines in the accounting document | Ties each ledger line back to the invoice line that produced it, so the entry can be read line by line |
+| Option | Field id | What changes |
+|---|---|---|
+| Taxable (`خاضع للضريبة`) | `termConfig.taxable` | Turns the tax columns on for documents using this term |
+| Tax Plan (`سياسة الضريبة`) | `termConfig.taxPlan` | The plan the header taxes are computed from |
+| Is tax modifiable (`الضريبة قابلة للتعديل`) | `termConfig.modifiableTax` | Whether the user may type over a computed tax value |
+| Header taxes editable per line | `termConfig.allowEditingHdrTaxInDetails` | Whether a line may depart from the header's taxes |
+| Prevent adding tax 1 to 4 | `termConfig.preventAddTax1` … `termConfig.preventAddTax4` | Blocks a specific tax from being added on a line, whatever the plan says |
+| Link with invoice lines in the accounting document | `termConfig.linkWithInvoiceLinesInAccountingDocument` | Ties each ledger line back to the invoice line that produced it, so the entry can be read line by line |
 
 And the one option people come to this screen for:
 
-**Create Asset If Not Found** (`إنشاء الأصول إذا لم تكن موجودة`) decides whether the purchase document
+**Create Asset If Not Found** (`إنشاء الأصول إذا لم تكن موجودة`, `termConfig.createAssetIfNotFound`) decides whether the purchase document
 may **create the fixed asset record itself**. With it off — the normal setting — every line must point
 at an asset that already exists in its initial state, and committing a line with an empty asset fails.
 With it on, a line that names no asset produces one at commit time, taking the name, type,
@@ -55,26 +55,34 @@ for lines that bring their own asset data with them.
 
 ### Page 2 — Invoice effect
 
-The credit side lives here. This is the account that faces the asset — normally the suppliers control
+The credit side (`termConfig.config.credit`) lives here. This is the account that faces the asset — normally the suppliers control
 account, so that committing the purchase leaves the supplier owed.
 
 Alongside it:
 
-- **Shorten ledger** — collapses the entry into fewer lines instead of one per invoice line.
-- **Pay installments in order** — forces the payment schedule to be settled oldest first.
-- **Update asset dimensions from the invoice** — pushes the line's legal entity, sector, branch,
+- **Shorten ledger** (`termConfig.config.shortenLedger`) — collapses the entry into fewer lines instead of one per invoice line.
+- **Pay installments in order** (`termConfig.payInstallmentsInOrder`) — forces the payment schedule to be settled oldest first.
+- **Allow Payment More Than Invoice Amount** (`السماح بدفع مبلغ أكبر من قيمة الفاتورة`, `termConfig.allowPaymentMoreThanInvoiceAmount`) — lets the
+  payment documents settled against the purchase add up to more than its value. With it off, a payment that
+  would push the document's remaining amount below zero is refused with
+  *Remaining {0} in document {1} became negative* — «المتبقي {0} فى المستند {1} أصبح بالسالب».
+- **Update asset dimensions from the invoice** (`termConfig.updateAssetDimensionsFromInvoice`) — pushes the line's legal entity, sector, branch,
   department and analysis set onto the asset itself, so the asset inherits the dimensions of the
   document that bought it.
 
 ### Pages 3 and 4 — Other effects and Discount effects
 
-Page 3 holds the cash side and four tax account groups, named `tax1` to `tax4` on the screen. Each
-group is a full account side, so a tax can be routed to a different account per term.
+Page 3 holds the cash side (`termConfig.cash`) and four tax account groups, named `tax1` to `tax4` on the screen
+(`termConfig.tax`, `termConfig.tax2`, `termConfig.htax`, `termConfig.htax2`). Each group is a full account side, so a
+tax can be routed to a different account per term, and each carries its own *other side* option
+(`termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide`).
 
-Page 4 holds the discount accounts: a line-discount side, an invoice-discount side, and seven further
-discount slots under the group titles `additionalDiscount2` to `additionalDiscount8`. It also carries
-the *other side* of each tax and discount, and the external-effect lines grid for entries that must
-reach accounts outside this document's normal reach.
+Page 4 holds the discount accounts: a line-discount side (`termConfig.lineDiscount`), an invoice-discount side
+(`termConfig.invoiceDiscount`), and seven further discount slots under the group titles `additionalDiscount2` to
+`additionalDiscount8` (`termConfig.firstDiscountAcc` … `termConfig.seventhDiscountAcc`). It also carries the
+*other side* of each discount (`termConfig.taxesOtherSide.discount1OtherSide` … `termConfig.taxesOtherSide.discount8OtherSide`,
+and `termConfig.taxesOtherSide.headerDiscountOtherSide` for the invoice discount), and the external-effect lines grid
+(`termConfig.externalEffectLines`) for entries that must reach accounts outside this document's normal reach.
 
 ### Worked example — `MCH-0007`
 
@@ -104,6 +112,13 @@ figures forward — but nothing is booked until a purchase document is raised. T
 an offer or an order as informational: they tell you what the invoice will look like, they do not
 create a liability.
 
+The Purchase Order term adds one switch in a **From Document** group: **Consider Satisfied Qties In From Doc**
+(`اعتبار الكميات المسلمة في بناءا علي`, `termConfig.considerSatisfiedQtiesInFromDoc`). An order is often raised
+*from* a purchase request or an offer, and normally it copies every line at its full quantity. With this switch on,
+it copies only what is still outstanding on each line of the source document — the quantity not yet covered by
+earlier orders — and leaves out the lines that are already fully covered. Use it when one request is ordered in
+several instalments.
+
 The Purchase Request shares the same configuration too, and needs even less: a request records what
 somebody wants, with no prices and no effects at all.
 
@@ -116,24 +131,33 @@ mediator account you type on the document, so **the opening term carries no acco
 What it does carry is four switches, and they exist because legacy data never arrives clean. Each one
 changes how the system derives dates and remaining life from what you typed:
 
-- One makes the asset's last-depreciation date the end of the **document's own month** rather than the
+- `termConfig.makeLastDepreciationDatePeriodEndDate` makes the asset's last-depreciation date the end of the **document's own month** rather than the
   end of the previous fiscal period — useful when your go-live date sits mid-period.
-- One handles assets that arrive **already fully depreciated**: it forces remaining life to zero and
+- `termConfig.calcDepStartDateForDepreciatedAssets` handles assets that arrive **already fully depreciated**: it forces remaining life to zero and
   back-computes the depreciation start date from the useful life.
-- One derives the depreciation start date from the **difference between useful life and remaining
+- `termConfig.calcDepreciationStartDateBasedOnDiffBetweenDefaultUsefulLifeAndRemainingLife` derives the depreciation
+  start date from the **difference between useful life and remaining
   life**, for registers that recorded remaining life but not a start date.
-- One tells the system to **keep the remaining life you typed** instead of recomputing it from the
+- `termConfig.doNotCalcRemainingLifeFromDates` tells the system to **keep the remaining life you typed** instead of recomputing it from the
   dates on the line.
 
 Pick the pair that matches the shape of the data you are importing, load a handful of assets, and check
-the resulting instalments before you load the rest. The Opening Update term, used for correcting an
-opening after the fact, carries no accounting configuration.
+the resulting instalments before you load the rest.
+
+The **Opening Update** term, used for correcting an opening after the fact, carries no accounts either, but it
+has one switch on its Effects page: **Do Not Copy Details Of From Doc** (`عدم نسخ التفاصيل من بناءاً على`,
+`termConfig.doNotCopyDetailsOfFromDoc`). When you pick the opening document to correct, the update normally copies
+its header and every one of its lines — asset, depreciation start date, properties, acquisition and accumulated
+depreciation values, location and purchase date — so you only change what was wrong. With the switch on, only the
+header is copied and you enter the lines to correct yourself, which is quicker when one asset out of a large opening
+needs fixing.
 
 ## The Delivery and Receipt of Custodies Term
 
 This document hands everything an employee holds — fixed assets and custody items alike — to somebody
 else. Its term is two pages, one for each side of the hand-over, and each page carries a debit and a
-credit account side.
+credit account side — `termConfig.debit2` / `termConfig.credit2` on the delivering side's page and
+`termConfig.receivedDebit` / `termConfig.receivedCredit` on the recipient's.
 
 The amount is the same on every side you configure: the total value of the **custody items** on the
 document. Fixed assets on the document move custodian without contributing a value, so a hand-over of
@@ -143,14 +167,15 @@ That symmetry is worth understanding before you configure it. Each side you fill
 same total, so configure the pair that represents the entry you actually want — filling in all four
 sides books the value twice.
 
-The page also carries **Change Custodian In Asset** (`تغيير مسؤول العهدة في الأصل`), which decides
+The page also carries **Change Custodian In Asset** (`تغيير مسؤول العهدة في الأصل`, `termConfig.changeCustodianInAsset`), which decides
 whether the hand-over rewrites the custodian shown on the fixed asset's own record, or merely adds a row
 to its custody history.
 
 ## The Creation Document Term
 
 The Fixed Asset Creation Document generates purchase documents for the assets it creates, and its term
-exists to say which **book and term those generated purchase documents should use**. Point it at the
+exists to say which **book and term those generated purchase documents should use** (`termConfig.faPurchaseBook`,
+`termConfig.faPurchaseTerm`). Point it at the
 purchase term you configured above and the generated documents will be wired exactly like a hand-typed
 purchase.
 

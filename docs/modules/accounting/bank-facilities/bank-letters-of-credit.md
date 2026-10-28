@@ -1,5 +1,5 @@
 ---
-entities: [BankLC, BLCOpeningDoc, BLCChanging, BLCClosingDoc, BLCReq]
+entities: [BankLC, BLCOpeningDoc, BLCChanging, BLCClosingDoc, BLCReq, BankLCType]
 menu: Banks → Bank LC → Bank LC
 ---
 
@@ -28,6 +28,8 @@ On the **Bank LC** screen (`Banks > Bank LC > Bank LC`) the LC's data is defined
 - **Basic information**: the **bank** and **bank account**, linking the LC to the **LC request**, **facility limit** and **project contract** (and **project contract extract**) when needed, and the **LC type**.
 - **Initial BLC values**: a snapshot of the opening terms — the **LC amount** and **currency**, **from date / to date**, the **covered amount** (covered in cash) and its percentage, the **facilities** (reserved portion) and its percentage, the **issue fees** and **change fees**.
 - **Current values**: the values in force after any amendment, plus the **status**.
+
+The **Bank Letter Of Credit Type** list (`Banks > Bank LC > Bank Letter Of Credit Type`) is a plain classification file — code, Arabic and English names, remarks and dimensions. It is picked on the [Facility Limit](./credit-facilities.md) lines, in the LC **Type** column that sits beside the guarantee-type and loan-type columns, to label which kind of LC a line of the ceiling is meant for. It is a label only: no amount, account or check reads it.
 
 ![Bank LC screen](../../../ar/modules/accounting/images/lc/bank-lc-en.png)
 

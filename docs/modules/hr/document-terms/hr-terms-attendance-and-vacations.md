@@ -25,7 +25,7 @@ The vacation document's term is a small set of side effects.
 | **Generate Delegation** | `termConfig.generateDelegation` | Saving the vacation also creates a **delegation** document, so somebody is formally covering the absentee's responsibilities while they are away. |
 | **Generated Delegation Book** | `termConfig.generatedDelegationBook` | The book that delegation is filed in. Setting the switch without the book leaves the delegation nowhere to go. |
 | **Change Employee State only If vacation Start Date Match Today** | `termConfig.changeEmpStateIfDateMatchToday` | The employee's state changes to "on vacation" only when the vacation actually starts, rather than the moment the document is saved. Leave it off and a vacation entered three weeks ahead moves the employee's state today. |
-| **Generated Loan Reschedule Book / Term** | `termConfig.generatedLoanRescheduleBook`, `…Term` | When the vacation document has **Postpone Loans During Vacation** ticked, saving it creates an **Aggregated Loan Installment Reschedule** that pushes the employee's unpaid instalments out. These two name that document's book and term, and both must be for the Aggregated Loan Installment Reschedule type. |
+| **Generated Loan Reschedule Book / Term** | `termConfig.generatedLoanRescheduleBook`, `termConfig.generatedLoanRescheduleTerm` | When the vacation document has **Postpone Loans During Vacation** ticked, saving it creates an **Aggregated Loan Installment Reschedule** that pushes the employee's unpaid instalments out. These two name that document's book and term, and both must be for the Aggregated Loan Installment Reschedule type. |
 
 Loans are postponed only for a vacation document that has **Postpone Loans During Vacation** ticked —
 the term alone never postpones anything. With the box ticked and this book or term empty, the
@@ -38,16 +38,16 @@ usually do — name the book and term of what they create.
 
 | Term | Fields | What it creates |
 |---|---|---|
-| **Aggregated Vacation Document** | `termConfig.generatedAggVacationDocTerm`, `…Book`, plus its own *Generated Loan Reschedule Book / Term* | One vacation document per employee, and any loan reschedules those produce. |
-| **Multi-Employee Vacation** | `termConfig.generatedAggVacationDocTerm`, `…Book` | The same, for the multi-employee vacation screen. |
+| **Aggregated Vacation Document** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook`, plus its own *Generated Loan Reschedule Book / Term* | One vacation document per employee, and any loan reschedules those produce. |
+| **Multi-Employee Vacation** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook` | The same, for the multi-employee vacation screen. |
 | **Aggregated Vacation Starting Document** | `termConfig.generatedWorkStartingDocBook` | The work-starting documents that record a batch of employees coming back. Note it names only a **book** — there is no term field here. |
 
 ## The Vacation Compensation term
 
 Paying an employee for vacation they did not take is one of the few attendance-family documents that
-does have an accounting effect, so its term carries account sides — *Debit* and *Credit*, plus a second pair *Debit 2*
-`termConfig.debit2` and *Credit 2* `termConfig.credit2` for implementations that split the
-compensation across two entries.
+does have an accounting effect, so its term carries one pair of account sides on its *Effect* tab,
+shown under the group titles **Debit** and **Credit**. Their field ids are `termConfig.debit2` and
+`termConfig.credit2`; there is no other pair.
 
 The field that matters most is **Compensation Value Calculation Formula**
 `termConfig.compensationCalcFormula`: the component calculation formula that decides what a day of

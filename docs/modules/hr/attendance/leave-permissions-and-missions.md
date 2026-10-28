@@ -1,6 +1,6 @@
 ---
 description: "Leave Permission and Mission Document for short intra-day absences, the Leave Permission Configuration limits, the Leave Reason list, mission overlaps, and the aggregated versions for many employees."
-entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, AggregatedMissionDocument, LeavePermissionConfiguration, LeaveReason]
+entities: [LeavePermission, MissionDocument, AggregatedLeavePermission, AggregatedMissionDocument, LeavePermissionConfiguration, LeaveReason, LeavePermissionReq]
 ---
 # Leave Permissions & Missions
 
@@ -51,14 +51,34 @@ A Leave Permission does not generate any ledger entry by itself. Its effect is e
 - A **date range** the rule applies within (From/To Value Date).
 - The **Leave Permission document's own dimensions** (its legal entity, branch, sector, department, analysis set) or a free-form **query/definition**.
 - The **employee's dimensions** (legal entity, branch, sector, department, analysis set).
+- The **employee's HR department** — the *Employee Department* record on the employee's file, as distinct from the department dimension.
+
+A blank scope column matches everything; a filled one must match. The scope columns, in screen order:
+
+| Column | Field |
+|---|---|
+| From / To Value Date | `details.fromValueDatePermission`, `details.toValueDatePermission` |
+| Permission Doc Dimensions — Company, Branch, Sector, Department, Analysis Set | `details.permissionDocLegalEntity`, `details.permissionDocRelatedBranch`, `details.permissionDocSector`, `details.permissionDocDepartment`, `details.permissionDocAnalysisSet` |
+| Permission Doc Definition / Permission Doc Query | `details.permissionDocDefinition`, `details.permissionDocumentQuery` |
+| Employee Dimensions — Legal Entity, Branch, Sector | `details.empLegalEntity`, `details.empBranch`, `details.empSector` |
+| Employee Department (the employee's **department dimension**) | `details.empDepartment` |
+| Employee Dimensions — Analysis Set | `details.empAnalysisSet` |
+| Employee Department (the employee's **HR department record**) | `details.employeeDepartment` |
+
+::: warning Two columns carry the same caption
+Both `details.empDepartment` and `details.employeeDepartment` show as **Employee Department** on
+screen. The first (fifth employee column, before *Analysis Set*) is compared with the employee's
+department **dimension**; the second (after *Analysis Set*) is compared with the *Employee
+Department* chosen on the employee's file. Pick the column by position, not by caption.
+:::
 
 and each rule then sets:
 
-| Field (English → Arabic) | Purpose |
-|---|---|
-| Max Permission Hours Per Month (أقصى عدد ساعات إذون انصراف شهريا) | The total hours of leave permission an employee can take in a month. |
-| Max Single Permission Hours (أقصى عدد ساعات للإذن الواحد) | The longest any one permission can be. |
-| Max Permissions Per Month (أقصى عدد إذون انصراف شهريا) | The number of separate permissions allowed in a month, regardless of their individual length. |
+| Field (English → Arabic) | Field id | Purpose |
+|---|---|---|
+| Max Permission Hours Per Month (أقصى عدد ساعات إذون انصراف شهريا) | `details.maxPermissionsHoursPerMonth` | The total hours of leave permission an employee can take in a month. |
+| Max Single Permission Hours (أقصى عدد ساعات للإذن الواحد) | `details.maxSinglePermissionHours` | The longest any one permission can be. |
+| Max Permissions Per Month (أقصى عدد إذون انصراف شهريا) | `details.maxPermissionsPerMonth` | The number of separate permissions allowed in a month, regardless of their individual length. |
 
 Because a rule can be scoped narrowly (one department) or broadly (the whole company), an organization can give, say, sales staff a looser allowance than back-office staff, all from the same configuration record.
 

@@ -51,6 +51,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **السماح بعمل فاتورة مستند على عرض سعر منتهي (Allow Creating Document From Expired Quotation)** `termConfig.allowCreatingDocumentFromExpiredQuotation` — افتراضيًا يجب أن يقع التاريخ الفعلي لمستند المبيعات المنشأ بناءً على عرض أسعار داخل مدى **صالح من** / **صالح حتي** في العرض، وإلا رُفض الحفظ بالرسالة «التاريخ الفعلي يجب ان يكون في المدي المحدد في صالح من و صالح إلي في عرض الأسعار». فعّل هذا الخيار في توجيه المستند الجديد لقبول العروض المنتهية. لمستندات المبيعات فقط.
 
+**اعتبار التاريخ الفعلي من بناءا علي في حساب الأسعار والعروض (Consider Value Date From From Document In Pricing And Offers)** `termConfig.considerValueDateFromFromDocInPricingAndOffers` — عند التحقق من أسعار المستند عند الحفظ مقابل قوائم الأسعار والعروض، يُستخدم التاريخ الفعلي لمستند **بناءا على** بدلًا من تاريخ المستند نفسه. فالفاتورة المؤرخة بعد تغيير الأسعار والمبنية على أمر أُخذ قبله تُفحص بأسعار الأمر. لمستندات المبيعات فقط.
+
 **السماح بإدخال كود واسم صنف بدون اختيار صنف (Allow Item Code And Name Without An Item)** `termConfig.allowItemCodeAndNameWithoutAnItem` — يسمح بكتابة كود/اسم صنف حر على السطر دون اختيار سجل صنف مُسجّل.
 
 **عدم نسخ بنود العقد عند اختياره (Do Not Copy Contract Terms When Selected)** `termConfig.doNotCopyContractTermsWhenSelected` — عندما يكون المصدر عقداً، يمنع نسخ بنود/شروط العقد إلى المستند الجديد. لمستندات خامات المقاولات فقط.
@@ -105,6 +107,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | عدم اعتبار الرقم المسلسل | `termConfig.fromDocLinesCollectionOptions.doNotConsiderSerial` |
 | عدم اعتبار الموقع | `termConfig.fromDocLinesCollectionOptions.doNotConsiderLocator` |
 
+**نسخ السطور التى بها نفس العميل فقط مع بناء على (Copy Lines With The Same Customer Only With From Doc)** `termConfig.copyLinesWithTheSameCustomerOnlyWithFromDoc` — في المجموعة نفسها. عندما يكون للمستند عميل، لا تُنسخ سطور المصدر التي تحمل عميلًا مختلفًا. أما السطور التي ليس لها عميل خاص فتُنسخ كالمعتاد.
+
 ## قفل السطور المرتبطة (Locking Linked Lines)
 
 يقفل المفتاح الرئيسي **منع تعديل خصائص السطور المرتبطة ببناءً على** (`termConfig.propertiesOfLinesLinkedToFromDoc.preventEditingLinesLinkedToFromDoc`) السطور المرتبطة بمستند مصدر ضد التعديل. تحدد علامات `consider*` أدناه — ضمن `termConfig.propertiesOfLinesLinkedToFromDoc.*` — أي المحددات تُفحص عند تحديد تلك السطور المرتبطة وقفلها.
@@ -123,6 +127,24 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | اعتبار المقاسات | `termConfig.propertiesOfLinesLinkedToFromDoc.considerMeasures` |
 | اعتبار الرقم المسلسل | `termConfig.propertiesOfLinesLinkedToFromDoc.considerSerial` |
 | اعتبار المخزن | `termConfig.propertiesOfLinesLinkedToFromDoc.considerWarehouse` |
+
+## العميل والمورد والسحب على المكشوف (Customer, Supplier and Overdraft)
+
+يقع هذان الخياران في مجموعة **بناءا على** في معظم توجيهات المخزون والمبيعات والمشتريات.
+
+**عميل / مورد مطلوب (Customer/supplier required)** `termConfig.customerOrSupplierRequired` — لا يُحفظ المستند بدون عميل (جانب المبيعات) أو مورد (جانب المشتريات)، ويُرفض بالرسالة «يجب عليك أدخال العميل»، أو في فواتير المشتريات «يجب عليك ادخال المورد». وفي التوريد أو الصرف المخزني يكفي أي من الطرفين. يُطبَّق الفحص على التوريد والصرف المخزني وطلبات الصرف، وفواتير المبيعات والمشتريات ومردوداتها، وأوامر البيع والفواتير المبدئية، وعروض أسعار المبيعات والمشتريات وطلباتها، وإحلال المبيعات.
+
+**منع السحب على المكشوف (Prevent Overdraft)** `termConfig.config.preventOverdraft` — يفحص كل سطر في مستندات هذا التوجيه من حيث السحب على المكشوف، حتى لو كان الصنف أو القسم أو المحددات أو السياسة العامة تسمح به. وهو يشدّد الفحص فقط؛ فإلغاؤه لا يمرّر أبدًا مستندًا تمنعه السياسة. انظر [إعدادات السحب على المكشوف والتأكد من الكميات](../configuration/overdraft-and-quantity-checking.md).
+
+## مدفوعات المبيعات ومندوب المبيعات (Sales Payments and Salesman)
+
+تظهر هذه الخيارات في فواتير المبيعات ومستندات المبيعات الأخرى التي تحمل سطور سداد.
+
+**نسخ طرق الدفع (Copy Payment Methods)** `termConfig.copyPaymentMethods` — عند إنشاء المستند من مستند مبيعات آخر، تُنسخ سطور طرق الدفع من ذلك المستند أيضًا.
+
+**نسخ لأول سطر طريقة دفع نقدية (Copy To First Cash Line)** `termConfig.copyToFirstCashLine` — أول سطر سداد طريقة دفعه نقدية يأخذ ما يتبقى من قيمة الفاتورة بعد سطور السداد الأخرى، ويتابعها كلما تغيرت السطور أو المبالغ. وإذا مُلئت **النقدية المدفوعة** في ذلك السطر، لا يتجاوزها المبلغ. ويفعل إجراء **نسخ لأول سطر طريقة دفع نقدية** في الفاتورة الشيء نفسه عند الطلب.
+
+**نسخ البائع الي منشئ السجل (Copy Sales Man To First Author)** `termConfig.copySalesManToFirstAuthor` — عند الحفظ يصبح **منشئ السجل** في المستند هو المستخدم المرتبط بسجل موظف مندوب المبيعات، فيُحسب السجل للمندوب نفسه. ولا يتغير شيء إذا لم يكن للمندوب مستخدم مرتبط.
 
 ## الحقول التي لا تُنسخ (Fields Not Copied)
 
@@ -151,6 +173,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 **نسخ السندات المخزنية من حقل تم النسخ من سند (Copy Stock Docs From Origin Doc)** `termConfig.copyStockDocsFromOriginDoc` — عند نسخ مستند من مصدر، ينقل أيضاً روابط السندات المخزنية المرفقة بذلك المصدر.
 
 **نسخ كمية التسعير من حقل السند المخزني (Copy Pricing Qty From Stock Doc Field)** `termConfig.copyPricingQtyFromStockDocField` — يحدد أي حقل كمية رقمي (`N1`/`N2`/`N3`) في السند المخزني المرتبط يوفّر كمية التسعير المستخدمة على سطر الفاتورة.
+
+**تفعيل منع الظهور في السندات المخزنية اذا كانت كل الاصناف خدمية (Mark Do Not Show In Stock Docs If All Items Type Are Service)** `termConfig.markDoNotShowInStockDocsIfAllItemsService` — عندما تكون كل سطور المستند أصنافًا خدمية، يعلِّم الحفظ خيار **منع الظهور في بناءا على بالسندات المخزنية** في المستند نفسه، فلا يظهر بعد ذلك في اختيار **بناءا على** في التوريد والصرف المخزني — إذ لا شيء يُستلم أو يُصرف مقابله. فواتير المشتريات ومردودات المبيعات.
 
 تتحكم مجموعة **سياسة تجميع سطور السندات المخزنية في الفواتير** (`termConfig.stockDockInInvoiceCollectionOptions.*`) في كيفية دمج ومطابقة سطور السندات المخزنية عند جمعها في الفاتورة. يدمج مفتاح `collectStockDocSimilarLines` السطور المتشابهة؛ وكل علامة `doNotConsider*` تُسقط ذلك المحدد من مفتاح تشابه السطور.
 

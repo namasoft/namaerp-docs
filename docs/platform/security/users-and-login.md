@@ -1,6 +1,6 @@
 ---
 description: "Creating and managing User records: user and login dimensions, self-service user requests, user-level permission overrides, login control, passwords, LDAP and Active Directory, two-factor authentication, administrative privileges and the messages you may see."
-entities: [User]
+entities: [User, UserAddRequest]
 menu: Administration → Security → User
 ---
 # Users and Login
@@ -39,10 +39,12 @@ should work in, and an **Added User Type** — *Customer*, *Supplier*, *Contract
 Pressing **Add User** on the request creates the real user, and three things are decided for you at
 that moment:
 
-- The new user's code comes from the **User Coding Group** on the request's *Term Config*, so
+- The new user's code comes from the **User Coding Group** (`termConfig.userCodingGroup`) on the request's *Term Config*, so
   requested users are numbered by the same rules as everything else.
-- The **Security Profile** is looked up in the *Term Config*'s grid by matching the **Added User
-  Type** — that is how "a customer login" and "a contractor login" end up with different
+- The **Security Profile** is looked up in the *Term Config*'s **Security Profiles** grid
+  (`termConfig.securityProfiles`) by matching its **Added User Type** column
+  (`termConfig.securityProfiles.addedUserType`) and taking that row's **SecurityProfile**
+  (`termConfig.securityProfiles.securityProfile`) — that is how "a customer login" and "a contractor login" end up with different
   permissions without anybody choosing a profile by hand. If the type has no row in that grid, the
   user is created with no profile at all.
 - The login id, names, e-mail and dimensions are copied across, and the created user is written back

@@ -89,7 +89,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | التوجيه | الحقول |
 |---|---|
 | **طلب تجديد إقامة مجمع** | *دفتر طلب تجديد إقامة* `termConfig.residenceReqBook` و*توجيه طلب تجديد إقامة* `termConfig.residenceReqTerm` |
-| **سند نقل كفالة مجمع** | *دفتر طلب نقل كفالة* و*توجيه طلب نقل كفالة* |
+| **سند نقل كفالة مجمع** | *دفتر طلب نقل كفالة* `termConfig.generatedHOSponsorshipTransferDocBook` و*توجيه طلب نقل كفالة* `termConfig.generatedHOSponsorshipTransferDocTerm` |
 | **طلب تأشيرة خروج وعودة مجمع** | *دفتر طلب تأشيرة خروج وعودة* `termConfig.hoExitReEntryVisaBook` و*توجيه طلب تأشيرة خروج وعودة* `termConfig.hoExitReEntryVisaTerm` |
 
 ويضيف توجيه تجديد الإقامة ما لا يضيفه الآخران: جدول **الجنسيات المٌستثناة**

@@ -1,5 +1,5 @@
 ---
-entities: [SalesPriceList, SalesOffers, DiscountCoupon, PostSalesOffer, PostSalesOfferConfig, PostSalesOfferClaim, PriceVotingDoc, PricingRange, AutoSalesPricing, SalesPriceInPoints, FreeItemGroup, PeriodicMonthlySalesOffer, DiscountCouponType, DiscountCouponBook, SalesCouponsCodingMethod, CouponsSalesOrder, CouponsSalesOrderReturn, PriceVotingFile, AutoSalesPricingSetting, Season, UpdateSeasonsDoc]
+entities: [SalesPriceList, SalesOffers, DiscountCoupon, PostSalesOffer, PostSalesOfferConfig, PostSalesOfferClaim, PriceVotingDoc, PricingRange, AutoSalesPricing, SalesPriceInPoints, FreeItemGroup, PeriodicMonthlySalesOffer, DiscountCouponType, DiscountCouponBook, SalesCouponsCodingMethod, CouponsSalesOrder, CouponsSalesOrderReturn, PriceVotingFile, AutoSalesPricingSetting, Season, UpdateSeasonsDoc, PeriodicMonthlySalesOfferCalc, ItemVotingFile, ItemVotingDoc]
 ---
 # Pricing, Offers & Coupons
 
@@ -65,7 +65,22 @@ Processing the document produces no stock movement and no accounting entry; what
 
 ## Post-Sales Offers (PostSalesOffer)
 
-Some incentives aren't granted at the time of sale but afterward (incentives, retroactive discounts, rebates). The **Post-Sales Offer** defines the program and its conditions via the **Post-Sales Offer Config** (PostSalesOfferConfig), and the customer claims their entitlement via the **Post-Sales Offer Claim** (PostSalesOfferClaim), which is reviewed, approved, and affects the customer's balance. There's also the **Periodic Monthly Offer** (PeriodicMonthlySalesOffer) that generates its incentives monthly via a periodic calculation.
+Some incentives aren't granted at the time of sale but afterward (incentives, retroactive discounts, rebates). The **Post-Sales Offer** defines the program and its conditions via the **Post-Sales Offer Config** (PostSalesOfferConfig), and the customer claims their entitlement via the **Post-Sales Offer Claim** (PostSalesOfferClaim), which is reviewed, approved, and affects the customer's balance. There's also the **Periodic Monthly Offer** (PeriodicMonthlySalesOffer) that generates its incentives monthly via a periodic calculation. That calculation is a document of its own, the **Periodic Monthly Sales Offer Calculation** (PeriodicMonthlySalesOfferCalc): pick the offer, and it lists the candidate customers with their total sales value, invoice count, the rule that applied, the discount percentage and the offer value, plus the discount coupon or credit note it generated for each one.
+
+### Post-Sales Offer Configuration
+
+A Post-Sales Offer lists items with an **Offer Price**. When the customer claims, the claim looks up what the customer already bought of those items and pays back the difference between what they paid and the offer price. The **Post Sales Offer Configuration** (PostSalesOfferConfig) named on the offer decides which invoices are read and which value counts as "what they paid":
+
+| Field | Field id | What it does |
+|---|---|---|
+| Discount Source | `discountSource` | Required. Which discount on the invoice lines — **Discount 1** to **Discount 8** or **Header Discount** — is carried over to the claim. The claim takes the highest percentage of that discount on the invoice's lines for the item and takes the same percentage off the offer price before comparing, so a customer who had 10% off at sale time gets the offer price less 10% too. |
+| Price Source | `priceSource` | Required. Which line value counts as the sales value: **Total** (the line price), **Net Value**, or **Equation** to work it out with the formula below. |
+| Equation | `equation` | Used when **Price Source** is *Equation*: a short Groovy formula that returns the sales value. It can use `TotalPrice`, `NetValue` and `Quantity` (the item's sold quantity on the invoice). |
+| Allowed Fields In Equation | `equationFields` | A helper list that suggests the names you can type in the equation. It is for reference only and does not change the calculation. |
+| Excluded Invoices | `excludedInvoices` (`term`, `book`) | Invoices saved under any term or book listed here are ignored — for example, staff sales or a book used for samples. |
+| Applicable Invoices | `applicableInvoicesLines` (`entityType`) | The document types the claim reads. Sales types add to the sold quantity and value; return types subtract. Left empty, the claim reads **Sales Invoice** and **Car Sales Invoice**, less **Sales Return** and **Car Sales Return**. |
+
+Only saved invoices of the claim's customer, dated within the offer's From/To dates, count, and quantities already claimed on earlier claims are taken off. The claim value of each invoice is the sales value (pro-rated to the quantity claimed) minus the discounted offer price times that quantity, never below zero.
 
 ## Coupons (DiscountCoupon)
 
@@ -96,6 +111,12 @@ Tiers, apply rules and the discount column only work for a coupon whose **Discou
 ## Price Voting (PriceVotingDoc)
 
 In organizations that require approval of price changes, the **Price Voting Document** provides a workflow: new prices are proposed and presented to approvers for a vote before taking effect, with their record kept in the **Price Voting File** (PriceVotingFile) as an audit trail of pricing decisions.
+
+## Item Voting (ItemVotingFile)
+
+Item voting applies the same idea to an item's stocking data rather than its price (*Sales → Item Voting*). An **Item Voting File** lists the employees allowed to vote on its **Voters** tab and carries a status. Each voter then saves an **Item Voting Doc** against that file, proposing per item (and per warehouse, locator or other dimension) a **Rack Code**, **Min Quantity**, **Max Quantity**, **Order Limit**, **Standard Cost**, **Min Price** and **Suggested Price**, and ticking **RE Request**, **Desirable** or **Suggested In Discounts And Offers**. The voter defaults to the employee of the logged-in user, and the document is refused unless the file's status is **Ready For Voting** and the voter is on the file's list.
+
+On the file, **Collect Doc Lines** gathers the lines of every voting document saved against it, and **update Items** writes the agreed values into the matching lines of each item's own dimension-data grid (adding a line when that combination is not there yet).
 
 ## Actions on these screens
 

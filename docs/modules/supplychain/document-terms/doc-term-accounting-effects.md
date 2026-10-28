@@ -243,6 +243,18 @@ Toggles on expense/cost documents (JOrderExpense, ReceiptAdditionalCost, LcExpen
 
 **Expense Type** `termConfig.expenseType` — Classifies the job-order expense, controlling how it is recorded/distributed. JOrderExpense only.
 
+## Payment Documents and Debt Ages
+
+These four sit in the From Document group of invoice terms. They decide how an invoice's payment lines and payment documents reach the ledger and the debt-age analysis.
+
+**Add Line With Total Paid Of From Doc In Payment Line** `termConfig.addLineWithTotalPaidOfFromDocInPaymentLine` — On save, when the invoice is built on another document that has already been paid (cash, vouchers or payment methods), a line is added to the invoice's payment-documents grid naming that document with its total paid. An order that took a 500 deposit thus counts the 500 on the invoice made from it. The line is removed again if the source shows nothing paid. Sales and purchase invoices.
+
+**Link With Invoice Lines In accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument` — When a receipt or payment voucher pays this invoice through its payment-documents grid, the invoice is added to that voucher's invoices grid and kept in step with it.
+
+**Use Payment Docs As Debt Ages** `termConfig.usePaymentDocsAsDebtAges` — The lines of the invoice's payment-documents grid are treated as debt-age rows, so the debt-age analysis sees what each payment document settled. Sales invoice, sales replacement (and its request) and purchase invoice.
+
+**Expand Payment Method Effect** `termConfig.expandPaymentMethodEffect` — The payment lines' entries are written in full: the payment value and the payment-method fees as separate lines, instead of netting the fees off the payment line. Sales and purchase documents.
+
 ## Which Documents Expose Which Effect Pages
 
 The effect groups present on a document term depend on the document type:
@@ -264,3 +276,5 @@ The effect groups present on a document term depend on the document type:
 | JOrderExpense | Debit/credit, taxes info, discount effects, expense type, affect-on-cost flags |
 | LC Opening | Debit/credit (down payment), fees debit/credit, covered debit/credit, LCExpense book/term |
 | Cost Revaluation | Debit (Adjustment Side) / credit (Inventory Side) |
+| Processing Document | Debit / credit of the indirect-cost entry (`termConfig.feesDebit` / `termConfig.feesCredit`) — see [Processing Document](./doc-term-document-specific.md#Processing-Document) |
+| Post Sales Offer Claim | Debit / credit, each an Accounting Side Config record (`termConfig.debit` / `termConfig.credit`) — see [Post-Sales Offer Claim](./doc-term-document-specific.md#Post-Sales-Offer-Claim) |

@@ -47,16 +47,17 @@ Create a new Tax Payer Configuration or edit an existing one.
 
 | Field          | Value |
 |----------------|-------|
-| Tax Payer Type | `UAE - Electronic Invoice Staging` (for testing) or `UAE - Electronic Invoice` (for production) |
-| Tax Registeration NO | Your establishment's tax registration number |
+| Tax Payer Type (`taxPayerType`) | `UAE - Electronic Invoice Staging` (for testing) or `UAE - Electronic Invoice` (for production) |
 
 #### Integration Settings
 
 | Field              | Description |
 |--------------------|-------------|
-| API URL            | Auto-filled when Tax Payer Type is selected |
-| Password           | API Key from Orchida (Bearer Token) |
-| Orchida Company ID | Company ID from the Orchida dashboard |
+| API URL (`apiUrl`) | Auto-filled when Tax Payer Type is selected |
+| Password (`password`) | API Key from Orchida (Bearer Token). Required. |
+| Orchida Company ID (`orchidaCompanyId`) | Company ID from the Orchida dashboard. Required. |
+
+Orchida knows the seller from the Company ID, so no seller block leaves Nama: **Tax Registeration NO**, **Activity Type** and **Branch Id From** on the UAE page are not sent with UAE invoices. Leave **Branch Id From** empty — when it is filled, saving the configuration still checks that record's **Tax Authority Code** and address.
 
 ![The UAE page of the Electronic Tax Authority Configuration](../../ar/modules/invoicing/images/uae-orchida-config-uae-page-en.png)
 
@@ -84,7 +85,33 @@ UAE tax codes follow the UN/EDIFACT 5305 standard (Aligned Tax Category Codes).
 When using code `S` (Standard rate), the VAT rate must be exactly `5.00`
 :::
 
+Enter the codes in the *Tax 1* group of the UAE page (or the group of whichever tax slot holds VAT): **Tax 1 Tax Type** (`taxesCodes.tax1TaxAuthType`) takes `VAT` and **Tax 1 Tax SubType** (`taxesCodes.tax1TaxAuthSubType`) takes the category. The rest of the group:
+
+- **Tax 1 Zero Tax Auth Type** and **Tax 1 Zero Tax Auth Sub Type** (`taxesCodes.tax1ZeroTaxAuthType`, `taxesCodes.tax1ZeroTaxAuthSubType`) are sent instead when the tax on a line is zero — for example `VAT` and `Z`.
+- **Send Tax 1 With Zero** (`taxesCodes.sendTax1WithZero`) sends the tax with a zero rate and a zero amount.
+- **Do Not Send Tax 1 If Codes Not Provided** (`doNotSendTax1IfNoCode`) leaves the slot out when it has no codes.
+
+**Calculate Tax Codes Types From** (`taxCodesType`) decides whether the codes are read from this page (the default) or from the tax plan on the term, the item or the customer, and the **Tax Codes Sources** grid (`taxCodesSource`) overrides that for chosen document types, books, terms, criteria, value dates or dimensions.
+
 ![Tax 1 codes on the UAE page](../../ar/modules/invoicing/images/uae-orchida-config-tax-codes-en.png)
+
+#### Item lines, prices and dates
+
+| Field | Field ID | What it does |
+|---|---|---|
+| **Calculate Item Code From**, **Item Code Template** | `itemCodeFrom`, `itemCodeTemplate` | The item code sent on each line: the **Tax Authority Code** of the item (or of its group, class, category, section or brand), or the item's own code when that is empty. With **From Item Code Template**, the template builds it. |
+| **Run Item Description Template On**, **Item Description Template** | `taxDescriptionFrom`, `taxDescriptionTemplate` | The line's name and description. By default the item's first name; the template can build it from the item, the document header or the document line. |
+| **Unit Price Source**, **Unit Price Source Type** | `unitPriceSource`, `unitPriceType` | Which step of the line's calculation the unit price is read from. See [Unit price, quantities and rounding](./e-invoices-guide.md#Unit-price-quantities-and-rounding). |
+| **Quantity Fractional Places** | `quantityFractionalPlaces` | Decimal places of the quantity; empty means 2. Same section. |
+| **Ignore and Round Amount if Scale is Greater Than Allowed Scale** | `ignoreAndRoundAmountIfScaleIsInvalid` | Rounds an over-precise unit price instead of stopping the document. Same section. |
+| **Max Number Of Lines When Collect Tax Auth Docs** | `maxNumberOfLinesWhenCollectTaxAuthDocs` | How many lines one collection may bring in. Same section. |
+| **Don Not Send Assembly Components** | `dontSendAssemblyComponentLines` | Sends an assembly item as one line rather than as its components. |
+| **Discount Configs** grid | `discountConfigs` | Sends a discount before tax, after tax, or not at all, discount by discount. See [Discount Configs](./e-invoices-guide.md#Discount-Configs). |
+| **Max Days To Send Invoices** | `maxDaysToSendInvoice` | See [Maximum Days to Send](#Maximum-Days-to-Send) below. |
+| **Start Sending From Date** | `startSendingFromDate` | Documents dated before this day are never sent. |
+| **Days To Allow Save Document In Future** | `futureDaysToAllowSaveDoc` | How many days ahead a document that goes to Orchida may be dated. Zero means not at all. |
+
+**Item Internal Code Template** and **Run Item Nama Code Template On** build an internal code that is not sent to Orchida; **Internal Item Code Maximum Length** still limits that code, to 50 characters when it is empty. The charge-fee fields (**Charge Fee Fields**, **Charge Fee Value**, **Charge Fee Tax Percent**, **Exclude Service Fees With No Configs**) and **Document Level Extra Discount Location** do not affect UAE invoices. Service fees reach Orchida only through the service-fees grid on the **Main** page — see [Service Fees And What Is Charged To Customer](./e-invoices-guide.md#Service-Fees-And-What-Is-Charged-To-Customer).
 
 ### Step 3: Customer Setup
 
@@ -162,4 +189,4 @@ After sending, the document status is set to:
 
 ## Maximum Days to Send
 
-The default number of days allowed to send an invoice after its value date is **14 days**. This can be changed in the Tax Payer Configuration under **Max Days To Send Invoices**.
+The default number of days allowed to send an invoice after its value date is **14 days**. This can be changed in the Tax Payer Configuration under **Max Days To Send Invoices** (`maxDaysToSendInvoice`). A document older than the limit cannot be saved once its book or term sends to the tax authority, and one that ages past it is no longer collected.

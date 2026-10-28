@@ -101,7 +101,7 @@ the book and term of the individual requests the batch creates:
 | Term | Fields |
 |---|---|
 | **Aggregated Residence Renewal Request** | *Residence Request Book* `termConfig.residenceReqBook`, *Residence Request Term* `termConfig.residenceReqTerm` |
-| **Aggregated Sponsorship Transfer Document** | *Generated Sponsorship Transfer Document Book* and *… Term* |
+| **Aggregated Sponsorship Transfer Document** | *Generated Sponsorship Transfer Document Book* `termConfig.generatedHOSponsorshipTransferDocBook`, *Generated Sponsorship Transfer Document Term* `termConfig.generatedHOSponsorshipTransferDocTerm` |
 | **Aggregated Exit / Re-Entry Visa Request** | *Exit ReEntry Visa Book* `termConfig.hoExitReEntryVisaBook`, *Exit ReEntry Visa Term* `termConfig.hoExitReEntryVisaTerm` |
 
 The residence renewal term adds one thing the others do not: an **Excluded Nationalities** grid

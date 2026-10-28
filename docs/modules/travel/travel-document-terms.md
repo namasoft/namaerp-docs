@@ -56,7 +56,7 @@ document", and the Hotel, Restaurant or Tour Guide master file supplies it.
 
 ### The Effect tab — the two sides that carry the deal
 
-The first tab holds the pair that does most of the work: **Debit** and **Credit**. Which business
+The first tab holds the pair that does most of the work: **Debit** `termConfig.config.debit` and **Credit** `termConfig.config.credit`. Which business
 meaning lands in which of the two follows the direction of the document, not your preference:
 
 | Document | Debit group holds | Credit group holds |
@@ -77,12 +77,10 @@ other two tabs, so recording the gross price here keeps them from being counted 
 
 Alongside Debit and Credit the tab carries a handful of switches:
 
-| Option | What it does |
-|---|---|
-| **Shorten Ledger** | Merges identical ledger lines so one invoice with forty detail lines does not produce forty pairs of entries |
-| **Tax Plan**, **Taxable**, **Modifiable Tax**, **Allow Editing Header Tax In Details** | The tax posture of the document — see below |
-| **Expand Payment Method Effect** | Keeps the payment-method fee entries un-merged, so each method's fee is visible on its own ledger line |
-| **Pay Installments In Order** | Forces instalments on the [Payments grid](./travel-payments-and-terms) to be settled oldest first |
+| Option | Field id | What it does |
+|---|---|---|
+| **Shorten Ledger** | `termConfig.config.shortenLedger` | Merges identical ledger lines so one invoice with forty detail lines does not produce forty pairs of entries |
+| **Tax Plan**, **Taxable**, **Modifiable Tax**, **Allow Editing Header Tax In Details** | `termConfig.taxPlan` / `termConfig.taxable` / `termConfig.modifiableTax` / `termConfig.allowEditingHdrTaxInDetails` | The tax posture of the document — see below |
 
 ::: info The term owns the tax settings, not the document
 Tax Plan, Taxable, Modifiable Tax and Allow Editing Header Tax In Details all appear on the document
@@ -92,18 +90,23 @@ answer is on the term, not on the invoice.
 :::
 
 The Effect tab closes with a **Service Fees** group: four pairs of debit and credit sides for
-documents that carry service fees, each with a flag saying whether the fee is deducted, plus a
-switch to skip the effect entirely when no account side has been configured for it.
+documents that carry service fees (`termConfig.serviceFees1Debit` / `termConfig.serviceFees1Credit`
+… `termConfig.serviceFees4Debit` / `termConfig.serviceFees4Credit`), each with a flag saying whether
+the fee is deducted (`termConfig.serviceFees1Deduction` … `termConfig.serviceFees4Deduction`), plus a
+switch to skip the effect entirely when no account side has been configured for it
+(`termConfig.doNotAddServiceFeesEffectWithoutAccSide`).
 
 ### The Other Effects tab — cash and the four taxes
 
 This tab is where the money that is not the deal itself gets its accounts.
 
-- **Cash** — the account for money taken at the counter. It is also the fallback for payment-method
+- **Cash** `termConfig.cash` — the account for money taken at the counter. It is also the fallback for payment-method
   rows: a card or wallet row is recorded on the account named on its own **Payment Method** master file,
   and only falls back to this Cash side when the method names none.
-- **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** — one group each, and each group carries both the tax
-  side and its **other side**, the contra account the tax is recorded against. On a sales document the
+- **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** (`termConfig.tax`, `termConfig.tax2`, `termConfig.htax`,
+  `termConfig.htax2`) — one group each, and each group carries both the tax side and its **other
+  side** (`termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide`), the
+  contra account the tax is recorded against. On a sales document the
   tax lands on the credit side (output tax); on a purchase document it lands on the debit side
   (recoverable input tax). You configure the account; the direction takes care of itself.
 
@@ -112,11 +115,14 @@ This tab is where the money that is not the deal itself gets its accounts.
 ### The Discount Effects tab — every discount level, plus the voucher rules
 
 Travel documents carry eight line discount levels and a header discount, and each one gets its own
-group here: **Discount 1** for the first line discount, **Invoice Discount** for the header
-reduction, then **Discount 2** through **Discount 8**. As with the taxes, each group has its side
-and its **other side**. On a sale a discount is a debit; on a purchase it is a credit.
+group here: **Discount 1** (`termConfig.lineDiscount`) for the first line discount, **Invoice
+Discount** (`termConfig.invoiceDiscount`) for the header reduction, then **Discount 2** through
+**Discount 8** (`termConfig.firstDiscountAcc` … `termConfig.seventhDiscountAcc`). As with the taxes,
+each group has its side and its **other side** (`termConfig.taxesOtherSide.discount1OtherSide` …
+`termConfig.taxesOtherSide.discount8OtherSide`, and `termConfig.taxesOtherSide.headerDiscountOtherSide`
+for the invoice discount). On a sale a discount is a debit; on a purchase it is a credit.
 
-At the bottom of the tab sits the **External Effects** grid — the one place on the term that is a
+At the bottom of the tab sits the **External Effects** grid (`termConfig.externalEffectLines`) — the one place on the term that is a
 grid rather than a group. It gives payment and receipt vouchers landing in the document's
 [Payment Documents grid](./travel-payments-and-terms) accounting of their own. Each row says: for
 vouchers of *this type*, matching *these criteria* or *this query*, record *this debit* against *this
@@ -175,15 +181,15 @@ button what to create.
 It has no accounting sides, no tax settings and no numbering. It holds five book-and-term pairs and
 two services:
 
-| Setting | What it is for |
-|---|---|
-| **Hotel Purchase Order Book** / **Hotel Purchase Order Term** | The book and term used for the orders built from the tour's accommodation lines, one per hotel |
-| **Hotel Service** | The Tour Service that stands for accommodation on those order lines |
-| **Flight Purchase Order Book** / **Flight Purchase Order Term** | The book and term for the orders built from the flight lines, one per supplier |
-| **Flight Service** | The Tour Service that stands for a flight on those order lines |
-| **Service Purchase Order Book** / **Service Purchase Order Term** | The book and term for orders built from the service lines, grouped by supplier |
-| **TourGuide Purchase Order Book** / **TourGuide Purchase Order Term** | The book and term for orders built from the service lines, grouped by tour guide |
-| **Restaurant Purchase Order Book** / **Restaurant Purchase Order Term** | The book and term for orders built from the service lines, grouped by restaurant |
+| Setting | Field id | What it is for |
+|---|---|---|
+| **Hotel Purchase Order Book** / **Hotel Purchase Order Term** | `termConfig.hotelPurchaseOrderBook` / `termConfig.hotelPurchaseOrderTerm` | The book and term used for the orders built from the tour's accommodation lines, one per hotel |
+| **Hotel Service** | `termConfig.hotelService` | The Tour Service that stands for accommodation on those order lines |
+| **Flight Purchase Order Book** / **Flight Purchase Order Term** | `termConfig.flightPurchaseOrderBook` / `termConfig.flightPurchaseOrderTerm` | The book and term for the orders built from the flight lines, one per supplier |
+| **Flight Service** | `termConfig.flightService` | The Tour Service that stands for a flight on those order lines |
+| **Service Purchase Order Book** / **Service Purchase Order Term** | `termConfig.servicePurchaseOrderBook` / `termConfig.servicePurchaseOrderTerm` | The book and term for orders built from the service lines, grouped by supplier |
+| **TourGuide Purchase Order Book** / **TourGuide Purchase Order Term** | `termConfig.tourGuidePurchaseOrderBook` / `termConfig.tourGuidePurchaseOrderTerm` | The book and term for orders built from the service lines, grouped by tour guide |
+| **Restaurant Purchase Order Book** / **Restaurant Purchase Order Term** | `termConfig.restaurantPurchaseOrderBook` / `termConfig.restaurantPurchaseOrderTerm` | The book and term for orders built from the service lines, grouped by restaurant |
 
 ![The tour term — twelve settings that decide which purchase orders the tour can generate, and into which book and term](../../ar/modules/travel/images/terms/tour-term-settings-en.png)
 

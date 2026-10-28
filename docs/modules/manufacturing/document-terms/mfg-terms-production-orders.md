@@ -32,87 +32,87 @@ The production order term is the longest in the module, and the one most worth r
 
 ### What must be on an order
 
-| Option | What it does |
-|---|---|
-| **Required Bom** (مكونات المنتج مطلوبة) | The order's **BOM** field must be filled before it can be saved. |
-| **Required Routing** (عملية التشغيل مطلوبة) | The same, for the **Routing** field. |
-| **Allow Empty Bom Lines** (السماح بترك سطور مكونات الأنتاج فارغة) | Off by default, so an order with no component lines is refused with *Components can not be empty* — «لا يمكن ترك مكونات المنتج فارغة». Tick it for orders that genuinely consume nothing you track — a pure rework order, for example. |
-| **Allow Empty Item In Component Lines** (السماح بترك الصنف فارغاً في سطور المكونات) | Off by default, so every component line needs an item. Carton production needs this ticked, because carton components are described by class and size rather than by an item code. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Required Bom** (مكونات المنتج مطلوبة) | `termConfig.requiredBom` | The order's **BOM** field must be filled before it can be saved. |
+| **Required Routing** (عملية التشغيل مطلوبة) | `termConfig.requiredRouting` | The same, for the **Routing** field. |
+| **Allow Empty Bom Lines** (السماح بترك سطور مكونات الأنتاج فارغة) | `termConfig.allowEmptyBomLines` | Off by default, so an order with no component lines is refused with *Components can not be empty* — «لا يمكن ترك مكونات المنتج فارغة». Tick it for orders that genuinely consume nothing you track — a pure rework order, for example. |
+| **Allow Empty Item In Component Lines** (السماح بترك الصنف فارغاً في سطور المكونات) | `termConfig.allowEmptyItemInComponentLines` | Off by default, so every component line needs an item. Carton production needs this ticked, because carton components are described by class and size rather than by an item code. |
 
 ### What may change on an order
 
-| Option | What it does |
-|---|---|
-| **Can Update Bom Details** (يمكن تعديل تفاصيل مكونات المنتج) | While the order is still *Initial* and names a BOM, lets the user change the component lines so they no longer match the BOM. Off, a changed component line is refused with *Can not modify component lines* — «لا يمكن تغير سطور مكونات المنتج». |
-| **Can Update Routing Details** (يمكن تعديل تفاصيل عملية التشغيل) | The same for the routing and routing-resource lines while the order is Initial. Off, they are refused with *Can not modify routing lines* — «لا يمكن تغيير سطور سطور عمليات التشغيل» — or *Can not modify routing resource lines* — «لا يمكن تععديل سطور موارد التشغيل». |
-| **Allow Editing Routing And Bom After Starting Production Order** (السماح بالتعديل في مكونات المنتج وعمليات التشغيل بعد بدء أمر الإنتاج) | Once an order has left Initial, its component, routing and resource lines are frozen with the same three messages. Ticking this lifts the freeze. It also lets an aggregated production order change lines whose production order has already started. |
-| **Allow Editing Quantity After Executing Production Order** (السماح بتعديل الكمية بعد البدء في تنفيذ أمر الإنتاج) | Off, the order's quantity and unit cannot change once it has left Initial: *Quantity can be changed only if status is still initial*. That message has no Arabic translation and shows in English on Arabic screens. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Can Update Bom Details** (يمكن تعديل تفاصيل مكونات المنتج) | `termConfig.canUpdateBomDetails` | While the order is still *Initial* and names a BOM, lets the user change the component lines so they no longer match the BOM. Off, a changed component line is refused with *Can not modify component lines* — «لا يمكن تغير سطور مكونات المنتج». |
+| **Can Update Routing Details** (يمكن تعديل تفاصيل عملية التشغيل) | `termConfig.canUpdateRoutingDetails` | The same for the routing and routing-resource lines while the order is Initial. Off, they are refused with *Can not modify routing lines* — «لا يمكن تغيير سطور سطور عمليات التشغيل» — or *Can not modify routing resource lines* — «لا يمكن تععديل سطور موارد التشغيل». |
+| **Allow Editing Routing And Bom After Starting Production Order** (السماح بالتعديل في مكونات المنتج وعمليات التشغيل بعد بدء أمر الإنتاج) | `termConfig.allowEditingRoutingAndBomAfterStartingProdOrder` | Once an order has left Initial, its component, routing and resource lines are frozen with the same three messages. Ticking this lifts the freeze. It also lets an aggregated production order change lines whose production order has already started. |
+| **Allow Editing Quantity After Executing Production Order** (السماح بتعديل الكمية بعد البدء في تنفيذ أمر الإنتاج) | `termConfig.allowEditQtyAfterExecuteProductionOrder` | Off, the order's quantity and unit cannot change once it has left Initial: *Quantity can be changed only if status is still initial*. That message has no Arabic translation and shows in English on Arabic screens. |
 
 ### Costing
 
-| Option | What it does |
-|---|---|
-| **Overhead** (التكاليف الغير مباشرة) | The default overhead type for these orders. The order close voucher takes its overhead from the order close term first and falls back to this one. |
-| **Calculate Deviations With Save** (حساب الانحرافات مع الحفظ) | At order close, compares actual unit cost with standard unit cost and fills the close voucher's deviation figures — quantity, material, resource and overhead. The Order Close term's **Standard Deviation Debit / Credit** are recorded only when this is on. |
-| **Cost Per Batch** | Costs the order separately for each lot delivered, instead of as one pool. **Lot ID** then becomes required on raw material issues, raw material returns and resource vouchers for the order. It cannot be combined with *Calculate Deviations With Save*: closing such an order fails with *Cost Per Batch Not Supported for deviation calculation*. The option's label is English on Arabic screens too. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Overhead** (التكاليف الغير مباشرة) | `termConfig.overhead` | The default overhead type for these orders. The order close voucher takes its overhead from the order close term first and falls back to this one. |
+| **Calculate Deviations With Save** (حساب الانحرافات مع الحفظ) | `termConfig.calculateDeviations` | At order close, compares actual unit cost with standard unit cost and fills the close voucher's deviation figures — quantity, material, resource and overhead. The Order Close term's **Standard Deviation Debit / Credit** are recorded only when this is on. |
+| **Cost Per Batch** | `termConfig.costPerBatch` | Costs the order separately for each lot delivered, instead of as one pool. **Lot ID** then becomes required on raw material issues, raw material returns and resource vouchers for the order. It cannot be combined with *Calculate Deviations With Save*: closing such an order fails with *Cost Per Batch Not Supported for deviation calculation*. The option's label is English on Arabic screens too. |
 
 Costing itself is explained on [Production Costing](/modules/manufacturing/production-costing).
 
 ### The raw material issue request
 
-| Option | What it does |
-|---|---|
-| **Raw Material Issue Request Book** / **Raw Material Issue Request Term** (دفتر / توجيه طلب صرف مواد خام) | When both are filled, saving an order that has a BOM creates — or updates — a **Raw material issue request** carrying the order's component lines, so the store sees what it has to prepare. Leave either empty and no request is created. Cancelling the order deletes the request. |
-| **Raw Material Issue Req Criteria Definition** (معايير إنشاء طلب صرف مواد خام) | Narrows that to orders matching the criteria. Empty means every order. An order that stops matching has its request deleted on the next save. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Raw Material Issue Request Book** / **Raw Material Issue Request Term** (دفتر / توجيه طلب صرف مواد خام) | `termConfig.issueRequestBook` / `termConfig.issueRequestTerm` | When both are filled, saving an order that has a BOM creates — or updates — a **Raw material issue request** carrying the order's component lines, so the store sees what it has to prepare. Leave either empty and no request is created. Cancelling the order deletes the request. |
+| **Raw Material Issue Req Criteria Definition** (معايير إنشاء طلب صرف مواد خام) | `termConfig.rawMaterialIssueReqCriteriaDefinition` | Narrows that to orders matching the criteria. Empty means every order. An order that stops matching has its request deleted on the next save. |
 
 ### Choosing the BOM by item classifier
 
-**Filter Bom By Item Classifiers** (فلترة مكونات المنتج من خلال محدد الصنف) widens the BOM search on the order. Normally only BOMs for the order's item are offered. Choose a classifier — **Item Section** or **Item class 1** to **Item class 10** — and BOMs that name no item but carry the same value of that classifier as the item are offered too. That is how one generic BOM serves a whole family of items.
+**Filter Bom By Item Classifiers** (فلترة مكونات المنتج من خلال محدد الصنف, `termConfig.filterBomByItemClassifiers`) widens the BOM search on the order. Normally only BOMs for the order's item are offered. Choose a classifier — **Item Section** or **Item class 1** to **Item class 10** — and BOMs that name no item but carry the same value of that classifier as the item are offered too. That is how one generic BOM serves a whole family of items.
 
 ### Planned deliveries
 
 An order can carry a grid of planned deliveries — this much of this item, in this lot, to this warehouse. Every product delivery and product return is matched against those lines to keep their delivered quantity up to date: first by the **Expected Delivery Code**, and failing that by the first planned line with the same item whose ticked dimensions also match.
 
-The **Planned Deliveries Matching Options** block says which dimensions must match: **Consider Size**, **Consider Color**, **Consider Revision**, **Consider Box**, **Consider Lot**, **Consider Warehouse**, **Consider Locator**, **Consider Measures**, **Consider Serial**, **Consider Second Serial**, **Consider SubItem**, **Active Percentage Consideration Type** (a yes/no switch despite its name) and **Consider Inactive Percentage**.
+The **Planned Deliveries Matching Options** block (`termConfig.plannedDeliveryMatchingOptions`) says which dimensions must match: **Consider Size** (`.considerSize`), **Consider Color** (`.considerColor`), **Consider Revision** (`.considerRevisionId`), **Consider Box** (`.considerBox`), **Consider Lot** (`.considerLotId`), **Consider Warehouse** (`.considerWarehouse`), **Consider Locator** (`.considerLocator`), **Consider Measures** (`.considerMeasures`), **Consider Serial** (`.considerSerial`), **Consider Second Serial** (`.considerSecondSerial`), **Consider SubItem** (`.considerSubItem`), **Active Percentage Consideration Type** (`.considerActivePercent` — a yes/no switch despite its name) and **Consider Inactive Percentage** (`.considerInActivePercent`). Each id is the block's id followed by the suffix, for example `termConfig.plannedDeliveryMatchingOptions.considerSize`.
 
-**Prevent Delivery Outside Planned Deliveries** (منع التسليم خارج سطور التسليمات المخططة) turns the matching into a rule. A delivery or return line must then match a planned line, may not deliver more than was planned, and may not return more than was delivered. The refusals are listed at the end of this page.
+**Prevent Delivery Outside Planned Deliveries** (منع التسليم خارج سطور التسليمات المخططة, `termConfig.preventDeliveryOutsidePlannedDeliveries`) turns the matching into a rule. A delivery or return line must then match a planned line, may not deliver more than was planned, and may not return more than was delivered. The refusals are listed at the end of this page.
 
 ## Production Order Request
 
-The request's term has one option of its own. **Filter Routing By Item Classifiers** (فلترة عمليات التشغيل من خلال محدد الصنف) does for the request's **Routing** search what *Filter Bom By Item Classifiers* does for the order's BOM search: routings that name no item but carry the item's value of the chosen classifier are offered as well.
+The request's term has one option of its own. **Filter Routing By Item Classifiers** (فلترة عمليات التشغيل من خلال محدد الصنف, `termConfig.filterRoutingByItemClassifiers`) does for the request's **Routing** search what *Filter Bom By Item Classifiers* does for the order's BOM search: routings that name no item but carry the item's value of the chosen classifier are offered as well.
 
 The request itself is on [Production Order Requests](/modules/manufacturing/production-order-request).
 
 ## Aggregated Production Order
 
-| Option | What it does |
-|---|---|
-| **Production Order Book** / **Production Order Term** (دفتر أمر انتاج / توجيه أمر الإنتاج) | The book and term of the production orders the aggregated order creates, one per line. Both are required: saving without them fails with *Production Term or Production Book from term config Can not be Empty* — «توجية و دفتر أمر الإنتاج الموجودين في التوجيه لا يمكن ان يكونا فارغين». |
-| **Default Cost Reallocation** (إعادة تحميل التكلفة الافتراضية) | Fills the document's **Cost Reallocation**, which re-spreads cost across the orders the aggregated order created: **Cost Share Only** (أسهم التكلفة فقط) by each line's cost share, **Quantity Only** (الكمية فقط) by delivered quantity, **Cost Share And Quantity** (أسهم التكلفة مرجحة بالكمية) by the two multiplied, or none. |
-| **Total Cost Share Is 100%** (إجمالي أسهم التكلفة 100%) | When a reallocation method is chosen, the lines' cost shares must add up to 100: *Total cost share must be 100%* — «إجمالي أسهم التكلفة يجب أن يكون 100%». |
-| **Regenerate Production Orders Regardless Of there are Changes Or Not** (إعادة إنشاء أوامر الإنتاج مع الحفظ بغض النظر عن وجود تغيرات أم لا) | Normally a generated order's routing, resource and co-product lines are rebuilt only when its BOM or routing changed. Ticked, they are rebuilt on every save of the aggregated order. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Production Order Book** / **Production Order Term** (دفتر أمر انتاج / توجيه أمر الإنتاج) | `termConfig.prodOrderBook` / `termConfig.prodOrderTerm` | The book and term of the production orders the aggregated order creates, one per line. Both are required: saving without them fails with *Production Term or Production Book from term config Can not be Empty* — «توجية و دفتر أمر الإنتاج الموجودين في التوجيه لا يمكن ان يكونا فارغين». |
+| **Default Cost Reallocation** (إعادة تحميل التكلفة الافتراضية) | `termConfig.defaultCostReallocation` | Fills the document's **Cost Reallocation**, which re-spreads cost across the orders the aggregated order created: **Cost Share Only** (أسهم التكلفة فقط) by each line's cost share, **Quantity Only** (الكمية فقط) by delivered quantity, **Cost Share And Quantity** (أسهم التكلفة مرجحة بالكمية) by the two multiplied, or none. |
+| **Total Cost Share Is 100%** (إجمالي أسهم التكلفة 100%) | `termConfig.totalCostShareIs100` | When a reallocation method is chosen, the lines' cost shares must add up to 100: *Total cost share must be 100%* — «إجمالي أسهم التكلفة يجب أن يكون 100%». |
+| **Regenerate Production Orders Regardless Of there are Changes Or Not** (إعادة إنشاء أوامر الإنتاج مع الحفظ بغض النظر عن وجود تغيرات أم لا) | `termConfig.regenProdOrdersRegardlessOfChanges` | Normally a generated order's routing, resource and co-product lines are rebuilt only when its BOM or routing changed. Ticked, they are rebuilt on every save of the aggregated order. |
 
 ## Aggregated Product Delivery and Aggregated Production Order Closing
 
 Both terms only name the book and term of the documents they generate, and both pairs are required.
 
-- **Aggregated Product Delivery**: **Product Delivery Book** / **Product Delivery Term** (دفتر / توجيه تسليم المنتج). Missing either: *Both Book and term of generated product delivery must be provided* (English only).
-- **Aggregated Production Order Closing**: **Production Order Closing Book** / **Production Order Closing Term** (دفتر / توجيه إغلاق أمر الإنتاج). Missing either: *You must fill order voucher close book and term in term {0}* (English only).
+- **Aggregated Product Delivery**: **Product Delivery Book** / **Product Delivery Term** (دفتر / توجيه تسليم المنتج, `termConfig.prodDeliveryBook` / `termConfig.prodDeliveryTerm`). Missing either: *Both Book and term of generated product delivery must be provided* (English only).
+- **Aggregated Production Order Closing**: **Production Order Closing Book** / **Production Order Closing Term** (دفتر / توجيه إغلاق أمر الإنتاج, `termConfig.prodOrderClosingBook` / `termConfig.prodOrderClosingTerm`). Missing either: *You must fill order voucher close book and term in term {0}* (English only).
 
 ## MRP Planning Document
 
 The MRP document generates purchase and production documents from its planned lines, and its term says how.
 
-| Option | What it does |
-|---|---|
-| **Purchase Doc Type** (نوع مستند الشراء المنشأ) | **Purchase Order**, **MRP Purchase Request** or **Item Request** — what the planned purchase lines become. |
-| **Production Doc Type** (نوع مستند الإنتاج المنشأ) | **Production Order** or **Production Order Request** — what the planned production lines become. |
-| **Purchase Order Book** / **Purchase Order Term** | Used when purchase lines become purchase orders. |
-| **MRP Purchase Order Book** / **MRP Purchase Order Term** | Used when they become MRP purchase requests. |
-| **Item Request Book** / **Item Request Term** | Used when they become item requests. |
-| **Production Order Book** / **Production Order Term** | Used when production lines become production orders. |
-| **Production Order Request Book** | Used when they become production order requests. There is no term field for this one. |
-| **Demand Docs Date Lines** (حقول تاريخ سندات الطلب) | A small grid of **Entity Type** and a date field. For each demand document type listed, the MRP line's document date is read from the chosen date field instead of the document's own date — a sales order's promised delivery date rather than its order date, for example. The date column has no translated heading, so it shows its internal name. |
+| Option | Field id | What it does |
+|---|---|---|
+| **Purchase Doc Type** (نوع مستند الشراء المنشأ) | `termConfig.purchaseDocType` | **Purchase Order**, **MRP Purchase Request** or **Item Request** — what the planned purchase lines become. |
+| **Production Doc Type** (نوع مستند الإنتاج المنشأ) | `termConfig.productionDocType` | **Production Order** or **Production Order Request** — what the planned production lines become. |
+| **Purchase Order Book** / **Purchase Order Term** | `termConfig.purchOrderBook` / `termConfig.purchOrderTerm` | Used when purchase lines become purchase orders. |
+| **MRP Purchase Order Book** / **MRP Purchase Order Term** | `termConfig.mrpPurchOrderBook` / `termConfig.mrpPurchOrderTerm` | Used when they become MRP purchase requests. |
+| **Item Request Book** / **Item Request Term** | `termConfig.itemReqBook` / `termConfig.itemReqTerm` | Used when they become item requests. |
+| **Production Order Book** / **Production Order Term** | `termConfig.prodOrderBook` / `termConfig.prodOrderTerm` | Used when production lines become production orders. |
+| **Production Order Request Book** | `termConfig.prodOrderReqBook` | Used when they become production order requests. There is no term field for this one. |
+| **Demand Docs Date Lines** (حقول تاريخ سندات الطلب) | `termConfig.demandDocsDateLines` | A small grid of **Entity Type** and a date field. For each demand document type listed, the MRP line's document date is read from the chosen date field instead of the document's own date — a sales order's promised delivery date rather than its order date, for example. The date column has no translated heading, so it shows its internal name. |
 
 Every book used for generation must be **auto-coded**; otherwise generating stops with *In this document term the book of {0} must be Auto* — «في توجيه هذا المستند , لابد ان يكون تكويد دفتر {0} آلي». A missing book or term stops it with a message naming the document type, for example *To generate Purchase Order doc ,Please select book and term of the Purchase Order in The term of this Document*.
 

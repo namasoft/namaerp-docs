@@ -225,25 +225,25 @@ The configuration is a small master file under **Manufacturing → Cartoon → C
 
 ![The planning configuration and its solver parameters](../../ar/modules/manufacturing/images/carton/planning-configuration-en.png)
 
-**Minimum Roll Cuts** — a reel must yield at least this many cuts to be worth using, which keeps the plan from setting up a reel for a handful of pieces.
+**Minimum Roll Cuts** (`minRollCuts`) — a reel must yield at least this many cuts to be worth using, which keeps the plan from setting up a reel for a handful of pieces.
 
-**Minimum Roll Length** — ignore reels shorter than this. It stops the optimizer consuming short remnants that cost more in setup than they save in paper.
+**Minimum Roll Length** (`minRollLength`) — ignore reels shorter than this. It stops the optimizer consuming short remnants that cost more in setup than they save in paper.
 
-**Minimum Trim** — the smallest trim the plan will accept. This one reads backwards until you have seen it on a machine: why reject a *low*-waste pattern? Because a sliver of trim jams equipment, cannot be recycled cleanly, and usually means a width has been forced to fit. A slightly wider offcut that comes off the machine intact is worth more than a narrow one that stops the line.
+**Minimum Trim** (`minTrim`) — the smallest trim the plan will accept. This one reads backwards until you have seen it on a machine: why reject a *low*-waste pattern? Because a sliver of trim jams equipment, cannot be recycled cleanly, and usually means a width has been forced to fit. A slightly wider offcut that comes off the machine intact is worth more than a narrow one that stops the line.
 
 It cuts both ways, though, because it is enforced as a hard limit on every reel the solver considers. Set it to 3 cm and the pattern that fits three 45 cm sheets across a 135 cm reel exactly — the arrangement with the least waste there is — becomes illegal, and the solver settles for two across. Where your reel widths are near-multiples of your sheet widths, a non-zero minimum trim throws away the best answer.
 
-**Max Different Lengths Per Sheet** — caps how many different sheet lengths may be cut from one sheet. It is a limit on shop-floor complexity rather than on mathematics.
+**Max Different Lengths Per Sheet** (`maxDifferentLengthsPerSheet`) — caps how many different sheet lengths may be cut from one sheet. It is a limit on shop-floor complexity rather than on mathematics.
 
-**Max Roll Group Split Count** — how many separate cutting patterns may be used across reels of the same group.
+**Max Roll Group Split Count** (`maxRollGroupSplitCount`) — how many separate cutting patterns may be used across reels of the same group.
 
-**Trim Co-product Item** — the stock item that trim is booked to. Set it and the waste becomes a co-product on the generated production orders rather than vanishing, which is what lets you value recovered offcuts instead of writing them off.
+**Trim Co-product Item** (`trimCoProduct`) — the stock item that trim is booked to. Set it and the waste becomes a co-product on the generated production orders rather than vanishing, which is what lets you value recovered offcuts instead of writing them off.
 
-**Maximum Search Time In Minutes** — the solver's budget. When runs keep coming back **Feasible**, this is the number to raise.
+**Maximum Search Time In Minutes** (`maxTimeInMinutes`) — the solver's budget. When runs keep coming back **Feasible**, this is the number to raise.
 
-**Maximum Time In Seconds For Companion Order Search** — the per-candidate budget for companion trials.
+**Maximum Time In Seconds For Companion Order Search** (`companionOrderSearchMaxTimeInSeconds`) — the per-candidate budget for companion trials.
 
-**CPU Thread Workers Count** — how many threads the search may use. Don't set it above the number of cores the server actually has.
+**CPU Thread Workers Count** (`workersCount`) — how many threads the search may use. Don't set it above the number of cores the server actually has.
 
 Most sites run a single configuration. A second one is worth creating when a class of work genuinely needs different rules — a long overnight run that can afford a much larger search budget, for instance.
 

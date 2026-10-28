@@ -99,12 +99,33 @@ What is particular to the miscellaneous term:
 
 The **Serivce Fees** group carries four service-fee pairs — **Service Fees 1…4 Debit / Credit**
 (`termConfig.serviceFees1Debit` … `termConfig.serviceFees4Credit`) — and the deduction switches
-**Service Fees 2…4 Deduction**, which subtract that fee from the invoice instead of adding it.
+**Service Fees 2…4 Deduction** (`termConfig.serviceFees2Deduction`, `termConfig.serviceFees3Deduction`,
+`termConfig.serviceFees4Deduction`), which subtract that fee from the invoice instead of adding it.
+The same group holds **Do Not Add Service Fees Effect Without Account Side**
+(`termConfig.doNotAddServiceFeesEffectWithoutAccSide`): a service fee whose own debit or credit side is
+not set records no entry, instead of falling back to the invoice's main sides.
+
+### The External Effects grid
+
+The **Discount Effects** tab ends with the **External Effects** grid (`termConfig.externalEffectLines`).
+It records an entry for the payments that reach the invoice from outside — the receipt or payment
+vouchers and other documents listed in the invoice's **Payment Documents** grid. Each row of the term's
+grid is a rule:
+
+| Column | Field | What it does |
+|---|---|---|
+| **For Type** | `termConfig.externalEffectLines.forType` | The payment document type the row applies to. Empty means every type. |
+| **Apply When Payment Document Matches Criteria** | `termConfig.externalEffectLines.applyWhenPaymentDocMatchesCriteria` | Only payment documents that match these criteria are recorded. |
+| **Apply When Payment Document Matches Query** | `termConfig.externalEffectLines.applyWhenPaymentDocMatchesQuery` | The same filter written as a query. |
+| **Debit**, **Credit** | `termConfig.externalEffectLines.debit`, `termConfig.externalEffectLines.credit` | Saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) records; the pair records each matching payment's value, in the invoice's currency and rate. |
+
+Every row is applied on its own, so a payment that matches two rows is recorded twice.
 
 ## Machine Rent Invoice
 
 The machine rent term is the miscellaneous term without the request/order extras: main **Debit /
-Credit** with **Shorten Ledger**, the **Other effects** and **Discount Effects** tabs, and **Is Sales
+Credit** with **Shorten Ledger**, the **Other effects** and **Discount Effects** tabs (with the same
+**External Effects** grid), and **Is Sales
 Not Purchase**, **Expand Payment Method Effect**, the four tax options, **Pay Installments In
 Order**, **Allow Payment More Than Invoice Amount** and **Link With Invoice Lines In accounting
 Document**, all with the same meaning as above. It has no service fees, no return switch and no

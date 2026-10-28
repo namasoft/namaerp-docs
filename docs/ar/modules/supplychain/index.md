@@ -97,6 +97,8 @@ description: "نظرة عامة على وحدة سلسلة التوريد: كي�
   <LandingCard icon="🗂️" title="مستندات العمليات في المبيعات والمشتريات" link="/ar/modules/supplychain/sales-operations-documents.md" details="المستندات الصغيرة المحيطة بدورة البيع: النقص، وطلبات الاستبدال، وإلغاء الحجز، وتغيير المندوب وحالة أمر الشراء، وحدود البيع وتحديث الخصومات." />
   <LandingCard icon="🎟️" title="التسعير والعروض والكوبونات" link="/ar/modules/supplychain/pricing-offers-and-coupons.md" details="قوائم أسعار البيع، والعروض والأصناف المجانية، وعروض ما بعد البيع، والكوبونات، والتسعير التلقائي." />
   <LandingCard icon="🎯" title="قواعد تطبيق العروض" link="/ar/modules/supplychain/offer-apply-rules.md" details="الفلتر القابل لإعادة الاستخدام الذي يحدد أي سطور المستند يُقاس عليها العرض أو الكوبون، وماذا يحدث حين لا يطابق شيئًا." />
+  <LandingCard icon="🔖" title="محددات أسعار المبيعات" link="/ar/modules/supplychain/sales-price-classifiers.md" details="خمسة أبعاد إضافية للسعر — التجهيز أو الوردية أو القناة — تطابق عليها قوائم الأسعار والعروض والخصومات، والأسعار الإضافية المؤرخة التي تضيفها قوائم أسعار المقاولات." />
+  <LandingCard icon="👥" title="فئات العملاء والموردين" link="/ar/modules/supplychain/customer-and-supplier-classes.md" details="فئة عملاء وفئة عميل 1–5 وتصنيف عميل وفئة موردين: ما يحمله كل منها وأي قوائم أسعار وعروض وروابط أصناف وحدود تقرؤه." />
   <LandingCard icon="🔒" title="دليل نظام الحجوزات الشامل" link="/ar/modules/supplychain/reservation-system-guide.md" details="كيف يحجز النظام الأصناف لعملاء بعينهم ويتتبع الكميات المحجوزة." />
   <LandingCard icon="🚚" title="التسليم والتحميل" link="/ar/modules/supplychain/delivery-and-loading.md" details="مستندات التسليم والتحميل، وطوابير التسليم، وإعداد السائقين وقواعد التحضير (Pick Rules)." />
 </LandingGrid>

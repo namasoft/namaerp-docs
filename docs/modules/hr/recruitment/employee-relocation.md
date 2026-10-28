@@ -1,6 +1,6 @@
 ---
 description: "Changing an employee's placement and data after hiring: the Employee Relocate document and its request, which move an employee and their balances to another branch or department, Update Employee Info, single or aggregated, and Work Place Update."
-entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUpdateEmpInfo, WorkPlaceUpdate]
+entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUpdateEmpInfo, WorkPlaceUpdate, RelocateReason]
 ---
 # Employee Relocation
 
@@ -14,7 +14,7 @@ Found at **Human Resources > Recruitment > Employee Relocate**, an **Employee Re
 |---|---|
 | Employee | Who is being relocated. |
 | Organization Position | The org-chart position the move applies to. |
-| Relocate Reason | Why the move is happening. |
+| Relocate Reason | Why the move is happening, picked from the **Relocate Reason** list (Human Resources > Recruitment > Relocate Reason) — a plain code-and-name master file you fill with your own reasons (promotion, restructuring, employee request…). |
 | Current Dimensions — Legal Entity / Branch / Department / Sector / Analysis Set | The employee's placement as it stands today (read from their own record). |
 | New Dimensions — Legal Entity / Branch / Department / Sector / Analysis Set | Where the employee is moving to. |
 

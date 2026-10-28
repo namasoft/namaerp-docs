@@ -1,6 +1,6 @@
 ---
 description: "The purchasing cycle step by step: Item Request and consolidated requests, quotation requests and price comparison, the Purchase Order and proforma, receiving goods, the Purchase Invoice and three-way matching, payment, and purchase returns."
-entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate]
+entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate, ManufacturerCertificate]
 ---
 # The Purchasing Journey
 
@@ -113,6 +113,7 @@ The path often starts with a **Purchase Return Request** (PurchaseReturnReq): th
 - **Import purchases**: For international purchases with their customs, freight, and payment guarantees, the path is managed via [Letters of Credit](./letters-of-credit.md) with their documents (the LC proforma invoice and shipment invoices within it).
 - **Post-purchase adjustments**: When you need to adjust a purchase after the fact (a late supplier discount, a quantity correction, additional charges, a tax adjustment), the **Purchase Document Update** (PurchaseDocumentUpdate) handles it - think of it as "adjustments" to the original purchase.
 - **Purchase forecasting**: To turn purchasing from reactive to proactive, see [Purchase Forecast](./purchase-forecast.md).
+- **Manufacturer certificates**: The **Manufacturer Certificate** (*Purchases → Master Files → Manufacturer Certificate*) is a filing place for the certificates a supplier provides — conformity, origin, analysis. You pick the supplier, then list the items with up to five attached files and a remark each. It is reference only: no purchase document checks it.
 
 ## Actions on this screen
 

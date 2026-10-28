@@ -1,5 +1,5 @@
 ---
-entities: [ItemClass1, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize, ItemColorClassification, ItemSizeClassification, ItemRevisionFile, ItemSizeColorCollection, ItemAssortment]
+entities: [ItemClass1, ItemClass2, ItemClass3, ItemClass4, ItemClass5, ItemClass6, ItemClass7, ItemClass8, ItemClass9, ItemClass10, ItemCategory, ItemSection, ItemBrand, ItemColor, ItemSize, ItemColorClassification, ItemSizeClassification, ItemRevisionFile, ItemSizeColorCollection, ItemAssortment]
 ---
 
 # ملفات تصنيف الأصناف (Item Classification Files)

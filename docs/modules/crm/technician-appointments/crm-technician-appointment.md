@@ -109,7 +109,7 @@ The grid is optional; a purely scheduling appointment can leave it empty.
 **The service unit defaults to the item's unit.** Leave Service Unit blank and it is set to the row's Unit when you save; set it yourself and it is left alone.
 
 ::: tip Switching the copy off
-The copy is controlled by the term. Open the appointment's **Term** (*توجيه المستند*) and untick **Copy Items Of From Doc** (*نسخ الأصناف من المستند الأعلى*) to stop the grid filling itself in. The option is on by default.
+The copy is controlled by the term. Open the appointment's **Term** (*توجيه المستند*) and untick **Copy Items Of From Doc** (*نسخ الأصناف من المستند الأعلى*, `termConfig.copyItemsOfFromDoc`) to stop the grid filling itself in. The option is on by default.
 
 Appointments created on the booking calendar are not filled in either way — the calendar does not go through this step. Open the appointment and re-pick the From Document if you want the copy.
 :::

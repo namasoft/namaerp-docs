@@ -83,8 +83,6 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **عدم استعمال الوصف في الحقول** `value.info.doNotUseDescriptorsInFields` — تعرض حقول المرجع الكود والاسم فقط بدل النص الوصفي الأطول. فعّله حيث تكون الأوصاف طويلة إلى حد يدفع الجزء المفيد من الحقل خارج الشاشة.
 
-**استعمال محرر النصوص الجديد** `value.info.useKendoRichEditor` — تستعمل حقول النص الغني محرر Kendo.
-
 **إنشاء المستند الارشيفي في شاشة منبثقة** `value.info.createDMSDocInPopUpWindow` *(مفعل افتراضياً)* — يفتح إجراء «إنشاء مستند ارشيفي» [المستند الأرشيفي](/ar/platform/dms/dms-documents.md) الجديد في نافذة منبثقة بدل الانتقال بعيداً، فلا يفقد المستخدم السجل الذي كان يعمل عليه.
 
 ## المساعدات السريعة
@@ -144,7 +142,6 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | إخفاء عمود عدد مرات الإدارج في قوائم الاختيار | Hide Count Column In Selector Popup | `value.info.hideCountColumnInSelectorPopup` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | Always Use Text Area In Serial Popup | Always Use Text Area In Serial Popup | `value.info.alwaysUseTextAreaInSerialPopup` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | عدم استعمال الوصف في الحقول | Do Not Use Descriptors In Fields | `value.info.doNotUseDescriptorsInFields` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
-| استعمال محرر النصوص الجديد | Use New Rich Text Editor | `value.info.useKendoRichEditor` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | إنشاء المستند الارشيفي في شاشة منبثقة | Create DMS Doc In Pop Up Window | `value.info.createDMSDocInPopUpWindow` | [النوافذ المنبثقة والمحررات](#lnwfdh-lmnbthq-wlmHrrt) |
 | موضع المساعدة السريعة | Tooltip Position | `value.info.tooltipPosition` | [المساعدات السريعة](#lmsaadt-lsryaa) |
 | تثبيت المساعدة السريعة | Pin Tool Tip | `value.info.pinToolTip` | [المساعدات السريعة](#lmsaadt-lsryaa) |

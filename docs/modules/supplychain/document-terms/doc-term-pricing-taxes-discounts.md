@@ -109,6 +109,8 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Do Not Check Header Discount While Force Price List** `termConfig.doNotCheckDiscountsWhileForcePriceList` — When Force Price List is active, skips validation of the header discount against the price list.
 
+**Check Min Price With Value After Effect** `termConfig.checkMinPriceWithValueAfterEffect` — With Force Price List on, the unit price is checked against the price list's minimum before any discount. Pick a stage here (a discount from 1 to 8, the header discount, or a tax from 1 to 4) to also check the line's net unit price after that stage: the line value after the chosen stage, divided by the quantity, must not fall below the minimum price. A line that does is refused with *Item {0} net price {1} after {2} is less than minimum price {3}* — «سعر الصنف {0} الصافي {1} بعد {2} أقل من الحد الأدنى للسعر {3}». Empty means no such check; a price list with no minimum price is not checked.
+
 **Price List Default Price** `termConfig.priceListDefaultPrice` — Chooses which price-list price tier (e.g. default/min/max) is used as the default when pricing lines.
 
 **Ignore Force Price List With Free Item** `termConfig.ignoreForcePriceListWithFreeItem` — Skips the Force-Price-List check for free items, so giveaway lines are not rejected for having no list price.
@@ -153,6 +155,14 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Use Pick List** `termConfig.usePickList` — Enables pick-list (stock pulling) rules for the sales invoice. Sales Invoice only.
 
+Three more options in this group are for Magento shops only. Each acts once per document, when it is first saved, and works back up the From Document chain to the order that came from Magento. See [E-Commerce Integration Guide](/modules/ecommerce/ecommerce-integration-guide#Magento-only-features).
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Create Magento Invoice When Condition Applied | `termConfig.createMagentoInvoiceWhenConditionApplied` | Creates the invoice in Magento for that order, when the document matches the site's invoice-creation criteria. |
+| Create Magento Invoice Shipping When Condition Applied | `termConfig.createMagentoInvoiceShippingWhenConditionApplied` | Creates the shipment in Magento for that order, when the document matches the site's shipping-creation criteria. |
+| Update Magento Order Status When Condition Applied In From Doc | `termConfig.updateMagentoStatusWhenConditionApplied` | Sends that order's status back to Magento. See [Sending order status back to the shop](/modules/ecommerce/ecommerce-integration-guide#Sending-order-status-back-to-the-shop). |
+
 ## Price-Update Control
 
 A common complaint is "I changed the term and my discounts disappeared". This is not data loss. On a sales document, the prices and discounts of **every line** are worked out again when the user changes the **term**, the **value date** or the **subsidiary**. They are also worked out again when the user changes the **customer**, but only if *Update Price After Updating Customer* is on in supply chain configuration. Any price or discount typed by hand is replaced by what the price lists and offers give. Changing an item's quantity or unit reprices that one line. The options below switch these recalculations off, either for one event or completely.
@@ -164,6 +174,15 @@ These options are added to the From-Document group for any `IInvoice` document (
 **Do Not Calculate Prices, Discounts, and Free Items If Unit Price Exists** `termConfig.doNotCalcPricesIfUnitPriceExist` — Skips price/discount/free-item calculation for any line that already has a unit price.
 
 **Ignore "Do Not Calculate Prices If Unit Price Exists" Before First Save** `termConfig.ignoreDoNotCalcPricesIfUnitPriceExistBeforeFirstSave` — Suspends the above flag until the document's first save, so initial pricing still runs.
+
+With *Do Not Calculate Prices … If Unit Price Exists* on, changing an item reprices its line but changing anything else on it does not. The four options below name other line fields whose change should still reprice the line, on sales documents:
+
+| Option | Field ID |
+|---|---|
+| Recalculate Prices Always With UOM | `termConfig.recalculatePricesAlwaysWithUOM` |
+| Recalculate Prices Always With Color (captioned *recalculatePricesAlwaysWithColor* on English screens) | `termConfig.recalculatePricesAlwaysWithColor` |
+| Recalculate Prices Always With Size | `termConfig.recalculatePricesAlwaysWithSize` |
+| Recalculate Prices Always With Revision | `termConfig.recalculatePricesAlwaysWithRevisionId` |
 
 **Do Not Automatically Add Unit Price** `termConfig.doNotAddUnitPriceAuto` — Prevents the unit price from being auto-filled when an item is selected; the user must enter it.
 

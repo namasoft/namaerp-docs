@@ -70,12 +70,12 @@ common cause of a project invoice that collects lines but shows no money.
 
 ## The settings
 
-| Option | What it controls | What changes when you set it |
-|---|---|---|
-| **Normal Time Rate** (معدل عمل اليوم العادي) | The markup applied when a project invoice collects approved time | The collected line value becomes `employee rate × approved hours × this factor`. Empty or zero produces zero-value lines |
-| **Standard Monthly Hours** (عدد الساعات المعيارية شهرياً) | The divisor that converts a monthly salary into an hourly cost | Together with the option below it sets each timesheet line's Cost of Hour to `monthly salary ÷ this number` |
-| **Update Hour Cost of Time Sheet From HR** (تحديث تكلفة الساعة في تنفيذ المهمه من الرواتب) | Whether timesheet costing is driven by payroll or typed by hand | On: Cost of Hour and Total Cost are recomputed from payroll on every save. Off: see the warning below |
-| **Filed Query 1 With Changing Date** (استعلام الحقل المحسوب 1 مع تغيير التاريخ) | A site-specific query run when a timesheet's value date changes | A customisation hook — see the note at the end of this page. The screen spells it *Filed Query 1* |
+| Option | Field id | What it controls | What changes when you set it |
+|---|---|---|---|
+| **Normal Time Rate** (معدل عمل اليوم العادي) | `value.normalTimeRate` | The markup applied when a project invoice collects approved time | The collected line value becomes `employee rate × approved hours × this factor`. Empty or zero produces zero-value lines |
+| **Standard Monthly Hours** (عدد الساعات المعيارية شهرياً) | `value.standardMonthlyHours` | The divisor that converts a monthly salary into an hourly cost | Together with the option below it sets each timesheet line's Cost of Hour to `monthly salary ÷ this number` |
+| **Update Hour Cost of Time Sheet From HR** (تحديث تكلفة الساعة في تنفيذ المهمه من الرواتب) | `value.updateHourCostOfTimeSheet` | Whether timesheet costing is driven by payroll or typed by hand | On: Cost of Hour and Total Cost are recomputed from payroll on every save. Off: see the warning below |
+| **Filed Query 1 With Changing Date** (استعلام الحقل المحسوب 1 مع تغيير التاريخ) | `value.field1QueryWithChangingDate` | A site-specific query run when a timesheet's value date changes | A customisation hook — see the note at the end of this page. The screen spells it *Filed Query 1* |
 
 ::: warning With payroll costing off, timesheets are worth nothing
 When **Update Hour Cost of Time Sheet From HR** is unticked, the Cost of Hour column becomes a

@@ -1,6 +1,6 @@
 ---
 description: "Following an employee's Gulf health insurance from start to end: the policy and insurance offer, enrolling employees and dependants, medical claims, mid-term category upgrades, moving a batch to a new insurer with Credence, and removing someone from the insurance."
-entities: [EmployeeHealthInsurance, HealthInsuranceOffer, HealthInsuranceClaimDoc, HealthInsuranceUpgrade, HealthInsuranceCredence, EmpHealthInsurDelete]
+entities: [EmployeeHealthInsurance, HealthInsuranceOffer, HealthInsuranceClaimDoc, HealthInsuranceUpgrade, HealthInsuranceCredence, EmpHealthInsurDelete, EmployeeHealthInsuranceReq, HealthInsuranceOfferRequest, HealthInsuranceClaimRequest, HealthInsuranceUpgradeReq, EmpHealthInsurDeleteReq]
 ---
 # Employee Health Insurance
 
@@ -207,18 +207,21 @@ The **Health Insurance Offer**, the **Health Insurance Claim Document** and the 
 ## How it's processed
 
 Every document on this page — enrolment, upgrade, credence and deletion — shares the same
-underlying accounting logic and records its entry on the term's configured sides: a **covering**
-debit/credit pair for the base premium, a matching **tax** debit/credit pair, an **employee tax**
-pair for any tax portion recovered from the employee, and — where **Administrative Fees** were
+underlying accounting logic and records its entry on the term's configured sides: the **Debit** /
+**Credit** pair on the term's Effect tab for the premium, with a **Discount** side for any discount,
+the **Employee Percentage Effect** pair for the employee's own share, a **tax** debit/credit pair, an
+**employee tax** pair for any tax portion recovered from the employee, and — where **Administrative Fees** were
 filled in — their own **Administrative Fees Value** and **Administrative Fees Tax Value**
 debit/credit pairs. The **Health Insurance Upgrade** additionally records a **Previous Insurance
-Category** debit/credit pair and a **Refund Tax** pair for the value credited back from the old
-tier. All of it runs as a background **business request** with a **processing status**, exactly like
+Category** debit/credit pair, a **Previous Insurance Value** pair and a **Refund Tax** pair for the
+value credited back from the old tier. The term-by-term detail is on
+[Insurance Document Terms](/modules/hr/document-terms/hr-terms-insurance). All of it runs as a background **business request** with a **processing status**, exactly like
 accounting effects elsewhere in Nama — retry a failed one from the **Business Requests** view rather than
 re-saving the document.
 
-The **Health Insurance Claim Document** is recorded separately and more simply: a single **Credit 2** /
-**Debit 2** pair sized to the claim's **Repaid Total Amount**, moving the reimbursed medical cost
+The **Health Insurance Claim Document** is recorded separately and more simply: a single **Debit** /
+**Credit** pair (field ids `termConfig.debit2` / `termConfig.credit2`) sized to the claim's **Repaid
+Total Amount**, moving the reimbursed medical cost
 between the accounts configured on the claim document's own term.
 
 ## Messages you may see

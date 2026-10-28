@@ -1,6 +1,6 @@
 ---
 description: "Employee services in HR: Car Action, Car Problem and car insurance documents for company vehicles, the Pickup Plan for staff transport routes, and meal types and meal delivery plans."
-entities: [CarAction, CarProblem, CarActionRequest, CarInfoUpdater, CarInsurancePolicy, CarInsuranceOfferDoc, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc, PickupPlan, MealType, MealsDetails, MealDeliveryPlan]
+entities: [CarAction, CarProblem, CarActionRequest, CarInfoUpdater, CarInfoUpdaterRequest, Car, CarBrand, CarModel, CarInsurancePolicy, CarInsuranceOfferDoc, CarInsuranceOfferReq, CarInsuranceAddingDoc, CarInsuranceAddingReq, CarInsuranceRemovingDoc, CarInsuranceRemovingReq, CarInsuranceInstallmentProofDoc, PickupPlan, MealType, MealsDetails, MealDeliveryPlan]
 ---
 # Employee Services (Vehicles, Transport & Meals)
 
@@ -21,6 +21,24 @@ are a completely different, Gulf-specific area — see
 :::
 
 ## Vehicles
+
+### The car file: Car, Car Brand and Car Model
+
+Every vehicle screen on this page starts from a **Car** (`سيارة`) record, kept under
+**Human Resources → Vehicles → Car** (the same screen is also listed under **Basic → Master Files**).
+Its main group identifies the vehicle — **Car Number** and **Car Number In English**, **Serial**,
+**Type**, **Car Status**, colour, brand, **Car Model**, **Number of Passangers**, and the **Fixed Asset**
+it is registered as, if any. Further groups hold the licence (validity, start and end dates, a copy),
+production year, purchase date, chassis and engine numbers, **Running Distance in KM**, the insurance
+state and value, the ownership (**Ownership**, **Car Owner** — a supplier or third party — and the
+owner's and rider's ID documents), the authorization and operating card, and the car's **Subsidiary
+Accounts** (`حافظة الحسابات`), which are required. **Custodian** names the employee who holds the car
+today, and the **Custody Details** grid keeps who held it from which date.
+
+**Car Brand** (`ماركة سياره`) is a plain code-and-name list, and each **Car Model** (`موديل سياره`) belongs
+to a brand. A Car Model also carries a **Tax Plan**: when a car is itself the item on an electronic
+invoice line, its tax is worked out from its model's tax plan. Both lists sit under
+**Human Resources → Vehicles** next to the Car screen.
 
 ### Recording what happened to a car: Car Action
 
@@ -52,8 +70,9 @@ can be raised before a formal Car Action, which creates the ledger entry, is wri
 Saving a Car Action raises a background **business request** (`Business Request`) that records the
 cost split in the ledger: the debit side covers the action's cost (net of the responsible employee's
 share), the responsible employee's share and its tax are recorded separately, and the tax on the whole
-action is recorded on its own pair of accounts. If that request fails, retry it from the
-**Business Requests** view.
+action is recorded on its own pair of accounts. Which accounts each part lands on is set on the
+document's term — see [The Car Action term](/modules/hr/document-terms/hr-terms-insurance#The-Car-Action-term).
+If that request fails, retry it from the **Business Requests** view.
 :::
 
 ### The catalog of things that happen to a car: Car Problem
@@ -74,6 +93,11 @@ auditable rather than a silent overwrite: current driver vs. new driver, current
 status, current running KM vs. new running KM, and the same before/after pairing for legal entity,
 branch, sector, department and analysis set. It creates no ledger entry — it only rewrites the
 car's own master data.
+
+A **Car Info Updater Request** (`طلب تحديث بيانات سيارة`) has the same current/new grid and refuses a
+line whose driver, running KM and status are all unchanged, but saving it changes nothing on the car.
+It is the form for asking for the change; the car is updated only when the change is recorded on a
+Car Info Updater.
 
 ## Car insurance
 
@@ -101,6 +125,23 @@ Insuring the company fleet runs through its own small lifecycle, separate from d
 4. **Recognise instalments.** Because a policy is usually paid in instalments, a **Car Insurance
    Installment Proof Document** (`قيد إثبات استحقاق قسط تأمين السيارة`) records the accounting entry
    that recognises one instalment as due, referencing the policy or amendment document it belongs to.
+
+Steps 1 and 3 can each start from a request, found in the same **Cars Insurance** menu group. A request
+names the insurance company, period and cover like the document it feeds, but its grid lists actual
+cars — car, brand, model, plate and chassis numbers, passengers, colour, estimated price and whether
+driver or passenger cover is wanted — and it has no accounting effect.
+
+- A **Car Insurance Offer Request** (`طلب عرض تأمين سيارات`) is what you send insurers to price. Pick
+  it in an Offer Document's **Based On Request** and the offer's grid is built from it, one line per car
+  type with the number of cars and their total estimated price. A policy opened on that offer then
+  takes its car lines from the request, priced with the offer's percentages for each car type.
+- A **Car Insurance Adding Request** (`طلب إضافة تأمين سيارة`) and a **Car Insurance Removing Request**
+  (`طلب حذف سيارات من التأمين`) list the cars to add to or drop from a policy. Pick one in the Adding or
+  Removing Document's **Based On Request** to copy its header and cars.
+
+Unless the document term ticks *Allow Adding Insurances Without Insurance Request or Insurance Offer*,
+the policy, adding and removing documents expect their car pricing to come from an offer or request — see
+[the car insurance terms](/modules/hr/document-terms/hr-terms-insurance).
 
 | Field (English) | Arabic label | Purpose |
 |---|---|---|

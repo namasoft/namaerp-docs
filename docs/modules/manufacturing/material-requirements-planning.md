@@ -1,6 +1,6 @@
 ---
 description: "The MRP document: how the calculation works, its prerequisites (items, BOM, routing, warehouses, scenarios, terms) and the workflow from collecting demand to planned production and purchase lines."
-entities: [MRPDocument, Scenario, MRPAvailableQtySource]
+entities: [MRPDocument, Scenario, MRPAvailableQtySource, ManualDemand, MRPSalesForecasting]
 menu: Manufacturing → Material Resource Planning → planning raw materials Document
 ---
 # Material Requirements Planning: Working Out What to Buy and When
@@ -104,7 +104,6 @@ Configure MRP document terms with:
 - Purchase order book/term
 - Production order book/term
 - Item request book/term
-- MRP purchase request book/term
 
 ---
 
@@ -130,7 +129,7 @@ The MRP process in Nama ERP follows this workflow:
 | **Req Qty Method Type** | نوع الحقل المتعامل عليه | For forecasts: use Actual or Forecasted quantities |
 | **Scenario** | السيناريو | Optional scenario for what-if analysis |
 | **Previous MRP Document** | سند التخطيط السابق | Link to previous MRP run (for rolling planning) |
-| **Purchase Doc Type** | نوع مستند الشراء | Type of purchase document to generate (Purchase Order, Item Request, MRP Purchase Request) |
+| **Purchase Doc Type** | نوع مستند الشراء | Type of purchase document to generate (Purchase Order or Item Request) |
 | **Production Doc Type** | نوع مستند الإنتاج | Type of production document to generate (Production Order, Production Order Request) |
 
 ::: tip Aggregation Period
@@ -299,7 +298,7 @@ Contains purchase orders to be created:
 | **Date** | Purchase date (considering lead time) |
 | **Supplier** | Preferred supplier (if configured) |
 | **Warehouse** | Receiving warehouse |
-| **Order Type** | Purchase Order, Item Request, or MRP Purchase Request |
+| **Order Type** | Purchase Order or Item Request |
 | **Doc** | Generated document (after generation) |
 
 ::: tip Filtering Planned Lines
@@ -339,7 +338,6 @@ Ensure document terms are properly configured with books for:
 - Purchase Order
 - Production Order
 - Item Request
-- MRP Purchase Request
 - Production Order Request
 
 The system will show an error if required books/terms are not configured.

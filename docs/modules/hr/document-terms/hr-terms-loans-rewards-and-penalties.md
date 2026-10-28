@@ -1,5 +1,5 @@
 ---
-entities: [HRLoanDocument, AggHRLoanDocument, HRLoanPaymentDocument, HRLoanReliefDocument, AggHRLoanInstallReschedule, RewardAndPenaltieDocument, AggrRewardAndPenaltieDoc, HOPenaltyDocument]
+entities: [HRLoanDocument, HRLoanRequest, AggHRLoanDocument, HRLoanPaymentDocument, HRLoanReliefDocument, AggHRLoanInstallReschedule, RewardAndPenaltieDocument, AggrRewardAndPenaltieDoc, HOPenaltyDocument]
 menu: Basic → Settings → Document Term
 ---
 
@@ -18,30 +18,41 @@ the three differently-named accounting switches — are on
 ## The loan family
 
 Four documents make up the life of a loan: the loan itself, a payment against it, a relief that
-writes part of it off, and a reschedule that moves its instalments.
+writes part of it off, and a reschedule that moves its instalments. A fifth, the loan request, comes
+before all of them.
 
-**The Loan Document term** carries a standard **effect configuration** block `termConfig.config` —
-the same debit/credit and ledger block used across the product, with its own *No Accounting Effect*
-and *Shorten Ledger* switches inside it — plus three options of its own:
+**The Loan Document term** has an *Effect* tab with a **Debit** group and a **Credit** group — the
+two account sides `termConfig.config.debit` and `termConfig.config.credit` — plus three options of
+its own:
 
 | Option | Field | What it does |
 |---|---|---|
-| **Without Accounting Effect** | `termConfig.withoutAccountingEffect` | Suppresses the document's entry. Note that the effect block inside `config` has its own switch of the same sense; either will stop the entry, which is worth knowing when one is set and the other is not. |
+| **Without Accounting Effect** | `termConfig.withoutAccountingEffect` | Suppresses the document's entry. |
 | **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | Skips the loan-type conditions — length of service, maximum amount, the employee-state list on [HR Configuration](/modules/hr/setup/hr-configuration) and the rest. This is the exception term, for the loan that management approved despite the rules. |
 | **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | The instalment schedule is built automatically when the document is saved, instead of waiting for the user to press *Generate Installments*. |
 
-**The Loan Payment and Loan Relief terms** each carry only the effect configuration block
-`termConfig.config`. Everything about how much is paid or relieved is on the documents; the term
-only says where it lands.
+**The Loan Request term** has a *Home* tab with the two loan options and nothing else — a request
+creates no accounting entry:
+
+| Option | Field | What it does |
+|---|---|---|
+| **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | The request is saved without checking the loan type's conditions, exactly as on the loan document. |
+| **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | When the request has no instalment lines, saving it builds the instalment schedule from the amount, the instalment count and the payment start date. Lines already on the request are left alone. |
+
+**The Loan Payment and Loan Relief terms** each carry only the two account sides, **Debit**
+`termConfig.config.debit` and **Credit** `termConfig.config.credit`. Everything about how much is
+paid or relieved is on the documents; the term only says where it lands.
 
 **The aggregated loan term** names *Generated HR Loan Doc Term* and *Generated HR Loan Doc Book*
-(`termConfig.generatedHRLoanDocTerm`, `…Book`) for the individual loans it creates, repeats *Ignore
-Conditions For Loan Document* so a batch can bypass the checks, and adds its own **Payment Amount
-Debit** and **Payment Amount Credit** (`termConfig.paymentAmountDebit`, `…Credit`) for the payout
-side of the batch.
+(`termConfig.generatedHRLoanDocTerm`, `termConfig.generatedHRLoanDocBook`) for the individual loans it
+creates, and adds its own **Payment Amount Debit** and **Payment Amount Credit**
+(`termConfig.paymentAmountDebit`, `termConfig.paymentAmountCredit`) for the payout side of the batch.
+It has no *Ignore Conditions* option of its own on screen; the loan-type conditions are checked on
+every line of the batch.
 
 **The aggregated instalment reschedule term** is the two-field shape: *Loan Installment Reschedule
-Book* and *Loan Installment Reschedule Term*.
+Book* `termConfig.loanInstallRescheduleBook` and *Loan Installment Reschedule Term*
+`termConfig.loanInstallRescheduleTerm`.
 
 Loans themselves are on [Loan Documents](/modules/hr/loans/hr-loan-documents) and
 [Loan Adjustments](/modules/hr/loans/hr-loan-adjustments).
@@ -65,10 +76,13 @@ customers want for a spot bonus in cash — but it also means the amount will no
 document, and anybody reconciling payroll to the ledger has to know that.
 :::
 
-The **aggregated** reward and penalty term is unusual in that it does not name a generated book and
-term at all. It carries a **generation configuration** block `termConfig.generationConfigurations`
-— the shared block that controls how the batch produces its documents — and a *Generate Accounting
-Effects* switch. Its label carries no translation, so on screen it shows its internal name.
+The **aggregated** reward and penalty term sits in a group titled *Generation*. Its *Generation
+Book* `termConfig.generationConfigurations.generationBook` and *Generation Term*
+`termConfig.generationConfigurations.generationTerm` name the book and term of the individual reward
+and penalty documents the batch creates — the book is required, and the issue method of the
+generated documents is taken from that term. *Generate Accounting Effects*
+`termConfig.generateAccountingEffects` decides whether the batch creates the entries for the
+documents it generated.
 
 The same term has **Allow Repeating Employee With The Same Reward / Penalty**
 `termConfig.allowRepeatingEmployeeWithSameReward`. Off (the default), a batch is refused when the
@@ -82,16 +96,13 @@ Rewards and penalties are on
 ## The government penalty term
 
 The government penalty document — the fine that arrives from an authority rather than from a
-manager — has the shortest term in the module: a second pair of account sides, *Debit 2*
-`termConfig.debit2` and *Credit 2* `termConfig.credit2`, on top of the first pair it inherits.
+manager — has the shortest term in the module: one pair of account sides on an *Effect* tab, shown
+under the group titles **Debit** and **Credit**. Their field ids are `termConfig.debit2` and
+`termConfig.credit2`; there is no other pair.
 
 This document **does** have an accounting effect, which is worth stating because its sibling the government payment
 request does not. If a customer asks why a government penalty appears in the ledger and a payment
 request does not, that is the reason, and it is by design.
-
-The second pair exists for the common case where the fine is recovered from the employee as well as
-recorded as a company cost: one pair books the liability to the authority, the other books the
-recovery against the employee.
 
 Government penalties are on
 [Government Penalties](/modules/hr/government-relations/government-penalties).

@@ -1,6 +1,6 @@
 ---
 description: "Warehouses and locators: warehouse types, keepers and MRP inclusion, locators inside a warehouse, item-warehouse links, warehouse groups, the Warehouse Usage Policy and Prevent Using Batch."
-entities: [Warehouse, Locator, WarehouseUsagePolicy, PreventUsingBatch, WarehouseGroup, WareLocationClass, ItemWarehouseRelation]
+entities: [Warehouse, Locator, WarehouseUsagePolicy, PreventUsingBatch, WarehouseGroup, WareLocationClass, ItemWarehouseRelation, RackQuantities]
 menu: Inventory → Master Files → Warehouse
 ---
 # Warehouses & Locators
@@ -67,7 +67,7 @@ When locators multiply, **location classes** help you group them by nature: refr
 
 ### Rack Quantities
 
-For warehouses that need precision beyond the locator level, the system supports tracking quantities at the **rack** level within a single locator - useful in large distribution centers where one locator contains several racks.
+Large distribution centres often have several racks inside one locator. **Rack Quantities** (*Inventory → Master Files → Rack Quantities*) records which rack each item sits on: you pick a warehouse and a locator, then list the items with their quantity and a free-text **Rack Code** (`details.rackCode`). It is a reference list for the storekeeper. It does not move stock, and the inventory balance is still kept per warehouse and locator, not per rack.
 
 ## Linking Items to Warehouses
 

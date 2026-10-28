@@ -1,6 +1,6 @@
 ---
 description: "How to write remark records against any record, read them back, classify them with Remark Types, and use the employee agenda and work tasks, including splitting a task across several people."
-entities: [Remark, DetailedRemark, MeetingRemark, WorkTask, EmployeeAgenda, RemarkType]
+entities: [Remark, DetailedRemark, MeetingRemark, WorkTask, EmployeeAgenda, RemarkType, WorkTaskCategory]
 ---
 # Remarks, Agenda and Work Tasks
 

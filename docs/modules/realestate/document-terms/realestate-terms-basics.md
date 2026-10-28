@@ -42,17 +42,20 @@ block once carefully and then never again.
 A full accounting side is rendered as a titled group — *Maintenance Deposit Debit*, *Income Credit*,
 *Total Penalties - Debit* — containing these fields:
 
-| Field | What it decides |
-|---|---|
-| Side Configuration | Whether this side is used at all, and how it behaves as a ledger side |
-| Account Source type | Where the account comes from: a fixed account you name here, or a lookup that follows a reference on the document |
-| Account | The fixed account, when the source is a fixed account |
-| Reference Type / Reference Source Field | When the account follows the document: which reference to read (for example the buyer) and which field on it holds the account |
-| Subsidiary account type | Which kind of subsidiary (ذمة) the line is stamped with — customer, supplier, owner and so on |
-| Bag Account Id / Field ID | The account taken out of an account bag, for configurations built on bags |
-| Calculate Account Based On Currency From Bag | Picks the bag account matching the line's currency and account type |
-| Narration Template / Narration Query, Narration 2 Template / Narration 2 Query | The two description lines written on the ledger line, either as a template with placeholders or as a query |
-| AnalysisSet Source type, Analysis set, Reference Type / On Field | Where the analysis set on the line comes from — fixed, or read from a reference on the document |
+Each side has its own id on the term (`termConfig.debit2`, `termConfig.maintenanceCredit` and so on — the
+family pages name them), and the fields inside it carry the same suffix on every side:
+
+| Field | Id suffix (after the side's id) | What it decides |
+|---|---|---|
+| Side Configuration | `.sideConfig` | Whether this side is used at all, and how it behaves as a ledger side |
+| Account Source type | `.accountSource.type` | Where the account comes from: a fixed account you name here, or a lookup that follows a reference on the document |
+| Account | `.accountRef` | The fixed account, when the source is a fixed account |
+| Reference Type / Reference Source Field | `.accountSource.entityType` / `.accountSource.fieldID` | When the account follows the document: which reference to read (for example the buyer) and which field on it holds the account |
+| Subsidiary account type | `.subsidiaryAccountType` | Which kind of subsidiary (ذمة) the line is stamped with — customer, supplier, owner and so on |
+| Bag Account Id | `.bagAccountId` | The account taken out of an account bag, for configurations built on bags |
+| Calculate Account Based On Currency From Bag | `.accountSource.accFrmBagCrrncy` | Picks the bag account matching the line's currency and account type |
+| Narration Template / Narration Query, Narration 2 Template / Narration 2 Query | `.narrationTemplate` / `.narrationQuery`, `.narration2Template` / `.narration2Query` | The two description lines written on the ledger line, either as a template with placeholders or as a query |
+| AnalysisSet Source type, Analysis set, Reference Type / On Field | `.analysisSetSource.type`, `.dimensions.analysisSet`, `.analysisSetSource.entityType` / `.analysisSetSource.fieldID` | Where the analysis set on the line comes from — fixed, or read from a reference on the document. Shown only when the global configuration adds the analysis-set source to terms |
 
 Some sides are not full blocks but a single lookup field pointing at a reusable **Accounting Side
 Config** record. Those behave identically; the configuration simply lives in a shared master record
@@ -100,35 +103,37 @@ revenue, plus one maintenance-cost installment that is not revenue at all — it
 holds on behalf of the owners' community and must sit in a liability account. Both live in the same
 grid on the same contract, and the document-level income pair cannot tell them apart.
 
-The **Confiuration List** grid (سطور إعدادات التوجيه — the English caption really does ship with the
+The **Confiuration List** grid `termConfig.configLineList` (سطور إعدادات التوجيه — the English caption really does ship with the
 typo) solves exactly this. Each row selects a set of installment types and gives them their own
 account pairs. It appears on the sales terms, all the rent terms and the collection terms.
 
 Each row has three parts.
 
 **Which installments the row applies to.** Five *Installment type* slots (Installment type,
-Installment type 2 … Installment type 5) list the types the row covers, and five *Do Not Apply On
-Type* slots list types it must skip. Two further switches filter by date rather than by type:
+Installment type 2 … Installment type 5 — `termConfig.configLineList.installmentType` …
+`installmentType5`) list the types the row covers, and five *Do Not Apply On Type* slots
+(`termConfig.configLineList.doNotApplyOnType` … `doNotApplyOnType5`) list types it must skip. Two
+further switches filter by date rather than by type:
 
-| Column | Effect |
-|---|---|
-| Do Not Use With Current Year Installments | Skip installments due on or before the end of the document's fiscal year |
-| Do Not Use With Next Years Installments | Skip installments due after the end of the document's fiscal year |
+| Column | Column id | Effect |
+|---|---|---|
+| Do Not Use With Current Year Installments | `termConfig.configLineList.doNotUseWithCurrentYearInstallments` | Skip installments due on or before the end of the document's fiscal year |
+| Do Not Use With Next Years Installments | `termConfig.configLineList.doNotUseWithNextYearsInstallments` | Skip installments due after the end of the document's fiscal year |
 
 Those two are what let you send this year's rent and next year's rent to different accounts inside
 one routing row.
 
 **What is booked.** Four amount buckets, each with its own debit and credit:
 
-| Column pair | Books |
-|---|---|
-| Amount Debit / Amount Credit | The installment amount itself — the only pair the system insists you fill completely |
-| Penalty Debit / Penalty Credit | The late-payment penalty carried on the line |
-| Discount Debit / Discount Credit | The discount carried on the line |
-| Prepaid Debit / Prepaid Credit | The amount already paid on the line |
+| Column pair | Column ids | Books |
+|---|---|---|
+| Amount Debit / Amount Credit | `termConfig.configLineList.amountDebit` / `amountCredit` | The installment amount itself — the only pair the system insists you fill completely |
+| Penalty Debit / Penalty Credit | `termConfig.configLineList.penaltyDebit` / `penaltyCredit` | The late-payment penalty carried on the line |
+| Discount Debit / Discount Credit | `termConfig.configLineList.discountDebit` / `discountCredit` | The discount carried on the line |
+| Prepaid Debit / Prepaid Credit | `termConfig.configLineList.prepaidDebit` / `prepaidCredit` | The amount already paid on the line |
 
 **The merged components.** *Merge Value 1 Debit / Credit* through *Merge Value 5 Debit / Credit*
-exist for terms that switch on *Merge Similar Payment Lines*. When that option collapses several
+(`termConfig.configLineList.mergeValue1Debit` … `mergeValue5Credit`) exist for terms that switch on *Merge Similar Payment Lines*. When that option collapses several
 generated installments of the same type and due date into one line, the original amounts are kept as
 five component values on the surviving line, and these five pairs let you record each component on its
 own accounts instead of losing the breakdown.
@@ -172,7 +177,7 @@ other one empty.
 ## Tax policy: the term wins, the module configuration is the fallback
 
 Real Estate documents look up their tax percentages in a grid called **Legal Entity Taxes**
-(السياسة الضريبية), and this grid exists in two places: on every sales and rent term, and once in the
+`termConfig.legalEntityTaxes` (السياسة الضريبية), and this grid exists in two places: on every sales and rent term, and once in the
 [module configuration](/modules/realestate/realestate-configuration). This is the part of Real Estate
 setup that confuses people most, so it is worth stating plainly:
 
@@ -184,17 +189,18 @@ away from the module configuration. So the practical pattern is: set the company
 the module configuration, leave the grid empty on nearly every term, and fill it only on the specific
 term that needs a different rate.
 
-The grid has the same columns in both places:
+The grid has the same columns in both places, except that the term screens of the sales family leave
+out the Unit Model column (the rent terms show it):
 
-| Column | What it does |
-|---|---|
-| Type | Applies the row only to installments of this type |
-| Unit Model | Applies the row only to units built from this model |
-| Effective From / Effective To | The date window in which the row applies, compared with the document's value date — except on a rent contract, where each installment is matched by its own due date, so a rate change in the middle of a lease applies only to the installments due after it. The same rule picks the unit's or the buyer's tax plan |
-| Entity Type / Entity Type List | Restricts the row to one document type, or to a list of them |
-| Tax 1 / Tax 2 | The two percentages |
-| Tax 1 Is Deduction / Tax 2 Is Deduction | Marks the tax as withheld from the amount rather than added to it |
-| Calculate Tax From Main Price | Bases the tax on the main price rather than on the line's net value |
+| Column | Column id on the term | What it does |
+|---|---|---|
+| Type | `termConfig.legalEntityTaxes.type` | Applies the row only to installments of this type |
+| Unit Model | `termConfig.legalEntityTaxes.unitModel` | Applies the row only to units built from this model |
+| Effective From / Effective To | `termConfig.legalEntityTaxes.effectiveFrom` / `effectiveTo` | The date window in which the row applies, compared with the document's value date — except on a rent contract, where each installment is matched by its own due date, so a rate change in the middle of a lease applies only to the installments due after it. The same rule picks the unit's or the buyer's tax plan |
+| Entity Type / Entity Type List | `termConfig.legalEntityTaxes.entityType` / `entityTypeList` | Restricts the row to one document type, or to a list of them |
+| Tax 1 / Tax 2 | `termConfig.legalEntityTaxes.tax1` / `tax2` | The two percentages |
+| Tax 1 Is Deduction / Tax 2 Is Deduction | `termConfig.legalEntityTaxes.tax1IsDeduction` / `tax2IsDeduction` | Marks the tax as withheld from the amount rather than added to it |
+| Calculate Tax From Main Price | `termConfig.legalEntityTaxes.calculateTaxFromTotalPrice` | Bases the tax on the main price rather than on the line's net value |
 
 ## The families, and how the pages fit together
 
@@ -202,7 +208,7 @@ The thirty-odd term screens group into four shapes:
 
 | Family | Members | Documented in |
 |---|---|---|
-| Sales | Sales contract, initial sales contract, opening sales, reservation, reservation cancel, waiver, handover, purchase contract | [Sales Document Terms](/modules/realestate/document-terms/realestate-terms-sales) |
+| Sales | Sales contract, initial sales contract, opening sales, reservation, reservation cancel, waiver, handover, purchase contract, sales offer | [Sales Document Terms](/modules/realestate/document-terms/realestate-terms-sales) |
 | Rent | Rent contract, rent offer, rent offer cancel, rent installment accrual ledger, opening rent contract, multi rent contract | [Rent Document Terms](/modules/realestate/document-terms/realestate-terms-rent) |
 | Collections | Collect document, exemption document, aggregated collect, fine, return payment, lease termination | [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other) |
 | Single purpose | Maintenance, investment, cost, opening cost, post-handover cost, ownership transfer, bank payout, owner payout | [the same page](/modules/realestate/document-terms/realestate-terms-other) |
@@ -227,5 +233,6 @@ Two exceptions are worth knowing before you start hunting for a missing account 
 
 Finally, two documents in the module have **no term at all**: the inspection record and the
 maintenance expense request. Both are documentary — they record what happened and authorise the next
-step, but they produce no journal entry, so there is nothing to configure. The sales offer likewise
-should be treated as a term-free quotation.
+step, but they produce no journal entry, so there is nothing to configure. The sales offer is
+different: it produces no entry either, but it does have a short term of its own with two options —
+see [Sales offer](/modules/realestate/document-terms/realestate-terms-sales#Sales-offer).

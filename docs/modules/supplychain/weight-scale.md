@@ -16,6 +16,24 @@ The **Weight Scale Configuration** is the central file that sets up scale termin
 - **Printing and connection**: the linked report definition, printer and port setup, and an inactivity logout timer.
 - **Issue control**: stock-issue-request ordering methods and allowed quantity-deviation tolerance.
 
+The scale app and the preparation generator read the first Weight Scale Configuration on file. Its fields, group by group:
+
+| Field | Field id | What it does |
+|---|---|---|
+| Port Name/Number | `portName` | Required. The serial port the scale is plugged into. A port set in the station's own settings wins over this one. |
+| Printer Name (CSV) | `printerName` | The printer the sticker goes to. A printer set in the station's own settings wins over this one. |
+| Report Definition | `reportDefinition` | The sticker printed for each weighed line; it receives the preparation document, the line and its line code. With none, nothing is printed. |
+| Logout Due To Inactivity For (In minutes) | `logoutDueToInactivityFor` | Logs the operator out of the scale app after this many idle minutes. Empty or zero never logs out. |
+| Rack Code Field | `racksCodeField` | Required. The item field that holds the rack code shown to the operator. An item with no value there is refused. |
+| Item Code | `itemCodeField` | The item field shown as the item code; empty shows the item's own code. |
+| Package Field | `packageField` | The request-line field shown as the package. |
+| Allowed Quantity Deviation Field / Default Quantity Deviation Percent | `qtyDeviationPercentField`, `defaultQtyDeviationPercent` | How far the weighed quantity may stray from the required quantity, as a percentage. The field is read from the request line; when it is empty or zero the default percentage applies. |
+| Computed Field 1 / Computed Field 2 | `computedField1`, `computedField2` | Queries run against the stock issue request; their first row is shown on the scale screen as extra information. |
+| Average Time Taken Field / Average Time Taken Query | `averageTimeTakenField`, `averageTimeTakenQuery` | How long each request line takes to prepare — a line field, or a query returning one row per line. The **Preparation Generator** adds these up and stops taking requests once the total reaches its execution time. |
+| Authorities | `authorities` (`namaUser`, `allowLessThanRequiredQty`, `allowManualWeightEntry`) | Per user: **Allow Less Than Required Qty** lets them print the sticker even when the weighed quantity falls short of the required quantity, and **Allow Manual Weight Entry** lets them type a weight (see below). |
+| Stock Issue Request Lines Order Methods | `stockIssueReqLinesOrderMethods` (`orderByField`, `orderByQuery`) | The order the generator lays request lines out in: each row adds one sort key, from a line field or from a query that returns one row per line. |
+| Barcode Specifications 1–5 | `weightScaleBarcodeSpecs1` … `weightScaleBarcodeSpecs5` (`prefix`, `treatPrefixAsPartOfFirstProperty`, `minCodeLength`, `maxCodeLength`, `separator`) and their parts grids `parts1` … `parts5` (`property`, `separator`, `length`, `multiplyBy`, `divideOn`, `format`) | How a scanned barcode is read. The first specification whose prefix and minimum/maximum length fit the code is used, and its parts grid cuts the code into values. A code that fits none is refused. |
+
 ![Weight scale configuration screen in NaMa ERP](../../ar/modules/supplychain/images/weight-scale/weight-scale-config-en.png)
 
 ## Issue Preparation Document (WeightScalePreparationDoc)

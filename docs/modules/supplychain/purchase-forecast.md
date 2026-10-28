@@ -24,11 +24,48 @@ You can narrow the forecast's scope by item, brand, or date range, and set the l
 The forecast's power is in its data source. The system supports more than one source, and they can be blended:
 
 - **Sales history**: use the past selling rate to predict upcoming demand - best for distribution and retail items. The rules for extracting sales are configured via the **Sales Source Config** (PFSalesSourceConfig): date range, item filters, and the invoice types included or excluded.
-- **Other quantity sources**: via the **Quantity Source** (PFQuantitySource), the forecast can be fed numbers from other sources (such as production plans or manual entry), not from sales alone.
+- **Stock on hand**: a **Quantity Source** (PFQuantitySource) is a list of warehouses and locators (`quantitySourceLines`). The forecast reads each item's current balance in them, so one source can stand for "the main store" and another for "the branch shops".
 
 ## Forecast Configuration (PurchaseForecastConfig)
 
-The **Purchase Forecast Configuration** gathers the calculation criteria in one place: the adopted sources, seasonality factors, demand multipliers, and how to handle available and reserved stock. Setting this up once makes generating forecasts later consistent and fast.
+The **Purchase Forecast Configuration** is the recipe a Purchase Forecast follows: which sales periods to measure, which stock to count, and the formulas that turn those numbers into coverage and a suggested order. Every Purchase Forecast names one in its **Purchase Forecast Configuration** field, so several buyers — or several product families — can each keep their own recipe. Pressing **Calculate Data** (or saving with **Calculate Data With Save Every Time** ticked) runs the recipe in this order: net sales, stock quantities, the line totals, the last purchase, then the coverage formulas.
+
+### Consider… flags
+
+By default, a line's net sales add up every sale of its item, whatever branch or size it was sold in. Each **Consider** flag splits the sales by one dimension instead: when it is ticked and the forecast line carries a value for that dimension, only sales made with the same value count towards the line. A line that leaves the dimension empty still collects all of the item's sales. Use them when you forecast per branch or per size — say, one line per branch with **Consider Branch** ticked. The flags apply to net sales only; stock quantities are always the whole item's balance in the source's warehouses.
+
+| Option | Field id |
+|---|---|
+| Consider Legal Entity · Consider Branch · Consider Department · Consider Sector · Consider Analysis Set | `considerLegalEntity`, `considerBranch`, `considerDepartment`, `considerSector`, `considerAnalysisSet` |
+| Consider Size · Consider Color · Consider Revision · Consider Box · Consider Lot | `considerSize`, `considerColor`, `considerRevisionId`, `considerBox`, `considerLotId` |
+| Consider SubItem · Consider Active Percentage · Consider Inactive Percentage | `considerSubItem`, `considerActivePerc`, `considerInactivePerc` |
+
+### Net Sales 1–5 Configuration
+
+**Net Sales 1 Configuration** to **Net Sales 5 Configuration** (`netSales1Configuration` … `netSales5Configuration`) each point at a **Sales Source Configuration**, and fill the **Net Sales 1–5** columns of the forecast lines. Leave one empty and its column is not calculated. Five slots let you compare periods side by side — last month, last quarter, the same quarter last year — and the forecast then picks the largest of the five into **Highest Sales Period**.
+
+A **Sales Source Configuration** (PFSalesSourceConfig) holds:
+
+| Field | Field id | What it does |
+|---|---|---|
+| Start Period / End Period | `periodStart`, `periodEnd` | How far back the window opens and closes, counted back from the forecast's date — a start of *6 Months* and an end of *1 Month* measure the five months that ended a month ago. An empty start or end means "yesterday". The window actually used is written on the forecast's header as **Net Sales *N* From Date / To Date**. |
+| Sales Source | `salesSources` (`entityType`, `entityList`, `effectType`) | The document types whose lines are summed — one type per row, or an entity list of several. **Effect Type** decides the sign: *Addition* adds, *Deduction* subtracts, and *Default* adds sales and subtracts returns (any invoice-type document that brings goods back in). Only saved documents dated inside the window count. |
+| Data Filters | `dataFilters` (`book`, `term`, `invoiceClassification`, `docCategory`, `customer`, item dimensions, accounting dimensions) | Narrows the documents read: by book, term, invoice classification, document category, customer (a customer, customer class 1 or 2, or customer category), warehouse, locator, size, colour, lot and the other item dimensions, and legal entity / sector / branch / department / analysis set. Values in the same column on several rows are alternatives; different columns must all match. |
+
+### Quantity 1–20 Source
+
+**Quantity 1 Source** to **Quantity 20 Source** (`quantity1Source` … `quantity20Source`) each point at a **Quantity Source** and fill the **Quantity 1–20** columns with the item's current balance in that source's warehouses and locators. An empty slot puts zero in its column. The forecast adds all twenty into **Total Quantities**.
+
+### Coverage 1–10 Calculation Formula and Suggested Order
+
+**Coverage 1–10 Calculation Formula** (`coverage1CalcFormula` … `coverage10CalcFormula`) and **Suggested Order Based on Coverage Formula** (`suggestedOrderBasedOnCoverageFormula`) are short Groovy formulas run once per forecast line; each result goes into the matching **Coverage *N*** or **Suggested Order Based on Coverage** column. An empty formula leaves its column alone. Inside a formula you can use:
+
+- `line` — the forecast line, with its columns: `line.netSales1` … `line.netSales5`, `line.highestSalesPeriod`, `line.quantity1` … `line.quantity20`, `line.totalQuantities`, `line.lastPurchaseQuantity`, `line.lastPurchaseDate`, and the coverages already worked out (`line.coverage1` …), since the formulas run in order 1 to 10 and the suggested order comes last.
+- `requiredCoverageInMonths` and `minimumSpecifiedCoverageForReorderInMonths` — the two header fields of the forecast, **Required Coverage In Months** and **Minimum Specified Coverage For Reorder In Months**.
+
+For example, with **Net Sales 1** measuring the last single month, the suggested order formula `line.netSales1.multiply(requiredCoverageInMonths).minus(line.totalQuantities)` orders enough for the required months minus what is already on hand.
+
+The suggested order is where the buyer starts: the purchase document generated from the forecast takes its quantities from **Suggested Order Based on Coverage (Adjusted)**, which the buyer fills — by hand, or with the copy action listed below.
 
 ::: tip Combine the Forecast with Lead Times
 The forecast alone tells you "how much" you'll need, but the item's **lead time** (defined on the [item card](./understanding-items.md#Purchase-Configuration)) tells you "when" to order. Combine the two to order at the timing that ensures goods arrive just before you run out.

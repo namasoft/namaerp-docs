@@ -152,7 +152,6 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | Integrator Config | يربط الشاشة بنظام خارجي | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Import Integrators | يضبط كيفية جلب السجلات من الخارج | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Invoice Retriever Lines | ينشر مطبوعة الفاتورة ليجري استرجاعها عبر رابط | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
-| Error Message Logging Configurations | يقرر أي رسائل النسخ المتماثل الواردة الفاشلة تُحفظ سجلات رسائل خطأ | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
 
 ::: info جدولان ليسا في تبويب الرئيسية
 جدول *Public Entities* له تبويب مستقل باسم **الملفات المسموح بحفظها على العام**، فلا تبحث عنه في كومة تبويب الرئيسية. وجداول الأيقونات الثلاثة في تبويب **الأيقونات**. وما عدا ذلك في الجدول أعلاه موجود في تبويب **الرئيسية**.

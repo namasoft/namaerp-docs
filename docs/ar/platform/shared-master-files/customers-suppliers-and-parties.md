@@ -1,5 +1,5 @@
 ---
-entities: [Customer, Supplier, Contact, ThirdParty, UpdateCustomerInfo, ModifyCustomerInfoReq]
+entities: [Customer, Supplier, Contact, ThirdParty, UpdateCustomerInfo, ModifyCustomerInfoReq, ModifySupplierInfoReq, CustomerClass, CustomerClass1, CustomerClass2, CustomerClass3, CustomerClass4, CustomerClass5, CustomerCategory, SupplierClass]
 menu: المبيعات ← الملفات ← عميل
 ---
 # العملاء والموردون وجهات الصلة

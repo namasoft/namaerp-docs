@@ -244,7 +244,9 @@ How you use it:
 
 1. Open a new update document and pick the committed opening document in the **Fixed Asset Opening
    Document** field. The header — dates, fiscal period, mediator account, the collect ranges,
-   dimensions and totals — and the detail lines copy across.
+   dimensions and totals — and the detail lines copy across. If the update's term has **Do Not Copy Details Of
+   From Doc** switched on, only the header copies and you enter the lines to correct yourself — see
+   [the opening terms](/modules/fixedassets/document-terms/fixedassets-terms-acquisition.md#The-Opening-Term).
 2. Change the lines that need changing. As you save, the system quietly photographs the **previous**
    values of every line it has not seen before: supplier, depreciation start date, purchase date,
    useful life, remaining life, salvage value, disposal date, acquisition opening value, accumulated

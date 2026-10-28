@@ -35,7 +35,7 @@ The toolbar is the same one bank reconciliation uses, and the same rule applies:
 **On the Collect Data step:**
 
 - **Collect Data** — step 1 in a button. With the **account**, the **subsidiary** and the import date range set, it pulls your books for that party into the **system lines** grid, continuing from the previous reconciliation for the same party.
-- **Import Subsidiary Lines** — loads the party's own statement from a file. Attach the file and name the **subsidiary** first; miss either and the button tells you which. (**Import Bank Lines** sits beside it and behaves identically — it is the bank-reconciliation wording of the same import.)
+- **Import Subsidiary Lines** — loads the party's own statement from a file. Attach the file and name the **subsidiary** first; miss either and the button tells you which. (**Import Bank Lines** sits beside it and behaves identically — it is the bank-reconciliation wording of the same import.) The file's columns are read by a formula written once in the accounting configuration — see [Reconciliation import formulas](../support/accounting-configuration.md#Reconciliation-import-formulas).
 - **Update System lines of previous document** — refreshes the system lines carried over from the previous reconciliation, so movements that changed since it was closed show their current figures. This step only.
 
 **On the Reconciliation step:**

@@ -41,7 +41,7 @@ The password is used only for that first login. The server then gives the phone 
 
 ### Biometric login
 
-The app can ask for a **fingerprint or face scan** on every launch as an extra layer of protection. This is controlled by a server-side setting, and biometric login can be **disabled** or made mandatory from the mobile app configuration (see the last section of this page).
+The app can ask for a **fingerprint or face scan** on every launch as an extra layer of protection. It is on by default, and the administrator can switch it off with **Disable Biometric Login In Mobile** in the [Mobile Apps Configurations](./mobile-apps-configuration.md) screen.
 
 ## The home screen
 
@@ -199,13 +199,15 @@ On login — or when you use **Reload app data** — the app fetches the referen
 
 ## Server settings that control the app's behavior
 
-Most of the app's behavior is configured centrally from the **Mobile App configuration** screen in the ERP (the mobile apps module configuration), not from the phone. This screen is the administrator's reference for everything related to the app, including for example:
+Most of the app's behavior is configured centrally from the **Mobile Apps Configurations** screen in the ERP (**Basic → Mobile Apps**, last item), not from the phone. This screen is the administrator's reference for everything related to the app, including for example:
 
 - Specifying the **books** allowed for each document type (attendance, vacations, permissions, stock taking, receipts, delivery…).
-- Controlling **biometric login**, showing/hiding the save-as-draft option, and the number of decimal places for quantities.
+- Controlling **biometric login**, showing/hiding the save-as-draft option, and the number of decimal places of line totals.
 - Setting the **criteria** that determine which customers or items are allowed to be sent to the app.
-- Authoring the **print templates** for documents and receipts, and the terms and conditions shown to the customer.
+- Authoring the **print templates** for documents and receipts.
 - Restricting the creation of some documents (attendance, vacations, stock taking, receipts) to the app only, or allowing their editing for authorized users only.
+
+Every option of that screen, tab by tab, is explained in [Mobile Apps Configurations — option reference](./mobile-apps-configuration.md).
 
 Your organization's **license** also determines which modules appear in the app at all (Human Resources, Sales, Maintenance, Warehouse Management/WMS, Stock Taking, Delivery…); if a module is not licensed, its screens will not appear in the menu.
 

@@ -47,7 +47,7 @@ Each step of the workflow is a button, and the reason a reconciliation "does not
 **On the Collect Data step:**
 
 - **Collect Data** — the button behind step 1. With the **bank account**, the ledger **account** and the from/to dates set, it pulls your side into the **system lines** grid, continuing from the previous reconciliation.
-- **Import Bank Lines** — loads the bank's own statement from a file. Attach the file and fill the **bank name** first; without both, it refuses and tells you which is missing. **Import Subsidiary Lines** does the same for the other grid.
+- **Import Bank Lines** — loads the bank's own statement from a file. Attach the file and fill the **bank name** first; without both, it refuses and tells you which is missing. **Import Subsidiary Lines** does the same for the other grid. The **bank name** is the name of a formula that describes the file's columns, written once in the accounting configuration — see [Reconciliation import formulas](../support/accounting-configuration.md#Reconciliation-import-formulas).
 - **Update System lines of previous document** — refreshes the system lines that were carried over from the previous reconciliation, so movements that changed since it was closed show their current figures. It works only on this step.
 
 **On the Reconciliation step:**

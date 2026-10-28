@@ -16,6 +16,7 @@ The two ideas every other page builds on, and the setup that has to exist first.
   <LandingCard icon="🧩" title="Core Concepts" link="/modules/hr/concepts/" details="Requests vs. documents vs. aggregated documents, and the five-step pipeline behind every salary calculation." />
   <LandingCard icon="⚙️" title="Setup" link="/modules/hr/setup/" details="HR years and periods, the calendar and holidays, and the employee HR information master record." />
   <LandingCard icon="🎛️" title="HR Configuration" link="/modules/hr/setup/hr-configuration.md" details="The module's ~150 settings, grouped by what they change — the month divisor, vacation rules, absence deductions, attendance and overtime." />
+  <LandingCard icon="🗂️" title="HR Master Files" link="/modules/hr/setup/hr-master-files.md" details="Employee department, job and organizational position, work place, employee group, nationality, sponsor, skills and the social insurance policy." />
   <LandingCard icon="🧾" title="Document Terms" link="/modules/hr/document-terms/" details="The 46 HR document terms: which accounts each document records its entry on, and which book and term the aggregated documents hand out." />
 </LandingGrid>
 

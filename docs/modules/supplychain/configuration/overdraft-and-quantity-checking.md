@@ -53,7 +53,7 @@ These options are flagged as critical: turning one on triggers a confirmation pr
 
 **Allow Overdraft in Manufacturing Issues** `value.allowOverdraftInManufacturingIssues` — Lets stock issues generated from a manufacturing raw-material issue fall back to the normal item policy instead of being forced non-negative.
 
-**Allow Overdraft in Stock Transfers** `value.allowOverdraftInStockTransfers` — The same relaxation for stock transfers (and issues generated from assembly documents).
+**Allow Overdraft in Stock Transfers** `value.allowOverdraftInStockTransfers` — The same relaxation for stock transfers, and also for stock issues generated from an **Assembly Document**, an **Aggregated Packaging Document** or a **Processing Document** — this is the switch that governs those issues, despite its name.
 
 **Dimensions with Allowed Overdraft** `value.dimensionsWithAllowedOverdraft` *(table)* — A per-line override of the overdraft policy by **warehouse**, **locator** and generic dimensions (sector / branch / department / analysis set / legal entity). Each row has a **policy** column (Allowed / Not Allowed) that wins over the item/section/global setting when a document line matches it — for example, to allow negative stock only in a transit warehouse. Not applied to real transfer documents.
 

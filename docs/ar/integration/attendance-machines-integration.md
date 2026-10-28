@@ -38,15 +38,15 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 
   * كود مناسب
   * اسم
-  * نوع الاتصال
+  * نوع الاتصال (`machineConnectionType`)
 
-* حدد **CRON Expression** لتحديد توقيت قراءة البيانات وإرسالها إلى النظام:
+* حدد **CRON Expression** (`cronExpression`) لتحديد توقيت قراءة البيانات وإرسالها إلى النظام:
 
   * الصيغة تتكوّن من **ستة** حقول — الثواني، ثم الدقائق، ثم الساعات، ثم يوم الشهر، ثم الشهر، ثم يوم الأسبوع.
   * مثال: `0 5 * * * *` سيقوم بقراءة البيانات كل ساعة عند الدقيقة الخامسة.
   * انتبه للأمثلة ذات الخمسة حقول في مواقع مثل [https://crontab.guru](https://crontab.guru) — تحتاج إلى إضافة حقل الثواني في أولها حتى تعمل هنا.
 
-* حدد المهمة المجدولة التي سيتم تشغيلها بعد سحب البيانات من الماكينة:
+* حدد المهمة المجدولة التي سيتم تشغيلها بعد سحب البيانات من الماكينة (`runScheduledTaskAfterFetch`):
 
   * هذه المهمة تقوم بجلب البيانات من جدول لوج البصمات إلى ملف الحضور والانصراف.
   * لتسهيل إنشاء المهمة، تم إضافة زر باسم **Create Scheduled Task**.
@@ -60,9 +60,9 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 * يسمح بنقل بيانات البصمة من برنامج ZK BioTime.
 * يتطلب:
 
-  * رابط الماكينة
-  * اسم المستخدم
-  * كلمة المرور
+  * رابط الماكينة (`machineUrl`)
+  * اسم المستخدم (`username`)
+  * كلمة المرور (`password`)
 
 #### SQL Server
 
@@ -70,21 +70,22 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 
 * الإعدادات المطلوبة:
 
-  * **رابط الماكينة**: عنوان خادم SQL Server – غالبًا يكون `localhost`
-  * **Database Port**: منفذ الاتصال – غالبًا `1433`
-  * **اسم المستخدم**: مثل `sa`
-  * **كلمة المرور**
-  * **SQL Query**: الاستعلام الذي سيتم استخدامه لقراءة البيانات من قاعدة بيانات الماكينة بشكل دوري
-  * **Read For Period Query**: استعلام يستخدم لقراءة بيانات فترة معينة عند الضغط على زر "Read Attendance For Period" في تطبيق attcron
-  * **Mapping Lines**: ربط أعمدة نتيجة الاستعلام بما يحتاجه النظام
+  * **رابط الماكينة** (`machineUrl`): عنوان خادم SQL Server – غالبًا يكون `localhost`
+  * **Database Port** (`databasePort`): منفذ الاتصال – غالبًا `1433`
+  * **Database Name** (`databaseName`)
+  * **اسم المستخدم** (`username`): مثل `sa`
+  * **كلمة المرور** (`password`)
+  * **SQL Query** (`sqlQuery`): الاستعلام الذي سيتم استخدامه لقراءة البيانات من قاعدة بيانات الماكينة بشكل دوري
+  * **Read For Period Query** (`readForPeriodQuery`): استعلام يستخدم لقراءة بيانات فترة معينة عند الضغط على زر "Read Attendance For Period" في تطبيق attcron
+  * **Mapping Lines** (`mappingLines`): ربط أعمدة نتيجة الاستعلام بما يحتاجه النظام
 
     يحتوي على ثلاثة أعمدة:
 
-    * **Response Field**: اسم الحقل المطلوب في النظام
+    * **Response Field** (`mappingLines.responseField`): اسم الحقل المطلوب في النظام
       القيم الممكنة:
       `EmployeeCode`, `firstName`, `lastName`, `department`, `punchTime`, `punchState`, `punchStateDisplay`, `verifyType`, `verifyTypeDisplay`, `gpsLocation`, `areaAlias`, `terminalSN`, `uploadTime`
-    * **Column Index**: رقم العمود في نتيجة الاستعلام
-    * **Column Alias**: اسم العمود البديل لاستخدامه في جملة SQL
+    * **Column Index** (`mappingLines.columnIndex`): رقم العمود في نتيجة الاستعلام
+    * **Column Alias** (`mappingLines.columnAlias`): اسم العمود البديل لاستخدامه في جملة SQL
 
 * يوجد زر باسم **Default Queries** يقوم بإدراج استعلامات افتراضية مناسبة لماكينات ZK.
 
@@ -93,16 +94,16 @@ entities: [AttendanceMachineConfig, TimeAttendance]
 * يسمح بنقل البيانات من قاعدة بيانات Microsoft Access.
 * نفس الإعدادات مثل SQL Server، باستثناء:
 
-  * لا حاجة لاسم مستخدم وكلمة مرور ورابط الخادم.
-  * بدلاً من ذلك يتم تحديد **مسار ملف قاعدة البيانات** الموجود على الجهاز الذي سيتم تنصيب عليه تطبيق attcron.
+  * بدلاً من رابط الخادم يتم تحديد **مسار ملف قاعدة البيانات** (خانة *مسار الملف*، `machineUrl`) الموجود على الجهاز الذي سيتم تنصيب عليه تطبيق attcron.
+  * لا يستخدم Access اسم المستخدم وكلمة المرور ومنفذ قاعدة البيانات واسمها، لكن يجب ملؤها بقيم شكلية: يرفض الوكيل البدء إذا كان اسم المستخدم أو كلمة المرور فارغين، ولا يُحفظ السجل بدون المنفذ واسم قاعدة البيانات. راجع [ماكينات الحضور](../modules/hr/attendance/attendance-machines.md#ACCESS).
 
 #### Timetaag
 
 * يسمح بنقل البيانات من خدمة الحضور السحابية Timetaag، والتي ترفع إليها أجهزة البصمة قراءاتها بنفسها.
 * يتطلب:
 
-  * **رابط خادم Timetaag**: `https://app.timetaag.com`
-  * **مفتاح Timetaag** — وتظهر هذه الخانة مرتين؛ يرسل التطبيق الأولى بوصفها مفتاح الـ API والثانية بوصفها رمز التوثيق
+  * **رابط خادم Timetaag** (`machineUrl`): `https://app.timetaag.com`
+  * **مفتاح Timetaag** (`username` و `password`) — وتظهر هذه الخانة مرتين؛ يرسل التطبيق الأولى بوصفها مفتاح الـ API والثانية بوصفها رمز التوثيق
 * يصدر المفتاح من لوحة تحكم Timetaag — ادخل بحساب مدير الشركة واستخدم **Generate API token**.
 * لا حاجة لأي استعلام أو مطابقة أعمدة؛ فالبيانات تصل بصيغة ثابتة.
 * بخلاف الأنواع الثلاثة الأخرى، يحتاج الجهاز الذي يعمل عليه attcron إلى الوصول إلى **الإنترنت** لا إلى الشبكة المحلية للماكينة.

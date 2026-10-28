@@ -1,6 +1,6 @@
 ---
 description: "تتبع الأصول الاستثمارية بالمحافظ الاستثمارية: ملفات المحفظة والمستثمر والمشروع الاستثماري، وأنواع الأسهم والحصص، ودورة الحياة من الفرصة الاستثمارية وفتح الاستثمار مرورًا بالتحديث وزيادة رأس المال وتوزيع الأرباح حتى إنهاء الاستثمار."
-entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject, IPShareType, IPStakeType]
+entities: [IPInvestmentPortfolio, IPInvestmentStart, IPInvestmentEnd, IPInvestmentUpdate, IPInvestmentProfitDistribution, IPInvestmentIncreaseCapital, IPInvestmentOpportunity, Investor, InvestmentProject, IPShare, IPStake, IPCashDeposit, IPInvestmentFund, InvestmentCompany, FundType, IPShareType, IPStakeType, IPInvestmentAllocation, IPInvestmentRefund, IPInvestmentBudget]
 menu: الحسابات ← محافظ استثمارية ← محفظة استثمارية
 ---
 
@@ -25,6 +25,18 @@ menu: الحسابات ← محافظ استثمارية ← محفظة استث
 - **مشروع استثماري** (`Accounting > Investment Portfolios > Investment Project`) — مشروعٌ يُخصَّص له رأس مال.
 
 وثمّة كذلك ملفاتُ بناءٍ — **الأسهم** و**الحصص** و**الودائع النقدية** و**الصناديق الاستثمارية** و**أنواع الصناديق** — تصف تركيبة ما هو مملوك.
+
+### شركات الاستثمار والأصول المملوكة
+
+كلّ ما تملكه المحفظة ملفٌّ رئيسيٌّ مستقل، ليحمل حساباته الخاصة ويُختار في سطور مستندات دورة الحياة:
+
+- **شركة استثمار** (`Banks > Investment Documents > Investment Company`) — الشركة التي تستثمر فيها أو من خلالها: **الدولة**، و**اسم المسؤول**، و**رقم الهاتف**، و**البريد الإلكتروني**، و**رقم الشركة**، والملاحظات والمرفقات، إلى جانب حساباتها. وتُختار في الأسهم والحصص والصناديق الاستثمارية والمحافظ، وفي سندات [مستندات الاستثمار](./investment-documents.md).
+- **سهم** و**حصة** (`Banks > Investment Documents > Share` / `Stake`) — سجلٌّ لكلّ أصلٍ مملوك في شركة استثمار. تُدخل الشركة والنوع والعملة و**نسبة الضريبة**؛ أمّا الأرقام — **عدد الأسهم (الحصص)**، و**سعر الشراء** و**إجمالي قيمة الشراء**، و**تاريخ الشراء**، و**السعر الحالي** و**تاريخ آخر تحديث علي السعر**، و**القيمة السوقية الحالية**، و**متوسط التكلفة**، و**سعر البيع**، و**الربح** و**نسبة الربح** — فتملؤها مستندات دورة الحياة ولا تُكتب يدويًا.
+- **وديعة نقدية** (`Banks > Investment Documents > Cash Deposit`) — مالٌ مودَع: **البنك**، و**الحساب البنكي**، والعملة، و**نسبة الضريبة**. وتأتي **القيمة بالعملة** و**القيمة بالعملة المحلية** و**تاريخ الشراء** من المستندات التي تضخّ فيها رأس المال.
+- **صندوق استثماري** (`Banks > Investment Documents > Investment Fund`) — حصّةٌ في صندوقٍ مُدار: **شركة الاستثمار** التي تديره و**نوع المحفظة** الخاص به. ويُملأ **إجمالي الصندوق بالعملة المحلية** و**تاريخ الشراء** من المستندات.
+- **نوع المحفظة** (`Banks > Investment Documents > Fund Type`) — قائمة تصنيف (كود وأسماء ووصف) تُختار في كل صندوق استثماري. وهي، مثل أنواع الأسهم والحصص، للتصنيف فقط.
+
+ولكلّ أصلٍ مملوك **حالة** و**قيمة الأرباح** تتبعان دورة الحياة نفسها التي تتبعها المحفظة.
 
 ### أنواع الأسهم وأنواع الحصص
 

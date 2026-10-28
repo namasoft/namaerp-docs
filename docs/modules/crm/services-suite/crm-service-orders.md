@@ -1,6 +1,6 @@
 ---
 description: "The CRM services suite chain: Service Contract, generating work plans and service orders, the Service Notice and the Execution sheet, with actions and messages."
-entities: [MnSrvContract, MnSrvOrder, MnSrvWorkPlan, MnSrvOrderExecution, MnSrvNotice]
+entities: [MnSrvContract, MnSrvOrder, MnSrvWorkPlan, MnSrvOrderExecution, MnSrvNotice, MnSrvSalesQuotation, MnSrvSalesOrder]
 ---
 # Service Orders and Executions
 
@@ -29,6 +29,13 @@ Sales Quotation ──manual──▶ Sales Order ──manual──▶ Contract
 ```
 
 Every arrow in that diagram is a **button somebody presses**. Nothing in this folder happens on a timer. There is no scheduler, no reminder, no alarm and no notification anywhere in the CRM module, so a contract that nobody opens produces no work plans, and a work plan that nobody opens produces no orders.
+
+## Before the Contract: Sales Quotation and Sales Order
+
+The **Maintenance Service Sales Quotation** and **Maintenance Service Sales Order** (**Customer Relationship Management → Service Documents**) are the commercial steps before the contract, and they use the contract's own screen: the same main tab with contract type, customer, subsidiary, number of periodic maintenance visits and work plan generate type, the same services grid and visit schedule, and the same spare parts and services totals. Two things differ:
+
+- Each has a **Service Name** (اسم الخدمة) column in the services grid and the visit schedule, so you can quote for services that have no service record yet.
+- Only the sales order has the **Generate Service** button that turns those names into service records — see [Actions on these screens](#Actions-on-these-screens).
 
 ## The Service Contract
 

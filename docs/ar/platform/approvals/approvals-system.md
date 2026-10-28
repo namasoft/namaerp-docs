@@ -1,5 +1,5 @@
 ---
-entities: [ApprovalDefinition]
+entities: [ApprovalDefinition, ApprovalReason]
 menu: إدارة النظام ← تخصيص شكل النظام ← تعريف موافقه
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "Sending e-invoices and e-receipts to the Egyptian Tax Authority: connecting to the portal, EGS and GS1 item codes, bank details and payment terms, registering POS devices, signing with the e-seal, what to do when the portal does not answer, and cancelling an accepted e-invoice."
-entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc, DocumentCancelDocument, Bank, BankAccount, DocumentTerm]
+entities: [TaxPayerConfiguration, TaxAuthoritySubmissionDoc, DocumentCancelDocument, Bank, BankAccount, DocumentTerm, EInvoiceNotificationReceiver]
 menu: Basic → Electronic Tax Authority Configuration → Electronic Tax Authority Configuration
 ---
 # Egyptian e-Invoice and e-Receipt
@@ -35,10 +35,10 @@ Your ERP system is registered on the portal as an application, and the portal gi
 
 | Field on the Egypt page | What to put in it |
 |---|---|
-| **User Name** | The **Client ID** of the ERP system registered on the portal |
-| **Password** | The **Client Secret** that goes with it |
-| **Tax Registeration NO** | Your company's 9-digit tax registration number |
-| **Activity Type** | The activity code your registration was issued under, from the authority's activity list |
+| **User Name** (`userName`) | The **Client ID** of the ERP system registered on the portal |
+| **Password** (`password`) | The **Client Secret** that goes with it |
+| **Tax Registeration NO** (`taxRegNo`) | Your company's 9-digit tax registration number |
+| **Activity Type** (`activityType`) | The activity code your registration was issued under, from the authority's activity list |
 
 The pre-production portal issues its own client ID and secret, separate from the live ones. Moving to live means changing the **Tax Payer Type** *and* pasting in the live credentials.
 
@@ -46,10 +46,10 @@ The pre-production portal issues its own client ID and secret, separate from the
 
 A document goes to the authority when its **document book** or **term** has **Send To Tax Authority** ticked and names the configuration in its **Tax Configuration** field. If the book and the term both name a configuration, they must name the same one. Any document type that can carry tax can be sent this way: sales invoices and returns, credit and debit notes, real estate, hospital, contracting and point-of-sale documents, and others.
 
-From that moment, every committed document dated on or after the configuration's **Start Sending From Date** is queued for the next collection. Two settings guard the dates:
+From that moment, every committed document dated on or after the configuration's **Start Sending From Date** (`startSendingFromDate`) is queued for the next collection. Two settings guard the dates:
 
-- **Max Days To Send Invoices** (3 days on a new record) — the authority's deadline. A document dated further back than that cannot be saved at all once its book or term sends to the authority.
-- **Days To Allow Save Document In Future** — how many days ahead a document may be dated. Zero means not at all.
+- **Max Days To Send Invoices** (`maxDaysToSendInvoice`, 3 days on a new record) — the authority's deadline. A document dated further back than that cannot be saved at all once its book or term sends to the authority.
+- **Days To Allow Save Document In Future** (`futureDaysToAllowSaveDoc`) — how many days ahead a document may be dated. Zero means not at all.
 
 Each document goes to the portal as one of these types:
 
@@ -65,7 +65,7 @@ A return knows which invoice it reverses from the document it was created from, 
 
 ## Who the portal thinks you are
 
-**Branch Id From** names the dimension — legal entity, branch, sector, department or analysis set — that represents the issuer. On every document, Nama reads that dimension from the document itself and sends its name, its address and its **Tax Authority Code**, which is the branch code you registered with the authority.
+**Branch Id From** (`branchIdDimension`) names the dimension — legal entity, branch, sector, department or analysis set — that represents the issuer. On every document, Nama reads that dimension from the document itself and sends its name, its address and its **Tax Authority Code**, which is the branch code you registered with the authority.
 
 Egypt checks the issuer's address in detail. The dimension chosen on the configuration record itself is checked when you save the configuration and again before every send. Its **Tax Authority Code**, country, governorate, city, street and building number must all be filled. A blank one stops the submission with *Field {0} in selected dimension {1} is required*.
 
@@ -83,7 +83,9 @@ The field is required for Egypt: a customer without it cannot be sent.
 
 A business buyer on an e-invoice also needs a full address: country, governorate, city, street and building number. Individuals and foreigners don't.
 
-Asking every walk-in customer for a national ID is not practical, and the authority doesn't require it below a certain amount. The configuration has two thresholds for this: **Minimum Invoice Value To Mandatory Send Customer** for e-invoices and **Minimum Receipt Value To Mandatory Send Customer** for receipts. When an individual's document is at or below the threshold, the ID is not required. Above it, the ID is required. Left at zero, the ID is required on every individual's document.
+**Customer Additional Information Template** (`customerAdditionalInfoTemplate`) adds a line of your own to the buyer's address on the portal. Nama runs the template on each document and sends the result as the address's *additional information* — a customer's internal account number, say, or the delivery site. Left empty, nothing is added.
+
+Asking every walk-in customer for a national ID is not practical, and the authority doesn't require it below a certain amount. The configuration has two thresholds for this: **Minimum Invoice Value To Mandatory Send Customer** (`minInvValueCustomerRequired`) for e-invoices and **Minimum Receipt Value To Mandatory Send Customer** (`minReceiptValueCustomerRequired`) for receipts. When an individual's document is at or below the threshold, the ID is not required. Above it, the ID is required. Left at zero, the ID is required on every individual's document.
 
 ![Minimum Value For Personal Receipts](../../ar/modules/invoicing/images/electronic-receipt-nama-min-value-for-personal-en.png)
 
@@ -100,15 +102,15 @@ The authority does not know your item codes. Every line has to carry a code from
 
 ### Where Nama takes the code from
 
-**Calculate Item Code From** says which record holds the code: the **Item** itself, its **Master Group**, one of the item classes 1–10, one of the categories 1–5, its **Section** or its **Brand**. Nama uses that record's **Tax Authority Code**. If that field is empty, it falls back to the record's own code, so fill it in rather than relying on internal codes.
+**Calculate Item Code From** (`itemCodeFrom`) says which record holds the code: the **Item** itself, its **Master Group**, one of the item classes 1–10, one of the categories 1–5, its **Section** or its **Brand**. Nama uses that record's **Tax Authority Code**. If that field is empty, it falls back to the record's own code, so fill it in rather than relying on internal codes.
 
-When the code has to be built from several pieces, set **Calculate Item Code From** to the template option and write the expression in **Item Code Template**. The template replaces everything above, and it is required in that mode and must be empty in every other.
+When the code has to be built from several pieces, set **Calculate Item Code From** to the template option and write the expression in **Item Code Template** (`itemCodeTemplate`). The template replaces everything above, and it is required in that mode and must be empty in every other.
 
 Nama decides which catalogue a code belongs to by looking at it: a code that starts with `EG-` followed by the configuration's **Tax Registeration NO** and a dash is EGS; anything else is sent as GS1.
 
 ### Checking EGS codes before sending
 
-With **Validate EGS Codes** ticked, **Validate Tax Authority Documents** and sending both look each EGS code up on the portal, among the codes your company has registered, before anything is sent:
+With **Validate EGS Codes** (`validateEGSCodes`) ticked, **Validate Tax Authority Documents** and sending both look each EGS code up on the portal, among the codes your company has registered, before anything is sent:
 
 - If the code is not there, or the authority rejected the request, the line fails with *Item code is not registered*. Either the code was mistyped, or it was never registered under this tax registration number.
 - If the request is still under review, or the document's date falls outside the code's active-from/active-to period, the line fails with *Item code is not active*. Usually the authority hasn't approved the code yet, or the document is dated before it did.
@@ -123,9 +125,11 @@ With the box unticked, Nama sends the codes unchecked and the portal itself refu
 
 ### The other line settings
 
-- **Item Internal Code Template** and **Item Description Template** decide the internal code and description sent for each line (by default the item's code and its first name). **Internal Item Code Maximum Length** limits the internal code; zero means 50 characters.
-- **Ignore Lines With Item Whose Tax Code Is** drops every line whose item tax code equals that value — handy for service lines the authority shouldn't see.
-- **Don Not Send Assembly Components** sends an assembly as one line instead of its components.
+- **Item Internal Code Template** (`internalCodeTemplate`) and **Item Description Template** (`taxDescriptionTemplate`) decide the internal code and description sent for each line (by default the item's code and its first name). **Run Item Nama Code Template On** (`internalCodeFrom`) and **Run Item Description Template On** (`taxDescriptionFrom`) say what each template reads: the **Item** (the default), the **Document Header** or the **Document Line**. A template that produces nothing falls back to the default. **Internal Item Code Maximum Length** (`internalItemCodeMaxLength`) limits the internal code; zero means 50 characters.
+- **Ignore Lines With Item Whose Tax Code Is** (`ignoreItemWithTaxCode`) drops every line whose item tax code equals that value — handy for service lines the authority shouldn't see.
+- **Don Not Send Assembly Components** (`dontSendAssemblyComponentLines`) sends an assembly as one line instead of its components.
+- **Document Level Extra Discount Location** (`extraDiscountLocation`) names one discount slot, **Discount 1**–**Discount 8**, that is sent as the invoice's document-level extra discount instead of a discount on the lines. That discount must come after all the taxes in the line's calculation; otherwise the document stops with *E-invoice discount {0} is configured as the document level extra discount but is applied before tax for document {1}. The extra discount must be applied after all taxes; otherwise the reported net amount and tax will not reconcile with the tax authority.* This message has no Arabic text.
+- The unit price, quantity decimals, rounding, the **Discount Configs** grid and the service-fees grid work as in every country — see [Shared settings on every country page](./e-invoices-guide.md#Shared-settings-on-every-country-page).
 
 ## Units, currency and taxes
 
@@ -133,9 +137,32 @@ Three more things on each line have to be in the authority's own codes:
 
 - **Unit** — the **Tax Authority Code** on the unit of measure (`EA`, `KGM` and so on). Fill it on every unit you sell in.
 - **Currency** — the **Tax Authority Code** on the currency. A document in another currency also needs its rate.
-- **Tax** — each of the four tax slots is mapped to the authority's tax type and sub-type in the *Tax 1*–*Tax 4* groups of the Egypt page. The *Zero* type and sub-type are sent instead when the tax on a line is zero. **Do Not Send Tax N If Codes Not Provided** leaves a slot out when it has no codes.
+- **Tax** — each of the four tax slots is mapped to the authority's tax type and sub-type in the *Tax 1*–*Tax 4* groups of the Egypt page (**Tax 1 Tax Type**, `taxesCodes.tax1TaxAuthType`, and **Tax 1 Tax SubType**, `taxesCodes.tax1TaxAuthSubType`, and so on). The *Zero* type and sub-type (`taxesCodes.tax1ZeroTaxAuthType`, `taxesCodes.tax1ZeroTaxAuthSubType`) are sent instead when the tax on a line is zero. **Send Tax N With Zero** (`taxesCodes.sendTax1WithZero`) sends that tax with a zero rate and a zero amount. **Do Not Send Tax N If Codes Not Provided** (`doNotSendTax1IfNoCode`) leaves a slot out when it has no codes.
 
-**Calculate Tax Codes Types From** chooses where those tax codes are read from: this configuration, or the tax plan on the term, the item or the customer. The **Tax Codes Sources** grid overrides that choice for particular document types, books, terms, dates or dimensions.
+**Calculate Tax Codes Types From** (`taxCodesType`) chooses where those tax codes are read from: this configuration, or the tax plan on the term, the item or the customer. The **Tax Codes Sources** grid (`taxCodesSource`) overrides that choice for particular document types, books, terms, dates or dimensions: each row names the documents it covers (**For Type**, **Entity Type List**, book, term, criteria, a value-date range and the dimensions) and the **Calculate Tax Codes Types From** to use for them. The first matching row wins.
+
+## Order references and the proforma number
+
+An Egyptian e-invoice has room for five references the buyer may want to match against their own records: the purchase order number and description, the sales order number and description, and the proforma invoice number. By default Nama fills them from the document. The **Configurations** grid (`configs`) at the bottom of the Egypt page replaces any of them with a template, for the documents a row covers.
+
+| Column | Field ID | What it does |
+|---|---|---|
+| **Entity Type**, **Entity Type List** | `configs.entityType`, `configs.entityTypeList` | The document types the row applies to. |
+| **Book**, **Term** | `configs.book`, `configs.term` | Limits the row to one book or one term. |
+| **From Date**, **To Date** | `configs.fromDate`, `configs.toDate` | Limits the row to documents whose value date falls in the range. |
+| **Apply When**, **Do not Apply When** | `configs.applyWhen`, `configs.doNotApplyWhen` | Criteria the document must match, or must not match. |
+| **Apply When Query**, **Do Not Apply When Query** | `configs.applyWhenQuery`, `configs.doNotApplyWhenQuery` | The same, as a query run on the document. |
+| **Purchase Order Preference Template** | `configs.purchaseOrderPreferenceTempo` | The purchase order reference sent. |
+| **Purchase Order Description Template** | `configs.purchaseOrderDescriptionTempo` | The purchase order description sent. |
+| **Sales Order Preference Template** | `configs.salesOrderPreferenceTempo` | The sales order reference sent. |
+| **Sales Order Description Template** | `configs.salesOrderDescriptionTempo` | The sales order description sent. |
+| **Proforma Invoice Number Template** | `configs.proformaInvoiceNumberTempo` | The proforma invoice number sent. |
+
+Nama uses the first row that matches the document. A template left empty in that row keeps the value the document supplies.
+
+::: tip Example
+A distributor's government customers quote their purchase order on every invoice, and staff type it in the invoice's `description1` field. A row for **Sales Invoice** whose **Purchase Order Preference Template** reads that field sends it as the purchase order reference, so the buyer's accounts team can match the e-invoice to its order on the portal.
+:::
 
 ## Bank details and payment terms
 
@@ -250,7 +277,7 @@ Anything left empty is left out. Leave all of it empty and the payment section i
 
 ### Invoice or receipt?
 
-**E Invoice Document Type**, in the e-receipt group of the Egypt page, decides which system a document goes to:
+**E Invoice Document Type** (`einvoiceDocType`), in the e-receipt group of the Egypt page, decides which system a document goes to:
 
 | Setting | What happens |
 |---|---|
@@ -294,9 +321,14 @@ Every device that issues receipts is registered with the authority as a point of
 
 ![Nama ERP Tax Authority Configuration](../../ar/modules/invoicing/images/electronic-receipt-nama-tax-config-en.png)
 
-**One device.** In the e-receipt group of the Egypt page, fill **POS Serial Number**, **POS Client ID**, **POS Client Secret** and **POS OS Version** (for example `Windows`), save, then press **Activate e-Receipt POS**. The device turns active on the portal.
+**One device.** In the e-receipt group of the Egypt page, fill **POS Serial Number** (`posSerialNumber`), **POS Client ID** (`posClientId`), **POS Client Secret** (`posClientSecret`) and **POS OS Version** (`posOSVersion`, for example `Windows`), save, then press **Activate e-Receipt POS**. The device turns active on the portal.
 
-**Several devices.** Register each one on the portal as above, then add a row per device to the **POS Terminals** grid at the bottom of the Egypt page: the **Document Book** that device's receipts and returns are issued from, its serial number, client ID, client secret and OS version. Save, tick the rows, and press **Activate Selected Lines**. Rows already marked **Activated** are skipped.
+Two more fields in the same group:
+
+- **POS Model Framework** (`posModelFramework`) is sent to the portal when a device is activated, as the device's model framework. It is read from this configuration for every device, including the **POS Terminals** rows and Nama POS registers.
+- **Syndicate License Number** (`syndicateLicenseNumber`) is sent with every receipt as the seller's syndicate licence number. Fill it if your activity is registered with a professional syndicate; otherwise leave it empty.
+
+**Several devices.** Register each one on the portal as above, then add a row per device to the **POS Terminals** grid (`posTerminals`) at the bottom of the Egypt page: the **Document Book** that device's receipts and returns are issued from, its serial number, client ID, client secret, OS version and **Syndicate License Number** (`posTerminals.syndicateLicenseNumber`). Once the grid has rows, the syndicate licence number is taken from the row for the receipt's book, not from the field above. Save, tick the rows, and press **Activate Selected Lines**. Rows already marked **Activated** are skipped.
 
 ![Receipt Serials in Nama ERP](../../ar/modules/invoicing/images/electronic-receipt-nama-serials-en.png)
 
@@ -317,19 +349,19 @@ Two rules are specific to receipts:
 
 ## Signing e-invoices
 
-When **Send Documents With Signature** is ticked, every e-invoice is signed with your company's e-seal before it is sent. With it unticked, documents go unsigned, which the authority accepts only from taxpayers it has allowed to do so.
+When **Send Documents With Signature** (`sendSignedDocuments`) is ticked, every e-invoice is signed with your company's e-seal before it is sent. With it unticked, documents go unsigned, which the authority accepts only from taxpayers it has allowed to do so.
 
 The e-seal is a USB token, and Nama talks to it through the **Nama eInvoice Signer**, a small Windows program (`eSignerSetup.msi`) that runs on port `7994`.
 
 **Signing from the browser (the default).** On the **Tax Authority Submission Document**, **Sign Documents** or **Sign Selected Documents** hands the documents to the signer on the computer of the user pressing the button. The token has to be plugged into that computer, with the signer running and the token's own driver installed (ITIDA Web Sign for Egypt Trust e-seals, or MCDR's). In Chrome, the `chrome://flags/#block-insecure-private-network-requests` flag must be disabled, or the browser blocks the call.
 
-**Signing on the server.** Tick **Sign Documents On Server Side** to have the ERP server sign instead. The token and the signer then live on the server: Nama starts the signer itself if it isn't running, from **E Signer Installation Folder Path** and **E Signer Execution File Name**. **E Invoice Signer URL** points at a signer on another address. The scheduled flows that send automatically always sign on the server.
+**Signing on the server.** Tick **Sign Documents On Server Side** (`signDocumentOnServerSide`) to have the ERP server sign instead. The token and the signer then live on the server: Nama starts the signer itself if it isn't running, from **E Signer Installation Folder Path** (`esignerInstalltionFolder`) and **E Signer Execution File Name** (`esignerExecutionFile`). **E Invoice Signer URL** (`einvoiceSignerUrl`) points at a signer on another address. The scheduled flows that send automatically always sign on the server.
 
-Either way, Nama passes the signer the **E Invoice Signer Type** (E Seal or MCDR) and the token's **E Invoice Signer Pin** from the configuration.
+Either way, Nama passes the signer the **E Invoice Signer Type** (`einvoiceSignerType`: E Seal or MCDR) and the token's **E Invoice Signer Pin** (`einvoiceSignerPin`) from the configuration.
 
 ## When the portal does not answer
 
-Nama sends the lines in batches. **Maximum Documents Per Request** on the configuration sets the batch size; left empty, everything you send goes in one batch. Each batch becomes its own submission on the portal, so 25 lines with a maximum of 10 make three submissions.
+Nama sends the lines in batches. **Maximum Documents Per Request** (`maxDocumentsPerRequest`) on the configuration sets the batch size; left empty, everything you send goes in one batch. Each batch becomes its own submission on the portal, so 25 lines with a maximum of 10 make three submissions.
 
 Sometimes the portal drops the connection, or answers *504 Gateway Timeout*, before it says whether it took a batch. Nama then stops, and the batches the portal already accepted are still recorded on their lines; only the batch that got no answer stays *Not Sent*. The message tells you which of two things happened: either the portal never answered, or it timed out and then turned away Nama's automatic retry as a repeat. Both are quoted in full under [Messages you may see](#Messages-you-may-see).
 
@@ -337,7 +369,7 @@ Send the unsent documents again. The portal remembers every batch it receives fo
 
 ### Letting Nama change the batch for you
 
-Tick **When Batch Is Refused As Repeated, Split It And Resend** on the configuration and Nama changes the batch itself. When the portal refuses a batch as a repeat, Nama takes the second half of the batch's e-invoices out and sends the first half straight away. This also covers the case where the portal timed out and then refused Nama's automatic retry. If the smaller batch is refused too, Nama halves it again, and so on. It stops in one of two ways:
+Tick **When Batch Is Refused As Repeated, Split It And Resend** (`splitBatchWhenRefusedAsRepeated`) on the configuration and Nama changes the batch itself. When the portal refuses a batch as a repeat, Nama takes the second half of the batch's e-invoices out and sends the first half straight away. This also covers the case where the portal timed out and then refused Nama's automatic retry. If the smaller batch is refused too, Nama halves it again, and so on. It stops in one of two ways:
 
 - **A smaller batch goes through.** The e-invoices it took out are then put at the front of the next batch, in their original order, so nothing is skipped. Say the maximum is 10 and you send 25 lines: the first batch of 10 is refused, Nama sends lines 1–5, and the next batch is lines 6–15.
 - **A batch of one e-invoice is refused.** Nama gives up and shows the refusal; wait the seconds it gives and send again.
@@ -354,23 +386,40 @@ A large batch takes the portal longer to answer, which is when the connection te
 2. Write the reason in its **Description** — the authority requires one.
 3. Collect and send it through a **Tax Authority Submission Document** like any other document.
 
-**Max Days To Cancel Sent Invoices** (3 days on a new record) is the window: a cancel document dated after it isn't sent. Only documents the authority has accepted can be cancelled.
+**Max Days To Cancel Sent Invoices** (`maxDaysToCancelInvoice`, 3 days on a new record) is the window: a cancel document dated after it isn't sent. Only documents the authority has accepted can be cancelled.
 
 ## Status notifications from the portal
 
-Besides **Check Tax Authority Status For Sent Document**, the portal can push status changes — a cancellation, a rejection by the buyer — back to Nama as they happen. **Notification Receiver Mode** sets this up:
+Besides **Check Tax Authority Status For Sent Document**, the portal can push status changes — a cancellation, a rejection by the buyer — back to Nama as they happen. **Notification Receiver Mode** (`receiverMode`) sets this up:
 
 | Mode | When to use it |
 |---|---|
 | **None** (default) | No push notifications; status is checked on request or by the scheduled flows. |
-| **Direct** | The ERP server can be reached from the internet. The portal calls it directly, identified by the configuration's **API Key**. |
-| **Intermediary Server** | The ERP is inside your network. A public Nama server receives the notifications, and your ERP fetches them on the **Notification Read Task Schedule**, using the **Intermediary Server URL**, client ID and secret. |
+| **Direct** | The ERP server can be reached from the internet. The portal calls it directly, identified by the configuration's **API Key** (`apiKey`). |
+| **Intermediary Server** | The ERP is inside your network. A public Nama server receives the notifications, and your ERP fetches them on the **Notification Read Task Schedule** (`notificationReadTask`), using the **Intermediary Server URL** (`intermediaryServerUrl`), client ID and secret (`intermediaryServerClientId`, `intermediaryServerClientSecret`). |
 
 The notifications received are listed under **E Invoice Events** at the bottom of the Egypt page.
 
+### The receiver record on the intermediary server
+
+In **Intermediary Server** mode, the public server keeps one **E Invoice Notification Receiver** record per
+customer installation, under **Basic → Electronic Tax Authority Configuration → E Invoice Notification
+Receiver** on that server. Give it a code and a name and save it: the first save fills **Generated Client ID**
+(`generatedClientId`), **Generated Client Secret** (`generatedClientSecret`) and **API Key** (`apiKey`) with
+random values that no other receiver uses. The API Key is the one the portal sends with each notification,
+so that is how the server knows which customer a notification belongs to; the client ID and secret go into
+the customer's own configuration as `intermediaryServerClientId` and `intermediaryServerClientSecret`.
+
+**Receiver Server URL** (`receiverServerUrl`) is optional. When the customer's ERP can be reached from the
+public server, put its address here and the server calls it as soon as a notification arrives, so the ERP
+reads it straight away instead of waiting for the next run of its task schedule. Duplicating a receiver
+clears all four values, so the copy gets its own keys.
+
 ## Documents your suppliers send you
 
-Where the received e-invoices module is installed, the Egypt page gains a **Recent Tax Electronic Invoice Configuration** group. The **Import Recent Tax Electronic Invoice From Tax Authority** action on the **Tax Electronic Invoice** list reads the documents that appeared on your portal account since the last read, and creates one record for each in the **Recent Document Book** and **Recent Document Term**.
+Where the received e-invoices module is installed, the Egypt page gains a **Recent Tax Electronic Invoice Configuration** group. The **Import Recent Tax Electronic Invoice From Tax Authority** action on the **Tax Electronic Invoice** list reads the documents that appeared on your portal account since the last read, and creates one record for each in the **Recent Document Book** (`taxEInvoiceBook`) and **Recent Document Term** (`taxEInvoiceTerm`).
+
+**Last Read Submission Date For Received Documents** (`lastReadSubmissionDateForReceivedDocuments`) is where "since the last read" comes from: each import asks the portal only for documents received after it, then moves it forward to the latest document it read. It fills itself; clear it or set it back to read older documents again.
 
 ## Messages you may see
 

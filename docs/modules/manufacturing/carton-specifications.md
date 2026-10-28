@@ -122,7 +122,7 @@ Select that pattern, and sheet dimensions populate automatically based on your p
 
 ### Step 4: Carton Structure and Materials
 
-Now define what the carton is made of:
+Now define what the carton is made of. The type, fluting, join, slotting, loading, pattern and printing lists come from small master files of their own, described on [Carton Lookup Files](/modules/manufacturing/carton-lookup-files):
 
 **Type** (نوع الكرتونة): Select a carton type like "Standard Corrugated", "Double Wall", etc. Types can have default starch levels.
 

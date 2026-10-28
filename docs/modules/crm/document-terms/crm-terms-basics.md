@@ -66,7 +66,7 @@ maintenance suites and have their own page.
 | Maintenance Contract, Maintenance Service Contract | Accounts and work-plan generation |
 | Maintenance Invoice, Maintenance Service Invoice | Accounts and stock-issue generation |
 | Maintenance Invoice Return, Maintenance Service Invoice Return | Accounts and stock-receipt generation |
-| Maintenance Estimation (مقايسة صيانة) | Tax settings |
+| Maintenance Estimation (مقايسة صيانة) | Tax settings (`termConfig.taxPlan`, `termConfig.taxable`, `termConfig.modifiableTax`, `termConfig.allowEditingHdrTaxInDetails`) and the two do-not-copy switches (`termConfig.doNotCopyHeaderDataOfFromDoc`, `termConfig.doNotCopyDetailsOfFromDoc`). Its screen also shows a full invoice-effect page, the cash, discount and tax account pages and a generation group, but an estimation creates no journal entry, so nothing configured on those pages is booked. |
 | Maintenance Work Plan, Maintenance Service Work Plan | Order generation |
 | Maintenance Order Execution (تنفيذ أمر صيانة) | Tax settings only |
 | Maintenance Visit (زيارة صيانة) | One option |
@@ -115,17 +115,23 @@ The generation routes are set out document by document in
 In our worked example, book `CSC` carries the term `T-CSC-STD`
 (توجيه عقد الخدمة العادي / Standard Service Contract Term). Its screen has three pages.
 
-The **Effect** (التأثير) page opens with **Contract Type** (نوع العقد) — pick the term on a
+The **Effect** (التأثير) page opens with **Contract Type** (نوع العقد, `termConfig.contractType`) — pick the term on a
 contract and this value is pushed onto the document, so the term is how a site decides that
 contracts in one book are ordinary and contracts in another are, say, renewals. Next to it sits
-**Use Payment Docs As Debt Ages** (استعال سندات الدفع في أعمار الديون), which decides whether the
-contract's external payment lines are treated as debt-age rows. Then the **Debit** and **Credit**
-groups — the on/off switch described above — the **Approximation Discount** side, and a Tax Plan
-group with **Taxable**, **Modifiable Tax**, **Allow Editing Header Tax In Details**, **Allow
-Payment More Than Invoice Amount** and **Link With Invoice Lines In accounting Document**.
+**Use Payment Docs As Debt Ages** (استعال سندات الدفع في أعمار الديون,
+`termConfig.usePaymentDocsAsDebtAges`), which decides whether the contract's external payment lines
+are treated as debt-age rows. Then the **Debit** and **Credit** groups (`termConfig.config.debit`,
+`termConfig.config.credit`) — the on/off switch described above — the **Approximation Discount** side
+(`termConfig.approximationDiscount`), and a Tax Plan group with **Tax Plan** (`termConfig.taxPlan`),
+**Taxable** (`termConfig.taxable`), **Modifiable Tax** (`termConfig.modifiableTax`), **Allow Editing
+Header Tax In Details** (`termConfig.allowEditingHdrTaxInDetails`), **Allow Payment More Than Invoice
+Amount** (`termConfig.allowPaymentMoreThanInvoiceAmount`) and **Link With Invoice Lines In accounting
+Document** (`termConfig.linkWithInvoiceLinesInAccountingDocument`).
 
-The remaining two pages hold the tax sides, the cash side, the discount sides, and a grid of
-conditional effects driven by which receipt voucher paid the contract.
+The remaining two pages hold the tax sides, the cash side, the discount sides, and the **External
+Effects** grid (`termConfig.externalEffectLines`) of conditional effects driven by which receipt
+voucher paid the contract — its columns are described on
+[Maintenance Document Terms](/modules/crm/document-terms/crm-maintenance-terms#The-rest-of-the-machine-suite-settings).
 
 One honest note about this screen: the service-fee sides and the second debit/credit pair that
 other invoice terms offer are structurally unavailable on a CRM Service Contract. They are not
@@ -138,12 +144,12 @@ hidden by a licence or a setting — the document simply cannot use them, so don
 The simplest term in the module. In our example, book `WPLAN` carries `T-WPLAN-STD`
 (توجيه خطة العمل / Work Plan Term) and its Settings page holds exactly four fields:
 
-| Arabic label | English label |
-|---|---|
-| دفتر سند إتصال | Call Document Book |
-| توجيه سند إتصال | Call Document Term |
-| دفتر سند زيارة | visit Document Book |
-| توجيه سند زيارة | visit Document Term |
+| Arabic label | English label | Field id |
+|---|---|---|
+| دفتر سند إتصال | Call Document Book | `termConfig.callDocBook` |
+| توجيه سند إتصال | Call Document Term | `termConfig.callDocTerm` |
+| دفتر سند زيارة | visit Document Book | `termConfig.visitDocBook` |
+| توجيه سند زيارة | visit Document Term | `termConfig.visitDocTerm` |
 
 Tick some lines on a work plan and press *Generate Documents From Selected Lines*, and each line
 becomes a committed Call or Visit born into the book and term named here — in our example books

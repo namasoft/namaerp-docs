@@ -23,13 +23,13 @@ The whole rulebook lives on one page: the header block first, then the Queues, Q
 
 ![Queue Service Configuration screen](../../../ar/modules/servicecenter/images/queues/queue-service-config-en.png)
 
-| Field | Arabic | What it does |
-|---|---|---|
-| Code, Name1, Name2, Group | الكود، الاسم العربي، الاسم الإنجليزي، المجموعة | Standard master-file identification. |
-| **Ticket Design** | تصميم التذكرة المطبوعه | **Required.** The [report](/modules/servicecenter/servicecenter-reports-and-forms.md) that prints the customer's slip. |
-| Screen Title | عنوان شاشة العرض | The heading shown at the top of the waiting-room display. Al-Sahra uses *استقبال الصحراء — الرياض*. |
-| Ticket Information Font Size | حجم خط بيانات التذكرة | How large the ticket codes appear on the waiting-room display (30 when empty). The printed slip takes its look from the Ticket Design instead. |
-| Printer URL | رابط الطابعة | The address of the machine that runs the Nama Printing Server with the counter printer attached, such as `http://192.168.1.20:9494` — not a server address. When the address carries no port, the app adds `:9494`. Every ticket-creator device of the branches using this configuration prints there. |
+| Field | Arabic | Field id | What it does |
+|---|---|---|---|
+| Code, Name1, Name2, Group | الكود، الاسم العربي، الاسم الإنجليزي، المجموعة | `code` / `name1` / `name2` / `group` | Standard master-file identification. |
+| **Ticket Design** | تصميم التذكرة المطبوعه | `ticketDesign` | **Required.** The [report](/modules/servicecenter/servicecenter-reports-and-forms.md) that prints the customer's slip. |
+| Screen Title | عنوان شاشة العرض | `screenModeTitle` | The heading shown at the top of the waiting-room display. Al-Sahra uses *استقبال الصحراء — الرياض*. |
+| Ticket Information Font Size | حجم خط بيانات التذكرة | `ticketInfoFontSize` | How large the ticket codes appear on the waiting-room display (30 when empty). The printed slip takes its look from the Ticket Design instead. |
+| Printer URL | رابط الطابعة | `printerUrl` | The address of the machine that runs the Nama Printing Server with the counter printer attached, such as `http://192.168.1.20:9494` — not a server address. When the address carries no port, the app adds `:9494`. Every ticket-creator device of the branches using this configuration prints there. |
 
 A configuration also carries the usual **Dimensions** group (Legal Entity, Analysis Set, Branch, Sector, Department).
 
@@ -41,13 +41,13 @@ You cannot save a configuration without a ticket design, so build the report fir
 
 The **Queues / الطوابير** grid is one row per queue. A queue is a service line with its own numbering, and its letter is the first character of every ticket code it issues — the code the advisor later picks on the customer's [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md).
 
-| Column | Arabic | Notes |
-|---|---|---|
-| **Queue Letter (Queue Code)** | الطابور (كود الطابور) | **Required.** The prefix on the ticket, and the code you refer to everywhere else — on provider rows, on automatic-ticketing rows. Usually a single letter. |
-| Description | الوصف | What this queue is for, in words. |
-| Suffix Length | طول اللاحقة | How many digits the number is padded to. 3 gives `A001`. |
-| **Last Number** | اخر رقم | **Required.** The highest number this queue may issue in a day. |
-| Max Time To Switch Queues | اقصي وقت لخدمة طوابير أخرى | Minutes. A ticket that has waited this long is promoted ahead of the whole branch's waiting list. Leave empty or zero to switch the promotion off. |
+| Column | Arabic | Field id | Notes |
+|---|---|---|---|
+| **Queue Letter (Queue Code)** | الطابور (كود الطابور) | `queues.queueLetter` | **Required.** The prefix on the ticket, and the code you refer to everywhere else — on provider rows, on automatic-ticketing rows. Usually a single letter. |
+| Description | الوصف | `queues.description` | What this queue is for, in words. |
+| Suffix Length | طول اللاحقة | `queues.suffixLength` | How many digits the number is padded to. 3 gives `A001`. |
+| **Last Number** | اخر رقم | `queues.lastNumber` | **Required.** The highest number this queue may issue in a day. |
+| Max Time To Switch Queues | اقصي وقت لخدمة طوابير أخرى | `queues.maxTimeToSwitch` | Minutes. A ticket that has waited this long is promoted ahead of the whole branch's waiting list. Leave empty or zero to switch the promotion off. |
 
 Al-Sahra's two queues:
 
@@ -75,13 +75,13 @@ Leave the column empty on queues where you would rather strict letter priority h
 
 The **Queue Providers / مقدمين الخدمة** grid is the module's access control. A user who has no row here cannot serve, cannot pull a ticket and cannot touch the branch's ticket lists.
 
-| Column | Arabic | Notes |
-|---|---|---|
-| **Service Provider** | مقدم الخدمة | **Required.** The Nama user — the advisor or engineer. |
-| Queue Code | كودالطابور | Which queue this row grants. **Leave it blank to grant every queue**: a provider with a blank queue code is offered the first waiting ticket of any letter. |
-| Can Modify | يمكنه التعديل | May edit a waiting ticket from the branch screen. |
-| Can Delete | الحذف *(the label is missing its "Can", in both languages)* | May delete a ticket from the branch screen. |
-| Can Manually Assign | يمكنه سحب التذكرة يدويا | May pull a ticket — either to themselves or to another provider — from the branch screen. |
+| Column | Arabic | Field id | Notes |
+|---|---|---|---|
+| **Service Provider** | مقدم الخدمة | `queueProviders.serviceProvider` | **Required.** The Nama user — the advisor or engineer. |
+| Queue Code | كودالطابور | `queueProviders.queueCode` | Which queue this row grants. **Leave it blank to grant every queue**: a provider with a blank queue code is offered the first waiting ticket of any letter. |
+| Can Modify | يمكنه التعديل | `queueProviders.canModify` | May edit a waiting ticket from the branch screen. |
+| Can Delete | الحذف *(the label is missing its "Can", in both languages)* | `queueProviders.canDelete` | May delete a ticket from the branch screen. |
+| Can Manually Assign | يمكنه سحب التذكرة يدويا | `queueProviders.canManuallyAssign` | May pull a ticket — either to themselves or to another provider — from the branch screen. |
 
 Al-Sahra's single row: `EMP-214` Majed Al-Qahtani, queue `A`, *Can Modify* and *Can Manually Assign* ticked, *Can Delete* left clear.
 
@@ -103,16 +103,16 @@ The customer supplies three things: the branch, a **mobile number** and a **plat
 
 Execution then starts at the **first row of the grid** — the topmost row is the entry point, there is no "start" flag — and walks from step to step until it hits a step that ends the conversation.
 
-| Column | Arabic | Notes |
-|---|---|---|
-| **Step Code** | كود الخٌطوة | The name of the step. Must be unique. |
-| **Step Type** | نوع الخُطوة | What this step does — see the table below. |
-| Query | الاستعلام | Only for a *Query* step: a database query that returns a number. |
-| Ticket Queue Code | *(this column's Arabic label is untranslated and shows its raw key)* | Only for a *Create And Print Ticket* step: which queue the ticket is issued in. **Required** on that step type. |
-| Arabic Message Template | قالب الرسالة (عربي) | The message shown to the customer, in Arabic. |
-| English Message Template | قالب الرسالة (إنجليزي) | The same message in English. |
-| Next Step (Then) | الخطوة التالية (عندما) | Where to go when the check is **true**. |
-| Next Step (Else) | الخطوة التالية (اٌخري) | Where to go when the check is **false**. |
+| Column | Arabic | Field id | Notes |
+|---|---|---|---|
+| **Step Code** | كود الخٌطوة | `autoTicketingLines.stepCode` | The name of the step. Must be unique. |
+| **Step Type** | نوع الخُطوة | `autoTicketingLines.stepType` | What this step does — see the table below. |
+| Query | الاستعلام | `autoTicketingLines.query` | Only for a *Query* step: a database query that returns a number. |
+| Ticket Queue Code | *(this column's Arabic label is untranslated and shows its raw key)* | `autoTicketingLines.ticketQueueCode` | Only for a *Create And Print Ticket* step: which queue the ticket is issued in. **Required** on that step type. |
+| Arabic Message Template | قالب الرسالة (عربي) | `autoTicketingLines.arabicMessageTemplate` | The message shown to the customer, in Arabic. |
+| English Message Template | قالب الرسالة (إنجليزي) | `autoTicketingLines.englishMessageTemplate` | The same message in English. |
+| Next Step (Then) | الخطوة التالية (عندما) | `autoTicketingLines.thenStepCode` | Where to go when the check is **true**. |
+| Next Step (Else) | الخطوة التالية (اٌخري) | `autoTicketingLines.elseStepCode` | Where to go when the check is **false**. |
 
 ### The six step types
 

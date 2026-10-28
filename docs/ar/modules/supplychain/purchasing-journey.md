@@ -1,6 +1,6 @@
 ---
 description: "دورة الشراء خطوة بخطوة: طلب الصنف وتجميع الطلبات، وطلب عروض الأسعار ومقارنتها، وأمر الشراء والفاتورة المبدئية، واستلام البضائع، وفاتورة المشتريات والمطابقة الثلاثية، والدفع، ومرتجعات المشتريات."
-entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate]
+entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, PurchaseQuotationRequest, PurchasePriceComparing, ConsolidatedPurchaseReq, PurchaseReturn, PurchaseReturnReq, ProformaPurchaseInvoice, PurchaseDocumentUpdate, ManufacturerCertificate]
 ---
 
 # رحلة الشراء (The Purchasing Journey)
@@ -114,6 +114,7 @@ entities: [PurchaseOrder, PurchaseInvoice, ItemRequest, PurchaseQuotation, Purch
 - **المشتريات الاستيرادية**: للمشتريات الدولية بجماركها وشحنها وضمان دفعها، يُدار المسار عبر [الاعتمادات المستندية](./letters-of-credit.md) بمستنداتها (الفاتورة المبدئية للاعتماد، وفواتير الشحنات ضمنه).
 - **تعديلات ما بعد الشراء**: عندما تحتاج إلى تعديل عملية شراء بعد وقوعها (خصم متأخر من المورد، تصحيح كمية، رسوم إضافية، تعديل ضريبة)، يتولى ذلك **تحديث مستند المشتريات** (PurchaseDocumentUpdate) - فكّر فيه كـ"تعديلات" على الشراء الأصلي.
 - **التنبؤ بالمشتريات**: لتحويل الشراء من تفاعلي إلى استباقي، راجع [التنبؤ بالمشتريات](./purchase-forecast.md).
+- **شهادات المُصنع**: شاشة **شهادات مُصنع** (*المشتريات ← الملفات ← شهادات مُصنع*) مكان لحفظ الشهادات التي يقدّمها المورد — مطابقة أو منشأ أو تحليل. تختار المورد ثم تسرد الأصناف مع حتى خمسة ملفات مرفقة وملاحظة لكل صنف. وهي للمرجعية فقط: لا يتحقق منها أي مستند شراء.
 
 ## الإجراءات في هذه الشاشة
 

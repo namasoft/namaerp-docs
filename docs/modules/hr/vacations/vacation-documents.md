@@ -1,5 +1,5 @@
 ---
-entities: [VacationDocument, VacationRequest, VacationPlanDocument, MultiEmpVacation, AggregatedVacationDocument]
+entities: [VacationDocument, VacationRequest, VacationPlanDocument, MultiEmpVacation, AggregatedVacationDocument, AggregatedVacationRequest]
 ---
 # Vacation Documents
 
@@ -90,6 +90,8 @@ Nama offers two different batch screens for vacations, and they aggregate along 
 **Aggregated Vacation Document** (سند أجازه مجمع) is the opposite idea: **one employee's** long leave, split across several **segments** — for example, part of a long absence drawn from the annual balance and the remainder recorded as unpaid. Each grid line is a segment with its own vacation type, dates, and period (`Actual Vacation Period` / مدة الأجازة الفعلية can differ from the requested period), and — just like the multi-employee screen — **each line still spawns its own single Vacation Document** underneath.
 
 **Where to find it:** Payroll > Vacations > Aggregated Vacation Document.
+
+An **Aggregated Vacation Request** (طلب أجازة مجمع) is the approval step in front of it, at Payroll > Vacations > Aggregated Vacation Request. It carries the same header (employee, alternative employee, start and return dates, period, contact information during the vacation) and the same segment grid, shows each segment's remaining balance after the leave, and consumes nothing. Once it is accepted, pick it in the Aggregated Vacation Document's **From Document** field: the document copies the employee, dates, period, alternative employee, contact information and every segment line, refreshing each segment's balance as of its own dates.
 
 ::: warning Edit the batch, not the generated singles
 In both screens, the individual Vacation Documents are system-generated and system-managed. Adding or removing a batch line creates or deletes its single document automatically. If you need to change something about one employee's leave (Multi Employee Vacation) or one segment (Aggregated Vacation Document), edit that line in the batch — editing the generated single document directly puts it out of step with its parent batch.

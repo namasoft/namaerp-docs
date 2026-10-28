@@ -1,5 +1,5 @@
 ---
-description: "Fields and Entities Settings grids for outside access: Integrator Config and Import Integrators web endpoints that create records, Invoice Retriever public PDF links, and error message logging."
+description: "Fields and Entities Settings grids for outside access: Integrator Config and Import Integrators web endpoints that create records, and Invoice Retriever public PDF links."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -189,29 +189,6 @@ So if you use one, put it **last**. An unprefixed line sitting above your `invoi
 
 The forms these lines run are ordinary printed forms, designed and maintained in the usual place — see the [Jasper Reports Complete Guide](/platform/reports/reports-guide) — and the server-wide printing and output settings that affect them live under [Reports and Printing](/platform/global-config/global-config-reports).
 
-## Error Message Logging Configurations
-
-When a record arrives from another site — a replication message, an incoming bus message — and
-processing it fails, the failure is visible for as long as the message sits in its queue and then it
-is gone. This grid is what keeps it: for the entity types you list, a failed message is copied into a
-permanent **Error Message** record carrying the message text, the description, the record it was
-about and the user it ran as.
-
-Each line says which failures to keep, with two columns and an entity list:
-
-| Column | What it does |
-|---|---|
-| **For Type** | One entity type. Leave it empty and the line covers every entity type on the queue named beside it. |
-| **Entity Type List** | A named list of types instead of a single one — the whole list is expanded, one entry each. |
-| **Target Queue ID** | The queue whose failures are kept. Leave it empty and the line covers **every** queue for the entity type beside it. |
-
-So a line with a type and no queue keeps that type's failures everywhere; a line with a queue and no
-type keeps everything that fails on that queue; a line with both is the narrow case. An **Inactive**
-line is ignored.
-
-The grid is read from a cache that is dropped whenever the settings record is saved, so a new line
-takes effect on the next failure — there is no restart in this one.
-
 ## Security note
 
 Every other grid on this screen adjusts what a signed-in user sees. These three create routes into and out of the system that bypass the login screen entirely, which changes what a mistake costs.
@@ -273,8 +250,6 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `invoiceRetrieverLines.saveFilesInFolder` | Save Files In Folder | Save Files In Folder | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
 | `invoiceRetrieverLines.urlPrefix` | URL Prefix | URL Prefix | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
 | `invoiceRetrieverLines.doNotCache` | Do Not Cache | Do Not Cache | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |
-| `errorMessageLoggingConfigs` | Error Message Logging Configurations | Error Message Logging Configurations | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
-| `errorMessageLoggingConfigs.targetQueueId` | Target Queue ID | نوع الرسالة | [Error Message Logging Configurations](#Error-Message-Logging-Configurations) |
 
 ## Related pages
 

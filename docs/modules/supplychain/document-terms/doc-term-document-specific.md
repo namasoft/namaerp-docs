@@ -22,6 +22,10 @@ Open the document's **Document Term** (توجيه). The options below show up on
 
 **Allow Revision Purchase From Different Supplier** `termConfig.allowRevsionPurchaseFromDifSupplier` — Allows receiving an item revision from a supplier other than the revision's default supplier. On the English screen this box is captioned *Prevent Revsion Purchase From Different Supplier*, but ticking it **allows** the purchase; the Arabic caption «السماح بشراء الإصدارات من مورد مختلف» says what it does.
 
+**Receipt Without Cost** `termConfig.config.rwc` — Lets a stock receipt stand on its own, with no invoice behind it: the goods enter stock as a receipt without cost and are costed later. With the box clear, a receipt that is not built on an invoice is refused on save with *Document is not linked with invoice* — «المستند غير مرتبط بفاتورة». The box is also checked when a purchase invoice built on another document drops a receipt from its stock-documents grid: if the receipt's term does not have it, the invoice is refused with *Stock Receipt {0} cannot be removed from stock docs, please make sure the option Receipt Without Cost is checked in its document term {1}* — «لا يمكن حذف سند التوريد {0} من سطور السندات المخزنية. يرجي التأكد من التعليم علي الاختيار توريد غير مكلف في توجيه التوريد {1}».
+
+**Do Not Auto Collect In Invoices** `termConfig.doNotAutoCollectInInvoices` — Flags every receipt saved with this term so the **Collect** button on a purchase invoice skips it. The receipt can still be linked to an invoice by hand. The same option is on the Stock Issue term, where it keeps issues out of a sales invoice's **Collect**.
+
 The **Consider … For Cost** family makes the cost layer/valuation distinguish receipts by the chosen dimension, so units that differ only in that dimension are costed separately.
 
 | Option | Field ID |
@@ -40,6 +44,34 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 *Applies to: Stock Issue (صرف مخزني).*
 
 **Returnable** `termConfig.config.returnable` — Marks the issue's accounting effect as a return; checked when validating the supplier/customer side of the document.
+
+**Do Not Auto Collect In Invoices** `termConfig.doNotAutoCollectInInvoices` — Flags every issue saved with this term so the **Collect** button on a sales invoice skips it; the issue can still be linked by hand.
+
+## Opening Stock
+
+*Applies to: Opening Stock Document (سند افتتاح مخزني).*
+
+**Allow Normal Periods** `termConfig.allowNormalPeriods` — An opening stock document normally has to sit in an opening fiscal period; in a *Normal* period it is refused with *Period must not be Normal* — «لا يمكن إنشاء المستند في فترة عادية». Tick this to accept normal periods too.
+
+## Stock Transfer Request
+
+*Applies to: Stock Transfer Request (طلب تحويل مخزني).*
+
+**use With Collect** `termConfig.useWithCollect` — Makes the request a collecting one: each line you add or change must name the **Stock Transfer Req** it comes from, and that request must have the same from and to warehouses as this one.
+
+## Aggregated Stock Transfer Request
+
+*Applies to: Aggregated Stock Transfer Request (طلب تحويل مخزني مجمع).*
+
+Saving an aggregated request generates ordinary stock transfer requests from its lines. The term holds the book and term of those requests and decides how lines are shared out between them. The full story is on [Moving Stock Between Warehouses](../moving-stock.md).
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Stock transfer Request Book | `termConfig.stockTransferReqBook` | Book of the generated requests. Required. |
+| Stock transfer Request Term | `termConfig.stockTransferReqTerm` | Term of the generated requests. Required. |
+| Group by From Warehouse | `termConfig.groupByFromWarehouse` | One generated request per source warehouse. |
+| Group by To Warehouse | `termConfig.groupByToWarehouse` | One generated request per destination warehouse; with both ticked, one per pair. |
+| Max Lines for Generated Stock Transfer Req | `termConfig.maxLinesForGenStockTransReq` | Splits a bigger group into requests of at most this many lines. Empty or zero means no cap. |
 
 ## Stock Transfer
 
@@ -107,6 +139,13 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 
 **Bom Alt Item Field** `termConfig.bomAltItemField` — Names one of the line's reference columns (Ref 1–4) as the place for an alternative item. When that column holds an item, the line's stock and cost effect, on issue and on return, uses that item instead of the line's own item, with the line's size, colour and revision. The option is read from the document's own term, then from the terms up its From Document chain (invoices).
 
+The **Electronic Invoice** group appears on Sales Invoice and Sales Return terms (and their service-centre, carton and POS variants). Both fields name a field on the invoice; how they are filled and sent is explained in the [Egyptian e-invoice guide](/modules/invoicing/egypt-einvoice-guide#The-two-term-fields).
+
+| Option | Field ID | What it does |
+|---|---|---|
+| E-Invoice Bank Account Field | `termConfig.eInvoiceBankAccountField` | The invoice's reference field where users pick the bank account reported to the tax authority. |
+| E-Invoice Payment Terms Field | `termConfig.eInvoicePaymentTermsField` | The invoice's text field where users type the payment terms reported to the tax authority. |
+
 ## Cancellation Documents
 
 *Applies to: Reservation Cancellation and Delivery Cancellation documents (إلغاء حجز / إلغاء تسليم).*
@@ -141,6 +180,8 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 
 **Do Not Affect Issued Qty By Actual Receipt Qty** `termConfig.doNotAffectDetailsQtyByActualReceiptQty` — Normally the issued-material (details) quantities are recalculated from the quantity of finished product actually received. With this option on, they stay driven by the assembly quantity instead, so editing the actual receipt quantity no longer changes the issued quantities (assembly).
 
+**Finished Product Issue Book / Term** `termConfig.finishedProductIssueBook` / `termConfig.finishedProductIssueTerm` — With both filled, saving the assembly document also generates a second stock issue that takes the received lines straight back out of the receipt warehouse. Leave either empty and no such issue is made (assembly). See [Assembly Requests & Assembly Documents](../assembly-and-packaging/assembly-documents-and-requests.md).
+
 **Create Document For Lines Which Have Status** `termConfig.createDocLineWithStatus` — Only generates assembly documents for lines at the chosen status (multi-assembly).
 
 **Use Required Quantity For Final Materials** `termConfig.useRequiredQtyForFinalMaterials` — Uses the required (planned) quantity for final-material consumption (multi-assembly).
@@ -154,6 +195,22 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 **Spread Only Stock Items From Document** `termConfig.spreadOnlyStockItemsFromDoc` — Copies only stock items from the From Document, skipping service lines (multi-assembly).
 
 **Save All Assembly Documents As Drafts** `termConfig.saveAllAssemblyDocumentsAsDrafts` — Ticks **Save As Draft** on every line, so the generated assembly documents are saved as drafts (multi-assembly). See [Multi-Level and Aggregated Assembly](../assembly-and-packaging/multi-level-and-aggregated-assembly.md).
+
+## Aggregated Packaging Document
+
+*Applies to: Aggregated Packaging Document (سند تعبئة متعدد).*
+
+Its term has one **Settings** tab. Besides the shared From Document options (consistency, copy details, satisfied quantities, relate only once, customer/supplier required), it holds the books and terms of the documents the packaging document generates and the defaults for its Farza and Stale lines. [Multi-Level and Aggregated Assembly](../assembly-and-packaging/multi-level-and-aggregated-assembly.md#The-Aggregated-Packaging-Document) tells the whole story.
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Stock Issue Document Book / Term | `termConfig.stockIssueDocBook` / `termConfig.stockIssueDocTerm` | Book and term of the stock issue generated from the Spare Parts grid. |
+| Stock Receipt Document Book / Term | `termConfig.stockReceiptDocBook` / `termConfig.stockReceiptDocTerm` | Book and term of the stock receipt generated from the receipt, previous-day, Farza and Stale lines. |
+| Additional Cost Document Book / Term | `termConfig.additionalCostDocBook` / `termConfig.additionalCostDocTerm` | Book and term of the Receipt Additional Cost generated from the expense lines. |
+| Automatically Calculate Additional Costs | `termConfig.autoCalcAddCosts` | Fills the expense lines on save from the expense items whose main material is used in the document. |
+| Farza Dimensions (`termConfig.farzaDimensions`) | `termConfig.farzaDimensions.revisionId`, `termConfig.farzaDimensions.lotId`, `termConfig.farzaDimensions.box`, `termConfig.farzaDimensions.size`, `termConfig.farzaDimensions.color` | Default revision, lot, box, size and colour of the Farza lines. Each value is used only when the item tracks that dimension. |
+| Stale Dimensions (`termConfig.halekDimensions`) | `termConfig.halekDimensions.revisionId`, `termConfig.halekDimensions.lotId`, `termConfig.halekDimensions.box`, `termConfig.halekDimensions.size`, `termConfig.halekDimensions.color` | The same defaults for the Stale (waste) lines created on save. |
+| Fixed Cost Revisions | `termConfig.fixedCostRevisions` (column `termConfig.fixedCostRevisions.dimensions.revisionId`) | One row per revision; the document's **Fixed Costs** grid gets one row per main material and listed revision. |
 
 ## Glass Job Order
 
@@ -175,6 +232,14 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 
 **Stock Issue Term** `termConfig.stockIssueTerm` — Term for that generated stock issue.
 
+**Has Accounting Effects** `termConfig.hasAccountingEffects` — With it on, saving the job order records the accounting entry set on the term's Effect tab, as an invoice does. With it off no entry is made, and an entry made earlier is cancelled on the next save.
+
+## Job Order Partial Delivery
+
+*Applies to: Job Order Partial Delivery (تسليم جزئي لأمر الشغل).*
+
+**Do Not Copy Lines With From Document** `termConfig.doNotCopyLinesWithFromDoc` — Picking the job order on a partial delivery normally copies its BOM lines with their undelivered quantities. With this on, only the customer is taken and the lines are left for the user to enter.
+
 ## Order Delivery / Execution / Finished
 
 *Applies to: Order Delivery (تسليم أمر) and Order Execution (تنفيذ أمر).*
@@ -194,6 +259,22 @@ The **Consider … For Cost** family makes the cost layer/valuation distinguish 
 **Automatic Sales Invoice** `termConfig.automaticSalesInvoice` — Auto-generates a sales invoice on delivery (using `termConfig.salesInvoiceBook` / `termConfig.salesInvoiceTerm`).
 
 **Cost Mode** `termConfig.costMode` — Selects how the execution cost is calculated (order execution).
+
+**Warehouse** `termConfig.warehouse` — The warehouse put on the stock issue that the order execution generates for its materials; the issue's book and term come from the Generation group (order execution).
+
+## Purchase Price Comparing
+
+*Applies to: Purchase Price Comparing (مقارنة أسعار مشتريات).*
+
+The **Purchase Orders** group drives the **Generate Purchase Orders For Best Prices** action, which creates one purchase order per supplier (and currency) from the lines ticked **Best Price**. Running it again updates those orders. See [The Purchasing Journey](../purchasing-journey.md).
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Purchase Order Book | `termConfig.purchaseOrderBook` | Book of the generated orders. Required: the action is refused with *Field {0} in term can not be empty* — «الحقل {0} الموجود في التوجية لا يمكن أن يكون فارغاً» when it is empty. |
+| Purchase Order Term | `termConfig.purchaseOrderTerm` | Term of the generated orders. Required, with the same message. |
+| Copy Origin Doc From Lines To From Doc In Generated Purchase Order | `termConfig.copyOriginDocToPurchaseOrderFromDoc` | Sets the generated order's **From Document** to the **Copied From Doc** of its first line (usually the supplier's quotation) instead of the comparing document. |
+| Purchase Order Fields Map | `termConfig.purchaseOrderFieldsMap` | Extra fields to copy into each generated order, written as a field map. |
+| Run Fields Map on First Origin Doc from Details | `termConfig.runFieldsMapOnFirstOriginDocFromDetails` | Reads the field map's source values from the first line's **Copied From Doc** instead of the comparing document. |
 
 ## Start Stock Taking
 
@@ -227,3 +308,54 @@ The generated stock-adjustment documents use these books and terms:
 **Generated Assembly Document Book** `termConfig.generatedDocAssembBook` — Book for the assembly document generated from the cutting document.
 
 **Generated Assembly Document Term** `termConfig.generatedDocAssembTerm` — Term for that generated assembly document.
+
+## Processing Document
+
+*Applies to: Processing Document (سند معالجة).*
+
+Saving a processing document generates two stock issues and a stock receipt, and its indirect costs can make a journal entry. The term names the book and term of each generated document and the two sides of that entry. [Processing Documents & Assembly Machines](../assembly-and-packaging/processing-documents-and-machines.md#What-saving-creates) walks through it.
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Materials Issue Book / Term (group *Raw Materials*) | `termConfig.materialsIssueBook` / `termConfig.materialsIssueTerm` | Book and term of the stock issue made from the Raw Materials grid. |
+| Indirect Materials Issue Book (both fields of group *Indirect Materials*) | `termConfig.indirectIssueBook` / `termConfig.indirectIssueTerm` | Book and term of the stock issue made from the Indirect Materials grid. In English both fields carry the same caption; the second is the term. |
+| Received Items Book / Term (group *Outputs Materials*) | `termConfig.receiptBook` / `termConfig.receiptTerm` | Book and term of the stock receipt made from the outputs. |
+| Debit / Credit (Effect tab) | `termConfig.feesDebit` / `termConfig.feesCredit` | Account sides of the indirect-cost entry. The entry is made only when both are set. Each is a full account side; see [Anatomy of an Account Side](./doc-term-accounting-effects.md#Anatomy-of-an-Account-Side). |
+
+## Weight Scale Documents
+
+The weighing chain has its own book and term options on three terms. [Weight Scale](../weight-scale.md) explains the process.
+
+*Stock Issue Request (طلب صرف مخزني) — Generation tab, group Weight Scale:*
+
+**Generated Weight Scale Preparation Document Book / Term** `termConfig.generatedWeightPreparationDocBook` / `termConfig.generatedWeightPreparationDocTerm` — When the scale station sends the weighing of a line of this request and no preparation document exists for it yet, the system creates one in this book and term.
+
+*Weight Scale Preparation Document (سند تحضير - الميزان) — group Collect Lots:*
+
+**Collect Lots From Smallest Sufficient Quantity, Otherwise From Largest** `termConfig.collectLotsByBestFitQty` — When lots are collected for a line, the lot with the smallest available quantity that still covers the whole line is taken first; when no single lot covers it, the largest lot comes first and the rule repeats for the rest. Without it, lots are taken in the usual order.
+
+*Weight Scale Preparation Documents Generator (سند إنشاء سندات تحضير الميزان) — Generation tab, group Weight Scale:*
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Generated Weight Scale Preparation Document Book / Term | `termConfig.generatedWeightPreparationDocBook` / `termConfig.generatedWeightPreparationDocTerm` | Book and term of the preparation documents the generator creates. |
+| Stock Issue Request Book | `termConfig.stockIssueReqBook` | **Documents To Prepare** lists only issue requests in this book, unless the generator document names a book of its own. |
+
+## Receipt Additional Cost and LC Expense
+
+*Applies to: Receipt Additional Cost (تكاليف إستلام إضافية) and the letter-of-credit Expense Document (سند مصروفات).*
+
+**Do Not Copy Rate From Header To Lines** `termConfig.doNotCopyRateFromHeaderToLines` — Lines in the header's currency normally take the header currency rate every time the document is saved. With this on, a line that already has its own rate keeps it, and only lines with no rate take the header's.
+
+## Post-Sales Offer Claim
+
+*Applies to: Post Sales Offer Claim (مطالبة عرض ما بعد البيع).*
+
+The term has a single **Effect** tab with two fields. Each points to an [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record rather than holding a full account-side block.
+
+| Option | Field ID | What it does |
+|---|---|---|
+| Debit | `termConfig.debit` | Debit side of the claim's entry. |
+| Credit | `termConfig.credit` | Credit side of the claim's entry. |
+
+Each line of the claim's **Invoices** grid becomes a ledger line for its **Claim Value**, in the legal entity's main currency. The account can come from the customer, the item, its section or its group. With both fields empty the claim makes no entry; fill both, since one side alone does not balance. The claim itself is described under [Pricing, Offers & Coupons](../pricing-offers-and-coupons.md#Post-Sales-Offers-PostSalesOffer).

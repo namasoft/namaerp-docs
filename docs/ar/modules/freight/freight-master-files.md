@@ -1,5 +1,5 @@
 ---
-entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRMOceanVessel, ShippingPort, FRMSailingSchedule, FRMCommodity, FRMBillOfLadingType, FRMUOM, FRMCountry, FRMLocation]
+entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRMOceanVessel, ShippingPort, FRMSailingSchedule, FRMCommodity, FRMBillOfLadingType, FRMShippingType, FRMUOM, FRMCountry, FRMLocation]
 ---
 
 # الملفات الأساسية لإدارة الشحن
@@ -51,6 +51,7 @@ entities: [FRMServiceItem, FRMContainer, FRMContainerType, FRMContainerSize, FRM
 ## أنواع بوالص الشحن ووحدات القياس
 
 - **نوع بوليصة الشحن (Bill of Lading Type)** — تصنيف البوالص (Master B/L, House B/L… إلخ).
+- **نوع شحن (Shipping Type)** — قائمة بسيطة (كود واسم) بطرق الشحن التي تعمل بها، مثل بحري حاوية كاملة أو بحري مشترك أو جوي؛ تُختار في حقل **نوع الشحن** في أمر التشغيل.
 - **وحدة القياس (FRM UOM)** — وحدات القياس الخاصة بالشحن (وزن، حجم/CBM، عدد…) المستخدمة في كميات السطور.
 
 ::: tip ابدأ صغيرًا

@@ -40,15 +40,15 @@ You also need the numeric **Page ID** of the Facebook page whose forms you want 
 
 The screen has a single tab. Besides the usual code and names, it holds:
 
-| Field (English / Arabic) | What it does |
-|---|---|
-| Page Id (معرف الصفحة) | The Facebook Page ID. This is how an incoming lead finds its configuration, so each page has exactly one record. |
-| App ID (معرف التطبيق) | The ID of your company's Facebook app. |
-| App Secret (المفتاح السري للتطبيق) | The app's secret, stored as a password. It must be the real secret of the app the webhook belongs to: Facebook signs every lead it sends with it, and Nama drops any call whose signature does not match. |
-| Webhook Verify Token (رمز التحقق من الـ Webhook) | The same value you typed as the **Verify token** when you set up the webhook in Meta for Developers. It sits next to **Page Id** on the screen. |
-| Save Leads As | **CRM Lead** or **CRM Potential** — which record each form submission becomes. |
-| Finder Query(Retriever) | An SQL query that finds the existing record for this person, if there is one. |
-| Fields Map | One line per field to fill on the new record, in the same syntax entity flows use to fill a generated record. |
+| Field (English / Arabic) | Field id | What it does |
+|---|---|---|
+| Page Id (معرف الصفحة) | `pageId` | The Facebook Page ID. This is how an incoming lead finds its configuration, so each page has exactly one record. |
+| App ID (معرف التطبيق) | `appId` | The ID of your company's Facebook app. |
+| App Secret (المفتاح السري للتطبيق) | `appSecret` | The app's secret, stored as a password. It must be the real secret of the app the webhook belongs to: Facebook signs every lead it sends with it, and Nama drops any call whose signature does not match. |
+| Webhook Verify Token (رمز التحقق من الـ Webhook) | `webhookVerifyToken` | The same value you typed as the **Verify token** when you set up the webhook in Meta for Developers. It sits next to **Page Id** on the screen. |
+| Save Leads As | `saveLeadsAs` | **CRM Lead** or **CRM Potential** — which record each form submission becomes. |
+| Finder Query(Retriever) | `finderQuery` | An SQL query that finds the existing record for this person, if there is one. |
+| Fields Map | `fieldsMap` | One line per field to fill on the new record, in the same syntax entity flows use to fill a generated record. |
 
 All seven are required. A configuration saved before **Webhook Verify Token** existed must have it filled in the next time it is saved; until then its page keeps receiving leads as before, as long as its **App Secret** is right. The dimensions group at the bottom — legal entity, branch and the rest — is copied to every lead the configuration saves, so a company with one page per branch gets each branch's leads stamped with the right branch.
 

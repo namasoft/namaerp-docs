@@ -60,7 +60,7 @@ POS documents have their own term types. Open a term from **Document Term** with
 
 | Document | Arabic name | Tabs on the term |
 |---|---|---|
-| POS Sales Invoice | فاتورة مبيعات نقاط البيع | General settings, **Invoice effect**, **Other effects**, **Discount Effects**, **External Effects** |
+| POS Sales Invoice | فاتورة مبيعات نقاط البيع | General settings, **Invoice effect**, **Other effects** (with the **External Effects** grid at its foot), **Discount Effects** |
 | POS Sales Return | مردود نقاط البيع | Same as the invoice |
 | POS Order Reservation | سند حجز اوردر نقاط بيع | Same as the invoice |
 | POS Cancel Reservation | سند إلغاء حجز اوردر نقاط بيع | Same as the invoice |
@@ -79,24 +79,25 @@ POS documents have their own term types. Open a term from **Document Term** with
 
 These four terms look like the supply chain's sales terms, and their general settings tab works the same way — see [Document Terms](/modules/supplychain/document-terms/) for those options. The tabs specific to them:
 
-- **Invoice effect** (*تأثير الفاتوره*) — the **Debit** and **Credit** sides of the sale itself (typically the customer or cash against revenue), the **Shorten Ledger** option (*إختصار القيود*), and the **Approximation Discount** side (*خصم التقريب*) for rounding discounts.
-- **Other effects** (*تأثيرات أخرى*) — the **Cash** side and the sides for **Tax 1** to **Tax 4**.
-- **Discount Effects** (*تأثير الخصومات*) — one side per discount: **Discount 1** to **Discount 8** and **Invoice Discount**.
-- **External Effects** (*تأثير سندات الدفع*) — extra entries for invoices paid through external payment documents.
+- **Invoice effect** (*تأثير الفاتوره*) — the **Debit** `termConfig.config.debit` and **Credit** `termConfig.config.credit` sides of the sale itself (typically the customer or cash against revenue), the **Shorten Ledger** option (*إختصار القيود*, `termConfig.config.shortenLedger`), and the **Approximation Discount** side (*خصم التقريب*, `termConfig.approximationDiscount`) for rounding discounts.
+- **Other effects** (*تأثيرات أخرى*) — the **Cash** side `termConfig.cash` and the sides for **Tax 1** to **Tax 4** (`termConfig.tax`, `termConfig.tax2`, `termConfig.htax`, `termConfig.htax2`). Each tax group also has a **Tax 1 Other Side** … **Tax 4 Other Side** field (`termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide`): an accounting side record the tax is booked against instead of the document's main side. At the foot of the same tab sits the **External Effects** grid (*تأثير سندات الدفع*, `termConfig.externalEffectLines`) — extra entries for invoices paid through payment documents. Each row says: for payment documents of this **For Type**, matching this criteria (**Apply When Payment Document Matches Criteria**) or this query (**Apply When Payment Document Matches Query**), book this **Debit** against this **Credit**.
+- **Discount Effects** (*تأثير الخصومات*) — one side per discount: **Discount 1** `termConfig.lineDiscount`, **Invoice Discount** `termConfig.invoiceDiscount`, and **Discount 2** to **Discount 8** (`termConfig.firstDiscountAcc` … `termConfig.seventhDiscountAcc`). Each group has its own other-side field as well (`termConfig.taxesOtherSide.discount1OtherSide` … `termConfig.taxesOtherSide.discount8OtherSide`, and `termConfig.taxesOtherSide.headerDiscountOtherSide` for the invoice discount).
+
+How the other sides behave is explained once, for every invoice term, in [Accounting Effects Configuration](/modules/supplychain/document-terms/doc-term-accounting-effects#The-tax-other-side).
 
 ![The Invoice effect tab of a POS Sales Invoice term](../../../ar/modules/pos/images/erp-setup/pos-term-sales-invoice-effect-en.png)
 
 ### Stock receipt
 
-Besides the debit and credit of the receipt, the **Generation** group (*الإنشاء التلقائي*) names the **Generation Book** and **Generation Term** of the inventory receipt the server creates from it, which is what puts the received goods into stock.
+Besides the debit `termConfig.config.debit` and credit `termConfig.config.credit` of the receipt, the **Generation** group (*الإنشاء التلقائي*) names the **Generation Book** `termConfig.generationConfigurations.generationBook` and **Generation Term** `termConfig.generationConfigurations.generationTerm` of the inventory receipt the server creates from it, which is what puts the received goods into stock.
 
 ### Pay-outs and pay-ins
 
-The **Effect** tab holds the **Debit** and **Credit** sides of the payment. On the **Settings** tab, **Expand Payment Method Effect** (*عدم إختصار قيود مصروفات طرق الدفع*) writes the payment-method entries line by line instead of shortening them.
+The **Effect** tab holds the **Debit** `termConfig.debit2` and **Credit** `termConfig.credit2` sides of the payment. On the **Settings** tab, **Expand Payment Method Effect** (*عدم إختصار قيود مصروفات طرق الدفع*, `termConfig.expandPaymentMethodEffect`) writes the payment-method entries line by line instead of shortening them.
 
 ### Shifts and cash count
 
-The shift opening, shift closing and cash drawer terms record the **differences** between the counted and expected amounts (**Increase** and **Decrease** sides). The shift closing also has the **Cash** tab used when the cash is reset at close. Both are explained, with examples, in [Shift Opening, Closing & Cash-Reset Settings](./pos-shift-close-settings.md#How-differences-are-recorded).
+The shift opening, shift closing and cash drawer terms record the **differences** between the counted and expected amounts (**Increase** sides `termConfig.config.debit` / `termConfig.config.credit` and **Decrease** sides `termConfig.debit2` / `termConfig.credit2`). The shift closing also has the **Cash** tab (`termConfig.closedDebit` / `termConfig.closedCredit`) used when the cash is reset at close. Both are explained, with examples, in [Shift Opening, Closing & Cash-Reset Settings](./pos-shift-close-settings.md#How-differences-are-recorded).
 
 ## When a document arrives with the wrong term
 

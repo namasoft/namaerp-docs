@@ -37,18 +37,23 @@ a scrap-loss account for machines it throws away. Same document type, same scree
 ## The Account Side — One Block, Repeated Everywhere
 
 Every "debit", "credit", "gain account" or "loss account" group on a Fixed Assets term screen is the
-same standard block of fields. Learn it once and every term screen in the module becomes readable:
+same standard block of fields. Learn it once and every term screen in the module becomes readable.
 
-| Field | What you are answering |
-|---|---|
-| Side Configuration (`الجانب المحاسبي`) | Whether this side is used at all, and how it behaves |
-| Account Source type (`نوع مصدر الحساب`) | Where the account comes from — a fixed account you name here, or an account looked up from something on the document |
-| Account (`الحساب`) | The fixed account, when you are naming one directly |
-| Reference Type (`نوع المرجع`) and Reference Source Field (`الحقل مصدر المرجع`) | When the account comes from a reference — say, from the supplier on the document, or from the employee holding the item |
-| Subsidiary account type (`نوع الحافظة`) | Which slot of that reference's accounts bag to read |
-| Bag Account Id (`كود الحساب من الحقيبة`) | Which account inside the bag, when the bag holds several |
-| Narration template / query (`قوالب واستعلامات الشرح`) | The wording written on the ledger line |
-| Analysis set source | Where the analysis set on the line comes from |
+Each side has its own field id — the purchase term's credit side is `termConfig.config.credit`, the disposal's gain
+account is `termConfig.profitConfig` — and the block's fields hang off it, so the purchase credit side's account
+source is `termConfig.config.credit.accountSource.type`. The pages that follow cite each side's own id; the suffixes
+are the same everywhere:
+
+| Field | Id suffix | What you are answering |
+|---|---|---|
+| Side Configuration (`الجانب المحاسبي`) | `.sideConfig` | Whether this side is used at all, and how it behaves |
+| Account Source type (`نوع مصدر الحساب`) | `.accountSource.type` | Where the account comes from — a fixed account you name here, or an account looked up from something on the document |
+| Account (`الحساب`) | `.accountRef` | The fixed account, when you are naming one directly |
+| Reference Type (`نوع المرجع`) and Reference Source Field (`الحقل مصدر المرجع`) | `.accountSource.entityType`, `.accountSource.fieldID` | When the account comes from a reference — say, from the supplier on the document, or from the employee holding the item |
+| Subsidiary account type (`نوع الحافظة`) | `.subsidiaryAccountType` | Which slot of that reference's accounts bag to read |
+| Bag Account Id (`كود الحساب من الحقيبة`) | `.bagAccountId` | Which account inside the bag, when the bag holds several |
+| Narration template / query (`قوالب واستعلامات الشرح`) | `.narrationTemplate`, `.narrationQuery` | The wording written on the ledger line |
+| Analysis set source | `.analysisSetSource.type` | Where the analysis set on the line comes from |
 
 The account-source idea is what makes one term serve hundreds of assets. You do not name the machinery
 cost account on the purchase term — you tell the term "take the account from the fixed asset", and each
@@ -89,12 +94,12 @@ This is the table most readers come here for. It is grouped by the job you are d
 | Document | Term? | What the term controls |
 |---|---|---|
 | Fixed Asset Purchase Document (`سند شراء أصل ثابت`) | Yes | The supplier/payable side, the tax and discount account sides, the tax settings, and whether the document creates the asset record itself |
-| Fixed Asset Purchase Order (`أمر شراء أصل`) | Yes | Tax settings only — the order books nothing |
+| Fixed Asset Purchase Order (`أمر شراء أصل`) | Yes | Tax settings, and whether an order raised from a request or offer copies only the quantities still outstanding — the order books nothing |
 | Fixed Asset Offer (`عرض سعر أصل`) | Yes | Tax settings only |
 | Fixed Asset Purchase Request (`طلب شراء أصل`) | Shares the order's term | Nothing needs configuring — a request has no financial effect |
 | Fixed Asset Initial Receipt (`سند استلام أصل مبدئي`) | Yes | Tax settings only |
 | Fixed Asset Opening Document (`أفتتاح أصل ثابت`) | Yes | Four switches that decide how dates and remaining life are derived for legacy assets. No accounts — the entry uses the asset's own accounts and the mediator account typed on the document |
-| Fixed Asset Opening Document Update (`تعديل أفتتاح أصل ثابت`) | Yes | No accounting configuration |
+| Fixed Asset Opening Document Update (`تعديل أفتتاح أصل ثابت`) | Yes | No accounts — one switch that decides whether picking the opening document to correct also copies its lines |
 | Custodies Delivery Receipt Document (`سند استلام وتسليم عهد`) | Yes | The accounts for each side of a hand-over, and whether the hand-over changes the custodian recorded on the fixed asset |
 | Fixed Asset Creation Document (`سند إنشاء أصول`) | Yes | The book and term used for the purchase documents it generates |
 
@@ -108,7 +113,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 | Asset addition deduction (`سند الإضافة و الإستبعاد`) | Yes | The account facing the asset, eight tax account sides, two discount-value sides, and the switches that decide whether each tax lands in the asset's value |
 | Aggregated Addition Deduction Document (`مستند إضافة واستبعاد مجمع`) | Yes | The book and term of the documents it generates |
 | Fixed Asset Properties (`خصائص أصل ثابت`) | Yes | Nothing — the document changes life and salvage values only and never reaches the ledger |
-| Aggregated Fixed Asset Properties Document (`سند خصائص أصل مجمع`) | Yes | The book and term of the documents it generates |
+| Aggregated Fixed Asset Properties Document (`سند خصائص أصل مجمع`) | Yes | The book and term of the documents it generates (`termConfig.faPropertiesBook`, `termConfig.faPropertiesTerm`) |
 
 ### Disposal
 
@@ -122,9 +127,9 @@ This is the table most readers come here for. It is grouped by the job you are d
 
 | Document | Term? | What the term controls |
 |---|---|---|
-| Transfer document (`سند نقل الأصل`) | Yes | One switch: whether the transfer produces an accounting entry at all. There are no account sides — a transfer moves value between the asset's own accounts |
-| Aggregated Fixed Asset Transfer Document (`سند نقل أصل مجمع`) | Yes | The book and term of the documents it generates |
-| Aggregated Fixed Asset Transfer Request (`طلب نقل أصل مجمع`) | Shares the aggregated transfer's term | The book and term of the requests it generates |
+| Transfer document (`سند نقل الأصل`) | Yes | One switch: whether the transfer produces an accounting entry at all. There are no account sides — a transfer moves value between the asset's own accounts (`termConfig.withoutAccountingEffect`) |
+| Aggregated Fixed Asset Transfer Document (`سند نقل أصل مجمع`) | Yes | The book and term of the documents it generates (`termConfig.faTransferBook`, `termConfig.faTransferTerm`) |
+| Aggregated Fixed Asset Transfer Request (`طلب نقل أصل مجمع`) | Shares the aggregated transfer's term | The book and term of the requests it generates (`termConfig.faTransferBook`, `termConfig.faTransferTerm`) |
 
 ### Custody
 
@@ -139,7 +144,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 
 | Document | Term? | What the term controls |
 |---|---|---|
-| Fixed Asset ProformaInvoice (`فاتوره اعتماد مبدئية`) | Not required | The proforma invoice books nothing |
+| Fixed Asset ProformaInvoice (`فاتوره اعتماد مبدئية`) | Yes | No accounts — the proforma invoice books nothing. One switch decides whether committing it creates asset records for lines that name no asset |
 | Fixed Asset Expense Document (`مصروف اعتماد أصل`) | Yes | Both sides of the expense entry, four tax pairs, a discount pair, and whether a line is excluded from the landed cost |
 | Fixed Asset Letter of Credit cost (`سند تكليف اعتماد أصل`) | Yes | The clearing account only — the asset side comes from each asset |
 

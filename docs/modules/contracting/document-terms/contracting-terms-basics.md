@@ -25,17 +25,19 @@ A term is created against **one document type**. Choose the document type first:
 
 ## Debit and Credit — the pair every contracting term has
 
-Every contracting document term carries a **debit side** and a **credit side** for its main entry. On screen they are captioned **Debit 2** and **Credit 2** (مدين 2 / دائن 2). Those are the primary pair — there is no "Debit 1" anywhere to hunt for, and the numbering is historical. Throughout these pages they are called simply the debit and the credit.
+Every contracting document term carries a **debit side** and a **credit side** for its main entry. On screen they are captioned **Debit 2** and **Credit 2** (مدين 2 / دائن 2) — field ids `termConfig.debit2` and `termConfig.credit2` on the extract, assay, daily labour book and equipment statement terms; the fine and payment terms use `termConfig.debit` / `termConfig.credit`, and the miscellaneous-contracting terms `termConfig.config.debit` / `termConfig.config.credit`. Those are the primary pair — there is no "Debit 1" anywhere to hunt for, and the numbering is historical. Throughout these pages they are called simply the debit and the credit.
 
 Each side is more than an account number. A side lets you say *where the account comes from* rather than naming one account for all time:
 
 | What you set on a side | What it does |
 |---|---|
-| The accounting side / account source | Whether the account is typed in directly, taken from a reference on the document, or pulled from a bag of accounts |
-| The reference type and the field it comes from | For example: take the account from the **project**, or from the **contractor**, or from the **customer** named on the document |
-| The subsidiary type and the account field | Which kind of subsidiary (customer, supplier, project…) the entry is filed under |
-| The narration templates | The wording that appears on the journal line |
-| The analysis set source | Where the [dimensions](/modules/contracting/contracting-configuration.md) on the journal line come from |
+| The accounting side / account source — `termConfig.debit2.sideConfig`, `termConfig.debit2.accountSource.type`, `termConfig.debit2.accountRef`, `termConfig.debit2.bagAccountId` | Whether the account is typed in directly, taken from a reference on the document, or pulled from a bag of accounts |
+| The reference type and the field it comes from — `termConfig.debit2.accountSource.entityType`, `termConfig.debit2.accountSource.fieldID` | For example: take the account from the **project**, or from the **contractor**, or from the **customer** named on the document |
+| The subsidiary type and the account field — `termConfig.debit2.subsidiaryAccountType` | Which kind of subsidiary (customer, supplier, project…) the entry is filed under |
+| The narration templates — `termConfig.debit2.narrationTemplate`, `termConfig.debit2.narration2Template` | The wording that appears on the journal line |
+| The analysis set source — `termConfig.debit2.analysisSetSource.type` (shown only when the global configuration adds dimension sources to terms) | Where the [dimensions](/modules/contracting/contracting-configuration.md) on the journal line come from |
+
+The ids above are written for the debit side; every other side has the same sub-fields under its own prefix (`termConfig.credit2.…`, `termConfig.tax1Debit.…` and so on).
 
 That is why "credit the subcontractor" is not an account at all — it is a credit side whose subsidiary type is *supplier* and whose account is taken from the contractor named on the document. Register a new subcontractor and no term needs editing.
 

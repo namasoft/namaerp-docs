@@ -52,7 +52,7 @@ The collector issues the **electronic receipt voucher** at the customer's site d
 
 ![Accounts group — electronic receipt](../../ar/modules/mobile/images/crm-delivery/accounts-receipt-group.jpg)
 
-In the receipt voucher the collector chooses the customer, the payment date, the currency and the **payment method** (cash, bank…), and the voucher can include **installments** and **terms and conditions** the customer agrees to. After saving, the receipt can be **printed** to the configured printer. Receipt vouchers are often linked to source documents such as the sales order or sales invoice.
+In the receipt voucher the collector chooses the customer, the payment date, the currency and the **payment method** (cash, bank…), and the voucher can include **installments**. After saving, the receipt can be **printed** to the configured printer. Receipt vouchers are often linked to source documents such as the sales order or sales invoice.
 
 ::: warning Linking the method to a bank
 The payment methods and banks available in the app are loaded from server settings; if the payment method is a bank method, the corresponding bank must be specified.
@@ -60,6 +60,6 @@ The payment methods and banks available in the app are loaded from server settin
 
 ## Notes for the administrator
 
-- The visit types and states, the allowed reference fields, and the customer/item criteria are configured from the [Mobile App configuration](./mobile-application-guide.md).
-- The receipt and delivery voucher books, the payment methods and banks, and the print templates for receipts and the terms and conditions are defined on the server side.
+- The visit types and states, the allowed reference fields, and the customer/item criteria are configured from the [Mobile Apps Configurations](./mobile-apps-configuration.md) screen.
+- The receipt and delivery voucher books, the payment methods and banks, and the print templates for receipts are defined on the server side, in the same screen.
 - The visits, maintenance, delivery and receipt modules appear in the menu only if they are licensed for your organization.

@@ -25,14 +25,14 @@ Compared with its neighbours, the Jordanian integration is the short one.
 
 Switch the country page on first. In **Global Configuration**, page 2, set **e-Invoice Page To Show** to **Jordan Page** (or **All Pages** if you also file elsewhere), then run a **Regen UI** so the page appears.
 
-Then create the **Electronic Tax Authority Configuration** — *Basic → Electronic Tax Authority Configuration* — and set **Tax Payer Type** to **Jordan - Electronic Invoice**. Choosing it fills the **API URL** in for you; leave it as it is unless the department publishes a new address.
+Then create the **Electronic Tax Authority Configuration** — *Basic → Electronic Tax Authority Configuration* — and set **Tax Payer Type** to **Jordan - Electronic Invoice**. Choosing it fills the **API URL** (`apiUrl`) in for you; leave it as it is unless the department publishes a new address.
 
 Two credentials identify you, and both come from your own account on the JoFotara portal:
 
 | Field on the Jordan page | What to put in it |
 |---|---|
-| **User Name** | The **Client Id** issued to your establishment by JoFotara |
-| **Password** | The **Secret Key** that goes with that Client Id |
+| **User Name** (`userName`) | The **Client Id** issued to your establishment by JoFotara |
+| **Password** (`password`) | The **Secret Key** that goes with that Client Id |
 
 They are sent with every request, so a rotated secret key on the portal has to be updated here on the same day or submissions start failing.
 
@@ -46,9 +46,9 @@ Saudi Arabia and Egypt both give you somewhere to rehearse. Jordan does not — 
 
 Jordan asks far less about the seller than Saudi Arabia does. There is no national address to complete and no building number to chase — the seller block that leaves your system carries the establishment's name, its tax registration number, and its country. Three settings supply it:
 
-- **Branch Id From** names the dimension — legal entity, branch, sector, and so on — whose record is used as the issuer. Its name and country travel on the invoice, so the record has to be a real one with a country set.
-- **Tax Registeration NO** is your establishment's sales tax number, sent as the seller's tax identifier.
-- **Activity Type** is the taxpayer activity code your registration was issued under. Jordan requires it and sends it as a separate seller block on every invoice, so an empty **Activity Type** is one of the first things to check when the portal starts refusing documents.
+- **Branch Id From** (`branchIdDimension`) names the dimension — legal entity, branch, sector, and so on — whose record is used as the issuer. Its name and country travel on the invoice, so the record has to be a real one with a country set.
+- **Tax Registeration NO** (`taxRegNo`) is your establishment's sales tax number, sent as the seller's tax identifier.
+- **Activity Type** (`activityType`) is the taxpayer activity code your registration was issued under. Jordan requires it and sends it as a separate seller block on every invoice, so an empty **Activity Type** is one of the first things to check when the portal starts refusing documents.
 
 ## Who the portal thinks the customer is
 
@@ -84,11 +84,32 @@ Every value on a Jordanian invoice is expressed in **Jordanian dinar**, whatever
 
 Tax is described the way the rest of the UBL world describes it: each line carries its tax category and rate under the UN/ECE category list, and the tax itself under the UN/ECE tax-type list. Which of your four tax slots maps to which code is set in the tax groups on the configuration page, exactly as for the other countries. The one Jordanian specific is that an **exempt or zero-rated line is sent under category `Z`**, so that is what you map a zero-rated tax to.
 
-**Quantity Fractional Places** deserves a look before you go live. Jordan checks that the unit price multiplied by the quantity really does produce the line total, to the number of decimal places you declare here. If your prices carry more precision than you declare, the arithmetic the portal performs will not match the totals you sent.
+**Quantity Fractional Places** (`quantityFractionalPlaces`) deserves a look before you go live. Jordan checks that the unit price multiplied by the quantity really does produce the line total, to the number of decimal places you declare here. If your prices carry more precision than you declare, the arithmetic the portal performs will not match the totals you sent.
 
-::: tip Item codes are not part of a Jordanian invoice
-Unlike Egypt, JoFotara does not want a registered code for the item — the line identifies the goods by their **description** only. The item code settings on the page serve other countries; for Jordan, what matters is that the item description template produces something a human reader can recognise.
+::: tip The line's item name is the item code
+JoFotara does not want a registered item code as Egypt does — it identifies the goods on each line by a name. Nama fills that name from the item code settings, **Calculate Item Code From** (`itemCodeFrom`) and **Item Code Template** (`itemCodeTemplate`), not from the description template. By default it is the item's **Tax Authority Code**, or the item's code when that is empty. To send a name a reader recognises, set **Calculate Item Code From** to **From Item Code Template** and build the name in **Item Code Template**.
 :::
+
+## The rest of the Jordan page
+
+The sections above cover what is Jordanian. The other fields on the page work as they do for every country:
+
+| Field | Field ID | What it does |
+|---|---|---|
+| **Charge Fee Fields**, **Charge Fee Value**, **Charge Fee Tax Percent**, **Exclude Service Fees With No Configs** | `chargesFeeFields`, `chargesFeeIncludeTax`, `chargesFeeTaxPercent`, `excludeServiceFeesWithNoConfigs` | How service fees are sent as a charge on the whole invoice. They work as for Saudi Arabia — see [Service fees sent as a document charge](./zatca-guide.md#Service-fees-sent-as-a-document-charge). |
+| **Unit Price Source**, **Unit Price Source Type** | `unitPriceSource`, `unitPriceType` | Which step of the line's calculation the unit price is read from. See [Unit price, quantities and rounding](./e-invoices-guide.md#Unit-price-quantities-and-rounding). |
+| **Ignore and Round Amount if Scale is Greater Than Allowed Scale** | `ignoreAndRoundAmountIfScaleIsInvalid` | Rounds an over-precise unit price instead of stopping the document. Same section. |
+| **Max Number Of Lines When Collect Tax Auth Docs** | `maxNumberOfLinesWhenCollectTaxAuthDocs` | How many lines one collection may bring in. Same section. |
+| **Don Not Send Assembly Components** | `dontSendAssemblyComponentLines` | Sends an assembly item as one line rather than as its components. |
+| **Calculate Tax Codes Types From** | `taxCodesType` | Where each tax's type and category are read from: this page (the default), or the tax plan on the term, the item or the customer. |
+| *Tax 1*–*Tax 4* groups | `taxesCodes.tax1TaxAuthType`, `taxesCodes.tax1TaxAuthSubType`, and so on | The tax type and category sent for each tax slot. The *Zero* pair (`taxesCodes.tax1ZeroTaxAuthType`, `taxesCodes.tax1ZeroTaxAuthSubType`) is sent instead when the tax on a line is zero. **Send Tax N With Zero** (`taxesCodes.sendTax1WithZero`) sends the tax with a zero rate and a zero amount. **Do Not Send Tax N If Codes Not Provided** (`doNotSendTax1IfNoCode`) leaves out a slot that has no codes. |
+| **Tax Codes Sources** grid | `taxCodesSource` | Overrides **Calculate Tax Codes Types From** for chosen document types, books, terms, criteria, value dates or dimensions. The first matching row wins. |
+| **Max Days To Send Invoices** | `maxDaysToSendInvoice` | How old a document may be and still be sent; 3 days when empty. Once its book or term sends to JoFotara, an older document cannot be saved, and one that ages past the limit is no longer collected. |
+| **Start Sending From Date** | `startSendingFromDate` | Documents dated before this day are never sent. |
+| **Days To Allow Save Document In Future** | `futureDaysToAllowSaveDoc` | How many days ahead a document that goes to JoFotara may be dated. Zero means not at all. |
+| **Discount Configs** grid | `discountConfigs` | Sends a discount before tax, after tax, or not at all, discount by discount. See [Discount Configs](./e-invoices-guide.md#Discount-Configs). |
+
+Six fields on the page do not affect a Jordanian invoice: **Run Item Description Template On**, **Item Description Template**, **Run Item Nama Code Template On**, **Item Internal Code Template**, **Internal Item Code Maximum Length** and **Document Level Extra Discount Location**. The service-fees grid on the **Main** page applies too — see [Service Fees And What Is Charged To Customer](./e-invoices-guide.md#Service-Fees-And-What-Is-Charged-To-Customer).
 
 ## Sending, and what comes back
 

@@ -50,6 +50,8 @@ These switches govern what is pulled from the origin document and how quantities
 
 **Allow Creating Document From Expired Quotation** `termConfig.allowCreatingDocumentFromExpiredQuotation` — By default a sales document created from a Sales Quotation must have its value date inside the quotation's **Valid from** / **Valid to** range, or the save is refused with *Value date must be within the range of sales quotation valid from and valid to.* Tick this on the new document's term to accept expired quotations. Sales documents only.
 
+**Consider Value Date From From Document In Pricing And Offers** `termConfig.considerValueDateFromFromDocInPricingAndOffers` — When the document's prices are checked on save against price lists and offers, the From Document's value date is used instead of the document's own. An invoice dated after a price change, built on an order taken before it, is then checked at the order's prices. Sales documents only.
+
 **Allow Item Code And Name Without An Item** `termConfig.allowItemCodeAndNameWithoutAnItem` — Permits typing a free item code/name on a line without selecting a registered item record.
 
 **Do Not Copy Contract Terms When Selected** `termConfig.doNotCopyContractTermsWhenSelected` — When the origin is a contract, suppress copying the contract's terms/conditions into the new document. Contracting-material documents only.
@@ -104,6 +106,8 @@ The **Collect Similar From Doc Lines** (`termConfig.collectSimilarFromDocLines`)
 | Do Not Consider Serial | `termConfig.fromDocLinesCollectionOptions.doNotConsiderSerial` |
 | Do Not Consider Locator | `termConfig.fromDocLinesCollectionOptions.doNotConsiderLocator` |
 
+**Copy Lines With The Same Customer Only With From Doc** `termConfig.copyLinesWithTheSameCustomerOnlyWithFromDoc` — Sits in the same group. When the document has a customer, source lines that carry a different customer are not copied. Lines with no customer of their own are still copied.
+
 ## Locking Linked Lines
 
 The **Prevent Editing Lines Linked To From Doc** (`termConfig.propertiesOfLinesLinkedToFromDoc.preventEditingLinesLinkedToFromDoc`) master switch locks lines that are linked to a from-document against editing. The `consider*` flags below — under `termConfig.propertiesOfLinesLinkedToFromDoc.*` — select which dimensions are checked when identifying and locking those linked lines.
@@ -122,6 +126,24 @@ The **Prevent Editing Lines Linked To From Doc** (`termConfig.propertiesOfLinesL
 | Consider Measures | `termConfig.propertiesOfLinesLinkedToFromDoc.considerMeasures` |
 | Consider Serial | `termConfig.propertiesOfLinesLinkedToFromDoc.considerSerial` |
 | Consider Warehouse | `termConfig.propertiesOfLinesLinkedToFromDoc.considerWarehouse` |
+
+## Customer, Supplier and Overdraft
+
+These two sit in the From Document group of most stock, sales and purchase terms.
+
+**Customer/supplier required** `termConfig.customerOrSupplierRequired` — The document cannot be saved without a customer (sales side) or a supplier (purchase side). It is refused with *Customer is required* — «يجب عليك أدخال العميل», or on purchase invoices *Supplier is required* — «يجب عليك ادخال المورد». On a stock receipt or issue either party is enough. The check runs on stock receipts, stock issues and issue requests, sales and purchase invoices and returns, sales orders and proforma invoices, sales and purchase quotations and their requests, and sales replacements.
+
+**Prevent Overdraft** `termConfig.config.preventOverdraft` — Checks every line of the term's documents for overdraft, even where the item, section, dimensions or global policy would allow it. It only tightens the check; turning it off never lets through a document the policy blocks. See [Overdraft & Quantity Checking Configuration](../configuration/overdraft-and-quantity-checking.md#Switches-on-the-document-and-its-term).
+
+## Sales Payments and Salesman
+
+These options appear on sales invoices and the other sales documents that carry payment lines.
+
+**Copy Payment Methods** `termConfig.copyPaymentMethods` — When the document is created from another sales document, that document's payment-method lines are copied too.
+
+**Copy To First Cash Line** `termConfig.copyToFirstCashLine` — The first payment line whose payment method is a cash method takes whatever is left of the invoice value after the other payment lines, and follows it as lines or amounts change. When **Paid Cash** is filled on that line, the amount is capped at it. The **Copy To First Cash Line** action on the invoice does the same on demand.
+
+**Copy Sales Man To First Author** `termConfig.copySalesManToFirstAuthor` — On save, the document's **First Author** is set to the user linked to the salesman's employee record, so the record counts as the salesman's own. Nothing changes when the salesman has no linked user.
 
 ## Fields Not Copied
 
@@ -150,6 +172,8 @@ When an invoice or return auto-collects (links) stock documents, these options c
 **Copy Stock Docs From Origin Doc** `termConfig.copyStockDocsFromOriginDoc` — When a document is copied from an origin, also carry over the stock-document links attached to that origin.
 
 **Copy Pricing Qty From Stock Doc Field** `termConfig.copyPricingQtyFromStockDocField` — Selects which numeric quantity field (`N1`/`N2`/`N3`) of the linked stock document supplies the pricing quantity used on the invoice line.
+
+**Mark Do Not Show In Stock Docs If All Items Type Are Service** `termConfig.markDoNotShowInStockDocsIfAllItemsService` — When every line of the document is a service item, saving ticks the document's own **Do Not Show In Stock Docs**, so it no longer appears in the From Document picker of stock receipts and issues — there is nothing to receive or issue against it. Purchase invoices and sales returns.
 
 The **Stock Dock In Invoice Collection Options** group (`termConfig.stockDockInInvoiceCollectionOptions.*`) governs how stock-document lines are merged and matched when collected into the invoice. The `collectStockDocSimilarLines` switch merges similar lines; each `doNotConsider*` flag drops that dimension from the similar-line key.
 

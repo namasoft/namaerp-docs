@@ -141,9 +141,8 @@ reconciles with the document's Remaining plus whatever the vouchers have already
 change a price after generating the schedule, run **GeneratePayments** again — otherwise the two
 numbers drift apart and the save is rejected.
 
-One term option changes how the plan behaves once vouchers start arriving: **Pay Installments In
-Order** forces instalments to be settled oldest first, so a customer cannot pay the fourth
-instalment while the second is still open.
+Once vouchers start arriving they can settle the instalments in any order: a customer may pay the
+fourth instalment while the second is still open.
 
 ## Standard Terms — the clauses of the contract
 

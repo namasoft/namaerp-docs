@@ -1,6 +1,6 @@
 ---
 description: "تغيير موقع الموظف وبياناته بعد التعيين: سند نقل موظف وطلبه اللذان ينقلان الموظف وأرصدته إلى فرع أو إدارة أخرى، وتحديث بيانات الموظف فرديًا أو مجمعًا، وتحديث مكان العمل."
-entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUpdateEmpInfo, WorkPlaceUpdate]
+entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUpdateEmpInfo, WorkPlaceUpdate, RelocateReason]
 ---
 
 # نقل الموظف
@@ -15,7 +15,7 @@ entities: [EmployeeRelocate, EmployeeRelocateRequest, UpdateEmployeeInfo, AggrUp
 |---|---|
 | الموظف (Employee) | من يُنقَل. |
 | الدرجة الوظيفية (Organization Position) | الموقع في الهيكل التنظيمي الذي ينطبق عليه النقل. |
-| سبب النقل (Relocate Reason) | سبب حدوث النقل. |
+| سبب النقل (Relocate Reason) | سبب حدوث النقل، يُختار من قائمة **سبب نقل** (الموارد البشرية > سندات التوظيف > سبب نقل) — ملف بسيط من كود واسم تملؤه بأسبابك الخاصة (ترقية، إعادة هيكلة، طلب الموظف…). |
 | المحددات الحالية — الشركة / الفرع / الإدارة / القطاع / المجموعة التحليلية (Current Dimensions) | موقع الموظف كما هو حالياً (تُقرأ من سجله). |
 | المحددات الجديدة — الشركة / الفرع / الإدارة / القطاع / المجموعة التحليلية (New Dimensions) | إلى أين يُنقَل الموظف. |
 

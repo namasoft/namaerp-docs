@@ -153,7 +153,6 @@ Every grid on the four tabs is covered on one of the sibling pages below.
 | Integrator Config | Connects a screen to an external system | [Integrations](/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Import Integrators | Configures how records are pulled in from outside | [Integrations](/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Invoice Retriever Lines | Publishes an invoice print-out for retrieval by a link | [Integrations](/platform/fields-and-entities-settings/fields-settings-integrations) |
-| Error Message Logging Configurations | Decides which failed incoming replication messages are kept as Error Message records | [Integrations](/platform/fields-and-entities-settings/fields-settings-integrations) |
 
 ::: info Two grids are not on Main
 *Public Entities* has a tab to itself, **Entities Allowed To Be Public**, so do not look for it in the Main stack. The three icon grids are on **Icons**. Everything else in the table above is on **Main**.

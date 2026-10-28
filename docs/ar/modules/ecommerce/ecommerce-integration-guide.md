@@ -1,5 +1,5 @@
 ---
-entities: [MAGMagentoSite, MagentoItemLinker, MagentoPriceUpdaterDoc, EcommerceProductConfig, EcommerceCategoryConfig]
+entities: [MAGMagentoSite, MagentoItemLinker, MagentoPriceUpdaterDoc, EcommerceProductConfig, EcommerceCategoryConfig, MagentoSiteGroup]
 menu: تكامل التجارة الإلكترونية ← الملفات ← Magento Site
 ---
 # دليل تكامل التجارة الإلكترونية
@@ -246,7 +246,17 @@ menu: تكامل التجارة الإلكترونية ← الملفات ← Ma
 - **طابور طلبات تحديث كميات الأصناف**: تغيّرات المخزون التي تنتظر أن تتحول إلى طلبات.
 - **طلبات تحديث كميات الأصناف**: صف لكل كمية أُرسلت، بالكمية وحالتها وأي خطأ. يعيد **إعادة محاولة للسطور المختاره** إرسال الصفوف الفاشلة بعد معالجة السبب، ويمسح **حذف ما تم تنفيذه** الصفوف المنتهية.
 
-يُعاد إرسال الطلبات الفاشلة تلقائياً عدداً محدوداً من المرات. ولكي تُبلَّغ بالأخطاء، أضف صفوفاً إلى **Ecommerce Event Actions Line** في تبويب **الإحصائيات**: اختر الحدث (**Update Item Quantity** أو **Update Item Price** أو **Update Item** أو **Item Not Found** أو **Configuration Not Matched**) والتنبيهات التي تُرسل عندما يفشل الطلب، وعندما تتوقف إعادة المحاولة، وعندما ينجح بعد فشل.
+يُعاد إرسال الطلبات الفاشلة تلقائياً عدداً محدوداً من المرات. ويُحدَّد هذا الحد لكل نوع من الطلبات في إعدادات الموديول، من **تكامل التجارة الإلكترونية ← الإعدادات**، في مجموعة **أقصي عدد للمحاولات**:
+
+| الحقل | معرّف الحقل | ما الذي يحدّه |
+|---|---|---|
+| **أقصي عدد محاولات لطلب تحديث الصنف** (Max retry for item update request) | `value.maxRetryForItemChangeReq` | إعادة محاولات إرسال الصنف إلى المتجر. |
+| **أقصي عدد محاولات لطلب تحديث كمية الصنف** (Max retry for item quantity update request) | `value.maxRetryForQtyChangeReq` | إعادة محاولات إرسال كمية المخزون إلى المتجر. |
+| **أقصي عدد محاولات لطلب تحديث سعر الصنف** (Max retry for item price update request) | `value.maxRetryForPriceChangeReq` | إعادة محاولات إرسال السعر إلى المتجر. |
+
+وإن تُرك الحقل فارغاً أو صفراً، يُستعمل بدلاً منه **أقصى عدد محاولات للمهام المعلقة** في [الإعدادات العامة](/ar/platform/global-config/global-config-notifications#aaddt-lrsl) (250 افتراضياً). والطلب الذي استنفد محاولاته يبقى فاشلاً إلى أن تضغط **Retry Selected Lines**.
+
+ولكي تُبلَّغ بالأخطاء، أضف صفوفاً إلى **Ecommerce Event Actions Line** في تبويب **الإحصائيات**: اختر الحدث (**Update Item Quantity** أو **Update Item Price** أو **Update Item** أو **Item Not Found** أو **Configuration Not Matched**) والتنبيهات التي تُرسل عندما يفشل الطلب، وعندما تتوقف إعادة المحاولة، وعندما ينجح بعد فشل.
 
 ### الأطقم المسجلة كأصناف خدمية
 

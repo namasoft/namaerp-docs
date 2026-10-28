@@ -42,7 +42,7 @@ first — before the detail lines. Enter it, then fill the grid.
 | Field | What it does |
 |---|---|
 | **Document Code** (Book / Code) | the book that numbers the document |
-| **Term** | optional on this document; it books nothing, so most installations leave it |
+| **Term** | optional on this document; it books nothing. Its only setting, **Create Asset If Not Found**, makes committing the invoice create an asset record for each line that names none — see [the letter-of-credit terms](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md) |
 | **Issue Date** and **Value Date** | the supplier's invoice date and the date the document counts from |
 | **Fiscal Period** | the period the document belongs to |
 | **Letter Of Credit** — required | the credit this invoice belongs to |

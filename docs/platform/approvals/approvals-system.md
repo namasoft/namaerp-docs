@@ -1,5 +1,5 @@
 ---
-entities: [ApprovalDefinition]
+entities: [ApprovalDefinition, ApprovalReason]
 menu: Administration → Display Customization → Approval Definition
 ---
 # Approvals System - Approval Definition Full Guide

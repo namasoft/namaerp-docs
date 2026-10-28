@@ -51,6 +51,7 @@ A specialised toolkit for carton makers, from product specs to an optimizing mat
 <LandingGrid>
   <LandingCard icon="📦" title="Carton Manufacturing Overview" link="/modules/manufacturing/carton-manufacturing-overview.md" details="Smart material planning tailored to corrugated and carton products." />
   <LandingCard icon="📐" title="Carton Specifications" link="/modules/manufacturing/carton-specifications.md" details="Define your carton products and their dimensional specifications." />
+  <LandingCard icon="🗂️" title="Carton Lookup Files" link="/modules/manufacturing/carton-lookup-files.md" details="Carton types, flutes, corrugating factors, patterns and printing types that every specification picks from." />
   <LandingCard icon="🧾" title="Carton Orders" link="/modules/manufacturing/carton-orders.md" details="Turn a customer request into a concrete carton production plan." />
   <LandingCard icon="🧠" title="Carton Material Planning" link="/modules/manufacturing/carton-material-planning.md" details="The optimization engine that works out the most efficient material use." />
   <LandingCard icon="🚚" title="Carton Material Issues" link="/modules/manufacturing/carton-material-issue.md" details="Move the planned materials from the warehouse out to the shop floor." />

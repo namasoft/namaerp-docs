@@ -11,4 +11,5 @@ description: "الملفات الرئيسية التي تقرؤها كل وحد�
   <LandingCard icon="🏷️" title="الكلمات المفتاحية وقوالبها" link="/ar/platform/shared-master-files/keyword-templates.md" details="وسوم وصفية على الأصناف والعملاء، وملفات الكلمات وقيمها، وقوالب تنسخ مجموعة جاهزة منها في خطوة واحدة." />
   <LandingCard icon="💱" title="العملات وأسعار الصرف" link="/ar/platform/shared-master-files/currencies-and-exchange-rates.md" details="ملف العملة، ومكان إدخال سعر اليوم، والترتيب الذي يبحث به المستند عن معدله." />
   <LandingCard icon="⚖️" title="جانب محاسبي" link="/ar/platform/shared-master-files/accounting-side-config.md" details="جانب محاسبي واحد — الحساب والحافظة والمحددات والبيان — محفوظ مرة كملف رئيسي ومُشترك بين كل توجيه يحتاجه." />
+  <LandingCard icon="🗺️" title="المناطق والخطوط الملاحية وتصنيفات السجلات" link="/ar/platform/shared-master-files/address-regions-and-record-categories.md" details="المناطق من الدولة إلى الشارع، والخطوط الملاحية في أوامر البيع، وتصنيفات السجلات التي تطابق عليها القواعد والنماذج وقوائم الأسعار." />
 </LandingGrid>

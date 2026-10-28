@@ -70,13 +70,13 @@ stacked one under the other, then the groups and filters grids:
 
 ### Header
 
-| Field | English | Notes |
-|---|---|---|
-| الحالة المبدئية | Initial SubItem Status | **Required.** The state a car is deemed to be in before its first status entry, and the state it falls back to when all its entries are removed |
-| الحالة الرئيسية المبدئية | Sub Item Initial Main Status | **Required.** The same, for the coarser main-status axis |
-| مجموعة الصنف الفرعي المُنشأ | Created SubItem Master Group | The master group new car records land in — and therefore their coding sequence and their generic dimensions. **Automatic creation fails if this is empty** |
-| الكمية الرئيسية يجب ان تساوي الواحد الصحيح | Prime Quantity Must Be One | Refuses any document line that carries a car and a quantity other than 1 |
-| نسخ الحقول من الصنف | Copy Fields From InvItem | A field map applied to every car of the item whenever the item is saved |
+| Field | English | Field id | Notes |
+|---|---|---|---|
+| الحالة المبدئية | Initial SubItem Status | `initialSubItemStatus` | **Required.** The state a car is deemed to be in before its first status entry, and the state it falls back to when all its entries are removed |
+| الحالة الرئيسية المبدئية | Sub Item Initial Main Status | `subItemInitialMainStatus` | **Required.** The same, for the coarser main-status axis |
+| مجموعة الصنف الفرعي المُنشأ | Created SubItem Master Group | `createdSubItemGroup` | The master group new car records land in — and therefore their coding sequence and their generic dimensions. **Automatic creation fails if this is empty** |
+| الكمية الرئيسية يجب ان تساوي الواحد الصحيح | Prime Quantity Must Be One | `primeQtyMustBeOne` | Refuses any document line that carries a car and a quantity other than 1 |
+| نسخ الحقول من الصنف | Copy Fields From InvItem | `copyFromInvItemFieldsMap` | A field map applied to every car of the item whenever the item is saved |
 
 *Prime Quantity Must Be One* deserves a moment. Tick it. It is the one setting that turns the most
 common data-entry mistake in the module — typing a quantity of 6 on one line instead of six lines of

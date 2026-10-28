@@ -126,7 +126,9 @@ The generation block is where terms cause real damage, and always in the same tw
 
 ::: info The book and the term decide generation
 On the **Car Receipt**, the **Car Final Delivery**, the **Spare Parts Issue** and the **Spare Parts
-Return**, generation is decided by the **Generation Book** and **Generation Term**: fill both and the
+Return**, generation is decided by the **Generation Book** and **Generation Term**
+(`termConfig.generationConfigurations.generationBook`,
+`termConfig.generationConfigurations.generationTerm`): fill both and the
 document generates its stock document. To stop these documents generating, **clear the generation
 book or the generation term**.
 :::

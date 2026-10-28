@@ -1,5 +1,5 @@
 ---
-entities: [Warehouse, Locator, WarehouseUsagePolicy, PreventUsingBatch, WarehouseGroup, WareLocationClass, ItemWarehouseRelation]
+entities: [Warehouse, Locator, WarehouseUsagePolicy, PreventUsingBatch, WarehouseGroup, WareLocationClass, ItemWarehouseRelation, RackQuantities]
 menu: المخازن ← الملفات ← مخزن
 ---
 
@@ -67,7 +67,7 @@ menu: المخازن ← الملفات ← مخزن
 
 ### تتبع الأرفف (Rack Quantities)
 
-للمستودعات التي تحتاج دقة أعلى من مستوى الموقع، يتيح النظام تتبع الكميات على مستوى **الرف** داخل الموقع الواحد - مفيد في مراكز التوزيع الكبيرة حيث يضم الموقع الواحد عدة أرفف.
+في مراكز التوزيع الكبيرة يضم الموقع الواحد غالبًا عدة أرفف. وشاشة **كميات بالارفف** (Rack Quantities) تسجّل الرف الذي يوجد عليه كل صنف: تختار مخزنًا وموقعًا، ثم تسرد الأصناف بكمياتها مع **كود الرف** (`details.rackCode`) وهو نص حر. هي قائمة مرجعية لأمين المخزن؛ لا تحرّك مخزونًا، ويبقى رصيد المخزون محسوبًا على مستوى المخزن والموقع لا على مستوى الرف.
 
 ## ربط الأصناف بالمخازن
 

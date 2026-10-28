@@ -1,5 +1,5 @@
 ---
-entities: [Subsidiary1, SubsidiaryClass, DetailedRemark, MeetingRemark, Remark, RemarkType]
+entities: [Subsidiary1, Subsidiary2, Subsidiary3, Subsidiary4, Subsidiary5, SubsidiaryClass, DetailedRemark, MeetingRemark, Remark, RemarkType, RemarkType2, RemarkType3, RemarkType4, RemarkType5]
 menu: الأساسيات ← الملاحظات ← ذمة 1
 ---
 # الملفات الرئيسية الاحتياطية

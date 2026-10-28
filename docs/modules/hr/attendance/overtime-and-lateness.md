@@ -1,6 +1,6 @@
 ---
 description: "How HR attendance measures overtime, lateness, early leave and missing punches from punches and shifts, how days off and holidays are handled, and the settings that change each result."
-entities: [TimeAttendance, AttendancePlan, PerformanceIndicator]
+entities: [TimeAttendance, AttendancePlan, PerformanceIndicator, AttendanceIndicatorWaiver]
 ---
 
 # Overtime and Lateness
@@ -235,6 +235,21 @@ Each of those steps is documented on
 5. Only then look at the indicator: its Shift Type, its *Not Included In Week Ends* flag, and
    whether an approval document capped it.
 :::
+
+## Excusing a day: Attendance Indicator Waiver
+
+Sometimes a reading is correct but should not cost the employee anything — a missed check-out on
+the day the fingerprint machine was down, or an absence HR has agreed to overlook. Rather than
+editing punches, record an **Attendance Indicator Waiver** (إعفاء من مؤشرات الحضور) at
+**Payroll > Performance Indicators > Attendance Indicator Waiver**. Each line names an **Employee**,
+a **Waiver Date** and either a **Performance Indicator** or a **System Indicator** (one or the other,
+never both). When the indicators are calculated, that indicator reads zero for that employee on that
+day; every other indicator and every other day is untouched.
+
+The header carries the same four fields as a shortcut: fill the employee, date or indicator there
+and every line takes it on save, so one document can waive many indicators for one employee, or one
+indicator for many employees. Only saved waivers count, and a waiver saved after the indicators were
+calculated takes effect the next time they are calculated.
 
 ## Messages you may see
 

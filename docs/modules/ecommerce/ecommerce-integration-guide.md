@@ -1,5 +1,5 @@
 ---
-entities: [MAGMagentoSite, MagentoItemLinker, MagentoPriceUpdaterDoc, EcommerceProductConfig, EcommerceCategoryConfig]
+entities: [MAGMagentoSite, MagentoItemLinker, MagentoPriceUpdaterDoc, EcommerceProductConfig, EcommerceCategoryConfig, MagentoSiteGroup]
 menu: e-Commerce Integration → Master Files → Magento Site
 ---
 # E-Commerce Integration Guide
@@ -246,7 +246,17 @@ Requests are processed in the background, and their progress is listed on the si
 - **Items Quantities Change Requests Updater**: stock changes waiting to be turned into requests.
 - **Items Quantities Change Requests**: one row per quantity sent, with the quantity, its status and any error. **Retry Selected Lines** sends failed rows again once the cause is fixed, and **Delete Finished Requests** clears the rows that are done.
 
-Failed requests are retried automatically a limited number of times. To be told about failures, add rows to **Ecommerce Event Actions Line** on the **Statistics** tab: pick the event (**Update Item Quantity**, **Update Item Price**, **Update Item**, **Item Not Found** or **Configuration Not Matched**) and the notifications to send when a request fails, when it stops being retried, and when it succeeds after failing.
+Failed requests are retried automatically a limited number of times. The limit is set per kind of request in the module's configuration, under **e-Commerce Integration → Settings**, in the **Max Retry Count** group:
+
+| Field | Field id | What it limits |
+|---|---|---|
+| **Max retry for item update request** | `value.maxRetryForItemChangeReq` | Retries of a product (item) sent to the shop. |
+| **Max retry for item quantity update request** | `value.maxRetryForQtyChangeReq` | Retries of a stock quantity sent to the shop. |
+| **Max retry for item price update request** | `value.maxRetryForPriceChangeReq` | Retries of a price sent to the shop. |
+
+Left empty or zero, a field falls back to **Max Retry Number For Pending Tasks** in [Global Configuration](/platform/global-config/global-config-notifications#Sending-settings) (250 by default). A request that has used up its retries stays failed until you press **Retry Selected Lines**.
+
+To be told about failures, add rows to **Ecommerce Event Actions Line** on the **Statistics** tab: pick the event (**Update Item Quantity**, **Update Item Price**, **Update Item**, **Item Not Found** or **Configuration Not Matched**) and the notifications to send when a request fails, when it stops being retried, and when it succeeds after failing.
 
 ### Bundles sold as service items
 

@@ -1,5 +1,5 @@
 ---
-entities: [ReportDefinition]
+entities: [ReportDefinition, ReportGroup]
 menu: Administration → Reports → Report Definition
 ---
 # Jasper Reports Complete Guide for Nama ERP

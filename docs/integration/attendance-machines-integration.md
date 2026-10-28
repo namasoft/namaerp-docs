@@ -36,15 +36,15 @@ Its primary function is to fetch data from the local program's database or throu
 
   * A suitable code
   * A name
-  * The connection type
+  * The connection type (`machineConnectionType`)
 
-* Set a **CRON Expression** to define when data is read and sent to the system:
+* Set a **CRON Expression** (`cronExpression`) to define when data is read and sent to the system:
 
   * The syntax has **six** fields — seconds, minutes, hours, day of month, month, day of week.
   * Example: `0 5 * * * *` will read data every hour at the fifth minute.
   * Beware of five-field examples from sites such as [https://crontab.guru](https://crontab.guru) — they need a leading seconds field adding before they will work here.
 
-* Set the scheduled task to run after pulling data from the machine:
+* Set the scheduled task to run after pulling data from the machine (`runScheduledTaskAfterFetch`):
 
   * This task fetches data from the fingerprint log table into the time attendance document.
   * To simplify task creation, a button named **Create Scheduled Task** has been added.
@@ -58,9 +58,9 @@ The connection type has four options:
 * Allows transferring fingerprint data from the ZK BioTime software.
 * Requires:
 
-  * Machine URL
-  * Username
-  * Password
+  * Machine URL (`machineUrl`)
+  * Username (`username`)
+  * Password (`password`)
 
 #### SQL Server
 
@@ -68,21 +68,22 @@ The connection type has four options:
 
 * Required settings:
 
-  * **Machine URL**: the SQL Server address — usually `localhost`
-  * **Database Port**: the connection port — usually `1433`
-  * **Username**: e.g. `sa`
-  * **Password**
-  * **SQL Query**: the query used to periodically read data from the machine's database
-  * **Read For Period Query**: a query used to read data for a specific period when the "Read Attendance For Period" button is pressed in the attcron application
-  * **Mapping Lines**: maps the query result columns to what the system needs
+  * **Machine URL** (`machineUrl`): the SQL Server address — usually `localhost`
+  * **Database Port** (`databasePort`): the connection port — usually `1433`
+  * **Database Name** (`databaseName`)
+  * **Username** (`username`): e.g. `sa`
+  * **Password** (`password`)
+  * **SQL Query** (`sqlQuery`): the query used to periodically read data from the machine's database
+  * **Read For Period Query** (`readForPeriodQuery`): a query used to read data for a specific period when the "Read Attendance For Period" button is pressed in the attcron application
+  * **Mapping Lines** (`mappingLines`): maps the query result columns to what the system needs
 
     Contains three columns:
 
-    * **Response Field**: the name of the field required by the system.
+    * **Response Field** (`mappingLines.responseField`): the name of the field required by the system.
       Possible values:
       `EmployeeCode`, `firstName`, `lastName`, `department`, `punchTime`, `punchState`, `punchStateDisplay`, `verifyType`, `verifyTypeDisplay`, `gpsLocation`, `areaAlias`, `terminalSN`, `uploadTime`
-    * **Column Index**: the column number in the query result
-    * **Column Alias**: an alternate column name to use in the SQL statement
+    * **Column Index** (`mappingLines.columnIndex`): the column number in the query result
+    * **Column Alias** (`mappingLines.columnAlias`): an alternate column name to use in the SQL statement
 
 * A button named **Default Queries** inserts default queries suitable for ZK machines.
 
@@ -91,16 +92,16 @@ The connection type has four options:
 * Allows transferring data from a Microsoft Access database.
 * Same settings as SQL Server, except:
 
-  * No username, password, or server URL is needed.
-  * Instead, specify the **database file path** on the machine where the attcron application will be installed.
+  * Instead of a server URL, specify the **database file path** (the *File Path* field, `machineUrl`) on the machine where the attcron application will be installed.
+  * Access does not use the username, password, database port or database name, but they must still hold placeholder values: the agent refuses to start while the username or password is empty, and the record will not save without the port and database name. See [Attendance Machines](../modules/hr/attendance/attendance-machines.md#ACCESS).
 
 #### Timetaag
 
 * Allows transferring data from the Timetaag cloud attendance service, which the fingerprint devices upload to themselves.
 * Requires:
 
-  * **Timetaag Server URL**: `https://app.timetaag.com`
-  * **Timetaag API Key** — the tab shows this field twice; the agent sends the first as the API key and the second as the authorization token
+  * **Timetaag Server URL** (`machineUrl`): `https://app.timetaag.com`
+  * **Timetaag API Key** (`username` and `password`) — the tab shows this field twice; the agent sends the first as the API key and the second as the authorization token
 * The key is issued from the Timetaag dashboard — sign in as the company administrator and use **Generate API token**.
 * No query or mapping is needed; the data arrives in a fixed format.
 * Unlike the other three types, the computer running attcron needs access to the **internet** rather than to the machine's local network.
