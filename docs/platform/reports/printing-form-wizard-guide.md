@@ -137,7 +137,9 @@ form are two different activities here.
 Whether a screen has a printable form is worked out once and remembered for the rest of that browser
 session. If somebody had the document open and pressed Print *before* you created the form, they will
 keep being told there is nothing to print no matter how many times they try. Reloading the page fixes
-it.
+it. A form you create from the screen itself, through the **More** menu or the Print button, clears
+that memory in your own browser, so you can print straight away; other people's open browsers still
+need a reload.
 :::
 
 ## Five of everything
@@ -246,6 +248,44 @@ The reader is not left guessing what happened:
   that render a template rather than a plain value, and any grid past the fifth all come back as
   warnings listing exactly what was skipped — so a form that is missing something tells you which
   something.
+
+### Straight from the Print button
+
+A screen with no form used to stop at an error when someone pressed **Print**. Now, when a user who may
+create printing forms presses **Print** or **Print As** on an edit screen that has no form, Nama offers to
+build one there and then. A dialog titled **No Printing Form For This Screen** asks:
+
+> This screen has no printing form. Create one from the screen and print it?
+
+On a screen with a single tab the only choice is **Create And Print**. On a screen with several tabs the
+buttons are **All Pages In One Form**, **Current Page Only** and **Every Page In Separate Forms**, the same
+choices as the table above. **Main Page Only** is not offered here because a main-page form prints only
+from the first tab, and on the first tab it is the same as **Current Page Only**.
+
+Pick one and Nama builds the form, prints the document you were looking at, and confirms with:
+
+> A printing form was created from this screen. You can change it from the Printing Form Wizard.
+
+Three things are different from the **More** menu route:
+
+- **The wizard does not open.** The form is ready to use, and you can tune it later in the wizard like any
+  other.
+- **The form is open to every company and branch.** It is meant as the screen's default form, so it is not
+  tied to the company or branch you are logged into.
+- **It never overwrites a form.** If this screen already has a form built from it, Print found nothing
+  only because that form does not apply to this record. Nama leaves it untouched and says:
+
+  > Printing form {0} already exists but does not apply to this record. Check its page, book, term, company and branch settings
+
+  Open that form in the wizard and check the fields under [Deciding when a form is used](#Deciding-when-a-form-is-used).
+
+Users who may not create printing forms get no dialog. Their Print button says:
+
+> There is no printing form for this screen. Ask your system administrator to create one.
+
+The administrator then presses Print on any record of that screen, or uses the **More** menu, and from
+then on everyone can print it. Printing automatically after saving a document never opens the dialog,
+because a question after every save would get in the way; it still shows *There is no form to print*.
 
 ### Running it again
 
