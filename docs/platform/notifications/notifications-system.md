@@ -145,6 +145,8 @@ has been {translate(status)}.
 You can view the invoice details here: {link($this)}
 ```
 
+If links like this one open the record in the old GUI, add `{useNewGUIForLinks}` anywhere in the template and they open in the new GUI, from the e-mail and from inside the system alike — see [Opening links in the new GUI](/admin/tempo#7-Opening-Links-in-the-New-GUI).
+
 Four built-in fields put the audit trail of an update straight into the message — `{$changesAsHtmlAr}`, `{$changesAsHtmlEn}`, `{$changesAsTextAr}` and `{$changesAsTextEn}`. Use the HTML pair in e-mail and the text pair in SMS; each lists the header fields that changed with their old and new values, plus added, removed and modified detail lines. [Tempo](/admin/tempo#Audit-Trail-Change-History) has the full syntax, including loops over detail lines and the `{openmsg}…{closemsg}` blocks that let one definition send a different message to each recipient.
 
 ## When it is sent

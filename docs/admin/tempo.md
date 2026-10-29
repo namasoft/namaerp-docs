@@ -337,6 +337,28 @@ The same call also works as a button on a document: put `{OpenInNewWindow}` foll
 
 For what happens when the calendar opens, see [The Booking Calendar](/modules/crm/technician-appointments/crm-technician-appointment-calendar#Opening-the-calendar-from-a-link-or-a-button).
 
+---
+
+### 7. Opening Links in the New GUI
+
+A link in a notification points at the server's address, and on an installation where **Start Always By New Gui** is off that address opens the old GUI. So a user who reads the notification inside the new GUI, or clicks the link in an e-mail, lands on the record in the old GUI. The **Always Use New GUI (Prevent Use Old GUI)** option in [Global Config](/platform/global-config/global-config-appearance#Startup-and-navigation) avoids that, but it closes the old GUI to every user, which is too much while some screens or users still need it.
+
+Write `{useNewGUIForLinks}` once, anywhere in the template, and that template's links open in the new GUI:
+
+```
+{useNewGUIForLinks}
+Dear {customer.name1},
+Your invoice {code} has been approved: {link($this)}
+```
+
+It applies to record links (`link`, `titledlink`, `flow`), creator links, report links, list view links and the technician appointment link. It changes nothing else: the old GUI stays open to anyone who uses it, and templates without the tag keep their links as they were. With `{appurl()}`, the links use the address you gave and open the new GUI on it.
+
+::: info Links it leaves alone
+- **Approval links** (`{approvelink}`, `{rejectlink}` and the rest) open their own confirmation page, which is the same whichever GUI the user works in.
+- **Attachment and image links** download a file rather than open a screen.
+- **Relative links** made with `{shortlinks}` or `{directlinks}` carry no server address, so they keep opening in the GUI the user is already working in.
+:::
+
 ## Using Loops in Tempo
 
 ### Looping Through Repeated Data (e.g. Document Details)
