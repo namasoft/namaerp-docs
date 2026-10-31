@@ -14,7 +14,7 @@ Think of it as repacking a warehouse whose shelves were built too deep: the stoc
 | The three origin indexes on the transaction line tables, built over 17 columns instead of one | Three large copies of the same data per table, none of which helps the lookups they exist for | [Origin Indexes Fixer](#Origin-Indexes-Fixer) |
 | Indexes that another index on the same table already covers | Disk space, and slower saving, for an index the database never needs | [Duplicate Index Finder](#Duplicate-Index-Finder) |
 
-You rarely have to go looking: when a database still needs the first two, the [critical errors](/admin/troubleshooting/critical-errors#Database-schema-fixes-Namasoft-support-only) shown at login say so — to the Namasoft support team only.
+You rarely have to go looking: when a database still needs any of the three, the [critical errors](/admin/troubleshooting/critical-errors#Database-schema-fixes-Namasoft-support-only) shown at login say so — to the Namasoft support team only.
 
 ## How these utilities behave
 
@@ -78,6 +78,8 @@ Because deciding which index to drop needs a developer's judgment, this one is a
 
 Logged in through the CRM, the support team can also tick indexes in the report itself and drop them with **Drop selected**, under the same checks.
 
+While the report has any index it would suggest dropping, the support team sees a critical error at login that gives their number and size. A common source is an index the support team once created by hand on a large table, which a later version of Nama now creates itself under its own name: the table then has two copies of the same index until one is dropped. The error is checked again after every drop run, and disappears once nothing is left to drop.
+
 ## Messages you may see
 
 | Message | Why | What to do |
@@ -85,6 +87,7 @@ Logged in through the CRM, the support team can also tick indexes in the report 
 | *Changing the database schema needs an admin user logged in through the Namasoft CRM* — «تغيير هيكل قاعدة البيانات يتطلب مستخدم مدير مسجل الدخول من خلال نظام CRM الخاص بنماسوفت» | An apply link or button was used by an administrator who did not sign in through the Namasoft CRM. | Leave it to the support team, who sign in through the CRM and apply it off-hours. |
 | *{0} tables ({1} MB) still have 255-byte reference columns, run the utility {2} off-hours* — «يوجد {0} جدول ({1} ميجابايت) ما زالت أعمدة المراجع فيها بطول 255 بايت، يرجى تشغيل الأداة {2} خارج أوقات العمل» | A critical error, shown only to the support team: the database still has wide reference columns. | Run the [Reference Column Narrower](#Reference-Column-Narrower), with the rebuild, outside working hours. |
 | *{0} origin indexes still cover more columns than they should, run the utility {1} off-hours* — «يوجد {0} فهرس أصل ما زال يشمل أعمدة أكثر من اللازم، يرجى تشغيل الأداة {1} خارج أوقات العمل» | A critical error, shown only to the support team: the database still has the 17-column origin indexes. | Run the [Origin Indexes Fixer](#Origin-Indexes-Fixer) outside working hours. |
+| *{0} indexes ({1} MB) are covered by another index on the same table, review them with the utility {2}* — «يوجد {0} فهرس ({1} ميجابايت) يغطيها فهرس آخر على نفس الجدول، يرجى مراجعتها باستخدام الأداة {2}» | A critical error, shown only to the support team: the [Duplicate Index Finder](#Duplicate-Index-Finder) would suggest dropping that many indexes. | Send its report to the development team and drop what they mark. |
 
 ## Related pages
 

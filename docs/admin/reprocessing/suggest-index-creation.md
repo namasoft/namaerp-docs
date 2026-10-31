@@ -8,6 +8,12 @@ In Nama ERP and other systems with highly normalized schemas, many tables contai
 
 To optimize performance, it's recommended to create a **non-clustered index** on such foreign key columns **only if the detail table contains a significant number of rows**.
 
+::: info The busiest documents are indexed by Nama itself
+Nama creates the index on the lines of its busiest documents at start-up, named `idx_<column>` (for example `idx_salesInvoice_id`): sales and purchase invoices and returns, POS invoices and returns, sales orders, stock issues and receipts, stock transfers, issue and receipt stock transfers, stock transfer requests, receipt and payment vouchers, journal entries, sales and purchase price lists, and the unit, size-and-colour and dimension lines of items. On a large database without that index, the first start-up after the upgrade takes longer while it is built.
+
+If you created one of these indexes by hand before, the table now has two copies. The [Duplicate Index Finder](/admin/reprocessing/database-size-and-index-utilities#Duplicate-Index-Finder) reports the extra copy, and a critical error reminds the support team until it is dropped.
+:::
+
 ## How to Use This Query
 
 The following SQL query searches for tables in your database that:
