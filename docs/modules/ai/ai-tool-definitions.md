@@ -45,7 +45,15 @@ The **Security (Access Control)** grid decides who may execute the tool. Each li
 - **Applicable For**: a user, a security profile, or a user group.
 - **Allow / Prevent**.
 
-When the tool is executed, the system looks for the first line matching the current user in this order: the **user's** own line first, then the user's **security profile** line, then the **group** line. The first matching line decides. If the grid is empty (or no line matches), the tool is available to everyone.
+When the tool is executed, the system looks for the first line matching the current user in this order: the **user's** own line first, then the user's **security profile** line, then the **group** line. The first matching line decides.
+
+When no line matches the user, what happens depends on the grid as a whole:
+
+- **The grid is empty**: the tool is available to everyone.
+- **Every line is Prevent**: the tool is available to everyone who is not prevented.
+- **At least one line is Allow**: the grid becomes an allow-list. Only a user with a matching line (their own user line, their security profile's line or their group's line) may use the tool; everyone else is shut out.
+
+So to give a tool to one role only, a single **Allow** line for that security profile is enough; you do not need **Prevent** lines for the other profiles.
 
 ::: warning Access is checked twice
 A client is shown only the tools its user may run: a tool this grid prevents for the user does not appear in the user's tool list at all, in an MCP client or in the in-app assistant. So "user X does not see tool Y" is usually this grid, not a fault. **Execution** is checked again as well: a call to a prevented tool is rejected with a clear message. Record-level security and dimensions (legal entity, branch, ...) also still apply to everything the tool reads or writes, because everything goes through the system's standard service gates.
