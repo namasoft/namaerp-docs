@@ -40,12 +40,30 @@ The **Dimensions** group must carry a real legal entity — a register cannot be
 
 | Field | Arabic on screen | What it is for |
 |---|---|---|
-| Printer Name | إسم الطابعه | The printer the register prints to. |
+| Printer Name | إسم الطابعه | The printer the cash drawer is attached to; the open-drawer command is sent to it. Invoices do not use this field. |
 | Open Cash Drawer Command | أمر فتح الدرج | The command sent to open the cash drawer. |
 | Documents Print Count | عدد مرات طباعه المستندات في كل أمر طباعه | How many copies each print produces. |
 | Always Print Full Invoice | طباعة الفاتورة الكامله دائماً | The "print full invoice" box in the payment window starts ticked. |
+| Full Invoice Printer | طابعة الفاتورة الكاملة | The printer this machine sends the full invoice to. Empty means the printer on the print form. |
+| Small Invoice Printer | طابعة الفاتورة الصغيرة | The printer this machine sends the normal (small) receipt to. Empty means the printer on the print form. |
 | Do Not Print Normal Form With Printing Full Form | عدم طباعه النموذج العادي في حالة طباعه النموذج الكامل | When the full form is printed, the normal receipt is skipped. |
 | Print Preparation Form With Payment / With Hold / With Payment Delay | طباعة فورمة تحضير الاوردر مع الدفع / مع تعليق الفاتوره / مع تأجيل الدفع | When the kitchen (preparation) slip prints. |
+
+#### Sending the full and the small invoice to different printers
+
+A print form (**Report Definition** of type user form) already carries its own **Printer Name (CSV)**, so with one printer per job and the same printer names on every machine, the forms alone are enough. That breaks down when every shop names its printers differently: the A4 printer is `HP-Branch1` in one branch and `Canon-Mall` in another.
+
+**Full Invoice Printer** and **Small Invoice Printer** solve this per machine. Take a shop whose machine *POS-01* has an A4 printer named `HP-A4` and a receipt printer named `XP-80`:
+
+1. Keep one full-invoice form (with **Used In Full Invoice** ticked) and one normal form for the POS sales invoice, shared by every machine. Their own **Printer Name (CSV)** can stay empty.
+2. On register *POS-01*, set **Full Invoice Printer** to `HP-A4` and **Small Invoice Printer** to `XP-80`. Repeat on each machine with that shop's own printer names.
+3. After the next sync, a cashier on *POS-01* who ticks "print full invoice" gets the full invoice on `HP-A4` and the small receipt on `XP-80`.
+
+The machine's printer wins over the form's printer, but only for the POS sales invoice and sales return. Kitchen (preparation) forms, forms listed under another form's **Related Forms**, and the forms of other documents keep using the printer written on the form. The name must match the printer's name in Windows exactly. If it is not installed on the machine, nothing prints and the error is written to the POS log.
+
+::: tip Different full-invoice designs for different machines or invoices
+The full-invoice form is now chosen the same way as the small receipt: **Form Criteria**, **Record Category** and **Invoice Classification (Related To POS)** on the form are respected, and the first matching form in order wins. So two full-invoice forms can exist side by side — for example one with the criteria *Register = POS-01* and a general one after it — and each machine prints the one that matches.
+:::
 
 ### Charges added to an invoice
 
