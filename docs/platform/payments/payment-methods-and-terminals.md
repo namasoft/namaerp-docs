@@ -78,7 +78,7 @@ Banks charge VAT on their commission. The **Fees Tax** group (ضريبة الر�
 - **Authorization Number Required** (رقم العملية مطلوب) — a payment line with this method cannot be saved without an **Authorization Number** (رقم العملية). Turn it on for card methods so every line can be matched to the acquirer's statement.
 - **Do Not Affect Remaining** (عدم التأثير على المتبقي) — the line is recorded but does not reduce the invoice's remaining amount. Use it for a payment that is recorded for information only.
 - **Tax Authority Code** (كود مصلحة الضرائب) — the code the e-invoicing integrations send as the payment means. For ZATCA, see [the payment-means rule](/modules/invoicing/zatca-guide).
-- **Used With Reward Point Discount Coupons** (يستخدم مع قسائم الخصومات الخاصة بنقاط المكأفاة) and **Reward Points Configuration** tie the method to the loyalty programme. **Use To Sell And Purchase Reward Points** (تستخدم لشراء و بيع نقاط الولاء) marks the method used when points themselves are bought or sold.
+- **Used With Reward Point Discount Coupons** (يستخدم مع قسائم الخصومات الخاصة بنقاط المكأفاة) and **Reward Points Configuration** tie the method to the loyalty programme. **Use To Sell And Purchase Reward Points** (تستخدم لشراء و بيع نقاط الولاء) marks the method used when points themselves are bought or sold. **Exclude Amounts Paid By This Method From Reward Points** (استثناء المبالغ المدفوعة بهذه الطريقة من احتساب نقاط الولاء في الفواتير والمرتجعات) takes whatever an invoice or return collects through this method out of the value that earns loyalty points; see [Payment methods that earn no points](/modules/invoicing/reward-points-setup#Payment-methods-that-earn-no-points).
 
 ## Cash, shifts and the POS counter
 

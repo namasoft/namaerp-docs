@@ -42,9 +42,27 @@ The rate lives in a separate screen, **Customer Reward Point Calculator**, and o
 - **Amount** and **Points Per Amount** (`amount`, `pointsPerAmount`): the customer earns *Points Per Amount* for every *Amount* of value. Amount 10 and Points Per Amount 1 gives one point per 10 of value, so a line worth 250 earns 25 points.
 - Who it applies to: a single **Points Owner** (`pointsOwner`), or customer classes and categories.
 - What it applies to: an item, a section, a brand, item classes and categories, and the dimensions at the bottom of the screen.
-- **From Amount** / **To Amount** (`fromAmount`, `toAmount`): used by the periodic method. The customer's total spend for the period must fall in this band.
+- **From Amount** / **To Amount** (`fromAmount`, `toAmount`): the rule applies only when the amount falls in this band, both ends included. With the **Per Invoice** method the amount is the invoice's total that earns points (a sales return is matched against its original invoice's total, so it takes points back at the band the invoice earned them in). With the periodic method it is the customer's total spend for the period.
+- **Max Points Per Invoice** (`maxPointsPerInvoice`): the most points one invoice can earn from this rule, however large it is. Empty or 0 means no limit. With one point per 10 and a maximum of 200, an invoice worth 10,000 earns 200 points instead of 1,000. The limit is per rule: when an invoice's lines match two rules, each rule's points are capped on their own and then added up. It applies to the **Per Invoice** method only; the periodic method grants on the period's total, not per invoice.
 
 Values filled in the header are copied into every line of the grid, so the header holds what the lines share. Calculators are tried in ascending **Priority** order, and for each invoice line the first rule that matches the item, the customer and the date gives the rate. A line that no rule matches earns nothing. The share of an invoice paid with discount coupons, which is how redeemed points are paid, earns no points.
+
+### Payment methods that earn no points
+
+Some payments should not earn loyalty points, for example an invoice settled through an instalment provider or a staff deduction. Open that **Payment Method** and tick **Exclude Amounts Paid By This Method From Reward Points** (`excludeFromRewardPoints`). From then on, whatever an invoice collects through that method is taken out of the value that earns points, exactly like the share paid with coupons.
+
+Take an invoice of 1,000 paid 600 in cash and 400 through an excluded method. Only 60% of the invoice earns points, so with one point per 10 the customer gets 60 points instead of 100. The share is spread over the invoice lines, so each line earns on 60% of its value.
+
+A few things to know:
+
+- The points are worked out from the payment lines on the invoice itself, when the invoice is saved for the first time. The customer's points notification therefore already shows the reduced figure.
+- A sales return uses the payment split of its original invoice, so it takes back points at the same reduced rate the invoice earned them.
+- The **Periodic** method leaves the excluded share out of the customer's spend too.
+- A receipt voucher entered later against the invoice does not change its points, whatever its payment method: the points were fixed when the invoice was saved.
+
+::: tip Exclude by payment method here, not in Selected Group
+To stop a payment method from earning points, use this option rather than an **Apply When Query** row in **Selected Group** that looks at the invoice's payment lines. The option also keeps the rest of the invoice earning, where a Selected Group row can only include or exclude the whole document.
+:::
 
 **Expired Points Task Schedule** (`expiredPointsTaskSchedule`): when it is left empty, saving the calculator links it to a daily task schedule coded `PurgeExpiredRewardPoints` (and creates the schedule if needed). That task moves expired points out of each customer's balance.
 
@@ -52,7 +70,7 @@ Values filled in the header are copied into every line of the grid, so the heade
 
 ## 3. What happens on save, return and cancel
 
-When an invoice is processed, its points are recorded against the customer. The customer's screen lists them with their usable-from and expiry dates. A sales return takes back the points earned on the returned value. If the customer no longer has enough usable points to give back, the return is refused. Cancelling an invoice is refused for the same reason.
+When an invoice is processed, its points are recorded against the customer. The customer's screen lists them with their usable-from and expiry dates. A sales return takes back the points earned on the returned value. When the original invoice was held down by **Max Points Per Invoice**, the return takes back points at the same reduced rate: in the example above, the invoice of 10,000 earned 200 points instead of 1,000, so returning half of it takes back 100 points, not 200. If the customer no longer has enough usable points to give back, the return is refused. Cancelling an invoice is refused for the same reason.
 
 ## 4. Redeeming
 
