@@ -138,5 +138,6 @@
     - [ملاحظات إصدار نما ERP - يوليو 2026](/ar/release-notes/2026/nama-erp-202607-release-notes.md)
     - [ملاحظات إصدار نما ERP - أغسطس 2026](/ar/release-notes/2026/nama-erp-202608-release-notes.md)
     - [ملاحظات إصدار نما ERP - سبتمبر 2026](/ar/release-notes/2026/nama-erp-202609-release-notes.md)
+    - [ملاحظات إصدار نما ERP - أكتوبر 2026](/ar/release-notes/2026/nama-erp-202610-release-notes.md)
 
 </div>

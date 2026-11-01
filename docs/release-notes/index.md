@@ -138,5 +138,6 @@
     - [Nama ERP Release Notes - July 2026](/release-notes/2026/nama-erp-202607-release-notes.md)
     - [Nama ERP Release Notes - August 2026](/release-notes/2026/nama-erp-202608-release-notes.md)
     - [Nama ERP Release Notes - September 2026](/release-notes/2026/nama-erp-202609-release-notes.md)
+    - [Nama ERP Release Notes - October 2026](/release-notes/2026/nama-erp-202610-release-notes.md)
 
 </div>
