@@ -6,6 +6,10 @@ entities: [AIToolDefinition, APICredentials]
 
 **MCP (Model Context Protocol)** is the open standard AI assistants — such as Claude Desktop, Claude Code, and others — use to connect to external systems, read their data, and act on them. Nama ERP ships with a **built-in MCP server**: once the AI module is installed, any MCP client can connect to the system directly and use the tools defined on the [AI Tool Definition](./ai-tool-definitions.md) screen — searching records, reading documents, running reports, and even importing new records — all under a real user account with the full security model applied.
 
+::: tip Prefer to watch?
+The [video guide on Getting Better Support with an AI Assistant](./ai-assisted-support.md) sets up this server from scratch with Claude: the tool definitions, one API key per user, the connection file, and a live session as an administrator and as a sales manager.
+:::
+
 ::: info Requirements
 - The AI module installed and licensed — without it, the server is not mounted at all.
 - If the licence carries an end date for the MCP subscription, that date must not have passed — after it, every request is refused (see [Messages you may see](#Messages-you-may-see)).

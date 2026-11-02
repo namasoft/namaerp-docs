@@ -17,6 +17,12 @@ This page walks through the whole setup. **You do not need to be a developer and
 Nama technical support staff, and system administrators at customer sites who want the same capability in-house. Allow about fifteen minutes for the one-time setup.
 :::
 
+## Watch the video guide
+
+A fourteen-minute video does the whole setup on screen. It prepares Claude, defines a toolkit for each role, gives each user an API key, and connects Claude to Nama. It then follows an administrator and a sales manager through a live system: they ask the documentation, read records, query across companies, enter a supplier's PDF invoice as a draft, and build a report, a dashboard and a tool. The steps below are the written version of the same setup.
+
+<iframe style="width:100%;max-width:800px;aspect-ratio:16/9;border:0" src="https://www.youtube.com/embed/GBxH21jY3gc" title="Connect Nama ERP to AI and Use It from Claude: Full Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Step 1: Install Claude Desktop
 
 We recommend **Claude Desktop**, because it puts everything in one window with no command line at all. Download it from [claude.com/download](https://claude.com/download), install it, launch it, and sign in with your Anthropic account. (If you already work with Claude Code in a terminal, that does exactly the same job: run it inside the knowledge-base folder from Step 3 on.)

@@ -17,6 +17,12 @@ entities: [AIToolDefinition]
 لموظفي الدعم الفني في نما، ولمديري الأنظمة لدى العملاء الذين يريدون القدرة نفسها داخل شركاتهم. خصّص نحو ربع ساعة للإعداد لمرة واحدة.
 :::
 
+## شاهد الشرح بالفيديو
+
+فيديو مدته نحو ثماني عشرة دقيقة ينفّذ الإعداد كاملًا أمامك: يجهّز Claude، ويعرّف مجموعة أدوات لكل دور، ويعطي كل مستخدم مفتاح API، ثم يربط Claude بنما. وبعدها يتابع مدير النظام ومدير المبيعات على نظام حقيقي: يسألان التوثيق، ويقرآن السجلات، ويستعلمان عبر الشركات، ويُدخلان فاتورة مورّد من ملف PDF كمسودة، ويبنيان تقريرًا ولوحة معلومات وأداة. والخطوات التالية هي النسخة المكتوبة من الإعداد نفسه.
+
+<iframe style="width:100%;max-width:800px;aspect-ratio:16/9;border:0" src="https://www.youtube.com/embed/jIFlOf88QUo" title="ربط نما ERP بالذكاء الاصطناعي واستخدامه من Claude: الدليل الكامل" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## الخطوة الأولى: تثبيت Claude Desktop
 
 نوصي بتطبيق **Claude Desktop**، لأنه يجمع كل شيء في نافذة واحدة بلا سطر أوامر إطلاقًا. نزّله من [claude.com/download](https://claude.com/download)، وثبّته، وشغّله، وسجّل الدخول بحسابك لدى Anthropic. (وإن كنت تعمل أصلًا بـ Claude Code في Terminal، فهو يؤدي المهمة نفسها تمامًا: شغّله داخل مجلد قاعدة المعرفة بدءًا من الخطوة الثالثة.)

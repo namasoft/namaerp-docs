@@ -14,6 +14,7 @@ Sometimes it's easier to watch than to read. This is the home for Nama ERP video
 Self-contained videos that stand on their own.
 
 <LandingGrid>
+  <LandingCard icon="🤖" title="Connect Nama ERP to AI and Use It from Claude" link="/modules/ai/ai-assisted-support.md" details="A step-by-step guide: tool definitions per role, one API key per user, connecting Claude Desktop or Claude Code, then a live session as an administrator and a sales manager." />
   <LandingCard icon="✨" title="Nama ERP's New UI & AI Integration Through MCP" link="/videos/new-ui-and-mcp-webinar.md" details="A tour of the redesigned interface and dashboards, followed by a practical demonstration of secure AI-agent integration through MCP." />
   <LandingCard icon="💿" title="Installation Video" link="/videos/installation-video.md" details="Set up a new server with multiple Tomcat instances and databases, then install Nama ERP from scratch." />
   <LandingCard icon="🏭" title="Actual & Indirect Manufacturing Costs" link="/videos/manufacturing-actual-overhead.md" details="How indirect and actual costs are defined and handled inside the manufacturing system." />
