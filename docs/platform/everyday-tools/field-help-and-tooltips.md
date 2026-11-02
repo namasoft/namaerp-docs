@@ -126,11 +126,12 @@ shows the first one the user is allowed to see:
 2. Within each group, a higher **Priority** comes first.
 
 The **Apply To** grid decides who is allowed. Each line names a **Security Profile**, **User**,
-**Employee** or user **Group**, and marks it **Allow** or **Prevent**. With the grid empty, everyone
-sees the tooltip. Otherwise:
+**Employee**, user **Group** or POS **Register**, and marks it **Allow** or **Prevent**. With the grid
+empty, everyone sees the tooltip. Otherwise:
 
-- A line naming the user, or the user's employee, outweighs any number of group and profile lines. So
-  "Prevent the Sales profile, Allow Ahmed" lets Ahmed see it and nobody else.
+- A line naming the user, the user's employee, or the register the request comes from outweighs any
+  number of group and profile lines. So "Prevent the Sales profile, Allow Ahmed" lets Ahmed see it and
+  nobody else.
 - If the matching **Prevent** lines outweigh the matching **Allow** lines, the user is skipped.
 - If the grid has **Allow** lines and none of them matches the user, the user is skipped as well — an
   Allow line turns the tooltip into an invitation-only one.
@@ -138,6 +139,47 @@ sees the tooltip. Otherwise:
 A skipped user is not shown nothing: the system moves on to the next tooltip on the field. That makes
 it possible to give managers a detailed tooltip and everyone else a simple one on the same field —
 the managers' version with the higher priority and an Allow line, the general one with no Apply To.
+
+### Tooltips in the POS
+
+The cashier at the counter benefits from tooltips as much as the salesman in the office: scan an item,
+and the stock in the other branches or the customer's points balance is right there. The POS uses the
+same Tooltip Definition records, with a few differences worth knowing.
+
+**Which screens.** A Parameters Mapping line reaches the POS when its screen is **POS Sales Invoice**,
+**POS Sales Return**, **POS Sales Replacement**, **POS Order Reservation**, **POS Payment**,
+**POS Receipt**, **POS Cash Drawer**, **POS Shift Opening** or **POS Shift Closing**. A line with no
+screen at all also reaches the POS and works on every POS screen that has the field; when both exist
+for the same field, the line for the particular screen wins.
+
+**The lines grid.** Attach the tooltip to the item of the invoice lines, the same line you would use
+for the sales invoice in the browser. The cashier selects a line and presses **F9**, or double-clicks
+it. The parameters can be filled from the selected line: its item, item code, warehouse, locator,
+revision, color, size, lot, box, serial number, unit and quantity. So one stock tooltip can show the
+balance of exactly the color and size on the line.
+
+**Automatic or on demand.** F9 and double-click show the tooltip whether or not
+**Automatically Display Tooltip When Field Value Changes** is ticked. With it ticked, the tooltip also
+appears by itself when an item is added to the invoice or the cashier presses Enter or Tab on the
+lines grid.
+
+**One register, not all of them.** Inside the POS, the User, Employee, Group and Security Profile lines
+of **Apply To** are matched against the user the register connects to the server with, not the cashier
+signed in at the counter, and many registers often share that user. To aim a tooltip at particular
+registers, add a **Register** line instead:
+
+- **Allow** a register to show the tooltip on that register only. Add one Allow line per register.
+- **Prevent** a register to show it everywhere except there.
+
+On a register the tooltip is not for, nothing appears, not even a "no tooltip" message, so an
+automatic tooltip does not pop up empty on every scan. Keep in mind that a tooltip with an Allow
+register line stops showing in the browser and the mobile app, because those are not a register; if
+the office needs it too, give them a separate tooltip.
+
+::: warning Restart the POS after changing a tooltip
+The POS downloads the tooltip definitions once, when it starts. After adding or changing a tooltip, or
+its Apply To lines, close the POS and open it again.
+:::
 
 ### Finding the tooltips on a screen
 
