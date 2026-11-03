@@ -22,6 +22,7 @@ Reports are how you get your data back out of Nama ERP, and printed forms are ho
 
 <LandingGrid>
   <LandingCard icon="🎯" title="Which Printed Form Comes Out" link="/platform/reports/printed-form-selection.md" details="The Print button never asks. What decides which form prints, and what stops one printing at all." />
+  <LandingCard icon="🖌️" title="Report Designs" link="/platform/reports/report-designs.md" details="Theme Colors, Modern or Classic, chosen when a report runs: default designs, print-friendly forms, summary cards and the Powered by line." />
   <LandingCard icon="🎨" title="Report Styles" link="/platform/reports/report-styles.md" details="Reusable fonts, colours and borders that wizard fields point at, instead of formatting every field by hand." />
   <LandingCard icon="📋" title="Custom Report Menu" link="/platform/reports/custom-report-menu.md" details="Put your own reports on the More menu of any screen, with parameters filled in from the record on screen." />
   <LandingCard icon="📑" title="Multi Value Report Parameter" link="/platform/reports/multi-value-report-parameters.md" details="A saved list of values that a scheduled task or AI tool passes to a report parameter that accepts several." />

@@ -77,6 +77,9 @@ These exist because a report covers a range of records and a form covers one:
 - **Union tables** and **where lines**, for combining and narrowing the main query.
 - **A Run button.** You can run a report from the wizard and look at it. There is no equivalent for a
   form — you exercise a form by printing a real document.
+- **The Modern banner and summary cards.** Both wizards' output prints in the three
+  [report designs](/platform/reports/report-designs) and both set a **Default Report Design**, but only a
+  report gets the banner and the totals cards of the Modern design.
 
 ## What only the Printing Form Wizard has
 

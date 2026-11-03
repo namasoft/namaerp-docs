@@ -416,6 +416,21 @@ fieldID,operator,value,logic;
 ابنِ الشروط بصرياً في شاشة [تعريف المعايير](/ar/platform/automation-and-rules/criteria-definitions) (Criteria Definition)، ثم استخدم **Convert to Text**. والناتج قالب يعمل تلصقه ثم تجعله ديناميكياً بـ `tempo(...)`.
 :::
 
+### موقع البرنامج نفسه
+
+`NamaRep.poweredBy()` ترجع **Powered by** متبوعة باسم البرنامج في هذه النسخة، مثل *Powered by Nama ERP 7*، والنسخة التي تحمل علامة تجارية أخرى تحصل على اسمها هي. و`NamaRep.appUrl()` ترجع موقع تلك العلامة. ومعاً تكوّنان السطر الصغير الذي يطبعه كل تقرير ونموذج من أدوات الإنشاء أسفل كل صفحة (انظر [تصاميم التقارير](/ar/platform/reports/report-designs#sTr-Powered-by)). ولإضافة السطر نفسه إلى تقرير مكتوب يدوياً ضع هذا في أسفل تذييل الصفحة، وفي تذييل الصفحة الأخيرة إن وُجد:
+
+```xml
+<textField hyperlinkType="Reference" hyperlinkTarget="Blank">
+    <reportElement x="355" y="20" width="200" height="12" forecolor="#8A94A3"/>
+    <textElement textAlignment="Right"><font size="7"/></textElement>
+    <textFieldExpression><![CDATA[NamaRep.poweredBy()]]></textFieldExpression>
+    <hyperlinkReferenceExpression><![CDATA[NamaRep.appUrl()]]></hyperlinkReferenceExpression>
+</textField>
+```
+
+النص بالإنجليزية دائماً، حتى في التقارير العربية.
+
 ## إنشاء السجلات من التقرير
 
 يستطيع التقرير أن يحمل زراً يفتح سجلاً جديداً مملوءاً سلفاً — سند قبض مقابل الفاتورة التي على السطر، أو أمر شراء مبنياً على قائمة النواقص التي تُطبع. والرابط لا يحفظ شيئاً؛ إنما يفتح شاشة السجل الجديد وحقولها ممتلئة، ويعتمده المستخدم بنفسه.

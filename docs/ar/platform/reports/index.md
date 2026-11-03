@@ -22,6 +22,7 @@ title: التقارير والنماذج المطبوعة
 
 <LandingGrid>
   <LandingCard icon="🎯" title="أي نموذج طباعة سيخرج" link="/ar/platform/reports/printed-form-selection.md" details="زر الطباعة لا يسأل. ما الذي يقرّر أي نموذج يُطبع، وما الذي يمنع الطباعة أصلًا." />
+  <LandingCard icon="🖌️" title="تصاميم التقارير" link="/ar/platform/reports/report-designs.md" details="ألوان الثيم أو الحديث أو الكلاسيكي، يُختار عند تشغيل التقرير: التصميم الافتراضي، والنماذج المناسبة للطباعة، وبطاقات الملخص، وسطر Powered by." />
   <LandingCard icon="🎨" title="تنسيقات التقارير" link="/ar/platform/reports/report-styles.md" details="خطوط وألوان وحدود قابلة لإعادة الاستعمال تشير إليها حقول الأداة، بدل تنسيق كل حقل بمفرده." />
   <LandingCard icon="📋" title="قائمة تقارير مخصصة" link="/ar/platform/reports/custom-report-menu.md" details="ضع تقاريرك في قائمة المزيد في أي شاشة، بمدخلات تُملأ من السجل المعروض." />
   <LandingCard icon="📑" title="قيم متعددة لمدخل تقرير" link="/ar/platform/reports/multi-value-report-parameters.md" details="قائمة قيم محفوظة تمرّرها مهمة مجدولة أو أداة ذكاء اصطناعي لمدخل تقرير يقبل أكثر من قيمة." />

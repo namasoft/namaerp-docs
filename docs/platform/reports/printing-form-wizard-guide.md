@@ -303,6 +303,19 @@ The menu entry only appears for users who may create a printing form. If somebod
 screen where you can, that is why.
 :::
 
+## How the printed form looks
+
+A form built with this wizard prints in one of three designs: **Theme colors**, **Modern** or **Classic**.
+Nobody is asked which one. The form's **Default Report Design**, on the **Main** tab, decides when it is
+set; otherwise each user's **Print design** preference does. Theme colors and Modern colour the grid of
+lines and the header block in print-friendly tints, and Classic prints the form exactly as you designed
+it. The header block keeps its layout in every design, and a label or value with its own Report Style
+keeps that style.
+
+Every form also ends each page with a small **Powered by** line linked to the application's website.
+See [Report Designs](/platform/reports/report-designs) for the details, including how the theme colour
+is chosen.
+
 ## See also
 
 - [How Nama chooses which form prints](/platform/reports/printed-form-selection) — the resolution

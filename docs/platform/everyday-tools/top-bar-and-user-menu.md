@@ -88,7 +88,7 @@ The **Settings** window has five tabs down its side.
 
 **GUI Preferences** holds the display settings, which apply in this browser on this device only — the same user on another computer starts again from the defaults:
 
-- **General Preferences** — **Density Mode** (normal, compact or ultra-compact spacing), **Dark Mode**, **Dark Nav Bar And Side Bar** and **Show Menu Icon Colors**.
+- **General Preferences** — **Density Mode** (normal, compact or ultra-compact spacing), **Dark Mode**, **Dark Nav Bar And Side Bar**, **Show Menu Icon Colors**, and **Print design**, the design forms and lists print in when printed from a screen (see [Report Designs](/platform/reports/report-designs#Printing-from-a-screen)).
 - **Screens Preferences** — **Horizontal Mode** (label and field on the same row), **Quad Layout** (four fields to a row) and **Toolbar Labels** (titles under the toolbar icons). The **Screen Preview** beside them shows the effect on a sample screen as you switch.
 - **Sound Effects** — a sound, or none, for notifications, approvals, chat messages and finished background tasks.
 - **GUI Themes List** — the theme cards described on [Themes](/platform/everyday-tools/ui-themes).

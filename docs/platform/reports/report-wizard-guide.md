@@ -1,5 +1,5 @@
 ---
-description: "Building reports with the Report Wizard: a first sales invoice report, the main fields, parameters and custom parameters, calculated columns, grouping, data sources, show all values, reporting on several tables, unit of measure conversion and the messages you may see."
+description: "Building reports with the Report Wizard: a first sales invoice report, the main fields, parameters and custom parameters, calculated columns, grouping, data sources, show all values, reporting on several tables, unit of measure conversion, report designs and summary cards, and the messages you may see."
 entities: [ReportWizard]
 menu: Administration → Reports → Report Wizard
 ---
@@ -622,6 +622,71 @@ If the two conditions are not met (`UOMConversion` parameter + `InvItem` field),
 ```
 :::
 
+## Designs and summary cards
+
+Every report the wizard builds can print in three designs, chosen by the reader in the **Display Options**
+section of the questions: **Theme colors**, which follows the colour of the user's screen theme;
+**Modern**, with a banner and summary cards; and **Classic**, the look described on this page. Two
+settings in the wizard shape them:
+
+- **Default Report Design** on the **Main** tab sets the design the question starts with.
+- The **Summary Cards** grid on the **Page Format Page** tab defines the total boxes
+  that print at the top of the report, in every design. With no lines, the report has no cards.
+
+The wizard also adds a small **Powered by** line, linked to the application's website, at the foot of every
+page. All of this is explained in [Report Designs](/platform/reports/report-designs).
+
+### Settings that work against the designs
+
+Most wizard settings print the same in every design. The ones below limit what **Theme colors** and
+**Modern** can do, so check them first when a design does not look right:
+
+- **Background Image.** When the report has a background image, the wizard makes the cells
+  see-through so the image shows behind them, unless **Do Not Make Fields Transparent With Background
+  Image** is ticked. In Theme colors and Modern the column titles and the totals still print on their
+  coloured strip, but the rows lose their alternating colours, so the image shows behind the data. To
+  keep the row colours, tick **Do Not Make Fields Transparent With Background Image**.
+- **Style** or **Conditional Style Grid** on a field line. The column keeps that style in every design
+  and on every row, not only on the rows where a condition is met. In Theme colors and Modern it looks
+  like a Classic column inside a coloured table. Give a column a style only when you want it to look
+  different on purpose. **Summary Style** and **Summary Conditional Style Grid** do the same for the
+  column's total.
+- **The wizard's own colours.** The background and text colours in **Column Header Band
+  Specifications**, **Detail Band Specifications** and **Summary Band Specifications**, and the colours
+  of **Line By Line Colouring Style**, print in **Classic** only. Theme colors and Modern use their own
+  colours instead. This is expected, not a fault.
+- **Image, barcode and QR code columns.** A field shown as an image, or with **Display Number As** set
+  to a barcode or a QR code, keeps its white background and does not take the row colours.
+- **Header components on every page.** The Modern banner already shows the report title, the logo, the
+  date and time, the user name and the company name. It takes the place of those header components only
+  when their **Component Position** is **First Page Header Only**. In **All Pages Header** they also
+  print under the banner on the first page, so the reader sees them twice.
+- **The logo.** The banner shows the logo of the company the user is logged in to, in a box about three
+  times as wide as it is high. The logo keeps its shape, so a wide logo fills the box and a square or
+  tall one prints small. A company with no logo gets the first letter of its name instead.
+- **Crosstabs.** A crosstab in the report keeps its own look in every design.
+- **A save that changes nothing.** The report is rebuilt only when a save changes the wizard. After
+  changing one of the settings above, check that the report was saved with the change before you judge
+  the result.
+
+### Where to read more
+
+[Report Designs](/platform/reports/report-designs) covers the rest:
+
+- **Totals on cards**: which numbers belong on a card, and why **Count** counts rows while **Distinct
+  Count** counts customers or invoices. See [Summary cards](/platform/reports/report-designs#Summary-cards)
+  and [What to put on a card](/platform/reports/report-designs#What-to-put-on-a-card).
+- **Totals in the table**: the summary row and the group header and footer rows print in the design's
+  total colour, with a thick line above them. Turn them on as usual with **Has Total In Summary** and
+  the grouping grids (see [Totals, aggregation and hidden columns](#Totals-aggregation-and-hidden-columns)).
+- **Lines and borders**: how **Vertical Borders**, **Horizontal Borders** and **Border Line Preset**
+  show in each design, in [What keeps its own look](/platform/reports/report-designs#What-keeps-its-own-look).
+- **Choosing the design**: the **Display Options** questions, the report's default design, and printing
+  from a screen, in [Choosing a design when you run a report](/platform/reports/report-designs#Choosing-a-design-when-you-run-a-report)
+  and [Printing from a screen](/platform/reports/report-designs#Printing-from-a-screen).
+- **Older reports**: a report built before the designs gets them the next time its wizard is saved with
+  a change. See [Reports that existed before the designs](/platform/reports/report-designs#Reports-that-existed-before-the-designs).
+
 ## Messages you may see
 
 Refusals raised when you save a Report Wizard record.
@@ -642,3 +707,6 @@ Refusals raised when you save a Report Wizard record.
 | *The parameter group {0} is repeated in lines {1} and {2}* — «مجموعة المدخلات {0} مكررة في السطرين {1} و {2}» | Two rows of the **Parameter Groups** grid carry the same name, so a parameter row naming it could belong to either. | Rename one of the two sections, or merge them into one row. |
 | *The parameter group name {0} is already used as a parameter name* — «اسم مجموعة المدخلات {0} مستخدم بالفعل كاسم مدخل» | A section's name is the same as the name of one of the report's parameters — a field, a generated name such as `customer_Equals`, or one of the parameters Nama fills in by itself. Each section becomes a parameter of its own in the report, so the two names would clash. The same message can also appear when the report is generated, for the few names the wizard only creates at that point. | Give the section a name that cannot be mistaken for a parameter, for example with a `grp` prefix. |
 | *The parameter group {0} is not defined in the parameter groups grid* — «مجموعة المدخلات {0} غير معرفة في جدول مجموعات المدخلات» | A row of the **Parameters** grid names a section in its **Parameter Group** column that has no row in the **Parameter Groups** grid — usually a typo. | Correct the name on the parameter row, or add the section to the **Parameter Groups** grid. |
+| *Summary card {0} needs a field or an expression* — «بطاقة الملخص {0} تحتاج إلى حقل أو تعبير» | Line {0} of the **Summary Cards** grid has neither a **Field** nor an **Expression**. | Fill one of them, or delete the line. |
+| *The field {0} of summary card {1} is not one of the report fields* — «الحقل {0} في بطاقة الملخص {1} ليس من حقول التقرير» | The card names a field that the report does not read. | Pick a field that is a column of the report, or add it as a hidden column. |
+| *Summary card {0} adds or averages the field {1}, which is not a number* — «بطاقة الملخص {0} تجمع أو تحسب متوسط الحقل {1} وهو ليس رقما» | **Sum** and **Average** need numbers; the field is a text, a date or a reference. | Choose **Count**, **Distinct Count**, **Highest** or **Lowest**, or a number field. |

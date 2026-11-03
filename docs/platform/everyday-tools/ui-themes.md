@@ -58,6 +58,10 @@ When none of the built-in themes fits — a company that wants its own brand col
 
 **Edit My Theme** in GUI Preferences opens the user's own theme for editing. A theme that has **Only For User** filled in is visible to that user alone. Creating a theme that everyone can see needs the **Can Create Theme For All Users** permission in the user's security profile, so one person's experiment does not end up in everybody's list.
 
+## Reports in the theme's colour
+
+The theme reaches beyond the screen. A report built with the Report Wizard prints by default in the **Theme colors** design, which fills the column titles with the theme's main colour and shades the rows to match, so a user on the Pink theme gets a pink report. The report always uses the light-mode colour and prints on white, even in dark mode. A result that is already open keeps its colours: after switching themes, press F5 in the report viewer to see it in the new ones. See [Report Designs](/platform/reports/report-designs).
+
 ## The system themes
 
 Each theme below is shown on the same Sales Invoice, with the main menu open, first in light mode and then in dark mode.

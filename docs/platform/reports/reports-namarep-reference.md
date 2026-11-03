@@ -416,6 +416,21 @@ fieldID,operator,value,logic;
 Build the conditions visually on the [Criteria Definition](/platform/automation-and-rules/criteria-definitions) screen, then use **Convert to Text**. The result is a working template you can paste in and then make dynamic with `tempo(...)`.
 :::
 
+### The application's own website
+
+`NamaRep.poweredBy()` returns **Powered by** followed by the application name of the installation, such as *Powered by Nama ERP 7*; a branded installation gets its own brand name. `NamaRep.appUrl()` returns that brand's website. Together they make the small line that every wizard report and form prints at the foot of each page (see [Report Designs](/platform/reports/report-designs#The-Powered-by-line)). To add the same line to a hand-written report, put this at the bottom of the page footer, and of the last page footer if the report has one:
+
+```xml
+<textField hyperlinkType="Reference" hyperlinkTarget="Blank">
+    <reportElement x="355" y="20" width="200" height="12" forecolor="#8A94A3"/>
+    <textElement textAlignment="Right"><font size="7"/></textElement>
+    <textFieldExpression><![CDATA[NamaRep.poweredBy()]]></textFieldExpression>
+    <hyperlinkReferenceExpression><![CDATA[NamaRep.appUrl()]]></hyperlinkReferenceExpression>
+</textField>
+```
+
+The text is always English, also on Arabic reports.
+
 ## Creating records from a report
 
 A report can carry a button that opens a new, pre-filled record — a receipt voucher against the invoice on the row, a purchase order built from the shortage list being printed. The link does not save anything; it opens the new-record screen with the fields already populated, and the user commits it.
