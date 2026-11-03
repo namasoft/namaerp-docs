@@ -148,6 +148,36 @@ The **Context Field 1 … 30** columns list what the screen has to send to the s
 ```
 :::
 
+### Copying the lines of another document in one step
+
+A journal entry often repeats one written before. The user picks the earlier entry in `ref1`, and its lines should appear straight away with every column filled in: account, debit, credit, subsidiary, narration and the rest.
+
+One line on `ref1` does it. `copyOf` copies every column the two tables share, so the expression needs no line per column:
+
+```ini
+lines=copyOf(ref1.$toReal.lines)
+```
+
+- `ref1` can point at any kind of record, so `$toReal` is needed to reach that record's lines.
+- If the user picks a different entry, the lines are rewritten in place: the rows already on screen are reused and only the extra ones are added or removed.
+- Add more mapping lines after it to change the copied rows, for example `lines.narration="Repeated entry"`.
+
+The context fields come out as `lines`. The screen has to send the lines it already has for them to be reused, and `ref1` itself is always sent because it is the field that triggers the action. The full rules for `copyOf` are in [Field Maps — Copying All Fields of a Table at Once](/entity-flows/core/ai-generated-field-maps-documentation#Copying-All-Fields-of-a-Table-at-Once).
+
+::: details JSON for Direct Import
+```json
+{
+  "lines": [
+    {
+      "forType": "JournalEntry",
+      "fieldID": "ref1",
+      "expression": "lines=copyOf(ref1.$toReal.lines)"
+    }
+  ]
+}
+```
+:::
+
 ### What the Fields To Update column is for
 
 After the expression has run, the screen is told which fields to re-read from the result. Left empty, **Fields To Update** is worked out for you: every field on the **left** of an `=` in the expression is refreshed, which is what you want almost every time.

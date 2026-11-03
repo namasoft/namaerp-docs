@@ -87,6 +87,34 @@ details=[5]              # Create exactly 5 empty lines
 details=[clear]          # Remove all existing lines
 ```
 
+### Copying All Fields of a Table at Once
+`[lines]` only gives the target the right number of empty lines, so on its own it needs one more mapping line per column (`details.item=lines.item`, `details.quantity=lines.quantity`, …). When the two tables share most of their columns, as a document and a copy of it do, `copyOf` copies every column in one line:
+
+```ini
+details=copyOf(lines)                 # Another table on the same record
+details=copyOf(salesOrder.details)    # The lines of the document picked in the salesOrder field
+details=copyOf(details)               # In a generate-entity flow: the source document's lines into the new one
+lines=copyOf(ref1.$toReal.lines)      # Through a generic reference: add $toReal
+```
+
+A generic reference such as `fromDoc` or `ref1` can point at any entity type, so it does not know which tables it has. Put `$toReal` after it to reach the record it points at, as everywhere else in field maps. Without it the flow stops with *error while trying to get value for field ref1.lines*.
+
+How it behaves:
+- The target ends up with exactly as many lines as the source, and line 1 holds a copy of source line 1, line 2 of source line 2, and so on. An empty source empties the target.
+- A column is copied when both tables have a field with the **same id** and a compatible type. Any other column in the target is cleared: `copyOf` replaces the whole line, it does not merge into it.
+- The target keeps its own lines. Running the same mapping again (for example each time the user changes the source) updates the existing lines in place rather than deleting and recreating them, so each line keeps its identity. When the source has more lines than the target, the extra lines are new; when it has fewer, the extra target lines are removed.
+- Mapping lines that come after `copyOf` see the copied lines, so you can adjust some columns afterwards:
+
+```ini
+details=copyOf(salesOrder.details)
+details.warehouse=warehouse
+details.remarks="Copied from order"
+```
+
+The left side must be a table, and the right side must lead to a table. Anything else stops the flow with *copyOf can only fill a table, but {0} is not a table* or *copyOf needs a table to copy from, but {0} is not a table*.
+
+In a [GUI post action](/platform/automation-and-rules/gui-post-actions.md), `copyOf` adds the target table to the context fields automatically, because the screen has to send the lines it already has for them to be reused. It also adds the source: the table itself, or the reference field it is reached through (`salesOrder` in the example above).
+
 ### Adding Lines
 ```ini
 details=[addLines(5)]              # Add 5 new empty lines
