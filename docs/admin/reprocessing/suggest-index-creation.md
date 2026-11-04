@@ -14,6 +14,10 @@ Nama creates the index on the lines of its busiest documents at start-up, named 
 If you created one of these indexes by hand before, the table now has two copies. The [Duplicate Index Finder](/admin/reprocessing/database-size-and-index-utilities#Duplicate-Index-Finder) reports the extra copy, and a critical error reminds the support team until it is dropped.
 :::
 
+::: tip For any slow query, not only detail tables
+The [Index Advisor](/admin/reprocessing/database-size-and-index-utilities#Index-Advisor) reads SQL Server's own record of the indexes its queries were missing, on any table, shows the queries behind them, and creates the ones the support team selects.
+:::
+
 ## How to Use This Query
 
 The following SQL query searches for tables in your database that:

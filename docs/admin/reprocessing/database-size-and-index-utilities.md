@@ -1,10 +1,10 @@
 ---
-description: "Utilities that shrink a Nama database and remove wasted indexes: narrowing the 255-byte reference columns older versions created, replacing the over-wide origin indexes, and dropping duplicate indexes, with their dry runs, apply buttons and the support-team login they need."
+description: "Utilities that shrink a Nama database and remove wasted indexes: narrowing the 255-byte reference columns older versions created, replacing the over-wide origin indexes, dropping duplicate indexes, and creating the indexes SQL Server reports missing, with their dry runs, apply buttons and the support-team login they need."
 ---
 
 # Database Size and Index Utilities
 
-Databases that were created by older versions of Nama carry a few leftovers that make them bigger and slower than they need to be. Nothing is wrong with the data — every document, balance and report is correct — but the same data takes more disk, more memory and more time to read. The three utilities on this page find those leftovers and repair them from inside the application, with no script to run by hand.
+Databases that were created by older versions of Nama carry a few leftovers that make them bigger and slower than they need to be. Nothing is wrong with the data — every document, balance and report is correct — but the same data takes more disk, more memory and more time to read. Three utilities on this page find those leftovers and repair them from inside the application, with no script to run by hand. A fourth, the [Index Advisor](#Index-Advisor), works the other way round: it finds the indexes the database is missing.
 
 Think of it as repacking a warehouse whose shelves were built too deep: the stock does not change, but once the shelves are the right size the same stock fits in a smaller room and is quicker to reach.
 
@@ -18,11 +18,11 @@ You rarely have to go looking: when a database still needs any of the three, the
 
 ## How these utilities behave
 
-All three work the same way, so it is worth knowing the pattern once.
+All four work the same way, so it is worth knowing the pattern once.
 
 **Opening one changes nothing.** The link opens a report: what it found, how much space is involved, and the exact database statements it would run. Any administrator can open the report as often as they like.
 
-**Applying needs the support team's login.** The buttons that change the database — **Narrow**, **Fix all indexes**, **Drop selected** and the like — appear only for an administrator who signed in through the Namasoft CRM, the QR login the support team uses. Anyone else sees the report with a note instead of the buttons, and an apply link opened by anyone else is refused with:
+**Applying needs the support team's login.** The buttons that change the database — **Narrow**, **Fix all indexes**, **Drop selected**, **Create selected** and the like — appear only for an administrator who signed in through the Namasoft CRM, the QR login the support team uses. Anyone else sees the report with a note instead of the buttons, and an apply link opened by anyone else is refused with:
 
 *Changing the database schema needs an admin user logged in through the Namasoft CRM* — «تغيير هيكل قاعدة البيانات يتطلب مستخدم مدير مسجل الدخول من خلال نظام CRM الخاص بنماسوفت»
 
@@ -79,6 +79,34 @@ Because deciding which index to drop needs a developer's judgment, this one is a
 Logged in through the CRM, the support team can also tick indexes in the report itself and drop them with **Drop selected**, under the same checks.
 
 While the report has any index it would suggest dropping, the support team sees a critical error at login that gives their number and size. A common source is an index the support team once created by hand on a large table, which a later version of Nama now creates itself under its own name: the table then has two copies of the same index until one is dropped. The error is checked again after every drop run, and disappears once nothing is left to drop.
+
+## Index Advisor
+
+Whenever SQL Server runs a query that an index the table does not have would have made faster, it notes the index it wished for. The notes pile up: the same wish recorded many times with small differences, wishes about tables of a few hundred rows, wishes that an index created last week has already granted. The Index Advisor reads them, cleans them up, and lets the support team create the ones worth having. It also lists the opposite case: indexes that are written far more often than they are read.
+
+<UtilityLinkBuilder
+className="com.namasoft.infra.domainbase.util.jpa.dynamicschema.IndexAdvisor"/>
+
+The report has two parts.
+
+**Missing indexes.** Each row is one index to consider, best first by SQL Server's own gain score: how expensive the queries were, how much the index would save them, and how often they ran. Each row shows the table and its row count, the key and included columns, how many times SQL Server looked for it, the expected gain, an estimated size, and the name the index would get, `IX_<Table>_<columns>`, like the indexes the support team creates by hand. Before listing them the report:
+
+- folds a suggestion into a wider one on the same table that also serves it, and says so in the notes;
+- leaves out the suggestions an existing index already serves;
+- leaves out tables under 10,000 rows and suggestions looked for fewer than 100 times (the page shows how to change both limits in the link);
+- notes what to watch: an index that would copy a long text column, one with many included columns, one whose keys are too wide to create, and an existing index it would make redundant.
+
+On SQL Server 2019 and later each row also opens the queries behind it: how many times each one ran, the time it took, and its text. That is usually enough to tell which screen or report is asking.
+
+Logged in through the CRM, the support team ticks the indexes to create and presses **Create selected**. Anyone can tick them and press **Copy link for the selected** to send them to the support team instead: the link opens as a dry run that checks every index again, and its **Create these indexes** button creates them. An index is created only if its table and columns still exist and no index serves it by then. On Enterprise and Developer editions it is built while users keep working; on Standard edition saving to that table waits until it is built.
+
+::: warning The numbers start again at every SQL Server restart
+SQL Server forgets these notes when it restarts, and the page shows when that last happened. A report taken the morning after a restart shows only what ran that morning, so wait for a normal working week before deciding. Creating or dropping any index on a table also makes SQL Server forget every suggestion for that table until its queries run again, so create the ones you want on a table in one go. And an index is not free: every save to its table updates it too. Create the ones that matter, not every row.
+:::
+
+**Indexes written far more than read.** Non-unique indexes written at least 10,000 times since the restart and read less than a tenth as often, with their size, reads, writes, last read, and whether Nama itself declares the index or it was made on site. Nothing is dropped from this page: an index Nama declares comes back at the next start, and an index read rarely may still be what makes a month-end report fast. Dropping one is a decision for the development team.
+
+The report needs SQL Server's `VIEW SERVER STATE` permission for the database login. Without it the page says so in one line.
 
 ## Messages you may see
 
