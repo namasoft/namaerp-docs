@@ -2087,6 +2087,28 @@ These fields show the differences between the current version and the previous v
 - Removed detail lines
 - Modified detail line fields
 :::
+
+The Arabic pair labels everything in Arabic and the English pair in English. A reference field shows as its code and name, e.g. `ED00005 - Sales Department`. The HTML pair is a ready-styled table that you can drop straight into an e-mail body. On a brand-new record there is nothing to compare, so the fields say *No changes recorded*.
+
+#### Old values: `{oldData.…}`
+
+The `changesAs…` fields list **every** field that changed, under the system's own labels. When the customer wants a short e-mail in their own wording, listing only the fields they care about, use `oldData` instead. While a record is being saved, `{oldData.<field>}` holds the value that field had **before** this edit, and `{<field>}` holds the new value. It works on reference fields as well, so `{oldData.jobPosition.name1}` is the name of the old job position.
+
+Put each field inside an `{ifnotequal}` block so that it only appears when it actually changed. This employee e-mail lists only the job position and the employee department:
+
+```tempo
+<table border="1" cellpadding="6" style="border-collapse:collapse" dir="rtl">
+<tr><th>الحقل</th><th>القيمة القديمة</th><th>القيمة الجديدة</th></tr>
+{ifnotequal(oldData.jobPosition.code,jobPosition.code)}<tr><td>الموقع الوظيفي</td><td>{oldData.jobPosition.name1}</td><td>{jobPosition.name1}</td></tr>{endif}
+{ifnotequal(oldData.employeeDepartment.code,employeeDepartment.code)}<tr><td>إدارة موظف</td><td>{oldData.employeeDepartment.name1}</td><td>{employeeDepartment.name1}</td></tr>{endif}
+</table>
+```
+
+Compare reference fields by `.code` (or `.id`), and print `.name1` (Arabic) or `.name2` (English). On the notification definition, list the same fields in **Critical Fields**, so the e-mail only goes out when one of them changed. Otherwise, an edit to some other field sends a table with no rows.
+
+::: warning oldData only exists while an existing record is being updated
+On insert there is no previous version, so every `{oldData.…}` is empty. Use it in notifications that fire on update. Master files and documents always carry it; most other record types do not, and there both `{oldData.…}` and the `changesAs…` fields stay empty. The same `oldData` also works in validation queries — see [Criteria-based validation](/platform/governance/criteria-based-validation).
+:::
 ---
 
 ### Discussions
