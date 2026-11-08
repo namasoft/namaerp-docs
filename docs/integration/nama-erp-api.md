@@ -116,6 +116,7 @@ The API automatically excludes:
 - Calculated fields
 - The contents of binary fields (images, documents) from read responses — an attachment field comes back as its id, file name and size instead, and can be written on save; see [Uploading and Attaching Files](#Uploading-and-Attaching-Files)
 - Internal user tracking fields
+- Fields the key's user cannot see — see [Field Settings and Approval Locks in the API](#Field-Settings-and-Approval-Locks-in-the-API)
 
 ### Working with Entity Collections
 
@@ -431,6 +432,22 @@ Content-Type: application/json
   ]
 }
 ```
+
+### Field Settings and Approval Locks in the API
+
+A key works with the permissions of its user, and that includes the user's [Field Settings](/platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows): the rows on their security profile and user record that make a field *Disabled* or *InVisible*, or prevent adding or deleting grid lines. The rows are matched against each record: a record the request is about to create counts as New, a draft as Draft, and a committed record as Edit.
+
+**Reading.** `findByIdOrCode`, `list` and the records returned after a save leave out every field that is *InVisible* for the record. It is left out entirely, not sent as `null`. When `responseFields` names a hidden field one by one on `findByIdOrCode` or `list`, the request fails instead:
+
+*You are not allowed to view the field {0}* — «غير مسموح لك بعرض الحقل {0}»
+
+`id` and `code` never fail the request; they are simply left out when hidden. The `responseFields` of a **save** never fail it either, because the record is already saved by then: a hidden field named there is left out of the response.
+
+**Filtering and sorting.** `list` fails with the same message when `textCriteria` or `orderBy` uses a field the user cannot see — a filter on a hidden field would reveal its values. A list mixes drafts and committed records, so a field hidden for either of them counts as hidden here.
+
+**Saving.** `save` treats the body exactly as [Import Records](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change) treats a sheet: a record fails when the body contains a field the user may not change, whatever its value. The same applies to a field the record's current approval step locks, and to lines added to or removed from a grid where that is prevented. The failed record is listed under `failed_records` with the reason. A value written as `evalsql(...)` works only for a user with Full Authority. The messages are listed in [Messages you may see](/platform/import-export/importing-records.md#Messages-you-may-see) on the import page.
+
+So build integrations to send only the fields they are meant to change. A client that reads a record, edits one field and sends the whole record back fails as soon as the record holds a field its user cannot change.
 
 ## Uploading and Attaching Files
 

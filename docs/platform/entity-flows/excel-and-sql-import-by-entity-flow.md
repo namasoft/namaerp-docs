@@ -33,6 +33,10 @@ evalsql(select top 1 id from SalesInvoice order by valueDate desc)
 ="evalsql(select code from Account where subsidiaryType = '" & U13 & "')"
 ```
 
+Because it runs a database query, `evalsql` works in [Import Records](/platform/import-export/importing-records.md), the REST API and the MCP import tool only for users with Full Authority. For anyone else the row fails with:
+
+*Only users with full authority can use evalsql in imported values* — «استخدام evalsql في القيم المستوردة متاح فقط للمستخدمين أصحاب الصلاحيات الكاملة»
+
 ---
 
 * `findByCode` and `altCode` Columns

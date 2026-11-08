@@ -109,7 +109,9 @@ Copying an exported row to create a *new* record and leaving its `id` in place t
 
 **Numbers.** Trailing zeros are stripped, so `100.00` exports as `100`. This is cosmetic; the value is unchanged.
 
-**Fields you cannot see.** If your security profile hides a field, that column is removed from your export altogether. Two users exporting the same screen can legitimately get files with different columns.
+**Fields you cannot see.** A field your [Field Settings](/platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows) make *InVisible* is left out of your export. The rows are matched against each record. A field hidden for every record you can export, drafts and committed alike, loses its column altogether. A field hidden only for drafts, or only for committed records, keeps its column, but the records it is hidden for carry no value for it. Their cell is empty because the field was left out, not because the record holds nothing there. Two users exporting the same screen can legitimately get files with different columns.
+
+A field that is *Disabled* rather than hidden is still exported, since you can see it. Importing the file back with that column in it fails the row — see [Fields You Are Not Allowed to Change](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change).
 
 **A few unusual fields** — document term configurations, configuration entry values, textual criteria — are too large and structured to fit a cell, so they are exported as a single compressed column whose heading begins with `&`. Leave those cells exactly as they are; they round-trip correctly but cannot be edited by hand.
 

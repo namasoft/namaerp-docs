@@ -34,6 +34,10 @@ evalsql(select top 1 id from SalesInvoice order by valueDate desc)
 ="evalsql(select code from Account where subsidiaryType = '" & U13 & "')"
 ```
 
+ولأنها تنفذ استعلاماً على قاعدة البيانات، فإن `evalsql` لا تعمل في [استيراد السجلات](/ar/platform/import-export/importing-records.md) والـ REST API وأداة الاستيراد في خادم MCP إلا لأصحاب الصلاحيات الكاملة (Full Authority). أما غيرهم فيفشل السطر بالرسالة:
+
+«استخدام evalsql في القيم المستوردة متاح فقط للمستخدمين أصحاب الصلاحيات الكاملة»
+
 ---
 
 * أعمدة `findByCode` و`altCode`

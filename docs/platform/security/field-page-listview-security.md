@@ -36,8 +36,18 @@ If no row matches, the field behaves normally. Users with a full-access security
 The very common requirement — "the Customer field on an invoice must not change after the document is created" — is a single row: target the invoice, field `customer`, Control Type *Disabled*, apply on **Edit** only.
 :::
 
-::: warning Field security is a UI barrier, not a vault
-Hiding a field removes it from the edit screen. The data itself may still appear in reports, list view columns, or exports — combine field settings with report restrictions and list view security (see *List View Security* below) when the data itself is sensitive.
+### Imports, exports and the API follow the same rows
+
+The same Field Settings rows also decide what data a user can bring in and take out without opening a screen: [Import Records](/platform/import-export/importing-records.md), the [Excel export](/platform/import-export/exporting-records.md), the [REST API](/integration/nama-erp-api.md#Field-Settings-and-Approval-Locks-in-the-API) and the [MCP import and export tools](/modules/ai/ai-mcp-server.md#Field-Settings-and-Approval-Locks). There, the *Apply on* flags are matched against each record: a record the import is about to create counts as **New**, a saved draft as **Draft**, and a committed record as **Edit**.
+
+- **Writing.** A record is refused when the file or request contains a field the user may not change: one marked *Disabled* or *InVisible* for that kind of record. The value doesn't matter. Sending a locked field with the value it already has is refused too, so remove the column rather than leave it unchanged. *Prevent Insert Row* and *Prevent Delete Row* refuse an import that adds lines to a grid or removes lines from it.
+- **Reading.** An *InVisible* field is left out of what the user gets back. It is left out entirely, not sent as an empty value.
+- A row on a grid or a group of fields also covers every field inside it. A row on `details` covers `details.price`, for example.
+
+The fields an approval step locks while a record waits for approval are enforced the same way when the record is imported — see [Approvals](/platform/approvals/approvals-system.md#Field-Level-Editing-Control).
+
+::: warning Field security is not a vault
+Hiding a field removes it from the edit screen, imports and exports. The data itself may still appear in reports and list views — combine field settings with report restrictions and list view security (see *List View Security* below) when the data itself is sensitive.
 :::
 
 ## Page Security

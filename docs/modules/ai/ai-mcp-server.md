@@ -293,6 +293,16 @@ It reads nothing but the file, which makes it the cheap way to fetch one line's 
 
 It does not check whether the user may see the record the attachment belongs to: any signed-in user who has the id can fetch the file, just as with the attachment links on Nama's own screens. `PrepareAttachmentDownload`, by contrast, checks access to the record.
 
+### Field Settings and Approval Locks
+
+The tools act as the key's user, so that user's [Field Settings](../../platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows) apply to them just as they do on screen. Those are the rows on the security profile and user record that make a field *Disabled* or *InVisible*, or prevent adding or deleting grid lines. Each record is matched by its own state: a record about to be created counts as New, a draft as Draft and a committed record as Edit.
+
+- **`GetRecord`** leaves out every field that is *InVisible* for the record — left out entirely, not returned as `null`. With `mode` alone that is all that happens. A field named in `fields` that the user cannot see fails the call with *You are not allowed to view the field {0}*, apart from `id` and `code`, which are just left out.
+- **`FindRecords`** answers *You are not allowed to view the field {0}* when `fields`, `criteria` or `orderBy` uses a field the user cannot see. A filter on a hidden field would reveal its values. The list mixes drafts and committed records, so a field hidden in either counts as hidden. A hidden `code` is left out of the rows instead.
+- **`ImportRecord`** checks each record the way [Import Records](../../platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change) checks a sheet. A record fails when it contains a field the user may not change, whatever its value. It also fails when it contains a field the record's current approval step locks, or when it adds or removes lines where that is prevented. The record's error names the field; the full list of messages is on that page. A value written as `evalsql(...)` works only for a user with Full Authority.
+
+`GetRecord` returns *Disabled* fields because the user can see them, so a record read, edited and sent back whole fails on them. Have the model send only the fields it means to change.
+
 ## A Complete Workflow
 
 The usual pattern an MCP client follows to import data:

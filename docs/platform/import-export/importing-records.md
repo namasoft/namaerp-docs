@@ -69,6 +69,20 @@ If a code is genuinely ambiguous — two records sharing it — the lookup fails
 The single most common cause of a failed import is editing the readable `customer: Name` column instead of the `customer` code column beside it. Name columns are written on export and completely ignored on import.
 :::
 
+## Fields You Are Not Allowed to Change
+
+An import cannot be used to get around [Field Settings](/platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows). The sheet is checked against the importing user's rows on the security profile and user record before any value is written. A row fails when the sheet has a column for a field that is *Disabled* or *InVisible* for that kind of record. For the *Apply on* flags, a new record counts as New, a draft as Draft and a committed record as Edit.
+
+What counts is the column, not the value in it. A column left exactly as it was exported still fails the row, because the system does not try to work out whether the value changed. So when an export comes back with a column you are not allowed to change, delete that column before importing. The *Excel export* leaves out fields you cannot see, but a *Disabled* field is visible, so it is exported and has to be removed by hand.
+
+Lines are checked the same way. When the security profile prevents inserting or deleting rows in a grid, a row that would add lines to that grid, or drop some of its lines, fails. With line identifiers in the sheet, a line whose identifier the record does not have is an addition, and a record line missing from the sheet is a deletion. Without identifiers, the lines are counted: more rows than the record has is an addition, and fewer is a deletion. *Add To Current Lines* always adds.
+
+A record waiting for approval is protected the same way. If the current approval step limits which fields may be edited, a column for any other field fails the row. Line insertion or deletion that the step prevents fails the row too — see [Approvals](/platform/approvals/approvals-system.md#Field-Level-Editing-Control). Users exempted from the step's lock are not affected.
+
+Users with Full Authority are not subject to field settings, but approval locks still apply to them.
+
+The `evalsql(...)` cell function (see [Importing Data from Excel or Queries](/platform/entity-flows/excel-and-sql-import-by-entity-flow.md)) runs a database query, so it works only for users with Full Authority. Other users get a failed row instead of the value.
+
 ## Watching It Run, and Reading the Result
 
 The import is handed to a background task, so your screen stays usable. A progress entry counts through the file — *"Importing 12 of 400 — Fail: 1 Success: 11"* — and you can cancel it partway if you spot something going wrong.
@@ -112,3 +126,17 @@ The same menu carries the opposite command, **Simple Export For Docs**. It turns
 Everything above assumes the file uses Nama's own layout. Often it does not: a supplier sends a price list in their format, or a legacy system produces an export whose columns are in the wrong order with the wrong headings and three rows of company letterhead on top.
 
 You could reshape it by hand every month. Or you could describe its layout once and reuse that description — which is what [Advanced Record Import](/platform/import-export/advanced-record-import.md) is for.
+
+## Messages you may see
+
+These are written into the `@errors` cell of the row that failed. `{0}` is the field id, such as `customer` or `details.price`, or for line messages the grid, such as `details`.
+
+| Message | Why | What to do |
+|---|---|---|
+| *You are not allowed to change the field {0}* — «غير مسموح لك بتعديل الحقل {0}» | The sheet has a column for a field your Field Settings make *Disabled* or *InVisible* for this kind of record. | Delete the column from the sheet, or ask an administrator to change the Field Settings row. |
+| *The field {0} is locked while the record is under approval* — «الحقل {0} مقفل أثناء انتظار السجل للموافقة» | The record is waiting for approval and the current step does not allow editing this field. | Remove the column, or wait until the approval finishes. |
+| *You are not allowed to add lines to {0}* — «غير مسموح لك بإضافة سطور إلى {0}» | The sheet adds lines to a grid whose *Prevent Insert Row* applies to you. | Keep the sheet to the record's existing lines, with their identifiers. |
+| *You are not allowed to delete lines from {0}* — «غير مسموح لك بحذف سطور من {0}» | The sheet has fewer lines than the record, or leaves out some of its line identifiers, in a grid whose *Prevent Delete Row* applies to you. | Include every existing line, or tick *Add To Current Lines* if you meant to add. |
+| *Lines cannot be added to {0} while the record is under approval* — «لا يمكن إضافة سطور إلى {0} أثناء انتظار السجل للموافقة» | The current approval step prevents adding lines to this grid. | Wait until the approval finishes. |
+| *Lines cannot be deleted from {0} while the record is under approval* — «لا يمكن حذف سطور من {0} أثناء انتظار السجل للموافقة» | The current approval step prevents deleting lines from this grid. | Include every existing line, or wait until the approval finishes. |
+| *Only users with full authority can use evalsql in imported values* — «استخدام evalsql في القيم المستوردة متاح فقط للمستخدمين أصحاب الصلاحيات الكاملة» | A cell uses `evalsql(...)` and your security profile does not have Full Authority. | Put the actual values in the cells, or have an administrator run the import. |
