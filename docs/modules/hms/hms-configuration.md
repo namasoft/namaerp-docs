@@ -6,8 +6,8 @@ menu: Hospital Management System → Settings → Hospital Management System Set
 
 # Hospital Management System Settings
 
-The hospital module has one settings record, and it is small: seventeen options on a single tab.
-Four of them change how a stay is counted into billable days, and the rest decide which discount, tax
+The hospital module has one settings record, and it is small: sixteen options on a single tab.
+Three of them change how a stay is counted into billable days, and the rest decide which discount, tax
 and price-classifier fields the hospital screens show at all. Nothing here creates a ledger entry or blocks a
 save — but the first block decides how many nights every inpatient is charged for, so it is worth
 setting deliberately before the first admission.
@@ -47,7 +47,8 @@ A patient arrives on 1 January at 10:00 and is discharged on 3 January at 13:00.
   would have been **2 days**.
 
 The same hours set the **invoicing date** of each accommodation-invoice line (a line whose day began
-before the check-in hour is dated the previous day), and they are the "today at check-out time" that a
+before the check-in hour is dated the previous day; with *Check Out Time Is Based On Check In Time*
+ticked, every line is dated on the day it began), and they are the "today at check-out time" that a
 still-running stay is billed up to when temporary accommodation invoices are rebuilt — see
 [Accommodation & Feeding](./hms-accommodation.md).
 
@@ -55,18 +56,20 @@ still-running stay is billed up to when temporary accommodation invoices are reb
 
 Every priced hospital document carries the same price block: price, two discounts, the patient and
 insurer split, two taxes, the totals. Most hospitals use one discount and one tax, so these eight
-options hide the parts you do not use.
+options hide the parts you do not use. The **Total Price Info** block is the stay summary on the
+Patient Admission, Accommodation and Accommodation Transfer screens; the invoices' own totals always
+show both discounts and both taxes.
 
 | Option | Shows | Default |
 |---|---|---|
 | **Use Discount 1 Percentage** | Discount 1 percent, value and maximum value on service lines and price blocks | On |
-| **Use Discount 1 Value** | Discount 1 value in the document totals | On |
+| **Use Discount 1 Value** | Discount 1 value in the **Total Price Info** block | On |
 | **Use Discount 2 Percentage** | Discount 2 percent, value and maximum value on service lines and price blocks | Off |
-| **Use Discount 2 Value** | Discount 2 value in the document totals | Off |
+| **Use Discount 2 Value** | Discount 2 value in the **Total Price Info** block | Off |
 | **Use Tax 1 Percentage** | Tax 1 percent (and, on lines, its value) | On |
-| **Use Tax 1 Value** | Tax 1 value in price blocks and totals | On |
+| **Use Tax 1 Value** | Tax 1 value in price blocks and the **Total Price Info** block | On |
 | **Use Tax 2 Percentage** | Tax 2 percent (and, on lines, its value) | Off |
-| **Use Tax 2 Value** | Tax 2 value in price blocks and totals | Off |
+| **Use Tax 2 Value** | Tax 2 value in price blocks and the **Total Price Info** block | Off |
 
 These options only show or hide fields. A discount or tax that comes from a price list, a medical
 discount or a tax plan is still calculated and still recorded in the entry when its field is hidden, so turn on the
@@ -96,5 +99,7 @@ new hours.
 
 ## Options that exist but are not on the screen
 
-The settings record also holds **Show Costs**, which adds cost percent and cost value to the price
-blocks. It is not on the settings screen, so it stays off unless it is set by import.
+The settings record also holds **Show Costs** («عرض التكاليف»). Cost percent and cost value already
+show on every price block and line grid; this option adds the **Cost Value** to the **Total Price Info** block
+of the admission, accommodation and transfer as well. It is not on the settings screen, so it stays off unless it is set by
+import.

@@ -17,7 +17,7 @@ A hospital isn't a shop that sells goods. What it "sells" are **medical services
 
 Let's follow a single patient from the front door to discharge.
 
-A patient arrives and is registered in a **Patient** file — which is at once a medical record and an accounting party. If they're an outpatient, a slot is booked via an **Outpatient Reservation** against an **Outpatient Schedule**. If they're to be admitted, a **Patient Admission** is opened — the pivotal document from which the rest of the journey branches.
+A patient arrives and is registered in a **Patient** file — which is at once a medical record and an accounting party. If they're an outpatient, their visit is booked with an **Outpatient Reservation**, and the clinics' weekly hours are kept in the **Outpatient Schedule**. If they're to be admitted, a **Patient Admission** is opened — the pivotal document from which the rest of the journey branches.
 
 From the admission, an **Accommodation** document is generated that assigns the patient a bed in a room and starts charging the daily accommodation and medical-supervision fees. During the stay they may be moved between rooms via an **Accommodation Transfer**, fed via **Feeding Issues**, and the doctor orders **lab tests**, **radiology** and **surgeries** whose **results** are recorded, while drugs and supplies are dispensed from the pharmacy.
 

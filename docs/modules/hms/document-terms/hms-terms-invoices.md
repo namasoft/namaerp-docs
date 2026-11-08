@@ -30,6 +30,9 @@ line is recorded in the ledger pair by pair from the Effect group:
   the ledger.
 - **Every main line, every supplies line and every services line is recorded**, unless the term's *Do
   Not Add Supplies To Invoice* or *Do Not Add Services To Invoice* keeps that grid out.
+- **The Check Invoice and the Attendant Invoice are priced in their header**, not line by line, so they
+  record one set of values per invoice — the patient's share, the insurer's share, the discounts and
+  taxes of the header price block.
 - Each side is an ordinary account side — a fixed account or one taken from a source on the document —
   described on [Accounting Effects Configuration](/modules/supplychain/document-terms/doc-term-accounting-effects).
   HMS adds its own sources: **Patient**, **Doctor**, **Medical Insurance Company** and **Medical
@@ -83,13 +86,18 @@ given it an actual value.
 |---|---|---|
 | **Do Not Add Supplies To Invoice** | `termConfig.doNotAddSuppliesToInvoice` | The supplies grid is left out of the invoice total and out of the entry. The supplies are still issued from stock. |
 | **Do Not Add Services To Invoice** | `termConfig.doNotAddServicesToInvoice` | The same for the services grid. |
-| **Tax Plan** | `termConfig.taxPlan` | The tax plan used for a line whose service, type or room names no tax plan of its own. |
-| **Taxable** | `termConfig.taxable` | Whether the plan's taxes apply to this invoice type at all. |
+| **Tax Plan** | `termConfig.taxPlan` | The tax plan used for a line whose service, type or room names no tax plan of its own. The plan's Tax 1 and Tax 2 percents are read for the invoice's legal entity and value date. |
+| **Taxable** | `termConfig.taxable` | Whether the plan's taxes apply to this invoice type at all. It starts unticked: until you tick it, every save sets Tax 1 and Tax 2 to zero on the lines, whatever tax plan the line's service or type names. |
 | **Editable Taxes** | `termConfig.editableTaxes` | Taxes are no longer recalculated from the tax plan on save, so a tax typed on a line is kept. |
 | **Update Prices With Save** | `termConfig.updatePricesWithSave` | Every save looks every line's price up again from the insurance approval and the price lists. Prices typed by hand are overwritten — unless the invoice's *Allow Changing Main Prices*, *Allow Changing Services Prices* or *Allow Changing Supplies Prices* is ticked for that grid. |
 | **Prevent Save Without Supplies** | `termConfig.preventSaveWithoutSupplies` | Refuses to save an invoice whose supplies grid is empty. |
 | **Prevent Save Without Services** | `termConfig.preventSaveWithoutServices` | Refuses to save an invoice whose services grid is empty. |
 | **Allow Repeating Surgery Type In Invoice Line** | `termConfig.allowRepeatingSurgeryTypeInInvoiceLine` | Surgery invoice only: two operation lines may name the same surgery type. |
+
+One more rule sits outside the term: when the invoice's **Medical Document Category** has *Not Taxable
+Tax 1* or *Not Taxable Tax 2* ticked, that tax is set to zero on every recalculated line, even on a
+taxable term. This is how one category of patients — a charity case, a staff member — is billed
+without tax on the same term as everyone else.
 
 The three *Allow Changing … Prices* switches are on each invoice, not on the term. On a saved invoice
 they are ticked from the **More** menu (*Allow Changing Main Prices*, *Allow Changing Services
@@ -107,6 +115,10 @@ stock document:
 | **Origin Issue Document Type** | `termConfig.issueDocType` | **Stock Issue** issues the supplies on save; **Stock Issue Request** raises a request for the store instead. Empty: nothing is generated. |
 | **Stock Issue Book** / **Stock Issue Term** | `termConfig.issueForHMSInvoiceBook` / `termConfig.issueForHMSInvoiceTerm` | The book and term of the generated document. Both are needed. |
 
+The generated document issues from the invoice's own warehouse and points back to the invoice. It
+stays in step with the supplies grid: every save of the invoice rewrites its lines, emptying the grid
+deletes it, and cancelling or deleting the invoice deletes it too.
+
 The pharmacy-family invoices below do not use this group — they move stock through their Generation
 tab. The full story is on [Pharmacy, Supplies & Blood Bank](../hms-pharmacy-and-supplies.md).
 
@@ -114,12 +126,12 @@ tab. The full story is on [Pharmacy, Supplies & Blood Bank](../hms-pharmacy-and-
 
 ### Check, attendant, lab, radiology, physical therapy, services and supervision invoices
 
-These seven terms are the Effect tab plus one more tab, **Tax Authority** («مصلحة الضرائب»), with a
-single field, **Tax Authority Item** `termConfig.taxAuthorityItem`. On the **Check Invoice**,
-**Attendant Invoice** and **Supervision Invoice** it is the item every line is reported under when the
-invoice is sent to the tax authority. Lab, radiology, physical therapy and services invoices report
-each line under the tax-authority item of its own test type, radiology type, therapy type or medical
-service, so the field on their terms can stay empty.
+These seven terms are the Effect tab plus a **Tax Authority** («مصلحة الضرائب») tab. On the **Check
+Invoice**, **Attendant Invoice** and **Supervision Invoice** terms that tab's single field, **Tax
+Authority Item** `termConfig.taxAuthorityItem`, is the item every line is reported under when the
+invoice is sent to the tax authority. Lab, radiology, physical therapy and services invoices need no
+such item: each line is reported under the tax-authority item of its own test type, radiology type,
+therapy type or medical service, and each supplies line under its own item.
 
 ### Accommodation invoice
 
@@ -133,10 +145,12 @@ the accommodation invoice can create for you. The group **Generated Supervision 
 | **Auto Generate Supervision Invoice** | `termConfig.autoGenSupervisionInvoice` | On save, create (or rebuild) one Supervision Invoice holding a line per day of each accommodation line. Rooms ticked *Do Not Create Room Supervision Invoice* are skipped. |
 | **Supervision Invoice Book** / **Supervision Invoice Term** | `termConfig.supervisionInvoiceBook` / `termConfig.supervisionInvoiceTerm` | The book and term of the generated Supervision Invoice — whose own term then creates its entry. |
 | **Tax Authority Item** | `termConfig.taxAuthorityItem` | The item the accommodation invoice's lines are reported under to the tax authority. |
-| **Accommodation Invoice Type** | `termConfig.accommodationInvoiceType` | Shown here, but what splits the stay into invoices is the same field on the **Accommodation** term — see the stay terms page. |
 
-The accommodation invoice's term also carries a **Medical Effects** group; leave it empty, since the
-supervision charge is recorded by the generated Supervision Invoice.
+The generated Supervision Invoice carries the accommodation invoice's admission, patient, doctor,
+insurer, endurance percentages and medical document category, and is priced again when it is built.
+Each later save of the accommodation invoice rebuilds its lines. How the stay is split into
+accommodation invoices in the first place is decided on the **Accommodation** term — see
+[Stay and Operations Document Terms](./hms-terms-stay-and-operations.md#Accommodation-and-Accommodation-Transfer--building-the-accommodation-invoices).
 
 ![The Generated Supervision Invoice group of the Accommodation Invoice term](../../../ar/modules/hms/images/document-terms/hms-term-accommodation-invoice-en.png)
 
@@ -151,13 +165,23 @@ additional time, and each component has its own pair:
 |---|---|
 | **Open Surgery Cost**, **Surgeon Fees Cost**, **Surgeon Assistant Cost**, **Anesthesia Fees Cost**, **Other Cost** (Debit / Credit) | The cost of that component for the standard hours. |
 | **Open Surgery Addition Time Cost**, **Surgeon Fees Addition Time Cost**, **Surgeon Assist Addition Time Cost**, **Anesthesia Fees Addition Time Cost**, **Other Addition Time Cost** (Debit / Credit) | The extra cost of that component for hours beyond the standard. |
-| **Subsidiary Addition Time** (Debit / Credit) | Shown on the screen; the surgery entry does not record it. |
 
-The same group holds the two rules that limit surgery invoices per admission: **Do Not Create More
-Than One Invoice On The Same Admission** and **Do Not Create More Than One Invoice for The Same Surgery
-Type On The Same Admission**. Some options appear twice on this screen (the supplies/services switches,
-Other Cost, and the Origin Document Effect group); both copies are the same field. The term ends with
-a **Tax Authority** tab. How the components are priced is on
+These component pairs are recorded in addition to the Effect group's pairs, line by line, for every
+operation line that carries price components.
+
+The same group holds the two rules that limit surgery invoices per admission. Both look only at
+surgery invoices already saved on the same admission:
+
+- **Do Not Create More Than One Invoice On The Same Admission** refuses a second surgery invoice on an
+  admission that already has one.
+- **Do Not Create More Than One Invoice for The Same Surgery Type On The Same Admission** allows several
+  invoices, but refuses one whose operation line repeats a surgery type already invoiced on that
+  admission.
+
+Some options appear twice on this screen (the supplies/services switches, Other Cost, and the Origin
+Document Effect group); both copies are the same field. When the invoice is sent to the tax authority,
+each operation line is reported under the tax-authority item of its surgery type, and each services or
+supplies line under its own service or item. How the components are priced is on
 [The Surgery Lifecycle](../hms-surgery-lifecycle.md).
 
 ![The Effect tab of the Surgery Invoice term with its Price Components Costs group](../../../ar/modules/hms/images/document-terms/hms-term-surgery-invoice-en.png)
@@ -174,13 +198,29 @@ above.
 Two things differ from the service invoices:
 
 - **The stock document comes from the Generation tab.** A *Generation Book* and *Generation Term* make
-  the invoice issue its items (and the return receive them back).
+  the invoice issue its items on a **Stock Issue** (and the return receive them back on a **Stock
+  Receipt**), from the invoice's warehouse and locator and on its value date. Every save rewrites that
+  document; emptying the items grid, cancelling or deleting the invoice deletes it. Leave either field
+  empty and no stock moves.
 - **A return does not reverse the sides for you.** It records the same pairs as the invoice, in the
   direction its own term gives them, so a return term needs each pair set the other way round from
   the invoice term — patient value on the credit side where the invoice debits it, and so on.
 
 Of the Effect group, these terms record the patient and insurance values, both discounts, the four tax
-pairs, the cost and the first subsidiary share.
+pairs, the cost and the first subsidiary share. *Tax Plan*, *Taxable*, *Editable Taxes* and *Update
+Prices With Save* work as on the service invoices.
+
+On these terms "supplies" means the invoice's **items grid** — the medicines, supplies or blood units
+being sold or returned:
+
+- **Do Not Add Supplies To Invoice** keeps the items grid out of the invoice totals and out of the
+  entry, while the Generation tab still moves the stock. **Do Not Add Services To Invoice** does the
+  same for the services grid.
+- **Prevent Save Without Supplies** refuses an invoice whose items grid is empty, with the message
+  *Main lines can not be empty*. **Prevent Save Without Services** refuses one with no services lines.
+
+On the **Service And Supply Invoice** the two *Do Not Add* switches change only the totals; both its
+supplies grid and its services grid are always recorded in the entry.
 
 ![The Generation tab of the Pharmacy Invoice term](../../../ar/modules/hms/images/document-terms/hms-term-pharmacy-generation-en.png)
 
@@ -189,3 +229,17 @@ pairs, the cost and the first subsidiary share.
 Lab and radiology requests and results, the surgery request and approval, the patient diagnosis and
 health status, the outpatient reservation, Change Patient Price Plan and Actual Overhead Calculation
 have no HMS-specific term tab. Their terms carry only the general settings every document has.
+
+## Messages you may see
+
+These refusals come from the term options on this page. The general invoice refusals (endurance
+percentages, negative prices) are on [Invoicing & Billing](../hms-invoicing.md#Messages-you-may-see).
+
+| Message | Why | What to do |
+|---|---|---|
+| *Services lines can not be empty* — «لا يمكنك ترك تفاصيل الخدمات فارغة» | The term has *Prevent Save Without Services* ticked and the invoice's services grid is empty. | Add the services, or save under a term without the option. |
+| *Supplies lines can not be empty* — «لا يمكنك ترك تفاصيل المستلزمات فارغة» | The term has *Prevent Save Without Supplies* ticked and a service or surgery invoice's supplies grid is empty. | Add the supplies used, or save under a term without the option. |
+| *Main lines can not be empty* — «لا يمكنك ترك تفاصيل الرئيسية فارغة» | On a pharmacy, supplies, service-and-supply or blood bank invoice or return, the term has *Prevent Save Without Supplies* ticked and the items grid is empty. | Add the items. |
+| *Surgery type {0} is repeated* — «نوع عملية {0} مكرر» | Two operation lines name the same surgery type and the term does not have *Allow Repeating Surgery Type In Invoice Line* ticked. | Merge the two lines, or tick the option if one invoice may bill the same operation twice. |
+| *There is an invoice {0} on the admission {1}, you can not create more than one invoice on the same admission* — «لا يمكنك إنشاء أكثر من فاتورة على استمارة دخول المريض {1}، حيث يوجد فاتورة {0} على نفس استمارة دخول المريض» | The term has *Do Not Create More Than One Invoice On The Same Admission* ticked and the admission already has a saved surgery invoice. | Add the operation to the existing invoice {0}. |
+| *There is an invoice {0} on the admission {1} and surgery type {2}, you can not use the same surgery type more than once* — «يوجد فاتورة {0} للاستمارة {1} لنوع العملية {2} - لا يمكنك إنشاء أكثر من فاتورة لنفس نوع العملية الجراحية» | The term has *Do Not Create More Than One Invoice for The Same Surgery Type On The Same Admission* ticked and invoice {0} already bills surgery type {2} on this admission. | Correct the existing invoice instead of billing the operation again. |

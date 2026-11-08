@@ -24,6 +24,10 @@ The admission term has one group, **Generated Accommodation Doc** («مستند 
 | **Accommodation Book** / **Accommodation Term** | `termConfig.accommodationBook` / `termConfig.accommodationTerm` | When an admission with **Generate Accommodation Doc** ticked is saved, an Accommodation is created under this book and term, carrying the patient, admission date and time, room and bed, prices, insurer and endurance percentages. Leave either empty and no accommodation is created, ticked or not. Unticking the flag later deletes the generated accommodation. |
 | **Allow Accommodation Intersection In The Same Room** | `termConfig.allowAccommodationIntersectionInTheSameRoom` | Normally a bed cannot be booked by a second accommodation while the first is still in it. Tick this to let stays of this admission type overlap on the same bed — for a mother and newborn sharing a cot, for example. |
 
+The generated accommodation can be opened and edited like one entered by hand, but every later save of
+the admission copies the admission's patient, dates, room, prices and insurance onto it again. Cancelling
+or deleting the admission deletes the accommodation it generated.
+
 ## Accommodation and Accommodation Transfer — building the accommodation invoices
 
 The accommodation term's single group, **Generated Accommodation Invoice** («فاتورة التسكين
@@ -86,10 +90,13 @@ The package itself is explained on [The Surgery Lifecycle](../hms-surgery-lifecy
 ## Surgery Reservation — the theatre gap
 
 The reservation term has the general settings and one option,
-**Consider Difference In Times Between Reservations Of The same Room**
+**Consider Difference In Times Between Reservations Of The Same Room**
 `termConfig.considerDiffInTimesBetweenRoomReservations`. With it ticked, a reservation is refused when
-another reservation of the same operating room falls within the gap set on that room's file
-(*Difference in time between consecutive reservations of the same room*). Unticked, the gap is ignored.
+another saved reservation of the same operating room falls within the gap set on that room's file
+(*Difference In Time Between Reservations Of The Same Room*) — before or after this one. With a
+two-hour gap, a 10:00 booking blocks every other booking of that room from 08:00 to 12:00. The option
+also makes the room's gap required: a reservation for a room whose file leaves it empty is refused
+until the gap is filled in. Unticked, the gap is ignored.
 
 ## Feeding Issue — meals out of the kitchen
 
@@ -108,6 +115,7 @@ documents it creates.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Can not create Accommodation Invoice, please add DocumentBook and DocumentTerm in Accommodation Doc Term.* — «لا يمكن إنشاء فاتورة إقامة، برجاء إضافة دفتر وتوجية الفاتورة فى توجية مستند تسكين المريض.» | An accommodation, transfer or exit tried to build the stay's invoices, but the accommodation's term has no Accommodation Invoice Book or Term. | Fill both on the term of the admission's accommodation, then save the document again. |
-| *Can not create Accommodation Invoice, please add Accommodation Invoice Type in Accommodation Doc Term.* — «لا يمكن إنشاء فاتورة إقامة، برجاء إضافة تحديد نوع فاتورة الإقامة فى توجية مستند تسكين المريض.» | Same, but the Accommodation Invoice Type is empty. | Choose Invoice Every Day, Invoice At In or Invoice At Out on the accommodation term. |
+| *Can not create Accommodation Invoice, please add DocumentBook and DocumentTerm in Accommodation Doc Term.* — «لا يمكن إنشاء فاتورة إقامة، برجاء إضافة دفتر وتوجيه الفاتورة في توجيه مستند تسكين المريض.» | An accommodation, transfer or exit tried to build the stay's invoices, but the accommodation's term has no Accommodation Invoice Book or Term. | Fill both on the term of the admission's accommodation, then save the document again. |
+| *Can not create Accommodation Invoice, please add Accommodation Invoice Type in Accommodation Doc Term.* — «لا يمكن إنشاء فاتورة إقامة، برجاء إضافة تحديد نوع فاتورة الإقامة في توجيه مستند تسكين المريض.» | Same, but the Accommodation Invoice Type is empty. | Choose Invoice Every Day, Invoice At In or Invoice At Out on the accommodation term. |
 | *Previous document {0} in date [{1} , {2}] Must Be Out for bed {3}, intersect with same bed* — «السند السابق {0} بتاريخ [{2} , {1}] يجب أن يكون خروج للغرفة {3} , لأنه متقاطع مع نفس الغرفة» | The bed is still occupied by the stay named in the message, and the admission's term does not allow overlapping stays. | Pick another bed, discharge or transfer the other patient first, or tick *Allow Accommodation Intersection In The Same Room* if sharing is intended. |
+| *There is a reservation doc {0} on the room {1}, reserved at {2} and the allowed time to make another reserve on this room is {3}* — «يوجد سند حجز {0} على الغرفة {1} تم الحجز في {2} والوقت المسموح به لعمل حجز آخر على نفس الغرفة هو {3}» | The surgery reservation term has *Consider Difference In Times Between Reservations Of The Same Room* ticked, and reservation {0} books the same room within the room's gap {3}. | Move the reservation outside the gap, book another room, or review the gap on the room file. |
