@@ -105,7 +105,7 @@ Copying an exported row to create a *new* record and leaving its `id` in place t
 
 ## Other Details Worth Knowing
 
-**Attachments.** If you did not tick *Ignore Attachments*, file fields hold a value like `4f2c…/contract.pdf` and the actual files arrive in a separate `-attachments.zip`. To import attachments, upload that zip in the dialog's *Attachments* field and keep the file names in the cells.
+**Attachments.** If you did not tick *Ignore Attachments*, file fields hold a value like `4f2c…/contract.pdf` and the actual files arrive in a separate `-attachments.zip`. To import attachments, upload that zip in the dialog's *Attachments* field and keep the file names in the cells. An empty cell leaves the record's attachment as it is; to remove an attachment, type `remove-attachment` in its cell instead — that needs no zip, and works from release 20261110 onwards.
 
 **Numbers.** Trailing zeros are stripped, so `100.00` exports as `100`. This is cosmetic; the value is unchanged.
 

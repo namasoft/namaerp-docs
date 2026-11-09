@@ -17,7 +17,7 @@ The command only appears for users whose security profile grants **Can Import** 
 | Option | Arabic label | Default | What it does |
 |---|---|---|---|
 | **File** | الملف | — | The workbook or data file to import. |
-| **Attachments** | المرفقات | — | The companion zip of attached files, if your sheet references any. |
+| **Attachments** | المرفقات | — | The companion zip of attached files, if your sheet references any. A cell holding `remove-attachment` removes that record's attachment instead, and needs no zip (release 20261110 or later); an empty cell leaves it alone. |
 | **Add** | إضافة | **On** | Allows rows that match no existing record to create one. Switch it off for an update-only run — then a row for a record that does not exist fails instead of quietly creating it. |
 | **Update** | تحديث | **On** | Allows rows that match an existing record to overwrite it. Switch it off for an insert-only run, so an accidental re-upload cannot damage existing data. |
 | **Ignore not found references** | تجاهل مراجع السجلات الغير موجودة | Off | Off, a row whose customer or item code cannot be found fails. On, the reference is simply left empty and the record is still saved — read the warning below before using this. |

@@ -107,7 +107,7 @@ The OpenAPI specification includes detailed schema definitions for each entity:
 - **Boolean Fields**: Boolean type fields
 - **Reference Fields**: Returns the referenced entity's code
 - **Generic References**: Object with `entityType` and `code` properties
-- **Attachment Fields**: Objects — read as `{"id", "fileName", "size"}`, written on save as `{"uploadId": ...}` or `{"url": ...}` — see [Uploading and Attaching Files](#Uploading-and-Attaching-Files)
+- **Attachment Fields**: Objects — read as `{"id", "fileName", "size"}`, written on save as `{"uploadId": ...}` or `{"url": ...}`, or removed with the string `"remove-attachment"` — see [Uploading and Attaching Files](#Uploading-and-Attaching-Files)
 - **Collections/Details**: Arrays of objects (e.g., invoice lines, payment details)
 
 #### Excluded Fields
@@ -464,7 +464,9 @@ A few values deserve a word:
 
 - **Both `uploadId` and `url` in one object** fails that record — give one or the other.
 - **An object with neither** is ignored, and the record keeps the attachment it already has. That is deliberate: a read returns an attachment as `{"id":...,"fileName":...,"size":...}` (see [Reading attachment fields](#Reading-attachment-fields)), so a record you read, change elsewhere and send back as it came leaves its attachments alone.
-- **A plain string** — a file path on your machine or on the server, such as `C:\docs\contract.pdf`, or anything else — is **not** accepted. It fails that record with a message, in English whatever the caller's language, that begins `An attachment is given as an object` and spells out the two object forms.
+- **The string `"remove-attachment"`** removes the attachment the record has, just as removing it on the screen does: the stored file is deleted too. On a record with no attachment it changes nothing. See [Removing an attachment](#Removing-an-attachment).
+- **An empty value** — `""` or `null` — is ignored like a field left out, and the attachment stays. Only `"remove-attachment"` removes one, so a record sent with the field blank never loses its file by accident.
+- **Any other plain string** — a file path on your machine or on the server, such as `C:\docs\contract.pdf`, or anything else — is **not** accepted. It fails that record with a message, in English whatever the caller's language, that begins `An attachment is given as an object` and spells out the two object forms.
 
 ::: warning Release 20261007 or later
 Writing attachment fields through the save endpoint, and the upload endpoint below, exist only on servers from release 20261007 onwards.
@@ -529,6 +531,20 @@ The server downloads the file during the save, under these rules:
 - **The file name**, when `fileName` is not given, is taken from the response's `Content-Disposition` header, or failing that from the last part of the address path.
 
 A refused or failed download fails that record, with a message (in English only) naming the address and the reason.
+
+### Removing an attachment
+
+Give the attachment field the string `"remove-attachment"` instead of an object:
+
+```json
+{"Customer":[{"code":"CUST001","attachment":"remove-attachment"}]}
+```
+
+The record keeps everything else and loses its attachment; the stored file is deleted, as when a user removes it on the screen. Capital letters and surrounding spaces do not matter. An empty string or `null` does **not** remove anything — it leaves the attachment as it is.
+
+::: warning Release 20261110 or later
+Removing an attachment this way works only on servers from release 20261110 onwards. An older server treats `"remove-attachment"` as any other plain string and fails the record.
+:::
 
 ### Reading attachment fields
 

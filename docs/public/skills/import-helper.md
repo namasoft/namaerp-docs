@@ -170,3 +170,4 @@ Through ImportRecord, an attachment field takes `{"uploadId":"<id>"}`, where the
 with `<prefix>PrepareAttachmentUpload`, or `{"url":"<http(s) address>"}`. Either form may add `"fileName"`.
 A path on the server or on the user's machine is refused. In a file import, the cell holds the file's name
 inside the companion attachments zip, which the user uploads in the dialog's **Attachments** field.
+To remove an attachment, give the field (or the cell) the string `remove-attachment` (release 20261110 or later); an empty value leaves it alone.
