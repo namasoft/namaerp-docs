@@ -5,7 +5,7 @@
 ## إعادة معالجة جميع حركات دفتر الأستاذ (Reprocess All Ledger Transactions)
 ::: details
 ```sql
-truncate table AccountBalance
+if object_id('AccountBalance', 'U') is not null truncate table AccountBalance
 go
 truncate table DimensionsBalance
 go
@@ -85,7 +85,7 @@ where costCallbackClass = 'com.namasoft.modules.supplychain.domain.entities.Cont
 ## السماح بتغيير عملة الحساب بعد حذف جميع حركاته (Allow Changing Currency of An Account After Deleting All its transactions)
 ::: details
 ```sql
-delete b from AccountBalance b left join Account acc on acc.id = b.account_id where b.creditAmount = 0 and b.debitAmount = 0 and b.localCreditAmount = 0 and b.localDebitAmount = 0
+if object_id('AccountBalance', 'U') is not null delete b from AccountBalance b left join Account acc on acc.id = b.account_id where b.creditAmount = 0 and b.debitAmount = 0 and b.localCreditAmount = 0 and b.localDebitAmount = 0
 delete b from DimensionsBalance b left join Account acc on acc.id = b.account_id where b.creditAmount = 0 and b.debitAmount = 0 and b.localCreditAmount = 0 and b.localDebitAmount = 0
 ```
 :::

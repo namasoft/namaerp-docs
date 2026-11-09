@@ -29,7 +29,7 @@ update FiscalYear set allowCostProcessingWithClosingEntry = 1 where commitedBefo
 go
 delete from PartitionedCostReqInfo
 go
-drop table AccountBalance
+if object_id('AccountBalance', 'U') is not null drop table AccountBalance
 go
 drop table DimensionsBalance
 go
