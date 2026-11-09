@@ -129,7 +129,7 @@ ZATCA expects the **EGS Serial Number** as three numbered parts — the solution
 ```
 
 ::: warning Do not duplicate a configuration to make a second unit
-**Duplicate** copies the certificate ZATCA issued to the original, so two units would be sending under one identity, each with its own counter. Create the second configuration from scratch, or approve the copy with its own OTP and EGS serial before it sends anything.
+**Duplicate** copies the certificate ZATCA issued to the original, and its signing key, so two units would be sending under one identity, each with its own counter. Create the second configuration from scratch, or approve the copy with its own OTP and EGS serial before it sends anything.
 :::
 
 ## Onboarding: Approve System
@@ -145,11 +145,17 @@ In one go, Nama then:
 1. Builds a certificate request from the configuration: the VAT number, the Legal Entity's name, address and CRN, the EGS serial, the organization unit name and the activity type.
 2. Asks ZATCA for a compliance certificate using the OTP.
 3. Submits ZATCA's compliance samples: a standard invoice, credit note and debit note if **Standard Invoices** is ticked, and the simplified three if **Simplified Invoices** is ticked.
-4. If every sample passes, asks for the production certificate and stores it on the configuration.
+4. If every sample passes, asks for the production certificate and stores it on the configuration, together with the private key created with the certificate request in step 1.
 
 When it succeeds, the button returns without a message, and the configuration is ready to send. When anything fails, the button shows ZATCA's own reasons and nothing is stored. Fix what they point at, get a fresh OTP, and press it again.
 
-An OTP is valid for one hour and for one use. Pressing **Approve System** again later, with a new OTP, onboards the unit afresh and replaces the stored certificate.
+From then on, every document of this unit is signed with that key and certificate. ZATCA issued the certificate to this unit alone, so each configuration signs as itself, and two configurations on the same server never share an identity.
+
+An OTP is valid for one hour and for one use. Pressing **Approve System** again later, with a new OTP, onboards the unit afresh and replaces the stored certificate and key.
+
+::: warning Configurations approved with an earlier version of Nama
+A configuration approved before Nama kept the signing key has a certificate but no key of its own. Its documents are still sent, but they are signed with the key file in the SDK folder on the server, which does not belong to the certificate ZATCA issued. Press **Approve System** again with a new OTP so the unit signs with its own key. Update `zatca.war` first: an older `zatca.war` does not hand the key back, and the unit carries on signing with the SDK file.
+:::
 
 ## Standard or simplified?
 
@@ -231,7 +237,9 @@ How the unit price, discounts and service fees are worked out is set by the sett
 
 **Currency.** ZATCA wants the VAT total in riyals, so the database must have a default currency whose **Tax Authority Code** is `SAR`. A document in another currency is sent in its own currency, with the VAT total also converted to riyals at the document's rate.
 
-**Rounding.** The payable amount is rounded to the nearest whole riyal, and the difference is sent as a rounding amount, so the XML's amount due can differ from the document's net by up to half a riyal.
+**Amount due.** The amount due is sent to two decimals, exactly as the document totals it. Nothing is rounded to a whole riyal and no rounding amount is sent, so the total ZATCA receives, and the total shown when the QR code is scanned, is the document's net.
+
+**Issue date and time.** The issue date sent is the document's **Value Date**, and the issue time is the time of day the document was created. A document dated yesterday but entered today at 10:15 goes out with yesterday's date and 10:15. Saving the document again does not change its time.
 
 ### Service fees sent as a document charge
 
@@ -310,6 +318,8 @@ Once a document is **Sent**, Nama locks it: it cannot be edited or deleted. ZATC
 ### The XML and the PDF
 
 **Export Cleared / Sent XML For Selected Lines** on the submission document gives you the XML ZATCA holds: the cleared copy for standard invoices and the reported one for simplified ones. **Export Current XML For Selected Lines** rebuilds it from today's data, unsigned. If the two differ, the document has changed since it was sent.
+
+**The QR code on the printout** is read from the XML ZATCA holds: ZATCA's own QR code for a cleared standard invoice, and the reported one for a simplified invoice. Scanning it with ZATCA's Fatoora app therefore shows exactly what ZATCA received. A document printed before it is sent has no such XML yet, so Nama signs it on the spot just to draw a QR code. That signing is not kept, and the document is signed again when it is sent, so the QR code on an early print does not match the one ZATCA receives. Print after sending whenever you can, and reprint documents that were printed before.
 
 To hand customers a PDF with the XML inside it, as ZATCA's PDF/A-3 format expects, tick **Include ZATCA XML In PDF** on the invoice's print form in **Report Definition**. It is available on user-form reports for invoices and returns, and attaches the XML ZATCA holds.
 
