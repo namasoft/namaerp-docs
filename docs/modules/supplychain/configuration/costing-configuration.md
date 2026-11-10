@@ -101,7 +101,7 @@ When a cost changes, the system re-runs cost calculation for affected documents.
 
 **Reprocess by Overdraft Margin** `value.reprocessByOverdraftMargin` *(default 0.05)* — Paired with the cap above: only reprocess if the cost difference is at least this margin, so rounding-level changes are ignored. Raise it to reprocess less, lower it for more precision.
 
-**Reprocess Assembly Margin** `value.reprocessAssemblyMargin` *(default 0.0002)* — A small "is this change effectively zero?" threshold for assembly documents and ledger-effect updates. Changes smaller than the margin are treated as zero and skipped. Generally leave at the default.
+**Reprocess Assembly Margin Per Unit** `value.reprocessAssemblyMarginPerUnit` *(default 0.001)* — When the cost of an assembly document's issue line (for example a job order) changes, the document's receipts are recalculated only if the change per unit (change ÷ line quantity) is at least this margin. Job orders that consume their own output, or each other's output on the same day, otherwise keep retrying each other over rounding-sized differences. Raise it if such job orders keep reprocessing; lower it for more precision on items with a very low unit cost. The ledger is regenerated for any change regardless of this margin.
 
 **Reprocess Production Order Margin** `value.reprocessProductionOrderMargin` *(default -1)* — Controls when a production order's cost is reprocessed after a related issue/receipt cost changes. The default −1 skips the check (reprocess as normal). Set a small positive value to suppress reprocessing for negligible production-order cost changes.
 
