@@ -445,9 +445,36 @@ A key works with the permissions of its user, and that includes the user's [Fiel
 
 **Filtering and sorting.** `list` fails with the same message when `textCriteria` or `orderBy` uses a field the user cannot see — a filter on a hidden field would reveal its values. A list mixes drafts and committed records, so a field hidden for either of them counts as hidden here.
 
-**Saving.** `save` treats the body exactly as [Import Records](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change) treats a sheet: a record fails when the body contains a field the user may not change, whatever its value. The same applies to a field the record's current approval step locks, and to lines added to or removed from a grid where that is prevented. The failed record is listed under `failed_records` with the reason. A value written as `evalsql(...)` works only for a user with Full Authority. The messages are listed in [Messages you may see](/platform/import-export/importing-records.md#Messages-you-may-see) on the import page.
+**Saving.** `save` treats the body exactly as [Import Records](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change) treats a sheet. A field the user may not change — one their Field Settings make *Disabled* or *InVisible* for the record, or one the record's current approval step locks — is skipped by default. Its value in the body is ignored, the field keeps its current value (or its default, on a new record), and the rest of the record is saved. That happens whether or not the value differs. The record counts as saved and appears under `saved_records`, and the response adds a `fields_left_unchanged` array with one entry per record that lost fields:
 
-So build integrations to send only the fields they are meant to change. A client that reads a record, edits one field and sends the whole record back fails as soon as the record holds a field its user cannot change.
+```json
+{
+  "saved_records_count": 1,
+  "saved_records": {
+    "Customer": [
+      {
+        "code": "CUST001",
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      }
+    ]
+  },
+  "fields_left_unchanged": [
+    {
+      "entityType": "Customer",
+      "code": "CUST001",
+      "indexInRequest": 1,
+      "fields": ["paymentPeriod"],
+      "message": "The following fields were left unchanged because you are not allowed to change them: paymentPeriod"
+    }
+  ]
+}
+```
+
+`fields` lists the field ids that were ignored, and `indexInRequest` is the record's position in the request, counting from 1. The `message` is always in English.
+
+When the Global Config option **Reject Imports Containing Fields The User Cannot Change** ([Security and Login](/platform/global-config/global-config-security.md#Record-security)) is on, such a record fails instead and is listed under `failed_records` with the reason, whatever the value of the field. Lines added to or removed from a grid where that is prevented, by Field Settings or by the approval step, always fail the record, whatever the option. A value written as `evalsql(...)` works only for a user with Full Authority. The messages are listed in [Messages you may see](/platform/import-export/importing-records.md#Messages-you-may-see) on the import page.
+
+So build integrations to send only the fields they are meant to change, and have them read `fields_left_unchanged`. A client that reads a record, edits one field and sends the whole record back still gets its edit saved, but a field it changed and was not allowed to change is quietly kept as it was unless the client checks that array. On a server where the option is on, the same client fails as soon as the record holds a field its user cannot change.
 
 ## Uploading and Attaching Files
 

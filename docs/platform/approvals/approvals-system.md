@@ -164,7 +164,7 @@ User attempts to edit field during approval:
 ```
 :::
 
-The same lock protects the record when its data arrives without the screen. [Import Records](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change), the [REST API](/integration/nama-erp-api.md#Field-Settings-and-Approval-Locks-in-the-API) and the MCP import tool all refuse a record waiting for approval when the file or request contains a field the current step does not allow editing. The same goes for adding or deleting lines where the step prevents it. Users exempted from the step's lock are not affected.
+The same lock protects the record when its data arrives without the screen. [Import Records](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change), the [REST API](/integration/nama-erp-api.md#Field-Settings-and-Approval-Locks-in-the-API) and the MCP import tool never let such a field change on a record waiting for approval. By default a field the current step does not allow editing is skipped: its imported value is ignored, the rest of the record is saved, and the result names the field. When the Global Config option *Reject Imports Containing Fields The User Cannot Change* is on, the whole record is refused instead. Adding or deleting lines where the step prevents it is always refused. Users exempted from the step's lock are not affected.
 
 #### OTP (One-Time Password) Security
 The system provides enhanced security through OTP verification for approval decisions. This feature ensures that approval actions are performed by the intended person and adds an extra layer of authentication.
