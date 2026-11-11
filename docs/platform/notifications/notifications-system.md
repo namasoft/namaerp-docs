@@ -213,3 +213,24 @@ The definition screen carries four actions for the notifications it has already 
 ::: warning Changing a definition takes effect immediately
 Definitions are cached, but the cache is dropped the moment any definition is saved — no restart, no waiting. If a changed definition seems not to have taken effect, the cause is in the definition's own filters, in its priority level, or in a recipient the engine dropped — not in a stale cache.
 :::
+
+## In practice
+
+About three in four companies use notification definitions. A typical company keeps around seven, and the busiest more than fifty. Larger companies rely on them more: roughly six in ten of the smallest companies have them, against nearly nine in ten of the largest.
+
+- **Channels.** Nearly every company uses the in-app message. About four in ten also send e-mail, about one in five send SMS, and only a few use WhatsApp.
+- **Recipients.** Most companies name their recipients directly, as a user or a security profile. About six in ten also use a **Field** target so the message follows the person on the record. The commonest such field is the record's creator, **First Author** (`firstAuthor`).
+- **By hand.** About one in five companies keep at least one **Manually** definition, run from a button or a flow step — see [Firing one by hand](#Firing-one-by-hand).
+
+The patterns that come up most often:
+
+| What it does | Key settings |
+|---|---|
+| Tells a team or a manager when a document is created: an invoice, a voucher, a transfer | **Approval Entity** = the document, **Use With Insert**, a **Target** row for a user or a security profile ([What fires it](#What-fires-it), [Who receives it](#Who-receives-it)) |
+| Tells the team that fulfils an internal request when one is raised: a purchase request, a stock transfer request, a payment request | **Approval Entity** = the request, **Use With Insert**, often **Use With Update** too, and the fulfilling team's security profile or responsibility as the **Target** |
+| Tells the creator that their record was rejected or returned in approval | **Use With Reject** and **Use With Return**, with a **Field** target of `firstAuthor` ([Who receives it](#Who-receives-it)) |
+| Alerts only for some documents: one branch, an amount above a limit, one user | **Use With Insert** plus **Criteria** or **Apply When Query** ([Narrowing it down](#Narrowing-it-down)) |
+| Watches particular changes on a master file, such as a price or a credit limit | **Use With Update** with those fields in **Critical Fields** ([Narrowing it down](#Narrowing-it-down)) |
+| Tells the keeper of the receiving warehouse that a stock transfer is on its way | A **Field** target of `toWarehouse.warehouseKeeper` |
+| Tells management when a voucher, an invoice or a stock document is deleted | **Use With Delete** |
+| Texts the customer when a document is saved | An **SMS Template** or **WhatsApp Message**, with a **Field** target of `customer` ([What they read](#What-they-read)) |

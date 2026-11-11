@@ -79,6 +79,13 @@ The group's **component types** grid lists its members. Each line names a compon
 
 The Salary Component Type, Salary Component and Salary Component Group screens have no buttons of their own; they are filled in and saved.
 
+## In practice
+
+- **About 2 in 3 companies have salary components set up**, including about 9 in 10 contracting companies. A typical company keeps around twenty component types and about as many components; about 1 in 10 keeps more than fifty. One component per type is therefore the common shape, and several differently scoped components under one type the less common one.
+- **Formulas are part of almost every salary setup.** About as many companies keep [Component Calculation Formulas](salary-calculation-formulas.md) as keep components — typically a dozen or more — so a mix of **Constant Value** and **Variable Value** components is the usual picture.
+- **Components usually reach employees directly.** About a third of the companies with components also use [Salary Structures](salary-structures.md); the rest attach components on each employee's [HR Information](../setup/employee-hr-information.md).
+- **Salary Component Groups and issuances are specialised tools.** Each is used by about 1 in 8 of the companies with components — groups where a formula, loan type or vacation type needs to name several components at once, issuances where the company runs more than one [payroll stream](../setup/hr-years-and-periods.md).
+
 ## Messages you may see
 
 | Message | Why | What to do |

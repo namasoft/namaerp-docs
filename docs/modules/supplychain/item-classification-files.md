@@ -95,6 +95,27 @@ Two files that sound as though they belong here are documented elsewhere, becaus
 - **Material Classification** sits under *Sales → Master Files* and is covered in [Specialized Scenarios](./specialized-scenarios.md).
 - **Season** and **Update Seasons Document** sit under *Sales → Prices And Offers*. They classify by trading period rather than by product nature, which puts them alongside [Pricing, Offers and Coupons](./pricing-offers-and-coupons.md) rather than here.
 
+## In practice
+
+Across Nama installations, the files are used roughly in this order:
+
+| File | Companies using it | Typical number of values |
+|---|---|---|
+| **Item Section** | about 9 in 10 | under ten |
+| **Item Class 1** | about 2 in 3 | a dozen or two |
+| **Item Class 2** | about half | a few dozen |
+| **Item Class 3** | about 1 in 3 | a few dozen |
+| **Item Class 4** | about 1 in 4 | a few dozen |
+| **Item Brand** | about 1 in 4 | a few dozen |
+| **Item Category** | about 1 in 4 | a couple of dozen |
+| **Item Class 5** to **Item Class 10** | from about 1 in 5 down to fewer than 1 in 10 | — |
+| **Item Color** / **Item Size** | about 1 in 10 / fewer than 1 in 10 | a couple of dozen each |
+
+- **The typical setup is Section plus two or three classes.** Companies fill the slots from Class 1 downwards, so each higher slot is used by fewer of them; fewer than 1 in 5 go as far as a sixth.
+- **Section stays small.** It is the broad department grouping, and most companies keep it under ten values; the detail goes into the classes.
+- **Item Category** still holds values in about 1 in 4 databases — the [superseded category slots](#Item-Class-1-to-10-the-Ten-Slots) described above.
+- **Colours and sizes** are standard in fashion, home textiles and phone retail. About 1 in 20 companies build a Size Color Revision Collection, and item assortments are rarer still.
+
 ## Messages you may see
 
 | Message | Why | What to do |

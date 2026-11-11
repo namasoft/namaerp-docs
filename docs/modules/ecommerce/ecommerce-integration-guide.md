@@ -365,7 +365,7 @@ Most of these messages have no Arabic translation and appear in English on Arabi
 
 | Message | Why | What to do |
 |---|---|---|
-| *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بألاكواد {0} مفعلة» | Sites are active but the server is not allowed to send data to shops. | Add `send-ecommerce-data=true` to `nama.properties`, or mark the listed sites **Inactive**. |
+| *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بالأكواد {0} مفعلة» | Sites are active but the server is not allowed to send data to shops. | Add `send-ecommerce-data=true` to `nama.properties`, or mark the listed sites **Inactive**. |
 | *Your licence has {0} magento sites, you are trying to create {1} active sites* | Saving or reading would make more sites active than the licence allows. | Mark an unused site **Inactive**, or extend the licence. |
 | *un defined item with code {0}* | An order line's SKU matches no linker line and no item code. | Link the SKU on a Magento Item Linker, then use **ReRead Selected Orders**. Or tick **Ignore Error If No Item Matches SKU**. |
 | *Book not configured for Type {0}* / *Term  not configured for Type {0}* | The Order Info, Return Info or generation row used for the order has no book or term. | Fill **Book** and **Term** in that group or row. |

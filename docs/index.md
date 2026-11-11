@@ -26,6 +26,10 @@ features:
     title: Getting Started
     details: System minimum requirements, the installation guide, Nama Properties configuration, and two-factor authentication (2FA)
     link: /getting-started/
+  - icon: 🧭
+    title: Business Scenarios
+    details: How each kind of company runs on Nama ERP — trading, retail, distribution, importing, production, contracting, real estate and company groups — from the first document to the cash
+    link: /business-scenarios/
   - icon: ⚙️
     title: Platform Features
     details: Screen modifier, approvals, security & permissions, entity flows, reports, business intelligence (BI), and notifications

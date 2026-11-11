@@ -101,6 +101,15 @@ With both on, a payment voucher that would turn the cash account's debit balance
 
 *The balance of account {0} will become {1}, You can not change the natural side of the account balance from Debit to Credit* — «رصيد الحساب {0} سيكون {1}, فلذلك لا يمكن تغيير طبيعه رصيد الحساب من مدين الي دائن»
 
+## In practice
+
+- Vouchers are daily work almost everywhere: about 9 in 10 companies issue both receipt and payment vouchers. A typical company issues several hundred receipts and more than a thousand payments a year; the busiest tenth issue several thousand of each.
+- Most companies start straight from the voucher. About 1 in 5 of those issuing payment vouchers raise a **Payment Request** first. This is common in contracting, retail branches and distribution: many staff raise requests, and a few cashiers **Accept** them and **Generate Payment Voucher**.
+- The other stages are less common. Receipt orders, payment orders and receipt requests are each used by fewer than 1 in 10 companies, typically where sales staff request a collection and finance carries it out. Consolidated requests are used by only a handful.
+- Receipts usually settle invoices: about 4 in 5 companies that issue receipt vouchers also issue sales invoices. **Collect Vouchers** is the quick way to fill the **Invoices** tab; the linking rules are on [Linking Payment Vouchers to Invoices](../../invoicing/payment-entries.md).
+- Cheques are widespread. Roughly 3 in 5 companies record financial papers, so the **Financial Papers** tab is everyday work wherever post-dated cheques are customary, as in instalment sales and distribution.
+- Salaries are a common use of payment vouchers: roughly 2 in 5 companies that issue them also run payroll with salary sheets.
+
 ## For Support
 
 - **"The request/order has no effect in the accounts"** — that's expected; the request creates no journal entry, and the accounting effect is recorded at the **voucher**.

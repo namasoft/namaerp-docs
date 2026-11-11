@@ -1,0 +1,23 @@
+{
+  "sortedPaths": [
+    "/business-scenarios",
+    "/business-scenarios/scenario-direct-invoice-trading.md",
+    "/business-scenarios/scenario-retail-chain-pos.md",
+    "/business-scenarios/scenario-quotation-led-selling.md",
+    "/business-scenarios/scenario-order-to-cash-distribution.md",
+    "/business-scenarios/scenario-importer-landed-cost.md",
+    "/business-scenarios/scenario-assembly-production.md",
+    "/business-scenarios/scenario-full-manufacturing.md",
+    "/business-scenarios/scenario-car-dealer-and-workshop.md",
+    "/business-scenarios/scenario-contracting-company.md",
+    "/business-scenarios/scenario-real-estate-developer.md",
+    "/business-scenarios/scenario-service-and-finance-only.md",
+    "/business-scenarios/scenario-multi-company-group.md"
+  ],
+  "folderTitles": {
+    "/business-scenarios": {
+      "ar": "سيناريوهات الأعمال",
+      "en": "Business Scenarios"
+    }
+  }
+}

@@ -944,6 +944,28 @@ When **enabled**, this option creates an Actions History record for **each indiv
 - **User Context**: Captures who made each decision and when
 :::
 
+## In practice
+
+About seven in ten companies use approval definitions. A typical company keeps around seven, and the busiest more than fifty. Larger companies use them more: about half of the smallest companies have approvals, against nearly nine in ten of the largest.
+
+- **Steps.** Most definitions have a single step. About four in ten companies also run two-step chains, about one in four three-step chains, and fewer go further.
+- **Who decides.** About three in four companies name an employee in at least one step. About four in ten pick the approver from the record with **From Field**, most often the employee's supervisor or the receiving warehouse's keeper. About one in five route a step to a responsibility or a security profile.
+- **Several definitions on one type.** About four in ten companies keep more than one conditional definition on the same record type, to tier by amount or to route by branch. Each one needs its own **Priority**.
+- **What the approver sees.** More than half fill in a **Summary Template** — see [Approval Summary Configuration](#Approval-Summary-Configuration).
+
+The common shapes, roughly in order of how many companies use them:
+
+| Approval | Key settings |
+|---|---|
+| Finance vouchers (payment and receipt vouchers, journal entries, payment requests) through a finance chain of one to three steps. About half the companies have one. | **Approval Entity** = the voucher, **Use With Insert**, one step per approver with **Employee Or Group** ([Step 2](#Step-2-Configure-Approval-Steps)) |
+| HR requests (leave, loan, mission) to the employee's supervisor first, then HR | Step 1 **From Field** = `employee.supervisor`, or **Initiator Supervisor**; step 2 the HR employee ([Dynamic Responsible Parties](#Dynamic-Responsible-Parties)) |
+| Escalation when nobody acts in time. About four in ten companies use it. | **Automatic Escalate To After Period**, plus the task schedule it needs ([Auto-escalation](#Auto-escalation)) |
+| No approval for some creators, such as a manager's own documents | An **Apply When Query** that returns 0 when `{$user.code}` is one of them ([Conditional Approvals](#Conditional-Approvals)) |
+| An extra step only above an amount | **Step Apply When Query** on `{money.netValue}` for that step ([Conditional (Optional) Steps](#Conditional-Optional-Steps)) |
+| Stock transfers approved by the receiving warehouse | **From Field** = `toWarehouse.warehouseKeeper` ([worked example](#Worked-example-route-a-stock-transfer-to-the-receiving-warehouse)) |
+| New or changed customers, suppliers and items | **Use With Insert**, plus **Use With Update** with the fields that matter in **Critical Fields** ([Critical Fields](#Critical-Fields)) |
+| Deleting a document | **Use With Delete** |
+
 ## Common configuration traps
 
 ### An update approval on a document will not save

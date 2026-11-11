@@ -104,6 +104,28 @@ So a slow flow on Update Calculated Fields is not made background by ticking the
 A deferred flow that has been raised but not yet run is a real row you can look at, on the **Queued Entity Flows** grid of its Task Queue — with its status, how many times it has been tried, and any error. That is where to look when someone says the flow "did not happen".
 :::
 
+## In practice
+
+- About 19 in 20 Nama installations have entity flows, and nearly 9 in 10 have written their own
+  beyond the few that come with a new setup. A typical company keeps around twenty, and the busiest
+  more than sixty.
+- Most flow lines are field maps: more than 8 in 10 active lines run
+  [EAFieldsValuesCalculator](/entity-flows/core/EAFieldsValuesCalculator). They mostly run on
+  [`UpdateCalculatedFields`](#UpdateCalculatedFields----After-Updating-Calculated-Fields), so the
+  values are in place before the record is saved. Flows that create or change *other* records run on
+  [`PostCommit`](#PostCommit----Save-Effects).
+
+The flows companies build most often (shares are of companies that use entity flows):
+
+| What it does | Key settings | How common |
+|---|---|---|
+| Work out helper numbers on a document: total quantity, cost, profit, a line total carried to the header | A field map such as `n1=totalize(details,details.quantity.quantity.primeQty.value)`, or `sql(...)` for anything the lines alone cannot give. Syntax: [Totaling Values](/entity-flows/core/ai-generated-field-maps-documentation#Totaling-Values), [Simple SQL Queries](/entity-flows/core/ai-generated-field-maps-documentation#Simple-SQL-Queries) | about 7 in 10 |
+| Build a name, description or remarks out of other fields | `name2=name1` to fill the English name from the Arabic one, or `description1=sql(select {code} + ' - ' + {customer.name1})`. On master files, `altCode=code` is a common one-liner too (about a third). Syntax: [Direct Field Copy](/entity-flows/core/ai-generated-field-maps-documentation#Direct-Field-Copy) | about 6 in 10 |
+| Fill in the dimensions: the header from the warehouse or the source document, then every line from the header | `branch=warehouse.branch`, `branch=fromDoc.$toReal.branch`, then `details.genericDimensions.branch=branch` on stock and sales lines (repeat for sector, analysis set, department). Syntax: [Copying Field Values to All Lines](/entity-flows/core/ai-generated-field-maps-documentation#Copying-Field-Values-to-All-Lines) | about 6 in 10 |
+| Create a related record when one is saved: an issue or invoice from an order, the receiving transfer from an issuing transfer, a warehouse or analysis set for each new project | [EAGenerateEntityFromEntityAction](/entity-flows/core/EAGenerateEntityFromEntityAction) on `PostCommit`, paired with [DeleteRelatedEntityAction](/entity-flows/core/DeleteRelatedEntityAction) on [`PostDelete`](#PostDelete----Delete-Effects) | more than half |
+| Work out a date: due date or valid-to date a number of days after the value date | `date1=sql(select dateadd(day, 30, {valueDate}))` | about 4 in 10 |
+| Add an extra journal line from a document field: a commission, the cash part, an extra tax | [EAAddAccountingEffect](/entity-flows/accounting/EAAddAccountingEffect) | more than a third |
+
 # Understanding the Record Lifecycle in Entity Flows
 
 To understand precisely how **Entity Flows** work in Nama ERP, it is important to first understand the sequence of actions that any record goes through during creation or modification. The system provides execution points (Events) to which you can attach flow elements to control business logic with precision.

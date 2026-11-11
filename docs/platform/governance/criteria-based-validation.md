@@ -632,6 +632,32 @@ Refusals raised when you save the validator record itself.
 | *Field {0} is a detail field, you must activate {1}* — «الحقل {0} حقل تفاصيل, يجب تفعيل {1}» | The **Error Field** points inside a grid while **Show Error By Line Number** is off, so the system would have no line to attach the error to. | Tick **Show Error By Line Number** on that line, or choose a header field instead. |
 | *Options {0}, {1}, {2}, and {3} could not be used with validator of type Confirm* — «الحقول {0} و {1} و {2} و {3} لا يمكن ان تكون مفعلة عند إستخدام المعيار مع التأكد» | A line of type **Confirm** is tied to draft, revise, unrevise or approval. A Confirm asks the user a question, and those four points have nobody to ask. | Leave a Confirm line on insert, update and delete only, or change its type to Error or Warning. |
 
+## In practice
+
+- About 9 in 10 Nama installations have validators. A typical company keeps around seven, and the most
+  customised keep several dozen. Large companies almost all have them; among the smallest it is about
+  8 in 10.
+- The Sales Invoice is the screen validated most often, in about 4 in 10 of the companies that use
+  validators. Stock Issue and Purchase Invoice come next, at about 3 in 10 each, then customers and
+  receipt and payment vouchers, at about 1 in 5 each.
+- Nearly every rule is a plain refusal (**Error**, or **Validator Type** left empty). **Warning** and
+  **Confirm** each show up in about 1 in 8 companies. More than half tick **Lines Should Match** on
+  at least one rule.
+- About 4 in 10 companies exempt somebody from a validator with **Apply On All Except Selected**, and
+  about 1 in 5 use **Apply On Selected** to aim a rule at a few people. Individual users appear on
+  these lists more often than security profiles. About a third point a validator at an Entity Type
+  List through **Apply Also To**.
+
+The rules companies write most often:
+
+| Rule | How it is usually built | See |
+|---|---|---|
+| Keep the shared PUBLIC value out of a dimension on documents (more than 4 in 10 companies) | A **Then Query** that returns 0 when `{branch.code}` (or the sector or analysis set) is `'PUBLIC'`, often with **Applicable For** set to Documents and the HR documents excluded in the **When Query** | [Enforce a house rule on every document](#Enforce-a-house-rule-on-every-document) |
+| Refuse a duplicate: the same manual reference, tax number or bank account twice (about 4 in 10) | A count against the same table with `id <> {id}` | [Prevent a duplicate](#Prevent-a-duplicate) |
+| Check a date against today: no future-dated documents, no vacation that starts in the past (about 3 in 10) | A **Then Query** comparing `{valueDate}` or `{startDate}` with `GETDATE()` through `DATEDIFF` | [The zero-or-one rule](#The-zero-or-one-rule) |
+| Stop a credit sale to a customer who is over the limit or overdue (about 1 in 7) | A query on the customer's open debt, compared with the limit or payment period on the customer file | [Block a sale that exceeds the customer's credit limit](#Block-a-sale-that-exceeds-the-customers-credit-limit) |
+| Refuse a line with a zero price, or one sold below cost (about 1 in 10) | **Lines Should Match** ticked, a line-level query, often of type **Confirm** | [Catch a bad line and point at it](#Catch-a-bad-line-and-point-at-it) |
+
 ## Related pages
 
 - [Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide.md) — the filter syntax behind saved

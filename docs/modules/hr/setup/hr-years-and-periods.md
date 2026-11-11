@@ -57,6 +57,14 @@ When a salary sheet is generated, it is built for one **HR Period + Issuance** c
 
 A typical year looks like this: an HR Year "2026" is created (via Create Next HR Year from 2025), carrying twelve HR Periods, January through December, all tied to one HR Calendar. Every month, payroll runs a salary sheet for that month's period under the "Main Salary" issuance; a separate team runs a second salary sheet for the same period under a "Commissions" issuance, restricted to sales staff. Once a month's numbers are confirmed, its period is closed, so no further generation can touch it by accident.
 
+## In practice
+
+- **About 2 in 3 companies have HR Years and Periods set up**, rising from a little under half of smaller companies to about 3 in 4 of mid-sized and larger ones.
+- **Companies either run their payroll in Nama or use the HR module without it.** A little under 6 in 10 of the companies with an HR Year issued salary documents in the last year. The others use the HR module for other work — employee files, attendance, vacations — or run payroll outside Nama, so their HR Years exist without salary runs.
+- **Monthly periods are the norm.** A typical company has about five HR Years on file — one a year, each with its monthly periods.
+- **Salary sheets per period:** a typical payroll company generates one or two salary sheets a month. Large employers often run one sheet per branch or project; about 1 in 10 generates more than 20 a month.
+- **Most companies run a single pay stream and never define a Salary Issuance.** Fewer than 1 in 5 of the companies running payroll have one, and those usually keep two.
+
 ## Related pages
 
 - **[How Salary Is Calculated](../concepts/hr-salary-engine.md)** — the full five-step pipeline that a salary sheet actually runs.

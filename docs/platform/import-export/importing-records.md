@@ -71,13 +71,25 @@ The single most common cause of a failed import is editing the readable `custome
 
 ## Fields You Are Not Allowed to Change
 
-An import cannot be used to get around [Field Settings](/platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows). The sheet is checked against the importing user's rows on the security profile and user record before any value is written. A row fails when the sheet has a column for a field that is *Disabled* or *InVisible* for that kind of record. For the *Apply on* flags, a new record counts as New, a draft as Draft and a committed record as Edit.
+An import cannot be used to get around [Field Settings](/platform/security/field-page-listview-security.md#Imports-exports-and-the-API-follow-the-same-rows). The sheet is checked against the importing user's rows on the security profile and user record before any value is written. A field you may not change is one that is *Disabled* or *InVisible* for that kind of record. For the *Apply on* flags, a new record counts as New, a draft as Draft and a committed record as Edit.
 
-What counts is the column, not the value in it. A column left exactly as it was exported still fails the row, because the system does not try to work out whether the value changed. So when an export comes back with a column you are not allowed to change, delete that column before importing. The *Excel export* leaves out fields you cannot see, but a *Disabled* field is visible, so it is exported and has to be removed by hand.
+What happens to such a field depends on one Global Config option, **Reject Imports Containing Fields The User Cannot Change**, in the *Records Security* group of the [Security and Login](/platform/global-config/global-config-security.md#Record-security) page. It is off by default.
 
-Lines are checked the same way. When the security profile prevents inserting or deleting rows in a grid, a row that would add lines to that grid, or drop some of its lines, fails. With line identifiers in the sheet, a line whose identifier the record does not have is an addition, and a record line missing from the sheet is a deletion. Without identifiers, the lines are counted: more rows than the record has is an addition, and fewer is a deletion. *Add To Current Lines* always adds.
+**With the option off (the default), the field is skipped.** Its value in the sheet is ignored and the field keeps the value the record already has — or its default value, on a new record — while the rest of the row is saved. It makes no difference whether the value in the sheet differs from the record's. The row is stamped `inserted` as usual, and in the returned file the cell where an error would go names the fields that were skipped:
 
-A record waiting for approval is protected the same way. If the current approval step limits which fields may be edited, a column for any other field fails the row. Line insertion or deletion that the step prevents fails the row too — see [Approvals](/platform/approvals/approvals-system.md#Field-Level-Editing-Control). Users exempted from the step's lock are not affected.
+*The following fields were left unchanged because you are not allowed to change them: {0}* — «لم يتم تعديل الحقول التالية لعدم وجود صلاحية لك بتعديلها: {0}»
+
+The message shown when the import finishes adds one line, so you know to look:
+
+*Some records were saved without the fields you are not allowed to change. The returned file names those fields* — «تم حفظ بعض السجلات دون الحقول التي ليس لك صلاحية تعديلها، ويوضح الملف المرتجع هذه الحقول»
+
+This is what makes the round trip work. You can export a screen, edit the columns you are allowed to edit and import the same file back. The *Excel export* leaves out fields you cannot see, and a *Disabled* field, which you can see and which is therefore exported, is simply skipped on the way back in.
+
+**With the option on, the row is refused instead.** A row fails when the sheet has a column for such a field, whatever the value in it, and its `@errors` cell names the field. A column left exactly as it was exported fails the row too, because the system does not try to work out whether the value changed. Under this option, delete such columns before importing. It suits a company that would rather have a sheet rejected than have part of it ignored.
+
+Lines are checked too, and these checks refuse the row **whatever the option says**, because skipping rows would lose data without anyone noticing. When the security profile prevents inserting or deleting rows in a grid, a row that would add lines to that grid, or drop some of its lines, fails. With line identifiers in the sheet, a line whose identifier the record does not have is an addition, and a record line missing from the sheet is a deletion. Without identifiers, the lines are counted: more rows than the record has is an addition, and fewer is a deletion. *Add To Current Lines* always adds.
+
+A record waiting for approval is protected the same way. If the current approval step limits which fields may be edited, every other field counts as one you may not change: skipped while the option is off, refused while it is on. Line insertion or deletion that the step prevents always fails the row — see [Approvals](/platform/approvals/approvals-system.md#Field-Level-Editing-Control). Users exempted from the step's lock are not affected.
 
 Users with Full Authority are not subject to field settings, but approval locks still apply to them.
 
@@ -90,9 +102,10 @@ The import is handed to a background task, so your screen stays usable. A progre
 When it finishes you get **your own file back**, annotated. That returned workbook is the real result report:
 
 - successful rows are stamped **`inserted`** in column A;
-- failed rows are stamped **`erorr`** in column A, and the reason is written into the `@errors` cell at the end of the row — with detail lines getting their own error cells on their own sheets.
+- failed rows are stamped **`erorr`** in column A, and the reason is written into the `@errors` cell at the end of the row — with detail lines getting their own error cells on their own sheets;
+- a row saved without some of its fields (see [Fields You Are Not Allowed to Change](#Fields-You-Are-Not-Allowed-to-Change)) is stamped `inserted`, and the same cell at the end of the row names the fields that were left unchanged.
 
-So the repair loop is simple and self-correcting: download the returned file, fix the rows that have text in the error column, and upload the same file again. The rows already marked `inserted` are skipped on the second pass, so nothing is imported twice.
+So the repair loop is simple and self-correcting: download the returned file, fix the rows stamped `erorr`, and upload the same file again. The rows already marked `inserted` are skipped on the second pass, so nothing is imported twice — including those carrying a note, which are already saved.
 
 ::: info Import is a background task, not a business request
 An import does not appear in the Business Requests list and is not retried from there. It runs on the server while you wait, and its result is the annotated file. What *does* land in Business Requests is the processing each imported document then triggers — its accounting and inventory effects — and those are monitored and retried in the usual way.
@@ -129,12 +142,14 @@ You could reshape it by hand every month. Or you could describe its layout once 
 
 ## Messages you may see
 
-These are written into the `@errors` cell of the row that failed. `{0}` is the field id, such as `customer` or `details.price`, or for line messages the grid, such as `details`.
+Apart from the second, which appears in the message shown when the import finishes, these are written into the `@errors` cell at the end of the row. `{0}` is the field id, such as `customer` or `details.price`, or for line messages the grid, such as `details`. The first two mean the rows were saved; the rest are on rows that failed.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You are not allowed to change the field {0}* — «غير مسموح لك بتعديل الحقل {0}» | The sheet has a column for a field your Field Settings make *Disabled* or *InVisible* for this kind of record. | Delete the column from the sheet, or ask an administrator to change the Field Settings row. |
-| *The field {0} is locked while the record is under approval* — «الحقل {0} مقفل أثناء انتظار السجل للموافقة» | The record is waiting for approval and the current step does not allow editing this field. | Remove the column, or wait until the approval finishes. |
+| *The following fields were left unchanged because you are not allowed to change them: {0}* — «لم يتم تعديل الحقول التالية لعدم وجود صلاحية لك بتعديلها: {0}» | The row was saved, but the sheet had values for fields you may not change, so those values were ignored. `{0}` lists the fields. Only while *Reject Imports Containing Fields The User Cannot Change* is off. | Nothing, if you did not mean to change them. Otherwise ask someone allowed to change those fields, or an administrator to change the Field Settings row. |
+| *Some records were saved without the fields you are not allowed to change. The returned file names those fields* — «تم حفظ بعض السجلات دون الحقول التي ليس لك صلاحية تعديلها، ويوضح الملف المرتجع هذه الحقول» | At least one row got the note above. | Open the returned file and read the notes. |
+| *You are not allowed to change the field {0}* — «غير مسموح لك بتعديل الحقل {0}» | *Reject Imports Containing Fields The User Cannot Change* is on, and the sheet has a column for a field your Field Settings make *Disabled* or *InVisible* for this kind of record. | Delete the column from the sheet, or ask an administrator to change the Field Settings row. |
+| *The field {0} is locked while the record is under approval* — «الحقل {0} مقفل أثناء انتظار السجل للموافقة» | *Reject Imports Containing Fields The User Cannot Change* is on, the record is waiting for approval and the current step does not allow editing this field. | Remove the column, or wait until the approval finishes. |
 | *You are not allowed to add lines to {0}* — «غير مسموح لك بإضافة سطور إلى {0}» | The sheet adds lines to a grid whose *Prevent Insert Row* applies to you. | Keep the sheet to the record's existing lines, with their identifiers. |
 | *You are not allowed to delete lines from {0}* — «غير مسموح لك بحذف سطور من {0}» | The sheet has fewer lines than the record, or leaves out some of its line identifiers, in a grid whose *Prevent Delete Row* applies to you. | Include every existing line, or tick *Add To Current Lines* if you meant to add. |
 | *Lines cannot be added to {0} while the record is under approval* — «لا يمكن إضافة سطور إلى {0} أثناء انتظار السجل للموافقة» | The current approval step prevents adding lines to this grid. | Wait until the approval finishes. |

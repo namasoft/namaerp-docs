@@ -222,6 +222,13 @@ The last page is view-only: a list of all users currently assigned this profile,
 Permission data is loaded with the session. Users typically pick up security profile changes at their next login — keep this in mind during testing.
 :::
 
+## In practice
+
+- Profiles follow roles, not people. Nearly 9 in 10 companies define profiles of their own on top of the shipped ones, and a typical company has about one profile for every three or four users.
+- The number grows with the company, but slowly. A company with up to ten users usually manages with two to four profiles. One with 30 to 100 users typically keeps between 10 and 20, and one with a few hundred users between 15 and 45.
+- A profile is also a ready-made audience. About a third of companies that send notifications address some of them to a security profile, so the message reaches everyone in the role — see [Who receives it](/platform/notifications/notifications-system#Who-receives-it).
+- Reports are opened to roles the same way: about 1 in 3 companies name a security profile in the security grid of some of their own reports — see [Who may run a report](/platform/reports/reports-guide#Who-may-run-a-report).
+
 ## Messages you may see
 
 A permission refusal always names the thing it checked, and that tells you which table to open.

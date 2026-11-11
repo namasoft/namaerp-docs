@@ -20,6 +20,7 @@ import EmbeddableSearchBox from './components/EmbeddableSearchBox.vue'
 import LandingGrid from './components/LandingGrid.vue'
 import LandingCard from './components/LandingCard.vue'
 import SectionSidebar from './components/SectionSidebar.vue'
+import MermaidDiagram from './components/MermaidDiagram.vue'
 
 export default {
     extends: DefaultTheme,
@@ -49,5 +50,6 @@ export default {
         app.component('EmbeddableSearchBox', EmbeddableSearchBox)
         app.component('LandingGrid', LandingGrid)
         app.component('LandingCard', LandingCard)
+        app.component('MermaidDiagram', MermaidDiagram)
     }
 } satisfies Theme

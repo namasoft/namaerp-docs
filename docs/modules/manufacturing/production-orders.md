@@ -378,8 +378,8 @@ Let's look at a few typical scenarios.
 A customer orders 50 custom widgets. Here's how it flows:
 
 1. Sales creates a Sales Order for 50 widgets
-2. Planner creates a Production Order linked to that sales order
-3. Selects product, quantity 50, desired delivery date
+2. A Production Order has no field for a sales order, so the planner records it on an **Aggregated Production Order**: picks the sales order in its **From Document** field (it accepts a sales order or a sales invoice) and adds a **Details** line for the product, quantity 50
+3. Saving the aggregated order creates the Production Order for that line, with the aggregated order as its **From Document**. When no record of the sales order is needed, the planner can simply create the production order by hand instead
 4. System populates BOM and routing automatically
 5. Planner reviews, adjusts if needed (maybe customer wants a different color)
 6. Starts the production order
@@ -389,7 +389,7 @@ A customer orders 50 custom widgets. Here's how it flows:
 10. Order is closed, costs are finalized
 11. Widgets are shipped to customer
 
-The production order ties everything together - you can trace from the customer order to the materials consumed to the shop floor work to the finished goods to the shipment.
+The production order ties the production side together - through the aggregated order you can trace from the customer order to the materials consumed to the shop floor work to the finished goods to the shipment.
 
 ### Scenario: MRP-Driven Make-to-Stock
 

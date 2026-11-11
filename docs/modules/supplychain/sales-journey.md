@@ -91,7 +91,7 @@ The last step is collecting what's due. In a **cash sale**, it's paid immediatel
 
 ## Returns and Replacements
 
-Sometimes sales don't stick. The **Sales Return** is used when the customer wants to return (a defective item, a wrong shipment, a change of mind within the return window, or damage in shipping). The path often starts with a **Sales Return Request** (SalesReturnRequest) for authorization, then the actual return is created, the goods are received, and their value is processed.
+Sometimes sales don't stick. The **Sales Return** is used when the customer wants to return (a defective item, a wrong shipment, a change of mind within the return window, or damage in shipping). Most returns are entered directly as a Sales Return: the goods are received and their value is processed. A **Sales Return Request** (SalesReturnRequest) is optional - use it when returns need an approval step, then create the actual return once it is authorized.
 
 **Returning against a specific invoice:** each return line has an **Invoice** column. Its list shows only the customer's invoices that contain the line's item and are not yet fully returned. Choosing one fills the line's price and discounts from that invoice, so the customer is credited what they actually paid. The Sales Return then cannot take back more than that invoice line sold, counting what earlier returns already took; saving refuses with *You can not return {0} because returned qty will be {1} and allowed qty {2} only*. The same column works in the Sales Return Request and in the Service Center's sales return.
 
@@ -173,6 +173,23 @@ A: It depends on your controls; some organizations lock prices at order confirma
 **Q: What happens if we can't fulfill an order?**
 
 A: Options: create a backorder (fulfill when stock is available), offer an alternative, cancel and refund, or partial fulfillment. Best practice is immediate communication with the customer to decide together.
+
+## In practice
+
+Across Nama installations about 4 in 5 companies issue sales invoices, and nearly 9 in 10 of those also use stock issues. Four selling styles cover most of them:
+
+| Style | Document chain | Where it is typical |
+|---|---|---|
+| Counter sale | **Sales Invoice** only — it creates its own stock issue when saved | The most common chain: at least half of invoicing companies work this way |
+| Showroom quotation | **Sales Quotation** → Sales Invoice | Showrooms, where the price is agreed before the sale |
+| Order-to-cash | Sales Quotation → **Sales Order** → Sales Invoice, or Sales Order → Sales Invoice for regular customers | Distribution and trading |
+| Delivery-first | Sales Order → **Stock Issue** → Sales Invoice built from the issues with **Collect** and **Apply Receipts** | Pharma and distribution; less common, at least 1 in 15 invoicing companies |
+
+- **Sales orders** are used by roughly half of companies and quotations by about a third; nearly every company that issues orders also invoices them, and Sales Order → Sales Invoice is one of the commonest chains.
+- **The Proforma Sales Invoice** is used by about 1 in 7 companies.
+- **Returns** are issued by about 2 in 3 companies in a typical year, and building the return on the original invoice is the common chain. Where goods go out on vans or trucks, returns can reach a quarter to a third of invoices. Most companies create the Sales Return directly; about 1 in 10 put a Sales Return Request in front of it.
+- **A separate delivery step** — delivery documents, loading and delivery queues — is run by about 1 in 10 companies, typically for home delivery; see [Delivery & Loading](./delivery-and-loading.md).
+- **High-volume counter selling** at a register usually moves to the [Point of Sale module](/modules/pos/): about 1 in 10 companies overall, and about 2 in 5 retailers.
 
 ## Next Steps
 

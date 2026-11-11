@@ -84,7 +84,7 @@ reducing the balance.
 
 ### Turning it into a contract
 
-Once the customer signs, press **Creat Sales Document** on the saved reservation. Nama opens a new
+Once the customer signs, press **Create Sales Document** on the saved reservation. Nama opens a new
 sales contract pre-filled with the estate, the buyer, the owner, the mediator, the block, the land,
 the unit, the square, the price — and, importantly, the 20,000 in the *paid with reservation* field,
 so the contract's plan starts from the right balance.
@@ -188,7 +188,7 @@ lost in the conversion. See
 **On the reservation document:**
 
 - **Confirmed** and **Cancelled** — set the reservation's **Status**. The status field itself cannot be typed into; these two buttons are the only way to move it by hand, and only a *Confirmed* reservation locks the unit (see *Status is the whole story* above).
-- **Creat Sales Document** — on the saved reservation, opens a new sales contract in a pop-up, pre-filled as described in *Turning it into a contract* above.
+- **Create Sales Document** — on the saved reservation, opens a new sales contract in a pop-up, pre-filled as described in *Turning it into a contract* above.
 - **Create installments** — builds the reservation's own **Installments** grid from its construction block.
 - **Create Receipt Voucher From Selected Line** — a receipt voucher for the remaining value of the ticked installments; the usual way to record a deposit paid in instalments.
 - **Create collect doc from selected line** — a button on each row of the **Installments** grid; it opens a collect document for the ticked rows, or for that row when nothing is ticked.

@@ -176,6 +176,27 @@ value that cannot apply to the field — all of it saves without complaint, and 
 criteria that matches nothing, or everything. So when a criteria misbehaves, read its lines one by
 one before looking anywhere else, and use **Use In List View** to see what it really returns.
 
+## In practice
+
+- About 9 in 10 Nama installations keep saved criteria. A typical company has around twenty, and the
+  most heavily configured more than a hundred. Larger companies lean on them more: about 8 in 10 of
+  the smallest companies have them, and almost all of the largest.
+- How often each tool borrows a saved criteria, among the companies that use that tool:
+
+| Tool | Companies that use a saved criteria in it |
+|---|---|
+| [Required Fields](/platform/governance/required-fields), the **When** column | about 6 in 10 |
+| [Entity Flows](/platform/entity-flows/), **Criteria** on the flow or on one of its lines | more than half |
+| [Criteria-Based Validation](/platform/governance/criteria-based-validation), the **When** and **Then** halves | about half |
+| [Approvals](/platform/approvals/approvals-system), the definition's criteria | about half |
+| [Notifications](/platform/notifications/notifications-system), the definition's criteria | more than 4 in 10 |
+
+- On Required Fields a saved criteria is the usual way to write a condition, more common than a
+  **When Query**. On validators it is the other way round: nearly every company writes queries there,
+  and about half also use saved criteria.
+- **Reversed Criteria Definition** on entity flows is used far less often than **Criteria**. Most
+  companies write the condition they want to match rather than the one they want to exclude.
+
 ## See also
 
 - [Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide) — the operator list, the text syntax and the date tokens

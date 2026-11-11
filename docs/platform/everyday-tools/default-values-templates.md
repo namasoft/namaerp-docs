@@ -213,6 +213,24 @@ the fields in the file and nothing else.
 six fields of a screen, the cursor still starts in the first one, and the user has to tab past all of
 them. Naming the seventh field here puts the cursor exactly where typing actually begins.
 
+## In practice
+
+- About 19 in 20 Nama installations use templates, and about 9 in 10 have gone beyond the couple a new
+  setup holds. A typical company keeps around twenty, and the busiest seventy-five or more, which is
+  why sorting the list by target type matters.
+- The templates found most often fall into a few kinds:
+
+| What it does | Key settings |
+|---|---|
+| Starts a user's documents in the right company and branch, with the right book and term: vouchers, transfers, orders, invoices | **Field Values** for the legal entity, branch, sector, department, analysis set, `book` and `term`. **Manual** left unticked, and **Apply To** naming the user or security profile. See [Who gets the template](#Who-gets-the-template) |
+| Offers a few named variants of the same document, such as several kinds of receipt voucher, payment voucher or stock transfer | **Manual** ticked and **Do Not Add To More Menu** unticked, so each variant appears in the More menu. See [Reaching a template on demand](#Reaching-a-template-on-demand) |
+| Starts a new customer, supplier, employee or bank account with its group and account settings already filled in | **Field Values** for `group` and `subsidiaryAccounts.mainAccount` (and the tax exemptions where they apply), either automatic or named in the **Template** field of the master group. See [When a template is used](#When-a-template-is-used) |
+| Fills the currency on vouchers and invoices | One **Field Values** line on the currency field |
+
+- Templates that build lines are much less common than header templates. When a company does use one,
+  it is for a standard set of lines, through **Line Index**. See
+  [Filling in detail lines](#Filling-in-detail-lines-not-just-the-header).
+
 ## Where to find them
 
 Default values templates live under **Administration → Display Customization → Default Values

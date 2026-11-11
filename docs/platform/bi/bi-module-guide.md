@@ -795,3 +795,14 @@ An assistant that writes a widget without seeing it run is guessing: it cannot t
 - **Preview a change** to a widget's SQL or chart configuration without saving it, correct it until the figures are right, and only then import it.
 
 The assistant runs everything with the permissions of the user its connection signs in as, and seeing a widget's SQL needs the right to edit dashboard widgets.
+
+## In practice
+
+About two in three companies use dashboards. A typical company keeps around five dashboards holding fifteen to twenty widgets between them, and the busiest have more than a hundred widgets. Use rises with size: fewer than half of the smallest companies have dashboards, against nearly nine in ten of the largest. Retail and real estate companies use them almost without exception.
+
+Among the companies that use dashboards:
+
+- **Refresh.** About seven in ten set a dashboard-level refresh. Every five minutes and every minute are the usual choices, and some dashboards refresh hourly or daily — see [Auto-Refresh](#Auto-Refresh).
+- **Widget mix.** The plain **Table** is the most common widget, in about six in ten companies. Embedded **Report** widgets come close behind, in nearly half. **HTML** widgets are in about four in ten, and **Calendar**, **EChart** and **Table v2 (Enhanced)** are each in about three in ten. Slicers (**CrossFilterControl**) and **Metrics Cards v2 (Enhanced)** are each in about one in four — see [Widget Types on a Dashboard](#Widget-Types-on-a-Dashboard).
+- **Interaction.** About three in ten bind their widgets to cross-filters ([Cross-Filtering](#Cross-Filtering)). About one in four build **Tabbed** dashboards ([Tabbed Dashboards](#Tabbed-Dashboards)), and about one in four put dashboards on the menu through a [Dashboard Group](#Dashboard-Groups----Putting-Dashboards-on-the-Menu).
+- **Subjects.** Sales and the general ledger are the most common subjects, each in about six in ten companies' widgets. Items and stock come next, then purchases.

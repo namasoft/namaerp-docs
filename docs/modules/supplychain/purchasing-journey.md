@@ -106,7 +106,7 @@ Things can go wrong, and you need to return items. The **Purchase Return** rever
 
 **The process:** obtain return authorization from the supplier, then create a return linked to the original purchase, issue the items from your warehouse and ship them to the supplier, await the credit note, and apply it to the payables balance. **Accounting effect:** credit inventory (reducing the asset), debit payables (reducing the liability). And if you've already paid, you may get a credit note for future purchases or a cash refund.
 
-The path often starts with a **Purchase Return Request** (PurchaseReturnReq): the warehouse identifies the items, purchasing contacts the supplier for authorization, then the actual return is created.
+Most returns are entered directly as a Purchase Return. A **Purchase Return Request** (PurchaseReturnReq) is optional - use it when returns need an approval step: the warehouse identifies the items, purchasing contacts the supplier for authorization, then the actual return is created from the request.
 
 ## Special Scenarios and Tools
 
@@ -190,6 +190,22 @@ A: Create a receipt for what arrived; the purchase order tracks what's still pen
 **Q: What happens if we cancel a purchase order after receiving part of it?**
 
 A: You can close the order on the remaining quantities; what was received stays received, and the system no longer waits for the balance.
+
+## In practice
+
+Across Nama installations about 4 in 5 companies record purchase invoices, and nearly all of them receive stock through stock receipts as well. What sets companies apart is which of the two comes first:
+
+| Style | Document chain | How common |
+|---|---|---|
+| Invoice-first | **Purchase Invoice**, which creates its own Stock Receipt when saved | The most common chain — at least half of companies work this way |
+| Receipt-first | **Stock Receipt** first, then a Purchase Invoice built from it with **Collect** and **Apply Receipts** | At least 1 in 4 companies |
+| Full order cycle | **Purchase Order** → Stock Receipt → Purchase Invoice | Less common; used where each delivery is checked against an order before it is billed |
+
+- **Purchase orders** are issued by roughly half of companies, and almost all of those go on to invoice; Purchase Order → Purchase Invoice is a common chain.
+- **The earlier steps are a minority choice.** About 3 in 10 companies raise Item Requests; where they do, the usual chain is Item Request → approval → Purchase Order → receipt. Purchase quotations are kept by about 1 in 5 companies, and price comparisons and consolidated requests by fewer than 1 in 10 — most companies go straight to the order or the invoice.
+- **Returns** are issued by about half of companies in a typical year. Most create the Purchase Return directly; fewer than 1 in 20 put a Purchase Return Request in front of it.
+- **Imports**: about 1 in 3 companies spread freight, customs and clearance over their receipts with the [Additional Cost document](./inventory-costing.md#Additional-Costs-on-Receipts-ReceiptAdditionalCost) — where imports are routine, typically one purchase invoice in five carries one. About 1 in 7 companies also follow their imports through [Letters of Credit](./letters-of-credit.md).
+- **Inspection before stock**: fewer than 1 in 10 companies route deliveries through [Receipt Inspection](./quality-control.md) first — mostly food and technical goods, where a quality check decides what reaches available stock.
 
 ## Messages you may see
 

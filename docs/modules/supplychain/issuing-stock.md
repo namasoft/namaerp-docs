@@ -140,6 +140,13 @@ A: An **issue** reduces total inventory (items left the organization's control).
 
 A: Use a stock issue directed to a loss account. This is the system's adopted way to record incidental damage, with the reason documented in the notes.
 
+## In practice
+
+- **Most stock issues are created by another document.** About 4 in 5 companies issue stock, and nearly 9 in 10 of them also issue sales invoices. The commonest chain by far is the sales invoice creating its own stock issue when saved — at least half of companies work this way. Fewer, at least 1 in 15, issue the goods first and invoice later from the issues; the selling styles are compared in [The Sales Journey](./sales-journey.md#In-practice).
+- **Purchase returns** send goods back to the supplier through a stock issue too: nearly every company that issues purchase returns also issues stock.
+- **Assembly**: about a third of companies that issue stock also run assembly documents, and each one generates its own stock issue for the components it consumes — see [what saving an assembly document creates](./assembly-and-packaging/assembly-documents-and-requests.md#What-saving-creates).
+- **The request-first approach** is a minority choice: about 1 in 7 companies raise Stock Issue Requests in a typical year, and among them Stock Issue Request → Stock Issue is a common chain.
+
 ## Messages you may see
 
 | Message | Why | What to do |
@@ -154,6 +161,7 @@ A: Use a stock issue directed to a loss account. This is the system's adopted wa
 | *Required length {0} is greater than issue length for item {1}* — «الطول المطلوب {0} أكبر من الطول المصروف للصنف {1}» | You are asking for a cut piece longer than the piece being issued. The message gives the length you asked for. | Reduce the required length, or issue a longer piece. |
 | *Required width {0} is greater than issue width for item {1}* — «العرض المطلوب {0} أكبر من العرض المصروف للصنف {1}» | The same check on the width, for a two-dimensional item. | Reduce the required width, or issue a wider piece. |
 | *The Length must be greater than zero* — «الطول يجب أن يكون أكبر من الصفر» | The item is measured by length only and the line's length is still empty or zero — the same gap as above, reported by the second of the two checks the screen runs. | Fill the length on the line. |
+| *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* — «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0} للذمة {1} - نوع المصدر {2} - نوع المرجع {3} - الحافظة (الحساب) {4} {5} {6}» | The issue's inventory request could not build its entry. With `null` as the subsidiary and `DocumentSubsidiary` as the entity type, the term reads the issue's **Subsidiary** field and that field is empty. An invoice's stock effect is the stock issue it generates, so an invoice's failure shows up on that issue. With a party named instead of `null`, that party's account slot named in the message is empty. | Fill the issue's **Subsidiary**, or the slot named in the message in the party's **Subsidiary Accounts**, then **Reprocess** the issue's inventory request. See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#The-account-the-term-asks-for-is-missing). |
 
 ## Next Steps
 

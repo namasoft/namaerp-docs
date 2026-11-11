@@ -19,6 +19,7 @@ page that explains it.
   <LandingCard icon="🐢" title="When the System Is Slow" link="/admin/troubleshooting/system-is-slow.md" details="What to check when users say everything is slow: running reports, background jobs, searching and the database." />
   <LandingCard icon="⏳" title="System Hanging or Unresponsiveness" link="/admin/troubleshooting/troubleshooting-system-hanging.md" details="The system has stopped responding: capture thread dumps before restarting, and send them to Namasoft." />
   <LandingCard icon="🚨" title="Critical Errors at Login" link="/admin/troubleshooting/critical-errors.md" details="The red list of health checks shown at login: every check, what raises it, and what to do about it." />
+  <LandingCard icon="🧾" title="Fixing a Failed Business Request" link="/admin/troubleshooting/failed-business-requests.md" details="A saved document whose ledger or stock effect failed: what each message means, what to fix, and whether to Reprocess or Recommit." />
   <LandingCard icon="❓" title="General FAQ" link="/admin/troubleshooting/general-faq.md" details="Answers to everyday administration questions, from blank lens errors to SMS formatting." />
 </LandingGrid>
 
@@ -49,6 +50,7 @@ page that explains it.
 | The complaint | Read |
 |---|---|
 | "The invoice is saved but it is not in the ledger." / "Stock did not move." | [Business Requests](/platform/background-processing/business-requests) |
+| "The document shows *Processing Failed*." / *Error while creating account of {0} side* | [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests) |
 | "The email, SMS or WhatsApp message never arrived." | [Pending Tasks](/platform/background-processing/pending-tasks) |
 | "The scheduled report did not go out." | [Scheduled Tasks](/platform/automation-and-rules/scheduled-tasks) |
 | "The salary sheet did not rebuild." | [System Actions](/platform/background-processing/system-actions) |

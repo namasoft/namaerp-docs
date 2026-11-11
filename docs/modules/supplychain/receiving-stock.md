@@ -62,22 +62,18 @@ In organizations that separate who requests a receipt from who executes it, the 
 
 When you first implement NaMa ERP, you already have inventory - you're not starting from zero. How do you bring existing stock into the system?
 
-### Initial Receipt (InitialReceipt)
+### Opening Stock Document (OpeningStockDocument)
 
-The **Initial Receipt** is a special receipt type used during system implementation. It lets you enter existing inventory quantities, set their current values, establish opening balances, and create the initial accounting entries.
+The **Opening Stock Document** is the document for opening balances. You enter it yourself: one line per item with its warehouse, quantity and unit cost, and the document totals the cost for you. It is meant for an opening period - unless its term has **Allow Normal Periods** switched on, the system refuses to save it in an ordinary period. Its term is set to generate the **Stock Receipt** that actually brings the quantities into stock, so the stock movement and its accounting come from that generated receipt.
 
-Think of it as a snapshot of your inventory on day zero of using NaMa ERP. After go-live, you won't use this document type again - it's meant for first-time setup only.
+Think of it as a snapshot of your inventory on day zero of using NaMa ERP.
 
 **Go-live best practice:**
 1. Perform a comprehensive physical count before go-live
 2. Value your inventory using your chosen costing method
-3. Create initial receipts for each item/location group
+3. Create opening stock documents for each warehouse or item group
 4. Verify that total inventory value matches your accounting records
 5. Go live!
-
-### Opening Stock Document (OpeningStockDocument)
-
-The **Opening Stock Document** is related to the previous one but slightly different - it's often system-generated and represents the official opening position for accounting purposes. You may not create it directly; the system generates it based on your initial receipts or migration data.
 
 ## Receiving Damaged Goods (PurgeStockReceipt)
 
@@ -94,10 +90,21 @@ You receive these items into a special "purge" location, then create disposal do
 
 Many facilities don't receive items directly into normal stock - they go to an inspection area first.
 
+### Initial Receipt (InitialReceipt)
+
+The **Initial Receipt** is a preliminary receiving note: it records that goods have arrived - usually against a purchase order, a purchase invoice, a letter of credit or one of its shipments - before they are accepted into stock. It is an everyday document, not a go-live tool.
+
+Saving an Initial Receipt does not move stock and creates no accounting entries; the most it can do is reserve the expected incoming quantity, when its term has **Reserve** switched on. The real effect comes from the documents created from it:
+
+- a **Receipt Inspection** (below) or a **Quality Control** document that records the check;
+- a **Stock Receipt** (or a **Stock Receipt Request**) that brings the accepted goods into stock.
+
+When a Stock Receipt is created from an Initial Receipt, every item that carries a **Quality Check List** must already have a Quality Control document recorded against that initial receipt - otherwise the receipt is refused (see the messages table below).
+
 ### Receipt Inspection (ReceiptInspection)
 
-The **Receipt Inspection** document records arriving items for inspection, creating a two-step receiving process:
-1. **Initial receipt into inspection**: items arrive and are placed in an "under inspection" warehouse/location
+The **Receipt Inspection** document records arriving items for inspection - on its own, or created from an Initial Receipt, a purchase order, a purchase invoice or a Stock Receipt Request - creating a two-step receiving process:
+1. **Arrival into inspection**: items arrive and are placed in an "under inspection" warehouse/location
 2. **Final decision after inspection**:
    - **Accept**: move to normal stock
    - **Reject**: create a return to the supplier or move to defective goods
@@ -169,6 +176,15 @@ A: Two options: (1) receive all 100, then immediately issue 5 to a defective loc
 **Q: What do we do if we received items at the wrong cost?**
 
 A: If you saved as a draft, correct the cost before final save. If the document was saved permanently, you can create a [cost revaluation](./inventory-costing.md) document, cancel and re-receive, or accept it and let subsequent receipts average out the cost.
+
+## In practice
+
+- **Most receipts come from another document.** About 4 in 5 companies issue stock receipts, and nearly all of them record purchase invoices too. The commonest source is the purchase invoice, which creates its receipt when saved — at least half of companies work this way — while at least 1 in 4 receive first and invoice later from the receipt. The three styles are compared in [The Purchasing Journey](./purchasing-journey.md#In-practice).
+- **Sales returns are the second big source.** About 3 in 4 companies that receive stock also take goods back on sales returns, and a sales return bringing goods back into stock with its own receipt is a common chain.
+- **Hand-made receipts** — internal returns, found items, samples — are the minority, and most companies receive without a request step: fewer than 1 in 10 use the Stock Receipt Request.
+- **Opening balances are mostly a one-off.** About 3 in 5 companies hold Opening Stock Documents, but only about 1 in 6 issue one in a given year.
+- **Landed cost**: about 1 in 3 companies add freight and customs charges to their receipts with the Additional Cost document, described in [Inventory Costing & Revaluation](./inventory-costing.md#Additional-Costs-on-Receipts-ReceiptAdditionalCost).
+- **An inspection gate** in front of available stock, through [Receipt Inspection](#Integration-with-Receipt-Inspection), is used by fewer than 1 in 10 companies — mostly in food, technical goods and packaging. A similar share records arrivals with the [Initial Receipt](#Initial-Receipt-InitialReceipt), and they issue it routinely all year round as the step in front of the check: Initial Receipt → Receipt Inspection or Quality Control → Stock Receipt.
 
 ## Messages you may see
 

@@ -187,6 +187,29 @@ Users rarely remember which fields have tooltips. The **Tooltips** button on the
 the screen in front of you; clicking one moves to that field and runs it. The button only appears where
 at least one tooltip is defined.
 
+## In practice
+
+About seven in ten companies define tooltips. A typical company keeps only a handful, around three, and
+even the busiest seldom go beyond ten. Larger companies use them more: about half of the smallest
+companies have tooltips, against more than eight in ten of the largest. About a third of the companies
+that use tooltips make at least one of them automatic, with **Automatically Display Tooltip When Field
+Value Changes** ticked.
+
+The same few tooltips account for most of what is built. Each one is a query plus one or more Parameters
+Mapping lines, as described in [Building one](#Building-one):
+
+| What the user sees on F9 | Field Name | What the query reads |
+|---|---|---|
+| Stock on hand per warehouse. Nearly every company that uses tooltips has this one. | The item field of the document lines | The item's quantities, often with the line's warehouse passed as a second parameter |
+| The customer's or supplier's balance and open debts. About six in ten companies have it. | The customer, supplier or subsidiary field | The party's balance and its unpaid amounts |
+| The quantity still free after reservations. More than half the companies have it. | The item field | The on-hand quantity minus what is reserved |
+| The last purchase price or the item's cost. About three in ten companies have it. | The item field | The latest purchase invoice line, or the item's cost |
+| The price-list price, or the last price this customer paid | The item field, with the customer passed as a second parameter | The price list, or earlier sales lines for that customer |
+
+To give managers a fuller version of one of these, such as balances with ageing, while everyone else sees
+the short one on the same field, use **Priority** and **Apply To** as described in
+[When several tooltips share a field](#When-several-tooltips-share-a-field).
+
 ## Messages you may see
 
 | Message | Why | What to do |

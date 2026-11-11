@@ -238,6 +238,13 @@ Suppose "Overtime Hours" is a **System** indicator, tied to attendance and gated
 
 See [How Salary Is Calculated](../concepts/hr-salary-engine.md) for where this fits in the full five-step pipeline, and [Time & Attendance](../attendance/time-attendance.md) for how daily punches turn into the kind of raw figures that System indicators and formulas ultimately consume.
 
+## In practice
+
+- **About 2 in 3 companies keep Performance Indicators**, including about 9 in 10 contracting companies. A typical company defines around ten; about 1 in 10 defines more than 25.
+- **The Manual Measure is the usual way values come in.** About half of the companies with indicators have used it, typically around two documents a month.
+- **The Performance Measure batch is the less common route**, used by fewer than 1 in 10 of the companies with indicators.
+- **Most companies do not put System readings through an approval step.** About 1 in 30 of the companies with indicators uses the System Indicator Approval document.
+
 ## Messages you may see
 
 | Message | Why | What to do |

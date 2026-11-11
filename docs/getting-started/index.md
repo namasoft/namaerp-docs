@@ -12,6 +12,7 @@ New to Nama ERP? Start here. First, what the system actually is and the vocabula
 <LandingGrid>
   <LandingCard icon="🧭" title="What is Nama ERP" link="/getting-started/what-is-nama-erp.md" details="The handful of ideas the whole system is built on — master files, documents, modules, and the document lifecycle." />
   <LandingCard icon="📖" title="Glossary of Nama ERP Terms" link="/getting-started/nama-erp-glossary.md" details="Every recurring term in the system, in Arabic and English, with the pairs that get mixed up." />
+  <LandingCard icon="🗺️" title="Find Your Business Scenario" link="/business-scenarios/" details="How a company like yours runs on Nama ERP: the licences, the document flow and the setup order." />
   <LandingCard icon="🖥️" title="System Minimum Requirements" link="/getting-started/system-minimum-requirements.md" details="The hardware and software your server needs before you install Nama ERP." />
   <LandingCard icon="📦" title="Nama ERP Installation Guide" link="/getting-started/installation-guide.md" details="Step-by-step setup to get Nama ERP up and running on your server." />
   <LandingCard icon="⚙️" title="Nama Properties" link="/getting-started/nama-properties.md" details="The nama.properties configuration file — what each setting does and how to tune it." />

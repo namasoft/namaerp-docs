@@ -17,6 +17,7 @@ title: استكشاف الأخطاء وإصلاحها
   <LandingCard icon="🐢" title="حين يصبح النظام بطيئًا" link="/ar/admin/troubleshooting/system-is-slow.md" details="ما الذي تفحصه حين يشكو المستخدمون من بطء كل شيء: التقارير الجارية، وأعمال الخلفية، والبحث، وقاعدة البيانات." />
   <LandingCard icon="⏳" title="توقف النظام أو عدم استجابته" link="/ar/admin/troubleshooting/troubleshooting-system-hanging.md" details="توقف النظام عن الاستجابة: التقط Thread Dumps قبل إعادة التشغيل، وأرسلها إلى نما." />
   <LandingCard icon="🚨" title="الأخطاء الحرجة عند الدخول" link="/ar/admin/troubleshooting/critical-errors.md" details="قائمة الفحوص الحمراء التي تظهر عند الدخول: كل فحص، وما الذي يثيره، وما العمل." />
+  <LandingCard icon="🧾" title="إصلاح طلب أعمال فاشل" link="/ar/admin/troubleshooting/failed-business-requests.md" details="مستند محفوظ فشل أثره المحاسبي أو المخزني: معنى كل رسالة، وما الذي تصلحه، ومتى تعيد المعالجة ومتى تعيد الحفظ." />
   <LandingCard icon="❓" title="أسئلة عامة" link="/ar/admin/troubleshooting/general-faq.md" details="إجابات عن أسئلة الإدارة اليومية، من أخطاء العدسة الفارغة إلى تنسيق الرسائل النصية." />
 </LandingGrid>
 
@@ -47,6 +48,7 @@ title: استكشاف الأخطاء وإصلاحها
 | الشكوى | اقرأ |
 |---|---|
 | «الفاتورة محفوظة لكنها ليست في الحسابات.» / «المخزون لم يتحرك.» | [طلبات الأعمال](/ar/platform/background-processing/business-requests) |
+| «المستند يظهر عليه المعالجة فشلت.» / «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0}» | [إصلاح طلب أعمال فاشل](/ar/admin/troubleshooting/failed-business-requests) |
 | «البريد أو الرسالة النصية أو رسالة الواتساب لم تصل.» | [المهام المعلقة](/ar/platform/background-processing/pending-tasks) |
 | «التقرير المجدول لم يُرسَل.» | [المهام المجدولة](/ar/platform/automation-and-rules/scheduled-tasks) |
 | «كشف الرواتب لم يُعَد بناؤه.» | [إجراءات النظام](/ar/platform/background-processing/system-actions) |

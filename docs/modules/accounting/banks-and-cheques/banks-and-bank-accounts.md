@@ -49,6 +49,13 @@ The **Bank**, **Bank Account** and **Bank Adjustment** screens have no buttons o
 - Bank reports (`SYSR-BNK*`: commercial-paper statement, cheques under collection, cheques by status, financial-paper books) are covered with [Cheques & financial papers](./cheques-financial-papers.md).
 - Printed forms: bank transfer `SYSF-BNK001`, bank adjustment `SYSF-BNK002`.
 
+## In practice
+
+- Banks and bank accounts are set up at about 9 in 10 companies. A typical company defines about half a dozen banks and around ten bank accounts; the largest tenth more than 30 of each.
+- The **Bank Transfer** is used by about 1 in 3 companies, roughly 2 in 5 of those with bank accounts. The others handle their bank movements through receipt and payment vouchers, whose cash side can be a bank account.
+- Where bank transfers are used they are routine: a typical company issues several hundred a year, and moving cash between cash desks and banks can make it one of the busiest documents.
+- The **Bank Adjustment** is used by fewer than 1 in 10 companies; those that use it typically record a few hundred a year.
+
 ## For Support
 
 - **"A bank account movement hits the wrong ledger account"** — review the **Accounts** block on the bank account (main account / 01–05); the accounting target comes from there.

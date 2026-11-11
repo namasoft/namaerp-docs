@@ -278,3 +278,30 @@ The effect groups present on a document term depend on the document type:
 | Cost Revaluation | Debit (Adjustment Side) / credit (Inventory Side) |
 | Processing Document | Debit / credit of the indirect-cost entry (`termConfig.feesDebit` / `termConfig.feesCredit`) — see [Processing Document](./doc-term-document-specific.md#Processing-Document) |
 | Post Sales Offer Claim | Debit / credit, each an Accounting Side Config record (`termConfig.debit` / `termConfig.credit`) — see [Post-Sales Offer Claim](./doc-term-document-specific.md#Post-Sales-Offer-Claim) |
+
+## In practice
+
+- A side does not have to name an account. It can say where to find one — the **Main Account** of
+  the warehouse, an **Account 01 … 20** slot of the item, or a slot of the party in the document's
+  **Subsidiary** field. When it does, the term only works if every record it points at has that
+  slot filled.
+- That is also where the trouble comes from. Across Nama installations, the most common reason a
+  saved document's effect fails is a side that reads a slot which is empty on the record: more than
+  half of all failed business requests, met by fewer than 1 in 10 companies.
+
+**Common errors**
+
+- *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* —
+  «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0} للذمة {1} - نوع المصدر {2} - نوع المرجع {3} - الحافظة (الحساب) {4} {5} {6}».
+  The message names the side, the record it opened (`null` when the document field the side reads
+  is empty), where the record came from (`Warehouse`, `InvItem`, `DocumentSubsidiary`, …) and the
+  empty slot (`MainAccount`, `Account1` …). Fill that slot in the record's **Subsidiary Accounts**,
+  or fill the empty document field, then **Reprocess** the inventory request.
+- A new warehouse is the usual case: a Stock Transfer whose term debits the **To Warehouse**'s Main
+  Account fails for every transfer into a store whose accounts were never filled.
+- If you change the **term** instead, Reprocess is not enough. The inventory request keeps its own
+  copy of the term's account sides from the moment the document was saved, so the document has to
+  be **Recommitted** to pick up the new sides.
+
+See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests) for every
+part of the message and the full Reprocess / Recommit rule.

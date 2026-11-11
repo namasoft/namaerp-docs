@@ -27,8 +27,9 @@ login afterwards. That is why correcting the problem does not clear the message.
 
 **Four things rebuild it:**
 
-- **Once an hour**, automatically. The schedule can be changed with the
-  `critical-errors-refresh-cron` key in `nama.properties`.
+- **Once an hour**, automatically, on a server that runs the background processing. The schedule
+  can be changed with the `critical-errors-refresh-cron` key in `nama.properties`. A front-end-only
+  server (one set with `no-background-processors`) has no hourly rebuild.
 - **On demand**, from **Utilities → Caching → Refresh Critical Errors** — the "Refresh Critical Errors"
   the troubleshooting answers ask for. Like the rest of the Utilities page, it needs the `admin` user or a
   user with **Allow Access to Admin Restricted Functionality**; the same link opened directly
@@ -37,7 +38,11 @@ login afterwards. That is why correcting the problem does not clear the message.
   [EARefreshCriticalErrors](/entity-flows/core/EARefreshCriticalErrors) action — the way to make the
   refresh part of a nightly routine.
 - **Whenever a business request fails or succeeds**, for the failed-requests count only. That one
-  number keeps itself current; everything else waits for a refresh.
+  number keeps itself current.
+
+A few entries also refresh on their own occasion: saving a Global Configuration entry re-checks the
+server id and the backup folder, and **Utilities → Reload Configuration** re-reads
+`critical-error-messages.txt`. Everything else waits for a rebuild.
 
 **It is shown at login, at most three times per session.** The list is pushed at the user the moment
 they sign in. If they dismiss it, it will come back at most twice more in that browser session and
@@ -84,7 +89,7 @@ each one with a backslash. Remove the file and, at the next refresh, the message
 | Message | What raised it | What to do |
 |---|---|---|
 | *Database transaction isolation level is not correct, please contact our support team and provide them the following message: TIL is {n}* | The database is not running in read-committed-snapshot isolation. Nama needs it; without it, readers and writers block each other and the whole system feels slow. English only. | A DBA change on the database, not in Nama. The number in the message tells support which level it found. |
-| *The background processor is not working, please check the server* | The thread that processes business requests is not alive. Nothing will be recorded in the ledger or the warehouse until it is back. English only. | The most urgent entry on this page. Check the server log for the failure that killed it, and restart the application server. |
+| *The background processor is not working, please check the server* | Raised on a front-end-only server — one set with `no-background-processors`, which leaves the business requests to a separate background server. Once a minute it calls that server's `background-server-url` to check that it is alive; the call failed or did not answer "alive". Nothing will be recorded in the ledger or the warehouse until the background server is back. English only. | The most urgent entry on this page. Check that the background server is running and that `background-server-url` points at it; look at that server's log, and restart it if needed. The message clears itself at the next good check. |
 | *Folder {0} is almost full, remaining space is less than {1} GB* | A folder being watched for free space fell below the threshold. Which folders and which threshold come from **Check The Following Folders for Empty Space (CSV)** and **Warn Users When Empty Space Is Less Than (GB)**; with nothing configured it watches the system drive. English only. | Free space, or point the watch at the right folders: <GlobalConfigOption option-code="value.info.foldersToCheckSpace" /> |
 | *Tomcat logs folder is {0} MB, please review and clean up old log files* | The application server's log folder passed 6 GB. Nama deletes the Windows service wrapper's own logs older than five days by itself, but nothing else in that folder. English only. | Clear out the old logs, and set log rotation on the application server. |
 | *You did not define server id in global configuration, all e-mail, SMS, and Mobile Push notifications will be postponed.* | **Send Mails And SMS Only From Servers (CSV)** is empty. It names which server instance is allowed to send messages, so that a test copy of the database does not e-mail real customers — and while it is empty, nothing is sent at all. English only. | Fill it with this server's id: <GlobalConfigOption option-code="value.info.sendMailsAndSMSOnlyFromServers" /> |
@@ -136,7 +141,7 @@ Both settings are described in
 
 | Message | What raised it | What to do |
 |---|---|---|
-| *There are {0} failed requests, please contact our support team and provide them the following message: SYSFRQS is {1}* — «يوجد {0} مستندات فشلت معالجتها. يرجي التواصل مع الدعم الفني و ابلاغهم بالخطأ التالي: SYSFRQS is {1}» | Business requests are sitting in *Failed* or *Failed By Exception*. Documents were saved and their effects never happened. | Open the [Business Requests](/platform/background-processing/business-requests) list view, filter by status, read the error on the row, then **More → Reprocess**. The count refreshes itself as the failures clear. |
+| *There are {0} failed requests, please contact our support team and provide them the following message: SYSFRQS is {1}* — «يوجد {0} مستندات فشلت معالجتها. يرجى التواصل مع الدعم الفني و إبلاغهم بالخطأ التالي: SYSFRQS is {1}» | Business requests are sitting in *Processing Failed* or *Failed By Exception*. Documents were saved and their effects never happened. | Open the [Business Requests](/platform/background-processing/business-requests) list view, filter by status, read the error on the row, fix the cause, then **More → Reprocess** or **Recommit** — [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests) explains each message and which of the two to use. The count refreshes itself as the failures clear. |
 | *There are {0} user notifications which exceeds the limit of {1}, this may affect system performance. Please review and clean up old notifications* | The notification table passed its limit — 10,000 unless **Max User Notification Count** says otherwise. A very large table slows the system for everyone. English only. | Delete the old ones, and set up a scheduled task so it does not come back (below). Or raise the limit: <GlobalConfigOption option-code="value.info.maxUserNotificationCount" /> |
 | *There is no next normal fiscal period, please define one* — «لا توجد فترة محاسبية عادية تالية للفترة الحالية , برجاء تعريفها» | There is no normal fiscal period starting the day after the current one ends. **The check only runs in December**, as a reminder to open next year before anybody needs it. | Create the next fiscal year and its periods. |
 
@@ -190,8 +195,20 @@ and complains for as long as they are enabled. All of these appear in English on
 | Message | What raised it | What to do |
 |---|---|---|
 | *There are {0} documents type {1} with Errors. Please fix them.* — «يوجد عدد مستندات {0} من النوع {1} بها أخطاء. يرجى معالجتها.» | Point-of-sale documents are sitting as drafts. The POS keeps a document that fails validation as a draft rather than losing the sale, so a draft here means a real transaction that never reached the books. | Open each one, fix what it complains about, and commit it. A growing count means the cause is still there. |
-| *There are {0} undeleted online orders ({1}) older than 12 hours. Please review and process them.* — «يوجد {0} طلب أونلاين ({1}) منذ أكثر من 12 ساعة لم بتم حذفها بعد. يرجى مراجعتها ومعالجتها.» | Online-order entries are not being cleared. The check raises it when more than nine thousand entries are older than a day. | Process the backlog, and schedule the clean-up action that deletes old entries. |
-| *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بألاكواد {0} مفعلة» | An e-commerce site record is active but this server is not configured to send data to it — so the shop and the ERP are silently drifting apart. | Either set `send-ecommerce-data` on the server that should be publishing, or mark the site record inactive. It is normal to see this on a test copy of a live database. |
+| *There are {0} undeleted online orders ({1}) older than 12 hours. Please review and process them.* — «يوجد {0} طلب أونلاين ({1}) منذ أكثر من 12 ساعة لم يتم حذفها بعد. يرجى مراجعتها ومعالجتها.» | Online-order entries are not being cleared. The check raises it when more than nine thousand entries are older than a day. | Process the backlog, and schedule the clean-up action that deletes old entries. |
+| *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بالأكواد {0} مفعلة» | An e-commerce site record is active but this server is not configured to send data to it — so the shop and the ERP are silently drifting apart. | Either set `send-ecommerce-data` on the server that should be publishing, or mark the site record inactive. It is normal to see this on a test copy of a live database. |
+
+### Purge
+
+These three come from the document purge (**Administration → Purge Documents → Purge
+Configuration**). Each one clears itself as soon as the purge moves again. All appear in English
+only.
+
+| Message | What raised it | What to do |
+|---|---|---|
+| *The purge coordinator has failed {0} time(s) in a row with the error: {1}. No purge can advance and every purge range guard stays up until this is resolved* | The step that advances the active purge configurations keeps failing with the error in the message. After three failures in a row (by default) the active configurations are marked failed, with the error written to their **Last Run Log**. | Fix the cause named in the message or in the Last Run Log, then run the purge configuration again. |
+| *Purge config {0} (status {1}) has made no progress for {2} minutes. Until it is resumed or fixed the purged period refuses postings, the ledger, inventory, stock ages and debt ages processors stay paused, and the balances and quantities of the already created purge roll-ups are doubled by the sources that are not deleted yet* | The oldest active purge configuration has not moved for an hour or more (by default) — failed, paused or stuck. While it stands still the purged period is half done, which is why balances and quantities look doubled. | Open the named purge configuration, read its Last Run Log, fix the cause and resume it. Treat it as urgent: postings and processing wait for it. |
+| *The purge batch {0} asked to be rescheduled {1} times in a row without processing a single row; it has been stopped as a non-progressing purge batch* | A purge step kept asking to run again without ever removing a row, so it was stopped instead of spinning forever. | Raise it with Namasoft support: the step needs investigating before the purge configuration is run again. |
 
 ### Database schema fixes (Namasoft support only)
 

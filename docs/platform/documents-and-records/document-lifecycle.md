@@ -66,9 +66,14 @@ previous committed version if it was already live. Nothing is left half-saved.
 
 ::: warning A committed document can still have failed
 Commit and processing are two different moments. A document can be perfectly committed and its
-ledger effect can fail minutes later, and the document still looks completely normal on screen. The
-place that knows is the Business Requests list view; the place that shouts about it is the
-critical-errors list at login — *There are {0} failed requests, please contact our support team and provide them the following message: SYSFRQS is {1}*.
+ledger effect can fail minutes later. The document's fields look exactly as before, but its header
+shows the status of the first request that is not yet processed — **Processing Failed** or
+**Failed By Exception** — in place of the document status. The exception is a sales or purchase
+invoice whose stock effect failed: that effect belongs to the Stock Issue or Stock Receipt the
+invoice generated, and only that document's header shows it. The place that lists every failure is
+the Business Requests list view (see
+[Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests)); the place that
+shouts about it is the critical-errors list at login — *There are {0} failed requests, please contact our support team and provide them the following message: SYSFRQS is {1}*.
 :::
 
 ## The status a document carries

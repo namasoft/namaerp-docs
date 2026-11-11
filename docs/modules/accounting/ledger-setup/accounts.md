@@ -49,7 +49,9 @@ Each company's **Mediator account**, on the Legal Entity screen, should be an in
 When the account is of type **Subsidiary**, you set its **Subsidiary Type** — the kind of party the balance breaks down by (customer, supplier, employee, bank, bank account, safe, fixed asset, item, project... the list is long and includes entities from every licensed module). You can combine up to **five subsidiary types** on the same account (subsidiary type 2 through 5), so its balance breaks down across more than one dimension at once — for example customer × project.
 
 ::: tip
-The **Allow Transactions Without Subsidiary** option lets you, when needed, record a transaction on a subsidiary account without specifying the party. By default, subsidiary accounts require the party; don't enable this without a clear reason.
+The **Allow System Transactions without Subsidiary and Vice Versa** option lets the entries the system builds when it processes documents skip the subsidiary check on this account: a line without a party is accepted, and so is a party where none belongs. It works only together with **Enable Allow System Transactions without Subsidiary and Vice Versa in Accounts** in [Accounting Configuration](../support/accounting-configuration.md) - the account cannot even be saved with the option ticked until that switch is on. Journal entries and receipt/payment vouchers that users enter still need the party: on those the account keeps refusing with
+*The account {0} must have a subsidiary* — «يجب تحديد ذمة للحساب {0}».
+By default, subsidiary accounts require the party; don't enable this without a clear reason.
 :::
 
 ## The control flag set
@@ -111,12 +113,17 @@ The account record itself prints on the **Account** form (`SYSF-ACC019`): its ch
 
 ![Account form (SYSF-ACC019)](../../../ar/modules/accounting/images/forms/SYSF-ACC019-en.png)
 
+## In practice
+
+- A new company starts with roughly 170 accounts, and about 5 in 6 companies add their own. A typical company ends up with around 230 accounts, and the largest tenth with more than 400.
+- Closing accounts by date is less common: fewer than 1 in 10 companies keep a **Prevent Accounts Transactions** record, usually just one.
+
 ## For Support
 
 Most "the entry won't save" or "the balance is wrong" tickets are resolved from this screen:
 
 - **"Blocking message on save: change of balance nature"** — the account has **Prevent Change Account Balance Nature** enabled and the transaction would have flipped its balance to the unnatural side. Review the transaction logic or the setup.
-- **"The system asks for a subsidiary/customer and won't save"** — the account is of type **Subsidiary** and no party was specified; either specify it or (only if necessary) enable **Allow Transactions Without Subsidiary**.
+- **"The system asks for a subsidiary/customer and won't save"** (*The account {0} must have a subsidiary* — «يجب تحديد ذمة للحساب {0}») — the account is of type **Subsidiary** and no party was specified. On a journal entry or voucher a user entered, specify the party: no option lifts that. When the line comes from a document the system processed, either fill the party on the document or (only if necessary) tick **Allow System Transactions without Subsidiary and Vice Versa** on the account, with the matching switch on in Accounting Configuration, then reprocess the document - see [Failed business requests](/admin/troubleshooting/failed-business-requests).
 - **"The system mandatorily requires a reference/narration"** — one of the **Do Not Allow Empty Reference/Narration** flags is enabled on the account.
 - **"The account doesn't appear in the debt-age report"** — the **Track Debt Ages** flag is off.
 - **"The account isn't revalued with currency differences"** — the **Do Not Auto-Include In Exchange Rate Update** flag is on.

@@ -44,6 +44,12 @@ You can also link the warehouse to a branch and a group, set its priority (for a
 
 You can decide whether a particular warehouse is included in Material Requirements Planning (MRP) calculations. A showroom display warehouse may not be something you want counted as available for production, while your main raw-materials warehouse should be.
 
+## The warehouse's accounts
+
+Each warehouse carries a **Subsidiary Accounts** block in its **Accounts** group: **Accounts Bag**, **Main Account**, and **Account 01** to **Account 20**. These are where the stock value of the warehouse is recorded. When a stock document is processed, its document term decides which account each side of the entry uses, and for the stock side it usually reads the **Main Account** of the warehouse on the document.
+
+So a warehouse left without a Main Account makes the stock postings of every document that uses it fail. The document itself saves, but its inventory request fails until the account is filled. This is most often seen on a stock transfer into a newly created store, where the store is the transfer's **To Warehouse**. Fill the Main Account, then **Reprocess** the failed requests - see [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#The-account-the-term-asks-for-is-missing).
+
 ## Locators: Precision Inside the Warehouse
 
 Inside a large warehouse, knowing you have "200 boxes" isn't enough - where exactly are they? Which aisle, which shelf, which pallet? This is where **Locators** come in.
@@ -188,6 +194,13 @@ Imagine a typical distribution center:
 
 This spatial structure is the foundation on which all the stock movements we'll cover in the next sections operate.
 
+## In practice
+
+- **Warehouse counts vary with the design, not just the size.** About 9 in 10 companies define warehouses; a typical company keeps around 15, and the largest tenth keep around a hundred or more.
+- **One warehouse per van or per project** is a common design. Van-sales distributors give each vehicle its own warehouse, and contractors give each site one, so these companies run hundreds of warehouses — and every van or site balance can be reported on its own.
+- **Transfers are routine.** About 2 in 3 companies with warehouses move stock between them with stock transfers in a typical year. In branch chains the usual pattern is a transfer request from the branch, then the transfer; about 1 in 5 companies use Stock Transfer Requests. Where goods spend time on the road between branches, the two-step transfer through a transit warehouse is used. Both are covered in [Moving Stock Between Warehouses](./moving-stock.md).
+- **Locators are a large-warehouse tool.** About 1 in 5 companies use them, and those that do define many — typically around a hundred, and at the largest distribution sites several thousand bin locators.
+
 ## Messages you may see
 
 | Message | Why | What to do |
@@ -203,6 +216,7 @@ This spatial structure is the foundation on which all the stock movements we'll 
 | *You must activate validate item warehouse relation in the SupplyChain Configurations* — «لا بد اولاً من تفعيل خيار ربط الاصناف بالمخزن فى إعدادات المخازن» | An **Item Warehouse Relation** record is being saved while the switch that makes those records mean anything is still off. | Switch **Activate Item Warehouse Relation** on in supply chain configuration, then save the record. |
 | *You must fill one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد من الحقول الأتية:{0}, {1} في السطر {2}» | An item-warehouse link line names neither a warehouse nor a warehouse group, so there is nothing for the item to be linked to. | Fill one of the two on that line. |
 | *You must fill only one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد فقط من الحقول الأتية:{0}, {1} في السطر {2}» | The same line names both a warehouse and a warehouse group. One link per line. | Clear one of the two, and add a second line if you meant both. |
+| *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* — «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0} للذمة {1} - نوع المصدر {2} - نوع المرجع {3} - الحافظة (الحساب) {4} {5} {6}» | The transfer's inventory request could not build its entry. With entity type `Warehouse`, account type `MainAccount` and `toWarehouse` at the end, the **To Warehouse** has no Main Account; with `null` as the subsidiary, the field the term reads is empty. | Fill the **Main Account** in the warehouse's **Subsidiary Accounts**, then **Reprocess** the transfer's inventory request. See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#The-account-the-term-asks-for-is-missing). |
 
 ## Next Steps
 

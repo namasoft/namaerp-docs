@@ -265,6 +265,28 @@ lines are left alone.
 | *Field {0} is required, can not be empty* — «لا يمكن ترك {0} فارغا» | A field this screen requires is empty. The same message is used whether the rule came from this screen, from the field's own definition, or from the product's built-in checks — the name in the message is the field, not the rule. | Fill the field. If you do not think it should be required, search this screen's three grids for its field id before looking anywhere else. |
 | *Error while validating required field {0} with condition {1},query {2}, required fields {3}* — «خطأ عند التحقق من الحقل المطلوب {0} للشرط {1} الاستعلام {2} لملف الحقول المطلوبة {3}» | A conditional line could not be evaluated — almost always a **When Query** that will not run. The rule is not skipped quietly: the save fails for everyone the line applies to. | The message names the field, the criteria, the query and the Required Fields record that holds the broken line, and the error panel can take you straight to it. Fix or clear the query. |
 
+## In practice
+
+- About 19 in 20 Nama installations have a Required Fields record, and about 3 in 4 have added rules
+  of their own beyond the one created at setup.
+- About two thirds of those companies use **Required Fields Based On Criteria** at least once, and
+  there the condition is usually a saved criteria in **When** rather than a **When Query**. **Ignore
+  Required Fields When** is much rarer: about 1 in 10 companies use it.
+- Most rules land on master files. Customers, items and employees carry the most, followed by the
+  sales invoice, suppliers, and purchase invoices and vouchers.
+
+The rules companies add most often, all of them one line each:
+
+| Rule | Grid and settings | Roughly how common |
+|---|---|---|
+| A master group on every new master file | [Fields Required Always](#Fields-Required-Always), On Field `group` on Customer, Supplier, Employee, Item and the rest. Several companies make it mandatory on dozens of master file types at once. Why the group matters: [Does every master file need a group?](/platform/documents-and-records/master-groups#Does-every-master-file-need-a-group) | 3 in 10 on customers, slightly fewer on suppliers |
+| Documents must come from their source document: returns from an invoice, receipts from an order, transfers from a request | On Field `fromDoc` (the **From Document** field) on the document that should never be created by itself | about 4 in 10 |
+| A description or remarks on vouchers, invoices and returns | On Field `remarks` or `description1` | about a third |
+| Item classification: item section, class 1, tax plan | Entity Type `InvItem`, On Field `section`, `itemClass1` or `taxPlan` | 3 in 10 for the section, 1 in 5 for class 1 |
+| A warehouse on sales and purchase documents | On Field `warehouse` | about a third |
+| The salesman on sales documents, the sales invoice above all | On Field `salesMan` | about 1 in 4 |
+| Account settings on customers, suppliers and bank accounts | On Field `subsidiaryAccounts.mainAccount`, and `iban` on bank accounts | about a third |
+
 ## Related pages
 
 - [Input Rules and Limits](/platform/fields-and-entities-settings/fields-settings-input-validation) — patterns, lengths and picklists for values that *are* entered.

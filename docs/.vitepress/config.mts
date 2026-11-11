@@ -20,6 +20,19 @@ const HOSTNAME = 'https://docs.namasoft.com/'
 const SEARCH_INDEX_STABLE_PATH = path.join(path.dirname(fileURLToPath(import.meta.url)), 'search-index.json')
 const DOCS_DIR = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 
+// A ```mermaid fence becomes the MermaidDiagram component (theme/components), which renders it in the
+// browser. The source travels URI-encoded so the Vue template compiler never sees its quotes, braces or
+// arrows. Nothing textual is rendered at build time, so diagrams stay out of the search index.
+function mermaidFences(md) {
+    const fence = md.renderer.rules.fence
+    md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        if (token.info.trim() === 'mermaid')
+            return `<MermaidDiagram code="${encodeURIComponent(token.content)}" />\n`
+        return fence(tokens, idx, options, env, self)
+    }
+}
+
 function rtlLtrContainer(md, type) {
     md.use(container, type, {
         render: (tokens, idx) =>
@@ -352,6 +365,7 @@ gtag('config', 'G-H68GM8HY15');`]
         config: (md) => {
             rtlLtrContainer(md, 'rtl')
             rtlLtrContainer(md, 'ltr')
+            mermaidFences(md)
         }
     },
     transformPageData(pageData) {

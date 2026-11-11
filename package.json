@@ -30,6 +30,7 @@
     "eslint-plugin-regexp": "^2.9.0",
     "eslint-plugin-vue": "^10.2.0",
     "markdown-it-container": "^4.0.0",
+    "mermaid": "11.17.2",
     "mocha": "^11.6.0",
     "mocha-chai-jest-snapshot": "^1.1.6",
     "nyc": "^17.1.0",

@@ -11,6 +11,7 @@ title: بدء الاستخدام
 <LandingGrid>
   <LandingCard icon="🧭" title="ما هو نظام نما؟" link="/ar/getting-started/what-is-nama-erp.md" details="الأفكار القليلة التي بُني عليها النظام كلّه — الملفات الرئيسية والمستندات والوحدات ودورة حياة المستند." />
   <LandingCard icon="📖" title="معجم مصطلحات نظام نما" link="/ar/getting-started/nama-erp-glossary.md" details="كل مصطلح متكرّر في النظام، بالعربية والإنجليزية، ومعه المصطلحات التي يكثر الخلط بينها." />
+  <LandingCard icon="🗺️" title="اعثر على سيناريو أعمالك" link="/ar/business-scenarios/" details="كيف تعمل شركة مثل شركتك على نظام نما: التراخيص، ومسار المستندات، وترتيب الإعداد." />
   <LandingCard icon="🖥️" title="الحد الأدنى لمتطلبات تشغيل النظام" link="/ar/getting-started/system-minimum-requirements.md" details="المتطلبات العتادية والبرمجية التي يحتاجها خادمك قبل تثبيت نظام نما." />
   <LandingCard icon="📦" title="دليل تثبيت نما" link="/ar/getting-started/installation-guide.md" details="خطوات تفصيلية لتشغيل نظام نما على خادمك." />
   <LandingCard icon="⚙️" title="إعدادات Nama Properties" link="/ar/getting-started/nama-properties.md" details="ملف الإعدادات nama.properties — ماذا يفعل كل إعداد وكيف تضبطه." />

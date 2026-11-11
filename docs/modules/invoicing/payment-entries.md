@@ -124,3 +124,11 @@ To implement this, enable the following option in the **Sales Invoice توجيه
 * When the invoice is saved, the system **clones all receipt vouchers linked to the Sales Order** that the invoice was created from.
 * If a **new receipt voucher is later added to the Sales Order**, it will **automatically be linked to the invoice** as well.
 * If the **receipt voucher is deleted or modified**, the system will **update its effect on the remaining balance in both the Sales Order and the Invoice**.
+
+## In practice
+
+* Payment vouchers are among the busiest documents: about 9 in 10 companies issue them, a typical company more than a thousand a year, which is more than its receipt vouchers.
+* Linking receipts to sales invoices is the everyday case: about 4 in 5 companies that issue receipt vouchers also issue sales invoices. The voucher's **Collect Vouchers** button fills the invoices table with the party's outstanding documents in one step; see [Receipt & Payment Vouchers](../accounting/money-in-and-out/receipts-and-payments.md#Actions-on-this-screen).
+* Not every payment settles an invoice. Roughly 2 in 5 companies that issue payment vouchers also run payroll, and salaries paid through payment vouchers settle salaries payable rather than invoices.
+* About 1 in 5 companies route payments through a payment request first. The request comes before the voucher, and the invoice is still linked on the voucher itself, through one of the three fields above.
+* Taking a down payment or instalments on the sales order before invoicing is a common pattern, for example at car dealers. That is the scenario `clonePayReceiptEntry` is for; see [Cloning Payment Vouchers from Orders to Invoices](#Cloning-Payment-Vouchers-from-Orders-to-Invoices).

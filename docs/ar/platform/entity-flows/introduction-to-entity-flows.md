@@ -107,6 +107,22 @@ menu: إدارة النظام ← تخصيص شكل النظام ← مسار ا
 المسار المؤجل الذي رُفع ولم يعمل بعد هو صف حقيقي يمكنك النظر إليه، في جدول **مسارات الكيانات في قائمة الانتظار** الخاص بطابور مهامه — بحالته، وعدد مرات محاولته، وأي خطأ فيه. وهذا هو المكان الذي تنظر فيه حين يقول أحدهم إن المسار «لم يحدث».
 :::
 
+## على أرض الواقع
+
+- نحو 19 من كل 20 نظام نما فيها مسارات كيان، وقرابة 9 من كل 10 كتبت مساراتها الخاصة فوق القليل الذي يأتي مع الإعداد الجديد. والشركة المعتادة تحتفظ بنحو عشرين مسارًا، وأكثرها استعمالًا بأكثر من ستين.
+- معظم سطور المسارات خرائط حقول: أكثر من 8 من كل 10 سطور نشطة تشغّل [EAFieldsValuesCalculator](/entity-flows/core/EAFieldsValuesCalculator). وأغلبها يعمل عند [`UpdateCalculatedFields`](#UpdateCalculatedFields----baad-tHdyth-lHqwl-lmHswb)، فتكون القيم جاهزة قبل حفظ السجل. أما المسارات التي تنشئ سجلات *أخرى* أو تغيّرها فتعمل عند [`PostCommit`](#PostCommit----tthyrt-lHfZ).
+
+المسارات التي تبنيها الشركات أكثر من غيرها (النسب من الشركات التي تستعمل مسارات الكيان):
+
+| ماذا يفعل | الإعدادات الأساسية | مدى شيوعه |
+|---|---|---|
+| حساب أرقام مساعدة على المستند: إجمالي الكمية، والتكلفة، والربح، وإجمالي سطر يُنقل إلى الرأس | خريطة حقول مثل `n1=totalize(details,details.quantity.quantity.primeQty.value)`، أو `sql(...)` لما لا تعطيه السطور وحدها. الصيغة: [Totaling Values](/entity-flows/core/ai-generated-field-maps-documentation#Totaling-Values) و[Simple SQL Queries](/entity-flows/core/ai-generated-field-maps-documentation#Simple-SQL-Queries) | نحو 7 من 10 |
+| تكوين اسم أو وصف أو ملاحظات من حقول أخرى | `name2=name1` لملء الاسم الإنجليزي من العربي، أو `description1=sql(select {code} + ' - ' + {customer.name1})`. وعلى الملفات الرئيسية يشيع أيضًا السطر الواحد `altCode=code` (نحو الثلث). الصيغة: [Direct Field Copy](/entity-flows/core/ai-generated-field-maps-documentation#Direct-Field-Copy) | نحو 6 من 10 |
+| ملء المحددات: الرأس من المخزن أو من المستند المصدر، ثم كل سطر من الرأس | `branch=warehouse.branch` و`branch=fromDoc.$toReal.branch`، ثم `details.genericDimensions.branch=branch` على سطور المخزون والمبيعات (وكرر ذلك للقطاع والمجموعة التحليلية والإدارة). الصيغة: [Copying Field Values to All Lines](/entity-flows/core/ai-generated-field-maps-documentation#Copying-Field-Values-to-All-Lines) | نحو 6 من 10 |
+| إنشاء سجل مرتبط عند حفظ سجل: صرف أو فاتورة من أمر، وتحويل الاستلام من تحويل الصرف، ومخزن أو مجموعة تحليلية لكل مشروع جديد | [EAGenerateEntityFromEntityAction](/entity-flows/core/EAGenerateEntityFromEntityAction) عند `PostCommit`، ومعه [DeleteRelatedEntityAction](/entity-flows/core/DeleteRelatedEntityAction) عند [`PostDelete`](#PostDelete----tthyrt-lHdhf) | أكثر من النصف |
+| حساب تاريخ: تاريخ الاستحقاق أو تاريخ الانتهاء بعد عدد من الأيام من تاريخ المستند | `date1=sql(select dateadd(day, 30, {valueDate}))` | نحو 4 من 10 |
+| إضافة سطر قيد إضافي من حقل في المستند: عمولة، أو الجزء النقدي، أو ضريبة إضافية | [EAAddAccountingEffect](/entity-flows/accounting/EAAddAccountingEffect) | أكثر من الثلث |
+
 # فهم دورة حياة السجل في مسارات الكيان
 
 لفهم كيفية عمل **مسارات الكيان** في نظام نما بشكل دقيق، من المهم أولًا فهم تسلسل الإجراءات التي يمر بها أي سجل أثناء إنشائه أو تعديله. النظام يوفر نقاط تنفيذ (Events) يمكنك ربط عناصر المسار بها للتحكم في منطق العمل بدقة.

@@ -888,6 +888,15 @@ Wizard reports print in three designs that the reader chooses when the report ru
 
 Everything you can call from inside a report expression — names and translations, Hijri dates, number-to-words, price lookups, links back into the system, record creators, approval links, QR codes, and the complete list of built-in `$P{}` parameters — is catalogued on the [NamaRep expression reference](/platform/reports/reports-namarep-reference).
 
+## In practice
+
+- Almost every company runs reports and printed forms of its own alongside the system reports. A typical company keeps about a hundred of its own. A quarter keep fewer than 35, and the largest tenth several hundred.
+- About 3 in 10 of a company's own report definitions are printed forms; the rest are reports run from the menu.
+- Most of them are designs drawn by hand. About 2 in 3 companies also use the **Report Wizard**, usually for a handful of reports, and about 1 in 4 use the **Printing Form Wizard**, typically for two or three forms.
+- About half of companies restrict at least one of their own reports through its security grid. **Allow** lines are the usual choice and appear at about twice as many companies as **Prevent** lines, so the guest-list rule in [Who may run a report](#Who-may-run-a-report) is the one most of them rely on. Lines naming a user are a little more common than lines naming a security profile.
+- About 1 in 6 companies use **Report Group** records. The rest let the **Group** field alone build the Reports menu — see [Where a report appears in the menu](#Where-a-report-appears-in-the-menu).
+- About 1 in 8 companies publish variants with **Based On Another Report** — see [Publishing several variants of one report](#Publishing-several-variants-of-one-report).
+
 ## Messages you may see
 
 Refusals raised when you save or run a report definition.

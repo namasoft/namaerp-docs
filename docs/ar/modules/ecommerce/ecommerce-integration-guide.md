@@ -365,7 +365,7 @@ menu: تكامل التجارة الإلكترونية ← الملفات ← Ma
 
 | الرسالة | السبب | ما العمل |
 |---|---|---|
-| «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بألاكواد {0} مفعلة» | هناك مواقع نشطة لكن الخادم غير مسموح له بإرسال البيانات إلى المتاجر. | أضف `send-ecommerce-data=true` إلى `nama.properties`، أو اجعل المواقع المذكورة **غير نشط**. |
+| «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بالأكواد {0} مفعلة» | هناك مواقع نشطة لكن الخادم غير مسموح له بإرسال البيانات إلى المتاجر. | أضف `send-ecommerce-data=true` إلى `nama.properties`، أو اجعل المواقع المذكورة **غير نشط**. |
 | *Your licence has {0} magento sites, you are trying to create {1} active sites* | الحفظ أو القراءة سيجعل عدد المواقع النشطة أكبر مما تسمح به الرخصة. | اجعل موقعاً غير مستخدم **غير نشط**، أو وسّع الرخصة. |
 | *un defined item with code {0}* | الـ SKU في سطر الطلب لا يطابق أي سطر ربط ولا أي كود صنف. | اربط الـ SKU في ملف ربط الأصناف، ثم نفّذ **إعاده محاوله التحميل**. أو فعّل **Ignore Error If No Item Matches SKU**. |
 | *Book not configured for Type {0}* / *Term  not configured for Type {0}* | ليس في Order Info أو Return Info أو صف الإنشاء المستخدم للطلب دفتر أو توجيه. | املأ **الدفتر** و**توجيه المستند** في تلك المجموعة أو الصف. |

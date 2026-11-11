@@ -74,6 +74,24 @@ screen". The most common places support meets it:
 | [Custom List Views](/platform/list-views/custom-list-views) | **Entity Type List** on the **Added As a Block To** lines — one block placed on several screens |
 | [Entity Flows](/platform/entity-flows/) | The entity-type list a flow runs on |
 
+## In practice
+
+- About 9 in 10 Nama installations have Entity Type Lists, and about 3 in 4 have built their own
+  beyond the one a new setup holds. A typical company keeps around half a dozen, and the busiest about
+  twenty or more. Lists are less common in the smallest companies, at about 3 in 4, and almost
+  universal in the rest.
+- Among the rule tools, entity flows and validators borrow them most: about a third of the companies that use either tool
+  point at least one flow or validator at a list. About 1 in 5 do it on approvals, and about 1 in 8
+  on notifications.
+- The lists themselves tend to follow the menu: the receipt and payment vouchers with the journal
+  entry, the sales documents (invoice, order, quotation), the purchasing documents, the stock
+  documents, the employee requests. **Add From Group** builds such a list in one click from the menu
+  group it mirrors.
+- A second kind of list is written around a rule rather than a department: "the documents on which
+  the branch is required", "the master files whose alternative code copies the code". One list then
+  serves one validator or one entity flow, and adding a screen to the rule means adding a row to the
+  list.
+
 ## See also
 
 - [Criteria Definitions](/platform/automation-and-rules/criteria-definitions) — the other shared building block: a saved filter, rather than a saved set of screens

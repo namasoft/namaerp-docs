@@ -57,6 +57,13 @@ Holidays and weekends aren't just calendar trivia — they change how attendance
 
 In short: the calendar and holiday list decide *which dates are special*; the attendance plan decides *which day of the week is the weekend*; and the formulas, indicators, and vacation types decide *what that specialness is worth* in attendance and pay.
 
+## In practice
+
+- **About 7 in 10 companies have an HR Calendar, and a single calendar is the usual setup.** Only about 1 in 10 of them keeps three or more.
+- **Official holidays are recorded by about half of the companies that have a calendar.** A typical company keeps a handful of HR Holidays records; about 1 in 10 keeps more than 30.
+- **Weekends are set on the Attendance Plan almost everywhere.** About 7 in 10 companies with an HR Calendar keep attendance plans, while the Weekend Document is used by fewer than 1 in 100.
+- **Vacation volume is what makes holiday dates matter.** A little over half of the companies with an HR Calendar issued vacation documents in the last year — typically a couple of hundred a year — so a holiday added or removed late can touch many saved vacations. That is the case the **Recommit Vacation Documents That Fall Within The Added Or Deleted Dates** option is for.
+
 ## Related pages
 
 - **[HR Years, Periods & Salary Issuance](hr-years-and-periods.md)** — every HR Year points to one HR Calendar.

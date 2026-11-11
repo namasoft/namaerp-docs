@@ -94,6 +94,13 @@ On the **Exchange Rate Update**:
 - Entry and daily-movement statements (`SYSR-ACC` journal statements) are covered on the [Account statements & trial balance](../financial-reporting/reports-account-statements-and-trial-balance.md) page.
 - The printed form for the journal entry is `SYSF-ACC001`, for the currency-difference journal `SYSF-ACC008`, and for the inter-company transfer `SYSF-ACC007`.
 
+## In practice
+
+- Manual entries never go away. Nearly every company issues journal entries even though most of its ledger comes from other documents: a typical company issues several hundred a year, and the busiest tenth more than 3,000.
+- Year-end sits next to them. About 2 in 5 companies that issue journal entries also close the year with a **Closing Entry**, which generates its own balancing journal entry (see [Year-end & period control](./year-end-and-period-control.md)).
+- The **Exchange Rate Update** is used by about 1 in 6 companies, those whose foreign-currency balances need revaluing. They typically run it about once a month, so around a dozen a year.
+- The **Inter-Company Transfer** is used by about 1 in 20 companies, those that keep several companies of a group in one database. Where it is used it is routine work, typically more than a hundred transfers a year.
+
 ## For Support
 
 - **"The entry won't save — unbalanced"** — check the **Total Difference**; it must be zero. If it's a tiny fraction, enable/review the **difference account** in the term.

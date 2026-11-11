@@ -127,13 +127,15 @@ A: Use one-step for transfers within a single location or between nearby locatio
 
 ## Messages you may see
 
-These messages have no Arabic text in the product except the last one, so the others appear in English on Arabic screens too.
+The first two messages have no Arabic text in the product, so they appear in English on Arabic screens too. The last two are not refusals at save time: they appear later, as the error of a failed request on the [Business Requests](/platform/background-processing/business-requests) screen.
 
 | Message | Why | What to do |
 |---|---|---|
 | *From legal entity {0} can not be same as to legal entity because this is inter-company transfer* | The term makes this an inter-company transfer, but the From and To groups name the same company. | Set the receiving company in the To group, or use a term for transfers within one company. |
 | *Mediator account in legal entity {0} is empty* | One of the two companies has no mediator account on its Legal Entity record. | Fill the company's **Mediator account**. |
 | *Stock can move between legal entities {0} and {1} only when they use the same currency. Use an intercompany sales invoice and purchase invoice instead* — «لا يمكن نقل المخزون بين الشركتين {0} و{1} إلا إذا كانتا تستخدمان نفس العملة. استخدم فاتورة مبيعات وفاتورة مشتريات بين الشركتين بدلا من ذلك» | The two companies' ledgers keep different main currencies. | Sell from one company and buy into the other. |
+| *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* — «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0} للذمة {1} - نوع المصدر {2} - نوع المرجع {3} - الحافظة (الحساب) {4} {5} {6}» | The transfer's inventory request could not build its entry. With entity type `Warehouse`, account type `MainAccount` and `toWarehouse` at the end, the **To Warehouse** has no Main Account; with `null` as the subsidiary, the field the term reads is empty. | Fill the **Main Account** in the warehouse's **Subsidiary Accounts**, then **Reprocess** the transfer's inventory request. See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#The-account-the-term-asks-for-is-missing). |
+| *For serial {0} of item {1} in document {2}, warehouse must be {3} and locator must be {4}* — «المسلسل {0} للصنف {1} في المستند {2} , يجب أن يكون المخزن {3} و الموقع {4}» | A serial is being transferred out of a warehouse or locator other than the one its last movement put it in. The message names where it actually is; when only the warehouse differs it ends after the warehouse. | Correct the from-warehouse, locator or serial on the transfer (or the earlier receipt, if that was wrong), then Recommit it. |
 
 ## Next Steps
 

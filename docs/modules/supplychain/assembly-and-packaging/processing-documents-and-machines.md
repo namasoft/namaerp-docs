@@ -70,6 +70,22 @@ The indirect costs also produce a journal entry, processed as a business request
 
 The **Direct Labor Lines** grid records each **Employee** with a **From** and **To** date and time; **Net Time** is worked out from them. Two buttons on the grid make it a time clock: stand on a line and press **Start** (*بدء*) to stamp the current date and time as its start, or **End** (*إنهاء*) to stamp its end. With **Fill From Date With Line Insertion** and **Fill From Time With Line Insertion** ticked, a new line starts with the current date and time already filled.
 
+## In practice
+
+- The output Stock Receipt is saved only **after** the raw-materials Stock Issue has been costed,
+  because it needs that cost. So the receipt's problems surface on the issue: if the receipt is
+  refused, the Stock Issue's inventory request fails on the
+  [Business Requests](/platform/background-processing/business-requests) screen, and the receipt
+  does not move stock.
+
+**Common errors**
+
+- *Error while generating entity {0}: {1} from entity {2}:{3}:-* — «خطأ أثناء إنشاء {0}: {1} من السجل {2}: {3}:-»
+  on the Stock Issue's inventory request. The real reason follows the `:-`; read it in the row's
+  **Error Description**. It is often a receipt warehouse with no account for the receipt term's
+  side, or a closed period. Fix that, then **Reprocess** the Stock Issue's inventory request — see
+  [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#A-document-generated-after-costing-failed).
+
 ## Related pages
 
 - [Assembly Requests & Assembly Documents](./assembly-documents-and-requests.md) — the recipe-driven alternative

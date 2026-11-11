@@ -190,6 +190,21 @@ List the fields exactly as the expression names them, separated by commas or new
 lines.n3, lines.n4
 ```
 
+## In practice
+
+About seven in ten companies write post actions of their own. A typical company keeps around five records, and the busiest twenty or more. Since one record can hold many lines, the record count understates how much is configured. About six in ten of these companies make some lines conditional with **Criteria** or **Apply When Query**. About a third chain a line to **Call System Post Actor Of Field**, and about one in ten turn a record into a button with **Manual**.
+
+These are the requests that come up most often. They are listed by how many companies use them, and the first is used by about half:
+
+| When the user… | On Field | Expression | How it works |
+|---|---|---|---|
+| picks the source document, so the header fills from it: customer, references, warehouse, dimensions | `fromDoc` | One line per field, such as `warehouse=fromDoc.$toReal.warehouse` | `fromDoc` can point at several kinds of document, so `$toReal` is needed, as in [Copying the lines of another document](#Copying-the-lines-of-another-document-in-one-step) |
+| picks a reference field, so values are copied from the record it points at | `ref1` (or another reference) | `target=ref1.$toReal.field` | The same `$toReal` rule |
+| picks the customer or supplier, so fields the system does not fill by itself are copied from the card | `customer` / `supplier` | `target=customer.field` | No `$toReal` is needed, because the field always points at one type |
+| edits a number on a line, so another number is recalculated | The number, such as `details.n1` | `details.n3=sql(...)` | [Calculating one grid column from the others](#Calculating-one-grid-column-from-the-others-in-the-same-row) |
+| changes something that should reprice the line | The field that changes, such as the lot | **Call System Post Actor Of Field** = the quantity | [Recalculating the price when a lot is selected](#Recalculating-the-price-when-a-lot-is-selected) |
+| picks an item, so a spare number column shows its stock | `details.item.item` | `details.n1=sql(...)`, a query that reads the item's quantity | The `sql(...)` rules in [the second example](#Calculating-one-grid-column-from-the-others-in-the-same-row) |
+
 ## Messages you may see
 
 None of these messages has an Arabic translation; they appear in English on Arabic screens too.

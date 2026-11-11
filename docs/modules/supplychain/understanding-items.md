@@ -329,6 +329,12 @@ Don't try to configure everything perfectly on your first item. Start with the b
 You can always come back later to add serial tracking, quality checklists, or automatic pricing. Get items into the system and start using them - you'll quickly learn what additional configuration you need.
 :::
 
+## In practice
+
+- **Catalogue size**: across Nama installations a typical company keeps a little over a thousand items, and the largest tenth keep more than 15,000 — the range where classification and the bulk tools in [Creating and Maintaining Items](./item-maintenance.md) earn their keep.
+- **Classification follows the "start simple" advice.** About 9 in 10 companies group items by **Item Section**, about 2 in 3 fill the first item class and about half the second; each further class is used by fewer companies, and the hierarchical categories by only about 1 in 4. The full picture is on [Item Classification Files](./item-classification-files.md#In-practice).
+- **Colours and sizes** are switched on by about 1 in 10 companies — standard in fashion, home textiles and phone retail, and rarely needed elsewhere.
+
 ## Messages you may see
 
 The item card refuses a save when its switches and its grids disagree. Unit-related refusals — rates, base units, deleted units — are on [Units of Measure](./units-of-measure.md).
@@ -355,7 +361,7 @@ The item card refuses a save when its switches and its grids disagree. Unit-rela
 | *Should have at least one color.* — «يجب تحديد لون واحد على الأقل» | **Has Color** is on, but no row of the sizes-and-colours grid names a colour. | Add the item's colours, or switch **Has Color** off. |
 | *Should have at least one size.* — «يجب تحديد مقاس واحد على الأقل» | **Has Size** is on, but no row of the sizes-and-colours grid names a size. | Add the item's sizes, or switch **Has Size** off. |
 | *You can not remove old lines for field {0} - {1}, because {2} transactions found* — «لا يمكنك حذف السطور الخاصة بالحقل {0} - {1} لان له {2} حركات» | A colour, size or revision was deleted from the item after stock movements or price list lines were recorded against it. The message names the field, the value removed and how many records use it. | Put the row back. The supply chain options *Allow Delete From Item Colors And Size After Transactions* and *Allow Delete From Item Revisions After Transactions* lift the check if the history really is disposable. |
-| *You can not change item type from Service to Stock or vice-versa after using it in Stock Issue, Receipt, or Transfer* — «لا يمكنك تغيير نوع الصنف من خدمة الى صرف او العكس بعد استخدامة فى سند الصرف , التوريد المخزني او التحويل المخزني» | The item's type was switched between Service and Stock after saved issues, receipts or transfers already carried it. A service item holds no quantity, so those documents would become meaningless. | Leave the type alone and create a second item of the right type. |
+| *You can not change item type from Service to Stock or vice-versa after using it in Stock Issue, Receipt, or Transfer* — «لا يمكنك تغيير نوع الصنف من خدمة إلى مخزني أو العكس بعد استخدامه في سند الصرف , التوريد المخزني أو التحويل المخزني» | The item's type was switched between Service and Stock after saved issues, receipts or transfers already carried it. A service item holds no quantity, so those documents would become meaningless. | Leave the type alone and create a second item of the right type. |
 | *You can not modify configuration after making transaction* — «لا يمكنك تغيير الاعدادات بعد عمل حركة» | The item's **Configurations** profile — the one that decides what cost and quantity are tracked by — was changed after the item already had movements. | Keep the profile the item was used with, or have the supply chain option *Allow Changing Cost And Qty Tracking After Usage* enabled and accept that existing balances were tracked the old way. |
 
 ## Next Steps

@@ -42,3 +42,10 @@ A **Partner** (`Accounting > Master Files > Partner`) is a business owner or par
 - up to four **Bank Info** groups (bank name, branch, account title, country, SWIFT code, IBAN, intermediary bank), with attachments.
 
 The **Percentage** field is informational: the profit split does not read it. Each partner's share of profit comes from the **Partner shares** record, where a partner row can name a Partner record, an employee or a third party. See [Partner Shares & Profit Distribution](../money-in-and-out/partner-shares-and-profit-distribution.md).
+
+## In practice
+
+- Safes are near-universal: about 6 in 7 companies keep them. A new company starts with one, and about 4 in 5 companies add more; a typical company keeps about six, and the largest tenth more than 25.
+- Most safes are ordinary cash boxes. Cashier shifts, and with them the **Treasury Cashier** and **Main Safe Deposit** options, are used by only a few companies.
+- About 2 in 3 companies keep Partner records, typically four or so. Profit distribution through **Partner shares** is used by about 1 in 20 companies, so most use the Partner simply to keep each owner's capital and current account.
+- Roughly half of companies use Accounts Bags, and they need only a handful: typically about five, rarely more than ten, since one bag serves a whole group of parties.

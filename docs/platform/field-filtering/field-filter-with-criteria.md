@@ -215,3 +215,24 @@ Then the filter on the receipt:
 :::
 
 Keep the scheduled task as well, running once a day: it catches what the flow never sees, such as large imports and direct edits.
+
+## In practice
+
+About seven in ten companies keep field filters. A typical company has around five, and the busiest more than fifteen. They are most common in large companies: nearly nine in ten of the largest companies use them, against just over half of the smallest.
+
+- **Criteria or Dynamic Filter.** Most lines point at a saved **Criteria**. About six in ten companies also write **Dynamic Filter** lines, and most of those write them in Tempo.
+- **Automatic or assigned.** Both are common. About three in four companies have at least one **Automatic** filter, and about seven in ten assign at least one through a document term, a book, a master group or a menu entry ([How to Define a Field Filter with Criteria](#How-to-Define-a-Field-Filter-with-Criteria)).
+- **Screens.** The sales invoice is filtered far more often than any other screen. The sales order, stock transfer, purchase invoice and stock issue come next.
+
+The fields that get filtered most, and what for:
+
+| Field | What the filter usually does | Line settings |
+|---|---|---|
+| Reference fields `ref1`, `ref2`… (about a third of companies) | Narrows a free reference to one kind of record, or to the records that belong to this document, such as the contacts of the document's customer | **Apply Filter with Type** = that type, plus a **Criteria** or a **Dynamic Filter** such as `relatedTo,Equal,${customer},AND;` for contacts |
+| `fromDoc` (about a third) | Offers only the source documents that fit: those of the same customer or supplier, or those in a given state | **Apply Filter with Type** = the source document type, plus a **Criteria** or a **Dynamic Filter** such as `customer.code,Equal,${customer.code},AND;` |
+| `details.item.item` (about a quarter) | Offers only some items: non-service items, one section, items that have stock | A **Criteria**, as in [the non-service example](#Example-Filter-Non-Service-Items-in-Sales-Invoice) and [the stock example](#Example-offer-items-by-available-stock) |
+| `book` and `term` (about a quarter) | Limits which books or document terms can be picked on a document | A **Criteria** on the book or term |
+| `warehouse` (about one in seven) | Limits which warehouses can be picked | A **Criteria** on the warehouse |
+| `customer` | Offers only the customers of the document's salesman | **Dynamic Filter** `salesMan,Equal,${salesMan},AND;` |
+
+Remember that the condition is written in the fields of the record being searched, not of your document — see [The condition speaks the language of the screen being searched](#The-condition-speaks-the-language-of-the-screen-being-searched).

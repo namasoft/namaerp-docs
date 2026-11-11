@@ -71,6 +71,12 @@ An account category prints on the **Account Category** form (`SYSF-ACC009`), whi
 
 ![Account Category form (SYSF-ACC009)](../../../ar/modules/accounting/images/forms/SYSF-ACC009-en.png)
 
+## In practice
+
+- Nearly every company keeps its tree in Accounts Chart. A typical tree has about 115 nodes, and the largest tenth more than 150; roughly half of companies have added nodes of their own to the tree a new company starts with.
+- Account Category is used by about 6 in 7 companies. A new company starts with about 40 categories and about 2 in 3 companies add their own, but a typical company keeps just over 40: the starting set covers most needs, plus a few lines of the company's own.
+- Account Tax Category is rarely needed: fewer than 1 in 100 companies keep any.
+
 ## For Support
 
 - **"I can't record entries on a certain account"** — make sure the node is a **leaf** (doesn't carry the "Accepts Elements" flag); entries can't be recorded on grouping nodes.

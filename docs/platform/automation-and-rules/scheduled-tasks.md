@@ -15,7 +15,7 @@ A task starts running on its own schedule a few minutes after the server starts 
 When you create a scheduled task, the first decision you'll make is choosing the **Schedule Type**. This determines what kind of action the task performs when it runs. Let's walk through each type:
 
 ### Report (Email Report)
-The most common use case. The system runs a report and emails it to the recipients you specify. You select a report definition, choose the output format (HTML, PDF, Excel, …), and decide who receives it.
+A common use case. The system runs a report and emails it to the recipients you specify. You select a report definition, choose the output format (HTML, PDF, Excel, …), and decide who receives it.
 
 ### Print Report
 Like the Report type, but instead of emailing, the report is sent straight to a printer. You specify the printer name that's configured on the server.
@@ -386,3 +386,26 @@ You cannot use both a Query and the Params collection on the same task. Choose o
 - Run Every: 5 Minutes
 - Magento Site: configured site reference
 - Enable Execution Log to confirm each sync ran
+
+## In practice
+
+- About 9 in 10 Nama installations have scheduled tasks. A typical company runs around half a dozen,
+  and the busiest more than twenty.
+- **Action** is the most widespread type, found in about 3 in 4 of the companies that schedule tasks.
+  **Notification** follows in more than half and **System** in about a third. Emailed **Report**
+  tasks appear in about a quarter, and **Parameterized Report** in fewer than 1 in 10.
+- Daily is by far the usual rhythm: about 8 in 10 companies have at least one daily task. More than
+  half also have tasks that run several times a day, about a quarter run monthly tasks, and about
+  1 in 5 run something every few minutes.
+
+The tasks companies set up most often (shares are of companies that schedule tasks):
+
+| What it does | Key settings | How common |
+|---|---|---|
+| Housekeeping: delete old files and old notifications, clear old files out of the server's temporary folder | [Action](#Action) tasks running [EADeleteOldFiles](/entity-flows/core/EADeleteOldFiles), [EADeleteNotificationsByDuration](/entity-flows/core/EADeleteNotificationsByDuration) and [EAEmptifyTomcatTemp](/entity-flows/core/EAEmptifyTomcatTemp), daily, outside working hours | about half |
+| Warn finance about cheques and commercial papers falling due | A [Notification](#Query-Based-Notifications) task, daily, whose query reads `FinancialPaper` where `DATEDIFF(day, GETDATE(), dueDate)` is a few days, addressed through `sendto` | about 3 in 10 |
+| Pull attendance from the attendance machine and calculate it | Action tasks running [EATimeAttendanceFromDBImporter](/entity-flows/hr/EATimeAttendanceFromDBImporter) and then [EAEmpAttendanceSysEntryCalculator](/entity-flows/hr/EAEmpAttendanceSysEntryCalculator), daily or hourly | about a quarter |
+| Email a report on a schedule, such as daily sales or stock | A [Report](#Report-Email-Report) task with the output format and recipients filled in | about a quarter |
+| Small SQL corrections at night: reclassify customers, set flags on employees or items | A [System](#System) task, daily | about a quarter |
+| Warn about expiring residencies, IDs, contracts and licences | A Notification task on the end date, as in the residency example under [Query-Based Notifications](#Query-Based-Notifications) | about 1 in 5 |
+| Re-save, recommit or run a flow over the records a query returns | Action tasks running [EARecommitFromQuery](/entity-flows/core/EARecommitFromQuery), [EASaveDraftsFromQuery](/entity-flows/core/EASaveDraftsFromQuery) or [EARunEntityFlowFromQuery](/entity-flows/core/EARunEntityFlowFromQuery) | about 1 in 5 |

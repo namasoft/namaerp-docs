@@ -255,6 +255,15 @@ The nine grids on this page split into two halves, and the half a grid belongs t
 There can be several Fields and Entities Settings records, and all their active lines are combined. That is convenient until the same field is configured in two different records — at which point which line wins becomes unpredictable, and grids that keep only the first matching line become genuinely hard to reason about. Keep everything about a given field in a single record.
 :::
 
+## In practice
+
+- **Allowed Values For Generic References** is set up at almost every company. The most common lines narrow a source-document field to the document it normally comes from: a Sales Return from a Sales Invoice, a Stock Receipt from a Purchase Order, a Sales Invoice from a Sales Order, a Stock Transfer from a Stock Transfer Request. Close behind are lines that narrow the party field on purchase and miscellaneous purchase invoices to Supplier or Employee. About 1 in 3 companies also set a **Default Entity Type** on some of their lines.
+- **Descriptors** are used by about 6 in 10 companies, most often on purchase orders, purchase and sales invoices, items, employees and customers. **Search And Title** is the most common choice, so the edit-screen title carries the same label as the lookup.
+- **Extra Codes** are used by about 1 in 4 companies. The favourite is the customer's mobile number. Other telephone numbers, the ID number and the tax registration number on customers come next, then the residency number on employees and the manual reference on invoices and vouchers.
+- **Extra Reference Search Fields** are used by about 1 in 6 companies, again led by the customer's mobile and telephone numbers. Between this grid and Extra Codes, about 1 in 7 companies let users find a customer by phone number.
+- **Fields that open Edit Screen when code not found** is used by about 1 in 5 companies, almost always on the customer field of sales invoices, quotations and orders. Where **Field To Set Value In** is filled, it is usually the mobile number, the code or the Arabic name.
+- **Extra Filter** is used by about 1 in 5 companies, with rules that vary from one company to the next. **Open Reference In Popup** and **Search In Name In Find By Code** are each used by fewer than 1 in 20.
+
 ## Settings on this tab
 
 Every grid and column this page covers, with its exact on-screen label in both languages, so you can find a setting by the name you see. The last column points to the section that explains it. The scope columns (For Type, Entity List, On Field and the like) are the same on every grid and are listed on the [overview page](/platform/fields-and-entities-settings/fields-settings-overview#Settings-on-this-tab).

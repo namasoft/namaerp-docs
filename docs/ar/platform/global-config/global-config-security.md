@@ -67,6 +67,8 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **Allow Filling Disabled Fields With Creators** `value.info.allowFillingDisabledFieldsWithCreators` *(مفعل افتراضياً)* — يدع مكوّنات النظام تكتب في حقول لا يُسمح للمستخدم بتعديلها. وهو المطلوب عادةً: فمن لا يُسمح له بكتابة الفرع يدوياً ينبغي أن يُملأ له آلياً.
 
+**رفض الاستيراد الذي يحتوي على حقول ليس للمستخدم صلاحية تعديلها** `value.info.rejectImportOfFieldsUserCannotChange` *(غير مفعل افتراضياً)* — يحدد ما يفعله الاستيراد بحقل لا يحق للمستخدم المستورِد تغييره: حقل تجعله إعدادات الحقول الخاصة به *Disabled* أو *InVisible* في ذلك السجل، أو حقل تقفله خطوة الموافقة الحالية للسجل. إذا تُرك الخيار غير مفعل يُتخطى الحقل: تُتجاهل قيمته المستوردة، ويحتفظ السجل بما كان فيه، ويُحفظ الباقي، وتذكر النتيجة الحقول التي تُخطيت. وهذا ما يتيح للمستخدم أن يصدّر شاشة ويعدّل الأعمدة المسموح له بتعديلها ثم يستورد الملف كما هو. وإذا فُعّل يُرفض السجل كله بدلاً من ذلك مع ذكر كل حقل من هذه الحقول. أما سطور الجدول التي لا يحق للمستخدم إضافتها أو حذفها فتُرفض في الحالتين. ويسري الخيار على [استيراد السجلات](/ar/platform/import-export/importing-records.md) و[الـ REST API](/ar/integration/nama-erp-api.md) و[أداة الاستيراد في خادم MCP](/ar/modules/ai/ai-mcp-server.md)، ولا يتأثر به الحفظ من الشاشة.
+
 **دمج ملفات الصلاحية البديلة في المستخدم الرئيسي** `value.info.mergeAlternateSecurityProfilesIntoMainUser` — المستخدم الذي مُنح صلاحيات مستخدم آخر بمستند [صلاحيات إضافية مؤقته](/ar/platform/security/security-delegation) يملك دائماً اتحاد صلاحياته وما نُقل إليه، وهذا الخيار لا يغيّر ذلك. وإنما يغيّر طريقة حساب هذا الاتحاد: فالنظام عادةً يسأل المستخدم أولاً ثم يسأل كل مستخدم نُقلت صلاحياته واحداً بعد الآخر، ومع تفعيل الخيار تُدمج سطورهم مرة واحدة في نسخة موحّدة من المستخدم تُقرأ منها كل الإجابات. والنتيجة واحدة، لكنها أسرع حيث تكثر الصلاحيات المنقولة.
 
 **عرض السجلات الممنوعة من الاستعمال في البحث** `value.info.displayPreventedRecords` — تظل السجلات التي لا يملك المستخدم صلاحية عرضها مدرجةً (محجوبة لا مفتوحة) بدل اختفائها. وبعض المؤسسات تفضّل رسالة «لا يُسمح لك برؤية هذا» الظاهرة على قائمة أقصر في صمت.
@@ -126,6 +128,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | Default LDAP Domain | Default LDAP Domain | `value.info.defaultLDAPDomain` | [LDAP](#LDAP) |
 | Allow Disabling Code Field With Security | Allow Disabling Code Field With Security | `value.info.allowDisablingCodeFieldWithSecurity` | [أمان السجلات](#mn-lsjlt) |
 | Allow Filling Disabled Fields With Creators | Allow Filling Disabled Fields With Creators | `value.info.allowFillingDisabledFieldsWithCreators` | [أمان السجلات](#mn-lsjlt) |
+| رفض الاستيراد الذي يحتوي على حقول ليس للمستخدم صلاحية تعديلها | Reject Imports Containing Fields The User Cannot Change | `value.info.rejectImportOfFieldsUserCannotChange` | [أمان السجلات](#mn-lsjlt) |
 | دمج ملفات الصلاحية البديلة في المستخدم الرئيسي | Merge Alternate Security Profiles Into Main User | `value.info.mergeAlternateSecurityProfilesIntoMainUser` | [أمان السجلات](#mn-lsjlt) |
 | عرض السجلات الممنوعة من الاستعمال في البحث | Display Prevented Records In Search | `value.info.displayPreventedRecords` | [أمان السجلات](#mn-lsjlt) |
 | عدم عرض السجلات الممنوعة من الاستعمال في القوائم | Do Not Display Prevented Records In List View | `value.info.doNotdispPrevRecInListView` | [أمان السجلات](#mn-lsjlt) |

@@ -208,6 +208,15 @@ Put together, an experienced user reads `MCH-0007` in three glances:
 
 Everything else on the module's menu is a way of writing rows into that third list.
 
+## In practice
+
+- **About 7 in 10 companies keep a fixed asset register in Nama**, and nearly every contracting company does. A typical register holds around 150 assets; about 1 in 10 of these companies keeps more than 1,400, which is where the list's status and location filters earn their keep.
+- **Assets usually arrive through the [Fixed Asset Purchase Document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md)** — more than 4 in 5 companies with assets use it. About 3 in 5 have also used the [Fixed Asset Opening Document](/modules/fixedassets/acquisition/fixedassets-opening-balances.md), but almost always once, at go-live, to bring in the assets they already owned.
+- **Depreciation is normally a monthly run.** About 2 in 3 companies with assets issued a [Depreciation Document](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md) in the last year, typically twelve of them. The [aggregated depreciation document](/modules/fixedassets/depreciation/fixedassets-aggregated-depreciation.md) is the less common choice, used by about 1 in 8.
+- **Beyond purchase and depreciation, disposals and value changes are the events you will most often see in Asset Transactions.** About 2 in 5 companies with assets have disposed of one, and about a third have used [Additions and Deductions](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions.md).
+- **Physical location tracking is optional.** About 1 in 3 companies with assets define [Asset Locations](/modules/fixedassets/master-files/fixedassets-locations.md), and about 1 in 6 move assets with the [Transfer Document](/modules/fixedassets/movement/fixedassets-transfer-document.md); elsewhere the Asset Location field simply stays empty.
+- **Most companies organise their register by Fixed Asset Type alone.** About 1 in 10 also fill the [classifications](/modules/fixedassets/master-files/fixedassets-classifications.md), and custody handovers, asset components and maintenance records are each used by fewer than 1 in 10 — so on most records the custody grid and the Maintenance Record page are empty.
+
 ## Messages you may see
 
 | Message | Why | What to do |

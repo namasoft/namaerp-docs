@@ -48,12 +48,12 @@ This is the column everything else hangs off.
 | **Processing** | Being worked on right now. Only inventory costing sits here for any length of time. |
 | **Processed** | Done. Whatever the document had to write is written — a document whose term writes nothing (every account side empty) is Processed with no entry. See [When a Document Has No Accounting Effect](/modules/accounting/support/accounting-request-processing). |
 | **Processing Failed** | The system understood the work and refused it — a closed period, a missing account, a rule that said no. |
-| **Failed By Exception** | The work broke unexpectedly. Usually a configuration gap rather than a business rule. |
+| **Failed By Exception** | The work broke unexpectedly. Usually a configuration gap rather than a business rule, sometimes a passing database lock. |
 
 The difference between the last two matters when you are triaging. **Processing Failed** almost
 always names its own cause in the **Error Message** column and is fixable by an implementer:
 open the period, set the missing account, correct the term. **Failed By Exception** is more often
-something structurally wrong, and the detail you need is in **Error Description**, which carries the full technical text rather than the one-line summary.
+something structurally wrong, and the detail you need is in **Error Description**, which carries the full technical text rather than the one-line summary. Its **Error Message** can even be empty: it is filled only when the failure carries a readable reason. An empty message is the cue to open Error Description — and when that text speaks of a deadlock, a lock or a timeout, nothing is wrong with the data and a plain Reprocess normally goes through.
 
 ::: warning Nothing retries a failed request on its own
 There is no attempt counter, no maximum, no backoff, no eventual give-up. The worker only ever
@@ -102,9 +102,21 @@ the generic ones every list has — and choosing between those two is the whole 
 nothing about the request except its status, and the worker picks it up within about a second.
 
 This is what you want when the request failed for a reason that has since been fixed and the
-document itself was always right — the period was closed and is now open, the account was missing
-and now exists, the exchange rate was absent and has been entered. The request is re-run exactly as
-it was first raised.
+document itself was always right — the period was closed and is now open, the exchange rate was
+absent and has been entered. The request is re-run exactly as it was first raised, and that is what
+decides whether a fixed account is picked up:
+
+- An **inventory request** reads the warehouse, item and party accounts again when it runs, so an
+  account slot filled on one of those records is picked up by Reprocess.
+- An **accounting request** already holds its lines with the accounts chosen when the document was
+  saved. Filling a missing account slot on a party does not reach those lines; Reprocess fails the
+  same way, and the answer is Recommit. Only a change to the **Account** record itself — its type,
+  its subsidiary types, its "without subsidiary" option — is read again at processing time.
+- Neither kind picks up a change to the **document term**: the request keeps the term's account
+  sides as they were at save time. That too needs Recommit.
+
+The full decision table, by what you changed, is on
+[Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#Running-the-request-again).
 
 ### Recommit
 
@@ -116,11 +128,14 @@ itself was built wrongly rather than merely executed at a bad moment. Because it
 documents, it runs every rule and validation the document has, and it can fail for reasons that
 have nothing to do with the original problem.
 
-::: warning Recommit needs permission to edit committed records
-Reprocess is available to anyone who can see the More menu here. Recommit additionally requires the
-right to edit records after they are committed, and on installations where that right is withheld
-the button is simply absent. If two people are looking at the same screen and only one of them can
-see Recommit, this is why.
+::: warning Who can Reprocess and Recommit
+Both actions need the **Edit After Commit** level on the **Configuration Group** screen in the
+user's [security profile](/platform/security/security-profiles); this list belongs to that screen.
+Recommit additionally needs **Allow Record Recommitting**, a switch that is on by default but
+[hidden from the security profile screen](/platform/security/security-profiles#Fields-Hidden-on-Purpose).
+The button stays visible either way; a user without the switch who presses it is refused with
+*Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي {0} لا يستطيع إعادة حفظ الملفات برجاء مراجعة اختيارات ملف الصلاحيات».
+Recommit also refuses a draft: only a document that has been committed can be committed again.
 :::
 
 ::: tip Try Reprocess first
@@ -161,8 +176,34 @@ that cannot be written because the period it belongs to has a closing entry over
 cannot be done yet. Requests that have been waiting far longer than a restart would explain are
 usually this.
 
+## In practice
+
+- A clean list is the normal state. Across Nama installations, most companies never have a failed
+  request; about 1 in 10 ever see one, and the typical company that does has only a handful.
+- Roughly nine in ten failures are **inventory** requests, all raised by stock documents — Stock
+  Transfer, Stock Issue, Stock Receipt and Cost Revaluation. A sales or purchase invoice's stock
+  failure is among them, under the Stock Issue or Stock Receipt the invoice generated.
+- The rest are accounting requests, mostly from payment vouchers, journal entries, fixed-asset
+  purchases and salary documents.
+
+**Common errors**
+
+- *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* —
+  more than half of all failures. A warehouse (often a transfer's to-warehouse), item or party has
+  an empty account slot that the document term reads. Fill it, then Reprocess.
+- A **Failed By Exception** row with an empty Error Message — read Error Description; a lock clears
+  with Reprocess.
+- *The account {0} must have a subsidiary* and its two relatives about the account's type and
+  subsidiary types — accounting requests, which keep their accounts, so fixing a party's slot needs
+  Recommit.
+
+Each message, with its fix, is on
+[Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests).
+
 ## See also
 
+- [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests) — what each
+  failure message means and how to clear it
 - [Pending Tasks](/platform/background-processing/pending-tasks) — the outbound message queue, a
   different queue with a similar screen
 - [Report Monitoring](/platform/background-processing/report-monitoring) — watching reports run

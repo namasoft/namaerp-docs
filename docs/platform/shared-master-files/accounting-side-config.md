@@ -58,3 +58,9 @@ The obvious use is the one above: one revenue side, one narration, twelve terms.
 Sharing has a cost, and it is worth being deliberate about it. A record used by twenty terms is edited by whoever needs the twenty-first, and the edit reaches the other twenty the moment it is saved. If two terms are only *currently* alike — same account today, different tomorrow — give them a record each. Records are cheap; an untangling exercise six months later is not.
 
 Changing a record does not rewrite entries that already exist. Documents processed before the change keep the entry they produced; they take the new side only if they are saved again, or reprocessed from the Business Requests list.
+
+## In practice
+
+- Shared sides are the norm: about 9 in 10 companies keep Accounting Side Config records. A typical company keeps about ten, and the largest tenth more than forty.
+- Use grows with the size of the installation. About 4 in 5 of the least busy third of companies keep them, against more than 9 in 10 of the busiest third, where more terms repeat the same sides.
+- Part of it is not optional. Roughly 3 in 5 companies define additional costs and about 2 in 5 define payment methods, and both describe their accounting only through these records, as do the tax and discount other sides on invoice terms.

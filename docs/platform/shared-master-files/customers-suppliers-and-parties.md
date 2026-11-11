@@ -248,6 +248,24 @@ The sibling screen, **User Add Request**, is how a new system user is requested 
 directly; it is documented under
 [self-service user requests](/platform/security/users-and-login#Self-service-user-requests).
 
+## In practice
+
+- **Typical size**: across Nama installations a company usually keeps several hundred customers and
+  around 150 suppliers. Customer lists vary far more than supplier lists: retailers that record walk-in
+  buyers by name reach tens or even hundreds of thousands of customers, which is where the customer
+  **Group** that builds the code — or the phone-number-as-code setting behind the *Must be phone
+  number* message — earns its place.
+- **Classification is kept light.** About 2 in 5 companies use **Customers' Class**, and about the
+  same share use **Supplier Class**, usually with only a handful of values. **Customer Category** is
+  used by about 1 in 4, and the five further **Customer Class 1–5** by fewer — the first by about 1 in
+  7, the others by about 1 in 10 or fewer.
+- **Third parties are common.** About 3 in 4 companies keep Third Party records, typically a few
+  dozen — the lawyers, government offices and brokers that need an account without being a customer.
+- **Contacts live on the party file for most companies.** Fewer than 1 in 5 keep separate Contact
+  records; the rest record phones and addresses on the customer or supplier itself.
+- **Changes are mostly made by editing the file.** The Update Customer Information document is used by
+  a small minority — about 1 in 25 companies — that want each change dated and numbered.
+
 ## Messages you may see
 
 | Message | Why | What to do |
