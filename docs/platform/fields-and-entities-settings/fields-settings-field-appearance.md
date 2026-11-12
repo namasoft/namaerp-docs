@@ -70,6 +70,14 @@ To force an English-only, upper-case, left-to-right code field on Item, add one 
 | Disable Suggestion Provider | Switches off the type-ahead suggestion list for this field. |
 | Do Not Go To Next With Enter | Pressing Enter keeps the cursor in this field instead of jumping to the next one. |
 
+::: tip Typing the other language in a fixed-language field
+A fixed input language is the default, not a lock. Sometimes a user really does need the other language: a customer's Arabic name with an English brand in the middle of it, for example. Pressing **Ctrl + Space** inside the field stops the fixed language, and the field then takes whatever language the keyboard is set to. Pressing **Ctrl + Space** again brings the fixed language back. The field also returns to its fixed language by itself as soon as the cursor leaves it, so the next time anyone enters it the setting applies again. A fixed letter case keeps working either way.
+
+Alt + Shift is not used for this on purpose: Windows switches its own keyboard language on that shortcut, and the two would fight each other.
+
+In the new interface, a small badge in the corner of the field (**ع** for Arabic, **EN** for English) shows that the fixed language is active while you type. It disappears when you press Ctrl + Space.
+:::
+
 **Disable Suggestion Provider** earns its place on fields where the suggestion list is either unhelpful — a free-text remarks field where past values are noise — or slow, because the underlying data is large enough that the type-ahead lookup makes typing feel sticky. **Do Not Go To Next With Enter** is for fields the user types several lines into: without it, Enter jumps to the next field and the user loses their place mid-sentence.
 
 ::: warning A line with no style set is ignored
