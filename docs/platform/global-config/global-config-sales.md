@@ -5,7 +5,7 @@ menu: Administration → Settings → System Settings
 
 # Customers and Sales
 
-A short tab with three unrelated jobs: deciding who counts as the salesman on a document, how customer codes are formed, and how this installation talks to Nama CRM.
+A short tab with three unrelated jobs: deciding who counts as the salesman on a document, how customer codes are formed, and whether error messages can be turned into a report your own team follows up.
 
 ![Customers and Sales tab](../../ar/platform/global-config/images/gc-sales-en.png)
 
@@ -27,13 +27,17 @@ The salesman on a sales document drives commission, targets and often pricing, s
 
 **Code Mask** `value.info.userCodeMask` — A pattern the generated code must match, which is how you enforce a phone-number shape rather than accepting any digits. This is **required** when the option above is on; the system refuses to save otherwise.
 
-## Nama CRM connection
+## Error reporting
 
-Support tickets can be exchanged with a Nama CRM instance. These three settings are the connection to it.
+When a user hits an error, the most useful thing they can hand your support team is the exact message and the record it happened on. Typing that into a ticket by hand loses detail, so this setting lets the error message start the report itself.
 
-**Nama CRM Server URL** `value.info.namaServerUrl` *(default `https://crm.namasoft.com/`)* — The address of the CRM instance.
+**Entity Type For Reporting Errors** `value.info.errorReportEntityType` — The screen your team uses to log problems, for example **Trouble Ticket** or a document type of your own. Once it is set, every error message shows a **Report This Error** button, to every user. Pressing it opens a new, unsaved record of that type in a popup window:
 
-**Customer User Name** / **Customer Password** `value.info.customerUserName`, `value.info.customerPassword` — The credentials this installation uses to authenticate against it.
+- Its **Description** holds the error message, followed by the server log when server-log tracking was on for that user.
+- If the error happened on a record that had already been saved, that record is filled in **Reference 1**.
+- Everything else starts the way a new record of that type always does — its book, document term and default values apply.
+
+The user completes whatever else the screen requires and saves it like any other record. Leave the field empty and the button does not appear.
 
 ## Settings on this tab
 
@@ -47,7 +51,4 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.useSalesManAsEmployeeForPriceLists` | Use Sales Man For Price Lists | استعمال البائع بدلا من المستخدم للأسعار | [Salesman](#Salesman) |
 | `value.info.useUserPhoneAsCode` | Use Phone As Code | أستخدام هاتف المستخدم ككود | [Customer coding](#Customer-coding) |
 | `value.info.userCodeMask` | Code Mask | هيئة الكود | [Customer coding](#Customer-coding) |
-| `value.info.namaServerUrl` | Nama CRM Server URL | رابط خادم Nama CRM | [Nama CRM connection](#Nama-CRM-connection) |
-| `value.info.customerUserName` | Customer User Name | إسم المستخدم للعميل | [Nama CRM connection](#Nama-CRM-connection) |
-| `value.info.customerPassword` | Customer Password | كلمة سر العميل | [Nama CRM connection](#Nama-CRM-connection) |
-| `value.info.useEnglishCRMTroubleTicketChangeTemplate` | Use English CRM Trouble Ticket Change Template | إستخدام قالب تغير طلب الدعم الإنجليزي | The notification a user gets when the status of their support ticket changes on the Nama CRM is written from the English template instead of the Arabic one. |
+| `value.info.errorReportEntityType` | Entity Type For Reporting Errors | نوع الكيان المستخدم للإبلاغ عن الأخطاء | [Error reporting](#Error-reporting) |

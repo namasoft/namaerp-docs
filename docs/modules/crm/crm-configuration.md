@@ -33,6 +33,6 @@ Several other screens in the module fill the responsible employee with the curre
 
 The settings screen carries no options at all for the risk register or the Kitchen Net screens, and only two for the whole maintenance suite — the invoice-customer relaxation and the machine-filter switch. Everything else about how maintenance behaves is configured on the document terms instead. See [Maintenance Document Terms](/modules/crm/document-terms/crm-maintenance-terms).
 
-There is also a **Nama CRM Connection** group on the Global Config screen — server URL, user name and password. That group is not about this module. It is how your ERP raises and follows support tickets with Nama's own support system, and it is unrelated to the trouble tickets your own staff handle in [the Support folder](/modules/crm/support/crm-support-overview).
+If you want users to raise a Trouble Ticket straight from an error message, that is not set here either: choose Trouble Ticket as the **Entity Type For Reporting Errors** in Global Config — see [Error reporting](/platform/global-config/global-config-sales#Error-reporting). The tickets it creates are ordinary ones that your staff handle in [the Support folder](/modules/crm/support/crm-support-overview).
 
 Reporting: none. This module ships no system reports, and this screen has no print form.

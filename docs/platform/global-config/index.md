@@ -26,7 +26,7 @@ The values are **cached** for speed. When you save, the system refreshes the cac
   <LandingCard icon="🧾" title="Taxes and e-Invoice" link="/platform/global-config/global-config-taxes.html" details="How each of the four taxes is calculated, its authority codes, rounding discount, and e-invoicing." />
   <LandingCard icon="🏷️" title="Discounts" link="/platform/global-config/global-config-discounts.html" details="The eight line discounts and the header discount — what each is applied to and which taxes it considers." />
   <LandingCard icon="📊" title="Accounting and Finance" link="/platform/global-config/global-config-accounting.html" details="Rounding tolerances, subsidiary accounts, credit limits, debt ages, payments, budgets, and cost." />
-  <LandingCard icon="🤝" title="Customers and Sales" link="/platform/global-config/global-config-sales.html" details="Salesman defaults, customer coding, and the connection to Nama CRM." />
+  <LandingCard icon="🤝" title="Customers and Sales" link="/platform/global-config/global-config-sales.html" details="Salesman defaults, customer coding, and reporting errors as records." />
   <LandingCard icon="✅" title="Approvals and Revise" link="/platform/global-config/global-config-approvals.html" details="Which approval decisions exist, revise levels, and record version tracking." />
   <LandingCard icon="🔐" title="Security and Login" link="/platform/global-config/global-config-security.html" details="Login attempts, sessions, password policy, two-factor authentication, LDAP, and record-level security." />
   <LandingCard icon="⚡" title="Performance and Search" link="/platform/global-config/global-config-performance.html" details="Query time limits, per-user usage caps, and how searching by code and name behaves." />

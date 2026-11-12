@@ -26,7 +26,7 @@ description: "ملف الإعدادات العامة، سجل الإعدادات
   <LandingCard icon="🧾" title="الضرائب والفاتورة الإلكترونية" link="/ar/platform/global-config/global-config-taxes.html" details="طريقة حساب كل ضريبة من الأربع وأكوادها لدى المصلحة وخصم التقريب والفوترة الإلكترونية." />
   <LandingCard icon="🏷️" title="الخصومات" link="/ar/platform/global-config/global-config-discounts.html" details="الخصومات الثمانية وخصم الرأس؛ وعاء كل خصم والضرائب التي يأخذها في الحسبان." />
   <LandingCard icon="📊" title="المحاسبة والمالية" link="/ar/platform/global-config/global-config-accounting.html" details="حدود التقريب وحسابات الذمم وحدود الائتمان وأعمار الديون والمدفوعات والموازنات والتكاليف." />
-  <LandingCard icon="🤝" title="العملاء والمبيعات" link="/ar/platform/global-config/global-config-sales.html" details="افتراضات المندوب وتكويد العملاء والاتصال بنظام Nama CRM." />
+  <LandingCard icon="🤝" title="العملاء والمبيعات" link="/ar/platform/global-config/global-config-sales.html" details="افتراضات المندوب وتكويد العملاء والإبلاغ عن الأخطاء كسجلات." />
   <LandingCard icon="✅" title="الموافقات والمراجعة" link="/ar/platform/global-config/global-config-approvals.html" details="قرارات الموافقة المتاحة ومستويات المراجعة وتتبع نسخ السجلات." />
   <LandingCard icon="🔐" title="الأمان وتسجيل الدخول" link="/ar/platform/global-config/global-config-security.html" details="محاولات الدخول والجلسات وسياسة كلمة المرور والمصادقة الثنائية وLDAP وأمان السجلات." />
   <LandingCard icon="⚡" title="الأداء والبحث" link="/ar/platform/global-config/global-config-performance.html" details="حدود زمن الاستعلامات وحدود الاستخدام لكل مستخدم وسلوك البحث بالكود والاسم." />
