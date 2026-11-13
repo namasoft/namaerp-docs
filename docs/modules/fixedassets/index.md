@@ -12,6 +12,17 @@ The module is built on one idea worth understanding before anything else: **the 
 
 Alongside the asset register sits a second, separate register: **custody**, for the low-value items you hand to named employees. A laptop issued to a member of staff is a custody item, not a fixed asset — it is never depreciated and it lives under its own licence and its own documents.
 
+## Watch the Video Series
+
+Three videos walk through the module on a live system, after a three-minute overview. The player below plays them in order.
+
+<iframe style="width:100%;max-width:800px;aspect-ratio:16/9;border:0" src="https://www.youtube.com/embed/videoseries?list=PLAuH5BTOfKqw" title="Fixed Assets in Nama ERP: a 3-part series" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- [Fixed assets in under 3 minutes](https://youtu.be/JphQq1aX4J4): a quick look at the whole module.
+- [Part 1: the asset lifecycle from purchase to sale](https://youtu.be/fNFOkqKUcC8) (16 minutes): setup, opening balances, purchase, monthly depreciation, additions, sale and disposal, and the period-end reports.
+- [Part 2: revaluation, transfers, stocktaking and partial disposal](https://youtu.be/yjH2KqDymEo) (10 minutes): also revising life and salvage value, and batch documents.
+- [Part 3: custody, asset letters of credit and maintenance](https://youtu.be/14Wouas7sC0) (9 minutes).
+
 ## Start Here
 
 The map of the module and the settings that shape everything else.

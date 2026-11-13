@@ -14,6 +14,7 @@ title: شروحات الفيديو
 
 <LandingGrid>
   <LandingCard icon="🤖" title="ربط نما بالذكاء الاصطناعي واستخدامه من Claude" link="/ar/modules/ai/ai-assisted-support.md" details="دليل خطوة بخطوة: تعريف الأدوات لكل دور، ومفتاح API لكل مستخدم، وربط Claude Desktop أو Claude Code، ثم جلسة حيّة بصفة مدير النظام ومدير المبيعات." />
+  <LandingCard icon="🏢" title="الأصول الثابتة في نما ERP" link="/ar/modules/fixedassets/" details="عرض سريع في أقل من ثلاث دقائق، ثم سلسلة من ثلاثة أجزاء: دورة حياة الأصل، والعمليات المتقدمة، ثم العهد واعتمادات الأصول والصيانة." />
   <LandingCard icon="✨" title="واجهة نما الجديدة وربط الذكاء الاصطناعي عبر MCP" link="/ar/videos/new-ui-and-mcp-webinar.md" details="جولة في تحسينات الواجهة ولوحات المعلومات، وتجربة عملية لربط نما بوكلاء الذكاء الاصطناعي مع ضبط الصلاحيات." />
   <LandingCard icon="💿" title="فيديو التنصيب" link="/ar/videos/installation-video.md" details="تجهيز خادم جديد بعدة نسخ Tomcat وقواعد بيانات، ثم تنصيب نظام نما من البداية." />
   <LandingCard icon="🏭" title="التكاليف الفعلية وغير المباشرة في التصنيع" link="/ar/videos/manufacturing-actual-overhead.md" details="كيفية تعريف ومعالجة التكاليف غير المباشرة والفعلية داخل نظام التصنيع." />
