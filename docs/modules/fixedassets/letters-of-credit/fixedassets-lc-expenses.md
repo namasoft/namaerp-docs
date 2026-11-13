@@ -297,7 +297,7 @@ which removes those costs from anything the cost document recalculates afterward
 
 | Message | Why | What to do |
 |---|---|---|
-| *There is no invoice for this letter of credit {0}* — «لا توجد فاتورة لهذا الإعتماد {0}» | The letter of credit on the document has no proforma invoice yet, so there is no total to distribute over. | Enter and commit the proforma invoice on the credit first. |
+| *There is no invoice for this letter of credit {0}* — «لا توجد فاتورة لهذا الاعتماد {0}» | The letter of credit on the document has no proforma invoice yet, so there is no total to distribute over. | Enter and commit the proforma invoice on the credit first. |
 | *Can Not Handel Closed Letter Of Credit* — «لا يمكن التعامل مع اعتماد حالته مغلقة» | The credit named on the document is already **Closed**. | Cancel the cost document to reopen the credit, then enter the expense. |
 | *Can not delete expense docs for closed letter of credit {0}* — «لا يمكن حذف سند مصروفات لاعتماد مستندي حالته مغلق {0}» | You tried to delete an expense document that belongs to a closed credit. | Cancel the cost document first; until then the expense's figures are already inside an asset's cost. |
 

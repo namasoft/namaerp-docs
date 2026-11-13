@@ -98,8 +98,8 @@ This is the table most readers come here for. It is grouped by the job you are d
 | Fixed Asset Offer (`عرض سعر أصل`) | Yes | Tax settings only |
 | Fixed Asset Purchase Request (`طلب شراء أصل`) | Shares the order's term | Nothing needs configuring — a request has no financial effect |
 | Fixed Asset Initial Receipt (`سند استلام أصل مبدئي`) | Yes | Tax settings only |
-| Fixed Asset Opening Document (`أفتتاح أصل ثابت`) | Yes | Four switches that decide how dates and remaining life are derived for legacy assets. No accounts — the entry uses the asset's own accounts and the mediator account typed on the document |
-| Fixed Asset Opening Document Update (`تعديل أفتتاح أصل ثابت`) | Yes | No accounts — one switch that decides whether picking the opening document to correct also copies its lines |
+| Fixed Asset Opening Document (`افتتاح أصل ثابت`) | Yes | Four switches that decide how dates and remaining life are derived for legacy assets. No accounts — the entry uses the asset's own accounts and the mediator account typed on the document |
+| Fixed Asset Opening Document Update (`تعديل افتتاح أصل ثابت`) | Yes | No accounts — one switch that decides whether picking the opening document to correct also copies its lines |
 | Custodies Delivery Receipt Document (`سند استلام وتسليم عهد`) | Yes | The accounts for each side of a hand-over, and whether the hand-over changes the custodian recorded on the fixed asset |
 | Fixed Asset Creation Document (`سند إنشاء أصول`) | Yes | The book and term used for the purchase documents it generates |
 
@@ -110,7 +110,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 | Depreciation Document (`سند إهلاك`) | Yes | Line wording, the analysis-set source, the contracting-cost sides, and three behaviour switches. The two accounts come from the asset |
 | Aggregated Depreciation Document (`سند إهلاك مجمع`) | Yes | The book and term used for the depreciation documents it generates |
 | Fixed Asset Revaluation (`إعادة تقييم الأصول`) | Yes | The gain account and the loss account, the dimension source, and whether straight-line assets may be converted |
-| Asset addition deduction (`سند الإضافة و الإستبعاد`) | Yes | The account facing the asset, eight tax account sides, two discount-value sides, and the switches that decide whether each tax lands in the asset's value |
+| Asset addition deduction (`سند الإضافة و الاستبعاد`) | Yes | The account facing the asset, eight tax account sides, two discount-value sides, and the switches that decide whether each tax lands in the asset's value |
 | Aggregated Addition Deduction Document (`مستند إضافة واستبعاد مجمع`) | Yes | The book and term of the documents it generates |
 | Fixed Asset Properties (`خصائص أصل ثابت`) | Yes | Nothing — the document changes life and salvage values only and never reaches the ledger |
 | Aggregated Fixed Asset Properties Document (`سند خصائص أصل مجمع`) | Yes | The book and term of the documents it generates (`termConfig.faPropertiesBook`, `termConfig.faPropertiesTerm`) |
@@ -144,7 +144,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 
 | Document | Term? | What the term controls |
 |---|---|---|
-| Fixed Asset ProformaInvoice (`فاتوره اعتماد مبدئية`) | Yes | No accounts — the proforma invoice books nothing. One switch decides whether committing it creates asset records for lines that name no asset |
+| Fixed Asset ProformaInvoice (`فاتورة اعتماد مبدئية`) | Yes | No accounts — the proforma invoice books nothing. One switch decides whether committing it creates asset records for lines that name no asset |
 | Fixed Asset Expense Document (`مصروف اعتماد أصل`) | Yes | Both sides of the expense entry, four tax pairs, a discount pair, and whether a line is excluded from the landed cost |
 | Fixed Asset Letter of Credit cost (`سند تكليف اعتماد أصل`) | Yes | The clearing account only — the asset side comes from each asset |
 
@@ -154,7 +154,7 @@ Some Fixed Assets documents have no term configuration in existence:
 
 - Fixed Asset Transfer Request (`طلب نقل أصل`)
 - Fixed asset Letter of Credit (`اعتماد أصول`)
-- Fixed Asset Receipt Document (`مستند أستلام أصل`)
+- Fixed Asset Receipt Document (`مستند استلام أصل`)
 - Fixed Asset Return Document (`سند رجوع أصول`) and Fixed Asset Out Document (`سند خروج أصول`)
 - FixedAssets Taking Document (`مستند جرد أصول`)
 - Prevent Assets Depreciation Document (`مستند منع اهلاك اصول`)

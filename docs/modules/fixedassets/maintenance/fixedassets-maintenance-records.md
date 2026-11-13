@@ -91,7 +91,14 @@ Neither the maintenance request nor the maintenance record carries a button of i
 pieces of automation that make the record quick to fill are not buttons: choosing the **Fixed Asset**
 narrows the component-type lookup to that asset's own components, and choosing the **Maintenance
 CheckList** — or a plan line — copies its questions onto the record ready to be answered. Picking the
-**Maintenance Type** also fills in the next expected maintenance date from the type's repeat interval.
+**Maintenance Type** also fills in the next expected maintenance date from the type's repeat interval,
+on the request as well as on the record.
+
+Two of those conveniences live on the record only. On a **request**, choosing the checklist names it
+but does not bring its questions in, and the plan line code has no suggestion list; the questions
+arrive when a record is raised from the request, or when the checklist is chosen on the record. And
+on the record, choosing a plan line fills the maintenance type but leaves the **Next Expected
+Maintenance Date** empty — pick the maintenance type again after the plan line to have it proposed.
 Everything the record does to the asset and to the plan happens on commit.
 
 ## Two rules that decide whether a record will commit
@@ -164,8 +171,8 @@ want to be able to find it later.
 `MCH-0007`, component type **Spindle**, maintenance type **Periodic Maintenance**, plan
 `MP-CNC-2026`, plan line code `0120260401`, contractor Gulf Machinery Trading, responsible engineer
 Khaled Al-Mutairi, estimated value **1,800**. Choosing the maintenance type proposes a next expected
-date of 23 June — 90 days from the request's own date. Choosing the CNC Routine Inspection checklist
-fills the grid with its four questions. Commit: nothing moves.
+date of 23 June — 90 days from the request's own date. The CNC Routine Inspection checklist is named on
+it; its four questions will be filled in on the record. Commit: nothing moves.
 
 **1 April 2026 — the record.** Maintenance Record `FAMR-000031` is created with value date 1 April
 and **From Document** set to the request. Everything copies across. The engineer re-picks the maintenance type

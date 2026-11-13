@@ -145,8 +145,8 @@ what decides which document will even offer you the item.
 
 | Status | Arabic | Set by | What can happen next |
 |---|---|---|---|
-| Initial | مبدأي | Saving a new custody record | The purchase document can buy it; the disposal document will offer it |
-| Purchased | تم شراؤة | Committing a custody purchase document | The delivery document will offer it |
+| Initial | مبدئي | Saving a new custody record | The purchase document can buy it; the disposal document will offer it |
+| Purchased | تم شراؤه | Committing a custody purchase document | The delivery document will offer it |
 | Delivered | تم تسليمه | Committing a delivery document | The transfer document will offer it; further transfers keep it here |
 | Disposed | تم التخلص منه | Committing a disposal document | Nothing — the item's life is over |
 

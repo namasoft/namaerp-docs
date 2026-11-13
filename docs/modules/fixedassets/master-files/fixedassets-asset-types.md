@@ -56,7 +56,7 @@ Two fields carry the family's normal expectations:
 | Default useful life | العمر الافتراضي | The service life, **counted in months** — not years. For `FAT-MCH` it is `60`. |
 | Salvage Value | قيمة الأصل كخردة | What the asset is expected to be worth when its life is over. For `FAT-MCH`, `24,000`. |
 
-These two are *defaults for documents*, not values written onto the asset. Choosing `FAT-MCH` on a **Fixed Asset Purchase Document** line fills both the useful life and the salvage value on that line. Choosing it on a **Fixed Asset Opening** line fills the useful life; the salvage value on an opening line is typed by hand. Either way it is the document line that ends up carrying the numbers, and the document that writes them onto the asset — see [The Purchase Document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md) and [Opening Balances](/modules/fixedassets/acquisition/fixedassets-opening-balances.md).
+These two are *defaults for documents*, not values written onto the asset. Choosing `FAT-MCH` on a **Fixed Asset Purchase Document** line fills both the useful life and the salvage value on that line. Choosing an asset of that type on a **Fixed Asset Opening** line, or collecting it with *Collect Fixed assets*, fills the same two. Either way it is the document line that ends up carrying the numbers, and the document that writes them onto the asset — see [The Purchase Document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md) and [Opening Balances](/modules/fixedassets/acquisition/fixedassets-opening-balances.md).
 
 Creating an asset by hand from the register does **not** give it a useful life from its type. A hand-made asset stays in its initial state with no life and no instalment until a purchase or opening document gives it both.
 
@@ -135,3 +135,24 @@ is why the section on overriding the type on a single asset matters as much as i
 8. Save.
 
 From here on, any machine bought at Al-Waha is created by choosing `FAT-MCH` and nothing else: the accounts, the flags, the code series and the component list all follow. The next page walks the asset record those settings land on — [The Fixed Asset Record](/modules/fixedassets/master-files/fixedassets-asset-master.md).
+
+## In practice
+
+- **Most companies keep somewhere between five and twenty types of their own.** The classes that recur almost everywhere are furniture and fixtures, computers and software, electrical devices and air-conditioning, machinery and tools, vehicles, and buildings and land.
+- **Useful lives cluster around a few figures.** Typical values, in months:
+
+  | Class | Typical life |
+  |---|---|
+  | Computers, IT equipment, software | 48 |
+  | Electrical devices, air-conditioning units | 48–60 |
+  | Furniture and fixtures | 60–84 |
+  | Vehicles, trucks, forklifts | 60 |
+  | Machinery and equipment | 60–84 |
+  | Heavy equipment | 84 |
+  | Formwork, scaffolding, prefabricated cabins | 24 |
+  | Leasehold and building improvements | 60–120 |
+  | Buildings | 180–480 (400 is a common choice) |
+  | Land | not depreciated — flag the type **Undepreciable** |
+
+- **Many companies leave the type's default useful life at zero** and enter the life on each purchase line instead. That works, but a default on the type saves typing and keeps the lives of like assets consistent.
+- **A type is also an accounting switch.** It is common to split one class into two types — "Equipment – Selling" and "Equipment – General & Admin", say — purely so that each half depreciates into its own expense account.

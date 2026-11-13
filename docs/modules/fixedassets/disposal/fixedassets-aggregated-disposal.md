@@ -165,3 +165,9 @@ Document** link on any line: that is the real document, carrying the real journa
 where the gain or loss, the accounts and the processing status all live. The assets themselves show
 the outcome too — status **Disposed**, a disposal date, a zero carrying amount — as described on the
 [asset status page](/modules/fixedassets/master-files/fixedassets-asset-status.md).
+
+## In practice
+
+- **About half of the companies that keep a register have disposed of assets**, and most of them enter one disposal document per asset — even when a whole batch leaves at once. Registers that retire hundreds of assets a year exist, and they are exactly where this document saves the most work.
+- **About 1 in 7 companies that dispose of assets use the aggregated document.** The usual pattern is one aggregated document per kind of disposal — scrapping, sale, donation — because each one carries a single term (see [One term, one kind of disposal](#One-term-one-kind-of-disposal)).
+- **The same holds for the other bulk documents.** Mass re-estimates of life and salvage, mass transfers and mass additions are also commonly entered one asset at a time; their aggregated forms ([properties](/modules/fixedassets/depreciation/fixedassets-properties-document.md), [transfers](/modules/fixedassets/movement/fixedassets-transfer-document.md), [additions and deductions](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions.md)) work the same way as this one.

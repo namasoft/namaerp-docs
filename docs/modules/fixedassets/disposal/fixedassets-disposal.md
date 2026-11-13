@@ -153,6 +153,15 @@ requires the `createAssetsInDisposal` feature on the licence. If you fill it, th
 **fixed asset purchase book and term** on its effects page — the commit is refused otherwise, because
 those rows are turned into a real acquisition document behind the scenes.
 
+::: warning Name the purchase book and term only where assets are salvaged
+The link works in the other direction too. Once the term names a fixed asset purchase book and term,
+**every** commit on that term raises the acquisition document, even when the created-assets grid is
+empty. That document is written into the named book, so the book must suit the disposal's own
+dimensions: a book of another company or branch makes the save fail with the dimensions consistency
+message. Leave the two fields empty on the terms you use for ordinary sales and write-offs, or give
+each company its own term.
+:::
+
 That generated document is what the read-only **Generated Purchase Document**
 (فاتورة المشتريات المنشأة) field on the header links to. Despite the label, it is not a supplier
 invoice: it is the **fixed-asset acquisition document raised for the assets listed in the grid**, and

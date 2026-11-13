@@ -27,16 +27,16 @@ Because forms are bound by document type and optionally by book or document term
 |---|---|---|---|
 | `SYSF-AST001` | سند إهلاك | Depreciation Document | The period's depreciation run: fiscal period, value date, document term and narration in the header, then one line per asset with its instalment amount, the document's dimensions, a total, and a signature block |
 | `SYSF-AST002` | سند نقل الأصل | Transfer document | The asset moved, the destination location, and the *from* and *to* sides of the move side by side — legal entity, branch, sector, department and custodian — with a signature block |
-| `SYSF-AST003` | سند الإضافة و الإستبعاد | Asset addition deduction | The addition or deduction, labelled as whichever it is, with fiscal period, value date, the asset, the amount in document and local currency, and a signature block |
+| `SYSF-AST003` | سند الإضافة و الاستبعاد | Asset addition deduction | The addition or deduction, labelled as whichever it is, with fiscal period, value date, the asset, the amount in document and local currency, and a signature block |
 | `SYSF-AST004` | مصروف اعتماد أصل | Fixed Asset Expense Document | The letter-of-credit expense document: the credit, the shipment, the currency and rate, then one line per expense item with its value, credit side, account and subsidiary, and the local-currency total |
 | `SYSF-AST005` | سند شراء أصل ثابت | Fixed Asset Purchase Document | The acquisition invoice: counterparty, date, remarks, and one line per asset with unit price and value, totalled |
 | `SYSF-AST006` | طلب شراء أصل | Fixed Asset Purchase Request | The request as raised: requesting employee, location, suggested supplier, remarks, and one line per asset wanted with its quantity |
 | `SYSF-AST007` | أمر شراء أصل | Fixed Asset Purchase Order | The same shape as the request, with prices — the sheet you send the supplier |
-| `SYSF-AST008` | مستند أستلام أصل | Fixed Asset Receipt Document | Physical receipt: fiscal period, the letter of credit and source document it came from, and one line per asset with the receiving employee and the location it went to |
+| `SYSF-AST008` | مستند استلام أصل | Fixed Asset Receipt Document | Physical receipt: fiscal period, the letter of credit and source document it came from, and one line per asset with the receiving employee and the location it went to |
 | `SYSF-AST009` | تخلص من الأصل | Fixed assets disposal document | The disposal: fiscal period, the asset, the disposal value, the source document and remarks |
-| `SYSF-AST010` | أفتتاح أصل ثابت | Fixed Asset Opening Document | The opening balances as entered: per asset, the depreciation start date, useful life, salvage value, acquisition value and opening accumulated depreciation — the sheet auditors ask for when a register is first loaded |
+| `SYSF-AST010` | افتتاح أصل ثابت | Fixed Asset Opening Document | The opening balances as entered: per asset, the depreciation start date, useful life, salvage value, acquisition value and opening accumulated depreciation — the sheet auditors ask for when a register is first loaded |
 | `SYSF-AST011` | مستند جرد أصول | FixedAssets Taking Document | The stocktaking sheet: fiscal period and status in the header, then one line per asset with its acquisition cost and current book value |
-| `SYSF-AST012` | فاتوره اعتماد مبدئية | Fixed Asset ProformaInvoice | The proforma invoice: credit, supplier, currency and fiscal period, then one line per asset with quantity, unit price and value |
+| `SYSF-AST012` | فاتورة اعتماد مبدئية | Fixed Asset ProformaInvoice | The proforma invoice: credit, supplier, currency and fiscal period, then one line per asset with quantity, unit price and value |
 | `SYSF-AST013` | سند تكليف اعتماد أصل | Fixed Asset Letter of Credit cost | The document that closes the import chain: per asset, the landed unit cost, salvage value, useful life and depreciation start date |
 
 Four of these belong to documents that are gated behind a sub-module licence, which is worth knowing before you go looking for them. `SYSF-AST004`, `SYSF-AST012` and `SYSF-AST013` belong to the letter-of-credit chain and appear only where `fixedassets-lc` is installed — and so does `SYSF-AST008`, because the Fixed Asset Receipt Document is itself an LC-licensed document even though it sits in the Custody of Assets menu folder. See [Receipts](/modules/fixedassets/acquisition/fixedassets-receipts.md).
@@ -46,7 +46,7 @@ Four of these belong to documents that are gated behind a sub-module licence, wh
 The thirteen forms cover the documents that most often leave the building on paper — the ones a supplier, an auditor, a department head or a storekeeper signs. Plenty of Fixed Assets documents ship with no form at all, and there is no point hunting for one:
 
 - **Revaluation** (إعادة تقييم الأصول) and **Prevent Assets Depreciation** (مستند منع اهلاك اصول) — internal value and policy decisions that stay in the system.
-- **Fixed Asset Properties** (خصائص أصل ثابت) and **Fixed Asset Opening Document Update** (تعديل أفتتاح أصل ثابت) — corrections to numbers already recorded.
+- **Fixed Asset Properties** (خصائص أصل ثابت) and **Fixed Asset Opening Document Update** (تعديل افتتاح أصل ثابت) — corrections to numbers already recorded.
 - **Partial Disposal** (سند تخلص جزئي من أصل) — the full disposal has a form, the partial one does not.
 - **Fixed Asset Offer** (عرض سعر أصل) and **Fixed Asset Initial Receipt** (سند استلام أصل مبدئي) — the two steps of the buying chain either side of the order and the receipt, both of which do have forms.
 - **Fixed Asset Out** and **Fixed Asset Return** documents (سند خروج أصول / سند رجوع أصول).

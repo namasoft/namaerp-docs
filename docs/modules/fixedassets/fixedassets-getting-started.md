@@ -129,7 +129,7 @@ With the master files in place, the asset records are quick. Give an asset a cod
 
 ![A fixed asset record, ready to be brought into service](../../ar/modules/fixedassets/images/master/fixed-asset-main-en.png)
 
-What you will **not** find is anywhere to type the cost, the useful life, the salvage value or the location. A new asset is saved with status **Initial** (إبتدائى), no value and no instalment. It is a shell waiting for a document. That is exactly as intended, and it is why this step is short. See [The Fixed Asset Record](/modules/fixedassets/master-files/fixedassets-asset-master.md).
+What you will **not** find is anywhere to type the cost, the useful life, the salvage value or the location. A new asset is saved with status **Initial** (ابتدائي), no value and no instalment. It is a shell waiting for a document. That is exactly as intended, and it is why this step is short. See [The Fixed Asset Record](/modules/fixedassets/master-files/fixedassets-asset-master.md).
 
 Companies that also run the Contracting module have one more route, and it is worth knowing what it is *not*. The **Fixed Asset Creation Document** is not a general bulk-registration screen: it is the document that capitalises a finished contracting project as an asset of your own — it names the project on each line, takes the asset's code from the line, copies the project contract's terms onto the asset, and refuses to create a second asset for a project that already has one. It creates the asset records in their initial state and then generates a purchase document that brings them into service. Note that it does **not** set the asset's cost; assets created this way arrive at zero, and the value has to reach them through that generated purchase document or through an addition afterwards. Its menu item only appears with a Contracting licence. See [The Creation Document](/modules/fixedassets/master-files/fixedassets-creation-document.md).
 
@@ -145,7 +145,7 @@ There are three things to get right on this document.
 
 1. **The fiscal period must be an opening period**, unless you have switched on *Allow Normal Periods In Fixed Assets Opening*. That is the module insisting that opening balances belong outside the trading periods.
 2. **Accumulated depreciation may not exceed cost minus salvage.** The document checks it, and a rejected line is nearly always a legacy figure that already wrote the asset below its residual value.
-3. **Enter the salvage value yourself.** Unlike a purchase line, an opening line does not take it from the asset type.
+3. **Check the salvage value on every line.** An opening line takes it from the asset type, as a purchase line does, and many types carry a salvage value of zero. Type over it wherever the asset's real residual value differs.
 
 There is a **Collect Fixed assets** button that pulls every asset still in its initial state within the ranges you name at the top of the document, pre-filled with the useful life and salvage from each asset's type. Use it, then correct the figures rather than typing every line.
 

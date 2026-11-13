@@ -48,7 +48,7 @@ title: الأصول الثابتة
 
 <LandingGrid>
   <LandingCard icon="🛒" title="اقتناء الأصول" link="/ar/modules/fixedassets/acquisition/fixedassets-acquisition-cycle.md" details="طلبات الشراء وعروض الأسعار وأوامر الشراء، وسند الشراء الذي يرسمل التكلفة، ومستندات الاستلام، والأرصدة الافتتاحية لما تملكه أصلًا." />
-  <LandingCard icon="🚢" title="إعتمادات الأصول" link="/ar/modules/fixedassets/letters-of-credit/fixedassets-lc-overview.md" details="الآلات المستوردة ومشكلة التكلفة النهائية: الاعتماد، والفاتورة المبدئية، والمصروفات، وسند التكليف الذي يضع الكل على الأصل." />
+  <LandingCard icon="🚢" title="اعتمادات الأصول" link="/ar/modules/fixedassets/letters-of-credit/fixedassets-lc-overview.md" details="الآلات المستوردة ومشكلة التكلفة النهائية: الاعتماد، والفاتورة المبدئية، والمصروفات، وسند التكليف الذي يضع الكل على الأصل." />
 </LandingGrid>
 
 ## القيمة عبر الزمن

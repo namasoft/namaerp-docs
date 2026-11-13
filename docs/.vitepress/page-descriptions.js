@@ -362,7 +362,7 @@ export const PAGE_DESCRIPTIONS = {
 "ar/modules/fixedassets/letters-of-credit/fixedassets-lc-cost-document.md":"سند تكليف اعتماد أصل: كيف يجمع التكاليف الموزَّعة على كل ماكينة، ويضع تكلفة الأصل وبيانات إهلاكه، ويدخله الخدمة، ويغلق الاعتماد، وما يصل إلى دفتر الأستاذ، وكيف يُنقَض.",
 "ar/modules/fixedassets/letters-of-credit/fixedassets-lc-expenses.md":"هنا يكفّ الاستيراد عن كونه أوراقاً ويصير مالاً.",
 "ar/modules/fixedassets/letters-of-credit/fixedassets-lc-overview.md":"المكبس الذي تشتريه من مصنع في الحي المجاور تكلفته هي ما تقوله الفاتورة.",
-"ar/modules/fixedassets/letters-of-credit/fixedassets-lc-proforma-invoice.md":"فاتوره اعتماد مبدئية في اعتمادات الأصول: فاتورة واحدة لكل اعتماد، وبيانات الرأس، وسطر لكل ماكينة، ولماذا لا تمثّل أسعارها تكلفة الأصول بل نسبة توزيع تكاليف الاستيراد.",
+"ar/modules/fixedassets/letters-of-credit/fixedassets-lc-proforma-invoice.md":"فاتورة اعتماد مبدئية في اعتمادات الأصول: فاتورة واحدة لكل اعتماد، وبيانات الرأس، وسطر لكل ماكينة، ولماذا لا تمثّل أسعارها تكلفة الأصول بل نسبة توزيع تكاليف الاستيراد.",
 "ar/modules/fixedassets/letters-of-credit/fixedassets-letter-of-credit.md":"كل ما يخصّ صفقة استيراد واحدة لا بد أن يُعلَّق على وتد واحد: الفاتورة المبدئية، ونصف دزينة من فواتير المصروفات من أربع جهات مختلفة، وأخيراً المستند الذي يحوّل ذلك كله إلى تكلفة أصل.",
 "ar/modules/fixedassets/maintenance/fixedassets-maintenance-checklists.md":"اطلب من فني أن «يعمل صيانة لماكينة CNC» تحصل على عمل مختلف كل ربع سنة بحسب من يحضر.",
 "ar/modules/fixedassets/maintenance/fixedassets-maintenance-overview.md":"ماكينة CNC تكلفتها 240,000 لا تعيش خمس سنوات وحدها.",

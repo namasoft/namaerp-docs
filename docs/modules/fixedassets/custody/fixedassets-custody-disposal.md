@@ -89,8 +89,12 @@ clearing account as the loss.
 
 The custody disposal screen has no buttons of its own — which fits a document this short. You name
 the item, the employee and the disposal value, save and commit; the accounting entry, the closing of
-the holding line and the change of the item's state all follow from the commit, not from anything you
-press. To reverse it, cancel or delete the document.
+the item's state all follow from the commit, not from anything you press. To reverse it, cancel or
+delete the document.
+
+The disposal does not touch the item's holding lines. The last holder's line stays on the custody
+record as it was, so the item still appears in that employee's **Common Custodies** list after it
+has been disposed of. Read the item's status, not the list, to tell whether it is still in use.
 
 ## Returning an item is not a disposal
 

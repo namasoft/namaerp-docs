@@ -192,6 +192,13 @@ hand. The
 [aggregated depreciation document](/modules/fixedassets/depreciation/fixedassets-aggregated-depreciation.md)
 takes a period range and creates the individual runs for you.
 
+## In practice
+
+- **Depreciation is run monthly, on the last day of each month.** Where the module is in use, there is a run for practically every month that has passed.
+- **One run per period is not the rule on larger registers.** It is common to issue several documents for the same month — one per company, or one per asset type or branch using the *from … to* ranges described in [Running January 2026 for Al-Waha](#Running-January-2026-for-Al-Waha). Each document collects only the assets in its slice, so the slices together cover the register once.
+- **Most runs are entered within two weeks of the month end**, and a smaller share a month or two later. Catching up several months at once is common straight after go-live; that is what the [aggregated depreciation document](/modules/fixedassets/depreciation/fixedassets-aggregated-depreciation.md) is for.
+- **Cancelling a run is rare.** When a figure is wrong, the usual fix is on the document that changed the asset, followed by a fresh run — see [Correcting a Run](#Correcting-a-Run).
+
 ## Messages you may see
 
 | Message | Why | What to do |

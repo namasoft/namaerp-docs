@@ -179,7 +179,11 @@ units that left.
 Each row is a fixed-asset purchase line — the new asset, its count, unit price and value, useful life,
 salvage value, depreciation start date, custodian and location. On commit they are turned into a real
 acquisition document, which the read-only field in the header then links to. Fill the grid and the
-term must name the purchase book and term that document will use.
+term must name the purchase book and term that document will use. The reverse holds as well: a
+term that names them raises that document on every commit, grid or no grid, in the named book — so
+the book must belong to the same company and branch as the partial disposal, or the save fails with
+the dimensions consistency message. Leave the two fields empty on a term that never salvages
+anything.
 
 ## Undoing a partial disposal
 

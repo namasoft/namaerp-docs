@@ -48,7 +48,7 @@ One row per asset to be created.
 | Asset Name1 / Asset Name2 | الإسم العربي للأصل / الإسم الإنجليزي للأصل | The new asset's Arabic and English names. |
 | Group | المجموعة | The master group to file the asset under, used when the type carries no coding group. |
 | Fixed Asset Type | نوع أصل | The most important column: it gives the new asset its accounts, its coding group and its Countable, Car Asset, Has Insurance and Undepreciable flags. See [Fixed Asset Types](/modules/fixedassets/master-files/fixedassets-asset-types.md). |
-| Useful Life | العمر الإفتراضي | In **months**. `300` for the warehouse. |
+| Useful Life | العمر الافتراضي | In **months**. `300` for the warehouse. |
 | Salvage Value | قيمة الأصل كخردة | `250,000`. |
 | Depreciation Start Date | تاريخ بداية الاهلاك | `01/10/2026`. |
 | Fixed Asset | الأصل الثابت | An output — the asset the row created. Fill it in advance and that existing asset is updated instead of a new one being created. |
@@ -80,7 +80,7 @@ The book you choose has one consequence worth thinking about in advance. If it i
 
 Two phases, in order.
 
-**Phase 1 — one asset record per row.** For every line, a fixed asset record is created carrying the names you typed, the code from the line, and everything the Fixed Asset Type supplies: the accounts (into whatever slots are still empty), the coding group and the four behaviour flags. The new asset is linked to the project, and its status is **Initial** (إبتدائى).
+**Phase 1 — one asset record per row.** For every line, a fixed asset record is created carrying the names you typed, the code from the line, and everything the Fixed Asset Type supplies: the accounts (into whatever slots are still empty), the coding group and the four behaviour flags. The new asset is linked to the project, and its status is **Initial** (ابتدائي).
 
 At the same time the asset's **Project Terms** grid is filled: every contract on the project is read, and each contract term flagged to be transferred to the asset becomes a row carrying its term code, standard term, description and warranty dates. For `P-2026-014` that brings across the structural warranty and the MEP warranty from contract `PC-2026-041`. The same collection can be re-run later from the **Update Project Terms** button on the asset — see [The Fixed Asset Record](/modules/fixedassets/master-files/fixedassets-asset-master.md).
 
@@ -88,7 +88,7 @@ At the same time the asset's **Project Terms** grid is filled: every contract on
 
 That generated purchase document is what actually puts the assets into service:
 
-- status moves from Initial to **Running Depreciation** (جارى الإهلاك), or to **Not Depreciable** for an undepreciable type;
+- status moves from Initial to **Running Depreciation** (جاري الإهلاك), or to **Not Depreciable** for an undepreciable type;
 - the purchase date is set to its value date, and the asset's Purchase Invoice field points at it;
 - useful life, remaining life, salvage value and depreciation start date are written onto the asset.
 

@@ -20,7 +20,7 @@ It is the single most common go-live task in this module, so it is worth doing s
 ![Fixed Asset Opening Document screen](../../../ar/modules/fixedassets/images/acquisition/fa-opening-document-main-en.png)
 
 Menu: **Assets > Documents > Fixed Asset Opening Document**
-(الأصول > المستندات > أفتتاح أصل ثابت), licence `fixedassets`.
+(الأصول > المستندات > افتتاح أصل ثابت), licence `fixedassets`.
 
 ## Before you type anything
 
@@ -32,7 +32,7 @@ not invent them. Create them first on the
 capitalised out of a finished contracting project, with the
 [creation document](/modules/fixedassets/master-files/fixedassets-creation-document.md) — each
 with its code, name, type, classifications and location. The asset picker on the opening document
-shows only assets in **Initial** (إبتدائى) status.
+shows only assets in **Initial** (ابتدائي) status.
 
 (If you prefer, the opening document can create the records itself: switch on the module setting
 **Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** and the grid gains the
@@ -67,9 +67,11 @@ criteria for the **Collect Fixed assets** (تجميع الأصول الثابت�
 
 ::: tip Collect Fixed assets
 Set the ranges — say, from asset type `FAT-VEH` to `FAT-VEH` — and press the button. Every asset in
-Initial status inside those ranges is appended to the grid as a line, with its useful life brought in
-from the asset's type. Assets already on the grid are skipped, so you can press it repeatedly with
-different ranges and build the document type by type. Type in each line's salvage value yourself.
+Initial status inside those ranges is appended to the grid as a line, with its useful life and
+salvage value brought in from the asset's type. Assets already on the grid are skipped, so you can
+press it repeatedly with different ranges and build the document type by type. Many types carry a
+salvage value of zero, so check each line's salvage value and type over it with the right figure for
+that asset.
 :::
 
 Then the **Details** grid, which is where the real work happens:
@@ -81,11 +83,11 @@ Then the **Details** grid, which is where the real work happens:
 | Fixed Asset | الأصل الثابت | The record being opened |
 | Count | العدد | For countable assets, how many units the record represents |
 | Depreciation Start Date | تاريخ بداية الاهلاك | The date the asset **originally** started depreciating, in the old system |
-| Useful Life | العمر الأفتراضي الأفتتاحي | The **original** total life in months |
-| Salvage Value | قيمة الأصل كخردة الأفتتاحية | The residual value |
+| Useful Life | العمر الافتراضي الافتتاحي | The **original** total life in months |
+| Salvage Value | قيمة الأصل كخردة الافتتاحية | The residual value |
 | Remaining Life | العمر المتبقي | Usually left to the system to compute |
-| Acquire opening value | قيمة الأقتناء الأفتتاحية | The **original cost**, not the book value |
-| Acc. Depreciation opening value | قيمة الأهلاك التراكمي الأفتتاحية | The depreciation **already taken** before go-live |
+| Acquire opening value | قيمة الاقتناء الافتتاحية | The **original cost**, not the book value |
+| Acc. Depreciation opening value | قيمة الإهلاك التراكمي الافتتاحية | The depreciation **already taken** before go-live |
 | Purchase date | تاريخ الشراء | When it was bought |
 | Asset Location | موقع أصول | Where it stands |
 | Custodian | مسئول العهدة | Who holds it |
@@ -231,7 +233,7 @@ Once depreciation has run, you no longer cancel. You correct.
 ![Fixed Asset Opening Document Update screen](../../../ar/modules/fixedassets/images/acquisition/fa-opening-document-update-main-en.png)
 
 **Assets > Documents > Fixed Asset Opening Document Update**
-(الأصول > المستندات > تعديل أفتتاح أصل ثابت).
+(الأصول > المستندات > تعديل افتتاح أصل ثابت).
 
 Despite its position in the menu this is not a second opening document. It is an **editor for a
 committed opening document** — the supported way to say "the truck's useful life was 72 months, not

@@ -62,7 +62,7 @@ deliveries, equipment released against an order while the paperwork travels.
 ![Fixed Asset Receipt Document screen](../../../ar/modules/fixedassets/images/acquisition/fa-receipt-doc-main-en.png)
 
 Menu: **Assets > Custody Of Assets > Fixed Asset Receipt Document**
-(الأصول > عهد الأصول > مستند أستلام أصل).
+(الأصول > عهد الأصول > مستند استلام أصل).
 
 ::: info It needs the letter-of-credit licence
 This document is gated behind the **`fixedassets-lc`** licence, not the base one and not the custody

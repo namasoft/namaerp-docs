@@ -53,7 +53,7 @@ The group below carries no heading on screen, and it mixes fields you type with 
 |---|---|---|
 | Serial Number | الرقم المسلسل | Yes — although a purchase document will overwrite it with the serial number on its line. |
 | Asset Location | موقع الاصل | **No.** Written by the documents that move the asset. See [Locations](/modules/fixedassets/master-files/fixedassets-locations.md). |
-| Useful Life | العمر الإفتراضي | **No.** In months. `60` for `MCH-0007`. |
+| Useful Life | العمر الافتراضي | **No.** In months. `60` for `MCH-0007`. |
 | Remaining Life | العمر المتبقي | **No.** In months, reduced by one after every depreciation run. `48` at the end of 2026. |
 | Market value | القيمة السوقية | Yes — a free reference figure. Depreciation ignores it entirely. |
 | Salvage Value | قيمة الأصل كخردة | **No.** `24,000`. |
@@ -151,8 +151,8 @@ This is the financial report on the asset, and **every field on it is read-only*
 |---|---|---|---|
 | Opening Document | سند الإقتتاح | — | The opening document, for assets brought in from a previous system. |
 | Openning Cost | قيمة الإقتناء | 240,000 | The acquisition cost, from the purchase or opening document. |
-| Acquire opening value | قيمة الأقتناء الأفتتاحية | — | The cost stated on an opening document. |
-| Acc. Depreciation opening value | قيمة الأهلاك التراكمي الأفتتاحية | — | The depreciation already taken before the asset entered Nama. |
+| Acquire opening value | قيمة الاقتناء الافتتاحية | — | The cost stated on an opening document. |
+| Acc. Depreciation opening value | قيمة الإهلاك التراكمي الافتتاحية | — | The depreciation already taken before the asset entered Nama. |
 | Additions | الإضافات | 0 | Everything capitalised onto the asset since. |
 | Deductions | الإستقطاعات | 0 | Everything written off its value. |
 | Year Depreciation | إهلاك السنة الحالية | 43,200 | Depreciation charged inside the current fiscal year. |
@@ -160,7 +160,7 @@ This is the financial report on the asset, and **every field on it is read-only*
 | Total Cost | إجمالي قيمة الأصل | 240,000 | Acquisition cost plus additions minus deductions. |
 | Current System Value | القيمة الدفترية الحالية | 196,800 | The book value — total cost minus accumulated depreciation. |
 | Fixed Asset System Value Before Disposal | قيمة الأصل الدفترية قبل التخلص | — | Filled at disposal; the book value at the moment the asset left. |
-| Useful Life | العمر الإفتراضي | 60 | In months. |
+| Useful Life | العمر الافتراضي | 60 | In months. |
 | Depreciation Start Date | تاريخ بداية الاهلاك | 01/01/2026 | The first period the asset may be depreciated in. |
 | Remaining Life | العمر المتبقي | 48 | In months. |
 | Current Installment | قسط الإهلاك | 3,600 | (196,800 − 24,000) ÷ 48 = 3,600. |

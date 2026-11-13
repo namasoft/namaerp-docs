@@ -98,8 +98,8 @@ Because so much of the module's behaviour is gated by the asset's status, it is 
 
 | Status | Arabic | What it means |
 |---|---|---|
-| Initial | إبتدائى | Registered but not yet in service — waiting for a purchase or opening document to give it a cost. |
-| Running Depreciation | جارى الإهلاك | Live and being depreciated period by period. |
+| Initial | ابتدائي | Registered but not yet in service — waiting for a purchase or opening document to give it a cost. |
+| Running Depreciation | جاري الإهلاك | Live and being depreciated period by period. |
 | Depreciated | مهلك | Fully written down: remaining life is zero or the book value has reached the salvage value. |
 | Not Depreciable | غير قابل للإهلاك | Marked as never depreciating — land, for instance. |
 | Disposed | تم التخلص منه | Retired. No further document will act on it. |

@@ -13,8 +13,8 @@ There are five values.
 
 | Status | Arabic | What it means |
 |---|---|---|
-| Initial | إبتدائى | Registered, but not yet in service. The record exists; it has no cost, no life and no instalment. |
-| Running Depreciation | جارى الإهلاك | Live. It has a cost and remaining life, and every depreciation run will pick it up. |
+| Initial | ابتدائي | Registered, but not yet in service. The record exists; it has no cost, no life and no instalment. |
+| Running Depreciation | جاري الإهلاك | Live. It has a cost and remaining life, and every depreciation run will pick it up. |
 | Depreciated | مهلك | Fully written down — either the remaining life reached zero or the book value reached the salvage value. |
 | Not Depreciable | غير قابل للإهلاك | Marked as never depreciating. Land is the standard case. |
 | Disposed | تم التخلص منه | Retired. Nothing in the module will touch it again. |

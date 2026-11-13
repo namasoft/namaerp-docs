@@ -103,7 +103,7 @@ The letter-of-credit chain has four documents, and three of them have something 
 The **letter of credit** itself (`اعتماد أصول`) has no term at all — it is the folder that the other
 three documents hang off, not a financial document.
 
-The **proforma invoice** (`فاتوره اعتماد مبدئية`) books nothing. This is the document that lists the goods —
+The **proforma invoice** (`فاتورة اعتماد مبدئية`) books nothing. This is the document that lists the goods —
 Press A at 300,000 and Press B at 200,000 for Al-Waha's `LC-2026-004` — and those figures are a *distribution
 base*, not a cost. They tell the system how to share out the expenses; they never capitalise by themselves, so
 its term has no accounts.

@@ -31,7 +31,7 @@ Somebody creates the asset record beforehand: by hand on the
 capitalised out of a finished contracting project — with the
 [fixed asset creation document](/modules/fixedassets/master-files/fixedassets-creation-document.md).
 The record carries a code, a name, a type, classifications and — through its type — its accounts. It
-sits in status **Initial** (إبتدائى) with no cost, no depreciation start date and no instalment.
+sits in status **Initial** (ابتدائي) with no cost, no depreciation start date and no instalment.
 
 On the purchase document you then pick that record in the line's **Fixed Asset** (الأصل الثابت)
 column. The picker deliberately offers **only assets in Initial status**, which is the system's way of
@@ -106,7 +106,7 @@ Then the **Details** grid, which is the heart of the document.
 | Asset Name From Purchase Order | اسم الاصل من أمر الشراء | Carried down from the order, so you can see what was ordered |
 | Unit price, Quantity, total price | سعر الوحدة، الكمية، السعر الكلي | The price block |
 | Discount 1 to 8, Taxes 1 to 4, Net value | خصم 1..8، الضرائب، الصافي | The usual invoice arithmetic |
-| Useful Life | العمر الإفتراضي | In months; defaulted from the asset's type |
+| Useful Life | العمر الافتراضي | In months; defaulted from the asset's type |
 | Salvage Value | قيمة الأصل كخردة | The residual value; defaulted from the asset's type |
 | Depreciation Start Date | تاريخ بداية الاهلاك | When the depreciation clock starts |
 | Custodian | مسئول العهدة | The employee who will hold it |

@@ -62,7 +62,7 @@ menu: الأصول ← الصيانة ← نوع الصيانة
 ::: tip الفترة آلة حاسبة لا مجدوِل
 ضبط الفترة لا يضع شيئاً في طابور. هو يملأ حقل تاريخ، ويصبح هذا التاريخ مرئياً على الأصل. أما
 الزيارات نفسها فتُكتب يدوياً في
-[خطه الصيانة](/ar/modules/fixedassets/maintenance/fixedassets-maintenance-plans.md)، والسجلات التي
+[خطة الصيانة](/ar/modules/fixedassets/maintenance/fixedassets-maintenance-plans.md)، والسجلات التي
 تغلقها يحرّرها إنسان.
 :::
 

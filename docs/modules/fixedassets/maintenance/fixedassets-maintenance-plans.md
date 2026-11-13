@@ -91,8 +91,9 @@ record. That date is a per-machine reminder that does not require anyone to open
 ## Actions on this screen
 
 The maintenance plan has no buttons of its own. There is no *generate the year's visits* button and
-no scheduler behind it: you add one row per planned visit, with its asset, component, type and due
-date, and save. The plan lines are then closed off by maintenance records as the visits actually
+no scheduler behind it: you add one row per planned visit, with its asset, type and due date, and
+save. A plan row names the machine, not the part; the component is chosen on the maintenance record
+that carries the visit out. The plan lines are then closed off by maintenance records as the visits actually
 happen — which is what the next section describes.
 
 ## How a record closes a line

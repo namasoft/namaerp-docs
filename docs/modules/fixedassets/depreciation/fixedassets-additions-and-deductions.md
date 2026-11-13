@@ -13,7 +13,7 @@ The **asset addition deduction document** is how that reaches the asset. It is t
 changing an asset's **cost** after the fact: capitalising an improvement, or writing a slice of value
 off. One document, one asset, one amount, in one direction or the other.
 
-**Assets → Documents → Asset addition deduction** (`الأصول > المستندات > سند الإضافة و الإستبعاد`),
+**Assets → Documents → Asset addition deduction** (`الأصول > المستندات > سند الإضافة و الاستبعاد`),
 licence `fixedassets`.
 
 ![The addition and deduction document — the asset, the amount, the Addition switch and the life fields](../../../ar/modules/fixedassets/images/depreciation/fa-addition-deduction-main-en.png)

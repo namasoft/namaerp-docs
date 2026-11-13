@@ -78,7 +78,7 @@ two-decimal currency you will see figures like 2,347.92 rather than long fractio
 
 ## Life Is Counted in Periods, Not Years
 
-**Useful Life** (العمر الإفتراضي) and **Remaining Life** (العمر المتبقي) are counts of fiscal
+**Useful Life** (العمر الافتراضي) and **Remaining Life** (العمر المتبقي) are counts of fiscal
 periods, held in months. `MCH-0007`'s useful life of 60 means sixty monthly periods, not sixty
 years and not five entries.
 

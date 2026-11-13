@@ -27,7 +27,7 @@ Those three fields are the entire reach of the document:
 
 | Field | |
 |---|---|
-| **Useful Life** (العمر الإفتراضي) | the asset's total expected life, in periods. Required. |
+| **Useful Life** (العمر الافتراضي) | the asset's total expected life, in periods. Required. |
 | **Remaining Life** (العمر المتبقي) | how many periods it still has to run |
 | **Salvage Value** (قيمة الأصل كخردة) | what it is expected to be worth at the end |
 
@@ -45,6 +45,16 @@ are **Remaining Life** and **Salvage Value**. Useful Life is the asset's headlin
 consumed when the asset is first capitalised, to seed the remaining life — and changing it here on
 a running asset is a reference change, not an arithmetic one. If you want the charge to change,
 change the remaining life.
+:::
+
+::: warning Fill in all three, even the ones you are not changing
+Choosing the asset does not bring its current life, remaining life or salvage value onto the
+document; the three fields start empty. On commit, whatever they hold **replaces** the asset's
+figures — all three of them. So when you only mean to change the remaining life, type the asset's
+current useful life and salvage value as well, copied from the asset record. A Remaining Life
+left empty is written as zero and the asset stops depreciating with book value still on it; a
+Salvage Value left empty is refused when the module's minimum salvage value is above zero, and is
+written as zero when it is not.
 :::
 
 ## The Worked Example
@@ -130,7 +140,8 @@ The **aggregated fixed asset properties document**
 (`الأصول > المستندات > سند خصائص أصل مجمع`) is one screen with one grid: asset, useful life,
 remaining life and salvage value per line, plus the generated document reference. On commit it
 creates **one properties document per line** and lets each of them do the real work — its own dated
-entry, its own instalment recalculation, its own validation.
+entry, its own instalment recalculation, its own validation. As on the single document, each line's
+three figures replace the asset's, so fill all three on every line.
 
 It needs one piece of configuration first. Its term carries two fields:
 

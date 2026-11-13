@@ -181,7 +181,7 @@ purchase.
 
 ## Documents in This Group with No Term
 
-The **Fixed Asset Receipt Document** (`مستند أستلام أصل`) — the note that records who took delivery and
+The **Fixed Asset Receipt Document** (`مستند استلام أصل`) — the note that records who took delivery and
 where the asset ended up — has no term and no Term field on its screen. It writes a custodian and a
 location onto the asset and books nothing, so there is nothing to configure. See
 [receipts](/modules/fixedassets/acquisition/fixedassets-receipts.md) for how it is used.

@@ -7,8 +7,8 @@ menu: Assets → Custody Of Assets → FixedAssets Taking Document
 
 Once a year somebody walks the plant with a scanner and finds out what is actually there. The
 register says Al-Waha Industries holds forty assets and twelve custody items at the Riyadh plant. The
-count finds thirty-eight assets, one of them a desk that belongs to Dammam, and a printer that is
-signed out to another department altogether.
+count finds thirty-eight assets, a desk the plant's register never listed, a printer nobody
+expected, and a chair that belongs to Dammam.
 
 The **مستند جرد أصول / FixedAssets Taking Document** is where that comparison happens. It is worth
 being blunt about what it is, because the name says "document" and people expect documents in this
@@ -120,10 +120,19 @@ Page 3, **نتائج جرد العهد / custodies Taking Result**, does the sam
 its holder and its price.
 
 ::: info Only two kinds of difference exist
-Missing and unexpected. An asset found in the wrong place is not reported as "wrong location" — it
-appears as an **extra** on the count where it was found, and as a **shortage** on the count of the
-place it should have been. This is worth knowing before you plan a site-by-site count: run all the
-sites before drawing conclusions, and match the extras of one against the shortages of another.
+Missing and unexpected. An **extra** is an item the document may reference but did not expect: one
+filed under a broader set of dimensions than the count — registered to the company but to no
+branch, say, when the count is for one branch.
+
+An asset that belongs to **another** company, branch, department, sector or analysis set cannot be
+added to the count sheet at all. The system's usual dimension check refuses the save with a message
+of this form:
+
+*Dimensions consistency error in entity: {0} - Dimension {1}, referenced object: {2} - Dimension {3}, field: {4} ({5})* — «خطأ بتناسق المحددات في السجل: {0} - المحدد {1} - السجل المستعمل {2} - محدد السجل المستعمل {3} الحقل : {4} ({5})»
+
+So an asset found at the wrong site is noted outside the document. It shows up as a **shortage** on
+the count of the site it is filed under, and a transfer puts it right. This is worth knowing before
+you plan a site-by-site count: run all the sites before drawing conclusions.
 :::
 
 ## A count at the Riyadh plant
@@ -137,8 +146,10 @@ Al-Waha counts the Riyadh plant on 30 June 2026.
    thirty-eight rows arrive in the count sheet.
 3. Over two days they scan. Everything on the sheet is confirmed except the forklift `MCH-0012`,
    which nobody can find, and one cabinet — those two rows are deleted. They also scan a desk
-   `FRN-0058` that carries a Dammam tag, and a printer that turns out to be custody item `CDY-0041`
-   held by another department. Both are added as new rows.
+   `FRN-0058` and a printer that turns out to be custody item `CDY-0041`; both are registered to
+   Al-Waha with no branch, so neither was expected at the plant. Both are added as new rows. A
+   chair `FRN-0071` carries a Dammam tag; adding it is refused with the dimensions consistency
+   message, so it is written down for the Dammam team instead.
 4. Status is set to **Ended** and the document saved. The results come out as:
    - *Shortage FixedAssets* — `MCH-0012` (book value 22,000), the cabinet, and the two plant assets
      that fell outside the collected code range and were never scanned;
@@ -155,7 +166,7 @@ that resolves it:
 |---|---|
 | An asset genuinely gone | A [disposal document](/modules/fixedassets/disposal/fixedassets-disposal.md) — for `MCH-0012`, a scrap at a disposal value of 0, taking the 22,000 book value as a loss |
 | Some units of a countable asset gone | A [partial disposal](/modules/fixedassets/disposal/fixedassets-partial-disposal.md) |
-| An asset found somewhere else | A [transfer document](/modules/fixedassets/movement/fixedassets-transfer-document.md) — `FRN-0058` back to Dammam, or its dimensions corrected to where it really is |
+| An asset found somewhere else | A [transfer document](/modules/fixedassets/movement/fixedassets-transfer-document.md) — `FRN-0071` back to Dammam, or its dimensions corrected to where it really is; `FRN-0058` given the plant's branch |
 | Something real that was never registered | A [purchase](/modules/fixedassets/acquisition/fixedassets-purchase-document.md) if it was bought and not recorded, or an [opening document](/modules/fixedassets/acquisition/fixedassets-opening-balances.md) if it predates the register |
 | A custody item with the wrong holder, or gone | A [custody delivery or transfer](/modules/fixedassets/custody/fixedassets-custody-delivery-and-transfer.md), or a [custody disposal](/modules/fixedassets/custody/fixedassets-custody-disposal.md) |
 

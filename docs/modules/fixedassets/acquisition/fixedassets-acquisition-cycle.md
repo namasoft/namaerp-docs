@@ -75,10 +75,10 @@ into existence during an acquisition:
 **Route 1 — the record already exists, and the purchase gives it a value.** Somebody creates the
 asset record first (by hand, or — for assets capitalised out of a finished contracting project — with
 the [fixed asset creation document](/modules/fixedassets/master-files/fixedassets-creation-document.md)).
-A brand-new record sits in status **Initial** (إبتدائى): it has a name and a type but no cost, no
+A brand-new record sits in status **Initial** (ابتدائي): it has a name and a type but no cost, no
 depreciation start date and no instalment. The purchase document's asset picker only offers assets in
 that state. When the purchase is committed, the record receives its cost and its dates and moves to
-**Running Depreciation** (جارى الإهلاك). This is the default and it is what most installations use,
+**Running Depreciation** (جاري الإهلاك). This is the default and it is what most installations use,
 because it lets you code, classify and account-map assets deliberately rather than in the middle of
 typing an invoice.
 
