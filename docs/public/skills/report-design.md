@@ -10,7 +10,7 @@ Wizard reports already have three designs, chosen when the report runs:
 | Design | Look |
 |---|---|
 | **Theme colors** (default) | Table header, zebra rows and totals take the user's screen theme color |
-| **Modern** | Fixed navy look; a hand-written report's cards show only in this design (wizard reports show cards in every design) |
+| **Modern** | Fixed navy look |
 | **Classic** | The report exactly as it was written, colors and lines untouched |
 
 A hand-written `.jrxml` gets the same designs by **opting in with markers**. The report compiler (it runs when the
@@ -154,16 +154,16 @@ report's other variables:
         <property name="nama-design-role" value="cards"/>
     </reportElement>
     <rectangle radius="6">
-        <reportElement mode="Opaque" x="0" y="0" width="180" height="46" forecolor="#E3EEFA" backcolor="#E3EEFA"/>
+        <reportElement mode="Opaque" x="0" y="0" width="180" height="46" forecolor="#E6E6E6" backcolor="#E6E6E6"/>
         <graphicElement><pen lineWidth="0"/></graphicElement>
     </rectangle>
     <textField>
-        <reportElement x="10" y="4" width="160" height="14" forecolor="#5B6B7F"/>
+        <reportElement x="10" y="4" width="160" height="14" forecolor="#555555"/>
         <textElement><font size="8"/></textElement>
         <textFieldExpression><![CDATA[NamaRep.name("صافي المبيعات","Net Sales")]]></textFieldExpression>
     </textField>
     <textField evaluationTime="Report" pattern="#,##0.00">
-        <reportElement x="10" y="18" width="160" height="24" forecolor="#0E3A66"/>
+        <reportElement x="10" y="18" width="160" height="24" forecolor="#000000"/>
         <textElement><font size="13" isBold="true"/></textElement>
         <textFieldExpression><![CDATA[$V{netSales} ?: 0]]></textFieldExpression>
     </textField>
@@ -171,8 +171,16 @@ report's other variables:
 </frame>
 ```
 
-The compiler makes the frame print only when the design is Modern and the user did not tick **Hide Summary Cards**
-(a question it adds next to "Report Design"). If the frame already has a `printWhenExpression`, that must be true too.
+The compiler makes the frame print in every design while the user did not tick **Hide Summary Cards** (a question it
+adds next to "Report Design"). If the frame already has a `printWhenExpression`, that must be true too.
+
+The colors you write are the Classic look. In Theme colors and Modern the compiler recolors the cards, like the wizard's:
+- a rectangle drawn in `#E6E6E6` (or the older `#E3EEFA`) is the main card and gets the design's total color; every
+  other rectangle gets the light row color;
+- a value text field must use `evaluationTime="Report"`; it takes the design's total text color;
+- labels (any other text) keep their own color.
+
+Rectangles and values may also sit one level down, in a frame per card.
 
 So that hiding the cards leaves **no empty gap**:
 - Nothing else may sit in the frame's rows (from its `y` to `y + height`); move other title elements above or below it.
@@ -181,8 +189,8 @@ So that hiding the cards leaves **no empty gap**:
 - Keep all cards in one row inside the one frame. The title band prints once, so the cards show on the first page only.
 - Without a `cards` frame the report has no cards and no **Hide Summary Cards** question.
 
-Suggested look (matches the wizard cards): 4 cards across the width with an 8px gap, 46px high, radius 6,
-background `#F1F4F8` (`#E3EEFA` for the main one), label `#5B6B7F` 8pt, value `#0E3A66` 13pt bold.
+Suggested look (matches the wizard's Classic cards): 4 cards across the width with an 8px gap, 46px high, radius 6,
+background `#F2F2F2` (`#E6E6E6` for the main one), label `#555555` 8pt, value `#000000` 13pt bold.
 
 ## Step 5 - "Powered by" footer (recommended)
 
@@ -241,5 +249,5 @@ Use only the element properties above (`nama-design-role`, `nama-design-lines`, 
 3. Run it in **Theme colors** and **Modern**, in English and Arabic (the Arabic copy is mirrored automatically). Run it
    from the new (Vue) interface; the old one always shows Nama blue.
 4. Switch to a dark theme and to a very pale one, and rerun with F5 each time: the header text must stay readable.
-5. If it has cards: run Modern with and without **Hide Summary Cards**; with it ticked there must be no empty gap.
+5. If it has cards: run every design with and without **Hide Summary Cards**; with it ticked there must be no empty gap.
 6. If it is a form: print a document from its screen with each Print design.
