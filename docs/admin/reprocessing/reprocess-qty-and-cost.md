@@ -133,6 +133,10 @@ className="com.namasoft.modules.supplychain.domain.utils.FastReprocessInvalidTra
 ]"
 />
 
+::: warning Releases older than 26 October 2026
+These releases (release numbers below `20261026…`) read everything after the `-` as the date, so the link fails with *Text '20261001,0.01' could not be parsed*. Clear the **Minimum Cost Difference** box so the link carries the date only, for example `…FastReprocessInvalidTransfersFromDate-20261001`. The tool then uses the default difference of `0.01`.
+:::
+
 ## Reprocess Stock Ages
 ### Method 1:
 Use the fast reprocess utility. It rebuilds the stock ages of every item whose stock ages policy is Yes from its processed inventory requests, a hundred requests at a time, and writes each finished request to a progress file so an interrupted run can carry on where it stopped.

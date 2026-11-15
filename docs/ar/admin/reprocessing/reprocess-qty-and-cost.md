@@ -133,6 +133,10 @@ className="com.namasoft.modules.supplychain.domain.utils.FastReprocessInvalidTra
 ]"
 />
 
+::: warning الإصدارات الأقدم من 26 أكتوبر 2026
+تقرأ هذه الإصدارات (أرقام الإصدار الأصغر من `20261026…`) كل ما بعد `-` على أنه التاريخ، فيفشل الرابط برسالة *Text '20261001,0.01' could not be parsed*. امسح خانة **Minimum Cost Difference** حتى يحمل الرابط التاريخ وحده، مثل `…FastReprocessInvalidTransfersFromDate-20261001`، وعندها تستخدم الأداة الفرق الافتراضي `0.01`.
+:::
+
 ## إعادة معالجة أعمار المخزون (Reprocess Stock Ages)
 
 ### الطريقة الأولى (Method 1)
