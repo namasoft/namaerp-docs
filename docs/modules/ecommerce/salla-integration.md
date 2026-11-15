@@ -76,6 +76,32 @@ The document Nama creates, and its book and term, come from **Order Info** and t
 - **Customer and address.** The customer's name and email come from the Salla customer. The address comes from the shipping receiver: name, phone, email, city, country, address line, street number and postcode. Salla sends no separate billing address.
 - **Payments.** Each payment method used on the order arrives as its own payment, with its name, amount and transaction reference. Payment methods are matched as described in the shared guide. Salla does not supply payment transactions, so a payment-method row that relies on transaction types never matches a Salla order. Leave **Validate Order Payment Transactions** off for Salla.
 
+### Taking the warehouse from the Salla branch
+
+A merchant who keeps stock in several Salla branches usually wants each order to leave from the warehouse of the branch that serves it. Salla sends that branch with the order in a list called `order_branches`. Each entry has the branch's `id` and `name`. For orders received through webhooks, Salla leaves the list out, so Nama takes the first branch of the order's first line instead.
+
+To copy the branch into the document, add this line to **Copy Sales Document Field Map**:
+
+```ini
+warehouse=$map.order_branches.$get(0).name
+```
+
+`$get(0)` picks the first branch in the list. The branch **name** in Salla has to be the **code** of a Nama warehouse. A branch named `Web02` fills the warehouse whose code is `Web02`. If no warehouse has that code, the field stays empty.
+
+To change the value on the way, wrap it in a query. This one leaves the warehouse empty for orders from the `Web02` branch, so the document falls back to its usual warehouse, and uses the branch name for every other branch:
+
+```ini
+warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
+```
+
+::: warning Three things that leave the warehouse empty
+- **The wrong map.** `$map` holds the Salla order only in **Copy Sales Document Field Map**, and in that map's copy on a row of **Generate Document Based On Order Criteria Lines**. In the **Header Fields Map** of Order Info it holds something else, so the same line gives nothing. When a row of **Generate Document Based On Order Criteria Lines** matches the order, that row's own map is used and the site's map is ignored.
+- **An older version.** `$get(0)` inside `sql(...)` works from the November 2026 version. On older versions the query always returned an empty value. The plain line without `sql(...)` works on every version.
+- **Double quotes.** Write empty text as `''` or use `null`. SQL Server reads `""` as a column name and refuses the query with *An object or column name is missing or empty*.
+:::
+
+See [Field maps](/modules/ecommerce/ecommerce-integration-guide.md#Field-maps) in the shared guide for the other maps.
+
 ### When an order fails
 
 Since August 2026, one bad order no longer stops the whole read. If an order cannot be saved, for example because one of its SKUs is not linked to any Nama item, Nama records it as an error and carries on with the rest of the orders. **Read Sales** still reports success on screen when some orders fail, so check the **Log List** on the site's **Statistics** tab after a read. Each row shows the order number and the reason. Fix the cause, then select the row and use **More → ReRead Selected Orders**. Once the order saves, the row is removed. **Delete Error** clears rows you no longer need.

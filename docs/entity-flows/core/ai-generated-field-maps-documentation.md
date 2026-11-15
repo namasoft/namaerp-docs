@@ -400,6 +400,27 @@ details.n3=sql(select isnull(try_cast({details.n1} as decimal(20,6)), 0)
 ```
 :::
 
+#### Picking one item of a list inside a query
+
+A placeholder that passes through a list, such as a detail table or a list inside `$map`, normally gives one value per item, and the query runs once for each. When you need a single item, write `$get(n)` right after the list. The index is zero-based, so `$get(0)` is the first item.
+
+A Salla order, for example, carries its branches in the list `order_branches`. This takes the first branch's name as the warehouse code, but leaves the warehouse empty for the online branch:
+
+```ini
+warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
+```
+
+- If the list has fewer items than the index, the placeholder is `NULL`. The query still runs.
+- `$get(n)` inside `sql(...)` works from the November 2026 version. Before that, the placeholder always came out `NULL`, so the query returned an empty value. Outside a query, as in `warehouse=$map.order_branches.$get(0).name`, it has always worked.
+
+::: warning Text in single quotes, never double quotes
+In SQL Server, `"..."` is a column name, not text. `then ""` is an empty column name, and the query fails with:
+
+`An object or column name is missing or empty. For SELECT INTO statements, verify each column has a name. For other statements, look for empty alias names. Aliases defined as "" or [] are not allowed. Change the alias to a valid name.`
+
+Write `''` for empty text, or `null` to leave the field empty.
+:::
+
 #### Multi-line SQL
 For complex queries that span multiple lines:
 ```ini
