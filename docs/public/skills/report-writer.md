@@ -39,7 +39,11 @@ Detail: `namaerp-docs/docs/platform/reports/report-wizard-guide.md`,
 ## Step 2 — Write the SQL
 
 Nama runs on **SQL Server**: write T-SQL. Read the tables' columns from the data model first (a local
-`namaerp-dm/docs/public/dm-json/<Entity>.json`, otherwise https://dm.namasoft.com). The full rule set, with worked
+`namaerp-dm/docs/public/dm-json/<Entity>.json`, otherwise https://dm.namasoft.com). Read an entity file whole only
+when it is under about 30 KB; for larger ones (`SalesInvoice`, `InvItem`, `SalesOrder`, `PurchaseInvoice`,
+`Employee` are 75–130 KB) search for just the fields you need, with about 5 lines of context: by label, by
+`"id" : "<fieldId>"`, or `"table"|"joinColumn"` for the header and grid tables. Never open `index.json` or
+`llms.txt` whole; search them to find the entity. The full rule set, with worked
 queries, is **Querying Nama Tables**: `namaerp-docs/docs/platform/reports/querying-nama-tables.md`
 (https://docs.namasoft.com/platform/reports/querying-nama-tables.html). The rules a report breaks most often:
 

@@ -18,7 +18,9 @@ cross filters can reach, a chart configuration the server can fill, and a layout
 ## Step 1 — Read Before Writing
 
 Load only what the task needs. In the support knowledge base the pages are under `namaerp-docs/docs/platform/bi/`;
-live: `https://docs.namasoft.com/platform/bi/<page>.html`.
+live: `https://docs.namasoft.com/platform/bi/<page>.html`. The technical reference (about 100 KB) and the guide
+(about 65 KB) are long: list their headings first (search for lines starting with `#`) and read only the sections
+the task needs.
 
 | Page | Load it for |
 |---|---|
@@ -28,8 +30,17 @@ live: `https://docs.namasoft.com/platform/bi/<page>.html`.
 | `bi-reference-enhanced-metrics-card.md` | `EnhancedMetricsCard` KPI cards |
 | `bi-module-guide.md` | what the user sees: designer, filter bar, drill-down, dashboard groups on the menu |
 
-**Schema.** Read each table from the data model, never from memory: `namaerp-dm/docs/public/dm-json/<Entity>.json`
-(find the entity in `index.json` or `llms.txt` first). `table` is the header table and each field's `column` is the
+**Schema.** Take each table's columns from the data model, never from memory: `namaerp-dm/docs/public/dm-json/<Entity>.json`.
+Find the entity by searching `llms.txt` or `index.json`; never open those two whole (about 270 KB and 670 KB).
+Check the entity file's size before reading it: under about 30 KB, read it whole. The entities dashboards use most
+are far larger (`SalesInvoice`, `InvItem`, `SalesOrder`, `PurchaseInvoice`, `Employee` are 75–130 KB), so search
+them for only the fields you need, with about 5 lines of context (each field is a short block of `id`, `column`,
+`ar`, `en`, `type`):
+- by label: the Arabic or English caption the user gave
+- by field id: `"id" : "<fieldId>"`
+- the header and grid tables: `"table"|"joinColumn"`
+
+`table` is the header table and each field's `column` is the
 real column. Every grid is an entry of `details` with its own `table` and a `joinColumn` that holds the header id:
 `SalesInvoiceLine l JOIN SalesInvoice h ON h.id = l.salesInvoice_id`. `name1` is the Arabic name, `name2` the English.
 All SQL is T-SQL (SQL Server).

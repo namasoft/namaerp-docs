@@ -23,8 +23,12 @@ Before writing any code, make sure you have:
 
 **Where to read the fields:**
 - **A local `namaerp-dm/docs/public/dm-json/` folder exists** (for example inside the support knowledge base):
-  read `<Entity>.json` there. Don't ask for DM URLs and don't fetch the web. If you only know the screen name,
-  find the entity in `namaerp-dm/docs/public/llms.txt` or `dm-json/index.json` first.
+  use `<Entity>.json` there. Don't ask for DM URLs and don't fetch the web. If you only know the screen name,
+  find the entity by searching `namaerp-dm/docs/public/llms.txt` or `dm-json/index.json`; never open those two
+  whole (about 270 KB and 670 KB). Read an entity file whole only when it is under about 30 KB. Most documents are
+  far larger (`SalesInvoice` and `InvItem` are about 130 KB), so search them for only the fields you need, with
+  about 5 lines of context: by the Arabic or English label, by `"id" : "<fieldId>"`, or `"table"|"joinColumn"`
+  for the header and grid tables.
 - **No local copy:** ask the user for the DM URL(s), then fetch each one:
   > "Please provide the DM URL(s) for the entity/entities involved so I can check the available fields before writing. Example: `https://dm.namasoft.com/modules/basic-forms-7-8/FormDoc7.html`"
 

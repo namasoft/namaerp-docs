@@ -27,9 +27,11 @@ All SQL is **T-SQL (SQL Server)** and read-only: a `select`, never a write.
 ## Step 1 — Learn the record's field ids
 
 Placeholders and criteria use **field ids**, not column names. Read the entity's data-model JSON
-(`namaerp-dm/docs/public/dm-json/<Entity>.json` in the support knowledge base, or `https://dm.namasoft.com`):
-each field has an `id` (use it inside braces) and a `column` (use it in your own `from`/`where` against other
-tables). Grid fields are listed under `details` with ids that already carry the grid name
+(`namaerp-dm/docs/public/dm-json/<Entity>.json` in the support knowledge base, or `https://dm.namasoft.com`).
+Read the file whole only when it is under about 30 KB; most documents are far larger (`SalesInvoice` is about
+130 KB), so search it for just the fields you need, with about 5 lines of context: by label, by
+`"id" : "<fieldId>"`, or `"details\.` for grid fields. Each field has an `id` (use it inside braces) and a
+`column` (use it in your own `from`/`where` against other tables). Grid fields are listed under `details` with ids that already carry the grid name
 (`details.item.item`, `details.quantity.quantity.primeQty.value`, `details.specificDimensions.warehouse`).
 
 Totals people ask for most:
