@@ -68,7 +68,7 @@ For every entity you add, you choose whether its image appears — and at what w
 - **Use In Header Fields** (`useInHeaderFields`, `widthInHeaderFields`, `heightInHeaderFields`) — beside a reference field on the document header.
 - **Show In Popup With Code Hover** (`showInPopupWithCode`).
 
-**Image Width Percent** (`mainFileWidthPercent`) sets how much of the record's own screen the main image occupies.
+**Image Width Percent** (`mainFileWidthPercent`) sets how much of the record's own screen the main image occupies, but only in the old interface. The new interface ignores it: the main image always takes a column of about 30% of the width beside the header fields (the full width on a phone), keeps its own proportions and is at most 350 px tall. No setting stretches the image to fill that column.
 
 The obvious case is a product catalogue, where a picture in the suggestion list makes picking the right item far faster than reading codes. It costs bandwidth on every list that shows it, so enable the places where the picture genuinely helps and leave the rest off.
 

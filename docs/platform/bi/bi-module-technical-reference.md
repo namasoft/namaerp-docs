@@ -1459,6 +1459,51 @@ Each tab of a Tabbed dashboard is a Single dashboard that divides **its own** he
 summary at `rowsCount: 6` and the next a long scrolling report at `rowsCount: 12` with an extent of
 `30`. Tune each tab on its own.
 
+##### Dashboards embedded in a record screen
+
+A dashboard placed on a record screen through a Screen Modifier's **Page Dashboards** collection
+does not get the browser window. It gets a **frame of fixed height**, and the **Size** column of
+that Page Dashboards line sets it:
+
+| Size | Frame height |
+|---|---|
+| 1-Tiny | 100 px |
+| 2-Very Small | 150 px |
+| 3-Small | 200 px |
+| 4-Medium | 300 px |
+| 5-Large (also used when Size is empty) | 500 px |
+| 6-XLarge | 700 px |
+| 7-XXLarge | 900 px |
+
+Inside the frame the rules above change in two ways:
+
+- **Every ordinary row has the same height**: the frame height, minus the filter bar if the
+  dashboard shows one and a few pixels of padding, divided by `rowsCount`, but **never less than
+  300 px**. There is no screenful-by-screenful sharing; self-sizing rows and collapsed rows still
+  take their own height.
+- **The frame never grows.** When the rows need more height than the frame has, the dashboard
+  scrolls inside the frame, and the record screen around it stays the same.
+
+So on a record screen, `rowsCount` and `heightInRows` only share the frame out. **Size** is what
+makes the frame, and so the widgets, taller. Take a dashboard with `rowsCount: 1` and two widgets
+side by side at `heightInRows: 1`, embedded at Size **Large**: each widget is about 490 px tall. To
+make them roughly half as tall again, change the line's Size to **XLarge** (about 690 px each). Do not
+change the dashboard itself: setting `rowsCount: 2` and `heightInRows: 3` asks for rows of about
+245 px, the 300 px minimum raises that to 300, and each widget becomes 900 px tall in a 500 px frame.
+The widgets are cut off and a scroll bar appears inside the frame.
+
+Two consequences of the 300 px minimum:
+
+- With Size **Tiny** to **Medium**, even one ordinary row does not fit, so the frame always
+  scrolls. Use those sizes only for a dashboard made of self-sizing widgets, such as a strip of
+  metrics cards.
+- Raising `rowsCount` stops shrinking the rows once they reach 300 px. On a Large frame that
+  happens from `rowsCount: 2` upwards, so any widget taller than one row makes the frame scroll.
+
+Size belongs to the Page Dashboards line, not to the dashboard. The same dashboard opened from the
+menu still fills the browser window as described above, so you can tune its embedded height on
+each record screen without touching it.
+
 ##### On phones and narrow screens
 
 Below the small-screen breakpoint the grid stops being a grid. Widgets stack in one full-width

@@ -111,6 +111,14 @@ You can surface analytics and printouts right inside an edit screen:
 | **Page Reports** | Embeds a report on a page, with its parameters driven by fields from the current record. |
 | **Page Dashboards** | Embeds a dashboard on a page, again with its parameters fed from the record's fields, so the charts reflect the open record. |
 
+An embedded dashboard sits in a frame of fixed height, and the **Size** column of its Page
+Dashboards line sets that height: from **1-Tiny** (100 px) through **5-Large** (500 px, also used
+when Size is empty) to **7-XXLarge** (900 px). The frame does not grow to fit the dashboard; when
+the widgets need more room they scroll inside it. So to make an embedded dashboard taller, raise
+**Size**. Raising the dashboard's own row settings makes its widgets taller than the frame and
+adds a scroll bar. Every value, and how the frame is shared among the widgets, is in
+[Dashboards embedded in a record screen](/platform/bi/bi-module-technical-reference.md#Dashboards-embedded-in-a-record-screen).
+
 ## Fill Fields From Column
 
 The **Fill Fields From Column** collection sets up **auto-fill** behaviour. You nominate a trigger column (typically a reference, such as the customer) and, for that reference, which **search field** to read from and which **field to copy into** on the host record. When the user fills the trigger column, Nama copies the chosen value across automatically — a lightweight way to default one field from another without custom code.
