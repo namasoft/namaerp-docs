@@ -225,6 +225,113 @@ has a rich-text editor and needs no query. Use HTML when the content comes from 
 
 ![The HTML Settings tab of an HTML widget](../../ar/platform/bi/images/bi-widget-html-settings-tab-en.png)
 
+### Buttons that act on records
+
+An HTML widget can do more than show figures: a `<script>` or an `onclick` in the template runs in
+the user's browser, and the new UI gives it a small set of helpers on the `nama` object. They act as
+the person looking at the dashboard, through the same screens and checks as the rest of Nama, so a
+button can never do something that user could not do by hand.
+
+| Helper | What it does |
+|---|---|
+| `nama.approvals.open(caseId, {decision, refresh})` | Opens Nama's own approval dialog for that approval case. Give a `decision` and the dialog shows only that decision's button; leave it out and the user picks one as on the document's screen. Pass `refresh: this` from a button and the widget reloads its rows once a decision is taken |
+| `nama.approvals.isCandidate(currentCandidates)` | `true` when the current user is one of the people who can decide on the case's current step. Give it the approval case's `currentCandidates` column |
+| `nama.approvals.canDecide(caseId, {decision})` | The same check, asked of the server for one case. With a `decision`, it also checks that this user is allowed to take that decision |
+| `nama.approvals.showHistory(caseId)` | Shows the approval case's steps so far |
+| `nama.openRecord(entityType, id)` | Opens the record over the dashboard, as a widget link does. Add `{mode: 'navigate'}` to go to its screen instead |
+| `nama.refreshWidget(element)` | Reloads the widget that contains `element` |
+| `nama.currentUser()` | The current user's `userId`, `userCode`, `employeeId`, `employeeCode` and `language` (`ar` or `en`) |
+
+The decisions are `Approve`, `Reject`, `Return`, `ReturnToPreviousStep`, `ReturnToSpecificStep`,
+`EscalateToDirectSupervisor`, `EscalateToSupervisor` and `EscalateToSpecificEmployee`.
+
+Because the buttons open the same dialog as the document's own **Approval** button, everything the
+approval definition asks for still applies: the OTP, a mandatory comment or approval reason, the
+fields a step requires, the step to return to, and the person to escalate to. A decision that the
+user's security profile does not allow, or that is switched off in
+[Global Config → Approvals](/platform/global-config/global-config-approvals), is not offered:
+the dialog shows *This approval decision is not available to you on this approval case*.
+
+#### Example: an approvals widget with one button per decision
+
+This widget lists the receipt vouchers, payment vouchers and bank transfers waiting for approval, and
+gives each row Approve, Reject and Return buttons. The query brings the approval case's id and its
+`currentCandidates` along with each document:
+
+```sql
+SELECT d.code, d.entityType, d.id, a.id caseId, a.currentCandidates, a.nextStepName2 stepName
+FROM (SELECT id, code, 'ReceiptVoucher' entityType, currentApprovalCase_id FROM ReceiptVoucher
+      UNION ALL SELECT id, code, 'PaymentVoucher', currentApprovalCase_id FROM PaymentVoucher
+      UNION ALL SELECT id, code, 'BankTransfer', currentApprovalCase_id FROM BankTransfer) d
+JOIN ApprovalCase a ON a.id = d.currentApprovalCase_id
+WHERE a.state = 'InProgress' /*AND-FILTERS*/
+```
+
+JavaScript is full of `{ }`, which a Tempo template would try to read as columns, so the template
+starts with `<useCSSFriendlyBrackets/>` and writes its columns as `%{column}%` instead (see
+[Tempo](/admin/tempo)):
+
+```html
+<useCSSFriendlyBrackets/>
+<style>
+  .approvals-widget td { padding: 4px 8px; }
+  .approvals-widget button { padding: 2px 10px; margin-inline-end: 4px; border: 1px solid #888; border-radius: 4px; cursor: pointer; }
+</style>
+<table class="approvals-widget">
+  %{loop(rows)}%
+  <tr data-candidates="%{currentCandidates}%">
+    <td><a href="#" onclick="nama.openRecord('%{entityType}%', '%{id}%'); return false;">%{code}%</a></td>
+    <td>%{stepName}%</td>
+    <td class="decisions">
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Approve', refresh: this})">Approve</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Reject', refresh: this})">Reject</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Return', refresh: this})">Return</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {refresh: this})">Other…</button>
+    </td>
+  </tr>
+  %{endloop}%
+</table>
+<script>
+  (() => {
+    const table = document.currentScript.previousElementSibling;
+    for (const row of table.querySelectorAll('tr[data-candidates]'))
+      if (!nama.approvals.isCandidate(row.dataset.candidates))
+        row.querySelector('.decisions').innerHTML = '';
+  })();
+</script>
+```
+
+The `<style>` block matters: the dashboard removes the browser's own look from buttons, so without
+it they show as plain words. Its class name keeps the styles to this widget, since a widget's styles
+apply to the whole page.
+
+The script at the end clears the buttons on the rows where the current user is not one of the
+step's approvers, so everyone sees the whole list but only the responsible people can act on it.
+`document.currentScript` keeps the script to its own widget's table, even when the dashboard holds
+other HTML widgets.
+
+::: warning Wrap the script in `(() => { … })();`
+A widget's scripts share one page with every other widget, and they run again each time the widget
+is drawn: on every refresh, and after every decision. A `const` or `let` written straight into the
+script is declared a second time on that second run, and the browser stops the script with
+*Identifier 'table' has already been declared*. The rows then keep buttons they should not have.
+Wrapping the script as the example does gives each run its own names.
+:::
+
+::: warning New UI only
+The `nama` helpers exist in the new UI only. The old interface and the mobile app also show HTML
+widgets but have no `nama`, so a button there does nothing. In an HTML widget that opens in its own
+frame (**HTMLOpenInIFrame** = `true`), buttons reach the helpers as plain `nama` too, but a script that
+runs while the frame is loading has to use `window.parent.nama`.
+:::
+
+::: danger Do not put the e-mail approval links in a dashboard
+The approve and reject links in approval e-mails carry a secret that lets anyone holding the link
+decide as the employee it was sent to, without logging in. A dashboard shows its rows to every user
+who opens it, so building those links into a widget would hand that power to all of them. Use the
+`nama.approvals` buttons above instead.
+:::
+
 ## Card Menu
 
 A **Card Menu** is a block of large shortcut buttons, one per line of its grid. Put one on a

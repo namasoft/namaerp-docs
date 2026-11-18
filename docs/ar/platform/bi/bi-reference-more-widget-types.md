@@ -209,6 +209,105 @@ HTML حين يأتي المحتوى من البيانات. انظر [TextBlock](
 
 ![تبويب إعدادات ال HTML لعنصر من نوع HTML](images/bi-widget-html-settings-tab-ar.png)
 
+### أزرار تنفّذ إجراءات على السجلات
+
+عنصر HTML يقدر يعمل أكثر من عرض الأرقام: أي `<script>` أو `onclick` في القالب يعمل في متصفح المستخدم، والواجهة
+الجديدة تعطيه مجموعة صغيرة من الدوال على الكائن `nama`. هذه الدوال تعمل باسم الشخص الذي يفتح اللوحة، ومن خلال نفس
+الشاشات والتحققات التي يمر بها باقي «نما»، فلا يستطيع أي زر أن يفعل شيئًا لا يقدر هذا المستخدم أن يفعله بنفسه.
+
+| الدالة | ماذا تفعل |
+|---|---|
+| `nama.approvals.open(caseId, {decision, refresh})` | تفتح شاشة الموافقة الخاصة بـ«نما» لحالة الموافقة هذه. إن أعطيتها `decision` تُظهر الشاشة زر هذا القرار وحده، وإن تركته يختار المستخدم القرار كما في شاشة المستند. ومرّر `refresh: this` من الزر ليعيد العنصر تحميل صفوفه بعد اتخاذ القرار |
+| `nama.approvals.isCandidate(currentCandidates)` | تعطي `true` إذا كان المستخدم الحالي من المسؤولين عن الخطوة الحالية في حالة الموافقة. أعطها عمود `currentCandidates` من حالة الموافقة |
+| `nama.approvals.canDecide(caseId, {decision})` | نفس التحقق، لكن تسأل الخادم عن حالة واحدة. ومع `decision` تتحقق أيضًا أن هذا المستخدم مسموح له باتخاذ هذا القرار |
+| `nama.approvals.showHistory(caseId)` | تعرض خطوات حالة الموافقة حتى الآن |
+| `nama.openRecord(entityType, id)` | تفتح السجل فوق اللوحة، كما يفعل رابط العنصر. أضف `{mode: 'navigate'}` للانتقال إلى شاشته بدلًا من ذلك |
+| `nama.refreshWidget(element)` | تعيد تحميل العنصر الذي يحتوي `element` |
+| `nama.currentUser()` | بيانات المستخدم الحالي: `userId` و`userCode` و`employeeId` و`employeeCode` و`language` (`ar` أو `en`) |
+
+القرارات هي: `Approve` (موافقة)، `Reject` (رفض)، `Return` (إرجاع)، `ReturnToPreviousStep` (إرجاع للخطوة السابقة)،
+`ReturnToSpecificStep` (إرجاع لخطوة محددة)، `EscalateToDirectSupervisor` (تصعيد إلى المشرف المباشر)،
+`EscalateToSupervisor` (تصعيد إلى المدير الأعلى)، `EscalateToSpecificEmployee` (تصعيد إلى موظف بعينه).
+
+ولأن الأزرار تفتح نفس الشاشة التي يفتحها زر **موافقة** في المستند نفسه، فكل ما يطلبه تعريف الموافقة يظل مطلوبًا: الرقم
+السري المؤقت، والملاحظات أو سبب الموافقة الإجباري، والحقول التي تطلبها الخطوة، والخطوة التي يُرجع إليها، والشخص الذي
+يُصعَّد إليه. والقرار الذي لا تسمح به صلاحيات المستخدم، أو المعطَّل في
+[الإعدادات العامة ← الموافقات](/ar/platform/global-config/global-config-approvals)، لا يُعرض، وتظهر الرسالة:
+«لا يمكنك اتخاذ هذا القرار على حالة الموافقة هذه».
+
+#### مثال: عنصر موافقات فيه زر لكل قرار
+
+هذا العنصر يعرض سندات القبض وسندات الصرف والتحويلات البنكية التي تنتظر الموافقة، ويضع في كل صف أزرار موافقة ورفض
+وإرجاع. الاستعلام يجلب مع كل مستند معرّف حالة الموافقة وعمود `currentCandidates` الخاص بها:
+
+```sql
+SELECT d.code, d.entityType, d.id, a.id caseId, a.currentCandidates, a.nextStepName1 stepName
+FROM (SELECT id, code, 'ReceiptVoucher' entityType, currentApprovalCase_id FROM ReceiptVoucher
+      UNION ALL SELECT id, code, 'PaymentVoucher', currentApprovalCase_id FROM PaymentVoucher
+      UNION ALL SELECT id, code, 'BankTransfer', currentApprovalCase_id FROM BankTransfer) d
+JOIN ApprovalCase a ON a.id = d.currentApprovalCase_id
+WHERE a.state = 'InProgress' /*AND-FILTERS*/
+```
+
+كود JavaScript مليء بالأقواس `{ }`، وقالب Tempo سيحاول قراءتها كأعمدة، لذلك يبدأ القالب بـ`<useCSSFriendlyBrackets/>`
+ويكتب الأعمدة على صورة `%{column}%` (انظر [Tempo](/ar/admin/tempo)):
+
+```html
+<useCSSFriendlyBrackets/>
+<style>
+  .approvals-widget td { padding: 4px 8px; }
+  .approvals-widget button { padding: 2px 10px; margin-inline-end: 4px; border: 1px solid #888; border-radius: 4px; cursor: pointer; }
+</style>
+<table class="approvals-widget">
+  %{loop(rows)}%
+  <tr data-candidates="%{currentCandidates}%">
+    <td><a href="#" onclick="nama.openRecord('%{entityType}%', '%{id}%'); return false;">%{code}%</a></td>
+    <td>%{stepName}%</td>
+    <td class="decisions">
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Approve', refresh: this})">موافقة</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Reject', refresh: this})">رفض</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {decision: 'Return', refresh: this})">إرجاع</button>
+      <button onclick="nama.approvals.open('%{caseId}%', {refresh: this})">قرار آخر</button>
+    </td>
+  </tr>
+  %{endloop}%
+</table>
+<script>
+  (() => {
+    const table = document.currentScript.previousElementSibling;
+    for (const row of table.querySelectorAll('tr[data-candidates]'))
+      if (!nama.approvals.isCandidate(row.dataset.candidates))
+        row.querySelector('.decisions').innerHTML = '';
+  })();
+</script>
+```
+
+جزء `<style>` مهم: اللوحة تزيل الشكل الافتراضي للأزرار، فبدونه تظهر الأزرار ككلمات عادية. واسم الـclass يحصر هذه الأنماط
+في هذا العنصر، لأن أنماط أي عنصر تسري على الصفحة كلها.
+
+السكربت في النهاية يمسح الأزرار من الصفوف التي ليس المستخدم الحالي من المسؤولين عن خطوتها، فيرى الجميع القائمة كاملة
+لكن لا يتصرف فيها إلا المسؤولون. و`document.currentScript` يحصر السكربت في جدول عنصره هو، حتى لو كانت في اللوحة عناصر
+HTML أخرى.
+
+::: warning ضع السكربت داخل `(() => { … })();`
+سكربتات العنصر تشترك في صفحة واحدة مع كل العناصر الأخرى، وتعمل من جديد كلما رُسم العنصر: مع كل تحديث، وبعد كل قرار.
+فأي `const` أو `let` مكتوب مباشرة في السكربت يُعرَّف مرة ثانية في التشغيل الثاني، فيوقف المتصفح السكربت برسالة
+*Identifier 'table' has already been declared*، وتبقى الأزرار في صفوف لا يجب أن تكون فيها. ووضع السكربت داخل دالة كما في
+المثال يعطي كل تشغيل أسماءه الخاصة.
+:::
+
+::: warning في الواجهة الجديدة فقط
+دوال `nama` موجودة في الواجهة الجديدة فقط. الواجهة القديمة وتطبيق الموبايل يعرضان عناصر HTML أيضًا لكن بدون `nama`،
+فلا يفعل الزر هناك شيئًا. وفي عنصر HTML يُفتح في إطار مستقل (**HTMLOpenInIFrame** = `true`) تصل الأزرار إلى الدوال باسم
+`nama` أيضًا، أما السكربت الذي يعمل أثناء تحميل الإطار فعليه استعمال `window.parent.nama`.
+:::
+
+::: danger لا تضع روابط الموافقة التي تصل بالبريد في لوحة
+روابط الموافقة والرفض في رسائل الموافقات تحمل رقمًا سريًا يسمح لأي شخص معه الرابط أن يتخذ القرار باسم الموظف الذي أُرسل
+إليه، بدون تسجيل دخول. واللوحة تعرض صفوفها لكل مستخدم يفتحها، فبناء هذه الروابط داخل عنصر يعطي هذه القدرة لهم جميعًا.
+استعمل أزرار `nama.approvals` السابقة بدلًا منها.
+:::
+
 ## قائمة بطاقات (Card Menu)
 
 **قائمة البطاقات** مجموعة من أزرار الاختصار الكبيرة، زر لكل سطر في جدولها. ضعها في اللوحة الرئيسية لقسم ما، فتصبح
