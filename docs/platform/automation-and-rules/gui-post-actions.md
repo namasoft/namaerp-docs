@@ -114,7 +114,7 @@ A user types a quantity in `n1` and a rate in `n2` on a journal entry line, and 
 
 Add one line per field that should trigger the calculation. Set **On Field** to the field the user types in (`lines.n1`), and write the calculation in **Expression**, naming the target with the **grid's own field id**:
 
-```ini
+```fieldmap
 lines.n3=sql(select isnull(try_cast({lines.n1} as decimal(20,6)), 0)
                   * isnull(try_cast({lines.n2} as decimal(20,6)), 0))
 ```
@@ -154,7 +154,7 @@ A journal entry often repeats one written before. The user picks the earlier ent
 
 One line on `ref1` does it. `copyOf` copies every column the two tables share, so the expression needs no line per column:
 
-```ini
+```fieldmap
 lines=copyOf(ref1.$toReal.lines)
 ```
 

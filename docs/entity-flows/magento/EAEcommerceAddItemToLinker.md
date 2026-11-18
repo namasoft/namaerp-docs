@@ -38,7 +38,7 @@ Manual execution on inventory items that need to be linked to Magento e-commerce
 
 ## Example Field Mapping
 
-```
+```fieldmap
 line.dimensions.box=name2
 line.description=description
 line.weight=weight

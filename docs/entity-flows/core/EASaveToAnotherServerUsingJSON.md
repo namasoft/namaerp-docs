@@ -53,7 +53,7 @@ The parameters are the same as [EASaveToAnotherServer](EASaveToAnotherServer.md)
 **Parameter 6:** Save As Draft (true/false) - Saves the record as a draft on the other server instead of committing it
 
 **Parameter 7:** Fields Value Overrider (Optional) - Field map of header fields whose values replace the exported ones, for example:
-```
+```fieldmap
 book="ABC"
 name1=sql(select case when {group.code} = '11' then '' else {group.name1} end)
 ```

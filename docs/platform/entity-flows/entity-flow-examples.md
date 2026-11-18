@@ -11,14 +11,14 @@ menu: Administration → Display Customization → Entity Flow
 ### Create an Entity Flow to change the resource rate in resource vouchers in the system (simulates the user clicking the "Recalculate Rate with Save" option in the resource voucher)
 Create an Entity Flow with the action "Manual" of type [`EAFieldsValuesCalculator`](/entity-flows/core/EAFieldsValuesCalculator) and place it in the edit screen. Enter the following in Parameter 1:
 
-```ini
+```fieldmap
 runCommand="edit"
 recalculateRateWithSave="true"
 runCommand="save"
 ```
 ### Create an Entity Flow to edit the description1 field in the parent document of the parent document of the current document (based on "Based On" then "Based On")
 Create an Entity Flow with the action "Save Effects" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
-```ini
+```fieldmap
 switchTarget=fromDoc.$toReal.fromDoc(
 runCommand="edit"
 description1="ABC"
@@ -27,7 +27,7 @@ runCommand="save"
 ```
 ### Create an Entity Flow to fill the value field in the first line of a receipt voucher with the total of commercial papers
 Create an Entity Flow with the action "Before Calculating Computed Fields" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
-```ini
+```fieldmap
 n1=totalize(fblines,fblines.fpCreationInfo.value.amount)
 selectLine="lines(0)"
 $line.amount.value.amount=n1
@@ -90,7 +90,7 @@ PurchaseOrder
 select id from PurchaseOrder where ref1Id = {id} and supplier_id = {$currentGroupKey.id}
 ```
     Parameter 3:
-```ini
+```fieldmap
 ref1=$this
 fromDoc=$this
 book="FPOR"

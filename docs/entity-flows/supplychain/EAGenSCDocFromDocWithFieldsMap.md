@@ -40,7 +40,7 @@ select id from SalesOrder where ref5Id={id}
 
 **Parameter 3:** Field Map (Required) - Mapping between source and target fields
 
-```
+```fieldmap
 code=code
 fromDoc=$this
 ref5=$this
@@ -50,7 +50,7 @@ ref5=$this
 
 **Parameter 5:** Inverse Copy (Optional) - Copy fields from generated back to source
 
-```
+```fieldmap
 ref5=$this
 description5=n1
 ```
@@ -61,7 +61,7 @@ description5=n1
 
 **Parameter 8:** Run Only If number greater not zero (Optional) - A value expression evaluated on the source document, such as a field or a `totalizesql(...)` query; the document is generated only when the result is not zero
 
-```
+```fieldmap
 totalizesql(select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end)
 ```
 

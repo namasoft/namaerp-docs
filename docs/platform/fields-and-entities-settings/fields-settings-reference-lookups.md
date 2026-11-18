@@ -81,7 +81,7 @@ When a record is shown in a reference field or a drop-down, the system has to re
 
 Write the label as ordinary text with field names in braces, and the system substitutes the record's values:
 
-```
+```tempo
 {code} - {name1} ({city})
 ```
 

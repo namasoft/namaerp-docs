@@ -135,7 +135,7 @@ ORDER BY s.valueDate DESC
 
 يمكن لمسارات الكيان الوصول إلى معاملات QR عبر المتغير `$map`:
 
-```
+```fieldmap
 fieldValue=$map.qrParam
 otherField=$map.anotherParam"
 ```
@@ -162,12 +162,12 @@ otherField=$map.anotherParam"
 يستخدم حقل `successTempo` نظام قوالب Tempo لإنشاء رسائل الاستجابة:
 
 ### قالب أساسي
-```
+```tempo
 Entity {code} created successfully for {customer.name1}
 ```
 
 ### مع المجموعات
-```
+```tempo
 {loop(lines, last)}
 Added line for item {lines.item.name1} with quantity {lines.quantity}
 {endloop}
@@ -175,7 +175,7 @@ Total lines: {lines.$size}
 ```
 
 ### عرض شرطي
-```
+```tempo
 {if=(status,"Stable")}
 ✓ Approved: {code}
 {else}

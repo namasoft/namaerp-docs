@@ -235,12 +235,12 @@ Form documents do no arithmetic of their own. An **Entity Flow** targeting the f
 *Fields Values Calculator* action, is what fills in a derived field. Two lines cover the gate pass
 — the first multiplies out each line, the second totals them onto the header:
 
-```
+```fieldmap
 details.number3=sql(select isnull(try_cast({details.number1} as decimal(20,6)),0)
                          * isnull(try_cast({details.number2} as decimal(20,6)),0))
 ```
 
-```
+```fieldmap
 n1=totalize(details,details.number3)
 ```
 

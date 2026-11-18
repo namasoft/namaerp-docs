@@ -56,7 +56,7 @@ A loop inside a table cell produces one table row per detail line. When a condit
 loop is not met, that iteration renders no text, and the row it produced is removed from the
 table instead of being left blank:
 
-```
+```tempo
 @#{loop(details)}{if=(details.item.item.section.code, "AP")}{details.item.code}{endif}{endloop}#@
 ```
 
@@ -74,7 +74,7 @@ To keep the old behaviour and print the blank rows, set **Parameter 5** to `true
 shows gaps (7, 12, 30). To number the printed rows sequentially, use a counter that is only
 incremented for the lines that pass the condition:
 
-```
+```tempo
 @#{loop(details)}{if=(details.item.item.section.code, "AP")}{incrementcounter(sn)}{countervalue(sn)}{endif}{endloop}#@
 ```
 

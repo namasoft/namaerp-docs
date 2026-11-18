@@ -276,7 +276,7 @@ x=$map.opResponse.errorMessage   // Get error message (on failure)
 
 الجدول هو **قوالب قيم الحقول** (`fieldsMapLines`)؛ اختر حقل البوابة في **الحقل** (`fieldsMapLines.field`). وعمود **قالب القيمة** (`fieldsMapLines.valueTemplate`) يدعم العناصر النائبة، بحيث يمكنك تعبئة هذه الحقول ديناميكيًا:
 
-```
+```tempo
 {customer.code}
 {code}
 {netTotal}

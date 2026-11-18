@@ -73,7 +73,7 @@ Each order is saved with the full checks of a normal save. If one of them is ref
 
 Parameter 2 sets the order's book and term:
 
-```
+```fieldmap
 book='PO01'
 term='PO'
 ```

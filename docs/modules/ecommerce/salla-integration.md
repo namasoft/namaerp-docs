@@ -82,7 +82,7 @@ A merchant who keeps stock in several Salla branches usually wants each order to
 
 To copy the branch into the document, add this line to **Copy Sales Document Field Map**:
 
-```ini
+```fieldmap
 warehouse=$map.order_branches.$get(0).name
 ```
 
@@ -90,7 +90,7 @@ warehouse=$map.order_branches.$get(0).name
 
 To change the value on the way, wrap it in a query. This one leaves the warehouse empty for orders from the `Web02` branch, so the document falls back to its usual warehouse, and uses the branch name for every other branch:
 
-```ini
+```fieldmap
 warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
 ```
 

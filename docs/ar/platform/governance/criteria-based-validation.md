@@ -224,7 +224,7 @@ select case when {details.vacationType.code} in ('014','016','017')
 بمجرد أن تعمل القاعدة لكل سطر يعرف النظام أرقام السطور المخالفة ويسلّمها لك في
 `{$map.errorLines}`:
 
-```
+```tempo
 سعر البيع أقل من التكلفة — السطر {$map.errorLines}
 ```
 
@@ -251,7 +251,7 @@ select case when {details.vacationType.code} in ('014','016','017')
 
 **حقول السجل** تُدرج مباشرة في النص:
 
-```
+```tempo
 المستخدم ({firstAuthor.name1}) غير مسموح له بالاستلام إلى مخزن ({toWarehouse.name1})
 ```
 
@@ -263,7 +263,7 @@ select case when {details.vacationType.code} in ('014','016','017')
 select c.limitValue, c.paymentPeriod from Customer c where c.id = {customer.id}
 ```
 
-```
+```tempo
 هذا العميل له حد ائتماني بقيمة {limitValue} وأقصى مدة سداد {paymentPeriod}
 ```
 
@@ -276,7 +276,7 @@ select top 1 entityType, id, code from MissionDocument
 where employee_id = {employee.id} and id <> {id}
 ```
 
-```
+```tempo
 الموظف له سند مأمورية بالفعل {titledlink(entityType,id)}{code}{endlink}
 ```
 

@@ -136,7 +136,7 @@ select entityType, id from Customer where parent_id = {relatedSubsidiary.id}
 
 قوالب Tempo تصل إلى أي حقل في السجل وفي السجلات التي يشير إليها:
 
-```
+```tempo
 عزيزنا {customer.name1}،
 
 فاتورتكم {code} بتاريخ {valueDate} وقيمتها {money.total}

@@ -7,6 +7,8 @@ import {SIDEBAR_CONFIG} from './sidebar.js'
 import {SECTION_PAGER, SECTION_SIDEBARS} from './section-trees.js'
 import {PAGE_DESCRIPTIONS} from './page-descriptions.js'
 import {collectPageForSearchIndex, devSearchIndexPlugin, writeSearchIndexJSON} from './search-index-builder.mts'
+import {tempoGrammar} from './tempo-grammar.mts'
+import {fieldMapGrammar} from './fieldmap-grammar.mts'
 import fs from 'node:fs'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -358,6 +360,7 @@ gtag('config', 'G-H68GM8HY15');`]
     ignoreDeadLinks: false,
     sitemap: {hostname: HOSTNAME},
     markdown: {
+        languages: ['html', 'sql', tempoGrammar as any, fieldMapGrammar as any],
         anchor: {
             // Must stay identical to the old VuePress slugify — existing inbound anchor links depend on it
             slugify: (str) => transliterate(str).replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')

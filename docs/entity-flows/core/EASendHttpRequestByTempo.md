@@ -35,7 +35,7 @@ Manual execution for integrating with external APIs, web services, or third-part
 
 The Tempo template should define HTTP requests using the system's HTTP request format:
 - Example 1:
-```
+```tempo
 {loop(details)}
 {httprequest}
  {requesturl}https://namasoft.com/api/v3.0/item{endurl}
@@ -54,7 +54,7 @@ The Tempo template should define HTTP requests using the system's HTTP request f
 {endloop}
 ```
 - Example 2:
-```
+```tempo
 {loop(details)}
 {httprequest}
  {requesturl}https://namasoft.com/api/v3.0/item{endurl}

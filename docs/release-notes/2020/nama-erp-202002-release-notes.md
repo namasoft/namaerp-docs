@@ -119,7 +119,7 @@ http://serverip:8080/erp/integrator?type=vacbal&empCode=[employee_code]&vacTypeC
   - Automatically Log Out When the Maximum Number of Logins Is Exceeded (from the oldest sessions)
 - For the option **Maximum Number of Concurrent Logins for a Single User**, the value set on the User is considered first (if not zero), then on the Permission File (if not zero), then the Global Config. If the User's field above has a value other than zero, the field **Automatically Log Out When the Maximum Number of Logins Is Exceeded (from the oldest sessions)** is taken from the User - and this field is honored if it is enabled on the User or on the Permission File, even without setting a maximum number of concurrent sessions
 - Added the function `round`; for example, `{round(netPrice,"2")}` displays two decimal places, and the number of display decimal places from the currency can also be used. See the following example:
-```
+```tempo
 {round(netPrice,currency.displayDecimalPlaces)}
 ```
 - Added the option `Do Not Compare the Remaining Amount to the Total Payments on Invoices` to the Global Config

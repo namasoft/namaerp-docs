@@ -117,7 +117,7 @@ what you type.
 If the formula contains no `${`, the whole text is treated as a **Tempo** template: plain text with
 `{ }` placeholders that read fields off the record being saved.
 
-```
+```tempo
 ITM-{category1.code}-
 ```
 

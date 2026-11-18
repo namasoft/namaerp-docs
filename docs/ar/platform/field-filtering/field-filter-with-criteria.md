@@ -90,7 +90,7 @@ menu: إدارة النظام ← تخصيص شكل النظام ← فلترة 
 
 ضع كود **Tempo** التالي في عمود **Dynamic Filter** في السطر، وعلّم **Use Tempo** في السطر نفسه:
 
-```
+```tempo
 {loop(fromDoc.$toReal.details)}
   {if(fromDoc.$toReal.details.unsatisfiedQty2)}
     code,Equal,{fromDoc.$toReal.details.customer.code},OR;
@@ -107,7 +107,7 @@ menu: إدارة النظام ← تخصيص شكل النظام ← فلترة 
 
 لنفترض أن مستند جرد يحمل **مرجع 1** في سطور التوجيه، وتريد أن يعرض هذا الحقل الأصناف المُدخلة في التفاصيل فقط. هذا الفلتر يبدو صحيحًا ولا يعيد شيئًا:
 
-```
+```tempo
 {loop(details)}
 termsLines.ref1,Equal,{details.item.item.code},OR;
 {endloop}
@@ -115,7 +115,7 @@ termsLines.ref1,Equal,{details.item.item.code},OR;
 
 مكان `termsLines.ref1` هو عمود **الحقل** لا الشرط، فشاشة الصنف التي يُبحث فيها ليس فيها حقل بهذا الاسم. اكتب الشرط بحقول الصنف نفسه، واترك متغيرات Tempo تقرأ من مستندك (مع تعليم **Use Tempo**، كما في كل فلتر بلغة Tempo):
 
-```
+```tempo
 {loop(details)}
 code,Equal,{details.item.item.code},OR;
 {endloop}
@@ -123,7 +123,7 @@ code,Equal,{details.item.item.code},OR;
 
 أو بدقة أكبر، بمعرّف السجل:
 
-```
+```tempo
 {loop(details)}
 id,Equal,{details.item.item.id},OR;
 {endloop}

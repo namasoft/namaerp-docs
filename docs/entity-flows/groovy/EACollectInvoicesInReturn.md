@@ -79,7 +79,7 @@ On a return of 3 units of one item, where the customer's two oldest invoices eac
 
 To keep a value from the invoice line on the return line as well, for example the invoice line's **Number 2** in the return line's **Number 1**, put this in Parameter 3:
 
-```
+```fieldmap
 currentLine.n1=currentLine.n2
 ```
 

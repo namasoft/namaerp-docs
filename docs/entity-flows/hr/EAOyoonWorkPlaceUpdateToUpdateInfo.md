@@ -37,14 +37,14 @@ This action runs automatically and cannot be disabled.
 
 **Parameter 1:** Fields Initializer - Field assignments for the generated document
 Example:
-```
+```fieldmap
 book="UPDT"
 term="UPDTERM"
 ```
 
 **Parameter 2:** UpdateEmployeeInfo fields Map - Additional field mappings
 Example:
-```
+```fieldmap
 branch=toInfo.empWorkPlace.branch
 ```
 

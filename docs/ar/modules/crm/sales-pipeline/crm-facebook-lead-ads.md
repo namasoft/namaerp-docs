@@ -71,7 +71,7 @@ SELECT id FROM CRMLead WHERE infoMobile = {$map.phone_number}
 
 خريطة نموذجية عند اختيار **Save Leads As = خيط بيع**:
 
-```
+```fieldmap
 code=$map.phone_number
 name1=$map.full_name
 name2=$map.full_name

@@ -87,7 +87,7 @@ menu: إدارة النظام ← تخصيص شكل النظام ← تعريف 
 :::
 
 **أمثلة رسائل التأكيد مع المحتوى الديناميكي:**
-```
+```tempo
 Arabic Confirmation:
 "تأكيد: هل أنت متأكد من طلب الموافقة على {entityType} رقم {code} بمبلغ {money.netValue} للقسم {department.name1}؟"
 
@@ -265,7 +265,7 @@ SELECT CASE WHEN {money.netValue} > 50000 THEN 1 ELSE 0 END
 
 عند تشغيل قاعدة للموافقة، تكون الأسطر المتأثرة متاحة في القوالب:
 
-```
+```tempo
 {if($map.approvalRuleLines)}
 <h3>Lines Requiring Approval:</h3>
 <table>
@@ -666,7 +666,7 @@ SELECT CASE WHEN {money.netValue} > 100000 THEN 1 ELSE 0 END
 - `$notificationInfo.otp` - رمز OTP للموافقة (إذا تم إعداده)
 
 **مثال قالب البريد الإلكتروني:**
-```
+```tempo
 <h2>Approval Required: {entityType} #{code}</h2>
 <p>Dear {$notificationInfo.employee.name2},</p>
 
@@ -697,7 +697,7 @@ SELECT CASE WHEN {money.netValue} > 100000 THEN 1 ELSE 0 END
 ```
 
 **مثال قالب الرسائل القصيرة:**
-```
+```tempo
 {$notificationInfo.employee.name2}: Approval needed for {entityType} #{code}
 Amount: {money.netValue}
 OTP: {$notificationInfo.otp}
@@ -707,7 +707,7 @@ OTP: {$notificationInfo.otp}
 ```
 
 **قالب الإشعار داخل التطبيق:**
-```
+```tempo
 <strong>Approval Request</strong>{enter}
 {entityType} #{code} requires your approval{enter}
 Amount: {money.netValue}{enter}
@@ -807,14 +807,14 @@ Department: {department.name1}{enter}
 #### أمثلة عملية لقوالب الإشعارات
 
 **مثال 1: عرض رمز OTP**
-```
+```tempo
 {if(currentApprovalCase.$firstCandidate.otp)}
 <p>Your Security Code (OTP): <strong>{currentApprovalCase.$firstCandidate.otp}</strong></p>
 {endif}
 ```
 
 **مثال 2: عرض قرار المعتمِد السابق وتعليقه**
-```
+```tempo
 {if(currentApprovalCase.$lastStep)}
 <h3>Previous Approval Step:</h3>
 <p><strong>Approved By:</strong> {currentApprovalCase.$lastStep.actualResponsible.name2}</p>
@@ -827,7 +827,7 @@ Department: {department.name1}{enter}
 ```
 
 **مثال 3: عرض معلومات التصعيد**
-```
+```tempo
 {if(currentApprovalCase.$firstCandidate.escalated)}
 <p style="color: orange;">
     <strong>Note:</strong> This approval was escalated from {currentApprovalCase.$firstCandidate.escalatedFrom.name2}
@@ -836,7 +836,7 @@ Department: {department.name1}{enter}
 ```
 
 **مثال 4: عرض جميع المرشحين الحاليين**
-```
+```tempo
 <h3>Awaiting Approval From:</h3>
 <ul>
 {if(currentApprovalCase.$firstCandidate)}
@@ -852,7 +852,7 @@ Department: {department.name1}{enter}
 ```
 
 **مثال 5: قالب بريد إلكتروني كامل مع سجل الموافقة**
-```
+```tempo
 <h2>Approval Request: {entityType} #{code}</h2>
 <p>Dear {$notificationInfo.employee.name2},</p>
 

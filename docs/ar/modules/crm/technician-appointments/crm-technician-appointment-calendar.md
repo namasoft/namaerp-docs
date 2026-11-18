@@ -191,7 +191,7 @@ menu: خدمة العملاء ← مواعيد الفنيين ← إنشاء م�
 
 وتبني الرابطَ دالة Tempo اسمها `createappointment`. ففي قالب إشعار على فاتورة المبيعات:
 
-```
+```tempo
 الفاتورة {code} للعميل {customer.name1} تحتاج زيارة تركيب.
 <a href="{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}">احجزها الآن</a>
 ```
@@ -216,7 +216,7 @@ menu: خدمة العملاء ← مواعيد الفنيين ← إنشاء م�
 
 الرابط نفسه يمكن أن يكون زراً على فاتورة المبيعات ذاتها. ففي [تعديل الشاشات](/ar/platform/screen-modifier/screen-modifier-action-buttons) الخاص بشاشة الفاتورة أضف سطراً في **صلاحيات الإجراءات** وضع هذا في **قالب الوصلة**:
 
-```
+```tempo
 {OpenInNewWindow}{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}
 ```
 

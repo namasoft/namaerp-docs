@@ -75,7 +75,7 @@ In one scenario within a `CPAProjectInvoice` document, an entity flow was set up
 * Copying the `n2` value from the project in the line into the `details.n3` field
 * Calculating the commission percentage by multiplying this value by the `totalActualValue` field in the document header, then storing the result in `details.n4`:
 
-```
+```fieldmap
 details.n3=details.project.n2
 details.n4=sql(select {details.n3} * {totalActualValue} / 100)
 ```
@@ -94,7 +94,7 @@ The value in `totalActualValue` represents the sum of the `details.price.actualV
 
 Instead of using `totalActualValue` from the header, use the `actualVal` value specific to each line to calculate the commission accurately:
 
-```
+```fieldmap
 details.n4=sql(select {details.n3} * {details.price.actualVal} / 100)
 ```
 
@@ -224,7 +224,7 @@ You can change the field name `n1` and the codes `BankExpensesDebit` and `BankEx
 
 You can implement this request by using an **entity flow** of type [`EAFieldsValuesCalculator`](/entity-flows/core/EAFieldsValuesCalculator) with the `itemprice` function from the `tempo` library, as follows:
 
-```
+```fieldmap
 details.n1=tempo({itemprice(itemIdOrCode=details.item.item)})
 ```
 
@@ -241,7 +241,7 @@ Please ensure that this flow is added to the "Stock Supply" document type and ac
 
 **Answer:** When using the following statement:
 
-```
+```fieldmap
 details.specificDimensions.warehouse=sql(select case when {details.item.item.section.code} = '1' then 'W-MG' else  warehouse_id end from SrvJOrderMaterialLine where SrvCJobOrder_id = {ref1.$toReal.id} and {details.item.item.id} = material_id)
 ```
 
@@ -258,7 +258,7 @@ Use a `sub-query` correctly inside the `else` branch of `case when` to ensure th
 
 Corrected syntax:
 
-```ini
+```fieldmap
 details.specificDimensions.warehouse=mlsql(
   select case 
     when {details.item.item.section.code} = '1' 
@@ -274,13 +274,13 @@ This way, the statement is guaranteed to always return a single logical value th
 
 The easiest way to achieve this is to use the following syntax:
 
-```ini
+```fieldmap
 details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from PurchaseInvoiceLine l where l.item_id = {details.item.item.id} order by l.valueDate desc)
 ```
 
 If you want to fetch the last purchase price on a date before the current document's date:
 
-```ini
+```fieldmap
 details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from PurchaseInvoiceLine l where l.item_id = {details.item.item.id} and l.valueDate <= {valueDate} order by l.valueDate desc)
 ```
 
@@ -290,7 +290,7 @@ details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from Pu
 
 Use `runCommand="saveConsideringApprovals"` instead. It runs the same save path as the edit screen: approval definitions are checked, and when one applies the record goes to approval instead of being saved as final. The "this record will go to approval" confirmation the screen normally asks for is answered automatically, and the flow step itself still finishes successfully.
 
-```ini
+```fieldmap
 customer.runCommand="edit"
 customer.description1="Updated from the invoice"
 customer.runCommand="saveConsideringApprovals"

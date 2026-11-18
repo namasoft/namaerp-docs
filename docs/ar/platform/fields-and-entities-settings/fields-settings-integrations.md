@@ -152,13 +152,13 @@ https://<عنوان الخادم لديك>/erp/integrator?integrator=<Integrator
 
 العنوان هو خادمك، ثم `/r/`، ثم معرّف يشير إلى مستند بعينه. وكل سجل في نما يستطيع إنتاج ذلك المعرّف عند الطلب، وتدرجه أنت في الرابط عبر المتغير `{retrieverFileId}` عند كتابة تنبيه. وأبسط صورة له:
 
-```
+```tempo
 https://<عنوان الخادم لديك>/erp/r/{retrieverFileId}
 ```
 
 وإضافة امتداد للملف تجعل المتصفحات تتعامل مع التنزيل بصورة أفضل، ويمكن أن يرافق المعرّفَ كودُ المستند نفسه بعد نقطة إن أردت ظهوره في العنوان — فكل ما يلي أول نقطة يُهمَل عند تحليل الرابط:
 
-```
+```tempo
 https://<عنوان الخادم لديك>/erp/r/{retrieverFileId}.pdf
 https://<عنوان الخادم لديك>/erp/r/{retrieverFileId}.{code}.pdf
 ```
@@ -167,13 +167,13 @@ https://<عنوان الخادم لديك>/erp/r/{retrieverFileId}.{code}.pdf
 
 وإذا كان للسطر **URL Prefix** — وليكن `invoices` — تسبق تلك الكلمة المعرّف:
 
-```
+```tempo
 https://<عنوان الخادم لديك>/erp/r/invoices/{retrieverFileId}
 ```
 
 هذه البادئة هي ما يتيح لنظام واحد نشر أكثر من نوع من المستندات: سطر ببادئة `invoices` يشغّل نموذج الفاتورة، وآخر ببادئة `receipts` يشغّل نموذج الإيصال، ولكلٍّ عنوانه. ويصل الرابط إلى العميل في تنبيه عادي — رسالة نصية أو بريد إلكتروني يحمل نصه المتغير `{retrieverFileId}`، مثلًا:
 
-```
+```tempo
 Thanks for visiting us, view your invoice by clicking on this link:
 https://<your server>/erp/r/{retrieverFileId}
 ```

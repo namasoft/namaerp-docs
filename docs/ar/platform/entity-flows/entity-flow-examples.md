@@ -13,14 +13,14 @@ menu: إدارة النظام ← تخصيص شكل النظام ← مسار ا
 ### إنشاء مسار كيان ليقوم بتغيير معدل الموارد في سندات الموارد في النظام (يقوم بمحاكاة أن المستخدم ضغط علي الاوبشن "اعادة حساب المعدل مع الحفظ" في سند الموارد
 قم بإنشاء مسار كيان مع الاجراء "يدوي" و نوعه [`EAFieldsValuesCalculator`](/entity-flows/core/EAFieldsValuesCalculator) و قم بوضعه بتعديل شاشة. قم بإدخال التالي في المدخل 1:
 
-```ini
+```fieldmap
 runCommand="edit"
 recalculateRateWithSave="true"
 runCommand="save"
 ```
 ### إنشاء مسار كيان ليقوم بتعديل حقل description1 في السند الأعلى للسند الأعلى للسند الحالي (بناءا على ثم بناءا على)
 قم بإنشاء مسار كيان مع الاجراء "تأثيرات الحفظ" و نوعه `EAFieldsValuesCalculator` . قم بإدخال التالي في المدخل 1:
-```ini
+```fieldmap
 switchTarget=fromDoc.$toReal.fromDoc(
 runCommand="edit"
 description1="ABC"
@@ -29,7 +29,7 @@ runCommand="save"
 ```
 ### إنشاء مسار كيان ليقوم بملء حقل القيمة في أول سطر في سند القبض بإجمالي الأوراق التجارية
 قم بإنشاء مسار كيان مع الإجراء "ما قبل تحديث الحقول المحسوبة" و نوعه `EAFieldsValuesCalculator` . قم بإدخال التالي في المدخل 1:
-```ini
+```fieldmap
 n1=totalize(fblines,fblines.fpCreationInfo.value.amount)
 selectLine="lines(0)"
 $line.amount.value.amount=n1
@@ -92,7 +92,7 @@ PurchaseOrder
 select id from PurchaseOrder where ref1Id = {id} and supplier_id = {$currentGroupKey.id}
 ```
     Parameter 3:
-```ini
+```fieldmap
 ref1=$this
 fromDoc=$this
 book="FPOR"

@@ -89,7 +89,7 @@ Suppose a **Sales Invoice** is based on a **Sales Order** containing multiple cu
 
 Put this **Tempo** code in the **Dynamic Filter** column of the line and tick **Use Tempo** on the same line:
 
-```
+```tempo
 {loop(fromDoc.$toReal.details)}
   {if(fromDoc.$toReal.details.unsatisfiedQty2)}
     code,Equal,{fromDoc.$toReal.details.customer.code},OR;
@@ -106,7 +106,7 @@ This is the mistake behind most dynamic filters that return nothing. A filter li
 
 Suppose a stock count document carries **Reference 1** on its term lines, and you want that lookup to offer only the items already entered in the details. This filter looks right and returns nothing:
 
-```
+```tempo
 {loop(details)}
 termsLines.ref1,Equal,{details.item.item.code},OR;
 {endloop}
@@ -114,7 +114,7 @@ termsLines.ref1,Equal,{details.item.item.code},OR;
 
 `termsLines.ref1` belongs in the **Field** column, not in the condition — the item screen being searched has no such field. Write the condition with the item's own fields, and let the Tempo placeholders read your document (with **Use Tempo** ticked, as for every Tempo filter):
 
-```
+```tempo
 {loop(details)}
 code,Equal,{details.item.item.code},OR;
 {endloop}
@@ -122,7 +122,7 @@ code,Equal,{details.item.item.code},OR;
 
 or, more precisely, by the record's identifier:
 
-```
+```tempo
 {loop(details)}
 id,Equal,{details.item.item.id},OR;
 {endloop}

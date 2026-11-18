@@ -10,14 +10,14 @@ This page covers the messages Nama sends customers about their reward points, th
 
 ## Send a notification to the customer with each invoice with rewarded points, redeemed, and total points
 * English Version
-```
+```tempo
 Dear {customer.name2},
 Thanks for visiting {branch.name2}.
 You earned {$earnedPoints} points. Your current balance is {customer.$availableRewardPoints} points (SAR {customer.$availableRewardAmount}).
 Thanks for shopping with us!
 ```
 * Arabic Version
-```
+```tempo
 عزيزي {customer.name1}،
 شكرًا لزيارتك فرع {branch.name1}.
 كسبت {$earnedPoints} نقطة جديدة، ورصيدك الآن {customer.$availableRewardPoints} نقطة ({customer.$availableRewardAmount} ريال سعودي).
@@ -31,11 +31,11 @@ Thanks for shopping with us!
 ### Sample SMS/Email Templates
 
 - English Version
-```
+```tempo
 To redeeem {rewardInfo.amount} {rewardInfo.currency.altCode} ({rewardInfo.redeemedPoints} points), please use the following OTP: {otpCode} 
 ```
 - Arabic Version
-```
+```tempo
 لاسترداد {rewardInfo.amount} ({rewardInfo.redeemedPoints} نقطة) {rewardInfo.currency.code}، يرجى استخدام رمز التحقق (OTP) التالي: {otpCode}.
 ```
 

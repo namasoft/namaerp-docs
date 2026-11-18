@@ -153,13 +153,13 @@ The first time someone opens the link, the form runs and the result is stored in
 
 The address is your server, then `/r/`, then an identifier that stands for one specific document. Every record in Nama can produce that identifier on demand, and you insert it into the link using the `{retrieverFileId}` variable when writing a notification. The simplest form is:
 
-```
+```tempo
 https://<your server>/erp/r/{retrieverFileId}
 ```
 
 Adding an extension makes browsers treat the download more sensibly, and the document's own code can ride along after a dot when you want it visible in the address itself — everything from the first dot onwards is ignored when the link is resolved:
 
-```
+```tempo
 https://<your server>/erp/r/{retrieverFileId}.pdf
 https://<your server>/erp/r/{retrieverFileId}.{code}.pdf
 ```
@@ -168,13 +168,13 @@ The code must come **after a dot, not after a slash**: the last path segment is 
 
 And if the line has a **URL Prefix** — say `invoices` — that word goes in front of the identifier:
 
-```
+```tempo
 https://<your server>/erp/r/invoices/{retrieverFileId}
 ```
 
 That prefix is what lets one system publish more than one kind of document: a line with prefix `invoices` running the invoice form, another with prefix `receipts` running the receipt form, each reached by its own address. The link reaches the customer in an ordinary notification — an SMS or an e-mail whose text carries the `{retrieverFileId}` variable, for example:
 
-```
+```tempo
 Thanks for visiting us, view your invoice by clicking on this link:
 https://<your server>/erp/r/{retrieverFileId}
 ```

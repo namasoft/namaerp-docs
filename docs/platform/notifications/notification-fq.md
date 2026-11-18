@@ -15,7 +15,7 @@ The reason is that the template being used does not contain a `loop` statement, 
 
 ### Incorrect Template (does not repeat)
 
-```
+```tempo
 الشركة المتحدة فارم صيدلية د/ {lines.subsidiary.$toReal.name1} نحيط علمكم بأنة
 تم اضافة استلام نقدية لحسابكم رقم الايصال {lines.rpaper} قيمة الأيصال {lines.amount.value.amount} جنية  بتاريخ {valueDate}
 ```
@@ -26,7 +26,7 @@ This template sends only one message using the data from the first line only.
 
 ### Correct Template for Sending a Message to Each Customer Individually
 
-```
+```tempo
 {loop(lines)}
 {openmsg}
 {sendto}{lines.subsidiary.$toReal.contactInfo.mobile}{endsendto}
@@ -65,7 +65,7 @@ In the following example, an SMS template was set up inside a notification:
 
 ::: details Previously Used Template
 
-```
+```tempo
 الشركة المتحدة فارم نحيط علمكم صيدلية د / {Customer.name1} بأن
 تم اضافة فاتورة رقم {code} لحسابكم
 _____  
@@ -87,7 +87,7 @@ To retrieve all lines, you must use the `{loop(details)}` instruction so that th
 
 ::: details Correct Modified Template
 
-```
+```tempo
 الشركة المتحدة فارم نحيط علمكم صيدلية د / {Customer.name1} بأن  
 تم اضافة فاتورة رقم {code} لحسابكم  
 _____  
@@ -110,19 +110,19 @@ To display the name of the person who approved the document in the notification 
 
 If you want to display the name as a link to the user's profile, use the following syntax:
 
-```
+```tempo
 تمت الموافقة على السجل {link($this)} من قبل {link(currentApprovalCase.lastStep.actualResponsible)}
 ```
 
 If you want to display the name as plain text without a link, use:
 
-```
+```tempo
 تمت الموافقة على السجل {code} من قبل {currentApprovalCase.lastStep.actualResponsible.name1}
 ```
 
 * You can add a condition to verify the existence of an approval step before displaying the name, as follows:
 
-```
+```tempo
 {if(currentApprovalCase.lastStep)}
 تمت الموافقة على السجل {code} من قبل {currentApprovalCase.lastStep.actualResponsible.name1}
 {else}
@@ -161,7 +161,7 @@ ORDER BY esu.code
 
 - Notification Template
 
-```
+```tempo
 {loop()}
 {header(supervisorCode)}
 {openmsg}{sendto}{supervisorId}{endsendto}

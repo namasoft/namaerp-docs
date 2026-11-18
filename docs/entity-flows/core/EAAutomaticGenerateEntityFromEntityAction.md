@@ -39,7 +39,7 @@ Uses same parameters as EAGenerateEntityFromEntityAction:
 - **Parameter 10:** Run Only If (Optional) - Execution condition
 
 ### Example Field Map:
-```
+```fieldmap
 code=code
 fromDoc=$this
 customer=customer

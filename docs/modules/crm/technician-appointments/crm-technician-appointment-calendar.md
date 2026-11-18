@@ -191,7 +191,7 @@ A notification, email or SMS can carry a link that opens this calendar with the 
 
 The Tempo function `createappointment` builds the link. For a notification template on the sales invoice:
 
-```
+```tempo
 Invoice {code} for {customer.name1} needs an installation visit.
 <a href="{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}">Book it now</a>
 ```
@@ -216,7 +216,7 @@ The full reference is in the Tempo guide, under [Link to Book a Technician Appoi
 
 The same link can be a button on the sales invoice itself. In a [Screen Modifier](/platform/screen-modifier/screen-modifier-action-buttons#The-URL-Template-column-any-link-at-all) for the invoice screen, add a row to **Action Authorities** (*صلاحيات الإجراءات*) and put this in **URL Template** (*قالب الوصلة*):
 
-```
+```tempo
 {OpenInNewWindow}{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}
 ```
 

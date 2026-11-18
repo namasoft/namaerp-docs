@@ -7,13 +7,13 @@
 
 تتيح لك Tempo تضمين قيم ديناميكية في قوالب نصية. مثلًا، لعرض رسالة خطأ تفيد بأن موظفًا لا يمكنه أخذ أكثر من خمسة أيام إجازة، يمكنك تضمين اسم الموظف ديناميكيًا:
 
-```
+```tempo
 Employee {employee.name1} cannot take more than five days of vacation.
 ```
 
 إذا أردت تضمين رابط تشعبي لسجل الموظف:
 
-```
+```tempo
 {link(employee)}
 ```
 
@@ -76,19 +76,19 @@ Employee {employee.name1} cannot take more than five days of vacation.
 
 * استخدم `{fieldName}` لعرض حقل من السجل الحالي:
 
-```
+```tempo
 This Employee's Arabic name is {name1}
 ```
 
 * للسجلات المرتبطة (مثل موظف في طلب إجازة):
 
-```
+```tempo
 This Employee's Arabic name is {employee.name1}
 ```
 
 * للمراجع غير المباشرة (مثل موظف في حقل `subsidiary`):
 
-```
+```tempo
 This Employee's Arabic name is {subsidiary.$toReal.name1}
 ```
 
@@ -98,7 +98,7 @@ This Employee's Arabic name is {subsidiary.$toReal.name1}
 
 لإضافة تعليقات في كود Tempo:
 
-```
+```tempo
 {comment} This was written by Khaled {endcomment}
 ```
 
@@ -118,7 +118,7 @@ This Employee's Arabic name is {subsidiary.$toReal.name1}
 
 لتحليل محتوى حقل (مثل الملاحظات) كقالب Tempo:
 
-```
+```tempo
 {tempo}{customer.remarks}{endtempo}
 ```
 
@@ -144,13 +144,13 @@ This Employee's Arabic name is {subsidiary.$toReal.name1}
 
 يمكنك حينئذٍ الكتابة بهذا الشكل:
 
-```
+```tempo
 %{code}%
 ```
 
 بدلًا من:
 
-```
+```tempo
 {code}
 ```
 
@@ -162,13 +162,13 @@ This Employee's Arabic name is {subsidiary.$toReal.name1}
 
 غير صحيح (يعرض المحرّر خطأ):
 
-```
+```tempo
 {time.$hours}
 ```
 
 المصحَّح:
 
-```
+```tempo
 {#time.$hours}
 ```
 
@@ -178,7 +178,7 @@ This Employee's Arabic name is {subsidiary.$toReal.name1}
 
 استخدم `{enter}` لإدراج فاصل سطر في رسائل HTML:
 
-```
+```tempo
 Line 1{enter}
 Line 2
 ```
@@ -193,14 +193,14 @@ Line 2
 
 استخدم دالة `link()` لتحويل الحقل نفسه إلى رابط تشعبي:
 
-```
+```tempo
 {link(targetField)}
 ```
 
 **مثال:**
 لإنشاء رابط لسجل العميل:
 
-```
+```tempo
 {link(customer)}
 ```
 
@@ -210,14 +210,14 @@ Line 2
 
 استخدم `titledlink()` مع محتوى رابط مخصص:
 
-```
+```tempo
 {titledlink(targetField)} Your custom link text {endlink}
 ```
 
 **مثال:**
 لعرض رابط عميل بالعنوان "Current Customer code is ABC":
 
-```
+```tempo
 {titledlink(customer)} Current Customer code is {code} {endlink}
 ```
 
@@ -236,14 +236,14 @@ Line 2
 
 **مثال 1 – استخدام `{shortlinks}`**:
 
-```
+```tempo
 {shortlinks}
 The user {#firstAuthor.name2} created the document {#code}
 ```
 
 **مثال 2 – استخدام `{directlinks}`**:
 
-```
+```tempo
 {directlinks}
 The user {#firstAuthor.name2} created the document {link($this)}
 ```
@@ -254,7 +254,7 @@ The user {#firstAuthor.name2} created the document {link($this)}
 
 إذا كنت ترسل إشعارًا استنادًا إلى استعلام:
 
-```
+```tempo
 {titledlink(entityType, id)} {code} {endlink}
 ```
 
@@ -266,13 +266,13 @@ The user {#firstAuthor.name2} created the document {link($this)}
 
 يمكنك تخصيص طريقة فتح الرابط بتحديد معاملات إضافية:
 
-```
+```tempo
 {link(record, menu="MenuCode", newindow="true or false", view="ViewName")}
 ```
 
 أو بعنوان مخصص:
 
-```
+```tempo
 {titledlink(record, menu="MenuCode", newindow="true or false", view="ViewName")}
 Link Content Here
 {endlink}
@@ -281,13 +281,13 @@ Link Content Here
 **مثال:**
 فتح سجل موظف في نافذة جديدة عبر قائمة وعرض محددين:
 
-```
+```tempo
 {link(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
 ```
 
 مع عنوان:
 
-```
+```tempo
 {titledlink(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
 Employee code {code}, Name {name1}
 {endlink}
@@ -299,7 +299,7 @@ Employee code {code}, Name {name1}
 
 لإجبار جميع الروابط على استخدام عنوان خادم معين، استخدم الوسم `{appurl()}` في **بداية** القالب:
 
-```
+```tempo
 {appurl("http://crm7.namasoft.com:8080/erp/")}
 ```
 
@@ -311,7 +311,7 @@ Employee code {code}, Name {name1}
 
 تُنتج `createappointment` رابطاً يفتح شاشة **إنشاء موعد فني** (تقويم حجز مواعيد الفنيين) وفيها القسم الوظيفي والإجراء الفني ومستند «بناءا على» مملوءة سلفاً. وهي لا تملأ إلا ما تمرّره، فللحجز على السجل الحالي مرِّر `entityType` و`id` الخاصين به كما في المثال. فتوفّر على فريق الحجز البحث عن المستند الذي بيعت عليه الزيارة.
 
-```
+```tempo
 {createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}
 ```
 
@@ -328,7 +328,7 @@ Employee code {code}, Name {name1}
 
 والناتج **عنوان URL مجرد** لا رابط قابل للنقر، فتضعه كما هو في رسالة SMS، أو تحيطه بوسم رابط HTML في البريد الإلكتروني أو الإشعار:
 
-```
+```tempo
 الفاتورة {code} للعميل {customer.name1} تحتاج زيارة تركيب.
 <a href="{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}">احجزها الآن</a>
 ```
@@ -345,7 +345,7 @@ Employee code {code}, Name {name1}
 
 اكتب `{useNewGUIForLinks}` مرة واحدة في أي موضع من القالب، فتفتح روابط هذا القالب في الواجهة الجديدة:
 
-```
+```tempo
 {useNewGUIForLinks}
 عزيزنا {customer.name1}،
 تم اعتماد فاتورتكم {code}: {link($this)}
@@ -365,7 +365,7 @@ Employee code {code}, Name {name1}
 
 لعرض قائمة من الصفوف المتكررة (مثل الأصناف في مستند)، استخدم كتلة `loop`:
 
-```
+```tempo
 {loop(details)}
   Loop content here
 {endloop}
@@ -374,7 +374,7 @@ Employee code {code}, Name {name1}
 **مثال:**
 عرض كود كل صنف واسمه بالعربية والكمية والقيمة الصافية في فاتورة مبيعات:
 
-```
+```tempo
 {loop(details)}
 {@rownumber} - {#details.item.item.code} - {#details.item.item.name2} - {#details.quantity.quantity.primeQty.value} - {#details.price.netValue}
 {endloop}
@@ -386,7 +386,7 @@ Employee code {code}, Name {name1}
 
 للوصول إلى حقول SQL (`sqlField1`، `sqlField2`، إلخ) ضمن مجموعات التفاصيل، فعّلها أولًا:
 
-```
+```tempo
 {enableDetailSqlFields(details)}
 {loop(details)}
   {ifequal(details.sqlField1,'APPROVED')}
@@ -400,19 +400,19 @@ Employee code {code}, Name {name1}
 
 لحساب رصيد الإجازات المتبقي للموظف:
 
-```
+```tempo
 {vacationRemainder(employeeIdOrCode, vacationTypeCodeOrId)}
 {vacationConsumed(employeeIdOrCode, vacationTypeCodeOrId)}
 {vacationAssigned(employeeIdOrCode, vacationTypeCodeOrId)}
 ```
-```
+```tempo
 {vacationRemainder(employeeIdOrCode, vacationTypeCodeOrId, atDate)}
 {vacationConsumed(employeeIdOrCode, vacationTypeCodeOrId, atDate)}
 {vacationAssigned(employeeIdOrCode, vacationTypeCodeOrId, atDate)}
 ```
 
 **أمثلة:**
-```
+```tempo
 Employee {name1} has {vacationremainder(id, "001")} days remaining
 Employee {name1} has {vacationremainder(id, "001", "2024-12-28")} days remaining
 Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000ff2854df")} days remaining
@@ -424,7 +424,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 التكرار على السطر الأخير فقط:
 
-```
+```tempo
 {loop(details, last)}
   Last line content
 {endloop}
@@ -436,7 +436,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 التكرار على نطاق محدد من أرقام الأسطر:
 
-```
+```tempo
 {loop(details, 2, 3)}
   From line 2 to 3
 {endloop}
@@ -448,13 +448,13 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 التكرار من سطر بداية حتى السطر الأخير:
 
-```
+```tempo
 {loop(details, 5)}
 ```
 
 > هذا مكافئ لـ:
 
-```
+```tempo
 {loop(details, 5, last)}
 ```
 
@@ -466,7 +466,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 #### صياغة العدّاد
 
-```
+```tempo
 {incrementcounter(counterName)}
 {decrementcounter(counterName)}
 {countervalue(counterName)}
@@ -476,7 +476,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 لاستخدام العدّاد في تعبير الصف:
 
-```
+```tempo
 {r(@@counterName)}
 ```
 
@@ -491,7 +491,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 * استخدام عدّاد يدوي `c1`
 * ملء نموذج إنشاء تحويل مخزني
 
-```
+```tempo
 {creator(entity="StockTransfer", menu="StockTransDocumentsStockTransferReq", title="Create StockTransferReq", newwindow="true")}
 
 {f("book")}{v("STR01")}
@@ -520,7 +520,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 يوضّح هذا المثال استخدام جمل if.
 
-```
+```tempo
 {if(totalUnsatisfiedQty)}
    {creator(entity="StockTransferReq")}
       {f("book")}{v("STR01")}
@@ -537,7 +537,7 @@ Employee {name1} has {vacationremainder("E00147", "ffff0001-8d64-70c9-e300-0000f
 
 لإعلام المستخدمين بالأسطر المحددة المتأثرة بقاعدة موافقة (مثل الأسعار الأقل من الحد)، استخدم حلقة `loop` على أسطر قاعدة الموافقة:
 
-```
+```tempo
 The lines that are below the default sales price:
 {loop($map.approvalRuleLines)}
   {link($map.approvalRuleLines.item.item)} - {$map.approvalRuleLines.price.unitPrice}
@@ -552,7 +552,7 @@ The lines that are below the default sales price:
 
 لتضمين أزرار الإجراءات في قوالب البريد الإلكتروني أو SMS لمسارات الموافقة، استخدم العناصر النائبة التالية:
 
-```
+```tempo
 {approvelink}
 {rejectlink}
 {returnlink}
@@ -578,13 +578,13 @@ The lines that are below the default sales price:
 
 **مثال — إرفاق سبب وعرض رابط عادي (غير مغلّف):**
 
-```
+```tempo
 {approvelink(reason=reasoncode, plain=true)}
 ```
 
 **مثال — بناء زر ملون مخصص حول رابط رفض عادي:**
 
-```
+```tempo
 <a href='{rejectlink(reason=LATE_SUBMISSION, plain=true)}'
    style='background:#e53935;color:#fff;padding:8px 16px;border-radius:4px;text-decoration:none'>
   Reject
@@ -607,7 +607,7 @@ The lines that are below the default sales price:
 
 #### **مثال – جدول تفاصيل فاتورة المبيعات**
 
-```
+```tempo
 {opentable}
   {row}{cell}#{cell}Item Code{cell}Item Name{cell}Quantity{cell}Net Value{endrow}
   {loop(details)}
@@ -636,7 +636,7 @@ The lines that are below the default sales price:
 
 **مثال – صف رأس الجدول:**
 
-```
+```tempo
 {row}{cell}#{cell}Item Code{cell}Item Name{cell}Quantity{cell}Net Value{endrow}
 ```
 
@@ -646,7 +646,7 @@ The lines that are below the default sales price:
 
 **مثال:**
 
-```
+```tempo
 {cell}Item Name{endcell}
 ```
 
@@ -662,7 +662,7 @@ The lines that are below the default sales price:
 
 #### رأس المجموعة
 
-```
+```tempo
 {header(groupingField)}
   Header content here
 {endheader}
@@ -670,7 +670,7 @@ The lines that are below the default sales price:
 
 #### تذييل المجموعة
 
-```
+```tempo
 {footer(groupingField)}
   Footer content here
 {endfooter}
@@ -678,7 +678,7 @@ The lines that are below the default sales price:
 
 #### **مثال – جدول مجمَّع حسب كود الصنف**
 
-```
+```tempo
 {loop(details)}
   {header(details.item.item.code)}
     Item: {#details.item.item.code}
@@ -709,13 +709,13 @@ The lines that are below the default sales price:
 
 استخدم الصياغة التالية للحصول على خصائص المستخدم الحالي المسجّل دخوله:
 
-```
+```tempo
 {$user.PROPERTY_NAME}
 ```
 
 **مثال:**
 
-```
+```tempo
 {$user.code}
 ```
 
@@ -725,13 +725,13 @@ The lines that are below the default sales price:
 
 ### التنسيق العام للتاريخ
 
-```
+```tempo
 {formatDate(dateExpression, formatExpression)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {formatDate(valueDate, "yyyy-MM-dd")}
 ```
 
@@ -812,25 +812,25 @@ The lines that are below the default sales price:
 
 لتنسيق حقل وقت من استعلام:
 
-```
+```tempo
 {time(timeField)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {time(fromTime)}
 ```
 
 أو استخدم:
 
-```
+```tempo
 {fromTime.$toStringNormal}
 ```
 
 لإجمالي الساعات المخزَّنة كعدد عشري:
 
-```
+```tempo
 {decimalToTime(decimalField)}
 ```
 
@@ -840,7 +840,7 @@ The lines that are below the default sales price:
 
 ### الوصول إلى عناصر المصفوفة
 
-```
+```tempo
 {details.$get(index)}
 ```
 
@@ -854,19 +854,19 @@ The lines that are below the default sales price:
 
 * إزالة جميع المسافات البيضاء — بما فيها بين الكلمات (يدعم Unicode):
 
-```
+```tempo
 {description1.$removeAllSpaces}
 ```
 
 * تسوية المسافات — قص الحواف وطي المسافات الداخلية المتعددة إلى مسافة واحدة:
 
-```
+```tempo
 {name1.$normalizeSpace}
 ```
 
 * تسوية النص العربي (توحيد الحروف المتشابهة):
 
-```
+```tempo
 {description1.$normalizeAr}
 ```
 
@@ -891,37 +891,37 @@ The lines that are below the default sales price:
 
 * الترجمة العربية:
 
-```
+```tempo
 {#orderStatus.$arabic}
 ```
 
 * الترجمة الإنجليزية:
 
-```
+```tempo
 {#orderStatus.$english}
 ```
 
 * الترجمة التلقائية استنادًا إلى إعدادات اللغة:
 
-```
+```tempo
 {translate(orderStatus)}
 ```
 
 * إجبار الترجمة العربية:
 
-```
+```tempo
 {translateAr(orderStatus)}
 ```
 
 * إجبار الترجمة الإنجليزية:
 
-```
+```tempo
 {translateEn(orderStatus)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {translate(orderStatus)}
 ```
 
@@ -939,7 +939,7 @@ The lines that are below the default sales price:
 
 * **اسم التطبيق** — اسم المنتج ذو العلامة التجارية:
 
-```
+```tempo
 {translate("applicationName")}
 ```
 
@@ -947,7 +947,7 @@ The lines that are below the default sales price:
 
 * **عنوان URL للتطبيق** — عنوان الموقع الإلكتروني ذو العلامة التجارية:
 
-```
+```tempo
 {translate("appUrl")}
 ```
 
@@ -955,7 +955,7 @@ The lines that are below the default sales price:
 
 **مثال:**
 
-```
+```tempo
 Thank you for using {translate("applicationName")}.
 For more information, visit {translate("appUrl")}.
 ```
@@ -972,13 +972,13 @@ For more information, visit {translate("appUrl")}.
 
 * التحويل إلى عدد صحيح:
 
-```
+```tempo
 {#description1.$tryToInt}
 ```
 
 * التحويل إلى عدد عشري:
 
-```
+```tempo
 {#description1.$tryToDecimal}
 ```
 
@@ -1002,32 +1002,32 @@ For more information, visit {translate("appUrl")}.
 
 * **إذا لم يكن الحقل فارغًا**:
 
-```
+```tempo
 {if(code)}Content shown if `code` is not empty{endif}
 ```
 
 * **إذا لم يكن الرقم صفرًا**:
 
-```
+```tempo
 {if(money.remaining)}Remaining is {#money.remaining}{endif}
 ```
 
 * **إذا كانت القيمة المنطقية true**:
 
-```
+```tempo
 {if(commitedBefore)}Record is committed before{endif}
 ```
 
 * **شرط منفي** (إذا كان الحقل فارغًا أو false):
 
-```
+```tempo
 {ifnot(code)}Code is missing{endif}
 {if!(code)}Code is missing{endif}
 ```
 
 * **إذا كان النص يمثّل رقمًا غير صفري**:
 
-```
+```tempo
 {ifnumber(description1)}
 ```
 
@@ -1067,7 +1067,7 @@ For more information, visit {translate("appUrl")}.
 
 يمكنك ربط شروط متعددة باستخدام `else if=` أو `elseif=` أو `else`.
 
-```
+```tempo
 {if=(code,"a")}Case A
 {else if=(code,"b")}Case B
 {else if<(n1,5)}Case C
@@ -1090,7 +1090,7 @@ For more information, visit {translate("appUrl")}.
 
 ### الصياغة
 
-```
+```tempo
 {tafqeet("Number", "CurrencyCode")}
 ```
 
@@ -1100,7 +1100,7 @@ For more information, visit {translate("appUrl")}.
 
 #### مثال 1: قيم ثابتة
 
-```
+```tempo
 {tafqeet("500", "EGP")}
 ```
 
@@ -1109,7 +1109,7 @@ For more information, visit {translate("appUrl")}.
 
 #### مثال 2: استخدام قيم الحقول
 
-```
+```tempo
 {tafqeet(money.netValue, money.currency.code)}
 ```
 
@@ -1127,7 +1127,7 @@ For more information, visit {translate("appUrl")}.
 
 وتريد التحويل بالإنجليزية بصرف النظر عن لغة الواجهة، استخدم:
 
-```
+```tempo
 {tafqeet(money.netValue, money.currency.altCode)}
 ```
 
@@ -1139,26 +1139,26 @@ For more information, visit {translate("appUrl")}.
 
 * التصيير دائمًا **بالعربية**:
 
-```
+```tempo
 {tafqeetAr(money.netValue, money.currency.code)}
 ```
 
 * التصيير دائمًا **بالإنجليزية**:
 
-```
+```tempo
 {tafqeetEn(money.netValue, money.currency.code)}
 ```
 ## تنفيذ مسارات الكيان عبر روابط Tempo
 
 لتشغيل مسار كيان من قالب Tempo (مثلًا في بريد إلكتروني)، استخدم الصياغة التالية:
 
-```
+```tempo
 {flow(record, flowCode="EntityFlowCode")}
 ```
 
 **مثال:**
 
-```
+```tempo
 {flow(employee, flowCode="CreateJobOffer")}
 ```
 
@@ -1172,7 +1172,7 @@ For more information, visit {translate("appUrl")}.
 
 #### الأسلوب الأول: استخدام `subject:` في بداية السطر الأول
 
-```
+```tempo
 subject:The employee {name2} was updated by {$user.name2}
 ```
 
@@ -1180,7 +1180,7 @@ subject:The employee {name2} was updated by {$user.name2}
 
 #### الأسلوب الثاني: استخدام كتلة `{subject}`
 
-```
+```tempo
 {subject}The employee {name2} was updated by {$user.name2}{endsubject}
 ```
 
@@ -1190,14 +1190,14 @@ subject:The employee {name2} was updated by {$user.name2}
 
 استخدم وسمًا أو أكثر من `emailattachment` للحقول أو مسارات الخادم:
 
-```
+```tempo
 {emailattachment(attachmentField)}
 {emailattachment("C:\Path\To\File.pdf")}
 ```
 
 **مثال:**
 
-```
+```tempo
 subject:Attachments of employee {code} - {name1}
 Dear Sir,  
 Please note that the employee {name1} was changed. The email contains all files attached to the employee.  
@@ -1206,7 +1206,7 @@ Please note that the employee {name1} was changed. The email contains all files 
 
 **مثال آخر:**
 
-```
+```tempo
 Attached our catalog {emailattachment("E:\Media\Prochures\catalog.pdf")}
 ```
 
@@ -1234,7 +1234,7 @@ Attached our catalog {emailattachment("E:\Media\Prochures\catalog.pdf")}
 
 #### كتلة نص الرسالة
 
-```
+```tempo
 {openmsg}
 Message content here
 {closemsg}
@@ -1242,7 +1242,7 @@ Message content here
 
 #### تعريف عنوان المستلم
 
-```
+```tempo
 {sendto}email-or-phone{endsendto}
 ```
 
@@ -1250,13 +1250,13 @@ Message content here
 
 * الإرسال إلى بريد العميل الإلكتروني:
 
-```
+```tempo
 {sendto}{#email}{endsendto}
 ```
 
 * إرسال SMS إلى رقم هاتف:
 
-```
+```tempo
 {sendto}{#phoneNumber}{endsendto}
 ```
 
@@ -1280,7 +1280,7 @@ order by customerCode
 
 **الخطوة 2: محتوى قالب البريد الإلكتروني**
 
-```
+```tempo
 {loop()}
   {header(customerCode)}
 
@@ -1309,31 +1309,31 @@ order by customerCode
 
 * **قص المسافات من البداية والنهاية** (مسافات ASCII فقط، أسلوب قديم):
 
-```
+```tempo
 {description1.$trim}
 ```
 
 * **تجريد المسافات البيضاء الأمامية والخلفية** (يدعم Unicode — يتعامل مع التبويبات، NBSP، إلخ):
 
-```
+```tempo
 {description1.$strip}
 ```
 
 * **تجريد المسافات البيضاء الأمامية فقط:**
 
-```
+```tempo
 {description1.$stripLeading}
 ```
 
 * **تجريد المسافات البيضاء الخلفية فقط:**
 
-```
+```tempo
 {description1.$stripTrailing}
 ```
 
 * **تسوية المسافات** — يقص الحواف **ويطوي** أي سلسلة من المسافات الداخلية إلى مسافة واحدة (يدعم Unicode):
 
-```
+```tempo
 {name1.$normalizeSpace}
 ```
 
@@ -1352,7 +1352,7 @@ order by customerCode
 
 * **تحويل الأرقام العربية إلى إنجليزية:**
 
-```
+```tempo
 {mobile.$replaceArNumerals}
 ```
 
@@ -1360,7 +1360,7 @@ order by customerCode
 
 * **تحويل جميع الأحرف إلى أحرف كبيرة:**
 
-```
+```tempo
 {chassisNumber.$toUpperCase}
 ```
 
@@ -1368,7 +1368,7 @@ order by customerCode
 
 * **تحويل جميع الأحرف إلى أحرف صغيرة:**
 
-```
+```tempo
 {email.$toLowerCase}
 ```
 
@@ -1382,13 +1382,13 @@ order by customerCode
 
 * **تحليل نص JSON إلى map:**
 
-```
+```tempo
 {text1.$parseJSONToMap}
 ```
 
 * **تحويل نص مفصول بفواصل إلى قائمة:**
 
-```
+```tempo
 {remarks.$parseCSVToList}
 ```
 
@@ -1398,37 +1398,37 @@ order by customerCode
 
 * **استخراج أحرف من اليسار:**
 
-```
+```tempo
 {left(string, length)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {left(code, 3)} → "Nam" if code is "NamaSoft"
 ```
 
 * **استخراج أحرف من اليمين:**
 
-```
+```tempo
 {right(string, length)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {right(code, 3)} → "oft" if code is "NamaSoft"
 ```
 
 * **استخراج سلسلة فرعية من نطاق محدد:**
 
-```
+```tempo
 {substring(string, startIndex, endIndex)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {substring("NamaSoft", 3, 5)} → "maS"
 ```
 
@@ -1438,19 +1438,19 @@ order by customerCode
 
 * **حشو أو قص من اليسار:**
 
-```
+```tempo
 {leftpad(length)}YourTextHere{endpad}
 ```
 
 * **حشو أو قص من اليمين:**
 
-```
+```tempo
 {rightpad(length)}YourTextHere{endpad}
 ```
 
 **أمثلة:**
 
-```
+```tempo
 {leftpad(10)}123{endpad}     → "       123"
 {rightpad(10)}123{endpad}    → "123       "
 {leftpad(5)}123456789{endpad}→ "12345"
@@ -1465,7 +1465,7 @@ order by customerCode
 
 * **التقريب إلى 0–5 خانات عشرية:**
 
-```
+```tempo
 {n1.$round0}
 {n1.$round1}
 {n1.$round2}
@@ -1476,7 +1476,7 @@ order by customerCode
 
 **أمثلة:**
 
-```
+```tempo
 {n1.$round0} → 20 if n1 = 19.9  
 {n1.$round2} → 10.33 remains 10.33
 ```
@@ -1485,13 +1485,13 @@ order by customerCode
 
 ### التقريب الديناميكي
 
-```
+```tempo
 {round(numberExpression, decimalPlacesExpression)}
 ```
 
 **أمثلة:**
 
-```
+```tempo
 {round(n1, "2")}
 {round(money.value, money.currency.fractionalDecimalPlaces)}
 ```
@@ -1500,13 +1500,13 @@ order by customerCode
 
 ### تنسيق الأرقام
 
-```
+```tempo
 {formatNumber(numberExpression, formatExpression)}
 ```
 
 **مثال:**
 
-```
+```tempo
 {formatNumber(n1, "###,###.00")} → 1,234.50
 ```
 ## اختصار URL في Tempo
@@ -1518,7 +1518,7 @@ order by customerCode
 
 ### الصياغة
 
-```
+```tempo
 {shortenurl(server="https://your-shortener.com/", signature="SIGNATURE_HERE")}
   {link($this, plainLink=true)}
 {endshortenurl}
@@ -1526,7 +1526,7 @@ order by customerCode
 
 **مثال باستخدام خدمة اختصار Namasoft:**
 
-```
+```tempo
 {shortenurl(server="https://namasoft.com/s/", signature="SIGNATURE_HERE")}
   {link($this, plainLink=true)}
 {endshortenurl}
@@ -1540,7 +1540,7 @@ order by customerCode
 
 ### مثال الإشعار
 
-```
+```tempo
 {reportlink(reportCode="1000", runType="launch", newwindow="true")}
   {paramname("entityType")}{paramvalue(ref1.entityType)}
   {paramname("document")}{paramvalue(ref1)}
@@ -1549,7 +1549,7 @@ order by customerCode
 
 ### مثال لوحة المعلومات
 
-```
+```tempo
 {reportlink(reportCode="1000", runType="launch", plainLink=true)}
   {paramname("entityType")}{paramvalue(entityType)}
   {paramname("document")}{paramvalue(id, entityType)}
@@ -1562,19 +1562,19 @@ order by customerCode
 
 * **المعامل بالاسم:**
 
-```
+```tempo
 {paramname("paramName")}{paramvalue("paramValue")}
 ```
 
 * **معاملات المرجع (مع حقول العرض الاختيارية):**
 
-```
+```tempo
 {paramrefvalue(entityType=..., id=..., code=..., name1=..., name2=...)}
 ```
 
 * **معاملات متعددة القيم:**
 
-```
+```tempo
 {parammultivalue}{code} {name1}{endmutlivalue}
 ```
 
@@ -1586,7 +1586,7 @@ order by customerCode
 
 ### الصياغة الأساسية
 
-```
+```tempo
 {listviewlink(title="View Invoices", newwindow="true")}
   {listentitytype("SalesInvoice")}
   {listcriteria}
@@ -1614,7 +1614,7 @@ order by customerCode
 
 تحتوي كتلة `{listcriteria}...{endlistcriteria}` على شروط التصفية بتنسيق نصي. يمكنك داخل هذه الكتلة استخدام قيم الحقول الديناميكية بالأقواس المعقوفة:
 
-```
+```tempo
 {listcriteria}
   fieldID,operator,{dynamicValue},AND;
   anotherField,Equal,"constantValue",AND;
@@ -1646,7 +1646,7 @@ order by customerCode
 
 ينشئ هذا المثال رابطًا في إشعار عميل يعرض جميع فواتير المبيعات غير المدفوعة لذلك العميل:
 
-```
+```tempo
 Dear {name1},
 
 You have unpaid invoices. Click below to view them:
@@ -1667,7 +1667,7 @@ You have unpaid invoices. Click below to view them:
 
 للوحات المعلومات التي تحتاج فقط إلى URL:
 
-```
+```tempo
 {listviewlink(plainlink="true")}
   {listentitytype(entityType)}
   {listcriteria}
@@ -1687,7 +1687,7 @@ You have unpaid invoices. Click below to view them:
 
 ### 1. تضمين الاستبيان في البريد الإلكتروني
 
-```
+```tempo
 Dear Sir,{enter}
 We would love you to answer the following survey.{enter}
 {$renderQuestionsForMailEmbedded}{enter}
@@ -1696,7 +1696,7 @@ Thanks and Best Regards
 
 ### 2. إرسال الاستبيان كرابط
 
-```
+```tempo
 Dear Sir,{enter}
 We would love you to answer a quick survey on the following <a href='{$questionsURL}'>URL</a>.{enter}
 Thanks and Best Regards
@@ -1711,7 +1711,7 @@ Thanks and Best Regards
 
 يرسل هذا المثال طلب POST لكل سطر في `details`، مع تعريف أجزاء الـ body بشكل فردي:
 
-```
+```tempo
 {loop(details)}
   {httprequest}
     {requesturl}https://namasoft.com/api/v3.0/item{endurl}
@@ -1753,7 +1753,7 @@ Thanks and Best Regards
 
 يستخدم هذا الإصدار نص JSON مكتوبًا يدويًا في جسم الطلب:
 
-```
+```tempo
 {loop(details)}
   {httprequest}
     {requesturl}https://namasoft.com/api/v3.0/item{endurl}
@@ -1797,7 +1797,7 @@ Thanks and Best Regards
 
 ### صياغة المنشئ الأساسية
 
-```
+```tempo
 {creator(entity="EntityName", menu="MenuName", title="Link Title", view="ViewName", newwindow="true/false")}
   ...field assignments...
 {endcreator}
@@ -1811,7 +1811,7 @@ Thanks and Best Regards
 
 **مثال:**
 
-```
+```tempo
 {creator(entity="SalesInvoice")}
 {endcreator}
 ```
@@ -1824,7 +1824,7 @@ Thanks and Best Regards
 
 **مثال:**
 
-```
+```tempo
 {f("n1")}{v("10")}
 ```
 
@@ -1836,7 +1836,7 @@ Thanks and Best Regards
 
 **مثال:**
 
-```
+```tempo
 {creator(entity="SalesInvoice")}
   {f("code")}{v("SA000001")}
   {f("remarks")}
@@ -1854,31 +1854,31 @@ Thanks and Best Regards
 
 #### الأسلوب 1: برقم الصف
 
-```
+```tempo
 {f("details.item.itemCode")}{v("ITEM005")}{r("2")}
 ```
 
 #### الأسلوب 2: الإضافة إلى صف جديد عند الحاجة (`@@end`)
 
-```
+```tempo
 {f("details.item.itemCode")}{v("ITEM005")}{r("@@end")}
 ```
 
 #### الأسلوب 3: استخدام الصف الأخير دائمًا (`@@last`)
 
-```
+```tempo
 {f("details.item.itemCode")}{v("ITEM005")}{r("@@last")}
 ```
 
 #### الأسلوب 4: استخدام رقم الصف الحالي في الحلقة
 
-```
+```tempo
 {f("details.item.itemCode")}{v(details.item.itemCode)}{r(@rownumber)}
 ```
 
 **مثال مع حلقة:**
 
-```
+```tempo
 {creator(entity="SalesInvoice")}
   {f("code")}{v("SA000001")}
   {loop(details)}
@@ -1891,7 +1891,7 @@ Thanks and Best Regards
 
 ### مثال حالة استخدام: نسخ الأصناف غير الخدمية فقط
 
-```
+```tempo
 {creator(entity="SalesInvoice")}
   {f("book")}{v("SIV1")}
   {f("term")}{v("CASH")}
@@ -1916,7 +1916,7 @@ Thanks and Best Regards
 
 يمكنك استدعاء إجراءات الواجهة (مثل حفظ وطباعة وحذف):
 
-```
+```tempo
 {callGUIAction("actionId")}
 ```
 
@@ -1934,7 +1934,7 @@ more, refresh, homePage, goToRecord
 
 استخدم دالة `itemprice`:
 
-```
+```tempo
 {itemprice(itemIdOrCode=expression)}
 ```
 
@@ -1942,7 +1942,7 @@ more, refresh, homePage, goToRecord
 
 #### الصياغة الكاملة
 
-```
+```tempo
 {itemprice(
   itemIdOrCode=...,
   customerIdOrCode=...,
@@ -2019,7 +2019,7 @@ more, refresh, homePage, goToRecord
  
 #### أمثلة
 
-```
+```tempo
 {loop(details)}
   Price of item {details.item.item.name} is {itemprice(itemIdOrCode=details.item.item.code)}
   Price for customer CST05: {itemprice(itemIdOrCode=details.item.item.code, customerIdOrCode="CST05")}
@@ -2033,13 +2033,13 @@ more, refresh, homePage, goToRecord
 
 استخدم دالة `itempurchaseprice`:
 
-```
+```tempo
 {itempurchaseprice(itemIdOrCode=..., supplierIdOrCode=...)}
 ```
 
 #### الصياغة الكاملة
 
-```
+```tempo
 {itempurchaseprice(
   itemIdOrCode=...,
   supplierIdOrCode=...,
@@ -2120,7 +2120,7 @@ more, refresh, homePage, goToRecord
 
 **مثال:**
 
-```
+```tempo
 The last added discussion was {lastDiscussion.discussion} at {lastDiscussion.onTime} by {link(lastDiscussion.user)}.
 Ref1 code: {lastDiscussion.ref1.code}
 ```
@@ -2162,6 +2162,6 @@ Ref1 code: {lastDiscussion.ref1.code}
 
 **مثال URL صورة للموظف:**
 
-```
+```tempo
 http://localhost:8080/erp/file.download?entityType=Employee&recordId={empId}
 ```

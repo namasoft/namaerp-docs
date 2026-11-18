@@ -39,7 +39,7 @@
 - **`dimensions`** — محددات الدخول الحالية
 
 **مثال بسيط:**
-```
+```tempo
 Name1: {item.name1} {enter}
 Name2: {item.name2} {enter}
 Color: {invItemCode.color}{enter}

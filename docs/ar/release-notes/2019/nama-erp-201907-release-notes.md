@@ -78,7 +78,7 @@
 - تم إضافة الإجراءين (مراجعة، إلغاء مراجعة) بأنواع الإجراءات بنافذة مسار الكيان
 - تم إضافة تاريخ جديد إلى مدير التراخيص - `Download Release Allow Temporary Until` بحيث يمكن للتجهيز والدعم تحميل الإصدار لدى البرنامج إذا كان هذا التاريخ يلي تاريخ انتهاء الدعم الفني. الغرض الأساسي هو عدم تعديل تاريخ انتهاء الصيانة عند الرغبة في فتح الإصدارات مؤقتاً للعميل
 - **Dynamic Criteria was not able to render tempo syntax, the ability was added**: تم إضافة حقل جديد إلى سطور الفلتر `Tempo Use` قم بالتعليم عليه ثم استخدم الصيغة التالية في حقل `Dynamic Criteria`:
-  ```
+  ```tempo
   {loop($currentUser.employee.responsibilities)}
   section.code,Equal,{$currentUser.employee.responsibilities.responsibility.code},OR; 
   {endloop}

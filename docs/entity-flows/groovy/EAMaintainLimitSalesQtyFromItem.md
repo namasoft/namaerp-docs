@@ -62,7 +62,7 @@ One Limit Sales Qty record, `MONTHLY-CAPS`, should hold every item's cap. Both f
 - Parameter 2: `select id from LimitSalesQty where code = 'MONTHLY-CAPS'`
 - Parameter 3:
 
-```
+```fieldmap
 code="MONTHLY-CAPS"
 name1="MONTHLY-CAPS"
 name2="MONTHLY-CAPS"

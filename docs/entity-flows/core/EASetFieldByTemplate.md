@@ -34,12 +34,12 @@ Manual execution for dynamic field population, automated data formatting, conten
 ## Template Examples
 
 Simple field reference:
-```
+```tempo
 Customer: {entity.customerName} - Order: {entity.orderNumber}
 ```
 
 Complex formatting:
-```
+```tempo
 Invoice #{code} dated {valueDate} 
 Amount: {money.netValue} 
 Status: {documentFileStatus}

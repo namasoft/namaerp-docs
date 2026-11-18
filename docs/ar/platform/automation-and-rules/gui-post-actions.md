@@ -113,7 +113,7 @@ select distinct top 15 name1 from @entity@ where name1 like '%' + {$csg} + '%'
 
 أضف سطرًا لكل حقل يُفترض أن يُشغّل الحساب. ضع في **الحقل** الحقل الذي يكتب فيه المستخدم (`lines.n1`)، واكتب الحساب في **المعادلة** مع تسمية الهدف ببادئة **الجدول** نفسه:
 
-```ini
+```fieldmap
 lines.n3=sql(select isnull(try_cast({lines.n1} as decimal(20,6)), 0)
                   * isnull(try_cast({lines.n2} as decimal(20,6)), 0))
 ```
@@ -153,7 +153,7 @@ lines.n3=sql(select isnull(try_cast({lines.n1} as decimal(20,6)), 0)
 
 يكفي لذلك سطر واحد على `ref1`. فالدالة `copyOf` تنسخ كل الأعمدة المشتركة بين الجدولين، فلا تحتاج المعادلة سطرًا لكل عمود:
 
-```ini
+```fieldmap
 lines=copyOf(ref1.$toReal.lines)
 ```
 

@@ -55,7 +55,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 * **آخر سطر معدَّل:**
 
-```
+```tempo
 {lastModifiedLine}
 ```
 
@@ -63,7 +63,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 **مثال:**
 
-```
+```tempo
 {lastModifiedLine.qty.value}
 ```
 
@@ -77,7 +77,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 يظهر حين تكون نقطة البيع في وضع الانتظار، قبل إنشاء أي فاتورة.
 
-```
+```tempo
 @CLEARLINE@@CLEARLINE@**** Welcome to Register {name2}
 ```
 
@@ -89,7 +89,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 يظهر عند إضافة صنف جديد إلى الفاتورة.
 
-```
+```tempo
 @CLEARLINE@@CLEARLINE@
 {padleft(20)}Item: {lastModifiedLine.item.name2}{endpad}
 {padleft(20)}Qty: {lastModifiedLine.qty.uom.name2} - {round(lastModifiedLine.qty.value,0)}{endpad}
@@ -103,7 +103,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 يظهر عند فتح شاشة التحصيل (قبل الدفع).
 
-```
+```tempo
 @CLEARLINE@@CLEARLINE@
 {padleft(20)}Total: {round(netPrice,2)}${endpad}
 ```
@@ -116,7 +116,7 @@ entities: [NamaPosPoleDisplaySpecs]
 
 يظهر بعد أن يدفع العميل ويُحسب الباقي.
 
-```
+```tempo
 @CLEARLINE@@CLEARLINE@
 {padleft(20)}Remaining: {round(change,2)}${endpad}
 ```

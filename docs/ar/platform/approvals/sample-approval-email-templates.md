@@ -40,7 +40,7 @@ menu: إدارة النظام ← تخصيص شكل النظام ← تعريف 
 
 ::: details كود HTML
 
-```html
+```tempo
 subject:طلب اعتماد {entityType.$arabic} - {code} - منشئ السجل: {firstAuthor.name1}
 <div dir="rtl" style="margin:0;padding:24px;background:#eef2ff;background:linear-gradient(135deg,#eef2ff 0%,#fdf2f8 100%);font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
   <table role="presentation" align="center" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;margin:0 auto;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(79,70,229,0.18);">
@@ -176,7 +176,7 @@ subject:طلب اعتماد {entityType.$arabic} - {code} - منشئ السجل:
 :::
 
 ::: details كود HTML
-```html
+```tempo
 subject:طلب اعتماد {entityType.$arabic} - {code} - الصافي: {formatNumber(money.netValue, "###,##0.00")}
 <div dir="rtl" style="margin:0;padding:24px;background:#ecfeff;background:linear-gradient(135deg,#ecfeff 0%,#f0fdf4 100%);font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
   <table role="presentation" align="center" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;margin:0 auto;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(13,148,136,0.18);">

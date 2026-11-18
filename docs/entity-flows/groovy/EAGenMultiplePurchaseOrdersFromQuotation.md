@@ -67,14 +67,14 @@ Each order or invoice is saved with the full checks of a normal save. If one of 
 
 For purchase orders, Parameter 2 sets the order's book and term:
 
-```
+```fieldmap
 book='PO01'
 term='PO'
 ```
 
 For purchase invoices, it also sets the warehouse:
 
-```
+```fieldmap
 book='PI01'
 term='PI'
 warehouse='01'

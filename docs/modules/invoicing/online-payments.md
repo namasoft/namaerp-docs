@@ -275,7 +275,7 @@ For KNet integration, you can pass additional data to the payment gateway using 
 
 The grid is **Fields Map Lines** (`fieldsMapLines`); pick the gateway field in **Field** (`fieldsMapLines.field`). The **Value Template** column (`fieldsMapLines.valueTemplate`) supports placeholders, so you can dynamically populate these fields:
 
-```
+```tempo
 {customer.code}
 {code}
 {netTotal}

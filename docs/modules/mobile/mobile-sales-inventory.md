@@ -37,7 +37,7 @@ The **Item Data** screen lets you query an item by scanning a barcode/QR or ente
 - **`dimensions`** - Current entry dimensions
 
 **Simple example:**
-```
+```tempo
 Name1: {item.name1} {enter}
 Name2: {item.name2} {enter}
 Color: {invItemCode.color}{enter}

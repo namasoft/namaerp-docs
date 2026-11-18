@@ -41,7 +41,7 @@ SELECT id FROM JournalEntry WHERE 1 = 0
 
 ### Parameter 2: Fields Updater (Required)
 Field assignments from source to journal entry:
-```
+```fieldmap
 book="JEB"
 ref1=id
 date1=issueDate
@@ -64,7 +64,7 @@ lines.amount=EXPENSE_DR,PAYABLE_CR
 
 ### Parameter 5: Inverse Copy Fields (Optional)
 Copy values back to source document:
-```
+```fieldmap
 ledgerTransReqId=ledgerTransReqId
 ```
 

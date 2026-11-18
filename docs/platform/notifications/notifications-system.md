@@ -136,7 +136,7 @@ A few more fields shape what arrives:
 
 Tempo templates reach any field of the record and of the records it points at:
 
-```
+```tempo
 Dear {customer.name1},
 
 Your invoice {code} dated {valueDate} with amount {money.total}

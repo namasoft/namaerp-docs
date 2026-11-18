@@ -205,7 +205,7 @@ ORDER BY s.creationDate DESC
 
 the template
 
-```html
+```tempo
 <h3>Latest invoices</h3>
 <p>Newest: {code}</p>
 <ul>{loop(rows)}<li>{code} - {customerName}</li>{endloop}</ul>
@@ -271,7 +271,7 @@ JavaScript is full of `{ }`, which a Tempo template would try to read as columns
 starts with `<useCSSFriendlyBrackets/>` and writes its columns as `%{column}%` instead (see
 [Tempo](/admin/tempo)):
 
-```html
+```tempo
 <useCSSFriendlyBrackets/>
 <style>
   .approvals-widget td { padding: 4px 8px; }

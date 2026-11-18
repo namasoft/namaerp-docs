@@ -12,7 +12,7 @@ A field map is a set of instructions that tells the system:
 - **How to transform it** (optional functions)
 
 The basic syntax is:
-```
+```fieldmap
 targetField=sourceField
 ```
 
@@ -21,26 +21,33 @@ targetField=sourceField
 ### Direct Field Copy
 The simplest form copies a value from one field to another:
 
-```ini
-code=code                  # Copy code from source to target
-description=description    # Copy description from source to target
-customer=customer          # Copy customer reference from source to target
+```fieldmap
+# Copy code from source to target
+code=code
+# Copy description from source to target
+description=description
+# Copy customer reference from source to target
+customer=customer
 ```
 
 ### Setting Fixed Values
 You can set fields to specific values:
 
-```ini
-status="Active"           # Set status to the text "Active"
-priority=1                # Set priority to number 1
-isApproved=true          # Set boolean value
-discount=null            # Clear the field
+```fieldmap
+# Set status to the text "Active"
+status="Active"
+# Set priority to number 1
+priority=1
+# Set boolean value
+isApproved=true
+# Clear the field
+discount=null
 ```
 
 ### Downloading Files from URLs (Attachments)
 For attachment fields (LargeData type), you can provide a URL and the system will automatically download the file:
 
-```ini
+```fieldmap
 # Direct URL - downloads and stores the file
 attachment="https://example.com/files/sample.pdf"
 
@@ -71,9 +78,11 @@ When you set an attachment field to a URL (any string containing `://`), the sys
 :::
 
 ### Special References
-```ini
-ref5=$this               # Set ref5 to reference the source entity itself
-fromDocument=$this       # Create a link back to the source document
+```fieldmap
+# Set ref5 to reference the source entity itself
+ref5=$this
+# Create a link back to the source document
+fromDocument=$this
 ```
 
 ## Working with Collections (Detail Lines)
@@ -81,20 +90,27 @@ fromDocument=$this       # Create a link back to the source document
 ### Copying Entire Tables
 When documents have detail lines (like invoice items), you can:
 
-```ini
-details=[lines]          # Create same number of lines as source
-details=[5]              # Create exactly 5 empty lines
-details=[clear]          # Remove all existing lines
+```fieldmap
+# Create same number of lines as source
+details=[lines]
+# Create exactly 5 empty lines
+details=[5]
+# Remove all existing lines
+details=[clear]
 ```
 
 ### Copying All Fields of a Table at Once
 `[lines]` only gives the target the right number of empty lines, so on its own it needs one more mapping line per column (`details.item=lines.item`, `details.quantity=lines.quantity`, …). When the two tables share most of their columns, as a document and a copy of it do, `copyOf` copies every column in one line:
 
-```ini
-details=copyOf(lines)                 # Another table on the same record
-details=copyOf(salesOrder.details)    # The lines of the document picked in the salesOrder field
-details=copyOf(details)               # In a generate-entity flow: the source document's lines into the new one
-lines=copyOf(ref1.$toReal.lines)      # Through a generic reference: add $toReal
+```fieldmap
+# Another table on the same record
+details=copyOf(lines)
+# The lines of the document picked in the salesOrder field
+details=copyOf(salesOrder.details)
+# In a generate-entity flow: the source document's lines into the new one
+details=copyOf(details)
+# Through a generic reference: add $toReal
+lines=copyOf(ref1.$toReal.lines)
 ```
 
 A generic reference such as `fromDoc` or `ref1` can point at any entity type, so it does not know which tables it has. Put `$toReal` after it to reach the record it points at, as everywhere else in field maps. Without it the flow stops with *error while trying to get value for field ref1.lines*.
@@ -105,7 +121,7 @@ How it behaves:
 - The target keeps its own lines. Running the same mapping again (for example each time the user changes the source) updates the existing lines in place rather than deleting and recreating them, so each line keeps its identity. When the source has more lines than the target, the extra lines are new; when it has fewer, the extra target lines are removed.
 - Mapping lines that come after `copyOf` see the copied lines, so you can adjust some columns afterwards:
 
-```ini
+```fieldmap
 details=copyOf(salesOrder.details)
 details.warehouse=warehouse
 details.remarks="Copied from order"
@@ -116,16 +132,19 @@ The left side must be a table, and the right side must lead to a table. Anything
 In a [GUI post action](/platform/automation-and-rules/gui-post-actions.md), `copyOf` adds the target table to the context fields automatically, because the screen has to send the lines it already has for them to be reused. It also adds the source: the table itself, or the reference field it is reached through (`salesOrder` in the example above).
 
 ### Adding Lines
-```ini
-details=[addLines(5)]              # Add 5 new empty lines
-details=[addLines(lines)]          # Add same number as source lines
-details1=[addLines(details2)]      # Add lines based on another collection
+```fieldmap
+# Add 5 new empty lines
+details=[addLines(5)]
+# Add same number as source lines
+details=[addLines(lines)]
+# Add lines based on another collection
+details1=[addLines(details2)]
 ```
 
 ### Removing Lines by SQL
 Sometimes you do not want to clear the whole table, only the lines that meet (or fail) a condition. Put the detail table on the left and one of the two removal functions on the right. The SQL is evaluated **once per line** and must return `1` (keep the match) or `0`, exactly like the queries used in criteria and `Apply When Query`:
 
-```ini
+```fieldmap
 # Drop every line whose n1 is below 5
 details=removeLinesMatchingSql(select case when {details.n1} < 5 then 1 else 0 end)
 
@@ -138,7 +157,7 @@ details=removeLinesMatchingSql(select case when {details.item.item.itemType} = '
 
 For longer queries use the multi-line form, closed with the matching `end…` keyword on its own line:
 
-```ini
+```fieldmap
 details=mlRemoveLinesMatchingSql(
   select case
     when {details.n1} > 5 then 1
@@ -162,22 +181,27 @@ How it behaves:
 :::
 
 ### Copying Field Values to All Lines
-```ini
-details.warehouse=warehouse        # Copy header warehouse to all detail lines
-details.project=project           # Copy header project to all detail lines
+```fieldmap
+# Copy header warehouse to all detail lines
+details.warehouse=warehouse
+# Copy header project to all detail lines
+details.project=project
 ```
 
 ### Line-by-Line Copying
-```ini
-details.quantity=lines.quantity    # Copy quantity from each source line
-details.price=lines.unitPrice      # Copy price from corresponding lines
-details.item=lines.item           # Copy item references
+```fieldmap
+# Copy quantity from each source line
+details.quantity=lines.quantity
+# Copy price from corresponding lines
+details.price=lines.unitPrice
+# Copy item references
+details.item=lines.item
 ```
 
 ### Getting Collection Size
 Use the `$size` operator to get the number of lines in a detail collection:
 
-```ini
+```fieldmap
 # Store the count of detail lines in a numeric field
 n1=details.$size
 
@@ -185,7 +209,7 @@ n1=details.$size
 
 You can also reference `$size` inside SQL expressions for conditional logic based on line counts:
 
-```ini
+```fieldmap
 # Conditional text based on number of lines
 text1=sql(select case when {lines.$size} > 5 then N'More than 5' else N'Less than 5' end)
 
@@ -199,10 +223,13 @@ avgValue=sql(select {money.netValue} / {details.$size})
 
 #### Masking
 Format text according to a pattern:
-```ini
-altCode=mask(code,XXX-XXX-XXX)    # ABC123456 becomes ABC-123-456
-phoneDisplay=mask(phone,XXXX XXX XXXX)  # 0501234567 becomes 0501 234 567
-details.text1=mask(details.text2,XX-XX:X--X)  # Works on detail lines too
+```fieldmap
+# ABC123456 becomes ABC-123-456
+altCode=mask(code,XXX-XXX-XXX)
+# 0501234567 becomes 0501 234 567
+phoneDisplay=mask(phone,XXXX XXX XXXX)
+# Works on detail lines too
+details.text1=mask(details.text2,XX-XX:X--X)
 ```
 - `X` represents a character from the original value
 - Any other character (like `-`, `.`, `:`, `*`, `@`) is inserted as-is
@@ -212,10 +239,13 @@ details.text1=mask(details.text2,XX-XX:X--X)  # Works on detail lines too
 - If item code is `ABC155713` and you use `mask(code,XXX-XXX@XXX)`, the result is `ABC-155@713`
 
 #### Text Extraction
-```ini
-firstFive=description.$left_5      # Get first 5 characters
-lastTwo=code.$right_2             # Get last 2 characters
-middle=ref1.$mid_3_4              # Get 4 characters starting at position 3
+```fieldmap
+# Get first 5 characters
+firstFive=description.$left_5
+# Get last 2 characters
+lastTwo=code.$right_2
+# Get 4 characters starting at position 3
+middle=ref1.$mid_3_4
 ```
 
 ### Data Field Functions
@@ -233,10 +263,11 @@ Every zero-argument method on a data field is callable from a field map with the
 | `$normalizeSpace` | Trim edges **and** collapse any run of internal whitespace into a single space (Unicode-aware) |
 | `$removeAllSpaces` | Remove every whitespace, Unicode-aware — including those in the middle of the value |
 
-```ini
+```fieldmap
 cleanName=customer.name1.$strip
 leftClean=code.$stripLeading
-tidyName=customer.name1.$normalizeSpace   # "  Ali   Hassan  " becomes "Ali Hassan"
+# "  Ali   Hassan  " becomes "Ali Hassan"
+tidyName=customer.name1.$normalizeSpace
 compactCode=code.$removeAllSpaces
 ```
 
@@ -247,7 +278,7 @@ compactCode=code.$removeAllSpaces
 | `$normalizeAr` | Normalize Arabic letters (unify alef, ya, ta-marbuta variants, etc.) |
 | `$replaceArNumerals` | Convert Arabic-Indic digits (٠–٩) to ASCII digits (0–9) |
 
-```ini
+```fieldmap
 normalizedName=customer.name1.$normalizeAr
 westernPhone=phone.$replaceArNumerals
 ```
@@ -259,8 +290,9 @@ westernPhone=phone.$replaceArNumerals
 | `$toUpperCase` | Convert all letters to upper case (uses `Locale.ROOT` so Turkish-locale quirks are avoided) |
 | `$toLowerCase` | Convert all letters to lower case |
 
-```ini
-chassisNumber=chassisNumber.$toUpperCase   # "abc123def" becomes "ABC123DEF"
+```fieldmap
+# "abc123def" becomes "ABC123DEF"
+chassisNumber=chassisNumber.$toUpperCase
 email=email.$toLowerCase
 ```
 
@@ -276,7 +308,7 @@ Arabic letters are case-less, so these functions only affect Latin (and other bi
 | `$english` | Return the English translation of the value |
 | `$translate` | Translate using the current user's UI language |
 
-```ini
+```fieldmap
 arabicLabel=status.$arabic
 englishLabel=status.$english
 localizedLabel=status.$translate
@@ -289,7 +321,7 @@ localizedLabel=status.$translate
 | `$tryToInt` | Parse the value as an integer; returns `null` if it is not a valid integer |
 | `$tryToDecimal` | Parse the value as a decimal; returns `null` if it is not a valid number |
 
-```ini
+```fieldmap
 n1=code.$tryToInt
 amount=description1.$tryToDecimal
 ```
@@ -300,7 +332,7 @@ amount=description1.$tryToDecimal
 |----------|-------------|
 | `$jsonEscape` | Return the value JSON-escaped (including surrounding quotes for strings) |
 
-```ini
+```fieldmap
 payload=description1.$jsonEscape
 ```
 
@@ -318,7 +350,7 @@ See the [Encryption/Decryption](#EncryptionDecryption) section under Security Fe
 
 #### Totaling Values
 Calculate sum of values in detail lines:
-```ini
+```fieldmap
 totalAmount=totalize(details,details.price)
 netTotal=totalize(lines,lines.netAmount)
 n1=totalize(details,details.price.unitPrice)
@@ -326,21 +358,23 @@ n1=totalize(details,details.price.unitPrice)
 
 #### Conditional Totaling
 Sum values only when a condition is met:
-```ini
+```fieldmap
 serviceTotal=totalizeif(details,details.price,select case when {details.item.item.itemType} = 'Service' then 1 else 0 end)
 n1=totalizeif(details,details.price.unitPrice,select case when {details.item.item.section.code} = 'SEC001' then 1 else 0 end)
 ```
 
 #### Min/Max Functions
 Get the minimum or maximum value from detail lines:
-```ini
-n1=max(details.price.unitPrice)    # Get the maximum unit price
-n1=min(details.price.unitPrice)    # Get the minimum unit price
+```fieldmap
+# Get the maximum unit price
+n1=max(details.price.unitPrice)
+# Get the minimum unit price
+n1=min(details.price.unitPrice)
 ```
 
 #### SQL-Based Calculations
 For complex calculations across detail lines:
-```ini
+```fieldmap
 # Sum of calculated values
 weightedTotal=totalizesql(select {details.quantity} * {details.unitPrice} * {details.discount} / 100)
 n1=totalizesql(select {details.price.unitPrice} * {details.n1} / {n3})
@@ -355,7 +389,7 @@ n1=minsql(select {details.price.unitPrice} * {details.n1} / {n3})
 #### Running Totals
 While `totalize`/`totalizesql` collapse the detail lines into a single aggregate, `runningTotal`/`runningTotalSql` produce a **cumulative** value **for each line** — the total of that line plus every line before it. The target is therefore a detail field, and each line receives its own accumulated figure:
 
-```ini
+```fieldmap
 # Cumulative sum of a detail field, written back per line
 details.n2=runningTotal(details.n1)
 
@@ -379,7 +413,7 @@ For `details.n2=runningTotal(details.n1)`:
 ### Database Queries
 
 #### Simple SQL Queries
-```ini
+```fieldmap
 customerBalance=sql(select balance from Customer where id = {customer.id})
 lastInvoiceDate=sql(select max(valueDate) from SalesInvoice where customer_id = {customer.id})
 n1=sql(select sum(netValue) from SalesInvoice where customer_id = {customer.id})
@@ -394,7 +428,7 @@ calculation that worked while testing fails on a half-filled document.
 
 Guard any placeholder that may be empty:
 
-```ini
+```fieldmap
 details.n3=sql(select isnull(try_cast({details.n1} as decimal(20,6)), 0)
                     * isnull(try_cast({details.n2} as decimal(20,6)), 0))
 ```
@@ -406,7 +440,7 @@ A placeholder that passes through a list, such as a detail table or a list insid
 
 A Salla order, for example, carries its branches in the list `order_branches`. This takes the first branch's name as the warehouse code, but leaves the warehouse empty for the online branch:
 
-```ini
+```fieldmap
 warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
 ```
 
@@ -423,7 +457,7 @@ Write `''` for empty text, or `null` to leave the field empty.
 
 #### Multi-line SQL
 For complex queries that span multiple lines:
-```ini
+```fieldmap
 complexValue=mlsql(
   select case
     when {totalAmount} > 1000 then 'High'
@@ -438,7 +472,7 @@ n1=mlsql(select case when {code} = 'abc' then 5 when {code} = 'cde' then 6 else 
 
 #### Detail SQL Fields
 To access SQL-computed fields (sqlField1, sqlField2, etc.) in detail collections, you must first enable them:
-```ini
+```fieldmap
 enableDetailSqlFields="details"
 details.n1=details.sqlField1
 details.n2=details.sqlField2
@@ -541,7 +575,7 @@ select count(*) from SalesInvoice where {x=,status,filterStatus} and {x>=,valueD
 
 #### First Not Empty
 Returns the first value that is not empty:
-```ini
+```fieldmap
 details.ref1=firstNotEmpty(details.ref1,ref1,customer.ref1)
 contactPhone=firstNotEmpty(customer.mobile,customer.phone,customer.contact.phone)
 details.n1=firstNotEmpty(details.n5,netValue,n4)
@@ -553,7 +587,7 @@ You can use an unlimited number of fields inside `firstNotEmpty`.
 
 #### First Not Null
 Returns the first value that is not null:
-```ini
+```fieldmap
 details.project=firstNotNull(details.project,project,customer.defaultProject)
 ```
 
@@ -562,14 +596,16 @@ details.project=firstNotNull(details.project,project,customer.defaultProject)
 #### name() Function
 Use the `name()` function to support multiple languages. It returns the first value (Arabic) in Arabic environments and the second value (English) in English environments:
 
-```ini
-description1=name(name1,name2)           # Uses field values
-description2=name("Arabic Text","English Text")  # Uses literal strings
+```fieldmap
+# Uses field values
+description1=name(name1,name2)
+# Uses literal strings
+description2=name("Arabic Text","English Text")
 ```
 
 ### Reference Creation
 Create references to other entities:
-```ini
+```fieldmap
 # Fixed reference by entity type and code
 relatedInvoice=ref("SalesInvoice","SIV150160")
 
@@ -594,7 +630,7 @@ ref4=ref(ref2.$toReal.ref1.entityType,sql(select top 1 id from Customer where re
 
 ### Match Lines By Fields
 Match source and target lines based on specific fields:
-```ini
+```fieldmap
 matchLinesBy=details.item.item=lines.ref1,details.warehouse=lines.warehouse(
   details.quantity=lines.quantity
   details.price=lines.unitPrice
@@ -610,7 +646,7 @@ This will:
 ### Match Lines by Source Line ID
 When copying data from a parent document to a child document, you often need to match lines based on the `sourceLineId` field that links child lines back to their parent lines:
 
-```ini
+```fieldmap
 switchSource=fromDoc(
     matchLinesBy=details.sourceLineId=details.id(
     details.price.unitPrice=details.price.unitPrice
@@ -634,7 +670,7 @@ This pattern is particularly useful for:
 
 ### Filter Lines
 Process only specific lines based on conditions:
-```ini
+```fieldmap
 filterLinesBy=(
   filterSourceDetail=details
   filterSourceBy=sql(select case when {details.quantity} > 0 then 1 else 0 end)
@@ -649,7 +685,7 @@ You can filter source only, target only, or both.
 
 #### Filter with Keyword Lines
 You can also filter lines and copy them to a keyword collection:
-```ini
+```fieldmap
 filterLinesBy=(
   filterSourceDetail=creditLimits
   filterSourceBy=sql(select case when {creditLimits.paymentPeriod} > 5 then 1 else 0 end)
@@ -666,7 +702,7 @@ You can use a **numeric field** from the line instead of an SQL statement. In th
 ### Single-Line Tempo Expressions
 Field maps support embedded Tempo expressions for dynamic text generation and complex field calculations:
 
-```ini
+```fieldmap
 # Basic tempo field reference
 customerInfo=tempo(Customer {customer.name1} has code {customer.code})
 
@@ -686,7 +722,7 @@ summaryText=tempo(Total amount: {money.netValue}, Customer: {customer.name1})
 ### Multi-Line Tempo Expressions
 For complex tempo templates with multiple lines, loops, or detailed formatting:
 
-```ini
+```fieldmap
 # Complex customer summary
 customerSummary=mltempo(
 Customer Details:
@@ -741,7 +777,7 @@ When working with collections (detail lines) in referenced entities, you need to
 
 For header fields in referenced entities, you can use direct dot notation:
 
-```ini
+```fieldmap
 # This works - modifying a header field in customer
 customer.n1="5"
 ```
@@ -750,7 +786,7 @@ customer.n1="5"
 
 However, when you need to work with collections (details) inside referenced entities, the simple dot notation doesn't work:
 
-```ini
+```fieldmap
 # ❌ This will NOT work as expected
 customer.lines.n1=n1
 ```
@@ -761,7 +797,7 @@ This is where `switchTarget` and `switchSource` become essential.
 
 Use `switchTarget` when you need to **modify fields in collections** within a referenced entity:
 
-```ini
+```fieldmap
 # ✅ Correct way to modify collections in customer object
 switchTarget=customer(
   lines.n1=n1
@@ -774,7 +810,7 @@ Notice that inside `switchTarget`, we omit the `customer.` prefix because we're 
 
 **More Examples:**
 
-```ini
+```fieldmap
 # Update related document details
 switchTarget=relatedDocument(
   # Now copying TO each related document's collections
@@ -792,7 +828,7 @@ switchTarget=relatedDocument(
 
 Use `switchSource` when you need to **copy data FROM collections** within a referenced entity TO collections in the current entity:
 
-```ini
+```fieldmap
 # ❌ This will NOT work as expected
 details.n1=customer.lines.n1
 
@@ -810,10 +846,11 @@ Inside `switchSource`, the left side (target) refers to the current entity's col
 
 **More Examples:**
 
-```ini
+```fieldmap
 # Copy data from a nested reference
 switchSource=customer.ref1(
-  totalPurchases=n5  # n5 here will come from customer.ref1
+  # n5 here will come from customer.ref1
+  totalPurchases=n5
   lastOrderDate=date1
 )endSwitchSource
 
@@ -828,7 +865,7 @@ switchSource=supplier(
 
 When working with generic reference fields (like `fromDoc` which can point to different entity types), you normally need to use `$toReal` to access the actual entity. However, `switchSource` and `switchTarget` handle this automatically:
 
-```ini
+```fieldmap
 # ❌ This will NOT work as expected
 details=fromDoc.$toReal.details
 details.text1=fromDoc.$toReal.details.description
@@ -868,7 +905,7 @@ Always remember to use `endSwitchTarget` and `endSwitchSource` to close the swit
 :::
 
 ### Working with Newly Added Lines
-```ini
+```fieldmap
 details=[addLines(5)]
 details=addedLinesOnly(details.item=defaultItem)
 details=addedLinesOnly(details.quantity=1)
@@ -881,17 +918,25 @@ Some field maps work on **one** line at a time rather than on the whole grid. `s
 line, and from then on `$line` (or `currentLine`) is a shorthand for it — on the left of the `=` to
 write into it, and inside `{...}` in a query to read from it.
 
-```ini
-selectLine="details(0)"     # Select first line (0-based index)
-$line.quantity=10          # Set quantity of selected line
-$line.n1="15"              # Set n1 of selected line
+```fieldmap
+# Select first line (0-based index)
+selectLine="details(0)"
+# Set quantity of selected line
+$line.quantity=10
+# Set n1 of selected line
+$line.n1="15"
 
-selectLine="details(2)"     # Select third line (index 2)
-n3=currentLine.n3          # Read from selected line using currentLine
-n3=$line.n3                # Alternative: read from selected line using $line
-$line.price=sql(select {$line.quantity} * {$line.unitPrice})  # Calculate price
+# Select third line (index 2)
+selectLine="details(2)"
+# Read from selected line using currentLine
+n3=currentLine.n3
+# Alternative: read from selected line using $line
+n3=$line.n3
+# Calculate price
+$line.price=sql(select {$line.quantity} * {$line.unitPrice})
 
-selectLine="details(last)"  # Select last line
+# Select last line
+selectLine="details(last)"
 $line.isLast=true
 ```
 
@@ -923,7 +968,7 @@ A query placeholder that names a grid — `{details.n1}` — makes the query run
 that line's own values substituted in. When the target is a field of the same grid, each result is
 written back to the line it came from, so one line of field map fills a whole column:
 
-```ini
+```fieldmap
 # n3 = n1 x n2 on every line of the grid
 details.n3=sql(select {details.n1} * {details.n2})
 
@@ -935,24 +980,41 @@ This is the form to reach for in a **GUI post action**, where the user is editin
 no `selectLine` step to write.
 
 ### Entity Commands
-```ini
-runCommand="edit"                          # Start editing mode
-runCommand="save"                          # Save the entity directly (approval definitions are NOT checked)
-runCommand="saveConsideringApprovals"      # Save the entity the way the screen does: approval definitions are checked first
-runCommand="recommit"                      # Re-save/recommit the entity
-runCommand="forcestable"                   # Force update without validation
-runCommand="unforcestable"                 # Cancel force update mode
-runCommand="flush"                         # Flush database changes
-runCommand="guessPeriod"                   # Auto-detect accounting period (DocumentFile only)
-runCommand="makeValueDateToday"            # Set value date to today (DocumentFile only)
-runCommand="setCodeIfNeeded"               # Set code from book or group
-runCommand="copyDimensionsFromBookOrGroup"     # Copy Dimensions (legal entity, branch, department, analysis set, and branch) from book or group
-runCommand="systemUpdateCalculatedFields"  # Update all calculated fields
-runCommand="regenledger"                   # Regenerate ledger entries (if applicable)
-runCommand="runManualEntityFlow(EF005)"    # Run specific entity flow by code
-runCommand="encryptPassword"               # Encrypt password field (NaMaUser only)
-runCommand="doNotCheckQty"                 # Skip quantity checks (InvoiceWithStockEffect only)
-runCommand="collectStockDocsIfEmpty"       # Collect stock documents (InvoiceWithStockEffect only)
+```fieldmap
+# Start editing mode
+runCommand="edit"
+# Save the entity directly (approval definitions are NOT checked)
+runCommand="save"
+# Save the entity the way the screen does: approval definitions are checked first
+runCommand="saveConsideringApprovals"
+# Re-save/recommit the entity
+runCommand="recommit"
+# Force update without validation
+runCommand="forcestable"
+# Cancel force update mode
+runCommand="unforcestable"
+# Flush database changes
+runCommand="flush"
+# Auto-detect accounting period (DocumentFile only)
+runCommand="guessPeriod"
+# Set value date to today (DocumentFile only)
+runCommand="makeValueDateToday"
+# Set code from book or group
+runCommand="setCodeIfNeeded"
+# Copy Dimensions (legal entity, branch, department, analysis set, and branch) from book or group
+runCommand="copyDimensionsFromBookOrGroup"
+# Update all calculated fields
+runCommand="systemUpdateCalculatedFields"
+# Regenerate ledger entries (if applicable)
+runCommand="regenledger"
+# Run specific entity flow by code
+runCommand="runManualEntityFlow(EF005)"
+# Encrypt password field (NaMaUser only)
+runCommand="encryptPassword"
+# Skip quantity checks (InvoiceWithStockEffect only)
+runCommand="doNotCheckQty"
+# Collect stock documents (InvoiceWithStockEffect only)
+runCommand="collectStockDocsIfEmpty"
 ```
 
 #### `save` vs `saveConsideringApprovals`
@@ -960,7 +1022,7 @@ runCommand="collectStockDocsIfEmpty"       # Collect stock documents (InvoiceWit
 
 `runCommand="saveConsideringApprovals"` runs the same save path the edit screen uses. If an approval definition applies to the record, the record goes to approval instead of being saved as final, and the flow's own step finishes successfully. The "this record will go to approval" confirmation the screen normally asks for is answered automatically, so no user interaction is needed.
 
-```ini
+```fieldmap
 # Update the customer from within an invoice, respecting approvals on the customer
 customer.runCommand="edit"
 customer.description1="Updated from invoice"
@@ -968,7 +1030,7 @@ customer.runCommand="saveConsideringApprovals"
 ```
 
 #### Common Command Combinations
-```ini
+```fieldmap
 # Set value date to today and auto-detect accounting period
 runCommand="guessPeriod"
 valueDate=sql(select getdate())
@@ -976,12 +1038,12 @@ valueDate=sql(select getdate())
 
 ### Adding Discussions
 You can add discussion entries to an entity:
-```ini
+```fieldmap
 addDiscussion="New Discussion added by entity flow"
 ```
 
 ### Updating Related Entities
-```ini
+```fieldmap
 # Update item from within invoice line
 details.item.item.runCommand="edit"
 details.item.item.lastSaleDate=valueDate
@@ -993,11 +1055,14 @@ details.item.item.runCommand="save"
 
 ### Encryption/Decryption
 Multiple encryption methods are available with different passwords:
-```ini
+```fieldmap
 # Encrypt sensitive data using different encryption keys
-encryptedCode=code.$encrypt1              # Encryption method 1
-encryptedSSN=customer.ssn.$encrypt2       # Encryption method 2
-encryptedData=data.$encryptX              # Encryption method X
+# Encryption method 1
+encryptedCode=code.$encrypt1
+# Encryption method 2
+encryptedSSN=customer.ssn.$encrypt2
+# Encryption method X
+encryptedData=data.$encryptX
 
 # Decrypt when needed (use matching decrypt method)
 originalCode=encryptedCode.$decrypt1
@@ -1006,7 +1071,7 @@ originalData=encryptedData.$decryptX
 ```
 
 You can also use encrypted values in SQL queries:
-```ini
+```fieldmap
 ref1=sql(select entityType,id from SalesInvoice where code = {description1.$decrypt1})
 ```
 
@@ -1019,19 +1084,29 @@ NamaRep.decrypt1($F{description1})
 ### OTP Generation
 Generate numeric or alphanumeric OTP codes with lengths from 4 to 8 characters:
 
-```ini
+```fieldmap
 # Numeric OTP (digits only)
-description1=$createNumericOTP4     # e.g., 1234
-description2=$createNumericOTP5     # e.g., 12345
-description3=$createNumericOTP6     # e.g., 123456
-description4=$createNumericOTP7     # e.g., 1234567
-description5=$createNumericOTP8     # e.g., 12345678
+# e.g., 1234
+description1=$createNumericOTP4
+# e.g., 12345
+description2=$createNumericOTP5
+# e.g., 123456
+description3=$createNumericOTP6
+# e.g., 1234567
+description4=$createNumericOTP7
+# e.g., 12345678
+description5=$createNumericOTP8
 
 # Alphanumeric OTP (letters and digits)
-description1=$createOTP4            # e.g., A1B2
-description2=$createOTP5            # e.g., A1B2C
-description3=$createOTP6            # e.g., A1B2C3
-description4=$createOTP7            # e.g., A1B2C3D
-description5=$createOTP8            # e.g., A1B2C3D4
+# e.g., A1B2
+description1=$createOTP4
+# e.g., A1B2C
+description2=$createOTP5
+# e.g., A1B2C3
+description3=$createOTP6
+# e.g., A1B2C3D
+description4=$createOTP7
+# e.g., A1B2C3D4
+description5=$createOTP8
 ```
 

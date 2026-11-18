@@ -72,7 +72,7 @@ When the query returns a record, the webhook **updates** that record with the ne
 
 A typical map for **Save Leads As = CRM Lead**:
 
-```
+```fieldmap
 code=$map.phone_number
 name1=$map.full_name
 name2=$map.full_name

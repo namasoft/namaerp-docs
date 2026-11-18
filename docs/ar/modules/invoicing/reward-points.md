@@ -11,14 +11,14 @@ menu: الأساسيات ← المستندات ← إعدادات نقاط ال
 
 ## إرسال إشعار للعميل مع كل فاتورة يتضمن النقاط المكتسبة والمستردة والرصيد الإجمالي
 * النسخة الإنجليزية
-```
+```tempo
 Dear {customer.name2},
 Thanks for visiting {branch.name2}.
 You earned {$earnedPoints} points. Your current balance is {customer.$availableRewardPoints} points (SAR {customer.$availableRewardAmount}).
 Thanks for shopping with us!
 ```
 * النسخة العربية
-```
+```tempo
 عزيزي {customer.name1}،
 شكرًا لزيارتك فرع {branch.name1}.
 كسبت {$earnedPoints} نقطة جديدة، ورصيدك الآن {customer.$availableRewardPoints} نقطة ({customer.$availableRewardAmount} ريال سعودي).
@@ -32,11 +32,11 @@ Thanks for shopping with us!
 ### نماذج رسائل SMS/بريد إلكتروني
 
 - النسخة الإنجليزية
-```
+```tempo
 To redeeem {rewardInfo.amount} {rewardInfo.currency.altCode} ({rewardInfo.redeemedPoints} points), please use the following OTP: {otpCode} 
 ```
 - النسخة العربية
-```
+```tempo
 لاسترداد {rewardInfo.amount} ({rewardInfo.redeemedPoints} نقطة) {rewardInfo.currency.code}، يرجى استخدام رمز التحقق (OTP) التالي: {otpCode}.
 ```
 

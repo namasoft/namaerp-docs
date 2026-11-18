@@ -239,7 +239,7 @@ condition inside the `case` rather than in a `where` clause.
 Once a rule runs per line, the system knows the line numbers that failed and hands them to you as
 `{$map.errorLines}`:
 
-```
+```tempo
 Selling price is below cost — line {$map.errorLines}
 ```
 
@@ -268,7 +268,7 @@ also really exist on the target screen — a typo is caught on save, not at runt
 
 **Fields of the record** can be dropped straight into the text:
 
-```
+```tempo
 User ({firstAuthor.name1}) is not allowed to receive into warehouse ({toWarehouse.name1})
 ```
 
@@ -281,7 +281,7 @@ the credit limit actually is:
 select c.limitValue, c.paymentPeriod from Customer c where c.id = {customer.id}
 ```
 
-```
+```tempo
 This customer has a credit limit of {limitValue} and a maximum payment period of {paymentPeriod}
 ```
 
@@ -294,7 +294,7 @@ select top 1 entityType, id, code from MissionDocument
 where employee_id = {employee.id} and id <> {id}
 ```
 
-```
+```tempo
 The employee already has a mission document {titledlink(entityType,id)}{code}{endlink}
 ```
 

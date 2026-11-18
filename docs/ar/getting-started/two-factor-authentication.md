@@ -163,7 +163,7 @@ use-custom-password-validator=true
      - أي حقل متاح في ملف بيانات المستخدم الرئيسي
 
 ### مثال على قالب SMS
-```
+```tempo
 Dear ${name2},
 Your Nama ERP verification code is: {otpCode}
 This code expires in 3 minutes.
@@ -180,7 +180,7 @@ Do not share this code with anyone.
 ```
 
 ### مثال على قالب WhatsApp
-```
+```tempo
 🔐 *Nama ERP Security Code*
 
 Hello {name2},

@@ -216,12 +216,12 @@ menu: الأساسيات ← الملاحظات ← نموذج 1
 الحقول**، هو ما يملأ حقلاً مشتقاً. سطران يكفيان لتصريح الخروج — الأول يضرب قيمة كل سطر، والثاني يجمعها
 في الترويسة:
 
-```
+```fieldmap
 details.number3=sql(select isnull(try_cast({details.number1} as decimal(20,6)),0)
                          * isnull(try_cast({details.number2} as decimal(20,6)),0))
 ```
 
-```
+```fieldmap
 n1=totalize(details,details.number3)
 ```
 

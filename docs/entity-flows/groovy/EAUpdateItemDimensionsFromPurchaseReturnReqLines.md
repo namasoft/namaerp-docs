@@ -53,7 +53,7 @@ For each request line that has an item:
 
 Write one mapping per line, in any of Parameters 2 to 15. Lines from all parameters are read together, so you can spread a long map over several parameters.
 
-```text
+```fieldmap
 details.description2=text1
 details.n3=n5
 sizesAndColors.name1="Returned"

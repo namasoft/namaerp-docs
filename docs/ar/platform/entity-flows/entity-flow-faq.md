@@ -82,7 +82,7 @@ It clarifies that you must set both the type and the code together using `ref()`
 * نسخ قيمة `n2` من المشروع الموجود في السطر إلى الحقل `details.n3`
 * حساب نسبة العمولة عن طريق ضرب هذه القيمة في الحقل `totalActualValue` الموجود في رأس المستند، ثم تخزين الناتج في `details.n4`:
 
-```
+```fieldmap
 details.n3=details.project.n2
 details.n4=sql(select {details.n3} * {totalActualValue} / 100)
 ```
@@ -101,7 +101,7 @@ details.n4=DrEffect,CrEffect
 
 بدلاً من استخدام `totalActualValue` من الرأس، يجب استخدام قيمة `actualVal` الخاصة بكل سطر على حدة لحساب العمولة بدقة، كالتالي:
 
-```
+```fieldmap
 details.n4=sql(select {details.n3} * {details.price.actualVal} / 100)
 ```
 
@@ -231,7 +231,7 @@ details.n4=sql(select {details.n3} * {details.price.actualVal} / 100)
 
 يمكنك تنفيذ هذا الطلب من خلال استخدام **مسار كيان** من النوع [`EAFieldsValuesCalculator`](/entity-flows/core/EAFieldsValuesCalculator) مع الدالة `itemprice` التابعة لمكتبة `tempo`، وذلك بالشكل التالي:
 
-```
+```fieldmap
 details.n1=tempo({itemprice(itemIdOrCode=details.item.item)})
 ```
 
@@ -248,7 +248,7 @@ details.n1=tempo({itemprice(itemIdOrCode=details.item.item)})
 
 **ج:** عند استخدامك للجملة التالية:
 
-```
+```fieldmap
 details.specificDimensions.warehouse=sql(select case when {details.item.item.section.code} = '1' then 'W-MG' else  warehouse_id end from SrvJOrderMaterialLine where SrvCJobOrder_id = {ref1.$toReal.id} and {details.item.item.id} = material_id)
 ```
 
@@ -265,7 +265,7 @@ details.specificDimensions.warehouse=sql(select case when {details.item.item.sec
 
 الصيغة المصححة:
 
-```ini
+```fieldmap
 details.specificDimensions.warehouse=mlsql(
   select case 
     when {details.item.item.section.code} = '1' 
@@ -281,13 +281,13 @@ details.specificDimensions.warehouse=mlsql(
 
 الطريقة الأسهل لتحقيق المطلوب هي استعمال الصيغة التالية:
 
-```ini
+```fieldmap
 details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from PurchaseInvoiceLine l where l.item_id = {details.item.item.id} order by l.valueDate desc)
 ```
 
 إذا أردت إحضار آخر سعر شراء في تاريخ يسبق تاريخ السند الحالي:
 
-```ini
+```fieldmap
 details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from PurchaseInvoiceLine l where l.item_id = {details.item.item.id} and l.valueDate <= {valueDate} order by l.valueDate desc)
 ```
 
@@ -297,7 +297,7 @@ details.n2=sql(select top 1 cast(l.unitPrice as decimal(20,2)) lastPrice from Pu
 
 استعمل الأمر `runCommand="saveConsideringApprovals"` بدلًا منه. هذا الأمر يمر بنفس مسار الحفظ الذي تمر به شاشة التحرير: يتم فحص تعريفات الموافقة، وإذا انطبق أحدها يذهب السجل إلى الموافقة بدلًا من حفظه نهائيًا. أما رسالة التأكيد "سيذهب هذا السجل إلى الموافقة" التي تطلبها الشاشة في العادة فيتم الرد عليها آليًا، وتنتهي خطوة المسار نفسها بنجاح.
 
-```ini
+```fieldmap
 customer.runCommand="edit"
 customer.description1="تم التحديث من الفاتورة"
 customer.runCommand="saveConsideringApprovals"

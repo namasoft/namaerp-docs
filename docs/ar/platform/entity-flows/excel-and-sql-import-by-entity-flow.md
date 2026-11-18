@@ -158,7 +158,7 @@ Column1, column2 from Table
 
 - يمكنك استعمال التالي في مسار كيان `EAFieldValuesCalculator` لنسخ المسميات باللغة العربية:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryAr
 contactInfo.address.city=contactInfo.address.region.$cityAr
 contactInfo.address.state=contactInfo.address.region.$stateAr
@@ -167,7 +167,7 @@ contactInfo.address.area=contactInfo.address.region.$areaAr
 
 - لنسخ المسميات باللغة الإنجليزية:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryEn
 contactInfo.address.city=contactInfo.address.region.$cityEn
 contactInfo.address.state=contactInfo.address.region.$stateEn
@@ -176,7 +176,7 @@ contactInfo.address.area=contactInfo.address.region.$areaEn
 
 - لنسخ المسميات حسب اللغة الحالية للمستخدم:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$country
 contactInfo.address.city=contactInfo.address.region.$city
 contactInfo.address.state=contactInfo.address.region.$state

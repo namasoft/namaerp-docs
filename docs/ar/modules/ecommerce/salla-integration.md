@@ -82,7 +82,7 @@ menu: تكامل التجارة الإلكترونية ← الملفات ← Ma
 
 لنسخ الفرع إلى المستند، أضف هذا السطر إلى **نسخ الي حقول معينة في مستند المبيعات**:
 
-```ini
+```fieldmap
 warehouse=$map.order_branches.$get(0).name
 ```
 
@@ -90,7 +90,7 @@ warehouse=$map.order_branches.$get(0).name
 
 ولتعديل القيمة قبل وضعها، ضعها داخل استعلام. هذا الاستعلام يترك المخزن فارغاً لطلبات الفرع `Web02`، فيأخذ المستند مخزنه المعتاد، ويستخدم اسم الفرع مع باقي الفروع:
 
-```ini
+```fieldmap
 warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
 ```
 

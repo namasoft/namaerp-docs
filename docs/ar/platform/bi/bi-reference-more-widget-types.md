@@ -191,7 +191,7 @@ ORDER BY s.creationDate DESC
 
 يعرض القالب
 
-```html
+```tempo
 <h3>آخر الفواتير</h3>
 <p>الأحدث: {code}</p>
 <ul>{loop(rows)}<li>{code} — {customerName}</li>{endloop}</ul>
@@ -252,7 +252,7 @@ WHERE a.state = 'InProgress' /*AND-FILTERS*/
 كود JavaScript مليء بالأقواس `{ }`، وقالب Tempo سيحاول قراءتها كأعمدة، لذلك يبدأ القالب بـ`<useCSSFriendlyBrackets/>`
 ويكتب الأعمدة على صورة `%{column}%` (انظر [Tempo](/ar/admin/tempo)):
 
-```html
+```tempo
 <useCSSFriendlyBrackets/>
 <style>
   .approvals-widget td { padding: 4px 8px; }

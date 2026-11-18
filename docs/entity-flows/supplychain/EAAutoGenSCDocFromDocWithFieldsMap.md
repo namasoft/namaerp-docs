@@ -43,7 +43,7 @@ select id from SalesOrder where ref5Id={id}
 
 **Parameter 3:** Field Map (Required) - Mapping between source and target fields
 
-```
+```fieldmap
 code=code
 fromDoc=$this
 ref5=$this
@@ -53,7 +53,7 @@ ref5=$this
 
 **Parameter 5:** Inverse Copy (Optional) - Copies fields from generated document back to source
 
-```
+```fieldmap
 ref5=$this
 description5=n1
 ```

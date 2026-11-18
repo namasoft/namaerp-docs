@@ -157,7 +157,7 @@ Column1, column2 from Table
 
 - You can use the following in an `EAFieldValuesCalculator` entity flow to copy the Arabic name labels:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryAr
 contactInfo.address.city=contactInfo.address.region.$cityAr
 contactInfo.address.state=contactInfo.address.region.$stateAr
@@ -166,7 +166,7 @@ contactInfo.address.area=contactInfo.address.region.$areaAr
 
 - To copy the English name labels:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryEn
 contactInfo.address.city=contactInfo.address.region.$cityEn
 contactInfo.address.state=contactInfo.address.region.$stateEn
@@ -175,7 +175,7 @@ contactInfo.address.area=contactInfo.address.region.$areaEn
 
 - To copy the labels according to the current user's language:
 
-```ini
+```fieldmap
 contactInfo.address.country=contactInfo.address.region.$country
 contactInfo.address.city=contactInfo.address.region.$city
 contactInfo.address.state=contactInfo.address.region.$state

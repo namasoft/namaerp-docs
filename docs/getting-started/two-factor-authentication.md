@@ -163,7 +163,7 @@ This is useful for:
      - Any field available in the user master file
 
 ### Example SMS Template
-```
+```tempo
 Dear ${name2},
 Your Nama ERP verification code is: {otpCode}
 This code expires in 3 minutes.
@@ -180,7 +180,7 @@ Do not share this code with anyone.
 ```
 
 ### Example WhatsApp Template
-```
+```tempo
 🔐 *Nama ERP Security Code*
 
 Hello {name2},

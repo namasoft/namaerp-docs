@@ -77,7 +77,7 @@
 - Added the two actions (Review, Cancel Review) to the action types in the Entity Flow window
 - Added a new date to the License Manager - `Download Release Allow Temporary Until`, so that setup and support staff can download a release for the customer if this date is later than the technical support expiry date. The main purpose is to avoid changing the maintenance expiry date when temporarily wanting to open up releases for the customer
 - **Dynamic Criteria was not able to render tempo syntax, the ability was added**: Added a new field to the filter lines, `Tempo Use`; check it, then use the following expression in the `Dynamic Criteria` field:
-  ```
+  ```tempo
   {loop($currentUser.employee.responsibilities)}
   section.code,Equal,{$currentUser.employee.responsibilities.responsibility.code},OR; 
   {endloop}
