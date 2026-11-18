@@ -31,7 +31,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **عرض اوبشن طباعة الباركود القديم في قائمة المزيد** `value.info.showOldBarcodeMenu` — يبقي قائمة الباركود القديمة ظاهرة. ولا تلزم إلا حيث ما زال مسار عمل باركود قديم مستعملاً.
 
-**ثيم النظام الافتراضي** `value.info.defaultSystemTheme` — ثيم النظام الجاهز الذي يبدأ به المستخدم إلى أن يختار ثيماً بنفسه: وردي، كحلي، فيروزي، أخضر وغيرها. يسري على كل المستخدمين وكل متصفح جديد، ولا يتجاوز أبداً ثيماً اختاره أحدهم. ويتقدم عليه أي ثيم مخصص مُعلَّم كافتراضي. وتجد كل الخيارات بالوضعين الفاتح والداكن في صفحة [الثيمات](/ar/platform/everyday-tools/ui-themes).
+**ثيم النظام الافتراضي** `value.info.defaultGUITheme` — الثيم الذي يبدأ به المستخدم إلى أن يختار ثيماً بنفسه. ويمكن أن يكون أي ثيم: أحد ثيمات النظام (وردي، كحلي، فيروزي، أخضر وغيرها) أو ثيماً مخصصاً. يسري على كل المستخدمين وكل متصفح جديد، ولا يتجاوز أبداً ثيماً اختاره أحدهم. ويتقدم عليه الثيم المحدد في ملف المستخدم أو في ملف الصلاحيات الخاص به. وتجد كل ثيمات النظام بالوضعين الفاتح والداكن في صفحة [الثيمات](/ar/platform/everyday-tools/ui-themes).
 
 ## شاشة الدخول والخلفية
 
@@ -106,7 +106,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | طريقة عرض المستندات عند اختيارها من القائمة | Document Files Default Menu Item Behavior | `value.info.docDefaultMenuItemBehavior` | [بدء التشغيل والتنقل](#bd-ltshGyl-wltnql) |
 | الذهاب الى الشاشة التى تم إنشاء السجل فيها عند فتحة | Go To Screen Where Record Was Created When Opening It | `value.info.shouldRedirectEditView` | [بدء التشغيل والتنقل](#bd-ltshGyl-wltnql) |
 | عرض اوبشن طباعة الباركود القديم في قائمة المزيد | Show Old Print Barcode Option in More Menu | `value.info.showOldBarcodeMenu` | [بدء التشغيل والتنقل](#bd-ltshGyl-wltnql) |
-| ثيم النظام الافتراضي | Default System Theme | `value.info.defaultSystemTheme` | [بدء التشغيل والتنقل](#bd-ltshGyl-wltnql) |
+| ثيم النظام الافتراضي | Default System Theme | `value.info.defaultGUITheme` | [بدء التشغيل والتنقل](#bd-ltshGyl-wltnql) |
 | اسم الشركة (للعرض عند تسجيل الدخول ) | Company Name For Login Page | `value.info.companyNameForLoginPage` | [شاشة الدخول والخلفية](#shsh-ldkhwl-wlkhlfy) |
 | تعين خلفية | Use Background Image | `value.info.useBackgroundImage` | [شاشة الدخول والخلفية](#shsh-ldkhwl-wlkhlfy) |
 | صورة الخلفية | Background Image | `backgroundImage` | [شاشة الدخول والخلفية](#shsh-ldkhwl-wlkhlfy) |

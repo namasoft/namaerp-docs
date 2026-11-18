@@ -20,43 +20,58 @@ This two-minute video walks through all thirteen, each in light and dark and in 
 
 The quickest way is the user menu: click your name at the top of the screen and open **GUI Themes List**. Each theme is listed with four colour dots — the light main colour, the light background, the dark main colour and the dark background — so you can tell them apart before clicking. The new theme applies at once; nothing has to be saved or reloaded.
 
+To keep the menu short, it lists only:
+
+- the theme the administrator set for you, if any, first and marked **Assigned by Admin** (see [The company's default theme](#The-companys-default-theme));
+- the custom themes defined in the system (see below);
+- the system themes you pinned, and the theme you are using now.
+
+**More Themes**, at the end of the list, opens **Settings** on the **GUI Themes List** page, where every theme is shown.
+
 ![The theme list in the user menu](../../ar/platform/images/themes/theme-user-menu-en.png)
 
 The same menu holds the **Dark Mode** switch, just above the list.
 
-**Settings → GUI Preferences** shows the same themes as cards. The card of the theme in use is outlined and marked **Active**. Two groups appear:
+**Settings → GUI Themes List** shows all the themes as cards. The card of the theme in use is outlined and marked **Active**. The groups are:
 
-- **System Themes** — the thirteen built-in themes. Each card has an eye button: click it to hide that theme from the user menu, and again to bring it back. This only tidies the menu; a hidden theme can still be chosen from this page.
+- **Assigned by Admin** — shown only when the administrator set a theme for you or for your security profile, so that after moving to another theme you can go back to it with one click.
+- **System Themes** — the thirteen built-in themes. They are not in the user menu unless you pin them: click the pin on a card to add that theme to the menu, and again to remove it.
 - **Custom Themes** — themes defined in the system (see below), followed by **Edit My Theme**.
 
-![Theme cards in GUI Preferences](../../ar/platform/images/themes/theme-preferences-cards-en.png)
+The same page holds the **Dark Mode** and **Dark Nav Bar And Side Bar** switches.
+
+![Theme cards on the GUI Themes List page](../../ar/platform/images/themes/theme-preferences-cards-en.png)
 
 ::: info The choice belongs to the browser
-The theme a user picks, the dark-mode setting and the hidden-theme list are remembered by the browser on that device. The same user on another computer, or in another browser, starts again from the company default.
+The theme a user picks, the dark-mode setting and the pinned themes are remembered by the browser on that device. The same user on another computer, or in another browser, starts again from the company default.
 :::
 
 ## Dark top bar and menu
 
 Three of the system themes — **Navy**, **Gold** and **Black & White** — keep the top bar and the side menu dark even in light mode, which frames a bright working area with a dark border. The other themes keep the bars in the same light shade as the page.
 
-A user who wants the opposite can change it in **GUI Preferences** with **Dark Nav Bar And Side Bar** — "Always show the nav bar and side bar in dark mode, even in light mode". That personal setting wins until the user picks a theme again; picking a theme returns to whatever that theme says.
+A user who wants the opposite can change it on the **GUI Themes List** page of **Settings** with **Dark Nav Bar And Side Bar** — "Always show the nav bar and side bar in dark mode, even in light mode". That personal setting wins until the user picks a theme again; picking a theme returns to whatever that theme says.
 
 ## The company's default theme
 
 A user who has never picked a theme on this browser gets, in order:
 
 1. Their own personal theme, if they have one (see **Edit My Theme** below).
-2. A custom theme with **Default Theme** ticked — the way to make a company's own branded theme the starting point for everyone.
-3. The theme chosen in **Default System Theme** `value.info.defaultSystemTheme`, on the **Appearance** tab of the global configuration (**Administration → Settings → System Settings**, file `global`). Leave it empty and the Default Theme is used.
-4. Otherwise, the built-in **Default Theme** — Nama's familiar blue.
+2. The theme in **GUI Theme** `settings.guiTheme` on the user's own record.
+3. The theme in **GUI Theme** `guiTheme` on the user's security profile — the way to give a whole department one look.
+4. The theme chosen in **Default System Theme** `value.info.defaultGUITheme`, on the **Appearance** tab of the global configuration (**Administration → Settings → System Settings**, file `global`). It can be any theme: one of the system themes or a custom one.
+5. A custom theme with **Default Theme** ticked.
+6. Otherwise, the built-in **Default Theme** — Nama's familiar blue.
 
-So a company can give every new user, and every new device, a consistent look without telling anyone to change anything — a ready-made system theme through the global setting, or its own design through a custom theme marked as default. Neither ever overrides a theme the user picked.
+So a company can give every new user, and every new device, a consistent look without telling anyone to change anything.
+
+A theme set on the **user** or on the **security profile** is also applied **once** to users who already picked a theme of their own: the next time they open the system they find the new theme, and from then on they are free to pick another. Changing the theme there again applies it once more. The global configuration theme never overrides a theme the user picked.
 
 ## Custom themes
 
 When none of the built-in themes fits — a company that wants its own brand colours, for example — themes can be defined as records on the **GUI Theme** screen (**Administration → Display Customization → New GUI Theme**). A theme record holds a full set of colours for the light version and another for the dark version, the font size and density, whether the toolbar shows labels, and the **Dark Nav Bar And Side Bar** default.
 
-**Edit My Theme** in GUI Preferences opens the user's own theme for editing. A theme that has **Only For User** filled in is visible to that user alone. Creating a theme that everyone can see needs the **Can Create Theme For All Users** permission in the user's security profile, so one person's experiment does not end up in everybody's list.
+**Edit My Theme**, on the **GUI Themes List** page of **Settings**, opens the user's own theme for editing. A theme that has **Only For User** filled in is visible to that user alone. Creating a theme that everyone can see needs the **Can Create Theme For All Users** permission in the user's security profile, so one person's experiment does not end up in everybody's list.
 
 ## Reports in the theme's colour
 

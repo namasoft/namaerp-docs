@@ -31,7 +31,7 @@ Both of those settings are read while the menu is being built, not while it is b
 
 **Show Old Print Barcode Option in More Menu** `value.info.showOldBarcodeMenu` — Keeps the legacy barcode menu visible. Only needed where an older barcode workflow is still in use.
 
-**Default System Theme** `value.info.defaultSystemTheme` — The built-in theme a user starts on until they pick one of their own: Pink, Navy, Teal, Green and so on. It applies to every user and every new browser, and never overrides a theme someone has chosen. A custom theme marked as the default takes precedence over it. Every option is shown in light and dark mode on [Themes](/platform/everyday-tools/ui-themes).
+**Default System Theme** `value.info.defaultGUITheme` — The theme a user starts on until they pick one of their own. It can be any theme: one of the system themes (Pink, Navy, Teal, Green and so on) or a custom one. It applies to every user and every new browser, and never overrides a theme someone has chosen. A theme set on the user or on the user's security profile takes precedence over it. Every system theme is shown in light and dark mode on [Themes](/platform/everyday-tools/ui-themes).
 
 ## Login page and background
 
@@ -106,7 +106,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.docDefaultMenuItemBehavior` | Document Files Default Menu Item Behavior | طريقة عرض المستندات عند اختيارها من القائمة | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.shouldRedirectEditView` | Go To Screen Where Record Was Created When Opening It | الذهاب الى الشاشة التى تم إنشاء السجل فيها عند فتحة | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.showOldBarcodeMenu` | Show Old Print Barcode Option in More Menu | عرض اوبشن طباعة الباركود القديم في قائمة المزيد | [Startup and navigation](#Startup-and-navigation) |
-| `value.info.defaultSystemTheme` | Default System Theme | ثيم النظام الافتراضي | [Startup and navigation](#Startup-and-navigation) |
+| `value.info.defaultGUITheme` | Default System Theme | ثيم النظام الافتراضي | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.companyNameForLoginPage` | Company Name For Login Page | اسم الشركة (للعرض عند تسجيل الدخول ) | [Login page and background](#Login-page-and-background) |
 | `value.info.useBackgroundImage` | Use Background Image | تعين خلفية | [Login page and background](#Login-page-and-background) |
 | `backgroundImage` | Background Image | صورة الخلفية | [Login page and background](#Login-page-and-background) |
