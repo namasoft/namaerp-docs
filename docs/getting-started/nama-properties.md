@@ -93,6 +93,7 @@ These are a blunt instrument for an emergency — a leaked account, an office th
 | `processors-initial-delay-minutes` | The same for the background processors. |
 | `no-background-processors` | Stops the background processors entirely. A server with this set saves documents but never processes them — which is right for a reporting replica and disastrous anywhere else. |
 | `disable-critical-errors` | Turns off the critical-errors checks: isolation level, missing server id, disk space, failed business requests. Only for a server where those checks are known to be noise. |
+| `util-run-retention-hours` | How many hours [the Utility Runner](/admin/reprocessing/utility-runner.md) keeps the result of a finished utility run. The default is 24. |
 
 ## Reports that will not end
 

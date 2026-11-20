@@ -161,7 +161,8 @@ Global Configuration as **Warn About SQL Statements Taking more than (millisecon
 can set its own threshold for the work it runs). The list lives in the server's memory from the last
 restart and is shown by this link, sorted by how often each statement ran, with the slowest time, the
 last time it was seen, the tool that ran it and where in the program it came from. Opening it changes
-nothing; a link at the bottom re-sorts by the slowest time.
+nothing; a button under the table sorts it by the slowest time instead, and double-clicking a cell
+opens its full text with a **Copy** button.
 
 <UtilityLinkBuilder
 className="com.namasoft.infra.domainbase.persistence.repos.QueryExecutionLogTracker"/>

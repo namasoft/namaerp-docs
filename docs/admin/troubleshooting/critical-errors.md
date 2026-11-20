@@ -212,19 +212,24 @@ only.
 
 ### Database schema fixes (Namasoft support only)
 
-These three are shown only to an administrator signed in through the Namasoft CRM. They mean the
+These four are shown only to an administrator signed in through the Namasoft CRM. They mean the
 database still has leftovers that make it bigger and slower than it needs to be. Fixing the first
 two locks tables for minutes on a large database, and choosing which index to drop needs a
 developer's review, so none of them is fixed automatically at start-up; the support team runs the
 fixes outside working hours.
+
+The utility's name at the end of each message is a link. It opens
+[the Utility Runner](/admin/reprocessing/utility-runner.md) in a new tab and starts that utility's
+dry run, which lists what it would fix and changes nothing.
 
 | Message | What raised it | What to do |
 |---|---|---|
 | *{0} tables ({1} MB) still have 255-byte reference columns, run the utility {2} off-hours* — «يوجد {0} جدول ({1} ميجابايت) ما زالت أعمدة المراجع فيها بطول 255 بايت، يرجى تشغيل الأداة {2} خارج أوقات العمل» | Tables still store their dimension, author, capability or system entry references in 255 bytes instead of 16. | Run the [Reference Column Narrower](/admin/reprocessing/database-size-and-index-utilities#Reference-Column-Narrower) with the rebuild. |
 | *{0} origin indexes still cover more columns than they should, run the utility {1} off-hours* — «يوجد {0} فهرس أصل ما زال يشمل أعمدة أكثر من اللازم، يرجى تشغيل الأداة {1} خارج أوقات العمل» | Transaction line tables still have origin indexes built over 17 columns instead of one. | Run the [Origin Indexes Fixer](/admin/reprocessing/database-size-and-index-utilities#Origin-Indexes-Fixer). |
 | *{0} indexes ({1} MB) are covered by another index on the same table, review them with the utility {2}* — «يوجد {0} فهرس ({1} ميجابايت) يغطيها فهرس آخر على نفس الجدول، يرجى مراجعتها باستخدام الأداة {2}» | Indexes that another index on the same table already serves — often one the support team created by hand that Nama now creates itself under its own name. | Run the [Duplicate Index Finder](/admin/reprocessing/database-size-and-index-utilities#Duplicate-Index-Finder), send its report to the development team, and drop what they mark. |
+| *{0} tables still have the old index {1}, which only slows down saving, drop it with the utility {2}* — «يوجد {0} جدول ما زال فيه الفهرس القديم {1}، وهو لا يفيد إلا في إبطاء الحفظ، يرجى حذفه باستخدام الأداة {2}» | Master file tables still have the old single-column index on the code prefix, which a better index has replaced. | Run the [Old Code Prefix Index Dropper](/admin/reprocessing/database-size-and-index-utilities#Old-Code-Prefix-Index-Dropper). |
 
-All three are checked again whenever the critical errors are refreshed and as soon as one of the
+All four are checked again whenever the critical errors are refreshed and as soon as one of the
 utilities finishes a run, so they disappear once nothing is left to fix.
 
 ## See also

@@ -76,7 +76,9 @@ const RETIRED_PAGE_REDIRECTS = {
     'EAReadOmnifulOrders': '/modules/ecommerce/omniful-integration.html',
     'EAReadOmnifulOrdersByIds': '/modules/ecommerce/omniful-integration.html',
     'EAReReadOmnifulOrder': '/modules/ecommerce/omniful-integration.html',
-    'magento-integration-guide': '/modules/ecommerce/ecommerce-integration-guide.html'
+    'magento-integration-guide': '/modules/ecommerce/ecommerce-integration-guide.html',
+    // The catalog page of the server was replaced by the Utility Runner (2026-11-20)
+    'utilities-catalog': '/admin/reprocessing/utility-runner.html'
 }
 
 // Pages moved to a new folder (basename unchanged), and pages replaced by a folder landing. The
@@ -90,6 +92,8 @@ const MOVED_PAGE_REDIRECTS = {
     '/developer': '/platform/automation-and-rules/gui-post-actions',
     // Renamed (2026-10-13): the guide covers every storefront platform, not only Magento
     '/modules/ecommerce/magento-integration-guide': '/modules/ecommerce/ecommerce-integration-guide',
+    // Replaced (2026-11-20): the Utility Runner page took over from the utilities catalog
+    '/admin/reprocessing/utilities-catalog': '/admin/reprocessing/utility-runner',
     ...Object.fromEntries(Object.entries({
         'documents-and-records': ['document-lifecycle', 'document-books', 'document-cancel-document',
             'why-a-record-will-not-save-or-delete', 'messages-and-refusals', 'master-groups', 'attachments',

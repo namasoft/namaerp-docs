@@ -29,7 +29,8 @@ The tools on these pages empty and rebuild whole tables. On a large database a f
 | A site is out of step with head office | [Replication Utilities](/admin/reprocessing/replication.md) |
 | Everything is correct but painfully slow | [Suggest Indexes for Large Detail Tables](/admin/reprocessing/suggest-index-creation.md) |
 | The database is bigger than it should be, or support sees a critical error about 255-byte reference columns or origin indexes | [Database Size and Index Utilities](/admin/reprocessing/database-size-and-index-utilities.md) |
-| You know what you need to do but not which utility does it | [The Utilities Catalog](/admin/reprocessing/utilities-catalog.md) |
+| You know what you need to do but not which utility does it | [The Utility Runner](/admin/reprocessing/utility-runner.md) |
+| A utility is running and you want to see how far it is, or stop it | [The Utility Runner](/admin/reprocessing/utility-runner.md) |
 
 ## The order to work in
 
@@ -40,9 +41,9 @@ The tools on these pages empty and rebuild whole tables. On a large database a f
 
 If step 1 does not explain the symptom, that is the moment to escalate rather than to widen the blast radius.
 
-## The utilities catalog
+## The Utility Runner
 
-The most used utilities are also gathered on one page on the server, each with a description and a button that opens it, grouped into numbered sections. Open it from the last section of `utils.html`; see [The Utilities Catalog](/admin/reprocessing/utilities-catalog.md).
+Utilities run on one page of the application, the Utility Runner. It lists the most used ones in numbered sections, each with a description and a form for its parameters, shows a run's progress and log while it works, lets you stop it, and keeps the result afterwards. Open it from **Utilities → Monitoring → Utility Runner** or from the last section of `utils.html`; see [The Utility Runner](/admin/reprocessing/utility-runner.md).
 
 ## Launcher links on these pages
 
@@ -61,7 +62,7 @@ In the page's markdown source each launcher is a `<UtilityLinkBuilder>` tag with
 - **Values** — a `-`, then the values of the `:params` list separated by commas: first every entry that has no `id`, as its value alone, in the order listed; then every entry that has an `id`, as `id=value`. Use the `default` value unless the customer's case needs another one. An empty value is left out, and with no values at all the `-` is left out too. Everything after that first `-` reaches the tool unchanged, so a value may contain a `-` (employee codes such as `E001-E002-E003`) but never a comma.
 - **`&gui=true`** — add it only when the tag carries `:gui="true"`.
 
-Open the link in a browser where you are logged in to that server as an administrator; the tool's answer is shown as the page.
+Open the link in a browser where you are logged in to that server as an administrator. The tool starts at once and the browser lands on its run in [the Utility Runner](/admin/reprocessing/utility-runner.md), which shows its progress and then its answer.
 
 For example, the **Recommit From File** launcher on [Batch Utilities That Work From a List File](/admin/reprocessing/batch-utilities-from-file.md) is written as:
 
@@ -120,5 +121,5 @@ A parameter with an `id` such as `{ title: 'Types To Process File', default: 'e:
   <LandingCard icon="🗄️" title="Database Related Operations" link="/admin/reprocessing/db-operations.md" details="Server-level operations on the database itself — the most destructive page in this folder." />
   <LandingCard icon="🔁" title="Replication Utilities" link="/admin/reprocessing/replication.md" details="Diagnose and repair a site that has fallen out of step with head office." />
   <LandingCard icon="📉" title="Database Size and Index Utilities" link="/admin/reprocessing/database-size-and-index-utilities.md" details="Narrow oversized reference columns, repair the origin indexes and drop duplicate indexes, dry run first and the support team's login to apply." />
-  <LandingCard icon="🧰" title="The Utilities Catalog" link="/admin/reprocessing/utilities-catalog.md" details="A page on the server listing the most used utilities in numbered sections, each with a description and an Open button." />
+  <LandingCard icon="🧰" title="The Utility Runner" link="/admin/reprocessing/utility-runner.md" details="The page that lists the utilities, starts them from a form, shows the progress and result of a run, and stops it." />
 </LandingGrid>
