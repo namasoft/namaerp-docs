@@ -7,6 +7,14 @@ Nama records times as plain local times: an invoice saved at 14:30 is stored as 
 
 This page covers the three parts of getting that right: setting the time zone of a server, the option that refuses a server running in the wrong zone, and what Nama does when servers in different time zones share one SQL Server.
 
+::: tip Most installations need no time zone setting in Tomcat or nama.properties
+Setting a time zone for Nama is needed in one case only: a Nama server has to run in a different time zone from SQL Server. When Tomcat and SQL Server are in the same time zone, and it is the time zone of the business, leave everything as it is.
+
+When the time zone is wrong, the best fix is to change the Windows time zone of the server itself, then restart Tomcat. Tomcat and SQL Server both follow it, and nothing has to be set in Nama.
+
+The `-Duser.timezone` option and the `timezone` line are for the case where that is not possible: more than one Nama instance runs on the same server, and they connect to a SQL Server whose time zone is different from theirs, for any reason. This happens mostly in multinational companies, where one server hosts a Nama instance for each country.
+:::
+
 ## Which time zone a server runs in
 
 A server takes its time zone from the first of these that is set:
@@ -15,7 +23,7 @@ A server takes its time zone from the first of these that is set:
 2. **The `-Duser.timezone` Java option of Tomcat**, which applies to that Tomcat only.
 3. **The Windows time zone of the machine**, when neither of the above is there.
 
-So a machine whose Windows clock is already in the zone of the business needs nothing. Set the zone yourself when the machine is somewhere else (a cloud server left on UTC is the usual case), or when one machine runs several Tomcats for businesses in different countries.
+So a machine whose Windows clock is already in the zone of the business needs nothing. When it is not (a cloud server left on UTC is the usual case), change the Windows time zone of the machine and restart Tomcat. Use the two settings below only when one machine runs several Tomcats for businesses in different countries, so that no single Windows time zone suits them all.
 
 ### Setting it on Tomcat
 
