@@ -16,7 +16,9 @@ product.
 ::: info These are not refusals
 A critical error never blocks a save. It is a statement about the server, not about the record in
 front of you. Refused saves are a different family entirely —
-[Messages and Refusals](/platform/documents-and-records/messages-and-refusals).
+[Messages and Refusals](/platform/documents-and-records/messages-and-refusals). One entry does come
+with a refusal of its own: a server running in the wrong time zone is reported here and refuses
+every save as well.
 :::
 
 ## How the list behaves
@@ -41,8 +43,8 @@ login afterwards. That is why correcting the problem does not clear the message.
   number keeps itself current.
 
 A few entries also refresh on their own occasion: saving a Global Configuration entry re-checks the
-server id and the backup folder, and **Utilities → Reload Configuration** re-reads
-`critical-error-messages.txt`. Everything else waits for a rebuild.
+server id, the backup folder and the time zone of the server, and **Utilities → Reload Configuration**
+re-reads `critical-error-messages.txt` and re-checks the time zone. Everything else waits for a rebuild.
 
 **It is shown at login, at most three times per session.** The list is pushed at the user the moment
 they sign in. If they dismiss it, it will come back at most twice more in that browser session and
@@ -90,6 +92,8 @@ each one with a backslash. Remove the file and, at the next refresh, the message
 |---|---|---|
 | *Database transaction isolation level is not correct, please contact our support team and provide them the following message: TIL is {n}* | The database is not running in read-committed-snapshot isolation. Nama needs it; without it, readers and writers block each other and the whole system feels slow. English only. | A DBA change on the database, not in Nama. The number in the message tells support which level it found. |
 | *The background processor is not working, please check the server* | Raised on a front-end-only server — one set with `no-background-processors`, which leaves the business requests to a separate background server. Once a minute it calls that server's `background-server-url` to check that it is alive; the call failed or did not answer "alive". Nothing will be recorded in the ledger or the warehouse until the background server is back. English only. | The most urgent entry on this page. Check that the background server is running and that `background-server-url` points at it; look at that server's log, and restart it if needed. The message clears itself at the next good check. |
+| *This server runs in the time zone {0}, while Always Ensure Time Zone in global configuration requires {1}. Saving is refused until the time zone of the server is corrected* — «هذا الخادم يعمل بالمنطقة الزمنية {0}، بينما يشترط خيار «التأكد دائما من المنطقة الزمنية» في الإعدادات العامة المنطقة الزمنية {1}. لن يتم حفظ أي بيانات حتى يتم تصحيح المنطقة الزمنية للخادم» | **Always Ensure Time Zone** names the time zone the database belongs to, and this server runs in another one. Unlike the other entries, this one comes with a refusal: every save on this server fails with the same message, because the times it would record are shifted. | Set the time zone of the server to `{1}` and restart it — [Server Time Zone](/getting-started/server-time-zone). The message links to the option, for the rare case where the option is what is wrong: <GlobalConfigOption option-code="value.info.alwaysEnsureTimeZone" /> |
+| *The time zone {0} in nama.properties is not a known time zone, so it was ignored and the server runs in {1}* — «المنطقة الزمنية {0} المحددة في ملف nama.properties ليست منطقة زمنية معروفة، لذلك تم تجاهلها والخادم يعمل بالمنطقة الزمنية {1}» | The `timezone` line in `nama.properties` is misspelled. The server kept the zone named at the end of the message, which is the one Tomcat or Windows gave it. | Correct the name — [Server Time Zone](/getting-started/server-time-zone) lists them — then restart, or run **Utilities → Reload Configuration**. |
 | *Folder {0} is almost full, remaining space is less than {1} GB* | A folder being watched for free space fell below the threshold. Which folders and which threshold come from **Check The Following Folders for Empty Space (CSV)** and **Warn Users When Empty Space Is Less Than (GB)**; with nothing configured it watches the system drive. English only. | Free space, or point the watch at the right folders: <GlobalConfigOption option-code="value.info.foldersToCheckSpace" /> |
 | *Tomcat logs folder is {0} MB, please review and clean up old log files* | The application server's log folder passed 6 GB. Nama deletes the Windows service wrapper's own logs older than five days by itself, but nothing else in that folder. English only. | Clear out the old logs, and set log rotation on the application server. |
 | *You did not define server id in global configuration, all e-mail, SMS, and Mobile Push notifications will be postponed.* | **Send Mails And SMS Only From Servers (CSV)** is empty. It names which server instance is allowed to send messages, so that a test copy of the database does not e-mail real customers — and while it is empty, nothing is sent at all. English only. | Fill it with this server's id: <GlobalConfigOption option-code="value.info.sendMailsAndSMSOnlyFromServers" /> |
@@ -238,4 +242,5 @@ utilities finishes a run, so they disappear once nothing is left to fix.
 - [Business Requests](/platform/background-processing/business-requests) — the failed-requests count, and how to clear it
 - [General FAQ](/admin/troubleshooting/general-faq) — other questions from the same corner of the system
 - [nama.properties](/getting-started/nama-properties) — the server keys named here
+- [Server Time Zone](/getting-started/server-time-zone) — the two time zone entries, and how to set the zone of a server
 - [Attachments and Storage](/platform/global-config/global-config-attachments) — the backup settings

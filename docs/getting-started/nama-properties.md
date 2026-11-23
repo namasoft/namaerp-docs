@@ -13,7 +13,7 @@ timezone=Africa/Cairo
 This page covers the settings support staff actually set on a customer's server. The system reads many more, but they are internal flags that exist for a developer chasing one specific problem — if a setting is not here and nobody told you to add it, it should not be in the file.
 
 ::: danger A misspelled setting is not an error
-Nothing in this file is validated. A misspelled key is simply never read, and a value the system does not recognise falls back to the default — either way the server starts as usual and logs no complaint. When a setting seems to have no effect, check its spelling before looking anywhere else.
+Nothing in this file is validated. A misspelled key is simply never read, and a value the system does not recognise falls back to the default — either way the server starts as usual and logs no complaint. When a setting seems to have no effect, check its spelling before looking anywhere else. The one value that is checked is `timezone`: an unknown time zone shows up on the critical errors list.
 :::
 
 ## What this installation calls itself
@@ -22,7 +22,7 @@ Nothing in this file is validated. A misspelled key is simply never read, and a 
 |---|---|
 | `customer` | The customer's name, as it appears in the licence and in messages the server sends home. |
 | `serverid` | This server's identity. It is what decides whether **this** machine is allowed to send e-mails and SMS — see below — so a test copy must never keep production's value. |
-| `timezone` | The server's timezone. |
+| `timezone` | The time zone the server runs in, such as `Asia/Riyadh`. It overrides the time zone of Tomcat and of Windows, and is applied again by **Utilities → Reload Configuration**. A name the system does not know is ignored and reported on the critical errors list. [Server Time Zone](/getting-started/server-time-zone) has the name for each country and the option that refuses a server in the wrong zone. |
 | `defaultlang` | The language a user gets before choosing one. |
 
 ## Addresses the system hands out
@@ -93,6 +93,7 @@ These are a blunt instrument for an emergency — a leaked account, an office th
 | `processors-initial-delay-minutes` | The same for the background processors. |
 | `no-background-processors` | Stops the background processors entirely. A server with this set saves documents but never processes them — which is right for a reporting replica and disastrous anywhere else. |
 | `disable-critical-errors` | Turns off the critical-errors checks: isolation level, missing server id, disk space, failed business requests. Only for a server where those checks are known to be noise. |
+| `disable-sql-clock-alignment` | Stops Nama from reading the database clock in the server's own time zone when the server and the SQL Server machine are in different zones. Only for ruling it out while investigating a query: see [Server Time Zone](/getting-started/server-time-zone). |
 | `util-run-retention-hours` | How many hours [the Utility Runner](/admin/reprocessing/utility-runner.md) keeps the result of a finished utility run. The default is 24. |
 
 ## Reports that will not end

@@ -15,6 +15,7 @@ title: بدء الاستخدام
   <LandingCard icon="🖥️" title="الحد الأدنى لمتطلبات تشغيل النظام" link="/ar/getting-started/system-minimum-requirements.md" details="المتطلبات العتادية والبرمجية التي يحتاجها خادمك قبل تثبيت نظام نما." />
   <LandingCard icon="📦" title="دليل تثبيت نما" link="/ar/getting-started/installation-guide.md" details="خطوات تفصيلية لتشغيل نظام نما على خادمك." />
   <LandingCard icon="⚙️" title="إعدادات Nama Properties" link="/ar/getting-started/nama-properties.md" details="ملف الإعدادات nama.properties — ماذا يفعل كل إعداد وكيف تضبطه." />
+  <LandingCard icon="🕒" title="المنطقة الزمنية للخادم" link="/ar/getting-started/server-time-zone.md" details="اضبط المنطقة الزمنية التي يعمل بها الخادم، وارفض الخادم العامل بمنطقة خاطئة، وشغّل دولاً مختلفة على SQL Server واحد." />
   <LandingCard icon="🔐" title="المصادقة الثنائية (2FA)" link="/ar/getting-started/two-factor-authentication.md" details="أضف عامل تسجيل دخول ثانيًا للحفاظ على أمان الحسابات." />
   <LandingCard icon="🔑" title="الترخيص، والشاشات والحقول الغائبة" link="/ar/getting-started/licensing.md" details="ما يحده الترخيص، وما تفعله حين يتغير، وكل سبب لغياب شاشة أو حقل تتوقع وجوده." />
 </LandingGrid>

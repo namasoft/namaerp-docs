@@ -17,6 +17,8 @@ The General tab holds the settings that don't belong to any one business area bu
 
 **Added Hours To Time (Time Zone Diff)** `value.info.addedHoursToTime` — A fixed number of hours added whenever the system stamps the current time. This exists for the common case where the database server sits in one time zone and the business operates in another: rather than move the server, you shift the clock the application sees. Enter `3` if the business runs three hours ahead of the server, or `-2` if it runs two hours behind. Because it affects every "now" the system records, set it once at implementation and leave it alone.
 
+**Always Ensure Time Zone** `value.info.alwaysEnsureTimeZone` — The time zone this database belongs to, such as `Africa/Cairo` or `Asia/Riyadh`. Press the down arrow in the field, or double-click it, to pick from the list. Once it is filled in, a server that runs in any other time zone shows a critical error at login and refuses every save until its own time zone is corrected; Global Configuration itself can still be saved. The field accepts only the zone the current server is running in, so set the server first. It does not take **Added Hours To Time** into account. [Server Time Zone](/getting-started/server-time-zone) explains how to set the zone of a server and what the option protects against.
+
 ## Numbers and decimal places
 
 Nama stores amounts at full precision; these three settings control how many fractional digits are *kept and shown* for the three kinds of numbers that usually need more than two.
@@ -64,6 +66,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.useFrenchInsteadOfEnglish` | Use French Instead Of English | استعمال الفرنسية بدلا من الإنجليزية | [Language and regional settings](#Language-and-regional-settings) |
 | `value.info.audioSpeechContextLanguage` | Audio Speech Context Language | لغة التعرف على الصوت | [Language and regional settings](#Language-and-regional-settings) |
 | `value.info.addedHoursToTime` | Added Hours To Time (Time Zone Diff) | الساعات المضافة للوقت (Time Zone Diff) | [Language and regional settings](#Language-and-regional-settings) |
+| `value.info.alwaysEnsureTimeZone` | Always Ensure Time Zone | التأكد دائما من المنطقة الزمنية | [Language and regional settings](#Language-and-regional-settings) |
 | `value.info.defaultDisplayDecimalPlaces` | Default Display Decimal Places | عدد خانات الكسر الافتراضي | [Numbers and decimal places](#Numbers-and-decimal-places) |
 | `value.info.percentageFractionalDecimalPlaces` | Percentage Fractional Decimal Places | عدد خانات النسب المئوية | [Numbers and decimal places](#Numbers-and-decimal-places) |
 | `value.info.rateFractionalDecimalPlaces` | Rate Fractional Decimal Places | عدد خانات معدل العملة | [Numbers and decimal places](#Numbers-and-decimal-places) |

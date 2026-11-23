@@ -17,6 +17,8 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **الساعات المضافة للوقت (Time Zone Diff)** `value.info.addedHoursToTime` — عدد ثابت من الساعات يُضاف كلما سجّل النظام الوقت الحالي. وُجد هذا الخيار للحالة الشائعة التي يكون فيها خادم قاعدة البيانات في منطقة زمنية والعمل في منطقة أخرى: فبدلاً من نقل الخادم تُزيح الساعة التي يراها التطبيق. اكتب `3` إذا كان العمل يسبق الخادم بثلاث ساعات، أو `2-` إذا كان يتأخر عنه بساعتين. ولأنه يؤثر في كل «الآن» يسجّلها النظام، اضبطه مرة واحدة عند التركيب ثم اتركه.
 
+**التأكد دائما من المنطقة الزمنية** `value.info.alwaysEnsureTimeZone` — المنطقة الزمنية التي تنتمي إليها قاعدة البيانات هذه، مثل `Africa/Cairo` أو `Asia/Riyadh`. اضغط السهم لأسفل داخل الحقل، أو انقر عليه نقراً مزدوجاً، لتختار من القائمة. وبعد ملئه، أي خادم يعمل بمنطقة زمنية أخرى يُظهر خطأ حرجاً عند الدخول ويرفض كل حفظ حتى تُصحَّح منطقته الزمنية؛ أما الإعدادات العامة نفسها فيمكن حفظها. ولا يقبل الحقل إلا المنطقة التي يعمل بها الخادم الحالي، فاضبط الخادم أولاً. ولا يأخذ خيار **الساعات المضافة للوقت** في الحسبان. وصفحة [المنطقة الزمنية للخادم](/ar/getting-started/server-time-zone) تشرح كيف تُضبط منطقة الخادم وممّ يحمي هذا الخيار.
+
 ## الأرقام والكسور العشرية
 
 يحفظ النظام المبالغ بدقتها الكاملة، وهذه الإعدادات الثلاثة تحكم عدد الخانات الكسرية التي *تُحفظ وتُعرض* للأنواع الثلاثة التي تحتاج عادةً أكثر من خانتين.
@@ -64,6 +66,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | استعمال الفرنسية بدلا من الإنجليزية | Use French Instead Of English | `value.info.useFrenchInsteadOfEnglish` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
 | لغة التعرف على الصوت | Audio Speech Context Language | `value.info.audioSpeechContextLanguage` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
 | الساعات المضافة للوقت (Time Zone Diff) | Added Hours To Time (Time Zone Diff) | `value.info.addedHoursToTime` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
+| التأكد دائما من المنطقة الزمنية | Always Ensure Time Zone | `value.info.alwaysEnsureTimeZone` | [اللغة والإعدادات الإقليمية](#llG-wlaaddt-lqlymy) |
 | عدد خانات الكسر الافتراضي | Default Display Decimal Places | `value.info.defaultDisplayDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
 | عدد خانات النسب المئوية | Percentage Fractional Decimal Places | `value.info.percentageFractionalDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
 | عدد خانات معدل العملة | Rate Fractional Decimal Places | `value.info.rateFractionalDecimalPlaces` | [الأرقام والكسور العشرية](#lrqm-wlkswr-laashry) |
