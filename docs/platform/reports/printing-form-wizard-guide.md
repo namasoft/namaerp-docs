@@ -241,6 +241,9 @@ The reader is not left guessing what happened:
   parts, and buttons are ignored.
 - **Each grid on the screen becomes one of the five detail grids**, in the order it appears, and the
   grid keeps its own title.
+- **A wide grid wraps instead of losing columns.** Twelve columns fit across the page; the rest of a
+  line continues on the rows under it, each column under the one above, and the column titles wrap the
+  same way.
 - **Titles carry across only where somebody changed them.** A field still showing its standard label
   is left blank in the form, so it picks up the normal translation in whichever language the form is
   printed. Rename a column on screen and the rename follows; leave it alone and nothing is hard-coded.
