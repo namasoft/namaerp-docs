@@ -26,36 +26,15 @@ You do not choose the kind per document. Nama decides it from the customer, as e
 
 ## Preparing the server
 
-ZATCA's signing toolkit (the ZATCA SDK) and Nama's signing service, `zatca.war`, must both be on the Nama server before anything else works.
+ZATCA's signing toolkit (the ZATCA SDK) and Nama's signing service, `zatca.war`, must both be on the Nama server before anything else works. In short:
 
-1. Download the SDK from [ZATCA's SDK page](https://zatca.gov.sa/E-Invoicing/SystemsDevelopers/ComplianceEnablementToolbox/Pages/DownloadSDK.aspx) and extract it.
-2. In the extracted folder, rename `install.ba_` to `install.bat` (select it and press F2) and run it.
-3. The installer creates an environment variable named `SDK_CONFIG` for the current user only. Tomcat runs as a service and does not see it, so copy it to the **System Variables**. Open the editor with Win + R and:
-   ```sh
-   rundll32 sysdm.cpl,EditEnvironmentVariables
-   ```
+1. Download the SDK from [ZATCA's SDK page](https://zatca.gov.sa/en/E-Invoicing/SystemsDevelopers/ComplianceEnablementToolbox/Pages/DownloadSDK.aspx) and extract it to `C:\zatca_sdk`.
+2. Rename `fatoora.ba_`, both `jq.ex_` files and `install.ba_` to `.bat` / `.exe`, then run `install.bat`.
+3. Copy the `SDK_CONFIG` variable that `install.bat` created for your user to the **System Variables**, because Tomcat runs as a service and does not see user variables.
+4. Check that every path in `Configuration\config.json` points at a file that exists.
+5. Put `zatca.war` from <https://namasoft.com/bin/zatca.war> in the `webapps` folder of the Tomcat that runs Nama, leave no other copy there, and restart Tomcat.
 
-   ::: tip Copy the variable with PowerShell instead
-   Run this in PowerShell **as Administrator**:
-   ```powershell
-   $varName = "SDK_CONFIG"
-   $userValue = [Environment]::GetEnvironmentVariable($varName, "User")
-   if ($userValue) {
-       Write-Host "Copying $varName with value '$userValue' to system environment..."
-       [Environment]::SetEnvironmentVariable($varName, $userValue, "Machine")
-       Write-Host "Copied successfully."
-   } else {
-       Write-Host "User environment variable '$varName' not found."
-   }
-   ```
-   :::
-
-   The result should look like this:
-
-   ![ZATCA System Variables Screenshot](../../ar/modules/invoicing/images/zatca-system-variables.png)
-
-4. Open `Configuration/config.json` in the SDK folder and check that every path in it points at a file that exists.
-5. Download `zatca.war` from <https://namasoft.com/bin/zatca.war>, put it in Tomcat's `webapps` folder, and restart Tomcat so it picks up the new system variable.
+[Installing the ZATCA SDK and zatca.war](./zatca-sdk-installation.md) walks through each step with a screenshot. Use it for a first installation.
 
 To confirm the service is up, open `http://<server>:<port>/zatca/api` in a browser — it answers **Zatca war is running**. If Nama shows *Please update zatca JAR* when you approve or send, the service is not deployed or not running.
 
@@ -329,7 +308,7 @@ The generic validation messages — a field required, a code invalid, a value da
 
 | Message | Why | What to do |
 |---|---|---|
-| *Please update zatca JAR* | Nama could not reach the `zatca.war` signing service. | Deploy `zatca.war` in Tomcat's `webapps` and restart Tomcat. See [Preparing the server](#Preparing-the-server). |
+| *Please update zatca JAR* | Nama could not reach the `zatca.war` signing service. | Deploy `zatca.war` in the `webapps` of the Tomcat that runs Nama, delete any other copy, and restart Tomcat. See [Installing the ZATCA SDK and zatca.war](./zatca-sdk-installation.md#7-Deploy-zatcawar-on-Tomcat). |
 | *Please approve system first in tax payer configuration file* | The configuration has no production certificate yet. | Run [Approve System](#Onboarding-Approve-System). |
 | *CSR is not generated, please check company vat information* | The certificate request could not be built from the configuration. | Check **Tax Registeration NO**, **EGS Serial Number** and the Legal Entity's name and address, then try again. |
 | *In case of a company belongs to a group please provide field {0} with a valid 10 numbers (Record Number)* | The VAT number belongs to a VAT group (its 11th digit is 1), and **Organization Unit Name** is not a 10-digit number. | Enter the member's 10-digit commercial registration in **Organization Unit Name**. |

@@ -26,36 +26,15 @@ menu: الأساسيات ← إعدادات مصلحة الضرائب ← إعد
 
 ## تجهيز الخادم
 
-لا بد أن تكون أداة التوقيع الخاصة بالهيئة (ZATCA SDK) وخدمة التوقيع في نما `zatca.war` على خادم نما قبل أي خطوة أخرى.
+لا بد أن تكون أداة التوقيع الخاصة بالهيئة (ZATCA SDK) وخدمة التوقيع في نما `zatca.war` على خادم نما قبل أي خطوة أخرى. وباختصار:
 
-1. حمّل الأداة من [صفحة SDK على موقع الهيئة](https://zatca.gov.sa/E-Invoicing/SystemsDevelopers/ComplianceEnablementToolbox/Pages/DownloadSDK.aspx) وفك ضغطها.
-2. في المجلد الناتج، غيّر اسم الملف `install.ba_` إلى `install.bat` (حدده واضغط F2) ثم شغّله.
-3. يُنشئ المثبّت متغير بيئة اسمه `SDK_CONFIG` للمستخدم الحالي فقط، وTomcat يعمل كخدمة فلا يراه، لذا انسخه إلى **متغيرات النظام (System Variables)**. افتح المحرر بالضغط على Win + R ثم:
-   ```sh
-   rundll32 sysdm.cpl,EditEnvironmentVariables
-   ```
+1. حمّل الأداة من [صفحة SDK على موقع الهيئة](https://zatca.gov.sa/en/E-Invoicing/SystemsDevelopers/ComplianceEnablementToolbox/Pages/DownloadSDK.aspx) وفك ضغطها إلى `C:\zatca_sdk`.
+2. غيّر اسم `fatoora.ba_` وملفي `jq.ex_` و`install.ba_` إلى `.bat` / `.exe`، ثم شغّل `install.bat`.
+3. انسخ المتغير `SDK_CONFIG` الذي أنشأه `install.bat` لمستخدمك إلى **متغيرات النظام (System Variables)**، لأن Tomcat يعمل كخدمة فلا يرى متغيرات المستخدم.
+4. تأكد أن كل مسار في `Configuration\config.json` يشير إلى ملف موجود.
+5. ضع `zatca.war` من <https://namasoft.com/bin/zatca.war> في مجلد `webapps` الخاص بـ Tomcat الذي يعمل عليه نما، ولا تترك فيه نسخة أخرى، ثم أعد تشغيل Tomcat.
 
-   ::: tip انسخ المتغير عبر PowerShell
-   شغّل هذا في PowerShell **كمسؤول (Administrator)**:
-   ```powershell
-   $varName = "SDK_CONFIG"
-   $userValue = [Environment]::GetEnvironmentVariable($varName, "User")
-   if ($userValue) {
-       Write-Host "Copying $varName with value '$userValue' to system environment..."
-       [Environment]::SetEnvironmentVariable($varName, $userValue, "Machine")
-       Write-Host "Copied successfully."
-   } else {
-       Write-Host "User environment variable '$varName' not found."
-   }
-   ```
-   :::
-
-   ويجب أن تبدو النتيجة هكذا:
-
-   ![متغيرات النظام الخاصة بالهيئة](images/zatca-system-variables.png)
-
-4. افتح الملف `Configuration/config.json` في مجلد الأداة وتأكد أن كل مسار فيه يشير إلى ملف موجود.
-5. حمّل `zatca.war` من <https://namasoft.com/bin/zatca.war> وضعه في مجلد `webapps` الخاص بـ Tomcat، ثم أعد تشغيل Tomcat ليقرأ متغير النظام الجديد.
+وتجد كل خطوة مشروحة بالصور في [تثبيت ZATCA SDK ونشر zatca.war](./zatca-sdk-installation.md)، فارجع إليها في أول تثبيت.
 
 وللتأكد من أن الخدمة تعمل، افتح `http://<server>:<port>/zatca/api` في المتصفح، فيجيب بـ **Zatca war is running**. وإذا ظهرت رسالة *Please update zatca JAR* عند الاعتماد أو الإرسال، فالخدمة غير منشورة أو متوقفة.
 
@@ -329,7 +308,7 @@ menu: الأساسيات ← إعدادات مصلحة الضرائب ← إعد
 
 | الرسالة | السبب | ماذا تفعل |
 |---|---|---|
-| *Please update zatca JAR* | لم يصل نما إلى خدمة التوقيع `zatca.war`. | انشر `zatca.war` في `webapps` وأعد تشغيل Tomcat. انظر «تجهيز الخادم». |
+| *Please update zatca JAR* | لم يصل نما إلى خدمة التوقيع `zatca.war`. | انشر `zatca.war` في `webapps` الخاص بـ Tomcat الذي يعمل عليه نما، واحذف أي نسخة أخرى، وأعد تشغيل Tomcat. انظر [تثبيت ZATCA SDK ونشر zatca.war](./zatca-sdk-installation.md). |
 | *Please approve system first in tax payer configuration file* | لا شهادة تشغيل في الإعدادات بعد. | شغّل **إعتماد النظام**. |
 | *CSR is not generated, please check company vat information* | تعذّر بناء طلب الشهادة من الإعدادات. | راجع **رقم التسجيل الضريبى** و **EGS Serial Number** واسم الشركة وعنوانها، ثم أعد المحاولة. |
 | *In case of a company belongs to a group please provide field {0} with a valid 10 numbers (Record Number)* | الرقم الضريبي لمجموعة ضريبية (رقمه الحادي عشر 1)، و **Organization Unit Name** ليس رقمًا من 10 أرقام. | ضع السجل التجاري للعضو من 10 أرقام في **Organization Unit Name**. |

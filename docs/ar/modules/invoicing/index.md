@@ -40,6 +40,7 @@ description: "وحدة الفواتير والضرائب والخصومات: ا�
 <LandingGrid>
   <LandingCard icon="📨" title="نظرة عامة على الفاتورة الإلكترونية" link="/ar/modules/invoicing/e-invoices-guide.md" details="مفاهيم الفاتورة الإلكترونية العامة في نما التي تُبنى عليها تكاملات الدول." />
   <LandingCard icon="🇸🇦" title="ZATCA (السعودية – فاتورة)" link="/ar/modules/invoicing/zatca-guide.md" details="الربط مع منصّة فاتورة لهيئة الزكاة والضريبة والجمارك بالسعودية للفوترة المطابقة ورموز QR." />
+  <LandingCard icon="🛠️" title="تثبيت ZATCA SDK ونشر zatca.war" link="/ar/modules/invoicing/zatca-sdk-installation.md" details="تجهيز خادم نما للربط مع الهيئة خطوة بخطوة، مع صورة لكل خطوة." />
   <LandingCard icon="🇯🇴" title="JoFotara (الأردن)" link="/ar/modules/invoicing/jofotara-jordan-guide.md" details="بيانات الدخول، وهوية المشتري، وما تعيده المنصّة الأردنية مع كل فاتورة." />
   <LandingCard icon="🇪🇬" title="الفاتورة والإيصال الإلكتروني في مصر" link="/ar/modules/invoicing/egypt-einvoice-guide.md" details="الاتصال بمصلحة الضرائب المصرية، وتسجيل أكواد الأصناف وأجهزة نقاط البيع، والبيانات البنكية، والتوقيع والإرسال والإلغاء." />
   <LandingCard icon="🇦🇪" title="الفاتورة الإلكترونية في الإمارات (Orchida osTax)" link="/ar/modules/invoicing/uae-orchida-einvoice-guide.md" details="الربط مع نظام الفاتورة الإلكترونية في الإمارات عبر خدمة Orchida osTax." />
