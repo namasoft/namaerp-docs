@@ -67,12 +67,10 @@ The operation order's buttons sit on the tab they act on.
   with one line for every service line whose **Selected** box is ticked, in any section, at its
   purchase price. Tick the lines first; with none ticked the button stops.
 - **Update All Services** — refreshes every section the order uses (ocean freight, custom
-  clearance, trucking, genset, courier) from the matching [price lists](./freight-pricing.md) in one
-  go. It needs the **Shipper**.
-- **Update Data** — the same, for the ocean-freight section only. It needs the **Shipper**,
-  **Shipping Line**, **Port Of Loading** and **Port Of Discharge**. When the order is both Collect
-  and Prepaid, collect lines are priced for the collect count and prepaid lines for the prepaid
-  count; otherwise for the total container count.
+  clearance, trucking, genset, courier, other) from the matching [price lists](./freight-pricing.md)
+  in one go. It needs the **Shipper**, then presses each ticked section's **Update Data** button for
+  you, with that button's own rules (below).
+- **Update Data** — the same, for the ocean-freight section only.
 - **Duplicate Operation** — the order must be saved first. Opens a copy of the order for a similar
   shipment, with the booking number, vessel, voyage, estimated dates, departure date and cut-off
   time cleared.
@@ -81,17 +79,52 @@ The operation order's buttons sit on the tab they act on.
   **From Document**, and starts with all its service sections empty.
 
 **On the Custom Clearance, Trucking, Genset and Other tabs**, each section has its own **Update
-Data** button that refreshes just that section. Clearance needs the **Shipper**, **Port Of
-Loading** and **Commodity**; trucking and genset need the **Shipper** (and, when the module is not
-set to **Multi Loading Points**, the **Gate In Port**, **Gate Out Port** and **Loading Point** —
-see [Freight Configuration](./freight-configuration.md)); the courier lines on the Other tab need
-the **Shipping Line** and **Country**.
+Data** button that refreshes just that section. The Other tab has two: one for the other-services
+lines and one for the courier lines.
+
+### How the Update Data buttons find their lines
+
+Every **Update Data** button looks for price-list lines of its own service type that are valid on
+the order's **Actual Date Sailing**: a line is taken only when that date falls between its **Valid
+From** and **Valid To**. On top of that, each button has its own matching rules:
+
+| Tab | Looks in | Must be filled on the order | A price-list line is taken when it matches |
+|---|---|---|---|
+| Ocean Freight | sales price lists | Shipper, Shipping Line, Port Of Loading, Port Of Discharge | the customer (the Shipper), the service provider (the Shipping Line), both ports, the Commodity when the order has one, and the Collect / Prepaid choice |
+| Custom Clearance | sales price lists | Shipper, Port Of Loading, Commodity | the customer, the port of loading and the commodity |
+| Custom Clearance with **Update Data With Validity Only** ticked | sales price lists | Shipper | the customer only |
+| Trucking | sales price lists | Shipper; also Gate In Port, Gate Out Port and Loading Point unless **Multi Loading Points** is on | the customer, plus the gate-in port, gate-out port and loading point: the order header's, or those of any line in the Loading Points table when **Multi Loading Points** is on |
+| Genset | sales price lists | as for trucking | as for trucking, except that with **Multi Loading Points** on, a Loading Points line is matched on its two gate ports only |
+| Other | sales price lists | Shipper | the customer only. When the Actual Date Sailing is empty, the document date is used for the validity check |
+| Courier (on the Other tab) | **purchase** price lists | Shipping Line, Country | the service provider (the Shipping Line) and the country. The customer plays no part |
+
+**Multi Loading Points** is a switch in [Freight Configuration](./freight-configuration.md).
+
+The Collect / Prepaid choice on ocean freight works like this. With both ticked, the button brings the
+collect lines priced for the **Collect CNTR** count and the prepaid lines priced for the **Prepaid
+CNTR** count. With only one ticked, it brings only the lines marked the same way. With neither ticked,
+it brings only the lines marked neither Collect nor Prepaid.
+
+Every other line takes its quantity from the order's **Total CNTR**, with three exceptions:
+clearance lines keep the quantity written on the price-list line, a trucking or genset line takes the
+quantity of the matching Loading Points line when there is one, and other-services lines always come
+in with a quantity of 1.
+
+::: tip When clearance rates do not depend on port or commodity
+Say a customer has one clearance price list whose rates apply to any port and any commodity. With
+the normal rules, an order for that customer must name a port of loading and a commodity, and only
+price-list lines with exactly those values come in. Tick **Update Data With Validity Only** on the
+Custom Clearance tab and the button brings every clearance line from that customer's price lists
+that is valid on the sailing date, whatever port or commodity it names. Only the **Shipper** is
+then required.
+:::
 
 ::: tip What a refresh keeps
-An **Update Data** button replaces its section with what the price lists return. A line whose
+An **Update Data** button replaces its whole section with what the price lists return. A line whose
 **Ignore Update** box is ticked keeps its current values when the price list still returns its sales
-element; lines brought in by the buttons arrive with **Ignore Update** already ticked, so press the
-button again only after unticking the lines you want refreshed.
+element. A line the price lists no longer return is removed, even with **Ignore Update** ticked, and
+so is a line you added by hand. Lines brought in by the buttons arrive with **Ignore Update** already
+ticked, so press the button again only after unticking the lines you want refreshed.
 :::
 
 **On the operation order list**, the **More** menu has **Telex Released**: select the orders whose
@@ -113,12 +146,16 @@ You'll find these files under **Master Files**, and they're used to track the ph
 
 ## Messages you may see
 
-The first three rows belong to the operation order itself; the rest belong to the **FRM OO Receipt**, which is where the capacity rules live.
+The first seven rows belong to the operation order itself; the rest belong to the **FRM OO Receipt**, which is where the capacity rules live.
 
 | Message | Why | What to do |
 |---|---|---|
 | *You should select some lines* — «يجب أختيار بعض السطور أولا» | **Create Purchase Invoice** was pressed with no service line ticked **Selected**. | Tick the lines to be bought, then press it again. |
-| `shipper is required` and the other `… is required` messages of the **Update** buttons | A field the price-list search needs is empty — the message names it by its internal name, for example `shipper,portOfLoading,commodity is required`. These messages have no Arabic text. | Fill the named fields on the header and press the button again. |
+| *Shipper is required* — «حقول مطلوبة: العميل/مرسل من» | **Update All Services**, or the **Update Data** button of the Trucking, Genset or Other tab, or of the Custom Clearance tab with **Update Data With Validity Only** ticked, was pressed with no **Shipper**. | Fill the Shipper and press the button again. |
+| *Shipper, shipping line, port of loading and port of discharge are required* — «حقول مطلوبة: العميل/مرسل من،الخط الملاحي، ميناء التحميل، ميناء التفريغ» | The ocean-freight **Update Data** button needs all four fields to find the rates. | Fill the missing fields and press the button again. |
+| *Shipper, port of loading and commodity are required* — «حقول مطلوبة: العميل/مرسل من، ميناء التحميل، السلعة» | The clearance **Update Data** button matches price-list lines on the port of loading and the commodity. | Fill the missing fields, or tick **Update Data With Validity Only** when the customer's clearance rates do not depend on port or commodity. |
+| *Gate in port, gate out port and loading point are required* — «حقول مطلوبة: ميناء الدخول،ميناء الخروج، نقطة التحميل» | The trucking or genset **Update Data** button was pressed while **Multi Loading Points** is off, so it matches on the header's gate ports and loading point. | Fill the three fields, or fill the Loading Points table if the module uses **Multi Loading Points**. |
+| *Shipping line and country are required* — «حقول مطلوبة: الخط الملاحي،الدولة» | The courier **Update Data** button looks up the courier's purchase rates by shipping line and country. | Fill both fields and press the button again. |
 | *You Must Select at least One Of Service Item Types* — «يجب اختيار خدمة واحدة على الاقل من الخدمات الأربعة التالية(شحن بحري ـ نقل ـ تخليص ـ مولدات)» | None of the four service flags — ocean freight, custom clearance, trucking, genset — is ticked on the operation order, so no service section would appear. | Tick the flags that describe the shipment; they are what makes the matching service sections visible. |
 | *Capacity of operation order {0} must be more than zero* — «يجب ان تكون سعة أمر التشغيل {0} أكبر من الصفر» | The receipt's operation order has no usable capacity: neither the receipt's dimension lines nor the order's own Capacity field give a figure above zero. | Fill the Capacity on the operation order, or enter the dimension lines on the receipt so the capacity can be derived from them. |
 | *The sum of capacity in the details {0} must be equal to the capacity in the operation order {1}* — «مجموع السعة فى سطور التفاصيل {0} يجب أن يساوى السعة فى رأس المستند {1}» | The capacity totalled from the receipt does not match the capacity the operation order carries. | Adjust the receipt lines, or the order's capacity, until the two figures are the same. |

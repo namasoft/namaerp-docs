@@ -49,7 +49,9 @@ legal entity, this one is used instead. Without it the list is refused — see
   buttons of the Trucking and Genset tabs price each loading point.
 - **Not ticked** — the operation order header shows three extra fields, **Gate In Port**, **Gate
   Out Port** and **Loading Point**, and the same buttons look prices up by those three. All three
-  must be filled, or the button stops with `gateInPort,gateOutPort,loadingPoint is required`.
+  must be filled, or the button stops with
+  *Gate in port, gate out port and loading point are required* — «حقول مطلوبة: ميناء الدخول،ميناء الخروج، نقطة التحميل».
+  The full matching rules of every button are on [Operation Orders](./operation-orders.md#How-the-Update-Data-buttons-find-their-lines).
 
 The last three settings drive the storage side of the module — locations, and the documents that
 move operation orders and mail items in and out of them. They are explained in context on
