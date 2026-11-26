@@ -69,7 +69,7 @@ Installation itself is performed by a graphical installer that creates the datab
 | Outbound | 443 | Downloading releases and upgrades, cloud backup uploads, tax-authority e-invoicing, e-commerce connectors. |
 | Outbound | mail/SMS | Your SMTP server and your messaging provider, for notifications and document delivery. |
 
-For users to reach the system from outside the office you need a static IP address and a domain name pointing at it, with ports 80 and 443 forwarded from the router. Where a static IP is not available, a dynamic DNS service works. Certificates are issued through Let's Encrypt by the installer and renew automatically.
+For users to reach the system from outside the office you need a static IP address and a domain name pointing at it, with ports 80 and 443 forwarded from the router. Where a static IP is not available, a dynamic DNS service works. Certificates are issued through Let's Encrypt by the installer and renew automatically. A server without public access can use a bought certificate or a self-signed one instead — see [Installing an SSL Certificate](../getting-started/ssl-certificate-installation.md).
 
 ::: warning Do not publish the database
 The only thing that should be reachable from the internet is the application over HTTPS. SQL Server's port belongs on the internal network, and remote administrative access to the server itself belongs behind a VPN.
@@ -120,4 +120,4 @@ Where branches are connected on reliable links — which today includes most of 
 
 Routine administration happens from inside the application rather than on the server console. The utilities page carries the upgrade, diagnostic and maintenance tools; background work is visible and retryable through the business requests and scheduled task views; and the reprocessing tools exist for the recovery cases. The relevant reading is [Batch Utilities That Work From a List File](../admin/reprocessing/batch-utilities-from-file.md), [Scheduled Tasks](../platform/automation-and-rules/scheduled-tasks.md), and the [Reprocessing](../admin/reprocessing/index.md) and [Troubleshooting](../admin/troubleshooting/index.md) sections.
 
-On the server itself, the recurring jobs are the ones any Windows server needs: confirm the backups ran, watch free space on the database and backup volumes, keep the operating system patched, and renew nothing by hand — the certificate renews itself.
+On the server itself, the recurring jobs are the ones any Windows server needs: confirm the backups ran, watch free space on the database and backup volumes, keep the operating system patched, and, with a Let's Encrypt certificate, renew nothing by hand — the certificate renews itself. A bought certificate has to be replaced before it expires.

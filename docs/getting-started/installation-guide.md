@@ -58,7 +58,7 @@ The **Nama ERP Installer** provides a graphical interface with the following key
 * Creating **differential backup job** (runs every 2–3 hours)
 * Generating **backup cleanup script** (removes old backups)
 * Option to **upload backups to cloud storage** (Google Drive, Dropbox, OneDrive, etc.)
-* Automatic **SSL certificate** creation using [Let's Encrypt](https://letsencrypt.org/)
+* **SSL certificate** installation: a free certificate from [Let's Encrypt](https://letsencrypt.org/), a bought certificate, or a self-signed one — see [Installing an SSL Certificate](/getting-started/ssl-certificate-installation)
 
 ### Interface Sections
 1. **License Information**: License key, customer name, sub-server (auto-populated)
@@ -74,6 +74,8 @@ The **Nama ERP Installer** provides a graphical interface with the following key
 * **License key integration**: Automatic customer/sub-server population
 
 ## SSL Certificate Requirements
+
+The SSL helper can also install a certificate you bought, or a self-signed certificate for a site used only inside the company; neither needs the requirements below. The full walkthrough is in [Installing an SSL Certificate](/getting-started/ssl-certificate-installation).
 
 To install SSL with Let's Encrypt, you need:
 
@@ -216,7 +218,7 @@ This will display the output of all commands executed by the installer, helping 
 
 ### Advanced Operations  
 * **Request Key**: Automated license key request from Nama servers with approval monitoring — see [Licensing](/getting-started/licensing)
-* **Install SSL**: Launches Let's Encrypt certificate installation wizard
+* **Install SSL**: Opens the SSL helper, which installs a Let's Encrypt, bought or self-signed certificate — see [Installing an SSL Certificate](/getting-started/ssl-certificate-installation)
 * **Migrate Tomcat**: Upgrades from Tomcat 9 to Tomcat 10 with configuration preservation
 * **DB Scripts**: Generates database setup scripts
 

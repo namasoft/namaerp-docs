@@ -15,6 +15,7 @@ New to Nama ERP? Start here. First, what the system actually is and the vocabula
   <LandingCard icon="🗺️" title="Find Your Business Scenario" link="/business-scenarios/" details="How a company like yours runs on Nama ERP: the licences, the document flow and the setup order." />
   <LandingCard icon="🖥️" title="System Minimum Requirements" link="/getting-started/system-minimum-requirements.md" details="The hardware and software your server needs before you install Nama ERP." />
   <LandingCard icon="📦" title="Nama ERP Installation Guide" link="/getting-started/installation-guide.md" details="Step-by-step setup to get Nama ERP up and running on your server." />
+  <LandingCard icon="🔒" title="Installing an SSL Certificate" link="/getting-started/ssl-certificate-installation.md" details="Put the system on HTTPS with a free Let's Encrypt certificate, a bought certificate, or a self-signed one for internal use." />
   <LandingCard icon="⚙️" title="Nama Properties" link="/getting-started/nama-properties.md" details="The nama.properties configuration file — what each setting does and how to tune it." />
   <LandingCard icon="🕒" title="Server Time Zone" link="/getting-started/server-time-zone.md" details="Set the time zone a server runs in, refuse a server in the wrong zone, and share one SQL Server between countries." />
   <LandingCard icon="🔐" title="Two-Factor Authentication (2FA)" link="/getting-started/two-factor-authentication.md" details="Add a second sign-in factor to keep accounts secure." />

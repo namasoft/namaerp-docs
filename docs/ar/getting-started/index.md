@@ -14,6 +14,7 @@ title: بدء الاستخدام
   <LandingCard icon="🗺️" title="اعثر على سيناريو أعمالك" link="/ar/business-scenarios/" details="كيف تعمل شركة مثل شركتك على نظام نما: التراخيص، ومسار المستندات، وترتيب الإعداد." />
   <LandingCard icon="🖥️" title="الحد الأدنى لمتطلبات تشغيل النظام" link="/ar/getting-started/system-minimum-requirements.md" details="المتطلبات العتادية والبرمجية التي يحتاجها خادمك قبل تثبيت نظام نما." />
   <LandingCard icon="📦" title="دليل تثبيت نما" link="/ar/getting-started/installation-guide.md" details="خطوات تفصيلية لتشغيل نظام نما على خادمك." />
+  <LandingCard icon="🔒" title="تركيب شهادة SSL" link="/ar/getting-started/ssl-certificate-installation.md" details="شغّل النظام على HTTPS بشهادة Let's Encrypt مجانية، أو بشهادة مشتراة، أو بشهادة موقَّعة ذاتيًا للاستخدام الداخلي." />
   <LandingCard icon="⚙️" title="إعدادات Nama Properties" link="/ar/getting-started/nama-properties.md" details="ملف الإعدادات nama.properties — ماذا يفعل كل إعداد وكيف تضبطه." />
   <LandingCard icon="🕒" title="المنطقة الزمنية للخادم" link="/ar/getting-started/server-time-zone.md" details="اضبط المنطقة الزمنية التي يعمل بها الخادم، وارفض الخادم العامل بمنطقة خاطئة، وشغّل دولاً مختلفة على SQL Server واحد." />
   <LandingCard icon="🔐" title="المصادقة الثنائية (2FA)" link="/ar/getting-started/two-factor-authentication.md" details="أضف عامل تسجيل دخول ثانيًا للحفاظ على أمان الحسابات." />

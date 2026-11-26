@@ -55,7 +55,7 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 * إنشاء **مهمة النسخ الاحتياطي التفاضلي** (تعمل كل 2-3 ساعات)
 * إنشاء **سكريبت تنظيف النسخ الاحتياطية** (يحذف النسخ القديمة)
 * خيار **رفع النسخ الاحتياطية إلى التخزين السحابي** (Google Drive، Dropbox، OneDrive، إلخ)
-* إنشاء **شهادة SSL** تلقائياً باستخدام [Let's Encrypt](https://letsencrypt.org/)
+* تركيب **شهادة SSL**: شهادة مجانية من [Let's Encrypt](https://letsencrypt.org/)، أو شهادة مشتراة، أو شهادة موقَّعة ذاتيًا — راجع [تركيب شهادة SSL](/ar/getting-started/ssl-certificate-installation)
 
 ### أقسام الواجهة
 1. **معلومات الترخيص**: مفتاح الترخيص، اسم العميل، السيرفر الفرعي (يُملأ تلقائياً)
@@ -71,6 +71,8 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 * **تكامل مفتاح الترخيص**: ملء تلقائي لبيانات العميل والسيرفر الفرعي
 
 ## متطلبات شهادة SSL
+
+يستطيع مساعد SSL أيضًا تركيب شهادة اشتريتها، أو شهادة موقَّعة ذاتيًا لموقع يُستخدم داخل الشركة فقط، ولا يحتاج أيٌّ منهما إلى المتطلبات أدناه. والخطوات الكاملة في [تركيب شهادة SSL](/ar/getting-started/ssl-certificate-installation).
 
 لتثبيت SSL باستخدام Let's Encrypt، تحتاج إلى:
 
@@ -213,7 +215,7 @@ Arguments = " -Dprint-process-output=true -jar \""+oFolder.path+"\\nama-installe
 
 ### العمليات المتقدمة
 * **Request Key**: طلب مفتاح ترخيص تلقائي من سيرفرات نما مع متابعة الموافقة — انظر [الترخيص](/ar/getting-started/licensing)
-* **Install SSL**: يشغّل معالج تثبيت شهادة Let's Encrypt
+* **Install SSL**: يفتح مساعد SSL الذي يركّب شهادة Let's Encrypt أو شهادة مشتراة أو موقَّعة ذاتيًا — راجع [تركيب شهادة SSL](/ar/getting-started/ssl-certificate-installation)
 * **Migrate Tomcat**: ترقية من Tomcat 9 إلى Tomcat 10 مع الحفاظ على الإعداد
 * **DB Scripts**: يولّد سكريبتات إعداد قاعدة البيانات
 
