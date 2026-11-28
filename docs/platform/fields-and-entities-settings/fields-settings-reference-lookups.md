@@ -1,5 +1,5 @@
 ---
-description: "The nine Fields and Entities Settings grids that control reference field lookups: allowed values, extra filters, descriptors, extra search fields and operators, extra codes, name search by code, and opening a new record or popup when a code is not found."
+description: "The nine Fields and Entities Settings grids that control reference field lookups: allowed values, extra filters, descriptors, extra search fields and operators, extra codes, name search by code, opening a new record when a code is not found, and opening a reference in a popup."
 entities: [GenericReferenceOverrider]
 menu: Basic → Settings → Fields and Entities Settings
 ---
@@ -22,13 +22,15 @@ This grid narrows that list to the types that actually make sense, and picks one
 |---|---|
 | For Type | The entity type the line applies to (for example Sales Invoice). |
 | Entity List | A named list of entity types, so one line covers several at once. |
-| On Field | The generic reference field the line targets. **Required** — a line with no field does nothing. |
+| On Field | The generic reference field the line targets. **Required.** |
 | Allowed Entity 1 … Allowed Entity 5 | Up to five record types the field is allowed to hold. |
 | Default Entity Type | The type pre-selected when the user reaches the field. |
 | Add To Existing | Adds your types on top of the built-in list instead of replacing it. |
 | Allowed Entity List | A reusable named list of entity types, for sets longer than five. |
 
-There are five type slots per line because five covers most cases. When you need more — or when the same set of types is used on many screens — build an **Allowed Entity List** once and point the line at it instead of repeating the same five names on every line.
+A line must name **For Type** or **Entity List** — a line with neither is refused with *You must enter for type or entity list* — and at least one allowed type or a Default Entity Type, otherwise it is refused with *You must enter at least one of allowed entities*.
+
+There are five type slots per line because five covers most cases. When you need more — or when the same set of types is used on many screens — build an **Allowed Entity List** once and point the line at it instead of repeating the same five names on every line. A line that fills both offers the types of the list and of the five slots together.
 
 **Add To Existing** is the column that decides whether you are editing the list or replacing it. Left unticked, your types **replace** the built-in list entirely: only what you name is offered. Ticked, your types are **added on top** of whatever the screen already offered. Replacing is the usual choice when the built-in list is too broad; adding is right when the built-in list is fine and you just need one extra type.
 
@@ -51,13 +53,13 @@ The previous grid narrows **which types** a generic field can hold. This one nar
 | For Type | The entity type the line applies to. |
 | Entity List | A named list of entity types, so one line covers several at once. |
 | On Field | The reference field whose lookup is being filtered. |
-| Criteria Definition | A saved, fixed rule — a [Criteria Definition](/platform/automation-and-rules/criteria-definitions) that the offered records must satisfy. |
+| Criteria | A saved, fixed rule — a [Criteria Definition](/platform/automation-and-rules/criteria-definitions) that the offered records must satisfy. |
 | Dynamic Tempo Criteria | A rule written in Tempo that can read the record being edited. |
-| Filtered Type | On a generic reference field, restricts the filter to one of the types it can hold. |
+| Apply Filter with Type | On a generic reference field, restricts the filter to one of the types it can hold. |
 
 Use a **Criteria Definition** when the rule is fixed and does not depend on the document in front of the user: "only items marked sellable", "only customers who are not blocked". Use **Dynamic Tempo Criteria** when the rule depends on the record being edited: "only warehouses in the same branch as this document", "only items supplied by the supplier already chosen on this purchase invoice". The Tempo expression can read the current record, which a saved criteria definition cannot.
 
-**Filtered Type** only matters on generic reference fields. Because such a field can hold several types, a filter written without this column would have to make sense for all of them. Filling in Filtered Type lets you say "when the user is picking a **Sales Invoice** in this field, apply this rule" and leave every other type the field accepts completely unfiltered.
+**Apply Filter with Type** only matters on generic reference fields. Because such a field can hold several types, a filter written without this column would have to make sense for all of them. On a line that names its **For Type** (or **Entity List**) and carries a **Dynamic Tempo Criteria**, filling in Apply Filter with Type lets you say "when the user is picking a **Sales Invoice** in this field, apply this rule" and leave every other type the field accepts completely unfiltered.
 
 ::: tip Test the criteria on its own first
 Before wiring a criteria definition into this grid, open the record file it applies to and confirm that filtering by that criteria returns exactly the records you expect. A lookup that silently returns nothing is almost always a criteria problem, not a configuration problem — and it is much easier to see that on the list screen than inside a drop-down.
@@ -112,10 +114,10 @@ This grid adds more columns to what the lookup searches.
 | Column | What it does |
 |---|---|
 | For Type List | A named list of entity types, so one line covers several at once. |
-| For Type | The entity type the line applies to. |
+| For Type | The type of record being looked up — Customer, not the Sales Invoice it is picked on. |
 | Applicable For | A broad category instead of naming types: All Screens, Documents, or Master Files. |
-| Search Operator | How the typed text is matched: Contains, Starts With, or Ends With. |
-| Field | The extra field to search. **Required** — a line with no field does nothing. |
+| Search Operator | How the typed text is matched: Contains, Starts With, or Ends With. **Required.** |
+| Field | The extra field of the looked-up record to search. **Required.** |
 
 Add one line with For Type = Customer and Field = the mobile field, and typing `0501234` into any customer lookup now finds the customer by phone number. Add another with For Type = Item and Field = the manufacturer part number, and the technician's part number resolves the item directly.
 
@@ -132,9 +134,9 @@ The previous grid decides **which** columns are searched. This one decides **how
 | Column | What it does |
 |---|---|
 | For Type List | A named list of entity types, so one line covers several at once. |
-| For Type | The entity type the line applies to. |
+| For Type | The screen the line applies to — the Sales Invoice, not the Customer picked on it. |
 | Applicable For | A broad category instead of naming types: All Screens, Documents, or Master Files. |
-| Field | The reference field the line applies to. **Required** — a line with no field does nothing. |
+| Field | The reference field on that screen the line applies to. **Required.** |
 | Code Search Operator | How the code is matched: Contains, Starts With, or Ends With. Defaults to Contains. |
 | Name 1 Search Operator | How the Arabic name is matched: Contains, Starts With, or Ends With. Defaults to Contains. |
 | Name 2 Search Operator | How the English name is matched: Contains, Starts With, or Ends With. Defaults to Contains. |
@@ -168,10 +170,10 @@ Code fields are strict by design: type a code that does not exist and you get an
 | Column | What it does |
 |---|---|
 | For Type List | A named list of entity types, so one line covers several at once. |
-| For Type | The entity type the line applies to. |
-| Applicable For | A broad category instead of naming types: All Screens, Documents, or Master Files. |
+| For Type | The type of record being looked up, for example Customer. |
+| Applicable For | A broad category instead of naming types: All Screens or Master Files. |
 
-The effect is concrete: a user types `ABC Trading` into the customer **code** field on a Sales Invoice. The code file has no such code — the customer's code is `CUST001` — but the name matches, so the customer is resolved and the document carries on. Without this setting the user gets an error and has to open the lookup.
+The fallback works on master files only. When no record has the typed code, the system looks for a record whose Arabic name equals the typed text, and failing that one whose English name equals it. The effect is concrete: a user types `ABC Trading` into the customer **code** field on a Sales Invoice. The code file has no such code — the customer's code is `CUST001` — but the English name matches, so the customer is resolved and the document carries on. Without this setting the user gets an error and has to open the lookup.
 
 ::: warning This runs on the server, so imports are affected too
 This is not a browser convenience — the fallback happens on the server, which means it also applies when records arrive through an import file or an external integration. A spreadsheet column that was meant to contain codes but actually contains names will now import "successfully", matching on names, and nobody will notice until the wrong record turns up on a report. That is exactly why the setting is **off by default**. Turn it on for the entity types where your users work by name, and think twice before turning it on for types that are heavily imported. See [Importing Records](/platform/import-export/importing-records).
@@ -188,9 +190,17 @@ This grid nominates additional fields that behave exactly like the record's main
 | For Type List | A named list of entity types, so one line covers several at once. |
 | For Type | The entity type the line applies to. |
 | Applicable For | A broad category instead of naming types: All Screens, Documents, or Master Files. |
-| Field | The field to treat as an additional code. **Required** — a line with no field does nothing. |
+| Field | The field to treat as an additional code. **Required.** It may be a header field or a column of one of the record's grids. |
 
 Once a field is listed here, typing its value into a reference field resolves the record just as the real code would, and the search box tries it too. Nominate the barcode field on Item and a scanned barcode on an invoice line resolves straight to the item; nominate the tax number on Customer and an accountant working from a tax certificate can reach the customer account without looking anything up.
+
+The extra codes are stored with the record **when the record is saved**. Records saved before you added the line are reached by their new extra code only after each of them is saved again.
+
+An extra code is held to the same rules as the real code. Its value must not be the code or an extra code of another record of the same type that is in the same legal entity or has no legal entity, so saving the second customer with the same mobile number is refused with:
+
+*Code {0} exists before for record with id {1}* — «الكود {0} موجود مسبقا للسجل بالمعرف {1}»
+
+Nominate only fields whose values are not shared between records.
 
 Lines add up rather than replace: nominating the barcode on one line and the supplier SKU on another gives you both, and both work everywhere the entity is referenced.
 
@@ -215,7 +225,7 @@ This grid replaces the error with a shortcut. When the typed value matches no re
 
 **Field To Set Value In** is what makes the shortcut feel finished rather than half-done. Set it to the Arabic name field on Customer and the agent who typed `مؤسسة النور التجارية` lands on a new-customer screen with the name already filled in and the cursor free to complete the rest. Set it to the code field instead and a user who types a code that does not exist yet gets a new record already carrying that code.
 
-This grid supports the full wildcard chain in the field column, so a single line with `*` in **On Field** enables the behaviour on every reference field of that entity type at once, and `EntityType.*` covers a whole nested block.
+The field column accepts `*`: a line with a **For Type** (or **Entity List**) and `*` in **On Field** enables the behaviour on every reference field of that screen at once. Every line names its screen in For Type or Entity List.
 
 ::: warning A wildcard here is a lot of new-record screens
 Because `*` reaches every reference field, a user who mistypes anything is now offered a creation screen instead of an error. That is helpful on a customer field and alarming on an account or a warehouse field, where the right response to "not found" is almost always "you typed it wrong". Name the fields you mean.
@@ -227,9 +237,9 @@ This grid is applied by the browser, so a signed-in user keeps the old behaviour
 
 ## Open Reference In Popup
 
-Every reference field carries an action to open the record it points at. By default that navigates away from the current screen — which is fine when the user is browsing and disruptive when they are three-quarters of the way through a document and only wanted to check one thing about the customer.
+This grid works in the old interface only; the modern interface does not read it.
 
-This grid makes the action open the referenced record in a **pop-up window** instead, leaving the half-finished document sitting untouched behind it. The user checks the customer's credit terms, closes the pop-up and carries on typing.
+In the old interface, the action on a reference field that opens the record it points at opens that record in a new window. A line in this grid makes the action open the referenced record in a **pop-up window** over the current screen instead, leaving the half-finished document sitting untouched behind it. Holding Ctrl while clicking still opens the new window.
 
 | Column | What it does |
 |---|---|
@@ -237,7 +247,7 @@ This grid makes the action open the referenced record in a **pop-up window** ins
 | Entity List | A named list of entity types, so one line covers several at once. |
 | On Field | The reference field whose open action becomes a pop-up. |
 
-Like the previous grid, this one supports the wildcard chain: `*` in **On Field** turns every reference field on that entity type into a pop-up opener, and `EntityType.*` covers a nested block. A `*` line on your document types is a reasonable blanket setting here, because pop-up viewing is rarely the wrong choice on a document being edited.
+`*` in **On Field** turns every reference field of the line's screen into a pop-up opener, and a line with no For Type or Entity List applies on every screen.
 
 ::: warning Sign out for this to take effect
 This grid is applied by the browser, so a signed-in user keeps the old behaviour until they sign out and sign back in.
@@ -245,11 +255,11 @@ This grid is applied by the browser, so a signed-in user keeps the old behaviour
 
 ## When your changes become visible
 
-The nine grids on this page split into two halves, and the half a grid belongs to decides how long it takes before anyone sees your change. This catches people out constantly — a setting is saved, tested immediately, appears to do nothing, and is written off as broken when it was simply cached.
+The grids on this page split into two halves, and the half a grid belongs to decides how long it takes before anyone sees your change. This catches people out constantly — a setting is saved, tested immediately, appears to do nothing, and is written off as broken when it was simply cached.
 
-**Applied by the server — effective on save.** Descriptors, Extra Filter, Extra Reference Search Fields, Reference Searching Operators/Strategies, Search In Name In Find By Code and Extra Codes are all evaluated on the server. Save the record and the very next lookup uses the new setting, for every user, with no restart and nothing to press.
+**Applied by the server — effective on save.** Descriptors, Extra Filter, Search In Name In Find By Code and Extra Codes are evaluated on the server. Save the record and the very next lookup uses the new setting, for every user, with no restart and nothing to press — except that an extra code reaches an existing record only when that record is saved again, as explained under [Extra Codes](#Extra-Codes).
 
-**Applied by the browser — needs a sign-out.** Allowed Values For Generic References, Fields that open Edit Screen when code not found and Open Reference In Popup are sent to the browser as part of the user's session. A user who is already signed in keeps the old behaviour until they **sign out and sign back in** (or force a hard reload). Test these in a fresh session before concluding that the line does not work.
+**Applied by the browser — needs a sign-out.** Allowed Values For Generic References, Extra Reference Search Fields, Reference Searching Operators/Strategies, Fields that open Edit Screen when code not found and Open Reference In Popup are sent to the browser when the user signs in; the type-ahead in a reference field is built from that copy. A user who is already signed in keeps the old behaviour until they **sign out and sign back in** (or force a hard reload). Test these in a fresh session before concluding that the line does not work.
 
 ::: warning Keep one field's settings in one record
 There can be several Fields and Entities Settings records, and all their active lines are combined. That is convenient until the same field is configured in two different records — at which point which line wins becomes unpredictable, and grids that keep only the first matching line become genuinely hard to reason about. Keep everything about a given field in a single record.
@@ -277,7 +287,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `details.allowedEntity4` | Allowed Entity 4 | النوع المسموح 4 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
 | `details.allowedEntity5` | Allowed Entity 5 | النوع المسموح 5 | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
 | `details.defaultEntityType` | Default Entity Type | النوع الافتراضي | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
-| `details.addToExisting` | Add To Existing | إضافة الى الموجود | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
+| `details.addToExisting` | Add To Existing | إضافة إلى الموجود | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
 | `details.allowedEntityList` | Allowed Entity List | قائمة الأنواع المسموح بها | [Allowed Values For Generic References](#Allowed-Values-For-Generic-References) |
 | `extraFilter` | Extra Filter | Extra Filter | [Extra Filter](#Extra-Filter) |
 | `extraFilter.filteredType` | Apply Filter with Type | تطبيق الفلتر مع النوع | [Extra Filter](#Extra-Filter) |
@@ -293,9 +303,9 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `referenceSearchingOperators.codeSearchOperator` | Code Search Operator | معامل البحث في الكود | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
 | `referenceSearchingOperators.name1SearchOperator` | Name 1 Search Operator | معامل البحث في الاسم العربي | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
 | `referenceSearchingOperators.name2SearchOperator` | Name 2 Search Operator | معامل البحث في الاسم الإنجليزي | [Reference Searching Operators/Strategies](#Reference-Searching-OperatorsStrategies) |
-| `searchInNameInFindByCode` | Search In Name In Find By Code | البحث في الأسم العربى والانجليزى عند كتابة كود ملف | [Search In Name In Find By Code](#Search-In-Name-In-Find-By-Code) |
+| `searchInNameInFindByCode` | Search In Name In Find By Code | البحث في الاسم العربي والإنجليزي عند كتابة كود ملف | [Search In Name In Find By Code](#Search-In-Name-In-Find-By-Code) |
 | `extraCodes` | Extra Codes | Extra Codes | [Extra Codes](#Extra-Codes) |
-| `openCreateFields` | Fields that open Edit Screen when code not found | الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود | [Fields that open Edit Screen when code not found](#Fields-that-open-Edit-Screen-when-code-not-found) |
+| `openCreateFields` | Fields that open Edit Screen when code not found | الحقول التي يتم فتح الإنشاء عند إدخال كود غير موجود | [Fields that open Edit Screen when code not found](#Fields-that-open-Edit-Screen-when-code-not-found) |
 | `openCreateFields.fieldToSetValueIn` | Field To Set Value In | الحقل الذي سيتم وضع القيمة به | [Fields that open Edit Screen when code not found](#Fields-that-open-Edit-Screen-when-code-not-found) |
 | `openInPopups` | Open Reference In Popup | Open Reference In Popup | [Open Reference In Popup](#Open-Reference-In-Popup) |
 

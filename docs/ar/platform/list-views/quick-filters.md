@@ -63,7 +63,7 @@ entities: [ScreenModifier, QuickFilterCriteria]
 
 ##### إعداد فلاتر القيم
 * **إعداد المجموعة**:
-   - **العنوان بالعربية**: عنوان المجموعة بالعربية
+   - **العنوان العربي**: عنوان المجموعة بالعربية
    - **English Title**: Group Title in English
    - **Column Names**: أدخل معرّفات الحقول مفصولة بفواصل (مثل `status,customerType`)
    - **Show Count**: فعّل هذا الخيار لعرض عدد السجلات
@@ -113,9 +113,11 @@ entities: [ScreenModifier, QuickFilterCriteria]
 2. **إضافة سطور المعايير**:
    - **Dynamic Criteria**: أدخل نص المعايير (مثل `dueDate,LessThanOrEqual,$today()`)
      - لمزيد من التفاصيل راجع: [Text Criteria Guide](../automation-and-rules/text-criteria-guide.md)
-   - **العنوان بالعربية**: العنوان بالعربية
+   - **العنوان العربي**: العنوان بالعربية
    - **English Title**: Title in English
 
 3. **الربط بـ Screen Modifier**:
    - في جدول Quick Filter داخل Screen Modifier
    - اختر المعايير المنشأة في حقل **Criteria**
+   - اترك **العنوان العربي** و**العنوان الإنجليزي** في السطر فارغين. فتأخذ المجموعة عنوانها من الاسم العربي والإنجليزي
+     لسجل معيار الفلترة السريعة، وتأخذ أزرارها من سطوره.

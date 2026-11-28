@@ -55,10 +55,10 @@ Two behaviours around this number surprise people, and both are simply how the s
 - **The total refreshes when a task is saved, or when a timesheet approval is committed — not when
   the project is saved.** Saving the project itself does not recalculate it. If a figure looks stale,
   open one of the project's tasks and save it, and the project's totals are rebuilt.
-- **The completion percentage is the only percentage the system computes.** It is actual hours ÷
-  planned hours across the project's tasks. Every other percentage in the module — the milestone's
-  "% of project", the discipline percentages in the matrix, a milestone's "% of finishing" — is typed
-  by a human. The system does not roll up weighted progress.
+- **The completion percentage is the only progress figure the system computes.** It is actual hours ÷
+  planned hours across the project's tasks (each task, and each executer row on it, shows the same
+  ratio for itself). The milestone's "% of project", the discipline percentages in the matrix and a
+  milestone's "% of finishing" are typed by a human. The system does not roll up weighted progress.
 
 ![The project screen's read-only status figures sit alongside the contract and estimate values, with no revenue anywhere on the page](../../ar/modules/ecpa/images/projects/project-main-en.png)
 
@@ -67,10 +67,10 @@ Two behaviours around this number surprise people, and both are simply how the s
 The module values an hour twice, in two different places, from two different sources. This is the
 thing most worth understanding on the whole page.
 
-**The rate on the task's executer row** is a plain number a planner types when assigning the employee
-to the task. It is what the project screen's Total Project Cost is built from. In our example it is
-60, chosen by whoever set up the task — a charge-out rate, a blended departmental rate, whatever the
-firm uses for planning.
+**The rate on the task's executer row** (**Employee Rate**) is filled in from the employee record's own
+**Employee Rate** when the employee is picked on the row, and the planner can overwrite it. It is
+what the project screen's Total Project Cost is built from. In our example it is 60 — a charge-out
+rate, a blended departmental rate, whatever the firm keeps on its employee records for planning.
 
 **The hourly cost on the timesheet line** is a different number entirely. When the module setting
 **Update Hour Cost of TimeSheet From HR** is switched on, each timesheet line is valued at the
@@ -111,7 +111,7 @@ matters for costing is where the money ends up:
 - **The project screen, no.** Neither document touches Total Project Cost.
 - **The stage sheet, no.** Expense documents cannot be put on a Project Stage.
 - **The invoice, sometimes** — and this is decided by one tick box. A line marked **Internal Account**
-  (مصروف داخلى) is a cost the firm absorbs; a line left unticked is re-billed to the customer when
+  (مصروف داخلي) is a cost the firm absorbs; a line left unticked is re-billed to the customer when
   someone presses *Collect Expenses* on a Project Invoice. Sara's 220 taxi is external and will be
   billed; her 80 of printing is internal and will not.
 
@@ -126,72 +126,16 @@ cost us so far".
 
 ## The Project Stage Sheet — Revenue and Cost Side by Side
 
-The one screen in the module that shows income against cost is the **Project Stage** (مرحلة مشروع), a
-committed document with two dedicated pages.
+The one screen in the module that shows income against cost is the **Project Stage** (مرحلة مشروع).
+It has no project field — it reaches a project only through the milestones on its lines — and every
+figure on its **Project Incomes** and **Project Costs** pages is picked or typed by hand. The income
+page takes supply-chain **Sales Invoices**, not this module's Project Invoices; the cost page holds
+five grids (stock issues, worker days, fixed-asset days, misc purchase invoices and payment
+vouchers); and **Project Profit** is the income total less the five cost totals. A stage produces no
+accounting effect of its own.
 
-**Before using it, understand what it is attached to: nothing.** A Project Stage has no project
-field. It is keyed by project type and sub-type, and it reaches a project only through the milestones
-picked on its own lines. It never writes anything back to a project, and one stage can legally carry
-milestones belonging to two different projects. It is a sheet you assemble for a phase of work, not a
-report the project produces.
-
-Everything on both money pages is **hand-picked or hand-typed**. There is no collect button, no roll-up
-task and no automatic feed.
-
-### The income page
-
-**Project Incomes** (إيرادات المشروع) takes **Sales Invoices** — the supply-chain sales invoice, not
-this module's own Project Invoice. You pick each invoice by hand and the system fills in its date,
-its customer and its net value. The module's own Project Invoices cannot be put on this sheet.
-
-![The Project Incomes page: hand-picked sales invoices with their dates, customers and values](../../ar/modules/ecpa/images/projects/project-stage-incomes-en.png)
-
-### The cost page
-
-**Project Costs** (تكاليف المشروع) is five grids, each accepting a different kind of cost:
-
-| Grid | What you put on it | How the value arrives |
-|---|---|---|
-| **Stock and supplier costs** | Stock Issues | You pick the issue; the system fills its source document, date, customer and net value |
-| **Worker costs** | Employees, with days worked and a cost per day | Typed entirely by hand |
-| **Fixed-asset costs** | An asset, with working days and a cost per working day | Typed by hand; the system multiplies the two |
-| **Transportation costs** | Misc Purchase Invoices | You pick the invoice; the system fills its source document, date, supplier and net value |
-| **Other costs** | Payment Vouchers | You pick the voucher; the system fills its source document, date, supplier and amount |
-
-![The Project Costs page — the stock-and-supplier grid and the worker-cost grid; the remaining cost grids and the profit block sit further down the page](../../ar/modules/ecpa/images/projects/project-stage-costs-en.png)
-
-### The arithmetic
-
-Each grid totals itself, the five cost totals add up to an all-costs figure, and the profit is the
-income total less that:
-
-```
-Project incomes total       = Σ income lines
-Stock and supplier costs    = Σ stock issue lines
-Worker costs                = Σ employee cost in project
-Fixed-asset costs           = Σ asset cost in project
-Transportation costs        = Σ misc purchase invoice lines
-Other costs                 = Σ payment voucher lines
-
-All costs   = stock + workers + fixed assets + transportation + other
-Profit      = incomes − all costs
-```
-
-For a stage covering the concept and schematic phases of `PRJ-0042`, a firm might record **250,000**
-of income against **30,000** of stock, **45,000** of worker cost, **8,000** of fixed-asset use,
-**5,000** of transportation and **2,000** of other costs — 90,000 of cost and a profit of
-**160,000**. The totals are recalculated whenever the document is saved and again when it is
-committed.
-
-::: tip One document can only be counted once
-A stage will not commit if the same sales invoice, stock issue, misc purchase invoice or payment
-voucher appears twice on it — or if it already appears on another committed Project Stage. That guard
-is what makes the sheet safe to use across several stages of the same job. It does not apply to the
-worker and fixed-asset grids, because those hold no document reference to compare.
-:::
-
-The Project Stage produces no accounting effect of its own. It is a working sheet, not an
-accounting document.
+How each grid fills, the profit roll-up and the commit guard against counting a document twice are
+on [Project Stages](/modules/ecpa/projects/ecpa-project-stages).
 
 ## Estimates Are Informational — There Is No Budget
 
@@ -223,8 +167,8 @@ control outside.
 | Misc purchase invoices | Project Stage → transportation costs | **Manually picked**; value filled automatically |
 | Payment vouchers | Project Stage → other costs | **Manually picked**; value filled automatically |
 | Sales invoices (revenue) | Project Stage → project incomes | **Manually picked**; value filled automatically |
-| Employee days on a stage | Project Stage → worker costs | **Typed entirely by hand** |
-| Fixed-asset usage | Project Stage → fixed-asset costs | **Typed entirely by hand** |
+| Employee days on a stage | Project Stage → worker costs | **Typed by hand** (days and day cost; the system multiplies them) |
+| Fixed-asset usage | Project Stage → fixed-asset costs | **Typed by hand** (days and day cost; the system multiplies them) |
 
 ## Answering the Question in Practice
 

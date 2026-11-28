@@ -16,14 +16,14 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 لشاشة التعديل أربعة تبويبات:
 
 - **الرئيسية** — ٣٦ جدولاً مرصوصة الواحد تلو الآخر، من *القيم المسموح بها للمراجع* في أعلاها إلى *Invoice Retriever Lines* في أسفلها.
-- **معلومات كتالوج التجهير** — وليس تبويب إعدادات أصلاً، بل هو رأس السجل التوثيقي والأرشيفي: الملاحظات، وصورة الشاشة، وعيّنة PDF، وخمسة مرفقات، والكيان والوحدة المرتبطان، والرابط إلى كتالوج التجهير. **ولا يظهر هذا التبويب إلا حين يكون الخادم مضبوطاً على التخاطب مع كتالوج التجهير**، فلن تراه في أغلب التركيبات.
+- **معلومات كتالوج التجهيز** — وليس تبويب إعدادات أصلاً، بل هو رأس السجل التوثيقي والأرشيفي: الملاحظات، وصورة الشاشة، وعيّنة PDF، وخمسة مرفقات، والكيان والوحدة المرتبطان، والرابط إلى كتالوج التجهيز. **ولا يظهر هذا التبويب إلا حين يكون الخادم مضبوطاً على التخاطب مع كتالوج التجهيز**، فلن تراه في أغلب التركيبات.
 - **الملفات المسموح بحفظها على العام** — جدول Public Entities، في تبويب مستقل به.
 - **الأيقونات** — ٣ جداول لأيقونات الكيانات وقيم القوائم والحقول.
 
-وأربعون جدولاً في سجل واحد تعني تمريراً طويلاً، ولذلك فإن **لكل جدول من هذه الجداول شاشة عرض وبحث خاصة به**. وهذه هي الطريقة العملية للعمل: افتح شاشة عرض *Display Masks*، وابحث عن الحقل الذي يعنيك، وعدّل السطر، واحفظ. ولا تفتح السجل الرئيسي نفسه إلا حين تضيف سطراً جديداً تماماً وتريد أن ترى ما حوله.
+وأربعون جدولاً في سجل واحد تعني تمريراً طويلاً، ولذلك يلي كل جدول تقريباً **قائمة قابلة للطي**. تعرض هذه القائمة سطور ذلك الجدول من **كل** سجلات أعدادات الحقول و الشاشات، والسجل الذي ينتمي إليه كل سطر في عمودها الأول. وهذه هي الطريقة العملية للعثور على إعداد موجود: افتح القائمة تحت *Display Masks*، وفلتر على الحقل الذي يعنيك، ثم افتح السجل الذي يملك السطر. وجدول *Style Overrider Details* هو الجدول الوحيد في تبويب الرئيسية الذي ليست له قائمة كهذه.
 
-::: tip ابحث عن الجدول باسمه
-شاشات العرض مسمّاة باسم الجدول لا باسم السجل الرئيسي. فإن كنت تعرف عنوان الجدول — *Field Formats* أو *Extra Codes* أو *Audit Fields* — فابحث عن هذا العنوان في القائمة أو في مربع البحث العام.
+::: tip القوائم ليست بنوداً في القائمة الرئيسية
+تقع هذه القوائم داخل تبويبات السجل نفسه، كل واحدة تحت جدولها، وليست في قائمة النظام. افتح أي سجل من أعدادات الحقول و الشاشات وافتح القائمة تحت الجدول الذي تريده — *Field Formats* أو *Extra Codes* أو *Audit Fields* — لترى كل سطور ذلك الجدول في كل السجلات.
 :::
 
 ![تبويب الرئيسية في أعدادات الحقول و الشاشات](../images/fields-settings/fields-settings-main-tab-ar.png)
@@ -39,7 +39,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | **لقوائم أنواع** (For Type List) | الصورة نفسها في الجداول التي تسمّي هذا العمود بهذا الاسم. |
 | **الحقل** (On Field / Field) | معرّف الحقل المستهدف — `customer` أو `details.item` أو `remarks`. |
 | **مطبق على** (Applicable For) | فئة عريضة بدل تسمية الأنواع: *كل الشاشات* أو *المستندات* أو *الملفات*. |
-| **غير نشط** (Inactive) | يوقف هذا السطر وحده دون حذفه. |
+
+وليس للسطر مفتاح تشغيل وإيقاف خاص به: فكل سطر يتبع علامة **غير نشط** في السجل الذي يحمله (انظر قسم «عدة سجلات، نظام واحد» أدناه). ولإيقاف سطر واحد احذفه أو انقله إلى سجل جعلته غير نشط.
 
 ### أربعة أمثلة عملية
 
@@ -60,6 +61,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 هذه هي الطريقة المقصودة للتعامل مع الاستثناءات. فلا تحذف السطر العام وتعيد إنشاءه ثلاثين مرة.
 
+وجدولان لا يقبلان سطوراً عامة: *القيم المسموح بها للمراجع* يرفض السطر الذي ليس فيه **للنوع** ولا **قائمة الأنواع**، و*Clear On Duplicate* يرفض السطر الذي ليس فيه **للنوع** ولا **قائمة الأنواع** ولا **مطبق على**.
+
 ### الرموز البديلة في عمود الحقل
 
 تقبل عدة جداول رموزاً بديلة في موضع معرّف الحقل:
@@ -67,7 +70,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 - `*` — كل الحقول.
 - `EntityType.*` — كل حقول نوع كيان واحد.
 
-وهذا مؤكَّد في *الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود* و*Open Reference In Popup* و*Use Scanner In Fields* و*Display Masks*.
+وهذا مؤكَّد في *الحقول التي يتم فتح الإنشاء عند إدخال كود غير موجود* و*Open Reference In Popup* و*Use Scanner In Fields* و*Display Masks*.
 
 وتذهب أقنعة العرض (Display Masks) خطوة أبعد: فهي تتدرج بمعرّف الحقل إلى الخارج حتى تجد مطابقة — `details.item.code` ثم `details.item.*` ثم `details.*` ثم `*`. والصيغة قبل الأخيرة مفيدة فعلاً: فـ `details.*` يضع القناع على **كل أعمدة جدول التفاصيل** بسطر واحد.
 
@@ -89,11 +92,11 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 هذا أكثر سؤال يصل إلى الدعم الفني، وجوابه يتوقف على الجهة التي يعيش فيها الإعداد.
 
-**إعدادات الخادم تُحدَّث فور الحفظ.** التحقق والبحث والتكويد والمحددات والمكاملات والوصّافات والأكواد الإضافية والحقول المحسوبة وحقول التدقيق ومسح الحقول عند النسخة المماثلة والكيانات العامة — كلها تسري لحظة حفظ السجل. لا إعادة تشغيل ولا زر تضغطه.
+**إعدادات الخادم تُحدَّث فور الحفظ.** التحقق والبحث في الاسم عند كتابة الكود والتكويد والمحددات والمكاملات والوصّافات والأكواد الإضافية والحقول المحسوبة وحقول التدقيق ومسح الحقول عند النسخة المماثلة والكيانات العامة — كلها تسري لحظة حفظ السجل. لا إعادة تشغيل ولا زر تضغطه.
 
-**إعدادات المتصفح تحتاج خروجاً ودخولاً.** أقنعة العرض وأنماط الحقول والأيقونات والحقول المعطّلة والنص المنسّق والتوقيعات والماسح الضوئي وتحويل النص إلى رابط وفتح شاشة الإنشاء وفتح المرجع في نافذة منبثقة وحقول «ليست ألواناً» وأنواع مراجع إرسال البريد والقيم المسموح بها — كلها مخزَّنة مؤقتاً في متصفح كل مستخدم. وعلى المستخدم أن **يخرج من النظام ثم يدخل** (أو يعيد تحميل الصفحة تحميلاً كاملاً) قبل أن يظهر التغيير عنده. فإن حفظت قناع عرض ثم قيل لك إنه «لا يعمل» فهذا هو السبب في الغالب الأعم — وهو أيضاً تفسير الشكوى الكلاسيكية «يعمل عندي ولا يعمل عندها»: هي ببساطة لم تخرج من النظام منذ أن حفظت أنت.
+**إعدادات المتصفح تحتاج خروجاً ودخولاً.** أقنعة العرض وأنماط الحقول والأيقونات والحقول المعطّلة والنص المنسّق والتوقيعات والماسح الضوئي وتحويل النص إلى رابط وفتح شاشة الإنشاء وفتح المرجع في نافذة منبثقة وحقول «ليست ألواناً» وأنواع مراجع إرسال البريد والقيم المسموح بها وحقول البحث الإضافية عند البحث عن مرجع ومعامل البحث عن المراجع — كلها مخزَّنة مؤقتاً في متصفح كل مستخدم. وعلى المستخدم أن **يخرج من النظام ثم يدخل** (أو يعيد تحميل الصفحة تحميلاً كاملاً) قبل أن يظهر التغيير عنده. فإن حفظت قناع عرض ثم قيل لك إنه «لا يعمل» فهذا هو السبب في الغالب الأعم — وهو أيضاً تفسير الشكوى الكلاسيكية «يعمل عندي ولا يعمل عندها»: هي ببساطة لم تخرج من النظام منذ أن حفظت أنت.
 
-**إعدادان يحتاجان إعادة تشغيل الخادم.** *إضافة النقاش إلي* و*إضافة المستندات المرتبطة إلى* مخزَّنان مؤقتاً مع تخطيطات الشاشات ولا يُحدَّثان تلقائياً، فلا يظهران إلا بعد إعادة تشغيل الخادم. فخطّط لهذين الاثنين مع المسؤول عن نافذة الصيانة.
+**إعدادان يحتاجان إعادة تشغيل الخادم.** *إضافة النقاش إلى* و*إضافة المستندات المرتبطة إلى* مخزَّنان مؤقتاً مع تخطيطات الشاشات ولا يُحدَّثان تلقائياً، فلا يظهران إلا بعد إعادة تشغيل الخادم. فخطّط لهذين الاثنين مع المسؤول عن نافذة الصيانة.
 
 ## عدة سجلات، نظام واحد
 
@@ -118,37 +121,37 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | Descriptors | يختار الحقول التي تُعرض لوصف السجل المشار إليه | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
 | حقول البحث الإضافية عند البحث عن مرجع (Extra Reference Search Fields) | يضيف حقولاً أخرى يُبحث فيها عند البحث عن سجل | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
 | معامل البحث عن المراجع (Reference Searching Operators) | يختار كيف يُطابَق النص المكتوب — يبدأ بـ، يحتوي، مطابق تماماً | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
-| البحث في الأسم العربى والانجليزى عند كتابة كود ملف (Search In Name In Find By Code) | يجعل مربع الكود يطابق الاسمين العربي والإنجليزي أيضاً | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
+| البحث في الاسم العربي والإنجليزي عند كتابة كود ملف (Search In Name In Find By Code) | يجعل مربع الكود يطابق الاسمين العربي والإنجليزي أيضاً | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
 | Extra Codes | يجعل السجل قابلاً للاستدعاء بأكواد بديلة إلى جانب كوده | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
-| الحقول التي يتم فتح الإنشاء عند ادخال كود غير موجود (Fields that open Edit Screen when code not found) | يفتح شاشة إنشاء حين يكتب المستخدم كوداً غير موجود بعد | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
+| الحقول التي يتم فتح الإنشاء عند إدخال كود غير موجود (Fields that open Edit Screen when code not found) | يفتح شاشة إنشاء حين يكتب المستخدم كوداً غير موجود بعد | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
 | Open Reference In Popup | يفتح السجل المشار إليه في نافذة منبثقة بدل مغادرة الشاشة | [مراجع البحث](/ar/platform/fields-and-entities-settings/fields-settings-reference-lookups) |
 | Display Masks | ينسّق ما يعرضه الحقل — التواريخ والأرقام والأكواد | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
 | Field Styles | ألوان الحقل وخطوطه وتمييزه | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
 | Rich Text Fields | يحوّل مربع النص العادي إلى محرر منسَّق | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
-| الحقول النصية المحوله الي روابط (Text To Link Fields) | يعرض النص كرابط قابل للنقر — أرقام هواتف وعناوين مواقع | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
+| الحقول النصية المحولة إلى روابط (Text To Link Fields) | يعرض النص كرابط قابل للنقر — أرقام هواتف وعناوين مواقع | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
 | ليست حقول ألوان (Not Color Fields) | يمنع معاملة الحقل كمنتقي ألوان | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
 | Signatures | يحوّل الحقل إلى مساحة التقاط توقيع يدوي | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
 | Use Scanner In Fields | يربط ماسحاً ضوئياً للباركود بالحقل | [مظهر الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance) |
-| Entity Icons | يعطي نوع الكيان أيقونته ولونه | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
-| Enum Icons | يعطي كل قيمة من قيم حقل القوائم أيقونتها ولونها | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
-| Field Icons | يضع أيقونة على حقل بعينه | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
+| أيقونات الكيانات (Entity Icons) | يعطي نوع الكيان أيقونته ولونه | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
+| أيقونات القيم الثابتة (Enum) (Enum Icons) | يعطي كل قيمة من قيم حقل القوائم أيقونتها ولونها | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
+| أيقونات الحقول (Field Icons) | يضع أيقونة على حقل بعينه | [أيقونات الحقول](/ar/platform/fields-and-entities-settings/fields-settings-field-icons) |
 | Field Formats | يفرض على المدخل نمطاً محدداً — ككود يجب أن يبدأ بـ `CU-` | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | القيم المسموح بها للحقول (Field Allowed Values) | يحصر الحقل في مجموعة قيم ثابتة | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | Disabled Fields | يعطّل الحقل فلا يمكن تعديله | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | أقصى عدد لسطور السندات والملفات (Max Lines Counts For Documents And Files) | يحدّ عدد السطور التي يقبلها الجدول | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | Max Fields Length In DB | يحدد عدد الحروف التي يخزّنها الحقل النصي | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | Max POS Fields Length In DB | الحدّ نفسه في جانب نقاط البيع | [التحقق من المدخلات](/ar/platform/fields-and-entities-settings/fields-settings-input-validation) |
-| استعلامات الحقول المحسوبة (calculated Fields Queries) | يملأ حقلاً في الشاشة من استعلام بدل الكتابة | [الحقول المحسوبة](/ar/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
+| استعلامات الحقول المحسوبة (Calculated Fields Queries) | يملأ حقلاً في الشاشة من استعلام بدل الكتابة | [الحقول المحسوبة](/ar/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
 | Style Overrider Details | يلوّن سطور الجدول كاملةً حسب شرط | [الحقول المحسوبة](/ar/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
-| التكويد الالي للملفات (Files Auto Coding) | يبني الأكواد تلقائياً من نمط وعدّاد | [التكويد الآلي](/ar/platform/fields-and-entities-settings/fields-settings-auto-coding) |
+| التكويد الآلي (Automatic Coding) | يبني الأكواد تلقائياً من نمط وعدّاد | [التكويد الآلي](/ar/platform/fields-and-entities-settings/fields-settings-auto-coding) |
 | السماح باستعمال السجلات الممنوعة من الاستعمال (Allow Usage Of Prevented Records) | يسمح باستعمال سجل ممنوع من الاستعمال في مواضع بعينها | [تخفيف القيود](/ar/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |
 | تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields) | يوقف فحص تناسق المحددات على حقول مسمّاة | [تخفيف القيود](/ar/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |
 | الملفات المسموح بحفظها على العام (Public Entities) | يعفي نوع كيان من ترشيح السجلات الأمني | [تخفيف القيود](/ar/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |
 | Clear On Duplicate | يفرّغ حقولاً مختارة عند نسخ السجل بـ *نسخة مماثلة* | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
 | Audit Fields | يسجّل من غيّر الحقل ومتى ومن أي قيمة إلى أي قيمة | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
-| إضافة النقاش إلي (Add Discussion To) | يضيف خيط نقاش إلى الشاشة | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
+| إضافة النقاش إلى (Add Discussion To) | يضيف خيط نقاش إلى الشاشة | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
 | إضافة المستندات المرتبطة إلى (Add Related Documents To) | يضيف لوحة المستندات المرتبطة إلى الشاشة | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
-| أنواع المراجع في نافذة ارسال بريد الكترونى (Email Send To Types) | يختار أنواع المراجع التي تظهر في نافذة إرسال البريد | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
+| أنواع المراجع في نافذة إرسال بريد إلكتروني (Email Send To Types) | يختار أنواع المراجع التي تظهر في نافذة إرسال البريد | [سلوك السجل](/ar/platform/fields-and-entities-settings/fields-settings-record-behaviour) |
 | Integrator Config | يربط الشاشة بنظام خارجي | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Import Integrators | يضبط كيفية جلب السجلات من الخارج | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
 | Invoice Retriever Lines | ينشر مطبوعة الفاتورة ليجري استرجاعها عبر رابط | [المكاملات](/ar/platform/fields-and-entities-settings/fields-settings-integrations) |
@@ -161,7 +164,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 رأس السجل بسيط عن قصد، لأن القيمة كلها في السطور. فإلى جانب الكود والمجموعة والاسمين — `name1` هو الاسم العربي و`name2` هو الاسم الإنجليزي — توجد علامة **غير نشط** الموصوفة أعلاه، ومربع لون حين يكون الترميز اللوني مفعّلاً لهذه الشاشة في الإعدادات العامة.
 
-ويحمل السجل أيضاً مجموعة من حقول التوثيق: الملاحظات، وصورة للشاشة، وعيّنة PDF، وخمسة مرفقات، واسمي الكيان والوحدة المرتبطين، ورابطاً إلى سجل في **Implementation Repository**. وهذا الأخير هو كتالوج نماسوفت المشترك للإعدادات الجاهزة — التقارير والإشعارات ولوحات المعلومات والتلميحات والمهام المجدولة وسجلات الإعدادات — حيث تُحفظ الإعدادات مع صورتها وعيّنتها ومرفقاتها ليمكن العثور على الضبط نفسه وإعادة استعماله في تركيب آخر. وهذه الحقول للتوثيق والأرشفة لا لتغيير السلوك، وهي مجتمعة في تبويب **معلومات كتالوج التجهير** — وهو تبويب لا يظهر إلا حين يكون الخادم مضبوطاً على التخاطب مع كتالوج التجهير. فإن لم تجد التبويب فهذا هو السبب.
+ويحمل السجل أيضاً مجموعة من حقول التوثيق: الملاحظات، وصورة للشاشة، وعيّنة PDF، وخمسة مرفقات، واسمي الكيان والوحدة المرتبطين، ورابطاً إلى سجل في **Implementation Repository**. وهذا الأخير هو كتالوج نماسوفت المشترك للإعدادات الجاهزة — التقارير والإشعارات ولوحات المعلومات والتلميحات والمهام المجدولة وسجلات الإعدادات — حيث تُحفظ الإعدادات مع صورتها وعيّنتها ومرفقاتها ليمكن العثور على الضبط نفسه وإعادة استعماله في تركيب آخر. وهذه الحقول للتوثيق والأرشفة لا لتغيير السلوك، وهي مجتمعة في تبويب **معلومات كتالوج التجهيز** — وهو تبويب لا يظهر إلا حين يكون الخادم مضبوطاً على التخاطب مع كتالوج التجهيز. فإن لم تجد التبويب فهذا هو السبب.
 
 ## الإعدادات في هذه الصفحة
 

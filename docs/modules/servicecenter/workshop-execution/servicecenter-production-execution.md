@@ -17,10 +17,9 @@ You will find it at **Service Center → Documents → Production Review**.
 `srvcenter`
 :::
 
-::: tip The menu says something else
-The document's own title is **تنفيذ أمر الشغل — Job Order Execution**, and that is what this
-documentation calls it. The English menu entry currently reads **Production Review**, so that is the
-line to look for while you are finding your way to the screen.
+::: tip Two names for one screen
+The document's English name, on the menu and on the screen, is **Production Review**. Its Arabic
+name, **تنفيذ أمر الشغل**, means *Job Order Execution*, and that is what this documentation calls it.
 :::
 
 ![The Production Execution screen](../../../ar/modules/servicecenter/images/execution/sc-production-execution-en.png)
@@ -68,13 +67,13 @@ rows in date order. Add a row with status *Finished* and the order is finished; 
 
 **Review** (المتابعة) is the fine-grained tab, where one grid row is one **task** worked by one
 technician: the task, the resource used, up to five technicians, from date/time, to date/time, the
-computed net time, the status and remarks. Above the grid sit **المهمه الحالية / Current Operation**,
-**الفني الحالي / Current Technician**, **المهمه التالية / Next Operation**, **الفني التالي / Next
-Technician** and a **Unified Technician** field.
+computed net time, the status and remarks. Above the grid sit **المهمة الحالية / Current Operation**,
+**الفني الحالي / Current Technician**, **المهمة التالية / Next Operation**, **الفني التالي / Next
+Technician** and a **فني موحد / Unified Technician** field.
 
 ::: warning Two fields to read carefully
 The two fields the English screen calls *Current Operation* and *Next Operation* pick from the
-**task** list, not from services — the Arabic labels read **المهمه** (task).
+**task** list, not from services — the Arabic labels read **المهمة** (task).
 
 **Unified Technician** is not a default. Fill it and, on save, it **overwrites the technician on
 every line of the document**. Use it when one person genuinely did everything, as Turki did on
@@ -97,25 +96,15 @@ A normal day at `WC-MECH` runs like this.
 2. Select the row for the task about to start and press **بدء المهمة للسطر الحالي / Start Current Line
    Task**. The start date and time are stamped with *now* and the line goes to *Under
    Processing*. If the order had no status row yet, one is added at *Under Processing*.
-3. When the technician downs tools, select the same row and press **إنهاء المهمة السطر الحالي /
+3. When the technician downs tools, select the same row and press **إنهاء المهمة للسطر الحالي /
    Finish Current Line Task**. The finish stamp is *now*, the line goes to *Finished*, and the
    net time appears in the **ساعات العمل** columns — as a decimal and as `hh:mm`.
 4. Repeat per task. **إنهاء أمر شغل / Finish Job Order** is the shortcut at the end of a car: it
    marks the header job order's rows in both grids finished, stamping *now* on anything still open.
    With the header's *Job Order* left empty it does this to every order on the document.
-5. When the car is done, **إغلق أمر الشغل / Close the Job Order** generates the job order closing
-   document straight from here, using the closing book and term set on this document's own term.
-   **إعاده فتح أمر الشغل / Re Open The Job Order** deletes that closing again. Save the execution document
-   before pressing either.
-
-The three **change status** buttons — *Under Processing*, *Cancelled*, *Finished* — each append one
-row to the Job Orders grid, for the job order in the header, with that status and
-the current moment as its creation date. They are how you correct a status log that has drifted.
-
-*Collect Job Orders* loads only orders that are *Under Processing* or *Not Started*, whatever you
-answer to its *Include Postponed Orders* question. An order you have suspended with a
-[pending operation document](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md)
-is therefore not loaded: resume it first, then collect.
+5. When the car is done, **إغلاق أمر الشغل / Close the Job Order** generates the job order closing
+   document straight from here, and **إعادة فتح أمر الشغل / Re Open The Job Order** deletes it again;
+   both are described under [Actions on this screen](#Actions-on-this-screen).
 
 ## Rules the document enforces
 
@@ -123,7 +112,7 @@ is therefore not loaded: resume it first, then collect.
 from/to intervals overlap — whether both lines are on this document or one of them is on another
 execution document for the same dates — the save is refused, naming the interval:
 
-*There is time overlapping between this line and another line time interval from {0} to {1}* — «هناك تداخل في الوقت بين هذا السطر وسطر اخر يبدا من {0} الي {1}»
+*There is time overlapping between this line and another line time interval from {0} to {1}* — «هناك تداخل في الوقت بين هذا السطر وسطر آخر يبدأ من {0} إلى {1}»
 
 This is the module's one genuine integrity check on recorded time, and it is worth the discipline it
 imposes. A workshop whose technicians genuinely work two jobs side by side ticks **Allow Time
@@ -138,13 +127,15 @@ before it becomes an invoice.
 **Finished orders are protected.** An order that is already *Closed*, or that already has a customer,
 insurance or warranty invoice, cannot appear on a new execution document at all.
 
-**Started lines freeze.** Once a line has a from-date and a to-date, its service, resource and five
-technician columns can no longer be changed. If the module setting *Can Not Edit Line Status Is
+**Started lines freeze.** Once a saved line has a from-date or a to-date, its service, resource and
+five technician columns can no longer be changed. If the module setting *Can Not Edit Line Status Is
 Finished* is switched on, a finished line is read-only in every column.
 
-One further check is optional. Tick **preventing more than one unfinished task per technician** on
-this document's term and a save is refused when a technician would be left with two open tasks on the
-same day.
+One further check is optional. Tick **منع فتح أكثر من مهمة للفني في نفس اليوم / Prevent Opening more
+than unfinished Task to Technical in same day** on this document's term and a save is refused when a
+technician would be left with two open tasks on the same day:
+
+*There is UnFinished Task {0} for Technician {1} at the same Day* — «لا يمكن إضافة مهمة جديدة، حيث أنه توجد مهمة {0} غير منتهية للفني {1}، لنفس اليوم»
 
 ::: warning The Term field looks optional — on this document it is not
 The document saves happily with **توجيه المستند / Term** left empty. But an empty term silently
@@ -156,36 +147,40 @@ book and term to create the closing with. Always fill it.
 
 **Basic Information** tab:
 
-- **Collect Job Orders** (*تجميع أوامر الشغل*) — asks *Include Postponed Orders*, then replaces the
-  Job Orders grid and the Review grid with the chosen work centre's orders that are *Under
-  Processing* or *Not Started*. Without a work centre it refuses with *Please Choose Work Center*.
+- **Collect Job Orders** (*تجميع أوامر الشغل*) — replaces the Job Orders grid and the Review grid
+  with the chosen work centre's orders that are *Under Processing* or *Not Started*. Without a work
+  centre it refuses with *Please Choose Work Center* — «من فضلك اختر مركز خدمة». An order suspended
+  with a
+  [pending operation document](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md)
+  is therefore not loaded: resume it first, then collect.
 - **Make Job Order Under Processing** (*جعل أمر الشغل تحت التنفيذ*), **Make Job Order Cancelled**
   (*جعل أمر الشغل ملغي*) and **Make Job Order Finished** (*جعل أمر الشغل منتهي*) — each appends one
-  status row for the header job order, stamped with the current moment.
-- **Close the Job Order** (*إغلق أمر الشغل*) — creates and commits the
+  status row for the header job order, stamped with the current moment. They are how you correct a
+  status log that has drifted.
+- **Close the Job Order** (*إغلاق أمر الشغل*) — creates and commits the
   [job order closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) for the
-  header job order, on the closing book and term named on this document's term, then refreshes the
-  screen. Save the document first.
-- **Re Open The Job Order** (*إعاده فتح أمر الشغل*) — deletes the committed closing of the header job
+  header job order, on the **Order Close Book** and **Order Close Term** named on this document's
+  term, then refreshes the screen. Save the document first.
+- **Re Open The Job Order** (*إعادة فتح أمر الشغل*) — deletes the committed closing of the header job
   order, which takes the order out of *Closed*. Save the document first.
 
 **Review** tab:
 
-- **Start Operation** (*بدأ خدمة*) — moves the header job order one task forward. It finishes the
+- **Start Operation** (*بدء خدمة*) — moves the header job order one task forward. It finishes the
   lines of the task in *Current Operation* (stamping *now* where no end is recorded), adds the job
   order's lines for the task in *Next Operation* with the *Next Technician*, and then refills the
   current and next fields from the job order's task sequence.
 - **Finish Job Order** (*إنهاء أمر شغل*) — finishes the header job order's rows in both grids, as in
   step 4 above.
 - **Start Current Line Task** (*بدء المهمة للسطر الحالي*) and **Finish Current Line Task**
-  (*إنهاء المهمة السطر الحالي*) — on the Details grid row; they stamp the start or finish on the
+  (*إنهاء المهمة للسطر الحالي*) — on the Details grid row; they stamp the start or finish on the
   selected line. A line that already has a start is refused with *Operation Already Started*, and one
   that already has a finish with *Operation Already Finished*.
 
 **Operations** tab:
 
 - **Start Current Line Operation** (*بدء المهمة للسطر الحالي*) and **Finish Current Line Operation**
-  (*إنهاء المهمة السطر الحالي*) — on the Operation Details grid row; the same stamping for a whole
+  (*إنهاء المهمة للسطر الحالي*) — on the Operation Details grid row; the same stamping for a whole
   service. Finishing a line that was never started is refused with *Operation Has Not Started Yet*.
 
 ![The action block on the Basic Information tab of a job order execution](../../../ar/modules/servicecenter/images/execution/sc-production-execution-actions-en.png)
@@ -238,9 +233,9 @@ description and the dimensions. A term is optional. The **Details** grid has one
 | Column | Arabic | What it holds |
 |---|---|---|
 | Employee | الموظف | Required. Any employee, picked from the HR employee file. |
-| Time / From | الوقـت / من | Clock-in time. |
-| Time / To | الوقـت / إلى | Clock-out time. |
-| Total Time Value | اجمالى الوقت | Filled for you: the hours between the two times, as a decimal (08:00–16:30 gives 8.5). |
+| From-Time | من وقت | Clock-in time. |
+| To-Time | إلى وقت | Clock-out time. |
+| Total Time Value | إجمالي الوقت | Filled for you: the hours between the two times, as a decimal (08:00–16:30 gives 8.5). |
 
 Every line belongs to the document's **value date**; there is no date column on the grid. So a
 technician who comes back after a break simply gets a second line on the same document.

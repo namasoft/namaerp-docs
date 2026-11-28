@@ -26,7 +26,7 @@ Manual execution for printing predefined reports directly to physical printers w
 
 ## Parameters
 
-**Parameter 1:** Printer Name (Required) - Name of the network or local printer to send output to
+**Parameter 1:** Printer Name (Optional) - Name of a printer installed on the application server. Empty prints to that server's default printer. One copy is printed on A4 paper, in the orientation of the report
 
 **Parameter 2:** Report Code (Required) - Business code of the ReportDefinition to print
 

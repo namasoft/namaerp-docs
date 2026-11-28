@@ -37,8 +37,8 @@ The letter-of-credit route, where the credit carries the goods and their expense
 
 ```mermaid
 flowchart LR
-    LC[Letter Of Credit] --> LP[LC Proforma Invoice]
-    LC --> LE[LC Expense Document]
+    LC[Letter Of Credit] --> LP[Proforma Invoice]
+    LC --> LE[Expense Document]
     LP -.-> IR[Initial Receipt]
     IR -.-> RI[Stock Receipt Inspection]
     RI -.-> SR[Stock Receipt]
@@ -58,10 +58,10 @@ Follow the 400 ovens through the common route.
 
 On the letter-of-credit route the same shipment goes like this:
 
-1. The bank opens the credit. Where the bank cycle is tracked, the **LC Request**, **Opening Request** and **Opening Document** come first; the opening document creates the accounting entries and loads the down payment and the opening commission onto the goods as costs.
+1. The bank opens the credit. Where the bank cycle is tracked, the **Letter Of Credit Request**, the **LC Opening Request** and the **Letter Of Credit Opening** document come first; the opening document creates the accounting entries and loads the down payment and the opening commission onto the goods as costs.
 2. The **Letter Of Credit** file holds the supplier, the bank, the value and expiry, the ports, and whether the goods come in several shipments.
-3. The **LC Proforma Invoice** lists the 400 ovens and their price. Expenses cannot be loaded onto a credit that has no proforma invoice, because there would be no item values to spread them over.
-4. Each charge, as it is incurred, goes on an **LC Expense Document** (*Expense Document* on screen) naming the credit and, for a credit with several shipments, the shipment.
+3. The credit's **Proforma Invoice** (the LC proforma invoice) lists the 400 ovens and their price. Expenses cannot be loaded onto a credit that has no proforma invoice, because there would be no item values to spread them over.
+4. Each charge, as it is incurred, goes on an **Expense Document** (the LC expense document) naming the credit and, for a credit with several shipments, the shipment.
 5. The ovens are received with a **Stock Receipt** that names the credit, or its shipment, as its **Cost Source**. Companies that check goods before accepting them put an **Initial Receipt** and a **Stock Receipt Inspection** in front of it.
 6. The **LC Cost Doc** closes the costing: **Collect Item Expenses** fills it from the expenses recorded against the credit or shipment, and saving it spreads them over the received items. It is refused until at least one saved stock receipt names the credit.
 

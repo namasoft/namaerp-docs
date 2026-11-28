@@ -104,14 +104,13 @@ begin
 	select @lastid = max(id) from LargeData where @lastid is null or id<@lastid
 	select @filename=fileName,@data=data from LargeData where id = @lastid
 	declare @init int
-	declare @file varbinary(max) = CONVERT(varbinary(max), (select top 1 data from LargeData where filename = '59696_426831487403451_1487925844_n.jpg'))
 	declare @filepath nvarchar(4000) = N'c:\temp\'+convert(nvarchar(50),@lastid,2)+'-'+@filename
 	
 
 	EXEC sp_OACreate 'ADODB.Stream', @init OUTPUT; -- An instace created
 	EXEC sp_OASetProperty @init, 'Type', 1; 
 	EXEC sp_OAMethod @init, 'Open'; -- Calling a method
-	EXEC sp_OAMethod @init, 'Write', NULL, @file; -- Calling a method
+	EXEC sp_OAMethod @init, 'Write', NULL, @data; -- Calling a method
 	EXEC sp_OAMethod @init, 'SaveToFile', NULL, @filepath, 2; -- Calling a method
 	EXEC sp_OAMethod @init, 'Close'; -- Calling a method
 	EXEC sp_OADestroy @init; -- Closed the resources
@@ -290,7 +289,7 @@ end
 :::
 ## Cleanup Utility for Recycle Bin, Action History, Notifications, and Pending Tasks
 
-This SQL script performs cleanup operations on several tables. Emptying the recycle bin is permanent: every record listed in **Administration → Other → Recycle Bin** disappears and can no longer be restored — see [Recovering and Finding Records](/platform/documents-and-records/recovering-and-finding-records). The operations are **safe by default**—nothing is deleted unless you explicitly set the parameters.
+This SQL script performs cleanup operations on several tables. Emptying the recycle bin is permanent: every record listed in **Administration → Other → Recycle Bin** disappears and can no longer be restored — see [Recovering and Finding Records](/platform/documents-and-records/recovering-and-finding-records). The recycle bin, action history, version, notification and pending task deletions run only when you set their parameter. The processed delete requests (`InvTransReq`, `LedgerTransReq` and `BusinessRequestStatus` rows whose request type is `Delete` and whose status is `Processed`) are removed on every run.
 
 ### Cleanup Targets
 
@@ -306,7 +305,7 @@ This SQL script performs cleanup operations on several tables. Emptying the recy
 
 * **All deletions are batch processed in chunks of 1000 rows**
 * **Date parameters must be in the format** `yyyyMMdd`
-* **All deletions require the appropriate date or flag to be set**
+* **Every deletion except the processed delete requests requires its date or flag to be set**
 * **Recycle bin cleanup only happens when** `@clean_recycle_bin = 1`
 
 ::: details

@@ -46,7 +46,7 @@ spins off a landed-cost document.
 The line grid is the standard purchase-invoice grid: item, assortment and measures, prime and
 secondary quantity, serial numbers, unit price and total price, the free-item flag, eight discount
 blocks, four tax blocks, net value, box / revision / size / colour / lot, the
-**السياره (Customer Car)** column, production and expiry dates, warehouse and locator, generic
+**السيارة (Customer Car)** column, production and expiry dates, warehouse and locator, generic
 dimensions, attachment, remarks, line type — and four read-only columns that are the point of the
 whole landed-cost exercise: **قيمة التكلفة الإضافية (Additional Cost Value)**, **unit cost**,
 **total cost**, plus **returned quantity** and **remaining**.
@@ -106,17 +106,17 @@ and skipping any one of them produces a different confusing symptom.
 2. **The item must have *Has Sub Item* ticked** and must carry a
    **[Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations.md)**
    record at *Item ▸ Configurations*. Without the configuration the commit fails with
-   *"Item … does not have Car Status Configurations"* — and the message is reported against the
+   *Item {0} does not have {1}* — «الصنف {0} ليس له {1}» ({1} is *Car Status Configurations*) — and the message is reported against the
    **item** column of the line, so look at the item's configuration, not at the line.
-3. **The configuration's *Created SubItem Master Group* must be filled**, or the commit fails
-   complaining that the group is empty.
+3. **The configuration's *Created SubItem Master Group* must be filled**, or the commit fails with
+   *Field {0} in File {1} is empty* — «الحقل {0} في الملف {1} فارغ».
 4. **The [document term's](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
    *إنشاء صنف فرعي من السطر (Create Sub Item From Line Information)* must be on** — and on for this
    document only.
 
 ::: danger The chassis-number column does not exist on this screen out of the box
 The default line grid of the Car Purchase Invoice — and of the Proforma Purchase Invoice, the
-Purchase Order and the Purchase Return — carries the **السياره (Customer Car)** picker and **no car
+Purchase Order and the Purchase Return — carries the **السيارة (Customer Car)** picker and **no car
 property columns at all**: no chassis number, no engine number, no gearbox, no key number, no slot
 number.
 
@@ -126,17 +126,10 @@ before you rely on automatic creation** — otherwise you will get six correctly
 with six empty chassis numbers, and only notice weeks later.
 :::
 
-::: danger Switch *Create Sub Item From Line Information* on for exactly one document type
-The option behaves identically on the purchase order, the proforma purchase invoice, this invoice and
-the purchase return. If two documents in the same chain have it on:
-
-- **built from each other** — the later document finds the existing car and re-edits it, re-deriving
-  its master group, re-applying the coding rule, resetting the status default and overwriting
-  warehouse, locator, classes and price classifiers from the new line;
-- **typed fresh** — a **duplicate car record** is created. Nothing validates chassis-number
-  uniqueness anywhere, so you end up with two records for one physical car, each carrying its own
-  stock and its own cost.
-:::
+Switch *Create Sub Item From Line Information* on for this document type only. The option exists on
+every Car Purchases document, and what happens when two documents in one chain have it on is set
+out under
+[Where car records are born](/modules/servicecenter/car-purchasing/car-purchase-order#Where-car-records-are-born).
 
 ### One line per chassis
 
@@ -150,33 +143,14 @@ that anything else is refused.
 
 ## The stock-in rule
 
-::: danger The car can be received into stock twice
-This invoice generates a stock receipt. So can the
-[Car Receipt](/modules/servicecenter/car-purchasing/car-receipt.md). **Neither document can see the
-other's** — each looks only for a stock receipt raised from itself — and nothing anywhere checks
-whether a car is already on hand.
-
-Follow the natural-looking path *order → receipt → purchase invoice* with both terms configured to
-generate, and the same chassis is received **twice**: on-hand quantity 2 for a car that exists once,
-and the cost row carrying both values. It happens silently, with no error, and the later sale
-relieves only one of the two.
-
-**The rule: fill the Generation Book and Generation Term on exactly one of the two document terms.**
-Treat the Car Receipt and the Car Purchase Invoice as **alternatives** for moving stock, never as a
-sequence.
-
-- If the invoice is your stock-in document — Al-Sahra's choice — leave the Car Receipt term's
-  generation book and term **empty**, and use the receipt purely as the physical-arrival record.
-- If the receipt is your stock-in document, leave the invoice's generation off and use
-  **تجميع (Collect)** and **تطبيق (Apply)** on the Related Documents tab to link the receipt's stock
-  document to the invoice.
-
-Whichever term does generate, switch
+This invoice and the [Car Receipt](/modules/servicecenter/car-purchasing/car-receipt.md) can each
+generate a stock receipt for the same car, so configure generation on **exactly one** of the two
+terms — the full rule, and how to link a receipt's stock document to the invoice instead, is under
+[The stock-in rule](/modules/servicecenter/car-purchasing/car-receipt#The-stock-in-rule).
+Al-Sahra makes the invoice its stock-in document and leaves the Car Receipt term's generation book
+and term empty. On the invoice's own term, switch
 *عدم إنشاء مستندات إذا وجدت مستندات يدوية (Do Not Generate Documents If Manual Documents Found)* on,
 so a collected receipt suppresses a second generation.
-
-To stop the **Car Receipt** generating, clear the Generation Book or the Generation Term on its term.
-:::
 
 ## Actions on this screen
 
@@ -202,10 +176,9 @@ To stop the **Car Receipt** generating, clear the Generation Book or the Generat
 
 **Shipping and billing page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — splits the remaining value into an instalment schedule,
+- **Generate Payments** (*إنشاء الدفعات*) — splits the remaining value into an instalment schedule,
   asking for the number of payments, the period between them and its unit, the start date, a grace
-  period, down / first / second / last payment values and a rounding mode. The English label ships as
-  the raw name shown here.
+  period, down / first / second / last payment values and a rounding mode.
 - **Generate payment voucher** (*إنشاء سند صرف*) — the invoice must be saved; creates a payment
   voucher for the whole remaining value against the supplier and opens it.
 - **Generate Payment Voucher For Selected Payments** (*إنشاء سند صرف للسطور المختارة*) — the same, for

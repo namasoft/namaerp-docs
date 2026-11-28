@@ -9,7 +9,7 @@ All these documents share a common header carrying **Received From**, **Received
 
 ## Mail Item Manifest
 
-The entry point for items into the system: when the inbound receptacles are opened, the manifest records every item inside — its identifier, class and category, HS code, declared and actual weight, country of origin, recipient, and value and currency. It's what builds the postal inventory the rest of the documents work on.
+The entry point for items into the system: when the inbound receptacles are opened, the manifest records every item inside — its **Mail Item Id** and description, class, category and subclass, HS code and revised HS code, IPS weight, country of origin, receiver name, and the location it is stored in. It's what builds the postal inventory the rest of the documents work on.
 
 ![Mail item manifest](../../ar/modules/freight/images/ips/mail-item-manifest-en.png)
 
@@ -23,7 +23,7 @@ To correct item data when discrepancies are found — a different weight, a wron
 
 ## Mail Item Stock Taking
 
-For periodic stock taking of the stored mail items: it empties the store for the physical count then re-stores, so you reconcile what physically exists against what's recorded in the system and settle the differences.
+For periodic stock taking of the stored mail items: you list what is physically on the shelves, so you reconcile what physically exists against what's recorded in the system. What the document does to storage follows the **Component Effect Type** of its term, like the other mail-item documents (see below).
 
 Its **Collect Mail Items From Location** button fills the grid with every mail item currently
 stored in any location, each with its location, so the count starts from what the system believes is
@@ -31,7 +31,7 @@ on the shelves. How mail items occupy locations is on [Storage Locations](./frei
 
 ## Mail Retention Document
 
-Some items are held and not delivered immediately — for customs, security, or unreachable-recipient reasons. The retention document records the held items and the **Retention Reason**, to follow them up until they're resolved (release, return, destruction).
+Some items are held and not delivered immediately — for customs, security, or unreachable-recipient reasons. The retention document records the held items, each with its actual weight and **Retention Reason**, and in its header an **Action Type** — **Retention**, **Confiscation** or **Release** — and a **Retention Type**. On save it reports its term's event for each item; it does not touch storage locations.
 
 ## Postal Parcels Sort
 
@@ -52,8 +52,9 @@ The accuracy of the **class, category, and subclass** and the HS code on each it
 ## What saving these documents does
 
 Each of these documents, when first saved, reports the event set on its term to the external IPS
-server for every mail item on it, and — depending on the term's **Component Effect Type** — puts
-the items into their lines' locations, takes them out, or leaves storage alone. Both are configured
+server for every mail item on it, and — except for the Mail Retention Document, depending on the
+term's **Component Effect Type** — puts the items into their lines' locations, takes them out, or
+leaves storage alone. Both are configured
 on the term: see [Freight Document Terms](./freight-document-terms.md#The-postal-movement-terms).
 
 Typing a **Mail Item Id** on a line fills the rest of the line from IPS. The **More** menu of each

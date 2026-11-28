@@ -214,5 +214,5 @@ the short one on the same field, use **Priority** and **Apply To** as described 
 
 | Message | Why | What to do |
 |---|---|---|
-| *System helps are applicable for all, Please empty applicable for lines* — «المساعدات النظاميه يجب ان تكون مطبقه للجميع, برجاء حذف سطور يطبق علي» | An Entity Help record marked **System** was given Applicable For lines. | Remove the lines. To limit who sees shipped help, use **Do Not Display System Help Messages** on the user or profile. |
-| *cannot edit in system entity help* | Someone tried to edit an Entity Help record downloaded from Namasoft, or to tick or untick **System**. There is no Arabic text, so it appears in English on Arabic screens too. | Leave the shipped record as it is and write your own Entity Help record. |
+| *System helps are applicable for all, Please empty applicable for lines* — «المساعدات النظامية يجب أن تكون مطبقة للجميع, برجاء حذف سطور يطبق على» | An Entity Help record marked **System** was given Applicable For lines. | Remove the lines. To limit who sees shipped help, use **Do Not Display System Help Messages** on the user or profile. |
+| *cannot edit in system entity help* — «لا يمكن التعديل في الملف النظامي» | Someone tried to edit an Entity Help record downloaded from Namasoft, or to tick or untick **System**. | Leave the shipped record as it is and write your own Entity Help record. |

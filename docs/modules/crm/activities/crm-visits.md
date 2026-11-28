@@ -13,7 +13,7 @@ menu: Customer Relationship Management → Support → Visit
 The Visit is the Call's twin. It records that somebody went somewhere — and, exactly like
 [the Call](/modules/crm/activities/crm-calls), it pushes a new status, classification, activity type
 and rejection reason onto the lead or potential it was logged against. These two screens are the only
-places in CRM where committing a document changes another record's state.
+places in CRM where committing a document changes a lead's or potential's state.
 
 The Visit adds three things the Call does not have: an **Employees** grid, so a site visit can carry
 the technician who went along; a **mobile check-in and check-out** flow with coordinates and
@@ -27,7 +27,7 @@ inventory effect of any kind.
 ## The screen
 
 The first tab opens with the usual document block: Document Code, Issue Date, Value Date, Fiscal
-Period, **From Document** (*بناءا على*) and a Description.
+Period, **From Document** (*بناءً على*) and a Description.
 
 ::: info Two Description boxes
 Description appears twice on this screen, both bound to the same field. Type into either one; they
@@ -38,7 +38,7 @@ Then comes **Visit details** (*تفاصيل الزيارة*), which is where the
 
 | Group of fields | What goes there |
 |---|---|
-| Responsible Employee, Assignee, Mediator, escaleted to, job | Who owns the visit |
+| Responsible Employee, Assignee, Mediator, escalated to, job | Who owns the visit |
 | Start Time (*من*), End Time (*إلى*), Visit date | When |
 | Visit location, Address, Customer representative | Where, and who received you |
 | Related To, and the six lead fields | The subject and the state machine — see below |
@@ -47,8 +47,8 @@ Then comes **Visit details** (*تفاصيل الزيارة*), which is where the
 | Map Location ×2, Building Number ×2, Client Signature, Employee Signature, Attachment…Attachment 5 | Filled by the mobile app — see below |
 
 **Status** uses the same list of values as the trouble ticket (Initial, Assigned, In Progress,
-Cancelled, Closed, Finished, Done, Postponed, Re-Open, Development Request, Customer Feedback, Out Of
-Warranty). It starts at *Initial*; you move it to any value by hand, with no fixed order, and filter the list
+Cancelled, Closed, Finished, Done, Postponed, Reopen, Development Request, Feedback from Customer,
+`OutSideContractScope`, Out Of Warranty). It starts at *Initial*; you move it to any value by hand, with no fixed order, and filter the list
 view by it.
 
 The **Action Plan** (*خطة التنفيذ*) group — Serial, Phase or Cycle, Description — is meaningful only
@@ -65,28 +65,21 @@ parallel comment logs.
 
 ## What a Visit writes onto the lead
 
-Pick a Lead or a Potential in **Related To** and the four "Current …" boxes fill from that record as a
-before-picture. Then four levers write back when the Visit is committed:
-
-| Lever on the Visit | What it overwrites on the lead or potential |
-|---|---|
-| **Change Status To** (*تغيير الحالة إلي*) | Status |
-| **Update Lead Classification To** (*تحديث تصنيف العميل المرتقب إلي*) | Lead Classification |
-| **Next Activity Type** (*نوع النشاط التالي*) | Activity Type |
-| **New Rejection Reason** (*سبب الرفض الجديد*) | Rejection Reason |
-
-The one lever the Call has and the Visit does not is Planned Re-Call Date; call-back chaining belongs
-to the Call screen alone.
+The Visit uses the same snapshot boxes and levers as the Call, with the same rules: the four
+"Current …" boxes fill from the lead as a before-picture, and **Change Status To**, **Update Lead
+Classification To**, **Next Activity Type** and **New Rejection Reason** write back when the Visit is
+committed, each only when filled and different from the lead's value. The full table and rules are in
+[The state machine](/modules/crm/activities/crm-calls#The-state-machine) on the Call page. The one
+lever the Call has and the Visit does not is Planned Re Call Date; call-back chaining belongs to the
+Call screen alone.
 
 `VISIT-0118` is the example: 19 January 2026, 11:00 to 13:00, Hala (`EMP-1042`) with the technician
 Mahmoud (`EMP-2011`) on the Employees grid, visit location *فندق مارينا بلازا – الإسكندرية*. On
 commit it sets the lead `LD-00417` to **Warm** and its next activity type to `AT-03`, Technical
 Presentation. Nobody edited the lead.
 
-::: warning Cancelling a Visit does not undo what it did
-As with the Call, the write-back is one-way. Cancel a Visit that made a lead Warm and the lead stays
-Warm. There is no stored "previous value" and no rollback. Correct the lead by hand.
-:::
+As with the Call, the write-back is one-way: cancel a Visit that made a lead Warm and the lead stays
+Warm until someone corrects it by hand.
 
 The subject may also be a Trouble Ticket, a Complaint, a Customer, a Campaign, a CRM Project or a
 Development Request. The levers apply only when the subject is a Lead or a Potential; with any other
@@ -107,34 +100,24 @@ technician checks in on arrival and checks out on departure, and the ERP receive
 That is a genuinely useful record: where the technician was, when, and two signatures to prove the
 customer accepted the work.
 
-::: danger Check-in does not detect a faked location
-The app sends flags saying whether it believes the device is reporting a mock location, and it sends
-the GPS accuracy of each fix. **The server keeps none of them.** They are received and thrown away,
-and the Visit has nowhere to store them.
+The Visit stores only the coordinates and the address. It has no field for the GPS accuracy or for
+whether the device reported a mock location, so nothing on the Visit shows how reliable a check-in
+location is.
 
-The practical consequence: a visit recorded with a mock-location app is indistinguishable from a
-genuine one, and there is no field a supervisor can check. Do not present the check-in as proof of
-attendance, and do not build a policy on it. If location integrity matters, it has to be handled
-outside this document.
-:::
+A few more rules to know before you rely on the mobile figures:
 
-A few more things worth knowing before you rely on the mobile figures:
-
-- **Visit Date and Start Time are rewritten on every sync** until the visit is checked out. A visit
-  that is synced the following morning is stamped with the sync date, and the arrival time keeps
-  sliding forward until check-out closes it.
+- **Each sync from the app sets the Responsible Employee to the app user's employee and the Visit
+  Date to the day of the sync.** Until the visit is checked out, each sync also sets Start Time to the
+  time of the sync; the check-out sync sets End Time instead. A visit first synced the following
+  morning is stamped with that morning's date and time.
 - **When the phone cannot get a fix**, the Map Location box is stored as the literal text
-  `null,null` rather than being left empty.
-- **The two Map Location boxes carry identical labels**, and so do the two Building Number boxes —
-  there is no on-screen hint which is arrival and which is departure. The first of each pair is
-  arrival, the second is departure. And "Building Number" is a misnomer: what the app puts there is
-  the full reverse-geocoded street address.
-- **"Prevent new CRM visit if there are open ones"**, the tick box on the mobile app configuration,
+  `null,null`.
+- **The two Map Location boxes carry identical labels**, and so do the two Building Number boxes.
+  The first of each pair is arrival, the second is departure. What the app puts in Building Number
+  is the full reverse-geocoded street address.
+- **Prevent Create New Visit If There Is One Open**, the tick box on the mobile app configuration,
   is enforced **by the phone only**. The server never checks it, so a Visit created from the web
-  screen, an import, a web service or an older build of the app is not affected. Treat it as an app
-  convenience, not a control.
-- Do not assume the app can create a **Visit Request** — that path is not confirmed to work. Raise
-  visit requests from the web screen.
+  screen, an import or a web service is not affected.
 
 ## The print form
 
@@ -161,14 +144,15 @@ A Visit can be typed from scratch, but it usually arrives one of three ways:
    subject already set.
 
 If you point **From Document** at a Visit Request or an earlier Visit by hand, the same set of
-fields — subject, dates and times, location, job, the expense boxes, responsible employee, mediator,
-customer representative, status, plus the remarks and employee lines — is copied across.
+fields — subject, escalated to, visit date, start and end times, visit location, job, the expense
+boxes, responsible employee, mediator, customer representative, status, plus the remarks and
+employee lines — is copied across.
 
 ## Actions on this screen
 
 The Visit carries two buttons of its own, and both need the visit **saved** first:
 
-- **escaleted to** (*تصعيد الي*) — asks for an employee, writes it into the escaleted to box, then
+- **escalated to** (*تصعيد إلى*) — asks for an employee, writes it into the escalated to box, then
   saves and commits the stored Visit and refreshes the screen. Nobody is notified. Save your edits
   before pressing it: it commits the version held on the server, not what is on screen.
 - **create CRM Task** (*إنشاء مهمة خدمة العملاء*) — opens a new [CRM Task](/modules/crm/activities/crm-tasks-and-follow-ups)

@@ -28,7 +28,6 @@ Modifiability** group:
 | **Can not modify Sector / Branch / Department / Analysis Set** | `termConfig.detailSectorNotModifiable`, `termConfig.detailBranchNotModifiable`, `termConfig.detailDepartmentNotModifiable`, `termConfig.detailAnalysisSetNotModifiable` | Locks that dimension on the lines on screen, so the lines keep the header's value. |
 | **Add Line In The End Of The Document With Difference Between Debit And Credit On Save** | `termConfig.addLineWithDiffAtEnd` | When the entry is first calculated and its debit and credit differ by more than the system's low margin, a balancing line is added at the end for the difference, in local currency. |
 | **The Mediator Account Used To Handle Difference Between Debit And Credit** | `termConfig.diffLineAccount` | The account of that balancing line. Without an account no line is added. |
-| **Calculate Subsidiary From Parent If Needed** | `termConfig.calcSubsidiaryFromParentIfExist` | Ledger lines carry the line party's parent as their subsidiary. |
 
 The balancing line is useful for entries imported or built from outside data, where a rounding
 difference of a few piastres would otherwise block the save. Point it at a suspense account and
@@ -39,6 +38,7 @@ The **Journal Entry** term adds:
 | Option | Field | What it does |
 |---|---|---|
 | **Do Not Copy Dimensions With New Lines** | `termConfig.doNotCopyDimensionsWithNewLines` | A new line starts with empty dimensions instead of the header's. |
+| **Calculate Subsidiary From Parent If Needed** | `termConfig.calcSubsidiaryFromParentIfExist` | Ledger lines carry the line party's parent as their subsidiary. |
 | **Tax1 / Tax2 Debit / Credit** *(Effects tab)* | `termConfig.tax1Debit` … `termConfig.tax2Credit` | Saved [side records](/platform/shared-master-files/accounting-side-config) that record the line taxes as their own ledger lines. |
 | **Add Tax 1 / 2 To Total Debit / Credit** *(Effects tab)* | `termConfig.addTax1ToTotalDebit` … `termConfig.addTax2ToTotalCredit` | Adds the line taxes into the entry's total debit or total credit. |
 

@@ -19,7 +19,9 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 ## السماح باستعمال السجلات الممنوعة من الاستعمال (Allow Usage Of Prevented Records)
 
-الملفات الرئيسية تُحال إلى التقاعد. صنف يُسحب من الكتالوج، عميل يُحظر بعد نزاع على السداد، مورد يُشطب من قائمة المعتمدين. وبدلًا من حذف السجل — وهو ما سيكسر كل مستند تاريخي يشير إليه — تُوضع على السجل علامة تمنع استعماله في المستندات **الجديدة**. وحين يختاره أحدهم رغم ذلك يفشل الحفظ برسالة تخبره بأن استعمال هذا السجل ممنوع.
+الملفات الرئيسية تُحال إلى التقاعد. صنف يُسحب من الكتالوج، عميل يُحظر بعد نزاع على السداد، مورد يُشطب من قائمة المعتمدين. وبدلًا من حذف السجل — وهو ما سيكسر كل مستند تاريخي يشير إليه — تُوضع على السجل علامة تمنع استعماله في المستندات **الجديدة**. وحين يختاره أحدهم رغم ذلك يفشل الحفظ بالرسالة:
+
+«لا يمكن استعمال السجلات التي تم منع استعمالها {0}-{1}»
 
 هذا المنع مقصود، وهو يسري على مستوى النظام كله. المشكلة أن "لم يعد صالحًا للاستعمال" نادرًا ما تكون صحيحة على *كل* المستندات. فإذا أرجع عميل صنفًا موقوفًا، وجب على مستند المرتجع أن يذكر ذلك الصنف — فهذا هو جوهر المستند. منع البيع مع السماح بالمرتجع هو بالضبط السلوك المطلوب، وهذا الجدول هو الطريق إليه: فهو يستثني حقلًا واحدًا بعينه من المنع.
 
@@ -87,8 +89,8 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 | العمود | ماذا يفعل |
 |---|---|
-| النوع المستهدف (Target Entity) | نوع سجل واحد يصير عامًا. |
-| قائمة الأنواع (Target Entities) | قائمة مسماة من أنواع السجلات، ليجعل السطر الواحد عدة أنواع عامة. |
+| النوع المستهدف (Tooltip Target Type) | نوع سجل واحد يصير عامًا. |
+| قائمة الأنواع (Entity Type List) | قائمة مسماة من أنواع السجلات، ليجعل السطر الواحد عدة أنواع عامة. |
 
 هناك أمران في هذا الجدول يوقعان الناس في الحيرة.
 
@@ -114,7 +116,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | مالك المستند | Document Owner | `allowUsageOfPreventedRecords.owner` | [السماح باستعمال السجلات الممنوعة من الاستعمال (Allow Usage Of Prevented Records)](#lsmH-bstaaml-lsjlt-lmmnwaa-mn-lstaaml-Allow-Usage-Of-Prevented-Records) |
 | تجاهل تناسق المحددات لحقول | Ignore Dimensions Consistency for Fields | `dimensionsConsistency` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
 | تجاهل الشركة | Ignore Legal Entity | `dimensionsConsistency.ignoreLegalEntity` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
-| تجاهل المجموعة التحليلة | Ignore Analysis Set | `dimensionsConsistency.ignoreAnalysisSet` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
+| تجاهل المجموعة التحليلية | Ignore Analysis Set | `dimensionsConsistency.ignoreAnalysisSet` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
 | تجاهل الفرع | Ignore Branch | `dimensionsConsistency.ignoreBranch` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
 | تجاهل القطاع | Ignore Sector | `dimensionsConsistency.ignoreSector` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |
 | تجاهل الإدارة | Ignore Department | `dimensionsConsistency.ignoreDepartment` | [تجاهل تناسق المحددات لحقول (Ignore Dimensions Consistency for Fields)](#tjhl-tnsq-lmHddt-lHqwl-Ignore-Dimensions-Consistency-for-Fields) |

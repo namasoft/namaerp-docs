@@ -5,16 +5,15 @@ menu: cars → Car Files → Car Status Configurations
 ---
 # Car Status Configurations
 
-**إعدادت حالة حاله السياره / Car Status Configurations** —
-`سيارات > ملفات السيارات > إعدادت حالة حاله السياره`. (The Arabic menu label carries a duplicated
-word; the record is the car status configuration.)
+**إعدادات حالة السيارة / Car Status Configurations** —
+`سيارات > ملفات السيارات > إعدادات حالة السيارة`.
 
 This is where you draw the life of a car. Not where you read it — where you *draw* it. It is the
 only record in
 [the cars half of the module](/modules/servicecenter/cars-setup/servicecenter-cars-overview.md) that
-turns a pile of documents into a lifecycle, and until it exists
-and is attached to an item, every car document in the module saves successfully and changes nothing
-about the car.
+turns a pile of documents into a lifecycle. Until it exists and is attached to an item, a document
+whose term creates cars from its lines is refused for that item, and every other car document saves
+and changes nothing about the car's status.
 
 ::: info Required licence
 `srvcenter-subitems`.
@@ -42,14 +41,14 @@ which is exactly what it looks like from the outside.
 
 ## How it is attached
 
-The configuration is attached **to the item**, at *Item ▸ Configurations ▸ Car Status
+The configuration is attached **to the item**, at *Item ▸ Configurations ▸ SubItem Status
 Configurations*. One configuration can serve many items, and that is usually how it is done — one
 record for "passenger cars", one for "commercial vehicles" — but every item that has cars needs one
 pointed at it.
 
 ::: warning Do not rely on *Default SubItem Configuration*
 The Service Center settings screen has an option called
-**إعدادات حالة الصنف الفرعي الإفتراضية / Default SubItem Configuration**, and it is not the fallback
+**إعدادات حالة الصنف الفرعي الافتراضية / Default SubItem Configuration**, and it is not the fallback
 its name promises.
 
 It is consulted for exactly one purpose: supplying the **status filter rows for the car picker** on
@@ -57,13 +56,17 @@ document lines, and only when the *item* has no configuration of its own.
 
 It does **not** feed the status engine, and it does **not** feed automatic car creation. Both of
 those read the item's own configuration and refuse to proceed without it — automatic creation fails
-outright with *"Item … does not have Car Status Configurations"*. Attach a real configuration to
+outright with:
+
+*Item {0} does not have {1}* — «الصنف {0} ليس له {1}»
+
+where {1} is *Car Status Configurations*. Attach a real configuration to
 every item that has cars; the module-level default will not rescue you.
 :::
 
 ## The screen — a header and four grids
 
-It is all one page: the header at the top, then **SubItem Status Movements** and **SubItem Updaters**
+It is all one page: the header at the top, then **Sub Item Status Movements** and **Sub Item Updaters**
 stacked one under the other, then the groups and filters grids:
 
 ![The Car Status Configurations screen: the header and the movements and updaters grids](../../../ar/modules/servicecenter/images/cars-setup/sc-car-status-config-en.png)
@@ -72,17 +75,17 @@ stacked one under the other, then the groups and filters grids:
 
 | Field | English | Field id | Notes |
 |---|---|---|---|
-| الحالة المبدئية | Initial SubItem Status | `initialSubItemStatus` | **Required.** The state a car is deemed to be in before its first status entry, and the state it falls back to when all its entries are removed |
+| الحالة المبدئية | Initial Sub Item Status | `initialSubItemStatus` | **Required.** The state a car is deemed to be in before its first status entry, and the state it falls back to when all its entries are removed |
 | الحالة الرئيسية المبدئية | Sub Item Initial Main Status | `subItemInitialMainStatus` | **Required.** The same, for the coarser main-status axis |
-| مجموعة الصنف الفرعي المُنشأ | Created SubItem Master Group | `createdSubItemGroup` | The master group new car records land in — and therefore their coding sequence and their generic dimensions. **Automatic creation fails if this is empty** |
-| الكمية الرئيسية يجب ان تساوي الواحد الصحيح | Prime Quantity Must Be One | `primeQtyMustBeOne` | Refuses any document line that carries a car and a quantity other than 1 |
+| مجموعة الصنف الفرعي المُنشأ | Created Sub Item Master Group | `createdSubItemGroup` | The master group new car records land in — and therefore their coding sequence and their generic dimensions. **Automatic creation fails if this is empty** |
+| الكمية الرئيسية يجب أن تساوي الواحد الصحيح | Prime Quantity Must Be One | `primeQtyMustBeOne` | Refuses any document line that carries a car and a prime quantity other than 1, with *Prime quantity must be one* — «الكمية الرئيسية يجب ان تساوي الواحد الصحيح» |
 | نسخ الحقول من الصنف | Copy Fields From InvItem | `copyFromInvItemFieldsMap` | A field map applied to every car of the item whenever the item is saved |
 
 *Prime Quantity Must Be One* deserves a moment. Tick it. It is the one setting that turns the most
 common data-entry mistake in the module — typing a quantity of 6 on one line instead of six lines of
 1 — from a silent, wrong car record into a refusal at the point of saving.
 
-### Grid 1 — سطور تحديث حالة الصنف الفرعي / SubItem Updaters
+### Grid 1 — سطور تحديث حالة الصنف الفرعي / Sub Item Updaters
 
 **Which document sets which status.** This is the grid you spend your time in.
 
@@ -103,17 +106,19 @@ in.
 The *To Main Status* column has an extra value, **بدون / None**, which means "move the sub status
 but leave the main status alone".
 
-### Grid 2 — سطور حركات حالة الصنف الفرعي / SubItem Status Movements
+### Grid 2 — سطور حركات حالة الصنف الفرعي / Sub Item Status Movements
 
 **Which moves are legal.** This is the whitelist, and it is enforced hard.
 
 Each row says a car may move *from* this status (and optionally from this main status) *to* that
-status, and names the document types allowed to make that move. Anything not on the list is refused
-at commit with:
+status, and names the document types allowed to make that move (a row that names none allows any
+document type). Anything not on the list is refused at commit with:
 
 > *{0} can not change status from {1} - main status {2} to {3} - main status {4} in document {5} for Item {6} in index {7}*
+>
+> «لا يمكن تغيير حالة {0} من الحالة {1} - و حالة رئيسية {2} إلى الحالة {3} - و حالة رئيسية {4} في المستند {5} للصنف {6} في السطر رقم {7}»
 
-where {0} is the sub-item type — *Customer Car* in a workshop, *Car* in a showroom.
+where {0} is the car's record type, *Customer Car* (السيارة), and {6} is the car itself.
 
 That message is the module's most-seen error, and it almost always means the movements grid is
 missing a row, not that the user did anything wrong.
@@ -137,12 +142,16 @@ on the From Document.
 
 ## What the save checks — and what it does not
 
-Saving the configuration checks three things:
+Saving the configuration checks these things:
 
-- a **warning** if a movement row has the same from and to status;
+- a **warning** if a movement row has the same from and to status —
+  *{0} is the same as {1} in line number {2}*;
 - a **failure** if the initial status does not appear as a *from status* in at least one movement
-  row — *"You must add a line with the status … in the field from status in lines …"*;
-- a **failure** if a filter row fills both the single entity type and the entity type list.
+  row —
+  *You must add a line with the status {0} in the field from status in lines {1}*;
+- a **failure** if a filter row fills both the single entity type and the entity type list;
+- a **failure** if an entity type column on the filter, movement or updater rows holds a value that
+  is not a valid entity type.
 
 ::: warning The two grids are never cross-checked
 Nothing verifies that a status your updater rows can produce is reachable through your movement
@@ -205,16 +214,12 @@ configuration, and it describes nothing that happens until you type it in.
 | Invoiced | مفوتر كلياً | Car Sales Invoice or Proforma Sales Invoice — reversed by the Sales Return | Sold and invoiced |
 | Totally Delivered | توصيل كلي | A delivery or issue document | Handed to the customer |
 | Final Delivered | توصيل نهائي | [Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md) — reversed by its cancel | Final hand-over complete |
-| Other 1 … Other 5 | أخرى ١ … أخرى ٥ | Free for your own stages | Whatever your showroom needs |
-
-One label is worth flagging so it does not confuse people: **Received** is translated
-*تم تسليمه* — "has been handed over" — where the meaning is "has been received". In a list that also
-contains *توصيل كلي* and *توصيل نهائي* it reads backwards. Take the meaning from the English.
+| Other 1 … Other 5 | أخرى 1 … أخرى 5 | Free for your own stages | Whatever your showroom needs |
 
 ### The main status
 
 A second, coarser axis stored alongside the status, with five values: **مبدئي / Initial**,
-**بضاعة الامانات / Consignments**, **مخزونات الشركة / Stocks**, **المشتريات / Purchases** and
+**بضاعة الأمانات / Consignments**, **مخزونات الشركة / Stocks**, **المشتريات / Purchases** and
 **مبيعات / Sales**. It exists so a report can ask "how many cars are on the purchase side" without
 enumerating a dozen sub-statuses. Movement rows can require a particular *from* main status;
 updater rows set the new one, or leave it alone with *None*.
@@ -235,8 +240,8 @@ Updater rows, most specific first:
 | Car Receipt | `BK-SIR` | Free Stock | Stocks |
 | Car Sales Order | `BK-SISO` | Booked | Sales |
 | Car Allocation | `BK-SIA` | Allocated | Sales |
-| Traffic Letter Request | — | Traffic Letter Requested | *None* |
-| Traffic Letter | — | Traffic Letter Issued | *None* |
+| Car Traffic Letter Request | — | Traffic Letter Requested | *None* |
+| Car Traffic Letter | — | Traffic Letter Issued | *None* |
 | Car Sales Invoice | `BK-SISI` | Invoiced | Sales |
 | Car Final Delivery | `BK-SIFD` | Final Delivered | Sales |
 
@@ -248,8 +253,8 @@ Movement rows, allowing exactly that chain and its reversals:
 | Customs | Free Stock | Car Receipt |
 | Free Stock | Booked | Car Sales Order |
 | Booked | Allocated | Car Allocation |
-| Allocated | Traffic Letter Requested | Traffic Letter Request |
-| Traffic Letter Requested | Traffic Letter Issued | Traffic Letter |
+| Allocated | Traffic Letter Requested | Car Traffic Letter Request |
+| Traffic Letter Requested | Traffic Letter Issued | Car Traffic Letter |
 | Traffic Letter Issued | Invoiced | Car Sales Invoice |
 | Invoiced | Final Delivered | Car Final Delivery |
 | Allocated | Free Stock | Car Allocation Cancel |
@@ -257,7 +262,9 @@ Movement rows, allowing exactly that chain and its reversals:
 | Final Delivered | Invoiced | Car Final Delivery Cancel |
 
 Read "reversed by" in these two tables as **status only**. A cancel document in this module moves the
-car's status and nothing else — it does not reverse stock and it does not reverse accounting.
+car's status — the Car Allocation Cancel also clears the car's allocation fields, and a cancel marks
+the document it cancels as cancelled — but it does not reverse stock and it does not reverse
+accounting.
 
 Note the reversals are rows like any other. A cancel document is not a special case to the engine —
 it writes an entry the same way, and if you do not give it a legal move it will be refused.

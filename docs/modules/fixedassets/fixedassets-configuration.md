@@ -24,13 +24,12 @@ The floor is checked on document lines only. Nothing stops the asset master itse
 
 Five options together decide how much of an asset's analytical identity travels onto its journal entries. All four of the first group ship switched **on**.
 
-**Sector affect Accounts** — *تأثير القطاع على الحسابات* · `value.dimensionsUsageInAcc.useSector`
-**Branch affect Accounts** — *تأثير الفرع على الحسابات* · `value.dimensionsUsageInAcc.useBranch`
-**Department affect Accounts** — *تأثير الإدارة على الحسابات* · `value.dimensionsUsageInAcc.useDepartment`
+**Sector Affects Accounts** — *تأثير القطاع على الحسابات* · `value.dimensionsUsageInAcc.useSector`
+**Branch Affects Accounts** — *تأثير الفرع على الحسابات* · `value.dimensionsUsageInAcc.useBranch`
+**Department Affects Accounts** — *تأثير الإدارة على الحسابات* · `value.dimensionsUsageInAcc.useDepartment`
+**Analysis Set Affects Accounts** — *تأثير المجموعة التحليلية على الحسابات* · `value.dimensionsUsageInAcc.useAnalysisSet`
 
-With one of these on, the corresponding dimension on the ledger entry is read from the fixed asset record. Switch it off and the entry simply carries no value for that dimension — the module does not fall back to anything else.
-
-There is a fourth option in the same set, sitting with the three above, that does the same job for the **analysis set**. Its label is wrong in both languages and reads as though the analysis set affects itself; what it actually controls is whether the analysis set on the entry is taken from the asset, exactly as its three siblings do for sector, branch and department (`value.dimensionsUsageInAcc.useAnalysisSet`).
+With one of these on, the corresponding dimension on the ledger entry is read from the fixed asset record. Switch it off and the entry carries no value for that dimension. Both rules apply only where the document's term sets no source of its own for that dimension and the matching *From Document* option below is off; the next section gives the full order.
 
 The reason these four exist at all is that a fixed asset is a long-lived thing whose analytical home can change. Al-Waha Industries wants its machinery depreciation charged to the department that operates the machine, so it leaves the department option on and lets each machine's own record decide. A company that reports assets centrally would switch them off and keep the entries clean.
 
@@ -47,7 +46,7 @@ Four more options invert the previous set, one dimension at a time.
 **Department From Document** — *الإدارة من المستند* · `value.departmentFromDocument`
 **Analysis Set From Document** — *المجموعة التحليلية من المستند* · `value.analysisSetFromDocument`
 
-Switch one on and the ledger entry takes that dimension straight from the header of the document being processed, overriding the "affect accounts" option above it. Leave it off and the older behaviour applies: the term's own setting wins if it has one, otherwise the asset supplies the value, otherwise the dimension is not stamped at all.
+Switch one on and the ledger entry takes that dimension straight from the header of the document being processed, overriding the "affect accounts" option above it. Leave it off and the older behaviour applies: the term's own setting wins if it has one, otherwise the asset supplies the value when the matching *Affects Accounts* option is on, otherwise the dimension is not stamped at all.
 
 The distinction matters in practice. Al-Waha's depreciation runs are raised centrally, so if branch came from the document, every machine's depreciation would land on head office. Al-Waha therefore leaves *Branch From Document* off and lets each machine's own branch carry through. A company whose asset records are not maintained with dimensions, and which prefers to state the analytical home on each document instead, does the opposite.
 
@@ -59,9 +58,13 @@ Transfer documents always work from the "to" side of the transfer itself, so the
 
 Two options control how strict the module is when the accounting department tries to close a fiscal period.
 
-**Allow Creating Closing Entry If Non Depreciated Assets Found** — *السماح بعمل قيد ختامي إذا وجد اصول غير مُهلكة* · `value.allowClosingIfNotDepreciatedAssetsFound`
+**Allow Creating Closing Entry If Non Depreciated Assets Found** — *السماح بعمل قيد ختامي إذا وجد أصول غير مُهلكة* · `value.allowClosingIfNotDepreciatedAssetsFound`
 
-Off by default, and deliberately so. With it off, creating a closing entry fails if there is a running asset whose depreciation start date falls before the end of the period and which was not depreciated in the previous period. It is the module's safety net against closing a year with a month of depreciation missing. Switch it on only when you have accepted that the register and the ledger may be out of step.
+Off by default, and deliberately so. With it off, creating a closing entry fails if the closing entry's legal entity has a running asset whose depreciation start date falls before the end of the period and which was not depreciated in the previous period. Each such asset is named in its own message:
+
+*Asset {0} is not depreciated in period {1}* — «الأصل {0} غير مُهلك في الفترة {1}»
+
+It is the module's safety net against closing a year with a month of depreciation missing. Switch it on only when you have accepted that the register and the ledger may be out of step.
 
 **Allow Closing If Asset Is Prevented From Depreciation** — *السماح بعمل قيد ختامي إذا تم منع الأصل من الإهلاك* · `value.allowClosingIfAssetIsPreventedFromDepreciation`
 
@@ -84,41 +87,47 @@ The setting is combined with the matching option on the purchase document's term
 
 ## Opening Balances
 
-**Allow Normal Periods In Fixed Assets Opening** — *السماح بالفترات العادية في افتتاحي الاصول* · `value.allowNormalPeriodsInFAOpening`
+**Allow Normal Periods In Fixed Assets Opening** — *السماح بالفترات العادية في افتتاحي الأصول* · `value.allowNormalPeriodsInFAOpening`
 
 Off by default. With it off, a Fixed Asset Opening document may only be issued in a fiscal period whose type is *opening* — which is what you want on go-live, because the opening entries belong outside the trading periods. Companies that keep bringing legacy assets in months after go-live switch it on so that an opening document can be issued in an ordinary month. See [Opening Balances](/modules/fixedassets/acquisition/fixedassets-opening-balances.md).
 
 **Ignore Asset Status With Fixed Asset Opening Document Update** — *تجاهل حالة الأصل مع تعديل افتتاح أصل ثابت* · `value.ignoreAssetStatusWithFAOpeningDocumentUpdate`
 
-An opening-update document normally refuses to touch an asset whose status has moved on. Switch this on and it will edit the asset regardless of where the asset has got to. It is a correction tool: use it when an opening figure was wrong and the asset has since started depreciating, and expect the asset's whole history to be replayed from the corrected opening.
+Saving an opening-update document replays every later document of the asset from the corrected opening. Depreciation documents and the asset's opening and purchase documents are replayed freely, but any other later document (an addition, a revaluation, a transfer and so on) normally stops the save:
+
+*The asset {0} was used in the document {1}, {2}. You can not modify this opening document.* — «الأصل {0} تم استخدامه في المستند {1} و {2}. لا يمكنك تعديل سند الافتتاح هذا»
+
+Switch this on and those documents are replayed too, so the correction goes through whatever the asset has been through since. It is a correction tool: use it when an opening figure was wrong and the asset has already moved on.
 
 **Remove Fixed Asset From Depreciation Document Details If Status Is Depreciated With FA Opening Document Update** — *حذف الأصل الثابت من سندات الإهلاك إذا تم إهلاكه عند حفظ سند تعديل افتتاح أصل ثابت* · `value.removeFixedAssetFromDeprecDocumentIfDepreciatedWithOpeningDocUpdate`
 
-The companion clean-up. When correcting an opening leaves an asset fully depreciated, saving the update also drops that asset's line out of depreciation documents where it no longer belongs, instead of leaving lines behind that would fail on the next run.
+The companion clean-up. When correcting an opening leaves an asset fully depreciated, saving the update also drops that asset's line out of the depreciation documents being replayed. With it off, the save stops instead:
+
+*The asset {0} is fully depreciated but is mentioned in depreciation document {1}* — «الأصل {0} مهلك ولكن تم ذكره في سند الإهلاك {1}»
 
 ## Creating Asset Records from Documents
 
-**Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** — *إضافة أعمدة إنشاء الأصول إلى سندات الشراء و الإفتتاح* · `value.addFACreationColumnsToFAOpeningAndPurchase`
+**Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** — *إضافة أعمدة إنشاء الأصول إلى سندات الشراء و الافتتاح* · `value.addFACreationColumnsToFAOpeningAndPurchase`
 
-This is the most visible option on the screen, because it changes what people see. Switch it on and the detail grids of the Fixed Asset Purchase and Fixed Asset Opening documents gain the columns needed to describe an asset that does not exist yet — asset type, Arabic and English name, serial number, market value, coding group and the five classification levels — and the documents will create the asset record for you at commit time.
+This is the most visible option on the screen, because it changes what people see. Switch it on and the detail grids of the Fixed Asset Purchase and Fixed Asset Opening documents gain the columns needed to describe an asset that does not exist yet — asset type, Arabic and English name, serial number, market value, coding group and the five classification levels. On the opening document, a line left without an asset then creates its asset record when the document is committed. On the purchase document, whether a line creates an asset is decided by the term's **Create Asset If Not Found** option, described with the rest of that route on [the purchase document page](/modules/fixedassets/acquisition/fixedassets-purchase-document); this setting supplies the columns that describe the new asset.
 
-Switch it off and those columns are gone; every line must point at an asset record somebody created beforehand, in its initial state.
+Switch it off and those columns are gone, and every opening line must point at an asset record somebody created beforehand, in its initial state.
 
 Which one you want is a genuine policy decision and it is worth making it early. Registering assets first gives you control over coding and classification but front-loads the work; creating them from the purchase is faster but means the quality of your register depends on the quality of the invoice line. This is the same question the setup wizard asks as *"Create fixed assets from purchase and opening documents"* — answering it there writes this very option.
 
-::: warning Creating assets from a document is not a per-line safety net
-With this behaviour switched on, the purchase document's term also decides whether a line may create an asset. A line that points at an *existing* asset while asset creation is enabled will rewrite that asset's descriptive fields from the line — including with blanks where the line is empty. Point lines at existing assets only when the line's asset columns are filled in the way you want the asset to end up.
-:::
-
 ## The Disposal Grid
 
-One further option controls whether the Disposal document shows and uses its grid of **assets created by this disposal** — the asset records raised for parts salvaged out of the asset being disposed of, so that a scrapped machine's reusable motor stays on the register as an asset in its own right. Its label is missing from the shipped translations, so on screen it reads as a raw name; it sits with the options above, and switching it on turns that grid on and brings its validation with it (`value.displayAndUseCreatedAssetsFromDisposalGrid`). See [Disposing of an Asset](/modules/fixedassets/disposal/fixedassets-disposal.md).
+One further option controls whether the Disposal document shows and uses its **Created Assets From Disposal** grid (*الأصول الناتجة عند التخلص*) — the asset records raised for parts salvaged out of the asset being disposed of, so that a scrapped machine's reusable motor stays on the register as an asset in its own right. It sits with the options above (`value.displayAndUseCreatedAssetsFromDisposalGrid`). Switch it on and the grid appears on the Disposal screen. With it off the grid is hidden, and a disposal whose grid still holds lines is refused:
+
+*The grid {0} can not filled because you did not select the option {1} in fixed assets module configuration* — «الجدول {0} لا يمكن ملؤه بسبب عدم اختيار أوبشن {1} في إعدادات الأصول الثابتة»
+
+See [Disposing of an Asset](/modules/fixedassets/disposal/fixedassets-disposal.md).
 
 ## Copying the Supplier's Registration Numbers
 
 **Update Tax Registration Number And Commercial Registration Number With Save In Asset Purchase document And Addition Deduction** — *نسخ بيانات التسجيل الضريبي والسجل التجاري في سندات الشراء والإضافة والاستبعاد للأصل مع الحفظ* · `value.updateTaxRegNoAndCommercialRegNoWithSaveInAssetPurchaseAndAdditionDeduction`
 
-With this on, saving a Fixed Asset Purchase or an Addition and Deduction document copies the supplier's tax registration number and commercial registration number onto the document. That is what e-invoicing needs, and it is why most installations that submit asset purchases to a tax authority switch it on. With it off, those fields are cleared on save.
+With this on, saving a Fixed Asset Purchase or an Addition and Deduction document (single or aggregated) copies the supplier's Arabic and English name, tax registration number and commercial registration number onto the document, each one only where the field is still empty. The purchase document also copies them, with its manual reference, down to any line where they are empty. Duplicating such a document clears these fields on the copy, so the copy picks them up afresh from its own supplier. That is what e-invoicing needs. With it off, saving leaves these fields exactly as they were typed.
 
 ## Actions on This Screen
 

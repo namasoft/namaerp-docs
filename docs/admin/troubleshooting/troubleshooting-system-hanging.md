@@ -62,7 +62,7 @@ The tool will automatically detect running Tomcat processes:
 #### Single Process Scenario
 If only one Tomcat instance is running, the tool will automatically select it:
 ```
-Auto-detected: Tomcat101010 (PID: 29500)
+Auto-detected: Tomcat101010.exe (PID: 29500)
 ```
 
 #### Multiple Process Scenario
@@ -70,9 +70,9 @@ If multiple Tomcat instances are running, you'll see a menu:
 ```
 Found 3 Tomcat processes:
 
-[1] Tomcat109999 (PID: 2972)
-[2] Tomcat101010 (PID: 29500)
-[3] Tomcat101111 (PID: 20984)
+[1] Tomcat109999.exe (PID: 2972)
+[2] Tomcat101010.exe (PID: 29500)
+[3] Tomcat101111.exe (PID: 20984)
 
 Select process (1-3):
 ```
@@ -95,7 +95,7 @@ The tool will:
 5. Automatically open the file in your default text editor
 
 ```
-Process: Tomcat101010 (PID: 29500)
+Process: Tomcat101010.exe (PID: 29500)
 Running jstack...
 
 Thread dump saved to: C:\Users\YourName\nama-dumps\Tomcat101010-20251102-143025.txt

@@ -31,7 +31,7 @@ Every asset's cost arrives on a document — a purchase document for new assets,
 
 Both work. Registering the assets first gives you control over coding, classification and accounts, and is the right choice when the register is being built deliberately by the finance team. Letting the documents create the records is faster and suits companies whose asset list arrives as a spreadsheet of invoice lines.
 
-Switch it with the **Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** option on the settings record; the setup wizard asks you the same question as *"Create fixed assets from purchase and opening documents"*.
+Switch it with the **Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** option on the settings record; the setup wizard asks you the same question as *"Create fixed assets from purchase and opening documents"*. On the purchase document, whether a line creates the record is decided by its term's **Create Asset If Not Found** option (step 5).
 
 ![The Fixed Assets settings screen, where the module-wide decisions are made](../../ar/modules/fixedassets/images/config/fa-configuration-screen-en.png)
 
@@ -70,7 +70,7 @@ For `FAT-MCH`, Al-Waha points them at machinery cost, depreciation expense, and 
 Two more things on the type are worth filling now:
 
 - **Default useful life** — copied onto purchase and opening document lines, so the person recording an invoice does not have to remember that machinery runs 60 periods.
-- **Salvage value** — copied onto asset **purchase** lines. Opening lines do not take it from the type, so on an opening document you enter the residual value yourself.
+- **Salvage value** — copied onto purchase and opening document lines in the same way, so a type that carries a salvage value of zero gives every line a zero you then have to type over.
 
 The type also carries flags that describe the family — car asset, has insurance, undepreciable, countable — and a list of component types. All of those are copied onto an asset the moment you choose its type. There is a subtlety: **the type's accounts are re-applied every time an asset is saved**, so treat the type as the authority on accounts rather than editing them asset by asset. The full picture is in [Asset Types](/modules/fixedassets/master-files/fixedassets-asset-types.md).
 

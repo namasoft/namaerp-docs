@@ -21,26 +21,13 @@ Manual execution or automated through entity flows for draft entity creation req
 
 ## How It Works
 
-1. **Analyzes source entity** for data extraction
-2. **Maps fields** from source to target based on configuration
-3. **Searches for existing** target entities using finder SQL  
-4. **Creates or updates** target entity with mapped values
-5. **Saves as draft** without full commitment for review
+The steps are those of [EAGenerateEntityFromEntityAction](/entity-flows/core/EAGenerateEntityFromEntityAction): check Run Only If and the Apply When query, find or create the target, copy the common data and apply the field map, save the target, apply the inverse copy, flush. This flow differs in one of them:
+
+- **Saves the target as a draft.** A target that was already saved as final once is saved as final again: only a target never saved as final stays a draft.
 
 ## Key Parameters
 
-Same as [EAGenerateEntityFromEntityAction](EAGenerateEntityFromEntityAction.md) but saves result as draft:
-
-- **Parameter 1:** Target Type (Required) - Entity type to create  
-- **Parameter 2:** Finder SQL (Required) - Query to find existing entity for updates
-- **Parameter 3:** Field Map (Optional) - Field mapping configuration
-- **Parameter 4:** Update Only (Optional) - Only update existing entities
-- **Parameter 5:** Inverse Copy (Optional) - Copy fields back to source entity
-- **Parameter 6:** Run Per Each Line (Optional) - Execute for each collection item
-- **Parameter 7:** Insert Only (Optional) - Only create new entities
-- **Parameter 8:** Apply When Query (Optional) - Conditional logic for generation
-- **Parameter 9:** Group Details By (Optional) - Group detail lines by criteria
-- **Parameter 10:** Run Only If (Optional) - Execute only if expression returns > 0
+The ten parameters, their titles and their rules are the same as in [EAGenerateEntityFromEntityAction](/entity-flows/core/EAGenerateEntityFromEntityAction#Key-Parameters): Target Type, Finder SQL, Field Map, Update Only, Inverse Copy, Run Entity Flow Per Each Line, Insert Only, Apply When Query, Group Details By and Run Only If. Parameters 1 and 2 must be filled.
 
 ## Database Tables Affected
 

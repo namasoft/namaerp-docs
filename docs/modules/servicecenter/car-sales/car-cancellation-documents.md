@@ -40,8 +40,8 @@ Everything below is an elaboration of that sentence.
 
 Cancelling or deleting the cancellation document clears the two fields again, and re-pointing its
 *From Document* at a different original un-cancels the previous one. Committing a second cancellation
-against an already-cancelled document is refused, with a message naming the document that cancelled
-it first.
+against an already-cancelled document is refused with *Document is cancelled from document {0}* —
+«المستند ملغي من {0}», naming the document that cancelled it first.
 
 All six cancellation documents look almost identical; this is the Car Sales Order Cancel:
 
@@ -53,14 +53,14 @@ They are scattered across three folders, which is the first practical problem re
 
 | Cancellation document | Menu path |
 |---|---|
-| Car Sales Order Cancel | `سيارات > الغاء مبيعات سيارات > إلغاء أمر بيع سيارة` |
-| Car Allocation Cancel | `سيارات > الغاء مبيعات سيارات > إلغاء تخصيص سيارة` |
+| Car Sales Order Cancel | `سيارات > إلغاء مبيعات سيارات > إلغاء أمر بيع سيارة` |
+| Car Allocation Cancel | `سيارات > إلغاء مبيعات سيارات > إلغاء تخصيص سيارة` |
 | Car Receipt Cancel | `سيارات > مخازن السيارات > إلغاء توريد سيارة` |
 | Car Final Delivery Cancel | `سيارات > مخازن السيارات > إلغاء تسليم سيارة نهائي` |
 | Car Traffic Letter Request Cancel | `سيارات > مبيعات السيارات > إلغاء طلب خطاب مرور سيارة` |
 | Car Traffic Letter Cancel | `سيارات > مبيعات السيارات > إلغاء خطاب مرور سيارة` |
 
-In English the folders read *Cars Sales Cancellation*, *Car Inventory* and *Car Sales* respectively.
+In English the folders read *Car Sales Cancellation*, *Car Inventory* and *Car Sales* respectively.
 The two traffic-letter cancellations sit with the sales documents rather than with the other
 cancellations — that is not a mistake in this page.
 

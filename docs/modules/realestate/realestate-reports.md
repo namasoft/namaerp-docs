@@ -11,29 +11,30 @@ The reports belong to the `realestate-sales` licence. They are installed with th
 | Code | Title (Arabic) | Title printed in English | It answers |
 |---|---|---|---|
 | `SYSR-RLS001` | اجمالى المبيعات مقسم بالعمائر | Total Sales by Buildings | Which contracts did we sign in this period, and for how much? |
-| `SYSR-RLS002` | اجمالى الوحدات المباعة والمتبقى | TotalSoldUnitsandRemaining | How many units has each project sold, and how many are left? |
-| `SYSR-RLS003` | اسعار النماذج | ModelsPrice | What is each unit model priced at on each price list? |
+| `SYSR-RLS002` | اجمالى الوحدات المباعة والمتبقى | Total Sold and Remaining Units | How many units has each project sold, and how many are left? |
+| `SYSR-RLS003` | اسعار النماذج | Model Prices | What is each unit model priced at on each price list? |
 | `SYSR-RLS004` | تفاصيل الوحدات | Units Details | Unit by unit, which are sold, which are reserved, and who bought them? |
-| `SYSR-RLS005` | تفاصيل الاقساط الغير مسدده | Details of unpaid installments | Which contracts have installments outstanding, and when were they due? |
+| `SYSR-RLS005` | تفاصيل الاقساط الغير مسدده | Unpaid Installment Details | Which contracts have installments outstanding, and when were they due? |
 | `SYSR-RLS006` | بيان بالمبالغ المتبقية فى عقود البيع | Amounts Remaining in Sales Contracts | How much does each contract still owe, installment by installment? |
 | `SYSR-RLS007` | تفاصيل عقود البيع | Sales Contracts Details | What was due on each installment, what was paid, when, and by what means? |
 
 Three things are true of all seven, so learn them once:
 
-- **Every criterion is a from/to pair, and an empty pair does not filter.** You never have to fill a range you do not care about. A half-filled pair — a *from project* with no *to project* — cuts off everything above it.
+- **Record criteria are lists, dates are ranges, and an empty criterion does not filter.** A project, building, unit, buyer or unit model criterion takes a list: pick one record or several, and the report keeps only the rows that match one of them. A date criterion is one range with a from date and a to date; fill only one end and the range is open on the other side. You never have to fill a criterion you do not care about.
 - **Contracts mean both kinds.** The reports that read contracts read the [sales contract](/modules/realestate/sales/realestate-sales-contract.md) and the [opening sales contract](/modules/realestate/opening/realestate-opening-sales.md) together. Opening contracts carry codes such as `REOS…` and sit among the ordinary ones.
-- **The tables give the Arabic criteria labels.** Each criterion below is named by the label the Arabic interface shows, in the order the criteria screen lists them.
+- **The tables give both criteria labels.** Each criterion below is named by its English label, followed by the label the Arabic interface shows.
 
 ## Total Sales by Buildings — SYSR-RLS001
 
-This is the "what did we sell this month" report. It lists every sales contract and opening sales contract whose **value date** falls in the range, one row per contract, with the contract's code, the unit it sold and the contract price, and a grand total of the price at the end. Click a contract code to open the contract.
+This is the "what did we sell this month" report. It lists every sales contract and opening sales contract whose **value date** falls in the range, one row per contract, with the contract's code, the unit it sold and the contract price. The rows are grouped by building, each building ends with a total line, and a grand total of the price closes the report. Click a contract code to open the contract.
 
 | Criterion (on screen) | Filters on |
 |---|---|
-| From Date / To Date | The contract's value date. Defaults to the first and last day of the current month. |
-| من مشروع / إلى مشروع | The project of the sold unit. |
-| من عمارة / إلى عمارة | The building on the contract. |
-| من شقة / إلى شقة | The unit itself. |
+| Date (التاريخ) | The contract's value date. Defaults to the current month. |
+| RE Project (مشروع استثمار عقاري) | The project of the sold unit. |
+| RE Building (مبنى استثمار عقاري) | The building on the contract. |
+| Rental Unit (وحدة استثمار عقاري) | The unit itself. |
+| ShowDetails (إظهار التفاصيل) | Ticked by default. Untick it and the contract rows are not printed, so the report shows only the building totals and the grand total. |
 
 ## Total Sold Units and Remaining — SYSR-RLS002
 
@@ -43,14 +44,14 @@ The stock count. For each project it prints three numbers: **Total Sold Units**,
 
 | Criterion (on screen) | Filters on |
 |---|---|
-| من مشروع / إلى مشروع | The unit's project. |
-| من شقة / إلى شقة | The unit. |
+| RE Project (مشروع استثمار عقاري) | The unit's project. |
+| Rental Unit (وحدة استثمار عقاري) | The unit. |
 
 ## Models Price — SYSR-RLS003
 
 A price sheet for the sales office. It lists each [unit model](/modules/realestate/properties/realestate-buildings-floors-and-units#Unit-Model----the-layout-you-define-once) with its name, its unit area and its price — one row for every line of a [price list](/modules/realestate/sales/realestate-price-lists-and-payment-methods.md) that names the model. A model priced on three price lists appears three times, once per list.
 
-Its only criterion is a range of unit models, labelled **من نموذج** on both fields.
+Its only criterion is **Unit Model** (نموذج وحدة), a list of unit models.
 
 The sheet also has **Advance payment**, **Installment Value**, **Installment Count** and **Receipt Date** columns. The model screen has no fields for these. The report reads them from the model's spare fields: **Number 2** (advance payment), **Number 4** (installment value), **Number 3** (installment count) and **Date 2** (receipt date). Those fields are not on the Unit Model screen by default, so the columns print zero and blank until you add the fields to the screen with a [Screen Modifier](/platform/screen-modifier/) and fill them in.
 
@@ -60,11 +61,12 @@ The unit-by-unit view of the same stock. It lists every rental unit with its bui
 
 | Criterion (on screen) | Filters on |
 |---|---|
-| من مشروع / الى مشروع | The unit's project. |
-| من مبنى / إلى مبنى | The unit's building. |
-| من مشترى / إلى مشترى | The buyer on the unit's contract. Unsold units drop out as soon as this pair is filled. |
-| من نموذج / الى نموذج | The unit's model. |
-| اظهار المتاح فقط | Show available units only. Sold and reserved rows are hidden; the building subtotals still count every unit. |
+| RE Project (مشروع استثمار عقاري) | The unit's project. |
+| RE Building (مبنى استثمار عقاري) | The unit's building. |
+| Rental Unit (وحدة استثمار عقاري) | The unit. |
+| Owner (مالك - مشتري) | The buyer on the unit's contract. Unsold units drop out as soon as this criterion is filled. |
+| Unit Model (نموذج وحدة) | The unit's model. |
+| HideZeroItems (اظهار المتاح فقط) | Show available units only. Sold and reserved rows are hidden; the building subtotals still count every unit. |
 
 ## Details of Unpaid Installments — SYSR-RLS005
 
@@ -72,14 +74,15 @@ The collector's list. It prints one block per contract that still has money owin
 
 | Criterion (on screen) | Filters on |
 |---|---|
-| من تاريخ استحقاق / إلى استحقاق | The installment's due date. Fill it to see only what fell due in a period. |
-| من مشروع / الى مشروع | The contract's project. |
-| من مبنى / إلى مبنى | The contract's building. |
-| من مشترى / إلى مشترى | The buyer. |
+| Due Date (تاريخ الاستحقاق) | The installment's due date. Fill it to see only what fell due in a period. |
+| RE Project (مشروع استثمار عقاري) | The contract's project. |
+| RE Building (مبنى استثمار عقاري) | The contract's building. |
+| Rental Unit (وحدة استثمار عقاري) | The contract's unit. |
+| Owner (مالك - مشتري) | The buyer. |
 
 ## Amounts Remaining in Sales Contracts — SYSR-RLS006
 
-The same population as the unpaid-installments report, with the money on it. Each contract that still has an unpaid installment gets a header row — code, value date, unit, project, building, floor, buyer, area, **Advance payment**, **Maintenance Deposit** and **Total Price** — and beneath it one row per unpaid installment line with its **Installment Code**, **Value**, **Due Date** and **Remaining Price**. The report ends with totals of the unpaid amount, the advance payments, the maintenance deposits and the contract prices.
+The same population as the unpaid-installments report, with the money on it. Each contract that still has an unpaid installment gets a header row — code, value date, unit, project, building, floor, buyer, area, **Advance payment**, **Maintenance Deposit** and **Total Price** — and beneath it one row per unpaid installment line with its **Installment Code**, **Value**, **Due Date** and **Remaining Amount**. The report ends with totals of the unpaid amount, the advance payments, the maintenance deposits and the contract prices.
 
 The **Advance payment** figure is the contract's down payment. Any installment line whose code contains «باق» — as in «باقي المقدم», the rest of the down payment — is added to it, because the report treats such a line as part of the down payment.
 
@@ -87,20 +90,21 @@ Its criteria are those of `SYSR-RLS005`, read the same way.
 
 ## Sales Contracts Details — SYSR-RLS007
 
-The full installment ledger of each contract, and the report to open when a buyer disputes what they have paid. It lists every installment line of every contract — paid or not — with the contract's code, value date, unit, project, building, floor and buyer, then the installment's **Installment Code**, **Due Date** and **Value**, the amount **Collected Receipt Papers** (collected through cheques and other receivable papers), the **Paid Value**, the **Remaining Price**, the **Paid Date**, and a **Paid Status** that reads «تم الدفع» or «لم يتم الدفع». The last line totals the **Paid Value** column.
+The full installment ledger of each contract, and the report to open when a buyer disputes what they have paid. It lists every installment line of every contract — paid or not — with the contract's code, value date, unit, project, building, floor and buyer, then the installment's **Installment Code**, **Due Date** and **Value**, the amount **Collected Receipt Papers** (collected through cheques and other receivable papers), the **Paid Value**, the **Remaining Amount**, the **Payment Date**, and a **Status** that reads *Paid* («تم الدفع») or *Not Paid* («لم يتم الدفع»). The last line totals the **Value**, **Collected Receipt Papers**, **Paid Value** and **Remaining Amount** columns.
 
 The paid value and paid date come from the payments recorded against the installment by collection documents. An installment settled in two payments therefore appears on two rows, one per payment, each with its own date and amount.
 
 | Criterion (on screen) | Filters on |
 |---|---|
-| من تاريخ / إلى تاريخ | The contract's value date. |
-| من تاريخ استحقاق / إلى تاريخ استحقاق | The installment's due date. |
-| من تاريخ دفع / إلى تاريخ دفع | The payment date. Once this pair is filled, installments with no payment drop out — the report then lists payments rather than installments. |
-| من مشروع / الى مشروع | The contract's project. |
-| من مبنى / إلى مبنى | The contract's building. |
-| من مشترى / إلى مشترى | The buyer. |
-| من قسط / إلى قسط | The installment code, typed as text (for example `INS01`). |
-| إظهار الاكواد الغير مسدده فقط | Show unpaid installments only. Lines marked paid are hidden. |
+| Due Date (تاريخ الاستحقاق) | The installment's due date. |
+| Payment Date (تاريخ الدفع) | The payment date. Once this range is filled, installments with no payment drop out — the report then lists payments rather than installments. |
+| Date (التاريخ) | The contract's value date. |
+| RE Project (مشروع استثمار عقاري) | The contract's project. |
+| RE Building (مبنى استثمار عقاري) | The contract's building. |
+| Rental Unit (وحدة استثمار عقاري) | The contract's unit. |
+| Owner (مالك - مشتري) | The buyer. |
+| From Installment / To Installment (من قسط / إلى قسط) | The installment code, typed as text (for example `INS01`). |
+| HideZeroItems (إظهار الاكواد الغير مسدده فقط) | Show unpaid installments only. Lines marked paid are hidden. |
 
 ## Where to Go Next
 

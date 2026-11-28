@@ -38,7 +38,7 @@ Three timing traps account for most "it did not run" reports:
 Two target actions have their own switch:
 
 - **Record View** lines run only when *Enable Record View Entity Flows* is turned on in the global configuration; the system will not even save such a line while the option is off.
-- **Manual** lines run only when someone presses the flow's button, and the button exists only once the flow has been added to the screen (Edit Screen → the "Actions and Notifications" table).
+- **Manual** lines run only when someone presses the flow's button, and the button exists only once the flow has been added to the screen (a line on the **Notifications** tab of a Screen Modifier — see [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons)).
 
 ## Step 3 — Does the header let it run in this situation?
 
@@ -48,11 +48,11 @@ These header fields stop a flow before any of its lines are looked at. Check the
 |---|---|---|
 | **Inactive** | غير نشط | Switches the whole flow off. Saving the flow with this ticked also ticks **Inactive** on every line. |
 | **Run In Sites** | تشغيل في | Replication only. When the grid has rows, the flow runs only on the sites listed; on every other site it is not loaded at all. |
-| **Do Not Run While Replicating** | عدم التشغيل اثناء الريبليكشن | Replication only. The flow does not run when the record arrives from another site — only when it is saved locally. |
+| **Do Not Run While Replicating** | عدم التشغيل أثناء الريبليكشن | Replication only. The flow does not run when the record arrives from another site — only when it is saved locally. |
 | **Run Only With Import** | يعمل فقط مع الاستيراد | The flow runs only when the record is saved by an import. A user saving from the screen never triggers it. |
 | **Run Only With Mobile App Save** | يعمل فقط مع الحفظ من تطبيق الموبايل | The flow runs only when the record is saved from the mobile app. You cannot tick both this and **Run Only With Import**. |
 | **Criteria** | المعايير | The record must match these criteria, or the flow is skipped. See [Criteria Definitions](/platform/automation-and-rules/criteria-definitions). |
-| **Reversed Criteria Definition** | معيار عدم التفيذ | The opposite: when the record matches these criteria, the flow is skipped. |
+| **Reversed Criteria Definition** | معيار عدم التنفيذ | The opposite: when the record matches these criteria, the flow is skipped. |
 | **Legal Entity**, **Sector**, **Branch**, **Department**, **Analysis set** | الشركة، القطاع، الفرع، الإدارة، المجموعة التحليلية | When filled, the record's value must be the same. An empty value on either side — the flow's or the record's — counts as a match. |
 | **Book** / **Term** | الدفتر / توجيه المستند | Documents only. When filled, the document must use this book or this توجيه. |
 | **Apply When Query** | تطبيق عند التوافق مع الاستعلام | A SQL query run against the record. The flow is skipped when the first column of the first row is **0** or false. |
@@ -80,7 +80,7 @@ And a line can stop the ones after it: when a line with **Stop With Failure** ti
 
 ## Step 5 — Did it run later, in the background?
 
-A flow with **Run After Committing Document And Affect On DataBase** ticked does not run during the save at all. Each of its lines is queued and run afterwards, on the flow's **Task Queue**; with **Wait For Quantity Processing** ticked it also waits for the document's inventory work to finish first. If the queue is busy, or a run failed and is waiting for its next retry, the effect has simply not happened *yet*.
+A flow with **Run After Committing Document And Affect On Database** ticked does not run during the save at all. Each of its lines is queued and run afterwards, on the flow's **Task Queue**; with **Wait For Quantity Processing** ticked it also waits for the document's inventory work to finish first. If the queue is busy, or a run failed and is waiting for its next retry, the effect has simply not happened *yet*.
 
 Look on the **Queued Entity Flows** grid of the [Task Queue](/platform/background-processing/task-queues): the queued run is a row there, with its status, how many times it was tried, and the last error. See [Running a Flow in the Background](/platform/entity-flows/introduction-to-entity-flows#Running-a-Flow-in-the-Background).
 
@@ -101,7 +101,7 @@ followed by the line's own error. Fix the cause the line reports, or tick the li
 | Message | Why | What to do |
 |---|---|---|
 | *Can not save as there are no changes* — «لا يمكن الحفظ حيث أنه لا توجد أي تغيرات في السجل» | Save was pressed on an existing record with nothing changed. Nothing was saved and no flow ran. | Change a field and save again, or test the flow on a new record. |
-| *You can not execute entity flow {0} on the draft record {1}* — «لا تستطيع تنفيذ مسار الكيان {0} علي السجل {1}» | The flow has **Not Run Entity Flow If Record Is Draft** ticked and the record has never been saved finally. | Save the record finally, then press the button again. |
+| *You can not execute entity flow {0} on the draft record {1}* — «لا تستطيع تنفيذ مسار الكيان {0} على السجل المسودة {1}» | The flow has **Not Run Entity Flow If Record Is Draft** ticked and the record has never been saved finally. | Save the record finally, then press the button again. |
 | *Error while running entity flow {0} for entity {1} - {2}:-* — «خطأ أثناء تشغيل مسار الكيان {0} للسجل {1} - {2}:-» | A line of flow {0} failed while saving {1} at moment {2}; the save was refused. | Read the error that follows it; fix the data or the line's parameters. |
 | *Error while executing entity flow {0} - line number {1}* | A line raised an error of its own. This message has no Arabic text and appears in English on Arabic screens. | Open line {1} of flow {0} and check its parameters. |
 | *Entity flow {0} made the dimension {1} null* — «مسار الكيان {0} جعل المحدد {1} فارغا» | The flow emptied a dimension (such as the branch) that the record had before. | Correct the flow so it keeps or sets the dimension. |

@@ -26,17 +26,7 @@ You do not choose the kind per document. Nama decides it from the customer, as e
 
 ## Preparing the server
 
-ZATCA's signing toolkit (the ZATCA SDK) and Nama's signing service, `zatca.war`, must both be on the Nama server before anything else works. In short:
-
-1. Download the SDK from [ZATCA's SDK page](https://zatca.gov.sa/en/E-Invoicing/SystemsDevelopers/ComplianceEnablementToolbox/Pages/DownloadSDK.aspx) and extract it to `C:\zatca_sdk`.
-2. Rename `fatoora.ba_`, both `jq.ex_` files and `install.ba_` to `.bat` / `.exe`, then run `install.bat`.
-3. Copy the `SDK_CONFIG` variable that `install.bat` created for your user to the **System Variables**, because Tomcat runs as a service and does not see user variables.
-4. Check that every path in `Configuration\config.json` points at a file that exists.
-5. Put `zatca.war` from <https://namasoft.com/bin/zatca.war> in the `webapps` folder of the Tomcat that runs Nama, leave no other copy there, and restart Tomcat.
-
-[Installing the ZATCA SDK and zatca.war](./zatca-sdk-installation.md) walks through each step with a screenshot. Use it for a first installation.
-
-To confirm the service is up, open `http://<server>:<port>/zatca/api` in a browser — it answers **Zatca war is running**. If Nama shows *Please update zatca JAR* when you approve or send, the service is not deployed or not running.
+ZATCA's signing toolkit (the ZATCA SDK) and Nama's signing service, `zatca.war`, must both be on the Nama server before anything else works: the SDK extracted to `C:\zatca_sdk` with its `SDK_CONFIG` variable copied to the system variables, and `zatca.war` deployed in the Tomcat that runs Nama. [Installing the ZATCA SDK and zatca.war](/modules/invoicing/zatca-sdk-installation) walks through every step with a screenshot, and ends with the check that `http://<server>:<port>/zatca/api` answers **Zatca war is running**. If Nama shows *Please update zatca JAR* when you approve or send, the service is not deployed or not running.
 
 ## Switching the ZATCA page on
 
@@ -281,7 +271,7 @@ Sending follows the general cycle — collect, validate, send — on a **Tax Aut
 
 What is particular to ZATCA:
 
-- **One document per request.** Standard documents go to clearance, simplified ones to reporting, and the answer comes back in the same exchange. The line becomes **Sent** or **Not Send Correctly** at once, with ZATCA's reasons on the line. There is nothing further to ask ZATCA afterwards, so **Check Tax Authority Status For Sent Document** has no effect for Saudi documents.
+- **One document per request.** Standard documents go to clearance, simplified ones to reporting, and the answer comes back in the same exchange. The line becomes **Sent** or **Not Sent Correctly** at once, with ZATCA's reasons on the line. There is nothing further to ask ZATCA afterwards, so **Check Tax Authority Status For Sent Document** has no effect for Saudi documents.
 - **There is no signing step to press.** Signing happens as part of sending.
 - **Send in order.** Because each document carries the hash of the one before it, send a unit's documents in date order and resend rejected ones once corrected, rather than leaving them behind.
 - **The cleared copy is kept.** For a standard invoice, ZATCA's cleared XML — with ZATCA's stamp and QR code — is stored on the submission line.
@@ -322,6 +312,6 @@ The generic validation messages — a field required, a code invalid, a value da
 | *Error while validating tax authority document {0} - the buyer postal code {1} must be 5 digits (BR-KSA-67)* | A Saudi customer's **Postal Code** is not 5 digits. | Correct it on the customer. |
 | *Error while validating tax authority document {0} - VAT category {1} requires a VATEX exemption reason code, please fill field {2} in the tax payer configuration (BR-KSA-CL-04)* | A line is exempt (`E`) or zero-rated (`Z`), and no reason code is set. | Fill the field named in {2} on the configuration, or the reason on the tax plan. |
 | *There is must be currency with tax authority code SAR and it should be default currency* — «يجب ان يكون هناك عملة بكود ضريبي SAR وان تكون هي العملة الافتراضية» | No default currency carries the code `SAR`. | Put `SAR` in the riyal's **Tax Authority Code** and make it the default currency. |
-| *Field {0} in selected dimension {1} is required* — «الحقل {0} في الفرع المختار {1} مطلوب» | Shown on saving the configuration: the record chosen in **Branch Id From** lacks its **Tax Authority Code** or part of its address. | Complete that record. |
-| *Document {0} can not be modified or deleted because it was sent to the tax authority* — «لا يمكنك تعديل او حذف المستند {0} حيث انه تم ارساله الي مصلحة الضرائب» | The document has been accepted by ZATCA. | Issue a credit or debit note instead. See [Correcting a sent document](#Correcting-a-sent-document). |
-| *We will not send document {0}, please check value date is before {1} days from today or in the period of two fields start from {2} to {3}* — «لن يتم إرسال المستند {0}, الرجاء التحقق من التاريخ الفعلي قبل {1} ايام من اليوم او بداخل الفتره المحدده بالحقلين من {2} الي {3}» | The document is older than **Max Days To Send Invoices**. | ZATCA expects documents on time. A document past the window has to go through ZATCA's own late-submission process. |
+| *Field {0} in selected dimension {1} is required* — «الحقل {0} في المحدد المختار {1} مطلوب» | Shown on saving the configuration: the record chosen in **Branch Id From** lacks its **Tax Authority Code** or part of its address. | Complete that record. |
+| *Document {0} can not be modified or deleted because it was sent to the tax authority* — «لا يمكنك تعديل أو حذف المستند {0} حيث أنه تم إرساله إلى مصلحة الضرائب» | The document has been accepted by ZATCA. | Issue a credit or debit note instead. See [Correcting a sent document](#Correcting-a-sent-document). |
+| *We will not send document {0}, please check value date is before {1} days from today or in the period of two fields start from {2} to {3}* — «لن يتم إرسال المستند {0}, الرجاء التحقق من التاريخ الفعلي قبل {1} أيام من اليوم أو بداخل الفترة المحددة بالحقلين من {2} إلى {3}» | The document is older than **Max Days To Send Invoices**. | ZATCA expects documents on time. A document past the window has to go through ZATCA's own late-submission process. |

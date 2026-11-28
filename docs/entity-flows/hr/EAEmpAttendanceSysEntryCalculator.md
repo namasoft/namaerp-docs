@@ -19,10 +19,10 @@ Manual execution or scheduled tasks for batch attendance calculation. Typically 
 
 ## How It Works
 
-1. **Validates configuration** - Checks if manual attendance calculation is enabled in HR settings
+1. **Validates configuration** - When **Attendance Manual Calculation** is ticked in the HR configuration and parameter 2 is not `true`, the flow stops with the message *The entity flow {0} can not be used if the option manual attendance is selected*
 2. **Executes SQL query** - Runs the provided query to retrieve employee IDs and optional date ranges
 3. **Processes each employee** - Iterates through query results with progress tracking
-4. **Determines date range** - Uses query-provided dates or defaults to current month
+4. **Determines date range** - Uses the query-provided dates; without them the start is the first day of the current month and the end is the last day of the start date's month
 5. **Calculates attendance** - Runs attendance calculation for each employee within date boundaries
 6. **Handles employment dates** - Respects employee commencement and firing dates
 7. **Creates transactions** - Each employee calculation runs in a separate database transaction
@@ -33,9 +33,9 @@ Manual execution or scheduled tasks for batch attendance calculation. Typically 
 **Parameter 1:** Select Statement (Required) - SQL query returning employee data
 - First column: Employee ID or code (required)
 - Second column: Start date (optional, defaults to month start)
-- Third column: End date (optional, defaults to month end)
+- Third column: End date (optional, defaults to the end of the start date's month)
 
-**Parameter 2:** Ignore Manual Attendance (Required) - true/false to bypass manual attendance configuration check
+**Parameter 2:** Ignore manual attendance(true or false) (Optional) - `true` runs the flow even when **Attendance Manual Calculation** is ticked in the HR configuration. Empty counts as `false`
 
 ## Example SQL Query
 

@@ -27,8 +27,8 @@ Four things identify the sheet, and the first three are required:
 
 - the **Student** (الطالب) whose marks these are;
 - the **Educational Stage** (المرحلة التعليمية) they sat it in;
-- the **Semester** (ترم دراسى) — First (الاول), Second (الثاني), Third (الثالث), Fourth (الرابع) or
-  Annual (سنوى);
+- the **Semester** (ترم دراسي) — First (الأول), Second (الثاني), Third (الثالث), Fourth (الرابع) or
+  Annual (سنوي);
 - and the course, chosen in the **Course Definition** (تعريف المواد الدراسية) field — this is where
   you pick the offering the student actually attended, described in
   [Course Definitions and Courses](./education-courses).

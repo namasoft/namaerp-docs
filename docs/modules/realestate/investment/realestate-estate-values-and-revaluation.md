@@ -32,8 +32,8 @@ That re-chaining is why the order is policed. Committing a document runs these f
 
 1. **The first document for an estate must be a purchase contract.** You cannot revalue or sell
    something the fund never bought.
-2. **A revaluation may only follow a purchase or another revaluation.** You cannot revalue an
-   estate that has already been sold.
+2. **A revaluation may not follow a sale.** It may follow a purchase, an estate addition or another
+   revaluation, but you cannot revalue an estate that has already been sold.
 3. **A purchase may only follow a sale.** Buying the same estate twice in a row is refused — it has
    to have left the fund in between.
 4. **A sale may only follow a revaluation, and that revaluation's value must equal the sale value.**
@@ -146,10 +146,9 @@ The first grid lists the estates being revalued:
 |---|---|---|---|
 | Plot A-7 | 1,000,000 | 1,200,000 | 200,000 |
 
-You type the post-revaluation value; the profit is the difference. The pre-revaluation value is
-filled by the system from the estate's last value entry — plus any purchase installments already
-paid on it before this date, so a property still being paid for is measured against what has
-actually gone into it.
+You type the post-revaluation value; the profit is the difference. On save, the pre-revaluation
+value is set by the system to the value of the estate's last value entry dated before this
+document, and the profit is recalculated from it.
 
 For the whole document, **Total Profit** is the sum of the line profits: 200,000.
 

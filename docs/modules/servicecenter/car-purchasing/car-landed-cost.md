@@ -51,13 +51,15 @@ The chain, step by step:
 2. **Configure the invoice's
    [document term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md).**
    Three settings do the work:
-   - **إنشاء سند تكاليف إستلام إضافية مع بنود الخدمات
+   - **إنشاء سند تكاليف استلام إضافية بالأصناف الخدمية
      (Create Receipt Additional Cost With Service Items)** — the master switch. Nothing happens
      without it.
-   - **دفتر سند التكاليف الإضافية** and **توجيه سند التكاليف الإضافية** (additional cost document
-     book and term) — where the generated document is filed.
-   - **توزيع التكلفة على أساس كمية الاستلام (Distribute Cost Based On Receipt Quantity)** — the
-     distribution basis.
+   - **دفتر سند التكاليف الإضافية** and **توجيه سند التكاليف الإضافية** (Additional Cost Document
+     Book and Additional Cost Document Term) — where the generated document is filed. With the master
+     switch on, charge lines on the invoice and either of them empty, the invoice is refused with
+     *Please fill additional cost doc book and term in the term {0}* — «يرجى ملء دفتر وتوجيه التكاليف الإضافية في التوجيه {0}».
+   - **توزيع التكلفة على الكمية الموردة بغض النظر عن الكمية بالفاتورة (Distribute Cost Based On Receipt
+     Quantity)** — the distribution basis.
 3. **Put the charges on the invoice.** Alongside the six car lines, add one line per charge using the
    service items. They carry an amount and no quantity of cars.
 4. **Commit.** The invoice collects the service lines whose item is a service item with an expense
@@ -173,13 +175,9 @@ almost never what you meant.
 
 ## Messages you may see
 
-These come from the generated **Receipt Additional Cost** document, so they appear when the invoice
-is processed rather than while you are typing on it.
-
-| Message | Why | What to do |
-|---|---|---|
-| *No items found to distribute the additional cost on* — «لا توجد أصناف لتوزيع التكاليف الإضافية عليها» | The additional-cost document found no stock lines to spread the charge over — usually because the source document has only service lines, or its lines carry no receipt quantity. | Make sure the invoice carries the car lines as well as the charge lines. A document term option, **Allow Empty Sys Distribution Lines** (السماح بترك سطور التوزيع النظامية فارغة), lets the document save with nothing to distribute onto — but then nothing is capitalised either. |
-| *Line {0} has a different costed document {1} than expected {2}* — «السطر رقم {0} مرتبط بمستند تكلفة مختلف {1} عن المستند المتوقع {2}» | A distribution line names a costed document other than the document's own **From Document**. | Clear the costed document on that line so it follows the header, or correct the From Document. |
-| *You Can Not have more than One Document Type in Receipt Additional Cost documents* — «لا يمكنك استعمال أكثر من نوع مستند فى سند تكاليف إستلام إضافية» | The documents being costed are of different types. Purchase orders and purchase invoices count as one type; anything else is separate. | Raise one additional-cost document per document type. |
-| *You can only use One Assembly Document per Receipt Additional Cost Document* — «يمكنك استعمال سند تجميع واحد فقط فى سند تكاليف إستلام إضافية» | An assembly document is among the costed documents together with something else. An assembly may only be costed on its own. | Put the assembly document on an additional-cost document of its own. |
-| *You can not use the order {0} as from doc for invoice {1} because it was used before with the invoice {2} and the order was found in the receipt additional cost {3}* — «لا يمكن إستخدام المستند {0} كبناءا علي للفاتورة {1} لانه استخدم من قبل الفاتورة {2} ووجد في مستند تكاليف الإستلام الإضافية {3}» | A purchase order is being used as the From Document of a second invoice, while an additional-cost document already spread charges over the first invoice raised from that order. | Charge the second invoice on its own additional-cost document, or reverse the first one before re-invoicing the order. |
+The refusals come from the generated **Receipt Additional Cost** document, so they appear when the
+invoice is processed rather than while you are typing on it. Each one is listed, with its cause and
+fix, under
+[Messages you may see](/modules/supplychain/inventory-costing#Messages-you-may-see) on the
+Inventory Costing page. On a car invoice the one met most often is *No items found to distribute the
+additional cost on*: make sure the invoice carries the car lines as well as the charge lines.

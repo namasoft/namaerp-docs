@@ -28,7 +28,7 @@ It is a small master file — one page, one group of fields, plus the usual dime
 | **Code** | Your identifier for the type, e.g. `MT-90D`. |
 | **Name1 / Name2** | The Arabic name and the English name. |
 | **Type** | The nature of the work — see below. A reporting classification; it changes no behaviour. |
-| **Maintenance CheckList** | The inspection sheet that comes with this kind of job. Picking this type on a plan line or a record pulls this checklist's questions onto the document. |
+| **Maintenance CheckList** | The inspection sheet that comes with this kind of job. When a maintenance record picks a plan line of this type, this checklist and its questions are pulled onto the record. Choosing the type directly on a record does not bring the checklist in. |
 | **Repeated Every** | A number and a unit — the interval at which this kind of maintenance comes round. |
 
 Nothing on this screen is validated and nothing on it is mandatory beyond the usual code and name,
@@ -38,10 +38,10 @@ so it is quick to set up and quick to correct.
 
 | English | Arabic | Typical use |
 |---|---|---|
-| Preventive | وقائيه | Work done to stop a failure that has not happened yet — an overhaul, a bearing replaced on schedule. |
-| Periodic | دوريه | The routine service that comes round on the calendar. |
-| Incidental | طارئه | The unplanned call-out after a breakdown. |
-| Other | أخري | Anything that does not fit the three above. |
+| Preventive | وقائية | Work done to stop a failure that has not happened yet — an overhaul, a bearing replaced on schedule. |
+| Periodic | دورية | The routine service that comes round on the calendar. |
+| Incidental | طارئة | The unplanned call-out after a breakdown. |
+| Other | أخرى | Anything that does not fit the three above. |
 
 This is a label, not a switch: the system treats all four identically. Its value is in reporting and
 in filtering the records list — *"show me every incidental job on the presses this year"* is a
@@ -106,9 +106,9 @@ that should be a checklist has been made into a type.
 | `MT-BRK` | Breakdown Call-Out | Incidental | *(none)* | *(none)* |
 
 `MT-90D` is the one that runs through the rest of these pages. It carries the CNC Routine Inspection
-checklist, so every record of that type arrives with the same four questions already on it, and its
-90-day interval is what turns 1 April into a proposed 30 June.
+checklist, so every record raised against one of its plan lines arrives with the same four questions
+already on it, and its 90-day interval is what turns 1 April into a proposed 30 June.
 
 `MT-BRK` deliberately has neither a checklist nor an interval. A breakdown is not predictable and
-has no standard inspection sheet — leaving both empty means the record simply comes up blank, with
-no next-due date proposed, which is exactly right for unplanned work.
+has no standard inspection sheet — leaving both empty means no checklist is pulled in and no next-due
+date is proposed, which is exactly right for unplanned work.

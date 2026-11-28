@@ -40,9 +40,9 @@ Beyond that, the term carries three behaviour switches:
 
 | Option | Field id | What it does |
 |---|---|---|
-| Allow a depreciation document dated before existing addition, deduction, transfer and partial-disposal documents | `termConfig.allowFADepBefAddDedPartial` | Relaxes the ordering rule so you can catch up on a missed month even though later documents already touched the asset |
-| Use As Cost Source Document In Contracting (`إستخدام المستند كمصدر تكلفة في المقاولات`) | `termConfig.useAsSourceCostDoc` | Makes each period's depreciation feed the contracting cost of the project the asset is allocated to |
-| Calculate Contracting Cost Debit And Credit From Asset If Found (`حساب مدين ودائن تكلفة المقاولات من الاصل الثابت إن وجد`) | `termConfig.calculateContractingCostDebitAndCreditFromAssetIfFound` | Takes the contracting cost accounts from the asset instead of the term, when the asset carries them |
+| Allow Previous FA Depreciation Document For (Addition, Deduction, Transfer, and Partial Disposal Documents) (`السماح بعمل مستندات إهلاك سابقا لتاريخ سندات (إضافة واستبعاد و تخلص جزئي و نقل)`) | `termConfig.allowFADepBefAddDedPartial` | Relaxes the ordering rule so a depreciation document can be dated before addition, deduction, transfer and partial-disposal documents that already touched the asset; with it on, the document also re-derives each line's instalment on save and drops lines whose instalment is zero or below |
+| Use As Cost Source Document In Contracting (`استخدام المستند كمصدر تكلفة في المقاولات`) | `termConfig.useAsSourceCostDoc` | Makes each period's depreciation feed the contracting cost of the project the asset is allocated to |
+| Calculate Contracting Cost Debit And Credit From Asset If Found (`حساب مدين ودائن تكلفة المقاولات من الأصل الثابت إن وجد`) | `termConfig.calculateContractingCostDebitAndCreditFromAssetIfFound` | Takes the contracting cost accounts from the asset instead of the term, when the asset carries them |
 
 The last two work with the **Contracting Cost Debit** (`termConfig.contractingCostDebit`) and **Contracting Cost
 Credit** (`termConfig.contractingCostCredit`) fields on the same page, which name the accounts the contracting entry uses when the asset does not supply them.
@@ -106,8 +106,10 @@ lines.
 
 The aggregated version of this document generates one ordinary addition-and-deduction document per grid
 line, so its term names the **book and term of the generated documents** (`termConfig.additionDeductionDocBook`,
-`termConfig.additionDeductionDocTerm`), plus an option to produce an accounting effect even when a line has no value
-to book (`termConfig.createEmptyAccountingEffect`).
+`termConfig.additionDeductionDocTerm`), plus **Create Empty Accounting Effect (To Allow Using Accounting
+Entity Flow)** (`termConfig.createEmptyAccountingEffect`): when ticked, the aggregate records an accounting
+request of its own with no lines, so an entity flow that adds entries to it has somewhere to write; all
+the amounts still come from the generated documents.
 
 ## The Disposal Term
 
@@ -136,38 +138,13 @@ generated acquisition document uses.
 Separate gain and loss accounts are the disposal's distinguishing feature. The partial disposal, below,
 has only one.
 
-### Worked example — selling `MCH-0007` at a gain
-
-By 31 December 2027 the machine stands at cost 270,000 and accumulated depreciation 93,900, a book value
-of 176,100. Al-Waha sells it for 200,000.
-
-| | Debit | Credit |
-|---|---|---|
-| Receivable — *the term's debit side* | 200,000 | |
-| Accumulated depreciation — *the asset's Account 02* | 93,900 | |
-| `MCH-0007` cost account — *the asset's main account* | | 270,000 |
-| Gain on disposal — *the term's profit account* | | 23,900 |
-
-### Worked example — scrapping `MCH-0012` at a loss
-
-The forklift stands at cost 60,000 and accumulated depreciation 38,000, a book value of 22,000. It is
-scrapped, so the disposal value is entered as 0 and the term's debit side has nothing to carry:
-
-| | Debit | Credit |
-|---|---|---|
-| Accumulated depreciation | 38,000 | |
-| Loss on disposal — *the term's loss account* | 22,000 | |
-| `MCH-0012` cost account | | 60,000 |
-
-Both entries used the same term. Which of the two accounts was reached was decided by the arithmetic,
-not by anything the user chose on the document.
-
-::: tip Taxes and what the buyer owes
-The term's debit side is charged with the **net** disposal value only — the tax pairs are booked
-separately. If the buyer is to owe you the gross amount, point the term's debit side and its tax 1 debit
-at the **same** receivable account, so the two lines add up on the customer's balance. And configure
-both halves of a tax pair or neither: a half-configured tax pair drops out of the entry silently.
-:::
+Two worked entries on one term — `MCH-0007` sold at a gain and `MCH-0012` scrapped at a loss — are on
+[Disposing of an Asset](/modules/fixedassets/disposal/fixedassets-disposal), with the rule that
+decides between the gain and the loss account: the arithmetic, not anything the user chooses on the
+document. The same page explains why the term's debit side carries only the **net** disposal value
+and how to point it and the tax 1 debit at one receivable when the buyer owes the gross amount. On the
+term itself, configure both halves of a tax pair or neither: a half-configured tax pair drops out of
+the entry silently.
 
 ![The Settings tab of the Fixed assets disposal document term, with its debit side](../../../ar/modules/fixedassets/images/disposal/fa-term-disposal-settings-en.png)
 

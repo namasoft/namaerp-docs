@@ -20,7 +20,7 @@ This script is not tied to any customer's setup. It has no parameters: attach it
 |---|---|
 | **Class name** | `EACreateAliasesForDrafts` |
 | **Script** | [EACreateAliasesForDrafts.groovy](/groovy-examples/EACreateAliasesForDrafts.groovy) |
-| **Runs on** | Any master file or document. Target action **Save Draft**. |
+| **Runs on** | Any master file or document. Target action **Add Draft**. |
 | **Uses** | No parameters. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -30,7 +30,7 @@ Every record's code is checked against a list of codes already in use, so that t
 
 That leaves a gap. Suppose a data entry clerk drafts a new customer `C-2001` on Monday and plans to complete it on Tuesday. On Monday afternoon a colleague creates and commits another customer, and gives it `C-2001` as its alternative code. Nothing stops them, because the draft's code is not on the list yet. On Tuesday the clerk cannot commit the draft: its code is now taken.
 
-With this script on the customer's **Save Draft** event, the draft's codes go on the list the moment the draft is saved. The colleague's save on Monday is refused instead, while it is still easy to pick another code.
+With this script on the customer's **Add Draft** event, the draft's codes go on the list the moment the draft is saved. The colleague's save on Monday is refused instead, while it is still easy to pick another code.
 
 The codes registered are the same ones a committed record registers: the record's code and its other codes, such as its alternative code. For items, when **Use Custom Item Codes as Alternative Code** is ticked in the supply chain settings, the item's custom item codes are registered too.
 
@@ -41,14 +41,14 @@ The script makes one call: it saves the draft's codes to the list of used codes,
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow whose **Target Type** is the screen you want to protect, for example Customer.
-2. Add one line to the **Details** grid with target action **Save Draft**. Paste the whole script into its **Groovy Script** column and leave **Class Name** empty.
+2. Add one line to the **Details** grid with target action **Add Draft**. Paste the whole script into its **Groovy Script** column and leave **Class Name** empty.
 3. Save. **Class Name** now shows the script's class name, and the line's description is filled in.
 
 One flow covers one target type. For several screens, create one flow per screen, or use an **Entity Type List** on the flow.
 
 ## Example
 
-On the demo database, customer `GRVA-CUST1` was saved as a draft with this flow on the Customer **Save Draft** event. Another customer was then imported, committed, with `GRVA-CUST1` as its alternative code. The save was refused:
+On the demo database, customer `GRVA-CUST1` was saved as a draft with this flow on the Customer **Add Draft** event. Another customer was then imported, committed, with `GRVA-CUST1` as its alternative code. The save was refused:
 
 *The code GRVA-CUST1 for the entity type Customer is repeated, can not save*
 

@@ -68,15 +68,14 @@ platform's *Prevent Usage* action.
 **Insurance Info** — the policy number and its issue and expiry dates. One policy per project, which
 is the normal case for a CAR or a third-party policy taken out per site.
 
-**Address** — region, country, city, state, area, two address lines, the building number and a map
-location. This is the site address, not the customer's, and it is what a driver or an inspector needs.
+**Address** — region, country, city, state, area, two address lines and a map location. This is the site address, not the customer's, and it is what a driver or an inspector needs.
 
 **Accounts and Taxes** — the subsidiary block described above, plus four "not subject to tax" flags
 for the four tax slots, which matter on projects that are exempt or zero-rated.
 
 **Dimensions** — legal entity, analysis set, branch, sector and department, as on every master file.
 
-**Fixed Asset Creation Doc** is the one button on the screen. When a project you built is going to
+**Create Fixed Asset Creation Doc** is the one button on the screen. When a project you built is going to
 stay on your own books — a head-office building, a rented tower you developed for yourself — press it
 and a new, unsaved Fixed Asset Creation Document opens with one line already pointing at this project
 as both the project and the subsidiary. Save the project first, because the button needs a saved

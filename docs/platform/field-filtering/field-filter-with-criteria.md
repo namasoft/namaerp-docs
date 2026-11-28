@@ -31,7 +31,7 @@ The menu next to this one holds **Field Filtering**, a different screen with a s
         - Document Book
         - Master Group
         - a menu entry, on a [Menu Definition or a Menu Update](/platform/menus/menu-structure)
-    - Alternatively, select the **Automatic** option to apply it automatically.
+    - Alternatively, tick **Automatic Usage (Does not Need to be Added to Books or Terms)** on the filter record. An automatic filter that is not **Inactive** applies to every record of the type in **For Type** (or of each type in its **Entity Type List**), with no assignment.
 
 4. **Save** your changes.
 
@@ -44,6 +44,8 @@ Each line of the grid takes these columns:
 | Dynamic Filter (`dynamicFilter`) | A condition written as text, which can read values from the record being edited. |
 | Use Tempo (`useTempo`) | Tick it when the Dynamic Filter is written in Tempo (`{loop}`, `{if}`, `{field}`). |
 | Apply Filter with Type (`filteredType`) | For a lookup that can point to more than one entity type, the line applies only when this type is being looked up. |
+
+Every line needs a **Criteria**, a **Dynamic Filter** or both; save refuses a line with neither. A line with both applies both.
 
 A Dynamic Filter without **Use Tempo** understands only `${field}` placeholders — `code,Equal,${customer.code},AND;`. Tempo braces are not evaluated at all, so a Tempo filter on a line without the tick never filters the way it was written — the classic "my dynamic filter returns nothing".
 
@@ -72,7 +74,7 @@ To show only non-service items when selecting an item in the **Sales Invoice** s
 6. When selecting items, only non-service items will be shown.
 
 ::: tip
-- You must assign the filter in **Field Filter** field of a document type, book, master group, or menu update.
+- Unless the filter is automatic, you must assign it in the **Field Filter** field of a document type, book, master group, or menu update.
 - To test your criteria:
     - Enable **Use In List View** in the criteria record.
     - Open the item list and enter your filter in the **Extra Filter** field.

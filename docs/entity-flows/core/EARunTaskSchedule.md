@@ -20,9 +20,9 @@ Manual execution when scheduled tasks need to be run immediately, such as for te
 ## How It Works
 
 1. **Locates task schedule** - Finds TaskSchedule by the specified business code
-2. **Initiates execution** - Calls TaskScheduleRunner to execute the task immediately
-3. **Runs synchronously** - Task executes in the current context without scheduling delay
-4. **Returns immediately** - Returns success result once task execution is initiated
+2. **Initiates execution** - Runs the task immediately
+3. **Runs synchronously** - Task executes in the current context without scheduling delay; the flow waits until it has finished
+4. **Returns success** - Once the task has finished
 
 ## Parameters
 

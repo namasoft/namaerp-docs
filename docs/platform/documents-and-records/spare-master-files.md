@@ -5,7 +5,7 @@ menu: Basic → Remarks → Subsidiary 1
 ---
 # Spare Master Files
 
-[Form documents](/platform/documents-and-records/form-documents.md) solve the problem of a customer needing a document
+[Form documents](/platform/documents-and-records/form-documents) solve the problem of a customer needing a document
 nobody else needs. The same problem turns up one shelf down: sometimes what the customer needs is
 not a document at all but a **file** — a register of something, a list of parties, a small
 catalogue that no module in Nama has a screen for.
@@ -63,7 +63,7 @@ you get without configuring anything.
 ## The remarks family — spare files with no accounts
 
 **Remark**, **Detailed Remark** and **Meeting Remark** are documented as a note-taking feature on
-[Remarks, Agenda and Work Tasks](/platform/everyday-tools/remarks-and-agenda.md), and that is what most sites use
+[Remarks, Agenda and Work Tasks](/platform/everyday-tools/remarks-and-agenda), and that is what most sites use
 them for. But structurally they are the same thing as a Subsidiary minus the accounting: a master
 file with a code, a name, five classification levels, the full bank of spare fields, and ten grids
 on the detailed and meeting versions.
@@ -106,7 +106,7 @@ point at the level above it, and when it does the lookups narrow accordingly: ch
 and Remark Type 2 offers only the records that name it. That gives you a cascading classification
 when you want one, and five unrelated tags when you don't.
 
-**Related Type 1 and Related Type 2 pre-fill the links.** A remark type can nominate the kind of
+**Related Type1 and Related Type2 pre-fill the links.** A remark type can nominate the kind of
 record the two general-purpose reference fields should point at. Pick that type on a document and
 Related Entity 1 and 2 are set to those kinds automatically. On a repurposed screen this is often
 all the restriction you need — the heavier
@@ -130,14 +130,14 @@ it on one of Form Documents 1 to 5 where the filter works.
 
 | If the one-off thing is… | Use |
 | --- | --- |
-| an event that happens on a date, with a number and a printout | a [form document](/platform/documents-and-records/form-documents.md) |
+| an event that happens on a date, with a number and a printout | a [form document](/platform/documents-and-records/form-documents) |
 | a party — money is owed to or by it, or costs accumulate against it | Subsidiary 1 … 5 |
 | a register or catalogue with no financial side, with repeating lines | Detailed Remark or Meeting Remark — if the site does not use them as notes |
 | a register or catalogue with no financial side and no lines | Remark — same caveat |
 | a way of grouping any of the above | Remark Type 1 … 5, or Subsidiary Class |
 
 Whichever you pick, the configuration work is the same as for a form document, and the
-[worked example there](/platform/documents-and-records/form-documents.md#Building-one----a-worked-example) applies
+[worked example there](/platform/documents-and-records/form-documents#Building-one----a-worked-example) applies
 unchanged: rename the file and its fields with a Translation Overrider, surface the fields you
 need with a Screen Modifier, restrict the reference and text fields in Fields and Entities
 Settings, and add whatever calculation and validation the customer needs.

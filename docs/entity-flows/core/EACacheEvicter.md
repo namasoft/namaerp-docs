@@ -14,18 +14,18 @@ Clears Hibernate second-level cache for a specific entity type, ensuring cached 
 
 ## When This Action Runs
 
-Manual execution after bulk data updates or cache inconsistency issues. Should run after bulk updates, imports, or external data modifications.
+Manual execution after data was changed outside the application, for example by an SQL update run directly on the database.
 
 ## How It Works
 
-1. **Accesses Hibernate SessionFactory** through Persister
-2. **Resolves entity type** using EntityTypeUtil 
-3. **Evicts cache entries** for specified entity type only
-4. **Frees memory** and ensures next queries hit database
+1. **Resolves the entity type** named in Parameter 1
+2. **Evicts cache entries** for that entity type only, so the next reads of its records come from the database
+
+Use it after records of a cached type (items, customers, ...) were changed by a direct SQL update, which the cache does not see.
 
 ## Key Parameters
 
-- **Parameter 1:** Entity Type (Required) - Case-sensitive entity type name (e.g., `Customer`, `SalesInvoice`)
+- **Parameter 1:** Entity Type (Required) - Case-sensitive entity type name (e.g., `Customer`, `InvItem`)
 
 ## Database Tables Affected
 

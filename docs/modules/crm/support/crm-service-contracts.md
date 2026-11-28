@@ -30,13 +30,13 @@ You reach it from **Customer Relationship Management → Support → CRM Service
 
 **Start with the document term.** The term is what decides whether the contract will create any ledger entry at all, and picking it also fills in the **نوع العقد / Contract Type** — *Ordinary* for a new contract, or *Renewal*, *Extension*, *Upgrade* or *Transfer* for one that supersedes an earlier contract. The field stays editable afterwards.
 
-**The header** — Customer, Responsible Employee (pre-filled with the current user's employee), the Mediator, Document category, the contract type, the contract this one updates, a read-only **حالة العقد / Service Contract Status**, currency and rate, and a description. Below it a small **Details** block holds the header **يبدأ في / Start In**, **ينتهى / End In** and **مدة العقد / Contract Period**.
+**The header** — Customer, Responsible Employee (pre-filled with the current user's employee), the Mediator, Document category, the contract type, the contract this one updates, a read-only **حالة العقد / Service Contract Status**, currency and rate, and a description. Below it a small **Details** block holds the header **يبدأ في / Start In**, **ينتهي / End In** and **مدة العقد / Contract Period**.
 
 ![The CRM Service Contract screen](../../../ar/modules/crm/images/support/crm-service-contract-en.png)
 
 `CSC-0044` is issued on 25 February 2026 with a value date of 1 March, customer `C-01188`, mediator `MED-07`, contract type *Ordinary*, running 1 March 2026 → 1 March 2027.
 
-**The lines** — the **تفاصيل عقود الخدمة / Service's Contracts details** grid is the heart of the document. One row per covered product:
+**The lines** — the **تفاصيل عقود الخدمة / Service Contracts details** grid is the heart of the document. One row per covered product:
 
 | # | Product | Serial | Start In | End In | Net value |
 |---|---|---|---|---|---|
@@ -68,7 +68,7 @@ The accounting effect runs **only when the document term carries both a debit si
 If contracts are committing and the ledger is empty, this is almost always why. Check the term first.
 :::
 
-Editing a committed contract recreates the entry; cancelling it reverses the entry — both re-check the same both-sides condition.
+Editing a committed contract updates the entry, or cancels it when the term no longer carries both sides; cancelling the contract reverses its entry.
 
 **Inventory: none.** The contract has no quantity, no warehouse and no stock document. It is also recognised as a tax-authority document, so the standard e-invoicing actions are available on it.
 
@@ -82,22 +82,14 @@ For `CSC-0044`, Al Nokhba collects **twelve receipts of 3,800.00** (3,800.00 × 
 
 ## What the contract does for support
 
-Its one functional consumer is the trouble ticket. When an agent raises a ticket for a product, the ticket asks *"is this product under contract on this date?"* and the contract answers. On `TKT-0451`, `CSC-0044`'s first line is what makes the ticket read **مغطي بعقد خدمة / Covered By Contract**.
+Its one functional consumer is the trouble ticket. When an agent raises a ticket for a product, the ticket asks *"is this product under contract on this date?"* and the contract answers. On `TKT-0451`, `CSC-0044`'s first line is what makes the ticket read **مغطى بعقد خدمة / Covered By Contract**.
 
-::: warning What coverage matches, and what it does not check
-**What coverage matches:** the ticket's **Product**, the ticket's **Serial Number** *only when the ticket carries one*, and the **ticket date** falling inside the line's **Start In → End In** window. A service contract wins over a warranty when both match.
+A contract line covers a ticket when the ticket's Product matches, its Serial Number matches (when the ticket carries one) and the ticket date falls inside the line's **Start In → End In** window; [Coverage](/modules/crm/support/crm-trouble-tickets#Coverage) on the Trouble Tickets page lists exactly what the lookup matches and what it does not check. On this document, always fill Serial Number on serialised items: one contract line registered without a serial covers every ticket raised on that product.
 
-**What coverage does not check:** the **customer** (any customer's contract or warranty can cover any other customer's ticket), the contract's **status** (Cancelled, Finished and Renewed contracts still cover), whether the contract has ever been **committed** (drafts cover), the **frozen extension** (coverage uses the line's End In), and all **dimensions** — legal entity, branch, sector.
-
-**What coverage does:** Covering Type and Covering Document tell the agent whether the product is covered and by which document. Whether to charge for the work is the agent's decision.
-
-**Practical advice:** always fill Serial Number on serialised items, or one contract line registered without a serial will cover every ticket raised on that product, for every customer, in every branch.
-:::
-
-**Contract or warranty?** A [CRM warranty](/modules/crm/master-files/crm-warranties.md) is the free cover a product shipped with — a master file with no price and no accounting. A service contract is paid cover the customer bought — a document with money and an accounting effect. Both feed the same lookup, and the contract wins.
+**Contract or warranty?** A [CRM warranty](/modules/crm/master-files/crm-warranties) is the free cover a product shipped with — a master file with no price and no accounting. A service contract is paid cover the customer bought — a document with money and an accounting effect. Both feed the same lookup, and the contract wins.
 
 ::: info Not the same thing as a maintenance contract
-The machine maintenance suite has its own, richer contract with visit schedules and instalments, under a different licence. Nothing links the two: no reference field, no shared status, no migration path, and a maintenance contract plays no part in trouble-ticket coverage. Which one you use is decided by which licence you own, not by which fits better. See [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts.md).
+The machine maintenance suite has its own, richer contract with visit schedules and instalments, under a different licence. Nothing links the two: no reference field, no shared status, no migration path, and a maintenance contract plays no part in trouble-ticket coverage. Which one you use is decided by which licence you own, not by which fits better. See [Maintenance Contracts](/modules/crm/maintenance-cycle/crm-maintenance-contracts).
 :::
 
 ## Contract status
@@ -106,7 +98,7 @@ The **حالة العقد / Service Contract Status** field is read-only on scre
 
 Two things write it. First, committing a **new** contract whose type is Renewal, Extension, Upgrade or Transfer, with **العقد المعدل / updated contract** pointing at the old one: the old contract is stamped *renewed*, *extended*, *upgraded* or *transferred* accordingly. (The document refuses that link when the type is empty or Ordinary, and refuses a contract already claimed by another.) Second, the **CRM Update Contract Status** document.
 
-Coverage follows the line dates, not the status: a contract covers tickets inside its lines' **Start In → End In** windows whatever its status, so to stop a contract covering, shorten its line dates. When a line's product is a Service Center vehicle, the [vehicle file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) shows its latest service contract and that contract's status.
+Coverage follows the line dates, not the status: a contract covers tickets inside its lines' **Start In → End In** windows whatever its status, so to stop a contract covering, shorten its line dates. When a line's product is a Service Center vehicle, the [vehicle file](/modules/servicecenter/workshop-setup/servicecenter-product-file) shows its latest service contract and that contract's status.
 
 **CRM Update Contract Status** (*تغيير حالة عقد خدمة*) is a two-field document — the contract, and the status to apply — and its value date must be later than the contract's.
 
@@ -120,9 +112,9 @@ The status document itself is this small:
 
 The **تجميد عقد / Freezing Contract** tab handles a suspension of service: a product, a freeze start date and a freeze end date. It refuses a product that is not on the contract (*"You can not freeze product {0} because it does not exist in contract"* — a message with no Arabic translation, so Arabic screens show the English), and it adds up the frozen days per product and pushes that line's calculated **إلى / To** column out by the same number of days.
 
-On `CSC-0044`, the hotel closes a wing from 1 to 31 July 2026, so line 2's *To* moves from 1 March 2027 to **1 April 2027**.
+The frozen days of a freeze line are its end date minus its start date. On `CSC-0044`, the hotel closes a wing from 1 to 31 July 2026 — 30 days — so line 2's *To* moves from 1 March 2027 to **31 March 2027**.
 
-Ticket coverage uses the line's **ينتهى / End In** date. To have the frozen days count as cover too, move End In by the same number of days.
+Ticket coverage uses the line's **ينتهي / End In** date. To have the frozen days count as cover too, move End In by the same number of days.
 
 ## The Executions tab
 
@@ -136,24 +128,23 @@ Unlike the maintenance suite's contract, this one schedules no visits and genera
 
 ## Actions on this screen
 
-The action block on the Main tab carries two buttons. Both need the contract **saved** first, and each opens a new, unsaved record in a pop-up with a reference back to the contract — nothing is saved for you.
+The action block on the Main tab carries three buttons. All three need the contract **saved** first, and each opens a new, unsaved record in a pop-up whose Related To field points back to the contract — nothing is saved for you.
 
-- **Create Calling** (*إنشاء  اتصال*) — a blank CRM Call.
+- **convert to Project** (*تحويله إلى مشروع*) — a blank CRM Project.
+- **Create Calling** (*إنشاء اتصال*) — a blank CRM Call.
 - **Create Visit** (*إنشاء زيارة*) — a blank CRM Visit.
 
-The Call and Visit buttons are shortcuts for logging a conversation, not a schedule: no date, no recurrence, and the created activity is not tracked against the contract in any way.
+The Call and Visit buttons are shortcuts for logging a conversation, not a schedule: no date, no recurrence, and the created activity carries the contract only in its Related To field.
 
 ## Configuring the document term
 
 All meaningful configuration for this document lives in its **Document Term**, not in CRM Settings. Three pages:
 
-**التأثير / Effect** — the **Contract Type** pushed onto documents that use this term; **Use Payment Docs As Debt Ages**; the **Debit** and **Credit** account sides (both required for any ledger entry to be created); the approximation-discount side; the **Tax Plan**, **Taxable**, **Modifiable Tax** and **Allow Editing Header Tax In Details** flags; **Allow Payment More Than Invoice Amount**, which caps receipt vouchers at the contract's net when unticked; and **Link With Invoice Lines In accounting Document**, which makes the contract selectable in the invoices grid of payment and receipt vouchers.
+**التأثير / Effect** — the **Contract Type** pushed onto documents that use this term; **Use Payment Docs As Debt Ages**; the **Debit** and **Credit** account sides (both required for any ledger entry to be created); the approximation-discount side; the **Tax Plan**, **Taxable**, **Modifiable Tax** and **Allow Editing Header Tax In Details** flags; **Allow Payment More Than Invoice Amount**, which caps receipt vouchers at the contract's net when unticked; and **Link With Invoice Lines In Accounting Document**, which makes the contract selectable in the invoices grid of payment and receipt vouchers.
 
 **تأثيرات أخرى / Other effects** — the cash side and four tax sides, plus an **External Effects** grid that lets you record the entry differently depending on which receipt voucher paid the contract.
 
 **تأثير الخصومات / Discount Effects** — the account sides for the line discount, the invoice discount and discounts 2 to 8.
-
-Two notes on that last page: in search, export and column-picker lists, use the group headings to tell the discount account sides apart; and for the third and fourth tax sides, go by the Arabic label.
 
 ::: info Service fees are not available on this document
 Whatever you may have seen on other invoice-style terms, the service-fee account sides and the second debit and credit sides do not exist for the service contract. Do not go looking for them.
@@ -161,7 +152,7 @@ Whatever you may have seen on other invoice-style terms, the service-fee account
 
 ## Reporting
 
-There is **none**. No system report, no printed form, no dashboard and no BI widget reads this document. A question as ordinary as *"which contracts expire next month?"* has no off-the-shelf answer — use the contract list screen's criteria, export to Excel, or build it in BI. The same is true of contract revenue by period.
+There is **none**. No system report, no printed form and no dashboard ships for this document. A question as ordinary as *"which contracts expire next month?"* has no off-the-shelf answer — use the contract list screen's criteria, export to Excel, or build it in BI ([CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms)). The same is true of contract revenue by period.
 
 ## The whole thing, end to end
 

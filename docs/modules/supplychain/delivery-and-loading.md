@@ -7,25 +7,32 @@ Between confirming the sales order and issuing the invoice lies the physical sta
 
 ## Preparation: Picking Items (Pick)
 
-Before goods can leave, they must be gathered from their locations in the warehouse. **Pick Rules (PickRules)** determine how the system selects what to pick and from where: oldest first (FIFO), nearest expiry (FEFO), nearest location, or the right batch. A pick list is generated that guides the warehouse worker to the items and their locations in the optimal sequence through the aisles, reducing errors and speeding preparation.
+**Pick Rules** (PickRules) decide which warehouses a sales invoice's quantities are drawn from. They work only on a **Sales Invoice** whose term has **Use Pick List** ticked. When such an invoice is saved, each line takes the first saved rule, in **Pick Order** sequence, whose filters it matches: item, item categories 1–5, brand, warehouse and the header dimensions. An empty filter matches anything, and a rule that names an item must leave the categories empty.
+
+The rule's lines then choose the warehouses: the warehouse source (one **Specific** warehouse, **All** warehouses, or every warehouse whose storage type is **Normal**, **Central** or **Show**), the **Warehouse Priority** among the candidates (**Quantity**, **Warehouse Order** or **Distance**), and whether overdraft is allowed. Each picked quantity turns into a document according to the line's **Pick Policy**:
+
+- **Out** generates a **Stock Issue** when the stock comes from the invoice's own warehouse, and a **Stock Transfer** when it comes from another warehouse.
+- **Reserve** generates a **Stock Issue Request** or a **Stock Transfer Request** in the same way.
+
+The books and terms of those documents are set on the rule, and they are required for every policy the rule's lines use.
 
 ## Loading: Consolidating the Shipment (LoadingDocument)
 
-The **Loading Document** records the consolidation of several deliveries into a single load (truck or shipment): it groups them by route, driver, or vehicle, tracks loading status and vehicle capacity, and links the source orders/invoices to the shipment. This creates a logical "staging area": the goods are no longer in normal storage (not sold to others) and not yet delivered (still in your inventory), but ready on the loading dock organized by shipment.
+The **Loading Document** is created from a **Delivery Document**, and each of its lines names a **Loading Warehouse**. Saving it does not move stock: it touches inventory only by reserving, when its term has **Reserve** ticked. Its quantities count in the delivery system table when its term points at a **Delivery Configuration File** — see [Reservation & Delivery System](/modules/supplychain/document-terms/doc-term-reservation-and-delivery).
 
-When you need to cancel a shipment and return its goods to storage, the **Loading Cancellation** (LoadingCancellationDoc) handles it.
+The **Loading Cancellation Document** (LoadingCancellationDoc) is created from a Loading Document and cancels it.
 
 ## Delivery and Proof of Receipt (DeliveryDocument)
 
-The **Delivery Document** records that items were loaded onto the vehicle, delivered to the customer, and signed for, so they left your custody. The document tracks delivery status (pending, delivered, partial, cancelled), the driver and vehicle per line, and may support delivery confirmation with a customer password. It's the **proof of delivery** document - vital if the customer later claims non-receipt.
+The **Delivery Document** records the delivery of goods to the customer. It is created from a **Reservation Document** or a **Sales Invoice**, and the **Details** group of its main page holds the **Driver**, the **Delivery Car**, the **Technician**, the **Delivery Status** and the **Customer Password**. A new document starts as **Delivering**. Picking a car fills the driver and the technician from the car, and on save the header's driver, car, technician and status are copied onto the lines (the status only onto lines that have none). Like the loading document, it does not move stock; it reserves only when its term has **Reserve** ticked, and it books accounting effects only from the accounts its term fills.
+
+When the term has **Update Delivery Status In From Doc** ticked, each line's delivery status is written back to its source line, and on up through that document's own source. After every save, a source document whose lines all share one delivery status takes that status in its header; when they differ, the header status is cleared.
+
+When the document is first saved it gets a **System Password**: 4 characters, letters and digits, unless the term sets a **System Password Length** and **System Password Pattern**. When the term has **Delivery State Requires Password** ticked, the status cannot be set to **Totally Delivered** until the **Customer Password** matches it, which makes the document the **proof of delivery**.
 
 ![Delivery document screen in NaMa ERP](../../ar/modules/supplychain/images/delivery/delivery-document-en.png)
 
-When a delivery fails or needs to be cancelled and the goods returned, the **Delivery Cancellation** (DeliveryCancellationDoc) handles it, reversing the delivery's effect and returning the goods to available stock.
-
-::: tip Delivery and Reservation
-Delivery integrates with the [Reservation System](./reservation-system-guide.md): when delivering goods reserved for an order, the reservation is released and they move from "reserved" to actually "out."
-:::
+The **Delivery Cancellation Document** (DeliveryCancellationDoc) is created from a Delivery Document and records the **Canceled Quantity** of each line.
 
 ## Delivery Queues: Organizing Distribution (DeliveryQueue)
 
@@ -77,16 +84,15 @@ A **Delivery Organization File** (DeliveryOrganization) groups driver schedules 
 
 ## Actions on this screen
 
-**On the Delivery Document:** **Add Reservation Doc** — asks you to pick a reservation document and pulls its lines into the delivery, so what was reserved is what gets delivered without re-keying it. If the document's term has *Consider Satisfied Quantities In From Doc* switched on, the already-satisfied quantities are taken into account rather than delivered twice; and an empty first line with no item on it is dropped rather than left behind.
+**On the Delivery Document:** **Add Reservation Doc** — asks you to pick a reservation document and pulls its lines into the delivery, so what was reserved is what gets delivered without re-keying it. A reservation line already pulled into the delivery is not added again. If the document's term has **Consider Satisfied Qties In From Doc** ticked, each line comes in with its unsatisfied quantity and fully satisfied lines are skipped, so nothing is delivered twice; and an empty first line with no item on it is dropped rather than left behind.
 
 ## The Full Picture
 
-Imagine a sales order ready for fulfillment:
-1. **Preparation**: a pick list is generated per its rules, and the worker gathers items from their locations.
-2. **Loading**: the loading document consolidates several deliveries into the route truck, and the goods move to the loading dock.
-3. **Routing**: with delivery organizations in use, the driver schedule books the shipment on a driver and car by region, weekday and priority, and the document drops into its delivery queue.
-4. **Delivery**: the driver delivers, the delivery document is recorded with proof of receipt, the reservation is released, and the goods leave your inventory.
-5. **Invoicing**: the [Sales Invoice](./sales-journey.md) is issued to complete the financial transaction.
+Imagine goods reserved for a customer:
+1. **Picking**: on a sales invoice whose term uses the pick list, the pick rules turn each line into stock issues, transfers or their requests from the right warehouses.
+2. **Routing**: with delivery organizations in use, the driver schedule books the document on a driver and car by region, weekday and priority, and the document drops into its delivery queue.
+3. **Delivery**: a delivery document is created from the reservation document or the invoice, and its status is set to **Totally Delivered** — with the customer's password when the term requires it.
+4. **Loading**: a loading document created from the delivery document records the loading warehouse of each line.
 
 ## Messages you may see
 
@@ -94,7 +100,7 @@ Imagine a sales order ready for fulfillment:
 |---|---|---|
 | *System password can not be manually changed in delivery document {0}* — «لا يمكن تغيير كلمة سر النظام يدويا في سند توصيل {0}» | The delivery document already carries a system-generated password and the saved value was typed over. The password is the proof of delivery, so only the system may set it. | Restore the password the system produced — reload the document without saving — and record the customer's password in the customer password field instead. |
 | *The provided password does not match system generated password* — «كلمة السر لا تطابق كلمة السر التي انشأها النظام» | The term requires a password on delivery, and the password typed in the customer password field is not the one the system generated. | Ask the customer for the code again — it is the one sent with the shipment — and retype it. |
-| *Delivery status can not be modified to delivered unless you provide the correct password* — «لا يمكن تعديل الحالة إلى ( تم التوصيل ) إلا بإدخال كلمة السر الصحيحة» | The status is being set to *Delivered* while the customer password is missing or does not match. That is the point of the password: nobody can mark a shipment delivered without the customer's code. | Enter the customer's password, then set the status. If the customer lost the code, the term option **Delivery State Requires Password** is what makes it mandatory. |
+| *Delivery status can not be modified to delivered unless you provide the correct password* — «لا يمكن تعديل الحالة إلى ( تم التوصيل ) إلا بإدخال كلمة السر الصحيحة» | The status is being set to **Totally Delivered** while the customer password is missing or does not match. That is the point of the password: nobody can mark a shipment delivered without the customer's code. | Enter the customer's password, then set the status. If the customer lost the code, the term option **Delivery State Requires Password** is what makes it mandatory. |
 | *Cannot find suitable line in {0} for document {1} at date {2}* — «لم يتم ايجاد سطر مناسب في {0} للمستند {1} في التاريخ {2}» | Delivery organizations are in use and the document's term names one, but no Delivery Driver Configuration line of that organization covers the delivery date, the shipping-address region and that weekday (and the driver or car already on the document, if any). | Check the shipping address region and the delivery date, then add or extend a schedule line for that region and day. |
 | *Cannot find suitable delivery cars for document {0} with delivery quantity {1}* — «لم يتم ايجاد سيارات توصيل للمستند {0} بالكميات {1}» | Matching schedule lines exist, but their cars have no free capacity for the document's quantity within the **Delivery Search Trials Count** days. | Add a car or driver to the schedule, raise the car's **Max Load**, or raise the organization's trials count. |
 | *From Date should be less than To Date* | A Delivery Driver Configuration line ends before it starts. This message has no Arabic text and shows in English on Arabic screens too. | Correct the line's dates — or the header dates, which are copied onto every line. |

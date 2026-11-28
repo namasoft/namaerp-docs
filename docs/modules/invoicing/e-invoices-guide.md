@@ -19,23 +19,24 @@ Nama ERP puts one machine behind all of them. Whichever country you operate in, 
 
 ## Switching e-invoicing on
 
-Before any of the screens are useful, the system has to know which country's page to show inside your invoices. In **Global Configuration**, page 2, set **e-Invoice Page To Show**:
+Before any of the screens are useful, the system has to know which country's page to show inside your invoices. In **Global Configuration**, on the **Taxes And e-Invoice** page, in the **Electronic Invoice** group, set **e-Invoice Page To Show**:
 
 <GlobalConfigOption option-code="value.info.einvoicePageShowType" />
 
-The choices are **Egypt Page**, **ZATCA Page** (Saudi Arabia), **Jordan Page**, the UAE page, or **All Pages** if you file in more than one country. After changing it, run a **Regen UI** — the extra page will not appear on documents until you do.
+The choices are **Egypt Page**, **ZATCA Page** (Saudi Arabia), **Jordan Page**, **UAE Page**, or **All Pages** if you file in more than one country. Left empty, it behaves like **All Pages**. After changing it, run a **Regen UI** — the extra page will not appear on documents until you do.
 
 Then create the configuration record and pick its **Tax Payer Type**. This single field selects both the country and the environment:
 
 | Tax Payer Type | Country | Environment |
 |---|---|---|
-| Saudi Arab - Electronic Invoice Sandbox | Saudi Arabia | Developer sandbox |
-| Saudi Arab - Electronic Invoice Simulation Site | Saudi Arabia | Simulation / trial |
-| Saudi Arab - Electronic Invoice Site | Saudi Arabia | Live |
+| Saudi Arabia - Electronic Invoice Sandbox | Saudi Arabia | Developer sandbox |
+| Saudi Arabia - Electronic Invoice Simulation Site | Saudi Arabia | Simulation / trial |
+| Saudi Arabia - Electronic Invoice Site | Saudi Arabia | Live |
 | Egypt - Electronic Invoice Site (Pre Production) | Egypt | Trial |
 | Egypt - Electronic Invoice Site | Egypt | Live |
 | Jordan - Electronic Invoice | Jordan | Live |
-| UAE (Orchida) staging and live | UAE | Trial and live |
+| UAE - Electronic Invoice Staging | UAE (Orchida) | Trial |
+| UAE - Electronic Invoice | UAE (Orchida) | Live |
 
 ::: tip Always start on the trial platform
 Picking the type fills in the **API URL** for you, so moving from trial to live later is a matter of changing this one field. Work through your real scenarios — an ordinary invoice, a return, an exempt line, an individual customer with no tax number — on the trial platform first. Rejections there cost nothing; rejections on the live platform are on your public record.
@@ -133,9 +134,8 @@ Open a new **Tax Authority Submission Document**, choose the configuration, and 
 
 1. **Collect Tax Authority Documents** fills the grid with every eligible document in that range that has not been accepted yet. Nothing has left the building at this point.
 2. **Validate Tax Authority Documents** runs the authority's rules against the collected lines and reports what would be rejected — a missing buyer identity, an item with no registered code, an address field left blank. Fix the source documents, collect again, and repeat until it is clean.
-3. **Preview Documents Before Sent** shows you the exact payload that will be transmitted, for when the validation message is not enough to explain itself.
-4. **Sign Documents** (or **Sign Selected Documents**) applies the digital signature where the country requires one.
-5. **Send Selected Documents** transmits the lines you ticked; **Send Not Sent Documents** transmits everything on the record that has not gone yet.
+3. **Sign Documents** (or **Sign Selected Documents**) applies the digital signature where the country requires one. These two buttons are on the screen only when **e-Invoice Page To Show** is **Egypt Page** or **All Pages**.
+4. **Send Selected Documents** transmits the lines you ticked; **Send Not Sent Documents** transmits everything on the record that has not gone yet.
 
 ::: tip Validate before you send, every time
 Validation checks the collected documents without committing anything. It is the difference between fixing ten invoices quietly and having ten rejections recorded against your tax file.
@@ -149,12 +149,12 @@ Each line carries a status that answers "where is this document now?":
 |---|---|
 | **Not Sent** | Collected but not yet transmitted. |
 | **Sent** | The authority accepted it. |
-| **Not Send Correctly** | Transmitted and refused. The line carries the authority's reason — fix the source document and send again. |
+| **Not Sent Correctly** | Transmitted and refused. The line carries the authority's reason — fix the source document and send again. |
 | **Cancelled** | Withdrawn after acceptance, within the days the authority allows. |
 | **Rejected** | The authority rejected it after acceptance. |
-| **Rejected by Receiver** | The buyer rejected it during the window their platform gives them. Nothing is wrong with your data — the customer disputed the document. |
+| **Rejected By Receiver** | The buyer rejected it during the window their platform gives them. Nothing is wrong with your data — the customer disputed the document. |
 
-**Check Tax Authority Status For Sent Document** re-asks the authority about the lines you have already sent and updates their status, which is how the last three states usually appear: they happen after your submission succeeded, on someone else's initiative.
+**Check Tax Authority Status For Sent Document** re-asks the authority about the lines you have already sent and updates their status, which is how the last three states usually appear: they happen after your submission succeeded, on someone else's initiative. Like the signing buttons, it is on the screen only when **e-Invoice Page To Show** is **Egypt Page** or **All Pages**.
 
 From the invoice itself, **View Invoice At E Invoice Site** opens the document on the authority's own portal — the fastest way to answer a customer who says they cannot see it.
 
@@ -166,7 +166,7 @@ Collecting and sending by hand is fine while you are settling in, and unsustaina
 - **[Auto Send e-Invoice](/entity-flows/core/EAAutoSendEInvoice)** — submits each invoice on its own, as soon as it is committed, for businesses that want the document on the authority's record within minutes rather than overnight.
 - **[Check Rejected by Receiver Documents](/entity-flows/core/EACheckTaxAuthorityRejectedByReceiverDocuments)** — watches recent submissions through the buyer's review window and brings back rejections and cancellations you would otherwise learn about from the customer.
 
-There is also a retry flow that walks the submission documents still holding lines at *Not Sent* or *Not Send Correctly* and sends them again, in batches. It is worth scheduling even if you collect and send by hand, because it turns an evening when the authority's platform was down into a non-event.
+There is also a [retry flow](/entity-flows/core/EASendNotSentTaxAuthorityDocuments) that walks the submission documents still holding lines at *Not Sent* or *Not Sent Correctly* and sends them again, in batches. It is worth scheduling even if you collect and send by hand, because it turns an evening when the authority's platform was down into a non-event.
 
 ## When a document does not arrive
 

@@ -28,7 +28,7 @@ Once this field is filled in, every other field in the same block is ignored —
 
 **Narration** `termConfig.config.debit.narrationTemplate` / `termConfig.config.debit.narrationQuery` — The first narration (description) of the ledger line, either from a template or a SQL query. A second narration line is set by `termConfig.config.debit.narration2Template` / `termConfig.config.debit.narration2Query`.
 
-**Dimension sources (sector / branch / department / analysis set)** — Each cost-center dimension can be a fixed value or sourced from a field on the document. Each composite source is shown only when its matching global config flag is enabled (`AddSectorSourceToTerms`, `AddBranchSourceToTerms`, `AddDeptSourceToTerms`, `AddAnalysisSourceToTerms`).
+**Dimension sources (sector / branch / department / analysis set)** — Each cost-center dimension can be a fixed value or sourced from a field on the document. Each composite source is shown only when its matching global configuration option is ticked (**Add Sector Source To Terms**, **Add Branch Source To Terms**, **Add Department Source To Terms**, **Add Analysis Set Source To Terms**).
 
 | Dimension | Field ID |
 |---|---|
@@ -37,7 +37,7 @@ Once this field is filled in, every other field in the same block is ignored —
 | Department source | `termConfig.config.debit.departmentSource` |
 | Analysis-set source | `termConfig.config.debit.analysisSetSource` |
 
-**Entity dimension & reference dimensions** — A generic entity dimension and up to three generic reference dimensions, each a composite (source type + entity type + field id + fixed value). Each is shown only when its global config flag is on (`AddEntityDimSourceToTerms`, `AddRef1SourceToTerms` … `AddRef3SourceToTerms`).
+**Entity dimension & reference dimensions** — A generic entity dimension and up to three generic reference dimensions, each a composite (source type + entity type + field id + fixed value). Each is shown only when its global configuration option is ticked (**Add Entity Dimension Source To Terms**, **Add Ref1 Source To Terms** … **Add Ref3 Source To Terms**).
 
 | Dimension | Field ID |
 |---|---|
@@ -46,9 +46,9 @@ Once this field is filled in, every other field in the same block is ignored —
 | Reference 2 source | `termConfig.config.debit.ref2Source` |
 | Reference 3 source | `termConfig.config.debit.ref3Source` |
 
-**Ignore unfound fields in refs and entity dimension** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — Don't fail processing when a referenced source field is missing. Shown when any ref/entity-dimension source is enabled.
+**Ignore Unfound Fields In References And Entity Dimension** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — Don't fail processing when a referenced source field is missing. Shown when any ref/entity-dimension source is enabled.
 
-**Currency / Rate source field** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — Source fields for the currency and rate of the ledger line; shown when `AddCurrencyAndRateSourceToTerms` is on.
+**Currency / Rate source field** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — Source fields for the currency and rate of the ledger line; shown when the global configuration option **Add Currency And Rate Source To Terms** is ticked.
 
 ::: tip
 In the groups below, "account side" always means a full block with the sub-fields above. Each group note gives only its **prefix** — append any sub-field id to reach a specific setting (e.g. `termConfig.cash.subsidiaryAccountType`).
@@ -146,17 +146,19 @@ Invoices expose eight discount **account sides** plus a header-discount side on 
 
 **Discount account sides (invoices)** — The eight discount sides, each a full account-side block.
 
-| Discount | Field ID (prefix) |
+| Group on the page | Field ID (prefix) |
 |---|---|
-| Line discount | `termConfig.lineDiscount` |
-| Invoice (header) discount | `termConfig.invoiceDiscount` |
-| Discount 1 | `termConfig.firstDiscountAcc` |
-| Discount 2 | `termConfig.secondDiscountAcc` |
-| Discount 3 | `termConfig.thirdDiscountAcc` |
-| Discount 4 | `termConfig.fourthDiscountAcc` |
-| Discount 5 | `termConfig.fifthDiscountAcc` |
-| Discount 6 | `termConfig.sixthDiscountAcc` |
-| Discount 7 | `termConfig.seventhDiscountAcc` |
+| Discount 1 | `termConfig.lineDiscount` |
+| Invoice Discount (header) | `termConfig.invoiceDiscount` |
+| Discount 2 | `termConfig.firstDiscountAcc` |
+| Discount 3 | `termConfig.secondDiscountAcc` |
+| Discount 4 | `termConfig.thirdDiscountAcc` |
+| Discount 5 | `termConfig.fourthDiscountAcc` |
+| Discount 6 | `termConfig.fifthDiscountAcc` |
+| Discount 7 | `termConfig.sixthDiscountAcc` |
+| Discount 8 | `termConfig.seventhDiscountAcc` |
+
+The field ids are one step behind the group titles: `firstDiscountAcc` is the **Discount 2** group, and so on up to `seventhDiscountAcc` for **Discount 8**. Each group's other-side field matches its title (`discount1OtherSide` sits in **Discount 1**).
 
 **Discount 1 debit / credit (expense & cost documents)** `termConfig.discount1Debit` / `termConfig.discount1Credit` — The flat discount account for the single discount group on JOrderExpense, ReceiptAdditionalCost and LcExpense.
 

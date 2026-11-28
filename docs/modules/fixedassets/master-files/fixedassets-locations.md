@@ -34,12 +34,13 @@ The screen is deliberately thin — a location is a label with a place in a tree
 | Field | Arabic label | Notes |
 |---|---|---|
 | Code | الكود | `LOC-R2`. |
-| Parent | المجموعة الأعلي | The location above this one. Leaving it empty makes this a root. |
+| Parent | المجموعة الأعلى | The location above this one. Leaving it empty makes this a root. |
 | Name1 / Name2 | الاسم العربي / الاسم الإنجليزي | Arabic name first, English name second. |
 | Description 1 / 2 | الوصف 1 / الوصف 2 | Free text — a bay number, a gate, a floor plan reference. |
+| Accepts Elements | يقبل عناصر | Tick it on the bottom-level places. The Location field on a custody record offers only locations with this ticked. |
 | Dimensions | الشركة، المجموعة التحليلية، الفرع، القطاع، الإدارة | Legal entity, analysis set, branch, sector, department. |
 
-There is no validation on the record and no behaviour behind it. Build the tree as deep or as flat as your plant needs; the module never walks it, it only records which node an asset is sitting on.
+Beyond that there is no validation on the record and no behaviour behind it. Build the tree as deep or as flat as your plant needs; the module never walks it, it only records which node an asset is sitting on.
 
 ::: tip Locations are not dimensions
 It is tempting to model branches and departments as locations. Do not — the asset already carries its five dimensions, and those are what the ledger uses. A location is a physical place; changing it on its own books nothing. Use dimensions for the accounting picture and locations for the floor plan.
@@ -47,7 +48,7 @@ It is tempting to model branches and departments as locations. Do not — the as
 
 ## The Location Field on the Asset Is Not Typed
 
-Open `MCH-0007` and you will find **Asset Location** (موقع الاصل) on the main page showing `LOC-R2` — and no way to edit it. Like every other moving part of the asset record, the location is written by documents.
+Open `MCH-0007` and you will find **Asset Location** (موقع الأصل) on the main page showing `LOC-R2` — and no way to edit it. Like every other moving part of the asset record, the location is written by documents.
 
 Underneath, the module keeps a **location history**: one row per move, each recording where the asset came from, where it went, on what date, and which document did it. The field on the asset is simply the destination of the newest row.
 
@@ -74,14 +75,20 @@ And two documents that look as though they should move an asset do not: the **mo
 
 The move itself is a **Fixed Asset Transfer Document**: the asset, from `LOC-R2`, to `LOC-R3`, with a value date. On commit:
 
-1. A new row is added to the location history — from `LOC-R2`, to `LOC-R3`, dated today, naming this transfer.
+1. A new row is added to the location history — from `LOC-R2`, to `LOC-R3`, carrying the transfer's value date, naming this transfer.
 2. The **Asset Location** field on the asset becomes `LOC-R3`.
 3. **Nothing is booked.** Neither the legal entity, nor any accounting dimension, nor any of the asset's three accounts changed, so there is no ledger entry to make. A pure location move is free.
 
 That third point is the one people find surprising, and it is worth carrying: the transfer document is not a *location* document, it is a document that can change location, dimensions, accounts and custodian at once — and it books something only when the change reaches the accounting. The full picture, including what happens when the machine moves to another company, is in [Transferring an Asset](/modules/fixedassets/movement/fixedassets-transfer-document.md).
 
 ::: info Back-dated moves
-The location on the asset is the destination of its **latest** row. If you record a transfer dated before a move that is already on file, the history gains the row in its proper place but the asset's current location does not change — correctly, because a later move already decided where the machine is now.
+The location on the asset is the destination of its **latest** row, so a transfer cannot be slipped in before a later one. A transfer dated before a move that is already on file is refused:
+
+*Cannot apply transfer because another Transfer {0} is after this date is found*
+
+This message has no Arabic text in the product, so it appears in English on Arabic screens as well. A transfer dated before a later financial document on the asset (a depreciation run, an addition) is refused too:
+
+*Cannot Transfer Asset because of next document {0}* — «لا يمكن نقل الأصل لوجود المستند {0}»
 :::
 
 ## Actions on This Screen
@@ -92,6 +99,6 @@ location, and the asset's own **Location** field cannot be typed.
 
 ## Reading the History
 
-Because every row names its document, the location list on the Statistics page is the fastest audit trail in the module. A machine that turned up in the wrong hall is one click from the transfer that put it there; a machine whose history is empty was never given a location by its purchase document, which is usually the real complaint behind "the location field is blank and I cannot fill it".
+Because every row names its document, the location list on the Statistics page is the fastest audit trail in the module. A machine that turned up in the wrong hall is one click from the transfer that put it there; a machine whose first row (from its purchase or opening document) has an empty to-location was never given a location by that document, which is usually the real complaint behind "the location field is blank and I cannot fill it".
 
 The fix in that case is not on the asset. It is a transfer document that moves the machine to where it actually is.

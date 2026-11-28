@@ -85,7 +85,8 @@ The caption the user reads comes from the first of these that is filled:
 1. **Resource ID** — the key of an existing system translation. If you fill it, it wins over
    everything else, and the caption follows the user's interface language automatically.
 2. **Arabic** and **English** on the line — the caption in each language.
-3. The header record's **Name1** and **Name2**, used when the line leaves both caption columns empty.
+3. The header record's **Name1** and **Name2**: Name1 replaces an empty **Arabic** and Name2 an empty
+   **English**, each on its own.
 
 For a record holding a single entry, naming the header well and leaving the line captions blank is the
 tidiest arrangement. For a record holding several, fill the line captions.
@@ -133,9 +134,11 @@ simply ignored at run time, and the report falls back to that parameter's defaul
 empty or unfiltered result rather than an error. When an entry runs but returns the wrong data, a
 misspelled parameter name is the first thing to check.
 
-When the entry is launched from a **list screen**, three values are always sent in addition to whatever
-you mapped: the ids of the rows involved, the record context, and the entity type. A report designed to
-be launched from a list can read the row ids without you configuring anything.
+When the entry is launched from a **list screen**, three more names can be used on the Field side:
+`ids` (all the rows involved, as one list), `$this` (the row being printed, or the same list as `ids`
+when the rows are combined into one report) and `entityType` (the type of the list). A report receives
+them only through a slot that maps one of its parameters to one of these names. Any other Field is read
+from the row, or from the first row when the rows are combined.
 
 ## Running from a list
 
@@ -153,8 +156,10 @@ of these" but which will flood the screen if a user selects two hundred rows.
 ## Ordering the entries
 
 More than one record can contribute entries to the same screen — one attached to Sales Invoice
-specifically, another applying to All Screens. **Priority** on the header decides the order they appear
-in, **highest first**.
+specifically, another applying to All Screens. The entries come in three blocks: first those that name
+the screen through **Entity Type** or **Entity List**, then those for **All Screens**, then those for
+**Documents** or **Master Files**. Inside each block, **Priority** on the header decides the order,
+**highest first**.
 
 Records sharing the same priority are left in no particular order relative to each other, so if the
 sequence of your menu entries matters, give each record a distinct priority rather than leaving them

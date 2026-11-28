@@ -10,7 +10,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Prevents documents from being used as "from documents" by setting the `preventUseAsFromDoc` flag to true. Controls document copy-from and reference relationships for security and data integrity.
+Prevents the documents that a field of the current record points to from being used as "from documents" by setting their `preventUseAsFromDoc` flag to true.
 
 ## When This Action Runs
 
@@ -26,18 +26,22 @@ Prevents documents from being used as "from documents" by setting the `preventUs
 3. **Sets restriction flag** `preventUseAsFromDoc = true` on target documents
 4. **Applies immediately** without requiring entity save
 
+From then on, saving any other document that newly selects a marked document in **From Document** is refused with:
+*The document {0} is prevented from usage as from doc* — «المستند {0} ممنوع من الاستخدام في بناء على»
+A document that already had it as its From Document before the mark keeps saving normally.
+
 ## Key Difference from Allow Action
 
 - **Restriction Direction:** Prevents instead of allows copy-from operations
 - **Flag Value:** Sets `preventUseAsFromDoc = true` instead of false
-- **Security Focus:** Emphasizes restriction rather than permission
 
 ## Parameters
 
 ### Parameter 1: Field ID (Required)
-- **Purpose:** Identifies target field containing documents to restrict
-- **Format:** Field identifier or expression
-- **Examples:** `sourceInvoice`, `lines.product`, `sql(SELECT invoiceId FROM ...)`
+- **Title:** Field id
+- **Purpose:** The reference field of the current record that points to the documents to restrict
+- **Format:** A header field id or a line field id. A line field marks the document of every line
+- **Examples:** `fromDoc`, `ref1`, `details.ref1`
 
 ## Database Tables Affected
 

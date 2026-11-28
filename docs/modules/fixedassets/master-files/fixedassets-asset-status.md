@@ -36,7 +36,7 @@ There are five values.
 Two of these moves run backwards as well:
 
 - **Cancelling or deleting the document that put the asset into service returns it to Initial.** Reversing the purchase or opening document empties the asset again.
-- **A depreciated asset can come back to life.** Capitalise an upgrade with an addition, or extend the remaining life with a properties document, and the asset has value and life again — so its status returns to **Running Depreciation** and the next depreciation run collects it.
+- **A depreciated asset can come back to life.** Record an addition with **Modify Asset Remaining Life** ticked and periods added to the remaining life, and the asset has value and life again — so its status returns to **Running Depreciation** and the next depreciation run collects it. A properties document does not do this: it accepts only Running Depreciation and Not Depreciable assets.
 
 ## What Each Status Blocks
 
@@ -46,18 +46,20 @@ This is the part worth keeping. Read it as "you cannot do X while the asset is Y
 |---|---|---|---|---|---|
 | Run depreciation on it | ✗ *"Cannot Depreciation because the status is Initial"* | ✔ | ✗ *"The Asset {0} is already depreaciated"* | ✗ — undepreciable assets are never depreciated | ✗ |
 | Have it collected automatically into a depreciation document | ✗ skipped | ✔ | ✗ skipped | ✗ skipped | ✗ skipped |
-| Have it collected into a revaluation document | ✗ skipped | ✔ | ✔ | — | ✗ skipped |
-| Record an addition or a deduction | ✗ | ✔ | ✔ | ✔ | ✗ |
+| Have it collected into a revaluation document | ✗ skipped | ✔ | ✔ | ✔ | ✗ skipped |
+| Record an addition or a deduction | ✗ (see below) | ✔ | ✗ (see below) | ✔ | ✗ |
 | Record a partial disposal | ✗ | ✔ | ✔ | ✔ | ✗ |
 | Dispose of it | ✗ — there is nothing to dispose of | ✔ | ✔ | ✔ | ✗ |
-| Pick it on an opening document | ✔ | ✔ | ✔ | ✔ | ✗ excluded from the picker |
+| Pick it on an opening document | ✔ | ✗ | ✗ | ✗ | ✗ |
 | Count it on a stocktaking sheet | ✔ | ✔ | ✔ | ✔ | ✗ excluded |
+
+The revaluation document collects only assets whose method is revaluation unless its term allows straight-line assets; the status rule above applies either way. An addition or deduction with **Modify Asset Remaining Life** ticked skips the status check, so it is accepted on any asset that is not disposed. The opening document offers only Initial assets in its picker and refuses any other status on save.
 
 Three of those rows deserve a sentence of their own.
 
-**Nothing acts on a disposed asset.** This is not a rule per document; it is a single check that every Fixed Assets document runs before it touches an asset — *"Cannot make action on asset {0} because it is disposed"*. This one has no Arabic text in the product, so it appears in English on Arabic screens as well. If an asset was disposed of by mistake, the way back is to reverse the disposal document, not to work around it.
+**Nothing acts on a disposed asset.** The addition/deduction document and the transfer documents refuse a disposed asset with *"Cannot make action on asset {0} because it is disposed"*. This one has no Arabic text in the product, so it appears in English on Arabic screens as well. The other documents refuse it through their own status checks or leave it out of their pickers, as the table shows. If an asset was disposed of by mistake, the way back is to reverse the disposal document, not to work around it.
 
-**An initial asset accepts almost nothing.** Additions, deductions, partial disposals and depreciation all refuse it, because there is no value to add to, deduct from or write down. The only documents that will accept an initial asset are the ones designed to bring it into service: the purchase document, the opening document and the letter-of-credit cost document.
+**An initial asset accepts almost nothing.** Depreciation, transfers, partial disposals and disposals refuse it, and so do additions and deductions unless **Modify Asset Remaining Life** is ticked, because there is no value to add to, deduct from or write down. The documents designed to bring it into service are the purchase document, the opening document and the letter-of-credit cost document.
 
 **The depreciation method is a gate too.** Even a perfectly healthy Running asset will be refused by the depreciation document if its method is revaluation — those assets are handled by the [revaluation document](/modules/fixedassets/depreciation/fixedassets-revaluation.md) instead, which is a different way of arriving at the same result.
 

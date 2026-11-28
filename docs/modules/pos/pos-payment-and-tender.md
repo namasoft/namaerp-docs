@@ -64,7 +64,10 @@ A single invoice can be settled by more than one method — say half cash, half 
 
 ### Deferred (pay later)
 
-Sometimes the customer pays later — a credit account, a reserved order. Choosing the **deferred** option clears the amounts to zero and saves the invoice with the balance still outstanding, without opening the drawer or (by default) printing a receipt. Whether a cashier may defer at all is a permission.
+Sometimes the customer pays later. There are two ways to record that:
+
+- **Delay Payment** («تأجيل الدفع»), a tick box at the bottom of the tender screen, shown only to cashiers whose profile has **Can Delay Invoice Payment**. Ticking it clears the amounts to zero; confirming saves the invoice unpaid, without opening the drawer. The invoice stays on the register — it is not sent to the server — until it is reopened from **Delayed Payment Invoices** in the slide menu and paid.
+- **Debit Value** («قيمة الأجل»), the system's default deferred method, puts the amount on the customer's account. The field appears only when **Hide Default System Debit Method** («إخفاء طريقة الدفع الآجل الافتراضية للنظام») is not ticked on the POS Settings screen, the invoice has a customer, and the cashier's profile has **Can Pay With Credit Val** («إمكانية الدفع آجل»). Ticking **Hide Default System Debit Method** removes it for every user, whatever their profile says, and also leaves the default deferred line out of the shift close.
 
 ![Deferred payment](../../ar/modules/pos/images/payment/pos-tender-deferred-en.png)
 
@@ -92,14 +95,14 @@ If the customer is on a loyalty programme, press `Alt+R` to redeem points toward
 
 A few rules keep the till honest:
 
-- **Change is cash.** Overpayment is expected on cash and becomes change. Card and other non-cash methods, by contrast, are normally not allowed to overpay — you cannot give change on a card.
-- **Authorization numbers are required where they matter.** A card payment needs its approval code; a credit note or coupon needs its reference. The sale will not complete without them.
+- **Change is cash.** Overpayment is expected on cash and becomes change. A non-cash method paying more than the invoice is refused with *{0} Invalid pay with payment method* — «{0}  دفع خاطئ بطريقة الدفع», unless **Allow Customer To Overpay Invoice By Non-Cash Methods** is set to yes on the register, or on POS Settings when the register inherits it.
+- **Authorization numbers are required where they matter.** A row with an amount needs its process number when its method has **Authorization Number Required** ticked, or when the amount was paid through the terminal; otherwise the sale is refused with *Authorization Number Require for method {0}* — «{0} رقم العمليه مطلوب لطريقة الدفع». A process number on a row with no amount is refused too, with *Process number with no value {0}* — «{0} رقم عمليه لقيمه فارغه».
 - **Amounts are rounded** to the currency's decimal places for display, while the maths underneath keeps full precision.
 - **A payment-method discount** (for example "2% off for cash") recalculates the net automatically when that method is used, and is undone if the payment is cancelled.
 
 ## The receipt
 
-Once payment is confirmed the **receipt prints**. There are options at the bottom of the tender screen for printing a fully itemized invoice, and — for those with permission — for suppressing the printout. Receipts can be reprinted later from the sales screen with `Alt+P`. On an empty sales screen `Alt+P` reprints the last invoice only when the POS setting **Print Last Document If No Current Open Document** is on.
+Once payment is confirmed the **receipt prints**. There are tick boxes at the bottom of the tender screen: **Print Full Invoice** («طباعه الفاتورة الكاملة»), which needs **Can Print Full Invoice** and starts ticked when the register has **Always Print Full Invoice**, and **Do Not Print The Invoice** («عدم طباعة الفاتورة»), which needs **Can Prevent Printing Invoices**. Receipts can be reprinted later from the sales screen with `Alt+P`. On an empty sales screen `Alt+P` reprints the last invoice only when the POS setting **Print Last Document If No Current Open Document** is on.
 
 What the receipt shows is up to your print form: a **Report Definition** whose **Report Type** is **Form**, for the **POS Sales Invoice**, with **Used In POS** ticked. The receipt below comes from a simple form of that kind.
 

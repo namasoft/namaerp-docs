@@ -10,7 +10,7 @@ Nama's Service Center module does not work that way, and the sooner you know it 
 This page is the map. It tells you what each part does, which licence switches it on, and — most importantly — where the seams are, so you plan around them instead of discovering them in month three.
 
 ::: info Required licence
-Every one of the module's **88 records and documents is licence-gated**. Nothing at all is available in a base installation — not one master file, not one document. The six codes are `srvcenter`, `srvcenter-subitems`, `srvcenter-insurance-and-installments`, `srvcenter-rental-assets`, `srvcenter-mobile-delivery` and `srvcenter-service-queues`. What each buys you is set out in [What Each Licence Switches On](#What-Each-Licence-Switches-On) below.
+Every one of the module's **88 records and documents is licence-gated**. Nothing at all is available in a base installation — not one master file, not one document. The six codes are `srvcenter`, `srvcenter-subitems`, `srvcenter-insurance-and-installments`, `srvcenter-rental-assets`, `srvcenter-mobile-delivery` and `srvcenter-service-queues`. What each buys you is set out in [What Each Licence Switches On](#What-Each-Licence-Switches-On) below. Two more screens sit in the module's menus under other modules' codes: the **Sub Item Assembly Document** in *Car Purchases* needs `supplychain-assembly`, and the **External Delivery Order** in *Mobile Apps - Service Center* needs `crm-united-pharma-app`.
 :::
 
 Throughout this documentation we follow one company:
@@ -23,8 +23,8 @@ The module registers **two top-level menu entries**, not one. Everything else fo
 
 | Menu root | Arabic | Folders inside it | Records and documents |
 |---|---|---|---|
-| **Service Center** | مركز خدمة | Master Files · ` Settings` · Documents · Mobile Apps - Service Center · Queue Service · Rental Assets | **46** |
-| **cars** | سيارات | Car Files · Car Purchases · Car Inventory · Car Sales · Cars Sales Cancellation · Car Insurance · Car Installment | **39** |
+| **Service Center** | مركز خدمة | Master Files · ` Settings` · Documents · Mobile Apps - Service Center · Queue Service · Rental Assets | **47** |
+| **cars** | سيارات | Car Files · Car Purchases · Car Inventory · Car Sales · Car Sales Cancellation · Car Insurance · Car Installment | **43** |
 
 Two labels are worth quoting exactly, because searching for the tidy version will not find them: the second root really is spelled **`cars`** in lower case in the English menu, and the settings folder really does begin with a **leading space** (` Settings` / ` الإعدادات`), so it sits slightly indented under its siblings.
 
@@ -76,7 +76,7 @@ Here is the workshop half in one story, with each step linked to the page that c
 5. **Who pays.** The 3,215 is split four ways on the job order's own lines — **695 customer, 60 insurance, 2,400 warranty, 60 the company's own pocket**. That split is the heart of the module and has [its own page](/modules/servicecenter/job-cycle/servicecenter-payer-split.md).
 6. **The parts.** The storekeeper [issues the parts](/modules/servicecenter/spare-parts/servicecenter-spare-parts-issue.md) against the order, and one unused litre of oil comes [back](/modules/servicecenter/spare-parts/servicecenter-spare-parts-return.md). The compressor goes out to a specialist for bench testing on an [external repair](/modules/servicecenter/spare-parts/servicecenter-external-repair.md).
 7. **The work.** Technician Turki clocks each task on and off on the [execution document](/modules/servicecenter/workshop-execution/servicecenter-production-execution.md). He spends 7 hours 20 minutes; the customer is billed for the catalogue's 6.5. Nothing in the module turns measured time into money — if a job stalls, work is [suspended and resumed](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md), and that changes neither the hours billed nor the amount.
-8. **The close.** [`SCJOC-2026-0392`](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) pulls in the finished work and all the materials, fills the four money boxes, generates the stock issue for the consumed parts and projects the next visit as 15 March 2026 from the [odometer history](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). Be clear about what those four boxes mean for the accounts, because it surprises people: the journal entry the closing produces carries the **customer's 695 only**. Insurance and warranty reach the ledger later, through their own invoices, and the internal 60 reaches accounting nowhere at all.
+8. **The close.** [`SCJOC-2026-0392`](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) pulls in the finished work and all the materials, fills the four money boxes, generates the stock issue for the consumed parts and projects the next visit as 14 August 2026 (the rule is in [The expected next visit](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals#The-expected-next-visit)). Be clear about what those four boxes mean for the accounts, because it surprises people: the journal entry the closing produces carries the **customer's 695 only**. Insurance and warranty reach the ledger later, through their own invoices, and the internal 60 reaches accounting nowhere at all.
 9. **The invoices.** Three [invoices](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md) go out — 695 to Fahad, 2,400 to the warranty provider, 60 to the insurer. The internal 60 is never invoiced to anybody.
 10. **The release.** [Gate pass](/modules/servicecenter/job-cycle/servicecenter-gate-pass.md) `SCGP-2026-0475` checks that the invoices exist and are paid, and Fahad drives away.
 

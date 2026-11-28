@@ -34,7 +34,10 @@ Manual execution when approval workflows need to be reset, cancelled, or restart
 ```
 select entityType,id from SalesInvoice where ref1Id = {id} and documentFileStatus = 'ApprovalPending'
 ```
-**Parameter 3:** Force Revoke Partially Approved (Optional) - true to allow revoking approvals with existing approval steps (default: false)
+**Parameter 3:** Force Revoke Partially Approved (Optional) - true to allow revoking approvals with existing approval steps (default: false). The flow line shows no title above this parameter. Without it, a record that already has an approval step stops the flow with:
+*Can not revoke approval because someone already approved parts of the record {0}, you can use parameter 3 to force revoking approval of partially approved records*
+
+A record that is not currently in an approval cycle is skipped without a message.
 
 ## Database Tables Affected
 

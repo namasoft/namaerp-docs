@@ -1,7 +1,7 @@
 ---
 description: "The Custody Disposal document: scrapping, selling, charging or writing off a custody item, its screen and actions, undoing a disposal, and how it differs from a return."
 entities: [FACustodyDisposal]
-menu: Assets → Custodys → Custody Disposal
+menu: Assets → Custodies → Custody Disposal
 ---
 # Disposing of a Custody Item
 
@@ -9,7 +9,7 @@ Eventually the laptop stops being worth keeping. It is scrapped, or sold for wha
 or the employee who lost it pays for it, or it is simply written off. Whichever of those happened,
 one document ends the item's life and takes its value back off whoever was holding it.
 
-**Assets > Custodys > Custody Disposal** (`الأصول > عهد > تخلص من العهدة`), licence
+**Assets > Custodies > Custody Disposal** (`الأصول > عهد > تخلص من العهدة`), licence
 `fixedassets-custody`, with a book and a
 [document term](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md) like every
 other document here.
@@ -45,8 +45,9 @@ who holds 100 % of it. In December 2028 Nouf leaves and buys the laptop from the
 Disposal document `CDS-2028-004`, value date 20 December 2028, custody `CDY-0033`, dispose value
 1,200, subsidiary = the departing employee.
 
-Committing it does two things. **The item's status becomes *Disposed***, which takes it out of every
-picker — it can never be delivered or transferred again. And **the accounting entry is created**, as
+Committing it does two things. **The item's status becomes *Disposed***, which takes it out of the
+transfer and disposal pickers, and out of the delivery picker for any item that is not marked
+**Priceless**. And **the accounting entry is created**, as
 a business request processed in the background, in two distinct halves:
 
 **The holder half.** For each of the item's current holders, their share of the item's price is
@@ -88,7 +89,7 @@ clearing account as the loss.
 ## Actions on this screen
 
 The custody disposal screen has no buttons of its own — which fits a document this short. You name
-the item, the employee and the disposal value, save and commit; the accounting entry, the closing of
+the item, the subsidiary and the disposal value, save and commit; the accounting entry, the closing of
 the item's state all follow from the commit, not from anything you press. To reverse it, cancel or
 delete the document.
 
@@ -105,8 +106,8 @@ keeps its history and its status of *Delivered* so it can be issued again. Dispo
 that are leaving the company altogether: sold, scrapped, lost, or written off. Once an item is in
 the *Disposed* status, nothing brings it back into circulation except cancelling or deleting the disposal.
 
-There is also the [Delivery/Receipt of Custodies
-document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md), which records
+There is also the [Custodies Delivery Receipt
+Document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md), which records
 hand-overs between employees and can carry fixed assets on the same lines. It is the natural choice
 when the movement being recorded is a physical hand-over rather than a change of accountability.
 

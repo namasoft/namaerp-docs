@@ -9,7 +9,7 @@ leaves the store and becomes somebody's responsibility — and the two documents
 two ways that happens: **delivery** (تسليم عهدة) puts an item into an employee's hands for the first
 time, and **transfer** (نقل عهدة) moves it from whoever holds it now to somebody else.
 
-Both live under **Assets > Custodys**, both need a book and a
+Both live under **Assets > Custodies**, both need a book and a
 [document term](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md), and both
 need the `fixedassets-custody` licence.
 
@@ -112,8 +112,9 @@ document still records the hand-over, it simply has no money to move.
 
 ### Undoing a delivery
 
-Cancel or delete it and — provided nothing has touched the item since — the status drops back to
-*Purchased*, the holding lines it created are cleared, and the accounting entry is cancelled. If a
+Cancel or delete a delivery made on page 1 and — provided nothing has touched the item since — the
+status drops back to *Purchased*, the item's holding lines are cleared, and the accounting entry is
+cancelled. If a
 transfer has happened in the meantime, the delivery cannot be deleted at all: the message tells you
 a later movement exists on the item. Undo that transfer first, then come back to the delivery.
 
@@ -133,7 +134,7 @@ Then two grids, each with employee, percentage and remark:
 - **From** (من) fills itself. The moment you pick the item, its current holding lines are copied in
   — for the laptop, Khaled Al-Mutairi at 100 %. You are not meant to edit this side; it is the
   system showing you what it is about to take away.
-- **To** (إلي) is yours to fill, and the shares here must add up to exactly 100 again.
+- **To** (إلى) is yours to fill, and the shares here must add up to exactly 100 again.
 
 | From | | | To | |
 |---|---|---|---|---|
@@ -164,18 +165,20 @@ Khaled's balance is clean again; Nouf now carries the laptop. Had the laptop gon
 ### Undoing a transfer
 
 Cancelling or deleting a transfer does something slightly cleverer than the delivery: it looks back for the
-document that held the item before this one — the previous transfer, or failing that the delivery —
-and rebuilds the holding lines from *that* document. The laptop goes back to Khaled at 100 %, and
+document that held the item before this one — the latest other transfer of the item, or failing that
+the latest delivery made for it on page 1 — and rebuilds the holding lines from *that* document. The laptop goes back to Khaled at 100 %, and
 the accounting entry is cancelled. If nothing came before it at all, the item is simply left with no
 holding lines.
 
-As always, the newest document has to be undone first. If the item has been transferred again since,
-or disposed of, deal with that document before coming back to this one.
+As always, undo the newest document first. The holding lines are rebuilt only when this transfer is
+still the item's latest delivery or transfer; cancel an older one and its accounting entry is
+reversed while the holding lines stay as the later document set them. If the item has been
+transferred again since, or disposed of, deal with that document before coming back to this one.
 
 ## Actions on these screens
 
 Neither the delivery document nor the transfer document carries a button of its own. Both are filled
-in and saved, and everything they do — writing the holding lines, stamping the custodian, raising the
+in and saved, and everything they do — writing the holding lines, moving the status, raising the
 accounting entry — happens on commit and is undone by cancelling or deleting the document. The delivery screen's one piece
 of behaviour worth knowing is not a button either: the two pages lock each other out. Fill in the
 **Custody** field on page 1 and the employee and lines of page 2 grey out; fill in the **Employee**

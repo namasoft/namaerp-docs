@@ -154,9 +154,9 @@ Several of these messages have no Arabic text in the product and appear in Engli
 
 | Message | Why | What to do |
 |---|---|---|
-| *Endorsing Account Sides are not Set* — «حسابات التظهير غير موجودة فى توجية المستند» | An opening-paper line is Endorsed and the term's Endorsing Effect tab is empty. | Fill that tab's debit and credit. The same applies to *Receiving*, *Issuing*, *Portfolioed*, *Temporary Bouncing*, *Postponed Portfolioed* and *Agio Account Sides are not Set*. |
+| *Endorsing Account Sides are not Set* — «حسابات التظهير غير موجودة في توجيه المستند» | An opening-paper line is Endorsed and the term's Endorsing Effect tab is empty. | Fill that tab's debit and credit. The same applies to *Receiving*, *Issuing*, *Portfolioed*, *Temporary Bouncing*, *Postponed Portfolioed* and *Agio Account Sides are not Set*. |
 | *Collect Account Sides are not Set* | A bank-notice line is Collected and the Collect Effect tab's first pair is empty. | Fill it. Likewise *Temporary Bounced* / *Finally Bounced Account Sides are not Set*. |
-| *Please enter deduction 1 account sides* — «من فضلك إدخل الجوانب المحاسبية للأستقطاع الأول» | The agio document has a deduction 1 value and its Subtraction1 pair is empty. | Fill the pair, or remove the deduction. |
+| *Please enter deduction 1 account sides* — «من فضلك أدخل الجوانب المحاسبية للاستقطاع الأول» | The agio document has a deduction 1 value and its Subtraction1 pair is empty. | Fill the pair, or remove the deduction. |
 | *Commercial Paper {0} was partially cancelled by {1} and the remaining is only {2}* — «الورقة التجارية {0} ملغاة جزئيا بالقيمة {1} والمتبقي {2}» | A partial cancel asks for more than what is left of the paper. | Reduce the cancelled amount to the remaining value. |
-| *Debit and Credit sides count must be equal* — «لابد من تساوي عدد جوانب الدائن والدين» | On an FP Transfer term, the filled debit sides and credit sides differ in number. | Fill one more side or clear one. |
+| *Debit and Credit sides count must be equal* — «لابد من تساوي عدد جوانب الدائن والمدين» | On an FP Transfer term, the filled debit sides and credit sides differ in number. | Fill one more side or clear one. |
 | *Total installments does not equal document total* | Validate Remaining And Installments Total Equality is on, and the instalment lines do not match the document. | Correct the instalment lines or the paper values. |

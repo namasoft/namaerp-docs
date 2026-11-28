@@ -137,27 +137,12 @@ Committing the invoice does not stop to write ledger entries. The document creat
 work is retryable. You can watch its **processing status**, and reprocess it if something in the
 setup was wrong, from the **Business Requests** list view.
 
-What that request contains, for our 40-pax invoice:
-
-1. **The client is debited** with what is still owed — the net value less the cash taken, less the
-   payment-method lines, less anything flagged as not affecting the remaining.
-2. **Revenue is credited** with the gross line price, before any discount is taken off.
-3. **Each tax level gets its own pair of sides** — sales tax 1 and 2, and the two invoice-level
-   taxes — each raised separately, so the tax accounts can be reconciled against the returns you
-   file.
-4. **Each discount level gets its own pair** — the header discount and discounts 1 to 8 — so a
-   given discount lands in its own account instead of quietly shrinking revenue.
-5. **Cash taken at the counter** is debited to the cash side.
-6. **Each payment-method line** is debited to the account that payment method carries — the card
-   settlement account, the cheques-under-collection account, the till — along with the merchant fee
-   and the tax on that fee where the method charges them.
-7. **Receipt vouchers linked to the invoice** are handled according to the term's external-effects
-   rules.
-
-Every one of those accounts comes from the document **Term**. A term with no debit and credit sides
-configured produces a request with nothing in it, and the invoice creates no ledger entry at all — which is
-occasionally what you want, and never what you want by accident. Again, see
-[Document Terms](./travel-document-terms).
+What that request contains comes entirely from the document **Term**. On our 40-pax invoice the
+client is debited with what is still owed and revenue is credited with the gross line price, before
+any discount; each tax level and each discount level gets its own pair of sides (taxes on the
+credit side, discounts on the debit side), and cash, payment-method lines and linked receipt
+vouchers produce their own entries. Each side, how it is valued, and what an empty term produces
+are described on [Document Terms](/modules/travel/travel-document-terms).
 
 If you correct a committed invoice and commit it again, the same ledger transaction is updated
 rather than a second one being created.
@@ -176,7 +161,7 @@ order.
 
 **Payments** is the instalment plan: an instalment code and description, the percentage or value
 due, the due date, what has been paid against it and what remains. A payment template on the header
-plus the **GeneratePayments** action will build the whole schedule for you from a down payment, a
+plus the **Generate Payments** action will build the whole schedule for you from a down payment, a
 number of instalments and a period. The schedule has to reconcile with what is still outstanding on
 the invoice before the document will commit.
 
@@ -237,12 +222,10 @@ without any travel-specific configuration.
 
 **Travel Service Sales Order, Sales Invoice and Sales Return — first page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — builds the instalment schedule on the Payment Documents
-  page from the document's remaining value. It asks for the number of payments, the period between
-  them and its unit, the start date, a grace period, the payment weekday, down / first / second /
-  last payment values and a rounding mode; a down payment is written into the cash paid on the
-  header. It refuses a document whose net value is zero. The English label ships as the raw name
-  shown here.
+- **Generate Payments** (*إنشاء الدفعات*) — builds the instalment schedule on the Payment Documents
+  page from the document's remaining value. What it asks for and what it writes back are described
+  under "Payments — the instalment plan" on
+  [Payments, Instalments & Contract Terms](/modules/travel/travel-payments-and-terms).
 
 ## Where the sales cycle sits next to operations
 
@@ -262,7 +245,7 @@ All four belong to the **Travel Service Sales Return** — they are the checks d
 
 | Message | Why | What to do |
 |---|---|---|
-| *Could not find line with the service {0} and unit price {1} in invoice {2}* — «لا يمكن إيجاد سطر مع الخدمة {0} وسعر الوحدة {1} في الفاتورة» | A return line's tour service **and** unit price together match no line on the source invoice — usually because the unit price was edited on the return. | Put the invoice's own unit price back on the line, or return the service the invoice actually sold. |
-| *The total returned quantity {0} of the tour service {1} can not be greater thant the total quantity {2} of the tour service in the invoice* — «لا يمكن ان يكون اجمالي الكمية المرتجعة {0} من الخدمة السياحية {1} أكبر من الكمية {2} الموجودة فى الفاتورة» | The quantity on this return, **plus** everything already returned on earlier returns from the same invoice, exceeds what the invoice sold. | Check the earlier returns against that invoice before reducing the quantity here. |
-| *Unit price {0} of tour service {1} must be less than or equal to unit price {2} in invoice {3}* — «سعر الوحدة {0} للخدمة السياحية {1} يجب أن تكون أقل من او تساوي سعر الوحدة {2} فى الفاتورة» | The line refunds more per unit than the invoice charged. | Lower the unit price to the invoiced one; a return may never give back more than was taken. |
-| *Discount{0} percentage {1} for tour service {2} is greater thant discount{0} percentage {3} in the invoice* — «نسبة الخصم{0} وقيمته {1} للخدمة السياحية {2} فى السطر {3} أكبر من نسبة الخصم{0} و قيمته {4} فى الفاتورة» | One of the eight discount levels on the return line carries a higher percentage than the same level on the invoice line; `{0}` is the discount number. | Copy the invoice's percentage for that discount level, or clear it. |
+| *Could not find line with the service {0} and unit price {1} in invoice {2}* — «لا يمكن إيجاد سطر مع الخدمة {0} وسعر الوحدة {1} في الفاتورة {2}» | A return line's tour service **and** unit price together match no line on the source invoice — usually because the unit price was edited on the return. | Put the invoice's own unit price back on the line, or return the service the invoice actually sold. |
+| *The total returned quantity {0} of the tour service {1} can not be greater thant the total quantity {2} of the tour service in the invoice* — «لا يمكن أن يكون إجمالي الكمية المرتجعة {0} من الخدمة السياحية {1} أكبر من الكمية {2} الموجودة في الفاتورة» | The quantity on this return, **plus** everything already returned on earlier returns from the same invoice, exceeds what the invoice sold. | Check the earlier returns against that invoice before reducing the quantity here. |
+| *Unit price {0} of tour service {1} must be less than or equal to unit price {2} in invoice {3}* — «سعر الوحدة {0} للخدمة السياحية {1} يجب أن تكون أقل من أو تساوي سعر الوحدة {2} في الفاتورة {3}» | The line refunds more per unit than the invoice charged. | Lower the unit price to the invoiced one; a return may never give back more than was taken. |
+| *Discount{0} percentage {1} for tour service {2} is greater thant discount{0} percentage {3} in the invoice* — «نسبة الخصم{0} {1} للخدمة السياحية {2} أكبر من نسبة الخصم{0} {3} في الفاتورة» | One of the eight discount levels on the return line carries a higher percentage than the same level on the invoice line; `{0}` is the discount number. | Copy the invoice's percentage for that discount level, or clear it. |

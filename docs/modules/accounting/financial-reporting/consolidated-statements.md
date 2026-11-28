@@ -66,7 +66,7 @@ Every company keeps its books in its own ledger's main currency. The report conv
 
 | Consolidation Rate | Rate used with **Standard (IAS 21)** | Typical accounts |
 |---|---|---|
-| **Closing** «اغلاق» | The closing rate at the as-of date | Cash, receivables, stock, payables, loans: everything the company holds or owes today |
+| **Closing** «إغلاق» | The closing rate at the as-of date | Cash, receivables, stock, payables, loans: everything the company holds or owes today |
 | **Average** «متوسط» | The average rate of the month each amount was booked in | Revenue and expenses |
 | **Historical** «تاريخي» | The rate on the date each amount was booked | Share capital and capital contributed by the parent |
 

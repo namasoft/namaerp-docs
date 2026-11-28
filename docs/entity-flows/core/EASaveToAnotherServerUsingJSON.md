@@ -21,9 +21,9 @@ Synchronizes data between Nama ERP servers using JSON format for data transmissi
 
 ## How It Works
 
-1. **Exports entity to JSON** using JsonRecordExporter (full structure)
+1. **Exports entity to JSON** (full structure)
 2. **Applies field overrides** to JSON before transmission
-3. **Transmits via CoreWS** using `importJsonFromAnotherServer()` method
+3. **Transmits the JSON** to the other server's import web service
 4. **Imports on target server** with configuration options for references and drafts
 
 ## Key Differences from Standard EASaveToAnotherServer
@@ -66,7 +66,7 @@ name1=sql(select case when {group.code} = '11' then '' else {group.name1} end)
 
 **Parameter 11:** Add Manual Code Prefix - Leave empty.
 
-**Parameter 12:** Keep Creation Date - Not supported by this flow; setting it to `true` stops the flow with an error. Use [EASaveToAnotherServer](EASaveToAnotherServer.md) to keep the creation date
+**Parameter 12:** Keep Creation Date - Not supported by this flow; setting it to `true` stops the flow with *KeepCreationDate is not supported for JSON export*. Use [EASaveToAnotherServer](EASaveToAnotherServer.md) to keep the creation date
 
 ## JSON Structure Example
 

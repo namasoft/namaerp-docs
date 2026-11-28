@@ -20,16 +20,16 @@ Manual execution on sales orders that contain lines for multiple customers, typi
 ## How It Works
 
 1. **Groups lines by customer** - Uses ref1 field to identify customer for each sales order line
-2. **Retrieves packing data** - Gets associated packing list information for pricing (n1 field)
+2. **Retrieves packing data** - Groups the packing list lines of the sales order by their ref1 field and takes the n1 value of the first line of each customer
 3. **Finds existing quotations** - Looks for quotations already linked to this sales order
 4. **Creates/updates quotations** - For each customer group:
    - Creates new quotation or updates existing one (based on ref4 reference)
    - Copies header data from sales order with field mapping
    - Sets customer, from document, and reference relationships
-   - Copies pricing information from packing list
+   - Copies that n1 value to the n1 field of the quotation when it is not zero
    - Creates quotation lines from corresponding sales order lines
 5. **Updates order references** - Sets ref4 on sales order lines to link back to quotations
-6. **Cleans up orphans** - Deletes quotations that are no longer referenced
+6. **Cleans up orphans** - Deletes the quotations whose ref5 is this sales order and that no line of the order points to any more
 
 ## Parameters
 
@@ -48,7 +48,7 @@ term=term
 - **SalesQuotation** - Creates new quotations or updates existing ones
 - **SalesQuotationLine** - Creates quotation lines from sales order lines
 - **SalesOrder** - Updates ref4 references on lines to link to quotations (read/update)
-- **PackingList** - Reads pricing information (read-only)
+- **Sales order packing list lines** - Reads ref1 and n1 (read-only)
 
 **Module:** supplychain
 
@@ -57,7 +57,7 @@ term=term
 **Related Entities:**
 - **SalesOrder** - Source document containing multi-customer lines
 - **SalesQuotation** - Generated quotations for individual customers
-- **PackingList** - Source of pricing information
+- **Sales order packing list lines** - Source of the n1 value copied to each quotation
 
 
 </div>

@@ -9,9 +9,9 @@ This page is the reference for the **EnhancedTable** widget type on the **DashBo
 its pivot (cross-tab) layout. Every column, format and colour rule of the table lives in the widget's
 **Chart Config JSON** field, so open this page when a table widget shows a column wrongly or a customer wants
 one changed. The click, drill-down and link settings it shares with the other widgets are in the
-[BI technical reference](./bi-module-technical-reference.md).
+[BI technical reference](/platform/bi/bi-module-technical-reference).
 
-`EnhancedTable` is the JSON-driven table widget — every column declared in `chartConfigJSON` with its own formatting, renderer, conditional formatting, pinning, grouping, aggregation. Reuses the BI interaction machinery (`clickEmitMapping`, `drillDownMapping`, `linkMappings`, `clickAction` — main reference §4–5b) with an optional `column` field on each entry to scope to a specific cell. Classic `Table` widget remains; opt in via `"type": "EnhancedTable"`.
+`EnhancedTable` is the JSON-driven table widget — every column declared in `chartConfigJSON` with its own formatting, renderer, conditional formatting, pinning, grouping, aggregation. Reuses the BI interaction machinery (`clickEmitMapping`, `drillDownMapping`, `linkMappings`, `clickAction` — [technical reference](/platform/bi/bi-module-technical-reference) §4–5b) with an optional `column` field on each entry to scope to a specific cell. Classic `Table` widget remains; opt in via `"type": "EnhancedTable"`.
 
 ![The Profitability by Legal Entity table: refresh, export and expand icons in its header, columns for code, legal entity, revenue, cost, gross profit and a bar-rendered margin percentage, seven data rows and a grand-total row](../../ar/platform/bi/images/bi-enhanced-table-widget-en.png)
 
@@ -50,7 +50,6 @@ No `dataMapping` / `echartOption` — EnhancedTable does not use ECharts.
   "rowNumbers":         true,
   "enableRowGroup":     true,
   "enablePivot":        false,
-  "pivotOpenByDefault": false,
   "grandTotalRow":      "bottom",
   "defaultColWidth":    null,
   "defaultFlex":        1,
@@ -69,8 +68,8 @@ No `dataMapping` / `echartOption` — EnhancedTable does not use ECharts.
 | `pagination` | `false` | Off by default — load-all-and-scroll. When on, AG Grid paginates the in-memory data. For paging on the server, use `rowModel` instead (§2.1). |
 | `grandTotalRow` | `null` | `"top"` / `"bottom"` / `null`. Computed client-side from visible rows. **Only columns with `aggFunc` set show a value in the grand-total row** — others render blank. |
 | `enableRowGroup` / `enablePivot` | `true` / `false` | AG Grid row-grouping / pivot modes. Columns need `rowGroup: true` / `pivot: true` to be grouped/pivoted by default. |
-| `groupDefaultExpanded` | `-1` in pivot mode | How many grouping levels are open on load; `-1` expands every level. The server fills in `-1` for pivot widgets that don't set it, because collapsed groups make a fresh cross-tab look empty. Set it yourself to override. |
-| `groupIncludeFooter` | `true` when pivot row subtotals are on | Adds a subtotal footer row under each group. Set it explicitly to force it on or off. |
+| `groupDefaultExpanded` | `-1` in pivot mode with row grouping | How many grouping levels are open on load; `-1` expands every level. The server fills in `-1` for pivot widgets whose row dimensions become row groups (§8.1 `useRowGrouping`) and that don't set it, because collapsed groups make a fresh cross-tab look empty. Set it yourself to override. |
+| `groupIncludeFooter` | `true` when pivot row subtotals are on with row grouping | Adds a subtotal footer row under each group. Set it explicitly to force it on or off. |
 | `rowModel` | `"clientSide"` | `"clientSide"` sends every row to the browser. `"serverSide"` keeps the rows on the server and sends one page at a time — see §2.1. Designer label: **Row Loading**. |
 | `serverPageSize` | `100` | Page size used when `rowModel` is `"serverSide"`. One of `25`, `50`, `100`, `250`, `500`, `1000`, `2500`, `5000`, `50000`. Ignored in client-side mode, where `pageSize` applies. |
 
@@ -130,7 +129,7 @@ The designer shows this rule under the Row Loading box: *Server paging is not us
 |---|---|---|
 | `id` | Yes | Stable identifier. Used by mappings (`column` field), `compareColumn`, AG Grid column ID. |
 | `field` | One of | SQL column name from widget's `dataSource`. |
-| `wizardFieldId` | One of | Wizard field ID (wizard mode). Resolved via cached `displayAlias`. See `bi-reference-wizard-mode.md`. |
+| `wizardFieldId` | One of | Wizard field ID (wizard mode). Resolved via cached `displayAlias`. See [BI Reference — Wizard Mode](/platform/bi/bi-reference-wizard-mode). |
 | `groupId` | No | References `columnGroups[].id`. |
 | `headerArTitle` / `headerEnTitle` | No | Localized header. Falls back to `id`. |
 | `hide`, `width`, `minWidth`, `maxWidth`, `flex` | No | AG Grid layout. |
@@ -207,7 +206,7 @@ Mixing `simple` and `interactive` in one row is supported and often useful — e
 | `text` | Plain string | Default. No renderer block needed. |
 | `html` | Raw HTML via `v-html` | Trust model matches legacy `Param_INHTML` — no client sanitization. Export to Excel and the column filter use the cell's visible text: tags, scripts, styles and hidden elements are dropped and `<br>` becomes a line break. |
 | `badge` | Pill/square with cell text | `bg`/`color` come from `conditionalFormatting`; falls back to subtle blue. `outline` variant pairs with conditional `bg` for tinted-pill effect. |
-| `bar` | Horizontal filled bar (CSS by default, ECharts when `style: "interactive"`) | Value scaled `min`→`max`. **`max` is optional** — when omitted, renderer auto-scales to the column's data max (the common pattern). |
+| `bar` | Horizontal filled bar (CSS by default, ECharts when `style: "interactive"`) | Value scaled `min`→`max`; `min` defaults to `0` and `max` to `100`, and a value outside the range is clamped to an empty or full bar. Set `max` to the largest value the column can reach. |
 | `progress` | Same mechanism as `bar`, blue fill | Semantically "progress toward target". |
 | `sparkline` | Mini multi-point ECharts chart | Reads series from the column's own SQL `field` — CSV string `1,5,9,12` or JSON array `[1,5,9,12]`. |
 | `icon` | Cell value matched against `mapping[].when` | Matched entry renders an icon (replaces text when `position: "replace"`). |
@@ -228,8 +227,6 @@ Rules evaluated server-side; winning style baked into the wire payload — clien
       "style": { "bg": "#fff3e0" } },
     { "when": { "type": "enum", "values": ["Cancelled", "Rejected"] },
       "style": { "bg": "#eeeeee", "italic": true } },
-    { "when": { "type": "compareColumn", "op": ">", "column": "budgetCol" },
-      "style": { "bg": "#ffebee", "color": "#b71c1c" } },
     { "when": { "type": "isNull" },
       "style": { "italic": true, "color": "#9e9e9e" } }
   ]
@@ -242,7 +239,7 @@ Rules evaluated server-side; winning style baked into the wire payload — clien
 |---|---|---|
 | `threshold` | `op`, `value` | Numeric (or date if column's `formatting.type` is `date`/`datetime`). Coerces both sides; rule misses if coercion fails — never falls through to string. |
 | `range` | `min`, `max`, `minExclusive?`, `maxExclusive?` | Same coercion. |
-| `compareColumn` | `op`, `column` (another column's `id`) | Compare to another cell on same row. |
+| `compareColumn` | `op`, `column` (the tested column's `id`), `rightColumn` (the other column's `id`) | Compare to another cell on the same row. Works in `rowConditionalFormatting` (§5.2), not in a column's own `conditionalFormatting`. |
 | `enum` | `values[]` | Case-sensitive string equality on trimmed cell value. |
 | `isNull` / `isNotNull` | — | Tests raw value before coercion. |
 
@@ -414,7 +411,7 @@ Pivot mode turns an `EnhancedTable` into a JasperReports-style cross-tab: row di
 | `colSubtotals` | `false` | Subtotal columns at each non-leaf col-dim level. Always backend-rendered (AG Grid can't synthesize cross-tab columns). |
 | `rowGrandTotal` | `null` | `"top"` / `"bottom"` / `null`. With grouping: AG Grid `grandTotalRow`. Without: baked into result set. |
 | `colGrandTotal` | `null` | `"start"` / `"end"` / `null`. **Logical** — `start` = leading edge in either reading direction. |
-| `subtotalLabelKey` / `grandTotalLabelKey` | hardcoded | i18n keys; frontend resolves via `Translator.translate()`. Falls back to `Subtotal` / `Grand Total` (and Arabic). |
+| `subtotalLabelKey` / `grandTotalLabelKey` | hardcoded | Translation keys; the grid shows the key's translation in the user's language. Falls back to `Subtotal` / `Grand Total` (and Arabic). |
 | `emptyCellAs` | `null` | What no-data cells render: `null` (blank), `0`, `"-"`, etc. |
 | `zeroAsEmpty` | `false` | Measure aggregating to exactly 0 → render as `emptyCellAs`. |
 
@@ -430,7 +427,7 @@ Walks rows once, builds distinct row-tuple/col-tuple trees (alphabetically sorte
 
 ### 8.3 Wizard mode
 
-In wizard mode (widget has `wizardDataSource`), use `wizardFieldId` instead of `field` on every dim/measure. `WizardChartConfigRewriter` resolves to cached SQL alias (`displayAlias`) before the engine runs.
+In wizard mode (widget has `wizardDataSource`), use `wizardFieldId` instead of `field` on every dim/measure. The server resolves each one to the wizard field's cached SQL alias (`displayAlias`) before the engine runs.
 
 ### 8.4 Interaction skipping on totals
 

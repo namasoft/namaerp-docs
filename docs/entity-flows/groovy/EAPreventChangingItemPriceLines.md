@@ -20,7 +20,7 @@ These scripts are not tied to any customer's setup. They have no parameters: att
 |---|---|
 | **Class names** | `EAPreventChangingItemPriceLines` (item), `EAPreventChangingSalesPriceListLines` (sales price list) |
 | **Scripts** | [EAPreventChangingItemPriceLines.groovy](/groovy-examples/EAPreventChangingItemPriceLines.groovy), [EAPreventChangingSalesPriceListLines.groovy](/groovy-examples/EAPreventChangingSalesPriceListLines.groovy) |
-| **Runs on** | **Item** and **Sales Price List**. Target action **ValidateOnSave**. |
+| **Runs on** | **Item** and **Price List** (the sales price list, entity type `SalesPriceList`). Target action **Validate On Save**. |
 | **Uses** | No parameters. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -44,9 +44,9 @@ All problems found in one save are reported together, one message per line.
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow with target type **Item**.
-2. In the **Details** grid, add a line with **Target Action** set to **ValidateOnSave**, and paste the whole item script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
+2. In the **Details** grid, add a line with **Target Action** set to **Validate On Save**, and paste the whole item script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
 3. Save the flow.
-4. Create a second flow with target type **Sales Price List** in the same way, using the sales price list script.
+4. Create a second flow with target type **Price List** (`SalesPriceList`) in the same way, using the sales price list script.
 
 Both scripts have no parameters. After saving, Parameter 1 shows the title *Not used - leave empty*.
 

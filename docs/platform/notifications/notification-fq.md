@@ -49,10 +49,10 @@ This template sends only one message using the data from the first line only.
 
 4. and 5. The message content itself, using data from the current line such as the customer name, receipt number, amount, and document date.
 
-5. `{closemsg}`
+6. `{closemsg}`
    Ends the message.
 
-6. `{endloop}`
+7. `{endloop}`
    Ends the loop.
 
 This way, a separate message will be sent to each customer present in each line of the receipt, so that every customer is informed only of information relevant to them.
@@ -145,8 +145,8 @@ The following query retrieves quotations that have been pending for 10 days with
 ```sql
 select s.code, c.name1 customername, s.valuedate,
        cast(s.netValue as decimal(20,2)) netValue,
-       e.code supervisorCode, e.id supervisorId,
-       e.entityType supervisorEntityType
+       esu.code supervisorCode, esu.id supervisorId,
+       esu.entityType supervisorEntityType
 from SalesQuotation s
 left join SalesOrder o on o.fromDoc_id = s.id
 left join Customer c on c.id = s.customer_id

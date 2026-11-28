@@ -5,10 +5,11 @@ menu: Contracting → Contractor Contracting → Contractor Contract Extract
 ---
 # Subcontractor Extracts
 
-Everything else on the subcontractor side is preparation. The subcontract records what you agreed,
-the execution records what was built, the advance records what you lent him and the fine records what
-he owes you back — and none of those four reaches the general ledger. The **subcontractor extract**
-(مستخلص مقاول باطن) is the one document that does. It is his payment application: the certificate
+Everything else on the subcontractor side is preparation. The subcontract records what you agreed and
+the execution records what was built, and neither books anything; the advance records what you lent
+him and the fine records what he owes you back, and each books only its own entry. The
+**subcontractor extract** (مستخلص مقاول باطن) is the document that books the work itself — cost,
+payable, tax, retention and the recovery of those advances and fines. It is his payment application: the certificate
 that says *this much work was done this period, this much is being held back, this much of your
 advance is coming off, and this is what you will actually be paid.*
 
@@ -23,16 +24,9 @@ grid, the same strict time ordering between extracts on one contract, and the sa
 types. Read that page for the shape of the document; this page is about the ways the cost side
 differs, and there are more of them here than anywhere else in the module.
 
-The headline differences:
-
-| | Project extract | Subcontractor extract |
-|---|---|---|
-| Direction of money | a receivable — the client owes you | a **payable** — you owe the subcontractor |
-| Settled by | receipt vouchers | **payment vouchers** |
-| Deductions collected from | contract conditions, project advances, project fines | contract conditions, **subcontractor advances, other payments, fines — and material you sold him** |
-| Taxes | a tax-term mechanism derives the tax lines automatically | tax percentages typed on the document |
-| Actual-cost accounting entries | yes | no — the amounts are always zero on this side |
-| Closing the contract | — | a **Final** extract marks the subcontract finished |
+The differences — the direction of money, what settles it, where the deductions are collected from,
+the taxes, the actual-cost entries and how a Final extract closes the contract — are tabulated once,
+in [The Subcontractor Cycle](/modules/contracting/contractor-contracting/contracting-contractor-cycle#Where-this-side-differs-from-the-owner-side).
 
 ## The example this page follows
 
@@ -56,8 +50,11 @@ The header identifies the document and the money. **Contract** is the subcontrac
 fills the contractor, the project, the responsible engineer and sales owner, the client — and the
 **project contract**, which is then locked, because a subcontract can only ever sit inside one client
 contract. The due date is worked out from the payment period agreed on the subcontract. **Type** is
-Initial, Ongoing or Final, and **Extract Number** is filled on commit: a sequence per subcontract, so
-the third extract on CC-0042 is number 3 no matter how many extracts exist elsewhere.
+Initial, Ongoing or Final, and **Extract #** is filled on commit: a sequence per subcontract, so
+the third extract on CC-0042 is number 3 no matter how many extracts exist elsewhere. It is counted
+the same way as the
+[advance's number](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md),
+and the subcontract's **Opening Number Of Extracts** is added to it.
 
 Below that sit the two grids that matter.
 
@@ -108,29 +105,36 @@ There are two routes and they exclude each other.
 
 **From an execution.** Put a
 [subcontractor execution](/modules/contracting/contractor-contracting/contracting-contractor-execution.md)
-in the **Based On** field. The measured lines come across, and unless the document term allows
-otherwise the billed quantities must stay exactly as measured.
+in the **From Document** field. The measured lines come across, and unless the document term has
+**Allow Changing Extract Quantities if From Execution** ticked the billed quantities must stay exactly
+as measured. The picker offers only executions that no extract has taken yet — and, once the contract
+is filled, only that subcontract's — and two extracts can never name the same document in *From
+Document*. The field also accepts a
+[project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) and a
+[cost execution](/modules/contracting/costs/contracting-cost-execution.md); a project extract's lines
+are copied with the billing quantity at zero.
 
-**From the subcontract.** Leave *Based On* empty and press **Collect Terms**. The extract asks the
+**From the subcontract.** Leave *From Document* empty and press **Collect Terms**. The extract asks the
 server what has been measured but not yet billed on this subcontract, builds a line for each, and
 then adds a line for every remaining contract term. Each line arrives with its contracted quantity,
 its previous quantity, the unit price and unit cost from the subcontract, the term's discount and tax
 percentages, and a suggested billing quantity — normally *measured so far minus already billed*.
-Parent lines are then re-totalled from their children.
+Parent lines are included only when **Show Main Terms Codes** is ticked in the contracting
+configuration, and they are then re-totalled from their children.
 
-The button refuses to run while *Based On* is filled, and it needs the contract first. There is a
+The button refuses to run while *From Document* is filled, and it needs the contract first. There is a
 second button, **Collect Terms Without Quantities**, which does everything except suggest the
 quantities — the choice for a surveyor who wants the bill of quantities laid out but insists on
-typing every figure himself. Two options on the document term change the suggestion as well: one makes every
-collected quantity zero, and the other fills it with the quantity remaining after the previous
-extract.
+typing every figure himself. Two options on the document term change the suggestion as well: **Make Qty
+Zero When Collecting or Selecting Terms** makes every collected quantity zero, and **Fill Paid Quantity
+With Remaining Quantity From Previous Extract** fills it with the remaining quantity — the contracted
+quantity minus what earlier extracts billed and minus what executions measured.
 
 ::: tip Terms with nothing left to bill are hidden
-*Collect Terms* deliberately skips any term whose remaining quantity has reached zero. When you do
-need those lines — a corrective extract, a re-measurement — the variants that pull **every** contract
-term regardless (*Collect All Terms* and *Collect All Terms Without Quantities*) are not above the
-details grid; they appear only on the **Term Phase Lines** page, which exists when the module option
-**Show Term Phase Lines** is on.
+*Collect Terms* skips a term when its remaining quantity — contracted, minus billed on earlier
+extracts, minus measured on executions — is zero or less **and** its payment percentage is 100. When
+you do need those lines — a corrective extract, a re-measurement — use the *Collect All Terms*
+variants listed under [Actions on this screen](#Actions-on-this-screen).
 :::
 
 For the first extract on CC-0042, the line is:
@@ -157,25 +161,26 @@ without any of it affecting what is being paid.
 options on the extract's [document term](/modules/contracting/document-terms/contracting-terms-extracts.md)
 change the arithmetic, and they cannot both be switched on:
 
-- **Calculate Prices Based On Total Qty** prices the line on the cumulative quantity instead. Be
+- **Calculate Prices Based On Total Quantity** prices the line on the cumulative quantity instead. Be
   precise about what this gives you: the line's pricing does change in every case, but the part that
   then subtracts the previous extract's price and previous discounts only runs when the
   **phase term lines** feature is enabled in the module configuration. Switch it on without that,
   and you get cumulative pricing without cumulative netting — which is almost never what you want.
-- **Calculate Prices Diff From Previous Extract Only** works everywhere. It finds the last previous
+- **Calculate Prices Difference From Previous Extract Only** works everywhere. It finds the last previous
   extract line for the term and fills a parallel set of difference columns — price difference, net
   value difference, discount differences — and the amount claimed for the line becomes this net value
   minus the previous one. Those difference columns have their own accounts on the document term, so a
   difference-only extract books the movement rather than the gross.
 
-Separately, a header-level option makes the **total due value** cumulative-minus-previous regardless
-of how the lines are priced, for organisations whose certificate format expects that.
+Separately, the term option **Calc Total Due Value From Previous Total** makes the **total due value**
+this extract's total minus the previous extract's total, regardless of how the lines are priced, for
+organisations whose certificate format expects that.
 
 ## Actions on this screen
 
 Above the details grid:
 
-- **Collect Terms** — builds the lines from the subcontract: what has been measured but not billed, plus every remaining contract term, each with a suggested billing quantity. Refuses to run while *Based On* is filled.
+- **Collect Terms** — builds the lines from the subcontract, each with a suggested billing quantity (see [Filling the details grid](#Filling-the-details-grid)).
 - **Collect Terms Without Quantities** — the same lines with the quantities left for you to type.
 
 Above the conditions grid:
@@ -202,15 +207,9 @@ written.
 turns each into a condition line carrying the document it came from. On this side that means
 **subcontractor advance payments**, **other payments**, **fines** and **material issued to him**. It
 looks for documents on the same subcontract, committed, with a remaining balance, dated no later than
-the extract. How much each one gives up is decided by the recovery method on that document:
-
-| Recovery method | Taken on each extract |
-|---|---|
-| First Next Extract | the whole remaining balance, on the next extract raised |
-| Fixed Value With Every Extract | the fixed amount on the document, or the remaining if less |
-| Percentage With Every Extract | that percentage of the document's own value |
-| Percentage From Due Value With Every Extract | that percentage of **this extract's** value |
-| Final Extract | nothing until the Final extract, then the whole remaining |
+the extract. How much each one gives up is decided by the **Payment Method** on that document — the
+five methods are tabulated on the
+[advance payment page](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md).
 
 An owner-side fine is deliberately excluded from this scan, so a penalty you levied on your client's
 contract can never appear as a deduction against a subcontractor.
@@ -224,18 +223,20 @@ For the first extract on CC-0042, *Collect Conditions* produces three lines:
 | Material charge-back | the cement issue | 2,400 |
 
 ::: info You can have the extract do this on save
-The extract's document term carries a collect-type setting with three positions: never collect
-automatically, collect on every extract, or collect on the **Final** extract only. Set it to collect
-on every extract and the grid is rebuilt server-side each time you save, which is the safer default
+The extract's document term carries **Automatic Collect Payment Document With Save**, with three
+values: *Without* (never collect automatically), *With Every Extract*, or *With Final Extract Only*.
+Set it to *With Every Extract* and the grid is rebuilt server-side each time you save, which is the safer default
 for a busy site office — the *Collect Conditions* button then becomes a way of previewing the
 deductions before committing.
 :::
 
-Two guards protect the conditions grid. A condition can never recover more in total than the
-subcontract planned for it, unless the clause is explicitly allowed to exceed its planned value —
-this is what stops you withholding 12% of retention on a 10% clause, counting all the extracts
-together. And no advance, other payment or fine may be driven negative; the save fails and names the
-document and the term.
+Two guards protect the conditions grid. A condition that has **Can Update Condition Value** ticked and
+appears in the subcontract's conditions grid can never recover more in total than the subcontract
+planned for it, unless the condition also has **Condition Value Can Exceed Contract Planned Value**
+ticked — this is what stops you withholding 12% of retention on a 10% clause, counting all the
+extracts together. And no advance, other payment or fine may be driven negative; the save fails and
+names the document and the term. The one exception is an advance or other payment whose document term
+has **Allow Negative Remaining** ticked.
 
 Each condition line also records, per term and per source document, what earlier extracts already
 took, so the grid shows the recovery to date beside this period's amount.
@@ -251,25 +252,14 @@ priced invoice: he is charged for the cement, VAT and all, and a receivable is c
 expects him to write you a cheque for it, though. The money comes back the only way money moves
 between you: **off his next extract**.
 
-The path is worth understanding because it explains what you see:
-
-1. Committing the material issue records a charge against the subcontract, one entry per issued line,
-   carrying the term code and the net value.
-2. Because the issue carries a condition and a recovery method just like an advance does, the next
-   extract's *Collect Conditions* finds it and writes a **deduction** line for it.
-3. Committing the extract stamps each charge with the extract that absorbed it, so it is never
-   collected twice, and the issue's remaining balance falls to zero.
-4. From that moment the issue is **frozen**: change or delete a line whose charge an extract has
-   already taken, and the save is refused, naming the extract that consumed it. Correct the extract
-   first, or issue a material return.
-5. A **material return** is the mirror image. It reverses the sale, brings the stock back, and on the
-   next extract it appears as an **addition** rather than a deduction — you are giving him his money
-   back.
+Because the issue carries a condition and a payment method just like an advance does, the next
+extract's *Collect Conditions* finds it and writes a **deduction** line for it; a **material return**
+arrives the same way as an **addition**. The whole path — what the issue records, how the extract
+stamps it, when the issue freezes, and where to see which extract absorbed it — is on the
+[Contractor Material Issue](/modules/contracting/costs/contracting-contractor-materials.md) page.
 
 On CC-0042 the 80 bags of cement at 30 became a 2,400 deduction on the first extract. Had he handed
-20 bags back, the following extract would have carried a 600 addition. The material issue's own
-Statistics page answers the question the site office actually asks — *has this material been deducted
-yet, and on which extract?*
+20 bags back, the following extract would have carried a 600 addition.
 
 ## Taxes
 
@@ -280,8 +270,8 @@ alone, along with its tax detail grid.
 
 Tax on a **condition** is handled separately: the accounts for it come from the condition record
 itself rather than from the document term, so if a retention clause is meant to carry tax, that is
-where you set it up. A term option additionally rolls condition taxes into the document's main
-Tax 1 amount.
+where you set it up. The term option **Add Conditions Tax To Statement Value** additionally adds
+condition taxes to the Tax 1 accounts of the document term.
 
 The condition record also decides the condition line's tax percentage. On every save, a line whose
 condition does not have **Taxable** ticked gets a tax percentage of 0, and an empty percentage on a
@@ -323,9 +313,10 @@ the payable".
 :::
 
 The subcontractor's side of the entry is expressed as an accounting side whose subsidiary is the
-supplier: it lands on the contractor record's own accounts, or on the accounts of the supplier
-record linked to him when the contractor has none. A term option shortens the entry, collapsing the
-per-line rows into one row per account so the journal is not a copy of the bill of quantities.
+supplier: it lands on the accounts of the supplier record linked to the contractor, or on the
+contractor record's own accounts when no supplier is linked. The term option **Shorten Ledger Effect** shortens
+the entry, collapsing the per-line rows into one row per account so the journal is not a copy of the
+bill of quantities.
 
 Read as a journal, with a conventional set-up — main pair debiting work in progress and crediting the
 subcontractor's payable, and each condition carrying its own pair — the first extract on CC-0042 is:
@@ -373,8 +364,11 @@ extract does three extra things:
 
 - It recovers the **whole remaining balance** of every advance, other payment and fine, regardless of
   each document's own recovery method.
-- It refuses to save while anything is still outstanding — *"the payment … for the contract … still
-  has a remaining …"*. You cannot close a subcontract with an unrecovered advance.
+- It refuses to save while any of them dated no later than the extract is still outstanding. You
+  cannot close a subcontract with an unrecovered advance. The message is:
+
+  *The payment {0} for the contract {1} still has a remaining {2}* — «مستند الدفع {0} للعقد {1} لا يزال متبقي مبلغ {2} فيه»
+
 - It marks the subcontract **finished**, which is why closed subcontracts stop appearing in the
   contract picker of new documents. Cancelling the Final extract reopens it.
 
@@ -384,11 +378,12 @@ refused, naming the later document; two committed extracts may not share a value
 Deletion follows the same logic — a later extract blocks it, and so does a line already consumed by
 a [cost execution](/modules/contracting/costs/contracting-cost-execution.md).
 
-Other checks worth knowing: you may not bill a **parent** term code on a detail line; every term code
-used must exist on the subcontract (or on the execution, when the extract came from one); the
-cumulative billed quantity is held to the term's permitted percentage unless the document term allows
-it to exceed the contract; a payment percentage may not exceed 100; and a term option can force line
-prices to match the contract exactly, refusing any line that has been re-priced.
+Other checks worth knowing: you may not bill a **parent** term code on a detail line unless **Show Main
+Terms Codes** is ticked in the contracting configuration; every term code used must exist on the
+subcontract (or on the execution, when the extract came from one); the cumulative billed quantity is
+held to the term's permitted percentage unless the document term has **Allow Extract Quantity to
+Exceed Contract Quantity** ticked; a payment percentage may not exceed 100; and the term option
+**Force Contract Prices** refuses any line whose unit price differs from the contract's.
 
 ::: tip Duplicating an extract gives you an empty bill of quantities
 Use **Duplicate** and every billing quantity comes across as zero. That is the intended behaviour and
@@ -408,8 +403,8 @@ Beyond the ledger and the condition documents, committing an extract updates:
 - **The contracting cost pool**, which is what
   [Cost Execution](/modules/contracting/costs/contracting-cost-execution.md) and the budgets later
   read.
-- **The client contract and the budgets** — but only when the module configuration turns on the
-  option to update term quantities from subcontractors' extracts. When it is on, the system gathers
+- **The client contract and the budgets** — but only when **Update Term Quantity From Contractors
+  Extract In Budget** is ticked in the contracting configuration. When it is on, the system gathers
   every subcontract on the same client contract, sums their extracted quantities by project term
   code, estimated budget term code and executive budget term code, and writes those totals onto the
   [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) and
@@ -422,8 +417,9 @@ Beyond the ledger and the condition documents, committing an extract updates:
 The extract creates the obligation; a **payment voucher** discharges it. Vouchers attached to the
 extract appear in its payment documents grid, and the vouchers total and remaining amount sit in
 their own block beside the totals — so the document itself answers "how much of this certificate has
-actually been paid?". A term option redirects that settlement to the subcontract's instalment
-schedule instead of the extract, for organisations that track payment against the contract.
+actually been paid?". The term option **Update Remaining In Contract Not Extract When Payment Or
+Receipt Voucher Created** redirects that settlement to the subcontract's instalment schedule instead
+of the extract, for organisations that track payment against the contract.
 
 Finally, the extract's **Statistics** page is the audit trail. It lists the fine documents this
 extract consumed and, row by row, which advance or other payment gave up how much on it. When

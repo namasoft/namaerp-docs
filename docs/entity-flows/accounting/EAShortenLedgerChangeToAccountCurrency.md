@@ -49,15 +49,15 @@ When currency conversion occurs:
 ### Find Currency Mismatches
 ```sql
 SELECT lt.id, a.currency_id AS AccountCurrency, 
-       CASE WHEN ltl.debit_amount IS NOT NULL 
-            THEN ltl.debit_currency_id
-            ELSE ltl.credit_currency_id END AS LineCurrency
+       CASE WHEN ltl.debitValueAmount <> 0 
+            THEN ltl.debitValueCurrency_id
+            ELSE ltl.creditValueCurrency_id END AS LineCurrency
 FROM LedgerTrans lt
 INNER JOIN LedgerTransLine ltl ON lt.id = ltl.ledgerTrans_id  
 INNER JOIN Account a ON ltl.account_id = a.id
-WHERE a.currency_id != CASE WHEN ltl.debit_amount IS NOT NULL 
-                           THEN ltl.debit_currency_id
-                           ELSE ltl.credit_currency_id END;
+WHERE a.currency_id != CASE WHEN ltl.debitValueAmount <> 0 
+                           THEN ltl.debitValueCurrency_id
+                           ELSE ltl.creditValueCurrency_id END;
 ```
 
 ## Related Actions

@@ -23,12 +23,12 @@ Manual execution for bulk entity flow operations, such as running scheduled main
 2. **Executes query** - Runs the provided SQL query to find target entities (must return entityType and id columns)
 3. **Processes each entity** - For each result, loads the entity and checks flow applicability
 4. **Executes in transactions** - Runs the entity flow on each entity in separate transactions
-5. **Handles errors** - Continues processing remaining entities even if individual entities fail
+5. **Handles errors** - Continues processing remaining entities even if individual entities fail, then fails at the end with *Failed to apply entity flow {0} on {1} records*
 6. **Supports cancellation** - Monitors for task cancellation during bulk operations
 
 ## Parameters
 
-**Parameter 1:** Entity Flow Code (Required) - Business code of the EntityFlow to execute
+**Parameter 1:** Entity Flow Code (Required) - Code of the entity flow to execute. It is run as a manual entity flow on each record; a record it does not apply to is skipped. An unknown code stops the run with *Could not find entity flow with code {0}*
 
 **Parameter 2:** Query (Required) - SQL query returning entityType and id columns
 - Example Query:

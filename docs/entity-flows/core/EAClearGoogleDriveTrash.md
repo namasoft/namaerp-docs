@@ -26,7 +26,7 @@ Manual execution or scheduled maintenance tasks to permanently delete all files 
 
 ## Key Parameters
 
-**Parameter 1:** OAuth File Code/ID (Required) - Google Drive authentication credentials with "Used For Emptying Trash" permission enabled
+**Parameter 1:** OAuth file code or ID (Required) - The code or id of an **OAuth File** that is **Authorized** and has **Used For Emptying Trash of Google Drive Account** ticked. Saving the entity flow is refused otherwise, with the OAuth File messages listed on [EACheckDailyBackupOnGoogleDrive](/entity-flows/core/EACheckDailyBackupOnGoogleDrive)
 
 ## Database Tables Affected
 

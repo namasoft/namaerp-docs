@@ -21,14 +21,16 @@ The Evaluation Element catalog is fully described on the [Employee Evaluation](.
 
 | Field (English) | Arabic | Notes |
 |---|---|---|
-| Used In Course Evaluation | يستخدم في تقييم الدورة التدريبية | Makes this element selectable when the evaluation's subject is the course itself. |
+| Used In Course Evaluation | يستخدم في تقييم الدورة التدريبية | Unlocks the Course Evaluation Rate next to it. |
 | Course Evaluation Rate | نقاط العنصر | The weight this element is worth when scored as part of a course-subject evaluation, overriding the Default Weight. |
-| Used In Student Evaluation | يستخدم في تقييم المتدربين | Makes this element selectable when the subject is a student. |
+| Used In Student Evaluation | يستخدم في تقييم المتدربين | Unlocks the Student Evaluation Rate. |
 | Student Evaluation Rate | نقاط العنصر | The weight this element is worth when scored as part of a student-subject evaluation. |
-| Used In Instructor Evaluation | يستخدم في تقييم المدرب | Makes this element selectable when the subject is an instructor. |
+| Used In Instructor Evaluation | يستخدم في تقييم المدرب | Unlocks the Instructor Evaluation Rate. |
 | Instructor Evaluation Rate | نقاط العنصر | The weight this element is worth when scored as part of an instructor-subject evaluation. |
 
-Only elements catalogued this way — and Evaluation Elements Groups scoped to training — are offered on a Course Evaluation's own Details grid and Elements Group field, so the two modules' criteria never get mixed up on screen even though they share one catalog.
+These six fields can be edited only on an element whose **Target Of Evaluation** (المستهدف من التقييم) is **Training Course**, and each rate only while its *Used In* box is ticked. Typing a **Default Weight** copies it into every rate; switching the Target Of Evaluation to Training Course sets the five staff-appraisal rates to zero.
+
+Target Of Evaluation is also what decides where an element can be used: a Course Evaluation's Details grid and Elements Group field offer only elements and Evaluation Elements Groups whose Target Of Evaluation is Training Course, and saving refuses any other with *Not for course* — «ليس لدورة تدريبية». The *Used In* boxes do not affect which elements are offered.
 
 ## Course Evaluation — scoring it
 
@@ -43,9 +45,9 @@ A Course Evaluation's header starts with an **Evaluation Type** (نوع التق
 | Elements Group | مجموعة نقاط التقييم | An optional bundle of elements to draw from, scoped to training. |
 | Final Percentage | النسبة النهائية | The rolled-up result across every scored element. |
 
-The Details grid can be populated two ways. Choosing an **Elements Group** copies in every element it bundles, along with its remark, in one step. Clicking **Collect** (تجميع) instead pulls in the training-catalog elements directly, without going through a group. Either way, each Details row carries the **Evaluation Element**, a computed **Max Weight**, the **Points** actually scored, the resulting **Percentage**, and a **Finding** — the qualitative label matched against the element's own Ranges, exactly as on Employee Evaluation.
+The Details grid can be populated two ways. Choosing an **Elements Group** replaces the grid with every element it bundles, along with its percentage and remark, in one step. Clicking **Collect** (تجميع) instead pulls in the training-catalog elements directly, without going through a group. Either way, each Details row carries the **Evaluation Element**, a computed **Max Weight**, the **Points** actually scored, the resulting **Percentage**, and a **Finding** — the qualitative label matched against the element's own Ranges, exactly as on Employee Evaluation.
 
-Max Weight is where the training-specific rates from the element catalog come in: it starts from the element's Default Weight, then gets overridden by whichever rate matches this evaluation's own Evaluation Type — the Course Evaluation Rate for a Training Course subject, the Student Evaluation Rate for a Student subject, or the Instructor Evaluation Rate for an Instructor subject (falling back to Default Weight if that particular rate is left empty).
+Max Weight is where the training-specific rates from the element catalog come in: it starts from the element's Default Weight, then gets overridden by whichever rate matches this evaluation's own Evaluation Type — the Course Evaluation Rate for a Training Course subject, the Student Evaluation Rate for a Student subject, or the Instructor Evaluation Rate for an Instructor subject (falling back to Default Weight if that particular rate is left empty). Max Weight and Percentage are recalculated on save, and a line whose Percentage exceeds 100 is refused with *can not exceed 100%* — «لا يمكن أن يتخطى نسبة 100 %».
 
 ![Course Evaluation, with the Evaluation Type, Collect button, and scored Details grid](../../../ar/modules/hr/images/training/course-evaluation-en.png)
 
@@ -55,7 +57,7 @@ Suppose Evaluation Type is set to **Training Course**, and the Details grid incl
 
 ## Actions on this screen
 
-- **Collect** — with **Evaluation Type** set to **Training Course**, replaces the **Details** grid with every evaluation element whose **Target Of Evaluation** is the training course, so you only have to score them. With no evaluation type chosen it does nothing.
+- **Collect** — with **Evaluation Type** set to **Training Course**, replaces the **Details** grid with every evaluation element whose **Target Of Evaluation** is the training course, so you only have to score them. With **Student** or **Instructor**, or with no evaluation type chosen, it leaves the grid as it is.
 
 The **Evaluation Element** has no buttons of its own.
 

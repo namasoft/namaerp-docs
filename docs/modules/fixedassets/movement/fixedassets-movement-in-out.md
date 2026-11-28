@@ -39,8 +39,8 @@ are for the case in between: gone for a while, and expected back.
 The whole mechanism is about counting units, so it only works on assets that *have* units. An asset
 is countable when it is registered as such — ten identical desks under one code, two hundred stacking
 chairs, a pool of hand tools. The asset picker on both documents shows only assets that are
-**countable** and **in service**, and a line naming anything else is refused with *"Fixed asset must
-be countable"*.
+**countable** and in **Running Depreciation** status, and a line naming an asset that is not countable
+is refused with *Fixed asset must be countable* — «الأصل يجب أن يكون له عدد».
 
 A single CNC machine is not countable, so `MCH-0007` never appears on these documents. A machine that
 leaves the site for a fortnight of external repair is recorded — if you want it recorded at all — with
@@ -91,16 +91,19 @@ first appears. Every out and return document that touches an asset is replayed i
 and the document you are committing is rejected if the running total ever goes wrong:
 
 - you cannot have more units outside than the asset has. A second out document for eight of the ten
-  desks while three are already away is refused, naming the totals — *"Total count is 10, and total
-  count outside is 11"*;
+  desks while three are already away is refused, naming the document, the asset and the totals (here
+  10 and 11):
+
+  *The document {0} for asset {1} can not be allowed, Total count is {2}, and total count outside is {3}* — «المستند {0} للأصل {1} غير مسموح به حيث أن إجمالي العدد للأصل {2} و إجمالي العدد بالخارج {3}»
 - you cannot bring back more than went out. A return for four desks when three are away is refused
   the same way;
+- the asset's first counted event must be the one that gave it units, so an asset with no count yet
+  is refused with *There is no count for asset {0}* — «لا يوجد عدد للأصل {0}»;
 - the same asset may not appear twice in one grid, and the grid may not be empty.
 
 Because it is the whole timeline that is replayed, a **back-dated** document can be refused because
-of something that happens *later*. Insert an out document dated 5 March for the remaining seven desks
-and the check fails at 10 March, where the return of three would push the running total past what the
-asset holds. When a rejection makes no sense against today's position, look forward as well as back.
+of something that happens *later*. Insert a return document dated 5 March for the three desks and the
+check fails at 10 March, where the return already on file would bring back more desks than went out. When a rejection makes no sense against today's position, look forward as well as back.
 
 Cancelling or deleting a document removes its units from the running total and recomputes the counters from
 what is left, so corrections are safe — you are never patching a stored total by hand.

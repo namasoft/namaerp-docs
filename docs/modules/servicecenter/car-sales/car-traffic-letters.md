@@ -28,7 +28,7 @@ The **request** is the internal step: the sales desk asks the department that ha
 produce a letter for this chassis, for this customer. The **letter** records that the letter was
 produced and issued. Both use the same screen as the rest of the car sales family — a header with
 book, term, value date, **بناءا على (From Document)**, customer and warehouse, and a lines grid
-where each line names one car in the **السياره (Customer Car)** column.
+where each line names one car in the **السيارة (Customer Car)** column.
 
 Build the request on the sales order or the
 [sales invoice](/modules/servicecenter/car-sales/car-sales-invoice.md), and the letter on the
@@ -49,7 +49,7 @@ overwrite, and the copy is one-way, from the document to the car:
 | ناقل الحركة (Gear Box) | نوع الهيكل (Body Type) |
 | عدد الركاب (Number Of Passengers) | مدة الضمان (Warranty Period) |
 | رقم المفتاح (Key Number) | رقم الموقع الفرعي (Slot Number) |
-| The accessory flags — catalogue, mats, toolkit, spare key, warranty | |
+| The item classes 1–10 | The categories 1–5 |
 
 So the traffic letter is genuinely useful as a data-capture point: it is often the moment somebody
 finally checks the engine number against the metal, and whatever is typed here lands on the car
@@ -108,10 +108,9 @@ one action, in the More menu:
   already on the line) and writes it back onto the line. The car record is saved straight away. It runs only when the term's *Create Sub Item From Line Info*
   option is on.
 
-Switch *Create Sub Item From Line Info* on for exactly **one** document type in a chain. Two
-documents with the option on will either rewrite an existing car record or, if the later document's
-lines were typed fresh rather than copied, create a **duplicate** car — nothing checks that a chassis
-number is unique.
+Switch *Create Sub Item From Line Info* on for exactly **one** document type in a chain; what two
+documents with the option on do is set out under
+[Where car records are born](/modules/servicecenter/car-purchasing/car-purchase-order#Where-car-records-are-born).
 
 ## Cancelling a letter
 

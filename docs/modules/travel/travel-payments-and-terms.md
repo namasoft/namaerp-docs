@@ -109,12 +109,12 @@ lines are what this grid holds.
 
 You rarely type them. Above the grid sits the **Payment Template** field, where you pick a
 [Payment Schedule Template](/modules/invoicing/payment-schedules-user-guide) — a reusable pattern
-such as "deposit now, remainder over four months". Then the **GeneratePayments** button (*إنشاء الدفعات*; the English label ships as that raw name) on the
+such as "deposit now, remainder over four months". Then the **Generate Payments** button (*إنشاء الدفعات*) on the
 document's first page builds the rows: it asks for the down payment, how many instalments you want,
-the period between them, any grace period before the first one, the weekday payments fall
+the period between them and its unit, the date the payments start from, any grace period before the first one, the weekday payments fall
 on, specific values for the first, second and last instalment if they differ, and how to round. It
 then spreads the document's **Remaining** across the rows it creates and writes the down payment
-back into **Cash Paid** on the header.
+back into **Cash Paid** on the header. It refuses a document whose net value is zero.
 
 Each row carries:
 
@@ -138,7 +138,7 @@ which is what fills the Paid Value, System paid, Remaining and Paid columns.
 
 Because the plan and the money must agree, the document will not commit unless the schedule
 reconciles with the document's Remaining plus whatever the vouchers have already covered. If you
-change a price after generating the schedule, run **GeneratePayments** again — otherwise the two
+change a price after generating the schedule, run **Generate Payments** again — otherwise the two
 numbers drift apart and the save is rejected.
 
 Once vouchers start arriving they can settle the instalments in any order: a customer may pay the

@@ -12,7 +12,7 @@
 
 <LandingGrid>
   <LandingCard icon="🧾" title="طلبات الأعمال" link="/ar/platform/background-processing/business-requests.md" details="الآثار المحاسبية والمخزنية للمستند — كيف تجد ما فشل منها، والفرق بين إعادة معالجته وإعادة حفظ المستند." />
-  <LandingCard icon="📤" title="المهام المعلقة" link="/ar/platform/background-processing/pending-tasks.md" details="صندوق الصادر للبريد والرسائل النصية والواتساب وإشعارات الدفع — لماذا تعلق الرسالة، وكيف تُحيي ما استسلم له النظام." />
+  <LandingCard icon="📤" title="المهام المعلقة" link="/ar/platform/background-processing/pending-tasks.md" details="صندوق الصادر للبريد والرسائل النصية والواتساب وتيليجرام وإشعارات الدفع — لماذا تعلق الرسالة، وكيف تُحيي ما استسلم له النظام." />
   <LandingCard icon="⚙️" title="إجراءات النظام" link="/ar/platform/background-processing/system-actions.md" details="العمل الداخلي المؤجَّل كإعادة بناء الرواتب والمناداة الخارجية، وسجل إصلاحات تكلفة المخزون الآلية." />
   <LandingCard icon="📊" title="متابعة التقارير" link="/ar/platform/background-processing/report-monitoring.md" details="ما يشغّله الخادم الآن، وكيف تُنهي تقريرًا لن ينتهي، وسجل من شغّل ماذا." />
   <LandingCard icon="🚦" title="طوابير المهام" link="/ar/platform/background-processing/task-queues.md" details="تقسيم العمل في الخلفية إلى مسارات متوازية حتى تتوقف المهمة المجدولة أو مسار الكيان البطيء عن تعطيل كل ما خلفه." />

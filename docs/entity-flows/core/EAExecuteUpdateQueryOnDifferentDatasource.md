@@ -26,7 +26,7 @@ Manual or automated execution for cross-database operations, data synchronizatio
 
 ## Parameters
 
-**Parameter 1:** Data Source Name (Required) - Name of configured external data source
+**Parameter 1:** Data Source Name (Must be defined in context.xml) (Required) - Name of the external data source as it is defined in the application server's `context.xml`
 
 **Parameter 2:** Update Query (Required) - SQL UPDATE, INSERT, or DELETE statement (use {fieldName} for entity references)
 

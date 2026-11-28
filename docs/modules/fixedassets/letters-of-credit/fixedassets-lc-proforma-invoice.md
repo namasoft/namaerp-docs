@@ -1,11 +1,11 @@
 ---
-description: "The Fixed Asset ProformaInvoice under a letter of credit: one invoice per credit, the header, one line per machine, and why its prices only set the ratio for distributing import costs rather than the assets' cost."
+description: "The Fixed Asset Proforma Invoice under a letter of credit: one invoice per credit, the header, one line per machine, and why its prices only set the ratio for distributing import costs rather than the assets' cost."
 entities: [FALCProformaInvoice]
-menu: Assets → Fixed Asset Letter of Credits → Fixed Asset ProformaInvoice
+menu: Assets → Fixed Asset Letters of Credit → Fixed Asset Proforma Invoice
 ---
 # The Proforma Invoice
 
-The **Fixed Asset ProformaInvoice** is the shortest document in the chain and the most
+The **Fixed Asset Proforma Invoice** is the shortest document in the chain and the most
 misunderstood. It lists the machines coming in under the credit and what the supplier is charging for
 each of them. It creates no journal entry and changes no asset: what it produces is a **ratio**.
 
@@ -18,9 +18,9 @@ was spent. The supplier's 500,000 becomes cost only when it is entered as an exp
 [expense document](/modules/fixedassets/letters-of-credit/fixedassets-lc-expenses.md).
 :::
 
-Find it at **Assets › Fixed Asset Letter of Credits › Fixed Asset ProformaInvoice**.
+Find it at **Assets › Fixed Asset Letters of Credit › Fixed Asset Proforma Invoice**.
 
-![The Fixed Asset ProformaInvoice screen](../../../ar/modules/fixedassets/images/lc/fa-lc-proforma-invoice-main-en.png)
+![The Fixed Asset Proforma Invoice screen](../../../ar/modules/fixedassets/images/lc/fa-lc-proforma-invoice-main-en.png)
 
 ## One invoice, one credit
 
@@ -42,7 +42,7 @@ first — before the detail lines. Enter it, then fill the grid.
 | Field | What it does |
 |---|---|
 | **Document Code** (Book / Code) | the book that numbers the document |
-| **Term** | optional on this document; it books nothing. Its only setting, **Create Asset If Not Found**, makes committing the invoice create an asset record for each line that names none — see [the letter-of-credit terms](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md) |
+| **Term** | optional on this document; it books nothing. Its only setting, **Create Asset If Not Found**, makes committing the invoice create an asset record for each line that names none, provided the module setting **Add Fixed Assets Creation Columns To Fixed Assets Opening And Purchase** is also on — see [the letter-of-credit terms](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md) |
 | **Issue Date** and **Value Date** | the supplier's invoice date and the date the document counts from |
 | **Fiscal Period** | the period the document belongs to |
 | **Letter Of Credit** — required | the credit this invoice belongs to |
@@ -88,10 +88,10 @@ For `LC-2026-004` the two presses already exist as asset records, so both lines 
 
 ### Prices
 
-You may type the **unit price** and let the line price compute, or type the **total price** directly.
-On every save the system recalculates: a line whose total price does not equal quantity × unit price
-is corrected to quantity × unit price, and the invoice **Total** is the sum of the lines. With
-quantities of 1 on both presses, unit price and line price are the same figure.
+You may type the **unit price** and let the line price compute, or type the **total price** and let
+the unit price compute from it. On every save a line with no total price is given quantity × unit
+price, and the invoice **Total** is the sum of quantity × unit price over the lines. With quantities
+of 1 on both presses, unit price and line price are the same figure.
 
 That total, 500,000, is the denominator of everything that follows. Distributing an expense **on
 value** means multiplying it by 300,000 ÷ 500,000 for Press A and 200,000 ÷ 500,000 for Press B.
@@ -144,7 +144,9 @@ that the rest of the chain relies on fall out of those figures.
 
 Very little, and that is by design. The document is validated — one asset or one type per line, no
 repeated assets, a credit that is still open, no second invoice on the same credit — and then it is
-recorded against the credit. No entry reaches the ledger. No asset is touched. The
+recorded against the credit. No entry reaches the ledger. No asset's value is touched; the only
+change to the register is the optional asset creation described under the term in the header table.
+The
 [letter of credit](/modules/fixedassets/letters-of-credit/fixedassets-letter-of-credit.md) now points
 at this invoice, and the expense documents can start arriving.
 

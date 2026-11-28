@@ -28,25 +28,27 @@ Automatically updates remarks fields in Contractor Extract lines and conditions 
 
 ## Parameters
 
-### Parameter 1: Update Details Remarks (Required)
-- **Values:** `true` or `false`
+The six parameters and the titles shown on the flow line are those of [EAUpdateRemarksInExtractFromContractTermDescription](/entity-flows/contracting/EAUpdateRemarksInExtractFromContractTermDescription). On this flow they behave as follows:
+
+### Parameter 1: Update Details Remarks
+- **Values:** `true`, `false` or empty. At least one of Parameters 1 and 2 must be filled
 - **Purpose:** Whether to update remarks in extract detail lines
 
-### Parameter 2: Update Conditions Remarks (Required)
-- **Values:** `true` or `false`
+### Parameter 2: Update Conditions Remarks
+- **Values:** `true`, `false` or empty
 - **Purpose:** Whether to update remarks in extract condition lines
 
 ### Parameter 3: Up to Level (Optional)
 - **Default:** 255 (all levels)
-- **Purpose:** Maximum hierarchy levels to include
+- **Purpose:** Maximum hierarchy levels to include, counted from the project term itself upward
 - **Examples:** `3`, `5`, `10`
 
 ### Parameter 4: Contract Field (Optional)
-- **Purpose:** Custom field path to get contract terms
+- **Purpose:** Field of the extract that holds the record whose terms are searched. Empty: the project contract of the extract; when the extract has no project contract no remarks are found
 - **Examples:** `projContract.executiveBudget`
 
 ### Parameter 5: Term Code Field (Optional)
-- **Purpose:** Custom field to get term code
+- **Purpose:** Field of the extract line that holds the term code. When it is filled its value is searched directly in the terms of Parameter 4, without the `projTermCode` mapping. Empty: the line's term code is mapped to the project term code through the contractor contract
 - **Examples:** `executiveTermCode`, `estimatedTermCode`
 
 ### Parameter 6: Separator (Optional)

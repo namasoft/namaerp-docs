@@ -70,7 +70,7 @@ The document Nama creates, and its book and term, come from **Order Info** and t
 
 ### Lines, bundles, shipping and payments
 
-- **Items** are matched by **SKU**, using the **Magento Item Linker** or the item code, exactly as described in the shared guide. Each line's price, discount and tax come from Salla's line amounts.
+- **Items** are matched by **SKU**, using the **Magento Item Linker** or the item code, exactly as described in the shared guide. Each line's price and discount come from Salla's line amounts; the tax is calculated by Nama, as for every platform.
 - **Bundles.** A Salla bundle ("group products") arrives as one line for each component product, not as one line for the bundle. The bundle's discount and tax are shared out across the component lines. Each component therefore needs its own SKU linked in Nama.
 - **Shipping cost** becomes the shipping service line. The shipping company's name is the order's shipping description, so you can use it to choose a different shipping item for each courier. **Salla's cash-on-delivery fee** becomes the **Delivery Service Item** line.
 - **Customer and address.** The customer's name and email come from the Salla customer. The address comes from the shipping receiver: name, phone, email, city, country, address line, street number and postcode. Salla sends no separate billing address.
@@ -94,9 +94,8 @@ To change the value on the way, wrap it in a query. This one leaves the warehous
 warehouse=sql(select case when {$map.order_branches.$get(0).name} = 'Web02' then null else {$map.order_branches.$get(0).name} end)
 ```
 
-::: warning Three things that leave the warehouse empty
+::: warning Two things that leave the warehouse empty
 - **The wrong map.** `$map` holds the Salla order only in **Copy Sales Document Field Map**, and in that map's copy on a row of **Generate Document Based On Order Criteria Lines**. In the **Header Fields Map** of Order Info it holds something else, so the same line gives nothing. When a row of **Generate Document Based On Order Criteria Lines** matches the order, that row's own map is used and the site's map is ignored.
-- **An older version.** `$get(0)` inside `sql(...)` works from the November 2026 version. On older versions the query always returned an empty value. The plain line without `sql(...)` works on every version.
 - **Double quotes.** Write empty text as `''` or use `null`. SQL Server reads `""` as a column name and refuses the query with *An object or column name is missing or empty*.
 :::
 
@@ -104,7 +103,7 @@ See [Field maps](/modules/ecommerce/ecommerce-integration-guide.md#Field-maps) i
 
 ### When an order fails
 
-Since August 2026, one bad order no longer stops the whole read. If an order cannot be saved, for example because one of its SKUs is not linked to any Nama item, Nama records it as an error and carries on with the rest of the orders. **Read Sales** still reports success on screen when some orders fail, so check the **Log List** on the site's **Statistics** tab after a read. Each row shows the order number and the reason. Fix the cause, then select the row and use **More → ReRead Selected Orders**. Once the order saves, the row is removed. **Delete Error** clears rows you no longer need.
+An order that cannot be saved, for example because one of its SKUs is not linked to any Nama item, does not stop the read: it goes to the **Log List** on the site's **Statistics** tab, and **Read Sales** still reports success. [When an order fails](/modules/ecommerce/ecommerce-integration-guide#When-an-order-fails) in the shared guide explains how to fix and reread it.
 
 When Salla itself refuses a request, Nama shows Salla's own error text as Salla wrote it.
 
@@ -129,9 +128,9 @@ Once the grid has rows:
 - Nama sends a separate quantity for each linked warehouse to its branch, and no longer sends the total.
 - The branch quantity in Salla is **overwritten** with Nama's figure. It is not adjusted up or down.
 - Quantities are sent as whole numbers, so a stock of 7.5 is sent as 7.
-- Stock in warehouses that are not in the grid is not sent to Salla.
+- Stock in warehouses that are not in the grid is not sent to Salla, and the minimum-quantity rule and rounding do not change branch figures (see [One total, or one figure per location](/modules/ecommerce/ecommerce-integration-guide#One-total-or-one-figure-per-location)).
 
-For example, the Riyadh warehouse is linked to branch `1873245` and the Jeddah warehouse to branch `1873246`. A sale from the Jeddah warehouse updates only the Jeddah branch in Salla.
+For example, the Riyadh warehouse is linked to branch `1873245` and the Jeddah warehouse to branch `1873246`. A sale from the Jeddah warehouse lowers only the Jeddah branch's figure in Salla; the Riyadh branch receives its unchanged figure.
 
 ## Receiving orders live (webhooks)
 
@@ -159,7 +158,7 @@ The order is built from the event itself. Nama does not read it from Salla again
 
 **Do Not Save Webhook Order Without Shipment** holds orders back until Salla has created a shipment for them. When the box is ticked, create and update events are skipped until the order has a shipment, so the order arrives with a later "order updated" event. Use it when your documents need the shipment number or courier.
 
-If an event cannot be saved, it goes to the **Log List** like any other failed order and is not collected again. Fix the cause and use **ReRead Selected Orders**. Webhooks and scheduled reading can run together, and scheduled reading then acts as a safety net, because an order already in Nama is not created twice.
+If an event cannot be saved, it goes to the **Log List** like any other failed order and is not collected again. Fix the cause and use **Reread Selected Orders**. Webhooks and scheduled reading can run together, and scheduled reading then acts as a safety net, because an order already in Nama is not created twice.
 
 ## Messages you may see
 

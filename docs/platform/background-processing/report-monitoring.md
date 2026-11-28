@@ -78,25 +78,31 @@ sign that nothing is being recorded.
 :::
 
 Each entry records the report, the user, the source address, the parameters the report was run
-with, when it started, how long it took, the output format, and — for a form printed from a
+with (when parameter logging is on, see below), when it started, how long it took, the output format, and — for a form printed from a
 document — which record it was printed for and how many times.
 
 ### What gets logged, and what does not
 
-Three switches sit in that same **Reports Logging** group, and they work independently of one
-another rather than as a master and two dependants:
+Three more switches sit in that same **Reports Logging** group, and each of them can also be ticked
+on a single Report Definition instead of for every report:
 
 | Activity | Logged when |
 |---|---|
 | A report run from the reports menu | **Log Report Performance To DB** is on |
-| Exporting a result to PDF, Excel or Word | its own export switch is on |
-| Printing a form from a document | its own forms switch is on |
+| The parameters of that run | **Log Report Parameters To DB When Running** is on, globally or on the report |
+| Exporting a result to PDF, Excel or Word | **Log Report Exports To DB** is on, globally or on the report |
+| Printing a form from a document | **Log Forms To Report Log** is on, globally or on the report |
+
+The three depend on the first. Global Configuration, or a Report Definition, cannot be saved with any
+of them ticked while **Log Report Performance To DB** is off; the refusal reads, for exports,
+*"You can not select LogExportsToDB if the option LogReportPerformanceToDB is not selected in global config"*,
+and the same with `LogParametersToDB` or `LogFormsDB` for the other two. The messages have no Arabic translation.
 
 An export is written as a second entry alongside the run it came from, so exporting the same result
 three times gives you the run plus three export rows.
 
-Two consequences are worth knowing. Because the switches are independent, turning on only the first
-gives you interactive report runs and nothing else — no exports, no printed forms. And because
+Two consequences are worth knowing. Turning on only the first gives you interactive report runs and
+nothing else — no parameters, no exports, no printed forms. And because
 printing a form does not count as running a report, printed forms never appear on the two
 monitoring screens at all; they show up only in the log.
 

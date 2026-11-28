@@ -45,7 +45,7 @@ contracting columns you see on a [material issue](/modules/contracting/costs/con
 | Contract | the project contract of this individual line |
 
 And a block of availability figures that answers "do we even need to buy this?" without leaving the
-screen: **Requested**, **In Stock**, **In Transit**, **Remaining** and **Ordered**.
+screen: **Requested**, **In Stock**, **In Trans**, **Remaining** and **Ordered**.
 
 Whatever term code you type is checked against the chosen contract's term list, and a code that is
 not there is refused. The executive budget term code is checked too, against the budget's own
@@ -71,8 +71,8 @@ are specific to that job.
 employee record of the logged-in user, so the trail back to whoever asked survives without anyone
 typing a name.
 
-**Each line tracks its own fulfilment.** Alongside the requested quantity sit an **Approved
-Quantity**, a **Delivered Quantity** and a **Remaining Quantity**, plus a **Recommended Supplier**
+**Each line tracks its own fulfilment.** Alongside the requested quantity sit **Quantity Status |
+Approved**, **Quantity Status | Delivered** and **Remaining | Quantity**, plus a **Recommended Supplier**
 the site can nominate for the buyer to consider. A request is therefore useful long after it was
 raised: it is the running record of what was asked for and how much of it has actually turned up.
 
@@ -85,9 +85,9 @@ picker to the items named on the analysis card, through the module setting descr
 
 **The request books nothing.** No journal entry, no stock movement. Whether it touches the project at
 all is a setup decision on its document term (توجيه): tick *تطبيق تأثير تكاليف وكميات المقاولات /
-Apply Contacting Cost And Quantity Effects* and the request starts contributing the **ordered
-quantity** to the term lines it names. Left alone, it contributes nothing — it is paperwork, and that
-is usually what you want from a request.
+Apply Contracting Cost And Quantity Effects* and the request writes to the term lines it names exactly
+as an order does (see [What the order actually does when it is processed](#What-the-order-actually-does-when-it-is-processed)).
+Left alone, it contributes nothing — it is paperwork, and that is usually what you want from a request.
 
 ## Actions on these screens
 
@@ -129,11 +129,18 @@ setting, because a purchase order is a commitment, not an expense. If they *are*
 produces a full invoice-style entry, taxes and discounts included. Change your mind and clear the
 sides, and re-processing the order cancels the entry it made earlier.
 
-**It contributes the ordered quantity to the project.** Here the polarity is the opposite of the
-request: the order applies its contracting quantity effects **unless** you tick
-*عدم تطبيق تأثير تكاليف وكميات المقاولات / Do Not Apply Contacting Cost And Quantity Effects*. What
-lands on the contract's term line is the **Ordered Quantity** column — not money. The money side of a
-purchased material reaches the project later, when the material is issued to it. A further option
+**It puts its cost and quantity on the project.** Here the polarity is the opposite of the request:
+the order applies its contracting cost and quantity effects **unless** you tick
+*عدم تطبيق تأثير تكاليف وكميات المقاولات / Do Not Apply Contracting Cost And Quantity Effects*. Each
+line with a term code then writes to the term line it names, on the contract and on the budgets and
+analysis card the line points at: its quantity is added to **Purchase Order Quantity** and to
+**Actual Quantity**, and its cost — the line's net value, less any taxes and discounts the document
+term or the supply chain configuration excludes from cost — is added to **Actual Cost**. The same
+cost is also deposited as a *Materials* slice that a
+[Cost Execution](/modules/contracting/costs/contracting-cost-execution) can absorb. A
+[Contracting Material Issue](/modules/contracting/costs/contracting-project-materials) of the same
+material later adds its own cost again, so when the issue is meant to carry the cost, tick the option
+on the order's term. A further option, *Effect In Contracting Term Cost Entries Before Approval*,
 makes those entries appear **at save, before the order is approved**, for implementations that want
 the commitment visible during the approval cycle rather than after it; abandoning the draft removes
 them again.
@@ -142,10 +149,14 @@ them again.
 
 A supplier is required. The instalment schedule has to reconcile with the remaining amount and the
 voucher payments against it. Every term code must exist in the contract, the executive budget code
-must respect the budget's hierarchy, and the contract must not be marked finished. Two more options
-cap the quantities themselves: *منع تجاوز الكمية / Do Not Exceed Quantity* and *منع تجاوز كمية كارت
-التحليل / Do Not Exceed Analysis Card Quantity*, which measure the order against the planned and the
-analysed quantity of the term respectively.
+must respect the budget's hierarchy, and the contract must not already have a committed final extract
+(*You can not use the contract {0} because it has a final extract {1}* — «لا يمكنك استخدام العقد {0} حيث أنه منتهي طبقًا للمستخلص الختامي {1}») unless the module option
+*Allow Creating Documents For Contracts That Have a Final Extract* is ticked. Two more options
+cap the quantities themselves: *عدم تخطي الكمية / Do Not Exceed Quantity* and *عدم تخطي كمية الكارت
+التحليلي / Do Not Exceed Analysis Card Quantity*, which measure the total ordered for the term against
+its planned quantity, and against the quantity still available on the term analysis card,
+respectively. Both checks run while the order writes its cost and quantity effects, so they do not
+apply when *Do Not Apply Contracting Cost And Quantity Effects* is ticked.
 
 ## The one hard link between the order and the site's consumption
 
@@ -173,19 +184,18 @@ point on you are in supply chain territory: goods receipt, supplier balance, pay
 standard.
 
 What the ordinary purchase invoice does **not** carry is the contracting spine. It has no term code
-column, so it cannot say which BOQ line the money belongs to. That is not an omission you need to work
-around, because of how project cost is designed to arrive:
+column, so it cannot say which BOQ line the money belongs to, and it puts no cost on the project. On
+the contracting side, project cost from a purchase arrives in one of two ways:
 
-- **Stocked material** becomes project cost when it is **issued to the project**, valued at inventory
-  cost — see [Issuing Material to a Project](/modules/contracting/costs/contracting-project-materials).
-  Buying it only moves it into the store.
-- **Non-stock spend** — a service, a hire charge, a fee — never goes through this pair at all. It goes
-  through the [misc contracting trio](/modules/contracting/costs/contracting-misc-spend), whose
-  invoice *does* carry term codes and *does* book project cost.
+- **Through the order itself**, when its term leaves the cost and quantity effects on (above).
+- **Through the issue**, when the material is drawn from the store onto the project, valued at
+  inventory cost — see [Issuing Material to a Project](/modules/contracting/costs/contracting-project-materials).
+  When the site draws the purchased material from the store this way, tick *Do Not Apply Contracting
+  Cost And Quantity Effects* on the order's term so the cost is not counted twice.
 
-So the rule of thumb when someone asks which purchase document to use: if it will sit in a warehouse,
-use this pair and let the issue carry the cost. If it will never be stocked, use the misc contracting
-documents instead.
+**Non-stock spend** — a service, a hire charge, a fee — never goes through this pair at all. It goes
+through the [misc contracting trio](/modules/contracting/costs/contracting-misc-spend), whose invoice
+carries term codes and books project cost.
 
 ## Worked example: four tonnes of rebar for the concrete term
 
@@ -201,17 +211,17 @@ documents instead.
    contract and the lines come across. Supplier *Gulf Steel*, 4 t at 2,600 = **10,400**, VAT 15% =
    1,560, total **11,960**. A purchase clause line records "to site by 18 April, 1% a week
    thereafter". The instalment plan is 50% on delivery, 50% at 30 days.
-3. **The contract notices.** The order's term has the cost-and-quantity effects left on, so term
-   `2.01` of `PC-2026-001` now shows **4** in its *Ordered Quantity* column. Its *Actual Cost* has
-   not moved — no money has reached the project yet.
+3. **The contract waits.** The steel will be drawn from the site store, so the order's term has
+   *Do Not Apply Contracting Cost And Quantity Effects* ticked. Term `2.01` of `PC-2026-001` does not
+   move: no quantity and no money reach it from the order.
 4. **The supplier is invoiced.** The buyer raises an ordinary **Purchase Invoice** from `CPO-000058`.
    Gulf Steel's balance and the input VAT are dealt with there. The project still shows no cost.
 5. **The steel reaches the project.** When the bar is drawn from the site store for the pour,
-   `CMI-000119`, a Contracting Material Issue against term `2.01`, is what finally puts the cost on
-   the contract — at the inventory cost of what left the store.
+   `CMI-000119`, a Contracting Material Issue against term `2.01`, is what puts the cost on the
+   contract — at the inventory cost of what left the store.
 6. **And the ceiling bites.** The material issue's term has the issued-versus-ordered check on. Four
    tonnes were ordered for term `2.01`; a second issue that would take the total past four tonnes is
    refused until someone raises another order.
 
-That sequence is the whole model in miniature: **the order commits the quantity, the ordinary invoice
+That sequence is the whole model in miniature: **the order commits the purchase, the ordinary invoice
 settles the supplier, and the issue carries the cost.**

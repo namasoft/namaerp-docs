@@ -46,7 +46,7 @@ The available **interest types**:
 | Decreasing | Interest on the remaining balance, so it shrinks with each principal installment repaid. |
 | Manual | Interest values are entered by hand in the interests table instead of being computed automatically. |
 
-The **allowed late days** and **late fine percent** fields together govern how the late-installment fine is computed at payment time.
+The **Late Days** and **Late Fine Percent** fields govern the late-installment fine at payment time: an installment paid on a **Loan Installment Payment** whose value date is later than the installment's payment date plus the **Late Days** takes a fine equal to **Late Fine Percent** of the installment value; otherwise the fine is zero.
 
 ### Loan statuses
 
@@ -55,32 +55,30 @@ The loan moves through these statuses, which advance automatically with the move
 | Status | When |
 |---|---|
 | Initial | when the loan is saved before being issued. |
-| Released | after the loan issue document is saved. |
-| In Progress | while installments are being paid. |
-| Finished | after all installments and interest are fully paid. |
-| Cancelled | on cancellation. |
+| Released | after the loan issue document is saved, and again whenever the status is recalculated while no installment or interest line is paid. |
+| In Progress | when the status is recalculated while some installment and interest lines are paid and others are not. |
+| Finished | when the status is recalculated while every installment and interest line is paid. |
+| Cancelled | when a **Bank Loan Changing Document** with **Cancel Loan** ticked is saved. |
+
+The status is recalculated when a **Loan Interests Calculation** is saved for the loan, and when a **Loan Installment Payment** that carries interest lines for the loan is saved. Once a loan has left Initial, a new **Loan Issue** on it is refused with *Invalid Field* — «قيمة الحقل غير صحيحة» on the **Bank Loan** field.
 
 ## Issuing the loan
 
-As long as the loan is in its initial status it's just an agreement on paper. When a **Loan Issue** (`Banks > Bank Loans > Loan Issue`) is recorded the amount actually arrives: the document creates a journal entry that records the loan against the bank and deposited into the account, and the loan's status flips to "Released". The issue term covers the sides: **loan value debit/credit**, **fees value debit/credit** (with **fees tax**), and **interest value debit/credit** — i.e. where the accounts for the loan principal, its fees and its interest come from. (The detail of where these accounts come from is in the [Document terms](../support/accounting-document-terms.md) reference.)
+As long as the loan is in its initial status it's just an agreement on paper. When a **Loan Issue** (`Banks > Bank Loans > Loan Issue`) is recorded the amount actually arrives: the document creates a journal entry that records the loan against the bank and deposited into the account, the loan's status flips to "Released", and when the loan carries a **facility limit** the issue's loan value is reserved against it (see [Credit Facilities](./credit-facilities.md)). The issue term covers the sides: **loan value debit/credit**, **fees value debit/credit** (with **fees tax**), and **interest value debit/credit** — i.e. where the accounts for the loan principal, its fees and its interest come from. (The detail of where these accounts come from is in the [Document terms](../support/accounting-document-terms.md) reference.)
 
 ![Loan Issue screen](../../../ar/modules/accounting/images/loans/loan-issue-en.png)
 
 ## Interest accrual and repayment
 
-As the loan periods pass, a **Loan Interests Calculation** is recorded to lock in the period's due interest according to the chosen interest type.
+As the loan periods pass, a **Loan Interests Calculation** is recorded for the interest lines that fall due: saving it creates their journal entry and marks those interest lines on the loan as paid.
 
-Then comes the **Loan Installment Payment** (`Banks > Bank Loans > Loan Installment Payment`) to repay one or more installments. The document shows the loan totals (total installments, interest, paid and remaining), and its lines separate the **installment principal**, the **interest paid** and the **late fine** (computed automatically from the late days and fine percent). The document records its entry on the sides: **fine debit/credit**, **interest payment value debit/credit**, plus the collected-principal side.
+Then comes the **Loan Installment Payment** (`Banks > Bank Loans > Loan Installment Payment`) to repay one or more installments. The document shows the loan totals (total installments, interest, paid and remaining), and its lines separate the **installment principal**, the **interest paid** and the **late fine** (computed automatically from the loan's **Late Days** and **Late Fine Percent**). The document records its entry on the sides: **fine debit/credit**, **interest payment value debit/credit**, plus the collected-principal side.
 
 ![Loan Installment Payment screen](../../../ar/modules/accounting/images/loans/loan-installment-payment-en.png)
 
-::: tip The interest-payment document is shared with deposits
-The **Interest Payment Document** (`Banks > Fixed Deposits > Interest Payment Document`) is used to record interest/profit payments, and it's the same document used in [Fixed Deposits](./fixed-deposits.md).
-:::
-
 ## Scheduling and amendment
 
-If repayment circumstances change, a **Bank Loan Scheduling** document redistributes the remaining installments over new periods. A **Bank Loan Changing Document** is used to amend the loan data itself after it's been issued, within the system's controls.
+If repayment circumstances change, a **Bank Loan Scheduling** document replaces the loan's unpaid installment and interest lines with the lines of its own grids; lines that already carry a payment stay, and a grid left empty leaves that side of the loan as it is. A **Bank Loan Changing Document** amends the loan itself: it writes its **loan value**, **interests percentage**, **interest value**, **from date** and **to date** onto the loan (each only when filled), and with **Cancel Loan** ticked it moves the loan to Cancelled.
 
 ## Actions on this screen
 
@@ -103,14 +101,14 @@ Almost nothing in the loan system is typed line by line — the schedules are ge
 
 **On the Loan Interests Calculation:**
 
-- **Collect Interests** — gathers the interest still unproven for the chosen loan range and date range into the interests grid. **From loan** is required; without it the button tells you so and does nothing.
+- **Collect Interests** — gathers the interest lines not yet marked paid for the chosen loan range and date range into the interests grid. **From loan** is required; without it the button tells you so and does nothing.
 
 ## Reports
 
 | Report | Answers |
 |---|---|
-| Loan installment details (SYSR-LON001) | The loan's installment schedule: due, paid and remaining for each installment and its interest. |
-| Details of banking facilities (SYSR-LON002) | Facility-limit consumption across loans, guarantees and credits (see [Credit Facilities](./credit-facilities.md)). |
+| Loan installment details (SYSR-LON001) | The installments of the chosen loans falling in a date range: value, paid and remaining for each installment. |
+| Details of banking facilities (SYSR-LON002) | The loan installments that still have a remaining amount, month by month for a fiscal year, filtered by bank account. |
 
 ![Loan installment details sample (SYSR-LON001): a 12-installment loan with three installments paid](../../../ar/modules/accounting/images/reports/SYSR-LON001-en.png)
 
@@ -118,15 +116,15 @@ Almost nothing in the loan system is typed line by line — the schedules are ge
 
 - **"The loan is still Initial and the amount hasn't arrived"** — the loan issue document hasn't been recorded yet; issuing is what records the amount in the ledger and moves the status to "Released".
 - **"Where do the loan, fees and interest accounts come from?"** — from the **Loan Issue** and **Installment Payment** terms; see [Document terms](../support/accounting-document-terms.md).
-- **"The late fine isn't computed"** — make sure the **allowed late days** and **late fine percent** are set on the loan.
-- **"The loan doesn't draw down the facility limit"** — make sure the loan is linked to the correct **facility limit**; details in [Credit Facilities](./credit-facilities.md).
+- **"The late fine isn't computed"** — make sure **Late Fine Percent** is set on the loan, and that the payment's value date is later than the installment's payment date plus the loan's **Late Days**.
+- **"The loan doesn't draw down the facility limit"** — make sure the loan is linked to the correct **facility limit**; the reservation is made when the **Loan Issue** is saved. Details in [Credit Facilities](./credit-facilities.md).
 - The accounting-processing mechanism is in [How documents are processed into accounting effects](../support/accounting-request-processing.md).
 
 ## Messages you may see
 
 | Message | Why | What to do |
 |---|---|---|
-| *Installment {0} value greater than installment value {1} in bank loan {2}* — «القسط {0} اكبر من قيمة القسط {1} فى القرض {2}» | The payments recorded against one installment code — this document plus every other committed **Loan Installment Payment** — now exceed that installment's value on the loan. | Reduce the paid amount on this document, or check whether the installment was already paid elsewhere. |
-| *Interest with interest date {0} and interest value {1} greater than interest value {2} in bank loan {3}* — «الفائدة التى تاريخها {0} وقيمتها {1} اكبر من قيمة الفائدة {2} فى القرض {3}» | The same over-payment check on the interest side: the interest paid for that date now exceeds the interest line on the loan. | Correct the interest paid, or re-run **Loan Interests Calculation** if the accrued interest itself is wrong. |
-| *Can not find installment line with code {0} in bank loan {1}* — «لا يمكن ايجاد سطر قسط بكود {0} فى القرض {1}» | A payment line carries an installment code that no longer exists on the loan — usually because a **Bank Loan Scheduling** or **Changing Document** rebuilt the schedule with different codes. | Re-pick the installment on the payment document; if a scheduling document removed paid installments, correct that document instead. |
-| *Can not find interest line with interest date {0} and interest value {1} in bank loan {2}* — «لا يمكن ايجاد سطر فوائد بتاريخ فائدة {0} وقيمة فائدة {1} فى القرض {2}» | The same, for an interest payment line whose date-and-value pair no longer matches any interest line on the loan. | Re-pick the interest line, or restore it on the loan. |
+| *Installment {0} value greater than installment value {1} in bank loan {2}* — «القسط {0} أكبر من قيمة القسط {1} في القرض {2}» | The payments recorded against one installment code — this document plus every other committed **Loan Installment Payment** — now exceed that installment's value on the loan. | Reduce the paid amount on this document, or check whether the installment was already paid elsewhere. |
+| *Interest with interest date {0} and interest value {1} greater than interest value {2} in bank loan {3}* — «الفائدة التي تاريخها {0} وقيمتها {1} أكبر من قيمة الفائدة {2} في القرض {3}» | The same over-payment check on the interest side: the interest paid for that date now exceeds the interest line on the loan. | Correct the interest paid, or re-run **Loan Interests Calculation** if the accrued interest itself is wrong. |
+| *Can not find installment line with code {0} in bank loan {1}* — «لا يمكن إيجاد سطر قسط بكود {0} في القرض {1}» | A payment line carries an installment code that no longer exists on the loan — usually because a **Bank Loan Scheduling** or **Changing Document** rebuilt the schedule with different codes. | Re-pick the installment on the payment document; if a scheduling document removed paid installments, correct that document instead. |
+| *Can not find interest line with interest date {0} and interest value {1} in bank loan {2}* — «لا يمكن إيجاد سطر فوائد بتاريخ فائدة {0} وقيمة فائدة {1} في القرض {2}» | The same, for an interest payment line whose date-and-value pair no longer matches any interest line on the loan. | Re-pick the interest line, or restore it on the loan. |

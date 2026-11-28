@@ -89,9 +89,11 @@ list offers only that customer's forms. The request takes the form's sales respo
 
 The grid at the bottom has just two columns, an attachment and a description. That is deliberate: **the measurement sheets are attached as files, not typed in as data.** The supervisor comes back with photographs of a marked-up drawing and a sketch on squared paper, and those go on as attachments, one row each.
 
-**Status** offers *Initial*, *In Progress*, *Measurements Taken*, *Confirmed* and *Re-Raise*, and there is a *Converted To Contract* flag beside it. Both are maintained by hand — nothing in the module advances the status or ticks the flag for you. Treat them as the tracking fields a coordinator updates, and use a list view with a [quick filter](/platform/list-views/quick-filters.md) on status as the day's worklist.
+**Status** offers *Initial*, *In Progress*, *Measurements Taken*, *Confirmed* and *Re-Raise*, and is maintained by hand — nothing in the module advances it for you. Treat it as the tracking field a coordinator updates, and use a list view with a [quick filter](/platform/list-views/quick-filters.md) on status as the day's worklist. The *Converted To Contract* flag beside it is system-maintained: it is ticked when a project contract or subcontract built from an assay on this request is committed, and cleared when that contract is deleted or its *Source* changed (see [the assay's status](/modules/contracting/project-contracting/contracting-assays#Status)).
 
-**What it gates.** One thing only: once a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md) has been built on the request, the request can no longer be re-saved. That is the whole of its enforcement.
+**What it gates.** The request's own save has one rule: once a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md) names the request, the request can no longer be re-saved, and the save is refused with:
+
+*Cannot be updated, there is assay on it* — «لا يمكن التعديل حيث توجد مقايسة عليه»
 
 **Where it leads.** Measurements request → assay (the priced take-off) → [project contract](/modules/contracting/project-contracting/contracting-project-contract.md). It sits *before* the contract, not before the execution, and it plays no part in billing. A reader who expects it somewhere in the certificate chain is looking in the wrong place.
 
@@ -128,9 +130,7 @@ The header carries **two independent approval decisions**, each with its own sta
 
 They behave the same way: approve, and the approved figure is taken from the submitted one; reject or leave blank, and it is zeroed; ask for a change, and you must type the figure you are willing to accept. Splitting the two matters because consultants routinely approve a product and argue about its price, or the reverse.
 
-The **Details** grid below is the round-trip log — one row per submission and response, each with its own approval status, approval date, attachment and note. The header's overall status is taken from the last row of that log, so the log is not decoration: it is what decides whether the submittal counts as approved. One rule follows from that: **once a row carries the closing status, no further row can be added.** The submittal is finished.
-
-The letter codes used for that overall status are the consultant submittal codes the industry already uses; they are not translated on the screen, so agree with your consultant which of them mean "approved" and record the convention outside the system.
+The **Details** grid below is the round-trip log — one row per submission and response, each with its own approval status, approval date, attachment and note. The header's overall status is taken from the last row of that log, so the log is not decoration: it is what decides whether the submittal counts as approved. The statuses are the consultant submittal letter codes *A*, *B*, *C* and *D*, and the submittal counts as approved when the last row reads *A* or *B*. One rule follows from that: **once a row carries status *A*, no further row can be added.** The submittal is finished.
 
 ### What a submittal actually gates
 

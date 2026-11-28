@@ -67,8 +67,8 @@ expected to fill in. The others are disabled, so the screen guides you.
 | **Reports Group** | Reference | A report group, shown as a browsable catalogue |
 | **All Reports** | *nothing* | Expands into one entry per report group |
 | **Dashboard** | Reference | One dashboard |
-| **Dashboards Group** | Reference | Every dashboard in that group, as separate entries |
-| **Auto Dash Boards** | *nothing* | Expands into the automatic dashboard groups |
+| **Dashboard Group** | Reference | Every dashboard in that group, as separate entries |
+| **Auto Dashboards** | *nothing* | Expands into the automatic dashboard groups |
 | **User Favourites** | *nothing* | The signed-in user's own favourites, injected here |
 | **Link** | Link | An external web address, opened in a new tab |
 | **Internal Link** | Link | A screen inside Nama that is not a record list |
@@ -76,7 +76,7 @@ expected to fill in. The others are disabled, so the screen guides you.
 **Reference** is a two-part control: you pick the entity type first, then the record itself. The
 column beside it, **Entity Type**, is the first half of that pair rather than a setting of its own.
 
-The three that take nothing — All Reports, Auto Dash Boards, User Favourites — are worth a second
+The three that take nothing — All Reports, Auto Dashboards, User Favourites — are worth a second
 look. Each is a single row that expands into many entries when the menu is drawn, so the Favourites
 folder every user has is one row in this grid, not one row per user.
 
@@ -208,11 +208,12 @@ Refusals raised when you save a menu definition.
 
 | Message | Why | What to do |
 |---|---|---|
-| *There is anothe menu definition marked as system default: {0}* — «يوجد تعريف قائمة آخر معلم عليه كقائمة إفتراضية للنظام: {0}» | **System Default** was ticked here while another menu already carries it. Only one menu can be the system default. The message is meant to name the other menu but arrives with its placeholder unfilled, so it does not tell you which one. | Untick it here, or find the menu that already has it — filter the menu list on System Default — and clear it there first. |
-| *Can not assign parent to root groups* — «لا يمكن تحديد مجموعة أعلي للمجموعات الرئيسية» | A row in the **Groups** grid has **Root Group** ticked *and* a **Parent Group** filled in. A root group is a top-level folder and cannot sit inside anything. | Clear **Parent Group**, or untick **Root Group** if the row was meant to be a sub-group. |
+| *There is anothe menu definition marked as system default: {0}* — «يوجد تعريف قائمة آخر معلم عليه كقائمة افتراضية للنظام: {0}» | **System Default Menu** was ticked here while another menu already carries it. Only one menu can be the system default. | Untick it here, or find the menu that already has it — filter the menu list on System Default — and clear it there first. |
+| *Can not assign parent to root groups* — «لا يمكن تحديد مجموعة أعلى للمجموعات الرئيسية» | A row in the **Groups** grid has **Root Group** ticked *and* a **Parent Group** filled in. A root group is a top-level folder and cannot sit inside anything. | Clear **Parent Group**, or untick **Root Group** if the row was meant to be a sub-group. |
 | *Use root groups only as parent group, the group {0} used in the group {1} is not root* — «لا يمكنك سوى استعمال المجموعات الرئيسية كمجموعة أعلى - المجموعة {0} المستعملة في المجموعة {1} ليست رئيسية» | A sub-group's **Parent Group** names another sub-group. The menu is exactly three levels deep, so a sub-group's parent must be a root group. | Point the parent at a root group, or tick **Root Group** on the parent if it really is a top-level folder. |
-| *{0} must be of the type {1}* — «{0} يجب ان يكون من النوع {1}» | An item whose **Type** is **Report** has a **Reference** that is not a report definition. | Re-pick the reference, choosing a report definition. |
-| *{0} must be of the type {1} or type {2}* — «{0} يجب ان يكون من النوع {1} او النوع {2}» | An item whose **Type** is **Reports Group** or **Dashboards Group** has a **Reference** that is neither a master group nor a report/dashboard group record. | Pick a group of the right kind. If you use a master group, its **For Type** must be the report or the dashboard type — otherwise the sibling message *{0} must be a group for the type {1}* follows. |
+| *Can not use root group {0} in menu item {1}* | An item's **Parent Group** names a root group. Entries live in sub-groups only. This message has no Arabic text and appears in English on Arabic screens too. | Point the item at a sub-group of that root group. |
+| *{0} must be of the type {1}* — «{0} يجب أن يكون من النوع {1}» | An item whose **Type** is **Report** has a **Reference** that is not a report definition. | Re-pick the reference, choosing a report definition. |
+| *{0} must be of the type {1} or type {2}* — «{0} يجب أن يكون من النوع {1} أو النوع {2}» | An item whose **Type** is **Reports Group** or **Dashboard Group** has a **Reference** that is neither a master group nor a report/dashboard group record. | Pick a group of the right kind. If you use a master group, its **For Type** must be the report or the dashboard type — otherwise the sibling message *{0} must be a group for the type {1}* follows. |
 
 ## See also
 

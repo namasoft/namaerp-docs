@@ -130,7 +130,7 @@ The whole chain, and which step does what, is on
 contract directly; the contract's estate picker only offers units that are available and not
 reserved, so a unit cannot be sold twice either way.
 
-**Revenue on delivery.** With *Create Accounting Effects For Handovered Documents Only* on the sales
+**Revenue on delivery.** With *Create Accounting Effects For Handed Over Documents Only* on the sales
 contract's term, the contract marks the unit sold and builds the schedule but books nothing until the
 Estate Handover releases its entry. See [handing the unit over](/modules/realestate/sales/realestate-handover).
 
@@ -159,8 +159,6 @@ and **Cancel Contract** to end a lease. See [the leasing cycle](/modules/realest
   Pick by whether you need cost per unit.
 - **Migrate sold units through opening sales documents.** Load the remaining schedule of each sold
   unit on an opening sales document rather than re-keying old contracts and their collections.
-- **Fee and commission accounts first.** They come from the type records, so set them before the
-  first contract.
 
 ## Where to read next
 

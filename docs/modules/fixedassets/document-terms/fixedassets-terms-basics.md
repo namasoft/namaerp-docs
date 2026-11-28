@@ -25,8 +25,9 @@ pick *Fixed Asset Purchase Document* and the record grows the purchase-specific 
 at is chosen entirely by that field.
 
 A document then picks its term in the **Term** field on its header, next to the book and code. Most
-Fixed Assets documents have that field. A few do not — the asset receipt document, the offer and the
-two movement documents never ask for one, because they have nothing to wire.
+Fixed Assets documents have that field. A few do not — the asset receipt document, the offer, the
+purchase request, the properties document and the two movement documents never ask for one, because
+they have nothing to wire.
 
 ::: tip One term per accounting story
 Terms are cheap and they are the natural place to separate stories that share a screen. Al-Waha keeps
@@ -51,9 +52,9 @@ are the same everywhere:
 | Account (`الحساب`) | `.accountRef` | The fixed account, when you are naming one directly |
 | Reference Type (`نوع المرجع`) and Reference Source Field (`الحقل مصدر المرجع`) | `.accountSource.entityType`, `.accountSource.fieldID` | When the account comes from a reference — say, from the supplier on the document, or from the employee holding the item |
 | Subsidiary account type (`نوع الحافظة`) | `.subsidiaryAccountType` | Which slot of that reference's accounts bag to read |
-| Bag Account Id (`كود الحساب من الحقيبة`) | `.bagAccountId` | Which account inside the bag, when the bag holds several |
+| Bag Account Id / Field ID (`كود الحساب من الحقيبة / حقل الحساب`) | `.bagAccountId` | Which account inside the bag, when the bag holds several |
 | Narration template / query (`قوالب واستعلامات الشرح`) | `.narrationTemplate`, `.narrationQuery` | The wording written on the ledger line |
-| Analysis set source | `.analysisSetSource.type` | Where the analysis set on the line comes from |
+| Analysis set source | `.analysisSetSource.type` | Where the analysis set on the line comes from. Shown only when Global Configuration adds the analysis set source to terms; the sector, branch, department, entity dimension and reference sources work the same way |
 
 The account-source idea is what makes one term serve hundreds of assets. You do not name the machinery
 cost account on the purchase term — you tell the term "take the account from the fixed asset", and each
@@ -95,8 +96,8 @@ This is the table most readers come here for. It is grouped by the job you are d
 |---|---|---|
 | Fixed Asset Purchase Document (`سند شراء أصل ثابت`) | Yes | The supplier/payable side, the tax and discount account sides, the tax settings, and whether the document creates the asset record itself |
 | Fixed Asset Purchase Order (`أمر شراء أصل`) | Yes | Tax settings, and whether an order raised from a request or offer copies only the quantities still outstanding — the order books nothing |
-| Fixed Asset Offer (`عرض سعر أصل`) | Yes | Tax settings only |
-| Fixed Asset Purchase Request (`طلب شراء أصل`) | Shares the order's term | Nothing needs configuring — a request has no financial effect |
+| Fixed Asset Offer (`عرض سعر أصل`) | Shares the order's term type, but the offer screen has no Term field | Nothing — a term of this type carries tax settings, but the offer never picks one |
+| Fixed Asset Purchase Request (`طلب شراء أصل`) | Shares the order's term type, but the request screen has no Term field | Nothing needs configuring — a request has no financial effect |
 | Fixed Asset Initial Receipt (`سند استلام أصل مبدئي`) | Yes | Tax settings only |
 | Fixed Asset Opening Document (`افتتاح أصل ثابت`) | Yes | Four switches that decide how dates and remaining life are derived for legacy assets. No accounts — the entry uses the asset's own accounts and the mediator account typed on the document |
 | Fixed Asset Opening Document Update (`تعديل افتتاح أصل ثابت`) | Yes | No accounts — one switch that decides whether picking the opening document to correct also copies its lines |
@@ -112,7 +113,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 | Fixed Asset Revaluation (`إعادة تقييم الأصول`) | Yes | The gain account and the loss account, the dimension source, and whether straight-line assets may be converted |
 | Asset addition deduction (`سند الإضافة و الاستبعاد`) | Yes | The account facing the asset, eight tax account sides, two discount-value sides, and the switches that decide whether each tax lands in the asset's value |
 | Aggregated Addition Deduction Document (`مستند إضافة واستبعاد مجمع`) | Yes | The book and term of the documents it generates |
-| Fixed Asset Properties (`خصائص أصل ثابت`) | Yes | Nothing — the document changes life and salvage values only and never reaches the ledger |
+| Fixed Asset Properties (`خصائص أصل ثابت`) | A term type exists, but the screen has no Term field | Nothing — the document changes life and salvage values only and never reaches the ledger |
 | Aggregated Fixed Asset Properties Document (`سند خصائص أصل مجمع`) | Yes | The book and term of the documents it generates (`termConfig.faPropertiesBook`, `termConfig.faPropertiesTerm`) |
 
 ### Disposal
@@ -144,7 +145,7 @@ This is the table most readers come here for. It is grouped by the job you are d
 
 | Document | Term? | What the term controls |
 |---|---|---|
-| Fixed Asset ProformaInvoice (`فاتورة اعتماد مبدئية`) | Yes | No accounts — the proforma invoice books nothing. One switch decides whether committing it creates asset records for lines that name no asset |
+| Fixed Asset Proforma Invoice (`فاتورة اعتماد مبدئية`) | Yes | No accounts — the proforma invoice books nothing. One switch decides whether committing it creates asset records for lines that name no asset |
 | Fixed Asset Expense Document (`مصروف اعتماد أصل`) | Yes | Both sides of the expense entry, four tax pairs, a discount pair, and whether a line is excluded from the landed cost |
 | Fixed Asset Letter of Credit cost (`سند تكليف اعتماد أصل`) | Yes | The clearing account only — the asset side comes from each asset |
 
@@ -156,8 +157,8 @@ Some Fixed Assets documents have no term configuration in existence:
 - Fixed asset Letter of Credit (`اعتماد أصول`)
 - Fixed Asset Receipt Document (`مستند استلام أصل`)
 - Fixed Asset Return Document (`سند رجوع أصول`) and Fixed Asset Out Document (`سند خروج أصول`)
-- FixedAssets Taking Document (`مستند جرد أصول`)
-- Prevent Assets Depreciation Document (`مستند منع اهلاك اصول`)
+- Fixed Assets Taking Document (`مستند جرد أصول`)
+- Prevent Assets Depreciation Document (`مستند منع إهلاك أصول`)
 - Maintenance Record (`سجل صيانة`) and Maintenance Record Request (`طلب سجل صيانة`)
 
 For a user this is good news rather than a gap. None of these nine reaches the ledger, and none of

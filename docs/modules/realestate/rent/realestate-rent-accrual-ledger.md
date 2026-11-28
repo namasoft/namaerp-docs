@@ -11,8 +11,8 @@ A rent contract is one document with one date. A three-year lease signed on 1 Ma
 to carry its own share.
 
 The **Rent Installment Ledger** (قيد إثبات استحقاق قسط إيجار) is how Nama solves that. It takes the
-schedule the contract produced and cuts it into one document per accrual period, each dated on the
-day the money actually becomes due, and it is that document — not the contract — that recognises the
+schedule the contract produced and cuts it into one document per accrual period, each dated in the
+period its installments fall due, and it is that document — not the contract — that recognises the
 period's revenue. Think of it as the automatic إثبات استحقاق journal that turns deferred rent into
 rent revenue, period by period. It doubles as the tax invoice for its period, so the e-invoice for a
 quarter of rent is issued from here.
@@ -34,7 +34,7 @@ ordinary [rent contract](/modules/realestate/rent/realestate-rent-contract.md) a
 controlled entirely from the contract's own
 [document term](/modules/realestate/document-terms/realestate-terms-rent.md):
 
-- **Generate Rent Installment Ledger** (إنشاء قيد إثبات استحقاق قسط إيجار أليا) is the master
+- **Generate Rent Installment Ledger** (إنشاء قيد إثبات استحقاق قسط إيجار آليا) is the master
   switch. Left off, no accrual documents exist at all and the contract's own entry is the only
   accounting the lease produces.
 - **Rent Ledger Period Type** (نوع فترة قيد إثبات استحقاق الأقساط) chooses how the installments are
@@ -90,7 +90,7 @@ and the accrual documents never block the contract from being deleted.
 
 Occasionally the date the money is due and the date the revenue belongs in are not the same — a
 quarter that starts on 1 January but really covers the December that has just ended, an installment
-whose due date was pushed out for a tenant. The **Actual Ledger Value Date**
+whose due date was pushed out for a tenant. The **Ledger Installment Value Date**
 (التاريخ الفعلي لقيد الاستحقاق) column on the contract's Rents grid is the escape hatch: fill it on a
 line and the grouping uses that date instead of the due date, so the line's accrual joins a different
 document without the due date — and therefore collection — moving at all. Leave it empty and the due
@@ -189,8 +189,9 @@ Their refusals:
 
 ## What Nama checks
 
-An accrual document will not commit with an empty lines grid, and every line's installment code must
-exist in the contract it came from and must not appear twice in the same document. The from/to-date
+An accrual document will not commit with an empty lines grid (*Ledger lines can not be empty*), and
+every line's installment code must exist in the contract it came from (*Installment code {0} is not found in the document {1}*)
+and must not appear twice in the same document (*Repeated code {0}*). The from/to-date
 consistency rule that the contract enforces is not applied here, and the accrual document never takes
 part in the estate's rent-status timeline — it changes nothing about whether the unit is rented,
 reserved or free.

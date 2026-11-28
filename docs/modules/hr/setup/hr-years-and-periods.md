@@ -17,9 +17,9 @@ An **HR Year** (سنة رواتب) is a payroll-only calendar year — it is del
 
 ![HR Year, with its embedded periods grid and Open/Close Periods actions](../../../ar/modules/hr/images/setup/hr-year-en.png)
 
-An HR Year owns an embedded grid of **HR Periods** (فترات الرواتب) — typically twelve, one per month, though nothing forces that shape. Each period line carries its own Code, Arabic Name/English Name, Start/End Date, **Days In Month** (عدد ايام الشهر — the day-count convention used for daily-rate math), an **Aggregated Period Code** (كود الفترة المجمعة), and a **Period Status** (حالة الفترة) of either **Opened** (مفتوح) or **Closed** (مغلقة).
+An HR Year owns an embedded grid of **HR Periods** (فترات الرواتب) — typically twelve, one per month, though nothing forces that shape. Each period line carries its own Code, Arabic Name/English Name, Start/End Date, **Days In Month** (عدد أيام الشهر — the day-count convention used for daily-rate math; it comes before the HR Calendar's and the HR configuration's value, in the order given on [HR Calendar](hr-calendar-and-holidays.md)), an **Aggregated Period Code** (كود الفترة المجمعة), and a **Period Status** (حالة الفترة) of either **Opened** (مفتوح) or **Closed** (مغلقة).
 
-The same period record also exists as its own standalone entity at **Payroll > Settings > HR Period**, with identical fields plus a reference back to its HR Year — useful when you need to look up or report on a single period without opening the whole year.
+The same period record also exists as its own standalone entity at **Payroll > Settings > HR Period**, with identical fields plus a reference back to its HR Year — useful when you need to look up or report on a single period without opening the whole year. HR Periods are created only by saving an HR Year; a period entered on the HR Period screen itself is refused with *HR Periods are system entities, you can create them only using HR year master file* — «فترات الموارد يتم إنشاؤها من النظام ، يمكن إنشاؤها من سنوات الموارد البشرية فقط».
 
 ::: tip Aggregated Period Code
 Two ordinary periods can share the same **Aggregated Period Code**, which lets reports and aggregated documents roll several periods up under one label — for example, treating two half-month runs as a single reporting month. It doesn't change how salary is calculated; it only affects how periods are grouped afterwards.
@@ -27,7 +27,7 @@ Two ordinary periods can share the same **Aggregated Period Code**, which lets r
 
 ### Actions on this screen
 
-Three buttons sit on the HR Year screen, above the periods grid. The first two act on **every** period in the grid at once; to close or reopen a single month, change that line's **Status** by hand instead. Either way, the change only counts once you save the year.
+Three buttons sit on the HR Year screen, above the periods grid. The first two act on **every** period in the grid at once; to close or reopen a single month, change that line's **Period Status** by hand instead. Either way, the change only counts once you save the year.
 
 - **Close Periods** (غلق الفترات) — sets every period's status to Closed, which blocks further salary generation against them. This is the safety switch once the year's payroll is finalized. Every payroll document that names a closed period is refused with *Hr period {0} is closed* — «فترة الرواتب {0} حالتها مغلقة» — salary sheets, payslips, loans and increases alike, so this one message on a payroll screen almost always means "someone closed the month".
 - **Open Periods** (فتح الفترات) — sets every period back to Opened.
@@ -47,8 +47,8 @@ Beyond the identification fields (Code, Group, Arabic Name, English Name), an is
 
 | Flag | What it prevents |
 |---|---|
-| Do Not Repeat Issuance In The Same Aggregated Period (عدم تكرار الصرفية خلال نفس فترة الرواتب المجمعة) | Generating this issuance more than once for periods sharing the same Aggregated Period Code. |
-| Do Not Repeat Issuance In The Same Year (عدم تكرار الصرفية خلال نفس السنة) | Generating this issuance more than once anywhere within the same HR Year. |
+| Do Not Repeat Issuance In The Same Aggregated Period (عدم تكرار الصرفية خلال نفس فترة الرواتب المجمعة) | Saving a salary document with this issuance when a saved salary document of the same HR Year already carries it in a period with the same Aggregated Period Code (*Salary document {0} has the same issuance {1} and the same aggregated period code {2}* — «يوجد سند الراتب {0} له نفس الصرفية {1} ونفس كود الفترة المجمعة {2}»). The period must have an Aggregated Period Code, otherwise the document is refused with *The field {0} in period {1} can not be empty* — «لا يمكن ترك الحقل {0} في الفترة {1} فارغاً». |
+| Do Not Repeat Issuance In The Same Year (عدم تكرار الصرفية خلال نفس السنة) | Saving a salary document with this issuance when a saved salary document of the same HR Year already carries it (*Salary document {0} has the same issuance {1} In the Same Year* — «يوجد سند الراتب {0} له نفس الصرفية {1} في نفس العام»). |
 | Do Not Collect Employees That Do Not Have Components For This Issuance (عدم تجميع الموظفين الذين ليس لهم مفردات لهذه الصرفية) | Pulling in employees who have no salary component lines tagged for this issuance at all — keeps a "Commissions" run, say, from collecting every employee in the company. |
 
 When a salary sheet is generated, it is built for one **HR Period + Issuance** combination at a time — which is exactly what makes parallel streams possible without them colliding.

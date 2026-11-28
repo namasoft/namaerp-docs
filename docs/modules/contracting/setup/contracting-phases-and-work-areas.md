@@ -78,11 +78,15 @@ Finishes 20%" — that seeds every term line at once.
 The screen is a basic identity block plus one grid, **Phases** (English caption *Phases or Cycles*).
 Each row names a phase — required — the **Price Percentage** billed at that phase, and a description.
 
-Two rules block a save: the grid may not be empty, and the same phase may not appear twice. Notably
+Two rules block a save: the grid may not be empty, and the same phase may not appear twice. The
+messages are:
+*Details must be filled* — «لا يمكن ترك التفاصيل فارغة», and
+*Repeated phase* — «مرحلة مكررة». Notably
 the group itself does **not** check that the percentages add up to 100. That check happens later, on
-the contract, where the five slots of each priced line are summed and rejected if they do not total
-100% — and there is a configuration switch that relaxes it, described in
-[Contracting Configuration](/modules/contracting/contracting-configuration.md). So a group weighted
+the contract, where the five slots of each priced line are summed and the save is refused if they
+do not total 100%, with:
+*sum of phases price percentage must be 100* — «مجموع نسب الأسعار للمراحل يجب أن يكون 100». The module option **Allow Phase Percentage to Exceed 100%** switches the check off,
+described in [Contracting Configuration](/modules/contracting/contracting-configuration.md). So a group weighted
 20/40/20/10 saves quite happily and only bites when a contract that uses it is saved. Get the
 arithmetic right in the group and the problem never arises.
 
@@ -120,8 +124,8 @@ extracts and penalties can afterwards be reported by location instead of only by
 
 ![The Work Area screen: identity, the parent that places it in the tree, and its type](../../../ar/modules/contracting/images/setup/work-area-main-en.png)
 
-The screen is a plain master file: Code, Group, Name1, Name2, **Parent**, **Type**, Description and
-dimensions. **Parent** is what builds the tree — the module maintains the full path behind the scenes,
+The screen is a plain master file: Code, Group, Name1, Name2, English Code, **Parent**, **Type**,
+Description and dimensions. **Parent** is what builds the tree — the module maintains the full path behind the scenes,
 which is what makes "everything under Block B" queries work. A work area with no parent is perfectly
 valid, so the tree may have as many roots as you have sites.
 
@@ -143,7 +147,10 @@ Read that table before you design your first tree, because two entries in it sur
 **Unit** must hang directly off a **Building**, so the intuitive Building → Floor → Unit chain will
 not save; put the units directly under the building. **Floor** is unconstrained, which makes it useful
 as a free label you can insert anywhere the site's own vocabulary needs one. Every rule is skipped
-when the parent is empty or the parent has no type of its own.
+when the parent is empty or the parent has no type of its own. A broken rule refuses the save with
+*Parent must be square*, *Parent must be block*, *Parent must be building*, *Parent must be Unit* or
+*Parent must be Unit component*; these messages have no Arabic text and appear in English on Arabic
+screens.
 
 ::: info The work area is a reporting dimension, and only that
 The work area you set on a contract term line is copied forward to the execution line, to the extract

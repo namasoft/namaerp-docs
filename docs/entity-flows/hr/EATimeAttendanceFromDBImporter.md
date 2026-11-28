@@ -23,8 +23,8 @@ Manual execution or scheduled tasks for regular attendance data imports. Commonl
 2. **Processes data** - Transforms results using format formula and optional Groovy preprocessing
 3. **Maps to employees** - Matches records to employees using attendance machine codes
 4. **Finds or creates document** - Uses initialization query to determine document properties
-5. **Imports attendance lines** - Adds processed attendance records to the document
-6. **Saves document** - Either commits (if previously committed) or saves as draft based on parameter
+5. **Imports attendance lines** - Writes the processed attendance records into the document, replacing the lines it already had
+6. **Saves document** - A document that was committed before is committed again whatever parameter 4 says; a new or draft document is saved as a draft when parameter 4 is `true`, otherwise committed
 7. **Disables versioning** - Temporarily disables entity versioning during save to improve performance
 
 ## Parameters
@@ -33,7 +33,7 @@ Manual execution or scheduled tasks for regular attendance data imports. Commonl
 
 **Parameter 2:** Format Formula (Required) - Transformation rules for data mapping
 
-**Parameter 3:** Document Initialization Query (Required) - SQL to determine document properties
+**Parameter 3:** Document Initialization Query (Required) - A query whose first row sets the document's fields: every column named after a field id of the Time Attendance document (`code`, `book`, `fiscalPeriod`, `valueDate`, …) is written to that field. The document with that `code` is updated when it exists; otherwise a new document is created
 
 **Parameter 4:** Save as Draft (Optional) - true to save as draft; false or empty to commit
 
@@ -48,12 +48,14 @@ Manual execution or scheduled tasks for regular attendance data imports. Commonl
 ## Example Attendance Query
 
 ```sql
-SELECT USERID, CHECKTIME, CHECKTYPE
+SELECT USERID, CHECKTIME [(yyyy-MM-dd HH:mm:ss)], CHECKTYPE
 FROM [DSCATM].dbo.CHECKINOUT atm 
 LEFT JOIN dsc.dbo.Employee e ON e.attendanceMachineCode = CAST(atm.USERID AS nvarchar(50))
 WHERE MONTH(atm.CHECKTIME) = MONTH(GETDATE()) 
   AND YEAR(atm.CHECKTIME) = YEAR(GETDATE())
 ```
+
+A date column whose alias holds a pattern in round brackets, as `[(yyyy-MM-dd HH:mm:ss)]` here, is turned into text with that pattern before the format formula reads it. The format formula uses the tokens described in [Attendance and Departure Formulas](/modules/hr/attendance-machine-formula).
 
 ## Example Document Initialization Query
 
@@ -70,7 +72,7 @@ SELECT
 - **TimeAttendance** - Creates new documents or updates existing ones
 - **TimeAttendanceLine** - Creates attendance line records
 - **Employee** - References employees by attendance machine code (read-only)
-- **External Database** - Source of attendance data
+- **Attendance machine database** - Read by the query in parameter 1
 
 **Module:** hr
 

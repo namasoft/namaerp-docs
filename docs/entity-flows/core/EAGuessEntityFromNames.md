@@ -29,7 +29,7 @@ Automated entity matching for reference fields requiring population during data 
 
 **Parameter 1:** Guess Into Field (Target) (Required) - Target reference field to populate (e.g., item, customer)
 
-**Parameter 2:** Guess From Field (Source) (Required) - Source field containing text to match (e.g., description, itemName)
+**Parameter 2:** Guess From Field (Source) (Required) - Source field containing text to match (e.g., `description1`, `details.text2`). The target and the source must both be header fields or both be fields of the same lines; mixing a header field with a line field fails with *The field {0} and {1} are header and detail, this is not yet supported*
 
 **Parameter 3:** Target Entity Type (Conditional) - Required for generic reference fields (e.g., InvItem, Customer)
 
@@ -39,9 +39,9 @@ Automated entity matching for reference fields requiring population during data 
 
 **Parameter 6:** Minimum Substring Length (Optional) - Minimum substring length for calculations (default: 4)
 
-**Parameter 7:** Previous Result Cache Statement (Optional) - SQL query for previous matching results
+**Parameter 7:** Previous Result Cache Statement (Optional) - SQL query for previous matching results: its first column is a source text and its second column the id of the record that text was matched to before, e.g. `select distinct l.text2,l.item_id from PurchaseQuotationLine l where l.text2 <> '' and l.item_id is not null`. A source value found there is taken from it before any name matching
 
-**Parameter 8:** Extra Comparison Fields (Optional) - Additional field comparisons (targetField=sourceField)
+**Parameter 8:** Extra Comparison Fields (Optional) - Additional fields that must be equal, one `field of the guessed record=field of the current record` per line or separated by commas (e.g. `defaultDetailData.minPrice=details.n2`)
 
 **Parameter 9:** Min Matched First Letters (Optional) - Minimum first letters that must match (default: 4)
 

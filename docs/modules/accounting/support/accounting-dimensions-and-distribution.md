@@ -23,9 +23,9 @@ Alongside these, an account can carry up to **five subsidiary types** (customer,
 
 Not every account should accept every dimension. On the account itself you can tighten this:
 
-- **restrict to the public dimension only** — the account only accepts the shared/public value of a dimension, not private ones,
-- **don't use with the public dimension** — the opposite: the account refuses the public value,
-- **mandatory reference / mandatory narration** — force the user to fill a reference or a narration on lines hitting this account.
+- **Must Use With Public Sector Only** (and the same for **Branch**, **Department** and **Analysis Set**) — the account only accepts the public value of that dimension, not a specific one,
+- **Do Not Use With Public Sector** (and the same for **Branch**, **Department** and **Analysis Set**) — the opposite: the account refuses the public value, so a specific one must be named,
+- **Do Not Allow Empty Entity Dimension / Reference 1 … 3 / Narration / Narration 2 When Moving This Account** — force the user to fill the record, a reference or a narration on lines hitting this account.
 
 These rules keep your analysis clean: a department-expense account can be made to *require* a department, a head-office account can be barred from department analysis entirely.
 
@@ -35,11 +35,11 @@ Sometimes one figure needs to be split across many dimensions — shared rent ac
 
 A distribution rule sets, **for each dimension** (account, analysis set, branch, department, sector, references, subsidiary, record), how that dimension participates:
 
-- a **policy** — **None** (don't distribute this dimension), **Distribute Public Only** (spread only the public value), or **Distribute Any** (spread across all values),
+- a **policy** — **None** (don't distribute over this dimension), **Distribute Public Only** (distribute a line only when its own value for this dimension is the public one; a line that already names a specific value is left as it is), or **Distribute Any** (distribute every line, whatever value it carries). The account, record, reference and subsidiary policies offer only **None** and **Distribute Any**,
 - an **order** (which dimension is distributed first), a **minimum undistributed value** (below which it won't bother splitting), and a **keep-and-invert** option,
 - and for advanced cases, a **query** or **script** that computes the split dynamically.
 
-The **distribution type** is either **Normal** or **Composite** (a distribution built up from other distributions). When several rule lines could apply, the **multi-distribute** setting decides which fire: **first matching only**, **all matching consecutively**, or **all matching consecutively considering order**.
+The **distribution type** is either **Normal** or **Composite** (a distribution built up from other distributions). When several rule lines could apply, the **Multi Distribution Type** setting decides which fire: **First Matching Only**, **All Matching Consecutively**, or **All Matching Consecutively Consider Order**.
 
 Finally, a distribution can be driven by the **other side** of the entry — "distribute based on the other side's branch / department / sector / subsidiary…" — and narrowed with **other-side criteria**, so the split mirrors how the opposite side of the transaction was analyzed.
 
@@ -47,8 +47,8 @@ Finally, a distribution can be driven by the **other side** of the entry — "di
 
 ## For Support
 
-- **"A line won't accept a department / analysis set"** — the account is restricted; check its dimension rules (**restrict to public only** / **don't use with public**).
-- **"The system forces a reference or narration"** — that account has **mandatory reference / narration** turned on.
-- **"A value isn't being split the way I expect"** — review the **Account Distribution** rule: each dimension's **policy**, its **order**, the **minimum undistributed value**, and the **multi-distribute** matching mode.
+- **"A line won't accept a department / analysis set"** — the account is restricted; check its dimension rules (**Must Use With Public … Only** / **Do Not Use With Public …**).
+- **"The system forces a reference or narration"** — that account has one of the **Do Not Allow Empty Reference … / Narration … When Moving This Account** options ticked.
+- **"A value isn't being split the way I expect"** — review the **Account Distribution** rule: each dimension's **policy**, its **order**, the **minimum undistributed value**, and the **Multi Distribution Type**.
 - **"The cost-center list is wrong"** — cost centers are the **Analysis Set** tree under `Basic > Dimensions`; fix it there.
 - For where a document's *accounts* (not dimensions) come from, see [Document terms](./accounting-document-terms.md).

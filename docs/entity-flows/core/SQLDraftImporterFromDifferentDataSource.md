@@ -28,7 +28,7 @@ Manual execution for importing data from external systems, legacy database migra
 
 ## Parameters
 
-**Parameter 1:** Update SQL (Optional) - SQL statement to run during import process for updates
+**Parameter 1:** Update SQL (Optional) - SQL statement run after each imported record is saved
 
 **Parameter 2:** Data Source Name (Required) - External database connection name (must be defined in context.xml)
 
@@ -38,33 +38,7 @@ Manual execution for importing data from external systems, legacy database migra
 
 **Parameter 5:** SQL Statement 3 (Optional) - Third SQL query for complex imports
 
-## SQL Query Format
-
-### Entity Record Query
-```sql
-select 
-  '' [:-record:PurchaseOrder],
-  'PurchaseOrder$#PO' book,
-  'PO'+CONVERT(NVARCHAR(10), GETDATE(), 112) code,
-  'PurchaseOrder$#PO' term,
-  getdate() valueDate
-```
-
-### Detail Record Query
-```sql
-select 
-  '' [:-detail:details],
-  'PO'+CONVERT(NVARCHAR(10), GETDATE(), 112) #code,
-  i.code [details.item.itemCode],
-  i.id [details.item.item],
-  i.dfMinQuantity-sum(coalesce(q.net,0)) [details.quantity.quantity.primeQty.value],
-  i.primBaseUnit_id [details.quantity.quantity.primeQty.uom] 
-from InvItem i 
-left join ItemDimensionsQty q on q.item_id = i.id 
-where i.dfMinQuantity > 0
-group by i.id,i.dfMinQuantity,primBaseUnit_id,i.code
-having sum(coalesce(q.net,0))<i.dfMinQuantity
-```
+The statements, the column headings, the Update SQL and the error handling are those of [SQLImporter](/entity-flows/core/SQLImporter). Here the SQL statements start at Parameter 3, both the statements and the Update SQL run on the data source of Parameter 2, and the imported records are saved as drafts. Parameters 6 to 15 have no title but are read as further SQL statements.
 
 ## Database Tables Affected
 

@@ -137,8 +137,10 @@ The request, the order and the invoice each carry one button, on the page that h
 
 Like every other cost document, a misc contracting invoice line that a committed
 [Cost Execution](/modules/contracting/costs/contracting-cost-execution) has already absorbed cannot be
-changed, and the invoice cannot be deleted: *Can not delete the document … because it is linked to cost
-execution …*. To correct something that far back, the Cost Execution has to be reversed first.
+removed, moved to another term code or contract, or reduced below what was absorbed, and the invoice
+cannot be deleted. The attempt fails with
+*You removed or modified line in document {0} which is linked with cost execution {1}* — «لقد تم حذف أو تعديل سطر من المستند {0} وهو مرتبط بمستند حصر تكاليف مقاولات {1}».
+To correct something that far back, the Cost Execution has to be reversed first.
 
 The invoice's term also offers the analysis-card ceilings — refuse the save if the actual quantity or
 the actual cost on this term would exceed the quantity or cost planned on its analysis card. They are
@@ -167,6 +169,7 @@ term.
    so nobody invoices it twice.
 
 Note what the 18,900 excludes: the VAT, which is recoverable and belongs to the tax accounts, not to
-the project. And note where it would have gone if the term code had been left blank — nowhere. The
+the project. It is left out because the invoice's term ticks *Exclude Tax 1 From Cost*; without that
+option the cost entry carries the line's full net value, tax included. And note where it would have gone if the term code had been left blank — nowhere. The
 journal entry would still be perfect and the project would never have heard about the fence. That trap
 is described in full in [How Project Cost Is Built](/modules/contracting/costs/contracting-cost-model).

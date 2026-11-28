@@ -22,7 +22,7 @@ Manual execution or scheduled batch processing for contract renewals. Typically 
 1. **Identifies expired contracts** - Uses SQL query to find committed, non-cancelled contracts past their expiration date
 2. **Processes each contract** - Iterates through found contracts in separate transactions
 3. **Duplicates contract data** - Creates a copy of the original contract maintaining most settings
-4. **Updates date ranges** - Calculates new from/to dates based on the original contract period
+4. **Updates date ranges** - The new from date is the day after the original contract's to date, the new to date is the new from date plus the contract's period, and the value date is the new from date
 5. **Adjusts payment schedules** - Updates due dates for payment lines based on the new contract period
 6. **Filters expenses** - Removes expenses marked as "do not copy with extension"
 7. **Resets payment status** - Marks all payments as unpaid with zero paid amounts
@@ -32,11 +32,13 @@ Manual execution or scheduled batch processing for contract renewals. Typically 
 
 **Parameter 1:** Generated Contract Book Code or ID (Required) - Book for the new extended contracts
 
-**Parameter 2:** Generated Contract Term Code or ID (Required) - Payment term for the new extended contracts  
+**Parameter 2:** Generated Contract Term Code or ID (Required) - Document term for the new extended contracts
 
-**Parameter 3:** Extend Contracts That Have At Least N Days Remaining (Optional) - Minimum days past expiration (default: 0)
+**Parameter 3:** Extend Contracts That have at least n days remainig (default is 0 days) (Optional) - A whole number N: only contracts whose to date is N days ago or earlier are extended (default: 0, so a contract is extended from its to date onwards)
 
-**Parameter 4:** Manual Query (Optional) - Custom SQL to specify which contracts to extend
+**Parameter 4:** Manual Query (Optional) - Custom SQL to specify which contracts to extend, returning the entity type and the id (or code) of each contract. It replaces the default query below
+
+Fill parameter 3 or parameter 4, not both: with both filled the entity flow is rejected on saving with *You must specify only one of the two parameters {0} and {1}. Provided values are {2},{3}*.
 
 ## Default Query Logic
 

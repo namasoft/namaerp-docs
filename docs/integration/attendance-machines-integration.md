@@ -12,128 +12,14 @@ The system supports two methods for integrating with attendance machines:
 
 ## Method 1: The attcron Application
 
-::: tip
-This application requires a separate license — please contact the sales or technical support team to obtain a license.
-:::
+attcron is a small application installed on a branch computer that can reach the attendance machine or its software. On a schedule it reads the new punches, through the ZkBioTime web interface, a SQL Server database, a Microsoft Access file or the Timetaag cloud service, and sends them to Nama. Every connection starts at the branch, so a branch needs no static IP; it only has to be able to reach the Nama server.
 
-::: tip Full reference
-This section is a summary. For installation, the day-to-day screen, where the agent keeps its settings and log, upgrading, and a full list of its error messages, see **[The attcron Attendance Agent](attcron-agent.md)**. For the Nama-side record that drives it, see **[Attendance Machines](../modules/hr/attendance/attendance-machines.md)**.
-:::
+Setting it up takes two steps, and each has its own page:
 
-This is a dedicated application installed on devices that have software for importing data from attendance machines.
-Its primary function is to fetch data from the local program's database or through the machine program's API, and send it periodically to the system.
+1. **In Nama**, create an **Attendance Machine Config** record: the connection type and its fields, the six-field cron expression, the queries and mapping lines, and the scheduled task that runs after each collection. See [Attendance Machines](/modules/hr/attendance/attendance-machines), which also names the licence this feature needs.
+2. **On the branch computer**, install the agent and connect it to that record with an API Credentials record. See [The attcron Attendance Agent](/integration/attcron-agent) for the prerequisites, the installer, the setup form and its password, the daily screen, the files the agent keeps, upgrading and its messages.
 
-### Application Features
-
-* No static IP is required at branches that have attendance machines.
-* However, a static IP or any method that allows the application to reach the main Nama ERP server must be available.
-
-### Setup Steps
-
-* Create an API Credentials record in Nama ERP and keep the **Client ID** and **Client Secret**.
-
-* Create a new "Attendance Machine Settings" record and specify:
-
-  * A suitable code
-  * A name
-  * The connection type (`machineConnectionType`)
-
-* Set a **CRON Expression** (`cronExpression`) to define when data is read and sent to the system:
-
-  * The syntax has **six** fields — seconds, minutes, hours, day of month, month, day of week.
-  * Example: `0 5 * * * *` will read data every hour at the fifth minute.
-  * Beware of five-field examples from sites such as [https://crontab.guru](https://crontab.guru) — they need a leading seconds field adding before they will work here.
-
-* Set the scheduled task to run after pulling data from the machine (`runScheduledTaskAfterFetch`):
-
-  * This task fetches data from the fingerprint log table into the time attendance document.
-  * To simplify task creation, a button named **Create Scheduled Task** has been added.
-
-### Connection Type
-
-The connection type has four options:
-
-#### ZkBiotime
-
-* Allows transferring fingerprint data from the ZK BioTime software.
-* Requires:
-
-  * Machine URL (`machineUrl`)
-  * Username (`username`)
-  * Password (`password`)
-
-#### SQL Server
-
-* Allows transferring data from any machine that supports SQL Server.
-
-* Required settings:
-
-  * **Machine URL** (`machineUrl`): the SQL Server address — usually `localhost`
-  * **Database Port** (`databasePort`): the connection port — usually `1433`
-  * **Database Name** (`databaseName`)
-  * **Username** (`username`): e.g. `sa`
-  * **Password** (`password`)
-  * **SQL Query** (`sqlQuery`): the query used to periodically read data from the machine's database
-  * **Read For Period Query** (`readForPeriodQuery`): a query used to read data for a specific period when the "Read Attendance For Period" button is pressed in the attcron application
-  * **Mapping Lines** (`mappingLines`): maps the query result columns to what the system needs
-
-    Contains three columns:
-
-    * **Response Field** (`mappingLines.responseField`): the name of the field required by the system.
-      Possible values:
-      `EmployeeCode`, `firstName`, `lastName`, `department`, `punchTime`, `punchState`, `punchStateDisplay`, `verifyType`, `verifyTypeDisplay`, `gpsLocation`, `areaAlias`, `terminalSN`, `uploadTime`
-    * **Column Index** (`mappingLines.columnIndex`): the column number in the query result
-    * **Column Alias** (`mappingLines.columnAlias`): an alternate column name to use in the SQL statement
-
-* A button named **Default Queries** inserts default queries suitable for ZK machines.
-
-#### Access
-
-* Allows transferring data from a Microsoft Access database.
-* Same settings as SQL Server, except:
-
-  * Instead of a server URL, specify the **database file path** (the *File Path* field, `machineUrl`) on the machine where the attcron application will be installed.
-  * Access does not use the username, password, database port or database name, but they must still hold placeholder values: the agent refuses to start while the username or password is empty, and the record will not save without the port and database name. See [Attendance Machines](../modules/hr/attendance/attendance-machines.md#ACCESS).
-
-#### Timetaag
-
-* Allows transferring data from the Timetaag cloud attendance service, which the fingerprint devices upload to themselves.
-* Requires:
-
-  * **Timetaag Server URL** (`machineUrl`): `https://app.timetaag.com`
-  * **Timetaag API Key** (`username` and `password`) — the tab shows this field twice; the agent sends the first as the API key and the second as the authorization token
-* The key is issued from the Timetaag dashboard — sign in as the company administrator and use **Generate API token**.
-* No query or mapping is needed; the data arrives in a fixed format.
-* Unlike the other three types, the computer running attcron needs access to the **internet** rather than to the machine's local network.
-
-### Steps to Install the Attendance Cron Application on a Device
-
-1. Go to the device where the application will run and install:
-
-  * **JDK 21**
-  * **Apache Tomcat 10**
-
-2. Configure Tomcat so that `Startup Type = Automatic`.
-
-3. Download the Attendance Cron installer from the following link:
-
-   [https://namasoft.com/bin/nama-attcron-upgrader.jar](https://namasoft.com/bin/nama-attcron-upgrader.jar)
-
-4. Place the file in the Tomcat folder, then run it.
-
-5. After running the file, the application will be downloaded.
-
-6. Open a browser and navigate to:
-
-   `http://localhost:8080/attcron`
-
-7. A page will appear asking you to enter the following information:
-
-  * **Nama Server Address**: enter the Nama server address.
-  * **Client Id and Client Secret**: enter the connection credentials you created earlier.
-  * **Attendance Machine Config Code**: enter the machine code you specified when creating the settings.
-
-After completing these details, the application is ready to send attendance data to the system.
+The readings the agent delivers are stored against the configuration record, and the scheduled task named in **Run Task Schedule After Fetching Transactions** turns them into a Time Attendance document.
 
 ## Method 2: Direct SQL Server Database Integration
 
@@ -220,7 +106,7 @@ SELECT
 
 Parameters 4 to 6 (save as draft, a Groovy pre-processor, ignore unfound employees) can stay empty. Two more optional parameters help when there are many employees:
 
-* **Parameter 7 (Split To Multiple Documents Each With N Lines):** a number such as `5000`. Instead of one huge Time Attendance document, the lines are spread over several documents of at most that many lines each, coded after the `code` from parameter 3 with a running suffix — `TA202610_001`, `TA202610_002`, and so on. One employee's lines always stay together in one document. On the next run, documents left over from a larger earlier run are deleted. Leave it empty for a single document.
+* **Parameter 7 (Split To Multiple Documents Each With N Lines):** a number such as `5000`. Instead of one huge Time Attendance document, the lines are spread over several documents, coded after the `code` from parameter 3 with a running suffix — `TA202610_001`, `TA202610_002`, and so on. One employee's lines always stay together in one document: a new document starts when adding the next employee's lines would take the current one past that number, so a document holds at most that many lines unless a single employee has more. On the next run, documents left over from a larger earlier run are deleted. Leave it empty for a single document.
 * **Parameter 8 (Employees Query):** a query whose first column returns employee codes, for example `select code from Employee where department_id = (select id from Department where code = 'D01')`. Only those employees are imported: their lines in the existing documents are replaced, every other employee's lines are left untouched, and selected employees not yet in any document get a new one. It works only together with parameter 7. When the query returns no known employee, the run stops with *Employees query returned no known employee, nothing was imported* (no Arabic text, so it shows in English on Arabic screens).
 
 ::: details JSON for Direct Import
@@ -262,7 +148,7 @@ If a time attendance document has been created for a specific month but some day
 
 ### What Is the Solution?
 
-You can create an **Entity Flow** named `ReImportTimeAttendance` that re-fetches data from the attendance machine's database (such as ZK) and inserts it into the current document manually.
+You can create an **Entity Flow** named `ReImportTimeAttendance` that re-fetches data from the attendance machine's database (such as ZK) when a user runs it on a document. It replaces all the lines of that document with what the query returns, then saves the document: as a draft if it was a draft, committed if it was already committed.
 
 ---
 

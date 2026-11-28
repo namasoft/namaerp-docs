@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Bulk regenerates accounting effects for entities identified by a SQL query. Extends EARecommitFromQuery but specifically generates accounting effects instead of full recommit, targeting entities implementing IGeneratesAccountingRequest interface.
+Bulk regenerates accounting effects for entities identified by a SQL query. It works like [EARecommitFromQuery](/entity-flows/core/EARecommitFromQuery), with the same six parameters, but regenerates only the accounting effects instead of recommitting the whole record. The query must return records that generate accounting effects.
 
 ## When This Action Runs
 
@@ -22,7 +22,7 @@ Manual execution for bulk accounting effect regeneration after chart of accounts
 1. **Executes query** - Runs the provided SQL query to find entities (must return entityType and id columns)
 2. **Processes results** - Extracts entity type and ID pairs from query results
 3. **Optional pre-update** - Runs optional update query after selection but before processing
-4. **Generates accounting effects** - Calls genAccEffect() on each entity to regenerate journal entries
+4. **Generates accounting effects** - Rebuilds and sends the accounting request of each entity
 5. **Handles errors** - Processes errors based on configuration (continue or stop)
 
 ## Parameters

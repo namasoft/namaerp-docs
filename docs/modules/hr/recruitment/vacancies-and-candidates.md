@@ -1,6 +1,6 @@
 ---
-description: "Recruitment screens: HR Vacancy Type as a reusable job profile, HR Vacancy for an actual opening, HR Candidate for registering applicants, and HR Test and HR Test Result."
-entities: [HRVacancy, HRVacancyType, HRCandidate, HRTest, HRTestResult]
+description: "Recruitment screens: HR Vacancy Type as a reusable job profile, HR Vacancy for an actual opening, and HR Candidate for registering applicants and turning them into employees."
+entities: [HRVacancy, HRVacancyType, HRCandidate]
 ---
 # Vacancies & Candidates
 
@@ -19,7 +19,7 @@ Found at **Payroll > Recruitment > Vacancy Type**, an **HR Vacancy Type** (نو�
 Two grids carry the profile's real content:
 
 - **Skills** — each line names a **Skill**, the **Skill Level** required (from **Not Found** up through **Very Weak**, **Weak**, **Good**, **Very Good**, to **Excellent**), and whether it's **Required**.
-- **Tests** — each line names a **Test** (see HR Test further down this page), its **Test Order**, its **Test Weight**, and the **Minimum Acceptance Grade** a candidate must clear.
+- **Tests** — each line names a **Test** (see [HR Test](/modules/hr/recruitment/job-offers-and-tests#HR-Test)), its **Test Order**, its **Test Weight**, and the **Minimum Acceptance Grade** a candidate must clear.
 
 Neither grid forces anything automatically onto a vacancy — they're a reference profile a recruiter reads while screening candidates for any vacancy opened under that type.
 
@@ -30,7 +30,7 @@ Found at **Payroll > Recruitment > Vacancy**, an **HR Vacancy** (فرصة عمل
 | Field | Purpose |
 |---|---|
 | Code / Group / Arabic Name / English Name | Identification. |
-| Vacancy Type | The job profile (HR Vacancy Type, above) this opening was created from. |
+| Vacancy Type | The job profile (HR Vacancy Type, above) this opening was created from. Choosing it copies the type's Organization Position and Employee Department onto the vacancy. |
 | Organization Position / Employee Department | Where the new hire will sit once appointed. |
 | Monthly Salary | The budgeted pay for this specific opening. |
 | Number Of Vacancies | How many people are needed to fill it — a single vacancy can represent several open seats. |
@@ -39,7 +39,7 @@ Found at **Payroll > Recruitment > Vacancy**, an **HR Vacancy** (فرصة عمل
 
 A vacancy also carries the standard **Dimensions** (legal entity, branch, sector, department, analysis set), so recruitment can be scoped the same way as every other master record in Nama.
 
-Once every seat is filled — or the opening is called off — a recruiter uses the **Change Status** button (تغيير الحالة), which asks for the new status — **Open**, **Closed** or **Pending** — to close it, rather than deleting it; the closed vacancy stays on record as a history of what was hired for and when.
+Once every seat is filled — or the opening is called off — a recruiter uses the **Change Status** button (تغيير الحالة), which asks for the new status, and chooses **Closed** to close it, rather than deleting it; the closed vacancy stays on record as a history of what was hired for and when.
 
 ![HR Vacancy edit screen, showing status and the position details](../../../ar/modules/hr/images/recruitment/hr-vacancy-en.png)
 
@@ -56,7 +56,7 @@ Found at **Payroll > Recruitment > Candidate**, an **HR Candidate** (متقدم 
 | Job Position | The specific position applied for. |
 | Salary Structure | A proposed [salary structure](../payroll/salary-structures.md) — carried forward if this candidate is later offered the job. |
 | Candidate State | Tracks the applicant's standing — **Offered** (بأنتظار الموافقة) while a decision is pending, **Appointed** (مُعين) once hired, plus the same working-life states (Working, Resigned, Dismissed, Suspended, Pension, In Vacation…) used elsewhere for an employee's own record, since a candidate who is hired keeps this same field going forward. |
-| Tests Total Grade / Tests Status | The candidate's combined score across all recorded test results (see HR Test Result further down), and the resulting conclusion — **Passed**, **Partial Passed**, or **Failed**. |
+| Tests Total Grade / Tests Status | The candidate's combined score across all recorded test results (see [HR Test Result](/modules/hr/recruitment/job-offers-and-tests#HR-Test-Result)), and the resulting conclusion — **Passed**, **Partial Passed**, or **Failed**. |
 | Arranged Interview Date / Time | When the interview is scheduled. |
 | Interview State | Where the candidate sits in the interview funnel: **Not Called**, **No Answer**, **Not Available**, **Waiting Interview**, **Interviewed**, **Short Listed**, **Accepted**, **Rejected**, **Awaiting Another Interview**, or **Interviewed Second Time**. |
 | CV | The candidate's attached résumé. |
@@ -88,26 +88,20 @@ Most organisations use the second path so there's always a documented offer behi
 
 ## HR Test and HR Test Result
 
-Found at **Payroll > Recruitment > HR Test**, an **HR Test** (إختبار) defines one assessment a candidate might be put through — a written test, an interview, or trial work — with its own **Test Type**, **Average Cost**, **Max Grade**, **Minimum Acceptance Grade**, **Test Period**, whether it's **Mandatory**, and a **Related Skills** grid tying it back to the skills it's meant to measure.
-
-**HR Test Result** (نتائج الإختبار), at **Payroll > Recruitment > Test Result**, records the outcome: pick the **Vacancy** and the **Test**, use the **Collect Candidates** button (تجميع المتقدمين) to add every candidate who applied for that vacancy and is not already listed, then score each one in the **Details** grid — **Test Score** and the resulting **Test Conclusion** (Passed / Partial Passed / Failed). Those per-test conclusions are what roll up into a candidate's own Tests Total Grade and Tests Status.
+The assessments a candidate is put through (**HR Test**) and the scores recorded against them (**HR Test Result**, with its **Collect Candidates** button) are described on [Job Offers & Tests](/modules/hr/recruitment/job-offers-and-tests#HR-Test).
 
 ## Actions on this screen
 
 **On the Vacancy:**
 
-- **Change Status** — asks for the new status (**Open**, **Closed** or **Pending**) and sets the vacancy to it.
+- **Change Status** — asks for the new status and sets the vacancy's **Status** to it: **Open** or **Closed**.
 
 **On the Candidate** (both explained in the tip above):
 
 - **Create Employee** — opens a new employee record filled in from the candidate, for you to complete and save. The candidate must be saved first.
 - **Transfer To Employee And Create Job Offer** — asks for a **Start Date** and creates the employee and a job offer from the candidate's committed candidate job offer. The candidate must be saved first.
 
-**On the Test Result:**
-
-- **Collect Candidates** — adds every candidate who applied for the chosen **Vacancy** and is not already in the grid.
-
-The **Vacancy Type** and the **HR Test** have no buttons of their own.
+The **Vacancy Type** has no buttons of its own.
 
 ## Where this leads
 

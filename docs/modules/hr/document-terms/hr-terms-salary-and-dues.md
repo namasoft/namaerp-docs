@@ -1,6 +1,6 @@
 ---
 description: "How HR document terms work, and what the terms of the salary document, salary sheet, daily salary, dues liquidation, annual increases and employee provisions documents control: accounts, accounting effect and document behaviour."
-entities: [SalaryDocument, SalarySheet, DailySalary, DuesLiquidationDoc, AggrDuesLiquidationDoc, AnnualIncreasesDoc, EmployeeProvisionsOpening, EmployeeProvisionsRecalc, AggrEmpProvisionsRecalc]
+entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
 
@@ -41,7 +41,7 @@ aggregated one hands out.
 ::: warning The switch that turns the accounting effect off has three different names
 The same idea is spelled three ways across HR terms, and the sense is inverted between them:
 
-- **Without Accounting Effect** («بدون تاثير محاسبي») — tick it to stop the accounting entry.
+- **Without Accounting Effect** («بدون تأثير محاسبي») — tick it to stop the accounting entry.
 - **Generate Accounting Effects** («إنشاء تأثير محاسبي») — tick it to **start** creating the entry.
 - **With Accounting Effect** on the reward and penalty term — same sense as the second.
 
@@ -61,13 +61,13 @@ salary document's accounts come from the [salary components](/modules/hr/payroll
 | **Remove Lines Without Effect** | `termConfig.removeLinesWithoutEffect` | Drops component lines that came out as zero, which makes a long payslip readable. |
 | **Salary Range Must be Specified** | `termConfig.salaryRangeMustBeSpecified` | Refuses the document unless a salary generation range is named. |
 | **Allow Issue Salary Documents For Employees In Vacation Without Salary** | `termConfig.allowIssueForInVacationEmps` | Issues a document for an employee on unpaid leave. The label notes what it is for: *(other components only)* — the basic is not paid, but other components can still reach them. |
-| **Do not duplicate component lines if dimensions are the same** | `termConfig.doNotDuplicateComponents` | Merges component lines that differ only by a dimension that is in fact identical. |
-| **Calculate Salary Document To Date From Employee Status Changeing Table Not Only From Firing Date** | `termConfig.calcSalaryToDateFromStateSysEntry` | The document's To Date is taken from the employee's status-change history rather than from the firing date alone — which matters when someone was suspended or moved states mid-month. |
-| **Maximum Number Of Paid Loan Installments On Salary Document** | `termConfig.maxNumberOfPaidLoanInstallments` | Caps how many loan instalments one document may settle. Without it, a document that covers several months' arrears can swallow several instalments at once. |
-| **Always Pay First Unpaid Installment Regardless Of Date** | `termConfig.alwaysPayFirstUnpaidInstallmentRegardlessOfDate` | The oldest unpaid instalment is always taken, even if its due date has not arrived. |
+| **Do not duplicate component lines if dimensions are the same** | `termConfig.doNotDuplicateComponents` | Lines for the same component that carry the same dimensions are merged into one line, their values added together up to that line's **Base Value**. |
+| **Calculate Salary Document To Date From Employee Status Changing Table Not Only From Firing Date** | `termConfig.calcSalaryToDateFromStateSysEntry` | The document's To Date is taken from the employee's status-change history rather than from the firing date alone — which matters when someone was suspended or moved states mid-month. |
+| **Maximum Number Of Paid Loan Installments On Salary Document** | `termConfig.maxNumberOfPaidLoanInstallments` | Caps how many loan instalments one document may settle. Without it, a document that covers several months' arrears can swallow several instalments at once. The cap does not apply to a last salary document before firing, which takes every unpaid instalment. |
+| **Always Pay First Unpaid Installment Regardless Of Date** | `termConfig.alwaysPayFirstUnpaidInstallmentRegardlessOfDate` | The oldest unpaid instalment is taken even if its due date has not arrived, and it is the only instalment the document pays. Not applied on a last salary document before firing. |
 | **Allow Saving Permanently If Salary Sheet is Draft** | `termConfig.allowSavingPermanentlyIfSalarySheetDraft` | Lets a salary document be saved permanently while the sheet above it is still a draft. |
 | **Update Currency Rate Value With Save** | `termConfig.updateCurrencyRateValueWithSave` | Refreshes the exchange rate on every save instead of keeping the rate the document was created with. |
-| **Collect HOPenalties In Salary Lines** | `termConfig.collectHOPenaltiesInSalaryLines` | Government penalty documents that carry a salary component are collected into the payslip's lines. |
+| **Collect HO Penalties In Salary Lines** | `termConfig.collectHOPenaltiesInSalaryLines` | Government penalty documents that carry a salary component are collected into the payslip's lines. |
 | **Fetch Previous Other Issuance Salary Docs** | `termConfig.fetchPreviousOtherIssuanceSalaryDocs` (column `termConfig.fetchPreviousOtherIssuanceSalaryDocs.issuance`) | A grid of salary issuances. Its label explains the case: when no salary document exists for the same period under the issuance being processed, the system looks for one in a previous period under the issuances listed here. |
 
 Four more options matter only when the Contracting module is in play: **Use As Cost Source Document
@@ -94,7 +94,7 @@ mostly about **which documents get created and what they inherit**.
 *Generated Doc Book* `termConfig.generatedDocBook` name the term and book every salary document
 created by this sheet is given. This is the pairing to check first when documents hit the wrong accounts.
 
-**Or a book per dimension.** The *Generated Docs Books* grid `termConfig.lines` holds dimension/book
+**Or a book per dimension.** The *Generated Documents Books* grid `termConfig.lines` holds dimension/book
 pairs — columns `termConfig.lines.dimensions.legalEntity`, `termConfig.lines.dimensions.branch`,
 `termConfig.lines.dimensions.sector`, `termConfig.lines.dimensions.department`,
 `termConfig.lines.dimensions.analysisSet` and `termConfig.lines.documentBook` — and
@@ -103,7 +103,7 @@ that grid based on the employee's own dimensions instead of using the single boo
 one payroll run files its documents into a different book per branch or per company.
 
 **What the documents copy from the employee.** Five switches — *Copy Legal Entity / Sector / Branch
-/ Department / AnalysisSet From Employee* (`termConfig.copyLegalEntityFromEmployee`,
+/ Department / Analysis Set From Employee* (`termConfig.copyLegalEntityFromEmployee`,
 `termConfig.copySectorFromEmployee`, `termConfig.copyBranchFromEmployee`,
 `termConfig.copyDepartmentFromEmployee`, `termConfig.copyAnalysisSetFromEmployee`) — decide whether each dimension is taken from the employee rather than from the sheet.
 These are read alongside the four dimension groups on
@@ -116,8 +116,9 @@ will fight, and the configuration wins on the line.
 everywhere else.
 
 **Mark Salary Document As Last If There is a Firing Document Found In Current Period**
-`termConfig.markLastSalaryDocIfFiringDocFoundInPeriod` — the sheet sets the *Last Salary Doc before
-Firing* flag automatically on any employee whose firing document falls in the period. This is the
+`termConfig.markLastSalaryDocIfFiringDocFoundInPeriod` — the sheet sets the *Last Salary Doc for
+Employee before Firing* flag automatically on the line of any employee who has a Firing Document whose
+**Work End Date** falls in the sheet's HR period, and clears it on every other line. This is the
 reliable way to get the last-document deduction rules applied; the alternative is ticking the flag by
 hand on each salary document or sheet line.
 
@@ -138,7 +139,7 @@ its term is a plain set of five debit/credit pairs:
 | Pair | Fields |
 |---|---|
 | **Daily Wage Total** | `termConfig.dailyWageTotalDebit` / `termConfig.dailyWageTotalCredit` |
-| **OverTime Total** | `termConfig.overTimeTotalDebit` / `termConfig.overTimeTotalCredit` |
+| **Overtime Total** | `termConfig.overTimeTotalDebit` / `termConfig.overTimeTotalCredit` |
 | **Deduction Total** | `termConfig.deductionTotalDebit` / `termConfig.deductionTotalCredit` |
 | **Other Additions** | `termConfig.otherAdditionsDebit` / `termConfig.otherAdditionsCredit` |
 | **Other Deductions** | `termConfig.otherDeductionsDebit` / `termConfig.otherDeductionsCredit` |
@@ -152,7 +153,7 @@ its subsidiary.
 End-of-service settlement is the most account-heavy document in HR, and its term is correspondingly
 the longest.
 
-**The effect grid.** *configuration List* `termConfig.configList` is where the money goes. One row
+**The effect grid.** *Configuration List* `termConfig.configList` is where the money goes. One row
 per liquidation component, each with:
 
 - **Liquidation Component Type** `termConfig.configList.liquidationComponentType` — *Termination*,
@@ -161,8 +162,8 @@ per liquidation component, each with:
   (required).
 - **Debit** `termConfig.configList.debit` and **Credit** `termConfig.configList.credit` — the two
   account sides (both required).
-- **Included Component Effects In** `termConfig.configList.includeComponentEffectsIn` — *Dues
-  Liquidation Doc Effect*, *Payment Voucher Creation Event*, or *Both*. This is the subtle one: it decides whether the row is recorded when the liquidation
+- **Include Component Effects In** `termConfig.configList.includeComponentEffectsIn` — *Dues
+  Liquidation Document Ledger Lines*, *Payment Voucher Lines On Creation Event*, or *Both*. This is the subtle one: it decides whether the row is recorded when the liquidation
   is processed, when the payment voucher for it is created, or on both occasions. Getting it wrong
   is how a settlement ends up recorded twice or not at all.
 
@@ -194,7 +195,7 @@ Arabic text and appears in English on Arabic screens too:
 |---|---|---|
 | **Subtract Absence Days From Net Worked Days** | `termConfig.considerAbsenceDays` | Absence reduces the service days the settlement is calculated on. |
 | **Vacation Type For Dues Liquidation Days (Paid Vacation Period)** | `termConfig.typeForPaidVacationPeriod` | Which vacation type represents the paid-leave portion of the settlement. |
-| **Calculate liquidation amount from actual date** | `termConfig.calcLiquidationAmountFromActualDate` | The amount is computed from the actual date rather than the document's nominal one. |
+| **Calculate liquidation amount from actual date** | `termConfig.calcLiquidationAmountFromActualDate` | **Ticked by default.** The settlement takes its salary basis from the employee's latest committed salary document whose From Date is on or before the document's **Value Date**; unticked, on or before its **Liquidate To Date**. It applies only while **Always Create Salary Document For Dues Liquidation** is off on HR Configuration. |
 | **Calculate Last Liquidation Date From Last Liquidation Document** | `termConfig.calcLastLiquidationDateFromLastLiquidationDoc` | The "liquidated up to" field is derived from the previous settlement instead of being typed. |
 
 **Salary documents and loans that the settlement absorbs.**
@@ -211,17 +212,19 @@ makes the settlement a cost source for contracting projects, and *Contracting Co
 the sides its project-cost entries are recorded on. Leave all three empty unless the Contracting
 module carries end-of-service cost to projects.
 
-The **aggregated** dues liquidation term is the short one: *Dues Liquidation Doc Book* and *Dues
-Liquidation Doc Term* (`termConfig.duesLiquidationDocBook`, `termConfig.duesLiquidationDocTerm`)
+The **aggregated** dues liquidation term is the short one: *Dues Liquidation Document Book* and *Dues
+Liquidation Document Term* (`termConfig.duesLiquidationDocBook`, `termConfig.duesLiquidationDocTerm`)
 name what the batch creates. Everything above belongs to the individual document's term.
 
 ## The Annual Increases term
 
-Two fields. *Update Emp Info Book* `termConfig.updateEmpInfoBook` names the book of the employee
+Two fields. *update Employee Info Book* `termConfig.updateEmpInfoBook` names the book of the employee
 update documents the increase run creates — because an annual increase is applied by writing a new
-employee information document, not by editing the employee. *Increase Relative To Service Months*
-`termConfig.increaseRelativeServMonths` prorates the increase by how many months of the year the
-employee actually served, which is what you want for someone hired in September.
+employee information document, not by editing the employee. *Apply Increase relative to Service
+months count* `termConfig.increaseRelativeServMonths` prorates the increase for an employee with
+fewer than 12 months of service, counted from the commencement date to the document's value date:
+the increase is multiplied by those months and divided by 12. That is what you want for someone hired
+in September.
 
 Annual increases are described on
 [Annual Increases](/modules/hr/payroll/hr-annual-increases).
@@ -232,13 +235,13 @@ Three documents share a small family of terms: the opening document that establi
 balance, the recalculation document that restates it, and the aggregated recalculation that runs the
 restatement for a batch of employees.
 
-**Employee Provisions Opening** `EmpProvisionOpenTerm` has a single field, *Without Accounting
+**Employee Provisions Opening** has a single field, *Without Accounting
 Effect* `termConfig.withoutAccountingEffect` — an opening document that only establishes the balance
 without an entry.
 
-**Employee Provisions Recalculation** adds the interesting part: a **details grid**
-`termConfig.details` of day bands, each row carrying *From Day* `termConfig.details.fromDay`, *To Day*
-`termConfig.details.toDay`, *Multiply By* `termConfig.details.multiplyBy` and *Divide On*
+**Employee Provisions Recalculation** adds the interesting part: a grid titled **Sections**
+`termConfig.details` of day bands, each row carrying *Number Of Days | From* `termConfig.details.fromDay`,
+*Number Of Days | To* `termConfig.details.toDay`, *Multiply By* `termConfig.details.multiplyBy` and *Divide On*
 `termConfig.details.divideOn`. This is the accrual scale — "from day 1 to day 365, one half month per year; from day
 366 onward, one month per year" is expressed as two rows. Alongside it, *Current Day Value
 Fractional Places* `termConfig.currentDayValFracPlaces` controls rounding of the per-day value,

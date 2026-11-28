@@ -19,17 +19,17 @@ Manual execution when bulk item entry is needed from a text list, typically for 
 
 ## How It Works
 
-1. **Reads source field** - Extracts text from specified field (defaults to remarks field)
+1. **Reads source field** - Extracts text from specified field (defaults to remarks field). If the field is empty the flow stops and the document lines are left as they are
 2. **Parses item codes** - Splits text by line breaks to get individual item codes
 3. **Clears existing lines** - Removes current document lines (reuses existing line objects)
 4. **Processes each code** - Trims whitespace and skips empty lines
-5. **Looks up items** - Finds InvItem records using business codes
+5. **Looks up items** - Finds InvItem records using business codes. A code with no item adds the error *Could not find item with code {0}* and the flow fails
 6. **Creates/updates lines** - Adds new lines or increments quantity for existing items
 7. **Sets default values** - Assigns quantity 1 and primary unit of measure
 
 ## Parameters
 
-**Parameter 1:** Source Field Name (Optional) - Field containing item codes (default: "remarks")
+**Parameter 1:** (shown without a title) (Optional) - Id of the header field containing the item codes (default: `remarks`)
 
 The field should contain item codes separated by line breaks, for example:
 ```

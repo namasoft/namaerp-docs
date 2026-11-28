@@ -55,7 +55,7 @@ Two consequences worth knowing:
 
 Location is a **reporting and filtering dimension**, and a good one. It is carried forward automatically: when a machine goes onto a maintenance notice, or a technician's execution sheet is created, the machine's building, floor and room come with it, so the paperwork the technician receives says where to go.
 
-It is not a routing input. Nothing in the module plans a route from a building, and nothing groups work by floor. The [daily dispatch documents](/modules/crm/maintenance-cycle/crm-maintenance-dispatch) work from address regions, not from these files. Work plans and maintenance visits carry no location fields of their own at all.
+It is not a routing input. Nothing in the module plans a route from a building, and nothing groups work by floor. The one place the building decides anything is *Generate Mn Orders* on a [work plan](/modules/crm/maintenance-cycle/crm-maintenance-work-plans), which puts lines with the same expected date, technician and building into one order. The [daily dispatch documents](/modules/crm/maintenance-cycle/crm-maintenance-dispatch) work from address regions, not from these files. Work plans carry the location only on their machine lines, copied from the contract; maintenance visits carry no location fields at all.
 
 And as everywhere else in this module, there are **no reports and no dashboards** over the location files. To answer "how much work did we do in the basement last quarter", filter a list screen and export it, or build it in BI.
 

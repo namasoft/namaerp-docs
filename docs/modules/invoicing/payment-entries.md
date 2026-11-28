@@ -14,7 +14,7 @@ Payment vouchers in this context refer to any **receipt or payment of cash or it
 * **Bank Transfer:**
 
     * Represents the receipt of cash by default.
-    * Can be directed to act as a **Receipt Voucher** or **Payment Voucher** via the option: `تعامل في أعمار الديون ومصاريف طرق الدفع مثل`
+    * Can be directed to act as a **Receipt Voucher** or **Payment Voucher** via the term option **Treat in Debt Ages Similarly To** (`debtAgesTreatment`, «تعامل في أعمار الديون ومصاريف طرق الدفع مثل»)
 
 * **Electronic Receipt Voucher:**
 
@@ -28,7 +28,7 @@ Payment vouchers in this context refer to any **receipt or payment of cash or it
 
     * Acts as a payment voucher by default.
     * Can be changed to a receipt voucher using the same direction option.
-* **Invoice Returns:** Can be treated as a payment method by enabling the option: `addReturnToInvoicePayment`
+* **Invoice Returns:** Can be treated as a payment method by enabling the option **Add Return To Invoice Payment Docs and Decrease Remaining** (`addReturnToInvoicePayment`)
 
   This option is found in the return's توجيه (Term Config) to specify whether it will be added to payment vouchers and deducted from the remaining balance.
 
@@ -58,10 +58,7 @@ Linking between invoices and payment vouchers follows these rules:
 
 ## Enabling Automatic Tracking of Links
 
-Before you begin, you must **enable the following option in the global configuration**:
-`usePayReceiptDocsSysEntries`
-
-**(In Arabic: استعمال الجداول النظامية لمتابعة ربط الصرف والقبض بالفواتير)**
+The links are tracked only while **Use System Entries For Payment/Receipt Documents Relationship to Invoices** (`usePayReceiptDocsSysEntries`, «استعمال الجداول النظامية لمتابعة ربط الصرف والقبض بالفواتير») is ticked in the global configuration. It is on by default; it and the related **Deduct Payments And Receipts In Invoices Remaining** are described under [Payments and receipts](/platform/global-config/global-config-accounting#Payments-and-receipts).
 
 ### The `PayReceiptDocsSysEntry` Table
 
@@ -107,7 +104,7 @@ Payment vouchers (such as receipt vouchers) can be linked to sales invoices thro
 
 In some business scenarios, it may be necessary to **pay an amount that exceeds the remaining balance on an invoice**.
 To enable this behavior, use the following option in the **invoice's توجيه (Term Config)**:
-`allowPaymentMoreThanInvoiceAmount` — Allow payment of an amount greater than the invoice value
+**Allow Payment More Than Invoice Amount** (`allowPaymentMoreThanInvoiceAmount`)
 
 ---
 
@@ -117,7 +114,7 @@ When following a scenario that starts with a **Sales Order** on which a **partia
 
 To implement this, enable the following option in the **Sales Invoice توجيه (Term Config)**:
 
-`clonePayReceiptEntry` — Clone the system tracking tables for receipt/payment links associated with the "Based On" document
+**Clone System Entries For Payment/Receipt Documents Relationship to Invoices** (`termInfo.clonePayReceiptEntry`) — clones the tracking entries of the "Based On" document. The term refuses this option while the global option above is off, with *You must enable {0} in global config to use the field {1}* — «يجب تفعيل {0} الموجود في الإعدادات العامة لكي تستطيع استعمال الحقل {1}».
 
 ### Effect of Enabling This Option:
 

@@ -37,7 +37,7 @@ wondering why an approved purchase order never showed up in the general ledger.
 ```
 
 Read from the top, each document is built on the one before it by picking it in the **From Document**
-(بناءا على) field. Nothing is compulsory: a small company can go straight to the purchase document
+(بناءً على) field. Nothing is compulsory: a small company can go straight to the purchase document
 and never raise a request in its life. The chain exists so that larger organisations can separate who
 asks, who negotiates, who commits and who pays.
 
@@ -78,7 +78,8 @@ the [fixed asset creation document](/modules/fixedassets/master-files/fixedasset
 A brand-new record sits in status **Initial** (ابتدائي): it has a name and a type but no cost, no
 depreciation start date and no instalment. The purchase document's asset picker only offers assets in
 that state. When the purchase is committed, the record receives its cost and its dates and moves to
-**Running Depreciation** (جاري الإهلاك). This is the default and it is what most installations use,
+**Running Depreciation** (جاري الإهلاك), or to **Not Depreciable** (غير قابل للإهلاك) when the asset is
+ticked **Undepreciable**. This is the default and it is what most installations use,
 because it lets you code, classify and account-map assets deliberately rather than in the middle of
 typing an invoice.
 
@@ -146,8 +147,9 @@ finally [sold](/modules/fixedassets/disposal/fixedassets-disposal.md) at the end
 
 ## How the documents actually link up
 
-Picking a source in **From Document** does two things: it copies header information — supplier,
-employee, location, department, shipping address — and it builds the detail lines for you.
+Picking a source in **From Document** does two things: it copies header information and it builds the
+detail lines for you. An offer, order or initial receipt copies the supplier, employee, location,
+department and shipping address; a purchase document copies the supplier and department.
 
 One copy rule surprises people, so learn it now. When a purchase document is built from an order,
 **each source line is exploded into one line per unit**. An order line for three forklifts at 100,000
@@ -155,15 +157,17 @@ each becomes three purchase lines of quantity 1 at 100,000. That is deliberate: 
 is one physical thing with one cost, one useful life and one serial number, so three forklifts must
 become three asset records, not one line of three.
 
-Downstream documents also leave a trail on their source. A committed order stamps **Processed By**
-(تمت معالجتة بواسطة) on the request it came from, and a committed purchase document stamps itself on
-the order. When you pick a source on a new purchase document, orders that have already produced one
+Downstream documents also leave a trail on their source. A committed offer, order, initial receipt or
+purchase document stamps **Processed By** (تمت معالجته بواسطة) on the document it was built from, and a
+committed purchase document also stamps itself in the **Purchase Invoice** field of the offer, order or
+initial receipt it came from. When you pick a source on a new purchase document, orders that have already produced one
 are filtered out of the list.
 
 ::: tip Tracking what has been delivered
-The request's **Satisfied Qty** and **Unsatisfied Qty** columns, and the **Total Unsatisfied Qty**
-figure in its header, are advanced by the offer, order or initial receipt raised **from the request
-itself**. Route your fulfilment tracking through those documents and the counters stay honest.
+The request's **Satisfied Qty** and **Unsatisfied Quantity** columns, and the **Total Unsatisfied Qty**
+figure in its header, are advanced only by a **Fixed Asset Purchase Order** raised **from the request
+itself**. An offer or initial receipt built on the request leaves the counters where they are, so route
+your fulfilment tracking through purchase orders.
 :::
 
 ## The buttons along the chain
@@ -174,13 +178,13 @@ exists and where one does not:
 | Screen | Button of its own | What it does |
 |---|---|---|
 | Fixed Asset Purchase Request | none | the request is consumed from the next document's **From Document** |
-| Purchase Offer, Purchase Order, Initial Receipt | **GeneratePayments** (إنشاء الدفعات) | spreads the outstanding amount across the payment schedule grid |
-| Fixed Asset Purchase Document | **GeneratePayments** (إنشاء الدفعات) | the same, on its *Shipping and billing* page |
+| Purchase Offer, Purchase Order, Initial Receipt | **Generate Payments** (إنشاء الدفعات) | spreads the outstanding amount across the payment schedule grid |
+| Fixed Asset Purchase Document | **Generate Payments** (إنشاء الدفعات) | the same, on its *Shipping and billing* page |
 | Fixed Asset Receipt Document | none | — |
 
-Everything else that looks automatic — a request's satisfied quantities moving, an order exploding
-into one line per unit, a receipt pre-filling custodians and locations — happens the moment you pick
-a **From Document**, with nothing to press.
+Everything else that looks automatic happens with nothing to press: an order exploding into one line
+per unit and a receipt pre-filling custodians and locations happen the moment you pick a **From
+Document**, and a request's satisfied quantities move when the purchase order built on it is committed.
 
 ## Licences and where to click
 
@@ -193,10 +197,9 @@ Everything above lives under **Assets > Documents** (الأصول > المستن
 | **Fixed Asset Receipt Document** | **`fixedassets-lc`** | Assets > Custody Of Assets |
 | Custodies Delivery Receipt Document | `fixedassets-custody` | Assets > Custody Of Assets |
 
-The receipt document sits behind the **letter-of-credit** licence because its header carries a Letter
-Of Credit reference — it is the document that signs for a shipment arriving against an LC as well as
-one arriving against an ordinary purchase. If a customer with only the base licence cannot find
-"Fixed Asset Receipt Document" in the menu, that is why.
+A customer with only the base licence will not find "Fixed Asset Receipt Document" in the menu; why it
+sits behind the **letter-of-credit** licence is explained on the
+[receipts page](/modules/fixedassets/acquisition/fixedassets-receipts).
 
 The last document in the family, the
 [Custodies Delivery Receipt](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md), is

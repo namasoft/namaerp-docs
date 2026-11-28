@@ -8,7 +8,7 @@ menu: Basic → Settings → Fields and Entities Settings
 
 Nama already ships an icon and a colour for most entity types and for the status values people meet
 every day, so a user recognises a Sales Invoice, a Customer or an "Approved" status at a glance
-without reading the label. The **Icons** tab — the fourth and last tab of the Fields and
+without reading the label. The **Icons** tab — the last tab of the Fields and
 Entities Settings screen — is where you change those defaults, or add an icon for something the
 system has no opinion about: a document type your company uses constantly, a custom status value,
 or the one field on a crowded screen that everybody keeps missing.
@@ -151,17 +151,17 @@ Every grid and column this page covers, with its exact on-screen label in both l
 
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
-| `entityIcons` | Entity Icons | Entity Icons | [Entity Icons](#Entity-Icons) |
+| `entityIcons` | Entity Icons | أيقونات الكيانات | [Entity Icons](#Entity-Icons) |
 | `entityIcons.iconCode` | Icon Code | كود الأيقونة | [Entity Icons](#Entity-Icons) |
 | `entityIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Entity Icons](#Entity-Icons) |
 | `entityIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Entity Icons](#Entity-Icons) |
-| `enumIcons` | Enum Icons | Enum Icons | [Enum Icons](#Enum-Icons) |
-| `enumIcons.enumType` | Enum Type | Enum Type | [Enum Icons](#Enum-Icons) |
+| `enumIcons` | Enum Icons | أيقونات القيم الثابتة (Enum) | [Enum Icons](#Enum-Icons) |
+| `enumIcons.enumType` | Enum Type | نوع القيم الثابتة (Enum) | [Enum Icons](#Enum-Icons) |
 | `enumIcons.allowedValue` | Allowed Value | القيمة المسموح بها | [Enum Icons](#Enum-Icons) |
 | `enumIcons.iconCode` | Icon Code | كود الأيقونة | [Enum Icons](#Enum-Icons) |
 | `enumIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Enum Icons](#Enum-Icons) |
 | `enumIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Enum Icons](#Enum-Icons) |
-| `fieldIcons` | Field Icons | Field Icons | [Field Icons](#Field-Icons) |
+| `fieldIcons` | Field Icons | أيقونات الحقول | [Field Icons](#Field-Icons) |
 | `fieldIcons.iconCode` | Icon Code | كود الأيقونة | [Field Icons](#Field-Icons) |
 | `fieldIcons.lightColorCode` | Light Color Code | كود اللون في الوضع النهاري | [Field Icons](#Field-Icons) |
 | `fieldIcons.darkColorCode` | Dark Color Code | كود اللون في الوضع الداكن | [Field Icons](#Field-Icons) |

@@ -56,7 +56,7 @@ If you add a line to the `details` sheet and mistype the invoice code in column 
 
 Two limits are worth knowing. Sheet names are cut to 31 characters (Excel's own limit), with vowels removed to squeeze long collection names in — so the sheet name may not match the field id exactly. And **details of details are not exported**: if a detail line has its own sub-table, that second level does not appear in the file and cannot be imported this way.
 
-If you turned **Export Details In Seperate Sheets** off, the same information is written inline instead: under each header row comes a `:-detail:details` heading block, then that record's lines, then a `:-enddetail` row, then the next header. It is compact but hard to work with by hand — separate sheets are almost always the better choice.
+If you turned **Export Details In Separate Sheets** off, the same information is written inline instead: under each header row comes a `:-detail:details` heading block, then that record's lines, then a `:-enddetail` row, then the next header. It is compact but hard to work with by hand — separate sheets are almost always the better choice.
 
 ## Reading the Column Headings
 
@@ -95,7 +95,7 @@ The last column of every sheet is `@errors`, empty on export. When you upload th
 Depending on the options you ticked when exporting, you may also see:
 
 - **`id`** on the main sheet — the record's internal identifier, present only if you ticked *Include ID Field*. Useful when the records have no dependable code to match on.
-- **`details.id`**, **`details.masterRowId`**, **`details.sourceLineId`** on detail sheets — present by default, because *Include Lines ID Filed* is on.
+- **`details.id`**, **`details.masterRowId`**, **`details.sourceLineId`** on detail sheets — present by default, because *Include Lines ID Field* is on.
 
 Those line identifiers matter more than they look. When every detail row in your file carries its `id`, a re-import updates **those exact lines**. When they are missing, lines are matched by position instead — row 1 in the file overwrites line 1 of the record, row 2 overwrites line 2, and so on. If you have deleted or reordered rows in Excel, positional matching quietly writes values into the wrong lines.
 
@@ -113,7 +113,7 @@ Copying an exported row to create a *new* record and leaving its `id` in place t
 
 A field that is *Disabled* rather than hidden is still exported, since you can see it. When you import the file back, that column is normally skipped: the record keeps its value, the rest of the row is saved, and the returned file notes which fields were left unchanged. Only when an administrator has switched on *Reject Imports Containing Fields The User Cannot Change* does the column fail the row instead — see [Fields You Are Not Allowed to Change](/platform/import-export/importing-records.md#Fields-You-Are-Not-Allowed-to-Change).
 
-**A few unusual fields** — document term configurations, configuration entry values, textual criteria — are too large and structured to fit a cell, so they are exported as a single compressed column whose heading begins with `&`. Leave those cells exactly as they are; they round-trip correctly but cannot be edited by hand.
+**A few unusual fields** are exported as a single column whose heading begins with `&`. A document term's configuration (`&termConfig`) and a configuration entry's value (`&value`) are too large and structured to fit a cell, so they are written compressed; leave those cells exactly as they are — they round-trip correctly but cannot be edited by hand. A saved criteria's conditions (`&textualCriteria`) are written as text criteria instead, readable in the cell.
 
 ## The JSON Shape
 

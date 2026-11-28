@@ -35,7 +35,8 @@ before** its value date for that legal entity:
   of the recovery switches described on the year-end page has been turned on.
 
 The line is shared with closing entries. For each legal entity the system takes the latest
-**committed** closing entry and the latest **committed** freeze document and uses whichever is later
+**committed** closing entry whose generation has completed and the latest **committed** freeze document
+and uses whichever is later
 — so the two never stack, and the later one always wins. Everything said in
 [Year-End Closing & Period Control](/modules/accounting/ledger-setup/year-end-and-period-control) about working around a
 closing entry applies here word for word.
@@ -114,6 +115,6 @@ and deleting it, or clearing its date columns, fixes it at once.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You can not edit the document {0} at date {1} because there is a closing entry on {2}* — «لا يمكن تعديل المستند {0} بتاريخ {1} لانه يوجد قيد ختامى بتاريخ {2}» | The document's date is on or before the line drawn by the latest committed closing entry **or** freeze document of its legal entity. | If no closing entry explains the date in `{2}`, look for a Freeze Processing Document dated `{2}`. Enter the document at a later date, or ask support whether the freeze should move. |
-| *You can not change the document {0} value date from {1} to {2} because there is a closing entry on {3}* — «لا يمكن تعديل التاريخ الفعلى للمستند {0} من تاريخ {1} الى تاريخ {2} لانه يوجد قيد ختامى بتاريخ {3}» | The document sits before the line and someone tried to move it after it. | Leave the frozen document as it is and record the correction as a new document after the line. |
-| *You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team* — «انت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمى لمستوى الأمان {1} برجاء التواصل مع الدعم الفنى» | Someone tried to save or delete a Freeze Processing Document from an ordinary session. | Only Namasoft support can create, change or delete a freeze document. |
+| *You can not edit the document {0} at date {1} because there is a closing entry on {2}* — «لا يمكن تعديل المستند {0} بتاريخ {1} لأنه يوجد قيد ختامي بتاريخ {2}» | The document's date is on or before the line drawn by the latest committed closing entry **or** freeze document of its legal entity. | If no closing entry explains the date in `{2}`, look for a Freeze Processing Document dated `{2}`. Enter the document at a later date, or ask support whether the freeze should move. |
+| *You can not change the document {0} value date from {1} to {2} because there is a closing entry on {3}* — «لا يمكن تعديل التاريخ الفعلي للمستند {0} من تاريخ {1} إلى تاريخ {2} لأنه يوجد قيد ختامي بتاريخ {3}» | The document sits before the line and someone tried to move it after it. | Leave the frozen document as it is and record the correction as a new document after the line. |
+| *You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team* — «أنت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمي لمستوى الأمان {1} برجاء التواصل مع الدعم الفني» | Someone tried to save or delete a Freeze Processing Document from an ordinary session. | Only Namasoft support can create, change or delete a freeze document. |

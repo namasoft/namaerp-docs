@@ -26,7 +26,7 @@ Registering paperwork, finding it again, and keeping track of who has it.
 
 <LandingGrid>
   <LandingCard icon="📄" title="Archived Documents" link="/platform/dms/dms-documents.md" details="The document record itself: filing, owners, attached scans, states, copies, and the four ways to find something again." />
-  <LandingCard icon="🔁" title="Checking Documents In and Out" link="/platform/dms/dms-movements.md" details="The movement voucher — the four types, what committing really changes, and why a transfer needs a manual follow-up." />
+  <LandingCard icon="🔁" title="Checking Documents In and Out" link="/platform/dms/dms-movements.md" details="The movement voucher — its types, what committing really changes, and why a transfer needs a manual follow-up." />
   <LandingCard icon="📦" title="Loading an Archive from a ZIP File" link="/platform/dms/dms-bulk-import.md" details="Turning one compressed file into hundreds of documents, and which columns reach the created documents." />
 </LandingGrid>
 
@@ -39,9 +39,6 @@ Registering paperwork, finding it again, and keeping track of who has it.
 ::: tip Looking for something else?
 Attaching a file to an ordinary record — an invoice, a customer — is not DMS at all; that is the
 standard attachment field, configured in
-[Attachments and Storage](/platform/global-config/global-config-attachments.md) and per field in
-[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance.md).
-And if you are looking for a way to delete old records rather than file them, that is data purging,
-covered under [year-end and period control](/modules/accounting/ledger-setup/year-end-and-period-control.md) —
-a different thing entirely, despite the similar vocabulary.
+[Attachments and Storage](/platform/global-config/global-config-attachments) and per field in
+[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance).
 :::

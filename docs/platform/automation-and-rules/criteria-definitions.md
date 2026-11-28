@@ -44,14 +44,14 @@ of the invoice lines carries item 1001*. A field that has no label in the system
 the list at all.
 
 The **operator** offered depends on the field: equal and not equal, greater and less than, starts
-with, contains, **In** and **Not In** against a list of accepted values, and **Within Period** /
+with, contains, **Is One Of** and **Is Not One Of** against a list of accepted values, and **Within Period** /
 **Outside Period** for dates. The period operators do not take a single date — they take a period,
 either a preset such as *This Month* or *Last 7 days*, or an explicit from-and-to. The full operator
 list, and what each one does to text, numbers and dates, is on
 [Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide).
 
 The **value** is entered with the field's own widget: a date picker for a date, the record selector
-for a reference field, a multi-value list for In and Not In.
+for a reference field, a multi-value list for Is One Of and Is Not One Of.
 
 The three buttons at the right of every line add a line (**F7**), copy the current line (**F8**) and
 remove it (**Ctrl+Delete**). The buttons on the grey header above the conditions work on the group as
@@ -100,20 +100,13 @@ a document rather than the whole of it, and what the *Lines Should Match* switch
 
 ## Values that follow the user
 
-A value does not have to be fixed. Write one of these tokens in the value and it is resolved afresh
-every time the criteria is evaluated, against the session that triggered it:
-
-| Token | Resolves to |
-|---|---|
-| `{loginUserId}`, `{loginUserCode}`, `{loginUserName1}`, `{loginUserName2}` | The user who is logged in |
-| `{loginEmployeeId}` | The employee linked to that user |
-| `{loginLegalEntityId}`, `{loginBranchId}`, `{loginSectorId}`, `{loginDepartmentId}`, `{loginAnalysisSetId}` | The dimensions the user is logged in with — each also has a `…Code`, `…Name1` and `…Name2` form |
-| `{loginLanguage}` | The language of the session |
-
-So *Created By equals `{loginUserId}`* is a criteria that means "mine" for whoever it is evaluated
-for, and *Branch equals `{loginBranchId}`* means "this branch" without naming one. Dates have tokens
-of their own — `$today()`, `$monthStart()`, `$todayMinusDays(30)` and the rest — listed in full on
-[Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide).
+A value does not have to be fixed. A token written in braces — `{loginUserId}`, `{loginEmployeeId}`,
+`{loginBranchId}` and the other login-user and login-dimension tokens — is resolved afresh every time
+the criteria is evaluated, against the session that triggered it. So *Created By equals
+`{loginUserId}`* is a criteria that means "mine" for whoever it is evaluated for, and *Branch equals
+`{loginBranchId}`* means "this branch" without naming one. Dates have tokens of their own —
+`$today()`, `$monthStart()`, `$todayMinusDays(30)` and the rest. Both lists are in full on
+[Criteria from Text Parser](/platform/automation-and-rules/text-criteria-guide#User-Context-Values).
 
 ## Testing a criteria before you rely on it
 
@@ -165,7 +158,7 @@ pattern repeats through the modules — but it covers what support is asked abou
 | [Fields and Entities Settings](/platform/fields-and-entities-settings/) | A **Criteria** column on most of its grids — automatic coding, input validation, reference lookups |
 | [Quick Filters](/platform/list-views/quick-filters) | **Quick Filter Values Criteria**, filtering which values become buttons |
 | [Screen Modifier](/platform/screen-modifier/) | **List View Default Criteria** and **Search View Default Criteria** — the filter a screen opens with |
-| [Scheduled Tasks](/platform/automation-and-rules/scheduled-tasks) | **Criteria** — the records the task runs over |
+| [Scheduled Tasks](/platform/automation-and-rules/scheduled-tasks) | **Criteria** on the **Send To** tab — the employees who receive the task's report or notification |
 | [Reports and printed forms](/platform/reports/) | The form criteria that decides which printed form a document gets |
 | [Salary documents](/modules/hr/payroll/salary-documents) | The employee criteria that decides who is collected into a sheet |
 

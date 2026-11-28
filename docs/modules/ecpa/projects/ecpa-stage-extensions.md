@@ -26,7 +26,8 @@ the rest.
 
 ![The Project Stage Extension: From Document at the top, then a line per delayed milestone with its days and reason](../../../ar/modules/ecpa/images/projects/stage-extension-main-en.png)
 
-**From Document** names the project stage being extended, and it has to be filled in first. The
+**From Document** names the project stage being extended, and it has to be filled in first; the
+commit is refused unless it names a Project Stage. The
 milestone picker on the lines below is limited to the milestones that appear on that stage — which is
 exactly what you want, since an extension can only lengthen a phase the stage already schedules, but
 it does mean the picker returns nothing at all while From Document is empty. If the lookup seems

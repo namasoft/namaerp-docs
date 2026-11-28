@@ -10,7 +10,7 @@ Al Nokhba Air Conditioning Systems sold Marina Plaza Hotels two 300-ton chillers
 Those three records are **machines**, and the machine file is the spine of the whole maintenance suite. A maintenance contract covers machines. A work plan schedules visits per machine. An order is executed on machines. An invoice bills the work done on machines. Get this file right and everything downstream has something solid to hang off; get it wrong — most commonly by leaving the customer blank — and the machine quietly disappears from every lookup that matters.
 
 ::: info Required licence
-`crm-maintenance`. The screen sits under **Customer Relationship Management → Maintenance Files → Machine** (خدمة العملاء ← ملفات الصيانة ← الة).
+`crm-maintenance`. The screen sits under **Customer Relationship Management → Maintenance Files → Machine** (خدمة العملاء ← ملفات الصيانة ← آلة).
 :::
 
 ::: warning The machine file is not connected to the support desk
@@ -61,7 +61,7 @@ Nothing checks that a serial number is unique, and the field has **no connection
 | Field (Arabic / English) | What it holds |
 |---|---|
 | العميل / **Customer** | `C-01188` Marina Plaza Hotels. **The single most important field on the screen** — see below. |
-| العميل الأصلي / **Original Customer** | The first owner. Stamped once by the system, then never changed. |
+| العميل الأصلي / **Original Customer** | The first owner. Stamped by the system at the first ownership transfer; after that only a Machine Update document can change it. |
 | جهة إتصال / **Contact** | `CNT-0904` Eng. Ramy Abdel Moneim. The lookup offers only contacts of the selected customer. |
 | جهة الإتصال الأصلية / **Original Contact** | The first contact, stamped alongside the original customer. |
 | المبنى / الطابق / الغرفة — **Building / Floor / Room** | `BLD-MP01` / `FLR-MP01-R` / `RM-MP01-R1`. Pick the room and the screen fills the floor, the building and the customer for you. |
@@ -87,7 +87,7 @@ Ownership is not meant to be edited casually once the machine is in service — 
 | تاريخ نهاية الضمان / **Warranty End Date** | **Worked out** — Warranty Start Date + Warranty Period. |
 | حالة الضمان / **Warranty Status** | Typed. Never derived from the dates above. |
 | قراءة العداد السابقة وتاريخها / **Last Odometer and its date** | Shown greyed out. The system rolls the current reading into it when a newer reading arrives. |
-| قراءة العداد الحالية وتاريخها / **Current Odometer and its date** | Typed here, and also written by a [maintenance visit](/modules/crm/maintenance-cycle/crm-maintenance-visits) when the technician records a reading. |
+| قراءة العداد الحالية وتاريخها / **Current Odometer and its date** | Typed here, and also written by a [maintenance visit](/modules/crm/maintenance-cycle/crm-maintenance-visits) or a committed maintenance order when it records a newer reading, and by a Machine Update document. |
 
 ### How the Three Warranty Dates Are Calculated
 
@@ -187,9 +187,7 @@ There are three routes, and only one of them gives you a complete record.
 3. **By import or web service**, using the standard record-import tooling — useful when a site takes over an existing installed base.
 
 ::: warning Generate Machine creates shells, not finished machines
-The button copies only building, floor, room, task template, warranty period and the line's dimensions. It does **not** copy the customer, the item, the machine type, the category, the serial number or any date — even though the sales order knows the customer perfectly well.
-
-Because the machine lookup is filtered by customer, those generated machines are then **invisible** on the next maintenance order for that customer. Treat the button as a shell-creation step: on the Marina Plaza deal the crew opened each of the three machines the following day and filled in customer, item, machine type, serial number and the sale and installation dates before anything else could be raised against them.
+A generated machine has no customer, item, machine type, serial number or dates, so it stays invisible to customer-filtered lookups until you complete it. What the button copies, and what to fill in afterwards, is on [Maintenance Sales](/modules/crm/maintenance-cycle/crm-maintenance-sales#Generate-Machine).
 :::
 
 Some things that sound as though they create machines do not. A **pre-installation preview** creates nothing at all. An **installation order** creates a warranty *contract*, not a machine. And no supply-chain document — delivery, invoice or issue — ever produces a machine record.

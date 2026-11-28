@@ -17,34 +17,38 @@ Open any record and the toolbar sits directly above the tabs.
 
 ![The toolbar on a sales invoice edit screen](../../ar/platform/images/screen-buttons/edit-toolbar-en.png)
 
-| Button | What it does | Shortcut |
-|---|---|---|
-| New | Clears the screen and starts a fresh record of the same type | Alt + N |
-| Save | Saves and commits the record | Ctrl + S |
-| Save And Continue | Saves and commits, then immediately starts a new blank record — the button to use when you are entering a batch of documents one after another | Alt + S |
-| Duplicate | Opens a new, unsaved record pre-filled from the one in front of you | Ctrl + D |
-| Draft | Saves the record without committing it, so you can come back and finish it later | |
-| Refresh | Re-reads the record from the server, throwing away unsaved edits | Alt + F5 |
-| Print | Prints the record with its default printing form | Alt + P |
-| Multi Printing | Opens the export dialog described below | |
-| Approval | Opens the approval case of a record that is waiting on someone's decision | |
-| Revised | Marks the record as revised — checked and sealed | |
-| Unrevise | Takes the last revision stamp back off. Appears beside Revised, on record types where revision is switched on | |
-| Tree View | Opens the records of this type as a hierarchy. Appears only on types that have a parent-child structure | Ctrl + T |
-| Tooltips | Lists the tooltips defined for this screen. Appears only where someone has defined them | |
-| Ask AI | Opens the AI assistant on this record. Appears only when the AI module is licensed and the user is allowed to use it | |
-| List | Leaves the record and goes to the list of records of this type | Ctrl + L |
-| Help | Turns the on-screen help messages on and off | |
-| Delete | Deletes the record, after a confirmation | Alt + Delete |
-| First / Previous / Next / Last | Walks through the records of this type without going back to the list | Alt + Home / Page Down / Page Up / End |
-| Remove Filter | Clears the filter that narrowed down what First, Previous, Next and Last walk through | |
-| More | Opens the More menu | Ctrl + M |
+| Button | What it does |
+|---|---|
+| New | Clears the screen and starts a fresh record of the same type |
+| Save | Saves and commits the record |
+| Save And Continue | Saves and commits, then immediately starts a new blank record — the button to use when you are entering a batch of documents one after another |
+| Duplicate | Opens a new, unsaved record pre-filled from the one in front of you |
+| Draft | Saves the record without committing it, so you can come back and finish it later |
+| Refresh | Re-reads the record from the server, throwing away unsaved edits |
+| Print | Prints the record with its default printing form |
+| Multi Printing | Opens the export dialog described below |
+| Approval | Opens the approval case of a record that is waiting on someone's decision |
+| Revised | Marks the record as revised — checked and sealed |
+| Unrevise | Takes the last revision stamp back off. Appears beside Revised, on record types where revision is switched on |
+| Tree View | Opens the records of this type as a hierarchy. Appears only on types that have a parent-child structure |
+| Tooltips | Lists the tooltips defined for this screen. Appears only where someone has defined them |
+| Ask AI | Opens the AI assistant on this record. Appears only when the AI module is licensed and the user is allowed to use it |
+| List | Leaves the record and goes to the list of records of this type |
+| Help | Turns the on-screen help messages on and off |
+| Delete | Deletes the record, after a confirmation |
+| First / Previous / Next / Last | Walks through the records of this type without going back to the list |
+| Remove Filter | Clears the filter that narrowed down what First, Previous, Next and Last walk through |
+| More | Opens the More menu |
+
+The default keyboard shortcut of each button is listed under *Business Function Shortcuts* in
+[Keyboard Shortcuts](/platform/everyday-tools/shortcuts).
 
 A greyed-out button is not a fault. Draft is greyed on a **document** that has been committed before
 — a document leaves draft behind for good, while a master file such as a customer or an item keeps
 its Draft button after committing — Approval is greyed when nothing is waiting for a decision, and
-Delete disappears entirely for a user whose permissions do not allow deleting. The toolbar always shows the same buttons in the same order — it
-just dims the ones that do not apply right now.
+Delete is greyed for a user whose permissions do not allow deleting the record. Apart from the
+buttons the table marks as appearing only in some places, the toolbar always shows the same buttons
+in the same order — it just dims the ones that do not apply right now.
 
 ::: tip The labels are optional
 The words under the icons are a preference, not a fixed part of the toolbar. **Preferences → Show
@@ -59,10 +63,11 @@ opens with a search box at the top. Typing two or three letters is usually faste
 
 ![The More menu on an edit screen](../../ar/platform/images/screen-buttons/edit-more-menu-en.png)
 
-The menu is assembled fresh every time you open it, in three layers. First come the actions that
-belong to this document type in particular — on a sales invoice that means things like re-reading the
-order from the e-commerce site. Then come the standard items that every record gets. Last come any
-custom reports your implementer attached to this screen.
+The menu is assembled fresh every time you open it, in three layers. First come the standard items
+that every record gets. Then come the actions that belong to this document type in particular — on a
+sales invoice that means things like re-reading the order from the e-commerce site — followed by the
+Show System Transaction items described below. Last come any custom reports your implementer
+attached to this screen.
 
 The standard items are worth knowing by name:
 
@@ -83,11 +88,11 @@ The standard items are worth knowing by name:
 | Create Printing Form From This Screen | Starts a printing form built from the fields of the screen you are on |
 | Add To / Remove From Current User Favourites | Puts the record in your own favourites menu |
 
-If the record has been saved more than once, the menu ends with a short list of its recent versions,
-so you can look at an older one without leaving the screen.
+If the record has been saved more than once, the standard items end with a short list of its recent
+versions, so you can look at an older one without leaving the screen.
 
 There is one more group that most users never see. A set of recovery items — recommit the record,
-regenerate its accounting effects, regenerate its inventory effects, revert it to an earlier version,
+regenerate its accounting effects, regenerate its inventory effects, import into the current record,
 show the internal field IDs — stays hidden until someone presses **Ctrl + Alt + X**, which is how
 support switches them on for the session (see [Keyboard shortcuts](/platform/everyday-tools/shortcuts)). They are
 repair tools for a record whose effects went wrong, not part of daily work, and they leave the menu
@@ -184,17 +189,16 @@ Multi Line Copy is the one people miss. It asks how many copies you want and mak
 if you are entering twenty lines that differ only in item code, filling in the first and copying it
 nineteen times beats typing the rest from scratch.
 
-Most of these have keyboard equivalents that are quicker once your hands are already on the grid:
-**Insert** adds a line, **Ctrl + Insert** copies one, **Ctrl + Alt + Insert** opens the multi-copy
-dialog and **Ctrl + Delete** removes a line. The full set is in
-[Keyboard shortcuts](/platform/everyday-tools/shortcuts).
+Most of these have keyboard equivalents that are quicker once your hands are already on the grid;
+they are listed under *Grid Shortcuts* in [Keyboard shortcuts](/platform/everyday-tools/shortcuts).
 
 ## Why a button is missing
 
 When a button you expected is not there, it is almost always one of four reasons.
 
-**Permissions.** Delete, Export, Import and the More menu itself are each tied to a capability. A
-user who does not hold it does not see the button at all.
+**Permissions.** Export, Import and the other security-controlled items of the More menu are each
+tied to a capability, and a user who does not hold it does not see the item at all. Delete is the
+exception: it stays on the toolbar, greyed out.
 
 **The kind of record.** Tree View only appears on master files that actually have a hierarchy.
 Revised and Unrevise only appear where revision has been switched on for that record type.

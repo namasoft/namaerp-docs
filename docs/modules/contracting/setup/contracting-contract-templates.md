@@ -14,10 +14,13 @@ A **contract template** (نموذج عقد مقاولات) is that bill of quant
 tree, the clauses that go with it, and the cost build-up behind the prices. Start a contract from the
 template and the whole skeleton arrives priced.
 
-There is a second reason this page matters, and it is the practical one. **The template is how terms
-and conditions get onto a contract.** There is no "copy terms" button anywhere in the module. Terms
-reach a contract in exactly two ways: from an [assay](/modules/contracting/project-contracting/contracting-assays.md),
-or by picking a template on the contract — and picking the template is the act that triggers the copy.
+There is a second reason this page matters, and it is the practical one. **The template is one of the
+ways terms and conditions get onto a contract**, and there is no "copy terms" button on the contract.
+Terms reach a contract by picking a document in its **Source** field (an
+[assay](/modules/contracting/project-contracting/contracting-assays.md), an offer, a term sheet, a
+budget or, on a subcontract, the project contract), by picking a template on the contract — picking
+the template is the act that triggers the copy — or line by line through the **Copied From Doc**
+column of the terms grid.
 
 - **Where to find it:** Contracting > Master Files > Contract Template
 - **Licence:** `contracting`
@@ -28,7 +31,7 @@ or by picking a template on the contract — and picking the template is the act
 
 ![The Contract Template screen: the terms and conditions grids with the four cost grids beneath them](../../../ar/modules/contracting/images/setup/contract-template-main-en.png)
 
-Everything sits on a single page, *Terms and Conditions*, and it holds six grids:
+Everything sits on a single page, *Terms And Conditions*, and it holds six grids:
 
 | Grid | What goes in it |
 |---|---|
@@ -67,7 +70,7 @@ throwaway contract once.
 
 Two buttons make a template into a small costing engine, and they are meant to be used as a pair.
 
-**Collect Contract Items From Standard Terms** (تجميع بنود التكلفه من البنود القياسية) explodes every
+**Collect Contract Items From Standard Terms** (تجميع بنود التكلفة من البنود القياسية) explodes every
 term line into its ingredients. It reads each line's standard term, takes the cost recipe stored on
 that term, scales it to the line's quantity, and routes each resulting row into Material, Workers,
 Contractors or Other Expenses according to how the cost element is typed. The scaling respects three
@@ -76,7 +79,9 @@ is multiplied up for a 1,200 m³ line), a waste percentage that inflates the req
 productivity factor.
 
 **Collect Sub Items Cost** (تجميع تكلفة البنود الفرعية) does the reverse. It sums the four cost grids
-by term code and writes the result back onto each term line as its total cost and unit cost.
+by term code and writes the result back onto each term line: the sum becomes the line's total cost
+before additional costs, its total cost is that sum plus the line's own additional costs, and its
+unit cost is the sum divided by the line's quantity.
 
 So the working rhythm is: type the quantities → *Collect Contract Items From Standard Terms* → correct
 the rates and quantities in the four cost grids where reality differs from the recipe → *Collect Sub
@@ -122,8 +127,9 @@ service: the numbers a contract inherits are only as good as the last roll-up.
 
 The other thing worth knowing is what the template does for you on an **assay**. Type a term code on
 an assay line that also exists on the chosen template and the whole line is pulled across — the
-standard term, the analysis card reference, the term categories, the status, the parent code, the
-remarks, the unit cost, the quantity, both units of measure and the totals. It turns the template into
+standard term, the analysis card reference, the first term category, the status, the parent code, the
+remarks, the unit cost, the quantity and both units of measure, and the assay's header totals are
+updated. It turns the template into
 a lookup you can key against rather than a wholesale copy.
 
 ## A Standard Tower Template Applied to a New Contract

@@ -22,7 +22,7 @@ This script was written for one customer's setup. It is hard-wired to these line
 |---|---|
 | **Class name** | `EAAddFreeLinesFromLineReferences` |
 | **Script** | [EAAddFreeLinesFromLineReferences.groovy](/groovy-examples/EAAddFreeLinesFromLineReferences.groovy) |
-| **Runs on** | Sales documents: sales order, sales invoice and the like. Target action **PreUpdateCalculatedFields**. |
+| **Runs on** | Sales documents: sales order, sales invoice and the like. Target action **Pre Update Calculated Fields**. |
 | **Uses** | No parameters. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -36,12 +36,12 @@ The system's own free-item offers work from rules set up in advance. Some sales 
 2. **It reads the three references.** For each of **Reference 1** to **Reference 3** that points to an item and has a quantity in the matching **Number** field, it prepares one free line.
 3. **It reuses the line's existing free lines.** Free lines that the script added to this line on an earlier save are linked to it, so they are updated in place rather than added again. New ones are created only when more are needed.
 4. **It fills each free line.** The free line gets the item, the quantity in the item's base unit, **Free Item** ticked and an empty price. It is placed right after the line it belongs to.
-5. **The document then calculates as usual.** Because the script runs on **PreUpdateCalculatedFields**, the free lines are in place before the document works out its totals.
+5. **The document then calculates as usual.** Because the script runs on **Pre Update Calculated Fields**, the free lines are in place before the document works out its totals.
 
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow whose target type is the sales document to cover (for example **Sales Order**).
-2. In the **Details** grid, add a line with **Target Action** set to **PreUpdateCalculatedFields**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
+2. In the **Details** grid, add a line with **Target Action** set to **Pre Update Calculated Fields**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
 3. Leave all parameters empty, and save the flow.
 4. Make sure **Reference 1** to **Reference 3** and **Number 1** to **Number 3** are visible on the document's lines, so users can fill them.
 

@@ -17,7 +17,7 @@ recalculateRateWithSave="true"
 runCommand="save"
 ```
 ### Create an Entity Flow to edit the description1 field in the parent document of the parent document of the current document (based on "Based On" then "Based On")
-Create an Entity Flow with the action "Save Effects" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
+Create an Entity Flow with the action "Post Commit" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
 ```fieldmap
 switchTarget=fromDoc.$toReal.fromDoc(
 runCommand="edit"
@@ -26,7 +26,7 @@ runCommand="save"
 )endSwitchTarget
 ```
 ### Create an Entity Flow to fill the value field in the first line of a receipt voucher with the total of commercial papers
-Create an Entity Flow with the action "Before Calculating Computed Fields" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
+Create an Entity Flow with the action "Pre Update Calculated Fields" of type `EAFieldsValuesCalculator`. Enter the following in Parameter 1:
 ```fieldmap
 n1=totalize(fblines,fblines.fpCreationInfo.value.amount)
 selectLine="lines(0)"
@@ -119,7 +119,7 @@ code=mlsql(select REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLAC
 ```
 
 
-### Delete the document referenced in "Based On" after deleting the voucher itself, using the "Runs after the document is finally saved and the database is affected" option in the Entity Flow
+### Delete the document referenced in "Based On" after deleting the voucher itself, using the "Run After Committing Document And Affect On Database" option in the Entity Flow
 
 You can use the Entity Flow `EADeleteFromQuery` with the following query:
 ```sql

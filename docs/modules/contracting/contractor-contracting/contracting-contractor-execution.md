@@ -55,7 +55,7 @@ execution:
 | Previous quantity | 0 |
 | **Current quantity** | **800** |
 | Total quantity | 800 |
-| Execution percentage | 40 |
+| % Of Finished | 40 |
 
 **End of month two.** Another 200 m² go up. The second execution is not for 1,000 — it is for
 **200**:
@@ -76,7 +76,7 @@ your total minus the previous quantity. Typing 1,000 there on the second documen
 quantity of 200 — the right answer, reached from the other direction.
 :::
 
-There are two more ways in. Type an **execution percentage** and the quantity is derived from the
+There are two more ways in. Type a **% Of Finished** value and the quantity is derived from the
 contracted quantity. Or, when the module configuration adds the dimension columns, type a count and
 length, width and height and let the quantity come out of the arithmetic.
 
@@ -88,13 +88,15 @@ contracted quantity, its description and its work area already in place, and wit
 quantity fetched from the earlier executions on that subcontract.
 
 Two things it deliberately does *not* do. It leaves the current quantity **empty** — that is the
-engineer's job, and nothing else on the document is allowed to guess it. And it skips **parent**
-term codes, the headings in a dotted term tree, unless the module configuration has been set to show
-main term codes in executions; a heading is a total, not a wall you can measure.
+engineer's job. And it skips **parent** term codes, the headings in a dotted term tree, unless
+**Show Main Term Code In Executions** is ticked in the contracting configuration; a heading is a
+total, not a wall you can measure.
 
-You can also add lines by hand. Pick a term code (and a phase if the term has phases) and the same
-descriptive columns, unit price, unit cost, contracted quantity and previous quantity fill
-themselves; the phase picker is narrowed to the phases that term actually uses.
+You can also add lines by hand. Pick a term code (and a phase if the term has phases) and the unit,
+standard term, term category, description, work area, contracted quantity and previous quantity fill
+themselves — and here the current quantity **is** filled for you, with what is left to measure: the
+contracted quantity minus the previous quantity. Overwrite it with what was actually measured. The
+phase picker is narrowed to the phases that term actually uses.
 
 ## Actions on this screen
 
@@ -102,7 +104,7 @@ themselves; the phase picker is narrowed to the phases that term actually uses.
 
 ## What the save checks
 
-Five things, and all five are worth understanding because each has a business reason:
+Seven things, each with a business reason:
 
 1. **The grid may not be empty.** A measurement with nothing measured is not a document.
 2. **The project must match the subcontract's project.** Both fields are filled from the contract,
@@ -112,13 +114,21 @@ Five things, and all five are worth understanding because each has a business re
    exactly as the contract filled it.
 4. **You may not measure more than the contract allows.** Each contract term carries a permitted
    percentage — a tolerance above the contracted quantity — and the cumulative measured quantity is
-   checked against it. Measuring 2,150 m² against a 2,000 m² term with a 5% tolerance is accepted;
-   2,300 m² is refused. There is a module configuration option that lifts the check for
-   organisations that would rather vary the contract afterwards.
-5. **An execution an extract has already consumed can be frozen.** When the module configuration
-   turns on the rule that prevents updating an execution once an extract exists on it, the save is
-   refused and names the extract. This is the option to switch on if you want measurements to become
-   evidence the moment they are billed.
+   checked against it. Measuring 2,100 m² against a 2,000 m² term with a 5% tolerance is accepted —
+   exactly 5% over — and 2,150 m² is refused. The configuration option **Allow Current Quantity
+   Percentage Exceed Permitted Percentage** lifts the check for organisations that would rather vary
+   the contract afterwards.
+5. **An execution an extract has already consumed can be frozen.** When **Prevent Update Execution
+   If Extract On It** is ticked in the contracting configuration, saving a committed execution that
+   any extract names in its *From Document* field is refused and names the extract. This is the
+   option to switch on if you want measurements to become evidence the moment they are billed.
+6. **Every line needs a valid term code.** The term code is required and must be a term of the
+   subcontract — a parent term only when *Show Main Term Code In Executions* is ticked. The same term
+   code and phase may not appear on two lines, and a term that is split into phases needs the phase
+   on the line.
+7. **A closed subcontract is refused.** Once a Final extract is committed on the subcontract, an
+   execution against it cannot be saved unless **Allow Creating Documents For Contracts That Have a
+   Final Extract** is ticked in the contracting configuration.
 
 ## What committing it changes
 
@@ -133,16 +143,11 @@ it does move is the picture on the subcontract:
 
 ## How the extract picks it up
 
-On a new [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md)
-you have two mutually exclusive routes, and this document is the first of them:
-
-- Put the execution in the **Based On** field. The extract pulls the measured lines in and, unless
-  its document term allows otherwise, the billed quantities must stay exactly as measured. The
-  picker only offers executions of the same subcontract that no extract has taken yet, and two
-  extracts can never share one execution.
-- Or leave **Based On** empty and press *Collect Terms* on the extract itself, which reads the
-  subcontract directly. The extract refuses to collect terms while *Based On* is filled — it is one
-  route or the other, never both.
+Put the execution in the **From Document** field of a new
+[subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md)
+and the measured lines come across. The other route — leaving the field empty and pressing
+*Collect Terms* on the extract — and the rules that separate the two are described on the extract
+page, under *Filling the details grid*.
 
 When an extract built from an execution is committed, it writes back: the execution is marked as
 extracted, and each of its lines records how much of it was billed. That is what stops the same

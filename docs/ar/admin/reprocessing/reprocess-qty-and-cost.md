@@ -108,9 +108,13 @@ go
 truncate table StockAgesTransLine
 go
 delete from StockAgesTrans
+go
+if object_id('NamaSchemaFingerprint', 'U') is not null delete from NamaSchemaFingerprint
 
 ```
 :::
+
+يُسقط السكربت عدة جداول، وينشئها السيرفر من جديد عند تشغيله. والسيرفر يتخطى تحديث هيكل قاعدة البيانات إذا لم تتغير تعريفات جداوله منذ آخر تحديث، ولهذا تحذف الجملة الأخيرة بصمة الهيكل المحفوظة (`NamaSchemaFingerprint`). فيُجري التشغيل التالي تحديث الهيكل كاملاً وينشئ الجداول التي أُسقطت.
 
 ### إعادة معالجة جزئية للتكلفة المتوسطة (سريعة) (Partial Reprocess of Average Cost (Fast))
 تعيد معالجة التكلفة المتوسطة لكل الأصناف بدءاً من التاريخ الذي تدخله (بصيغة `yyyyMMdd`، مثل `20260101`) دون إيقاف السيرفر. وهي للتكلفة المتوسطة فقط: على نظام يعمل بطريقة FIFO ترفض بالرسالة *You are using FIFO costing method, this utility is for average cost*، وإذا كانت إعادة معالجة سريعة أخرى ما زالت تعمل ترفض بالرسالة *Can not start fast reprocessing from file, there is one already running*. الرسالتان بالإنجليزية فقط.

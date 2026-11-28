@@ -135,6 +135,6 @@ documents can be deleted only through their contract, never by hand.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Field {0} in term can not be empty* — «الحقل {0} الموجود في التوجية لا يمكن أن يكون فارغاً» | A prepaid-expense contract's term lacks one of the generated books or terms. | Fill the ledger book and term, and — when the contract has payment lines — the payment book and term. |
+| *Field {0} in term can not be empty* — «الحقل {0} الموجود في التوجيه لا يمكن أن يكون فارغاً» | A prepaid-expense contract's term lacks one of the generated books or terms. | Fill the ledger book and term, and — when the contract has payment lines — the payment book and term. |
 | *You can not manually delete expense ledger documents.* | **Prevent Deletion of Generated Documents** is on the ledger's term. This message has no Arabic text in the product. | Delete or change the contract instead. |
 | *You can not manually delete prepaid expense payment documents.* — «لا يمكن حذف مستندات سداد المصروفات المقدمة يدويًا.» | The same option, on the payment's term. | Delete or change the contract instead. |

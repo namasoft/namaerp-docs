@@ -65,8 +65,8 @@ This one is a log with a single author. When the system repairs stock costs and 
 have drifted out of step, it writes down that it did so — and that is the only thing that ever
 appears here.
 
-Every row therefore has the same **Action Name**, `UpdateCurrentNetCostAndCurrentNetQty`, which is
-the internal name of that repair. What varies is **Action Description**, which lists the specific
+Every row therefore has the same **Action**, `UpdateCurrentNetCostAndCurrentNetQty`, which is
+the internal name of that repair. What varies is **Action description**, which lists the specific
 stock movements that were corrected, and **Submission Date**, which tells you when. The **Target
 Record** column is always blank.
 

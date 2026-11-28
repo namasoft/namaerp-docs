@@ -51,7 +51,7 @@ The next two fields decide where the reservation is placed — against the norma
 | Reservation Warehouse Source | `termConfig.reservationWarehouseSource` | `NormalWarehouse` / `ReservationWarehouse` |
 | Reservation Locator Source | `termConfig.reservationLocatorSource` | `NormalLocator` / `ReservationLocator` |
 
-**Reservation Satisfied Fields** `termConfig.reservationSatisfiedFields` — Selects which quantity field counts as the satisfied/released reservation quantity. Accepts `TrackInFirst` / `TrackInSecond`.
+**Reservation Satisfied Fields** `termConfig.reservationSatisfiedFields` — Selects which quantity-tracking field counts as already satisfied: the line reserves its quantity minus what that field shows as satisfied (system plus manual). Accepts `TrackInFirst` / `TrackInSecond`.
 
 ## Sequentiality & Availability Checks
 
@@ -85,12 +85,12 @@ The **Delivery System Table Configuration** page links the configuration files t
 
 ### Delivery Document Terms Only
 
-The following fields are defined on the delivery-document term and apply **only to Delivery Document terms**. The last three implement a password gate that must be satisfied before a delivery can be marked as delivered.
+The following fields apply **only to Delivery Document terms** and sit in the term's From-Document group. The last three implement a password gate that must be satisfied before a delivery can be marked as delivered; the whole flow is described in [Delivery & Loading](/modules/supplychain/delivery-and-loading).
 
-**Update Delivery Status In From Doc** `termConfig.updateDeliveryStatusInFromDoc` — Writes the delivery status back into the linked from-document.
+**Update Delivery Status In From Doc** `termConfig.updateDeliveryStatusInFromDoc` — Writes each line's delivery status back into its source line in the linked from-document.
 
-**Delivery State Requires Password** `termConfig.deliveryStateRequiresPassword` — Requires entering/matching a system password before the delivery state can be changed to "Delivered".
+**Delivery State Requires Password** `termConfig.deliveryStateRequiresPassword` — The delivery status cannot be set to **Totally Delivered** until the **Customer Password** matches the document's system password.
 
-**System Password Pattern** `termConfig.systemPasswordPattern` — Defines the character pattern of the generated delivery-confirmation password: `NumbersOnly`, `LettersOnly`, or `Both`.
+**System Password Pattern** `termConfig.systemPasswordPattern` — The characters of the generated password: `NumbersOnly`, `LettersOnly`, or `Both`. Empty means both.
 
-**System Password Length** `termConfig.systemPasswordLength` — Defines the length (number of characters) of the generated delivery-confirmation password.
+**System Password Length** `termConfig.systemPasswordLength` — The number of characters of the generated password. Empty means 4.

@@ -1,6 +1,6 @@
 ---
-description: "Receiving stock: the Stock Receipt and Stock Receipt Request, opening stock documents, receiving damaged goods, receipt inspection, and correcting or cancelling receipts."
-entities: [StockReceipt, StockReceiptReq, InitialReceipt, PurgeStockReceipt, ReceiptInspection, StockReceiptCancellation, OpeningStockDocument]
+description: "Receiving stock: the Stock Receipt and Stock Receipt Request, opening stock documents, receipt inspection, and correcting or cancelling receipts."
+entities: [StockReceipt, StockReceiptReq, InitialReceipt, ReceiptInspection, StockReceiptCancellation, OpeningStockDocument]
 menu: Inventory → Receipt Documents → Stock Receipt
 ---
 # Receiving Stock
@@ -75,17 +75,6 @@ Think of it as a snapshot of your inventory on day zero of using NaMa ERP.
 4. Verify that total inventory value matches your accounting records
 5. Go live!
 
-## Receiving Damaged Goods (PurgeStockReceipt)
-
-Not everything arrives in good condition. The **Purge Stock Receipt** is for receiving damaged, defective, or to-be-disposed items.
-
-Why bother receiving items you'll dispose of? Because:
-1. **Financial tracking**: You need to know the value of damaged goods for insurance claims or supplier disputes
-2. **Compliance**: Regulated industries are required to track the disposal of certain materials
-3. **Quality analysis**: Understanding the defect rate in receipts helps you evaluate supplier quality
-
-You receive these items into a special "purge" location, then create disposal documents later to remove them from inventory, so the documentation trail is complete.
-
 ## Integration with Receipt Inspection
 
 Many facilities don't receive items directly into normal stock - they go to an inspection area first.
@@ -103,7 +92,7 @@ When a Stock Receipt is created from an Initial Receipt, every item that carries
 
 ### Receipt Inspection (ReceiptInspection)
 
-The **Receipt Inspection** document records arriving items for inspection - on its own, or created from an Initial Receipt, a purchase order, a purchase invoice or a Stock Receipt Request - creating a two-step receiving process:
+The **Stock Receipt Inspection** document records arriving items for inspection - on its own, or created from an Initial Receipt, a purchase order, a purchase invoice or a Stock Receipt Request - creating a two-step receiving process:
 1. **Arrival into inspection**: items arrive and are placed in an "under inspection" warehouse/location
 2. **Final decision after inspection**:
    - **Accept**: move to normal stock
@@ -140,13 +129,13 @@ Understanding a receipt document's journey helps you use the system effectively:
 1. **Creation**: Someone creates the receipt document. At this stage it's a draft - nothing has happened yet.
 2. **Data entry**: Items and quantities, storage destination, cost, source information, and serial/batch numbers if any.
 3. **Review (optional)**: Depending on your organization's controls, receipts may require approval before saving.
-4. **Saving the document**: When saved (not as a draft), inventory quantities and accounting entries update **immediately**.
+4. **Saving the document**: When saved (not as a draft), the receipt raises its inventory and accounting business requests, which are processed in the background; the document's processing status shows when they are done.
 5. **Historical record**: The receipt becomes a permanent part of the item's history.
 
 ::: tip Draft vs. Saved
 - **Save as draft**: the document is stored with no effect on inventory or accounting. Use it for preparation and review.
-- **Save (not draft)**: the document updates inventory, accounting, and all related accounts immediately.
-- Any future edits to saved documents update the system immediately - no separate confirmation step needed.
+- **Save (not draft)**: the document's inventory and accounting effects are processed as business requests in the background.
+- Saving an edit to a saved document processes its effects again - no separate confirmation step needed.
 :::
 
 ![Stock receipt screen in NaMa ERP](../../ar/modules/supplychain/images/receiving/stock-receipt-edit-en.png)

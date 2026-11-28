@@ -49,7 +49,7 @@ reads:
 | Carry Over Hours | 10 % | 4 |
 | Walk In Hours | 5 % | 2 |
 | ساعات الطوارئ / Emergencies Hours | 5 % | 2 |
-| الساعات المتبقة / Remaining Hours | 0 % | 0 |
+| الساعات المتبقية / Remaining Hours | 0 % | 0 |
 | **إجمالي الساعات المتاحة / Total Available Hours** | | **40** |
 
 ::: tip Four English labels on an Arabic screen
@@ -65,9 +65,10 @@ Committing the sheet writes one capacity row per calendar day in the range, each
 From then on, a **[service request](/modules/servicecenter/job-cycle/servicecenter-service-request.md)**
 — the booking document — does two things against those rows: it
 adds its own total hours to the day's
-reserved hours, and it refuses a booking whose hours would take the day past its **appointment**
-allowance, unless the visit type is flagged as always allowed. It also refuses a reservation time
-outside the reception window.
+reserved hours, and, when it names a
+visit type whose **السماح بالحجز دائما / Always Allow Reservation** is not ticked, it refuses a
+booking whose hours would take the day past its **appointment** allowance and a reservation time
+outside the reception window. A booking with no visit type, or with zero total hours, is not checked.
 
 That is the entire enforcement surface. **Carry-over, walk-in, emergency and remaining hours are
 planning information:** a statement of intent for the people running the shop, not a rule the system
@@ -79,7 +80,7 @@ the other three as the shop's own budget.
 
 ## Keep the four shares adding up to 100
 
-The **الساعات المتبقة / Remaining Hours** and **النسبة المتبقية / Remaining Percent** pair is
+The **الساعات المتبقية / Remaining Hours** and **النسبة المتبقية / Remaining Percent** pair is
 meaningful while the four buckets total 100 % or less — as they do in the table above, where nothing
 is left over. Keep the four shares within 100 % so the sheet reads as a real split of the day.
 

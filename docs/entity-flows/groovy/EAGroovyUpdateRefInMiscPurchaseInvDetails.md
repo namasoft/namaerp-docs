@@ -26,7 +26,7 @@ This script is not tied to any customer's setup. Both the yes/no field and the r
 
 ## When to use it
 
-A miscellaneous invoice often carries several lines for the same thing: three lines for the same purchase element, or several lines for the same project in **Ref 1**. When a flag on the line has to mean "this group", for example *include in the monthly recharge*, ticking it line by line is slow and easy to get half right. With this script the user ticks it on one line of the group, and the save does the rest.
+A miscellaneous invoice often carries several lines for the same thing: three lines for the same purchase element, or several lines for the same project in **Reference 1**. When a flag on the line has to mean "this group", for example *include in the monthly recharge*, ticking it line by line is slow and easy to get half right. With this script the user ticks it on one line of the group, and the save does the rest.
 
 The script is also a small example of a pattern that is useful in many Groovy flows: the fields it works on are not written into the code but read from the parameters, so one script serves many setups.
 

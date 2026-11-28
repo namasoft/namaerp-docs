@@ -28,8 +28,8 @@ Everything lives on one page.
 **The header** carries the book and code, the issue date, the value date and the period; the
 **Project** and the **Customer** the sheet was priced for; a *Calculate Price From Profit When Save*
 switch; and the two calculated totals, total cost and total price. There is also a marker showing
-whether the sheet has already been converted into a contract, kept by the system, plus remarks and up
-to four attachments for the drawings the quantities were taken off.
+whether the sheet has already been converted into a contract, kept by the system, plus remarks and
+five attachment fields for the drawings the quantities were taken off.
 
 **The Terms grid** is the sheet. Reading its columns left to right, they fall into five families:
 
@@ -38,7 +38,7 @@ to four attachments for the drawings the quantities were taken off.
 | Identification | term code, term category, term category 2, standard term, treat as detail, term description, work area |
 | Measurement | unit, count, length, width, height, quantity from dimensions, discounted quantity, quantity |
 | Cost | unit cost, total cost before additional, additional costs, total cost |
-| Price and margin | unit price, price before discount, discount, profit percentage, profit, total price |
+| Price and margin | unit price, price before discount, profit percentage, profit, total price |
 | Housekeeping | attachment, and a note of the document the row was copied from |
 
 The length, width and height columns appear only when the module is configured to show dimension
@@ -50,9 +50,8 @@ and completion percentage. The sheet holds them; they are carried forward when t
 sheet is picked up by an assay and eventually a contract, which is where they start moving money. See
 [Contract Conditions](/modules/contracting/setup/contracting-conditions).
 
-**Two buttons** sit above the terms grid. One regenerates every term code in the sheet; the other
-fills only the codes that are still blank, which is what you want after inserting rows into a sheet
-that is already numbered.
+**Two buttons** sit above the terms grid to regenerate term codes — see
+[Actions on this screen](#Actions-on-this-screen).
 
 ## Measuring Quantity from Dimensions
 
@@ -163,8 +162,10 @@ The sheet carries only the two code buttons, above its terms grid:
 
 ## Where a Sheet Goes Next
 
-A term sheet does not push itself anywhere. The receiving document pulls it, and there is exactly one
-pull: the **assay**.
+A term sheet does not push itself anywhere. The receiving document pulls it: the **assay** through its
+*term sheet* field, or a project contract, a subcontract or a budget through its **Source** field,
+which copies the sheet's project, customer, term lines and condition lines in the same way (term lines
+whose status is *Rejected* are left behind).
 
 On a [contracting assay](/modules/contracting/project-contracting/contracting-assays) there is a
 *term sheet* field. Choose your sheet and the assay copies the sheet's project and customer, then
@@ -176,14 +177,15 @@ From the assay, terms travel onward into a project contract or a subcontract by 
 is worth being blunt about:
 
 ::: warning There is no "copy terms from a sheet" button on a contract
-Terms reach a contract in one of three ways, and none of them is a button on the contract's terms
-grid:
+None of the ways terms reach a contract is a button on the contract's terms grid:
 
-1. through an **assay** that was populated from the sheet, then converted;
+1. picking the sheet (or an assay populated from it) in the contract's **Source** field, or
+   converting such an assay;
 2. by choosing a **contract template** on the contract — picking the template is what triggers the
    copy. See [Contract Templates](/modules/contracting/setup/contracting-contract-templates);
-3. from the template's own list actions, which create a contract or an assay directly from the rows
-   you tick.
+3. from the template's own buttons, which create a contract or an assay directly from the rows you
+   tick;
+4. line by line, through the **Copied From Doc** column of the contract's terms grid.
 
 An action on the assay whose English caption reads *Collect Terms* does something else entirely: it
 pulls **analysed costs** onto the assay's existing terms. It will not fetch you a bill of quantities.
@@ -202,3 +204,11 @@ Four checks, all of them cheap to satisfy:
 
 Once the sheet is clean, hand it to an assay and let the priced bill of quantities begin its journey
 towards a signed contract.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *Repeated term code* — «كود البند مكرر» | two term lines carry the same code | renumber with **Update Codes**, or correct the code by hand |
+| *Can not Duplicate term With Same Condition* — «لا يمكن تكرار الشرط مع نفس البند» | the Conditions grid has the same condition twice for the same term code | delete one of the two rows |
+| *This Code Is Not In Term Code* — «هذا البند ليس من البنود» | a condition row names a term code that no term line carries | correct the condition's term code, or delete the row |

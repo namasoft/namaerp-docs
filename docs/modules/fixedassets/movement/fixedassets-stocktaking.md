@@ -1,7 +1,7 @@
 ---
-description: "The FixedAssets Taking Document: counting fixed assets and custody items by location or by employee, building the count sheet, how missing and unexpected items are listed, and acting on the findings."
+description: "The Fixed Assets Taking Document: counting fixed assets and custody items by location or by employee, building the count sheet, how missing and unexpected items are listed, and acting on the findings."
 entities: [FAFixedAssetsTaking]
-menu: Assets → Custody Of Assets → FixedAssets Taking Document
+menu: Assets → Custody Of Assets → Fixed Assets Taking Document
 ---
 # Stocktaking Fixed Assets
 
@@ -10,7 +10,7 @@ register says Al-Waha Industries holds forty assets and twelve custody items at 
 count finds thirty-eight assets, a desk the plant's register never listed, a printer nobody
 expected, and a chair that belongs to Dammam.
 
-The **مستند جرد أصول / FixedAssets Taking Document** is where that comparison happens. It is worth
+The **مستند جرد أصول / Fixed Assets Taking Document** is where that comparison happens. It is worth
 being blunt about what it is, because the name says "document" and people expect documents in this
 module to do something:
 
@@ -26,7 +26,7 @@ disposal document with a term behind it, not on a count sheet. What the taking d
 an accurate, dated list of the differences, and it delivers that.
 
 You will find it at **الأصول > عهد الأصول > مستند جرد أصول** (Assets > Custody Of Assets >
-FixedAssets Taking Document), under the `fixedassets` licence. It uses no document term.
+Fixed Assets Taking Document), under the `fixedassets` licence. It uses no document term.
 
 ![The fixed asset taking document](../../../ar/modules/fixedassets/images/movement/fa-taking-main-en.png)
 
@@ -38,7 +38,7 @@ produce:
 | Taking Type | The expected list is |
 |---|---|
 | **للموقع / For Location** | Every asset and custody item filed under the document's own **المحددات / Dimensions** — company, sector, branch, department, analysis set — that has not been disposed of |
-| **للموظف / For Employee** | Every asset and custody item held by the **Employee** named in the header |
+| **للموظف / For Employee** | Every asset and custody item, not disposed of, whose custodian is the **Employee** named in the header or whose custody history has a line for that employee |
 
 For Location is the annual count of a site or a branch. Note what drives it: the **document's own
 dimensions**, set in the Dimensions group at the bottom of the page. Set the Dimensions group to
@@ -50,17 +50,18 @@ periodic confirmation of what an engineer is signed for. It pulls both the asset
 [custody items](/modules/fixedassets/custody/fixedassets-custody-overview.md) that person holds, and
 the employee is required.
 
-The header also carries **الحالة / Status**, with two values: **بدأ / Started** and **منهي / Ended**.
+The header also carries **الحالة / Status**, with two values: **بدأ / Started** and **منتهي / Ended**.
 A new document starts as *Started*, and that matters — see the comparison section below.
 
 ## Building the count sheet
 
-The **الاصول الحالية / Actual FixedAssets** grid is the count itself: one row per thing the team
+The **الأصول الحالية / Actual Fixed Assets** grid is the count itself: one row per thing the team
 physically found. There are three ways to fill it, and a real count usually uses all three.
 
-**1. Press Collect Fixed assets** (تجميع الأصول الثابته). The button pre-fills the grid with assets
+**1. Press Collect Fixed assets** (تجميع الأصول الثابتة). The button pre-fills the grid with assets
 from the register so the team has something to walk with. It rebuilds the grid from scratch each
-time, so press it before you start editing rows, not after. Above it sit sixteen From/To range fields —
+time and also drops any custody rows already on it, so press it before you start editing rows, not
+after. Above it sit sixteen From/To range fields —
 group, asset type, asset code, company, branch, sector, department, analysis set — which narrow what
 the button pulls in. Each range is a code comparison, and a blank field means no bound on that side,
 so *From Fixed Asset* `FA-1000` and *To Fixed Asset* `FA-1999` pulls that block of codes and nothing
@@ -92,7 +93,7 @@ that is no longer in the grid becomes a shortage. Nothing is marked as missing �
 
 ## How the differences are worked out
 
-The comparison runs when the document's **Status** is set to **منهي / Ended**, and it re-runs on
+The comparison runs when the document's **Status** is set to **منتهي / Ended**, and it re-runs on
 every save from then on. While the status is *Started* the four result grids stay as they are, which
 is what lets a count run over several days without half-finished results confusing anybody.
 
@@ -107,15 +108,15 @@ pages rather than two on one.
 
 ![The asset results page](../../../ar/modules/fixedassets/images/movement/fa-taking-assets-result-en.png)
 
-Page 2, **نتائج جرد الاصول / fixedAsset Taking Result**, holds **الناقص من الاصول / Shortage
-FixedAssets** and **الزائد من الاصول / Extra FixedAssets**. Each line shows the asset, its custodian,
-its **قيمة الإقتناء / Openning Cost** and its **القيمة الدفترية الحالية / Current System Value** — so
+Page 2, **نتائج جرد الأصول / Fixed Asset Taking Result**, holds **الناقص من الأصول / Shortage
+Fixed Assets** and **الزائد من الأصول / Extra Fixed Assets**. Each line shows the asset, its custodian,
+its **قيمة الاقتناء / Opening Cost** and its **القيمة الدفترية الحالية / Current System Value** — so
 the shortage list doubles as the value of the problem. Those value columns settle when the document
 is saved, so read them from a saved document rather than mid-entry.
 
 ![The custody results page](../../../ar/modules/fixedassets/images/movement/fa-taking-custodies-result-en.png)
 
-Page 3, **نتائج جرد العهد / custodies Taking Result**, does the same for custody items in
+Page 3, **نتائج جرد العهد / Custodies Taking Result**, does the same for custody items in
 **الناقص من العهد / Custodies Shortage** and **الزائد من العهد / Custodies Extra**, showing the item,
 its holder and its price.
 
@@ -151,9 +152,9 @@ Al-Waha counts the Riyadh plant on 30 June 2026.
    chair `FRN-0071` carries a Dammam tag; adding it is refused with the dimensions consistency
    message, so it is written down for the Dammam team instead.
 4. Status is set to **Ended** and the document saved. The results come out as:
-   - *Shortage FixedAssets* — `MCH-0012` (book value 22,000), the cabinet, and the two plant assets
+   - *Shortage Fixed Assets* — `MCH-0012` (book value 22,000), the cabinet, and the two plant assets
      that fell outside the collected code range and were never scanned;
-   - *Extra FixedAssets* — `FRN-0058`;
+   - *Extra Fixed Assets* — `FRN-0058`;
    - *Custodies Extra* — `CDY-0041`.
 5. The document is committed. **Every asset record is exactly as it was.**
 

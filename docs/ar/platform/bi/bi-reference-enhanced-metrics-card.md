@@ -7,17 +7,17 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 # مرجع BI — EnhancedMetricsCard (وwidget المقاييس القديم MetricsCards)
 
 هذه الصفحة مرجع إعدادات نوعَي البطاقات اللذين يُنشآن في شاشة **عنصر اللوحة**: النوع الحديث **EnhancedMetricsCard**
-الذي تُضبط إعداداته في حقل **Chart Config JSON**، والنوع الأقدم **MetricsCards**. ارجع إليها حين يعرض شريط
+الذي تُضبط إعداداته في حقل **إعدادات الرسم البياني JSON**، والنوع الأقدم **MetricsCards**. ارجع إليها حين يعرض شريط
 البطاقات رقمًا أو لونًا أو أيقونة على غير المتوقع، أو حين يطلب العميل بطاقة لا تحويها لوحته بعد. ويشرح
-[دليل وحدة BI](./bi-module-guide.md) اللوحات في مجملها، أما الإعدادات المشتركة بين كل العناصر ففي
-[المرجع التقني لوحدة BI](./bi-module-technical-reference.md).
+[دليل وحدة BI](/ar/platform/bi/bi-module-guide) اللوحات في مجملها، أما الإعدادات المشتركة بين كل العناصر ففي
+[المرجع التقني لوحدة BI](/ar/platform/bi/bi-module-technical-reference).
 
 يقرأ `EnhancedMetricsCard` الحقل `chartConfigJSON` بالكامل، ويدعم sparklines مدمجة، وخلفيات بطاقة شرطية، وتبديل الأيقونات، وكامل مكدس التفاعل في BI (cross-filter / drill-down / link). يستمر widget المقاييس القديم `MetricsCards` في العمل جنبًا إلى جنب؛ للتحويل إلى النوع الجديد استخدم `type: "EnhancedMetricsCard"`.
 
 ## 1. متى تستخدم كل منهما
 
 - **شريط KPI سريع — header / value / subtitle / icon، مع شارة نسبة اختيارية** → `MetricsCards` القديم (لا يتطلب كتابة JSON؛ ولا يدعم sparklines أو خلفية شرطية).
-- **أي شيء أغنى** — sparklines، ألوان بطاقة شرطية، drill-down لكل بطاقة، تجميع قائم على partition عبر صفوف SQL متعددة → `EnhancedMetricsCard`.
+- **أي شيء أغنى** — sparklines، ألوان بطاقة شرطية، `clickAction` على مستوى الـ widget، تجميع قائم على partition عبر صفوف SQL متعددة → `EnhancedMetricsCard`.
 
 وفي الحالتين، ما يظهر على لوحة المعلومات هو شريط بطاقات كهذا:
 
@@ -25,7 +25,7 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 
 ## 2. الـ `MetricsCards` القديم (`type: "MetricsCards"`)
 
-يقرأ كائن القيمة `metricsCardConfig` على مستوى **أعلى** من `DashBoardWidget` مباشرة — **وليس** `chartConfigJSON`. بطاقة واحدة لكل صف SQL. تستبدل سلاسل Tempo الصيغة `{columnName}` بقيم الصف.
+يقرأ محتوى البطاقة من كائن القيمة `metricsCardConfig` على مستوى **أعلى** من `DashBoardWidget` مباشرة — **وليس** `chartConfigJSON`. بطاقة واحدة لكل صف SQL. تستبدل سلاسل Tempo الصيغة `{columnName}` بقيم الصف. حقول Tempo أدناه وحدها هي التي تبني البطاقة؛ ولعرض عمود كما هو اكتب `{columnName}` قالبًا كاملًا.
 
 ```json
 {
@@ -50,16 +50,15 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 | الحقل | الوصف |
 |---|---|
 | `headerTempoAr` / `headerTempoEn` | قالب الترويسة مع استبدال `{col}`. |
-| `headerColumnAr` / `headerColumnEn` | اسم العمود مباشرةً (بديل للقالب). |
-| `valueTempo` / `valueColumn` | الرقم الرئيسي — قالب أو عمود مباشر. |
-| `subtitleTempoAr` / `subtitleTempoEn` / `subtitleColumnAr` / `subtitleColumnEn` | السطر الثانوي. |
+| `valueTempo` | الرقم الرئيسي — قالب يجب أن ينتج رقمًا. |
+| `subtitleTempoAr` / `subtitleTempoEn` | السطر الثانوي. |
 | `iconCode` | اسم أيقونة Material؛ يدعم استبدال `{col}` لتغيير الأيقونة لكل صف. |
-| `badgePercentTempo` / `badgePercentColumn` | شارة نسبة تغيير اختيارية (الزخرفة الوحيدة الشبيهة بالرسم البياني في widget القديم). |
-| `linkTempo` / `linkColumn` | رابط عند النقر — قالب Tempo أو عمود مباشر. |
+| `badgePercentTempo` | شارة نسبة تغيير اختيارية تظهر بالشكل `+12.5%` / `-3.0%` (منزلة عشرية واحدة)، وتختفي حين ينتج القالب صفرًا أو لا شيء (الزخرفة الوحيدة الشبيهة بالرسم البياني في widget القديم). |
+| `linkTempo` | رابط عند النقر — قالب Tempo. |
 | `numberFormat` | قناع numeral.js (`"0,0"` ، `"0,0.00"` ، `"0a"`). **لغة تنسيق مختلفة** عن كائن `formatting` المنظّم المستخدم في أماكن أخرى. |
 | `suffix` | نص ثابت يُلحق بعد القيمة المنسقة (مثل `" SAR"`). |
 
-عندما يكون هذا الشكل كافيًا، يكون widget القديم أقصر من `EnhancedMetricsCard`. انتقل إلى `EnhancedMetricsCard` عند الحاجة إلى sparklines أو ألوان بطاقة شرطية أو click-emit/drill-down.
+عندما يكون هذا الشكل كافيًا، يكون widget القديم أقصر من `EnhancedMetricsCard`. أما ربط cross-filter وdrill-down والروابط (`clickEmitMapping` و`drillDownMapping` و`linkMappings`) فيبقى في `chartConfigJSON` تمامًا كما في `EnhancedMetricsCard`. انتقل إلى `EnhancedMetricsCard` عند الحاجة إلى sparklines أو ألوان بطاقة شرطية أو وضع partition أو `clickAction` على مستوى الـ widget.
 
 ## 3. الـ `chartConfigJSON` الخاص بـ EnhancedMetricsCard
 
@@ -137,7 +136,7 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
       "borderWidth":  "1px",
       "borderRadius": "12px",
       "padding":      "16px",
-      "shadow":       "sm"               // none | xs | sm | md | lg
+      "shadow":       "sm"               // none | sm | md | lg
     },
 
     // Conditional card bg / icon swap (§7)
@@ -158,7 +157,7 @@ menu: إدارة النظام ← لوحات ← عنصر اللوحة
 }
 ```
 
-تُعرض قيمة `percent` **كما هي** ما لم يقل التنسيق غير ذلك: `12.5` تصبح `12.5%`. وإذا كان الاستعلام يرجع كسراً (`0.125`) فأضف `"percentScale": "fraction"` كما في الشارة أعلاه، وإلا ظهرت الشارة `0.1%`. أما بقية خيارات التنسيق — المنازل العشرية والعملة والتواريخ و`nullDisplay` — فهي نفسها في EnhancedTable؛ راجع [التنسيق](/ar/platform/bi/bi-reference-enhanced-table.md#41-formatting).
+تُعرض قيمة `percent` **كما هي** ما لم يقل التنسيق غير ذلك: `12.5` تصبح `12.5%`. وإذا كان الاستعلام يرجع كسراً (`0.125`) فأضف `"percentScale": "fraction"` كما في الشارة أعلاه، وإلا ظهرت الشارة `0.1%`. أما بقية خيارات التنسيق — المنازل العشرية والعملة والتواريخ و`nullDisplay` — فهي نفسها في EnhancedTable؛ راجع [التنسيق](/ar/platform/bi/bi-reference-enhanced-table#41-formatting).
 
 ### `cardLayout.direction`
 
@@ -284,8 +283,9 @@ ORDER BY sortOrder
 النشطة، ولا يعدّله إلا عند الحاجة:
 
 - **خلفية البطاقة `bg`** تُرسم دائمًا كـ **wash** — 30% من اللون الذي كتبته، مركَّبة فوق سطح البطاقة
-  الخاص بالسمة — فتصبغ البطاقة في السمتين بدل أن تحبس نصها على تعبئة فاتحة. وهذا سلوك قديم؛ الجديد
-  أن كل صيغ ألوان CSS صارت تُقرأ، لا hex بست خانات فقط.
+  الخاص بالسمة — فتصبغ البطاقة في السمتين بدل أن تحبس نصها على تعبئة فاتحة. وفي الوضع الداكن ينزل
+  اللون الفاتح (الباستيل أو القريب من الأبيض) إلى wash بنسبة 6%، وينزل `borderColor` الفاتح إلى 12%،
+  فيظهر رفعًا خفيفًا بدل لوح رمادي.
 - **لون النص** — `color` الخاص بالبطاقة، أو `color` في خانة القيمة، أو لون شارة/أيقونة مذكور وحده —
   يبقى كما كُتب طالما ظل مقروءًا على البطاقة خلفه، وإلا سار في اتجاه السمة (أفتح على بطاقة داكنة،
   وأغمق على بطاقة فاتحة) بخطوات تحافظ على درجة لونه. فقيمة باللون `#0e7490` تبقى كما هي في الوضع
@@ -327,14 +327,14 @@ ORDER BY sortOrder
 
 ## 8. Cross-filtering وDrill-down والروابط
 
-يستخدم `clickEmitMapping` و`drillDownMapping` و`linkMappings` و`clickAction` نفس الشكل تمامًا كما في EnhancedTable / legacy Table (المرجع الرئيسي §4 / §5 / §5b). مصفوفة `points` تتوافق 1:1 مع البطاقات المعروضة بالترتيب. في وضع partition، تتوفر فقط أعمدة الصف الممثل لحمولات النقر — أعمدة الصفوف الأخرى في الـ partition غير المفتاحية تُتجاهل.
+يستخدم `clickEmitMapping` و`drillDownMapping` و`linkMappings` و`clickAction` نفس الشكل تمامًا كما في EnhancedTable / legacy Table ([المرجع التقني](/ar/platform/bi/bi-module-technical-reference) §4 / §5 / §5a / §5b). مصفوفة `points` تتوافق 1:1 مع البطاقات المعروضة بالترتيب. في وضع partition، تتوفر فقط أعمدة الصف الممثل لحمولات النقر — أعمدة الصفوف الأخرى في الـ partition غير المفتاحية تُتجاهل.
 
 ## 9. وضع Wizard
 
-كل slot من نوع `*field` يقبل عنصرًا شقيقًا `wizardFieldId` يُحلَّل إلى `displayAlias` الخاص بالـ wizard عند وقت العرض، مطابقًا لنمط wizard في EnhancedTable / EChart. **استثناء**: `sparkline.valuesField` (وضع inline) — أعمدة CSV / JSON-array لا تتلاءم مع تجريد wizard-field؛ مراجع الأعمدة الخام فقط هناك.
+تقبل الخانات `value` و`subtitle` و`icon` و`badge` كلٌّ منها المفتاح `wizardFieldId` بدل `field`؛ ويُحلَّل إلى `displayAlias` الخاص بالـ wizard عند وقت العرض، مطابقًا لنمط wizard في EnhancedTable / EChart. وإذا ضُبط `field` فهو المقدَّم على `wizardFieldId`. أما بقية مراجع الأعمدة — `headerArField` / `headerEnField`، ومفاتيح `colorField` / `bgField`، و`cardLayout.partitionKeys`، و`valueField` و`valuesField` و`orderByField` في الـ sparkline — فتأخذ اسم عمود خام من مجموعة النتائج.
 
 ## 10. المصمم (Designer)
 
-افتح مربع حوار chart-config من سجل الـ widget نفسه عبر إجراء **Edit Chart Config**. يكتشف مربع الحوار `type: "EnhancedMetricsCard"` ويعرض تبويب **Card Template** إلى جانب **Click & Links** و**Drill-Down Mapping** — ولا يوجد تبويب Data Mapping لهذا النوع من الـ widgets، ولا لوحة معاينة حية. يحتوي تبويب Card Template على أقسام قابلة للتوسع: Card Layout، Header، Value Slot، Subtitle، Icon، Badge، Sparkline، بالإضافة إلى محرري JSON خام لـ Card Style وCard Conditional Formatting. يتبدّل محدد الحقول تلقائيًا بين أعمدة SQL (الوضع الخام) وحقول wizard (عند ضبط `wizardDataSource`).
+افتح مربع حوار chart-config من سجل الـ widget نفسه عبر إجراء **تعديل إعدادات الرسم البياني**. يكتشف مربع الحوار `type: "EnhancedMetricsCard"` ويعرض تبويب **قالب البطاقة** إلى جانب **النقر والروابط** و**إعدادات التعمق** — ولا يوجد تبويب «ربط البيانات» لهذا النوع من الـ widgets، ولا لوحة معاينة حية. يحتوي تبويب قالب البطاقة على أقسام قابلة للتوسع: تخطيط البطاقات، الرأس، خانة القيمة، خانة العنوان الفرعي، خانة الأيقونة، خانة الشارة، خانة المخطط المصغر، بالإضافة إلى محرري JSON الخام «نمط البطاقة (JSON)» و«التنسيق الشرطي للبطاقة (JSON)». يتبدّل محدد الحقول تلقائيًا بين أعمدة SQL (الوضع الخام) وحقول wizard (عند ضبط `wizardDataSource`).
 
 ![مصمم بطاقات المؤشرات على تبويب Card Template، مع فتح أقسام تخطيط البطاقة (الاتجاه، أقل عرض، الفراغ، عدد الأعمدة في الصف، مفاتيح التقسيم) والرأس وفتحة القيمة (الحقل، التجميع، التنسيق، حجم الخط، حقل اللون) وبقية الفتحات مطوية](images/bi-metrics-card-designer-ar.png)

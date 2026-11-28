@@ -57,11 +57,10 @@ the other. Each line carries:
 | Customer Endure (% and value) | the share recharged to the customer |
 | Company Endure (% and value) | the share the company absorbs |
 
-::: tip Always pick an Item on every line
-The Item is what supplies the line's tax plan and its default subsidiary, and the calculation runs
-through it on every save. Leave a line without an item and the document will not recalculate
-cleanly. Make "no line without an item" a house rule — see
-[Fee, Commission, Broker and Expense Catalogues](/modules/realestate/costs/realestate-fee-commission-and-expense-types)
+::: tip The Item drives each line
+The Item supplies the line's tax plan (the term's tax plan is used when the item has none, and an
+item marked not taxable gets no tax) and, when *Line Subsidiary* is empty, its default subsidiary.
+See [Fee, Commission, Broker and Expense Catalogues](/modules/realestate/costs/realestate-fee-commission-and-expense-types)
 for how the catalogue is built.
 :::
 
@@ -96,10 +95,9 @@ one estate for the whole document.
 soon as there is at least one line. A cost typed by hand only survives on a document with no lines
 at all.
 
-**Every line must add up to 100%.** Company Endure Percent plus Customer Endure Percent must equal
-exactly 100 on **every** line, or the commit is blocked with an error on the company-endurance
-column. Type one and the other follows; the two value columns are then derived from the line value.
-Our lift line is 100 / 0.
+**The customer share is derived from the company share.** On every save the system sets Customer
+Endure Percent to 100 minus Company Endure Percent on each line, and recalculates both value columns
+from the line value. So the percentage you type is the company's. Our lift line is 100 / 0.
 
 ### Recharging the customer's share
 
@@ -108,10 +106,10 @@ company swallows. A line where the customer bears 60% is a cost the company pays
 recharges — and the term has a **separate account pair for each share**, so the company-borne
 portion and the customer-borne portion land in different accounts from the same line.
 
-That matters because the expense is also treated as a **tax invoice toward the buyer**. When the
-document is pushed to the tax authority or offered for online payment, the amount billed is
-**only the customer's share** — the company's share never appears on the invoice. Set the split
-before you send anything.
+The expense is also treated as a **tax invoice toward the buyer**. The electronic invoice sent to
+the tax authority carries each line's full value and taxes. When the document is offered for online
+payment, the amount billed is **only the customer's share** of each line's value after tax — the
+company's share is not billed. Set the split before you send anything.
 
 ## What gets recorded
 
@@ -145,8 +143,7 @@ menu → Reprocess / Recommit**.
 
 ### Paying the contractor
 
-Two buttons on the document's action block turn the expense into money out — the same two on the
-request and on the expense:
+Two buttons on the expense's action block turn it into money out (the request has neither):
 
 - **Create Payment Voucher** — opens a new payment voucher for the document's amount and currency,
   with the **buyer** as the subsidiary, for you to complete and commit.
@@ -185,13 +182,8 @@ Building C's 40 flats total 4,000 m². A 120 m² flat is 3% of that, so its shar
 is 126. The rows are written with the parent estate, the unit, its area, the total area, the share
 percentage and the distributed amount, and they appear on the document's **Details** tab.
 
-Two details that make the arithmetic honest:
-
-- **Rounding residue goes on the last row**, so the rows always sum exactly to the amount rather
-  than leaving a stray fraction.
-- **If the total area is zero** — because nobody filled the unit areas — the split falls back to an
-  **equal split**, one equal share per unit. That is a reasonable fallback, but it is not what you
-  asked for, so fill the unit areas.
+**Rounding residue goes on the last row**, so the rows always sum exactly to the amount rather than
+leaving a stray fraction. The split is by area, so fill the unit areas.
 
 ::: info The distribution uses the gross amount
 The split ignores the company/customer endurance percentages entirely — it distributes the whole

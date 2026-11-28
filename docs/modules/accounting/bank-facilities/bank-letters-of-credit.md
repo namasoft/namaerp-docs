@@ -5,10 +5,10 @@ menu: Banks → Bank LC → Bank LC
 
 # Bank Letters of Credit
 
-A letter of credit (LC) is a tool an importer uses to reassure the supplier: the bank undertakes to pay the supplier the shipment's value once they present shipping documents matching the terms. Like a letter of guarantee, an LC **reserves part of your facility limit** and charges you **fees**, and it's tracked as a master file with a succession of opening, amendment and closing documents, keeping the two snapshots of **initial values** and **current values**. Its structure is very close to that of [Letters of Guarantee](./letters-of-guarantee.md).
+A letter of credit (LC) is a tool an importer uses to reassure the supplier: the bank undertakes to pay the supplier the shipment's value once they present shipping documents matching the terms. Like a letter of guarantee, an LC **reserves part of your facility limit** and charges you **fees**, and it's tracked as a master file with a succession of opening, changing and closing documents, keeping two sets of figures: the **initial values** and the **current values**. Its structure is very close to that of [Letters of Guarantee](./letters-of-guarantee.md).
 
 ::: info Required license
-Letters of credit are part of the `accounting-blc` license.
+Letters of credit are part of the `accounting-blc` license. The **Bank Letter Of Credit Type** list is part of the `accounting-financial-commitments-regulation` license.
 :::
 
 ## The LC's lifecycle
@@ -25,9 +25,9 @@ Every screen hangs off the **Banks > Bank LC** root:
 
 On the **Bank LC** screen (`Banks > Bank LC > Bank LC`) the LC's data is defined:
 
-- **Basic information**: the **bank** and **bank account**, linking the LC to the **LC request**, **facility limit** and **project contract** (and **project contract extract**) when needed, and the **LC type**.
-- **Initial BLC values**: a snapshot of the opening terms — the **LC amount** and **currency**, **from date / to date**, the **covered amount** (covered in cash) and its percentage, the **facilities** (reserved portion) and its percentage, the **issue fees** and **change fees**.
-- **Current values**: the values in force after any amendment, plus the **status**.
+- **Basic information**: the code and names, the **English Code**, and the link to the **LC request**, the **project contract** and the **project contract extract** when needed.
+- **Initial Bank LC Values**: figures you type on the master file itself — the **LC amount** and **currency**, **Delivered To**, **from date / to date**, the **covered** percentage and amount (covered in cash), and the **fees** percentage and value. No document changes them.
+- **Bank LC** (the current values): the **status**, the same figures as written by the latest saved document on the LC, and the **bank** and **bank account**. The **Transactions** tab lists those documents.
 
 The **Bank Letter Of Credit Type** list (`Banks > Bank LC > Bank Letter Of Credit Type`) is a plain classification file — code, Arabic and English names, remarks and dimensions. It is picked on the [Facility Limit](./credit-facilities.md) lines, in the LC **Type** column that sits beside the guarantee-type and loan-type columns, to label which kind of LC a line of the ceiling is meant for. It is a label only: no amount, account or check reads it.
 
@@ -35,32 +35,39 @@ The **Bank Letter Of Credit Type** list (`Banks > Bank LC > Bank Letter Of Credi
 
 ### LC statuses
 
-The LC moves through the same statuses as a letter of guarantee: **Initial** → **Issued** → (**Received** / **Totally Delivered**) → **Finished** / **Canceled** / **Liquidated**.
+The LC moves through **Initial** → **Issued** → **Finished** / **Canceled** / **Liquidated**. The opening document sets **Issued**, a changing document keeps the status as it is, and the closing document sets whichever of the last three you pick in its **Status** field.
 
 ## Opening and reserving the facility
 
-When a **Bank LC Opening** (`Banks > Bank LC > Bank LC Opening`) is recorded its accounting effect is created and the facility portion is reserved. The opening term covers the sides: **LC amount debit/credit**, **facilities amount debit/credit**, **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where the accounts come from is in the [Document terms](../support/accounting-document-terms.md) reference.)
+When a **Bank LC Opening** (`Banks > Bank LC > Bank LC Opening`) is recorded its accounting effect is created and, when the LC carries a facility limit, the full LC amount is reserved against it. The opening term covers the sides: **LC amount debit/credit**, **facilities amount debit/credit**, **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where the accounts come from is in the [Document terms](../support/accounting-document-terms.md) reference.)
 
 ![Bank LC Opening screen](../../../ar/modules/accounting/images/lc/blc-opening-en.png)
 
 ::: warning Facility-limit check
-At opening, the system checks that the total reserved doesn't exceed the **facility limit** linked to the LC, blocking the opening if it does. Details in [Credit Facilities](./credit-facilities.md).
+When the LC carries a facility limit, the opening recalculates that limit and is blocked if any of its lines is left with a negative remaining amount. Details in [Credit Facilities](./credit-facilities.md).
 :::
 
 ## Amendment and closing
 
-**Changing** is used to raise or lower the LC value or extend its term — it updates the current values while keeping the initial values for comparison, and records the **change fees**. **Closing** closes the LC and releases the reserved facility.
+A **Bank LC Changing** (`Banks > Bank LC > Bank LC Changing`) raises or lowers the LC value, changes its dates or covered amount, and records **Change Fees**. Its LC field lists only LCs past **Initial**. The document copies the LC's current figures, read-only, and you type the new ones in its **New Info** group. On save the new figures become the LC's current values, the change fees add up in **Total Change Fees**, and the status and the initial values stay as they are. The changing document does not touch the facility limit.
+
+A **Bank LC Closing** (`Banks > Bank LC > Bank LC Closing`) closes the LC. Its **Status** field is required and takes **Finished**, **Canceled** or **Liquidated**, and that becomes the LC's status. The document takes the LC's current values, and when the LC carries a facility limit it releases the LC amount from those current values. It can also carry **Bank LC Closing Fees**.
+
+A changing or closing document needs an earlier document on the LC. Otherwise the save is refused with:
+*Bank LC {0} does not have a previous entry. Please create Openning document.* — «الاعتماد البنكي {0} لا يوجد له سند سابق لهذا السند. يرجى عمل سند افتتاحي أولا»
 
 ## Actions on this screen
 
-As with letters of guarantee, the request carries the two buttons that build the rest of the chain:
+Two buttons build the rest of the chain, one on each screen:
 
-- **Create Bank LC** — turns the approved request into the LC's master file, carrying over its type, amount, bank, bank account, dates, covered amount, facilities and fees, and opening it as a new record for you to review and save.
-- **Create Bank LC Opening Document** — opens the **Bank LC Opening** document directly, pre-filled from the request's account, bank and bank account. Use it at the moment the bank actually opens the LC, so the accounting effect is created and the facility is reserved in one step.
+- **Create Bank LC**, on the **Bank LC Request** — turns the request into the LC's master file, carrying over its names, type, amount and currency, bank, bank account, dates, **Delivered To**, covered amount and fees, and opening it as a new record for you to review and save. It is refused when the request's type is **Rejected**, and when the request was already turned into an LC.
+- **Create Bank LC Opening Document**, on the **Bank LC** master file — opens a new **Bank LC Opening** document for that LC, pre-filled with its bank, bank account, dates, amount and currency, covered amount and fees.
 
-Both need the request **saved** first.
+Each needs its record **saved** first.
 
 ## Reports
+
+Both reports read the supply-chain **Letter of Credit** (its proforma invoices and expense documents), not the Bank LC of this page.
 
 | Report | Answers |
 |---|---|
@@ -85,6 +92,6 @@ For the full import cycle — shipments, proforma invoices, additional costs, an
 ## For Support
 
 - **"Couldn't open the LC — limit exceeded"** — the reserved amount exceeds the linked facility limit; see [Credit Facilities](./credit-facilities.md).
-- **"What's the difference between initial and current values?"** — the initial ones are a snapshot of the opening terms, and the current ones reflect the latest amendment.
+- **"What's the difference between initial and current values?"** — the initial ones are typed on the master file and no document changes them; the current ones are written by the latest saved document on the LC.
 - **"Where do the amount, facility and fee accounts come from?"** — from the **Bank LC Opening** term; see [Document terms](../support/accounting-document-terms.md).
 - The accounting-processing mechanism is in [How documents are processed into accounting effects](../support/accounting-request-processing.md).

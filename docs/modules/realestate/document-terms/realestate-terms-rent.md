@@ -20,7 +20,7 @@ at all. Each page corresponds to a value on the lease itself, so it helps to hav
 the first time you configure one.
 
 Read [How Real Estate Document Terms Work](/modules/realestate/document-terms/realestate-terms-basics)
-first for the anatomy of an accounting side, the both-halves-or-nothing rule, the Confiuration List
+first for the anatomy of an accounting side, the both-halves-or-nothing rule, the Configuration List
 routing grid and the tax-policy precedence.
 
 ::: info Configure by page title, never by field name
@@ -36,17 +36,17 @@ match an import column or a customisation to the right tab — read them as labe
 
 | Page | Title on screen | Debit / credit field ids | The money it books |
 |---|---|---|---|
-| 0 | Total contract effect · اساس العقد | `termConfig.debit2` / `termConfig.credit2` | The contract's total rent value, the split between recognised and deferred rent, and every behavioural option |
-| 1 | Insurrance effect · تاثيرات التأمين | `termConfig.issuedDebit` / `termConfig.issuedCredit` | The tenant's security deposit |
-| 2 | Commissions effect · تاثيرات السعي | `termConfig.feesValDebit` / `termConfig.feesValCredit` | The brokerage commission on the lease |
-| 3 | Maintenance effect · تاثيرات الصيانة | `termConfig.interestValDebit` / `termConfig.interestValCredit` | The maintenance charge carried on the lease |
-| 4 | Water expense effect · تاثيرات مصاريف المياه | `termConfig.receivedDebit` / `termConfig.receivedCredit` | The water and utility charge |
-| 5 | commission Collection Effect · تاثيرات عمولة التحصيل | `termConfig.collectDebit1` / `termConfig.collectCredit1` | The collection commission |
-| 6 | Cancel Previuos RentContract · إعدادات إلغاء العقد السابق | — | The book and term used when a renewal auto-cancels the previous lease |
+| 0 | Total contract effect · أساس العقد | `termConfig.debit2` / `termConfig.credit2` | The contract's total rent value, the split between recognised and deferred rent, and every behavioural option |
+| 1 | Insurance effect · تأثيرات التأمين | `termConfig.issuedDebit` / `termConfig.issuedCredit` | The tenant's security deposit |
+| 2 | Commissions effect · تأثيرات السعي | `termConfig.feesValDebit` / `termConfig.feesValCredit` | The brokerage commission on the lease |
+| 3 | Maintenance effect · تأثيرات الصيانة | `termConfig.interestValDebit` / `termConfig.interestValCredit` | The maintenance charge carried on the lease |
+| 4 | Water expense effect · تأثيرات مصاريف المياه | `termConfig.receivedDebit` / `termConfig.receivedCredit` | The water and utility charge |
+| 5 | Commission Collection Effect · تأثيرات عمولة التحصيل | `termConfig.collectDebit1` / `termConfig.collectCredit1` | The collection commission |
+| 6 | Cancel Previous Rent Contract · إعدادات إلغاء العقد السابق | — | The book and term used when a renewal auto-cancels the previous lease |
 | 7 | Tax Effects · تأثيرات الضريبة | — | The tax plan and the two tax account pairs |
 
-The captions on pages 1 and 6 ship with typos ("Insurrance", "Previuos"); they are reproduced here so
-you can recognise the tabs on screen.
+Page 6, and the *Allow Rent Sold Estate* and *Rental Contract* options on page 0, appear only on the
+rent contract's own term.
 
 Pages 1 to 5 each contain nothing but a debit block and a credit block, and each configures one
 amount. Leave a page's blocks empty and that amount is simply not booked — which is the normal
@@ -95,7 +95,7 @@ two thirds of that quarter is this year's income and one third is deferred.
 | Fixed Maintenance | `termConfig.fixedMaintenance` | Affects only the leases created by the batch lease generator. Normally each year's maintenance charge on a generated lease is recomputed as the lease's maintenance percentage of that year's rent, so it rises with the yearly increase. On, the maintenance value on the batch line is kept unchanged for every year of the lease. A rent contract entered on its own ignores this option. |
 | Modifiable Tax | `termConfig.modifiableTax` | Leaves the tax amounts on the installment grid editable. Off, they are recomputed from the tax policy on every save. |
 | Legal Entity Taxes | `termConfig.legalEntityTaxes` | The term's own tax policy grid. Filled, it wins outright; empty, the module configuration applies. |
-| Confiuration List | `termConfig.configLineList` | The per-installment-type routing grid. On a lease this is where you send the current year's and next years' rent to different accounts per charge type. |
+| Configuration List | `termConfig.configLineList` | The per-installment-type routing grid. On a lease this is where you send the current year's and next years' rent to different accounts per charge type. |
 
 Two more options appear on page 0 **only on rent offers and offer cancellations**, in a group of
 their own:
@@ -151,7 +151,7 @@ accruals give it back month by month.
 Each of these pages holds one debit block and one credit block, and each books exactly one amount
 from the lease's value block.
 
-**Insurrance effect** books the tenant's security deposit. It is not income — it is money held on the
+**Insurance effect** books the tenant's security deposit. It is not income — it is money held on the
 tenant's behalf — so the pair almost always credits a deposits-held liability. When the lease ends,
 the termination document decides what comes back.
 
@@ -166,12 +166,10 @@ page:
 effect** books the water and utility charge. Both are charges the tenant pays alongside the rent, and
 both are optional — a lease that does not levy them leaves the pages empty.
 
-**commission Collection Effect** is the page where you set the accounts for the commission charged on
+**Commission Collection Effect** is the page where you set the accounts for the commission charged on
 collecting the rent — the fee a managing agency keeps out of what it collects for the landlord. Like
 the other charge pages it holds one debit block and one credit block, and both must be filled for the
-commission to be booked at all. Its two captions are swapped: the block captioned *Commission
-Collection Credit* holds the debit side (`termConfig.collectDebit1`) and the block captioned
-*Commission Collection Debit* holds the credit side (`termConfig.collectCredit1`).
+commission to be booked at all.
 
 ## Page 6 — the auto-cancel book and term
 
@@ -207,26 +205,20 @@ a Taxes page:
 
 | Page | Title on screen | Debit / credit field ids | The bucket |
 |---|---|---|---|
-| 0 | Remaining inssurance effects · تاثيرات صافي التامين | `termConfig.debit` / `termConfig.credit` | The net deposit after everything has been deducted |
-| 1 | Inssurance effects · تاثيرات التامين | `termConfig.debit2` / `termConfig.credit2` | The gross deposit |
+| 0 | Remaining insurance effects · تأثيرات صافي التأمين | `termConfig.debit` / `termConfig.credit` | The net deposit after everything has been deducted |
+| 1 | Insurance effects · تأثيرات التأمين | `termConfig.debit2` / `termConfig.credit2` | The gross deposit |
 | 2 | Commissions Effects · تأثيرات السعي | `termConfig.commissionDebit` / `termConfig.commissionCredit` | The unused portion of the commission |
 | 3 | Water Expenses Effects · تأثيرات تكاليف المياه | `termConfig.waterExpenseDebit` / `termConfig.waterExpenseCredit` | The unused water charge |
 | 4 | Maintenance Effects · تأثيرات تكاليف الصيانة | `termConfig.maintenanceDebit` / `termConfig.maintenanceCredit` | The unused maintenance charge |
-| 5 | Discount value insurance effects · تاثيرات خصم التامين | `termConfig.issuedDebit` / `termConfig.issuedCredit` | The discount taken out of the deposit |
-| 6 | Other discount effects · تاثيرات الخصومات الأخرى | `termConfig.receivedDebit` / `termConfig.receivedCredit` | Any other discount applied to the settlement |
-| 7 | Remaining Effects · تاثيرات المتبقي | `termConfig.loanValDebit` / `termConfig.loanValCredit` | Everything still owed or prepaid at termination |
+| 5 | Discount value insurance effects · تأثيرات خصم التأمين | `termConfig.issuedDebit` / `termConfig.issuedCredit` | The discount taken out of the deposit |
+| 6 | Other discount effects · تأثيرات الخصومات الأخرى | `termConfig.receivedDebit` / `termConfig.receivedCredit` | Any other discount applied to the settlement |
+| 7 | Remaining Effects · تأثيرات المتبقي | `termConfig.loanValDebit` / `termConfig.loanValCredit` | Everything still owed or prepaid at termination |
 | 8 | Taxes · الضرائب | `termConfig.sendAs` | Not a bucket: the single **Send As** field — Invoice, CreditNote or DebitNote, as the English screen spells them — that decides how the termination is sent to the tax authority |
 
-Pages 2, 3 and 4 each hold a debit block and a credit block for their bucket, and follow the same
-both-halves-or-nothing rule as everywhere else: an unconfigured page means that bucket is not booked
-and the tenant's settlement is simply shorter by that amount.
-
-::: warning Captions swapped on pages 2, 3 and 4
-On these three pages the block captioned **Debit** holds the credit side and the block captioned
-**Credit** holds the debit side (for example, on page 2 the *Debit* block is `termConfig.commissionCredit`).
-Put the account you want debited in the block captioned *Credit*. Pages 0, 1, 5, 6 and 7 are captioned
-correctly.
-:::
+Pages 2, 3 and 4 each hold a debit block and a credit block for their bucket. An unconfigured page
+means that bucket is not booked and the tenant's settlement is simply shorter by that amount. Unlike
+the rent contract term, this term writes a filled side even when its partner is empty, so a
+half-configured page gives a one-sided line: always fill both blocks.
 
 Page 7 is the largest. It holds the remaining-balance blocks plus four further account pairs that
 separate what belongs to this year from what belongs to the next:
@@ -247,8 +239,8 @@ Four behavioural options complete the term:
 |---|---|---|
 | Allow Cancel Of Rent Contract With Unpaid Installments | `termConfig.allowUnpaidInstallments` | Off, a lease cannot be terminated while any installment is still unpaid. On, termination goes ahead and the arrears are carried by the *Remaining Effects* accounts — which is how most companies handle a tenant who leaves owing money. |
 | Calculate Remaining Rent Values Based On System Paid Rent | `termConfig.calcCurrentYearAndNextYearValueFromPaidRent` | Derives the current-year / next-year rent split from the amounts actually recorded as paid rather than from the contract schedule. |
-| Delete Ldegers Saved As Draft After Saving Cancel Contract | `termConfig.deleteDraftLdegersAfterSave` | Deletes the terminated lease's **draft** accrual documents when the termination is saved, so future accruals do not linger. Pairs with *Save Generated Ledger As Draft* on the contract term. *(The shipped label carries the typo "Ldegers".)* |
-| ReCreate Ledgers After Deleting Cancel Contract | `termConfig.reCreateLedgersAfterDelete` | If the termination document is later deleted, regenerates the original lease's accrual documents so the schedule comes back intact. |
+| Delete Ledgers Saved As Draft After Saving Cancel Contract | `termConfig.deleteDraftLdegersAfterSave` | Deletes the terminated lease's **draft** accrual documents when the termination is saved, so future accruals do not linger. Pairs with *Save Generated Ledger As Draft* on the contract term. |
+| Recreate Ledgers After Deleting Cancel Contract | `termConfig.reCreateLedgersAfterDelete` | If the termination document is later deleted, regenerates the original lease's accrual documents so the schedule comes back intact. |
 
 Worked through: a tenant on the 120,000-a-year shop lease leaves four months early. *Allow Cancel Of
 Rent Contract With Unpaid Installments* is on, so the termination commits despite one outstanding
@@ -265,9 +257,9 @@ terms belonging to the rent contract, so you cannot point them at the wrong docu
 All the real accounting configuration lives in the term you name here — the batch document itself
 creates no entry. See [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule).
 
-**The opening lease term** is the ordinary rent contract term with one extra page, **Pre paid effects
+**The opening lease term** is the ordinary rent contract term with one extra page, **Prepaid effects
 · تأثيرات المدفوع مسبقا**, for rent that the tenant paid before the system went live. That page edits
-the same two fields as the *commission Collection Effect* page (`termConfig.collectDebit1` /
+the same two fields as the *Commission Collection Effect* page (`termConfig.collectDebit1` /
 `termConfig.collectCredit1`), so on an opening lease the two pages always show the same accounts, and
 filling one fills the other: the prepaid rent and any collection commission are booked to the same
 pair. Everything else

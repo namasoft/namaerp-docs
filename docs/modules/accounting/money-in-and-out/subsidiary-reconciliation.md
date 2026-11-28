@@ -20,8 +20,8 @@ The subsidiary reconciliation document produces **no accounting effect**; it's a
 
 The document moves through a **reconciliation step** in three stages — exactly as bank reconciliation does:
 
-1. **Collect Data** — you specify the **account** and **subsidiary** (the customer/supplier) and an **import date range**, and the system gathers your transactions (**system lines**) and the party's statement (**subsidiary lines**).
-2. **Reconciliation** — you match the subsidiary lines against your system lines, within the allowed **value tolerance** and **date-difference tolerance**, optionally driven by a **narration match sequence** or matching from the subsidiary side. What doesn't match lands in the **unmatched system lines** and **unmatched subsidiary lines** grids, where the real discrepancies become visible.
+1. **Collect Data** — you specify the **account**, the **subsidiary** (the customer/supplier) and the **From Date** / **To Date** range. The **Collect Data** button gathers your transactions (**system lines**), and **Import Subsidiary Lines** loads the party's statement (**subsidiary lines**) from an attached file.
+2. **Reconciliation** — you match the subsidiary lines against your system lines, within the allowed value tolerance (**Max. Tolerated Value**) and date-difference tolerance (**Allowed Difference In Date**), optionally driven by a **narration match sequence** or matching from the subsidiary side. What doesn't match lands in the **unmatched system lines** and **unmatched subsidiary lines** grids, where the real discrepancies become visible.
 3. **Finished** — the document is closed once matching is complete.
 
 ![The Subsidiary Reconciliation screen](../../../ar/modules/accounting/images/subsrecon/subsidiary-reconciliation-en.png)
@@ -30,24 +30,19 @@ Each document links to the **previous reconciliation** for the same party, so it
 
 ## The buttons that drive the three steps
 
-The toolbar is the same one bank reconciliation uses, and the same rule applies: a button that "does nothing" is almost always being pressed on the wrong step.
+The buttons behave as they do on bank reconciliation, and the same rule applies: a button that "does nothing" is almost always being pressed on the wrong step.
 
 **On the Collect Data step:**
 
-- **Collect Data** — step 1 in a button. With the **account**, the **subsidiary** and the import date range set, it pulls your books for that party into the **system lines** grid, continuing from the previous reconciliation for the same party.
-- **Import Subsidiary Lines** — loads the party's own statement from a file. Attach the file and name the **subsidiary** first; miss either and the button tells you which. (**Import Bank Lines** sits beside it and behaves identically — it is the bank-reconciliation wording of the same import.) The file's columns are read by a formula written once in the accounting configuration — see [Reconciliation import formulas](../support/accounting-configuration.md#Reconciliation-import-formulas).
-- **Update System lines of previous document** — refreshes the system lines carried over from the previous reconciliation, so movements that changed since it was closed show their current figures. This step only.
+- **Collect Data** — step 1 in a button. With the **account** and the **subsidiary** set, it pulls your books for that party between **From Date** and **To Date** into the **system lines** grid, and carries over the lines left unmatched on the **Previous Reconciliation**.
+- **Import Subsidiary Lines** — loads the party's own statement from a file into the **subsidiary lines** grid, limited to **Import From Date** – **Import To Date** when they are filled. Attach the file and choose the import formula first; with either missing the button refuses. The formula field is the second field labelled **Subsidiary** on this screen (the first is the party), and it names a formula written once in the accounting configuration that says how the file's columns are read — see [Reconciliation import formulas](../support/accounting-configuration.md#Reconciliation-import-formulas).
 
 **On the Reconciliation step:**
 
 - **Automatic Match** — runs the matching engine over both grids, honouring the **value tolerance**, the **date-difference tolerance** and the **narration match sequence**, and working from whichever side **match from subsidiary lines** points at. This clears the bulk.
 - **Manual Match** — the same engine restricted to the pairings you have set up, for what automatic matching could not resolve.
-- **Macth** — applies what you typed into the unmatched grids: fill a row's **matched with** (or **reverse of**) column, press it, and those rows are matched and leave the unmatched lists. The label reads exactly like that on screen.
-- **Create Journal Entry** — records a selected unmatched line as a journal entry carrying that line's account, subsidiary, value date and amount, ready for you to complete the other side and save. Note that the reconciliation still records nothing itself — the entry does.
-
-**Any time:**
-
-- **Calculate Totals** — recomputes the system and subsidiary totals, both unmatched totals and the total difference from the grids as they stand. Press it after a round of matching to see where you are.
+- **Match** — applies what you typed into the unmatched grids: fill a row's **Matched with** (or **Reverse Ledger For**) column, press it, and those rows are matched and leave the unmatched lists.
+- **Create Journal Entry** — opens a new journal entry for the selected line of the **Unmatched Subsidiary Lines** grid, carrying that line's account, value date and amount, ready for you to complete the other side and save. Note that the reconciliation still records nothing itself — the entry does.
 
 ## For Support
 

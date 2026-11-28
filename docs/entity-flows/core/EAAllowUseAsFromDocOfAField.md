@@ -10,29 +10,31 @@ entities: [EntityFlow]
 
 ## Overview
 
-Allows a specific field to be used as a source document reference ("from doc") in document creation workflows. Enables field-level control over document reference functionality.
+Lifts the "prevented from usage as from doc" mark from the documents that a field of the current record points to, so they can again be chosen in **From Document** of other documents. It undoes what [EAPreventUseAsFromDocOfAField](/entity-flows/core/EAPreventUseAsFromDocOfAField) does.
 
 ## When This Action Runs
 
-- **Trigger:** Manual execution through entity flows
-- **Target:** Specific field in entity forms
-- **Purpose:** Enable field for use as document reference source
-- **Timing:** On-demand when field access control is needed
+- **Trigger:** The event chosen in **Target Action** on the flow line, or a manual run
+- **Target:** Any record that has a field pointing to documents
+- **Purpose:** Make the referenced documents usable as a From Document again
 
 ## How It Works
 
-Configures the specified field to allow its use as a "from doc" reference when creating new documents from existing ones. This enables users to select this field's value as a source for document creation workflows.
+1. **Reads the field** named in Parameter 1 from the current record. A line field gives one value per line
+2. **Keeps only documents**: a value that is not a document (a master file, for example) is skipped
+3. **Clears the mark** `preventUseAsFromDoc` on each of those documents
 
 ## Parameters
 
 ### Parameter 1: Field ID (Required)
-- **Purpose:** Identifies the specific field to allow for "from doc" usage
-- **Format:** Field identifier string
-- **Examples:** `customerRef`, `sourceInvoice`, `originalOrder`
+- **Title:** Field id
+- **Purpose:** The reference field of the current record that points to the documents to release
+- **Format:** A header field id or a line field id
+- **Examples:** `fromDoc`, `ref1`, `details.ref1`
 
 ## Related Actions
 
-- **EAPreventUseAsFromDocOfAField** - Prevents field from being used as document reference
+- **EAPreventUseAsFromDocOfAField** - Marks the referenced documents so they cannot be used as a From Document
 
 **Module:** core
 

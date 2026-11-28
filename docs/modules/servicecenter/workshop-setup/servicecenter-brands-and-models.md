@@ -30,7 +30,7 @@ Read it as: a **brand** is the marque; a **model** is one vehicle line of that m
 
 ### The Brand File
 
-**Brand** (`ماركة منتج`) is deliberately thin — code, Arabic and English names, attachments. Its second tab, headed **Brand** (ماركه), is a read-only list of every model that belongs to it, which is the quickest way to see whether a marque has been set up completely.
+**Brand** (`ماركة منتج`) is deliberately thin — code, Arabic and English names, attachments. Its second tab, headed **Brand** (ماركة), is a read-only list of every model that belongs to it, which is the quickest way to see whether a marque has been set up completely.
 
 ![The Brand file screen](../../../ar/modules/servicecenter/images/workshop-setup/sc-brand-en.png)
 
@@ -62,23 +62,21 @@ This is the part worth memorising, because it is short and it is the entire retu
 
 **2. The labour time and rate of a task.** A [task](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) carries a Products grid — one row per model, with the hours that model takes and the rate charged. The oil change is 1.0 hours at 120 on the Saif 1.6 because a row says so.
 
-**3. The [service interval](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md).** A task's recurrence rows can set a different **Recur Every KM** per model, and a service's model price row carries its own recurrence figure. That is how the same oil change can be due every 10,000 km on a sedan and every 7,500 on a van.
+**3. The [service interval](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md).** A task's recurrence rows can set a different **Recur Every KM** per model (a row may also name a brand, or one vehicle), and a service's model price row carries its own recurrence figure. That is how the same oil change can be due every 10,000 km on a sedan and every 7,500 on a van.
 
 And one thing it explicitly does **not** drive: **[inspection templates](/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md)**. Inspection templates and the inspection points they are built from carry no model and no brand at all, and no rule, filter or `توجيه` option picks a template. The template is chosen by hand, by the person filling the form — never by the car.
 
 ::: tip Rows are chosen by model
 On a task's Products grid the **Brand** column is mandatory — you cannot save a row without it. On a service's model price grid the brand column is displayed and is checked against the header.
 
-Every matcher that picks a price, a labour time or an interval keys on the **model**. So fill the brand with the marque that genuinely owns the model, and keep one row per model.
+A row that names a model applies to that model. When a service is picked, a service price row that names a brand but no model applies to every model of that brand, and the first row that fits the vehicle is the one taken, so list the model rows first; recalculating prices matches model rows only. So fill the brand with the marque that genuinely owns the model, and keep one row per model.
 :::
 
 ::: tip The pickers offer the whole catalogue
 On a job order, the task and service pickers offer the whole catalogue, and the service advisor chooses the ones that fit the vehicle. If the catalogue is large, invest in codes and master groups that sort sensibly.
 :::
 
-::: tip Write `brad`, not `brand`
-The brand field on the task and on its product lines is spelled **`brad`** in its identifier. That spelling reaches you through import files, criteria definitions, entity flows and query expressions — anywhere you name the field rather than click it. The screen label reads "Brand"; the identifier does not.
-:::
+The brand field on the task and on its Products rows has the identifier `brad`; see [Service Tasks](/modules/servicecenter/workshop-setup/servicecenter-tasks).
 
 ## Setting the Classification Up
 
@@ -86,4 +84,4 @@ The brand field on the task and on its product lines is spelled **`brad`** in it
 2. Create the **model categories** you actually want to group by. Keep the list short; nothing depends on it, so a long one costs you effort and buys nothing.
 3. Create one **model** per vehicle line, point it at its brand and its category, and use codes people will recognise (`MDL-SAIF16` rather than `M001`).
 4. Then, and only then, build the [task catalogue](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) and the [service packages](/modules/servicecenter/workshop-setup/servicecenter-operations.md) — because their price rows are typed *per model*, and a model that does not yet exist cannot be priced.
-5. When a new model joins the range, remember it needs a price row added to every task and every service that applies to it. Nothing inherits from the brand, so an unpriced new model quietly falls back to the generic average period and the [work center's hour price](/modules/servicecenter/workshop-setup/servicecenter-work-centers.md).
+5. When a new model joins the range, remember it needs a price row added to every task and every service that applies to it. A task with no row for the model falls back to its Average Period — priced from the task's own Total when the task is picked, and at the [work center's hour price](/modules/servicecenter/workshop-setup/servicecenter-work-centers.md) when prices are recalculated — and a service priced by Total takes its own total price when it is picked, unless a brand-only service row covers the model.

@@ -101,10 +101,10 @@ The **Settings** window has five tabs down its side.
 |---|---|---|
 | *The current password is incorrect* — «كلمة المرور الحالية غير صحيحة» | **Current Password** is empty or is not the password you signed in with. | Type the password you use now. If you have forgotten it, ask an administrator to set a new one from your User record. |
 | *New password and confirmed passwords do not match* — «كلمة المرور الجديدة لا تطابق تأكيد كلمة المرور» | The two password boxes differ. | Type the same password in both. |
-| *New password is the same as old password, please use a different password* — «كلمة المرور الجديد مطابقة للحالية. يرجى استعمال كلمة مرور مختلفة.» | The company forbids reusing the current password. | Choose a different password. |
-| *Password length must be greater than or equal {0}* — «طول كلمة المرور يجب ان يكون اكبر من او يساوي {0}» | The password is shorter than the policy allows. | Use at least the number of characters shown. |
-| *Password must contains at least {0} Alphabetic Characters* — «يجب أن تحتوي كلمة المرور علي الأقل علي {0} من الحروف» | Too few letters. | Add letters. |
-| *Password must contains at least {0} Numeric Characters* — «يجب ان تحتوي كلمة المرور علي الأقل علي {0} من الحروف الرقمية» | Too few digits. | Add digits. |
-| *Password must contains at least {0} Special Characters* — «يجب أن تحتوي كلمة المرور علي الأقل علي {0} من العلامات أو الحروف الخاصة » | Too few symbols. | Add symbols such as `@` or `#`. |
-| *Password must contains upper and lower case characters* — «يجب أن تحتوي كلمة المرور علي حالة الحروف الكبيرة والصغيرة» | The policy needs both capital and small letters. | Mix capital and small letters. |
+| *New password is the same as old password, please use a different password* — «كلمة المرور الجديدة مطابقة للحالية. يرجى استعمال كلمة مرور مختلفة.» | The company forbids reusing the current password. | Choose a different password. |
+| *Password length must be greater than or equal {0}* — «طول كلمة المرور يجب أن يكون أكبر من أو يساوي {0}» | The password is shorter than the policy allows. | Use at least the number of characters shown. |
+| *Password must contains at least {0} Alphabetic Characters* — «يجب أن تحتوي كلمة المرور على الأقل على {0} من الحروف» | Too few letters. | Add letters. |
+| *Password must contains at least {0} Numeric Characters* — «يجب أن تحتوي كلمة المرور على الأقل على {0} من الحروف الرقمية» | Too few digits. | Add digits. |
+| *Password must contains at least {0} Special Characters* — «يجب أن تحتوي كلمة المرور على الأقل على {0} من العلامات أو الحروف الخاصة» | Too few symbols. | Add symbols such as `@` or `#`. |
+| *Password must contains upper and lower case characters* — «يجب أن تحتوي كلمة المرور على حالة الحروف الكبيرة والصغيرة» | The policy needs both capital and small letters. | Mix capital and small letters. |
 | *Changing password is not supported for LDAP users* (English only) | Your login is checked against LDAP or Active Directory. | Change the password in your company directory. |

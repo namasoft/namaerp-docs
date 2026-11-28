@@ -8,8 +8,10 @@
 
 لتحسين الأداء، يُنصح بإنشاء **non-clustered index** على أعمدة المفاتيح الخارجية هذه **فقط إذا كان جدول التفاصيل يحتوي على عدد كبير من الصفوف**.
 
-::: info المستندات الأكثر استخداماً يفهرسها نما بنفسه
-ينشئ نما عند التشغيل الـ index على سطور مستنداته الأكثر استخداماً، باسم `idx_<column>` (مثل `idx_salesInvoice_id`): فواتير المبيعات والمشتريات ومرتجعاتها، وفواتير مبيعات نقاط البيع ومردوداتها، وأوامر البيع، والصرف المخزني والتوريد المخزني، وسندات التحويل المخزني، وصرف واستلام التحويل المخزني، وطلبات التحويل المخزني، وسندات القبض والصرف، والقيود اليومية، وقوائم أسعار البيع والشراء، وسطور الوحدات والمقاسات والألوان والمحددات في الأصناف. وفي قاعدة البيانات الكبيرة التي ليس فيها هذا الـ index يطول أول تشغيل بعد التحديث حتى يُبنى.
+::: info نما ينشئ هذه الـ indexes بنفسه
+يعرّف نما index باسم `idx_<column>` (مثل `idx_salesInvoice_id`) على عمود الأب في جداول التفاصيل لمستنداته وملفاته، في كل الوحدات، وينشئه عند التشغيل حيثما كان ناقصاً. وفي قاعدة البيانات الكبيرة التي ليس فيها هذا الـ index يطول أول تشغيل بعد التحديث حتى يُبنى.
+
+والاستعلام في هذه الصفحة يعرض فقط أعمدة الأب التي ما زالت بلا index. فهو لقاعدة بيانات على إصدار أقدم؛ أما على إصدار حالي فلا يُرجع إلا جداول التفاصيل القليلة التي لا يفهرسها نما بنفسه.
 
 وإن كنت أنشأت أحد هذه الـ indexes يدوياً من قبل، ففي الجدول الآن نسختان منه. تعرض [أداة اكتشاف الفهارس المكررة](/ar/admin/reprocessing/database-size-and-index-utilities) النسخة الزائدة، ويذكّر خطأ حرج فريق الدعم بها حتى تُحذف.
 :::
@@ -29,6 +31,8 @@
 يُخرج الاستعلام قائمة بالجداول مع مقترحات لإنشاء الـ index المطلوب.
 
 يجب **تطبيق الـ indexes المقترحة فقط على الجداول التي يتجاوز فيها `row_count` الحد المحدد**، مثل 50,000 أو 100,000 سجل.
+
+هذه النتيجة النموذجية من قاعدة بيانات على إصدار أقدم، قبل أن ينشئ نما هذه الـ indexes الأربعة بنفسه:
 
 | table\_name                | column\_name           | row\_count | create\_index\_sql                                                                                                                          |
 | -------------------------- | ---------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1105,7 +1109,6 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'ReqSecondaryItemUOMLine+invItemOpiningRequest_id',
 'ReqSizesAndColors+invItemOpiningRequest_id',
 'ItemUpdateDimensionsDetail+invItemUpdate_id',
-'InvestmentFundLine+investmentFund_id',
 'InvoiceReceiptDocLine+invoiceReceiptDoc_id',
 'MismatchedInvReceiptDocQtysLine+invoiceReceiptDoc_id',
 'ItemAssortmentLine+itemAssortment_id',
@@ -1179,7 +1182,7 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'LCScheduledPayLine+lCProformaInvoice_id',
 'ShipmentLine+lCShipment_id',
 'LCShipmentInvoiceLine+lCShipmentProformaInvoice_id',
-'LCScheduledPayLine+lCShipmentProformaInvoice_id',
+'LCShipmentScheduledPayLine+lCShipmentProformaInvoice_id',
 'LGTOpeningDocLine+lGTOpeningDoc_id',
 'LcExpenseLine+lcExpenseDocument_id',
 'ManualLcExpenseLine+lcExpenseDocument_id',
@@ -1223,7 +1226,7 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'MRPForecastingLine+mRPSalesForecasting_id',
 'MachineRentInvLine+machineRentInvoice_id',
 'MiscRentExternalPaymentLine+machineRentInvoice_id',
-'MiscPurchaseInvPaymentLine+machineRentInvoice_id',
+'MachineRentInvPaymentLine+machineRentInvoice_id',
 'MiscRentScheduledPayLine+machineRentInvoice_id',
 'MagentoItemLinkerLine+magentoItemLinker_id',
 'MagentoPriceUpdaterLine+magentoPriceUpdaterDoc_id',

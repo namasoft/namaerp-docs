@@ -104,14 +104,13 @@ begin
 	select @lastid = max(id) from LargeData where @lastid is null or id<@lastid
 	select @filename=fileName,@data=data from LargeData where id = @lastid
 	declare @init int
-	declare @file varbinary(max) = CONVERT(varbinary(max), (select top 1 data from LargeData where filename = '59696_426831487403451_1487925844_n.jpg'))
 	declare @filepath nvarchar(4000) = N'c:\temp\'+convert(nvarchar(50),@lastid,2)+'-'+@filename
 	
 
 	EXEC sp_OACreate 'ADODB.Stream', @init OUTPUT; -- An instace created
 	EXEC sp_OASetProperty @init, 'Type', 1; 
 	EXEC sp_OAMethod @init, 'Open'; -- Calling a method
-	EXEC sp_OAMethod @init, 'Write', NULL, @file; -- Calling a method
+	EXEC sp_OAMethod @init, 'Write', NULL, @data; -- Calling a method
 	EXEC sp_OAMethod @init, 'SaveToFile', NULL, @filepath, 2; -- Calling a method
 	EXEC sp_OAMethod @init, 'Close'; -- Calling a method
 	EXEC sp_OADestroy @init; -- Closed the resources
@@ -289,7 +288,7 @@ end
 :::
 ## أداة تنظيف سلة المحذوفات والسجل وإشعارات المستخدمين والمهام المعلقة
 
-يُنفّذ هذا السكريبت عمليات تنظيف على عدة جداول. تفريغ سلة المحذوفات نهائي: كل سجل يظهر في **إدارة النظام ← أخري ← سلة المحذوفات** يختفي ولا يمكن استعادته بعد ذلك — انظر [استعادة السجلات والبحث عنها](/ar/platform/documents-and-records/recovering-and-finding-records). العمليات **آمنة بشكل افتراضي** — لن يُحذف أي شيء ما لم تُعيّن المعاملات بشكل صريح.
+يُنفّذ هذا السكريبت عمليات تنظيف على عدة جداول. تفريغ سلة المحذوفات نهائي: كل سجل يظهر في **إدارة النظام ← أخرى ← سلة المحذوفات** يختفي ولا يمكن استعادته بعد ذلك — انظر [استعادة السجلات والبحث عنها](/ar/platform/documents-and-records/recovering-and-finding-records). حذف سلة المحذوفات وسجل الإجراءات والنسخ والإشعارات والمهام المعلقة لا يتم إلا عند تعيين المعامل الخاص بكل منها. أما طلبات الحذف المعالَجة (صفوف `InvTransReq` و`LedgerTransReq` و`BusinessRequestStatus` التي نوع طلبها `Delete` وحالتها `Processed`) فتُحذف في كل تشغيل.
 
 ### أهداف التنظيف
 
@@ -305,7 +304,7 @@ end
 
 * **تُعالَج جميع عمليات الحذف على دفعات بحجم 1000 سجل**
 * **يجب أن تكون معاملات التاريخ بالصيغة** `yyyyMMdd`
-* **تتطلب جميع عمليات الحذف تعيين التاريخ أو العلامة المناسبة**
+* **كل عملية حذف، عدا طلبات الحذف المعالَجة، تتطلب تعيين التاريخ أو العلامة الخاصة بها**
 * **لا يحدث تنظيف سلة المحذوفات إلا عند تعيين** `@clean_recycle_bin = 1`
 
 ::: details

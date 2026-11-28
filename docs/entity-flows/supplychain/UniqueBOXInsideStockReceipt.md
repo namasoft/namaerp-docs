@@ -26,7 +26,7 @@ Validation action typically executed during document save, approval, or processi
 5. **Tests for duplicates** - Attempts to add combination to HashSet:
    - If successfully added: combination is unique, continues processing
    - If addition fails: combination already exists, records error
-6. **Records duplicate errors** - Accumulates failure messages for duplicate combinations
+6. **Records duplicate errors** - Adds the failure *Box {0} for item {1} is repeated* for each duplicate combination
 7. **Returns validation result** - Success if no duplicates, failure with error details if duplicates found
 
 ## Parameters

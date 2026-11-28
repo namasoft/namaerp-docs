@@ -19,10 +19,10 @@ Manual execution for integrating with external APIs, web services, or third-part
 
 ## How It Works
 
-1. **Parses Tempo template** - Processes the Tempo template using ComplexRenderer to extract HTTP request definitions
+1. **Parses Tempo template** - Processes the Tempo template to extract HTTP request definitions
 2. **Renders entity data** - Uses entity data to populate template variables and generate final HTTP request content
 3. **Extracts HTTP requests** - Identifies all HTTP request blocks defined in the rendered Tempo content
-4. **Creates pending actions** - Generates PendingSystemAction records for each HTTP request
+4. **Creates pending actions** - Generates one pending system action (of type *Send HTTP Request*) for each HTTP request
 5. **Queues for execution** - Stores requests in the system action queue for asynchronous processing
 
 ## Parameters

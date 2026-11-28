@@ -82,8 +82,10 @@ To exit the barcode field and move to other fields, use one of the following key
 - **Esc key** (Escape)
 - **F4 key**
 
+You can also leave by pressing **Enter** or **Tab** while the field is empty: the cursor moves to the next field.
+
 ::: warning Warning
-You will not be able to exit the barcode field by clicking outside the field or using the Tab key. You must use Esc or F4.
+Clicking outside the field does not leave it, and Enter or Tab on a field that holds a code processes the code and keeps the focus. Use Esc or F4, or Enter/Tab on the empty field.
 :::
 
 ## Technical Details
@@ -98,7 +100,7 @@ You will not be able to exit the barcode field by clicking outside the field or 
 | **Entering an empty line** | Exits the field and moves to the next field |
 | **Esc/F4 key** | Exits focus-retention mode |
 | **Enter/Tab key** | Processes the entered code, retains focus |
-| **Ctrl+Enter** | Inserts a new line in the text field |
+| **Ctrl or Alt with Enter or Tab** | Inserts a new line in the text field |
 
 ### Usage Requirements
 
@@ -111,23 +113,10 @@ You will not be able to exit the barcode field by clicking outside the field or 
 ## Frequently Asked Questions
 
 ### Can the field be used in any entity?
-No, the field can only be used in Supply Chain distribution documents such as sales invoices, purchase invoices, and stock transfers.
-
-However, the fields are available in all entities in the system and may be enabled in other screens in the future.
-
-### What happens if the item is not found?
-- A warning sound plays
-- The code is added to the "Invalid Barcodes" field
-- The field continues to retain focus to continue scanning
+The two fields exist on every entity, but scanning works only on a screen whose lines grid is the **details** grid with an **Item Code** column (`details.item.itemCode`), such as the Supply Chain sales invoices, purchase invoices and stock transfers. On any other screen the scanned code has nowhere to go.
 
 ### Can codes be entered manually in the field?
 Yes, codes can be typed manually. Press Enter after each code to process it.
-
-### Can multiple codes be pasted at once?
-Yes, a list of codes can be copied from an Excel file or text file (one code per line) and pasted into the barcode field. All codes will be processed automatically one by one.
-
-### Why can't I exit the field by clicking outside it?
-This is by design. The goal is to prevent unintentional loss of focus during scanning. Use Esc or F4 to exit.
 
 ### Can multiple codes for the same item be scanned?
 Yes, each scan will be added as a separate line in the details grid.
@@ -146,8 +135,7 @@ Yes, each scan will be added as a separate line in the details grid.
 
 ::: warning Important Notes
 - The "Barcode" and "Invalid Barcodes" fields are system fields but are editable
-- The content of the "Barcode" field is not saved — it is a temporary input-only field
-- The content of the "Invalid Barcodes" field is saved with the record for later review
+- Neither field is saved with the record: "Barcode" is an input-only field, and the "Invalid Barcodes" list is not stored in the database either, so review it before you save
 - The feature is compatible with all modern browsers
 :::
 

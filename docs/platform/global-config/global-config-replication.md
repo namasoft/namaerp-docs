@@ -26,15 +26,13 @@ Branch is on by default because the usual topology is one server per branch. Ena
 
 ## Message delivery
 
-**Max Trials When Replication Failures Occur** `value.info.maxTrialsForMessages` *(default 0, meaning unlimited)* — How many times delivery of a replication message is attempted before it is given up on.
+**Max Trials When Replication Failures Occur** `value.info.maxTrialsForMessages` *(default 0)* — Once a received replication message has failed more times than this, it stops being retried and is marked Failed. With the default 0, a message is marked Failed after its first failed attempt.
 
-**Request ReCommit After Messages Fail** `value.info.requestReCommitAfterFailures` — After repeated failures, asks the originating site to commit the record again rather than continuing to retry the same message.
-
-**Replication Clean Up Time** `value.info.replicationCleanUpTime` — The time of day when delivered messages are purged. Set it to a quiet hour: the clean-up touches a lot of rows.
+**Request Recommit After Messages Fail** `value.info.requestReCommitAfterFailures` — When a message passes that limit, it is deleted instead of being marked Failed, and the sending site is asked to recommit the record so that a fresh message is sent. This applies to record changes other than deletions, and only once: a message that itself came from such a request is marked Failed.
 
 **Do Not Replicate Attachments** `value.info.donotReplicateAttachments` — Leaves attachments out of replication payloads. Frequently the right choice on a slow or metered link, where a few scanned pages can hold up every other message behind them.
 
-**Prevent Using Branches When Headoffice Is Online** `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` — Branch servers refuse to work locally while the head office is reachable, so everyone writes to one place and there is nothing to reconcile. The branch server becomes a fallback for when the link is down rather than a peer.
+**Prevent Using Branches When Head Office Is Online** `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` — Branch servers refuse to work locally while the head office is reachable, so everyone writes to one place and there is nothing to reconcile. The branch server becomes a fallback for when the link is down rather than a peer.
 
 **Prevent Using Branches Timeout** `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` *(default 60)* — How many seconds without an answer before the head office counts as unreachable and the branch takes over. Too short and a slow link flips the branch into local mode repeatedly; too long and staff wait a minute before they can work during a genuine outage.
 
@@ -57,14 +55,13 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.useBranchInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
 | `value.info.useDepartmentInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
 | `value.info.useAnalysisSetInReplication` | Use In Replication | مستخدم في التكرار | [Dimensions used in replication](#Dimensions-used-in-replication) |
-| `value.info.maxTrialsForMessages` | Max Trials When Replication Failures Occur | أقصي عدد محاولات عند فشل الرسائل | [Message delivery](#Message-delivery) |
-| `value.info.requestReCommitAfterFailures` | Request ReCommit After Messages Fail | طلب إعادة الإرسال بعد فشل الرسائل | [Message delivery](#Message-delivery) |
-| `value.info.replicationCleanUpTime` | Replication Clean Up Time | وقت مسح الرسائل المرسلة التي تم معالجتها | [Message delivery](#Message-delivery) |
+| `value.info.maxTrialsForMessages` | Max Trials When Replication Failures Occur | أقصى عدد محاولات عند فشل الرسائل | [Message delivery](#Message-delivery) |
+| `value.info.requestReCommitAfterFailures` | Request Recommit After Messages Fail | طلب إعادة الإرسال بعد فشل الرسائل | [Message delivery](#Message-delivery) |
 | `value.info.donotReplicateAttachments` | Do Not Replicate Attachments | Do Not Replicate Attachments | [Message delivery](#Message-delivery) |
-| `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | Prevent Using Branches When Headoffice Is Online | منع استعمال سيرفرات الفروع حال عمل الرئيسي | [Message delivery](#Message-delivery) |
-| `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` | Prevent Using Branches Timeout | اقل توقيت لمنع استعمال سيرفرات الفروع | [Message delivery](#Message-delivery) |
-| `value.info.replicationBookArabicError` | Replication Autocoding Arabic Error | رسالة خطا التكويد الالي مع موقع التكرار - عربي | [Message delivery](#Message-delivery) |
-| `value.info.replicationBookEnglishError` | Replication Autocoding English Error | رسالة خطا التكويد الالي مع موقع التكرار - إنجليزي | [Message delivery](#Message-delivery) |
+| `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | Prevent Using Branches When Head Office Is Online | منع استعمال سيرفرات الفروع حال عمل الرئيسي | [Message delivery](#Message-delivery) |
+| `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` | Prevent Using Branches Timeout | أقل توقيت لمنع استعمال سيرفرات الفروع | [Message delivery](#Message-delivery) |
+| `value.info.replicationBookArabicError` | Replication Autocoding Arabic Error | رسالة خطأ التكويد الآلي مع موقع التكرار - عربي | [Message delivery](#Message-delivery) |
+| `value.info.replicationBookEnglishError` | Replication Autocoding English Error | رسالة خطأ التكويد الآلي مع موقع التكرار - إنجليزي | [Message delivery](#Message-delivery) |
 | `value.info.doNotReplicate` | Do Not Replicate | Do Not Replicate | [What not to replicate](#What-not-to-replicate) |
 | `value.info.doNotReplicate.entityType` | Entity Type | النوع | [What not to replicate](#What-not-to-replicate) |
 | `value.info.doNotReplicate.entityTypeList` | Entity Type List | قائمة الأنواع | [What not to replicate](#What-not-to-replicate) |

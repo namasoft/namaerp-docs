@@ -78,32 +78,16 @@ On save the invoice checks that the patient is the admission's patient, and an i
 Where a line's price, endurance percents, discounts and cost come from — the insurance approval, the
 sales price list, the cost list and the discount list — is explained on
 [Pricing, Costing & Discounts](./hms-pricing.md) and [Medical Insurance & Approvals](./hms-insurance.md).
-What the invoice does with them is always the same arithmetic. Take a lab test priced at 1,000 for a
-patient whose insurer covers 80%:
+What the invoice does with them is always the same arithmetic: the two discounts, the insurer's share of
+the price before tax, the patient's remainder, and the taxes split by the same percents. Where the
+percents come from, the order that wins, and a worked example are under
+[Splitting a line between patient and insurer](/modules/hms/hms-insurance#Splitting-a-line-between-patient-and-insurer).
+On every invoice line the **Price After Tax** is the price before tax plus both taxes.
 
-| Step | Column | Value |
-|---|---|---|
-| The price | **Price** | 1,000 |
-| Discount 1 is a percent of the price | **Discount 1** 10% | 100 |
-| Discount 2 is a percent of what is left after Discount 1 | **Discount 2** 5% | 45 |
-| | **Price Before Tax** | 855 |
-| The insurer's share of the price before tax | **Insurance Value** 80% | 684 |
-| The patient pays the rest | **Patient Value** 20% | 171 |
-| Tax is charged on the price before tax | **Tax 1** 15% | 128.25 |
-| … and split by the same endurance percents | **Insurance Tax1 Value** / **Patient Tax1 Value** | 102.60 / 25.65 |
-| | **Total Insurance Due Amount** | 786.60 |
-| | **Total Patient Due Amount** | 196.65 |
-| | **Price After Tax** | 983.25 |
-
-A line with no endurance percents at all is billed 100% to the patient. When the header's **Patient
-Endurance Percent** or **Company Endurance Percent** is filled, it is copied onto every line on save,
-replacing what the line had. Patient and company percents on each main line must add up to 100.
-
-Two ceilings can cut the insurer's share, and whatever is cut moves to the patient:
-
-- **Insurance Max Value From Approval** — the most the insurance approval lets the insurer pay for this
-  service. If it says 600 in the example above, the insurer's value becomes 600 and the patient's 255.
-- **Insurance Max Value From Admission** — the line's part of the admission-wide ceiling, below.
+Two ceilings can cut the insurer's share, and whatever is cut moves to the patient: **Insurance Max
+Value From Approval**, the most the insurance approval lets the insurer pay for the service, and
+**Insurance Max Value From Admission**, the line's part of the admission-wide ceiling below. Both are
+explained under [Capping the insurer's share](/modules/hms/hms-insurance#Capping-the-insurers-share).
 
 Three switches outside the invoice change the taxes. **Not Taxable Tax 1** / **Not Taxable Tax 2** on the
 invoice's **Medical Document Category** removes that tax from every line. **Do Not Endure From Tax1** /
@@ -124,17 +108,10 @@ Services To Invoice** ticked, that grid is left out of the **Prices Total** and 
 ### The admission-wide insurance ceiling
 
 An insurer often agrees to cover a stay up to a fixed amount, whatever services it includes. That amount
-goes on the admission, in **Insurance Endurance Max Value On All Invoices** (see
-[Patients & Admission](./hms-patients.md)). From then on, every invoice saved against the admission
-reports its total insurance due, and the admission's **Remaining Of Insurance Endurance Max Value** shows
-what is still available.
-
-Say the ceiling is 10,000 and the invoices already saved bring the insurer to 9,200. A new radiology
-invoice whose insurer share would be 1,500 is cut down on save: only 800 is left, so the insurer's share is
-reduced to fit, spread over the invoice's lines in proportion to their insurer values, and the patient's
-share on each line grows by the same amount. Each line's **Insurance Max Value From Admission** shows its
-reduced share, and the admission's remaining value drops to zero. Cancelling one of the earlier invoices
-gives its amount back to the remaining value. Leave the ceiling at zero and no ceiling applies.
+is the admission's **Insurance Endurance Max Value On All Invoices**, and every invoice saved against the
+admission that would go over it is cut down to what is left of it. How the amount is set, how an invoice
+that would exceed it is reduced line by line, and what cancelling an invoice gives back are on
+[Capping the insurer's share](/modules/hms/hms-insurance#Capping-the-insurers-share).
 
 ## Service invoices
 
@@ -189,21 +166,11 @@ These invoices **move stock** and add **Service Fees** accounts; their line is a
 ## What an invoice records in the ledger
 
 Saving an invoice creates its accounting entry as a business request processed in the background.
-Every line is recorded value by value, and each value goes where the invoice's document term sends it:
-
-| Value on the line | Term pair | A usual set-up |
-|---|---|---|
-| The patient's share | **Patient Value** | Debit the patient, credit the revenue of the test type, service or pharmacy. |
-| The insurer's share | **Insurance Value** | Debit the insurance company, credit the same revenue. |
-| Discount 1 and Discount 2 | **Discount1**, **Discount2** | Debit a discounts-allowed account, credit revenue, when revenue should show the gross price. |
-| Each tax, split | **Tax1 Patient**, **Tax2 Patient**, **Tax1 Insurance**, **Tax2 Insurance** | Debit the patient or the insurer, credit output tax. |
-| The cost | **Debit Cost** / **Credit Cost** | Debit the cost of the service, credit what is owed for it. |
-| The revenue shares | **Subsidiary**, **Subsidiary 1**, **Subsidiary 2** | Debit an expense, credit the doctor (below). |
-| The surgery fee components | **Price Components Costs** | One pair per component, on the surgery term. |
-
-So one invoice raises **two receivables** — the patient's and the insurer's — each with its own taxes.
-The overhead grid is recorded through each **Overhead Item**'s own sides, not the term. A pair records
-only when both its sides are filled; the sides, their sources and every option are on
+Every line is recorded value by value — the patient's share, the insurer's share, each discount, each
+tax split between the two, the cost, the subsidiary shares and, on surgery lines, the fee components —
+and each value goes where the invoice's document term sends it. So one invoice raises **two
+receivables**, the patient's and the insurer's, each with its own taxes. The pairs, a usual set-up for
+each, their account sources and the overhead sides are on
 [Invoice Document Terms](./document-terms/hms-terms-invoices.md).
 
 Each line's own **analysis set**, **branch**, **sector** and **department** go on that line's ledger
@@ -316,7 +283,7 @@ Several of these only appear when the invoice's term config asks for them: the e
 | *Total of patient endurance percent and company endurance percent must equal 100* — «مجموع حقلي نسبة تحمل المريض ونسبة تحمل الشركة يجب أن يساوي 100» | A line's patient and company percents — or, on the check and attendant invoices, the header's — add up to something other than 100. | Correct one of the two percents; typing one in the header fills the other. |
 | *Unit price can not be negative* — «سعر الوحدة لا يمكن أن يكون سالب» | A line's unit price is below zero. | Enter the price as a positive amount; a refund belongs on a return or a cancellation. |
 | *Overhead item {0} is repeated in line {1}* — «بند التكلفة الغير مباشرة {0} مكرر في السطر {1}» | The same overhead item appears twice in the overhead grid. | Remove the duplicate row. |
-| *The current discount value {0} is greater than the max discount value {1} of current employee* — «قيمة الخصم الحالي {0} أكبر من أقصى قيمة خصم {1} للموظف الحالي» | A discount value exceeds the maximum the employee behind the logged-in user is allowed to give. On a line discount the two numbers are not filled in and the message shows `{0}` and `{1}` literally; on the surgery package invoice's header discount they are. | Reduce the discount, or have the invoice entered by someone whose employee record allows it. The limits are the Max Discount fields on the employee file. |
+| *The current discount value {0} is greater than the max discount value {1} of current employee* — «قيمة الخصم الحالي {0} أكبر من أقصى قيمة خصم {1} للموظف الحالي» | A discount value exceeds the maximum the employee behind the logged-in user is allowed to give. | Reduce the discount, or have the invoice entered by someone whose employee record allows it. The limits are the Max Discount fields on the employee file. |
 | *The current discount percentage {0} is greater than the max discount percentage {1} of current employee* — «نسبة الخصم الحالية {0} أكبر من أقصى نسبة خصم {1} للموظف الحالي» | As above, for a discount percentage rather than a value. | As above. |
 | *Surgery type {0} is repeated* — «نوع عملية {0} مكرر» | Two surgery lines on a Surgery Invoice name the same surgery type, and the term config does not allow repeating it. | Merge the lines, or tick *Allow Repeating Surgery Type In Invoice Line* on the surgery term config if two operations of the same type really were performed. |
 | *Surgery type {0} was not found in the surgery lines* — «نوع العملية {0} غير موجود في سطور العمليات الجراحية» | A supplies or services row on a Surgery Invoice is attributed to a surgery type that has no line in the surgery grid. | Correct the surgery type on the row, or add the missing surgery line — every supply and service must hang off an operation being billed. |

@@ -32,7 +32,7 @@ Each group on the screen is one ledger entry, and each entry is a debit side, a 
 | **Tax 1**, and separately **Tax 2**, **Tax 3**, **Tax 4** — `termConfig.tax1Debit` / `termConfig.tax1Credit` … `termConfig.tax4Debit` / `termConfig.tax4Credit` | each line's tax 1…4 value | summed over lines | both |
 | **Discounts 1 to 8** — `termConfig.discount1Debit` / `termConfig.discount1Credit` … `termConfig.discount8Debit` / `termConfig.discount8Credit` | each line's discount 1…8 value | summed over lines | both |
 | **Actual cost** `termConfig.actualCostDebit` / `termConfig.actualCostCredit` — the cost genuinely consumed, as opposed to the planned cost above | the line's actual total cost | summed over lines | project extract |
-| **Cost variance** `termConfig.costDiffDebit` / `termConfig.costDiffCredit` — planned against actual | the line's cost difference. The credit side's English caption reads oddly; it is the *cost difference credit* | summed over lines | both |
+| **Cost variance** `termConfig.costDiffDebit` / `termConfig.costDiffCredit` — planned against actual | the line's cost difference | summed over lines | both |
 | **Total price variance** `termConfig.totalPriceDiffDebit` / `termConfig.totalPriceDiffCredit`, and a per-discount variance for each of the eight discounts, `termConfig.discount1DiffDebit` / `termConfig.discount1DiffCredit` … `termConfig.discount8DiffDebit` / `termConfig.discount8DiffCredit` | the line's total price difference and discount differences. Only meaningful with difference-only pricing, below | summed over lines | both |
 | **The variance between the extracts' actual cost and the cost documents** `termConfig.diffExtractsCostDocsCostDebit` / `termConfig.diffExtractsCostDocsCostCredit` | a single header figure | once per document | both |
 
@@ -60,18 +60,18 @@ Some owners and consultants insist on a cumulative presentation instead — "wor
 
 Two things to know before choosing cumulative pricing:
 
-- **The cumulative option is only half-effective on its own.** It does change how lines are priced, but the recalculation of the previous extracts' prices and discounts, and of taxes, happens only when the module setting that shows phase term lines is switched on in [module configuration](/modules/contracting/contracting-configuration.md). Without that setting the previous-value side of the cumulative presentation is not recalculated, so the figures you get are not the ones a cumulative certificate is supposed to show. Treat the two as a pair.
-- **The two options describe two different arithmetics for the same idea, so pick one.** On the subcontractor extract term the system refuses to save both together. On the project extract term both can be saved together, which is not a combination that means anything — choose deliberately.
+- **Where the previous extracts are subtracted depends on Show Term Phase Lines** in [module configuration](/modules/contracting/contracting-configuration.md). With that setting off, *Calculate Prices Based On Total Quantity* subtracts the previous extracts' value (price less discounts, before tax) from the line's total price itself. With it on, the line's total price stays cumulative and the previous extracts' price is subtracted from the line's due value and net value instead; only in that mode are the earlier extracts' taxes netted off (see *Consider Previous Tax Values* below).
+- **The two options describe two different arithmetics for the same idea, so tick only one.** On the subcontractor extract term the system refuses to save both together with *You can not use field {0} and field {1} together*.
 
 Three further options apply the same cumulative-then-net-off treatment to individual amounts rather than to the whole line:
 
 | Option | Effect | On which screen |
 |---|---|---|
-| **Consider Previous Extracts Discount 1 Values** `termConfig.considerPreviousDiscount1Values` | Discount 1 is treated cumulatively and the earlier extracts' discount 1 is netted off | both |
-| **Consider Previous Extracts Discount 2 Values** `termConfig.considerPreviousDiscount2Values` | The same for discount 2 | both |
-| **Consider Previous Tax Values** `termConfig.considerPreviousTaxValues` | Taxes 1 to 4 are treated cumulatively and the earlier extracts' tax is netted off | both |
+| **Consider Previous Extracts Discount1 Values** `termConfig.considerPreviousDiscount1Values` | Discount 1 is treated cumulatively and the earlier extracts' discount 1 is netted off | both |
+| **Consider Previous Extracts Discount2 Values** `termConfig.considerPreviousDiscount2Values` | The same for discount 2 | both |
+| **Consider Previous Tax Values** `termConfig.considerPreviousTaxValues` | The earlier extracts' taxes 1 to 4 are netted off this extract's tax. Takes effect only with *Calculate Prices Based On Total Quantity* and Show Term Phase Lines both on | both |
 
-A fourth, **Previous Unit Price Difference Adjustment** `termConfig.adjustUnitPriceDifference`, handles the case where the contract's unit price changed mid-project and earlier certificates were priced at the old rate: it records the difference as its own adjustment. It depends on the module-level unit-price-difference setting being switched on — with that setting off, the subcontractor extract term refuses to be saved with this option ticked (the project extract term does not run this check), which is the system telling you to enable the feature first.
+A fourth, **Previous Unit Price Difference Adjustment** `termConfig.adjustUnitPriceDifference`, handles the case where the contract's unit price changed mid-project and earlier certificates were priced at the old rate: it records the difference as its own adjustment. It works only when **Use Unit Price Difference** is switched on in module configuration. With that setting off, the subcontractor extract term refuses to be saved with this option ticked: *You can not use the option {0} without selecting the option {1} in Contracting Configuration* — «لا يمكنك استخدام الاوبشن {0} بدون استخدام الاوبشن {1} في إعدادات المقاولات».
 
 ## Quantity, price and the previous extract
 
@@ -79,9 +79,9 @@ A fourth, **Previous Unit Price Difference Adjustment** `termConfig.adjustUnitPr
 |---|---|---|
 | **Allow Extract Quantity to Exceed Contract Quantity** `termConfig.exceedExistQtyInExtractOverContract` | Skips the permitted-percentage check entirely, so a line may bill more than the contract's quantity allows | both |
 | **Force Contract Prices** `termConfig.forceContractPrices` | Blocks the save when any line's unit price differs from the contract's | both |
-| **Allow Changing Extract Quantities if From Execution** `termConfig.allowUpdatingDetailsQTYIfFromExcecution` | Lets the commercial team edit quantities on an extract that was seeded from an [execution](/modules/contracting/project-contracting/contracting-project-execution.md). Without it those quantities are locked to what was surveyed | both |
+| **Allow Changing Extract Quantities if From Execution** `termConfig.allowUpdatingDetailsQTYIfFromExcecution` | Lets the commercial team edit quantities on an extract that was seeded from an [execution](/modules/contracting/project-contracting/contracting-project-execution.md). Without it, an extract whose lines no longer match the execution's quantities is refused with *Cannot update details quantities* | both |
 | **Calc Total Due Value From Previous Total** `termConfig.calcTotalDueValueFromPreviousTotal` | The header's total due becomes this extract's total minus the previous extract's total, rather than being summed from the lines | both |
-| **Fill Paid Quantity With Remaining Quantity From Previous Extract** `termConfig.fillPaidQtyWithRemainingQtyFromPreviousExtract` | Changes what the *Collect Terms* action puts in the billing quantity: the whole remaining quantity rather than nothing | both |
+| **Fill Paid Quantity With Remaining Quantity From Previous Extract** `termConfig.fillPaidQtyWithRemainingQtyFromPreviousExtract` | Changes what the *Collect Terms* action puts in the billing quantity: the remaining quantity after the previous extracts, instead of the default, which is the executed quantity (or the contract quantity when nothing has been executed) less what earlier extracts already billed | both |
 | **Make Qty Zero When Collecting or Selecting Terms** `termConfig.makeQtyZeroWhenCollectingOrSelectingTerms` | *Collect Terms* brings the terms in with a zero quantity, for teams who prefer to type every quantity by hand | both |
 
 ::: info Force Contract Prices is a save block, not a correction
@@ -96,19 +96,19 @@ Contracting extracts carry a **payment percentage** — the proportion of a line
 |---|---|---|
 | **Consider Payment Percentage With Total Price** `termConfig.considerPaymentPercentageInTotalPrice` | The percentage scales the quantity used for pricing, so the line's total price itself is reduced | both |
 | **Consider Payment Percentage In Calculation Of Discount Values** `termConfig.considerPaymentPercentageInCalcOfDiscountValues` | The percentage is applied before discounts are computed, so discounts follow the reduced base | both |
-| **Do Not Change Zero Payment Percent To 100** `termConfig.doNotChangeZeroPaymentPercentageTo100` | A line left at zero percent stays at zero instead of being filled up to 100 | project extract |
+| **Do Not Change Zero Payment Percent To 100** `termConfig.doNotChangeZeroPaymentPercentageTo100` | A line with a quantity but a zero percent stays at zero instead of being filled up to 100 | both |
 
 ## Conditions, instalments and the shape of the journal
 
 | Option | What it changes |
 |---|---|
-| **Automatic Collect Payment Document With Save** `termConfig.paymentDocCollectType` | Whether advances and fines are collected into the conditions grid automatically on save. The choices are never, on every extract, or on the final extract only |
-| **Copy Condition Document Lines With Remaining When Term Code And Condition Are Blank** `termConfig.copyConditionDocLinesWithRemainingWhenTermCodeAndConditionAreEmpty` | A condition row that names only a payment document, with no term code and no condition, is expanded into one row per remaining payment line on that document |
+| **Automatic Collect Payment Document With Save** `termConfig.paymentDocCollectType` | Whether advances and fines are collected into the conditions grid automatically on save. The choices are **Without**, **With Every Extract** and **With Final Extract Only** |
+| **Copy Condition Document Lines With Remaining When Term Code And Condition Are Empty** `termConfig.copyConditionDocLinesWithRemainingWhenTermCodeAndConditionAreEmpty` | A condition row that names only a payment document, with no term code and no condition, is expanded into one row per remaining payment line on that document |
 | **Add Conditions Tax To Statement Value** `termConfig.addConditionsTaxToTax1Effect` | Folds every condition line's tax into the **Tax 1** entry, on top of the condition's own tax accounts. Read the option by that behaviour rather than by its caption, which suggests it changes the extract's value — it does not |
 | **Update Remaining In Contract Not Extract When Payment Or Receipt Voucher Created** `termConfig.updateRemainingInContractNotExtractWhenPaymentOrReceiptVoucherCreated` | Settlement by receipt or payment voucher reduces the remaining balance on the **contract's** payment schedule rather than the extract's |
 | **Link With Invoice Lines In Accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument` | Receipt and payment vouchers carry this extract's lines in their invoice grid, so a collection can be matched line by line |
-| **Allow Payment More Than Invoice Amount** `termConfig.allowPaymentMoreThanInvoiceAmount` | Lets receipt and payment vouchers settle more than the extract's remaining balance. Left off, a voucher that would push the extract's remaining below zero is refused with *Remaining {0} in document {1} became negative* — «المتبقي {0} فى المستند {1} أصبح بالسالب». On both screens |
-| **Shorten Ledger Effect** `termConfig.shortenLedgerEffect` | Collapses the per-line journal rows into one row per account. On a 200-line bill of quantities this is the difference between a readable entry and an unusable one |
+| **Allow Payment More Than Invoice Amount** `termConfig.allowPaymentMoreThanInvoiceAmount` | Lets receipt and payment vouchers settle more than the extract's remaining balance. Left off, a voucher that would push the extract's remaining below zero is refused with *Remaining {0} in document {1} became negative* — «المتبقي {0} في المستند {1} أصبح بالسالب». On both screens |
+| **Shorten Ledger Effect** `termConfig.shortenLedgerEffect` | Merges journal lines that share the same account, subsidiary, dimensions, narration, currency and rate into one line carrying their net amount, so a debit and a credit on the same account cancel out |
 | **Calculate discount N percentage from value** (one per discount, 1 to 8) `termConfig.calcDisc1PercentFromValue` … `termConfig.calcDisc8PercentFromValue` | The discount percentage is derived from the amount you typed instead of the other way round. The same switch exists in module configuration and on the contract; any one of the three being on is enough |
 
 ## Owner side only — the tax model
@@ -130,7 +130,7 @@ The full mechanism, including how a line finds its tax term, is on [Taxes on Ext
 
 The subcontractor extract term adds two families of options that have no owner-side equivalent, and both are about **cost**, which is what a subcontractor extract produces.
 
-**The analysis-card ceilings.** Two switches block the save when the certified figures overrun the plan on the term's [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md):
+**The spending ceilings.** Two switches block the save when the certified figures overrun the plan. The cost switch checks every plan line the cost lands on — the project contract's term line, the estimated and executive budget lines and the [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md) line; the quantity switch checks analysis card lines only. The full rule is on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests):
 
 - **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty`
 - **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost`
@@ -155,7 +155,7 @@ The usual setting is to exclude a recoverable tax from cost (you get it back, so
 
 The actual-cost and variance pairs are left empty on this contract, because actual cost reaches the ledger through the material, labour and equipment documents themselves; configure them only where the business wants the extract to restate consumed cost as well. Leaving a pair empty is a valid answer, not an omission.
 
-The rest of `EXT-STD` is behavioural: *Automatic Collect Payment Document With Save* set to **on every extract**, *Missing Tax Term Strategy* set to **Default From Term Config** with *Construction works* as the default tax term, and *Shorten Ledger Effect* on.
+The rest of `EXT-STD` is behavioural: *Automatic Collect Payment Document With Save* set to **With Every Extract**, *Missing Tax Term Strategy* set to **Default From Term Config** with *Construction works* as the default tax term, and *Shorten Ledger Effect* on.
 
 The first extract certifies 400 m³ of excavation, 20 m³ of concrete and 500 m² of blockwork — 61,000 of works, 9,150 VAT, 70,150 gross. Retention of 6,100 and advance recovery of 11,500 arrive as condition lines from the contract's retention condition and from the [46,000 advance](/modules/contracting/project-contracting/contracting-project-advances.md), reducing the net payable to **52,550**. The journal:
 

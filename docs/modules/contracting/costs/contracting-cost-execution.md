@@ -25,7 +25,7 @@ You will find it under **Contracting > Costs > Contracting Cost Execution**. It 
 ![The Contracting Cost Execution main page: contract, value date, the Executions grid and the two collect buttons](../../../ar/modules/contracting/images/costs/cost-execution-main-en.png)
 
 The header is short. **Contract** is required and must be a project contract; choosing it fills in the
-project, the customer and the responsible engineer. **Total Cost** is a system field — the sum of the
+project and the customer. **Total Cost** is a system field — the sum of the
 grid. The rest is the ordinary document header.
 
 The field to think about is **Value Date**, because it is the **cut-off for the sweep**. When the
@@ -58,7 +58,7 @@ type second.
 
 ### You type one number per line
 
-Of the many columns on the Executions grid, **Current Quantity** (الكمية | حالي) is the one you fill
+Of the many columns on the Executions grid, **Quantity | Current** (الكمية | حالي) is the one you fill
 in, and it is **required on every line** — the whole point of the document is to divide cost by it.
 Around it sit the quantities you would expect: previous, total, contracted, discounted, the quantity
 measured from physical dimensions, count, the accumulative completion percentage, the work area, the
@@ -90,15 +90,20 @@ in the grid:
 
 | Column | Fed by |
 |---|---|
-| Materials Cost / التكلفة من الصرف | material issues, less material returns |
-| Invoices Cost / التكلفة من الفواتير | misc contracting invoices, and ledger vouchers carrying the term code |
+| Materials Cost / التكلفة من الصرف | material issues, less material returns, and contracting purchase orders and requests whose term applies their cost effects |
+| Invoices Cost / التكلفة من الفواتير | misc contracting invoices, and journal entries and receipt or payment vouchers carrying the term code |
 | Contractors Cost / التكلفة من المقاولين | subcontractor extracts |
 | Workers Cost / تكلفة العمالة | daily labor books |
 | Fines / الغرامات | fines on either side of the contract |
 | Salaries / المرتبات | staff cost distributed onto the project, and payroll documents |
 | Depreciations / الإهلاكات | machine cost distributed onto the project, and asset depreciation |
 
-5. **Total Cost** is everything the line absorbed, and **Unit Cost = Total Cost ÷ Current Quantity**
+A credit or debit note lands in the column of the Cost Type chosen on the note. The full list of
+documents that deposit cost, including those from outside the module, is in
+[How Project Cost Is Built](/modules/contracting/costs/contracting-cost-model#Which-documents-put-cost-on-a-project).
+
+5. **Total Cost** is everything the line absorbed — including insurance cost from the vehicle-insurance
+   documents, which has no column of its own — and **Unit Cost = Total Cost ÷ Quantity | Current**
    (left empty when the quantity is zero). The header's Total Cost is the sum of the lines.
 
 The document has **no accounting effect of its own** — not a debit, not a credit. The money was booked
@@ -114,7 +119,7 @@ Automatic mode — sweep everything up to the value date — is the default and 
 the time. When you need control, tick **Manually Collect Cost Documents** on the document term
 (توجيه); it is the only option that term carries.
 
-With it on, the **Manually Cost Documents** grid becomes the thing that decides, and the **Collect
+With it on, the **Manual Cost Documents** grid becomes the thing that decides, and the **Collect
 Cost Documents** button fills it. (With the option off the button deliberately does nothing.) The
 button lists the unabsorbed cost for this contract up to the value date, keeps only the terms present
 in your Executions grid, subtracts what other cost executions have already taken, and proposes one row
@@ -135,7 +140,7 @@ from the whole sweep.
 ## Actions on this screen
 
 - **Collect Terms** — rebuilds the Executions grid from the contract's term lines, one line per term or per phase (see the warning above).
-- **Collect Cost Documents** — fills the **Manually Cost Documents** grid with the unabsorbed cost slices for this contract up to the value date. It does nothing unless **Manually Collect Cost Documents** is ticked on the document term.
+- **Collect Cost Documents** — fills the **Manual Cost Documents** grid with the unabsorbed cost slices for this contract up to the value date. It does nothing unless **Manually Collect Cost Documents** is ticked on the document term.
 
 ## The Statistics page
 
@@ -158,7 +163,7 @@ collection.
 Press **Collect Terms**, get four lines, and type the March quantities. Plastering has not started, so
 it is removed:
 
-| Term code | Term | Unit | Current Quantity |
+| Term code | Term | Unit | Quantity \| Current |
 |---|---|---|---|
 | `1.01` | Excavation | m³ | 400 |
 | `2.01` | Reinforced concrete | m³ | 20 |

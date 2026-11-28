@@ -62,8 +62,10 @@ Never build an import from a guess about the field names.
 | Detail line | own sheet, field id with the collection prefix (`details.item.item`) | an array under the collection key, keys without the prefix |
 | Line → its record | first column `#code` holds the parent record's code | none: the array sits inside its record |
 
-In JSON a dotted key such as `"contactInfo.mobile"` is never read, so it stores nothing. A key that is not a
-field of the entity is ignored the same way. Always nest. Copy the nesting from the schema's `example`:
+In a JSON file a dotted key such as `"contactInfo.mobile"` is never read, so it stores nothing, and a key that is
+not a field of the entity is ignored the same way. ImportRecord checks for both before it saves anything: it
+imports nothing and answers with the keys under `unknownKeys` and suggested field ids under `didYouMean`. Always
+nest. Copy the nesting from the schema's `example`:
 money is `{"value":{"amount":100,"currency":"EGP"}}` and a line quantity is
 `quantity.quantity.primeQty.value`.
 

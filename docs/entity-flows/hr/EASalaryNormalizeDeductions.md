@@ -11,24 +11,25 @@ entities: [EntityFlow]
 
 ## Overview
 
-Adjusts salary components when total additions exceed deductions, ensuring balanced salary calculations. Modifies the target component's base value when there is a positive surplus in the salary calculation.
+Sets the base value of a target salary component from the net of a list of component types: the total of their additions minus their deductions, taken as an absolute value and capped at the target component's original value.
 
 ## When This Action Runs
 
-Manual execution during salary processing when additions outweigh deductions, typically used to normalize salary components and maintain calculated balance by adjusting elements like overtime or bonus components.
+Runs on a salary document, typically used to adjust a component like overtime or a bonus from the balance of other components.
 
 ## How It Works
 
 1. **Calculates net total** - Computes the sum of (additions - deductions) for specified component types
-2. **Checks for positive balance** - Determines if additions exceed deductions (positive total)
-3. **Finds target component** - Locates the salary line with the specified target component type
-4. **Adjusts base value** - Sets the target component's base value to the minimum of the surplus amount and original value
-5. **Updates calculations** - Recalculates addition/deduction amounts and salary totals
-6. **Refreshes totals** - Updates overall salary document totals after normalization
+2. **Finds target component** - Locates the first salary line whose component type has the target code; when there is none, no line is changed
+3. **Adjusts base value** - Sets the target component's base value to the minimum of the net total's absolute value and the line's original value
+4. **Updates calculations** - Recalculates the line's addition/deduction amounts
+5. **Refreshes totals** - Updates overall salary document totals after normalization
+
+When Parameter 1 or Parameter 2 is empty, the flow fails with *You must specify parameters 1 and 2 for entity flow {0}*.
 
 ## Parameters
 
-**Parameter 1:** Target Component Type (Required) - Code of the salary component to adjust (e.g., "overtime", "bonus")
+**Parameter 1:** Target Component Type (Required) - Code of the salary component type to adjust (e.g., "overtime", "bonus")
 
 **Parameter 2:** Components To Normalize (Required) - Comma-separated list of component type codes to include in balance calculation
 
@@ -42,7 +43,7 @@ Manual execution during salary processing when additions outweigh deductions, ty
 **Full Class Name:** `com.namasoft.modules.humanresource.utils.clientscripts.EASalaryNormalizeDeductions`
 
 **Related Actions:**
-- [EASalaryNormalizeAdditions](EASalaryNormalizeAdditions.md) - Normalizes salary components for negative balance situations
+- [EASalaryNormalizeAdditions](EASalaryNormalizeAdditions.md) - Takes the same two parameters and applies the same calculation
 
 
 </div>

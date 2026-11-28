@@ -163,7 +163,7 @@ Each UOM used in invoices must have a valid tax authority code following UN/ECE 
 
 ### Step 5: Currency Setup
 
-Ensure a currency with tax authority code `AED` exists and is set as the default currency.
+Ensure a currency with tax authority code `AED` exists and is set as the default currency; validation refuses every document otherwise. The invoice's own currency is sent with that currency's **Tax Authority Code**, and the tax currency is always sent as `AED`.
 
 ## Sending Invoices
 
@@ -177,7 +177,7 @@ Ensure a currency with tax authority code `AED` exists and is set as the default
 
 After sending, the document status is set to:
 - **Sent**: Orchida accepted the invoice for processing
-- **Not Send Correctly**: The invoice was rejected — check the errors field for details
+- **Not Sent Correctly**: The invoice was rejected, or Orchida answered with the status `invalid` — check the errors field for details
 
 ## Supported Document Types
 

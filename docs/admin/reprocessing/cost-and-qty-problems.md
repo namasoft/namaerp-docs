@@ -272,7 +272,7 @@ select costs,acc,costs-acc diff from acc inner join costs on 1 = 1
 
 ```
 :::
-# Check Cost and Ledger are consistent per each document
+## Check Cost and Ledger are consistent per each document
 ::: details
 ```sql
 declare @onDate as date = '20231231'
@@ -383,36 +383,8 @@ order by abs(sum(netCost)) desc
 />
 
 ## Production Delivery Cost Problem (Cost Callback)
-::: details
-```sql
-with delivery as (
-select sum(cin.netCost) receiptCost,po.id from ProductionOrder po inner join ProductDelivery pod on pod.productionOrder_id = po.id inner join StockReceipt sr on sr.fromDoc_id = pod.id
-inner join CostInTransLine cin on cin.originId = sr.id 
-group by po.id
-),
-issue as (
-select sum(cout.netCost) materialCost,po.id from ProductionOrder po inner join RawMaterialIssue pod on pod.productionOrder_id = po.id inner join StockIssue sr on sr.fromDoc_id = pod.id
-inner join CostOutTransLine cout on cout.originId = sr.id
-group by po.id
-),
-ret as (
-select sum(cin.netCost) retCost,po.id from ProductionOrder po inner join RawMaterialReturn pod on pod.productionOrder_id = po.id inner join StockReceipt sr on sr.fromDoc_id = pod.id
-inner join CostInTransLine cin on cin.originId = sr.id 
-group by po.id
-),
-resources as(
-select sum(l.total) resourceCost,po.id from ProductionOrder po inner join ResourceVoucher v on v.productionOrder_id = po.id left join ResourceVoucherLine l on l.resourceVoucher_id = v.id
-group by po.id
-)
-select cv.entityType, cv.id,po.valueDate, receiptCost,materialCost+resourceCost-coalesce(retCost,0),receiptCost-(materialCost+resourceCost-coalesce(retCost,0)),issue.materialCost,ret.retCost,resources.resourceCost from ProductionOrder po left join
-delivery on delivery.id = po.id left join issue on issue.id = po.id left join ret on ret.id = po.id 
-left join resources on resources.id = po.id
-left join OrderCloseVoucher cv on cv.productionOrder_id = po.id
-where abs(receiptCost-(materialCost+resourceCost-coalesce(retCost,0)))>1.5 and cv.id is not null
 
-
-```
-:::
+The query that lists the production orders that have an **Order Close** document and whose delivery cost differs by more than 1.5 from the cost of the materials issued plus the resources, less the materials returned, is on [Manufacturing Utilities](/admin/reprocessing/manufacturing-utilities).
 
 ## Reprocess Bad Fifo Cost Transactions
 ::: details
@@ -425,11 +397,8 @@ left join FifoCostMatcher mo on mo.outLine_id = l.id
 group by l.originType,l.originId,l.remainingInQty,l.remainingOutQty,l.inQty,l.outQty,l.item_id,l.id,l.valueDate
 having l.remainingInQty <> l.inQty - sum(coalesce(mi.consumedQty,0))
  or l.remainingOutQty <> l.outQty - sum(coalesce(mo.consumedQty,0))
- order by l.valueDate desc
  )
  update r set r.transstatus = 'Retry',r.costtransstatus = 'Retry' from toReproocess t inner join InvTransReq r on r.originId = t.originId
-
-declare @annualIncome decimal(10,2) = 400000
 
 ```
 :::

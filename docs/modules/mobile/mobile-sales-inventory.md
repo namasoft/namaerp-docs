@@ -95,11 +95,11 @@ The **Warehouse Management** group gathers the full range of stock movement oper
 **Electronic stock taking** lets you count inventory from the phone: the warehouse keeper opens the stock-taking document, scans each item's barcode to add it, and records the actual quantity for each item/locator. The app supports **adding lines automatically** on scan and **auto-saving as a draft** at intervals, so the count data is never lost.
 
 ::: tip Tuning barcode behavior in stock taking
-The administrator can set a regular expression to validate the barcode, prevent item repetition, hide the quantity, and prevent editing an item's color, size or unit during the count when using the barcode.
+The administrator can set a regular expression that every scanned or typed item code must match, make an item's color and size read-only on the count lines, and keep the barcode's unit on a line added by scanning a barcode. See the [Stock Taking App Configurations](/modules/mobile/mobile-apps-configuration#Stock-Taking-App-Configurations) tab.
 :::
 
 ## Notes for the administrator
 
-- The administrator decides from the [Mobile App configuration](./mobile-application-guide.md) how requests coming from the app are imported (sales order, invoice, issue, receipt, transfer…), the allowed books and warehouses, and the **criteria** that determine which customers and items are sent to the app.
+- The administrator decides from the [Mobile Apps Configurations](/modules/mobile/mobile-apps-configuration) screen how requests coming from the app are imported (sales order, invoice, issue, receipt, transfer…), the allowed books and warehouses, and the **criteria** that determine which customers and items are sent to the app.
 - Options such as auto-adding a line, saving as a draft, and the print templates for documents and receipts are also configured on the server side.
 - The stock-taking and warehouse management (WMS) screens appear only if the corresponding modules are licensed for your organization.

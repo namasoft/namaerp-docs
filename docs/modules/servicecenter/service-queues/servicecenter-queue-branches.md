@@ -20,7 +20,7 @@ Al-Sahra Motors has one: `QSB-RUH`, pointing at configuration `QSC-01` and start
 | Field | Arabic | What it does |
 |---|---|---|
 | Code, Name1, Name2, Group | الكود، الاسم العربي، الاسم الإنجليزي، المجموعة | Standard master-file identification. The code is what the kiosk and the display are pointed at. |
-| **Queue Service Configurations** | اعدادت خدمة الطوابير | **Required.** The rulebook this counter follows. Several branches may share one. |
+| **Queue Service Configurations** | إعدادات خدمة الطوابير | **Required.** The rulebook this counter follows. Several branches may share one. |
 | **Day Start Time** | وقت بداية يوم العمل | The moment the service day begins. Everything below hangs off it. |
 
 Plus the usual **Dimensions** group.
@@ -48,17 +48,17 @@ The columns, in order:
 
 | Column | Arabic |
 |---|---|
-| Service Branch | فرع الخدمة |
+| Ticket Branch | فرع الخدمة |
 | Created On | تاريخ الإنشاء |
 | Assigned On | تاريخ السحب |
 | Finished On | تاريخ التنفيذ |
 | Manually Assigned By | تمت سحب التذكرة يدويا بواسطة |
 | Service Provider | مقدم الخدمة |
-| Ticket Code | *(the Arabic column heading reads* كود طلب الدعم *— it shares a label with the support-ticket field elsewhere in the system; it is the queue ticket code)* |
-| Sequence | المسلسل |
-| Queue Code | كودالطابور |
-| Customer | العميل |
-| Plate Number | رقم اللوحه |
+| Ticket Code | كود طلب الدعم |
+| Ticket Sequence | المسلسل |
+| Queue Code | كود الطابور |
+| Queue Client | العميل |
+| Plate Number | رقم اللوحة |
 
 Reading a row is straightforward: *Created On* is when the customer took the ticket, *Assigned On* is when an advisor called them, *Finished On* is when the visit was closed, and *Manually Assigned By* is filled only when a supervisor pushed the ticket to somebody rather than the advisor pulling it.
 
@@ -80,7 +80,7 @@ The *Not Assigned Tickets* list carries five actions in its More menu:
 
 Modify and the two assign actions work on exactly one selected row; with none, or with several, they ask you to select a single row.
 
-**Modify, the two assign actions and Delete are checked against the configuration's Queue Providers grid.** The current user must have a provider row on this branch's configuration carrying the matching permission — *Can Modify* for editing, *Can Manually Assign* for either kind of assignment, *Can Delete* for deleting. Without it the action leaves the ticket exactly as it was, so when a supervisor reports that a button "does nothing", that grid is where you look first.
+**Modify, the two assign actions and Delete are checked against the configuration's Queue Providers grid.** The current user must have a provider row on this branch's configuration carrying the matching permission — *Can Modify* for editing, *Can Manually Assign* for either kind of assignment, *Delete* for deleting. Without it the action leaves the ticket exactly as it was, so when a supervisor reports that a button "does nothing", that grid is where you look first.
 
 ::: tip Assigning by hand closes what the advisor already had
 Pushing or pulling a ticket to a provider behaves exactly like the advisor pressing *next* on their own station: whatever they still had open is stamped finished at that moment. One advisor is never serving two customers at once.
@@ -106,8 +106,8 @@ The last step of a ticket's life happens on a completely different screen, and i
 
 | Field | Arabic | Notes |
 |---|---|---|
-| Service Branch | فرع الخدمة | Which reception hall the ticket was drawn at — `QSB-RUH`. |
-| Ticket Code | *(the Arabic label reads* كود طلب الدعم*)* | Chosen from a suggestion list, not typed freely — `A014`. |
+| Ticket Branch | فرع الخدمة | Which reception hall the ticket was drawn at — `QSB-RUH`. |
+| Ticket Code | كود طلب الدعم | Chosen from a suggestion list, not typed freely — `A014`. |
 
 Once you pick the branch, the ticket-code field suggests **the branch's still-open tickets that were assigned on or after the job order's value date**. Two things follow from that, and they are the two support calls this generates:
 

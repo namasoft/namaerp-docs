@@ -5,7 +5,7 @@ menu: Inventory → Settings → Supply Chain Configurations
 ---
 # Quantity Suggestion Configuration
 
-This page documents the **Quantity Suggestion** tab. It controls two related behaviors:
+This page documents the **Qty Suggestion** tab. It controls two related behaviors:
 
 - **Quantity suggestion** — when a user enters an item (or one of its properties) on a document line, the system looks up where that item currently sits in stock (lots, serials, sizes/colors, revisions, measures, warehouses, locators) and *suggests* the available quantities and which property to pull from.
 - **Collect similar lines** — when documents are copied or consolidated, identical lines can be *merged* so the resulting document is shorter.
@@ -26,15 +26,15 @@ When the system lists an item's available stock, it sorts the suggestions using 
 
 ## What Gets Suggested
 
-**Add Quantity to Item Property Suggestion in Issues** `value.addQtyToItemDimensionsSuggestion` *(default on)* — Shows available on-hand quantities per property when entering an item on **issue/outgoing** documents (sales, stock issue), so the user can pick what to pull. Turn off to enter properties manually without the lookup.
+**Add Qty To Item Property Suggestion In Issues** `value.addQtyToItemDimensionsSuggestion` *(default on)* — Shows available on-hand quantities per property when entering an item on **issue/outgoing** documents (sales, stock issue), so the user can pick what to pull. Turn off to enter properties manually without the lookup.
 
-**Add Quantity to Item Property Suggestion in Receipts** `value.addQtyToItemDimensionsSuggestionInRecipts` *(default on)* — The same for **receipt/incoming** documents (purchases, stock receipt), showing existing on-hand quantities while receiving.
+**Add Qty To Item Property Suggestion In Receipts** `value.addQtyToItemDimensionsSuggestionInRecipts` *(default on)* — The same for **receipt/incoming** documents (purchases, stock receipt), showing existing on-hand quantities while receiving.
 
-**Use Quantity Suggestion Only in the Following Types** `value.addQtyToItemDimensionsSuggestionInTypes` *(table)* — Restricts the quantity suggestion to **only** the document types listed. Empty means no restriction (the two switches above apply normally).
+**Add Qty To Item Dimensions Suggestion Only In Types** `value.addQtyToItemDimensionsSuggestionInTypes` *(table)* — Restricts the quantity suggestion to **only** the document types listed. Empty means no restriction (the two switches above apply normally).
 
-**Consider Invoice Date in Quantity Suggestion** `value.considerInvoiceDateInQtySuggestion` — When on, the suggested available quantity is calculated **as of the document's date** rather than the live current balance — useful for back-dated documents.
+**Consider Invoice Date In Qty Suggestion** `value.considerInvoiceDateInQtySuggestion` — When on, the suggested available quantity is calculated **as of the document's date** rather than the live current balance — useful for back-dated documents.
 
-**Show Only Non-Zero Quantities in Receipt Docs Suggestions** `value.showOnlyNonZeroQtiesInReceiptDocsSuggestions` — On receipt documents, suggestions can normally include properties with zero on-hand (so you can receive into a new lot). When on, only properties with a positive quantity are suggested.
+**Show Only Non-Zero Qties In Receipt Docs Suggestions** `value.showOnlyNonZeroQtiesInReceiptDocsSuggestions` — On receipt documents, suggestions can normally include properties with zero on-hand (so you can receive into a new lot). When on, only properties with a positive quantity are suggested.
 
 **Consider Warehouse in Receipt Docs Suggestions** `value.considerWarehouseInReceiptDocsSuggestions` *(default on)* — On issue documents the suggestion is always filtered by the line's warehouse/locator; on receipt documents this happens only when this is on. Turn off to look across all warehouses while receiving.
 
@@ -58,11 +58,11 @@ Each switch suppresses suggestions of the corresponding property when no quantit
 
 ### Filtering & Calculation Tweaks
 
-**Calculate Measures Quantity Based on Transaction Unit Rate to Base Unit** `value.calcMeasuresQtyBasedOnTransUOMRateToBaseUOM` — For dimensional/measured items, computes the measures quantity using the transaction unit's conversion rate to the item's base unit, normalizing it when the entry unit differs from the base unit.
+**Calculate Measures Quantity Based on Transaction UOM Rate to Base UOM** `value.calcMeasuresQtyBasedOnTransUOMRateToBaseUOM` — For dimensional/measured items, computes the measures quantity using the transaction unit's conversion rate to the item's base unit, normalizing it when the entry unit differs from the base unit.
 
 **Do Not Filter Warehouse and Locator by Dimensions in Quantity Suggestion** `value.doNotFilterWarehouseAndLocatorByDimensionsInQtySuggestion` — Normally suggested warehouses/locators are filtered by the document's dimensions (branch/department/sector). When on, that filtering is skipped so any warehouse/locator is suggested.
 
-**Suggest Quantity in Locator and Warehouse** `value.suggestQtyInLocatorAndWarehouse` — When on, the locator/warehouse fields offer a per-locator / per-warehouse quantity suggestion. When off, the locator suggestion on stock issue is disabled. Turn on for warehouses that use locators.
+**Suggest Qty In Locator And Warehouse** `value.suggestQtyInLocatorAndWarehouse` — When on, the locator/warehouse fields offer a per-locator / per-warehouse quantity suggestion. When off, the locator suggestion on stock issue is disabled. Turn on for warehouses that use locators.
 
 ### Assortment, Packing & Assembly Display
 
@@ -72,7 +72,7 @@ Each switch suppresses suggestions of the corresponding property when no quantit
 
 **Show BOM Materials Only in Assembly Document** `value.showBOMMaterialsOnlyInAssembly` — When on, the assembly document only shows the materials belonging to the selected recipe (BOM), hiding unrelated entries.
 
-**Show BOM Co-Products Only in Assembly Document** `value.showBOMCoProdsOnlyInAssembly` — The same restriction for the co-products defined by the selected recipe.
+**Show BOM CoProds Only In Assembly Document** `value.showBOMCoProdsOnlyInAssembly` — The same restriction for the co-products defined by the selected recipe.
 
 ### Showing Property Names
 

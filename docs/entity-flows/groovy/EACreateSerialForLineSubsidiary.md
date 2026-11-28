@@ -13,7 +13,7 @@ description: A Groovy script that gives every receipt or payment voucher line a 
 This Groovy script gives each line of a receipt or payment voucher a running number that counts that line's subsidiary — the customer, supplier or employee on the line — within the fiscal year. The third payment to supplier S0001 this year is number 3, whatever voucher it is on.
 
 ::: warning Customer-specific example
-This script works, but it is hard-wired to one setup. It overwrites the line's **N1** and **Narration**, and the text it writes is fixed as `<subsidiary code> - <fiscal year code> - <number>`. If those fields are used for something else, or the text should look different, adapt the script before you use it.
+This script works, but it is hard-wired to one setup. It overwrites the line's **Number 1** and **Narration**, and the text it writes is fixed as `<subsidiary code> - <fiscal year code> - <number>`. If those fields are used for something else, or the text should look different, adapt the script before you use it.
 :::
 
 | | |
@@ -31,8 +31,8 @@ Some companies number their payments to each party, so that a supplier can quote
 ## How it works
 
 1. **It groups the lines by subsidiary.** Lines with no subsidiary are left alone.
-2. **It finds where the count stands.** For each subsidiary it looks for the latest committed voucher of the same type (payment vouchers for a payment voucher, receipt vouchers for a receipt voucher) in the same fiscal year that has a line for that subsidiary. "Latest" means the latest value date; on the same date, the one created last. Vouchers dated after the one being saved do not count. The last such line's **N1** is the count so far, or 0 when there is none.
-3. **It numbers the lines.** Each line of that subsidiary, in the order of the grid, gets the next number in **N1**, and the text `<subsidiary code> - <fiscal year code> - <number>` replaces its **Narration**.
+2. **It finds where the count stands.** For each subsidiary it looks for the latest committed voucher of the same type (payment vouchers for a payment voucher, receipt vouchers for a receipt voucher) in the same fiscal year that has a line for that subsidiary. "Latest" means the latest value date; on the same date, the one created last. Vouchers dated after the one being saved do not count. The last such line's **Number 1** is the count so far, or 0 when there is none.
+3. **It numbers the lines.** Each line of that subsidiary, in the order of the grid, gets the next number in **Number 1**, and the text `<subsidiary code> - <fiscal year code> - <number>` replaces its **Narration**.
 
 The search covers every book and every legal entity, and nothing stores the numbers apart from the lines. So the numbers are recalculated every time the voucher is saved. Saving or deleting an older voucher does not renumber the vouchers after it.
 
@@ -50,13 +50,13 @@ The search covers every book and every legal entity, and nothing stores the numb
 
 A payment voucher in fiscal year 2026 pays supplier S0001 on two lines and records a third line on an expense account with no subsidiary. No earlier voucher this year carries a number for S0001.
 
-| Line | Subsidiary | N1 | Narration after saving |
+| Line | Subsidiary | Number 1 | Narration after saving |
 |---|---|---|---|
 | 1 | S0001 | 1 | S0001 - 2026 - 1 |
 | 2 | (none) | | unchanged |
 | 3 | S0001 | 2 | S0001 - 2026 - 2 |
 
-The next payment voucher to S0001 continues the count: its line gets **N1** 3 and the narration `S0001 - 2026 - 3`.
+The next payment voucher to S0001 continues the count: its line gets **Number 1** 3 and the narration `S0001 - 2026 - 3`.
 
 ## The script
 

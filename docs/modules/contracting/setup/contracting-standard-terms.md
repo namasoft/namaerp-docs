@@ -109,12 +109,16 @@ cost and total cost stay in step with each other as you type.
 The quantities are not "per unit" unless you say so. The header field **Executed Contract Quantity**
 declares the term quantity that the recipe is expressed *per*, and it is stamped onto every recipe
 row when you save. Write the recipe for 100 m³ and set Executed Contract Quantity to 100, and a
-contract line for 1,200 m³ will scale it up twelvefold when an analysis card explodes it.
+contract line for 1,200 m³ is scaled twelvefold when an analysis card explodes it: each row's
+quantity on the card becomes 12 × the row's productivity (with its waste percentage on top). The
+row's own quantity column is not used in that explosion — see
+[Term Analysis Cards](/modules/contracting/setup/contracting-term-analysis-cards#Filling-the-Card-Automatically).
 
 ::: warning A leaf term cannot be saved without a recipe
 This is the rule that surprises everybody on their first day. Save a term whose Type is **Leaf**
-with an empty Contracting Items grid and the save is refused. Parent terms are exempt, because they
-never carry cost. If you genuinely do not know the recipe yet, enter one placeholder row for the
+with an empty Contracting Items grid and the save is refused with *You must enter standard items*
+(the message has no Arabic text and appears in English on Arabic screens). Parent terms are exempt,
+because they never carry cost. If you genuinely do not know the recipe yet, enter one placeholder row for the
 dominant cost element and correct it later.
 :::
 
@@ -126,13 +130,16 @@ names a standard condition and repeats its value and value type so you can vary 
 particular term. Pick a condition and those figures are copied down for you; for a text-only clause
 the value columns are switched off and the clause's explanatory text is copied instead, and the
 completion percentage is available only for a clause that fires at a given percentage of completion.
+On save, every row whose condition is not a text condition needs a value
+(*Value is required* — «القيمة مطلوبة»), and a row for a completion-percentage clause needs its
+completion percentage (*Finish Percentage is required* — «نسبة الإتمام مطلوبة»).
 The clauses themselves are defined in
 [Contract Conditions](/modules/contracting/setup/contracting-conditions).
 
 Rather than key the same five clauses onto forty terms, define a **conditions group** once and pick
-it in the header. There is also a list-view action that re-applies each selected term's conditions
-group over its Conditions grid — useful after you change a group and want the change to reach the
-terms that use it. Terms with no group are skipped, and the rows are replaced rather than merged.
+it in the header. Picking it replaces the Conditions grid with one row per clause of the group, each
+carrying the condition (and, for a text clause, its explanation) but no value, so type the values in
+before you save. To re-apply groups in bulk, see [Actions on this screen](#Actions-on-this-screen).
 
 ## Parent and Leaf Terms
 
@@ -237,7 +244,7 @@ A few consequences worth stating plainly:
   [Extract Document Terms](/modules/contracting/document-terms/contracting-terms-extracts).
 - **Conditions can override.** A retention or a penalty carries its own pair of accounts on the
   condition record, and when it does those win for that amount. When it does not, the amount lands on
-  the extract's own sides instead — as a negative for a deduction. That mechanism is explained under
+  the default sides of the extract's document term instead — as a negative for a deduction. That mechanism is explained under
   [Contract Conditions](/modules/contracting/setup/contracting-conditions).
 - **A wrong or unresolvable account shows up late.** The extract saves happily; it is the background
   business request that fails. Power users find it in the Business Requests list view, fix the term,
@@ -247,7 +254,7 @@ A few consequences worth stating plainly:
 
 The standard-term screen itself has no buttons. Its **list view** has one, in the **More** menu:
 
-- **Update Conditions From Conditions Group** — for every standard term you select in the list, re-copies the condition lines from the term's conditions group and saves the term. Select rows first, or you are asked to.
+- **Update Conditions From Conditions Group** — for every standard term you select in the list that has a conditions group, makes the Conditions grid exactly as long as the group, sets each row's condition to the group's condition at the same position (a value already on that row stays on it; a row added to reach the group's length arrives without one), and saves the term. Terms with no group are skipped. Select rows first, or you are asked to. Use it after you change a group and want the change to reach the terms that use it.
 
 ## Where a Term Goes Next
 
@@ -271,5 +278,5 @@ From here, the natural reading order is:
 
 ![The Standard Term list view — the shape every contracting master-file list takes](../../../ar/modules/contracting/images/setup/standard-term-list-en.png)
 
-The list view is where day-to-day catalogue maintenance happens: filter by group or unit, select a
-batch of terms, and use the More menu to re-apply their conditions groups.
+The list view is where day-to-day catalogue maintenance happens: filter by group or unit, and select
+a batch of terms for the More-menu action above.

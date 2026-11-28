@@ -9,12 +9,12 @@ run a **clearance**: the person has to be signed out by each department they owe
 takes back the laptop, the warehouse confirms nothing is on loan, Finance checks there are no
 outstanding advances, the line manager releases the handover. In Nama this departmental clearance
 (**إخلاء طرف**) is modelled as a small workflow that sits *around* the settlement as a **procedural
-gate**: it decides *whether* the paperwork may proceed, but it never touches the money math itself.
+gate**: it records *whether* the paperwork may proceed, but it never touches the money math itself.
 
 ::: info A gate, not a calculation
 Evacuation approval carries **no accounting effect** and computes no gratuity. It is purely a
 sign-off chain. The figures — gratuity, vacation cash-out, loans, net pay — all live on the
-[Dues Liquidation](./dues-liquidation) document. Think of the clearance as the checklist that must
+[Dues Liquidation](/modules/hr/end-of-service/dues-liquidation) document. Think of the clearance as the checklist that must
 be green before that settlement is released. It needs the advanced HR licence
 (`humanresource-advanced`).
 :::
@@ -22,7 +22,7 @@ be green before that settlement is released. It needs the advanced HR licence
 ## The three pieces
 
 The feature is three records working together, all under **Payroll → Dues Liquidation and Firing**
-(`الرواتب > التصفية وانهاء الخدمات`):
+(`الرواتب > التصفية وإنهاء الخدمات`):
 
 1. **Evacuation Approval Settings** (`إعدادات الموافقة على سند إخلاء طرف`) — the reusable template
    that lists the clearance **steps** and their order.
@@ -40,15 +40,15 @@ pass:
 
 | Column (English) | Arabic label | Purpose |
 |---|---|---|
-| Step Code | كود الخٌطوة | A short identifier for the step. |
+| Step Code | كود الخُطوة | A short identifier for the step. Codes must not repeat (*Repeated step code {0}* — «كود خطوة مكرر {0}»). |
 | Step Arabic Description / Step English Description | وصف عربي للخطوة / وصف إنجليزي للخطوة | The bilingual name of the checkpoint (e.g. "Return IT equipment"). |
-| Responsible Employee | الموظف المسئول | Who signs this step off. |
+| Responsible Employee | الموظف المسئول | Who signs this step off: an employee, an employee group or a user. |
 | Optional Step | خطوة اختيارية | If ticked, the step may be skipped without blocking the clearance. |
-| Require Previous Steps Approval | تتطلب تنفيذ الخطوات السابقة أولا | Enforces the **order** — this step cannot be approved until the ones before it are. |
+| Require Previous Steps Approval | تتطلب تنفيذ الخطوات السابقة أولا | Enforces the **order** — a decision on this step is refused while the approval of any step with a lower **Step Code** is still at **Initial**. |
 
 The **Require Previous Steps Approval** flag is what turns a flat checklist into an **ordered**
-approval chain: a step so marked stays locked until everything ahead of it is signed, so Finance
-can't clear the employee before IT has taken the laptop back.
+approval chain: a step so marked stays locked while any step ahead of it (by step code) is still at
+**Initial**, so Finance can't clear the employee before IT has dealt with the laptop.
 
 ![Evacuation Approval Settings](../../../ar/modules/hr/images/end-of-service/evacuation-approval-settings-en.png)
 
@@ -56,11 +56,12 @@ can't clear the employee before IT has taken the laptop back.
 
 An **Evacuation Party Document** is raised for the leaving (or departing-on-leave) employee. It
 identifies the person and the leave in question — **Employee** (`الموظف`), **Start Date**
-(`تاريخ البداية`), **Return Date** (`تاريخ العودة`), **Vacation Period** (`مدة الأجازة`) and
-**Vacation Type** (`نوع الأجازة`) — and points at the **Approval Settings** (`إعدادات الموافقة`)
+(`تاريخ البداية`), **Return Date** (`تاريخ العودة`), **Vacation Period** (`مدة الإجازة`) and
+**Vacation Type** (`نوع الإجازة`) — and points at the **Approval Settings** (`إعدادات الموافقة`)
 template to use.
 
-Its **Approval State** (`حالة الموافقة`) tracks the whole clearance through four values:
+Its **Approval State** (`حالة الموافقة`) is updated every time one of its approvals is saved, and
+takes one of four values:
 
 | State (English) | Arabic label |
 |---|---|
@@ -71,17 +72,16 @@ Its **Approval State** (`حالة الموافقة`) tracks the whole clearance 
 
 Two buttons fan the clearance out into its steps: **Generate Evacuation Approval Documents**
 creates a live approval per step, while **Generate Draft Evacuation Approval Documents**
-produces them as drafts first. The party document only
-reaches **Approved** once every non-optional step has been approved; a single rejection flips it to
-**Approval Rejected**.
+produces them as drafts first (see [Actions on this screen](#Actions-on-this-screen)).
 
 ![Evacuation Party Document](../../../ar/modules/hr/images/end-of-service/evacuation-party-doc-en.png)
 
 ## Step 3 — Each responsible party signs their step
 
-Each generated **Evacuation Approval Document** represents one step. It carries the **Step Code**
-and the Arabic / English step description copied from the template, the **Employee** being cleared,
-the **Responsible Employee** (`الموظف المسئول`) who owns the decision, and a **Decision**
+Each generated **Evacuation Approval Document** represents one step of one **Evacuation Party
+Document**. It carries the **Step Code** and the Arabic / English step description copied from the
+template, the **Responsible Employee** (`الموظف المسئول`) who owns the decision, an **Employee**
+field that is filled with the employee of the user who creates the approval, and a **Decision**
 (`القرار`) that is one of:
 
 | Decision (English) | Arabic label |
@@ -91,8 +91,10 @@ the **Responsible Employee** (`الموظف المسئول`) who owns the decisi
 | Reject | رفض |
 
 The responsible party opens their approval, records what they checked, and sets the decision. When
-the last required step turns to **Approve**, the parent party document becomes **Approved** and the
-settlement is free to proceed.
+the approval has an **Employee**, that employee must be the step's responsible employee, belong to
+the responsible employee group, or be the employee of the responsible user; otherwise saving is
+refused. The step's decision is the latest saved approval for that step code, and once a step is
+approved a later approval cannot change it.
 
 ### The checklist slots are yours to define
 
@@ -106,16 +108,16 @@ procedure, not as predefined semantics.
 ## How it's processed
 
 Evacuation approval is a **workflow**, not a ledger document — it generates **no accounting effect**
-and creates no general-ledger entry. Its only "processing" is the state machine: approvals roll
-up into the party document's approval state, and that state is what a settlement can be made to
-respect. Because the clearance and the money are deliberately separate, you can run the two in
-parallel and simply require the clearance to be **Approved** before the dues liquidation is paid.
+and creates no general-ledger entry. Its only "processing" is the state: approvals roll up into the
+party document's approval state. The Dues Liquidation Document does not read that state, so the
+clearance and the money run in parallel; requiring the clearance to be **Approved** before the dues
+liquidation is paid is a procedure your company enforces.
 
 ## Actions on this screen
 
 **On the Evacuation Party Document** (both need the document saved first and its **Approval Settings** filled):
 
-- **Generate Evacuation Approval Documents** — creates and saves one Evacuation Approval Document per step of the approval settings, each assigned to the step's responsible person and carrying the party document's company and dimensions. Steps already approved are skipped, but every other step gets a new approval document each time you press it — so press it once, not again while steps are still pending. When every step is already approved it stops with *All steps are approved* — «تم الموافقة علي كل الخطوات».
+- **Generate Evacuation Approval Documents** — creates and saves one Evacuation Approval Document per step of the approval settings, each assigned to the step's responsible person and carrying the party document's company and dimensions. Steps already approved are skipped, but every other step gets a new approval document each time you press it — so press it once, not again while steps are still pending. When every step is already approved it stops with *All steps are approved* — «تم الموافقة على كل الخطوات».
 - **Generate Draft Evacuation Approval Documents** — the same, but the approval documents are left as drafts, so you can review or adjust them before they go out.
 
 The Evacuation Approval Settings and the Evacuation Approval Document have no buttons of their own.
@@ -124,15 +126,16 @@ The Evacuation Approval Settings and the Evacuation Approval Document have no bu
 
 | Message | Why | What to do |
 |---|---|---|
-| *Please define one required step at least* — «من فضلك قم بتعريف خطوة واحدة مطلوبة علي الأقل» | Every row in the settings' **Steps** grid is marked **Optional Step**, so the whole clearance could be skipped. | Untick **Optional Step** on at least one row — the step no departure may bypass. |
-| *There is no approval steps for this document* — «لا توجد خطوات موافقة اخلاء طرف لهذا المستند» | The approval is being signed against an Evacuation Party Document whose **Approval Settings** are missing, or whose settings carry no steps at all. | Point the clearance at a settings record that has steps defined, and define them there first. |
+| *Please define one required step at least* — «من فضلك قم بتعريف خطوة واحدة مطلوبة على الأقل» | Every row in the settings' **Steps** grid is marked **Optional Step**, so the whole clearance could be skipped. | Untick **Optional Step** on at least one row — the step no departure may bypass. |
+| *There is no approval steps for this document* — «لا توجد خطوات موافقة إخلاء طرف لهذا المستند» | The approval is being signed against an Evacuation Party Document whose **Approval Settings** are missing, or whose settings carry no steps at all. | Point the clearance at a settings record that has steps defined, and define them there first. |
 | *Invalid approval step code* — «كود خطوة غير صحيح» | The **Step Code** on the approval does not match any step in the settings the clearance uses. | Pick the step code from the settings' Steps grid; codes are per settings record, not global. |
-| *Step state is {0}* — «حالة الخطوه{0}» | You moved the approval onto a step that has already been approved on this clearance, so signing it again would overwrite a decision. | Choose a step that is still pending, or amend the approval document that already signed that step. |
-| *The step {0} requires the approval of steps {1}* — «الخطوة {0} تتطلب تنفيذ للخطوة {1} اولا» | The step has **Require Previous Steps Approval** ticked and the steps listed in the message are still at *Initial* — the ordered chain has not reached this step yet. | Have the listed steps signed first; the message names exactly which ones are outstanding. |
+| *Step state is {0}* — «حالة الخطوة {0}» | You moved the approval onto a step that has already been approved on this clearance, so signing it again would overwrite a decision. | Choose a step that is still pending, or amend the approval document that already signed that step. |
+| *The step {0} requires the approval of steps {1}* — «الخطوة {0} تتطلب تنفيذ للخطوة {1} أولا» | The step has **Require Previous Steps Approval** ticked and the steps listed in the message are still at *Initial* — the ordered chain has not reached this step yet. | Have the listed steps signed first; the message names exactly which ones are outstanding. |
+| *The employee {0} can not approve the step {1} because he does not belong to {2}* (no Arabic text; shown in English on Arabic screens too) | The approval's **Employee** is not the step's responsible employee, is not in the responsible employee group, and is not the employee of the responsible user. | Have the responsible person create and save the approval, or clear the **Employee** field. |
 
 ## Related pages
 
-- [Dues Liquidation](./dues-liquidation) — the final settlement the clearance gates; all the gratuity
+- [Dues Liquidation](/modules/hr/end-of-service/dues-liquidation) — the final settlement the clearance gates; all the gratuity
   and vacation-payout math lives there.
-- [Firing & Termination](./firing-and-termination) — the termination that sets the whole end-of-service
+- [Firing & Termination](/modules/hr/end-of-service/firing-and-termination) — the termination that sets the whole end-of-service
   process in motion.

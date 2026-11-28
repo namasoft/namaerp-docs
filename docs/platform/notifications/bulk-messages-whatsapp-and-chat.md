@@ -55,7 +55,7 @@ One record per provider account:
 
 **Send Only One Time** is the guard against a customer receiving the same invoice message every time the invoice is edited. A repeat is refused with:
 
-*You can not send notification {0} with message {1} again because it was sent before* — «لا يمكنك إرسال التنبية {0} برسالة {1} مرة أخرى حيث تم إرسالها من قبل»
+*You can not send notification {0} with message {1} again because it was sent before* — «لا يمكنك إرسال التنبيه {0} برسالة {1} مرة أخرى حيث تم إرسالها من قبل»
 
 ### WhatsApp Message
 
@@ -73,7 +73,7 @@ A **WhatsApp Message** says *what* is sent. It names its **Configuration**, and 
 
 The cool-down is the switch for "do not message the customer twice in five minutes because two people saved the order". A message that comes too soon is refused with:
 
-*The message has already been sent to {0} at {1}, you can send it again at {2}* — «هذه الرسالة قد تم إرسالها إلى {0} فى الوقت {1} يمكنك إعادة إرسالها فى الوقت {2}»
+*The message has already been sent to {0} at {1}, you can send it again at {2}* — «هذه الرسالة قد تم إرسالها إلى {0} في الوقت {1} يمكنك إعادة إرسالها في الوقت {2}»
 
 ## Error Message: a log, not a message
 

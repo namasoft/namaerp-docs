@@ -38,7 +38,8 @@ directly, with the accounts taken from its document term.
 
 ::: info Where the two halves touch
 There is exactly one link between them: a **Course** carries a **sales price**, and when you pick
-that course on a Course Contract, its sales price becomes the unit price on the student line. Nothing
+that course in the header of a Course Contract, its sales price is copied into the unit price of the
+student lines already on the contract. Nothing
 else crosses over — attendance, marks, buses and meals never feed a fee, an invoice or a balance.
 :::
 
@@ -51,8 +52,8 @@ Suppose a training centre runs "Advanced Excel for Accountants" three times a ye
 2. For the spring intake you create a **Course**: the offering that actually runs, with its lecturer,
    its semester, its planned dates, its cost and — importantly — its **sales price** of 1,800 per
    student.
-3. Twelve students sign up. You raise a **Course Contract**, add the twelve students, and pick the
-   course on each line so the price comes across: 12 × 1,800 = 21,600.
+3. Twelve students sign up. You raise a **Course Contract**, add the twelve students, then pick the
+   course in the header so its price is copied onto every student line: 12 × 1,800 = 21,600.
 4. The family will pay 4,000 up front and the rest monthly, so you let the system build the
    **payment schedule** — eight instalments — and record the down payment on the contract's own
    payment lines.
@@ -94,7 +95,7 @@ and **School Trips** — and this guide follows the shape of the work rather tha
 
 <LandingGrid>
   <LandingCard icon="📝" title="Course Contracts" link="/modules/education/education-course-contracts.md" details="The one document in Education that reaches the ledger: who is enrolled, what they owe, and what processing it books." />
-  <LandingCard icon="💳" title="Payment Schedules and Collection" link="/modules/education/education-payment-schedules.md" details="Building an instalment plan by hand, from a payment template or with the generate button, and recording what is collected." />
+  <LandingCard icon="💳" title="Payment Schedules and Collection" link="/modules/education/education-payment-schedules.md" details="Building an instalment plan by hand or from a payment template, and recording what is collected." />
   <LandingCard icon="↩️" title="Cancelling a Course Contract" link="/modules/education/education-contract-cancellation.md" details="Unwinding all or part of a contract, and what happens to the instalments already agreed." />
   <LandingCard icon="⚙️" title="Document Terms" link="/modules/education/education-document-terms.md" details="Where the accounting behaviour of both documents is actually configured." />
 </LandingGrid>

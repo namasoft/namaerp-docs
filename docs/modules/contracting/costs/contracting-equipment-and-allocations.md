@@ -46,10 +46,11 @@ either pushes the value down onto every line, and the project is derived from th
 ### One person, one machine, one place at a time
 
 The validation that matters is the **overlap check**. The same person or machine cannot be allocated to
-two overlapping date ranges — not within one document, and not across other committed allocations
-either. Try it and the commit names both offending lines and both documents. A module setting turns the
-check off for organisations that genuinely share a resource across projects at the same time and split
-its cost some other way.
+the same term code over two overlapping date ranges — not within one document, and not across other
+committed allocations either. Try it and the commit names both offending lines and both documents. Lines
+for the same resource on different term codes are not compared. The module setting *Allow Date
+Overlapping In Employee And Equipment Project Allocation* turns the check off for organisations that
+genuinely share a resource at the same time and split its cost some other way.
 
 ### It writes back to the employee, asset or car
 
@@ -89,13 +90,17 @@ Press **Collect Documents** and the system:
    **vehicle insurance** documents;
 4. **excludes anything an earlier cost distribution already consumed**, which is the guard against
    double-counting the same salary run twice;
-5. and writes one line per (project contract × source document × person or machine) into the
-   **Details** grid, carrying the sliced cost.
+5. and writes one line per allocation line of each source document's person or machine into the
+   **Details** grid, carrying that allocation line's project contract and term codes and the sliced cost.
 
-The slice itself is simple arithmetic: **allocated days ÷ days in the period × the value of the salary
-component**. Which components count is a module setting — a list of component types the implementation
-nominates as project cost. Leave that list empty and the whole net salary plus paid instalments is used
-as a single unnamed component.
+The slice is a proportional split. A source document's value is shared among the allocation lines of
+its person or machine, **in proportion to the days each line covers inside the source document's
+range** — the salary document's own from and to dates, or the fiscal period of the depreciation — with
+both end dates counted. The split is between allocations, not against the length of the period: a
+crane allocated to one project for 20 days and to nothing else for the rest of the month carries its
+whole month's depreciation to that project. Which salary components count is a module setting — a list
+of component types the implementation nominates as project cost. Leave that list empty and the whole
+net salary plus paid instalments is used as a single unnamed component.
 
 The Details grid is entirely machine-filled: **every column on it is read-only**. It is the evidence of
 what was collected, not something you edit.
@@ -109,19 +114,19 @@ the term code columns suggest the chosen contract's terms.
 
 How much of the work you do by hand depends on one option on the document term:
 
-- **Manual** (the default). Detail lines that already carry a term code are reconciled into the Cost
-  Allocation grid for you; the rest you distribute yourself.
+- **Manual** (the default). You fill the Cost Allocation grid yourself.
 - **Automatic** (*توزيع التكلفة تلقائياً على البنود / Automatically Distribute Cost On Project Terms*).
-  The grid is cleared and rebuilt. A detail line that already has a term code produces one cost line
-  one-for-one. A detail line **without** one has its cost spread across the eligible terms of the
-  project contract — for a person, the terms flagged as carrying **salary** cost; for a fixed asset, the
-  terms flagged as carrying **depreciation** cost. The weight is chosen by a second term option, *Cost
+  The grid is cleared and rebuilt on every save. A detail line that already has a term code produces
+  one cost line one-for-one. A detail line **without** one, for a person or a fixed asset, has its cost
+  spread across the terms of its project contract. The weight is chosen by a second term option, *Cost
   Distribution By*, which offers quantity (the default), total price or total cost, and each term takes
   its share in proportion.
 
-Two things about automatic distribution are worth knowing before you rely on it. A **car** is not spread
-automatically — only people and fixed assets are — so distribute car cost by hand. And **Term Category 2**
-is not carried onto automatically built cost lines; if you report on that category, set it yourself.
+Two things about automatic distribution are worth knowing before you rely on it. A **car** is not
+spread — only people and fixed assets are — and because the grid is rebuilt on every save, a car's cost
+reaches the project under automatic distribution only when its allocation line carries a term code.
+And **Term Category 2** is not carried onto cost lines built from the Details grid; if you report on
+that category, set it yourself.
 
 ### What it refuses, and what it produces
 
@@ -266,47 +271,40 @@ Two behaviours are worth knowing:
 
 ### The allocation
 
-`CEEA-000042`, value date 1 April 2026, project contract `PC-2026-001`:
+`CEEA-000042`, value date 1 April 2026:
 
-| Project Contract | Term Code | From | To | Days | Employee / Equipment |
-|---|---|---|---|---|---|
-| PC-2026-001 | `3.01` | 01/04/2026 | 30/04/2026 | 30 | `EMP-0210` Eng. Hani, site engineer |
-| PC-2026-001 | `2.01` | 01/04/2026 | 20/04/2026 | 20 | `FA-0112` tower crane |
+| Project Contract | Term Code | From | To | Employee / Equipment |
+|---|---|---|---|---|
+| PC-2026-001 | `3.01` | 01/04/2026 | 30/04/2026 | `EMP-0210` Eng. Hani, site engineer |
+| PC-2026-001 | `2.01` | 01/04/2026 | 20/04/2026 | `FA-0112` tower crane |
+| PC-2026-007 | `1.01` | 21/04/2026 | 30/04/2026 | `FA-0112` tower crane, moved to the warehouse job |
 
-Committing this costs nothing. It declares that in April, Hani's salary is attributable to the tower for
-the whole month, and the crane's depreciation for twenty of the thirty days. If either had already been
-allocated elsewhere over an overlapping range, the commit would have named the clash.
+Committing this costs nothing. It declares that in April Hani works only on the tower, and that the
+crane spends twenty days on the tower and the last ten on another project. If the same resource had
+already been allocated to the same term code over an overlapping range, the commit would have named the
+clash.
 
 ### The costing
 
-`CEEC-000009`, value date 30 April 2026, on a term with automatic distribution on and the weight set to
-quantity. Range: employees `EMP-0200` to `EMP-0299`, assets `FA-0100` to `FA-0199`; everything else left
-empty.
+`CEEC-000009`, value date 30 April 2026, on a term with automatic distribution on. Range: employees
+`EMP-0200` to `EMP-0299`, assets `FA-0100` to `FA-0199`; everything else left empty.
 
 Press **Collect Documents**:
 
 | Project Contract | Document | Employee / Equipment | Term Code | Cost |
 |---|---|---|---|---|
-| PC-2026-001 | `SAL-2026-04` | EMP-0210 Eng. Hani | *(blank)* | 9,000 |
-| PC-2026-001 | `FADEP-2026-04` | FA-0112 tower crane | *(blank)* | 6,000 |
+| PC-2026-001 | `SAL-2026-04` | EMP-0210 Eng. Hani | `3.01` | 9,000 |
+| PC-2026-001 | `FADEP-2026-04` | FA-0112 tower crane | `2.01` | 6,000 |
+| PC-2026-007 | `FADEP-2026-04` | FA-0112 tower crane | `1.01` | 3,000 |
 
-Hani's April salary is 9,000 and he was allocated 30 of 30 days, so all of it is attributable. The
-crane's April depreciation is 9,000 but it was allocated only 20 of 30 days, so **9,000 × 20 ÷ 30 =
-6,000** comes through.
+Hani's April salary is 9,000 and his only allocation covers all of it, so all 9,000 comes through. The
+crane's April depreciation is 9,000, split between its two allocations by days: **9,000 × 20 ÷ 30 =
+6,000** to the tower and 9,000 × 10 ÷ 30 = 3,000 to the other project.
 
-Neither detail line carries a term code, so automatic distribution spreads them. On `PC-2026-001`, two
-terms are flagged as carrying salary cost — `3.01` *Blockwork* (2,000 m²) and `3.02` *Plastering*
-(1,000 m²) — and one is flagged as carrying depreciation cost, `2.01` *Reinforced concrete*:
-
-| Project Contract | Document | Employee / Equipment | Term Code | Cost |
-|---|---|---|---|---|
-| PC-2026-001 | SAL-2026-04 | EMP-0210 | `3.01` | 9,000 × 2,000/3,000 = **6,000** |
-| PC-2026-001 | SAL-2026-04 | EMP-0210 | `3.02` | **3,000** |
-| PC-2026-001 | FADEP-2026-04 | FA-0112 | `2.01` | **6,000** |
-
-6,000 + 3,000 = 9,000, which matches what was collected for that salary document, and 6,000 matches the
-depreciation document, so the commit is accepted. Three cost slices are written — **Salaries** 6,000 and
-3,000, **Depreciations** 6,000 — and *Actual Cost* on the three term lines rises accordingly. No journal
+Every detail line carries the term code of its allocation line, so each produces one cost line
+one-for-one, each matching what was collected for its pair, and the commit is accepted. The cost
+slices are written — **Salaries** 9,000 on `3.01`, **Depreciations** 6,000 on `2.01` of `PC-2026-001` and
+3,000 on `1.01` of `PC-2026-007` — and *Actual Cost* on those term lines rises accordingly. No journal
 entry is produced by this document; the salary run and the depreciation run already did that.
 
 ### And the hired crane, for contrast
@@ -322,6 +320,6 @@ narrative behind it, as an Equipment Statement.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Line {0} at document {1} overlapped with line {2} at document {3}* — «السطر {0} في المستند {1} متداخل مع السطر {2} في المستند {3}» | The same person, asset or car is allocated to two places over dates that overlap. The check runs inside the document and against every other committed allocation, so the two document numbers quoted may differ. | Shorten one of the two date ranges so they no longer overlap, or remove the duplicate line. Where the message names another document, that document is the one you have to look at. |
-| *Document {0} with project contract {1} cost is {2} and distributed cost is {3}* — «المستند {0} لعقد مشروع {1} التكلفة {2} والتكلفة المُوزعة {3}» | On the Cost Distribution document, the Cost Allocation lines for that source document and project contract do not add up to the cost collected for the pair. | Make the two figures match — the collected figure appears on no grid, so read it from the message itself. Press **Distribute Cost** again to rebuild the lines from the allocated days, or correct the amounts by hand. |
+| *Line {0} at document {1} overlapped with line {2} at document {3}* — «السطر {0} في المستند {1} متداخل مع السطر {2} في المستند {3}» | The same person, asset or car is allocated to the same term code over dates that overlap. The check runs inside the document and against every other committed allocation, so the two document numbers quoted may differ. | Shorten one of the two date ranges so they no longer overlap, or remove the duplicate line. Where the message names another document, that document is the one you have to look at. |
+| *Document {0} with project contract {1} cost is {2} and distributed cost is {3}* — «المستند {0} لعقد مشروع {1} التكلفة {2} والتكلفة المُوزعة {3}» | On the Cost Distribution document, the Cost Allocation lines for that source document and project contract do not add up to the cost collected for the pair. | Make the two figures match — the collected figure appears on no grid, so read it from the message itself. Correct the Cost Allocation amounts by hand, or press **Collect Documents** again if the source documents changed. |
 | *There is another asset {0} depend on this project {1}* — «الأصل الثابت {0} المنشأ يعتمد على هذا المشروع {1}» | The Fixed Asset Creation Document line points at a project that already has a fixed asset created for it. One project can only capitalise into one asset. | Use the existing asset, or point the line at a different project. |

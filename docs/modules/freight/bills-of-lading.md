@@ -12,19 +12,20 @@ The bill of lading is the official shipping document that proves the carrier's r
 
 The bill header carries the data printed on the shipping document:
 
-- **Bill of Lading Number** and its type (Master / House…).
-- **Shipper** — a required field — plus the **Consignee** and the two **Notify** parties, each with the address printed on the bill.
-- **Freight Type** — prepaid or collect.
+- **Bill of Lading Number** and its **Bill of Lading Type** — a master file you define, such as Master or House.
+- **Shipper** — a required field — plus the **Consignee** and the two **Notify** parties, each with the address printed on the bill. Picking a party fills its address from the customer's contact address.
+- **Freight Type** — **Prepaid** or **Collected**.
 - **Ocean Vessel and Voyage**, plus the carrier booking number.
 - **Loading and discharge ports**, the **estimated arrival date**, and the **actual sailing date**.
-- Reefer-container data: **temperature, humidity, and ventilation**, and the **container count**.
+- Reefer-container data: **temperature, humidity, and ventilation**, and the **container count**, which the system sets on save to the number of bill lines.
 - **Commodity** and attachments.
 
 ## Bill lines
 
 In the bill's details you list the shipped goods line by line:
 
-- **Container number** and **quantity**.
+- **Container number** and **quantity**. A container number can appear on only one line of the bill; a repeat is refused on save with
+  *Duplicate Container Number {0}* — «رقم حاوية مكرر {0}».
 - **Description and remarks** as printed on the document.
 - **Net and gross weight** per line, plus total net and gross weight.
 - **CBM volume**.
@@ -36,4 +37,4 @@ The bill of lading creates no accounting effect by itself — the shipment's fin
 
 ## Relationship to the operation order and invoices
 
-At invoicing time, the sales invoice links the invoiced bills of lading, so bill numbers and container numbers are gathered automatically into the invoice — making it easy for the customer to reconcile the invoice against shipments. This ties the three together: **operation order** (planning and services) → **bill of lading** (shipping documentation) → **invoice** (financial collection).
+At invoicing time, the sales invoice's **Collect Bills of Lading** button brings in the container lines of the bills created from its operation order, and on save the invoice gathers their bill numbers and container numbers into its header (see [Invoices & Returns](/modules/freight/freight-invoicing)) — making it easy for the customer to reconcile the invoice against shipments. This ties the three together: **operation order** (planning and services) → **bill of lading** (shipping documentation) → **invoice** (financial collection).

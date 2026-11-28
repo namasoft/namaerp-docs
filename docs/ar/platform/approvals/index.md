@@ -12,6 +12,6 @@ title: الموافقات
 
 <LandingGrid>
   <LandingCard icon="✅" title="نظام الموافقات - الدليل الشامل لتعريف الموافقة" link="/ar/platform/approvals/approvals-system.md" details="الشرح الكامل: تعريفات الموافقة وخطواتها والمسؤولون عنها وشروطها ودورة حياة حالة الموافقة." />
-  <LandingCard icon="✉️" title="نماذج بريد إلكتروني جاهزة لطلبات الموافقة (Sample Approval Email Templates)" link="/ar/platform/approvals/sample-approval-email-templates.md" details="نماذج بريد جاهزة وأنيقة بأزرار قابلة للنقر للاعتماد والرفض والإرجاع يمكنك لصقها في قاعدة الموافقة." />
+  <LandingCard icon="✉️" title="نماذج بريد إلكتروني جاهزة لطلبات الموافقة (Sample Approval Email Templates)" link="/ar/platform/approvals/sample-approval-email-templates.md" details="نماذج بريد جاهزة وأنيقة بأزرار قابلة للنقر للاعتماد والرفض والإرجاع يمكنك لصقها في تعريف الموافقة." />
   <LandingCard icon="🧑‍💼" title="المسئوليات والمسئول المخصص والتفويض" link="/ar/platform/approvals/responsibilities-and-delegation.md" details="وجّه الموافقات إلى أدوار لا أسماء، واستخرج المعتمِد من المستند، وسلّم العمل لمن ينوب أثناء الغياب." />
 </LandingGrid>

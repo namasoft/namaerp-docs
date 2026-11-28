@@ -94,17 +94,16 @@ Only some of them, and always through the term's Debit and Credit sides.
 | Document | Its term's accounting behaviour |
 |---|---|
 | Maintenance Order, Maintenance Order Request | An **Effect** (التأثير) page with a single Debit and Credit pair (`termConfig.debit`, `termConfig.credit`). Set both and the document creates a two-sided journal entry over its spare-part and service lines. |
-| Maintenance Contract, Maintenance Service Contract | An **Invoice effect** (تأثير الفاتوره) page — the full invoice shape: Debit and Credit (`termConfig.config.debit`, `termConfig.config.credit`), with tax, discount, cash and approximation-discount (`termConfig.approximationDiscount`) sides. |
-| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape. The **Settings** page of **both** invoice terms adds the **Serivce Fees** group (the label is misspelt on screen) with four Service Fees debit/credit pairs (`termConfig.serviceFees1Debit` … `termConfig.serviceFees4Credit`) — see [the service-fee switches](#The-rest-of-the-machine-suite-settings) below. The machine invoice also has a **Services Debit** / **Services Credit** pair (مدين الخدمات / دائن الخدمات, `termConfig.servicesDebit` / `termConfig.servicesCredit`): fill both and the service lines are booked against them instead of the invoice's main sides, so labour revenue can sit apart from spare-parts revenue. Leave either empty and the service lines use the main sides. |
+| Maintenance Contract, Maintenance Service Contract | An **Invoice effect** (تأثير الفاتورة) page — the full invoice shape: Debit and Credit (`termConfig.config.debit`, `termConfig.config.credit`), with tax, discount, cash and approximation-discount (`termConfig.approximationDiscount`) sides. |
+| Maintenance Invoice, Maintenance Service Invoice | The same full invoice shape. The **Settings** page of **both** invoice terms adds the **Service Fees** (مصاريف الخدمة) group with four Service Fees debit/credit pairs (`termConfig.serviceFees1Debit` … `termConfig.serviceFees4Credit`) — see [the service-fee switches](#The-rest-of-the-machine-suite-settings) below. The machine invoice also has a **Services Debit** / **Services Credit** pair (مدين الخدمات / دائن الخدمات, `termConfig.servicesDebit` / `termConfig.servicesCredit`): fill both and the service lines are booked against them instead of the invoice's main sides, so labour revenue can sit apart from spare-parts revenue. Leave either empty and the service lines use the main sides. |
 | Maintenance Invoice Return, Maintenance Service Invoice Return | The same, in the opposite direction — including the Services Debit / Credit pair on the machine invoice return. |
 | Maintenance Estimation | It creates no accounting entry. |
 | Maintenance Service Order | Its term shows no account sides, and the document creates no accounting entry. |
 | Maintenance Order Execution | Tax settings only. It creates no accounting entry and moves no stock. |
 | Maintenance Notice, both sales orders, both sales quotations, Maintenance Visit, the plans | Nothing. |
 
-As on every CRM term, the effect only happens when **both** sides are configured. One side alone
-means no journal entry, no error message and nothing in Business Requests, because no request was
-ever raised.
+As on every CRM term, the effect only happens when **both** sides are configured — see
+[The accounts block](/modules/crm/document-terms/crm-terms-basics#The-accounts-block).
 
 ![The Invoice effect tab of the Maintenance Invoice term](../../../ar/modules/crm/images/document-terms/crm-term-maintenance-invoice-en.png)
 
@@ -151,7 +150,7 @@ tax group (**Tax Plan**, **Taxable**, **Modifiable Tax**, **Allow Editing Header
 `termConfig.allowEditingHdrTaxInDetails`), **Consider Task Templates Tasks When Creating Executions**
 (اعتبار مهام قوالب المهام عند إنشاء عمليات التنفيذ, `termConfig.considerTaskTemplatesTasksWhenCreatingExecutions`
 — take the checklist from the header task template rather than the machine line's), and on the
-machine order only, a reward-points configuration and a discount-coupon group and book
+machine order and order request terms only, a reward-points configuration and a discount-coupon group and book
 (`termConfig.rewardPointsConfig`, `termConfig.discountCouponGroup`, `termConfig.discountCouponBook`).
 
 The invoice term adds **Consider Lines Of FromDoc** (`termConfig.considerLinesOfFromDoc`), **Copy
@@ -163,11 +162,13 @@ net), and on the machine invoice the same reward-points and coupon fields. The r
 
 | Option | Field id | What it does |
 |---|---|---|
-| **Use Payment Docs As Debt Ages** (استعال سندات الدفع في أعمار الديون) | `termConfig.usePaymentDocsAsDebtAges` | Machine invoice only. The invoice's external payment lines — the receipts recorded against it — also count as debt-age rows, so the debt-age analysis sees them. Unticked, they do not. |
+| **Use Payment Docs As Debt Ages** (استعمال سندات الدفع في أعمار الديون) | `termConfig.usePaymentDocsAsDebtAges` | Machine invoice only. The invoice's external payment lines — the receipts recorded against it — also count as debt-age rows, so the debt-age analysis sees them. Unticked, they do not. |
 | **Service Fees 1 Deduction** … **Service Fees 4 Deduction** (خصم مصاريف خدمة 1 … 4) | `termConfig.serviceFees1Deduction` … `termConfig.serviceFees4Deduction` | Both invoices. Treats that service fee as a deduction from the invoice's net value instead of an addition, and reverses its entry accordingly. |
 | **Do Not Add Service Fees Effect Without Account Side** | `termConfig.doNotAddServiceFeesEffectWithoutAccSide` | Both invoices. A service-fee line whose own debit or credit side is empty is left out of the entry, instead of being booked to the term's main sides. |
 
-The **Discount Effects** page of the Maintenance Contract and Maintenance Invoice terms — and of the
+The **Discount Effects** page of the Maintenance Contract, Maintenance Invoice, Maintenance Invoice
+Return and Maintenance Estimation terms (and of the Maintenance Service Contract, Invoice and Invoice
+Return terms) — and of the
 [CRM Service Contract term](/modules/crm/document-terms/crm-terms-basics#The-CRM-Service-Contract-term)
 — ends with the **External Effects** grid (تأثير سندات الدفع, `termConfig.externalEffectLines`). Each
 row adds a debit/credit pair to the document's own journal entry for every receipt recorded against

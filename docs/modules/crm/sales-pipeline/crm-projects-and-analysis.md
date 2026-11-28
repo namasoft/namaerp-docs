@@ -22,8 +22,8 @@ Before the detail, the shape of the thing:
    CRM Project  (CRM مشروع)   the delivery plan
        ^
        :  Related To, filled by hand - and it accepts a Lead, Potential,
-          Project, Campaign, Trouble Ticket, Customer or Development
-          Request. It does NOT accept an Offer or an Analysis.
+          Project, Campaign, Trouble Ticket, Complaint, Customer or
+          Development Request. It does NOT accept an Offer or an Analysis.
 ```
 
 The dotted lines are reference fields somebody types. There is **no button anywhere** that turns an Analysis into an Offer, or an Offer into a Project, and — as the diagram says — the Project cannot even be pointed at the Offer or the Analysis that preceded it. Read [The Sales Pipeline](/modules/crm/sales-pipeline/crm-pipeline-overview) if you have not already.
@@ -34,7 +34,7 @@ The dotted lines are reference fields somebody types. There is **no button anywh
 
 The Analysis (تحليل) is a document — a book gives it its number, and like the [Offer](/modules/crm/sales-pipeline/crm-offers) it needs **no document term**. Structurally it is the Offer screen with two differences: it adds a **Mediator** (الوسيط) to the header, and its *Related To* (يرتبط بـ) accepts a **Lead**, a **Potential** or a **CRM Project** (there is no second reference field).
 
-Everything else you already know from the Offer: a header with responsible employee, customer and the reference field; a *Details* group carrying product, type, planned time, actual time, status and client representative; a single-column **Assigned employees** grid; and a second tab whose grid breaks the analysis work into lines with their own assignees, statuses, planned and actual times and dates, followed by the meeting-notes grid — which, as on the Offer, shows a raw key instead of a heading.
+Everything else you already know from the Offer: a header with responsible employee, customer and the reference field; a *Details* group carrying product, type, planned time, actual time, status and client representative; a single-column **Assigned employees** grid; and a second tab whose grid breaks the analysis work into lines with their own product, client representative, assignee, status, type and planned and actual times (no start and end dates, unlike the Offer's lines), followed by the meeting-notes grid.
 
 The one thing the Analysis has that the Offer does not is a third tab, **Related Records**, holding a read-only list titled **Offers**. It shows the offers whose **second** reference field (مرتبط ب2) points at this analysis. That list is the only place in the whole product where an analysis and its offers appear together — which is why, if you want the view, you must link the offer through *Related To 2* and not through *Related To*.
 
@@ -58,12 +58,12 @@ Code, group and the two names, then a **Project details** group:
 
 | Field (English / Arabic) | Notes |
 |---|---|
-| Related To (يرتبط بـ) | A Lead, Potential, another Project, Campaign, Trouble Ticket, Customer or Development Request — **not** an Offer and **not** an Analysis |
+| Related To (يرتبط بـ) | A Lead, Potential, another Project, Campaign, Trouble Ticket, Complaint, Customer or Development Request — **not** an Offer and **not** an Analysis |
 | Responsible Employee (الموظف المسئول) | Filled with the logged-in user's employee on every new record |
 | Agent (الوكيل) and Mediator (الوسيط) | The outside parties involved |
 | Customer (العميل) | Who the project is for |
 | Assignee (المعين للمهمة) | The employee who owns the delivery |
-| Project Start Date / Project End Date (تاريخ بداية المشروع / تاريخ نهاية المشروع) | Plain dates |
+| Project start date / Project end date (تاريخ بداية المشروع / تاريخ نهاية المشروع) | Plain dates |
 
 ::: info There is no budget, no cost and no progress on a CRM Project
 The screen has no budget field, no cost field, no revenue field, no percentage complete, no milestone and no completion flag. Nothing is rolled up from the lines, and nothing is compared to anything.
@@ -73,11 +73,9 @@ It is also completely unrelated to the **Contracting** module's projects — dif
 
 ### Preparing and Training
 
-The second tab is the plan. A remarks field, then a grid with one row per phase: **Serial** (المسلسل), **Phase or Cycle** (المرحلة), **Description** (الوصف), product, client representative, the employee it is assigned to, status, type, planned time, actual time, start date, end date and an attachment. The status and type values are the same short lists used on the Offer.
+The second tab is the plan. A remarks field, then a grid with one row per phase: **Serial** (المسلسل), **Phase or Cycle** (المرحلة), **Description** (الوصف), product, client representative, the employee it is assigned to, status, type, planned time, actual time, start date, end date and an attachment. The status and type values are the same short lists used on the Offer. Each row carries the **Create Visit From Selected Line** button described under *Actions on this screen* below.
 
-Select a row and press **Create Visit From Selected Line** (إنشاء زيارة من السطر المختار) and a new [CRM Visit](/modules/crm/activities/crm-visits) opens carrying that line's serial, description, phase and assignee. As always, the visit is unsaved until you save it, and no link is written back onto the project line.
-
-Below the grid sits the same meeting-notes grid you saw on the Offer; on screen its heading shows as **`CRMProject.remarkLines`** in both languages.
+Below the grid sits the same meeting-notes grid you saw on the Offer.
 
 ### Related Records
 
@@ -89,10 +87,10 @@ The four buttons on the Basic Information tab need the project **saved** first, 
 
 - **create CRM Task** (*إنشاء مهمة خدمة العملاء*) — a new CRM Task.
 - **Create Visit** (*إنشاء زيارة*) — a new Visit.
-- **Create Calling** (*إنشاء اتصال*) — a new Call.
+- **Create Call** (*إنشاء اتصال*) — a new Call.
 - **Create Contact** (*إنشاء جهة اتصال*) — a new Contact linked back to the project.
 
-On the Preparing and Training tab, each row of the phase grid carries **Create Visit From Selected Line** (*إنشاء زيارة من السطر المختار*). It opens a new Visit for the project with the row's serial, phase and description already filled in its Action Plan group — the same values the Visit's own Serial picker would bring.
+On the Preparing and Training tab, each row of the phase grid carries **Create Visit From Selected Line** (*إنشاء زيارة من السطر المختار*). It opens a new, unsaved [CRM Visit](/modules/crm/activities/crm-visits) for the project with the row's serial, phase and description already filled in its Action Plan group — the same values the Visit's own Serial picker would bring. No link is written back onto the project line.
 
 ![The action block on the CRM Project's Basic Information tab](../../../ar/modules/crm/images/sales-pipeline/crm-project-actions-en.png)
 
@@ -117,7 +115,7 @@ You can tell from the screen itself: its status list names NaMaSoft's internal d
 Two practical notes for anybody who does open it:
 
 - Eight of the nine buttons along the toolbar simply write a value into the on-screen **Status** field; the ninth, **ReOpen**, starts a new request. Details under *Actions on this screen* below.
-- The **Complete Description** column on the list view is built from a specific e-mail template that must exist in the installation under a fixed code. Where that template has not been created, the column is permanently blank — that is the explanation, and there is no setting to change it.
+- The **Complete Description** column on the list view is built from the e-mail template of the Notification Definition whose code is `releasenotifier`. Where that definition has not been created, the column is permanently blank — that is the explanation, and there is no setting to change it.
 
 ::: warning Development Requests cannot be deleted
 The Delete action is refused unconditionally on this screen — there is no setting and no permission that allows it. The refusal message is written in English only and is addressed to NaMaSoft's own staff, so it will look out of place to anybody else who triggers it. If a request was created in error, close or reject it instead.
@@ -134,7 +132,7 @@ The first eight buttons only set the **Status** field on screen. Nothing is save
 | **Planned** (*مخطّطة*) | Planned |
 | **Postpone** (*تأجيل*) | Postponed |
 | **Start** (*بدء*) | In Progress |
-| **Finish** (*انهاء*) | Finished |
+| **Finish** (*إنهاء*) | Finished |
 | **Close** (*إغلاق*) | Closed |
 | **Reject** (*رفض*) | Rejected |
 

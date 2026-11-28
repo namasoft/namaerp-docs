@@ -26,19 +26,17 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 ## توصيل الرسائل
 
-**أقصي عدد محاولات عند فشل الرسائل** `value.info.maxTrialsForMessages` *(الافتراضي 0، ومعناه بلا حد)* — كم مرة تُحاوَل تسلمة رسالة الـ Replication قبل التخلي عنها.
+**أقصى عدد محاولات عند فشل الرسائل** `value.info.maxTrialsForMessages` *(الافتراضي 0)* — حين تفشل رسالة Replication مستلَمة أكثر من هذا العدد من المرات، تتوقف إعادة محاولتها وتُعلَّم فاشلة. ومع القيمة الافتراضية 0 تُعلَّم الرسالة فاشلة بعد أول محاولة فاشلة.
 
-**طلب إعادة الإرسال بعد فشل الرسائل** `value.info.requestReCommitAfterFailures` — بعد إخفاقات متكررة، يطلب من الموقع المصدر إعادة حفظ السجل بدل الاستمرار في إعادة إرسال الرسالة نفسها.
-
-**وقت مسح الرسائل المرسلة التي تم معالجتها** `value.info.replicationCleanUpTime` — وقت اليوم الذي تُحذف فيه الرسائل المسلَّمة. اجعله ساعة هادئة: فالتنظيف يمسّ أسطراً كثيرة.
+**طلب إعادة الإرسال بعد فشل الرسائل** `value.info.requestReCommitAfterFailures` — حين تتجاوز الرسالة ذلك الحد تُحذف بدل أن تُعلَّم فاشلة، ويُطلب من الموقع المرسِل إعادة اعتماد السجل فتُرسَل رسالة جديدة. وينطبق هذا على تغييرات السجلات عدا الحذف، ومرة واحدة فقط: فالرسالة التي جاءت هي نفسها من طلب كهذا تُعلَّم فاشلة.
 
 **Do Not Replicate Attachments** `value.info.donotReplicateAttachments` — يُخرج المرفقات من حِزم الـ Replication. وهو الخيار الصحيح كثيراً على وصلة بطيئة أو محدودة، حيث قد تعطّل بضع صفحات ممسوحة كل رسالة أخرى خلفها.
 
 **منع استعمال سيرفرات الفروع حال عمل الرئيسي** `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` — ترفض خوادم الفروع العمل محلياً ما دام المركز الرئيسي متاحاً، فيكتب الجميع في مكان واحد ولا يبقى ما يُسوَّى. ويصير خادم الفرع بديلاً احتياطياً عند انقطاع الوصلة لا نظيراً.
 
-**اقل توقيت لمنع استعمال سيرفرات الفروع** `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` *(الافتراضي 60)* — كم ثانية بلا رد قبل أن يُعدّ المركز الرئيسي غير متاح فيتولى الفرع. فالمهلة القصيرة تقلب الفرع إلى الوضع المحلي مراراً على وصلة بطيئة، والطويلة تجعل الموظفين ينتظرون دقيقة قبل أن يعملوا أثناء انقطاع حقيقي.
+**أقل توقيت لمنع استعمال سيرفرات الفروع** `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` *(الافتراضي 60)* — كم ثانية بلا رد قبل أن يُعدّ المركز الرئيسي غير متاح فيتولى الفرع. فالمهلة القصيرة تقلب الفرع إلى الوضع المحلي مراراً على وصلة بطيئة، والطويلة تجعل الموظفين ينتظرون دقيقة قبل أن يعملوا أثناء انقطاع حقيقي.
 
-**رسالة خطا التكويد الالي مع موقع التكرار - عربي** / **رسالة خطا التكويد الالي مع موقع التكرار - إنجليزي** `value.info.replicationBookArabicError`, `value.info.replicationBookEnglishError` — الرسالة المعروضة حين يحاول أحدهم إنشاء سجل على الموقع الخطأ بالنسبة لموقع الـ Replication الخاص بمكوّده. وكلتاهما تقبل بديلين: `{0}` هو الخادم الذي كان ينبغي إنشاء السجل عليه، و`{1}` هو موقع الـ Replication الذي ينتمي إليه المكوّد. والقيم الافتراضية تذكر الاثنين أصلاً، وهذا ما يجعل الخطأ مفهوماً بذاته لمستخدم الفرع.
+**رسالة خطأ التكويد الآلي مع موقع التكرار - عربي** / **رسالة خطأ التكويد الآلي مع موقع التكرار - إنجليزي** `value.info.replicationBookArabicError`, `value.info.replicationBookEnglishError` — الرسالة المعروضة حين يحاول أحدهم إنشاء سجل على الموقع الخطأ بالنسبة لموقع الـ Replication الخاص بمكوّده. وكلتاهما تقبل بديلين: `{0}` هو الخادم الذي كان ينبغي إنشاء السجل عليه، و`{1}` هو موقع الـ Replication الذي ينتمي إليه المكوّد. والقيم الافتراضية تذكر الاثنين أصلاً، وهذا ما يجعل الخطأ مفهوماً بذاته لمستخدم الفرع.
 
 ## ما يُستثنى من الـ Replication
 
@@ -57,14 +55,13 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | مستخدم في التكرار | Use In Replication | `value.info.useBranchInReplication` | [المحددات المستخدمة في الـ Replication](#lmHddt-lmstkhdm-fy-l-Replication) |
 | مستخدم في التكرار | Use In Replication | `value.info.useDepartmentInReplication` | [المحددات المستخدمة في الـ Replication](#lmHddt-lmstkhdm-fy-l-Replication) |
 | مستخدم في التكرار | Use In Replication | `value.info.useAnalysisSetInReplication` | [المحددات المستخدمة في الـ Replication](#lmHddt-lmstkhdm-fy-l-Replication) |
-| أقصي عدد محاولات عند فشل الرسائل | Max Trials When Replication Failures Occur | `value.info.maxTrialsForMessages` | [توصيل الرسائل](#twSyl-lrsyl) |
-| طلب إعادة الإرسال بعد فشل الرسائل | Request ReCommit After Messages Fail | `value.info.requestReCommitAfterFailures` | [توصيل الرسائل](#twSyl-lrsyl) |
-| وقت مسح الرسائل المرسلة التي تم معالجتها | Replication Clean Up Time | `value.info.replicationCleanUpTime` | [توصيل الرسائل](#twSyl-lrsyl) |
+| أقصى عدد محاولات عند فشل الرسائل | Max Trials When Replication Failures Occur | `value.info.maxTrialsForMessages` | [توصيل الرسائل](#twSyl-lrsyl) |
+| طلب إعادة الإرسال بعد فشل الرسائل | Request Recommit After Messages Fail | `value.info.requestReCommitAfterFailures` | [توصيل الرسائل](#twSyl-lrsyl) |
 | Do Not Replicate Attachments | Do Not Replicate Attachments | `value.info.donotReplicateAttachments` | [توصيل الرسائل](#twSyl-lrsyl) |
-| منع استعمال سيرفرات الفروع حال عمل الرئيسي | Prevent Using Branches When Headoffice Is Online | `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | [توصيل الرسائل](#twSyl-lrsyl) |
-| اقل توقيت لمنع استعمال سيرفرات الفروع | Prevent Using Branches Timeout | `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` | [توصيل الرسائل](#twSyl-lrsyl) |
-| رسالة خطا التكويد الالي مع موقع التكرار - عربي | Replication Autocoding Arabic Error | `value.info.replicationBookArabicError` | [توصيل الرسائل](#twSyl-lrsyl) |
-| رسالة خطا التكويد الالي مع موقع التكرار - إنجليزي | Replication Autocoding English Error | `value.info.replicationBookEnglishError` | [توصيل الرسائل](#twSyl-lrsyl) |
+| منع استعمال سيرفرات الفروع حال عمل الرئيسي | Prevent Using Branches When Head Office Is Online | `value.info.preventUsingBranchesWhenHeadOfficeIsOnline` | [توصيل الرسائل](#twSyl-lrsyl) |
+| أقل توقيت لمنع استعمال سيرفرات الفروع | Prevent Using Branches Timeout | `value.info.preventUsingBranchesWhenHeadOfficeIsOnlineTimeout` | [توصيل الرسائل](#twSyl-lrsyl) |
+| رسالة خطأ التكويد الآلي مع موقع التكرار - عربي | Replication Autocoding Arabic Error | `value.info.replicationBookArabicError` | [توصيل الرسائل](#twSyl-lrsyl) |
+| رسالة خطأ التكويد الآلي مع موقع التكرار - إنجليزي | Replication Autocoding English Error | `value.info.replicationBookEnglishError` | [توصيل الرسائل](#twSyl-lrsyl) |
 | Do Not Replicate | Do Not Replicate | `value.info.doNotReplicate` | [ما يُستثنى من الـ Replication](#m-yustthn-mn-l-Replication) |
 | النوع | Entity Type | `value.info.doNotReplicate.entityType` | [ما يُستثنى من الـ Replication](#m-yustthn-mn-l-Replication) |
 | قائمة الأنواع | Entity Type List | `value.info.doNotReplicate.entityTypeList` | [ما يُستثنى من الـ Replication](#m-yustthn-mn-l-Replication) |

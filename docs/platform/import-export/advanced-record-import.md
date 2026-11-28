@@ -36,11 +36,11 @@ A short screen. The **Details** grid is the whole point of it — one row per fi
 |---|---|---|
 | **File ID** | معرف الملف | A short identifier for this file, like `customers` or `opening-stock`. It is the handle everything else uses: the configuration says which File ID it describes, and the import document says which File ID each uploaded file is. |
 | **File Can Be Empty** | يمكن ترك الملف فارغا | Tick it and a run may proceed without this file. Leave it clear and the file is required. |
-| **File Can Not Be Repeated** | يمكن تكرار الملف | Prevents the same file being supplied more than once in a run. |
+| **File Can Not Be Repeated** | لا يمكن تكرار الملف | Prevents the same file being supplied more than once in a run. |
 | **Sample File** | ملف (عينة) | Attach a specimen of what this file should look like, so whoever prepares next month's data has something to copy. |
 | **Description** | ملاحظات | Free notes. Worth filling in — it is what the person preparing the files reads. |
 
-Two buttons sit above the grid. **Collect File Ids From Configs** (تجميع معرفات الملفات) fills the grid for you from the configurations that already reference this list, which is easier than typing the identifiers twice. **Start Import** runs the whole list.
+Two buttons sit above the grid. **Collect File Ids From Configs** (تجميع معرفات الملفات) fills the grid for you from the configurations that already reference this list, which is easier than typing the identifiers twice. **Start Import** runs the whole list: every saved configuration that names this list, each reading the **Sample File** attached to its File ID here. It is a test run on the specimens; real files go through the Record Import Document.
 
 The greyed **Result File (JSON)** and **Result Excel Files** fields at the top are filled by the system after a run — they hold what came back.
 
@@ -63,10 +63,10 @@ Foreign spreadsheets almost never start with data on row one. The **Header** gro
 | Field | Arabic label | Purpose |
 |---|---|---|
 | **Imported Type** | نوع السجل الذي تريد استيراده | Required. Which entity type these rows become. |
-| **Workbook ID** | معرف الملف | Which File ID from the import list this configuration describes. |
+| **Workbook ID** | معرف الملف | Required. Which File ID from the import list this configuration describes. |
 | **Sheet Name Or Index** | اسم الشيت أو رقمه | Which sheet inside the workbook. |
-| **Ignore Lines From Top** | | Skip this many rows of letterhead before the data. |
-| **Cell Titles Row Number** | رقم سطر عناوين الخلايا | Which row holds the column headings, so columns can be matched by their title rather than their letter. |
+| **Ignore Lines From Top** | | Skip this many rows before the data — the letterhead **and** the headings row. Left empty, saving warns you to make sure the sheet has no titles row. |
+| **Cell Titles Row Number** | رقم سطر عناوين الخلايا | Which row holds the column headings. The **Cell Name** suggestions use it to show each column's heading next to its letter; the import itself does not read it. |
 | **Ignore Lines From End** | | Skip this many rows at the bottom — the totals row, the signature line. |
 | **Skip Line If Matched With Query** | | Drop rows that match a condition, for the awkward cases the row counts above cannot express. |
 | **Unique By Expression Type** / **Unique By Expression** | | Build a key from the row's values so that repeated rows collapse onto one record instead of creating duplicates. |
@@ -74,8 +74,8 @@ Foreign spreadsheets almost never start with data on row one. The **Header** gro
 | **Do Not Update Records (Add Only)** | عدم تحديث السجلات الموجودة (إضافة فقط) | Refuse to overwrite anything; only create. |
 | **Save As Draft** | الحفظ كمسودة | Leave the imported records as drafts for review. |
 
-::: tip Match columns by title, not by letter
-Fill in **Cell Titles Row Number** and then map each field to a **Cell Title** rather than a **Cell Name**. The mapping then survives the supplier inserting a column next month — which they will, without telling you.
+::: tip Columns are matched by letter
+The import reads each field from its **Cell Name** — the column letter — never from the heading text. If the supplier inserts a column next month, the letters after it shift and the mapping has to be updated. Fill in **Cell Titles Row Number** so the Cell Name suggestions show you the headings while you re-map.
 :::
 
 ### The field mapping grids
@@ -86,17 +86,19 @@ Fill in **Cell Titles Row Number** and then map each field to a **Cell Title** r
 |---|---|---|
 | **Field ID** | | Required. The field being filled. |
 | **Cell Name** | الخلية | Take the value from this column of the sheet — `B` for the current row's column B, or a full address like `B2` for one fixed cell shared by every record. |
-| **Cell Title** | عنوان الخلية | Or find the column by its heading text instead. |
+| **Cell Title** | عنوان الخلية | Filled in for you when you pick a Cell Name from the suggestions: the heading of that column, for reference. The import does not read it. |
 | **Constant Value** / **Constant Date Value** / **Constant Reference Value** | القيمة الثابتة / تاريخ / مرجع | Do not read the sheet at all — put this fixed value on every record. This is how you stamp every imported row with the same warehouse or the same document book when the file does not mention it. |
-| **Expression Type** / **Expression** | | Calculate the value instead of reading one, for the columns that need combining, splitting or translating — and for values that live in a fixed cell rather than a column. See [Referring to cells in an expression](#Referring-to-cells-in-an-expression). |
-| **Skip Row If Empty Or Zero** | تجاهل السطر بالكامل إذا كان الحقل فارغا | If this field ends up empty, throw the whole row away. Point it at a key column and the blank filler rows at the bottom of the sheet disappear on their own. |
+| **Expression Type** / **Expression** | | Calculate the value instead of reading one, for the columns that need combining, splitting or translating — and for values that live in a fixed cell rather than a column. An expression saved with no type is treated as Groovy. See [Referring to cells in an expression](#Referring-to-cells-in-an-expression). |
+| **Skip Row If Empty Or Zero** | تجاهل السطر بالكامل إذا كان الحقل فارغا | If this field ends up empty, throw the whole row away. Point it at a key column and the blank filler rows at the bottom of the sheet disappear on their own. When no field has it and the block has no skip query, saving ticks it on the `code` field for you. |
 | **Skip Field If Empty Or Zero** | تجاهل الحقل إذا كان فارغا | Leave the field untouched when the cell is empty, rather than writing a blank over an existing value. Essential for update runs where the sheet only carries some columns. |
-| **Field Type** | نوع الحقل | Force how the cell should be read, when the automatic reading gets it wrong. |
+| **Field Type** | نوع الحقل | Filled in by the system on every save from the type of the target field; it decides how the cell is read (a date, a number, a reference). |
 | **Use As Uniqueness Key** | يستعمل لمنع التكرار | This field is part of what identifies the record, so two rows carrying the same value are the same record. |
-| **Date Formats** | | The date patterns to try, separated by `##`. This is the answer to a file that writes dates in a shape Excel refuses to recognise. |
+| **Date Formats (Separate by ##)** | | The date patterns to try, separated by `##`. This is the answer to a file that writes dates in a shape Excel refuses to recognise. |
 | **Description** | ملاحظات | Notes on the mapping. Future you will be grateful. |
 
-**Detail 1 Fields** through **Detail 5 Fields** do the same for up to five detail tables, each with its own sample workbook and its own header block. Each detail block adds three fields the header does not need:
+Each row takes its value from exactly one source: a **Cell Name**, an **Expression**, or one of the constants. A row that fills two of them, or none, is refused when you save, and so is a field that appears twice in the same grid.
+
+**Details 1 Fields** through **Details 5 Fields** do the same for up to five detail tables, each with its own sample workbook and its own header block. Each detail block adds three fields the header does not need:
 
 - **Detail Field** (معرف السطور) — which detail table on the target record these rows fill.
 - **Header Link Field** and **Detail Link Field** — the pair of columns that say which header row each detail row belongs to. This is the equivalent of the `#headerconnector` column in a native export: the value in the detail row's link column must match the value in a header row's link column.
@@ -142,11 +144,11 @@ The **Cell Name** column understands the same two forms, so you do not need an e
 
 ### Running one configuration
 
-**Start Import** (بدء الاستيراد) on this screen runs just this configuration. It asks four or five questions:
+**Start Import** (بدء الاستيراد) on this screen runs just this configuration, reading its own **Sample Workbook** (and the detail blocks' sample workbooks) — as long as **Import List** is empty. When the configuration names an Import List, the button runs that whole list instead, exactly as the list's own **Start Import** does. It asks five questions:
 
 | Option | Default here | What it does |
 |---|---|---|
-| **Parse Data From Files** | On | Read the files and work out what the rows mean. |
+| **Parse Data From Files** | On | Read the files and work out what the rows mean. Off, the run reuses the data parsed by the previous run. |
 | **Import Data** | **Off** | Actually write records. Left off, you get a parse-only dry run — the system tells you what it *would* create without touching anything. |
 | **Save Result As Excel Sheets** | On | Return the outcome as annotated spreadsheets rather than raw data. |
 | **Continue On Errors** | Off | Keep going past a failing row. |

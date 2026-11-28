@@ -1,13 +1,13 @@
 ---
-description: "The Daily Labor Book and Daily Engineering Diary: recording site workers and their wages, allocating the wage bill across terms, what committing books, raising fines from the labour book, why it has no link to payroll, and the diary as a record only."
+description: "The Daily Labor Book and Daily Engineering Doing: recording site workers and their wages, allocating the wage bill across terms, what committing books, raising fines from the labour book, why it has no link to payroll, and the diary as a record only."
 entities: [DailyLaborBook, DailyEngineeringDoings]
 menu: Contracting → Contractor Contracting → Daily Labor Book
 ---
 # Daily Labour and Site Diary
 
 Two documents in this part of the module are written by the people who are actually on site, at the end
-of the day, in their own handwriting before anyone types them up. The **Daily Labour Book**
-(مستند السركى) records who worked and what they are owed. The **Daily Engineering Diary**
+of the day, in their own handwriting before anyone types them up. The **Daily Labor Book**
+(مستند السركي) records who worked and what they are owed. The **Daily Engineering Doing**
 (مستند الأعمال الهندسية اليومية) records what was built. They look like a pair, and they behave nothing
 alike: the first books a journal entry and puts real cost on the project, the second is a written record
 and nothing else.
@@ -59,7 +59,7 @@ fiscal period:
   supplier who is going to be paid for these men. This is the field that matters accounting-wise, and a
   line can override it for one worker.
 - **Currency and rate** default from the legal entity's main ledger currency, with a rate of 1.
-- **Labour #** is filled by the system on commit with the sequence number of this book within its
+- **Labor #** is filled by the system on commit with the sequence number of this book within its
   contract, so "the eighteenth labour sheet on Tower A" is a real, findable thing.
 - Two read-only totals sit here — **Total Workers Costs** (from the details grid) and **Total
   Distributed Costs** (from the cost allocation grid) — and their agreement is what the document is
@@ -75,20 +75,20 @@ calculation or account selection reads them.
 |---|---|
 | Worker name | free text; this is the labourer's name and nothing more |
 | Work Description, Classification | descriptive |
-| Time From, Time To | descriptive |
+| Time \| From, Time \| To | descriptive |
 | Number Of Days | input |
 | Additional | overtime, **expressed in days** — 0.5 means half a day extra |
 | Total Days | read-only, days + additional |
 | Daily Salary | the day rate |
 | Total Salary | read-only, daily salary × total days |
 | Deductions | anything withheld from this man |
-| Work Cost | total salary − deductions — **the figure that reaches the ledger** |
+| Worker Cost | total salary − deductions — **the figure that reaches the ledger** |
 | Subsidiary | overrides the header counterparty for this one line |
 
 The wage is computed from **four fields only**: number of days, additional days, daily salary and
-deductions. The times and the classification play no part in it — *Time From* 07:00 and *Time To* 17:00
+deductions. The times and the classification play no part in it — *Time | From* 07:00 and *Time | To* 17:00
 do not become ten hours and do not become a day and a quarter. If a man worked overtime, express it in
-*Additional* as a fraction of a day. And if all four numeric fields are left empty, a Work Cost typed by
+*Additional* as a fraction of a day. And if all four numeric fields are left empty, a Worker Cost typed by
 hand is left exactly as typed, which is the escape hatch for a lump-sum arrangement with no day rate
 behind it.
 
@@ -118,14 +118,14 @@ Three things, in this order.
    [Cost Execution](/modules/contracting/costs/contracting-cost-execution) later absorbs as *Workers*
    cost.
 2. **The journal entry is produced.** One debit/credit pair **per worker**, not per cost line, valued at
-   that worker's Work Cost. The document's dimensions apply, unless a line overrides them. Delivery is a
+   that worker's Worker Cost. The document's dimensions apply, unless a line overrides them. Delivery is a
    background business request, so the entry appears a moment after the save and a failure is retried
    from the Business Requests view.
 3. **Subcontractor fines are created.** See the next section.
 
 ::: tip Debit 2 and Credit 2 are the *only* accounts
-On this document, as on every contracting document, the accounting sides on the term are labelled
-**Debit 2 / مدين 2** and **Credit 2 / دائن 2**. There is no "Debit 1" to look for. The usual wiring is
+On this document the accounting sides on the term are labelled **Debit 2 / مدين 2** and
+**Credit 2 / دائن 2**. There is no "Debit 1" to look for. The usual wiring is
 Debit 2 = the labour cost or work-in-progress account, Credit 2 = the labour supplier's subsidiary
 account. Leave both empty and no entry is produced at all.
 :::
@@ -161,7 +161,7 @@ money through his extract — see
 
 ![The Daily Engineering Diary: today's work and tomorrow's plan, per contract term](../../../ar/modules/contracting/images/costs/daily-engineering-doings-main-en.png)
 
-The **Daily Engineering Diary** is the site diary in its purest form. Each evening the responsible
+The **Daily Engineering Doing** is the site diary in its purest form. Each evening the responsible
 engineer writes, term by term, what was done today and what is planned for tomorrow, and attaches a
 photograph if there is one. Picking the contract fills in the project and the responsible engineer; the
 term code column offers the contract's terms as suggestions and, once chosen, brings the standard term
@@ -187,7 +187,7 @@ currency and rate as defaulted.
 
 **Details — who worked:**
 
-| # | Worker name | Classification | Days | Additional | Total days | Daily salary | Total salary | Deductions | Work Cost |
+| # | Worker name | Classification | Days | Additional | Total days | Daily salary | Total salary | Deductions | Worker Cost |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | Rajesh K. | Mason | 1 | 0.5 | 1.5 | 120 | 180 | — | **180** |
 | 2 | Anwar S. | Mason | 1 | — | 1 | 120 | 120 | 20 | **100** |
@@ -195,7 +195,7 @@ currency and rate as defaulted.
 | | | | | | | | | **Total Workers Costs** | **380** |
 
 Rajesh worked a day and a half — the extra half day is entered as 0.5 in *Additional*, not as four hours
-in the time columns. Anwar had 20 withheld for a broken level, so his Work Cost is 100 rather than 120.
+in the time columns. Anwar had 20 withheld for a broken level, so his Worker Cost is 100 rather than 120.
 
 **Cost Allocation — where it lands:**
 
@@ -210,7 +210,7 @@ in the time columns. Anwar had 20 withheld for a broken level, so his Work Cost 
   Credit 2 the `SUP-0044` subsidiary 380 in total — produced as a background request.
 - **The project** gets 380 of cost against term `3.01`: the contract's term line rises by 380 in
   *Actual Cost*, and 380 of *Workers* cost is waiting in the pool.
-- **Labour #** is stamped as 18 — the eighteenth labour sheet on this contract.
+- **Labor #** is stamped as 18 — the eighteenth labour sheet on this contract.
 
 Change Anwar's deduction to 30 and forget to change the allocation line, and the commit is refused:
 370 of worker cost against 380 distributed. Delete the allocation line altogether and the document

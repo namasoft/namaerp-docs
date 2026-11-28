@@ -31,13 +31,13 @@ This page documents the **Purchasing** tab — settings that affect purchase ord
 
 **Insert N1 / N2 / N3 in Purchase Invoice Lines** `value.insertN1inPurchaseInvoiceLines`, `value.insertN2inPurchaseInvoiceLines`, `value.insertN3inPurchaseInvoiceLines` — When on, the corresponding note/analysis text (N1, N2, N3) is copied from the **purchase price list** onto the purchase line when the item is selected. Use when you store extra descriptive or analysis text on purchase price lists.
 
-**Update Tax Registration and Commercial Registration Number in Purchase with Save** `value.updateTaxRegNoAndCommercialRegNoInPurchaseWithSave` — When on, the supplier's tax-registration and commercial-registration numbers are refreshed from the supplier file onto the document each time it is saved, so documents always reflect current values.
+**Update Tax Registration Number And Commercial Registration Number In Purchase With Save** `value.updateTaxRegNoAndCommercialRegNoInPurchaseWithSave` — When on, the supplier's tax-registration and commercial-registration numbers are refreshed from the supplier file onto the document each time it is saved, so documents always reflect current values.
 
-**Calculate Purchase Return Prices** `value.calculatePurchaseReturnPrices` *(default on)* — When on, the system auto-fills unit prices on purchase return lines (from the last purchase price) where they aren't entered manually. Turn off only if you always enter return prices by hand.
+**Calculate Purchase Return Prices** `value.calculatePurchaseReturnPrices` *(default on)* — When on, saving a purchase return fills the unit price of every line whose price is empty or zero (free lines excepted) with the last purchase price for that item, supplier, unit and item dimensions; when there is none, it takes the lowest non-zero average cost among the item's cost records. Lines priced by hand keep their price. Turn off only if you always enter return prices by hand. The same option also appears on the Pricing & Price Lists tab.
 
-**Must Match Line Uom With Sales Price List Uom In Purchase While Searching For Price** `value.mustMatchLineUomWithPurchasePriceListUom` — When on, a purchase price-list price is used only if the line's unit of measure exactly matches the price-list line's unit, avoiding picking a price meant for another unit. The label says *Sales Price List*, but this is the purchasing setting and it reads the purchase price list.
+**Must Match Line Uom With Purchase Price List Uom In Purchase While Searching For Price** `value.mustMatchLineUomWithPurchasePriceListUom` — When on, a purchase price-list price is used only if the line's unit of measure exactly matches the price-list line's unit, avoiding picking a price meant for another unit.
 
-**Calculate Total Quantity in Purchases from Purchase Unit** `value.totalQtyIsInPurchaseUnitForPurchases` — When on, the document's total-quantity figure on purchase documents is expressed in the supplier's purchase unit (e.g. cartons) instead of the item's base unit (e.g. pieces).
+**Calculate Total Quantity In Purchases from Purchases Unit** `value.totalQtyIsInPurchaseUnitForPurchases` — When on, the document's total-quantity figure on purchase documents is expressed in the supplier's purchase unit (e.g. cartons) instead of the item's base unit (e.g. pieces).
 
 ## Letters of Credit & Proforma
 
@@ -45,8 +45,8 @@ These settings relax the locking rules around the letter-of-credit (LC) import w
 
 **Allow Editing in LC Proforma Invoice and LC Expense Document** `value.allowEditingInLcProformaInvoiceAndLcExpenseDocument` — When on, LC proforma invoices and LC expense documents can be edited even after the credit has been closed. Use cautiously, only to correct LC paperwork after closing.
 
-**Allow Editing LC Proforma Invoice After Expense Documents** `value.allowEditingProformaInvoiceAfterExpenseDocs` — When on, the LC proforma invoice can still be edited after LC expense documents have been created against it.
+**Allow Editing In Lc Proforma Invoice After Creating Lc Expense Document** `value.allowEditingProformaInvoiceAfterExpenseDocs` — When on, the LC proforma invoice can still be edited after LC expense documents have been created against it.
 
-**Allow Create Proforma Invoice Before Creating the LOC** `value.allowCreateProformaInvoiceBeforeCreateLOC` — When on, an LC proforma invoice can be created before the letter of credit itself exists, for workflows that prepare the proforma ahead of opening the credit.
+**Allow Create Proforma Invoice Before Create LOC** `value.allowCreateProformaInvoiceBeforeCreateLOC` — When on, an LC proforma invoice can be created before the letter of credit itself exists, for workflows that prepare the proforma ahead of opening the credit.
 
 **Use Proforma Invoice per Shipment** `value.useProformaInvoicePerShipment` — For multi-shipment letters of credit, when on the system uses a separate proforma invoice for each shipment instead of one consolidated proforma — useful when a single LC covers several shipments you want to document and cost separately.

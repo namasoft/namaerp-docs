@@ -42,9 +42,9 @@ Header fields and the two grids all sit on one screen:
 The point of filling all this in is what happens on a [maintenance notice or order](/modules/crm/maintenance-cycle/crm-maintenance-notices-and-requests). When a fault line names a dysfunction:
 
 1. The dysfunction's **details** and **proposed solution** are copied onto the line, so the technician starts from the standard text and edits it rather than writing from scratch.
-2. Its **spare parts** are pulled into the document's spare-parts grid, with their quantities.
-3. The **machine** lookup on that fault line narrows to machines of the dysfunction's machine type — pick a chiller fault and you are offered chillers.
-4. The alternative remedies from the *Proposed Solutions* grid appear as suggestions while typing in the document's own Proposed Solution field.
+2. Its **spare parts** are pulled into the document's spare-parts grid, with their quantities and prices, once the fault line has a machine: when you pick the dysfunction on a line whose machine is already set, or when you set the line's machine afterwards.
+3. The **machine** lookup on that fault line narrows to the machines listed in the document's Machines grid that are of the dysfunction's machine type — pick a chiller fault and you are offered the chillers on the document. While the Machines grid holds no machine, or the dysfunction has no machine type, the lookup is not narrowed.
+4. On a maintenance notice, the alternative remedies from the *Proposed Solutions* grid appear as suggestions while typing in the fault line's Proposed Solution field.
 
 That is a good return on a few minutes of setup, and it is worth doing properly for the twenty or thirty faults that make up most of your work.
 

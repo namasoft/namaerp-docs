@@ -44,11 +44,11 @@ The header then holds:
 | Responsible Employee (الموظف المسئول) | Filled with the logged-in user's employee on every new record |
 | Customer (العميل) | Who the work is for |
 | Related To (يرتبط بـ) | A **Lead** or a **Potential** — filled by hand |
-| Related To 2 (مرتبط ب2) | An **Analysis** or a **Lead** — filled by hand |
+| Related to 2 (مرتبط ب2) | An **Analysis** or a **Lead** — filled by hand |
 
 Below that, a **Details** group describes the work package as a whole: **Product** (المنتج), **Type** (النوع), **Planned Time** (الوقت المخطط), **Actual Time** (الوقت الفعلي), **Status** (الحالة), **Client Representative** (ممثل العميل) and five attachments. Then a single-column grid, **Assigned employees** (الموظفون المعنيون), listing the employees who will do the work — and, finally, the dimensions group.
 
-For the Marina Plaza installation, an offer of this kind would name the customer, point *Related To* at the potential, carry `AC-CHL-300` as the product, sit at type *preparement* while the plant room is being prepared, and list Hala Samir Abdel Rahman and the technician Mahmoud Adel Hassan on the assigned-employees grid.
+For the Marina Plaza installation, an offer of this kind would name the customer, point *Related To* at the potential, carry `AC-CHL-300` as the product, sit at type *preparation* while the plant room is being prepared, and list Hala Samir Abdel Rahman and the technician Mahmoud Adel Hassan on the assigned-employees grid.
 
 ### Type and Status
 
@@ -57,13 +57,13 @@ For the Marina Plaza installation, an offer of this kind would name the customer
 | Arabic | English |
 |---|---|
 | عرض | Offer |
-| تجهيز | preparement |
+| تجهيز | preparation |
 | تدريب | Training |
-| دعم | TroubleTicket |
+| دعم | Trouble Ticket |
 
-The last row really is labelled *TroubleTicket* in English and *دعم* (support) in Arabic — it means support work, and it has no connection whatsoever to the Trouble Ticket screen in the Support folder.
+The last row is labelled *Trouble Ticket* in English and *دعم* (support) in Arabic — it means support work, and it has no connection whatsoever to the Trouble Ticket screen in the Support folder.
 
-**Status** (الحالة) has three values: *مخطّطة / Planned*, *تحت التنفيذ / Excuting* and *تم التنفيذ / Excuted*. The two English spellings are what the screen shows.
+**Status** (الحالة) has three values: *مخطّطة / Planned*, *تحت التنفيذ / Executing* and *تم التنفيذ / Executed*.
 
 Type and Status are labels you set by hand and filter on: a status can move to any value in any order, and actual time can be filled at any status. **Planned Time** and **Actual Time** are clock-style values (hours and minutes) you type; the variance between them is yours to work out.
 
@@ -71,15 +71,13 @@ Type and Status are labels you set by hand and filter on: a status can move to a
 
 The second tab is where the work package is broken down. Its **Details** grid holds one row per piece of work, with: **Product**, **Client Representative**, **Assign To**, **Status**, **Type**, **Planned Time**, **Actual Time**, **Start Date**, **End Date** and an attachment.
 
-So a single Offer for Marina Plaza might carry a *preparement* line for the plant-room survey, a *Training* line for the hotel's own engineers on the chiller controls, and a *دعم / TroubleTicket* line for the first month of hand-holding after commissioning — each with its own assignee and its own planned and actual times.
+So a single Offer for Marina Plaza might carry a *preparation* line for the plant-room survey, a *Training* line for the hotel's own engineers on the chiller controls, and a *دعم / Trouble Ticket* line for the first month of hand-holding after commissioning — each with its own assignee and its own planned and actual times.
 
-Below that grid sits a second, one-column grid for meeting notes, labelled **دقائق ملاحظات الاجتماع / Training preparing remarks**.
-
-On screen, this grid's title shows as **`CRMOffers.remarkLines`** in both Arabic and English; it is the meeting-notes grid.
+Below that grid sits a second, one-column grid for meeting notes; its column is labelled **دقائق ملاحظات الاجتماع / Training preparing remarks**.
 
 ## Copying From an Analysis
 
-Fill **Related To 2** (مرتبط ب2) with an **Analysis** and the offer copies five things across from it: the product, the type, the status, the client representative and the responsible employee.
+Fill **Related to 2** (مرتبط ب2) with an **Analysis** and the offer copies five things across from it: the product, the type, the status, the client representative and the responsible employee.
 
 That same reference has one further effect: the Analysis screen carries a read-only **Offers** list on its Related Records tab, and that list is driven by *Related To 2*. It is the only place in the product where an analysis and the offers made against it are shown together — so if you want that view, you must use the **second** reference field, not the first.
 

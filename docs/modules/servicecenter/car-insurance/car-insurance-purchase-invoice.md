@@ -25,12 +25,12 @@ Al-Sahra raises `SIIPI-2026-0074` with one line: policy `POL-2026-7741`, car sal
 
 | Column | Arabic | Typed or calculated |
 |---|---|---|
-| **Insurance Policy** | وثيقة تأمين سيارة | Picked — the picker offers only policies not yet bought |
+| **Policy** | الوثيقة | Picked — the picker offers only policies not yet bought |
 | **Car Sale Price** | سعر بيع السيارة | Filled from the policy's car price |
 | **Policy Purchase Percentage** | نسبة شراء الوثيقة | Filled from the programme band that matches the car |
 | **Purchase Value** | قيمة الشراء | **Calculated** — car sale price × the percentage. It becomes the row's unit price |
 | **Insurance Value** | — | **Typed** |
-| **Commission Value** | — | **Typed** |
+| **Commission value** | قيمة السعي | **Typed** |
 
 After those columns come the usual invoice price columns — unit price, discounts and taxes — and below the grid the invoice totals and payment methods. A **Payment Documents** page holds the payment lines and the external payment documents. Taxes are calculated only when the invoice's term has **Taxable** (*خاضع للضريبة*) ticked. The invoice cannot be saved with a negative remaining amount.
 
@@ -47,7 +47,7 @@ On top of that, it books two amounts per row against two more pairs:
 | Amount | Term group | Debit / credit fields |
 |---|---|---|
 | **Insurance Value** | Insurance Expense (*تحمل التأمين*) | *Insurance Value Debit / Credit* (*مدين / دائن تحمل التأمين*) |
-| **Commission Value** | Commission (*العمولة*) | *Insurance Commission Debit / Credit* (*عمولة التأمين - مدين / دائن*) |
+| **Commission value** | Commission (*العمولة*) | *Insurance Commission Debit / Credit* (*عمولة التأمين - مدين / دائن*) |
 
 A pair left empty on the term books nothing. Nothing reconciles the three amounts: the insurance value is not the purchase value plus the commission, and the system never checks that it is. In Layla's case 2,835 + 315 happens to equal 3,150, because that is how Al-Sahra chose to break the figure down — not because anything enforced it.
 
@@ -57,7 +57,7 @@ Beyond the ledger, the invoice touches every policy it names. On commit it stamp
 
 That actual cost then replaces the policy's *Initial Cost* as the cost the receipt and the delivery book. Any receipt or delivery already committed for the policy has its cost entry rebuilt on the spot, so the cost in the ledger always follows the latest purchase.
 
-Cancelling or deleting the invoice reverses all of this: the reference is cleared, *Purchased* is unticked, the actual cost goes back to zero (so the initial cost applies again) and the payment status goes back to *Fully or Partially Paid*.
+Cancelling or deleting the invoice reverses all of this: the reference is cleared, *Purchased* is unticked, the actual cost goes back to zero (so the initial cost applies again) and the payment status is worked out again from the customer's payments (*Unpaid*, *Partially Paid* or *Fully Paid*).
 
 It moves no stock — there is nothing physical about a policy — and it does not touch the policy's physical status, its value or its dates.
 
@@ -74,4 +74,4 @@ The **Car Insurance Policy Purchase Return** (*مرتجع شراء وثيقة ت
 
 *Document {0} must be created from a committed document of type {1}* — «يجب إنشاء المستند {0} بناءً على مستند محفوظ من النوع {1}»
 
-On commit the return clears the policy's purchase exactly as cancelling the invoice would: *Purchased* is unticked, the actual cost goes back to zero and the payment status returns to *Fully or Partially Paid*, and the receipt's and delivery's cost entries are rebuilt with the initial cost. The policy can then be bought again with a new purchase invoice. The return has its own term, with the same groups as the invoice's.
+On commit the return clears the policy's purchase exactly as cancelling the invoice would: *Purchased* is unticked, the actual cost goes back to zero and the payment status is worked out again from the customer's payments, and the receipt's and delivery's cost entries are rebuilt with the initial cost. The policy can then be bought again with a new purchase invoice. The return has its own term, with the same groups as the invoice's.

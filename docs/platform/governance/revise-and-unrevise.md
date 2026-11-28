@@ -12,7 +12,7 @@ If you need decisions and routing, use [approvals](/platform/approvals/approvals
 
 ## What happens when you revise a record
 
-The record must be **committed** first. A draft cannot be revised — the refusal is *The record {0} is draft, you can not revise draft records* — and a record sitting in an approval cycle cannot be revised either, because its content is not final yet: *Record {0} is being approved*.
+The record must be **committed** first. A draft cannot be revised, and neither can a committed record that has a saved draft on it that is not committed yet — the refusal is *Record {0} is draft* — and a record sitting in an approval cycle cannot be revised either, because its content is not final yet: *Record {0} is being approved*.
 
 Once you revise, three things happen:
 
@@ -72,9 +72,9 @@ The revise buttons act on one record at a time and leave nothing behind but a hi
 
 ![Revision Document](../../ar/platform/images/revision/revision-doc-en.png)
 
-You will find it under **Basic → Documents → Revision Document**. Choose the **Revision Type** — *Revise* or *UnRevise* — then list the records in the **Details** grid, one **Revised Record** per line, with optional remarks. Committing the document applies the chosen action to every listed record; deleting or cancelling it reverses what it did, so a revision document taken back also takes back the sign-offs it granted.
+You will find it under **Basic → Documents → Revision Document**. Choose the **Revision Type** — *Revise* or *Unrevise* — then list the records in the **Details** grid, one **Revised Record** per line, with optional remarks. Committing the document applies the chosen action to every listed record; deleting or cancelling it reverses what it did, so a revision document taken back also takes back the sign-offs it granted.
 
-If you want *all* revising to go through documents, turn on **Use Revision Document For All Entities** in Global Configuration, or tick the same option for individual entity types in the Revise Levels table. The plain Revise button then steps aside and the record's More menu offers **Create Revision Document**, **Create Unrevision Document** and **View Revision Documents** instead.
+If you want *all* revising to go through documents, turn on **Use Revision Document For All Entities** in Global Configuration, or tick **Use Revise Document** for individual entity types in the Revise Levels table. The plain Revise button then steps aside and the record's More menu offers **Create Revision Document**, **Create Unrevise Document** and **View Revision Documents** instead.
 
 ::: tip Revising in bulk from a query
 For clean-up campaigns — "seal every sales invoice older than two days" — there is an entity flow, [EAReviseUnReviseFromQuery](/entity-flows/core/EAReviseUnReviseFromQuery), that revises or unrevises everything a query returns. Run it from a scheduled task when you need it to happen unattended.
@@ -135,7 +135,7 @@ Say payment vouchers above 50,000 need two pairs of eyes, and everything smaller
 A 70,000 voucher matches DRC-1, so it needs both sign-offs and the treasury clerk sees "Treasury Check" on the Revise button. A 4,000 voucher falls through to DRC-2 and is done after one.
 
 ::: tip Keep rules for the same entity type consistent
-The step names shown on screen for an entity type are taken from its highest-priority rule, not from whichever rule turns out to apply to the record you are looking at. When several rules cover the same entity type, keeping their step names aligned avoids labels that read oddly for the records governed by the other rules.
+The step names shown on screen for an entity type are taken from its first rule in **Priority** order (the smallest number), not from whichever rule turns out to apply to the record you are looking at. When several rules cover the same entity type, keeping their step names aligned avoids labels that read oddly for the records governed by the other rules.
 :::
 
 ## Following progress: the revision history
@@ -165,14 +165,12 @@ Revising and unrevising are proper events in the system, and other features can 
 
 | Message | Why | What to do |
 |---|---|---|
-| *Can not operate on revised record {0}* — «لا يمكن التعامل مع السجل {0} لانه تمت مراجعته» | You tried to edit or delete a record that carries a sign-off. | Unrevise it, make the correction, revise it again. |
-| *Record {0} is revised* — «السجل {0} تمت مراجعته» | **Revise** was pressed on a record that is already at the highest level its rule allows — one level where nothing else is configured. | Nothing to do; the record is fully signed off. To raise the ceiling, give the entity more levels in its Detailed Revision Settings. |
+| *Can not operate on revised record {0}* — «لا يمكن التعامل مع السجل {0} لأنه تمت مراجعته» | You tried to edit or delete a record that carries a sign-off. | Unrevise it, make the correction, revise it again. |
+| *Record {0} is revised* — «السجل {0} تمت مراجعته» | **Revise** was pressed on a record that is already at the highest level its rule allows — one level where nothing else is configured. | Nothing to do; the record is fully signed off. To raise the ceiling, give the entity more levels in Global Configuration (**Default Revise Level** or the **Revise Levels** table), or more steps in the Detailed Revision Settings rule that covers it. |
 | *Record {0} is not revised* — «السجل {0} لم تتم مراجعته» | **Unrevise** was pressed on a record with no sign-off on it. | Nothing to do — there is nothing to take back. |
-| *Record {0} is draft* — «السجل {0} لا يزال مسودة» · *The record {0} is draft, you can not revise draft records* | Revising was attempted on a record that has never been committed. | Commit the record first. |
+| *Record {0} is draft* — «السجل {0} لا يزال مسودة» | Revising or unrevising was attempted on a record that has never been committed, or on a committed record that has a saved draft on it that is not committed yet. | Commit the record (or discard its draft) first. |
 | *Record {0} is being approved* — «السجل {0} خاضع لموافقة حاليا» | The record is in an open approval cycle, so its content is not final. | Let the approval finish, then revise. |
 | *You do not have the authority to perform the operation {0} on the entity {1}.* — «لا توجد لديك الصلاحية للعملية {0} على السجل {1}» | Your security profile has no **Revise** capability for this entity type at the level you are trying to reach. The check is per level — L1 may be granted and L2 not. | Ask for the capability, or let the person named for that step sign off. |
 | *You can not change capabilities of revised entity {0}* — «لا يمكنك تعديل صلاحية السجل {0} حيث تمت مراجعته» | Security capabilities were edited on a revised security record. | Unrevise it first. |
 | *Document {0} can not be cancelled because it is revised* — «المستند {0} لا يمكن إلغاؤه لأنه تمت مراجعته» | A Document Cancel Document names a revised document. | Unrevise the document, then cancel it. |
-
-*The record {0} is draft, you can not revise draft records* has no Arabic translation, so it appears
-in English even on an Arabic screen.
+| *You are not the responsible for revision step {0} - {1}* — «لست المسئول عن خطوة المراجعة {0} - {1}» | A Detailed Revision Settings rule covers the record, and the employee linked to your user is neither the step's **Responsible Employee** nor a member of its employee group. | Let the step's owner take it, or change the owner on the rule. |

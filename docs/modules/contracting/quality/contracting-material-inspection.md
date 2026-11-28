@@ -53,7 +53,7 @@ Above the standard document book, code, term and dates, the header identifies th
 | **BC No** | the consignment or delivery-note number — typed |
 | **Vendor** | the supplier's name — typed |
 | **FEIN** | the supplier's tax or registration number |
-| **Location** | where on site the material was received — the gate, the store, the stockyard. Despite the caption, which is borrowed from the warehouse screens, this is a site location and not a warehouse |
+| **Location** | where on site the material was received — the gate, the store, the stockyard. It is typed text, not a reference to a warehouse or locator |
 | **Receiving Date** | the day the lorry arrived, which is often not the day the document gets typed |
 | **Description** | anything the reader needs — weather, the driver's name, the reason a line was queried |
 
@@ -62,9 +62,9 @@ Then the **Details** grid, one row per kind of material on the vehicle:
 | Column | What goes in it |
 |---|---|
 | **Quantity** | how much of it arrived |
-| the unit column | the **unit of measure** — ton, m³, bag, each. The caption on this column is borrowed from another module and reads as a housing unit; it is the unit of measure |
+| **Housing units** | the **unit of measure**, typed — ton, m³, bag, each |
 | **Article** | the material itself, described in words: grade, size, batch, certificate number. A long text box, so use it properly |
-| the condition column | the **physical condition** of what arrived — *Accepted*, *Accepted with comments*, *Rejected*, and why. The caption reads as *condition* in the contractual sense; here it means the state of the goods |
+| **Condition** | the **physical condition** of what arrived, typed — *Accepted*, *Accepted with comments*, *Rejected*, and why |
 
 Because there is no item reference, **Article** is doing the work that an item code would normally do. Write it as if the reader has never seen the delivery: *"Ordinary Portland cement CEM I 42.5 N, 50 kg bags, batch 4471, mill certificate attached"* rather than *"cement"*. A year later that sentence is the only description of what was accepted.
 
@@ -77,11 +77,11 @@ The register tracks the reports themselves — sent to the consultant, returned 
 | **Outcome Of Activity** | what came back — *Approved*, *Approved with comments*, *Rejected* |
 | **Sent Date** | the day the report went out. A real date |
 | **Description** | which report this row is about |
-| **Quantity** | the quantity covered, so the register totals as well as lists |
+| **Quantity** | the quantity covered, as a number |
 | **Receive Date** | the day the outcome came back. This is a **free-text box, not a date field**, so type it in a consistent format — the register cannot calculate turnaround time from it |
-| **Remarks** | the consultant's code, comments, or anything else |
+| **Description** (the last column) | the consultant's code, comments, or anything else. On English screens this remarks column carries the caption **Description** too |
 
-The register identifies the report it is tracking by its **Description**, so type the report's own document number there — *"MRR-2026-0031 cement delivery"* — and keep that habit. It is the only thread between a register row and the receipt it refers to.
+The register identifies the report it is tracking by its first **Description** column, so type the report's own document number there — *"MRR-2026-0031 cement delivery"* — and keep that habit. It is the only thread between a register row and the receipt it refers to.
 
 ## Worked Example: A Cement Delivery to Tower A
 
@@ -98,7 +98,7 @@ The register identifies the report it is tracking by its **Description**, so typ
 
 Two lines:
 
-| Quantity | Unit | Article | Condition |
+| Quantity | Housing units | Article | Condition |
 |---|---|---|---|
 | 40 | ton | Ordinary Portland cement CEM I 42.5 N, 50 kg bags, batch 4471, mill certificate attached | Accepted |
 | 8 | ton | Same batch, second vehicle — three bags torn in transit, contents lost | Accepted with comments — 3 bags short, credit requested |
@@ -109,7 +109,7 @@ He commits it. Nothing else happens in the system: no stock movement, no journal
 
 > **Outcome Of Activity** `Approved` · **Sent Date** `09/03/2026`
 > **Description** `MRR-2026-0031 cement delivery` · **Quantity** `48`
-> **Receive Date** `12/03/2026` *(typed as text)* · **Remarks** `Consultant code A. Short delivery noted, no objection to use.`
+> **Receive Date** `12/03/2026` *(typed as text)* · last **Description** column `Consultant code A. Short delivery noted, no objection to use.`
 
 The cement is now cleared for use in the eyes of the project's quality file, and the register shows a three-day turnaround — read by eye, since the return date is text.
 

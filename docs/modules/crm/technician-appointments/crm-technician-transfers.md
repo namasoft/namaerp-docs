@@ -38,11 +38,17 @@ The grid helps you fill it in from either end:
 
 Two rules are enforced when the document is committed, both reported against the offending row:
 
-**Nobody twice.** A technician may appear on only one row — *"Technician … is repeated in more than one line, a technician can be transferred only once per document"*. If somebody really moves twice, that is two documents on two dates, which is also the truer record.
+**Nobody twice.** A technician may appear on only one row:
+*"Technician {0} is repeated in more than one line, a technician can be transferred only once per document"* — «الفني {0} مكرر في أكثر من سطر, لا يمكن نقل الفني أكثر من مرة في نفس المستند».
+If somebody really moves twice, that is two documents on two dates, which is also the truer record.
 
-**Nobody into a crew they are already in** — *"Technician … already exists in Crew …"*. Usually this means the move has already happened, by this document or another one.
+**Nobody into a crew they are already in:**
+*"Technician {0} already exists in Crew {1}"*.
+Usually it means the move has already happened, by this document or another one.
 
-A third check comes from the crews themselves. If the person you are moving is the **Crew Supervisor** of the crew they leave, that crew no longer passes its own rule, and the transfer fails with the crew's *"Crew supervisor … must be one of the crew technicians"*. Name a new supervisor on that crew first, then commit the transfer.
+A third check comes from the crews themselves. If the person you are moving is the **Crew Supervisor** of the crew they leave, that crew no longer passes its own rule, and the transfer fails with the crew's
+*"Crew supervisor {0} must be one of the crew technicians"* — «يجب أن يكون مشرف الفريق {0} أحد فنيي الفريق».
+Name a new supervisor on that crew first, then commit the transfer.
 
 The receiving crew also has to pass the usual dimension checks. If the technician's branch doesn't match the To Crew's branch, the commit stops with a *"Dimensions consistency error"* that names the crew and the technician. Move people only between crews whose dimensions fit them.
 

@@ -15,7 +15,7 @@ Throughout this page we run the reports over the machine the rest of the module 
 
 The five reports are not in the Fixed Assets menu — they sit with every other report in Nama, under **Reports** (التقارير) → **All Reports**. Type part of a title to find one, or type `AST` and all five come up together.
 
-Each report opens on a criteria screen before it runs, and almost every criterion is a **from/to pair**: from asset to asset, from location to location, from fiscal period to fiscal period. The rule for all of them is the same and it is worth learning once — **an empty pair does not filter at all.** You never have to fill a range you do not care about, and the usual cause of "the report is missing assets" is a half-filled pair: a *from asset* with no *to asset* silently cuts off everything above it.
+Each report opens on a criteria screen before it runs, and the criteria come in two kinds. **Legal entity, branch, asset, asset location, asset type and account** are [multi-value lists](/platform/reports/multi-value-report-parameters): pick as many entries as you need, and **an empty list does not filter at all.** **Fiscal period, date and group** are **from/to pairs**: an empty side means no bound on that side, so a pair with only its *from* filled keeps everything from that value upward. You never have to fill a criterion you do not care about.
 
 Three of the reports carry a **Hide Details** (إخفاء التفاصيل) tick box. Leave it clear and you get every asset line; tick it and the report collapses to its totals — per account, per asset type or per master group, depending on the report. It is the difference between a working paper and a one-page summary, and it is the fastest way to make a large register printable.
 
@@ -41,7 +41,7 @@ Every figure on these reports comes from what documents have already written to 
 
 You give it a **From Date** and a **To Date** and it splits every asset's history at those two points. Everything dated before the From Date is compressed into the opening columns; everything dated between the two is spread across the movement columns; the closing columns are the arithmetic of the two. Rows are grouped by the asset's **main account** — its cost account — with a total per account and a grand total at the end, which is exactly the shape you need when you are proving a ledger account balance against the assets sitting behind it.
 
-Its criteria are From/To **date**, and from/to **legal entity**, **branch**, **asset**, **asset location** and **group**, plus a **status** filter covering the initial, running-depreciation, depreciated and disposed states, and the **Hide Details** tick box.
+Its criteria are From/To **date** and from/to **group**, lists of **legal entities**, **branches**, **assets** and **asset locations**, plus a **status** filter covering the initial, running-depreciation, depreciated and disposed states, and the **Hide Details** tick box.
 
 ### Reading the Columns
 
@@ -105,7 +105,7 @@ For each asset it prints three blocks of four columns side by side — one block
 
 and inside each block: **رصيد إفتتاحى / Begining Balance**, **مدين / Debit**, **دائن / Credit**, **رصيد أخر الفترة / Ending Balance**. The opening balance is the year's opening fiscal period; the debit and credit columns are the movement over the fiscal periods you selected; the ending balance is the opening plus debit minus credit. Because that arithmetic is debit-minus-credit throughout, a credit-balance account such as accumulated depreciation shows its balance as a negative figure — read the sign as the side, not as an error.
 
-Rows are gathered by asset type or by master group according to **Group By**, with a total per group and a grand total. Its criteria are from/to **fiscal period**, **legal entity**, **branch**, **asset**, **asset location**, **group** and **asset type**, plus **Hide Details** and **Group By**.
+Rows are gathered by asset type or by master group according to **Group By**, with a total per group and a grand total. Its criteria are from/to **fiscal period** and from/to **group**, lists of **legal entities**, **branches**, **assets**, **asset locations** and **asset types**, plus **Hide Details** and **Group By**.
 
 For `MCH-0007` over the twelve fiscal periods of 2026 the three blocks read: cost account opening 0, debit 240,000, closing 240,000; accumulated depreciation opening 0, credit 43,200, closing −43,200; depreciation expense debit 43,200. Those are the same three numbers the general report showed — arrived at from the other side of the wall. When they disagree, either something reached those accounts from outside Fixed Assets, or a business request has not finished processing.
 
@@ -117,7 +117,7 @@ For `MCH-0007` over the twelve fiscal periods of 2026 the three blocks read: cos
 
 That layout makes one particular question trivial that is painful everywhere else: *is this asset's charge steady, and if not, when did it change?* Read across a row and you see one period across the whole register; read down a column and you see one asset's whole depreciation history, with every change of instalment showing up as a step in the numbers. `MCH-0007` reads 3,600 twelve times, then 4,225 from the period after the upgrade — the re-levelling described in [How Depreciation Works](/modules/fixedassets/depreciation/fixedassets-depreciation-concepts.md), visible as a column of figures.
 
-Its criteria are from/to **legal entity**, **branch**, **group**, **asset** and **asset location**. Note that there is deliberately **no date or period range** — the matrix covers everything the assets have ever taken. On a mature register that is a very wide report, so narrow it by asset or by group before you run it.
+Its criteria are from/to **group** and lists of **legal entities**, **branches**, **assets** and **asset locations**. Note that there is deliberately **no date or period range** — the matrix covers everything the assets have ever taken. On a mature register that is a very wide report, so narrow it by asset or by group before you run it.
 
 > **Reach for this when** you are checking a single asset's depreciation history month by month, or explaining to somebody why this period's charge is not the same as last period's.
 
@@ -127,7 +127,7 @@ Its criteria are from/to **legal entity**, **branch**, **group**, **asset** and 
 
 **كود الأصل / Asset Code**, **اسم الأصل / Asset Name**, **تاريخ الشراء / PurchaceDate**, **قيمة الاقتناء / OpenCost**, **قيمة قسط الاهلاك / CurrentInstallMent**, **العمر الانتاجى / UsefulLife**, **الاقساط المتبقية / RemainingLifeValue**, **مجمع الاهلاك / TotalDep**, **القيمة الدفترية الحالية / CurrentSystemValue**, and then the paperwork behind it — **فاتوره مشتريات / purchaseDocument**, **مورد / Supplier** and **موقع الاصل / Location**.
 
-Rows are grouped by the asset's account first and then by asset type or master group, so the report doubles as a listing of what each cost account contains. Its criteria are from/to **date**, **legal entity**, **branch**, **asset**, **asset location** and — uniquely among the five — from/to **account**, plus **Hide Details** and **Group By**.
+Rows are grouped by the asset's account first and then by asset type or master group, so the report doubles as a listing of what each cost account contains. Its criteria are from/to **date**, lists of **legal entities**, **branches**, **assets**, **asset locations** and — uniquely among the five — **accounts**, plus **Hide Details** and **Group By**.
 
 Two points of care. The **date range filters the acquisition date**, not the movements, so "1 January 2026 to 31 December 2026" here means *assets acquired during 2026*, not *what happened during 2026*. And the values are current values: the accumulated depreciation column shows the total to date, whatever range you asked for. `MCH-0007` run at the end of 2026 shows acquisition value 240,000, instalment 3,600, life 60, remaining 48, accumulated depreciation 43,200, book value 196,800, its purchase document, Gulf Machinery Trading and Riyadh Plant, Hall 2.
 
@@ -137,7 +137,7 @@ Two points of care. The **date range filters the acquisition date**, not the mov
 
 `SYSR-AST005` — **اهلاكات الاصول بالفترة / FADepreciationPeriod** — is the summary of the family. It prints **no asset lines at all**: only a total row per **asset location** within each **asset type**, showing **قسط الاهلاك / Depreciation Installment**, **مجمع الاهلاك / Accumulated Depreciation** and **قيمة الاقتناء / purchase Value**, with a total for each asset type at the end of its block.
 
-That makes it the report to hand somebody who wants the shape of the depreciation charge rather than its detail — how much of the monthly charge comes from machinery versus vehicles, or from the Riyadh plant versus the Jeddah warehouse. Its criteria are from/to **fiscal period**, from/to **date** (again on the acquisition date), from/to **legal entity**, **branch**, **asset type**, **asset code** and **asset location**, plus a **status** filter.
+That makes it the report to hand somebody who wants the shape of the depreciation charge rather than its detail — how much of the monthly charge comes from machinery versus vehicles, or from the Riyadh plant versus the Jeddah warehouse. Its criteria are from/to **fiscal period**, from/to **purchase date** (again on the acquisition date), lists of **legal entities**, **branches**, **asset types**, **assets** and **asset locations**, plus a **status** filter.
 
 > **Reach for this when** you want the depreciation charge broken down by category or by site — for a budget conversation or a cost-allocation review — and you do not want a hundred pages of asset lines with it.
 

@@ -19,7 +19,7 @@ Manual execution for data repair and maintenance. Typically used after contract 
 
 ## How It Works
 
-1. **Executes query** - Runs SQL query to identify contracts that need chain fixing
+1. **Executes query** - Runs the default query below to list the contracts to fix
 2. **Processes each contract** - Iterates through found contracts in separate transactions
 3. **Fills previous contract** - Updates references to the immediately preceding contract
 4. **Updates previous renter** - Links to previous contract for the same renter
@@ -29,7 +29,7 @@ Manual execution for data repair and maintenance. Typically used after contract 
 
 ## Parameters
 
-**Parameter 1:** Manual Query (Optional) - Custom SQL query to specify which contracts to fix
+The contracts to fix are the ones the default query returns: every committed rent contract and opening rent contract.
 
 ## Default Query
 

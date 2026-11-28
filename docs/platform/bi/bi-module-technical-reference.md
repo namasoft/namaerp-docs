@@ -1,5 +1,5 @@
 ---
-entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard]
+entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard, BIPeriodComparisonConfig]
 ---
 # Nama ERP BI Module — Technical Reference
 
@@ -13,9 +13,9 @@ The Nama ERP data model is published at [https://dm.namasoft.com](https://dm.nam
 
 ::: info Companion files
 Three deep-dive references sit beside this file. Load them on demand to keep context tight:
-- [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md) — wizard widgets (`wizardDataSource`), drill-by, runtime slot selection
-- [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md) — `EnhancedTable` widget + pivot/cross-tab
-- [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md) — `EnhancedMetricsCard` + legacy `MetricsCards`
+- [`bi-reference-wizard-mode.md`](/platform/bi/bi-reference-wizard-mode) — wizard widgets (`wizardDataSource`), drill-by, runtime slot selection
+- [`bi-reference-enhanced-table.md`](/platform/bi/bi-reference-enhanced-table) — `EnhancedTable` widget + pivot/cross-tab
+- [`bi-reference-enhanced-metrics-card.md`](/platform/bi/bi-reference-enhanced-metrics-card) — `EnhancedMetricsCard` + legacy `MetricsCards`
 :::
 
 ---
@@ -82,7 +82,7 @@ Each widget has a `dataSource` field containing a SQL query (T-SQL for SQL Serve
 The general rules for SQL against Nama tables (count only documents with `commitedBefore = 1`, join lines to their header for the status, `name1` Arabic and `name2` English, amounts from `LedgerTransLine`, quantities from `QtyTransLine`) are on [Querying Nama Tables with SQL](/platform/reports/querying-nama-tables). Every widget query needs them too.
 
 ::: tip Reusing complex SQL across widgets
-If the same `UNION` / multi-join / hand-rolled SELECT keeps showing up across several SQL-mode widgets, consider promoting it to a **Virtual Entity** instead. A Virtual Entity wraps the SELECT in a SQL Server view and registers it as a first-class entity, so it becomes pickable from the wizard's main-table picker (`tableType = "VirtualEntity"`) — and from there, every wizard-mode convenience (auto-joins on reference fields, dimension drill-by, auto-inferred cross-filter columns) works against it as if it were a real table. See the [Virtual Entity Guide](../automation-and-rules/virtual-entity-guide.md).
+If the same `UNION` / multi-join / hand-rolled SELECT keeps showing up across several SQL-mode widgets, consider promoting it to a **Virtual Entity** instead. A Virtual Entity wraps the SELECT in a SQL Server view and registers it as a first-class entity, so it becomes pickable from the wizard's main-table picker (`tableType = "VirtualEntity"`) — and from there, every wizard-mode convenience (auto-joins on reference fields, dimension drill-by, auto-inferred cross-filter columns) works against it as if it were a real table. See the [Virtual Entity Guide](/platform/automation-and-rules/virtual-entity-guide).
 :::
 
 ### Pattern
@@ -106,7 +106,7 @@ Because `/*AND-FILTERS*/` is a SQL comment, the query is always syntactically va
 
 ### Query Rules
 
-1. Always include `/*AND-FILTERS*/` — even if the widget has no cross-filter bindings. The server expects it.
+1. Always include `/*AND-FILTERS*/`. A widget whose `dataSource` lacks it is refused on save as soon as it has cross-filter bindings — *This widget is referenced in cross-filter bindings but its datasource does not contain the `/*AND-FILTERS*/` placeholder.* — and a dashboard whose `crossFilterBindings` name such a widget is refused with *Widget {0} has cross-filter bindings but its datasource does not contain the `/*AND-FILTERS*/` placeholder.* Neither message has an Arabic text. The widget check skips wizard-backed widgets, and both checks skip a widget whose `dataSource` is empty.
 2. **Multiple `/*AND-FILTERS*/` placeholders are allowed** and are all replaced with the same filter expression. Required for CTE-heavy queries: every CTE body that joins a filtered table needs its own placeholder so the filter applies inside it (e.g. a `WITH months AS (...), hcSeries AS (SELECT ... FROM Employee WHERE ... /*AND-FILTERS*/), ...` must repeat the placeholder in each CTE that touches the filtered table).
 3. The placeholder lives in the WHERE clause only. `HAVING`, `JOIN ON`, and CTE outer `SELECT` aren't injected into. If you need a filter to apply to a `HAVING`, mirror the predicate or restructure into a subquery whose WHERE carries the placeholder.
 4. Use table aliases consistently. The `sqlLeftHandSide` on a cross-filter targets these aliases (e.g., `l.branch_id`). For binding to work, the alias **must exist in the query** at the placeholder's scope.
@@ -312,7 +312,7 @@ For pie charts, funnels, and similar: one column for labels, one for values. Eac
 
 ### 3.4 Gauge
 
-For gauge/meter charts. Uses only the first row of the result set.
+For gauge/meter charts. The gauge shows one number: the **sum** of `valueColumn` over every row of the result set, so a query that returns one row shows that row's value.
 
 **Required fields:**
 - `type`: `"Gauge"`
@@ -328,15 +328,15 @@ For gauge/meter charts. Uses only the first row of the result set.
 
 | Placeholder | Type | Description |
 |---|---|---|
-| `$DATA.value` | `number` | Numeric value from first row |
-| `$DATA.unit` | `string` | From `unit` field |
-| `$DATA.max` | `number` | From `max` field |
-| `$DATA.min` | `number` | From `min` field |
-| `$DATA.bands` | `array` | From `bands` field |
+| `$DATA.value` | `number` | Sum of `valueColumn` across all rows |
+| `$DATA.unit` | `string` | From `unit` field (empty string when unset) |
+| `$DATA.max` | `number` | From `max` field. When unset: `100` if `unit` is `"%"` or the value is 100 or less, otherwise the value rounded up to the next 1, 2, 5 or 10 times its power of ten (e.g. 3,400 → 5,000) |
+| `$DATA.min` | `number` | From `min` field, `0` when unset |
+| `$DATA.bands` | `array` | From `bands` field (absent when unset) |
 
 ### 3.5 Scatter
 
-For scatter/bubble plots. Each row becomes an `[x, y]` or `[x, y, size]` point.
+For scatter/bubble plots. Each distinct X value becomes one `[x, y]` or `[x, y, size]` point, in first-seen order: rows that share an X value are merged, their Y values (and sizes) **summed**, and the point's drill-down / cross-filter data comes from the first such row. Give every row its own X if each row must stay a separate point.
 
 **Required fields:**
 - `type`: `"Scatter"`
@@ -350,7 +350,7 @@ For scatter/bubble plots. Each row becomes an `[x, y]` or `[x, y, size]` point.
 
 | Placeholder | Type | Description |
 |---|---|---|
-| `$DATA.rows` | `number[][]` | Array of `[x, y]` or `[x, y, size]` arrays |
+| `$DATA.rows` | `number[][]` | Array of `[x, y]` or `[x, y, size]` arrays, one per distinct X |
 
 ### 3.6 Heatmap
 
@@ -368,7 +368,7 @@ For heatmap/matrix charts. Each row provides an X category, Y category, and nume
 |---|---|---|
 | `$DATA.xCategories` | `string[]` | Unique X values |
 | `$DATA.yCategories` | `string[]` | Unique Y values |
-| `$DATA.rows` | `number[][]` | Array of `[xIndex, yIndex, value]` arrays |
+| `$DATA.rows` | `number[][]` | Array of `[xIndex, yIndex, value]` arrays, one per distinct X/Y pair; rows that share both are summed into one cell |
 | `$DATA.min` | `number` | Minimum cell value |
 | `$DATA.max` | `number` | Maximum cell value |
 
@@ -399,7 +399,7 @@ For waterfall (bridge) charts. Given a single value column representing deltas, 
 
 | Placeholder | Type | Description |
 |---|---|---|
-| `$DATA.categories` | `string[]` | Unique values from `categoryColumn`, preserving row order |
+| `$DATA.categories` | `string[]` | Unique values from `categoryColumn`, preserving row order. Rows that share a category are summed into one delta |
 | `$DATA.series` | `object[]` | Two entries: `[0]` is the invisible placeholder, `[1]` is the visible value series. Both carry `stack: "Total"`. |
 | `$DATA.series[0].data` | `number[]` | Placeholder heights (the stepped base level per bar) |
 | `$DATA.series[1].data` | `object[]` | `[{value: <abs delta>, _signedValue: <raw delta>}, ...]`. `_signedValue` is available for styling (e.g. red for negative). |
@@ -418,11 +418,11 @@ For radar/spider charts. One column provides indicator names; each series column
 | Placeholder | Type | Description |
 |---|---|---|
 | `$DATA.indicators` | `{name, max}[]` | One per unique category. `max` is the global maximum across all series (so every axis shares the same scale). |
-| `$DATA.series` | `{name, value}[]` | One per series config. `value` is an array aligned to `$DATA.indicators`. |
+| `$DATA.series` | `{name, value}[]` | One per series config. `value` is an array aligned to `$DATA.indicators`; rows that share a category are summed. |
 
 ### 3.10 GaugeMulti
 
-For concentric multi-ring gauges — each row becomes one ring/gauge item.
+For concentric multi-ring gauges — each distinct label becomes one ring/gauge item; rows that share a label are summed into one ring.
 
 **Required fields:**
 - `type`: `"GaugeMulti"`
@@ -433,7 +433,7 @@ For concentric multi-ring gauges — each row becomes one ring/gauge item.
 
 | Placeholder | Type | Description |
 |---|---|---|
-| `$DATA.values` | `object[]` | `[{value, name, title: {show: false}, detail: {show: false}}, ...]`. Per-point `title`/`detail` are pre-hidden to avoid overlapping labels. |
+| `$DATA.values` | `object[]` | `[{value, name, itemStyle: {color}, title: {show: false}, detail: {show: false}}, ...]`. Each ring takes the next colour of a fixed nine-colour palette (starting `#5470c6`, `#91cc75`, `#fac858`). Per-point `title`/`detail` are pre-hidden to avoid overlapping labels. |
 
 ### 3.11 NestedLabelValue
 
@@ -814,10 +814,6 @@ Use `linkToEntityTypeColumn` + `linkToIdColumn` to build a link that opens an en
 | `column` | Table widgets only | Scopes the entry to a specific column (absent = row-level, any cell). |
 | `onCellClick` | No | Table widgets only. When `true`, left-clicking a matching cell opens the link without needing the right-click menu. See Section 5a.1. |
 
-::: tip
-The `labelColumn` field is a small touch that makes a big difference in usability. Instead of a generic "Open Customer" menu item, the user sees "Open Customer 'ABC Trading'" — they know exactly where the link will take them before they click.
-:::
-
 **Example — chart widget, left-click navigates to a customer entity (widget-level clickAction):**
 
 ```json
@@ -906,19 +902,19 @@ Dashboard-level entries carry an extra **required** `element` field naming the t
 
 ### Supported Operators
 
-| Operator | SQL | Use case |
-|---|---|---|
-| `Equal` | `=` | Exact match (default) |
-| `In` | `IN (...)` | Multi-value selection |
-| `GreaterThanOrEqual` | `>=` | Date from, minimum value |
-| `LessThanOrEqual` | `<=` | Date to, maximum value |
-| `GreaterThan` | `>` | Strict greater than |
-| `LessThan` | `<` | Strict less than |
-| `NotEqual` | `<>` | Exclusion |
-| `Contains` | `LIKE '%value%'` | Text search |
-| `StartsWith` | `LIKE 'value%'` | Text prefix match |
+| Operator (JSON) | On screen | SQL | Use case |
+|---|---|---|---|
+| `Equal` | Equal | `=` | Exact match (default — also what an empty operator does) |
+| `In` | Is One Of | `IN (...)` | Multi-value selection |
+| `GreaterThanOrEqual` | Greater Than Or Equal | `>=` | Date from, minimum value |
+| `LessThanOrEqual` | Less Than Or Equal | `<=` | Date to, maximum value |
+| `GreaterThan` | Greater Than | `>` | Strict greater than |
+| `LessThan` | Less Than | `<` | Strict less than |
+| `NotEqual` | Not Equal | `<>` | Exclusion |
+| `Contains` | Contains | `LIKE '%value%'` | Text search |
+| `StartsWith` | Starts With | `LIKE 'value%'` | Text prefix match |
 
-These are the only operators a cross-filter applies.
+These are the only operators a cross-filter applies. The operator set on a binding wins over the one on the cross-filter.
 
 ### Widget-Local Scope (`localScope`)
 
@@ -931,16 +927,7 @@ Cross-filter bindings — both at the widget level (`DashBoardWidget.crossFilter
 ]
 ```
 
-When `localScope` is `true` for a binding, that filter belongs to the widget's own filter popup instead of the dashboard's global filter bar. Specifically:
-
-- The widget exposes a filter button on its header. Clicking it opens a popup with one input per `localScope` binding. Values entered there apply only to this widget.
-- Click-emitted cross-filters from other charts, and values typed into the dashboard filter bar, are **ignored** for `localScope` bindings — only the widget's own popup can drive them.
-- If every binding for a given cross-filter code (across all widgets and the dashboard) is `localScope`, that code disappears from the dashboard filter bar entirely.
-- A drill-down request that targets a `localScope`-bound code still passes its value through (drill-down takes precedence over local scope, since it is an explicit user action).
-- Period-comparison shifting still applies — the resolved local value flows through `BIPeriodComparisonExecutor` like any other.
-- The widget's local filter values are serialized into the shareable dashboard URL via `localToChart`, so a copied URL restores the same per-widget filter state.
-
-Use `localScope` when one chart needs an independent slicer (e.g. "show this KPI for Region X") that should not propagate to its sibling widgets.
+When `localScope` is `true` for a binding, that filter belongs to the widget's own filter popup instead of the dashboard's global filter bar, and only that popup (or a drill-down) drives it. What the user sees and how a local filter interacts with the rest of the dashboard are on the guide's [Widget-Local Filters](/platform/bi/bi-module-guide#Widget-Local-Filters) section. In the shareable dashboard URL each local value carries `localToChart` (the widget it belongs to, written as the `lch` key), so a copied URL restores the same per-widget filter state.
 
 ---
 
@@ -1094,8 +1081,6 @@ Each fragment is emitted only when its end of the range has a value, so a half-o
 
 Preset keys: `Today`, `Yesterday`, `ThisWeek`, `PreviousWeek`, `ThisMonth`, `PreviousMonth`, `ThisQuarter`, `PreviousQuarter`, `ThisYear`, `PreviousYear`, `Last7`, `Last30`, `Last90`, `Last365`. Weeks run Sunday→Saturday; `Last7` is today plus the six days before it. `defaultValue` accepts either form.
 
-Because a preset stores the period rather than the dates, a dashboard saved with `ThisMonth` follows the calendar instead of freezing on the month it was authored in.
-
 **How the value is displayed** — filter chips, filter badges and the drill-down popup show an explicit range as "from – to" (both dates), and a half-open range shows only the bound that is set.
 
 **Binding notes:**
@@ -1119,7 +1104,7 @@ Because a preset stores the period rather than the dates, a dashboard saved with
 | `EnhancedMetricsCard` | JSON-driven KPI card strip — cards, slots, sparklines, conditional colouring. See Section 15. | Yes |
 | `MetricsCards` | Legacy KPI cards driven by `metricsCardConfig` fields on the widget record, not by `chartConfigJSON`. | No |
 | `PieChart`, `ColumnWithRotatedLabels`, etc. | Legacy Highcharts types (auto-translated to ECharts server-side) | No |
-| `Calendar`, `ResourceView`, `Timeline`, `Report`, `HTML`, `CardMenu`, `RecentVisits` | Configured through the `params` grid, the `htmlArabic` / `htmlEnglish`, `cardMenus`, `metricsCardConfig` + `timelineConfig` fields, or `definition` + `launchType`. See [Calendar, Timeline, Report and Other Widgets](./bi-reference-more-widget-types.md). | No |
+| `Calendar`, `ResourceView`, `Timeline`, `Report`, `HTML`, `CardMenu`, `RecentVisits` | Configured through the `params` grid, the `htmlArabic` / `htmlEnglish`, `cardMenus`, `metricsCardConfig` + `timelineConfig` fields, or `definition` + `launchType`. See [Calendar, Timeline, Report and Other Widgets](/platform/bi/bi-reference-more-widget-types). | No |
 
 For `Table` widgets, the SQL column names become the grid column headers. No `chartConfigJSON` is needed — just provide the `dataSource` SQL and `crossFilterBindings`.
 
@@ -1274,7 +1259,7 @@ Each entry creates a `DashBoardWidget` entity. Key fields:
 | `crossFilterBindings` | No | Array of `{"crossFilter": "filterCode"}` (widget-level — see §6). |
 | `metricsCardConfig` | If type=`MetricsCards` | Top-level value object (not inside `chartConfigJSON`) carrying the legacy card template — see §15.1 for the shape. |
 | `crossFilterRef` | If type=`CrossFilterControl` | Bare string — the `BICrossFilter` code (e.g. `"branchFilter"`). Do **not** use an object (`{"code": "..."}`) — the importer rejects it with "crossFilterRef cannot be empty". See §9a. |
-| `enableComparison` | No | Toggles period-comparison execution (`BIPeriodComparisonExecutor`). |
+| `enableComparison` | No | Turns period comparison on for this widget — see [10.5](#105-BIPeriodComparisonConfig-Array-Optional). |
 | `mergeComparisonByColumns` | No | CSV of column names that key the merge between baseline and comparison rows. |
 | `comparisonDataMapping` | No | Grid that splits a measure into a current and a previous-period column: `[{"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}]`. Previous-period rows move their `netValue` into `prevNetValue`, so a chart can draw both as separate series. See [10.5](#105-BIPeriodComparisonConfig-Array-Optional). |
 
@@ -1542,13 +1527,13 @@ A Tabbed parent has no `charts` of its own — it lists `subDashboards` (each a 
 |---|---|---|
 | `code` | Yes | Unique dashboard code |
 | `name1` / `name2` | Yes | Arabic / English name |
-| `kind` | Yes | `"Single"` or `"Tabbed"` |
+| `kind` | Yes | `"Single"` or `"Tabbed"`. Left out, the dashboard is saved as `Single`. |
 | `rowsCount` / `colsCount` | Yes | **Divisors, not cell counts.** One row is `available height ÷ rowsCount`, one column is `available width ÷ colsCount`; widget placement is 1-based against them. Raising `rowsCount` shrinks every widget. Read [Sizing and scrolling](#Sizing-and-scrolling) before choosing values. Tabbed parent: set both to `1`. |
 | `charts` | Single only | Array of widget placements (`element`, `rowNumber`, `columnNumber`, `heightInRows`, `widthInColumns`). |
 | `subDashboards` | Tabbed only | Array of `{subDashboard, arTitle, enTitle}`. `subDashboard` is the `code` of another `DashBoard` (must be `kind: "Single"`). |
 | `crossFilterBindings` | No | Dashboard-level **overrides** — each entry needs `element` (target widget code) plus `crossFilter`, with optional `operator`/`sqlLeftHandSide`/`customWhereClause`/`localScope`. Usually `[]`. See §6 for shape. |
-| `totalDashboardRowsCount` | No | Design-time only — the layout editor's canvas height. The rendered dashboard takes its sizing and scrolling from `rowsCount`/`colsCount` and the widget placements, so leave this out or at `0` when authoring by import; do not try to keep it in step with `rowsCount` or the widget extent. Opening the layout editor and pressing OK stamps a value into it if it was empty. |
-| `mobileMaxRowsCount` | No | Phone layout only: how many widgets fit on one narrow screen. On phones the grid is abandoned — widgets stack full-width in row-then-column order and `rowsCount`/`colsCount`/`heightInRows`/`widthInColumns` are ignored — and each ordinary widget gets `1 ÷ mobileMaxRowsCount` of the visible height, never less than 260 pixels. Empty or `0` is automatic: one widget per screen when the dashboard has only one ordinary widget, otherwise two. |
+| `totalDashboardRowsCount` | No | Not read when the dashboard is drawn, on screen or in the layout editor. The rendered dashboard takes its sizing and scrolling from `rowsCount`/`colsCount` and the widget placements, so leave this out or at `0` when authoring by import; do not try to keep it in step with `rowsCount` or the widget extent. Opening the layout editor and pressing OK stamps a value into it if it was empty. |
+| `mobileMaxRowsCount` | No | Phone layout only: how many widgets fit on one narrow screen — see [On phones and narrow screens](#On-phones-and-narrow-screens). Empty or `0` is automatic. |
 | `refreshDashboardPer` | No | `TimePeriod` value-object (e.g. `{"value": 5, "uom": "Minute"}`) — auto-refresh interval. |
 
 ### 10.5 BIPeriodComparisonConfig Array (Optional)
@@ -1557,7 +1542,7 @@ A period comparison runs a widget's query twice — once for the dates the user 
 the same dates shifted back — and merges the two results. The config record says how far to shift
 and what to call each period; date cross-filters point at it through `comparisonConfig`, and each
 widget that should compare sets `enableComparison: true`. The guide's
-[Period Comparison](/platform/bi/bi-module-guide.md#Period-Comparison) section explains the two
+[Period Comparison](/platform/bi/bi-module-guide#Period-Comparison) section explains the two
 ways a chart can show the result.
 
 ```json
@@ -1758,7 +1743,7 @@ through the same **Import Records** command as any other data:
 3. Choose the file and run the import. The records are created in the order of the keys in the
    file — see [Top-Level Structure](#Top-Level-Structure).
 4. Read the result file the import hands back — it reports each record that was created or
-   refused. See [Importing Records](/platform/import-export/importing-records.md) for the options
+   refused. See [Importing Records](/platform/import-export/importing-records) for the options
    and the result file.
 5. Open the dashboard by its code (`ex-sales-dashboard`).
 
@@ -1906,7 +1891,7 @@ In a combo chart the area fill overlays the bars; a click on the fill is resolve
 
 Detail moved to a companion file to keep this reference compact. Load only when authoring a widget with `wizardDataSource` set.
 
-→ [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md)
+→ [`bi-reference-wizard-mode.md`](/platform/bi/bi-reference-wizard-mode)
 
 Covers: metadata caching, `*WizardFieldId` keys, click-emit / drill-down with `wizardFieldId`, active-dimensions list, drill-by semantics (Option A), wizard-path cross-filter LHS, runtime slot selection, opt-out flags.
 
@@ -1916,7 +1901,7 @@ Covers: metadata caching, `*WizardFieldId` keys, click-emit / drill-down with `w
 
 Detail moved to a companion file. Load when authoring `type: "EnhancedTable"` widgets (or pivot/cross-tab mode).
 
-→ [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md)
+→ [`bi-reference-enhanced-table.md`](/platform/bi/bi-reference-enhanced-table)
 
 Covers: `tableOptions` (including server-side paging via `rowModel` / `serverPageSize`), column definitions, `formatting` (with `currencySymbol`/`currencyPlacement`), renderers (`badge`/`bar`/`progress`/`sparkline`/`icon`), conditional formatting (cell + row, traffic-light recipe), pivot (cross-tab) layout — row/col dimensions, measures, subtotals, grand totals.
 
@@ -1926,7 +1911,7 @@ Covers: `tableOptions` (including server-side paging via `rowModel` / `serverPag
 
 Detail moved to a companion file. Load when authoring metric-card widgets (`type: "EnhancedMetricsCard"` or legacy `type: "MetricsCards"`).
 
-→ [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md)
+→ [`bi-reference-enhanced-metrics-card.md`](/platform/bi/bi-reference-enhanced-metrics-card)
 
 Covers: when-to-use-which, legacy `metricsCardConfig` value-object shape (top-level on the widget, `numberFormat` mask string), `chartConfigJSON` shape (cardLayout, value/subtitle/icon/badge/sparkline slots), card-to-row vs partition mode (N rows → 1 card), inline sparkline + STUFF/FOR XML PATH recipe, conditional card bg + icon swap, chip-strip recipe.
 
@@ -1936,7 +1921,7 @@ Covers: when-to-use-which, legacy `metricsCardConfig` value-object shape (top-le
 
 | When the task involves… | Load |
 |---|---|
-| Widget with `wizardDataSource` set, drill-by, runtime slot selection | [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md) |
-| `type: "EnhancedTable"` — columns, renderers, conditional formatting, pivot | [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md) |
-| `type: "EnhancedMetricsCard"` or legacy `type: "MetricsCards"` | [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md) |
+| Widget with `wizardDataSource` set, drill-by, runtime slot selection | [`bi-reference-wizard-mode.md`](/platform/bi/bi-reference-wizard-mode) |
+| `type: "EnhancedTable"` — columns, renderers, conditional formatting, pivot | [`bi-reference-enhanced-table.md`](/platform/bi/bi-reference-enhanced-table) |
+| `type: "EnhancedMetricsCard"` or legacy `type: "MetricsCards"` | [`bi-reference-enhanced-metrics-card.md`](/platform/bi/bi-reference-enhanced-metrics-card) |
 | Anything else (chartConfigJSON, SQL, dataMapping, BICrossFilter, DashBoard, bulk import) | This file |

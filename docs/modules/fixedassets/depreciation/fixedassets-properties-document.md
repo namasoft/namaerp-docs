@@ -107,7 +107,8 @@ Two more checks apply on commit:
 
 - **The salvage value must be at least the module's minimum.** The
   [module configuration](/modules/fixedassets/fixedassets-configuration.md) carries a minimum salvage
-  value, and a lower figure is refused. Neither life figure may be negative.
+  value, and a lower figure is refused. Neither life figure may be negative. An asset flagged
+  undepreciable skips both checks.
 - **The asset's status must be Running or Not Depreciable.** You cannot re-estimate an asset that is
   still in its initial state, one that has been disposed of, or one that is already fully
   depreciated. For a fully depreciated asset that is still in service, the way back is an
@@ -168,3 +169,14 @@ Neither the properties document nor its aggregated form carries a button of its 
 *collect* on either, so the lines of an aggregated re-estimate are typed or imported rather than
 pulled from a range. The recalculation you are after happens on commit: the new life and salvage
 value are written onto the assets, and the next depreciation run picks them up.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *Cannot change fixed asset properties because it is used after this date* | Another document dated after this one has already touched the asset. This message has no Arabic text and shows in English on Arabic screens. | Date the document after the asset's last entry, or undo the later document first. |
+| *You can not edit document {0} because the asset {1} has a transaction on {2} in document {3}* — «لا يمكن تعديل المستند {0} لأن الأصل {1} له تنفيذ في {2} في المستند {3}» | Same cause, naming the later document `{3}` and its date `{2}`. | As above. |
+| *Error in fixed asset status {0}, current status is {1} and it has to be {2} or {3}* — «خطأ في حالة الأصل {0} الحالة الحالية هي {1} ويجب أن تكون {2} أو {3}» | The asset is not **Running** or **Not Depreciable**. | For a fully depreciated asset still in service, use an addition that adds life instead. |
+| *{0} can not be less than {1}* — «{0} لا يمكن أن يكون أقل من {1}» | The salvage value is below the module's minimum salvage value. | Raise the salvage value to at least `{1}`. |
+| *You must fill fixed asset properties book in term {0}* — «يجب ملء دفتر سند خصائص أصل ثابت في التوجيه {0}» | The aggregated document's term has no Fixed Asset Properties Book. | Fill the book on the term, then commit again. |
+| *The asset {0} is repeated* — «الأصل {0} مكرر» | The same asset is on two lines of the aggregated document. | Remove the duplicate line. |

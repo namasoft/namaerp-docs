@@ -79,12 +79,12 @@ The employee now has a check-out without a check-in on the 4th and a check-in wi
 
 ## Messages you may see
 
-The scripts raise no messages of their own. These are the messages they help you avoid. Neither has an Arabic translation, so they appear in English on Arabic screens as well.
+The scripts raise no messages of their own. These are the messages they help you avoid. The first has no Arabic translation, so it appears in English on Arabic screens as well.
 
 | Message | Why | What to do |
 |---|---|---|
 | *Attendance Hours in line {0} is negative* | A line's **Out** comes before its **In**, typically an **Out** of 00:00 on the same date. | Add the check-out script to the flow, then save again. |
-| *Attendance Hours in line {0} is greater than Maximum allowed attendance hours* — «ساعات الحضور فى السطر {0} أكبر من أقصى عدد ساعات حضور متواصل» | A line covers more hours than the HR configuration allows, which a check-in recorded as 00:00 can cause. | Add the check-in script to the flow, then save again. |
+| *Attendance Hours in line {0} is greater than Maximum allowed attendance hours* — «ساعات الحضور في السطر {0} أكبر من أقصى عدد ساعات حضور متواصل» | A line covers more hours than the HR configuration allows, which a check-in recorded as 00:00 can cause. | Add the check-in script to the flow, then save again. |
 
 ## The script
 

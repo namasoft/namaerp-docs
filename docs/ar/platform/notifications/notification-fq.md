@@ -4,8 +4,6 @@ entities: [NotificationDefinition]
 menu: إدارة النظام ← تخصيص شكل النظام ← تعريف تنبيهات
 ---
 
-<rtl>
-
 # أسئلة شائعة عن التنبيهات والرسائل
 
 ## كيف أرسل تنبيه لكل عميل عند تسجيل سند قبض يحتوي على عدة سطور لعدة عملاء؟
@@ -52,10 +50,10 @@ menu: إدارة النظام ← تخصيص شكل النظام ← تعريف 
 
 4. و5. محتوى الرسالة نفسه، مع استخدام بيانات السطر الحالي مثل اسم العميل، رقم الإيصال، المبلغ، وتاريخ السند.
 
-5. `{closemsg}`
+6. `{closemsg}`
    ينهي الرسالة.
 
-6. `{endloop}`
+7. `{endloop}`
    ينهي التكرار.
 
 بهذا الشكل، سيتم إرسال رسالة منفصلة لكل عميل موجود في كل سطر من سطور سند القبض، وبذلك يتم إعلام كل عميل بالمعلومة الخاصة به فقط.
@@ -148,8 +146,8 @@ ___محتويات الفاتورة ___
 ```sql
 select s.code, c.name1 customername, s.valuedate,
        cast(s.netValue as decimal(20,2)) netValue,
-       e.code supervisorCode, e.id supervisorId,
-       e.entityType supervisorEntityType
+       esu.code supervisorCode, esu.id supervisorId,
+       esu.entityType supervisorEntityType
 from SalesQuotation s
 left join SalesOrder o on o.fromDoc_id = s.id
 left join Customer c on c.id = s.customer_id
@@ -197,5 +195,3 @@ ORDER BY esu.code
 ::: warning ملاحظة مهمة
 يجب أن يحتوي الاستعلام على `ORDER BY esu.code` لضمان أن سجلات كل مشرف تأتي متتالية في النتائج. بدون الترتيب، قد تتداخل سجلات المشرفين ولن يعمل التجميع بـ `header`/`footer` بشكل صحيح.
 :::
-
-</rtl>

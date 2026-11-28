@@ -17,7 +17,7 @@ that customer's oldest open invoices, and nobody has to think about it. But not 
 machine-decidable. A customer pays a round 50,000 against six invoices and expects it applied to the
 three the sales manager agreed on. A supplier's payment was captured before the invoice was entered,
 so at the time there was nothing to match. Some installations switch automatic matching off
-altogether — the **Never Automatically Match Debt Ages** setting on
+altogether — the **Never Automatically Match Debt Ages (Manual Matching Only)** setting on
 [the accounting tab of Global Configuration](/platform/global-config/global-config-accounting) — because
 the accounting team insists on deciding every allocation itself.
 
@@ -40,7 +40,7 @@ The header carries four fields that scope the work:
 | Field | What it does |
 |---|---|
 | **Subsidiary** | The party whose open items you want — a customer, a supplier, an employee, a project, a patient, a student. Required; nothing happens without it. |
-| **Account** | Optional. Narrows the work to one account. The lookup only offers accounts that genuinely have open items for the subsidiary you chose, so an empty list is itself an answer. |
+| **Account** | Optional. Narrows the work to one account. Once a subsidiary is chosen, the lookup offers only the accounts that carry debt-age items (open or already settled) for that subsidiary; when the subsidiary has none at all, the lookup is not narrowed. |
 | **From Date** | Optional. Ignores anything older. |
 | **To Date** | Optional. Ignores anything newer; left empty, the system fills in today's date for you when it collects. |
 

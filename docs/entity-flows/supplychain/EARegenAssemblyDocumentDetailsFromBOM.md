@@ -21,7 +21,7 @@ Manual execution on assembly documents when the BOM structure has changed and do
 
 1. **Invokes BOM regeneration** - Calls the document's regenAssemblyDocumentLinesFromBom() method
 2. **Clears existing lines** - Removes current assembly document lines
-3. **Reads current BOM** - Accesses the latest BOM structure for the assembly item
+3. **Reads current BOM** - Reads the BOM selected on the assembly document. New lines are generated only when the document has a BOM and a non-zero quantity; otherwise the document is left with no lines
 4. **Creates new lines** - Generates fresh document lines for each BOM component
 5. **Applies quantities** - Sets component quantities based on BOM requirements and assembly quantity
 6. **Maintains relationships** - Establishes proper parent-child relationships between components

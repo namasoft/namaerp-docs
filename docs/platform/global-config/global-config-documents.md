@@ -36,7 +36,7 @@ A document term can *supply* values to the document it governs — a term for Ca
 
 - **Add Sector Source To Terms** `value.info.addSectorSourceToTerms`
 - **Add Branch Source To Terms** `value.info.addBranchSourceToTerms`
-- **Add AnalysisSet Source To Terms** `value.info.addAnalysisSourceToTerms` *(default on)*
+- **Add Analysis Set Source To Terms** `value.info.addAnalysisSourceToTerms` *(default on)*
 - **Add Department Source To Terms** `value.info.addDeptSourceToTerms`
 - **Add Entity Dimension Source To Terms** `value.info.addEntityDimSourceToTerms`
 - **Add Ref1 Source To Terms** / **Add Ref2 Source To Terms** / **Add Ref3 Source To Terms** `value.info.addRef1SourceToTerms`, `...addRef2SourceToTerms`, `...addRef3SourceToTerms`
@@ -44,7 +44,7 @@ A document term can *supply* values to the document it governs — a term for Ca
 
 ## Documents and drafts behaviour
 
-**Use Next Real Number For Drafts** `value.info.useNextRealNumberForDrafts` — Drafts normally draw from a separate draft sequence, so a draft that is never committed doesn't consume a real number. Turn this on and a draft takes the next real number instead, which keeps the committed series gap-free at the cost of burning numbers on abandoned drafts. Individual auto-coders can override this.
+**Use Next Real Number For Drafts** `value.info.useNextRealNumberForDrafts` — Drafts normally draw from a separate draft sequence, so a draft that is never committed doesn't consume a real number. Turn this on and a draft takes the next real number instead, which keeps the committed series gap-free at the cost of burning numbers on abandoned drafts. With this off, a single book or auto-coder can still take real numbers for its own drafts by ticking its own **Use Next Real Number For Drafts**.
 
 **Create Entity System Entry For Draft Records** `value.info.createEntitySystemEntryForDraftRecord` — Writes a system entry for drafts as well as committed records. Needed when an integration or a report has to see documents before they are committed.
 
@@ -56,16 +56,16 @@ A document term can *supply* values to the document it governs — a term for Ca
 
 **Max Lines Count For Documents And Files** `value.info.maxLinesCount` *(default 750)* — The default cap on how many detail lines one record may hold. It protects the server from a single enormous document. Individual entity/grid combinations can be given their own limit that overrides this.
 
-**Max. Lines Per Generated Doc.** `value.info.maxLinesPerGeneratedDoc` *(default 1000)* — When the year-end closing produces its entries, it splits them across several documents rather than building one giant entry. This is the number of lines per generated document.
+**Max. Lines Per Generated Doc.** `value.info.maxLinesPerGeneratedDoc` *(default 1000)* — When the year-end closing produces its entries, it splits them across several documents rather than building one giant entry. A new closing entry copies this value into its own **Max. Lines Per Generated Doc.** field, which decides the split; an empty or zero value there falls back to this one, and anything above 2000 counts as 2000.
 
-**Template Excluded Fields** `value.info.defaultValuesExcludedFields` — When a user saves a record as a "default values" template, everything on it is copied. List field ids here — one per line — to keep them out of such templates. Dates, codes and reference numbers are the usual candidates.
+**Template Excluded Fields** `value.info.defaultValuesExcludedFields` — When a user saves a record as a "default values" template, everything on it is copied. List field ids here — one per line — to keep them out of such templates. The value date, issue date, fiscal period and fiscal year are always left out, so they need no line here; codes and reference numbers are the usual candidates.
 
 ## Master files automatic coding
 
 Items, accounts and other master files can be coded by formula rather than by hand. This group defines those formulas; the system checks them when you save the configuration.
 
 ::: info Documents, items, and everything else
-Keep the three apart. A **document's** number comes from its book's auto-coder, not from here. The formulas below cover **items** and their revisions and variants. Any *other* master file — customers, suppliers, cost centres — is coded by its [Master Group](/platform/documents-and-records/master-groups) if it has one, and otherwise by a line in [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-auto-coding), where you name the record type and give it a formula of the same kind.
+Keep the three apart. A **document's** number comes from its book's auto-coder, not from here. The formulas below cover **items** and their revisions and variants, and only for an item whose item section supplies no coding formula of its own; an item section set to prevent automatic coding stops it altogether. Any *other* master file — customers, suppliers, cost centres — is coded by its [Master Group](/platform/documents-and-records/master-groups) if it has one, and otherwise by a line in [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-auto-coding), where you name the record type and give it a formula of the same kind.
 :::
 
 **Prevent Manual Coding for Autocoded books** `value.info.preventManualCoding` — Refuses to save a record whose code was typed by hand when its auto-coder is set to code automatically. The strict counterpart to the document-code option above.
@@ -88,7 +88,7 @@ Keep the three apart. A **document's** number comes from its book's auto-coder, 
 
 **Do Not Reset Code With Update** `value.info.itemCodingFormula.doNotResetCodeWithUpdate` — Keeps the existing code when the record is edited, even if the formula's inputs changed.
 
-**Update Revision If Empty Only** / **Update Color and Size If Empty Only** `value.info.itemCodingFormula.updateRevisionIfEmpty`, `...updateColorAndSizeIfEmpty` — Fill those codes only when they are currently blank, leaving anything already coded untouched.
+**Update Revision If Empty Only** `value.info.itemCodingFormula.updateRevisionIfEmpty` — With this on, the revision formulas and the size-and-colour formulas fill only the revision lines and size-and-colour lines whose code is currently blank, leaving anything already coded untouched. With it off, every line is recoded each time the item's code is generated.
 
 ## Installments
 
@@ -111,7 +111,7 @@ Keep the three apart. A **document's** number comes from its book's auto-coder, 
 ::: danger Only a Namasoft support session can switch these two on
 Switching either option **on** is not an ordinary edit. Both sit at a protected security level, and a save
 that turns one on from a normal session is refused with
-*"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"* — «انت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمى لمستوى الأمان {1} برجاء التواصل مع الدعم الفنى»
+*"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"* — «أنت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمي لمستوى الأمان {1} برجاء التواصل مع الدعم الفني»
 — with the option's id and `L2Dangerous` filling the two placeholders. Turning them back off is not gated.
 
 That is deliberate: reprocessing across a closing entry rewrites figures that a closed period was built from, so balances that were reported to management or to an auditor can silently change. While either option is on, every login shows the critical error *The option {0} in {1} config is enabled, it should be disabled. Please contact our support team.* — see [Critical errors](/admin/troubleshooting/critical-errors). Switch them on for a supervised correction, then off again.
@@ -119,7 +119,7 @@ That is deliberate: reprocessing across a closing entry rewrites figures that a 
 
 **Enable Fiscal Year Status Update** `value.info.enableFiscalYearStatusUpdateFile` — Activates the Fiscal Year Status Update file, which closes an open period further for a specific combination of entity, dimensions and user. It cannot reopen a period that is closed — see [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
-**Ignore Closed Periods In** `value.info.ignoreClosedPeriodsIn` *(table)* — A more surgical alternative to the options above. Each row grants one user (or one "allow for" group) the right to save documents into a named fiscal period and year, for one entity type, optionally narrowed to specific dimensions. This is how you let the accountant finish last month's adjustments without unlocking the period for everybody.
+**Ignore Closed Periods In** `value.info.ignoreClosedPeriodsIn` *(table)* — A more surgical alternative to the options above. Each row grants one user, or whoever matches its **Allow For** (an employee, a security profile, an employee group or a group), the right to save documents into a named fiscal period and year, for one entity type (an empty entity type covers every type), optionally narrowed to specific dimensions. This is how you let the accountant finish last month's adjustments without unlocking the period for everybody.
 
 ## Settings on this tab
 
@@ -130,13 +130,13 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.doNotAllowSpecifyingDocCode` | Do Not Allow Changing Document Code | عدم السماح بتغيير الكود في المستندات | [Books and document terms](#Books-and-document-terms) |
 | `value.info.allowEmptyPrefixForManualBook` | Allow Empty Prefix For Manual Book | السماح بترك بادئة التكويد فارغة في الدفاتر اليدوية | [Books and document terms](#Books-and-document-terms) |
 | `value.info.unlimtedAllowedBooksInTerms` | Unlimited Allowed Books in Terms | السماح باستعمال دفاتر مسموح بها دون حد أقصى في التوجيه | [Books and document terms](#Books-and-document-terms) |
-| `value.info.ifSingleBookIsDefinedForEntityUseItWithNew` | If Single Book Is Defined For Entity Use It With New | اذا وجد دفتر واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
-| `value.info.ifSingleTermIsDefinedForEntityUseItWithNew` | If Single Term Is Defined For Entity Use It With New | اذا وجد توجيه واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
+| `value.info.ifSingleBookIsDefinedForEntityUseItWithNew` | If Single Book Is Defined For Entity Use It With New | إذا وجد دفتر واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
+| `value.info.ifSingleTermIsDefinedForEntityUseItWithNew` | If Single Term Is Defined For Entity Use It With New | إذا وجد توجيه واحد لمستند يتم استعماله مباشرة عند إنشاء جديد | [Books and document terms](#Books-and-document-terms) |
 | `value.info.doNotConsiderDimensionsWhenSearchingForSingleTermBook` | Do Not Consider Dimensions When Searching For Single Term And Book | تجاهل محددات الدخول عند البحث عن دفتر و توجيه واحد | [Books and document terms](#Books-and-document-terms) |
-| `value.info.showOnlyCurrentDimensionBooks` | Show Only Current Dimensions Books (Even if they are PUBLIC) | اظهار دفاتر المحددات الحالية فقط حتي لو كانت عام | [Books and document terms](#Books-and-document-terms) |
+| `value.info.showOnlyCurrentDimensionBooks` | Show Only Current Dimensions Books (Even if they are PUBLIC) | إظهار دفاتر المحددات الحالية فقط حتى لو كانت عام | [Books and document terms](#Books-and-document-terms) |
 | `value.info.addSectorSourceToTerms` | Add Sector Source To Terms | إضافة تفاصيل القطاع للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
 | `value.info.addBranchSourceToTerms` | Add Branch Source To Terms | إضافة تفاصيل الفرع للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
-| `value.info.addAnalysisSourceToTerms` | Add AnalysisSet Source To Terms | إضافة تفاصيل المجموعة التحليلية للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
+| `value.info.addAnalysisSourceToTerms` | Add Analysis Set Source To Terms | إضافة تفاصيل المجموعة التحليلية للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
 | `value.info.addDeptSourceToTerms` | Add Department Source To Terms | إضافة تفاصيل الإدارة للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
 | `value.info.addEntityDimSourceToTerms` | Add Entity Dimension Source To Terms | إضافة تفاصيل مصدر السجل للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
 | `value.info.addRef1SourceToTerms` | Add Ref1 Source To Terms | إضافة تفاصيل مصدر مرجع 1 للتوجيه | [Values driven by document terms](#Values-driven-by-document-terms) |
@@ -146,12 +146,12 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.useNextRealNumberForDrafts` | Use Next Real Number For Drafts | استعمال الرقم التالي الحقيقي للمسودات | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
 | `value.info.createEntitySystemEntryForDraftRecord` | Create Entity System Entry For Draft Records | Create Entity System Entry For Draft Records | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
 | `value.info.doNotChangeDateWithDuplicate` | Do Not Change Date With Duplicate | منع تغيير التاريخ مع النسخة المماثلة | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
-| `value.info.applyPreventUsageOfFromDocWithDrafts` | Apply Prevent Usage Of From Doc With Drafts | تفعيل منع مستند بناءا على من الاستعمال عند حفظ المسودة | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
+| `value.info.applyPreventUsageOfFromDocWithDrafts` | Apply Prevent Usage Of From Doc With Drafts | تفعيل منع مستند بناءً على من الاستعمال عند حفظ المسودة | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
 | `value.info.enableRecordViewEntityFlows` | Enable Record View Entity Flows | Enable Record View Entity Flows | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
 | `value.info.maxLinesCount` | Max Lines Count For Documents And Files | أقصى عدد لسطور السندات والملفات | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
-| `value.info.maxLinesPerGeneratedDoc` | Max. Lines Per Generated Doc. | اقصي عدد من السطور عند إنشاء مستندات | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
+| `value.info.maxLinesPerGeneratedDoc` | Max. Lines Per Generated Doc. | أقصى عدد من السطور عند إنشاء مستندات | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
 | `value.info.defaultValuesExcludedFields` | Template Excluded Fields | الحقول المستبعدة من القوالب | [Documents and drafts behaviour](#Documents-and-drafts-behaviour) |
-| `value.info.preventManualCoding` | Prevent Manual Coding for Autocoded books | منع التكويد اليدوي للدفاتر الالية | [Master files automatic coding](#Master-files-automatic-coding) |
+| `value.info.preventManualCoding` | Prevent Manual Coding for Autocoded books | منع التكويد اليدوي للدفاتر الآلية | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.codeCalculationFormula` | Code Calculation Formula | صيغة حساب الكود | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.codeValidityQuery` | Code Validity Query (Skip code if 1 is returned, and calculate next) | Code Validity Query (Skip code if 1 is returned, and calculate next) | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.codeSequencePrefix` | Code Sequence Prefix | بادئة حساب التسلسل | [Master files automatic coding](#Master-files-automatic-coding) |
@@ -159,23 +159,22 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.itemCodingFormula.codeSuffixFirstNumber` | Suffix First Number | أول رقم في لاحقة الكود | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.name1CalculationFormula` | Name1 Calculation Formula | صيغة حساب الاسم العربي | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.name2CalculationFormula` | Name2 Calculation Formula | صيغة حساب الاسم الإنجليزي | [Master files automatic coding](#Master-files-automatic-coding) |
-| `value.info.itemCodingFormula.altCodeFormula` | Alternate Code Formula | صيغه الكود البديل | [Master files automatic coding](#Master-files-automatic-coding) |
+| `value.info.itemCodingFormula.altCodeFormula` | Alternate Code Formula | صيغة الكود البديل | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.revCodeCalculationFormula` | Revision Code Calculation Formula | صيغة حساب الكود للإصدارات | [Master files automatic coding](#Master-files-automatic-coding) |
-| `value.info.itemCodingFormula.rvName1Formula` | Name 1 Encoding Formula For Revision | صيغة تكويد اسم 1 للاصدارة | [Master files automatic coding](#Master-files-automatic-coding) |
-| `value.info.itemCodingFormula.rvName2Formula` | Name 2 Encoding Formula For Revision | صيغة تكويد اسم 2 للاصدارة | [Master files automatic coding](#Master-files-automatic-coding) |
+| `value.info.itemCodingFormula.rvName1Formula` | Name 1 Encoding Formula For Revision | صيغة تكويد اسم 1 للإصدارة | [Master files automatic coding](#Master-files-automatic-coding) |
+| `value.info.itemCodingFormula.rvName2Formula` | Name 2 Encoding Formula For Revision | صيغة تكويد اسم 2 للإصدارة | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.sizeAndColorCodeCalculationFormula` | Size And Color Code Calculation Formula | صيغة حساب الكود للمقاس و اللون | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.szName1Formula` | Name 1 Encoding Formula For Colour And Size | صيغة تكويد اسم 1 للون والمقاس | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.szName2Formula` | Name 2 Encoding Formula For Colour And Size | صيغة تكويد اسم 2 للون والمقاس | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.doNotResetCodeWithUpdate` | Do Not Reset Code With Update | عدم تحديث الكود مع التعديل | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.itemCodingFormula.updateRevisionIfEmpty` | Update Revision If Empty Only | تحديث الإصدار إذا كان فارغا فقط | [Master files automatic coding](#Master-files-automatic-coding) |
-| `value.info.itemCodingFormula.updateColorAndSizeIfEmpty` | Update Color and Size If Empty Only | تحديث اللون والمقاس إذا كانا فارغين فقط | [Master files automatic coding](#Master-files-automatic-coding) |
 | `value.info.installmentCodingMethod` | Installment Coding Method | طريقة تكويد الأقساط | [Installments](#Installments) |
 | `value.info.installmentCodingFormula` | Installment Coding Formula | معادلة حساب كود القسط | [Installments](#Installments) |
 | `value.info.ignoredValueWhenPayingInstallments` | Ignored Value When Paying Installments | القيمة المتجاهلة عند مقارنة المدفوع بالأقساط (الدفعات) | [Installments](#Installments) |
 | `value.info.doNotCompareRemainingWithPaymentTotalInInvoices` | Do Not Compare Remaining With Payment Total In Invoices | عدم مقارنة المتبقي بإجمالي الدفعات في الفواتير | [Installments](#Installments) |
-| `value.info.doNotPreventModifyingDocsBeforeLastCloseEntry` | Do Not Prevent Modifying Documents Before Last Close Entry Date | السماح بتعديل المستندات قبل تاريخ القيد الختامى | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
-| `value.info.allowReprocessingOfLedgerTransRequestsBeforeClosingEntry` | Allow Reprocessing Of Ledger Trans Requests Before Closing Entry | Allow Reprocessing Of Ledger Trans Requests Before Closing Entry | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
-| `value.info.allowReprocessingOfInvTransRequestsBeforeClosingEntry` | Allow Reprocessing Of Inventory Trans Requests Before Closing Entry | Allow Reprocessing Of Inventory Trans Requests Before Closing Entry | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
+| `value.info.doNotPreventModifyingDocsBeforeLastCloseEntry` | Do Not Prevent Modifying Documents Before Last Close Entry Date | السماح بتعديل المستندات قبل تاريخ القيد الختامي | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
+| `value.info.allowReprocessingOfLedgerTransRequestsBeforeClosingEntry` | Allow Reprocessing Of Ledger Trans Requests Before Closing Entry | السماح بإعادة معالجة طلبات الحركات المحاسبية قبل قيد الإقفال | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
+| `value.info.allowReprocessingOfInvTransRequestsBeforeClosingEntry` | Allow Reprocessing Of Inventory Trans Requests Before Closing Entry | السماح بإعادة معالجة طلبات الحركات المخزنية قبل قيد الإقفال | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
 | `value.info.enableFiscalYearStatusUpdateFile` | Enable Fiscal Year Status Update | تفعيل تحديث حالة السنة المالية | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
 | `value.info.ignoreClosedPeriodsIn` | Ignore Closed Periods In | تجاهل الفترات المغلقة في | [Fiscal periods and closing](#Fiscal-periods-and-closing) |
 | `value.info.ignoreClosedPeriodsIn.entityType` | Entity Type | النوع | [Fiscal periods and closing](#Fiscal-periods-and-closing) |

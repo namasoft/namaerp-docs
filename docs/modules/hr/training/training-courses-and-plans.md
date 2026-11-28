@@ -21,8 +21,8 @@ A Training Course is defined once and reused across every plan and enrollment th
 
 | Field (English) | Arabic | Notes |
 |---|---|---|
-| External Course | دورة تدريبة خارجية | Ticks on when the course is run by an outside training provider rather than in-house. |
-| Delivery Method | طريقة التدريس | Instructor, Self-Study, or On Job Training. |
+| External Course | دورة تدريبية خارجية | Ticks on when the course is run by an outside training provider rather than in-house. |
+| Delivery Method | طريقة التسليم | Instructor, Self-Study, or On Job Training. |
 | Default Provider | مقدم الدورة الأساسي | Who normally delivers it — an employee by default, though an external course can point to a third party instead. |
 | Minimum / Maximum Student Number | أدنى / أقصى عدد للمتدربين | The minimum can never be set higher than the maximum — the course rejects that combination outright. |
 | Estimated Cost | التكلفة التقديرية | The planning figure a Training Plan pulls in when it schedules the course (see below). |
@@ -53,7 +53,7 @@ Clicking **Collect Courses** (تجميع الدورات) turns that wishlist int
 |---|---|---|
 | Employee | الموظف | Who is being scheduled. |
 | Course | الدورة التدريبية | Which catalog course was matched (or picked directly). |
-| Status | الحالة | Not Started, In Progress, Finished Successfully, Finished UnSuccessfully, or Terminated. |
+| Status | الحالة | Not Started, In Progress, Finished Successfully, Finished Unsuccessfully, or Terminated. |
 | Cost \| Estimated / Actual | التكلفة \| المخطط / الفعلي | The course's planning cost next to what it actually cost. |
 | Start Date / End Date \| Estimated / Actual | تاريخ البداية / تاريخ النهاية \| المخطط / الفعلي | Planned dates alongside the dates Course Enrollment and End Training Course later stamp in. |
 
@@ -67,15 +67,15 @@ Suppose a Skills row calls for **Ahmed** to reach **Level 5 (Very Good)** in "Ne
 
 Where the Training Plan schedules a course, a Course Enrollment records one actual delivery of it — a specific **Instructor**, running from a **Start Date** to an **End Date**, with one or more employees attending. Picking a **Plan** on the header pre-fills the Start Date and End Date from that plan automatically; a course delivered outside any plan is simply marked **Unplanned Course** instead of being tied to one.
 
-The **Details** grid holds one row per attending **Employee**, each with its own Start Date and End Date — these default from the header dates, and if the grid holds exactly one row, changing the header's End Date updates that row's End Date too. The header's End Date must always fall after its Start Date.
+The **Details** grid holds one row per attending **Employee**, each with a Start Date and End Date. A new row takes the header dates, and on save every row's dates are set to the header's Start Date and End Date. A header Start Date after its End Date is refused with *End date must be greater than start date* — «تاريخ النهاية يجب أن يكون أكبر من تاريخ البداية».
 
-Saving the enrollment reaches back into the Training Plan: for every employee/course pair it finds a matching Details line on the plan, stamps in the enrollment's Start Date as that line's **Actual Start Date**, and — if the line was still sitting at Not Started — bumps its Status to **In Progress**. In other words, enrolling people is what tells the plan that a scheduled course has actually begun.
+Saving the enrollment reaches back into the Training Plan: for every employee/course pair it finds a matching Details line on the plan, stamps in the enrollment's Start Date as that line's **Actual Start Date**, and sets its Status to **In Progress**. In other words, enrolling people is what tells the plan that a scheduled course has actually begun. Cancelling or deleting the enrollment puts the matching lines that are still In Progress back to **Not Started** and clears their Actual Start Date.
 
 ![Course Enrollment, with the attending employees in the Details grid](../../../ar/modules/hr/images/training/course-enrollment-en.png)
 
 ## End Training Course — closing an employee's participation
 
-An End Training Course record closes out one **Employee**'s run through one **Course** on one **Training Plan** — a **Status** (the same Not Started / In Progress / Finished Successfully / Finished UnSuccessfully / Terminated set used on the plan), a **Final Percentage**, an **End Date**, and a **Skill Development** grid listing each skill the employee actually worked on, with the **Level** they reached.
+An End Training Course record closes out one **Employee**'s run through one **Course** on one **Training Plan** — a **Status** (the same Not Started / In Progress / Finished Successfully / Finished Unsuccessfully / Terminated set used on the plan), a **Final Percentage**, an **End Date**, and a **Skill Development** grid listing each skill the employee actually worked on, with the **Level** they reached.
 
 Saving it feeds two things back into the Training Plan in one step:
 
@@ -90,7 +90,7 @@ Ahmed finishes "Advanced Negotiation," and his End Training Course record shows 
 
 **On the Training Plan:**
 
-- **Collect Courses** — rebuilds the **Details** grid from the **Skills** grid: for each skills row it takes a catalog course that develops that skill to the expected level or higher, adds it for that employee with the status **Not Started** and the course's estimated cost, and totals the plan's **Estimated Cost**. Rows you had typed into the Details grid are replaced, so press it before adding courses by hand.
+- **Collect Courses** — rebuilds the **Details** grid from the **Skills** grid: for each skills row it takes the first catalog course found that develops that skill to the expected level or higher, adds it for that employee with the status **Not Started** and the course's estimated cost, and totals the plan's **Estimated Cost**. Rows you had typed into the Details grid are replaced, so press it before adding courses by hand.
 
 The **Training Course**, **Course Enrollment** and **End Training Course** have no buttons of their own.
 

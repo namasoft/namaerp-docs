@@ -55,8 +55,11 @@ for the ledger balances the document reads, and the **Dimensions** group carries
 analysis set, branch, sector and department. Partial-disposal entries always take their dimensions
 from the document.
 
-Tax on a partial disposal is handled through **Tax 1** — its percentage and value are filled from the
-term's tax plan when you pick the term, and recalculated when you change the dispose value.
+Tax on a partial disposal is booked through **Tax 1** — its percentage and value are filled from the
+term's tax plan when you pick the term, and recalculated when you change the dispose value. On save
+the same rules as the full disposal apply: the percentages are set again from the term's tax plan
+(or the asset's own) unless the term allows the tax to be edited, and all of them are zeroed when the
+term is not taxable.
 
 There is no "reason" here either. Just as with a full disposal, a sale and a scrap are told apart by
 which document term you choose and what you put in the dispose value.
@@ -156,9 +159,10 @@ one — the new asset record for the salvaged part. All of it happens on commit.
 | Depreciation must be sequential up to the document's period | the accumulated depreciation removed must be the figure really recorded in the ledger |
 | If the created-assets grid is filled, the term must name a fixed asset purchase book and term | those rows become a real acquisition document |
 
-The depreciation rule is the only one with an escape hatch. The partial disposal's term carries an
-option — written in Arabic as *السماح بعمل سند تخلص جزئي لاصل رغم عدم إنشاء سند الاهلاك للشهور
-السابقة* — which lets the document commit even when earlier periods have not been depreciated.
+The depreciation rule is the only one with an escape hatch. The partial disposal's term carries the
+option **Allow partial disposal of an asset even if depreciation documents for previous months were
+not created** (*السماح بعمل سند تخلص جزئي لأصل رغم عدم إنشاء سند الإهلاك للشهور السابقة*), which
+lets the document commit even when earlier periods have not been depreciated.
 
 ::: tip Think before switching that option on
 It does not change the arithmetic; it only removes the check. The accumulated depreciation the entry
@@ -171,7 +175,7 @@ backlog, and expect to fix the difference afterwards; do not leave it switched o
 ## Assets salvaged out of a partial disposal
 
 The partial disposal carries the same **Created Assets From Disposal** grid
-(الأصول الناتجه عند التخلص) as the full one: a place to register whatever you are keeping out of the
+(الأصول الناتجة عند التخلص) as the full one: a place to register whatever you are keeping out of the
 units that left.
 
 ![The created assets grid on a partial disposal](../../../ar/modules/fixedassets/images/disposal/fa-partial-disposal-created-assets-grid-en.png)

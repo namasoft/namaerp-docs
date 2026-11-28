@@ -70,7 +70,7 @@ block, for example, is refused with the contractor's own message.
 
 ## The draft option on the term
 
-The term of a modify request has a **create Record As Draft** (إنشاء السند كمسودة) switch. With it on,
+The term of a modify request has a **Create Record As Draft** (إنشاء السند كمسودة) switch. With it on,
 **Create Contractor** saves the new contractor as a **draft** instead of committing it, so that the
 person responsible can complete it — accounts, bank details — before it is used. A contractor that
 was committed before is always committed again, never turned back into a draft.

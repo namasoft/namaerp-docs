@@ -34,13 +34,13 @@ Manual execution on supply chain documents when lot date information needs to be
 
 ## Parameters
 
-**Parameter 1:** Do Not Update Expiry Date (Optional) - true/false to skip expiry date updates (default: false)
+**Parameter 1:** Do Not Update Expiry Date (Optional) - Leave empty
 
-**Parameter 2:** Do Not Update Production Date (Optional) - true/false to skip production date updates (default: false)
+**Parameter 2:** Do Not Update Production Date (Optional) - true/false to skip production date updates (default: false). A line with no production date never changes the production date
 
-**Parameter 3:** Do Not Update Retest Date (Optional) - true/false to skip retest date updates (default: false)
+**Parameter 3:** Do Not Update Retest Date (Optional) - true/false to skip retest date updates (default: false). A line with no retest date never changes the retest date
 
-**Parameter 4:** Force Update of Current Entity Lines (Optional) - true/false to update current document's table (default: false)
+**Parameter 4:** Force Update of Current Entity Lines (Optional) - true/false to also update the line table of the current document's own type (default: false, that table is skipped)
 
 ## Database Tables Affected
 

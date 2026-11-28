@@ -7,8 +7,9 @@ Two of the most sensitive government touch-points for an expatriate workforce ar
 insurance register** and the **sponsorship (Kafala)** relationship. When someone joins, they have to
 be added to the employer's social-insurance file; when they leave, they have to be taken off it. And
 when an employee moves from one employer to another, the sponsorship that ties their residency to a
-company has to be formally transferred. Nama models all three as short recording documents that sit
-in the same pick-employee → record → write-back rhythm as the rest of the government-relations desk.
+company has to be formally transferred. Nama models all three as short recording documents in the
+same pick-employee → record rhythm as the rest of the government-relations desk; the two GOSI
+documents also write the registration onto the employee's file when they are committed.
 
 ::: info Gulf / KSA-specific area
 Both the GOSI register and Kafala sponsorship are Saudi / Gulf labour-and-immigration concepts, so
@@ -41,11 +42,23 @@ You will find it under **Human Resources → Social Insurance → Employee Socia
 | Issue Date | تاريخ التحرير | The date the document is written. |
 | Value Date | التاريخ الفعلي | The effective date of the enrolment. |
 | Employee | الموظف | The employee being added to the GOSI register (one per line). |
-| Ensured Legal Entity | الشركة المؤمنة في التأمين | The company the employee is insured under. |
+| Insured Legal Entity | الشركة المؤمنة في التأمين | The company the employee is insured under. |
 | Social Insurance Number | رقم التأمين الأجتماعي | The GOSI number issued for the employee. |
 | Organization id | رقم المنشأة | The employer's GOSI establishment number. |
-| Labor id | الرقم بمكتب العمل | The employee's labour-office number. |
+| Labor ID | الرقم بمكتب العمل | The employee's labour-office number. |
 | Issue | تاريخ الإصدار | The issue date of the social-insurance registration. |
+
+Picking the employee on a line fills these fields from what the employee's file already holds. When
+the document is committed, each line is written onto its employee: the Insured Legal Entity, the
+social-insurance number, issue and end dates, and — only when both are filled — the Organization id and
+Labor ID. Cancelling the document clears the social-insurance number and dates and the Insured Legal
+Entity again.
+
+An employee can be added only once while registered. A line for an employee who is already on another
+Employee Social Insurance Add, and who has no Employee Social Insurance Remove line for that legal
+entity, refuses the commit:
+
+*{0} already registed for {1} according to {2} you must remove Insurance Before* — «{0} مسجل من قبل بشركة {1} طبقاً للسند {2} يجب حذف الموظف من التأمين قبل الإضافة»
 
 ![Employee Social Insurance Add](../../../ar/modules/hr/images/government-relations/ho-social-insurance-add-en.png)
 
@@ -54,7 +67,10 @@ You will find it under **Human Resources → Social Insurance → Employee Socia
 The **Employee Social Insurance Remove** (`سند حذف موظفين من التأمينات الإجتماعية`) document is the
 withdrawal counterpart — used when employees leave or are moved off the insurance file. Its lines
 carry the same employee and insurance-number columns, plus the **End at** (`تاريخ الأنتهاء`) date
-that closes the registration.
+that closes the registration. Picking the employee fills the insurance number, its issue date and the
+Insured Legal Entity from the employee's file, and those three stay locked; an empty issue date takes
+the document's value date. When the document is committed, each line's insurance number, dates and
+legal entity, with the End at date, are written onto the employee.
 
 It lives under **Human Resources → Social Insurance → Employee Social Insurance Remove**
 (`الموارد البشرية > التأمين الأجتماعي > سند حذف موظفين من التأمينات الإجتماعية`).
@@ -85,10 +101,13 @@ Document** (`الموارد البشرية > معاملات إداريه > طل�
 | Sponsorship Transfer Cost | قيمة رسوم نقل الكفالة | The government fee for the transfer (amount and currency). |
 | Residency (Number / Issue / End at) | الأقامة (رقم / تاريخ الإصدار / تاريخ الأنتهاء) | The Iqama details reproduced on the transfer. |
 | Passport (Number / Issue / End at) | جواز السفر (رقم / تاريخ الإصدار / تاريخ الأنتهاء) | The passport details for the transfer. |
-| sponsor Name / Sponsor Number | اسم الكفيل / رقم الكقيل | The new sponsor's name and number. |
+| Sponsor Name / Sponsor Number | اسم الكفيل / رقم الكقيل | The new sponsor's name and number. |
 | Labor Acceptance Number | رقم موافقة مكتب العمل | The labour-office approval number for the transfer. |
-| labor Facility Number | رقم المنشة بمكتب العمل | The employer's labour-office establishment number. |
+| Labor Facility Number | رقم المنشة بمكتب العمل | The employer's labour-office establishment number. |
 | Attachment 1…5 | مرفق 1…5 | Scanned supporting documents. |
+
+Every field here is typed in: **Employee Name** is free text, not a link to an employee record, and
+the document changes nothing on any employee's file.
 
 ![Sponsorship Transfer Document](../../../ar/modules/hr/images/government-relations/ho-sponsorship-transfer-en.png)
 
@@ -96,7 +115,9 @@ Document** (`الموارد البشرية > معاملات إداريه > طل�
 
 When a batch of workers is moved together, the **Aggregated Sponsorship Transfer Document**
 (`طلب نقل كفالة مجمع`) captures them all in one grid — each row being one employee's transfer — and,
-on save, produces one ordinary Sponsorship Transfer Document per row. As with every aggregated
+when committed, produces one ordinary Sponsorship Transfer Document per row, with the book and term
+its document term names (with neither named, it produces none). Removing a row or cancelling the
+batch deletes the document that row produced. As with every aggregated
 document in Nama, you manage the batch by editing the aggregated document, not the singles it
 generated; see [HR Requests, Documents & Aggregated Documents](../concepts/hr-requests-and-documents)
 for how that two-level relationship works. It lives one menu entry along, under
@@ -109,11 +130,10 @@ The social-insurance add and remove documents and the sponsorship transfer docum
 
 ## How it's processed
 
-Saving any of these documents is instant; like every document in Nama, any follow-on work is raised
-as a **business request** (`طلب أعمال`) with its own **processing status** (`حالة المعالجة`) that can
-be retried from the **Business Requests** view if it fails. None of the documents on this page creates
-a general-ledger entry — they **record** a government fact (an enrolment, a withdrawal, a sponsorship
-move) and, where relevant, feed the employee's official-document details. Any fee attached to a
+Saving any of these documents is instant. None of the documents on this page creates a general-ledger
+entry — they **record** a government fact (an enrolment, a withdrawal, a sponsorship move). On commit
+the two GOSI documents update the employee's social-insurance details, as described above, and the
+aggregated sponsorship transfer creates its single documents. Any fee attached to a
 sponsorship transfer is tracked and settled the same way as every other government charge: through the
 fee-recording flow described in the [Government Relations Overview](./government-relations-overview),
 not by these documents debiting or crediting anything themselves.

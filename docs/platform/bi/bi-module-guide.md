@@ -5,7 +5,7 @@ entities: [DashBoardWidget, DashBoard, DashBoardGroup, BICrossFilter, DashBoardW
 
 Nama ERP's BI module lets you build interactive dashboards that turn your live ERP data into charts, gauges, tables, and more. Charts talk to each other through cross-filters, drill-down popups, and direct links — so your dashboards aren't just static pictures, they're exploration tools your team can click through to find answers.
 
-This guide walks you through everything the BI module can do, from the chart designer to advanced interactions like drill-down and cross-filtering. If you're looking for the JSON structures, SQL patterns, and import formats needed to build dashboards programmatically, see the [Technical Reference](./bi-module-technical-reference.md).
+This guide walks you through everything the BI module can do, from the chart designer to advanced interactions like drill-down and cross-filtering. If you're looking for the JSON structures, SQL patterns, and import formats needed to build dashboards programmatically, see the [Technical Reference](/platform/bi/bi-module-technical-reference).
 
 ---
 
@@ -76,7 +76,7 @@ The designer has two states:
 
 ### State A — Template Gallery
 
-When you start with a blank widget, the designer opens in gallery mode. You see a searchable grid of all 41 templates, each rendered as a live mini-chart so you can see exactly what you're picking.
+When you start with a blank widget, the designer opens in gallery mode, with the category chip of the current chart type already selected — **Bar** on a new widget — so the grid first shows that category's templates. Click the selected chip again to clear it and see all 41. Each template is rendered as a live mini-chart so you can see exactly what you're picking.
 
 ![The Template Gallery inside the chart designer: a search box, a row of chart-type category chips, and a grid of preview cards (Bar Chart, Multi-Series Bar, Stacked Bar, 100% Stacked Bar, Horizontal Bar, Horizontal Stacked Bar) each labelled with its slot shape such as 1D + 1M, and a Start Blank button](../../ar/platform/bi/images/bi-template-gallery-en.png)
 
@@ -95,7 +95,7 @@ Once you've picked a template (or opened an existing widget), you land in the ed
 
 At the top of the editor, a **chart type bar** shows 11 icon buttons (one per chart category). Clicking one switches the chart type while keeping your data mapping intact where possible.
 
-The form area has four tabs — **Data Mapping**, **Style Options**, **Click & Links** and **Drill-Down Mapping** — plus a **Change Template** button that takes you back to the gallery. The first tab changes with the widget type: Enhanced Table widgets show **Table Columns** where Data Mapping would be, and metrics-card widgets show **Card Template** and have no preview pane at all.
+The form area has four tabs — **Data Mapping**, **Style Options**, **Click & Links** and **Drill-Down Mapping** — plus a **Change Template** button that takes you back to the gallery. That full set is for chart widgets. The table and card widget types open the designer with only **Click & Links** and **Drill-Down Mapping**, and no chart type bar or Change Template: an Enhanced Table widget adds a **Table Columns** tab in front of them, a **Metrics Cards v2 (Enhanced)** widget adds a **Card Template** tab, and the classic Table and Metrics Cards add nothing. Only chart and Enhanced Table widgets have the preview pane.
 
 A **Text Block** widget skips all of that. Its designer is a single content pane: a rich-text editor with an **Arabic Text** / **English Text** tab pair above it, a collapsible Raw HTML box for pasting markup straight in, and a frame-style grid underneath (background and text colour, padding, border colour/width/radius, default font size, alignment). Write the block in one language and leave the other empty and the same text serves both; fill both in and each language reads its own.
 
@@ -179,11 +179,7 @@ Configure drill-down targets — covered in the [Drill-Down](#Drill-Down) sectio
 
 A dashboard is a grid that holds multiple widgets. You configure the grid size (e.g., 3 columns × 4 rows), then place each widget by specifying its row, column, width (in columns), and height (in rows).
 
-The part that surprises people is what those rows and columns actually are. They are **proportions, not fixed cells**. A dashboard set to 12 rows takes the height it has on screen and divides it into twelve; a widget four rows tall gets a third of the screen. Set the same dashboard to 24 rows and that same widget is now a sixth of the screen — nothing was added, everything shrank. So when a table looks too short, the fix is to make *that widget* taller, never to raise the dashboard's row count.
-
-Scrolling follows from the same arithmetic. The dashboard is one screen tall per "row count" worth of rows, so it only scrolls once the lowest widget reaches past the row count. Put another way: if your bottom widget ends on the last row, the dashboard is promising to fit on one screen, and it will keep that promise by squeezing everything — tables first — until it does. To get a scrolling report, give the widgets the heights they deserve and let them run off the bottom.
-
-The [Technical Reference](./bi-module-technical-reference.md#Sizing-and-scrolling) works this through with formulas, a worked comparison, and the list of widget types that size themselves to their content and ignore the height you give them.
+Those rows and columns are **proportions, not fixed cells**: the dashboard divides the height it has on screen by its row count, so raising the row count makes every widget smaller, and the dashboard scrolls only once its lowest widget ends past the row count. When a table looks too short, make *that widget* taller, never the dashboard's row count. [Sizing and scrolling](/platform/bi/bi-module-technical-reference#Sizing-and-scrolling) in the Technical Reference has the formulas, worked examples, the phone layout, Tabbed dashboards and the widget types that size themselves to their content.
 
 Every dashboard has a **Kind**:
 
@@ -202,11 +198,9 @@ In edit mode, you can:
 - **Resize widgets** using handles on all edges and corners
 - **Save or cancel** your layout changes
 
-The layout designer is for Single dashboards only. Trying to open it on a Tabbed dashboard shows an error — Tabbed dashboards have no widget grid to lay out, just a list of sub-dashboards.
+The layout designer is for Single dashboards only. On a Tabbed dashboard it does not open — Tabbed dashboards have no widget grid to lay out, just a list of sub-dashboards.
 
-The row and column counts themselves are not edited in the designer — they are the **Rows Count** and **Columns Count** fields on the dashboard record. Change one and everything on the dashboard resizes at once, because you have changed the scale the widget heights are measured against, not the size of a cell. Two neighbouring fields on the same screen are easy to misread: **Total Dashboard Rows Count** is a leftover the layout editor keeps for itself and has no effect on how the dashboard displays, and **Mobile Max Rows Count** applies only on phones, where the grid is abandoned entirely and widgets simply stack full-width — that field decides how many of them fit on one narrow screen. Left empty, the dashboard decides for itself: two per screen, or the whole screen when there is only one widget.
-
-Each tab of a Tabbed dashboard divides its own height by its own row count, so tabs are tuned one at a time and a change to one never affects another.
+The row and column counts themselves are not edited in the designer — they are the **Rows Count** and **Columns Count** fields on the dashboard record. **Total Dashboard Rows Count** and **Mobile Max Rows Count** sit beside them; what each one does is in [Sizing and scrolling](/platform/bi/bi-module-technical-reference#Sizing-and-scrolling).
 
 ### Auto-Refresh
 
@@ -221,50 +215,54 @@ While ECharts are the star of the show, dashboards support several other widget 
 
 | Widget Type | What It Does                                                            |
 |---|-------------------------------------------------------------------------|
-| **EChart** | Any of the 41 chart templates                                           |
+| **eChart** (`EChart`) | Any of the 41 chart templates                                           |
 | **Table** | A data table — the SQL column names become column headers automatically |
 | **Table v2 (Enhanced)** | A richer data table — columns are defined explicitly in JSON with formatting, cell renderers, and conditional styling. See the [Enhanced Table](#Enhanced-Table-Widget) section. |
 | **Metrics Cards** | KPI summary cards (value + label + trend)                               |
-| **Metrics Cards v2 (Enhanced)** | A richer KPI card strip — cards, slots and sparklines defined in JSON. See the [Enhanced Metrics Card reference](./bi-reference-enhanced-metrics-card.md) |
-| **Timeline** | Chronological event stream. See [Timeline](./bi-reference-more-widget-types.md#Timeline) |
-| **Calendar** | Event calendar. See [Calendar](./bi-reference-more-widget-types.md#Calendar) |
-| **Report** | Embedded JasperReport. See [Report](./bi-reference-more-widget-types.md#Report) |
-| **HTML** | Custom HTML content built from the query rows. See [HTML](./bi-reference-more-widget-types.md#HTML) |
-| **Recent Visits** | Shows the screens the user opens most. See [Recent Visits](./bi-reference-more-widget-types.md#Recent-Visits) |
-| **Card Menu** | Navigation cards. See [Card Menu](./bi-reference-more-widget-types.md#Card-Menu) |
-| **Resource View** | Resource scheduler. See [Resource View](./bi-reference-more-widget-types.md#Resource-View) |
-| **CrossFilterControl** | A slicer — renders one cross-filter as a picker sitting on the dashboard grid, so users set the filter without opening the Filters dialog |
-| **TextBlock** | Static rich text — section headers, subtitles, and instructions placed between the data widgets. Its content is written once per language |
+| **Metrics Cards v2 (Enhanced)** | A richer KPI card strip — cards, slots and sparklines defined in JSON. See the [Enhanced Metrics Card reference](/platform/bi/bi-reference-enhanced-metrics-card) |
+| **Timeline** | Chronological event stream. See [Timeline](/platform/bi/bi-reference-more-widget-types#Timeline) |
+| **Calendar** | Event calendar. See [Calendar](/platform/bi/bi-reference-more-widget-types#Calendar) |
+| **Report** | Embedded JasperReport. See [Report](/platform/bi/bi-reference-more-widget-types#Report) |
+| **HTML** | Custom HTML content built from the query rows. See [HTML](/platform/bi/bi-reference-more-widget-types#HTML) |
+| **Recent Visits** | Shows the screens the user opens most. See [Recent Visits](/platform/bi/bi-reference-more-widget-types#Recent-Visits) |
+| **Card Menu** | Navigation cards. See [Card Menu](/platform/bi/bi-reference-more-widget-types#Card-Menu) |
+| **Resource View** | Resource scheduler. See [Resource View](/platform/bi/bi-reference-more-widget-types#Resource-View) |
+| **Cross Filter Control** (`CrossFilterControl`) | A slicer — renders one cross-filter as a picker sitting on the dashboard grid, so users set the filter without opening the Filters dialog |
+| **Text Block** (`TextBlock`) | Static rich text — section headers, subtitles, and instructions placed between the data widgets. Its content is written once per language |
 
 ::: warning Some widget types need the new UI
-**EChart**, **Table v2 (Enhanced)**, **Metrics Cards**, **Metrics Cards v2 (Enhanced)**, **Timeline**,
-**Recent Visits**, **Card Menu**, **CrossFilterControl** and **TextBlock** are drawn by the new UI only.
-Open a dashboard that contains them from the old interface and each of these widgets shows a message
-saying its type is supported in the new UI only, with an **Open in the new UI** link under it that opens the
-same dashboard in the new UI in a new tab.
+**eChart**, **Table v2 (Enhanced)**, **Metrics Cards**, **Metrics Cards v2 (Enhanced)**, **Timeline**,
+**Recent Visits**, **Card Menu**, **Cross Filter Control** and **Text Block** are drawn by the new UI only.
+Open a dashboard that contains them from the old interface and each of these widgets shows the message
+below, with an **Open in the new UI** link under it that opens the same dashboard in the new UI in a new tab:
+
+*The widget type {0} is supported in the new UI only* — «نوع {0} مدعوم في الواجهة الجديدة فقط»
 :::
 
 ---
 
 ### Dashboard Groups — Putting Dashboards on the Menu
 
-A **Dash Board Group** (*Administration → DashBoards → Dash Board Group*) is a hand-picked collection
+A **Dashboard Group** (*Administration → DashBoards → Dashboard Group*) is a hand-picked collection
 of dashboards, the dashboard twin of a report group. List its dashboards in its **Details** grid, or
-add the group to a dashboard's own **Details** grid (the **Dash Board Group** column) — the two stay in
+add the group to a dashboard's own **Details** grid (the **Dashboard Group** column) — the two stay in
 step, and deleting the group takes it off every dashboard. A dashboard can be listed only once in a
-group; a second line is refused with *Dash Board {0} can not be repeated* — «اللوحة {0} لايمكن تكرارها».
+group, and a group only once on a dashboard; a second line is refused with
+*Dash Board {0} can not be repeated* — «اللوحة {0} لا يمكن تكرارها» on the group, or
+*Dash Board Group {0} can not be repeated* — «مجموعة اللوحات {0} لا يمكن تكرارها» on the dashboard.
 
 A group puts its dashboards on the menu in one of two ways (see [Menu structure](/platform/menus/menu-structure)):
 
-- **A menu item of type Dashboards Group** pointing at the group shows every dashboard in it as its
+- **A menu item of type Dashboard Group** pointing at the group shows every dashboard in it as its
   own entry.
-- **Automatically Add To Menu** on the group, together with one **Auto Dash Boards** item in the menu,
-  shows every ticked group as its own sub-menu, named after the group and listing its dashboards. The
-  Auto Dash Boards item must be the only item in its menu group. New groups then appear without
-  editing the menu.
+- **Automatically Add To Menu** on the group, together with one **Auto Dashboards** item in the menu,
+  shows every ticked group as its own sub-menu, named after the group and listing its dashboards, when
+  the Auto Dashboards item is the only item in its menu group. Placed beside other items, it lists the
+  dashboards of every ticked group as plain entries of that menu group instead. New groups then appear
+  without editing the menu.
 
 Which licence the BI screens need, how a user's home dashboard is chosen, and how to hide a widget
-or a tab from some users are on [BI Menus, Licence and Access](./bi-menu-licence-and-access.md).
+or a tab from some users are on [BI Menus, Licence and Access](/platform/bi/bi-menu-licence-and-access).
 
 ## Tabbed Dashboards
 
@@ -301,11 +299,9 @@ Switching to Tabbed reveals the **Sub Dashboards** grid. Add one row per tab:
 | Arabic Title | Optional override for the tab label in Arabic |
 | English Title | Optional override for the tab label in English |
 
-The order of rows in the grid is the order tabs appear in the UI. To rearrange tabs, reorder the grid rows. If you leave both title fields empty, the tab uses the sub-dashboard's own name (`name1` for Arabic UI, `name2` for English).
+The order of rows in the grid is the order tabs appear in the UI. To rearrange tabs, reorder the grid rows. Each language falls back on its own: with **Arabic Title** empty the Arabic tab shows the sub-dashboard's Arabic name, and with **English Title** empty the English tab shows its English name, or its Arabic name when it has no English one.
 
-::: tip
-A Tabbed dashboard cannot have widgets of its own — it's purely a container. If you also try to add widgets directly, the system blocks the save. This keeps the model coherent: a Tabbed parent's job is to host sub-dashboards, nothing more.
-:::
+A Tabbed dashboard is purely a container: it cannot have widgets of its own. The save rules are under **Rules & Limits** below.
 
 ### Cross-Filters Across Tabs
 
@@ -327,24 +323,26 @@ The active tab is encoded in the URL as the `sd` (sub-dashboard) query parameter
 
 - **Bookmark** a specific tab + filter combination, and the link reopens in the same state
 - **Share** a link that points colleagues directly to "the warehouse tab with the Q1 date filter pre-applied"
-- **Use the browser back/forward buttons** — switching tabs doesn't break navigation history beyond the URL update
+- **Rely on the address staying current** — switching tabs replaces the address instead of adding a history entry, so the browser's Back button leaves the dashboard rather than stepping back through its tabs
 
 ### What's Different About Editing Tabbed Dashboards
 
 A Tabbed dashboard has no widget grid, so:
 
-- **The layout designer doesn't open** for Tabbed parents. Click "Edit Dashboard Elements" and you'll see an error message asking you to use the Sub Dashboards grid instead.
+- **The layout designer doesn't open** for Tabbed parents: **Edit Dashboard Elements** shows an error instead. Tabs are managed in the Sub Dashboards grid.
 - **To edit a sub-dashboard's widget layout**, navigate to that sub-dashboard directly (it's still a normal Single dashboard) and use the layout designer there. Changes appear in the parent automatically.
 
 ### Rules & Limits
 
-A few invariants are enforced when you save:
+A few invariants are enforced when you save. These messages have no Arabic text and appear in English on Arabic screens too:
 
-- **No nested tabs.** A sub-dashboard cannot itself be Tabbed. Tabs are one level deep — this avoids cycles and keeps the UI predictable.
-- **No self-reference.** A dashboard cannot list itself as one of its own tabs.
-- **No duplicate sub-dashboards.** Each sub-dashboard can appear at most once in the tab list.
-- **Cross-filter bindings live on sub-dashboards only.** A Tabbed parent cannot have its own bindings — the union from sub-dashboards is what powers the bar.
-- **Permission filtering at runtime.** If you can see the parent but not a particular sub-dashboard, that tab still shows up but renders an error message instead of widgets, so you know something's restricted rather than silently hiding it.
+- **Sub-dashboards only.** A Tabbed dashboard with widgets is refused with *A Tabbed dashboard cannot have widgets. Use Sub Dashboards instead.*, and one with no sub-dashboard with *A Tabbed dashboard must have at least one Sub Dashboard.* The other way round, a Single dashboard with sub-dashboards is refused with *A Single dashboard cannot have Sub Dashboards. Change Kind to Tabbed first.*
+- **No nested tabs.** A sub-dashboard cannot itself be Tabbed: *Sub Dashboard {0} is itself a Tabbed dashboard. Nested Tabbed dashboards are not allowed.* Tabs are one level deep.
+- **No self-reference.** A dashboard cannot list itself as one of its own tabs: *A Sub Dashboard cannot reference its parent dashboard.*
+- **No duplicate sub-dashboards.** Each sub-dashboard can appear at most once in the tab list: *Sub Dashboard {0} is referenced more than once.*
+- **Cross-filter bindings live on sub-dashboards only.** A Tabbed parent cannot have its own bindings — the union from sub-dashboards is what powers the bar: *A Tabbed dashboard cannot have cross-filter bindings. Define them on the Sub Dashboards instead.*
+
+Who may see which tab is decided by the sub-dashboard's View Capability; see [BI Menus, Licence and Access](/platform/bi/bi-menu-licence-and-access#Hiding-a-widget-or-a-tab-from-some-users).
 
 ---
 
@@ -405,7 +403,7 @@ Cross-filters support all the data types you'd expect:
 
 Bounding a dashboard to "the first of the month through today" with two separate date filters means two records to maintain, two chips in the bar, and two chances for the pair to drift apart. Ticking **Show as Date Range** on a cross-filter collapses that pair into a single control that carries both ends of the period.
 
-You set it up on the cross-filter record: tick **Show as Date Range** — it sits beside Parameter Type and List Display Type — and point **SQL Left Hand Side** at the date column you want bounded. There is no second record to create; both ends come from this one.
+You set it up on the cross-filter record: tick **Show as Date Range** — it sits beside Param Type and List Display Type — and point **SQL Left Hand Side** at the date column you want bounded. There is no second record to create; both ends come from this one.
 
 On the dashboard the filter renders as a button showing the chosen period. Open it and you can pick either:
 
@@ -420,35 +418,25 @@ Picking a ready-made period stores the period itself, not the two dates it happe
 
 Two things worth knowing while configuring one:
 
-- The comparison is always the `>=` / `<=` pair, so there is no **Operator** to choose.
+- The comparison is always the `>=` / `<=` pair; an **Operator** set on the cross-filter or on a binding is ignored.
 - A **Custom WHERE Clause**, on the cross-filter or on a widget's binding, still wins: it replaces the generated pair with your own SQL, exactly as it does for an ordinary filter.
 
 ### Operators
 
-Each cross-filter can use a different comparison operator:
-
-| Operator | SQL | Typical Use |
-|---|---|---|
-| Equal | `=` | Exact match (most common) |
-| In | `IN (...)` | Multi-value selection |
-| GreaterThanOrEqual | `>=` | "From" date, minimum value |
-| LessThanOrEqual | `<=` | "To" date, maximum value |
-| GreaterThan / LessThan | `>` / `<` | Strict comparison |
-| NotEqual | `<>` | Exclusion |
-| Contains | `LIKE '%...%'` | Text search |
-| StartsWith | `LIKE '...%'` | Prefix match |
+Each cross-filter has its own comparison **Operator** (an empty one means Equal), and a widget's binding can override it for that widget. The nine operators a cross-filter applies, with their on-screen names and the SQL each one writes, are listed under [Supported Operators](/platform/bi/bi-module-technical-reference#Supported-Operators) in the Technical Reference.
 
 ### Widget-Local Filters
 
 Sometimes one chart needs a slicer of its own that the rest of the dashboard must not feel — "show *this* KPI for the northern region" while every neighbouring widget stays on the group total. That is what the **Widget-Local Scope** tick on a cross-filter binding is for.
 
-Tick it on the binding row — in the widget's cross-filter bindings grid, or on a dashboard-level override row — and the filter moves out of the dashboard filter bar and into the widget itself. A filter button appears in the widget's top-right corner, carrying a badge with the count of its active local filters; clicking it opens a small dialog with one input per local binding, an **Apply** button and a **Clear All**.
+Tick it on the binding row — in the widget's cross-filter bindings grid, or on a dashboard-level override row — and the filter moves out of the dashboard filter bar and into the widget itself. A filter button appears in the widget's top-right corner, carrying a badge with the count of its active local filters; clicking it opens a small dialog with one input per local binding, an **Apply** button and, once a local value is set, a **Clear All**.
 
 Local filters are deliberately sealed off from the dashboard conversation:
 
 - A value clicked on a neighbouring chart, or typed into the dashboard filter bar, never reaches a local binding — only the widget's own popup drives it.
 - If every binding of a given cross-filter across the whole dashboard is local, that filter disappears from the dashboard filter bar altogether.
 - Drill-down is the exception, because it is an explicit user action: a drill-down that targets a locally-bound filter still passes its value through.
+- Period comparison treats a local value like any other: a date filter tied to a comparison config is still shifted for the previous-period run.
 
 Local values travel in the dashboard URL alongside the global ones, so a link you copy reopens with the same per-widget state.
 
@@ -552,7 +540,7 @@ Each section only appears if the corresponding mapping is defined, and **Drill d
 
 ## The Chart Toolbox
 
-Every chart can carry a small row of icons in its top-right corner, but they are **hidden by default**. Turn them on from the dashboard toolbar: **View Options** (the ⋮ button) → **Show Toolbox**. The choice is remembered in your browser and applies to every dashboard you open.
+Every chart can carry a small row of icons in its top-right corner, but they are **hidden by default**. Turn them on from the dashboard toolbar: **View Options** (the ⋮ button) → **Show Chart Toolbox**. The choice is remembered in your browser and applies to every dashboard you open.
 
 With the toolbox on, a chart offers:
 
@@ -560,7 +548,7 @@ With the toolbox on, a chart offers:
 - **Save as Image** — downloads the chart as a PNG file.
 - **Data View** — shows the rows behind the chart as a read-only table, which is the quickest way to read exact numbers off a picture.
 - **Line / Bar / Stack** — on charts drawn against an X and Y axis, switches the rendering on the spot, with **Restore** to put it back. Stack appears only when the chart has more than one series.
-- **Runtime Slot Selection** — on wizard-backed widgets, opens the picker that lets a reader swap the dimension or measure the chart is drawn from, for this session only. See the [Wizard Mode reference](./bi-reference-wizard-mode.md).
+- **Runtime Slot Selection** — on wizard-backed widgets, opens the picker that lets a reader swap the dimension or measure the chart is drawn from, for this session only. See the [Wizard Mode reference](/platform/bi/bi-reference-wizard-mode).
 
 Administrators see three more: **Open Widget**, which opens the widget's own record, plus **Copy EChart Option** and **Copy Server Response**, which put the chart's option JSON and the server's raw answer on the clipboard — the two things worth having in hand when a chart renders differently than you expected.
 
@@ -578,9 +566,6 @@ Non-chart widgets — tables and cards — get a collapse button in the same cor
 | **Hover** data point | Shows tooltip (axis mode shows all series, item mode shows single point) |
 | **Scroll wheel** | Zooms in/out if data zoom is enabled |
 | **Drag zoom slider** | Adjusts visible data range |
-| **Toolbox: Save as Image** | Downloads the chart as a PNG file |
-| **Toolbox: Data View** | Opens the chart's rows as a read-only table |
-| **Toolbox: Copy EChart Option** | Copies the chart's option JSON to the clipboard (administrators) |
 
 ---
 
@@ -615,7 +600,7 @@ Every column is configured on its own, so one table can mix:
 - **Column groups, pinned columns, widths, row grouping and totals**, and a **pivot (cross-tab) layout**.
 - **The usual interactions** — cross-filters, drill-downs and record links work as on any widget, and each one can be limited to clicks on a single column.
 
-The exact settings for each of these are in the [Enhanced Table reference](./bi-reference-enhanced-table.md).
+The exact settings for each of these are in the [Enhanced Table reference](/platform/bi/bi-reference-enhanced-table).
 
 ### Large Tables — Paging From the Server
 
@@ -625,14 +610,14 @@ For those tables, open **Table Options** and set **Row Loading** to **Load page 
 
 Server paging only works on a plain list. If the table has a pivot layout, a grand-total or subtotal row, row grouping, or any column with an aggregation, the widget quietly keeps loading all rows at once — the designer says so under the Row Loading box. In server mode users can't drag columns into groups or pivot, but clicks, cross-filters, drill-downs and record links all work as usual. If the table sits unused for 15 minutes, the next page request makes it re-run its query and reload by itself.
 
-The [Enhanced Table reference §2.1](./bi-reference-enhanced-table.md) has the exact rules and settings.
+The [Enhanced Table reference §2.1](/platform/bi/bi-reference-enhanced-table) has the exact rules and settings.
 
 ### Admin Conveniences
 
-When logged in as `admin` (or any user with `treatAsAdmin` enabled), the widget toolbar shows two extra buttons:
+When logged in as `admin` (or any user with `treatAsAdmin` enabled), and with **Show Chart Toolbox** turned on (see [The Chart Toolbox](#The-Chart-Toolbox)), the widget header shows two extra buttons:
 
 - **Copy Data JSON** — copies the widget's fully-computed data payload to the clipboard. Handy for debugging formatting rules or understanding why a particular cell looks the way it does.
-- **Open Widget** — opens the widget's edit screen in a new tab. This same button also appears on `Table`, `Metrics Cards`, `Card Menu`, and `EChart` widgets for admins, giving one-click access to widget configuration from any dashboard.
+- **Open Widget** — opens the widget's edit screen in a new tab. The same button sits on `Table`, `Metrics Cards`, `Metrics Cards v2 (Enhanced)` and `Card Menu` widgets too, and in the toolbox of every chart.
 
 ### Designer
 
@@ -646,9 +631,9 @@ From that tab you can:
 - Edit each column's id, field, headers, width, pinning, renderer type, formatting type inline
 - Bootstrap from a SQL query via the **Generate Columns From Result Set** button — this runs the data-source SQL and seeds one default column per result-set header, so you're not starting from zero
 
-A companion **Table Options** tab covers the grid-level switches (pagination, row grouping, grand total row, row loading, etc.).
+A **Table Options** section below the columns on the same tab covers the grid-level switches (pagination, row grouping, grand total row, row loading, etc.).
 
-For more advanced configuration — specifically column groups, per-renderer options like bar min/max or icon mappings, and the full conditional-formatting rule DSL — use the **Raw JSON** tab. The [Enhanced Table reference](./bi-reference-enhanced-table.md) has the complete schema.
+For more advanced configuration — specifically column groups, per-renderer options like bar min/max or icon mappings, and the full conditional-formatting rule DSL — edit the JSON directly in the widget's **Chart Config JSON** field on its Main tab. The [Enhanced Table reference](/platform/bi/bi-reference-enhanced-table) has the complete schema.
 
 ### When To Use Which
 
@@ -678,11 +663,11 @@ Each widget gets its data from either a raw SQL query or a wizard data source.
 
 ### Raw SQL
 
-You write a standard T-SQL SELECT query. The only requirement is including the `/*AND-FILTERS*/` placeholder in the WHERE clause — this is where the system injects cross-filter conditions at runtime. Because it's a SQL comment, your query remains valid if you paste it into SQL Server Management Studio for testing.
+You write a standard T-SQL SELECT query with the `/*AND-FILTERS*/` placeholder in its WHERE clause — this is where the system injects cross-filter conditions at runtime. A widget that has cross-filter bindings cannot be saved without it, and neither can a dashboard that binds a cross-filter to such a widget. Because it's a SQL comment, your query remains valid if you paste it into SQL Server Management Studio for testing. The exact rules are in section 2 of the [Technical Reference](/platform/bi/bi-module-technical-reference).
 
 ### Wizard Data Source
 
-Instead of writing SQL, you define a data source using Nama ERP field IDs (property paths like `customer.customerCategory` or `price.netValue`). The system generates the SQL automatically. Wizard fields are marked as either **Dimension** (group-by / category) or **Measure** (aggregated value with Sum, Count, Average, Min, or Max).
+Instead of writing SQL, you define a data source using Nama ERP field IDs (property paths like `customer.customerCategory` or `price.netValue`). The system generates the SQL automatically. Wizard fields are marked as either **Dimension** (group-by / category) or **Measure** (aggregated by its **SQL Aggregation Type**: Sum, Count, Avg, Min, Max or Distinct Count).
 
 ![The Dashboard Widget Wizard record for the sales data source: the main table SalesInvoiceLine, the generated SQL query, and a Fields grid whose lines show each field id, its Dimension or Measure usage, and the Sum aggregation on the measure](../../ar/platform/bi/images/bi-wizard-data-source-screen-en.png)
 
@@ -729,6 +714,8 @@ Three pieces are needed:
 
 3. **Enable comparison on each widget** — on the widget, check the `Enable Comparison` checkbox. Only widgets with this flag enabled will run the double-query comparison. Other widgets on the same dashboard continue to work normally with a single query.
 
+The second, shifted query runs only once one of the cross-filters tied to the config has a value; until then the widget runs once and shows the current period only. A widget's bindings may reach only one config — a widget or dashboard whose bindings lead to two different configs is refused on save.
+
 ![The period comparison configuration record: a four-month subtracted period, the injected period column names, the four period labels, and the list of cross filters using it](../../ar/platform/bi/images/bi-period-comparison-config-en.png)
 
 ### Two Modes of Comparison
@@ -757,7 +744,7 @@ Configure it in the widget's **Comparison Data Mapping** grid:
 
 Your chart's `CategoryValue` data mapping then has two series: one for `netValue` ("Current Year") and one for `prevNetValue` ("Previous Year"), producing side-by-side bars.
 
-For EChart widgets, you don't need to set `Merge Comparison Results By Columns` — the ECharts data mapping layer already merges rows that share the same category/label keys and sums their values automatically. However, `Merge Comparison Results By Columns` is important for **non-chart widget types** like Tables, Metrics Cards, and other widgets where there's no data mapping layer to handle the merge. Set it to a CSV of the columns that identify a unique row (e.g., `itemClassName`), and the system will match rows from both periods and combine them into a single row instead of appending duplicates.
+For EChart widgets, you don't need to set `Merge Comparison Results By Columns (CSV)` — the ECharts data mapping layer already merges rows that share the same category/label keys and sums their values automatically. However, `Merge Comparison Results By Columns (CSV)` is important for **non-chart widget types** like Tables, Metrics Cards, and other widgets where there's no data mapping layer to handle the merge. Set it to a CSV of the columns that identify a unique row (e.g., `itemClassName`), and the system will match rows from both periods and combine them into a single row instead of appending duplicates. On a wizard-backed widget rows are matched on the chart's active dimensions instead; the field is used there only when the chart has no active dimension.
 
 ### Query Parameters
 
@@ -767,7 +754,7 @@ Regardless of mode, the system injects two parameters into every comparison quer
 
 ## Creating Dashboards with AI
 
-The [BI Module Technical Reference](./bi-module-technical-reference.md) documents every JSON structure, SQL pattern, and import format you need to create dashboards programmatically. It's written specifically for AI tools and developers — which means you can use an AI assistant to design and generate complete dashboard import files for you.
+The [BI Module Technical Reference](/platform/bi/bi-module-technical-reference) documents every JSON structure, SQL pattern, and import format you need to create dashboards programmatically. It's written specifically for AI tools and developers — which means you can use an AI assistant to design and generate complete dashboard import files for you.
 
 ::: tip Using AI to Build Dashboards
 Here's a workflow that works well:
@@ -779,7 +766,7 @@ Here's a workflow that works well:
    > "I need a sales analysis dashboard with a pie chart showing sales by customer category, a horizontal bar chart showing top 10 items, a monthly trend line chart, and a details table. All charts should be cross-filtered by branch, date range, and customer category. The pie chart should emit the customer category filter when clicked, and the bar chart should drill down to invoice details."
 
 4. Ask the AI to generate a complete import JSON file following the technical reference format
-5. Import the generated JSON into Nama ERP with **More → Import Records** (see [How to Import](/platform/bi/bi-module-technical-reference.md#How-to-Import)) — you'll have a working dashboard with all the cross-filters, drill-downs, and styling ready to go
+5. Import the generated JSON into Nama ERP with **More → Import Records** (see [How to Import](/platform/bi/bi-module-technical-reference#How-to-Import)) — you'll have a working dashboard with all the cross-filters, drill-downs, and styling ready to go
 6. Given AI can guess table names, column names, or joins incorrectly, it is better to give it a sample query containing the columns and joins you want to use.
 7. For wizards, you can skip the sample query and instead let the AI reference [dm.namasoft.com](https://dm.namasoft.com) for property paths — the wizard resolves joins automatically from the field IDs.
 
@@ -788,7 +775,7 @@ This is dramatically faster than building each widget by hand, especially for da
 
 ### Letting the AI Check Its Own Work
 
-An assistant that writes a widget without seeing it run is guessing: it cannot tell that its query returns no rows, that a join counts every invoice twice, or that a cross filter never reaches the query. Connect it to the system over [MCP](../../modules/ai/ai-mcp-server.md) and give it the [dashboard tools](../../modules/ai/ai-tool-definitions.md#Dashboard-tools-Add-Report-Tools) — the **Add Report Tools** button on the AI Tool Definition screen adds them — and it can close that loop itself:
+An assistant that writes a widget without seeing it run is guessing: it cannot tell that its query returns no rows, that a join counts every invoice twice, or that a cross filter never reaches the query. Connect it to the system over [MCP](/modules/ai/ai-mcp-server) and give it the [dashboard tools](/modules/ai/ai-tool-definitions#Dashboard-tools-Add-Report-Tools) — the **Add Report Tools** button on the AI Tool Definition screen adds them — and it can close that loop itself:
 
 - **Run a dashboard** and read what every chart, table and card shows, as numbers rather than a picture, with the cross filters you choose.
 - **Run one widget** and read the SQL it actually executed — with the cross filter conditions written into the `/*AND-FILTERS*/` placeholder and the parameters filled in — next to the rows the database returned. That is usually enough to tell a wrong query from a wrong chart configuration.
@@ -803,6 +790,6 @@ About two in three companies use dashboards. A typical company keeps around five
 Among the companies that use dashboards:
 
 - **Refresh.** About seven in ten set a dashboard-level refresh. Every five minutes and every minute are the usual choices, and some dashboards refresh hourly or daily — see [Auto-Refresh](#Auto-Refresh).
-- **Widget mix.** The plain **Table** is the most common widget, in about six in ten companies. Embedded **Report** widgets come close behind, in nearly half. **HTML** widgets are in about four in ten, and **Calendar**, **EChart** and **Table v2 (Enhanced)** are each in about three in ten. Slicers (**CrossFilterControl**) and **Metrics Cards v2 (Enhanced)** are each in about one in four — see [Widget Types on a Dashboard](#Widget-Types-on-a-Dashboard).
+- **Widget mix.** The plain **Table** is the most common widget, in about six in ten companies. Embedded **Report** widgets come close behind, in nearly half. **HTML** widgets are in about four in ten, and **Calendar**, **eChart** and **Table v2 (Enhanced)** are each in about three in ten. Slicers (**Cross Filter Control**) and **Metrics Cards v2 (Enhanced)** are each in about one in four — see [Widget Types on a Dashboard](#Widget-Types-on-a-Dashboard).
 - **Interaction.** About three in ten bind their widgets to cross-filters ([Cross-Filtering](#Cross-Filtering)). About one in four build **Tabbed** dashboards ([Tabbed Dashboards](#Tabbed-Dashboards)), and about one in four put dashboards on the menu through a [Dashboard Group](#Dashboard-Groups----Putting-Dashboards-on-the-Menu).
 - **Subjects.** Sales and the general ledger are the most common subjects, each in about six in ten companies' widgets. Items and stock come next, then purchases.

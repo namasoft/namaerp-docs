@@ -23,11 +23,9 @@ By default a stock document carries one warehouse and one set of accounting dime
 | Sector in Details | `value.sectorInDetails` |
 | Department in Details | `value.departmentInDetails` |
 
-**Salesman in Details** (`value.salesManInDetails`) — Lets each line carry its own salesman (and, with the option below, governs how the purchases man behaves per line). Use it when commission/attribution must be split among salesmen on one document.
+**Salesman in Details** (`value.salesManInDetails`) — Lets each line carry its own salesman. The same switch decides whether a line on a purchase document keeps its own purchases man: while it is off, every line takes the header's purchases man as well. Use it when commission/attribution must be split among salesmen on one document.
 
-**Salesman from Header if Detail is Empty** (`value.salesManFromHeaderIfDetEmpty`) — Only relevant when *Salesman in Details* is on: a line with no salesman is filled from the header, while a salesman already on the line is kept. With it off, the header value overrides the line whenever the header has one. The same applies to the purchases man.
-
-**Purchases Man in Details** (`value.purchasesManInDetails`) — Shows the purchases man column on document lines (its per-line/header fill behavior follows the salesman options above).
+**Sales Man From Header If Detail is Empty** (`value.salesManFromHeaderIfDetEmpty`) — Only relevant when *Salesman in Details* is on: a line with no salesman is filled from the header, while a salesman already on the line is kept. With it off, the header value overrides the line whenever the header has one. The same applies to the purchases man.
 
 **Apply Warehouse Usage Policies** (`value.applyWarehouseUsagePolicies`) — The company-wide switch for [Warehouse Usage Policies](/modules/supplychain/warehouses-and-locators#Warehouse-Usage-Policy). While it is off, no document is checked against any policy and the policy screen refuses to save.
 
@@ -39,23 +37,23 @@ By default a stock document carries one warehouse and one set of accounting dime
 
 **Use System Table to Track Quantities** (`value.useEntriesForTrackQuantities`) *(on in newly created databases)* — Switches quantity tracking (the running "how much of this line has been delivered/satisfied" balance between linked documents) to a dedicated system table maintained automatically as documents are processed and deleted. This is the modern, recommended way to track delivered/remaining quantities across the document chain.
 
-**Allow Non-System Term and Book in Assembly Document Term** (`value.allowNonSystemTermAndBook`) — On the assembly document term, this normally forces issued/received items to use the system-defined book and term. When on, you may assign your own (non-system) book and term for the issue and receipt sides.
+**Allow Non System Issue And Receipt Term And Book In Assembly Document Term Config** (`value.allowNonSystemTermAndBook`) — On the assembly document term, this normally forces issued/received items to use the system-defined book and term. When on, you may assign your own (non-system) book and term for the issue and receipt sides.
 
 **Copy Item Name with Entry and Keep It** (`value.copyItemNameWithEntryAndKeepIt`) — When an item is entered, its name is copied onto the line and kept even if it would otherwise be recomputed — useful when the captured name should be preserved for printing.
 
-**Show To-Item Dimensions in Transfer and Use Them** (`value.showToItemDimensionsInTransfer`) — On stock transfers, shows and uses the destination "to-item" dimensions, so a transfer can map the item's dimensions on the receiving side (e.g. re-labeling color/size on transfer).
+**Show To Item Dimensions In Transfer and Use Them** (`value.showToItemDimensionsInTransfer`) — On stock transfers, shows and uses the destination "to-item" dimensions, so a transfer can map the item's dimensions on the receiving side (e.g. re-labeling color/size on transfer).
 
 **Copy Line Dimensions Using Legacy Method** (`value.copyLineDimensionsUsingLegacyMethod`) — A compatibility switch: copies line dimensions between documents using the older method. Enable only if line-dimension copying must match historical behavior.
 
 **Enable Pick Lines Usage** (`value.enablePickLinesUsage`) — Turns on the picking (pick-lines) workflow for sales documents. Enable when warehouse picking against sales documents is part of your fulfillment.
 
-**Show Final Materials in Multi-Assembly Document** (`value.showFinalMaterialsGridInMultiAssembly`) — Adds a "final materials" grid to the Multi-Assembly document, summarizing the consolidated materials across the assembly.
+**Show Final Materials In Multi Assembly Doc** (`value.showFinalMaterialsGridInMultiAssembly`) — Adds a "final materials" grid to the Multi-Assembly document, summarizing the consolidated materials across the assembly.
 
-**Only Add Alternative Material Found in Issued Material When Creating Assembly Alternative Material** (`value.onlyAddAltMaterialFoundInIssuedMaterialInAssemblyDocumentWhenCreatingAssemblyAltMaterial`) — When creating an Assembly Alternative-Material document, restricts the offered alternatives to materials that actually appear in the assembly's issued materials.
+**Only Add Alternative Material Found In Issued Material In Assembly Document When Creating Assembly Alternative Material** (`value.onlyAddAltMaterialFoundInIssuedMaterialInAssemblyDocumentWhenCreatingAssemblyAltMaterial`) — When creating an Assembly Alternative-Material document, restricts the offered alternatives to materials that actually appear in the assembly's issued materials.
 
-**Do Not Multiply Quantities in Assembly Document** (`value.doNotMultiplyQiesInAssemblyDoc`) — Normally, saving an assembly multiplies component quantities by the assembled quantity. When on, the entered component quantities are taken as-is. Use it when you enter absolute component quantities.
+**Do Not Multiply Quantities In Assembly Doc** (`value.doNotMultiplyQiesInAssemblyDoc`) — Normally, saving an assembly multiplies component quantities by the assembled quantity. When on, the entered component quantities are taken as-is. Use it when you enter absolute component quantities.
 
-**Default Delivery Status** (`value.defaultDeliveryStatus`) — The delivery status automatically stamped on every new sales document (e.g. "Not Delivered"). Leave empty for no default.
+**Default Status** (`value.defaultDeliveryStatus`) — The delivery status automatically stamped on every new sales document (e.g. "Not Delivered"). Leave empty for no default.
 
 **Use Delivery Organization Files** (`value.useDeliveryOrganization`) — Turns on driver scheduling: a sales document whose term names a Delivery Organization File gets a driver, a car and a delivery day booked from the Delivery Driver Configuration schedule when it is saved. See the [Delivery & Loading guide](../delivery-and-loading.md).
 
@@ -67,7 +65,7 @@ These tables add optional grids or columns to specific document types. Each one 
 
 **Add Quantity Tracking Fields To** (`value.addQtyTrackingFieldsTo`) **/ Add Quantity Tracking Fields To (2)** (`value.addQtyTrackingFieldsTo2`) *(tables)* — Add quantity-tracking columns (requested, satisfied, unsatisfied) to the listed document types' line grids, so staff see the running balance. The second table adds an independent *second* set of tracking columns for documents that need two tracking measures.
 
-**Add Delete-on-Save Field To** (`value.addDeleteOnSaveFieldTo`) *(table)* — Adds a "delete on save" checkbox to each line (plus select-all/unselect-all actions) for the listed document types, so users can mark lines for removal and have them deleted on save.
+**Add Delete On Save Field To** (`value.addDeleteOnSaveFieldTo`) *(table)* — Adds a "delete on save" checkbox to each line (plus select-all/unselect-all actions) for the listed document types, so users can mark lines for removal and have them deleted on save.
 
 **Add Gross Weight and Net Weight Fields To** (`value.addGrossWeightAndNetWeightFieldsTo`) *(table)* — Adds gross-weight and tare-weight columns next to the quantity column for the listed document types. When a user types either weight, the line quantity becomes gross weight minus empty weight (a negative result is ignored).
 

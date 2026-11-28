@@ -23,45 +23,40 @@ together.
 | `SYSR-PMG001` | اوقات الموظفين | Employee TimeSheet | Which hours were booked on which project and task, over a date range, and what state is each line in? |
 | `SYSR-PMG002` | تفاصيل أوقات الموظفين | Employee TimeSheet Details | Set against attendance, leave and missions, what does each employee's day actually look like? |
 
-Both read committed **Tasks Executing** documents. Time that is still sitting in a draft, or in a
-timesheet whose processing has not finished, is not on them.
+Both read the lines of saved **Tasks Executing** documents directly; neither looks at whether the
+timesheet's accounting entry has been processed.
 
 ## Employee TimeSheet — the Billing and Chasing Report
 
-`SYSR-PMG001` is the everyday one. It lists timesheet lines over a period, one row per stretch of
-recorded work, with the customer, the project, the task, the from and to times, the net time in
-decimal hours, the line's remark, its code and its state — and a grand total of hours at the end.
+`SYSR-PMG001` is the everyday one. It lists timesheet lines over a period, grouped by employee and by
+date, one row per stretch of recorded work, with the columns **Customer**, **Project**, **Task**,
+**From**, **To**, **Net Time** (hours:minutes), **Remarks** (the line's remark), **Code** (the Tasks
+Executing document) and **Status** (the line's approval state) — with a total per date, a total per
+employee and a grand total of hours at the end.
 
 It is the report you run before raising a Project Invoice ("what is billable on `PRJ-0042` for
 March?") and the report a manager runs on a Monday morning ("whose time is still waiting for me?").
 
-Its criteria are almost all **from/to pairs**, and the rule for all of them is the same: leave a pair
-empty and it does not filter at all. The pairs are:
+Its criteria are these; any you leave empty do not filter at all:
 
-- **From Date / To Date** — the only criteria that come pre-filled, defaulting to the start and end of
-  the current month.
-- **From Employee / To Employee** — a range over employee codes.
-- **From Project / To Project** and **From Task / To Task** — narrow to one job or one work package.
-- **From Manager / To Manager**, available both by manager code and by manager name — this is how a
-  department head pulls only the projects they are responsible for.
+- **Date** — a date range on the line's date, the only criterion that comes pre-filled, defaulting to
+  this month.
+- **Employee** — pick one or more employees.
+- **From Customer / To Customer** — a range over customer codes. **Managed Project** — pick one or
+  more projects; once From Customer is filled, the project list offers only that customer's projects.
+- **Task** — pick one or more tasks, to narrow to one work package.
+- **Manager** — pick one or more employees; the report keeps the lines whose project names one of them
+  as its manager. This is how a department head pulls only the projects they are responsible for.
 
-Beyond the ranges there are five switches, and they are what make the report useful rather than
-merely long:
+Beyond the criteria there are switches, and they are what make the report useful rather than merely
+long:
 
-| Switch | What it does |
-|---|---|
-| **Show Details** | Off, the report collapses to totals; on, you get every individual line. |
-| **Show Current Employee Only** | Restricts the report to the logged-in user's own time — the "my timesheet" view. |
-| **Show Approved** | Include lines a manager has accepted. |
-| **Show Rejected** | Include lines a manager has turned down. |
-| **Show Pending** | Include lines still waiting for approval. |
-
-The three state switches are independent, so any combination works: approved only, to see what is
-billable; pending only, to see what is stuck; all three, to reconcile a month.
-
-One reading note. The report has two columns whose English heading reads *Remarks*. The first is the
-line's own remark text; the **rightmost** one is the line's approval state. Read the last column as
-the state and the report makes sense immediately.
+| Switch | Default | What it does |
+|---|---|---|
+| **Show Details** | On | Off, the report collapses to the per-date and per-employee totals; on, you get every individual line. |
+| **Show Current Employee Only** | Off | Restricts the report to the logged-in user's own time — the "my timesheet" view. |
+| **Show Approved** | On | Off, lines whose status is Approved are left out — the way to see what is still open. |
+| **Show Rejected** | On | Off, lines a manager has turned down are left out. |
 
 ## Employee TimeSheet Details — Time Against Attendance
 
@@ -75,11 +70,10 @@ are colour-coded to make that immediate: **vacation days are shaded green and ab
 
 Its criteria are wider than the first report's because it reaches into HR:
 
-- **From Date / To Date**.
-- The full **dimension** ranges (محددات): legal entity, branch, sector, department and analysis set —
-  so a shared-services group can report one company or one branch at a time.
-- The **employee organisation** ranges: employee department, employee section, employee code and
-  employee name.
+- **Date** — a date range, defaulting to this month.
+- **Legal Entity** and **Branch** — pick one or more of each, so a shared-services group can report
+  one company or one branch at a time.
+- **Employee Department**, **Department Section** and **Employee** — pick one or more of each.
 - **Show Current Employee Only**, as on the first report.
 
 This is a payroll-and-audit report rather than a billing one. Run it at the end of a month, before

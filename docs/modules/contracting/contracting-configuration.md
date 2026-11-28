@@ -15,11 +15,11 @@ There are around ninety options on the screen, and almost all of them arrive as 
 
 Two facts about the record itself matter more than any individual option.
 
-**There is exactly one.** Every piece of code that reads these settings reads the same single record, with no company or dimension passed in. So there is **no per-company override**: a group running three legal entities out of one database runs all three on the same contracting settings. If two companies need different term-coding rules or different extract pricing, that is not something this screen can give them.
+**There is exactly one.** Each module has a single settings record for the whole database (see [System Settings, Configuration Group and Edit File](/admin/system-settings-and-configuration-group)). So there is **no per-company override**: a group running three legal entities out of one database runs all three on the same contracting settings. If two companies need different term-coding rules or different extract pricing, that is not something this screen can give them.
 
 **It is read live.** Nothing is cached into your contracts. Changing an option changes the behaviour of the next document you save, including documents that already existed — so a switch that changes how an extract prices its lines will change how an existing draft extract recalculates the moment you reopen and save it. Change these settings deliberately, and preferably not in the middle of a billing run.
 
-Do not assume any option starts on. What is switched on depends on how the database was set up: the setup wizard's Contracting Configurations step saves only the options you tick there, and everything else stays off. Open this screen and check before relying on an option.
+Do not assume any option starts on. In a new database exactly one does: **Prevent Update Execution If Extract On It**. The setup wizard's Contracting Configurations step then overwrites the dozen options it shows — that one included — with exactly what is set there, and every option the wizard does not show stays off. Open this screen and check before relying on an option.
 
 ## Term Codes and the Parent-Term Rule
 
@@ -29,7 +29,7 @@ A term code is the dotted outline number — `1`, `1.1`, `1.2`, `2` — that ide
 |---|---|---|
 | **Term Codes Manually in Contracts and Assays**<br>`value.termCodesManual` | Term codes on contracts and assays are typed by the user instead of generated from grid position. | When the client's bill of quantities already has an official numbering that must be reproduced exactly — a government or consultant-issued BOQ, typically. |
 | **Manually Coded Terms Entities**<br>`value.manuallyCodedTermsEntities` | A grid of document types. Anything listed here is manually coded; anything not listed is generated. **If this grid has even one row it completely overrides the option above.** Allowed types are the assay, both budgets, the project contract and the subcontract. | When only some documents need manual codes — for example manual codes on the contract because the client dictates them, generated codes everywhere else. |
-| **Calculate Parent Term Based on Term Codes**<br>`value.calculateParentTermBasedOnTermCodes` | The parent/child relationship in the term tree is derived from the code prefix, so `1.2.1` becomes a child of `1.2`, rather than from the line's position in the grid. **Requires manual term coding** — the settings screen refuses to save this option without it. | Whenever term codes are typed. With manual codes and this option off, the outline the user typed and the tree the system believes in can drift apart. |
+| **Calculate Parent Term Based on Term Codes (Term Code Starts with Parent Term Code)**<br>`value.calculateParentTermBasedOnTermCodes` | The parent/child relationship in the term tree is derived from the code prefix, so `1.2.1` becomes a child of `1.2`, rather than from the line's position in the grid. **Requires manual term coding** — the settings screen refuses to save this option unless **Term Codes Manually in Contracts and Assays** is ticked. | Whenever term codes are typed. With manual codes and this option off, the outline the user typed and the tree the system believes in can drift apart. |
 | **Do Not Allow Auto Code Analysis Card Term Codes**<br>`value.doNotAutoCodeAnalysisCardTermCodes` | Suppresses the automatic analysis-term code on a term analysis card. | Only if your cost analysts maintain their own analysis coding scheme. |
 | **Add Parent Terms Codes When Suggest Terms**<br>`value.addParentTermsCodesWhenSuggestTerms` | Term-code suggestion offers parent (roll-up) codes as well as leaf codes. | When users habitually bill or cost against header lines. Leave it off to force everyone onto leaf terms. |
 | **Consider Terms Project Remarks While Suggesting Term Code**<br>`value.considerTermProjRemarksWhileSuggestingTermCode` | Term-code suggestion also matches on the project remarks typed against a term line, not just the code and description. | When term descriptions are generic ("brickwork") and the useful distinguisher is in the remarks ("brickwork — block C stairwell"). |
@@ -61,20 +61,20 @@ These are the options that change the money. Most of them exist because differen
 | **Do Not Include Terms That Do Not Have Current Quantities**<br>`value.doNotIncludeTermsThatDoNotHaveCurrentQties` | *Collect Terms* on an extract skips any term with nothing to bill this period. | Almost always. On a 200-line bill of quantities it is the difference between an extract you can read and one padded with zero rows. |
 | **Copy Manual Total From Previous Quantity With From Document**<br>`value.copyManualTotalFromPreviousQtyWithFromDoc` | When an extract is built "based on" an earlier document, the manually typed total is carried across too. | Where the extract total is negotiated as a round figure and re-typing it every period is error-prone. |
 | **Subtract Remaining Tax Value With Percent From Due Value With Every Extract**<br>`value.subtractRemainingTaxValueWithPercentFromDueValueWithEveryExtract` | With the "percentage of due value" payment method, the remaining tax portion is subtracted on every extract instead of being left to the end. | When the tax on an advance or deduction must be relieved gradually alongside the recovery rather than in one lump. |
-| **Consider Document Book And Calculating Fines And Extract Docs Numbers**<br>`value.considerDocBookWhenCalcFinesAndExtractDocsNumbers` | Extract and fine sequence numbers are counted per document book instead of globally. | When each project or branch has its own book and each needs its own "extract no. 1". |
+| **Consider Document Book When Calculating Fines And Extract Docs Numbers**<br>`value.considerDocBookWhenCalcFinesAndExtractDocsNumbers` | Extract and fine sequence numbers are counted per document book instead of globally. | When each project or branch has its own book and each needs its own "extract no. 1". |
 | **Allow Creating Documents For Contracts That Have a Final Extract**<br>`value.allowUsingFinalizedContracts` | Lets new documents be raised against a contract that has already been closed with a final extract. | For genuine post-closure work — a snagging bill, a late-agreed variation — that the business does not want to handle as a new contract. |
 
 ### The Eight Discount-Percentage Switches
 
 There are eight discount slots on an extract line, and for each one there is an option — *Calculate discount 1 percentage from value* through *Calculate discount 8 percentage from value* (`value.calcDisc1PercentFromValue` … `value.calcDisc8PercentFromValue`) — that reverses the direction of the calculation. Off, you type a percentage and the system computes the amount. On, you type the amount you actually negotiated and the system derives the percentage.
 
-Turn on the slots your business negotiates as flat amounts and leave the rest off. It is worth knowing that this is resolved in a three-level cascade: the module setting is the default, the contract can override it, and the extract's document term can override that. So this screen sets house style, not law.
+Turn on the slots your business negotiates as flat amounts and leave the rest off. The same switch also exists on the contract and on the extract's document term, and a slot is reversed on an extract when it is ticked in **any one** of the three places. Ticking it here therefore turns it on for every contract and every term; neither of them can switch it back off. Leave it off here if only some contracts or some terms need it.
 
 ## Quantity Executions
 
 | Option | What it changes | When to turn it on |
 |---|---|---|
-| **Prevent Update Execution If Extract On It**<br>`value.preventUpdateExeDocIfExtract` | Blocks editing an execution document once an extract has consumed it. | Turn it on. Editing a measurement that has already been billed is how billed quantities and measured quantities silently diverge. |
+| **Prevent Update Execution If Extract On It**<br>`value.preventUpdateExeDocIfExtract` | Blocks editing a processed execution document once an extract names it as its From Document; the save is refused with *Can not update, there is extract {0} on it*. | Leave it on — it is the one option that starts on. Editing a measurement that has already been billed is how billed quantities and measured quantities silently diverge. |
 | **Allow Current Quantity Percentage Exceed Permitted Percentage**<br>`value.allowCurrentQuantityPercentageExceedPermittedPercentage` | Lets the current-quantity percentage on an execution go past the permitted percentage set on the contract's term line. | Where the permitted percentage is guidance rather than a contractual cap. |
 
 ## When a Contract, Assay or Subcontract Can Still Be Edited
@@ -96,7 +96,7 @@ The module locks documents once downstream money exists. These options unlock th
 
 ### Discount Ceilings from the Employee File
 
-Two options — **Prevent Saving Contracts and Offers if Discount Percentage in Line Exceeds the Max Discount In Employee** (`value.maxDiscPercenForEmpToApplyOnContracting`) and the matching **… in Header …** (`value.maxDiscPercenForEmpToApplyOnContractingHeader`) — enforce the maximum discount recorded on the employee's own file against contracts and offers. One covers discounts typed on a line, the other the discount on the document header. Each is a choice of how strictly to enforce, so set the one that matters and leave the other alone if header discounts are not used. Turn them on when sales staff have individual discount authority that has to hold.
+Two options — **Prevent Saving Contracts and Offers if Discount Percentage in Line Exceeds the Max Discount In Employee** (`value.maxDiscPercenForEmpToApplyOnContracting`) and **Prevent Saving Contracts and Offers if Discount Percentage in Header Exceeds the Max Discount In Employee** (`value.maxDiscPercenForEmpToApplyOnContractingHeader`) — enforce the maximum discount recorded on the employee's own file against contracts and offers. One covers discounts typed on a line, the other the discount on the document header. Each is a list, not a tick box: it picks which of the eight maximum-discount percentages on the employee file is the ceiling, and left empty it uses the first. The employee is the one linked to the logged-in user; a user with no employee, or an employee whose chosen ceiling is empty or zero, is not checked at all.
 
 ## Cost Attribution and the Analysis Card
 
@@ -180,10 +180,10 @@ Stationing a person or a machine on a project is an allocation document; turning
 | Option | What it changes | When to turn it on |
 |---|---|---|
 | **Term Code Required In Employee Equipment Allocation**<br>`value.termCodeRequiredInEmployeeEquipmentAllocation` | Makes the term code mandatory when allocating a person or machine to a project. | When allocation cost must always land on a specific term rather than on the project generally. Recommended, since a cost line with no term code contributes nothing. |
-| **Allow Date Overlapping In Employee And Equipments Project Allocation**<br>`value.allowOverlappingInContrEmployeeEquipmentAlloc` | Lets one person or asset be allocated to overlapping date ranges. | When people and plant genuinely split their time across projects in the same week. Off, the system treats an overlap as a mistake. |
-| **Cost Salary Components**<br>`value.costSalaryComponents` | A grid naming which payroll components flow into contracting labour cost. Each row picks a component and, for components whose effect type is "Other", also the effect it should be treated as. | Fill it before the first cost distribution. Only listed components reach project cost — an empty grid means salaries never become project cost. |
-| **Copy Last Project To Employee In Field** / **… To Asset In Field** / **… To Car In Field**<br>`value.copyLastProjectToEmployeeInField` / `value.copyLastProjectToAssetInField` / `value.copyLastProjectToCarInField` | Each names a field on the employee, asset or vehicle master file that receives the most recent project the resource was allocated to. | When supervisors need to see current deployment on the resource's own file rather than by searching allocations. |
-| **Copy Last Branch To Employee In Field** / **… To Asset In Field** / **… To Car In Field**<br>`value.copyLastBranchToEmployeeInField` / `value.copyLastBranchToAssetInField` / `value.copyLastBranchToCarInField` | The same three, for the branch instead of the project. | Same, where branch matters for reporting or authorisation. |
+| **Allow Date Overlapping In Employee And Equipment Project Allocation**<br>`value.allowOverlappingInContrEmployeeEquipmentAlloc` | Lets one person or asset be allocated to overlapping date ranges. | When people and plant genuinely split their time across projects in the same week. Off, the system treats an overlap as a mistake. |
+| **Cost Salary Components (Other Component Effect Type Is Empty For Addition And Deduction Components)**<br>`value.costSalaryComponents` | A grid naming which payroll components flow into contracting labour cost. Each row picks a component and, for components whose effect type is "Other", also the effect it should be treated as. | Fill it before the first cost distribution. Only listed components reach project cost — an empty grid means salaries never become project cost. |
+| **Copy Last Project To Employee In Field** / **Copy Last Project To Asset In Field** / **Copy Last Project To Car In Field**<br>`value.copyLastProjectToEmployeeInField` / `value.copyLastProjectToAssetInField` / `value.copyLastProjectToCarInField` | Each names a field on the employee, asset or vehicle master file that receives the most recent project the resource was allocated to. | When supervisors need to see current deployment on the resource's own file rather than by searching allocations. |
+| **Copy Last Branch To Employee In Field** / **Copy Last Branch To Asset In Field** / **Copy Last Branch To Car In Field**<br>`value.copyLastBranchToEmployeeInField` / `value.copyLastBranchToAssetInField` / `value.copyLastBranchToCarInField` | The same three, for the branch instead of the project. | Same, where branch matters for reporting or authorisation. |
 
 The salary-components grid is validated line by line: a component whose effect type is "Other" must say which effect to treat it as, and a component of any other type must leave that column empty. Get it wrong and the settings screen names the offending row.
 
@@ -191,7 +191,7 @@ The documents themselves are in [Employees, Equipment and Their Costs](/modules/
 
 ## Cheques on Payment Schedules
 
-One grid on this screen (`value.docs`) controls which contracts can mint financial papers — cheques — from their payment schedule. Listing the project contract, the subcontract, or both, makes the cheque-creation columns appear on that contract's payment-schedule grid; leave the grid empty and no contract can generate cheques. Its label says only *Documents*, which does not hint at what it does, so it is easy to miss.
+The grid **Documents To Generate FP From** (`value.docs`) controls which contracts can mint financial papers — cheques — from their payment schedule. Listing the project contract, the subcontract, or both, makes the cheque-creation columns appear on that contract's payment-schedule grid; leave the grid empty and no contract can generate cheques.
 
 Fill it when the business hands over post-dated cheques against an instalment plan at signature — a common arrangement on subcontracts.
 
@@ -199,8 +199,10 @@ Fill it when the business hands over post-dated cheques against an instalment pl
 
 Three rules are checked when you save, and each produces a message that names the fields involved:
 
-1. **Calculate Parent Term Based on Term Codes without manual term coding.** The parent-from-code rule only makes sense when the codes are typed, so the screen refuses the combination.
-2. **Calculate Prices Based On Total Quantity together with Calculate Prices Difference From Previous Extract Only.** These are two different definitions of the same thing and cannot both be true.
+1. **Calculate Parent Term Based on Term Codes without manual term coding.** The parent-from-code rule only makes sense when the codes are typed, so the screen refuses the combination with
+   *You can not use the option {0} without selecting the option {1} in Contracting Configuration*
+2. **Calculate Prices Based On Total Quantity together with Calculate Prices Difference From Previous Extract Only.** These are two different definitions of the same thing and cannot both be true; the message is
+   *You can not use field {0} and field {1} together*
 3. **An inconsistent salary-component row**, as described above.
 
 If a save is refused, the message points at the option pair or the row index — fix that and save again.

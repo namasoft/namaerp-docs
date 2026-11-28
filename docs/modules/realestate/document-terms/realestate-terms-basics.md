@@ -80,15 +80,19 @@ properly, the entry still balances and looks perfectly healthy. Always configure
 and when an amount you expected is missing from an entry, the first place to look is the other half
 of its block.
 
-The one place where the system does stop you is the routing grid described below: a routing row that
-names an Amount Debit without an Amount Credit refuses to save at all, with *"Two Accounting Sides
-must be exist"*.
+This skipping applies to the blocks of the sales, rent and maintenance terms. The collect,
+exemption, fine and lease-termination terms apply each side on its own: a filled debit with an empty credit still
+writes its debit line, so the entry comes out one-sided rather than shorter.
+
+The one place where the system does stop you is the routing grid described below: on a sales-family
+term, a routing row that names an Amount Debit without an Amount Credit (or the reverse) refuses to
+save at all, with *"Two Accounting Sides must be exist"*.
 
 ::: tip Reading a finished entry
 A document's effects are created as a **business request** processed in the background, so the entry
 appears a moment after the save rather than during it. If a request fails, you find it in the
-Business Requests list view, filter by status and use the More menu → Reprocess / Recommit. A term
-that is only half configured will not fail — it will succeed with a shorter entry.
+Business Requests list view, filter by status and use the More menu → Reprocess / Recommit. A
+contract term whose pair is only half configured will not fail — it will succeed with a shorter entry.
 :::
 
 ## Routing money by installment type — the Configuration List
@@ -103,9 +107,9 @@ revenue, plus one maintenance-cost installment that is not revenue at all — it
 holds on behalf of the owners' community and must sit in a liability account. Both live in the same
 grid on the same contract, and the document-level income pair cannot tell them apart.
 
-The **Confiuration List** grid `termConfig.configLineList` (سطور إعدادات التوجيه — the English caption really does ship with the
-typo) solves exactly this. Each row selects a set of installment types and gives them their own
-account pairs. It appears on the sales terms, all the rent terms and the collection terms.
+The **Configuration List** grid `termConfig.configLineList` (سطور إعدادات التوجيه) solves exactly
+this. Each row selects a set of installment types and gives them their own account pairs. It appears
+on the sales terms, all the rent terms and the collection terms.
 
 Each row has three parts.
 
@@ -127,7 +131,7 @@ one routing row.
 
 | Column pair | Column ids | Books |
 |---|---|---|
-| Amount Debit / Amount Credit | `termConfig.configLineList.amountDebit` / `amountCredit` | The installment amount itself — the only pair the system insists you fill completely |
+| Amount Debit / Amount Credit | `termConfig.configLineList.amountDebit` / `amountCredit` | The installment amount itself — the only pair a sales-family term insists you fill completely |
 | Penalty Debit / Penalty Credit | `termConfig.configLineList.penaltyDebit` / `penaltyCredit` | The late-payment penalty carried on the line |
 | Discount Debit / Discount Credit | `termConfig.configLineList.discountDebit` / `discountCredit` | The discount carried on the line |
 | Prepaid Debit / Prepaid Credit | `termConfig.configLineList.prepaidDebit` / `prepaidCredit` | The amount already paid on the line |
@@ -209,8 +213,8 @@ The thirty-odd term screens group into four shapes:
 | Family | Members | Documented in |
 |---|---|---|
 | Sales | Sales contract, initial sales contract, opening sales, reservation, reservation cancel, waiver, handover, purchase contract, sales offer | [Sales Document Terms](/modules/realestate/document-terms/realestate-terms-sales) |
-| Rent | Rent contract, rent offer, rent offer cancel, rent installment accrual ledger, opening rent contract, multi rent contract | [Rent Document Terms](/modules/realestate/document-terms/realestate-terms-rent) |
-| Collections | Collect document, exemption document, aggregated collect, fine, return payment, lease termination | [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other) |
+| Rent | Rent contract, rent offer, rent offer cancel, rent installment accrual ledger, opening rent contract, multi rent contract, lease termination | [Rent Document Terms](/modules/realestate/document-terms/realestate-terms-rent) |
+| Collections | Collect document, exemption document, aggregated collect, fine, return payment | [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other) |
 | Single purpose | Maintenance, investment, cost, opening cost, post-handover cost, ownership transfer, bank payout, owner payout | [the same page](/modules/realestate/document-terms/realestate-terms-other) |
 
 Members of a family share one option set, and often literally one screen: the collect document and

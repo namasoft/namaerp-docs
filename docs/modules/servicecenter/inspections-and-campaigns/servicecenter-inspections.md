@@ -46,15 +46,6 @@ Write your options to help the person filling the sheet, not to constrain them �
 not constrain anybody.
 :::
 
-::: warning The "default finding" auto-fill can never happen
-The point carries a *default finding* value that the system reads whenever a point is added to a
-sheet, intending to pre-fill the finding — but the field is **not on the inspection point screen**,
-so there is no way to give it a value. Every finding on every sheet therefore starts blank.
-
-Do not plan a workflow around pre-filled answers such as "everything defaults to سليم and the
-receptionist changes the exceptions". It will not happen; each line is typed from empty.
-:::
-
 Nothing on this screen is validated. Two points can carry the same name, and an empty options list
 is perfectly acceptable.
 
@@ -179,17 +170,10 @@ The inspection sheet shares a
 [term family](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md) with the other
 small workshop documents, and the term is **optional** — the document commits without one.
 
-Its screen carries three options, and only these three:
-
-| Option | Arabic label | What it does |
-|---|---|---|
-| Change Product Status To | تغيير حالة الصنف إلى | Writes a status entry for the vehicle on commit, so the vehicle's current status becomes, say, *In Workshop* |
-| Change Status Only When Criteria Matches | تغيير الحالة فقط عند توافق المعيار | Guards the status change with criteria |
-| Notify On Status Change | تشغيل التنبيه عند تغير الحالة | Fires a notification for a vehicle whose status actually changed |
-
-The status is rebuilt by replaying all of a vehicle's status entries in date order, so a back-dated
-sheet slots into the history rather than overwriting the present. Cancelling or deleting the inspection
-removes its entry again and the status is recomputed without it.
+Its screen carries only the vehicle-status trio — *Change Product Status To*, *Change Status Only
+When Criteria Matches* and *Trigger Alert On Status Change* — described on
+[Workshop Document Terms](/modules/servicecenter/document-terms/servicecenter-terms-workshop).
+Al-Sahra uses it to move the vehicle to *In Workshop* when the sheet is committed.
 
 The inspection sheet has no accounting effect, no inventory effect, and generates no documents.
 

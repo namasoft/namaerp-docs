@@ -37,13 +37,13 @@ http[s]://<server-ip-or-domain>/erp/browseapi/
 
 وتحت مربع البحث تظهر الكيانات مجمّعةً تمامًا كما تجمّعها القائمة الرئيسية (**Accounting / Master Files** و**Basic / Documents** وهكذا)، لأن القائمة تُبنى من القائمة الافتراضية نفسها. والكيان الذي تعرضه القائمة في موضعين يظهر في الموضعين. أما القائمة الجانبية على اليسار فتقصر الصفحة على مجموعة رئيسية واحدة من القائمة، وتعرض بجانب كل مجموعة عدد ما يطابق بحثك من كياناتها. والكيانات التي لها واجهة برمجية وليس لها مكان في القائمة تُجمع في النهاية تحت **Not in the menu**.
 
-ولا يظهر إلا ما هو متاح على هذا الخادم: الوحدات والميزات والكيانات التي يستبعدها الترخيص أو إعدادات الأمان الخاصة بالمستخدم لا تظهر.
+ولا يظهر إلا ما هو متاح على هذا الخادم: الوحدات والميزات والكيانات التي يستبعدها الترخيص لا تظهر.
 
 ويعرض كل سطر الاسم الإنجليزي والاسم العربي ومُعرِّف الكيان، وبالنقر على المُعرِّف يُنسخ. ويفتح زر **Open** مرجع الكيان في تبويب جديد.
 
 ### استخدام سجل حقيقي مثالًا
 
-يسهل فهم المرجع كثيرًا حين يكون مثال جسم الطلب مستندًا حقيقيًا لا حقولًا فارغة. يفتح زر **With a record** لوحة صغيرة تحت السطر: اكتب كود سجل محفوظ أو مُعرِّفه واختر **Open with this record**، فيعرض المرجع بيانات ذلك السجل مثالًا. واترك المربع فارغًا لاستخدام أول سجل محفوظ. ويفتح رابط **Data model** المجاور صفحة الكيان في موقع نموذج البيانات.
+يسهل فهم المرجع كثيرًا حين يكون مثال جسم الطلب مستندًا حقيقيًا لا حقولًا فارغة. يفتح زر **With a record** لوحة صغيرة تحت السطر: اكتب كود سجل محفوظ أو مُعرِّفه واختر **Open with this record**، فيعرض المرجع بيانات ذلك السجل مثالًا. واترك المربع فارغًا لاستخدام أول سجل محفوظ ليس مسودة. ويفتح رابط **Data model** المجاور صفحة الكيان في موقع نموذج البيانات.
 
 ![فتح مرجع العميل مع سجل محفوظ مثالًا](images/rest-api-browser-record.png)
 
@@ -81,7 +81,7 @@ http[s]://<server-ip-or-domain>/erp/browseapi/openapi/{EntityName}.json?exampleC
 - `{code}`: اختياري - كود سجل محدد أو UUID لاستخدامه كمثال
 
 **أكواد الأمثلة الخاصة:**
-- `Find@First`: يستخدم أول سجل متاح كمثال
+- `Find@First`: يستخدم أول سجل ليس مسودة كمثال
 - أي كود أعمال أو UUID صالح في نظامك
 
 ::: tip أمثلة على الروابط
@@ -112,10 +112,9 @@ http://localhost:8080/erp/browseapi/openapi/Item.json
 
 #### الحقول المستثناة
 تستثني الواجهة البرمجية تلقائياً:
-- الحقول التي يولدها النظام (ما لم يُطلب ذلك تحديداً)
-- الحقول المحسوبة
+- حقول النظام والحقول المحسوبة وحقول تتبع المستخدمين الداخلية، ما لم يذكرها `responseFields` بالاسم
+- الحقول التي قيمتها فارغة أو صفر
 - محتوى الحقول الثنائية (الصور والمستندات) من استجابات القراءة — أما حقل المرفق فيعود بدلاً من ذلك بمعرّفه واسم ملفه وحجمه، ويمكن كتابته عند الحفظ؛ انظر قسم «رفع الملفات وإرفاقها» أدناه
-- حقول تتبع المستخدمين الداخلية
 - الحقول التي لا يراها مستخدم المفتاح — انظر قسم «إعدادات الحقول وأقفال الموافقة في الـ API» أدناه
 
 ### التعامل مع collections الكيانات
@@ -264,15 +263,9 @@ http://localhost:8080/erp/browseapi/openapi/SalesInvoice.json?X-API-Key={your-ap
 
 ## إعداد CORS
 
-يتولى متصفح الواجهة البرمجية تلقائياً إدارة Cross-Origin Resource Sharing (CORS) لطلبات الواجهة البرمجية:
+ترد واجهة REST ومتصفح الواجهة البرمجية على كل طلب بترويسات CORS تسمح بأي منشأ وأي أسلوب وأي ترويسة (`Access-Control-Allow-Origin: *`)، وتردّان على طلبات `OPTIONS` التمهيدية (preflight). ولذلك تستطيع صفحة على نطاق آخر استدعاء الواجهة البرمجية من المتصفح ما دامت ترسل مفتاحًا صالحًا.
 
-- يسمح بالطلبات عبر المنشأ من أي نطاق (وضع التطوير)
-- يدعم طلبات OPTIONS التمهيدية (preflight)
-- يتضمن ترويسات CORS اللازمة في الاستجابات
-
-::: warning CORS في الإنتاج
-في بيئات الإنتاج، قم بإعداد سياسات CORS لتقييد الوصول على نطاقات محددة لأسباب أمنية.
-:::
+وليس في نما إعداد يقصر هذه الترويسات على نطاقات محددة.
 
 ---
 
@@ -337,8 +330,10 @@ Content-Type: application/json
 
 **تتضمن الاستجابة:**
 - `totalRecordsCount`: إجمالي السجلات المطابقة
-- `records`: مصفوفة السجلات المطلوبة
+- `records`: كائن مفتاحه نوع الكيان وقيمته مصفوفة سجلات هذه الصفحة — `"records": {"Customer": [ ... ]}`
 - `records_count`: عدد السجلات في الاستجابة
+
+يبدأ `startPage` من 1 وقيمته الافتراضية 1. وقيمة `pageSize` الافتراضية 25، وما زاد على 1000 يُقصَر على 1000. ويجب أن يحمل الطلب جسم JSON مع `Content-Type: application/json`، ولو كان `{}` فقط.
 
 #### 3. إنشاء/تحديث كيان (POST/PUT)
 ```http
@@ -346,37 +341,46 @@ POST /erp/rest/v1/{entity}/save
 X-API-Key: {api-key}
 Content-Type: application/json
 
-# ترويسات/معاملات الطلب:
-saveAsDraft: false           # الحفظ كمسودة بدون التحقق
-addRecord: true              # السماح بإنشاء سجلات جديدة
-updateRecord: true           # السماح بتحديث السجلات الموجودة
-addToCurrentLines: false     # الإضافة إلى البنود التفصيلية الموجودة
-trimExtraSpaces: false       # إزالة المسافات الزائدة من النصوص
-continueOnErrors: true       # الاستمرار في المعالجة عند الأخطاء
-useUserDimension: true       # تطبيق فلاتر محددات المستخدم
-ignoredUnFoundRefs: false    # تجاهل المراجع غير الموجودة
-responseFields: code,id      # الحقول المُرجَعة بعد الحفظ
-
-# الجسم: بيانات الكيان بصيغة JSON
 {
-  "code": "CUST001",
-  "name1": "Customer Name",
-  "contactInfo": {
-    "email": "customer@example.com",
-    "mobile": "+966501234567"
-  }
+  "Customer": [
+    {
+      "code": "CUST001",
+      "name1": "Customer Name",
+      "contactInfo": {
+        "email": "customer@example.com",
+        "mobile": "+966501234567"
+      }
+    }
+  ]
 }
 ```
 
-وتُرسل بنود المستند في الجسم نفسه داخل الـ collection الخاصة به — لفاتورة المبيعات مثلاً:
+الجسم دائماً كائن مفتاحه نوع الكيان وقيمته **مصفوفة** من السجلات، حتى لو كان السجل واحداً. أما كائن السجل المجرّد، أو مصفوفة السجلات المجرّدة، فغير مقبولين. ويمكن أن يحمل الطلب الواحد عدة سجلات:
 
 ```json
 {
-  "details": [
+  "Customer": [
+    { "code": "CUST001", "name1": "Customer 1" },
+    { "code": "CUST002", "name1": "Customer 2" }
+  ]
+}
+```
+
+السجل الذي يوجد كوده أو معرّفه من قبل يُحدَّث، وإلا يُنشأ سجل جديد. أرسل `updateRecord: false` لطلب يُسمح له بالإنشاء فقط، أو `addRecord: false` لطلب يُسمح له بالتحديث فقط. وهذان الخياران وبقية خيارات الحفظ تُرسل كترويسات للطلب أو كمعاملات استعلام، وهي مسرودة مع قيمها الافتراضية في قسم «خيارات الاستيراد» أدناه.
+
+وتُرسل بنود المستند داخل السجل، في الـ collection الخاصة به — لفاتورة المبيعات مثلاً:
+
+```json
+{
+  "SalesInvoice": [
     {
-      "item": { "item": "ITEM001" },
-      "quantity": { "quantity": { "primeQty": { "value": 5 } } },
-      "price": { "unitPrice": 100 }
+      "details": [
+        {
+          "item": { "item": "ITEM001" },
+          "quantity": { "quantity": { "primeQty": { "value": 5 } } },
+          "price": { "unitPrice": 100 }
+        }
+      ]
     }
   ]
 }
@@ -425,13 +429,18 @@ Content-Type: application/json
       "indexInRequest": 2,
       "errors": [
         {
-          "message": "Record is referenced by other entities"
+          "message": {
+            "arabicText": "...",
+            "englishText": "..."
+          }
         }
       ]
     }
   ]
 }
 ```
+
+كل عنصر في `errors` يحمل نصه في كائن `message` فيه `arabicText` و`englishText`. و`indexInRequest` هو ترتيب السجل في الطلب: يبدأ من 0 في ردود `findByIdOrCode` و`delete`، ومن 1 في ردود `save`.
 
 ### إعدادات الحقول وأقفال الموافقة في الـ API
 
@@ -609,144 +618,62 @@ curl -H "X-API-Key: {api-key}" \
 #### 3. المرجع التفاعلي
 افتح الكيان من [متصفح الواجهة البرمجية](#lbHth-aan-kyn) وأرسل الطلبات من صفحة مرجعه: زر **Test Request** في Scalar، أو **Try it out** في Swagger UI.
 
-### أمثلة على صيغ الطلبات
-
-#### البحث عن سجل واحد
-```http
-GET /erp/rest/v1/Customer/findByIdOrCode/CUST001
-X-API-Key: {api-key}
-```
-
-#### البحث عن سجلات متعددة
-```http
-POST /erp/rest/v1/Customer/findByIdOrCode
-X-API-Key: {api-key}
-Content-Type: application/json
-
-["CUST001", "CUST002", "CUST003"]
-```
-
-#### إنشاء سجل جديد
-```http
-POST /erp/rest/v1/Customer/save
-X-API-Key: {api-key}
-Content-Type: application/json
-addRecord: true
-updateRecord: false
-
-{
-  "code": "CUST001",
-  "name1": "Customer Name",
-  "contactInfo": {
-    "email": "customer@example.com",
-    "mobile": "+966501234567"
-  }
-}
-```
-
-#### تحديث سجل موجود
-```http
-POST /erp/rest/v1/Customer/save
-X-API-Key: {api-key}
-Content-Type: application/json
-addRecord: false
-updateRecord: true
-
-{
-  "code": "CUST001",
-  "name1": "Updated Customer Name",
-  "contactInfo": {
-    "email": "newemail@example.com"
-  }
-}
-```
-
-#### السرد مع الفلاتر
-```http
-POST /erp/rest/v1/Customer/list
-X-API-Key: {api-key}
-Content-Type: application/json
-
-{
-  "startPage": 1,
-  "pageSize": 50,
-  "textCriteria": "city,Equal,Riyadh,AND;status,Equal,Active,AND;",
-  "orderBy": "status,creationDate:desc,name1"
-}
-```
-
 ---
 
 ## معالجة الأخطاء
 
-تُرجع الواجهة البرمجية رموز حالة HTTP قياسية ورسائل خطأ تفصيلية:
-
 ### رموز الاستجابة الشائعة
-- **200 OK**: طلب ناجح
-- **201 Created**: تم إنشاء المورد بنجاح
-- **400 Bad Request**: معاملات طلب غير صالحة
-- **401 Unauthorized**: مفتاح API مفقود أو غير صالح
-- **403 Forbidden**: صلاحيات غير كافية
-- **404 Not Found**: المورد غير موجود
-- **500 Internal Server Error**: خطأ على جانب الخادم
+- **200 OK**: تمت معالجة الطلب. وفي `save` معناه أن سجلاً واحداً على الأقل قد حُفظ؛ والسجلات التي فشلت تُسرد تحت `failed_records` في الرد نفسه.
+- **400 Bad Request**: في `save` لم يُحفظ أي سجل. وفي `findByIdOrCode` و`list` و`delete` لم يُعثر على شيء أو لم يُحذف شيء، أو رُفض أحد السجلات المطلوبة.
+- **401 Unauthorized**: مفتاح API مفقود أو غير صالح أو لم يبدأ سريانه أو منتهٍ أو ممنوع من الدخول، أو مستخدمه غير مصرَّح له بالعملية.
+- **500 Internal Server Error**: خطأ غير متوقع على جانب الخادم.
+
+لا ترد الواجهة البرمجية أبداً بالرموز 201 أو 403 أو 404. والكود أو المعرّف غير الموجود يُبلَّغ عنه داخل الجسم، تحت `failed_records`.
 
 ### صيغة استجابة الخطأ
+السجل الذي يفشل داخل طلب `save` أو `findByIdOrCode` أو `delete` يُسرد تحت `failed_records` مع أخطائه `errors`. أما إذا فشل الطلب كله، بمفتاح غير صالح مثلاً، فالجسم كائن فشل واحد:
+
 ```json
 {
-  "error": {
-    "code": "ENTITY_NOT_FOUND",
-    "message": "Customer with code CUST999 not found",
-    "details": "Additional error information"
-  }
+  "failureOccurred": true,
+  "errors": [
+    {
+      "message": {
+        "arabicText": "...",
+        "englishText": "Invalid API key"
+      }
+    }
+  ]
 }
 ```
+
+وقد يحمل الكائن كذلك `errorType` و`log` و`warning`.
+
+### رسائل قد تظهر لك
+
+هذه رسائل رفض المفتاح نفسه. كلها ترد بالرمز 401، وليس لأي منها ترجمة عربية، فتظهر بالإنجليزية أياً كانت اللغة.
+
+| الرسالة | السبب | ما العمل |
+|---|---|---|
+| *Invalid API key* | المفتاح المرسل لا يطابق حقل **Client Id (Can Be Ignored)** ولا حقل **API Key (Client Secret)** في أي سجل API Credentials محفوظ. | انسخ المفتاح من جديد من سجل API Credentials (حدد **View API Key** واحفظ ليظهر). |
+| *Invalid API secret* | الترويسة `X-API-Key` تحمل الـ Client Id الخاص بالسجل، و`X-API-Secret` ليست سر ذلك السجل. | أرسل سر السجل نفسه، أو أرسل السر وحده في `X-API-Key`. |
+| *Your API key can be used only after {0}* | حقل **صالح من** في السجل تاريخ لاحق لليوم. | غيّر **صالح من**، أو انتظر ذلك التاريخ. |
+| *Your API key expired on {0}* | حقل **صالح حتى** في السجل قبل اليوم. | مدّد **صالح حتى**. |
+| *The provided API key is prevented from login* | خيار **منع الدخول** محدد في السجل. | ألغِ تحديده. |
 
 ---
 
 ## الواجهات البرمجية ذات الأغراض الخاصة
 
-بالإضافة إلى عمليات CRUD القياسية، يوفر نما واجهات متخصصة:
+بالإضافة إلى عمليات الكيانات، تحتوي قائمة **Special Purpose APIs** في متصفح الواجهة البرمجية على واجهة واحدة:
 
 ### تكامل أجهزة الحضور والانصراف
-- نقطة النهاية: `attcron-open-api-template`
-- الغرض: مزامنة بيانات الحضور من أجهزة البصمة البيومترية
-- يدعم المعالجة الدفعية لسجلات الحضور
-
-### واجهة برمجية لتصدير البيانات
-- تصدير السجلات بصيغة JSON مع بيانات العلاقات الكاملة
-- يدعم الفلترة والتصفيح
-- يحافظ على سلامة البيانات للنسخ الاحتياطي/الترحيل
-
-### العمليات الدفعية
-- معالجة سجلات متعددة في طلب واحد
-- معالجة تعاملية مع التراجع عند الأخطاء
-- محسَّنة للتكاملات ذات الحجم الكبير
+- اسمها في القائمة: **Attendance Machine Cron**. ووصفها متاح على `/erp/browseapi/openapi/attcron-open-api-template.json`
+- الغرض: الطلبان اللذان يرسلهما [تطبيق attcron](/ar/integration/attcron-agent)، أحدهما لجلب إعدادات ماكينة الحضور الخاصة به والآخر لتسليم البصمات التي جمعها
 
 ---
 
 ## اعتبارات الأداء
-
-### التصفيح
-تدعم جميع نقاط نهاية السرد التصفيح بحجم صفحة قابل للتهيئة:
-
-```http
-POST /erp/rest/v1/{entity}/list
-Content-Type: application/json
-
-{
-  "startPage": 1,     # ترقيم يبدأ من 1
-  "pageSize": 50      # الحد الأقصى 1000 لكل طلب
-}
-```
-
-**استجابة التصفيح:**
-```json
-{
-  "totalRecordsCount": 2547,
-  "records_count": 50,
-  "records": { ... }
-}
-```
 
 ### اختيار الحقول
 تحكم في الحقول المُرجَعة لتحسين حجم البيانات:
@@ -760,36 +687,7 @@ responseFields: code,name1,status,balance
 - مررها كترويسة HTTP: `responseFields: field1,field2,field3`
 - أو كمعامل استعلام: `?responseFields=field1,field2,field3`
 - تدعم الحقول المتداخلة: `contactInfo.email,address.city`
-- الحقول الافتراضية إذا لم تُحدَّد: `code,id`
-
-### العمليات الدفعية
-عالج سجلات متعددة في طلب واحد لأداء أفضل:
-
-#### الاسترجاع الدفعي
-```http
-POST /erp/rest/v1/Customer/findByIdOrCode
-Content-Type: application/json
-
-["CUST001", "CUST002", "550e8400-e29b-41d4-a716-446655440000"]
-```
-
-#### الاستيراد/الحفظ الدفعي
-```http
-POST /erp/rest/v1/Customer/save
-Content-Type: application/json
-continueOnErrors: true
-
-[
-  {
-    "code": "CUST001",
-    "name1": "Customer 1"
-  },
-  {
-    "code": "CUST002", 
-    "name1": "Customer 2"
-  }
-]
-```
+- إذا لم تُحدَّد، يعيد `findByIdOrCode` و`list` كل حقل في السجل له قيمة ويحق لمستخدم المفتاح رؤيته، عدا حقول النظام والحقول المحسوبة وحقول تتبع المستخدمين؛ ويعيد `save` الحقلين `code,id`
 
 ### المعايير والترتيب
 استخدم صيغة المعايير النصية المنظَّمة في نما للفلترة والترتيب:
@@ -834,7 +732,7 @@ type,In,Type1|Type2|Type3,AND;
   - مثال: `customer.code,Equal,CUST001,AND;`
 
 ::: tip بناء المعايير
-استخدم شاشة [تعريف المعايير](/ar/platform/automation-and-rules/criteria-definitions) (Criteria Definition) في نما لبناء شروط الفلتر بصرياً، ثم انقر **Convert to Text** للحصول على التمثيل النصي للاستخدام في الواجهة البرمجية.
+استخدم شاشة [تعريف المعايير](/ar/platform/automation-and-rules/criteria-definitions) (Criteria Definition) في نما لبناء شروط الفلتر بصرياً، ثم انقر **تحويل إلى نص** للحصول على التمثيل النصي للاستخدام في الواجهة البرمجية.
 :::
 
 ### صيغة الترتيب
@@ -871,6 +769,7 @@ type,In,Type1|Type2|Type3,AND;
 | `continueOnErrors` | true | الاستمرار في معالجة السجلات المتبقية عند الخطأ |
 | `useUserDimension` | true | تطبيق فلاتر محددات المستخدم |
 | `ignoredUnFoundRefs` | false | تخطي التحقق من حقول المرجع |
+| `responseFields` | `code,id` | الحقول المُعادة لكل سجل محفوظ |
 
 ---
 
@@ -886,9 +785,9 @@ type,In,Type1|Type2|Type3,AND;
 #### بيانات مثال فارغة
 - تحقق من وجود سجلات للكيان
 - تحقق من صلاحيات رؤية البيانات للمستخدم
-- استخدم `Find@First` للحصول على أي سجل متاح
+- استخدم `Find@First` للحصول على أول سجل ليس مسودة
 
 #### حقول مفقودة في الاستجابة
-- حقول النظام مستثناة افتراضياً
+- حقول النظام والحقول المحسوبة تُستثنى ما لم يذكرها `responseFields` بالاسم
+- الحقول الفارغة أو التي قيمتها صفر تُستثنى
 - محتوى الملفات غير مدرج في استجابات الواجهة البرمجية — فحقل المرفق يعيد معرّفه واسم ملفه وحجمه فقط (ويمكن كتابته — انظر قسم «رفع الملفات وإرفاقها»)
-- الحقول المحسوبة غير متاحة عبر الواجهة البرمجية

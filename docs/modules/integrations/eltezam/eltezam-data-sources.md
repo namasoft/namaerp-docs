@@ -12,12 +12,19 @@ table name the table; how the table itself picks a code is on
 
 ## Values shared by every operation
 
+Employee ID and the national ID (or Iqama number) go on the requests of every operation, and Sub
+Agency ID on those of every operation except Employee Info. The job values below go only on the requests that carry job details: all of them on
+Employee Info; job number, the job codes, location and basic salary on Employee Historical Info;
+job number, the job codes, location and the actual organization (sent as the position
+organization) on Job Info; employment type and rank on Payslip Info. Qualification, Vacation and
+Appraisal Info carry none of them.
+
 | MCS value | Taken from |
 |---|---|
 | Employee ID | The employee **code** |
 | National ID | The employee's national ID number. If it is empty, the **residency (Iqama) number** is sent instead |
 | Sub Agency ID | **Sub Agency ID** on the configuration (all operations except Employee Info) |
-| Job number | **Job Number From Employee Field** on the configuration → else the employee's labour office ID → else the organizational position code |
+| Job number | **Job Number From Employee Field** on the configuration → else the employee's **Labor ID** → else the organizational position code |
 | Job class, job name, job category chain, employment type, rank | The JobClassCode, JobNameCode, JobCatChain, EmploymentTypeCode and RankCode tables, keyed on the employee's **organizational position**. The position's Arabic name goes with the job name code |
 | Actual job name code | **Actual Job Name Code From Employee Field** → else the JobNameCode table |
 | Job organization ID / name | **Agency Organization ID / Name From Employee Field** → else **Agency Organization ID / Name** on the configuration |
@@ -70,10 +77,11 @@ One request for **each committed salary document** of the employee in the period
 net salary, the value date as the paid date, the Hijri and Gregorian month and year, and one
 element per salary line:
 
-- the element code from the ElementCode table, keyed on the line's **salary component**, and the
-  component's Arabic name;
-- the amount — the addition for an earning, the deduction for a deduction — sent as a positive
-  number and classified as Paid or Deduction;
+- the element code from the ElementCode table, keyed on the line's **salary component** (the
+  component's Arabic name is kept on the request log as the element name; it is not sent);
+- the amount — the addition for an earning, the deduction for a deduction, or the line's
+  **other** value when that one is zero — sent as a positive number and classified as Paid or
+  Deduction;
 - the consolidation set from the ConsolidationSetID table, keyed on the salary document's
   **issuance**.
 
@@ -101,7 +109,8 @@ appraisal type from the AppraisalTypeCode table keyed on the evaluation type, th
 the evaluation's **Number 3** (N3) — the score out of 5 — sent as a percentage with two decimals (4.1 goes as
 `82.00`), and the rating from the RatingCode table keyed on the evaluation's **Description 1** (or the
 table's Default MCS Code when Description 1 matches no row). Date 1, Date 2 and Number 3 must be
-filled on the evaluation, or the employee is refused before sending.
+filled on the evaluation, or the request fails Nama's own checks (and is not sent when **Do Not
+Send Records Having Validation Errors** is ticked on the configuration).
 
 ## Which documents count as "in the period"
 
@@ -111,7 +120,7 @@ chosen by the period on the submission:
 
 | Period on the submission | Salary documents and evaluations | Vacation and Update Employee Info documents |
 |---|---|---|
-| **HR Period** filled | Those of that HR period | Those inside From Date / To Date, if given |
+| **HR Period** filled | Those of that HR period | Those inside From Date / To Date, if given; else inside the HR year's start and end, when an HR Year is filled too |
 | **HR Year** filled (no HR Period) | Those of that year's periods, narrowed by From / To Date if given | Those inside From / To Date, or else inside the HR year's start and end |
 | Only **From / To Date** | Value date inside the range | Value date (start date for vacations) inside the range |
 | Nothing | The employee's whole history | The employee's whole history |
@@ -119,6 +128,6 @@ chosen by the period on the submission:
 ::: tip Reporting one month
 When you report a single payroll month with **HR Period**, fill **From Date** and **To Date** with
 the same month as well. The HR period narrows salary documents and evaluations; the dates are what
-narrow vacations and historical updates — without them those two operations send the employee's
-whole history.
+narrow vacations and historical updates — without them (and without an HR Year) those two
+operations send the employee's whole history.
 :::

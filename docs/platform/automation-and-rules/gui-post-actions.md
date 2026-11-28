@@ -30,9 +30,9 @@ Users pick up a new or changed post action the next time they log in.
 | Field | What it does |
 |---|---|
 | **For Type** | The screen the lines apply to, such as *Sales Invoice*. Copied onto every line when you save. |
-| **Entity List** | An [entity type list](/platform/automation-and-rules/entity-type-lists.md) instead of one type, so the same lines serve a family of screens. Also copied onto every line. |
+| **Entity List** | An [entity type list](/platform/automation-and-rules/entity-type-lists) instead of one type, so the same lines serve a family of screens. Also copied onto every line. |
 | **Manual** | Turns the record into a button instead of a reaction to a field — see [Manual post actions](#Manual-post-actions-buttons-and-follow-ups) below. |
-| **Perform Action As Field** | Required for a manual post action. Type anything; on save it is replaced by an internal name for the button. |
+| **Perform Action As Field** | Required for a manual post action that has no **Run With System Action**. Type anything; on save it is replaced by an internal name for the button. |
 | **Run With System Action** | Runs the lines after one of the screen's standard actions succeeds — see below. Filling it in ticks **Manual** for you. |
 | **Inactive** | Switches the whole record off. Saving it inactive also marks every line inactive. |
 
@@ -50,13 +50,13 @@ Each line is one reaction.
 |---|---|
 | **For Type** / **Entity List** | The screen(s) this line works on. A line with neither applies to the field on every screen that has it. |
 | **On Field** | The field whose change triggers the line, by its field id — `customer`, `details.specificDimensions.lotId`, `lines.n1`. Several fields separated by commas share the line. Required. |
-| **Expression** | What to do, written as a field map: one `target=source` per line, the same language entity flows use (see [Field Maps](/entity-flows/core/ai-generated-field-maps-documentation.md)). Required. |
+| **Expression** | What to do, written as a field map: one `target=source` per line, the same language entity flows use (see [Field Maps](/entity-flows/core/ai-generated-field-maps-documentation)). Required. |
 | **Fields To Update** | Which fields the screen re-reads afterwards. Usually left empty — see [the third example](#What-the-Fields-To-Update-column-is-for). |
 | **For Insert Line** / **For Delete Line** | Run the line when a row is added to, or removed from, a grid instead of when a field changes. **On Field** must then be the grid itself (`details`), not one of its columns. |
 | **Call System Post Actor Of Field** | After the expression, run the system's built-in reaction of another field, as if the user had just changed it. |
 | **Call GUI Action** | After the expression, run one of the screen's actions, by its action id. |
 | **Context Field 1 … 30** | The fields the screen must send so the expression can be evaluated. Filled in for you — see the tip in the [second example](#Calculating-one-grid-column-from-the-others-in-the-same-row). |
-| **Criteria** | A [criteria definition](/platform/automation-and-rules/criteria-definitions.md): the line runs only when the record matches it. |
+| **Criteria** | A [criteria definition](/platform/automation-and-rules/criteria-definitions): the line runs only when the record matches it. |
 | **Reversed Criteria Definition** | The opposite: the line is skipped when the record matches. |
 | **Apply When Query** / **Do Not Apply When Query** | The same two conditions written as an SQL query against the record instead of a saved criteria. |
 | **Description** | Your own note on what the line is for. |
@@ -76,14 +76,14 @@ At most 25 suggestions are shown.
 
 Tick **Manual** and the lines no longer wait for a field to change. Instead:
 
-- **As a button.** Fill in **Perform Action As Field**, save, and add the record to the screen as a button through a [Screen Modifier](/platform/screen-modifier/screen-modifier-action-buttons.md) — its **GUI Post Actions** column only accepts manual records. Pressing the button runs the lines on the record as it is on screen.
+- **As a button.** Fill in **Perform Action As Field**, save, and add the record to the screen as a button through a [Screen Modifier](/platform/screen-modifier/screen-modifier-action-buttons) — its **GUI Post Actions** column only accepts manual records. Pressing the button runs the lines on the record as it is on screen.
 - **After a standard action.** Fill in **Run With System Action** with the id of one of the screen's standard actions. Whenever that action finishes successfully, the lines run on the result. No Screen Modifier is needed.
 
 In both cases the lines' **On Field** is filled in for you when you save, so leave it to the system.
 
 ## Worked examples
 
-Each example ends with a *JSON for direct import* block. To load one, open a new GUI Post Actions record and paste it as described in [Importing Into the Record You Have Open](/platform/import-export/importing-records.md#Importing-Into-the-Record-You-Have-Open).
+Each example ends with a *JSON for direct import* block. To load one, open a new GUI Post Actions record and paste it as described in [Importing Into the Record You Have Open](/platform/import-export/importing-records#Importing-Into-the-Record-You-Have-Open).
 
 ### Recalculating the price when a lot is selected
 
@@ -218,6 +218,6 @@ None of these messages has an Arabic translation; they appear in English on Arab
 
 ## See also
 
-- [Field Maps](/entity-flows/core/ai-generated-field-maps-documentation.md) — the expression language
-- [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons.md) — placing a manual post action as a button
-- [Entity Type Lists](/platform/automation-and-rules/entity-type-lists.md) and [Criteria Definitions](/platform/automation-and-rules/criteria-definitions.md)
+- [Field Maps](/entity-flows/core/ai-generated-field-maps-documentation) — the expression language
+- [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons) — placing a manual post action as a button
+- [Entity Type Lists](/platform/automation-and-rules/entity-type-lists) and [Criteria Definitions](/platform/automation-and-rules/criteria-definitions)

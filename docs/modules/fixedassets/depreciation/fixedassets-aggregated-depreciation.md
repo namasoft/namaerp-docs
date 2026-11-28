@@ -37,7 +37,7 @@ and it is there so you can see at a glance what the batch came to.
 ## Setting One Up
 
 The screen is the depreciation document's screen with one addition: **From Period** (من فترة) and
-**To Period** (الي فترة) sit alongside the single Fiscal Period field. Everything else is familiar —
+**To Period** (إلى فترة) sit alongside the single Fiscal Period field. Everything else is familiar —
 the same paired *from … to* code ranges for asset, type, master group, branch, sector, department,
 analysis set and classifications, the same *Collect Assets* button, the same locked details grid
 where the only editing action is deleting a line. There are also five attachment slots on the
@@ -72,9 +72,10 @@ Say the range is January to October 2026 and the filters are left empty.
    reads 3,600.
 3. February's document is built next, from the same list, now that January has moved everybody's
    position on by one period. `MCH-0007` appears again, at 3,600.
-4. …and so on to October. An asset bought in June only appears from June onwards; an asset disposed
-   of in August stops appearing after August. Each period's document contains exactly the assets that
-   belong in it.
+4. …and so on to October. An asset whose depreciation starts in June only appears from June onwards;
+   an asset that becomes fully depreciated in August stops appearing after August, because only
+   assets whose status is still **Running** are carried into each period's document. Each period's
+   document contains exactly the assets that belong in it.
 5. The ten totals roll up into the aggregate's total.
 
 The generated documents are listed on the aggregate's second tab, **Related Documents**
@@ -86,13 +87,15 @@ print, and they can be reported on.
 
 ## One Extra Convenience
 
-The single depreciation document simply skips an asset whose computed instalment is not above zero.
-The aggregate, because it knows a range, does something more useful: when an asset's instalment
-comes out at zero or below for the period it is looking at, it scans forward through the range
-looking for the first period where the instalment turns positive, and picks the asset up there.
+The aggregate's *Collect Assets*, because it knows a range, does something the single document's
+collect does not: when an asset's instalment comes out at zero or below at the aggregate's value
+date, it scans forward through the periods of the range for the first one where the instalment turns
+positive, and keeps the asset in the grid if it finds one. An asset whose instalment stays at zero or
+below across the whole range is left out.
 
-That is how an asset acquired in the middle of a catch-up range lands in the right month without you
-telling it which month.
+Which period's document the asset then lands in is decided on commit, from the asset's next due
+date. That is how an asset acquired in the middle of a catch-up range lands in the right month
+without you telling it which month.
 
 ## Changing Your Mind
 
@@ -100,10 +103,9 @@ Cancelling the aggregate deletes every document it generated — newest first, s
 come apart cleanly — and with them their accounting entries. That is the supported way to undo a
 batch, and it is a clean one.
 
-What is **not** supported is editing an aggregate that has already been committed and re-committing
-it. Treat a committed aggregate as finished: if the batch was wrong, cancel it whole and enter a new
-one. If only one period inside it was wrong, cancel the batch, fix the underlying cause, and run it
-again — or run the remaining periods individually with the ordinary depreciation document.
+To correct a committed batch, cancel it whole and enter a new one. If only one period inside it was
+wrong, cancel the batch, fix the underlying cause, and run it again — or run the remaining periods
+individually with the ordinary depreciation document.
 
 ::: warning Cancelling a batch reverses many periods at once
 An aggregate covering ten months holds ten committed depreciation documents behind it, each of which
@@ -111,3 +113,12 @@ has moved every asset's remaining life on by one period. Cancelling it rewinds a
 the correct behaviour and it is why the aggregate is so convenient — but it is a large action, and
 worth pausing over on a live register.
 :::
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *You must Select Book and Term inside the term {0}* — «يجب ملء الدفتر والتوجيه داخل التوجيه {0}» | The aggregate's term has no Aggregated Depreciation Book or Aggregated Depreciation Term. | Fill both on the term, then commit again. |
+| *From Period can not be after To Period* — «من فترة لا يمكن أن تكون بعد إلى فترة» | The range is reversed. | Swap the two periods. |
+| *From Period and To Period must be Normal* — «من فترة وإلى فترة يجب أن تكون فترة عادية» | One end of the range is an opening, adjustment or closing period. | Choose normal periods. |
+| *From Period and To Period must have the same Calender* — «يجب أن يكون تقويم من فترة وإلى فترة نفس التقويم» | The two periods belong to different calendars. | Choose both periods from the same calendar. |

@@ -57,7 +57,7 @@ it belongs to — and Nama sends them in that order automatically.
 For each customer Nama sends its Arabic and English names, its legal entity (as the city), its
 Customer Class 5, its tax registration number, its commercial registration number, a phone number (the
 mobile, or Phone 1 when the mobile is empty), its group (as the branch), its salesman, its address
-(the first address line, or the second when the first is empty), and the dates it was created and last changed.
+(the **Address 1** field, or the **Building Number** field when Address 1 is empty), and the dates it was created and last changed.
 
 ### What an invoice carries
 
@@ -82,7 +82,8 @@ expect a "sync" button:
    file that was accepted and has not changed since is skipped, which keeps frequent runs cheap.
    A sales document that was accepted is never sent again, even if the query picks it up again.
 2. **Failures retry themselves.** A record or document the platform refused, or that could not be
-   sent because the platform was unreachable, is simply tried again on the next run.
+   sent because the platform was unreachable, is simply tried again on the next run that selects
+   it (a sales document only when that run's query returns it again).
 3. **Every send leaves a log row**, and deleting a log row makes Nama treat that record as never
    sent. That is how you force a resend — see
    [Send logs and resending](./alwatania-send-logs).

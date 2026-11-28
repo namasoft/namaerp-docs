@@ -19,12 +19,12 @@ Manual execution on supply chain documents containing assembly items that need t
 
 ## How It Works
 
-1. **Identifies assembly items** - Scans document lines for items with Bill of Materials (BOM) structures
-2. **Retrieves BOM components** - Gets component items and quantities from the assembly's BOM
+1. **Identifies assembly items** - Scans document lines for items whose **Disassembly Bom Components Spread Method** is filled and whose quantity is not zero. A line that is itself a dependent line of another line is skipped
+2. **Retrieves BOM components** - Gets component items and quantities from that BOM, as valid on the document's value date
 3. **Calculates component quantities** - Multiplies BOM component quantities by assembly line quantities
 4. **Creates component lines** - Adds new document lines for each BOM component
-5. **Transfers specifications** - Copies dimensions, pricing, and other details to component lines
-6. **Handles parent lines** - Either removes original assembly lines or keeps them based on parameter setting
+5. **Links component lines** - Each component line is linked to its assembly line as a dependent line and takes its origin document. On sales documents the component lines are marked as free lines
+6. **Handles existing lines** - When Parameter 1 is `true`, the assembly line stays and its component lines are placed after it. Otherwise all the existing lines of the document are removed when an assembly line is spread, and only component lines remain
 7. **Accumulates results** - Collects any processing errors or warnings
 
 ## Parameters
@@ -32,7 +32,7 @@ Manual execution on supply chain documents containing assembly items that need t
 **Parameter 1:** Do Not Remove Parent Lines (Optional) - true/false to keep original assembly lines (default: false)
 
 - `true` - Keep original assembly lines along with component lines
-- `false` - Remove original assembly lines after creating component lines
+- `false` - Remove all the existing lines of the document (the assembly lines and every other line) and keep only the component lines
 
 ## Database Tables Affected
 

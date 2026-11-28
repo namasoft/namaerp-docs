@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Recalculates additional costs and expense item lines for assembly documents by triggering the standard expense calculation logic. Updates cost allocations, overhead distributions, and expense line amounts based on current assembly configuration and cost calculation rules.
+Recalculates the additional cost lines of an assembly document from their expense items. For each additional cost line that has an expense item, it takes the value per unit and total again from the matching line of that expense item.
 
 ## When This Action Runs
 
@@ -19,12 +19,11 @@ Manual execution on assembly documents when additional costs need to be recalcul
 
 ## How It Works
 
-1. **Invokes expense calculation** - Calls AssemblyDocumentUtilities.calcExpenseItemLines() method
-2. **Processes assembly structure** - Analyzes current assembly document configuration
-3. **Calculates expense allocations** - Distributes additional costs across assembly components
-4. **Updates expense lines** - Refreshes expense item lines with calculated amounts
-5. **Applies cost rules** - Uses current cost calculation and overhead distribution rules
-6. **Returns success** - Always completes successfully after calculation
+1. **Goes through the additional cost lines** - Takes every additional cost line of the assembly document that has an expense item; lines without one are left as they are
+2. **Resets the line** - Sets value per unit, total and total units of the line to zero
+3. **Finds the matching expense item line** - Takes the first line of the expense item that is valid on the document's value date. A line with no "calculate from" grid matches directly; otherwise it must match one of the items of the component lines or of the co-product lines (by item, brand, section, categories and item classes) and its quantity range
+4. **Updates the line** - When a match is found, copies its value per unit and total, and the account, subsidiary and credit side of the expense item, clears the four taxes of the line, fills total units when the expense item line asks for it, and recalculates the total from the value per unit
+5. **Returns success** - Always completes successfully after calculation
 
 ## Parameters
 
@@ -32,10 +31,8 @@ This action does not require any parameters - it automatically recalculates all 
 
 ## Database Tables Affected
 
-- **Assembly Document Lines** - Updates expense item lines and cost allocations
-- **Assembly Configuration** - Reads current assembly structure (read-only)
-- **Cost Center Data** - Uses overhead and expense rate information (read-only)
-- **Expense Item Masters** - References expense item definitions (read-only)
+- **Assembly Document Additional Cost Lines** - Updates value per unit, total, total units and account data
+- **Expense Item Masters** - Reads expense item definitions (read-only)
 
 **Module:** supplychain
 
@@ -43,7 +40,6 @@ This action does not require any parameters - it automatically recalculates all 
 
 **Document Type:** Assembly Documents Only
 
-**Related Utilities:** AssemblyDocumentUtilities for expense calculations
 
 
 </div>

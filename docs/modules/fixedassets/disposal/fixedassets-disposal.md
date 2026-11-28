@@ -122,8 +122,10 @@ issue date, value date, fiscal period — and then the four fields that matter:
 
 Two tax pairs sit below — **Tax 1** and **Tax 2**, each with a percentage and a value. You do not
 normally type into them: choosing the term fills them from the tax plan the term points at, and
-editing the dispose value recalculates them. If the term is not marked taxable, all four are zeroed
-on save, whatever you typed.
+editing the dispose value recalculates them. On save the percentages are set again from the term's
+tax plan (or from the asset's own tax plan when the term names none) unless the term allows the tax
+to be edited, and the values are recalculated from the dispose value. If the term is not marked
+taxable, all four are zeroed on save, whatever you typed.
 
 ::: info How the tax lands on the buyer
 The proceeds side of the term is charged with the **net** dispose value only, and the tax is a
@@ -142,7 +144,7 @@ a term setting, so if your disposals are landing in the wrong branch, that is th
 Sometimes an asset does not vanish so much as decompose. You scrap a production line and keep three
 motors that are worth registering as assets in their own right. The disposal document can create
 those for you: a grid on the screen — headed **Created Assets From Disposal**
-(الأصول الناتجه عند التخلص) — takes one line per new asset, with the same columns as a
+(الأصول الناتجة عند التخلص) — takes one line per new asset, with the same columns as a
 [fixed asset purchase document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md)
 line: the asset, its count, unit price and value, useful life, salvage value, depreciation start
 date, custodian and location.
@@ -277,8 +279,8 @@ here is settled the ordinary way, through receipts against the third party.
 ## Actions on this screen
 
 The disposal document has no buttons of its own. Everything you have read above happens because of
-what you type and what the commit does: the book value is worked out as the fields fill, the gain or
-loss falls out of the arithmetic, and the asset's status changes on commit. To reverse it you
+what you type and what the commit does: the book value is read from the ledger on commit, the gain
+or loss falls out of the arithmetic, and the asset's status changes on commit. To reverse it you
 cancel or delete the document — there is no reverse button, and none is needed.
 
 ## Undoing a disposal
@@ -314,8 +316,11 @@ mistake of disposing of the wrong asset out of a pair of near-identical machines
 
 | Message | Why | What to do |
 |---|---|---|
-| *The grid {0} can not filled because you did not select the option {1} in fixed assets module configuration* — «الجدول {0} لا يمكن ملئه بسبب عدم اختيار أوبشن {1} في إعدادات الأصول الثابتة» | The created-assets grid has rows while the matching option in the Fixed Assets module configuration is switched off. | Clear the grid, or switch the option on in the module configuration and save it before committing. |
-| *Cannot Dispose Asset because the status is Initial* — «لا يمكن عمل التخلص للاصل الثابت لان الحالة ابتدائية» | The asset is still **Initial** — it has no cost, so there is nothing to dispose of. | If the asset was never meant to exist, delete the record. If it was bought, capitalise it first. |
+| *You can not create disposal document for asset {0}, because it is not depreciated until {1}* — «لا يمكنك إنشاء سند تخلص للأصل {0} حيث أنه لم يتم إهلاكه حتى الفترة {1}» | The asset is still running and has an un-depreciated period between its last depreciation and the disposal's period `{1}`. | Run the missing depreciation periods first, as described in [Depreciation must be up to date first](#Depreciation-must-be-up-to-date-first). |
+| *Cannot Dispose Asset because of next document {0}* | Another document dated after the disposal has already touched the asset. This message has no Arabic text and shows in English on Arabic screens. | Undo `{0}` first, or date the disposal after it. |
+| *You must fill purchase document book {0} and term {1}* — «يجب ملء دفتر سند الشراء {0} والتوجيه {1}» | The created-assets grid has rows but the term names no fixed asset purchase book and term. | Fill both on the term's effects page, then commit again. |
+| *The grid {0} can not filled because you did not select the option {1} in fixed assets module configuration* — «الجدول {0} لا يمكن ملؤه بسبب عدم اختيار أوبشن {1} في إعدادات الأصول الثابتة» | The created-assets grid has rows while the matching option in the Fixed Assets module configuration is switched off. | Clear the grid, or switch the option on in the module configuration and save it before committing. |
+| *Cannot Dispose Asset because the status is Initial* — «لا يمكن عمل التخلص للأصل الثابت لأن الحالة ابتدائية» | The asset is still **Initial** — it has no cost, so there is nothing to dispose of. | If the asset was never meant to exist, delete the record. If it was bought, capitalise it first. |
 | *Can not dispose asset {0} because its status is disposed* — «لا يمكن عمل تخلص للأصل {0} لأن حالته تم التخلص منه» | The asset was already disposed of by an earlier document. | Reverse that earlier disposal if it was a mistake; do not raise a second one. |
 
 ## Where to go next

@@ -18,12 +18,12 @@ Six copies are written into the script and cannot be switched off through parame
 
 | Request line field | Goes to the item's dimensions row |
 |---|---|
-| **N1** | **Min Quantity** |
-| **N2** | **Order Limit** |
-| **N5** | **Slow moving period** |
-| **B1** | **Suggested In Discounts And Offers** |
-| **N3** | **N1** |
-| **N4** | **N2** |
+| **Number 1** | **Min Quantity** |
+| **Number 2** | **Order Limit** |
+| **Number 5** | **Slow moving period** |
+| **Boolean 1** | **Suggested In Discounts And Offers** |
+| **Number 3** | **Number 1** |
+| **Number 4** | **Number 2** |
 
 Keep these fields free for this purpose on the request, or change the fixed copies in the script before you paste it.
 :::
@@ -45,7 +45,7 @@ Each item's dimensions grid holds per-warehouse settings such as the minimum qua
 For each request line that has an item:
 
 1. **It finds the item's row.** It looks in the item's dimensions grid for a row with the same item code and the same warehouse as the line. If there is none, it adds a new row with that item code and warehouse.
-2. **It copies the fixed fields.** The six fields in the table above are copied, but only when the request line has a value: a zero or empty number, or an empty B1, leaves the item's value as it was.
+2. **It copies the fixed fields.** The six fields in the table above are copied, but only when the request line has a value: a zero or empty number, or an empty Boolean 1, leaves the item's value as it was.
 3. **It applies the field map.** Every map line that starts with `details.` writes into that same row. Every map line that starts with `sizesAndColors.` writes into the item's **Sizes and Colors** row that has the request line's size and color; if the item has no such row, one is added.
 4. **It saves each item once.** After all lines are handled, every item touched is saved and committed, even when several lines point to it.
 
@@ -81,7 +81,7 @@ The item records are changed and committed as part of committing the request. If
 
 ## Example
 
-Parameter 2 holds `details.description2=text1`. A request line for item `PIPE-25` in warehouse `MAIN` has **N1** = 5, **N2** = 10, **N3** = 7 and **Text 1** `Returned batch`. After the request is committed, the item's dimensions row for `MAIN` shows **Min Quantity** 5, **Order Limit** 10, **N1** 7 and **Description 2** `Returned batch`. If the item had no row for `MAIN`, that row has just been added.
+Parameter 2 holds `details.description2=text1`. A request line for item `PIPE-25` in warehouse `MAIN` has **Number 1** = 5, **Number 2** = 10, **Number 3** = 7 and **Text 1** `Returned batch`. After the request is committed, the item's dimensions row for `MAIN` shows **Min Quantity** 5, **Order Limit** 10, **Number 1** 7 and **description2** `Returned batch`. If the item had no row for `MAIN`, that row has just been added.
 
 ## The script
 

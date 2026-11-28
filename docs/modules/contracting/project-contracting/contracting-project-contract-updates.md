@@ -5,7 +5,7 @@ menu: Contracting → Project Contracting → Project Contract Update
 ---
 # Project Contract Updates
 
-Clients change their minds. A quantity turns out to have been under-measured, a rate is renegotiated, an item nobody thought of has to be added, the completion date slips by a month. On a small job you would simply open the contract and edit it — and early in a contract's life that is exactly what you do. But [the project contract](/modules/contracting/project-contracting/contracting-project-contract.md) freezes its prices, quantities and conditions as soon as the first extract has been issued against it, and from that point on the only sanctioned way to change it is this document.
+Clients change their minds. A quantity turns out to have been under-measured, a rate is renegotiated, an item nobody thought of has to be added, the completion date slips by a month. On a small job you would simply open the contract and edit it — and early in a contract's life that is exactly what you do. But [the project contract](/modules/contracting/project-contracting/contracting-project-contract.md) freezes its prices, quantities and conditions as soon as the first extract has been issued against it, and a change to a signed contract deserves a dated record of its own. This document is that record. It goes through the contract's own validation, so the freeze applies to it too — see [What blocks a commit or a delete](#What-blocks-a-commit-or-a-delete).
 
 The project contract update is the **variation order**. It is worth pausing on what kind of record it is, because it is the odd one out in this part of the module:
 
@@ -17,7 +17,7 @@ It does have a *Document Term* field, because every document does, but **there a
 
 You will find it at **Contracting > Project Contracting > Project Contract Update**, under licence `contracting`. The subcontractor side has its own, identically-behaving equivalent — see [subcontract updates](/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md).
 
-Our worked example is contract **`PC-2026-001`** — the **Tower A** project for **Al-Fanar Development** — six months in: contract value **230,000**, two extracts already issued, the contract therefore frozen. The client now wants **300 m³ more excavation, waterproofing and painting added, and four extra weeks**.
+Our worked example is contract **`PC-2026-001`** — the **Tower A** project for **Al-Fanar Development** — six months in: contract value **230,000**, two extracts already issued. Because the amendment changes an extracted line and the end date, it is accepted only because this installation has the contracting configuration option **Allow Edit Prices And Quantities In Project Contract After Make Extracts** ticked. The client now wants **300 m³ more excavation, waterproofing and painting added, and four extra weeks**.
 
 ![The project contract update screen](../../../ar/modules/contracting/images/project-contracting/project-contract-update-main-en.png)
 
@@ -42,8 +42,6 @@ That means the *history* of the contract lives outside the contract: in the chai
 The *Terms Before Edit* grid is the contract as it stands, entirely read-only, with one extra column — **Selected**. Tick the lines you intend to change, set the header **Edit Type**, and press **Copy Lines To Editable Terms** (نقل السطور الي البنود المعدلة). The ticked lines are converted into editable rows in the *Terms* grid on page 1, already stamped with that edit type, and the ticks are cleared. **Select All Lines** and **Unselect All Lines** save you the clicking on a long contract.
 
 You do not have to go through the snapshot: typing a term code by hand into the *Terms* grid on page 1 finds the matching snapshot line and clones it into your row, line by line. Both the term-code and the *Add After* pickers on page 1 suggest from the snapshot rather than from the database, so they only ever offer codes this contract actually has.
-
-The captions on the "before" grids are not always word-for-word identical to the live grids for the same columns — read them by position and meaning rather than by matching the exact wording.
 
 **4. Say what each change is.** Every line in the *Terms* grid carries its own **Edit Type**, and it is the line's value that is obeyed. The header field is only a convenience default: change it and it is stamped onto every line already in the grid.
 
@@ -148,7 +146,7 @@ Duplicating an update document (نسخة مماثلة) deliberately clears both 
 | **Add After** is required on any *Add* line. | column-required |
 | Deleting the document is refused if a later update exists for the contract. | *Cannot delete document {0} because of the update document {1}* |
 
-Two further families of failure surface only when the document is committed, because that is when the contract is actually rewritten. The first is the pair of *Could not find term line with the code {0}* messages described above. The second is anything **the contract itself** rejects — the update re-commits the contract through the ordinary route, so every rule on [the contract page](/modules/contracting/project-contracting/contracting-project-contract.md) applies, including the post-extract freeze. The update is a disciplined, audited path *through* the freeze, not a way around it: it can change a frozen field precisely because it records what the field was before, but it cannot break any other contract rule. If your amendment leaves a term code duplicated or a set of phase percentages that no longer adds up to 100, the commit fails and the contract is untouched.
+Two further families of failure surface only when the document is committed, because that is when the contract is actually rewritten. The first is the pair of *Could not find term line with the code {0}* messages described above. The second is anything **the contract itself** rejects — the update re-commits the contract through the ordinary route, so every rule on [the contract page](/modules/contracting/project-contracting/contracting-project-contract.md) applies, including the post-extract freeze. Once any extract exists on the contract, and while **Allow Edit Prices And Quantities In Project Contract After Make Extracts** is not ticked, an update can still add new term lines and change lines that nothing has extracted or executed, but it cannot change a frozen field of an extracted or executed line, delete such a line, move the start or end date or the other frozen header fields, or change the conditions. The update records the change as a dated document; it is not a way around the freeze. If your amendment breaks any contract rule — a term code duplicated, a set of phase percentages that no longer adds up to 100, a frozen field changed — the commit fails and the contract is untouched.
 
 ## Where to read next
 

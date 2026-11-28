@@ -53,7 +53,7 @@ and immediately promoted, exactly as if you had created it by hand a minute earl
 For that to produce a usable record the line needs somewhere to hold the asset's descriptive data,
 and those columns are hidden by default. Switch on the module setting **Add Fixed Assets Creation
 Columns To Fixed Assets Opening And Purchase**
-(إضافة أعمدة إنشاء الأصول إلى سندات الشراء و الإفتتاح) in the
+(إضافة أعمدة إنشاء الأصول إلى سندات الشراء و الافتتاح) in the
 [Fixed Assets configuration](/modules/fixedassets/fixedassets-configuration.md) and the grid gains:
 
 **Fixed Asset Type**, **Asset Name (Arabic)**, **Asset Name (English)**, **Serial Number**,
@@ -86,7 +86,7 @@ The main page holds the invoice header:
 | Code (Book) | الكود (الدفتر) | Document book and serial number |
 | Term | توجيه المستند | The accounting wiring — see [acquisition terms](/modules/fixedassets/document-terms/fixedassets-terms-acquisition.md) |
 | Issue Date / Value Date | تاريخ التحرير / التاريخ الفعلي | The value date is the acquisition date written onto the asset |
-| From Document | بناءا على | The order, offer, initial receipt or request this invoice answers |
+| From Document | بناءً على | The order, offer, initial receipt or request this invoice answers |
 | Supplier | مورد | Who invoiced you |
 | Subsidiary | الذمة | Defaults from the supplier; the party the credit side is booked against |
 | Purchases man | مندوب المشتريات | Who bought it |
@@ -103,12 +103,12 @@ Then the **Details** grid, which is the heart of the document.
 |---|---|---|
 | Fixed Asset | الأصل الثابت | The record being capitalised. Picker shows Initial assets only |
 | Count | العدد | For countable assets — how many units this record represents |
-| Asset Name From Purchase Order | اسم الاصل من أمر الشراء | Carried down from the order, so you can see what was ordered |
+| Asset Name From Purchase Order | اسم الأصل من أمر الشراء | Carried down from the order, so you can see what was ordered |
 | Unit price, Quantity, total price | سعر الوحدة، الكمية، السعر الكلي | The price block |
 | Discount 1 to 8, Taxes 1 to 4, Net value | خصم 1..8، الضرائب، الصافي | The usual invoice arithmetic |
 | Useful Life | العمر الافتراضي | In months; defaulted from the asset's type |
 | Salvage Value | قيمة الأصل كخردة | The residual value; defaulted from the asset's type |
-| Depreciation Start Date | تاريخ بداية الاهلاك | When the depreciation clock starts |
+| Depreciation Start Date | تاريخ بداية الإهلاك | When the depreciation clock starts |
 | Custodian | مسئول العهدة | The employee who will hold it |
 | Supplier, Subsidiary | مورد، الذمة | Per-line overrides |
 | Asset Location | موقع الأصل | Where this particular asset goes |
@@ -122,7 +122,7 @@ percentages.
 
 The second page, **Shipping and billing** (الشحن و الدفع), carries the shipping and billing
 addresses, the **Payment Documents** grid for advances already paid, a **payment schedule template**
-with its **GeneratePayments** (إنشاء الدفعات) action and the resulting instalment grid, and a
+with its **Generate Payments** (إنشاء الدفعات) action and the resulting instalment grid, and a
 partial money block.
 The **Installment Payments** action in the More menu opens the payment vouchers raised against those
 instalments.
@@ -197,8 +197,9 @@ Committing a purchase document is the busiest moment in the module. For each lin
 - updates the asset-count register for countable assets;
 - copies the line's dimensions onto the asset, if the term option **Update Asset Dimensions From
   Invoice** (تحديث محددات الأصل من الفاتورة) is on and nothing later has touched the asset;
-- stamps this document onto the order or offer it came from, so that source can never be invoiced
-  twice.
+- stamps this document onto the offer, order or initial receipt it came from (its **Purchase
+  Invoice** field) and onto the source's **Processed By**; an order stamped this way no longer appears
+  in the **From Document** list of a new purchase document, so it cannot be invoiced twice.
 
 Then it sends the journal entry as a business request.
 
@@ -294,5 +295,6 @@ recovery there are also the
 | Message | Why | What to do |
 |---|---|---|
 | *Fixed asset and fixed asset type can not be empty* — «لا يمكن ترك كل من الأصل الثابت و نوع الأصل فارغاً» | The term is set to create the asset when it is not found, and a line names neither an asset nor an asset type, so there is nothing to create the asset from. | Fill the asset on the line, or fill the asset type and let the document create the record. |
-| *The line that has fixed asset {0}, can not be edited because there are transactions after purchase date by document {1}* — «السطر الذى به الأصل {0}  لا يمكن تعديله لان هناك حركات عليه من المستند {1} بعد تاريخ الشراء» | You edited a line whose asset already carries a transaction dated after the purchase date. The message names the document that wrote it. | Reverse the named document, make the correction, and re-enter it. The purchase is the first event in the asset’s life and cannot be moved under a later one. |
-| *Error in fixed asset status {0}, current status is {1} and it has to be {2}* — «خطأ في حالة الأصل {0} الحالة الحالية هى {1} ويجب أن تكون {2}» | A line names an asset that is not **Initial** — something already gave it a cost. | Use a different asset, or reverse whatever capitalised this one. A purchase document only accepts an initial asset. |
+| *You can not edit document {0} because the asset {1} has a transaction on {2} in document {3}* — «لا يمكن تعديل المستند {0} لأن الأصل {1} له تنفيذ في {2} في المستند {3}» | You changed or removed a line whose asset already carries a transaction dated after the purchase. The message names the date and the document that wrote it. | Reverse the named document, make the correction, and re-enter it. The purchase is the first event in the asset’s life and cannot be moved under a later one. |
+| *The depreciation start date {0} for fixed asset {1} cannot be before the value date* — «لا يمكن أن يكون تاريخ بدء الإهلاك {0} للأصل الثابت {1} قبل التاريخ الفعلي للشراء» | A depreciable line's depreciation start date is earlier than the document's value date. | Move the depreciation start date to the value date or later, or bring the asset in on an opening document instead. |
+| *Error in fixed asset status {0}, current status is {1} and it has to be {2}* — «خطأ في حالة الأصل {0} الحالة الحالية هي {1} ويجب أن تكون {2}» | A line names an asset that is not **Initial** — something already gave it a cost. | Use a different asset, or reverse whatever capitalised this one. A purchase document only accepts an initial asset. |

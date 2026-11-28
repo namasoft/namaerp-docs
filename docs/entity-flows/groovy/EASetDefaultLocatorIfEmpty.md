@@ -26,7 +26,7 @@ These scripts are not tied to any customer's setup. You control them entirely th
 
 ## When to use them
 
-In a warehouse whose **Locator Usage** is **Required**, every line must name a locator, or the save is refused with the message *The field {0} can not be empty, at line {1} , item is {2}*, where `{0}` is **Locator**. That is right for shelved stock, but some goods always land in the same place: a receiving bay, a bulk area, a "service parts" shelf. Asking the user to pick that locator on every line is busywork.
+In a warehouse whose **Locator Usage** is **Required**, every line must name a locator, or the save is refused with the message *The field {0} can not be empty, at line {1} , item is {2}* — «لا يمكن ترك الحقل {0} فارغا، في السطر {1} للصنف {2}», where `{0}` is **Locator**. That is right for shelved stock, but some goods always land in the same place: a receiving bay, a bulk area, a "service parts" shelf. Asking the user to pick that locator on every line is busywork.
 
 - Use **EASetDefaultLocatorIfEmpty** when every line without a locator should go to one default locator, for example the receiving bay `RCV-01`.
 - Use **EASetDefaultLocatorForItemSections** when only some kinds of items have a fixed place, for example all items of the sections `SERV` and `CONS` go to locator `SVC-SHELF`, except two items that are stored elsewhere.
@@ -46,7 +46,7 @@ Each element covers one locator, and so one warehouse. To give several warehouse
 :::
 
 ::: info The analysis set in the section version
-EASetDefaultLocatorForItemSections also copies the warehouse's analysis set onto each line it looks at. When tested on a stock issue, the saved lines still carried the document's analysis set, so do not rely on this step to change a line's analysis set.
+EASetDefaultLocatorForItemSections also writes the warehouse's analysis set onto each line that has an item, no locator and a warehouse, before it checks the warehouse and the item section. The line keeps it when **Analysis Set In Details** is ticked in the supply chain configuration, or when the document has no analysis set. When that option is off and the document has an analysis set, the save puts the document's analysis set back on every line.
 :::
 
 ## Setting them up

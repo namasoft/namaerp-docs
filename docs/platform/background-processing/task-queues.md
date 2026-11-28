@@ -91,7 +91,7 @@ Entity flows need one step of background first, because a flow only reaches a qu
 deferred in the first place.
 
 Most entity flows run inline: you save the customer, the flow runs, the save finishes. But a flow
-can be marked **Run After Committing Document And Affect On DataBase**, and that changes it completely. The
+can be marked **Run After Committing Document And Affect On Database**, and that changes it completely. The
 document is saved and committed, its accounting and inventory effects are raised, you get the
 screen back — and only then, separately, is the flow picked up and run. Nothing about the flow is
 allowed to slow down or fail the save.
@@ -111,7 +111,7 @@ the flow is running in the background with nobody watching it:
 
 | Field | What it does |
 |---|---|
-| **Max Retry Count** | How many times a failed run is attempted again before the system gives up and leaves it failed. Left empty, a failure is final at the first attempt. |
+| **Max Retry Count** | Lets a run that fails with an error message be put back as **Retry** and attempted again instead of failing for good; a run that breaks unexpectedly fails at once. Left empty, a failure is final at the first attempt. |
 | **Retry Every Seconds** | How long to wait before each retry. Useful when the flow depends on something outside Nama that is briefly unavailable. |
 | **Wait For Quantity Processing** | Holds the flow back while the system still has inventory work outstanding. Set it when the flow reads stock quantities or costs — otherwise it can read figures that are about to change. |
 
@@ -137,7 +137,7 @@ the same queue is the guarantee you are looking for.
 Two grids on the queue's own screen, and one list for the whole system.
 
 **Queued Entity Flows** — on the queue screen — shows the flow entries waiting in this queue, each
-with its **Status**, **Submition Date**, **Trials** and **Process After**, plus the record it is
+with its **Status**, **Submission Date**, **Trials** and **Process After**, plus the record it is
 going to run against. An empty grid is the healthy state: it means the worker is keeping up. Rows
 that sit there with a rising **Trials** count are the ones to look at. The grid's **More** menu can
 delete selected entries outright, which is the way to abandon work that will never succeed.
@@ -148,17 +148,10 @@ way to see that a queue is doing what you set it up to do.
 
 **Pending Task Schedules** — at **Administration → Settings → Pending Task Schedules** — is
 the same information for every queue at once, with a **Task Queue** column so you can see how the
-work is spread. It is the screen to open when someone asks why a task has not fired: if it is not
-in this list, it is not scheduled at all, and the reason is on the task itself — inactive, or never
-committed, or restricted to another site.
+work is spread. How the two live values are read, and how to use the list when a task has not
+fired, is on [Scheduled Tasks](/platform/automation-and-rules/scheduled-tasks#Seeing-what-is-scheduled-and-what-is-running).
 
 ![Pending task schedules across every queue](../../ar/platform/background-processing/images/task-queues/pending-task-schedules-en.png)
-
-::: tip Expected Next Run and Currently Running are live
-These two are not stored on the task schedule; they are read from the running scheduler at the
-moment you open the screen. That is why they are blank on a server that is not running scheduled
-tasks at all, and why they are not available as columns on the task's own list view.
-:::
 
 ## When workers appear and disappear
 
@@ -197,9 +190,9 @@ Refusals raised when you save an entity flow with the background fields on this 
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must activate option ( Run After Committing Document And Affect On DataBase ) to use option( Wait For Quantity Processing)* — «يجب تفعيل الأوبشن ( يعمل بعد حفظ المستند نهائيا و التأثير على قاعدة البيانات ) لإستخدام الأوبشن ( انتظار انتهاء معالجة الكميات )» | **Wait For Quantity Processing** was ticked on a flow that still runs inline. There is nothing to wait for — the inventory work has not been raised yet at that point. | Tick **Run After Committing Document And Affect On DataBase** first, or clear the wait option. |
-| *You must activate option ( Run After Committing Document And Affect On DataBase ) to use ( {0})* — «يجب تفعيل الأوبشن ( يعمل بعد حفظ المستند نهائيا و التأثير على قاعدة البيانات ) لإستخدام ( {0} )» | **Retry Every Seconds** or **Max Retry Count** was filled in on a flow that still runs inline. Retrying only makes sense once the flow is deferred; an inline failure is part of the save. | Defer the flow, or clear the retry field the message names. |
-| *The current Entity Flow has has un processed entries* — «يوجد إدخالات نظامية لم يتم معالجتها لمسار الكيان الحالى» | The flow still has entries waiting in a queue, and saving it now would change the rules under work that is already in flight. | Let the queue drain — watch the **Queued Entity Flows** grid — then save. |
+| *You must activate option ( Run After Committing Document And Affect On DataBase ) to use option( Wait For Quantity Processing)* — «يجب تفعيل الأوبشن ( يعمل بعد حفظ المستند نهائيا و التأثير على قاعدة البيانات ) لاستخدام الأوبشن ( انتظار انتهاء معالجة الكميات )» | **Wait For Quantity Processing** was ticked on a flow that still runs inline. There is nothing to wait for — the inventory work has not been raised yet at that point. | Tick **Run After Committing Document And Affect On Database** first, or clear the wait option. |
+| *You must activate option ( Run After Committing Document And Affect On DataBase ) to use ( {0})* — «يجب تفعيل الأوبشن ( يعمل بعد حفظ المستند نهائيا و التأثير على قاعدة البيانات ) لاستخدام ( {0} )» | **Retry Every Seconds** or **Max Retry Count** was filled in on a flow that still runs inline. Retrying only makes sense once the flow is deferred; an inline failure is part of the save. | Defer the flow, or clear the retry field the message names. |
+| *The current Entity Flow has has un processed entries* — «يوجد إدخالات نظامية لم يتم معالجتها لمسار الكيان الحالي» | The flow still has entries waiting in a queue, and saving it now would change the rules under work that is already in flight. | Let the queue drain — watch the **Queued Entity Flows** grid — then save. |
 
 ## Related
 

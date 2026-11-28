@@ -53,7 +53,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
    - رسالة الخطأ في حال عدم الضبط: *"Can not select the option Message OTP without fill Notification For Two-Factor Authentication OTP"*
 
 2. **متطلبات طريقة Estidamah API**:
-   - تحتاج الطريقة إلى **أربعة** إعدادات — **Estidamah Environment Url** و**Estidamah Api Key** و**Estidamah Encryption Key** و**Estidamah Encryption IV**. ثلاثة منها تُفحص عند الحفظ، أما **Api Key** فلا يُفحص، فيُحفظ الإعداد الناقص بلا اعتراض ثم يفشل عند البوابة في أول محاولة دخول. فاملأ الأربعة.
+   - تحتاج الطريقة إلى **أربعة** إعدادات — **رابط بيئة Estidamah** و**مفتاح API الخاص بـ Estidamah** و**مفتاح التشفير الخاص بـ Estidamah** و**متجه التهيئة للتشفير (IV) الخاص بـ Estidamah**. املأ الأربعة: فالبوابة تستخدمها كلها.
    - **Custom Password Validator**: يجب تفعيله في `nama.properties`
    - الخطأ في حال عدم التفعيل: *"You can not enable estidamah login method without enabling custom password validator in nama.properties first, use-custom-password-validator=true"*
 
@@ -61,9 +61,9 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 | الحقل | الوصف | الافتراضي | الخيارات | قواعد التحقق |
 |-------|-------|-----------|---------|--------------|
-| **نوع المصادقة الثنائية لتسجيل الدخول** | العامل الثاني الذي يطلبه تسجيل الدخول | None | None · Message OTP · Estidamah API | - |
+| **نوع المصادقة الثنائية لتسجيل الدخول** | العامل الثاني الذي يطلبه تسجيل الدخول | بدون (None) | بدون (None) · رمز تحقق برسالة (OTP) (Message OTP) · Estidamah API | - |
 | **تنبيه OTP للمصادقة الثنائية** | تعريف التنبيه الذي يحمل الرمز | - | أي تعريف تنبيه يدوي | **مطلوب** حين تكون الطريقة Message OTP |
-| **OTP Format** | شكل الرمز المُولَّد | Numeric | Numeric (123456) · Alphabetic (ABCDEF) · AlphaNumeric (A1B2C3) | - |
+| **OTP Format** | شكل الرمز المُولَّد | أرقام فقط | أرقام فقط (123456) · حروف فقط (ABCDEF) · أرقام و حروف (A1B2C3) | - |
 | **طول OTP** | عدد أحرف الرمز | 6 إذا تُرك الحقل فارغاً أو صفراً | أي عدد | - |
 | **وقت انتهاء صلاحية OTP** | الثواني قبل أن يتوقف قبول الرمز | 3 دقائق إذا تُرك الحقل فارغاً | دقائق صحيحة — تُقسم القيمة على 60، فتعمل 90 ثانية كدقيقة واحدة | - |
 | **مدة الانتظار قبل إعادة إرسال OTP** | الثواني قبل أن يُسمح بطلب الرمز من جديد | 60 إذا تُرك الحقل فارغاً أو صفراً | أي عدد | - |
@@ -73,10 +73,10 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 | الحقل | الوصف |
 |-------|-------|
-| **Estidamah Environment Url** | عنوان البوابة (يُفحص عند الحفظ) |
-| **Estidamah Api Key** | مفتاح الحساب المرسَل مع كل نداء (لا يُفحص عند الحفظ، ومع ذلك تطلبه البوابة) |
-| **Estidamah Encryption Key** | مفتاح التشفير لتأمين بيانات الاعتماد (يُفحص عند الحفظ) |
-| **Estidamah Encryption IV** | متجه التهيئة للتشفير (يُفحص عند الحفظ) |
+| **رابط بيئة Estidamah** (Estidamah Environment Url) | عنوان البوابة |
+| **مفتاح API الخاص بـ Estidamah** (Estidamah Api Key) | مفتاح الحساب المرسَل مع كل نداء |
+| **مفتاح التشفير الخاص بـ Estidamah** (Estidamah Encryption Key) | مفتاح التشفير لتأمين بيانات الاعتماد |
+| **متجه التهيئة للتشفير (IV) الخاص بـ Estidamah** (Estidamah Encryption IV) | متجه التهيئة للتشفير |
 
 ::: warning متطلب إعداد مهم
 لاستخدام طريقة مصادقة Estidamah API، يجب تفعيل custom password validator في `nama.properties`:
@@ -115,7 +115,7 @@ use-custom-password-validator=true
 |---|---|
 | *«You must provide OTP»* | كلمة المرور صحيحة، وهذا طلب الرمز لا رفض. وتحمل الرسالة طول الرمز ومدة الانتظار قبل إعادة الإرسال، وهو ما تعرضه شاشة الرمز. |
 | *«Invalid OTP»* | الرمز لا يطابق الرمز الصادر، أو انتهت صلاحيته وأُرسل رمز أحدث. اطلب رمزاً جديداً. |
-| *«Error with Message OTP»* | تعذّر إرسال الرمز أصلاً — والسبب في الغالب تعريف التنبيه: غير موجود، أو ليس يدوياً، أو لا يحمل المستخدم رقم موبايل أو بريداً. |
+| *«Error with Message OTP»* | لم يُختر تعريف تنبيه في **تنبيه OTP للمصادقة الثنائية**، فلا يوجد ما يحمل الرمز. أما إذا اختير تعريف وفشل الإرسال فيعرض الدخول خطأ التنبيه نفسه بدلًا من هذه الرسالة. |
 
 ## إعدادات المستخدم
 
@@ -164,7 +164,7 @@ use-custom-password-validator=true
 
 ### مثال على قالب SMS
 ```tempo
-Dear ${name2},
+Dear {name2},
 Your Nama ERP verification code is: {otpCode}
 This code expires in 3 minutes.
 Do not share this code with anyone.

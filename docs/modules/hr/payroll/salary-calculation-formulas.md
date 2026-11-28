@@ -12,14 +12,14 @@ Found at **Payroll > Salary Configurations > Component Calculation Formula**, a 
 
 | Formula Type | Arabic | Reads from |
 |---|---|---|
-| Percentage From Totals / Additions / Deductions | نسبة من الإجمالي / الإضافات / الأستقطاعات | A slice of other components' amounts. |
+| Percentage From Totals / Additions / Deductions | نسبة من الإجمالي / الإضافات / الاستقطاعات | A slice of other components' amounts. |
 | Insurance Percentage (and its Fixed / Variable / Employee / Company variants) | نسبة من وعاء التأمينات (وتنويعاتها) | The employee's or the company's share of the fixed or variable insurance base. |
 | Tax Percentage / Taxes | نسبة من وعاء الضرائب / الضرائب | A flat percentage, or a full progressive tax table (its own dedicated bracket grid — see below). |
-| Related To Performance Indecator | مرتبط بمؤشر أداء | A measured figure — overtime hours, sales, attendance — from a [Performance Indicator](../performance/performance-indicators.md). |
+| Related To Performance Indicator | مرتبط بمؤشر أداء | A measured figure — overtime hours, sales, attendance — from a [Performance Indicator](../performance/performance-indicators.md). |
 | Related To Component | مرتبط بمفرد | Another component's own value, used as a building block. |
-| Composite Formula | تتكون من معادلات أخري | A weighted combination of other formulas, each multiplied/divided by its own factor. |
+| Composite Formula | تتكون من معادلات أخرى | A weighted combination of other formulas, each multiplied/divided by its own factor. |
 | Fixed Value In Offer | القيمة المثبتة بالعرض الوظيفي | The literal value that was written into the employee's job offer. |
-| Percentage From Service End | نسبة من نهاية الخدمة | A share of the end-of-service base — see [Provisions & End of Service](../end-of-service/hr-provisions.md) once published. |
+| Percentage From Service End | نسبة من نهاية الخدمة | A share of the end-of-service base — see [Provisions & End of Service](../end-of-service/hr-provisions.md). |
 | Balance From Employee Account (Debit-Credit / Credit-Debit) | رصيد حساب من حسابات الموظف | The running balance of one of the employee's own accounts — used for things like recovering an outstanding balance. |
 
 When a formula is **Related To Performance Indicator**, its **Applicability Method** decides how the indicator's figure is applied:
@@ -42,6 +42,8 @@ The **Factor Value** field (حساب المعامل) decides whether the indicat
 | Factor Only | المعامل فقط | Each calculation line gives its rate (Multiply By ÷ Divide On) **× the number of times the line applied**: for a Daily formula, the number of days that matched it. The size of the figure on each day doesn't matter. | The first matching line gives its rate **× 1**. The indicator's figure is only used to pick the line. |
 | Factor And Value | المعامل و قيمة المؤشر | Each line gives its rate **× the sum of the indicator's figures on the days it applied**, after adding the line's **Added Value** to each day's figure. | The first matching line gives its rate **× the indicator's total**. |
 
+Factor Value is optional on the other formula types, but it still counts when the calculation method is Sections: a line multiplies its rate by the base figure only when Factor Value is **Factor And Value**; otherwise each matching line gives its rate once for every value it matched (with a Daily formula, once per matching day).
+
 The **Performance Factor** (معدل الأداء) is then multiplied by that result. It sets the base the formula's result is a fraction of:
 
 | Performance Factor | Arabic | Multiplies the result by |
@@ -63,20 +65,20 @@ If the customer complains that a deduction ignores how long the employee was lat
 
 ![A lateness formula related to a performance indicator, with Factor Value and Performance Factor](../../../ar/modules/hr/images/payroll/calc-formula-factor-value-en.png)
 
-### Calculation method: one rate, or progressive brackets
+### Calculation method: one line, or every matching line
 
 | Calc Method | Arabic | Behavior |
 |---|---|---|
-| One Percentage | نسبة واحدة | A single rate applies to the entire base. |
-| Sections | شرائح | Progressive brackets — each slice of the base is computed at its own rate, exactly like an income-tax table. |
+| One Percentage | نسبة واحدة | Only the **first** calculation line whose range and criteria match is used. |
+| Sections | شرائح | **Every** calculation line whose range and other gates match contributes, and the formula's result is the sum of what the lines give. The base is not cut into slices: each line is compared with the whole figure (with a Daily formula, each day's figure; otherwise the running total for the period), so overlapping lines all count. Income tax brackets use the **Taxes** type and its own **Tax Ranges** grid instead (below). |
 
 With **Sections**, the formula's **calculation lines** define the brackets, and each line can combine several kinds of gate at once:
 
 - **Range** — a from/to band on the base value (or a SQL query for a computed range), plus a separate **Experience Days** from/to band for seniority-based brackets.
-- **Rate** — multiply-by / divide-on factors, a flat rate, and an **Added Value** on top.
+- **Rate** — multiply-by / divide-on factors (their quotient is shown, read-only, as the line's **Rate**), and an **Added Value** that is added to the figure before it is compared and multiplied. One Percentage refuses an Added Value.
 - **Criteria** (المعايير) — an optional filter (on the employee file, the HR information record, or the salary document itself) that must match for the bracket to apply at all.
 - **Occurrence Count** — from/to bounds on how many times this bracket has already fired this period, or in the year/aggregated-period, useful for rules like "the first two occurrences are free, the third onward is penalized."
-- **Vacation / Holiday / Weekend factors** — separate multipliers applied when the day in question falls on a vacation, an official holiday, or a weekly rest day.
+- **Vacation Factor** (معامل العطلات) — a gate on the days around the day being judged: **Pre-Vacation** applies the line only when the next day is off, **Post-Vacation** only when the previous day is off, **Pre or Post Vacation** when either is, **Within Vacation** when both are, and **Mid Week** when neither is. What counts as "off" is set by the line's **Factor For Weekends**, **Factor For Holidays** and **Factor For Vacations** ticks.
 
 The whole formula can also be clamped with an overall **Minimum Formula Value** / **Maximum Formula Value**, regardless of what the brackets compute.
 
@@ -92,13 +94,13 @@ An empty bound on a calculation line never blocks the line. It removes the limit
 Occurrence Count is counted **per line**, on every day the line's range and criteria matched. A single line with **Occurrence Count From = 3** and an empty **To** therefore ignores the first two matching days and applies from the third onward. You don't need a second line to cover the first two days.
 
 ::: tip A worked example: a seniority bonus by brackets
-Suppose a component pays a **seniority bonus** as a percentage of basic salary, defined with **Sections** using the **Experience Days** range instead of a value range:
+Suppose a component pays a **seniority bonus** as a percentage of basic salary: a **Related To Component** formula on the basic salary, defined with **Sections** and **Factor Value** set to **Factor And Value**, using the **Experience Days** range instead of a value range:
 
 - 0 – 365 days of service → 0%
 - 366 – 1,095 days → 5%
 - 1,096 days and above → 10%
 
-An employee with 900 days of service falls in the second bracket, so their bonus is **5% of basic salary** — not a blend of the brackets below it, because experience-day brackets (like value brackets) select **one** matching bracket rather than accumulating across all of them the way progressive tax slices do. If the same component also carried a **Criteria** limiting it to a specific department, an employee outside that department would get nothing at all, regardless of their experience.
+An employee with 900 days of service falls in the second bracket, so their bonus is **5% of basic salary** — not a blend of the brackets below it, because only the lines that match contribute, and these experience-day ranges do not overlap. If the same component also carried a **Criteria** limiting it to a specific department, an employee outside that department would get nothing at all, regardless of their experience.
 :::
 
 For the **Taxes** formula type specifically, brackets are defined in a separate, purpose-built **Tax Ranges** grid instead of the generic calculation lines: a Value threshold, a Tax Percentage, a Discount Percentage with its own min/max discount, and — for annual calculations — an "annual income greater than / less than or equal" band. A handful of extra flags (Tax On Tax, Tax Range Is Monthly, Discount Employee Insurance Before Tax, and others) refine how this interacts with country-specific tax rules.
@@ -113,15 +115,15 @@ The HR module's **Salary Config** settings include **Log Salary Account Detail I
 
 ## Daily Salary — for employees paid by the day
 
-Not every employee is paid a monthly component-driven salary. For daily-wage staff, Nama uses a separate document: **Daily Salary** (أجر يومى, **Payroll > Payroll > Daily Salary**).
+Not every employee is paid a monthly component-driven salary. For daily-wage staff, Nama uses a separate document: **Daily Salary** (أجر يومي, **Payroll > Payroll > Daily Salary**).
 
 | Field | Purpose |
 |---|---|
 | Document Code (Book / Code) | The document's own numbering. |
 | Term (توجيه المستند) | The document term that governs its numbering and accounting. |
 | Issue Date / Value Date | When it was written up, and the accounting date it takes effect on. |
-| Fiscal Period / Subsidiary | The accounting period and the ledger subsidiary it is recorded against. |
-| From Date / To Date | The date range this daily-wage run covers. |
+| Fiscal Period / Subsidiary | The accounting period, and the safe deposit or third party the document's ledger lines can be recorded against. |
+| From Date / To Date | The date range this daily-wage run covers. On save they are copied to every line, and each line's days count becomes the number of days from From Date to To Date, both included. |
 
 A **Collect Employees** block (from/to employee, department, branch, sector, job/organization position, nationality, health-insurance company, and more) combined with the **Collect Employees** (تجميع الموظفين) button pulls in every matching employee in one pass, rather than adding them one at a time.
 
@@ -133,21 +135,23 @@ Each collected employee gets a **Details** line with: **Daily Wage** (days count
 
 **On the Daily Salary:**
 
-- **Collect Employees** — rebuilds the **Details** grid with one line per employee who matches the employee range **and** has **Daily Wage Work** (العمل بأجر يومى) ticked on the employee record. Monthly-paid staff never come in, however wide the range. Pressing it again replaces the lines, so collect first and type the days, hours and amounts afterwards.
+- **Collect Employees** — rebuilds the **Details** grid with one line per employee who matches the employee range **and** has **Daily Wage Work** (العمل بأجر يومي) ticked on the employee record. Monthly-paid staff never come in, however wide the range. Pressing it again replaces the lines, so collect first and type the days, hours and amounts afterwards.
 
 The **Component Calculation Formula** screen has no buttons of its own.
 
 ## How it's processed / its accounting effect
 
-Unlike a Salary Component — which relies entirely on the component's own account lines carried through a monthly [Salary Document](salary-documents.md) — **Daily Salary creates its own accounting effect directly**. Its document term configures separate debit and credit sides for the Daily Wage Total, the Overtime Total, Other Additions, Deduction Total, and Other Deductions, each processed as its own background business request. If a Daily Salary document's processing fails, it is retried the same way as any other business request, from the Business Requests view.
+Unlike a Salary Component — which relies entirely on the component's own account lines carried through a monthly [Salary Document](salary-documents.md) — **Daily Salary creates its own accounting effect directly**. Its document term configures separate debit and credit sides for the Daily Wage Total, the Overtime Total, Other Additions, Deduction Total, and Other Deductions; a pair is recorded only when both its debit and its credit side are set. All the lines of all the pairs go into one accounting request for the document, processed in the background as a business request. If a Daily Salary document's processing fails, it is retried the same way as any other business request, from the Business Requests view.
 
 ## Messages you may see
 
 | Message | Why | What to do |
 |---|---|---|
 | *Calculation method must be percentages not one percent if you are using daily applicability* | The formula's **Applicability Method** is Daily but its **Calculation Method** is One Percentage. A Daily formula judges each day separately, which only the Sections method does. This message has no Arabic string, so it stays in English on Arabic screens. | Switch the Calculation Method to **Sections** and put the rate on a calculation line. Use Periodic instead if a single figure for the whole month is what you want. |
-| *Employee Account Type (For Forumla Balance Type) Can not Be Empty* — «لا يمكن  ترك نوع حساب الموظف(لنوع معادلة الرصيد) فارغ» | The Formula Type is one of the **Balance From Employee Account** types, but the formula doesn't say which of the employee's accounts to read. | Fill **Employee Account Type (For Formula Balance Type)** on the formula. |
+| *Employee Account Type (For Forumla Balance Type) Can not Be Empty* — «لا يمكن ترك نوع حساب الموظف (لنوع معادلة الرصيد) فارغ» | The Formula Type is one of the **Balance From Employee Account** types, but the formula doesn't say which of the employee's accounts to read. | Fill **Employee Account Type (For Formula Balance Type)** on the formula. |
 | *The formula {0} has recursion - in line {1} of formula {2}* | A **Composite Formula** includes itself, directly or through another composite formula in its **Formulas** grid, so it could never finish calculating. This message has no Arabic string, so it stays in English on Arabic screens. | Remove the line named in the message, or point it at a formula that doesn't lead back to this one. |
+| *From Date can not be after To Date* — «من تاريخ يجب أن يكون قبل إلى تاريخ» | On a **Daily Salary** line, the From Date is later than the To Date. | Correct the dates on that line, or set the header From Date and To Date so they are copied to every line. |
+| *Total per daily salary must not be negative* — «إجمالي الأجر اليومي لا يمكن أن يكون سالب» | On a **Daily Salary** line, the deduction is larger than the daily wage and overtime together. | Reduce the deduction hours or the deduction hour wage on that line. |
 
 ## Related pages
 

@@ -17,11 +17,11 @@ You reach all of them from **Customer Relationship Management → Support**.
 
 | Screen | Arabic | What it is |
 |---|---|---|
-| **Complaint - Suggestion** | شكوي - إقتراح | The intake log — see [Complaints](/modules/crm/support/crm-complaints.md) |
-| **Trouble Ticket** | طلب دعم | The case file, with a status and a clock — see [Trouble Tickets](/modules/crm/support/crm-trouble-tickets.md) |
-| **Ticket Execution** | تنفيذ طلب دعم | The technician's timesheet — see [Ticket Executions](/modules/crm/support/crm-ticket-executions.md) |
-| **Ticket Follow Up** | متابعة طلب دعم | The conversation record, and the status gateway — see [Ticket Follow-Ups](/modules/crm/support/crm-ticket-follow-ups.md) |
-| **CRM Service Contract** | عقد خدمة | The paid cover agreement, which is also the invoice — see [Service Contracts](/modules/crm/support/crm-service-contracts.md) |
+| **Complaint - Suggestion** | شكوى - اقتراح | The intake log — see [Complaints](/modules/crm/support/crm-complaints) |
+| **Trouble Ticket** | طلب دعم | The case file, with a status and a clock — see [Trouble Tickets](/modules/crm/support/crm-trouble-tickets) |
+| **Ticket Execution** | تنفيذ طلب دعم | The technician's timesheet — see [Ticket Executions](/modules/crm/support/crm-ticket-executions) |
+| **Ticket Follow Up** | متابعة طلب دعم | The conversation record, and the status gateway — see [Ticket Follow-Ups](/modules/crm/support/crm-ticket-follow-ups) |
+| **CRM Service Contract** | عقد خدمة | The paid cover agreement, which is also the invoice — see [Service Contracts](/modules/crm/support/crm-service-contracts) |
 | **CRM Update Contract Status** | تغيير حالة عقد خدمة | A one-purpose document that stamps a status onto a contract |
 
 ## Two doors into the same work
@@ -62,10 +62,10 @@ This is the single most common wrong assumption about the CRM menu, so it is wor
 ::: danger A trouble ticket cannot be raised against a maintained machine
 The machine maintenance suite — machine files, maintenance orders, maintenance notices — is a **different product** that happens to sit in the same menu. The Trouble Ticket's **Product** field accepts stock items and real-estate rental units only. A machine registered in the maintenance suite cannot be selected on a ticket, on a warranty, or on a service contract line.
 
-There is no button, no reference field and no report that joins the two. If your business maintains registered machines, faults on those machines are logged as **maintenance notices** in the [maintenance cycle](/modules/crm/maintenance-cycle/crm-maintenance-overview.md), not as trouble tickets. Do not plan an after-sales process that hands work from one to the other — the hand-off does not exist.
+There is no button, no reference field and no report that joins the two. If your business maintains registered machines, faults on those machines are logged as **maintenance notices** in the [maintenance cycle](/modules/crm/maintenance-cycle/crm-maintenance-overview), not as trouble tickets. Do not plan an after-sales process that hands work from one to the other — the hand-off does not exist.
 :::
 
-The two also keep **separate warranty registers**. The warranty a trouble ticket consults is the CRM warranty file described on the [Warranties](/modules/crm/master-files/crm-warranties.md) page. The maintenance suite keeps its own warranty periods on the machine file. Neither one reads the other, so a product covered in one register is invisible to the other.
+The two also keep **separate warranty registers**. The warranty a trouble ticket consults is the CRM warranty file described on the [Warranties](/modules/crm/master-files/crm-warranties) page. The maintenance suite keeps its own warranty periods on the machine file. Neither one reads the other, so a product covered in one register is invisible to the other.
 
 ## What this area does not have
 
@@ -73,11 +73,11 @@ Read this list before you promise a customer anything.
 
 - **No service-level agreements.** Severity, Ticket Type, Relative Weight and Expected Execution Date are labels on the ticket for filtering and reporting; no deadline or priority rule is built on them, and Estimated Fix Period is not compared automatically with Actual Fix Period.
 - **No due-date alarm and no breach detection.** Nothing watches the clock.
-- **No escalation state.** *Escalate To* is a single field plus a button that stamps it. It changes no status, notifies nobody, and there is no queue of escalated cases.
+- **No escalation state.** *escalated to* is a single field plus a button that stamps it. It changes no status, notifies nobody, and there is no queue of escalated cases.
 - **No notifications of any kind** — no e-mail, no user message, no mobile push when a ticket is assigned, changes status or goes stale.
 - **No scheduler anywhere in CRM.** There is no task schedule, no reminder and no recurring job in the whole module. Everything that looks scheduled happens because a person pressed a button.
 - **No stock and no money.** No document in this folder except the service contract touches inventory or the ledger. A ticket execution does not consume spare parts and does not bill labour; if parts are needed, they are issued with an ordinary stock document and nothing links that document back to the ticket.
-- **No customer-facing portal.** Customers cannot see, raise or comment on their own tickets, and the FAQ file that a ticket can create is an internal notebook for your staff — see [FAQ](/modules/crm/master-files/crm-faq.md).
+- **No customer-facing portal.** Customers cannot see, raise or comment on their own tickets, and the FAQ file that a ticket can create is an internal notebook for your staff — see [FAQ](/modules/crm/master-files/crm-faq).
 
 ## Where to see a customer's history
 
@@ -87,18 +87,18 @@ There is no "support history" tab on the customer file. What support staff use i
 2. **The Ticket Execution list screen**, filtered by Trouble Ticket, Employee, External Responsible or Customer — the right place to answer "how many hours did we spend on this customer?"
 3. **The complaint's Related Records tab**, which lists the tickets, executions and follow-ups descending from *that one complaint*.
 4. **The ticket's own Executions and Follow Up tabs**, scoped to that one ticket.
-5. **The service contract's Executions tab**, which lists tickets that were matched to that contract — see [Service Contracts](/modules/crm/support/crm-service-contracts.md).
+5. **The service contract's Executions tab**, which lists tickets that were matched to that contract — see [Service Contracts](/modules/crm/support/crm-service-contracts).
 
 ## Reporting: none
 
-CRM ships **no system reports and no dashboards at all** — not for tickets, not for complaints, not for contracts. The module's only printed form belongs to the CRM Visit, elsewhere in the module. For anything resembling a support report, use the list screens above with their criteria, export to Excel, or build the figures in BI. This is covered in full on [Reports and Printed Forms](/modules/crm/crm-reports-and-forms.md).
+CRM ships **no system reports and no dashboards at all** — not for tickets, not for complaints, not for contracts. The module's only printed form belongs to the CRM Visit, elsewhere in the module. For anything resembling a support report, use the list screens above with their criteria, export to Excel, or build the figures in BI. This is covered in full on [CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms).
 
 ## Setting the desk up
 
 Before the first call comes in:
 
-1. Create the classification files the desk will pick from — **Complaint Type**, **Complaint Source**, **Problem Classification** and **Problem**. These are described on [Problem and Complaint Catalogues](/modules/crm/master-files/crm-problem-and-complaint-catalogues.md).
-2. In **CRM Settings**, set **Compliant Source** (Sales Invoice or Service Contract — this decides what the complaint's search offers) and **Number Of Result Sources Of Complaint** (how many rows it pulls; it falls back to 10 when blank). See [CRM Settings](/modules/crm/crm-configuration.md).
+1. Create the classification files the desk will pick from — **Complaint Type**, **Complaint Source**, **Problem Classification** and **Problem**. These are described on [Problem and Complaint Catalogues](/modules/crm/master-files/crm-problem-and-complaint-catalogues).
+2. In **CRM Settings**, set **Complaint Source** (Sales Invoice or Service Contract — this decides what the complaint's search offers) and **Number Of Result Sources Of Complaint** (how many of the customer's documents it reads; it falls back to 10 when blank). See [CRM Settings](/modules/crm/crm-configuration).
 3. Create **Books** for the four support documents, so each gets its own numbering. None of the four uses a document term, so there is nothing else to configure on them — the only document in this folder with a term is the service contract.
 4. Register the **warranties** that shipped with the products you sell, and raise **service contracts** for the cover customers have bought. Without at least one of the two, every ticket will report *Not Covered*.
-5. Decide whether support documents should carry satisfaction surveys. Adding Trouble Ticket or Complaint - Suggestion to **Add Questionairs Page To** in CRM Settings gives those screens an extra questionnaire tab and a *Create Questionair* action.
+5. Decide whether support documents should carry satisfaction surveys. Adding Trouble Ticket or Complaint - Suggestion to **Add Questionnaires Page To** in CRM Settings gives those screens an extra questionnaire tab and a *Create Questionnaire* action.

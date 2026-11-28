@@ -22,11 +22,11 @@ An offer is rarely typed from a blank screen. Four fields at the top of the basi
 | Field | What it pulls in |
 |---|---|
 | **Term Sheet** (كراسة الشروط) | the tender bill of quantities — its whole term list, with quantities and prices |
-| **From Document** (بناءا على) | another offer, an assay, or a term sheet, when you are re-pricing something that already exists |
+| **From Document** (بناءً على) | another offer, an assay, or a term sheet, when you are re-pricing something that already exists |
 | **Contract Template** (نموذج العقد) | a stored contract skeleton: term codes, standard terms and conditions |
 | **Measurements Request** (طلب رفع مقاسات) | the site visit whose measured quantities the offer is priced from |
 
-Below them sit the parties and the people — project, customer, responsible engineer, sales responsible, responsible employee, salesman — and the **Type** field that decides whether this offer, when won, becomes an owner contract or a subcontract.
+Below them sit the parties and the people — project, customer, responsible engineer, sales responsible, responsible employee, salesman — and the **Type** field (*Project Contract* or *Contractor Contract*). *Type* does not decide what the offer converts into — the conversion button on this screen always produces a project contract. It governs the copy of lines from a term sheet or another document: with *Contractor Contract*, whether the copied lines take the source's price or its cost follows the module option **Copy Price From Price Field not Cost Field in Project Contract and Assay to Contractor Contract**.
 
 The header's **Contract Type** (نوع العقد) has three values: *Contract* for the ordinary case, *Addendum* when the work is an addition to an existing contract (which makes the main-contract reference mandatory), and *Modify To Contract* when the offer is meant to revise the parent contract's terms rather than sit alongside them. The field labelled *Addendum contract* in English is that main, parent contract — the Arabic `العقد الرئيسي` says it more clearly.
 
@@ -54,7 +54,7 @@ The **Work Area** column is a reporting dimension: it is copied forward from the
 
 ## Building the cost — the four buckets
 
-Under the terms grid sit four grids that are the heart of this document: **Material** (مواد خام), **Workers** (عمالة), **Contractors** (مقاول باطن) and **Other Expenses** (مصروفات أخري). Each line names a cost element from the [direct-cost catalogue](/modules/contracting/setup/contracting-lookups.md), the quantity of it consumed, and its unit cost. The four grids together are the offer's total cost.
+Under the terms grid sit four grids that are the heart of this document: **Material** (مواد خام), **Workers** (عمالة), **Contractors** (مقاول باطن) and **Other Expenses** (مصروفات أخرى). Each line names a cost element from the [direct-cost catalogue](/modules/contracting/setup/contracting-lookups.md), the quantity of it consumed, and its unit cost. The four grids together are the offer's total cost.
 
 For Tower A, this is where the 200,000 comes from:
 
@@ -91,7 +91,7 @@ For Tower A, this is where the 200,000 comes from:
 
 40,000 + 48,000 + 80,000 + 32,000 = **200,000**, and that is what the header's *Total Cost* shows. Blockwork is the one term with a single line, because the whole of it is being given to a subcontractor at 40.00 the square metre — the 80,000 subcontract the cost side of these docs follows.
 
-Two mechanisms make these grids less laborious than they look. **Productivity** (الإنتاجية) and **Wastage %** (نسبة الهالك) let you enter a norm instead of an absolute quantity: productivity is how much of the element one contracted unit consumes, wastage inflates it for breakage, and the line quantity comes out as `contracted quantity × productivity × (1 + wastage %)`. Say a plasterer-day covers 6.25 m² of plastering, and the labour line sizes itself from the 1,000 m² above at 160 man-days; put 4% wastage on the cement-and-sand line and that one inflates to match. And two buttons fill the grids for you — **Collect Contract Items From Standard Terms** (تجميع بنود التكلفه من البنود القياسية) reads the standard cost recipe stored on each standard term, and **Collect Sub Items Cost** (تجميع تكلفة البنود الفرعية) rolls the resulting element costs back up into the term line's unit cost.
+Two mechanisms make these grids less laborious than they look. **Productivity** (الإنتاجية) and **Qty Waste Percentage** (نسبة الهالك) let you enter a norm instead of an absolute quantity: productivity is how much of the element one contracted unit consumes, wastage inflates it for breakage, and the line quantity comes out as `contracted quantity × productivity × (1 + wastage %)`. Say plastering takes 0.16 plasterer-days per m² (one plasterer covers 6.25 m² a day), and the labour line sizes itself from the 1,000 m² above at 160 man-days; put 4% wastage on the cement-and-sand line and that one inflates to match. And two buttons fill the grids for you — **Collect Contract Items From Standard Terms** (تجميع بنود التكلفة من البنود القياسية) reads the standard cost recipe stored on each standard term, and **Collect Sub Items Cost** (تجميع تكلفة البنود الفرعية) rolls the resulting element costs back up into the term line's unit cost.
 
 If your organisation maintains [term analysis cards](/modules/contracting/setup/contracting-term-analysis-cards.md), the same cost model exists there as a reusable master file, analysed once per term rather than once per offer.
 
@@ -147,7 +147,7 @@ What crosses over to the contract, and what does not, is worth knowing before yo
 
 | Carried over | Left behind |
 |---|---|
-| Project, customer, responsible engineer | The four cost-analysis grids |
+| Project and customer; the offer's **Responsible Employee** as the contract's responsible engineer | The four cost-analysis grids |
 | Price before discount, discount value and percentage | Tasks |
 | Contract type and the main-contract reference | The payment schedule |
 | Remarks | Taxes and the total cost |
@@ -157,9 +157,7 @@ What crosses over to the contract, and what does not, is worth knowing before yo
 
 Two of those deserve a note. The **Source** reference is how the contract remembers where it came from, and it is what the contract screen shows in its *Source* field — so an auditor can always walk back from a signed contract to the bid that produced it. And the cost grids being left behind is deliberate: the contract carries the *unit cost* on each term line, which is all it needs, and the detailed build-up stays on the offer as the estimating record.
 
-One nuance on the subcontractor conversion: whether your selling price is copied onto the subcontract's lines is a module configuration setting, so you can choose not to reveal your own rates in a document a subcontractor may see. See [contracting configuration](/modules/contracting/contracting-configuration.md).
-
-If the measurements request is filled in on the offer, the conversion also overwrites the responsible engineer and salesman from that request — the people who actually measured the site win over whoever was typed on the offer.
+If the measurements request is filled in on the offer, the conversion takes the responsible engineer and the salesman from that request instead — the people who actually measured the site win over whoever was typed on the offer.
 
 ## Actions on this screen
 

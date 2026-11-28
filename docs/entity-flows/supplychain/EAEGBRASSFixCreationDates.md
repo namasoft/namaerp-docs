@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Bulk fixes creation dates on supply chain documents identified by SQL query. Synchronizes creation dates with source documents and adjusts them based on document type (issues vs receipts) to maintain proper chronological order for inventory effects.
+Bulk fixes creation dates on the stock issues and stock receipts that an assembly document generated, identified by SQL query. Gives each document the creation date its assembly document assigns to it (the issue is dated before the receipt) and regenerates its inventory effects.
 
 ## When This Action Runs
 
@@ -20,28 +20,19 @@ Manual execution for data correction when creation dates are incorrect or incons
 ## How It Works
 
 1. **Executes SQL query** - Finds documents to process based on query criteria
-2. **Synchronizes with source** - Copies creation date from source document (fromDoc) if available
-3. **Adjusts chronological order** - For StockIssue: makes creation date after source; for others: makes creation date before source
-4. **Regenerates inventory effects** - Recalculates inventory transactions with corrected dates
-5. **Processes in sequence** - Handles each document individually with error accumulation
+2. **Synchronizes with source** - Sets the creation date of the document to the one its source document (fromDoc) assigns to the documents it generates
+3. **Regenerates inventory effects** - Recalculates inventory transactions with corrected dates
+4. **Processes in sequence** - Handles each document individually with error accumulation
 
 ## Parameters
 
-**Parameter 1:** Query (Required) - SQL query returning entityType and id columns
+It takes the same six parameters, in the same order and with the same rules, as EARecommitFromQuery: see [its Parameters section](/entity-flows/core/EARecommitFromQuery#Parameters). On this flow the titles of Parameters 3, 4 and 6 read *Do not Fix Creation Date cancelled Records (true,false)*, *Flush After Each Fix Creation Date (true,false)* and *Run Update Query After Selecting Entities, and Before Fix Creation Date*.
+
+Example for Parameter 1:
 
 ```sql
 select entityType,id from StockIssue where fromDoc_id = {id}
 ```
-
-**Parameter 2:** Flush Before Starting (Optional) - true/false to flush database before processing (default: false)
-
-**Parameter 3:** Skip Cancelled Records (Optional) - true/false to ignore cancelled documents (default: true)
-
-**Parameter 4:** Flush After Each Fix (Optional) - true/false to flush after each document (default: false)
-
-**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - true/false. When true, each document is fixed in its own transaction, so an error in one document is logged and the remaining documents are still processed (default: false)
-
-**Parameter 6:** Run Update Query After Selecting Entities, and Before Fix Creation Date (Optional) - SQL update query that runs after Parameter 1 has selected the documents and before their creation dates are fixed
 
 ## Database Tables Affected
 
@@ -57,8 +48,6 @@ select entityType,id from StockIssue where fromDoc_id = {id}
 
 **Related Actions:**
 - [EARecommitFromQuery](../core/EARecommitFromQuery.md) - Parent class for bulk operations
-- [EAMakeCreationDateAlwaysAfter](../core/EAMakeCreationDateAlwaysAfter.md) - Used for StockIssue documents
-- [EAMakeCreationDateAlwaysBefore](../core/EAMakeCreationDateAlwaysBefore.md) - Used for other documents
 
 
 </div>

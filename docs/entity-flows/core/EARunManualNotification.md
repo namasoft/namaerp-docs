@@ -19,11 +19,10 @@ Manual execution when specific notifications need to be sent outside of automati
 
 ## How It Works
 
-1. **Locates notification definition** - Finds NotificationDefinition by the specified business code
-2. **Validates configuration** - Ensures notification is configured for manual execution
-3. **Prepares notification data** - Uses current entity data to populate notification template
-4. **Sends notification** - Executes the notification through the NotificationsEngine
-5. **Returns results** - Reports success or failure of notification delivery
+1. **Locates notification definition** - Finds the notification definition by the code in Parameter 1; an unknown code stops with *Could not find notification definition with code {0}*
+2. **Prepares notification data** - Uses current entity data to populate notification template
+3. **Sends notification** - Runs the notification definition on the current record
+4. **Returns results** - Reports success or failure of notification delivery
 
 ## Parameters
 

@@ -39,7 +39,7 @@ With this script, the user types the chain and the script does the multiplicatio
 
 ## How it works
 
-1. When the item is saved, the script looks at every line of the **Conversions** grid whose target unit (the unit after **Equal Y of**) is not the item's **Base Unit(Smallest)**.
+1. When the item is saved, the script looks at every line of the **Conversions** grid whose target unit (the unit after **Equal Y of**) is not the item's **Base Unit (Smallest)**.
 2. For each such line it looks for another line that converts that target unit to the base unit. For `1 Pallet = 50 Carton`, that is `1 Carton = 24 Piece`.
 3. If it finds one, it rewrites the line to the base unit and multiplies the quantities: `1 Pallet = 50 × 24 ÷ 1 = 1200 Piece`.
 4. If it finds none, the line is left as it is, and the system's normal check applies to it.
@@ -63,7 +63,7 @@ Each line is rewritten through a line that reaches the base unit at that moment.
 
 ## Example
 
-An item has **Gram** as its **Base Unit(Smallest)**, and its **Conversions** grid is entered as:
+An item has **Gram** as its **Base Unit (Smallest)**, and its **Conversions** grid is entered as:
 
 | X of | Unit | Equal Y of | Unit |
 |---|---|---|---|
@@ -83,7 +83,7 @@ The script raises no messages of its own. This is the message it helps you avoid
 
 | Message | Why | What to do |
 |---|---|---|
-| *Could not find conversion between base unit ({0}) and unit ({1})* — «لم يمكن العثور علي تحويل بين الوحدة الأساسية ({0}) و الوحدة ({1})» | Unit `{1}` still has no direct conversion to the base unit `{0}`, because no line connects its target unit to the base unit. | Add the missing line that converts that unit to the base unit, then save again. |
+| *Could not find conversion between base unit ({0}) and unit ({1})* — «لم يمكن العثور على تحويل بين الوحدة الأساسية ({0}) و الوحدة ({1})» | Unit `{1}` still has no direct conversion to the base unit `{0}`, because no line connects its target unit to the base unit. | Add the missing line that converts that unit to the base unit, then save again. |
 
 ## The script
 

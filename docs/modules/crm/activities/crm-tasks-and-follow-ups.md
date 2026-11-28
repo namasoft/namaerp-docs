@@ -8,7 +8,7 @@ menu: Customer Relationship Management → Support → CRM Task
 ::: info Required licence
 `crm`. The CRM Task lives at **Customer Relationship Management > Support > CRM Task**
 (*خدمة العملاء > الدعم > مهمة خدمة عملاء*). The Follow Up Document lives at **Customer Relationship
-Management > Questionairs > Follow Up Document** (*خدمة العملاء > استبيانات > سند متابعة*) — yes, in
+Management > Questionnaires > Follow Up Document** (*خدمة العملاء > استبيانات > سند متابعة*) — yes, in
 the questionnaires group, not with the other support documents.
 :::
 
@@ -34,10 +34,10 @@ Then the working block:
 
 | Field | Notes |
 |---|---|
-| **Responsible Employee**, **Assignee**, **Mediator**, **escaleted to** | Responsible Employee and Assignee are stamped with the logged-in user's employee on every new task, always |
+| **Responsible Employee**, **Assignee**, **Mediator**, **escalated to** | Responsible Employee and Assignee are stamped with the logged-in user's employee on every new task, always |
 | **Related To** (*يرتبط بـ*) | The subject: a Lead, Potential, Project, Campaign, Trouble Ticket, Complaint, Customer, Development Request, another CRM Task, or a Visit |
 | **Related Task** | Point at a parent task and its task information, subject and assignee are copied down |
-| **Task Type** | Visit, Call, Support, training or preparation — a label you filter and report on |
+| **Task Type** | Visit, Call, Support, exercise or preparation — a label you filter and report on |
 | **Planned Start Date**, **Planned Time** (from/to) | What you intend |
 | **Actual Start Date**, **Actual Time** (from/to) | What happened — typed by hand, see the warning below |
 | **Status** | Planned, In Progress or Finished — a label you set by hand |
@@ -76,7 +76,7 @@ If your site reports on task effort, read the grid rows, not the header.
 
 ### Actions on this screen
 
-All five buttons need the task **saved** first.
+The first five buttons need the task **saved** first; the Start and End row buttons do not.
 
 - **Create Call** (*إنشاء اتصال*) — opens a new Call in a pop-up with this task as its subject.
 - **Create Contact** (*إنشاء جهة اتصال*) — opens a new Contact in a pop-up, linked back to this task.
@@ -85,7 +85,7 @@ All five buttons need the task **saved** first.
 - **create CRM Task** (*إنشاء مهمة خدمة العملاء*) — opens a follow-on task in a pop-up with this task
   as its subject and as its **Related Task**, carrying over the task type, status, actual start date,
   actual end time and the contact-information block.
-- **escaleted to** (*تصعيد الي*) — asks for an employee, writes it into the Escalated To box, saves and
+- **escalated to** (*تصعيد إلى*) — asks for an employee, writes it into the **escalated to** box, saves and
   commits the record and refreshes the screen. **Nobody is notified.** Escalation here means a field
   now holds a name.
 - **Start** (*بدء*) and **End** (*إنهاء*) — row buttons on the **Detailed Tasks** grid; they stamp the
@@ -101,11 +101,10 @@ A CRM Task has **no relationship whatsoever** to the platform's task schedule, i
 or any approval inbox. Nothing watches the Planned Start Date. Nothing changes the status when a date
 passes. Nothing e-mails the assignee when a task is created or when it becomes overdue.
 
-This is true of the whole CRM module, not just this screen — there is no scheduler anywhere in it.
-Everything that looks scheduled happens because somebody pressed a button.
-
-The only calendar-adjacent feature available is the generic **Add To Agenda** action, which is a
-platform feature on every document and which the user has to press themselves.
+This is true of the whole CRM module, not just this screen — see
+[What this module does not do](/modules/crm/crm-overview#What-this-module-does-not-do). The only
+calendar-adjacent feature available is the generic **Add To Agenda** action, which the user has to
+press themselves.
 :::
 
 Tasks *are* counted, in one place: [Target Plans](/modules/crm/marketing/crm-target-plans) count
@@ -114,7 +113,8 @@ document, on demand, and it counts against the task's **Assignee**.
 
 ## The Follow Up Document
 
-The Follow Up Document is a single-block screen: a document code, a value date, a description, and
+The Follow Up Document is a single-block screen: a document code, a term box (the document needs no
+term), a value date, a description, and
 then **Follow Up Date**, **Follow Up Time**, **Related Record**, **Follow Up Type**, **Status** and
 **Sub Status**. The Related Record accepts a Lead or a Potential — nothing else.
 
@@ -146,5 +146,6 @@ fields, belonging to the support side of the module.
 The Follow Up Document described here is reachable from its menu item and nowhere else.
 :::
 
-**Reporting: none.** This module ships no system reports, and neither of these two screens has a
-print form. Use the list views, Excel export or BI.
+**Reporting: none.** Neither of these two screens has a print form, and CRM ships no system reports
+(see [CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms)). Use the list views, Excel
+export or BI.

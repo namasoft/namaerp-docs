@@ -19,20 +19,16 @@ Manual execution or automated through entity flows on DocumentFile entities with
 ## How It Works
 
 1. **Retrieves currency** from specified currency field
-2. **Calculates exchange rate** using ExchangeRateUtil with document context
+2. **Calculates exchange rate** of that currency in the ledger of the document's legal entity on the document's value date. The ledger's main currency gets a rate of 1
 3. **Sets calculated rate** to specified rate field
-4. **Handles errors** for invalid currency or unavailable rates
+4. **Empty currency:** when the currency field is empty the rate field is left as it is
 
 ## Key Parameters
 
 - **Parameter 1:** Currency Field (Required) - Field path to currency field (e.g., `money.currency`)
 - **Parameter 2:** Rate Field (Required) - Field path to rate field for calculated value (e.g., `money.currencyRate`)
 
-### Common Field Examples:
-```
-Currency Field: money.currency, currency, foreignCurrency
-Rate Field: money.currencyRate, exchangeRate, currencyExchangeRate
-```
+Both are header fields. For a currency on the document lines use [EACalcCurrencyRateInDetails](/entity-flows/core/EACalcCurrencyRateInDetails).
 
 ## Database Tables Affected
 

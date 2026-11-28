@@ -6,7 +6,7 @@ menu: Accounting → Financial Statement → FS Settings File
 
 # Financial Statements
 
-Every company needs an income statement and a balance sheet, but no two companies want them laid out exactly the same way — different line groupings, different subtotals, different comparison columns. Rather than hard-code a fixed report, Nama gives you a **configurable financial-statements engine**: you describe the shape of the statement once, then *issue* it for any period to get the numbers. The income statement, balance sheet and cash-flow reports you print are all output of this one engine.
+Every company needs an income statement and a balance sheet, but no two companies want them laid out exactly the same way — different line groupings, different subtotals, different comparison columns. Rather than hard-code a fixed report, Nama gives you a **configurable financial-statements engine**: you describe the shape of the statement once, then *issue* it for any period to get the numbers. The issue-driven statement reports print the output of this engine; the other statement reports in the same group read the account balances directly (see [The reports](#The-reports)).
 
 ::: info Required license
 The financial-statements engine is part of the core `accounting` license. Its screens are under **Accounting > Financial Statement**.
@@ -33,11 +33,13 @@ The **FS Settings File** is where the statement takes shape. It carries an Arabi
 
 ![The FS Settings File screen](../../../ar/modules/accounting/images/fs/fs-settings-file-en.png)
 
-At the header you also choose how the whole statement behaves:
+At the header you also choose how the whole statement behaves by default:
 
-- the **comparison type** — **One Year**, **Two Years**, a **Period Set** (a run of consecutive periods, i.e. month-by-month columns), or **Two Period Sets** (the same months across two years),
-- up to five **grouping axes** (**group by** legal entity, branch, department, sector, analysis set, references, record, or subsidiary) — so the same statement can be broken down by dimension,
+- the **Default Comparison Type** — **One Year** (used when it is left empty), **Two Years**, a **Period Set** (a run of consecutive periods, i.e. month-by-month columns), or **Two Period Sets** (the same months across two years),
+- up to five **grouping axes** (**Default Group 1 By** to **Default Group 5 By**: legal entity, branch, department, sector, analysis set, references, record, or subsidiary) — so the same statement can be broken down by dimension,
 - and display options: **create totals lines**, **hide zero-value balances**, **hide equal-balanced transactions**, **show to level** (collapse detail beyond a depth), and **consider debit and credit charts**.
+
+These are defaults. Picking the settings file on an issue file copies them into the issue file's own **Comparison Type**, **Group 1 By** to **Group 5 By** and display options, and the issue file's values are the ones used when the statement is generated.
 
 ## Issuing a statement
 
@@ -82,12 +84,14 @@ Designing a statement from an empty settings file is a long job, so the screen o
 
 ## The reports
 
-The printed statements all come out of this engine, under the report menu (`Acc-FNS`, codes `SYSR-FNS*`):
+The statement reports are in the report group `Acc-FNS` (codes `SYSR-FNS*`). Only the issue-driven ones print from this engine; the others read the account balances, chart of accounts and account categories directly, with no settings file or issue:
 
-- **Income statement** — by accounts (`SYSR-FNS001`), monthly (`SYSR-FNS002`), and grouped by dimension (`SYSR-FNS009`).
-- **Balance sheet** — by accounts (`SYSR-FNS003`), monthly (`SYSR-FNS004`), by balances and by account category.
-- **Cash-flow statement.**
-- **Issue-driven statements** that print from a saved issue: monthly income statement one/two years (`SYSR-FNS010`/`SYSR-FNS011`), yearly income statement one/two years (`SYSR-FNS012`/`SYSR-FNS013`), yearly balance sheet one/two years (`SYSR-FNS014`/`SYSR-FNS015`), plus an FS trial balance.
+- **Income statement** — by accounts (`SYSR-FNS001`), monthly (`SYSR-FNS002`), by balances (`SYSR-FNS006`), and grouped by dimension (`SYSR-FNS009`).
+- **Balance sheet** — by accounts (`SYSR-FNS003`), monthly (`SYSR-FNS004`), by balances (`SYSR-FNS007`) and by account category (`SYSR-FNS008`).
+- **Cash-flow statement** (`SYSR-FNS005`).
+- **Issue-driven statements** that print from a saved issue: monthly income statement one/two years (`SYSR-FNS010`/`SYSR-FNS011`), yearly income statement one/two years (`SYSR-FNS012`/`SYSR-FNS013`), yearly balance sheet one/two years (`SYSR-FNS014`/`SYSR-FNS015`), and the FS trial balances (`SYSR-FNS016`, and `SYSR-FNS017` with grouping).
+
+The consolidated group statements `SYSR-FNS018` to `SYSR-FNS020` are described on [Consolidated Statements](/modules/accounting/financial-reporting/consolidated-statements).
 
 ![Income statement by accounts (SYSR-FNS001)](../../../ar/modules/accounting/images/reports/SYSR-FNS001-en.png)
 
@@ -117,7 +121,7 @@ The printed statements all come out of this engine, under the report menu (`Acc-
 
 - **"A line shows the wrong number"** — check the line's **equation** (balance vs debit-credit vs opening vs totals) and any **dimension limits** on it; a line limited to one branch only sums that branch.
 - **"A subtotal isn't adding up"** — totals lines use the **totals equation** and reference other lines by **source line code**; verify those references and the line **levels**.
-- **"The comparison columns are missing/wrong"** — that's the **comparison type** (One Year / Two Years / Period Set / Two Period Sets) on the settings file.
+- **"The comparison columns are missing/wrong"** — that's the **Comparison Type** (One Year / Two Years / Period Set / Two Period Sets) on the issue file; it is copied from the settings file's **Default Comparison Type** when the settings file is picked.
 - **"The figures are out of date"** — the issue-driven reports print a saved **issue**; re-issue the settings file for the period to refresh the snapshot.
 - **"The figures in the statement are not clickable"** — the line needs a **period values link configuration** (the opening and total columns of a monthly statement need the **period open link configuration** and **period total link configuration**; the settings file a **Trial Balance Link Configuration**), and the issue must be generated again after that was set; links are worked out at generation time.
 - **"Zero/empty rows clutter the statement"** — turn on **hide zero-value balances** (and **show to level** to collapse deep detail).
@@ -126,9 +130,9 @@ The printed statements all come out of this engine, under the report menu (`Acc-
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must choose Settings File in field {0}* — «يجب إختيار القيمة ملف إعدادات فى الحقل {0}» | A settings-file line points its **source** at another settings file while its equation type is something else. | Set the line's equation type to **Settings File** — that is what makes the source a settings file. |
+| *You must choose Settings File in field {0}* — «يجب اختيار القيمة ملف إعدادات في الحقل {0}» | A settings-file line points its **source** at another settings file while its equation type is something else. | Set the line's equation type to **Settings File** — that is what makes the source a settings file. |
 | *Source Type must be Settings File* — «نوع المصدر يجب أن يكون إعدادات قائمة مالية» | The mirror image of the previous message: the line's equation type is **Settings File** but its **source** points at something else. | Point the source at a financial-statement settings file, or change the equation type. |
-| *Code {0} is repeated at line {1}* — «الكود {0} مكرر فى السطر رقم {1}» | Two lines of the settings file carry the same **code**; totals lines reference other lines by that code, so it must be unique. | Give one of the two lines a different code and fix any totals equation that referred to it. |
-| *You must fill field {0} before fill this field {1}* — «يجب ملئ الحقل {0} قبل ملئ الحقل {1}» | The **group by** levels are filled out of order — a later level is set while an earlier one is empty. | Fill the grouping levels from the first one down, with no gaps. |
+| *Code {0} is repeated at line {1}* — «الكود {0} مكرر في السطر رقم {1}» | Two lines of the settings file carry the same **code**; totals lines reference other lines by that code, so it must be unique. | Give one of the two lines a different code and fix any totals equation that referred to it. |
+| *You must fill field {0} before fill this field {1}* — «يجب ملء الحقل {0} قبل ملء الحقل {1}» | The **group by** levels are filled out of order — a later level is set while an earlier one is empty. | Fill the grouping levels from the first one down, with no gaps. |
 | *Group {0} is repeated* — «التجميع بـ {0} مكرر» | The same grouping level value is chosen twice in the group-by chain. | Choose a different value for one of them, or leave the later level empty. |
-| *You must fill at least one of the following fields: {0}, {1}* — «{1} ,يجب ملء حقل واحد على الأقل من الحقول الأتية : {0}» | The issue file's **comparison type** needs a period range (or a second one, for Two Period Sets) and the range is completely empty. | Fill the from/to fields the message names for the comparison type you chose. |
+| *You must fill at least one of the following fields: {0}, {1}* — «{1} ,يجب ملء حقل واحد على الأقل من الحقول الآتية : {0}» | The issue file's **comparison type** needs a period range (or a second one, for Two Period Sets) and the range is completely empty. | Fill the from/to fields the message names for the comparison type you chose. |

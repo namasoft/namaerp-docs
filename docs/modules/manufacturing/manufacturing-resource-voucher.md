@@ -23,7 +23,7 @@ Resource vouchers are part of the core `manufacturing` license. If the **Manufac
 
 Here is the thing worth understanding before you enter a single voucher: **most resource consumption never needs one**.
 
-If a [standard operation](/modules/manufacturing/manufacturing-work-centers) has **Auto Charge** ticked, its resources are charged automatically as production is recorded. The routing knows the machine runs 0.25 of an hour per item; production execution says 90 items went through; the charge lands by itself. Nobody types anything.
+Every production execution generates a resource voucher for each order it touches, in the book and term its document term names ([What an execution generates](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery#What-an-execution-generates)). It charges the order's resource rows that have **Auto Charge** ticked — a flag the rows inherit from the [standard operation](/modules/manufacturing/manufacturing-work-centers) through the routing — for the operation the units arrive at and for every auto-charged operation they pass on the way. The routing knows the machine runs 0.25 of an hour per item; production execution says 90 items went through; the charge lands by itself. Nobody types anything.
 
 The resource voucher is for the cases that escape that:
 
@@ -41,23 +41,25 @@ Routine, predictable resource consumption belongs on the standard operation with
 
 **Production Order** is required, and for the same reason as on a materials issue: a resource cost has to attach to a job or it has nowhere to go.
 
+**From Document** fills it for you. Pick a production order and it becomes the voucher's order. Pick a production execution and the voucher takes the production order the execution was itself made from (its own From Document), and fills the grid with the order's resource rows that do *not* have Auto Charge ticked, for the operations the execution covered — the charges the generated voucher leaves for someone to enter.
+
 **Currency** and its rate handle resources billed in another currency — the contractor invoicing in dollars. **Amount** carries the voucher's value, and **Net After Taxes** the figure after tax has been applied — 1,755 in both fields in the example, because no tax applies to it.
 
 **Subsidiary** names the party where the resource is external and there is someone to pay.
 
-**Recalculate Rate With Save** is the checkbox to think about. Leave it unticked and the rates on the lines stay exactly as entered. Tick it and saving re-derives them from the current standard rates. Which you want depends on why you are raising the voucher: recalculation is right when you are catching up a document to current rates, and wrong when the whole point of the voucher was to record a rate that *differed* from standard — in that case ticking it silently discards what you came to record.
+**Recalculate Rate With Save** is the checkbox to think about. Leave it unticked and the rates on the lines stay exactly as entered. Tick it and saving re-reads every line's **Rate** from its resource's rate for the line's **Activity** on the voucher's value date. Which you want depends on why you are raising the voucher: recalculation is right when you are catching up a document to current rates, and wrong when the whole point of the voucher was to record a rate that *differed* from standard — in that case ticking it silently discards what you came to record.
 
 **Attachment 1** through **Attachment 5** hold the evidence — the contractor's invoice, the maintenance log, the timesheet. On a document whose purpose is to explain an unusual cost, these earn their place.
 
 ## Choosing Which Operations to Charge
 
-Two sections sit between the header and the grid, and they exist to save typing on orders with long routings.
+Two sections sit between the header and the grid. They narrow down the lines a production execution in **From Document** brings in, and the grid is refilled whenever one of their fields changes.
 
-**Manual Resource For Operation In Range** takes a **From Operation** and a **To Operation** — charge everything from step 20 through step 60 in one stroke.
+**Manual Resource For Operation In Range** takes a **From Operation** and a **To Operation** — keep only the lines from step 20 through step 60. Either end may be left empty to leave that side open.
 
-**Manual Resource For Specific Operations** takes up to five individual steps in **Operation1** through **Operation5** — for when the steps you want are scattered rather than contiguous.
+**Manual Resource For Specific Operations** takes up to five individual steps in **Operation1** through **Operation5** — for when the steps you want are scattered rather than contiguous. When any of them is filled, they decide on their own and the range is ignored.
 
-Both are shortcuts for populating the grid. Leave them empty and you name the operations line by line instead, which on a short routing is no hardship.
+Without a production execution in **From Document** they do nothing, and you name the operations line by line instead, which on a short routing is no hardship.
 
 ## The Details Grid
 
@@ -67,16 +69,16 @@ Each row charges one resource at one operation.
 
 **Resource** is what consumed the time: the Pipe Cutting & Flaring Machine. **Resources Count** is how many of them — 1 here.
 
-**Qty or Lot Count** is the volume the charge is being spread across: 10.
+**Qty or Lot Count** is the volume the charge is multiplied by: 10.
 
-**Resource Rate** (**Unit** + **Value**) is the standard rate — `5 - Hour` at `0.25`, meaning a quarter of an hour per unit.
+**Resource Rate** (**Unit** + **Value**) is the time the resource works — `5 - Hour` at `0.25`, a quarter of an hour.
 
-**Rate** (90) is the money rate, and **Total** (225) is the resulting charge. That figure is what lands on the production order's cost.
+**Rate** (90) is the money rate, and **Total** (225) is the resulting charge. On save, Total is **Rate** × **Resources Count** × the Resource Rate value, then by **Cost Basis**: with **Item** it is multiplied by **Qty or Lot Count** (90 × 1 × 0.25 × 10 = 225); with **Lot** it is charged once per lot, and once for every **Max Lot Quantity** units of Qty or Lot Count (rounded up) when the line carries one. A line with no Cost Basis is saved as Lot. A voucher generated by an execution fills Qty or Lot Count on Item lines with the quantity executed divided by the resource row's **Final Quantity** on the order.
 
-**Item Tax** (**%** + **Tax value**) and **Tax 2** (**%** + **Value**) apply tax where the resource is externally billed and taxable. For an in-house machine they stay zero.
+**Item Tax** (**%** + **Tax value**), **Tax 2**, **Tax 3** and **Tax 4** (**%** + **Value**) come from the resource's tax plan (the first two) and the term's tax plan (the last two), and are forced to zero when the term is not taxable; [Costing, Resource and Mold Document Terms](/modules/manufacturing/document-terms/mfg-terms-costing#Resource-Voucher) has the options. **Total After Taxes** adds them to the Total, except those the term keeps out of cost. For an in-house machine they stay zero.
 
 ## Where the Cost Goes
 
 A saved resource voucher adds to the production order's accumulated cost, alongside materials issued and overheads absorbed. Its effects are raised as business requests and processed in the background, so the save itself is immediate; if a voucher's effects fail, they surface in the **Business Requests** list view for reprocessing.
 
-At [order close](/modules/manufacturing/production-costing), resource cost is compared against what the routing said the operations should have consumed. A persistent gap is worth chasing, because it usually means one of two specific things: the standard rates on your operations have drifted away from reality, or the shop is genuinely taking longer than the routing claims. Those call for very different responses, and the resource variance is the number that tells them apart.
+At [order close](/modules/manufacturing/production-costing), when the production order's term has **Calculate Deviations With Save** ticked, resource cost is compared against what the routing said the operations should have consumed. A persistent gap is worth chasing, because it usually means one of two specific things: the standard rates on your operations have drifted away from reality, or the shop is genuinely taking longer than the routing claims. Those call for very different responses, and the resource variance is the number that tells them apart.

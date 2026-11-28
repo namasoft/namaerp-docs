@@ -15,7 +15,7 @@ Copies maximum normal tax percentages (Tax1-Tax4) from parent invoice lines to c
 
 ## When This Action Runs
 
-Manual execution on invoice documents that have parent-child line relationships, typically when tax rates need to be synchronized from source invoices to derived invoices like credit notes or return documents.
+Manual execution on invoice documents that have parent-child line relationships, typically when tax rates need to be synchronized from source invoices to derived documents such as sales or purchase returns.
 
 ## How It Works
 

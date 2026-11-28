@@ -23,7 +23,7 @@ All three live in the [global configuration](/platform/global-config/), on two d
 
 ### Add Related Archive Docs To
 
-**إضافة المستندات الارشيفية إلي** — on the **Entities Screens** tab.
+**إضافة المستندات الأرشيفية إلى** — on the **Entities Screens** tab.
 
 A grid of entity types. Every type you list gains a **DMS Documents / مستندات أرشيفية** page on
 its edit screen, listing the archived documents that belong to that record.
@@ -52,7 +52,7 @@ default archives set — the picker will simply come up empty.
 
 ### Create DMS Doc In Pop Up Window
 
-**إنشاء المستند الارشيفي في شاشة منبثقة** — on the **Appearance** tab, in the Popups And Editors
+**إنشاء المستند الأرشيفي في شاشة منبثقة** — on the **Appearance** tab, in the Popups And Editors
 group. **On by default.**
 
 Controls the **Create Archive** action described below: on, the new document opens in a popup over
@@ -64,7 +64,7 @@ your place.
 ## Storage, Scanning and Previews
 
 DMS files are ordinary Nama attachments, so everything on the
-[Attachments and Storage](/platform/global-config/global-config-attachments.md) tab applies to
+[Attachments and Storage](/platform/global-config/global-config-attachments) tab applies to
 them. The settings that matter most for an archive:
 
 | Setting | Why it matters for DMS |
@@ -77,14 +77,14 @@ them. The settings that matter most for an archive:
 | **Allow Downloading Attachment Without Authentication** | Turning this on makes attachment downloads public to anyone with the link. Think carefully before enabling it on an archive of contracts and identity documents. |
 
 Allowed file extensions are **not** a global setting. They are configured per attachment field in
-[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance.md),
+[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance),
 where the default is to allow everything. That is also where you mark an attachment field as a
 scanner field so it gets its own scan button.
 
 ## Security
 
 There is no DMS-specific permission system — no per-folder or per-topic access control. DMS relies
-on ordinary [security profiles](/platform/security/security-profiles.md), which is usually enough:
+on ordinary [security profiles](/platform/security/security-profiles), which is usually enough:
 
 - **Standard privileges** per screen — who may add, update, delete, view or print archived
   documents and movements.
@@ -104,7 +104,7 @@ disposed ones too.
 
 Two actions appear in the **More** menu of any record whose type is an allowed document owner:
 
-- **Create Archive / إنشاء مستند ارشيفي** — creates a new archived document with the current record
+- **Create Archive / إنشاء مستند أرشيفي** — creates a new archived document with the current record
   already set as its owner. Honours the popup setting above.
 - **DMS Documents Archive / أرشيف المستندات** — opens the list of documents belonging to this
   record, matching on the header owner *or* any row of the multi-owner grid.
@@ -125,6 +125,6 @@ uploads its file together. Reading a file back is a separate call, whose behavio
 authentication setting mentioned above.
 
 For loading an existing archive, the two bulk operations behind the
-[ZIP loader](/platform/dms/dms-bulk-import.md) are also exposed as services — unpack an uploaded
+[ZIP loader](/platform/dms/dms-bulk-import) are also exposed as services — unpack an uploaded
 archive into staging rows, then turn those rows into documents. Note the limits described on that
 page before building anything on top of them.

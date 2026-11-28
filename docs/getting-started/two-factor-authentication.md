@@ -53,7 +53,7 @@ The system enforces the following validation rules when configuring 2FA:
    - Error message if not configured: *"Can not select the option Message OTP without fill Notification For Two-Factor Authentication OTP"*
 
 2. **Estidamah API Method Requirements**:
-   - The method needs **four** settings — **Estidamah Environment Url**, **Estidamah Api Key**, **Estidamah Encryption Key** and **Estidamah Encryption IV**. Three of them are checked when you save; the **Api Key** is not, so a configuration missing it saves cleanly and then fails at the gateway on the first login attempt. Fill all four.
+   - The method needs **four** settings — **Estidamah Environment Url**, **Estidamah Api Key**, **Estidamah Encryption Key** and **Estidamah Encryption IV**. Fill all four: the gateway uses every one of them.
    - **Custom Password Validator**: Must be enabled in `nama.properties`
    - Error if not enabled: *"You can not enable estidamah login method without enabling custom password validator in nama.properties first, use-custom-password-validator=true"*
 
@@ -63,7 +63,7 @@ The system enforces the following validation rules when configuring 2FA:
 |-------|-------------|---------|---------|-----------------|
 | **Login Two-Factor Authentication Method** | Which second factor the login asks for | None | None · Message OTP · Estidamah API | - |
 | **Notification For Two-Factor Authentication OTP** | The notification definition that carries the code | - | Any manual notification definition | **Required** when the method is Message OTP |
-| **OTP Format** | Shape of the generated code | Numeric | Numeric (123456) · Alphabetic (ABCDEF) · AlphaNumeric (A1B2C3) | - |
+| **OTP Format** | Shape of the generated code | Only Numbers | Only Numbers (123456) · Only Characters (ABCDEF) · Numbers And Characters (A1B2C3) | - |
 | **OTP Length** | How many characters the code has | 6 when the field is empty or zero | Any number | - |
 | **OTP Expiry Time** | Seconds before the code stops being accepted | 3 minutes when the field is empty | Whole minutes — the value is divided by 60, so 90 seconds behaves as 1 minute | - |
 | **OTP Resend Delay** | Seconds before the user may ask for the code again | 60 when the field is empty or zero | Any number | - |
@@ -73,10 +73,10 @@ Only required when using Estidamah API method:
 
 | Field | Description |
 |-------|-------------|
-| **Estidamah Environment Url** | The gateway address (checked on save) |
-| **Estidamah Api Key** | The account key sent with every call (not checked on save, still required by the gateway) |
-| **Estidamah Encryption Key** | Encryption key for securing credentials (checked on save) |
-| **Estidamah Encryption IV** | Initialization vector for encryption (checked on save) |
+| **Estidamah Environment Url** | The gateway address |
+| **Estidamah Api Key** | The account key sent with every call |
+| **Estidamah Encryption Key** | Encryption key for securing credentials |
+| **Estidamah Encryption IV** | Initialization vector for encryption |
 
 ::: warning Important Configuration Requirement
 To use Estidamah API authentication method, you must enable custom password validator in `nama.properties`:
@@ -115,7 +115,7 @@ This setting prevents password hashing and allows the system to send encrypted c
 |---|---|
 | *"You must provide OTP"* | The password was right; this is the login asking for the code, not a refusal. It carries the code's length and the resend delay, which is what the OTP screen displays. |
 | *"Invalid OTP"* | The code does not match the one issued, or it has expired and a newer one was sent. Ask for a fresh code. |
-| *"Error with Message OTP"* | The code could not be sent at all — almost always the notification definition: missing, not manual, or the user has no mobile/e-mail on file. |
+| *"Error with Message OTP"* | No notification definition is selected in **Notification For Two-Factor Authentication OTP**, so there is nothing to carry the code. When a definition is selected and sending fails, the login shows the notification's own error instead. |
 
 ## User Settings
 
@@ -164,7 +164,7 @@ This is useful for:
 
 ### Example SMS Template
 ```tempo
-Dear ${name2},
+Dear {name2},
 Your Nama ERP verification code is: {otpCode}
 This code expires in 3 minutes.
 Do not share this code with anyone.

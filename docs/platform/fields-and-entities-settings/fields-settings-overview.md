@@ -21,10 +21,10 @@ The edit screen has four tabs.
 - **Entities Allowed To Be Public** — the Public Entities grid, on a tab of its own.
 - **Icons** — 3 grids, for entity, enum and field icons.
 
-Forty grids on one record is a lot of scrolling, so every one of those grids also has its **own list/search screen**. That is the practical way to work: open the list screen for *Display Masks*, search for the field you care about, edit the line, save. You only open the master record itself when you are adding a brand-new line and want the surrounding context.
+Forty grids on one record is a lot of scrolling, so almost every grid is followed by a **collapsible list**. The list shows that grid's lines from **every** Fields and Entities Settings record, with the record each line belongs to in its first column. That is the practical way to find an existing setting: expand the list under *Display Masks*, filter for the field you care about, and open the record that owns the line. *Style Overrider Details* is the one grid on Main without such a list.
 
-::: tip Find the grid you want by name
-The list screens are named after the grid, not after the master record. If you know the grid title — *Field Formats*, *Extra Codes*, *Audit Fields* — search for that title in the menu or in the global search box.
+::: tip The lists are not menu entries
+The lists sit on the record's own tabs, each under the grid it belongs to; they are not in the menu. Open any Fields and Entities Settings record and expand the list under the grid you want — *Field Formats*, *Extra Codes*, *Audit Fields* — to see every line of that grid across all records.
 :::
 
 ![The Main tab of Fields and Entities Settings](../../ar/platform/images/fields-settings/fields-settings-main-tab-en.png)
@@ -40,7 +40,8 @@ This is the single most important idea on the screen, and it is the same in almo
 | **For Type List** | The same thing as Entity List, in the grids that label the column with this name. |
 | **On Field** / **Field** | The field ID the line targets — `customer`, `details.item`, `remarks`. |
 | **Applicable For** | A broad category instead of naming types: *All Screens*, *Documents* or *Master Files*. |
-| **Inactive** | Switches this single line off without deleting it. |
+
+A line has no on/off switch of its own: every line follows the **Inactive** flag of the record that holds it (see [Several records, one system](#Several-records-one-system)). To stop one line, delete it or move it to a record you have made inactive.
 
 ### Four worked examples
 
@@ -60,6 +61,8 @@ When the system looks for a setting it checks the entity-specific lines first, a
 - For Type = *Sales Invoice*, field `remarks` → wins on Sales Invoice, and the generic line is ignored there.
 
 That is the intended way to handle exceptions. Do not delete the generic line and re-create it thirty times.
+
+Two grids take no generic lines. *Allowed Values For Generic References* refuses a line without a **For Type** or an **Entity List**, and *Clear On Duplicate* refuses a line without a **For Type**, an **Entity List** or an **Applicable For**.
 
 ### Wildcards in the field column
 
@@ -90,9 +93,9 @@ Nothing validates that a hand-typed field ID exists. If a setting "isn't working
 
 This is the question support gets most often, and the answer depends on which side of the wire the setting lives on.
 
-**Server-side settings refresh immediately on save.** Validation, searching, coding, dimensions, integrators, descriptors, extra codes, calculated fields, audit fields, clear-on-duplicate and public entities all take effect the moment you save the record. No restart, no button to press.
+**Server-side settings refresh immediately on save.** Validation, name search by code, coding, dimensions, integrators, descriptors, extra codes, calculated fields, audit fields, clear-on-duplicate and public entities all take effect the moment you save the record. No restart, no button to press.
 
-**Browser-side settings need a sign-out and sign-in.** Display masks, field styles, icons, disabled fields, rich text, signatures, the scanner, text-to-link, open-create, open-in-popup, not-color fields, e-mail send-to types and allowed values are cached in each user's browser. The user has to **sign out and back in** (or do a hard reload) before the change appears. If you save a display mask and it "doesn't work", this is almost always why — and it explains the classic report that "it works on my machine but not on hers": she simply hasn't signed out since you saved.
+**Browser-side settings need a sign-out and sign-in.** Display masks, field styles, icons, disabled fields, rich text, signatures, the scanner, text-to-link, open-create, open-in-popup, not-color fields, e-mail send-to types, allowed values, extra reference search fields and reference searching operators are cached in each user's browser. The user has to **sign out and back in** (or do a hard reload) before the change appears. If you save a display mask and it "doesn't work", this is almost always why — and it explains the classic report that "it works on my machine but not on hers": she simply hasn't signed out since you saved.
 
 **Two settings need a server restart.** *Add Discussion To* and *Add Related Documents To* are cached together with the screen layouts and are not refreshed automatically. They only appear after the server is restarted, so plan those two with the person who owns the maintenance window.
 
@@ -139,9 +142,9 @@ Every grid on the four tabs is covered on one of the sibling pages below.
 | Max Lines Counts For Documents And Files | Caps how many lines a grid may hold | [Input validation](/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | Max Fields Length In DB | Sets how many characters a text field may store | [Input validation](/platform/fields-and-entities-settings/fields-settings-input-validation) |
 | Max POS Fields Length In DB | The same limit for the point-of-sale side | [Input validation](/platform/fields-and-entities-settings/fields-settings-input-validation) |
-| calculated Fields Queries | Fills a screen field from a query instead of from typing | [Calculated fields](/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
+| Calculated Fields Queries | Fills a screen field from a query instead of from typing | [Calculated fields](/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
 | Style Overrider Details | Colours whole grid rows according to a condition | [Calculated fields](/platform/fields-and-entities-settings/fields-settings-calculated-fields) |
-| Files Auto Coding | Builds codes automatically from a pattern and a counter | [Automatic coding](/platform/fields-and-entities-settings/fields-settings-auto-coding) |
+| Automatic Coding | Builds codes automatically from a pattern and a counter | [Automatic coding](/platform/fields-and-entities-settings/fields-settings-auto-coding) |
 | Allow Usage Of Prevented Records | Lets a record blocked from use be used in specific places anyway | [Relaxing restrictions](/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |
 | Ignore Dimensions Consistency for Fields | Suspends the dimensions consistency check on named fields | [Relaxing restrictions](/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |
 | Public Entities | Exempts an entity type from record-level filtering | [Relaxing restrictions](/platform/fields-and-entities-settings/fields-settings-relaxing-restrictions) |

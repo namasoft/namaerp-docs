@@ -11,36 +11,31 @@ The same group also holds the **Cash Count** screen, which `Ctrl+F2` opens direc
 
 ![The Cash Count screen, opened with Ctrl+F2](../../ar/modules/pos/images/inventory/pos-inventory-screen-en.png)
 
-### Buttons on the Cash Count screen
-
-The Cash Count screen has its own row of icon buttons under the title bar, and three buttons under the grid. Icon buttons show their name when you hover over them.
+The Cash Count screen carries the shift screen's icon buttons under the title bar — RePrint Document, Sign out, Show Document, Settings, Send All and the language button — described in [Buttons on the shift screen](/modules/pos/pos-shifts-and-cash#Buttons-on-the-shift-screen). A saved cash count closes the screen, so **RePrint Document** prints the register's last cash count. Under the grid:
 
 | Button | Arabic caption | What pressing it does |
 |---|---|---|
-| **RePrint Document** | «إعادة طباعة المستند» | Shown only when the security profile has **Can RePrint Documents**. A saved cash count closes the screen, so this prints the register's last cash count again — when **Print Last Document If No Current Open Document** is ticked in POS Settings. |
-| **Sign out** | «خروج» | Returns to the login screen. |
-| **Show Document** | «عرض مستند» | Lists the earlier cash counts so you can open one. Needs **Can Open Old Document**. The same button sits beside **Ok** under the grid. |
-| **Settings** | «الإعدادات» | Opens the register's settings window. Needs **Can Edit Settings**. |
-| **Send All** | «إرسال الكل» | Opens a small window with two buttons. **Force Send** («إرسال إجباري») sends every document that has not reached the server yet; with nothing waiting it says *No Data to send* — «لا توجد بيانات للإرسال». **Reset and Force Send** («إعادة تعيين وإرسال إجباري») sends again the documents that used up their automatic retries; with none it says *No failed documents exceeding retry limit* — «لا توجد سندات تجاوزت الحد الأقصى لمحاولات الإرسال». |
-| **Arabic** / **English** | «العربية» / «الإنجليزية» | Switches the interface language. The button is named after the other language. |
 | **Ok** (`F2`) | «موافق» | Saves the cash count, prints it and goes back to the sales screen. `F2` does nothing when **Prevent Saving Shift By F2 Shortcut** is ticked in POS Settings. |
 | **NO** | «لا» | Goes back to the sales screen without saving. |
+| **Show Document** | «عرض مستند» | Lists the earlier cash counts so you can open one. Needs **Can Open Old Document**. |
+
+With **Start With New Shift UI** ticked in POS Settings, the Cash Count opens in the shift screen's own layout instead.
 
 ## Receiving stock
 
-When goods arrive — from a supplier, head office, or another branch — a **stock receipt** records them into the store's warehouse. Add each item and the quantity received, add a note if needed, and save. The receipt updates the store's stock and is sent up to the central system.
+When goods arrive — from a supplier, head office, or another branch — a **stock receipt** records them into the store's warehouse. Add each item and the quantity received, add a note if needed, and save. The receipt is sent up to the central system, where its document term decides whether it generates the stock receipt that adds the goods to stock — see [POS documents on the server](/modules/pos/erp-setup/pos-documents-on-the-server).
 
 ![Stock receipt](../../ar/modules/pos/images/inventory/pos-stock-receipt-en.png)
 
 ## Transferring stock
 
-When stock needs to move to another warehouse or branch, a **stock transfer request** records it leaving here and heading there. Your own warehouse is filled in as the source; choose the destination, list the items and quantities, and save. The receiving location confirms it on their side to complete the move.
+When stock needs to move to another warehouse or branch, a **stock transfer request** records it leaving here and heading there. Your own warehouse is filled in as the source; choose the destination, list the items and quantities, and save. On the server, the warehouse that sends or receives the goods completes the move with an ordinary stock transfer that names this request as its source.
 
 ![Stock transfer](../../ar/modules/pos/images/inventory/pos-stock-transfer-en.png)
 
 ## Counting stock
 
-A **stock-taking** document is a physical count — the periodic check that what is on the shelf matches what the system thinks. Choose the warehouse and location, scan or enter each item with the quantity actually on hand, and save. The counts go up to the central system, where they are compared against the records to surface any shortfall or surplus.
+A **stock-taking** document is a physical count — the periodic check that what is on the shelf matches what the system thinks. Choose the warehouse and location, scan or enter each item with the quantity actually on hand, and save. The counts go up to the central system, where the document can be turned into a supply-chain **Stock Taking** record that compares them with the books — see [POS documents on the server](/modules/pos/erp-setup/pos-documents-on-the-server).
 
 ![Stock taking](../../ar/modules/pos/images/inventory/pos-stock-taking-en.png)
 

@@ -15,7 +15,7 @@ Applies inventory reservations to supply chain documents identified by a custom 
 
 ## When This Action Runs
 
-Manual execution when inventory reservations need to be applied to specific documents. Typically used to reserve inventory for sales orders, transfer requests, or production orders based on criteria like due dates, customer priorities, or document status.
+Manual execution when inventory reservations need to be applied to specific documents. Typically used to reserve inventory for sales orders or transfer requests based on criteria like due dates, customer priorities, or document status.
 
 ## How It Works
 
@@ -28,7 +28,7 @@ Manual execution when inventory reservations need to be applied to specific docu
 
 ## Parameters
 
-**Parameter 1:** SQL Query (Required) - Query to select documents for inventory reservation
+**Parameter 1:** Query (Required) - Query to select documents for inventory reservation
 
 ## Example Query
 
@@ -39,7 +39,7 @@ select entityType,id from ReservationDocument where dueDate = GETDATE()
 ## Query Requirements
 
 - Must return two columns: entityType and id
-- entityType should be valid supply chain document types
+- entityType must be a supply chain document type; other document types (for example a production order) are not supported
 - id should be valid document IDs
 
 ## Database Tables Affected

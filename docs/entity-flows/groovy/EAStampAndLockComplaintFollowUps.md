@@ -36,7 +36,7 @@ With this script, a user only types the remarks of a new line. The employee and 
 
 1. **It compares the grid with the saved complaint.** A line that is not in the saved complaint is new. On the first save of a complaint, every line is new.
 2. **It stamps each new line.** **Follow Up Employee** becomes the employee of the current user, and **Follow Up Date** becomes today. The line's remarks are kept as typed.
-3. **It restores each saved line.** For every line that was already saved, **Follow Up Employee**, **Follow Up Date** and **Remarks** are set back to their saved values. The save goes on, so the user sees no error: the edit simply does not stick.
+3. **It restores each saved line.** For every line that was already saved, **Follow Up Employee**, **Follow Up Date** and the remarks (the **Description** column) are set back to their saved values. The save goes on, so the user sees no error: the edit simply does not stick.
 
 Deleting a saved follow-up line is not prevented. The line is removed like any other.
 

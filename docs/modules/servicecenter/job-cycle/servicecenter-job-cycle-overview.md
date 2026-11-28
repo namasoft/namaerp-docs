@@ -38,7 +38,7 @@ This is the first and most important thing to understand, because it explains a 
 readers find surprising later.
 
 There is **no wizard and no "create the next document" button** between the first four documents.
-What joins them is a single field called **From Document** (بناءا على) at the top of each screen.
+What joins them is a single field called **From Document** (بناءً على) at the top of each screen.
 You open a job estimation, you point its *From Document* at yesterday's service request, and the
 header, the operations, the resources and the spare-parts lines are poured into the new document for
 you. That is the whole mechanism.
@@ -72,11 +72,17 @@ Everything else is convention.
 
 ### Statuses travel back up the chain
 
-When a job order is committed it walks back up the *From Document* trail and moves what it finds to
-**Under Processing**: the estimation it came from, and — if that estimation itself came from a
-service request — the request too. The job order's own number is stamped onto each of them, so from
-an old service request you can always jump forward to the job that eventually came out of it.
-Deleting the job order puts them back to **Not Started**.
+When a job order is committed it moves the document in its *From Document* to **Under Processing**
+(when that document's status is still empty or *Not Started*). When that document is an estimation
+update, the estimation it names and — if that estimation came from a service request — the request
+move to *Under Processing* too. An estimation that came from a request has already moved the request
+when the estimation itself was committed. The job order's own number is stamped onto every document
+up the trail, so from an old service request you can always jump forward to the job that eventually
+came out of it.
+
+Deleting a job order raised from an estimation update puts the estimation that update names, and its
+service request, back to **Not Started**. Deleting a job order raised directly from an estimation or
+a service request leaves their status as it is.
 
 ## Following one job all the way through
 
@@ -115,7 +121,7 @@ Saif 1.6, vehicle `VEH-2031` in the workshop's product register. He telephones o
    and each task line moves to *Finished*.
 7. **Closing.** `SCJOC-2026-0392` pulls in the finished operations and all the materials, fills the
    four money boxes, generates the stock issue for what was consumed, projects the next visit as
-   15 March 2026, and flips the order to **Closed**. See
+   14 August 2026, and flips the order to **Closed**. See
    [Closing a Job Order](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md).
 8. **Invoicing.** Three buttons produce three sales invoices — 695 to Fahad, 2,400 against the
    warranty provider, 60 against the insurer. The internal 60 is never invoiced to anybody. See
@@ -142,13 +148,10 @@ one most people assume.
   revenue, tax and receivable in the ordinary way.
 - The **internal share reaches accounting nowhere at all.**
 
-::: danger The 3,215 does not become 3,215 in the ledger
-The closing document shows four money boxes totalling 3,215, but its journal entry carries **695** —
-the customer figure — as one debit and one credit. Insurance and warranty money only reaches the
-ledger if you press their invoice buttons, and the internal 60 never reaches it by any route.
-If you are relying on this module to account for warranty recovery from the manufacturer, that
-recovery has to come from the warranty **invoice**, not from the closing.
-:::
+For Fahad's job the closing's four money boxes total 3,215, but its journal entry carries only the
+customer's **695**. The entry, and where the insurance, warranty and internal shares go instead, are
+explained in
+[What reaches the ledger](/modules/servicecenter/job-cycle/servicecenter-job-order-closing#What-reaches-the-ledger).
 
 ## What each document does behind the scenes
 

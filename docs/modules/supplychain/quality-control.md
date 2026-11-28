@@ -34,7 +34,9 @@ For in-process verification, the **Quality Assurance Request** (QualityAssurance
 
 The **Checklist** is the standardized inspection template: a set of questions/criteria for each item type, assembly, or finished product. It supports multiple result types (yes/no, numeric, ranges) with answer classification, and quantity-based confirmation rules. Its questions are categorized via **Question Classification** (QuestionClassification) for organization and reuse.
 
-When a checklist is linked to an item (see [Understanding Inventory Items](./understanding-items.md#Manufacturing-and-Quality-Configuration)), the system enforces passing the check before the item becomes available.
+When a quality check list is linked to an item (see [Understanding Inventory Items](./understanding-items.md#Manufacturing-and-Quality-Configuration)), a Stock Receipt built from an Initial Receipt refuses that item until a quality control document has been made for it from the same initial receipt:
+
+*Must make Quality Control Doc For This Item* — «لابد من عمل مستند تحكم جودة لهذا الصنف»
 
 ## Integration with Receiving and Production
 
@@ -52,7 +54,7 @@ Quality control isn't isolated, but a step within larger paths:
 
 **On the Quality Control Request:** **Create QC Document** — the same step for quality control, building the inspection document from the request's lines.
 
-**On both the Quality Control Document and the Quality Assurance Document:** **Stock Transfer request For Accepted** and **Stock Transfer request For Rejected** — these are what move the goods once the verdict is in. The first raises a stock transfer request for the quantities you accepted, normally out of the quarantine warehouse and into the usable one; the second does the same for what you rejected, sending it wherever your rejected stock lives. The rejected one needs the document saved first.
+**On both the Quality Control Document and the Quality Assurance Document:** **Stock Transfer request For Accepted** and **Stock Transfer request For Rejected** — these are what move the goods once the verdict is in. The first raises a stock transfer request for the quantities you accepted, normally out of the quarantine warehouse and into the usable one; the second does the same for what you rejected, sending it wherever your rejected stock lives. Both need the document saved first.
 
 ## Best Practices
 

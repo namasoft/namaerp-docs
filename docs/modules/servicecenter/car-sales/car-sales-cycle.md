@@ -97,31 +97,21 @@ Neither has a cancellation document. If a quotation is wrong, delete it or raise
 
 ### The point of no return
 
-**The Car Sales Invoice is the only document in this chain that books money.** It is the only one
+**The Car Sales Invoice is the only document in this chain that always books.** It is the only one
 whose effects are unconditional: revenue, tax, the customer receivable, the cost of goods sold and
-the stock issue that takes the car out of the showroom. Every step before it can be undone by
+the stock issue that takes the car out of the showroom. The sales order, the sales approval and the
+pro-forma sales invoice book only when their term fills the accounts (see the table below). Every step before it can be undone by
 deleting the document or by raising its matching cancellation document. After it, the only way back
 is a **Car Sales Return**.
 
 The pro-forma sales invoice, despite its name and its full invoice layout, is not a financial
 document — see [Car Sales Invoices](/modules/servicecenter/car-sales/car-sales-invoice.md).
 
-::: danger The car can be issued from stock twice
-Both the **Car Sales Invoice** and the **Car Final Delivery** can generate a stock issue, and
-**neither can see the other's**. Follow the natural path — invoice the car, then deliver it — with
-both document terms configured to generate, and the same chassis leaves stock **twice**: the cost is
-relieved to cost of sales twice and the car sits at −1 on hand, silently. If negative stock is
-blocked for that item, you get a confusing shortage error naming an auto-generated stock document
-rather than the car document you were saving.
-
-**The rule: fill *Generation Book* and *Generation Term* on exactly one of the two document terms.**
-At Al-Sahra Motors the sales invoice generates the issue, so the final-delivery term's generation
-book and term are left **empty**.
-
-To stop the final delivery generating, clear the generation book or the generation term on its
-term. Treat the invoice and the final delivery as **alternatives for moving stock, never as a
-sequence**.
-:::
+Both the Car Sales Invoice and the Car Final Delivery can generate a stock issue for the same car,
+so configure generation on **exactly one** of the two terms; the full rule is on
+[Handing the Car Over](/modules/servicecenter/car-sales/car-final-delivery). At Al-Sahra Motors
+the sales invoice generates the issue, so the final-delivery term's generation book and term are
+left **empty**.
 
 ![A Car Sales Order on instalments](../../../ar/modules/servicecenter/images/car-sales/sc-car-sales-order-en.png)
 
@@ -185,7 +175,7 @@ The honest summary, which the rest of the folder expands:
 | Sales Quotation Request | none | none | status line; quotation-request stamp |
 | Sales Quotation | none | none | status line; quotation stamp |
 | Sales Approval | only the generic debit/credit pair, and only if the term fills it | none | status line |
-| Sales Order | the generic pair if filled, **plus** the booking deposit | none | status line; sales-order and salesman stamps |
+| Sales Order | the generic pair and the booking deposit, both only if the term fills the generic debit or credit side | none | status line; sales-order and salesman stamps |
 | Allocation | **none** | none | writes the five allocation fields; status line |
 | Proforma Sales Invoice | only the generic pair if the term fills it | **none** | status line |
 | **Sales Invoice** | **full sales entry, always** | **out, via a stock issue** | status line; sales-invoice stamp |

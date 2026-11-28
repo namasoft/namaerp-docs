@@ -34,7 +34,7 @@ Manual execution when sales transactions need to be synchronized with the Datanu
    - Regular payment methods (cash, card)
    - Loyalty point redemptions
    - Voucher redemptions with reference tracking
-6. **Calculates redeemed values** - Sums loyalty point and voucher redemptions
+6. **Calculates redeemed values** - Sums the payments made with a discount coupon that has a voucher type other than loyalty voucher, and adds the header discount when the document itself carries a discount coupon. The paid amount sent is the document's net value minus this redeemed value
 7. **Sends to Datanuum** - Transmits complete transaction data to Datanuum API
 8. **Returns results** - Accumulates API response results and any errors
 

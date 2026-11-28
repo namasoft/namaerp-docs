@@ -19,7 +19,7 @@ A customer who has licensed `srvcenter-insurance-and-installments` and nothing e
 
 The **Insurance Company** master file (*شركة تأمين*) — and the **External Agency** file beside it — do not belong to the insurance licence. They sit in **cars → Car Files**, which belongs to [the vehicles sub-module](/modules/servicecenter/cars-setup/servicecenter-cars-overview.md), `srvcenter-subitems`. Without that code the Insurance Company screen is not merely hidden from the menu; the record type does not exist in the installation, so no insurance company can be created.
 
-And an insurance company is required everywhere. The **Insurance Policy Order** demands one before it can be committed, and so does the **Car Insurance Program** — which is what carries the price bands and the rate. Every policy in the system is reached through a company-scoped programme, and every policy document is filtered by company.
+And an insurance company is required everywhere. The **Insurance Policy Issuance Order** demands one before it can be committed, and so does the **Car Insurance Program** — which is what carries the price bands and the rate. Every programme belongs to one company, and the policy pickers of the order and the receipt are filtered by company.
 
 The whole `cars` menu root is gated the same way, so both the **Car Insurance** and the **Car Installment** folders disappear from the menu without `srvcenter-subitems` even though the documents inside them are licensed separately.
 
@@ -27,17 +27,17 @@ The whole `cars` menu root is gated the same way, so both the **Car Insurance** 
 :::
 
 ::: warning Know where each money figure comes from
-The Car Insurance Program looks like a rate card, and it is natural to assume that choosing a programme prices the whole policy. Only one document uses it that way. Each figure the cycle books has its own source:
+The Car Insurance Program looks like a rate card, and it is natural to assume that choosing a programme prices the whole policy. Only the policy itself and the purchase invoice read it. Each figure the cycle books has its own source:
 
 | Figure | Where it comes from | Booked by |
 |---|---|---|
 | **Insurance Price** (*سعر التأمين*) on the grid of the order, receipt and renewal | **Typed** on each row. Nothing fills it. | Order, receipt, renewal |
-| **Policy Value** on the policy | **Typed** on the policy | The delivery, as the price the customer is charged |
+| **Policy Value** on the policy | Worked out on save from the programme band that covers the car price (zero when no band matches). A typed value is kept only when **Allow Calculating Policy Value Manually** (*السماح بحساب قيمة الوثيقة يدوياٌ*) is ticked in the Service Center configuration and the value is not zero | The delivery, as the price the customer is charged |
 | **Initial Cost** on the policy | Car price × the percentage typed beside it, or typed directly when no percentage is given | Receipt and delivery, as the cost — until the policy is bought |
 | **Actual Cost** on the policy | The net value of the policy's line on the purchase invoice | Receipt and delivery, as the cost — once the policy is bought |
 | **Purchase Value** on the purchase invoice | Car sale price × the programme band's percentage, filled when you pick the policy | The purchase invoice |
 
-**Type the insurance price on every grid row** of the order, receipt and renewal, and the policy value on the policy. Left empty, those documents book zero.
+**Type the insurance price on every grid row** of the order, receipt and renewal. Left empty, those documents book zero.
 :::
 
 ## What the area is made of
@@ -68,7 +68,7 @@ Al-Sahra creates one record: `INS-02` **Wafa Insurance** / *وفاء للتأم�
 
 An insurance programme records a deal Al-Sahra has struck with one insurer: *for cars in this price band, of this brand or this model, the policy costs this percentage and the buyer's share is that percentage*. Al-Sahra sets up **`INSP-WAFA-COMP` Wafa Comprehensive** / *وفاء الشامل* against `INS-02`.
 
-The header is short — the insurance company (required) and five attachment slots for the signed agreement.
+The header carries the insurance company (required), a **Priority** (*الأولوية*, also required), a date range, two commission percentages, **Program Details** (*تفاصيل البرنامج*) and five attachment slots for the signed agreement. Of these, only the insurance company affects how the programme is used: the programme picker is filtered by it.
 
 The value is in the grid: **one row per price band**.
 
@@ -82,17 +82,17 @@ The value is in the grid: **one row per price band**.
 | **Brand** | الماركة | Optional. Narrows the row to one [brand](/modules/servicecenter/workshop-setup/servicecenter-brands-and-models.md). |
 | **Insurance Percentage** | نسبة التأمين | The negotiated rate for the band. Required. |
 | **Buyer Insurance Percentage** | نسبة تأمين المشتري | The buyer's rate. Feeds the *Policy Purchase Percentage* field on the insurance purchase invoice. |
-| **Policy Category** | فئة الوثيقة | *With DownPayment* (بتحمل) or *Without DownPayment* (بدون تحمل). Required. Copied onto the policy. |
+| **Policy Category** | فئة الوثيقة | *With Down Payment* (بتحمل) or *Without Down Payment* (بدون تحمل). Required. Copied onto the policy. |
 
 Al-Sahra's Rimal 2.4 sells at 87,000, so the row that covers it is the **50,000 → 150,000** band, with an insurance rate of **3.75 %** and a buyer rate of **3.6 %**.
 
-Those two numbers are what the service advisor quotes to the customer and what the accounts clerk checks the insurer's statement against. The system uses the band in one place only: the purchase invoice, where it fills the policy purchase percentage that prices the policy bought from the insurer. The order, receipt and renewal book the insurance price typed on their rows — see the table in the box above.
+Those two numbers are what the service advisor quotes to the customer and what the accounts clerk checks the insurer's statement against. The system reads the band in two places: the policy, which copies the band's two percentages and works out its policy value from it, and the purchase invoice, where it fills the policy purchase percentage that prices the policy bought from the insurer. The order, receipt and renewal book the insurance price typed on their rows — see the table in the box above.
 
 The programme's only validation is that a band's lower bound may not exceed its upper bound. Overlapping bands, gaps between bands and a band that covers every car ever sold are all accepted.
 
 ### How a programme is chosen
 
-When you pick a programme on a policy, the picker offers the programmes that match on three things: the **insurance company**, the **car price falling inside a band**, and the **brand and item matching or being left empty**. When more than one band of the chosen programme covers the price, the more specific one wins — a band naming both the brand and the item beats one naming only the brand, which beats one naming neither. Ties are broken arbitrarily.
+When you pick a programme on a policy, the picker offers the programmes that match on three things: the **insurance company**, the **car price falling inside a band**, and the **brand and item matching or being left empty**. When more than one band of the chosen programme covers the price, the more specific one wins — a band naming both the brand and the item beats one naming only the brand, which beats one naming neither. On a tie the band listed first in the grid wins. When the policy carries a policy category, only bands of that category count.
 
 To take an old rate card out of circulation, remove its bands or delete the record.
 

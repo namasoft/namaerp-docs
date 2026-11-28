@@ -30,7 +30,7 @@ The [daily labour book](/modules/contracting/costs/contracting-daily-labour.md) 
 | **Debit** and **Credit** `termConfig.debit2` / `termConfig.credit2` | The two sides of the labour book's own journal entry — typically project cost against wages payable or against the labour supplier |
 | **Contractor Contract Fine Book** `termConfig.contractorContractFineBook` | The document book of the [subcontractor fine](/modules/contracting/contractor-contracting/contracting-contractor-fines.md) the labour book generates |
 | **Contractor Contract Fine Term** `termConfig.contractorContractFineTerm` | And that generated fine's own document term |
-| **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` | Refuses to save the labour book when the labour quantity it records against a term pushes that term's actual quantity above the planned quantity — the same ceiling as on the [material terms](/modules/contracting/document-terms/contracting-terms-materials.md) |
+| **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` | Refuses to save the labour book when the quantity it records pushes an analysis card line's actual quantity above its planned quantity — the same ceiling as on the [material terms](/modules/contracting/document-terms/contracting-terms-materials.md) |
 | **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` | The same ceiling for cost: the save is refused when the labour cost recorded against a term takes its actual cost above the planned cost |
 
 ::: tip A generation chain that is easy to miss
@@ -48,7 +48,7 @@ This is the document that turns an allocation of a person or a machine into proj
 | Option | What it does |
 |---|---|
 | **Automatically Distribute Cost On Project Terms** `termConfig.automaticallyDistributeCostOnTerms` | The collected cost is spread across the project's terms without the user entering a line per term |
-| **Cost Distribution By** `termConfig.costDistributeType` | The proportional basis used for that automatic spread |
+| **Cost Distribution By** `termConfig.costDistributeType` | The proportional basis used for that automatic spread: **Quantity**, **Total** or **Total Cost** of the project's terms. Left empty, the spread is by quantity |
 
 Leave the first option off and the cost lines are typed by hand, which is what a project controller wants when the machine genuinely worked on two terms in a ratio no formula would guess.
 
@@ -69,13 +69,13 @@ The contracting purchase order — the document the English menu lists as *Contr
 | Contracting addition | What it does | Default |
 |---|---|---|
 | **Do Not Apply Contracting Cost And Quantity Effects** `termConfig.doNotApplyContactingCostAndQtyEffects` | Suppresses the contracting cost and quantity effect entirely, so the order does not reserve cost against a term | Off — meaning the effects **are** applied |
-| **Do Not Exceed Quantity** `termConfig.doNotExceedQuantity` | Blocks ordering beyond the reference quantity | Off |
-| **Do Not Exceed Analysis Card Quantity** `termConfig.doNotExceedAnalysisCardQuantity` | Blocks ordering beyond the quantity on the term's [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md) | Off |
+| **Do Not Exceed Quantity** `termConfig.doNotExceedQuantity` | Blocks the save when the quantity ordered against a plan line — the project contract's term line, a budget line or an analysis card line — passes that line's planned quantity | Off |
+| **Do Not Exceed Analysis Card Quantity** `termConfig.doNotExceedAnalysisCardQuantity` | Blocks the save when the quantity ordered against an [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md) line passes the card line's available quantity | Off |
 | **Effect In Contracting Term Cost Entries Before Approval** `termConfig.effectInCNTRTermCostEntriesBeforeApproval` | Writes the contracting term-cost entries as soon as the order is saved, before the approval cycle finishes — so committed spend shows against the term while the order is still being approved | Off |
 | **Add Term Analysis Card Lines** `termConfig.addTermAnalysisCardLines` | When a line names an [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md), the card's material lines are pulled onto the order automatically | Off |
 | **Do Not Copy Contract Terms When Selected** `termConfig.doNotCopyContractTermsWhenSelected` | Picking the project contract on the order does not copy its terms onto the lines | Off — meaning the terms **are** copied |
 
-The two analysis-card ceilings described on the [material terms page](/modules/contracting/document-terms/contracting-terms-materials.md) — `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` and `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — are also on this term, with the same scope: they bite when the line targets an analysis-card line.
+The two spending ceilings described on the [material terms page](/modules/contracting/document-terms/contracting-terms-materials.md) — `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` and `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — are also on this term, with the same scope: the cost option checks every plan line the order's cost lands on, the quantity option checks analysis card lines only.
 
 ### Contracting Purchase Request
 
@@ -93,14 +93,14 @@ On the **order** the switch is phrased *Do Not Apply*, so leaving it alone means
 
 ### Executive Budget Item Request
 
-This is the request for material spend against an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md), and its term carries the module's only budget-derived spending ceilings.
+This is the request for material spend against an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md). Its term carries two checks against the **customer submittal** named on each line — not against the budget.
 
 | Option | What it does |
 |---|---|
-| **Allow To Exceed Approved Quantity** `termConfig.allowToExceedApprovedQty` | Lets the request go beyond the quantity the customer approved |
-| **Allow To Exceed Approved Price** `termConfig.allowToExceedApprovedPrice` | Lets it go beyond the agreed price |
+| **Allow To Exceed Approved Quantity** `termConfig.allowToExceedApprovedQty` | Lets the requests on a submittal go beyond the quantity the customer approved in it |
+| **Allow To Exceed Approved Price** `termConfig.allowToExceedApprovedPrice` | Lets a line's unit price go beyond the price approved in its submittal |
 
-Both are permissions, so the control is what happens when they are **off** — the request is refused. There is a condition on that control, and it is the important part: the two checks are performed only on lines that carry a **customer submittal**. A line with the submittal left blank is not compared against anything. If the budget ceiling is the reason you are using this document, make the submittal a habit on every line; the full picture is on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).
+Both are permissions, so the control is what happens when they are **off** — the request is refused. There is a condition on that control, and it is the important part: the two checks are performed only on lines that carry a **customer submittal**. A line with the submittal left blank is not compared against anything. The ceiling that compares spending with the budget is a different option, on the documents that spend; the full picture is on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).
 
 ### Miscellaneous Contracting Request, Order and Invoice
 
@@ -109,15 +109,15 @@ The three miscellaneous-contracting documents cover non-stock spend — a servic
 | Option | What it does |
 |---|---|
 | **Debit** and **Credit** `termConfig.config.debit` / `termConfig.config.credit` | The two sides of the document's entry |
-| **Shorten Ledger** `termConfig.config.shortenLedger` (in the Credit group) | Collapses the per-line journal rows into one row per account |
+| **Shorten Ledger** `termConfig.config.shortenLedger` (in the Credit group) | Merges journal lines that share the same account, subsidiary, dimensions, narration, currency and rate into one line carrying their net amount |
 | The tax options — **Taxable** `termConfig.taxable`, **Tax Plan** `termConfig.taxPlan`, **Modifiable Tax** `termConfig.modifiableTax`, and the tax sides `termConfig.tax`, `termConfig.tax2`, `termConfig.htax`, `termConfig.htax2` | Whether the document is taxed, under which plan, and where the tax lands |
 | **Allow Editing Header Tax In Details** `termConfig.allowEditingHdrTaxInDetails` | Copied onto each new document: lets a line carry a different tax from the header's. Off by default |
-| **Sales Not Purchase** `termConfig.isSalesNotPurchase` | Treats the document as a sale rather than a purchase, which flips the direction of the whole entry |
-| **Return Invoice** (invoice only) `termConfig.returnInvoice` | Marks the term as producing credit notes |
+| **Is Sales Not Purchase** `termConfig.isSalesNotPurchase` | Treats the document as a sale rather than a purchase, which flips the direction of the whole entry |
+| **Invoice Return** (invoice only) `termConfig.returnInvoice` | Marks the term as producing credit notes |
 | **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Makes the project term code optional on the lines |
 | **Executive Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryExecutiveBudgetTermCodeInCostDocuments` | Forces the executive-budget term code |
 | **Estimated Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryEstimatedBudgetTermCodeInCostDocuments` | Forces the estimated-budget term code |
-| **Exclude Tax1 From Cost** … **Exclude Tax4 From Cost**, **Exclude Discount 1 From Cost** … **Exclude Discount 8 From Cost** — `termConfig.excludeTax1FromCost` … `termConfig.excludeTax4FromCost`, `termConfig.excludeDiscount1FromCost` … `termConfig.excludeDiscount8FromCost` | Each removes that one tax or discount amount from the cost the line records against the project term — the same capitalise-or-not decision as on the [subcontractor extract](/modules/contracting/document-terms/contracting-terms-extracts.md). Only the invoice records project cost, so these matter on the invoice term only |
+| **Exclude Tax 1 From Cost** … **Exclude Tax 4 From Cost**, **Exclude Discount 1 From Cost** … **Exclude Discount 8 From Cost** — `termConfig.excludeTax1FromCost` … `termConfig.excludeTax4FromCost`, `termConfig.excludeDiscount1FromCost` … `termConfig.excludeDiscount8FromCost` | Each removes that one tax or discount amount from the cost the line records against the project term — the same capitalise-or-not decision as on the [subcontractor extract](/modules/contracting/document-terms/contracting-terms-extracts.md). Only the invoice records project cost, so these matter on the invoice term only |
 | **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty`, **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` | The spending ceilings described on the [material terms page](/modules/contracting/document-terms/contracting-terms-materials.md): the save is refused when the cost or quantity recorded against a term overruns the plan. Like the exclusions, they act on the invoice only, because the request and the order record no project cost |
 | **Track Quantity Fields From Doc** `termConfig.trackQuantityFieldsFromDoc` | When a document is built from an earlier miscellaneous document — an order from a request, an invoice from an order — its quantities are recorded as consumed on the source document's lines, in **Consumed Quantity 1** (*Track In First*) or **Consumed Quantity 2** (*Track In Second*). Leave it empty and nothing is tracked |
 | **Copy Remaining Quantity From Doc Considering Fields** `termConfig.copyRemainingQtyFromDocConsideringFields` | When the source document's lines are copied in, each quantity is reduced by what that line has already consumed — in *Consumed Quantity 1* or *2*, as chosen — and fully consumed lines are left out. Empty, the full quantities are copied |
@@ -139,7 +139,7 @@ The [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.m
 |---|---|
 | **Spread Item Revision Lines** `termConfig.spreadItemRevisionLines` | The explode action produces one line per item revision |
 | **Spread Item Colors And Sizes Lines** `termConfig.spreadItemColorAnsSizeLines` | And one line per colour and size combination |
-| **Call Post Action Of Field After Spreading Revisions Or Sizes** `termConfig.callPostActionOfFieldAfterSpreadingRevisionsOrSizes` | Names a post-actor to be fired on the resulting lines after the explode has run. Leave it blank and no follow-up runs. It is only meaningful together with one of the two options above, which gate the spreading itself. On the Arabic screen this one field's caption appears in English |
+| **Call Post Action Of Field After Spreading Revisions Or Sizes** `termConfig.callPostActionOfFieldAfterSpreadingRevisionsOrSizes` | Names a post-actor to be fired on the resulting lines after the explode has run. Leave it blank and no follow-up runs. It is only meaningful together with one of the two options above, which gate the spreading itself |
 | **Do Not Copy From Doc Details** `termConfig.doNotCopyFromDocDetails` | Building the card from a source document does not copy that document's detail lines |
 | The unit-cost effects grid `termConfig.effectsUnitCostConfigLines` (columns `.fieldID`, `.valueType`, `.percentBasis`, `.multiplyBy`) | One row per cost component, saying how that component rolls into the unit cost: the field it reads, the value type, the percentage basis and a multiplier |
 

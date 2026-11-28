@@ -29,7 +29,7 @@ The behaviour worth knowing before anything else is this: **a fine does two thin
 | Column | What it is |
 |---|---|
 | **Fine Reason** | the classification — late completion, defective work, site safety. See below |
-| **Term Code** | the BOQ term the penalty is charged against. Normally mandatory |
+| **Term Code** | the BOQ term the penalty is charged against. Mandatory |
 | **Fine Value** | the amount |
 | **Standard Term**, **Term Remarks**, **Work Area** | descriptive, carried for reporting |
 | **Executive Term Code**, **Estimated Term Code** and their remarks | link the penalty to a [budget](/modules/contracting/budgets/contracting-executive-budget.md) line, so it shows in cost reporting against the right budget item |
@@ -59,15 +59,7 @@ The fine is also recorded as a cost source, so it appears in the module's [cost 
 
 ### 3. It waits to be deducted from the next extract
 
-Exactly like an advance, the fine sits on the contract with a **Remaining** balance, and the next extract collects it as a **deduction** row in *Additions And Deductions*. The **Payment Method** decides how much:
-
-| Payment method | Deducted from an ordinary extract |
-|---|---|
-| **First Next Extract** | the whole balance, on the very next extract |
-| **Fixed Value With Every Extract** | the fixed amount, or the balance if smaller |
-| **Percentage With Every Extract** | that percentage of the fine's own total |
-| **Percentage From Due Value With Every Extract** | that percentage of the extract's works value |
-| **Final Extract** | nothing until the Final extract, which then takes the balance |
+Exactly like an advance, the fine sits on the contract with a **Remaining** balance, and the next extract collects it as a **deduction** row in *Additions And Deductions*. The **Payment Method** decides how much, with the same five methods as an advance — see [The recovery rule](/modules/contracting/project-contracting/contracting-project-advances#The-recovery-rule). On a fine they work per term code: the fine's lines are grouped by term code, each group is recovered as its own deduction row, and a fixed value or a *Percentage With Every Extract* percentage applies to each term code's own subtotal.
 
 On a Final extract the whole remaining balance is taken regardless, and the extract refuses to commit while any fine still carries a balance.
 
@@ -79,7 +71,7 @@ The extract deduction is not a second expense. The fine's own entry is what reco
 
 ## The lock nobody expects
 
-**Once an extract has deducted a fine, the fine can no longer be edited or deleted.** The attempt is refused with a message naming the extract that claimed it.
+**Once an extract has deducted a fine, the fine can no longer be edited or deleted.** The attempt is refused with a message naming the extract that claimed it: *You can not edit nor delete this fine because it is used in {0}* — «لا يمكن تعديل أو حذف المستند لأنه مستخدم في {0}».
 
 This is deliberate, and it is the right behaviour — the certificate has already been issued with that deduction on it, and quietly changing the penalty afterwards would leave the two documents disagreeing. To correct a fine that has already been deducted, cancel the extract, fix the fine, and re-commit the extract.
 
@@ -87,11 +79,11 @@ Each extract's **Statistics** page has a *Fine Documents* list showing exactly w
 
 ## Other rules that block a commit
 
-- **A term code is required on every fine line**, unless a term option makes it optional in cost documents.
+- **A term code is required on every fine line** — *Project term code can not be empty in line {0}* — «لا يمكن ترك كود بند المشروع فارغاً في السطر رقم {0}».
 - **Roll-up (parent) term codes are rejected** — charge the penalty against a leaf term.
 - **The payment value cannot exceed the due value of its term code.**
-- **The payment method's own field must be filled** — a percentage method needs a percentage, a fixed-value method needs a value.
-- **The contract must not already have a Final extract.**
+- **The payment method's own field must be filled** — *Percentage With Every Extract* needs a percentage, *Fixed Value With Every Extract* needs a value.
+- **The contract must not already have a Final extract**, unless the module option **Allow Creating Documents For Contracts That Have a Final Extract** is ticked.
 
 ## Worked example
 

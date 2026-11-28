@@ -24,29 +24,29 @@ Nine screens that everyone calls documents are in fact **master files**. They ha
 term, no document number, no value date and no approval cycle, and nothing you configure on a term
 can ever reach them:
 
-CRM Lead (خيط بيع) · CRM Potential (فرصة) · CRM Campaign (حملة) · MarketingPlan document
+CRM Lead (خيط بيع) · CRM Potential (فرصة) · CRM Campaign (حملة) · Marketing Plan document
 (خطة تسويق) · Operation goal (هدف تشغيل) · CRM Task (مهمة خدمة عملاء) · CRM Project (CRM مشروع) ·
 CRM Warranty (ضمان) · Maintenance Service (خدمة صيانة)
 
 A second, longer group *are* real documents — they have a book, a code and dates — but they
 declare that they need no term at all, so the Term field is not even offered:
 
-CRM Call (اتصال) · Visit (الزيارة) · Visit Request (طلب زيارة) · Follow Up Document (سند متابعة) ·
-Complaint - Suggestion (شكوي - إقتراح) · Trouble Ticket (طلب دعم) · Ticket Execution
-(تنفيذ طلب دعم) · Ticket Follow Up (متابعة طلب دعم) · Questionair (استبيان) · Offer (CRM عرض) ·
-Analysis (تحليل) · Development request (طلب تطوير) · CRM Update Contract Status
-(تغيير حالة عقد خدمة)
+CRM Call (اتصال) · Visit (الزيارة) · Visit Request (طلب زيارة) ·
+Complaint - Suggestion (شكوى - اقتراح) · Trouble Ticket (طلب دعم) · Ticket Execution
+(تنفيذ طلب دعم) · Ticket Follow Up (متابعة طلب دعم) · Questionnaire (استبيان) · Offer (CRM عرض) ·
+Analysis (تحليل) · Development request (طلب تطوير)
 
-::: warning Three screens show a Term field that leads nowhere
+::: warning Four screens show a Term field that leads nowhere
 The three risk-register documents — SMF Problem Declaration, SMF Solution Suggestion and SMF
-Initial Operation — display a **Term** (توجيه المستند) picker even though they use no term and no
-term configuration exists behind it. Leave it empty; nothing you put there changes anything. See
-[Risk Register](/modules/crm/risk-register/crm-risk-register).
+Initial Operation — and the Follow Up Document (سند متابعة) display a **Term** (توجيه المستند)
+picker even though they need no term and no term configuration exists behind it. Leave it empty;
+nothing you put there changes anything. See [Risk Register](/modules/crm/risk-register/crm-risk-register)
+and [Tasks and Follow-Ups](/modules/crm/activities/crm-tasks-and-follow-ups).
 :::
 
 A third group takes a generic Document Term because every document type can, but has **no
 CRM-specific settings on it** — the term screen shows only the platform's standard options:
-Maintenance Notice, Maintenance Sales Order, Maintenance Sales Quotation, Pre-Installation
+CRM Update Contract Status (تغيير حالة عقد خدمة), which requires a term, and Maintenance Notice, Maintenance Sales Order, Maintenance Sales Quotation, Pre-Installation
 Preview, CRM Maintenance Plan, Machine Update Document, Machine Ownership Transfer Document,
 Maintenance Service Notice, Maintenance Service Order Execution, Maintenance Service Sales Order
 and Maintenance Service Sales Quotation. Creating a term for these is only ever about numbering
@@ -55,8 +55,8 @@ and the standard platform behaviour, never about accounts or generation.
 ## What is left — the documents whose terms matter
 
 Once you take all that away, twelve term shapes remain in the whole module, and several documents
-share one shape. Two of them belong to core CRM and are described below; the rest belong to the
-maintenance suites and have their own page.
+share one shape. Two of them belong to core CRM and are described below; one belongs to Technician
+Appointments; the rest belong to the maintenance suites and have their own page.
 
 | Term for | What its settings control |
 |---|---|
@@ -71,6 +71,7 @@ maintenance suites and have their own page.
 | Maintenance Order Execution (تنفيذ أمر صيانة) | Tax settings only |
 | Maintenance Visit (زيارة صيانة) | One option |
 | CRM Maintenance Plan (خطة صيانة خدمة عملاء) | Nothing — the configuration behind it is empty |
+| Technician Appointment (موعد فني) | One option, **Copy Items Of From Doc** — see [Technician Appointment](/modules/crm/technician-appointments/crm-technician-appointment) |
 
 ## The two blocks every CRM term is built from
 
@@ -118,14 +119,15 @@ In our worked example, book `CSC` carries the term `T-CSC-STD`
 The **Effect** (التأثير) page opens with **Contract Type** (نوع العقد, `termConfig.contractType`) — pick the term on a
 contract and this value is pushed onto the document, so the term is how a site decides that
 contracts in one book are ordinary and contracts in another are, say, renewals. Next to it sits
-**Use Payment Docs As Debt Ages** (استعال سندات الدفع في أعمار الديون,
+**Use Payment Docs As Debt Ages** (استعمال سندات الدفع في أعمار الديون,
 `termConfig.usePaymentDocsAsDebtAges`), which decides whether the contract's external payment lines
 are treated as debt-age rows. Then the **Debit** and **Credit** groups (`termConfig.config.debit`,
 `termConfig.config.credit`) — the on/off switch described above — the **Approximation Discount** side
 (`termConfig.approximationDiscount`), and a Tax Plan group with **Tax Plan** (`termConfig.taxPlan`),
 **Taxable** (`termConfig.taxable`), **Modifiable Tax** (`termConfig.modifiableTax`), **Allow Editing
-Header Tax In Details** (`termConfig.allowEditingHdrTaxInDetails`), **Allow Payment More Than Invoice
-Amount** (`termConfig.allowPaymentMoreThanInvoiceAmount`) and **Link With Invoice Lines In accounting
+Header Tax In Details** (`termConfig.allowEditingHdrTaxInDetails`), **Pay Installments In Order**
+(`termConfig.payInstallmentsInOrder`), **Allow Payment More Than Invoice Amount**
+(`termConfig.allowPaymentMoreThanInvoiceAmount`) and **Link With Invoice Lines In Accounting
 Document** (`termConfig.linkWithInvoiceLinesInAccountingDocument`).
 
 The remaining two pages hold the tax sides, the cash side, the discount sides, and the **External
@@ -146,15 +148,13 @@ The simplest term in the module. In our example, book `WPLAN` carries `T-WPLAN-S
 
 | Arabic label | English label | Field id |
 |---|---|---|
-| دفتر سند إتصال | Call Document Book | `termConfig.callDocBook` |
-| توجيه سند إتصال | Call Document Term | `termConfig.callDocTerm` |
+| دفتر سند اتصال | Call Document Book | `termConfig.callDocBook` |
+| توجيه سند اتصال | Call Document Term | `termConfig.callDocTerm` |
 | دفتر سند زيارة | visit Document Book | `termConfig.visitDocBook` |
 | توجيه سند زيارة | visit Document Term | `termConfig.visitDocTerm` |
 
-Tick some lines on a work plan and press *Generate Documents From Selected Lines*, and each line
-becomes a committed Call or Visit born into the book and term named here — in our example books
-`CALL` and `VISIT`, neither of which needs a term of its own. Leave the Call book empty and the
-button refuses to generate the Call lines, naming the term in its message.
+What each field decides, how generation uses them and the message you get when a book is missing
+are on [Work Plans](/modules/crm/activities/crm-work-plans#Setting-the-term-up-first).
 
 ## A quirk of the CRM term screens
 

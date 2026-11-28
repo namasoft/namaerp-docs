@@ -296,4 +296,4 @@ customer.description1="Updated from the invoice"
 customer.runCommand="saveConsideringApprovals"
 ```
 
-If the flow saves the record it is running on, and you trigger it manually, you do not need `runCommand` at all: check **Requires Commit On Manual** in the flow header, and add **Consider Approvals On Commit On Manual** to get the same approval-aware behaviour. See [Saving the record after a manual run](./introduction-to-entity-flows#Saving-the-record-after-a-manual-run).
+If the flow saves the record it is running on, and you trigger it manually, you do not need `runCommand` at all: check **Requires Commit On Manual** in the flow header, and add **Consider Approvals On Commit On Manual** to get the same approval-aware behaviour. See [Saving the record after a manual run](/platform/entity-flows/introduction-to-entity-flows#Saving-the-record-after-a-manual-run).

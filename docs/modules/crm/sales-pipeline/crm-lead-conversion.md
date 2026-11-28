@@ -17,9 +17,9 @@ We follow Marina Plaza Hotels from lead `LD-00417` through to customer `C-01188`
 
 ## Convert To Potential
 
-**On:** CRM Lead. **Label:** تحويل إلي فرصة / Convert To Potential.
+**On:** CRM Lead. **Label:** تحويل إلى فرصة / Convert To Potential.
 
-Press it and a new **CRM Potential** opens in a pop-up, partly filled in. Complete it, save it, and the lead is flagged *Converted To Potential* (تم تحويلة إلي فرصة) and points at the new record. Press it on a lead that has already been converted and it refuses.
+Press it and a new **CRM Potential** opens in a pop-up, partly filled in. Complete it, save it, and the lead is flagged *Converted To Potential* (تم تحويله إلى فرصة) and points at the new record. Press it on a lead that has already been converted and it refuses.
 
 On 2 February 2026 this is how `PT-00203` was born out of `LD-00417`.
 
@@ -46,21 +46,21 @@ Also worth planning around: the **Contacts** grid is not copied. The generated C
 
 ## Convert To Customer
 
-**On:** CRM Lead and CRM Potential. **Label:** تحويل إلي عميل / Convert To Customer.
+**On:** CRM Lead and CRM Potential. **Label:** تحويل إلى عميل / Convert To Customer.
 
 This is the button that wins the deal. It opens a new, unsaved **Customer** master file carrying:
 
 - the Arabic and English names;
 - the salesman;
 - the whole contact-information block;
-- the campaign — **only when the button is pressed on a Lead**;
+- the campaign — **only when the lead's or potential's own *Campaign* box is filled** at that moment;
 - your dimensions (legal entity, branch, sector, department, analysis set) from the current context;
 - and a reference back to the lead or potential it came from.
 
 Everything that makes a customer an accounting object — the subsidiary account, credit limit, tax card, price list, payment terms — is yours to complete. On 16 February 2026 that is what turned `PT-00203` into `C-01188`.
 
 ::: warning The lead is flagged only when the customer is saved
-Pressing the button changes nothing on the lead. *Converted To Customer* (تم تحويلة إلي عميل) is ticked, and the *Customer* reference filled, at the moment the **Customer record is saved** — not before. If the person who pressed the button abandons the half-finished customer screen, the lead stays exactly as it was, and nothing records the attempt.
+Pressing the button changes nothing on the lead. *Converted To Customer* (تم تحويله إلى عميل) is ticked, and the *Customer* reference filled, at the moment the **Customer record is saved** — not before. If the person who pressed the button abandons the half-finished customer screen, the lead stays exactly as it was, and nothing records the attempt.
 
 The reverse also holds: **deleting the customer clears the flag** on the lead and hands it back to the pipeline.
 :::
@@ -68,7 +68,7 @@ The reverse also holds: **deleting the customer clears the flag** on the lead an
 A lead or potential can produce only one customer. If somebody tries to point a second customer at the same record, the save is refused with *"This Lead has customer"* on the customer's own lead/potential field.
 
 ::: info Promoting to a potential first is optional
-Nothing forces a lead through the Potential screen. *Convert To Customer* sits on the Lead as well, and pressing it there is the shortest route — and, as noted above, the only route that carries the campaign through to the customer file.
+Nothing forces a lead through the Potential screen. *Convert To Customer* sits on the Lead as well, and pressing it there is the shortest route — and, as noted above, the route that carries the lead's campaign through to the customer file without re-typing it on a potential.
 :::
 
 ### After the conversion: what is locked and what is not
@@ -95,15 +95,15 @@ Think of this button as a convenience that saves you picking the customer — no
 
 ## Convert To REOwner
 
-**On:** CRM Lead and CRM Potential. **Label:** تحويل الي مشتري / Convert To REOwner.
+**On:** CRM Lead and CRM Potential. **Label:** تحويل إلى مشتري / Convert To REOwner.
 
-In a real-estate installation this replaces *Convert To Customer*: it opens a new, unsaved Real Estate **owner** record following exactly the same pattern — pre-filled, saved by you, and the lead flagged only when the save happens. The button is only present when the Real Estate feature is installed; on an installation without it, you will not see it at all.
+In a real-estate installation this button sits next to *Convert To Customer*: it opens a new, unsaved Real Estate **owner** record following exactly the same pattern — pre-filled, saved by you, and the lead flagged only when the save happens. The button is only present when the Real Estate feature is installed; on an installation without it, you will not see it at all.
 
 ## The Whole Conversion Story, End to End
 
 1. **12 January 2026** — Hala opens lead `LD-00417` for Marina Plaza Hotels, sets the campaign, the industry, the mediator and the products, and puts herself and Tarek in the Assigned To grid.
 2. **14 January – 22 January** — a call, a site visit and a call-back move the status from *Initial* to *Contacted* to *Warm* to *Qualified*. Hala moves Sales Stage to *Price Quote* and Probability to 70 by hand.
-3. **2 February** — *Convert To Potential*. `PT-00203` opens pre-filled; Hala re-types the campaign, the industry, the mediator, the salesman, the sales manager, the sales stage and the probability, then saves. The lead is now flagged and locked to further edits.
+3. **2 February** — *Convert To Potential*. `PT-00203` opens pre-filled; Hala re-types the industry, the mediator, the salesman, the sales manager, the sales stage and the probability, but not the campaign, then saves. The lead is now flagged *Converted To Potential*; it stays editable, because only a customer saved from the lead itself locks it.
 4. **16 February** — *Convert To Customer* on the potential. The Customer screen opens with the names, the salesman and the contact block; the accountant adds the subsidiary account, the credit limit and the tax card, and saves. `C-01188` exists, and only now is the record flagged *Converted To Customer*.
 5. **16 February** — *Create Sales Quotation*. `SQ-0771` opens with `C-01188` in the customer field and nothing else. The commercial offer is built there, in Supply Chain, from scratch.
 

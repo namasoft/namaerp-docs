@@ -40,10 +40,10 @@ A **Document** is where the real business effect lives. Saving a vacation docume
 
 There are two ways a document comes to life from an accepted request:
 
-1. **From the request** — the reviewer opens the accepted request and clicks its generate button (for a vacation request this is **Generate Vacation Doc** / إنشاء سند أجازة). Nama builds a matching document pre-filled from the request.
+1. **From the request** — the reviewer opens the accepted request and clicks its generate button (for a vacation request this is **Generate Vacation Doc** / إنشاء سند إجازة). Nama builds a matching document pre-filled from the request.
 2. **From the document** — the user opens a fresh document and picks the source request in its "from document" field. This picker deliberately lists **only Accepted requests** — you cannot build a real document from something that is still awaiting approval or was rejected.
 
-Either way, the moment the document is created the originating request flips to **Processed**, so the same request can never be turned into two documents.
+Either way, the moment the document is saved the originating request flips to **Processed**, so the same request can never be turned into two documents.
 
 ![Vacation document generated from the request](../../../ar/modules/hr/images/concepts/vacation-document-en.png)
 
@@ -79,8 +79,8 @@ There are **two completely different reasons** to aggregate, and Nama gives each
 
 | Axis | What one grid line means | Example screen | Arabic |
 |---|---|---|---|
-| **Many employees** | One line per employee — the same action for a whole group | Multi Employee Vacation | سند أجازة مجمع لأكثر من موظف |
-| **One employee, many segments** | One line per segment of a single long event, split across balances/types | Aggregated Vacation Document | سند أجازه مجمع |
+| **Many employees** | One line per employee — the same action for a whole group | Multi Employee Vacation | سند إجازة مجمع لأكثر من موظف |
+| **One employee, many segments** | One line per segment of a single long event, split across balances/types | Aggregated Vacation Document | سند إجازة مجمع |
 
 So a **Multi Employee Vacation** sends *many people* on leave at once (one document each), whereas an **Aggregated Vacation Document** splits *one person's* long leave into several segments (for example, drawing part from the annual balance and part from an unpaid allowance) — and still produces the individual vacation documents underneath. The same "many employees" idea reappears elsewhere (aggregated firing, aggregated loans, aggregated missions); the "one employee, many segments" idea is specific to vacations.
 

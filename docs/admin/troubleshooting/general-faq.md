@@ -68,7 +68,7 @@ This can be done through [Fields and Entities Settings](/platform/fields-and-ent
 
 1. You can add the discussion to any screen in the system through the "Add Discussion To" table found in Fields and Entities Settings.
 ::: tip You Can Control the Fields Shown in Discussions
-You can control which fields appear in the discussion screen by editing the screen - "Edit Discussion Fields" block:
+You can control which fields appear in the discussion screen by editing the screen - "Modified Discussion Fields" block:
   - Remove the Discussion field
   - Remove Attachment 1 - 2 - 3 - 4
   - Remove Reference 1 - 2
@@ -178,7 +178,7 @@ own page: [Critical Errors at Login](/admin/troubleshooting/critical-errors).
 
 To achieve this in Nama ERP, you can use the following table:
 
-### Table: `Text Fields Converted to Links`
+### Table: `Text To Link Fields`
 
 Table code: `textToLinkFields`
 Located inside [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance), which is also where a text field can be made to dial a phone number or open an e-mail instead of a web page.

@@ -7,8 +7,9 @@ How the payment travels and where it can fail is described in [How a Card Paymen
 ## Where to find the code
 
 - **Geidea machines.** Nama shows the code and its meaning in the refusal message itself, for example *Purchase Transaction refused - 116 - Not Enough Balance*.
-- **Neoleap machines.** Nama shows *Purchase Transaction refused* without a code. Open PGW's **Last Transactions** window. The machine's answer (the line that starts with *Here is the body of neoleap response*) contains the code in `TerminalStatusCode` and a short result in English, such as `DECLINED`.
+- **Neoleap machines.** Nama's refusal message carries the meaning from the [Neoleap codes](#Neoleap-codes) table, for example *PIN timeout.*, but not the code itself. To see the code, open PGW's **Last Transactions** window. The machine's answer (the line that starts with *Here is the body of neoleap response*) contains the code in `TerminalStatusCode` and a short result in English, such as `DECLINED`.
 - **InterPay.** softPOS returns the reason as text. It is in the `message` field of the answer in PGW's **Last Transactions** window.
+- **Code `BUSY`, any machine.** PGW lets only one request at a time reach the machine. A payment or a recovery sent while another request is still running is refused by PGW itself, without reaching the machine, so nothing is charged for it. The reason names the running request and when it started, for example *Purchase Transaction refused - BUSY - The terminal is still busy with a payment of 1150 since 14:05:12. Finish or cancel it on the terminal and try again. If this continues, restart the PGW app*.
 
 ## Geidea codes
 

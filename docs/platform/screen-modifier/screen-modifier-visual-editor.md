@@ -11,13 +11,13 @@ Filling in dozens of collections by hand is precise, but slow. The **Visual Layo
 
 There are two ways in:
 
-- From a **Screen Modifier** record whose *Applicable For* is **Entity Type** or **EntityType List**, run the **Open In Editor** action.
+- From a **Screen Modifier** record whose *Applicable For* is **Entity Type** or **Entity Type List**, run the **Open In Editor** action.
 - From the **list view** of any type, use **Create Screen Modifier** to start a fresh modifier, or **Open Screen Modifier** to jump straight into the editor for that type.
 
-The editor opens the screen for the chosen type (respecting the *For Mobile View* and *For Quick Creator View* flags, and the layout name on the record) and shows it on a canvas you can edit.
+The editor opens the screen for the chosen type (respecting the *Use In Mobile and Tablet Devices* and *For Quick Creator View* flags, and the layout name on the record) and shows it on a canvas you can edit.
 
 ::: warning
-The editor needs a concrete type to draw, so it is only available when *Applicable For* is **Entity Type** or **EntityType List** — not for the broad *All Screens*, *Master Files* or *Documents* scopes.
+The editor needs a concrete type to draw, so it is only available when *Applicable For* is **Entity Type** or **Entity Type List** — not for the broad *All Screens*, *Master Files* or *Documents* scopes.
 :::
 
 ## The layout of the editor
@@ -91,7 +91,11 @@ This is worth knowing before it surprises you. Filling the modifier in by hand s
 
 So a Screen Modifier built in the editor opens with every one of its grids empty, and that is normal — the modification really is live, and the design is in that one field. Read it as "this record was designed in the editor", not as "this record is empty".
 
-It also works the other way round: while that field holds a value, the record refuses manual changes to the collections. Saving one is rejected with a message telling you to clear **Wizard Edit Screen XML** first — which discards the whole design made in the editor. Decide early which way you want to maintain a given modifier, by hand or in the editor, because moving from the editor back to hand-editing means starting that record again.
+It also works the other way round: while that field holds a value, the record refuses manual changes to the collections. Saving one is rejected with a message telling you to clear **Wizard Edit Screen XML** first — which discards the whole design made in the editor. The message has no Arabic text, so it appears in English on Arabic screens too:
+
+*You can not make any manual changes because you used the editor. Clear the field {0} first, this will discard all changes ade in the editor.*
+
+Decide early which way you want to maintain a given modifier, by hand or in the editor, because moving from the editor back to hand-editing means starting that record again.
 :::
 
 As with any modifier, the change does not reach users until the screens are rebuilt — run **Regenerate GUI For Applicable Types Only** (or **Regenerate Screens**) and reopen the screen to confirm. See [Overview & Concepts](/platform/screen-modifier/screen-modifier-overview.md#Making-your-changes-take-effect) for the full rebuild rhythm.

@@ -123,7 +123,7 @@ The delegate works under their own login: approvals they give are recorded under
 
 ### What was already waiting
 
-A delegation created on the first day of leave only catches what is raised *after* it. Two buttons on the Delegation screen deal with the backlog; both work on the open document or on the rows ticked in the Delegation list:
+A delegation created on the first day of leave only catches what is raised *after* it. Two buttons on the Delegation screen deal with the backlog; both work on the open document or on the rows ticked in the Delegation list, and only on a saved delegation (a draft is refused):
 
 - **Move Approvals To Delegated Employee** — in every approval case still in progress where the delegator is a current candidate, and whose request date falls inside the delegation period, the delegator is **replaced** by the delegate.
 - **Move Notifications To Delegated Employee** — moves the delegator's unread notifications from the period across to the delegate.

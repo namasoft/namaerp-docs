@@ -73,7 +73,7 @@ for you once the supplier is chosen. Next to them sits **Subsidiary**, the accou
 whole document; this is where a hotel, a restaurant or a tour guide goes when the counterparty is not
 a supplier at all. **From Document** links the order to whatever it came from. Tax handling is set by
 **Tax Plan**, **Taxable** and **Modifiable Tax**, the money is expressed in the header **Currency**
-and **Currency Rate**, and there are five attachment slots and a description field.
+and **Currency Rate**, and there are six attachment slots and a description field.
 
 Below the header, a money block totals the document: total, the running net after each of the four
 discount levels, the header discount as a percentage or a value, header taxes 3 and 4, the net value,
@@ -148,29 +148,14 @@ invoice. If a request fails — a closed period, a missing account — it shows 
 processing status and can be retried from the **Business Requests** list view; nothing is lost and
 nothing needs re-keying.
 
-What that processing produces is driven entirely by the document's term, and it is built in layers:
-
-1. **Taxes** first — each of the four line taxes and the two header taxes goes to the account side
-   configured for it on the term. On a purchase, tax lands on the debit side, which is how
-   recoverable input tax is captured.
-2. **Discounts** next — the invoice discount, each of the eight line discount levels and the
-   rounding discount each have their own side, and on a purchase they land on the credit side.
-3. **The cost side** — one entry per detail row, on the term's debit side, valued at the line's
-   **total price before discounts and taxes**. This is the cost of the service, and it is where the
-   Tour Service's own accounts come into play when the term reads its account from the item.
-4. **The party side** — one entry per detail row, on the term's credit side, valued at what is
-   **still owed**: the net value less the cash paid, less anything settled through a payment method,
-   less anything explicitly marked as not affecting the remaining balance. This is the balance that
-   ends up on the hotel's, restaurant's, guide's or supplier's account.
-5. **Money settled on the spot** — the cash amount goes to the term's cash side, and every row of the
-   payment grid produces its own pair of entries using that payment method's own accounts, with
-   separate entries again for the method's fees and the tax on those fees. Payment documents written
-   outside the invoice can carry their own accounting too, configured per document type on the term.
-
-Because every one of those sides is a term setting, the practical rule is simple: **an invoice books
-exactly what its term tells it to book, and nothing else**. A term with no debit and credit
-configured produces no entries at all. If you need to rebuild the entries after changing a term, the
-**Regenerate Accounting Effects** action on the document toolbar does exactly that.
+What that processing produces is driven entirely by the document's term. On a purchase invoice the
+cost side is debited, one entry per detail row at the line's total price before discounts and taxes
+(this is where the Tour Service's own accounts come in when the term reads its account from the
+item), and the party — the hotel, restaurant, guide or supplier — is credited with what is still
+owed. Taxes land on the debit side and discounts on the credit side, each on its own account side,
+and cash and payment-method rows produce their own entries. Each side, how it is valued and what
+happens when it is left empty are described on [Document Terms](/modules/travel/travel-document-terms).
+The rule to remember: **an invoice books exactly what its term tells it to book, and nothing else**.
 
 A few checks run before the document will commit. The **Details** grid cannot be empty. Unit prices
 and discount values cannot be negative, and neither can the remaining amount, the cash paid or the
@@ -209,7 +194,7 @@ fees tax, authorization number, issuer and card details.
 
 The **Payments** grid is the instalment plan: what you have promised to pay, in how many instalments,
 on which dates, with the paid and remaining amounts tracked for you as vouchers settle them. The
-**GeneratePayments** action fills it in from a count, a period and a down payment rather than making
+**Generate Payments** action fills it in from a count, a period and a down payment rather than making
 you type each row.
 
 The **Payment Documents** grid lists payment and receipt vouchers written *outside* this document
@@ -226,12 +211,10 @@ All four are covered properly on
 
 **Travel Service Purchase Order, Purchase Invoice and Purchase Return — first page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — builds the instalment schedule on the Payment Documents
-  page from the document's remaining value. It asks for the number of payments, the period between
-  them and its unit, the start date, a grace period, the payment weekday, down / first / second /
-  last payment values and a rounding mode; a down payment is written into the cash paid on the
-  header. It refuses a document whose net value is zero. The English label ships as the raw name
-  shown here.
+- **Generate Payments** (*إنشاء الدفعات*) — builds the instalment schedule on the Payment Documents
+  page from the document's remaining value. What it asks for and what it writes back are described
+  under "Payments — the instalment plan" on
+  [Payments, Instalments & Contract Terms](/modules/travel/travel-payments-and-terms).
 
 ## Carrying a document forward
 
@@ -240,8 +223,10 @@ document has a **From Document** field, and pointing a new document at an existi
 carry work forward.
 
 Create the new document, choose the source in **From Document**, and the system copies the account
-party, the whole money block and every detail line — tour service, quantity, line party, prices and
-description — into the document you are writing. From there you adjust: correct the quantities to what
+party, the payment template, the whole money block and every detail line — tour service, quantity,
+line party, prices and description — into the document you are writing. The copy happens on a
+Travel Service Purchase Invoice or Purchase Return; on a Travel Service Purchase Order the field
+only records the link and copies nothing. From there you adjust: correct the quantities to what
 was actually delivered, price anything the order left blank, fill in the supplier and the per-line
 currency the new document needs, and delete the lines that do not belong.
 

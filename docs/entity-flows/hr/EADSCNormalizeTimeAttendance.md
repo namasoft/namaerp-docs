@@ -20,13 +20,13 @@ Manual execution during attendance processing to clean up and standardize attend
 ## How It Works
 
 1. **Processes each attendance line** - Iterates through all time attendance lines in the document
-2. **Validates required data** - Checks for employee, dates, and times; skips incomplete records
+2. **Validates required data** - Skips a line that has no employee, from date, to date or from time, and a line that has a **Machine Code**
 3. **Applies exclusion criteria** - Optionally excludes specific employees based on criteria definition
-4. **Retrieves work schedule** - Gets employee's attendance plan and work day configuration for the date
+4. **Retrieves work schedule** - Gets employee's attendance plan and work day configuration for the line's from date; the line is skipped when the employee has no plan for that date or the date is a weekend in the plan
 5. **Calculates work shifts** - Identifies first and second work time periods for the day
 6. **Adjusts attendance times** - Modifies from/to times to align with work shift boundaries
 7. **Handles break periods** - Splits attendance lines that span lunch breaks or non-work periods
-8. **Removes invalid records** - Deletes attendance lines that fall completely outside work hours
+8. **Removes invalid records** - Deletes an attendance line that ends before the first work period starts, or that lies entirely in the break between the first and second work periods
 
 ## Parameters
 

@@ -20,7 +20,7 @@ This script is not tied to any customer's setup. You can paste it as it is and c
 |---|---|
 | **Class name** | `EASetDeliveryStatusInFromDocLines` |
 | **Script** | [EASetDeliveryStatusInFromDocLines.groovy](/groovy-examples/EASetDeliveryStatusInFromDocLines.groovy) |
-| **Runs on** | Any supply chain document made from another document. Usually **PostCommit**. |
+| **Runs on** | Any supply chain document made from another document. Usually **Post Commit**. |
 | **Uses** | Parameter 2 and Parameter 3. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -44,7 +44,7 @@ The script only sets a status. Deleting the document, or removing a line from it
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow whose target type is the document that should trigger the change (for example **Stock Issue**).
-2. In the **Details** grid, add a line with **Target Action** set to **PostCommit**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
+2. In the **Details** grid, add a line with **Target Action** set to **Post Commit**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
 3. Fill in the parameters:
 
 | Parameter | Title shown after saving | What to enter |

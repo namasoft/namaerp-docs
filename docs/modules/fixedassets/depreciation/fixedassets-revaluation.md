@@ -145,3 +145,13 @@ the asset to what the previous entry left, reverts a converted depreciation meth
 the accounting entry through a business request of its own. As everywhere else in this folder, the
 timeline comes apart newest-first: a revaluation with later documents behind it will not cancel
 until those are undone.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *Can not revaluate the fixed asset {0} at line {1} because the depreciation method is {2}* — «لا يمكن إعادة تقييم الأصل {0} في السطر {1} لأن طريقة الإهلاك {2}» | The asset is a straight-line asset and the term's **Allow Straight Line And Change Depreciation Method** is off. | Remove the line, or turn the term option on if the asset is meant to move to revaluation. |
+| *Can not revaluate the fixed asset {0} at line {1} because the status is {2}* | The asset is still **Initial** or has been **Disposed**. This message has no Arabic text and shows in English on Arabic screens. | Remove the line. |
+| *Cannot revalue asset {0} because of next document {1}* | Another document dated after this revaluation has already touched the asset. This message has no Arabic text. | Undo `{1}` first, or date the revaluation after it. |
+| *You can not change fiscal period in Revaluation Documents, please delete and re-insert* — «لا يمكنك التغيير في الفترة في مستندات إعادة التقييم الرجاء مسح وإعادة الإدخال» | You changed the **Fiscal Period** of a saved revaluation. | Delete the document and enter a new one for the period you want. |
+| *Fixed asset {0} is repeated* — «الأصل {0} مكرر» | The same asset is on two lines. | Remove the duplicate line. |

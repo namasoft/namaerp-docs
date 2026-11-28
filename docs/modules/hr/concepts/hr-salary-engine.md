@@ -19,17 +19,17 @@ Let's follow a component from definition all the way to the payslip.
 
 Everything starts with a **Salary Component Type** (نوع المفرد): the *category* of a pay element — Basic, Housing, Transportation, a tax, overtime, an insurance share, and so on. The type carries the flags that every component of that kind inherits, and two of them are load-bearing:
 
-- **Effect type** — is this money **added**, **deducted**, or neither?
+- **Component Effect Type** — is this money **added**, **deducted**, or neither?
 
 | Effect type | Arabic | Role in the payslip |
 |---|---|---|
-| Addition (إضافة) | إضافة | Increases the salary (basic, allowances, overtime). |
-| Deduction (إستقطاع) | إستقطاع | Reduces the salary (tax, insurance, penalties, installments). |
-| Other (أخري) | أخري | Informational only — recorded but **not** added to or subtracted from net pay. |
+| Addition | إضافة | Increases the salary (basic, allowances, overtime). |
+| Deduction | استقطاع | Reduces the salary (tax, insurance, penalties, installments). |
+| Other | أخرى | Informational only — recorded but **not** added to or subtracted from net pay. |
 
 - **Component order** — the sequence in which components are calculated. This matters enormously: a component that is a *percentage of another* must be calculated **after** the thing it depends on. Tax computed before the allowances it should tax will silently come out as zero.
 
-The type also decides whether the amount counts toward the tax base and the insurance base, and a **Salary Component Group** (مجموعة مفردات) bundles related components into one named set, so that a calculation formula, a vacation type's deduction lines or a loan type's salary conditions can refer to all of them in one step.
+The type also decides whether the amount counts toward the tax base and the insurance base, and a **Salary Component Group** (مجموعة مفردات راتب) bundles related components into one named set, so that a calculation formula, a vacation type's deduction lines or a loan type's salary conditions can refer to all of them in one step.
 
 ## Step 2 — Price each component
 
@@ -54,32 +54,11 @@ A **Component Calculation Formula** (معادلة حساب المفرد) turns i
 - **Insurance percentages** — the employee's or company's share of the social-insurance base.
 - **Composite** — a formula built from other formulas.
 
-The **calculation method** then decides how the brackets apply:
-
-| Method | Arabic | Behaviour |
-|---|---|---|
-| One Percentage | نسبة واحدة | A single rate over the whole base. |
-| Sections | شرائح | Progressive brackets — each slice of the base is taxed at its own rate. |
+The **calculation method** then decides how the calculation lines apply: **One Percentage** (نسبة واحدة) uses only the first line that matches, and **Sections** (شرائح) adds up what every matching line gives, each line being compared with the whole figure rather than with a slice of it. The exact rules are under [Calculation method](/modules/hr/payroll/salary-calculation-formulas#Calculation-method-one-line-or-every-matching-line).
 
 ![A calculation formula built from sections](../../../ar/modules/hr/images/concepts/calc-formula-en.png)
 
 Each **calculation line** (bracket) has a range, a factor/rate, optional criteria that gate whether it applies, and optional minimum/maximum clamps. When detailed logging is enabled, every bracket that fires leaves an audit entry on the salary document — the "why is this number what it is" trail that support staff rely on.
-
-::: tip A worked progressive-brackets example
-Suppose income tax is defined with **Sections** as:
-
-- 0 – 2,000 → 0%
-- 2,001 – 5,000 → 10%
-- 5,001 and above → 15%
-
-For a taxable base of **6,000**, the tax is computed slice by slice, not all at one rate:
-
-- first 2,000 → 0
-- next 3,000 (2,001–5,000) → 300
-- remaining 1,000 (5,001–6,000) → 150
-
-**Total tax = 450.** With **One Percentage** at 15% instead, the whole 6,000 would be taxed → 900. Choosing Sections vs One Percentage is therefore a real business decision, not a cosmetic one.
-:::
 
 ## Step 3 — Assign components to employees
 
@@ -99,7 +78,7 @@ Variable amounts need live monthly inputs, and those come mostly from **[time & 
 
 Attendance punches are rolled up per day into worked time, overtime, lateness and absence. Those figures reach salary through **performance indicators**: a formula of the "related to a performance indicator" type reads the indicator and turns it into money. A *daily* indicator is factored per working day; a *periodic* one uses the month's total. Attendance also drives the pro-rating of pay for partial months and the deduction for non-worked days.
 
-Employees paid by the day rather than a monthly salary are handled through the **Daily Salary** (أجر يومى) document instead of this monthly component machinery.
+Employees paid by the day rather than a monthly salary are handled through the **Daily Salary** (أجر يومي) document instead of this monthly component machinery.
 
 ## Step 5 — Generate the salary sheet and documents
 

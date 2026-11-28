@@ -11,7 +11,7 @@ The **subcontractor** (مقاول باطن) is who you give work to: the blockwo
 the plant hire company. He is the party you *pay*, and he needs a full financial identity because his
 balance, his retention, his advances and his deductions all have to be tracked.
 
-The **consultant** (إستشاري) is who supervises: the engineering office that inspects, approves and
+The **consultant** (استشاري) is who supervises: the engineering office that inspects, approves and
 signs off on behalf of the owner. He is a name you record on the project so that reports, checklists
 and letters can say who is supervising. He is not a money-bearing party in this module.
 
@@ -70,6 +70,10 @@ of the company, the file number, the ID card number, the buyer identity type use
 and the two composite blocks for the specified tax office and the nature of the dealing. The
 subcontractor can be the counterparty on an electronic invoice, and this page is where that comes from.
 
+**Statistics page** — the list *Modify Contractor Info Requests*: every
+[change request](/modules/contracting/setup/contracting-modify-contractor-info-request.md) raised
+against this subcontractor, with its update type, value date, creation date and author.
+
 **Contractor Classification** (فئة مقاول باطن) is its own tiny master file under the same menu — a
 code and a name, nothing more. Companies use it to band their subcontractors (Class A / Class B) or to
 group them by trade. It is a reporting and searching tag: nothing in the module restricts, prices,
@@ -96,7 +100,8 @@ documents resolve their subsidiary to him — or to his linked supplier:
 - [Subcontracts](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) — the
   agreement, which like the owner contract books nothing on signature.
 - [Subcontractor Extracts](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md)
-  — his payment application, and the only document in that chain that creates a journal entry.
+  — his payment application, the document that books his work. The advance, other-payment and fine
+  documents below create journal entries of their own too.
 - [Subcontractor Advances and Other Payments](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md)
   and [Subcontractor Fines](/modules/contracting/contractor-contracting/contracting-contractor-fines.md)
   — the deductions and pre-payments that reach his extract.
@@ -112,7 +117,7 @@ documents resolve their subsidiary to him — or to his linked supplier:
 ![The Advisory screen: the consultant as a party record — a code, a name, accounting subsidiary and contact details](../../../ar/modules/contracting/images/setup/advisory-main-en.png)
 
 The English menu caption reads *Advisory*, which makes it sound like a document you raise. It is not.
-It is the **consulting engineer's office** (إستشاري) as a party record, and the whole file is three
+It is the **consulting engineer's office** (استشاري) as a party record, and the whole file is three
 things: the master-file identity (code, Arabic name, English name, group, description, dimensions), a
 **required accounting subsidiary** so that the consultant can be an account holder if you ever pay him
 directly, and a **contact block** — address, telephones, e-mail.

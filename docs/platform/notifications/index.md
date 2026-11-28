@@ -13,7 +13,7 @@ When something important happens in the system — a new invoice, an approval re
 
 <LandingGrid>
   <LandingCard icon="🔔" title="Notification Definitions" link="/platform/notifications/notifications-system.md" details="The definition screen field by field — what fires a notification, who receives it, what they read, and when it is sent." />
-  <LandingCard icon="💬" title="WhatsApp Integration" link="/platform/notifications/sms-and-whatsapp.md" details="Configure SMS and WhatsApp providers from Global Configuration so the system can message users and customers." />
+  <LandingCard icon="💬" title="WhatsApp Integration" link="/platform/notifications/sms-and-whatsapp.md" details="Configure SMS gateways in Global Configuration and WhatsApp providers in WhatsApp Message Configuration so the system can message users and customers." />
   <LandingCard icon="✈️" title="Telegram Notifications" link="/platform/notifications/telegram.md" details="Set up a Telegram bot, let customers link themselves by sharing their phone, and send notifications straight to their chat." />
   <LandingCard icon="📣" title="General Announcements" link="/platform/notifications/general-announcements.md" details="The company notice board — write a text once, pick who sees it and between which dates, and it appears beside their notifications." />
   <LandingCard icon="✉️" title="Bulk Messages, WhatsApp Messages and Internal Chat" link="/platform/notifications/bulk-messages-whatsapp-and-chat.md" details="Send one message to a hand-picked list, shape what goes out over WhatsApp, read the Error Message log, and chat with colleagues." />

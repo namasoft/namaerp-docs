@@ -11,32 +11,21 @@ entities: [EntityFlow]
 
 ## Overview
 
-Validates entity data using SQL query and displays custom error message if validation fails. Supports multilingual error messages for user feedback.
-
-**⚠️ This entity flow has been replaced by CriteriaBasedValidation**
-
-## When This Action Runs
-
-Entity validation during save operations to enforce business rules and data constraints.
-
-## How It Works
-
-1. **Executes SQL query** against entity data (returns 0 for valid, non-zero for invalid)
-2. **Evaluates result** to determine if validation passed or failed
-3. **Renders error message** using template with entity field values
-4. **Displays multilingual error** in Arabic and optional English
+An older entity flow for checking a record with an SQL query. It has been replaced by the **Criteria Based Validation** screen: to refuse saving a record when a query or a condition is not met, define the rule there. See [Criteria Based Validation](/platform/governance/criteria-based-validation).
 
 ## Parameters
 
-**Parameter 1:** Query (Required) - SQL query returning 0 for valid data, non-zero for invalid (use {fieldName} syntax)
+The flow line shows these titles above its parameters:
 
-**Parameter 2:** Arabic Error Tempo (Required) - Arabic error message template with field references
+**Parameter 1:** Query, eg: select case when {code} = 'abc' then 0 else 1 end - Required when the entity flow is saved
 
-**Parameter 3:** English Error Tempo (Optional) - English error message template (fallback to Arabic if not provided)
+**Parameter 2:** Arabic Error Tempo, eg: The code {code} must not be abc, please use something else. - Required when the entity flow is saved
+
+**Parameter 3:** English Error Tempo
 
 ## Database Tables Affected
 
-- **None** - Validation only, no database modifications
+- **None** - no database modifications
 
 **Module:** core
 

@@ -18,7 +18,7 @@ When you define a service item you set its nature through a set of flags:
 - **Default quantity and unit** — to speed up line entry.
 
 ::: info Fields related to e-invoicing
-A service item carries three fields for e-invoicing: a **Tax Authority Code** to classify the service for the authority, an **E-Invoice Item** to send a substitute/consolidated item instead of the operational one, and a **Commission Item** to separate commission from cost in the agent model. Details are in the [E-Invoicing](./freight-einvoicing.md) page.
+A service item carries three fields for e-invoicing: a **Tax Authority Code** to classify the service for the authority, an **E Invoice Service Item** to send a substitute/consolidated item instead of the operational one, and a **Commission Item** to separate commission from cost in the agent model. Details are in the [E-Invoicing](./freight-einvoicing.md) page.
 :::
 
 ![Service item](../../ar/modules/freight/images/master-files/service-item-en.png)
@@ -62,8 +62,10 @@ You don't need to define everything up front. Start with the service items you a
 
 | Message | Why | What to do |
 |---|---|---|
-| *You Must Select at least One Of Service Item Types* — «يجب اختيار خدمة واحدة على الاقل من الخدمات الأربعة التالية(شحن بحري ـ نقل ـ تخليص ـ مولدات)» | A service item has none of its service flags ticked — ocean freight, custom clearance, trucking, genset or other — **and** no Tax Authority Code either, so nothing places it in a section. | Tick the flag for the service the item really is. An item that exists only for e-invoicing passes the check once it carries a Tax Authority Code. |
-| *Commission item {0} should not be the same e invoice item {1}* — «بند خدمة (عمولة) {0} لا يجب ان يكون هو نفسه بند الفاتورة الالكترونية {1}» | The Commission Item and the E-Invoice Item on the service item point at the same record, which would make commission and cost indistinguishable on the submitted invoice. | Point them at two different service items, or clear the one you do not need. |
-| *Capacity {0} must be more than zero* — «يجب ان تكون السعة أكبر من الصفر» | A Location is being saved with an empty, zero or negative Capacity. | Enter the location's capacity; storage consumption is measured against it. |
-| *You Must Select One Record* — «يجب إختيار سطر واحد» | **Create Operation Order** on the sailing schedule was pressed with no line, or more than one line, ticked **Selected**. | Tick exactly one sailing line. |
-| *You Must Select Shipping Line* — «لا يمكن ترك الخط الملاحى فارغاً» | The ticked sailing line has no shipping line. | Fill the line's shipping line, then press the button again. |
+| *You Must Select at least One Of Service Item Types* — «يجب اختيار خدمة واحدة على الأقل من الخدمات الأربعة التالية(شحن بحري ـ نقل ـ تخليص ـ مولدات)» | A service item has none of its service flags ticked — ocean freight, custom clearance, trucking, genset or other — **and** no Tax Authority Code either, so nothing places it in a section. | Tick the flag for the service the item really is. An item that exists only for e-invoicing passes the check once it carries a Tax Authority Code. |
+| *Commission item {0} should not be the same e invoice item {1}* — «بند خدمة (عمولة) {0} لا يجب أن يكون هو نفسه بند الفاتورة الإلكترونية {1}» | The Commission Item and the E Invoice Service Item on the service item point at the same record, which would make commission and cost indistinguishable on the submitted invoice. | Point them at two different service items, or clear the one you do not need. |
+| *Commission item {0} should not be the same item {1}* | The service item names itself as its own Commission Item. This message has no Arabic text and shows in English on Arabic screens too. | Choose a different service item as the commission item. |
+| *Item {0} should not be repeated in the chain* | Following the E Invoice Service Item from item to item comes back to an item already in the chain. This message has no Arabic text and shows in English on Arabic screens too. | Break the loop so the chain of e-invoice items ends at an item with no E Invoice Service Item. |
+| *Capacity {0} must be more than zero* — «يجب أن تكون السعة {0} أكبر من الصفر» | A Location is being saved with an empty, zero or negative Capacity. | Enter the location's capacity; storage consumption is measured against it. |
+| *You Must Select One Record* — «يجب اختيار سطر واحد» | **Create Operation Order** on the sailing schedule was pressed with no line, or more than one line, ticked **Selected**. | Tick exactly one sailing line. |
+| *You Must Select Shipping Line* — «لا يمكن ترك الخط الملاحي فارغاً» | The ticked sailing line has no shipping line. | Fill the line's shipping line, then press the button again. |

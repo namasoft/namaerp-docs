@@ -92,7 +92,7 @@ Everything above arrives at once. Open a new fixed asset, pick `FAT-MCH`, and be
 3. the components grid, one line per component type on the type;
 4. the contracting cost sides, if the Contracting module is installed.
 
-The same copy happens on the server whenever a document creates an asset for you, so an asset born on a purchase document is set up identically to one you made by hand.
+When a document (purchase, opening, creation or letter-of-credit proforma) creates an asset for you, the server copies only part of this: the accounts, into the slots that are still empty, and the four flags. It does not copy the components grid or the contracting cost sides, so on an asset born on a document you add those on the asset record yourself.
 
 ## Overriding the Type on a Single Asset
 
@@ -119,8 +119,9 @@ The asset account, the depreciation account and the accumulative depreciation ac
 ## Actions on This Screen
 
 The fixed asset type has no buttons of its own. Everything it does, it does by being *chosen*: the
-moment an asset picks a type, the type's accounts, depreciation defaults and numbering are copied
-down. There is no button that pushes a changed type back onto assets already created from it, which
+moment an asset picks a type, the type's accounts, flags and component types are copied down, and
+its depreciation defaults and coding group are read by the documents that bring assets of the type
+into service. There is no button that pushes a changed type back onto assets already created from it, which
 is why the section on overriding the type on a single asset matters as much as it does.
 
 ## Setting Up FAT-MCH, Start to Finish

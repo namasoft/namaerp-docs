@@ -26,7 +26,7 @@ Keep the list at the granularity you actually want reported. If nobody will ever
 
 ## Technician Procedure
 
-The procedure carries the name your booking staff will recognise, plus a **Standard Duration (Minute)** (*المدة الإفتراضية (دقيقة)*) for the whole job — the number to have in mind when you decide how wide a slot to draw on the calendar.
+The procedure carries the name your booking staff will recognise, plus a **Standard Duration (Minute)** (*المدة الافتراضية (دقيقة)*) for the whole job — the number to have in mind when you decide how wide a slot to draw on the calendar.
 
 ![The Technician Procedure screen](../../../ar/modules/crm/images/technician-appointments/technician-procedure-en.png)
 

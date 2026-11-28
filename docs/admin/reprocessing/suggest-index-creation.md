@@ -8,8 +8,10 @@ In Nama ERP and other systems with highly normalized schemas, many tables contai
 
 To optimize performance, it's recommended to create a **non-clustered index** on such foreign key columns **only if the detail table contains a significant number of rows**.
 
-::: info The busiest documents are indexed by Nama itself
-Nama creates the index on the lines of its busiest documents at start-up, named `idx_<column>` (for example `idx_salesInvoice_id`): sales and purchase invoices and returns, POS invoices and returns, sales orders, stock issues and receipts, stock transfers, issue and receipt stock transfers, stock transfer requests, receipt and payment vouchers, journal entries, sales and purchase price lists, and the unit, size-and-colour and dimension lines of items. On a large database without that index, the first start-up after the upgrade takes longer while it is built.
+::: info Nama creates these indexes itself
+Nama declares an index named `idx_<column>` (for example `idx_salesInvoice_id`) on the parent column of the detail tables of its documents and master files, in every module, and creates it at start-up wherever it is missing. On a large database without that index, the first start-up after the upgrade takes longer while it is built.
+
+The query on this page lists only the parent columns that still have no index. It is for a database on an older release; on a current release it returns only the few detail tables Nama does not index itself.
 
 If you created one of these indexes by hand before, the table now has two copies. The [Duplicate Index Finder](/admin/reprocessing/database-size-and-index-utilities#Duplicate-Index-Finder) reports the extra copy, and a critical error reminds the support team until it is dropped.
 :::
@@ -29,6 +31,8 @@ The following SQL query searches for tables in your database that:
 The query outputs a list of tables with suggestions for creating the needed index.
 
 You should **only apply the suggested indexes to tables where `row_count` exceeds your threshold**, e.g., 50,000 or 100,000 records.
+
+This sample result comes from a database on an older release, before Nama created these four indexes itself:
 
 | table\_name                | column\_name           | row\_count | create\_index\_sql                                                                                                                          |
 | -------------------------- | ---------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1105,7 +1109,6 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'ReqSecondaryItemUOMLine+invItemOpiningRequest_id',
 'ReqSizesAndColors+invItemOpiningRequest_id',
 'ItemUpdateDimensionsDetail+invItemUpdate_id',
-'InvestmentFundLine+investmentFund_id',
 'InvoiceReceiptDocLine+invoiceReceiptDoc_id',
 'MismatchedInvReceiptDocQtysLine+invoiceReceiptDoc_id',
 'ItemAssortmentLine+itemAssortment_id',
@@ -1179,7 +1182,7 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'LCScheduledPayLine+lCProformaInvoice_id',
 'ShipmentLine+lCShipment_id',
 'LCShipmentInvoiceLine+lCShipmentProformaInvoice_id',
-'LCScheduledPayLine+lCShipmentProformaInvoice_id',
+'LCShipmentScheduledPayLine+lCShipmentProformaInvoice_id',
 'LGTOpeningDocLine+lGTOpeningDoc_id',
 'LcExpenseLine+lcExpenseDocument_id',
 'ManualLcExpenseLine+lcExpenseDocument_id',
@@ -1223,7 +1226,7 @@ WHERE  CONCAT(tc.table_name, '+', tc.column_name) IN (
 'MRPForecastingLine+mRPSalesForecasting_id',
 'MachineRentInvLine+machineRentInvoice_id',
 'MiscRentExternalPaymentLine+machineRentInvoice_id',
-'MiscPurchaseInvPaymentLine+machineRentInvoice_id',
+'MachineRentInvPaymentLine+machineRentInvoice_id',
 'MiscRentScheduledPayLine+machineRentInvoice_id',
 'MagentoItemLinkerLine+magentoItemLinker_id',
 'MagentoPriceUpdaterLine+magentoPriceUpdaterDoc_id',

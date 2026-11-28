@@ -102,7 +102,7 @@ its own screen.
 
 Two actions under **More** work on the selected rows, whatever their types:
 
-- **ReCommit From All Records View** saves each selected record again, so its effects are rebuilt.
+- **Recommit From All Records View** saves each selected record again, so its effects are rebuilt.
   Tick **Stop With First Error** to halt at the first record that fails; leave it unticked to carry
   on and get a list of every failure at the end.
 - **ReReplicate Any** sends each selected record to the other sites again, for installations that
@@ -115,7 +115,7 @@ A record that is not in All Records does not exist any more. Look for it in the 
 | Message | Why | What to do |
 |---|---|---|
 | *Please Select Rows* — «من فضلك اختر السجلات أولا» | An action under **More** was pressed with no row selected. | Tick the rows first. |
-| *You can not delete cancelled Document {0}* — «تم الغاءالمستند {0} فبالتالي لا يمكن حذفه» | Cancelled documents cannot be deleted, so they never reach the bin. | Nothing to recover — the document is still in place with the Cancelled status. |
+| *You can not delete cancelled Document {0}* — «تم إلغاء المستند {0} فبالتالي لا يمكن حذفه» | Cancelled documents cannot be deleted, so they never reach the bin. | Nothing to recover — the document is still in place with the Cancelled status. |
 | *You cannot delete {0} because it is awaiting approval.* | A delete for this record is already waiting for approval. The message has no Arabic translation, so it appears in English on Arabic screens. | Finish the approval; the record reaches the bin only once the delete is approved. |
 
 ## See also

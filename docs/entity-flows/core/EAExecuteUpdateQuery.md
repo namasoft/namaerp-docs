@@ -20,15 +20,14 @@ Manual or automated execution for bulk data operations, data migration, and data
 ## How It Works
 
 1. **Prepares SQL statement** with parameter substitution using {fieldName} syntax
-2. **Executes query directly** against database within current transaction
+2. **Executes query directly** against database within current transaction. A statement that uses line fields (`{details.item.item.id}`) is executed once per line of the record
 3. **Optionally evicts cache** to maintain data consistency
-4. **Returns execution result** with error handling
 
 ## Parameters
 
 **Parameter 1:** Update Query (Required) - Valid SQL UPDATE, INSERT, or DELETE statement (use {fieldName} for entity references)
 
-**Parameter 2:** Evict Cache After Execution (Optional) - "true"/"false" to clear Hibernate cache after execution (default: false)
+**Parameter 2:** Evict Cache After Execution(true,false) (Optional) - `true` clears all the system caches after execution (default: false)
 
 ## Database Tables Affected
 

@@ -6,7 +6,7 @@ menu: Customer Relationship Management → Maintenance Documents → Maintenance
 # Maintenance Orders
 
 On 1 April 2026 Nahed El Gindy opens maintenance work plan `WP-0087` and presses **Generate
-Maintenance Orders**. The plan holds three lines — the April monthly visit for chiller `MCH-00311`,
+Mn Orders**. The plan holds three lines — the April monthly visit for chiller `MCH-00311`,
 the same for chiller `MCH-00312`, and the monthly visit for the air-handling unit `MCH-00318`. All
 three share the same expected date, the same technician (`EMP-2011`, Mahmoud Adel Hassan) and the
 same building, so the system groups them into **one** document: maintenance order `MO-0513`.
@@ -15,8 +15,10 @@ That order is where the maintenance suite does its real work. It says which mach
 worked on, what faults were found, which spare parts and services the job needs, who the technicians
 are and what each of them is owed. It draws the pre-paid quantities down from the contract, it can
 write a fresh warranty onto a repaired fault, and — if you configure it that way — it can create a
-journal entry. What it does **not** do is move a single part out of the store; that only ever
-happens through the [invoice](/modules/crm/maintenance-cycle/crm-maintenance-invoicing.md).
+journal entry. What it does **not** do is move a single part out of the store; parts leave only
+through a supply-chain document — the stock issue the
+[invoice](/modules/crm/maintenance-cycle/crm-maintenance-invoicing.md) generates, or one raised from
+this order's issue buttons.
 
 ::: info Required licence
 `crm-maintenance`
@@ -26,14 +28,15 @@ happens through the [invoice](/modules/crm/maintenance-cycle/crm-maintenance-inv
 
 ## Where an order comes from
 
-There are five routes onto this screen, and only one of them is automatic:
+There are six routes onto this screen, and only one of them is automatic:
 
 | Route | How | Automatic? |
 |---|---|---|
-| From a **maintenance work plan** | *Generate Maintenance Orders* on the work plan | Yes — the orders are created and committed for you |
+| From a **maintenance work plan** | *Generate Mn Orders* on the work plan | Yes — the orders are created and committed for you |
 | From a **maintenance notice** | Type the order, pick the notice in *From document* | No |
 | From a **maintenance order request** | Type the order, pick the request in *From document* | No |
 | From a **maintenance contract** | Type the order, pick the contract in *From document* | No |
+| From a **maintenance estimation** or another **maintenance order** | Type the order, pick it in *From document* | No |
 | From nothing at all | Type it | No |
 
 When you pick a predecessor in *From document*, a copier brings the header data and the maintenance
@@ -124,7 +127,7 @@ they do on any other document of this family.
 The *Current Status* box points at an **Order Status** record you defined yourself, and each of
 those records carries a **status type** — *Open*, *In Progress*, *On Hold*, *Closed*, *Initial*,
 *Re-Open* or *Finished*. That status type is what the system actually reads: it is copied into the
-order's own read-only *Status Type*, and the
+order's own read-only *Status* field, and the
 [executions](/modules/crm/maintenance-cycle/crm-maintenance-executions.md) overwrite it as work
 starts and finishes. On `MO-0513` the order opens at `MOS-NEW` (*Open*) and moves to `MOS-WIP`
 (*In Progress*) as soon as the first execution is under way.
@@ -197,8 +200,8 @@ of the two files. Pick one — normally the order term, since that is where the 
 When *Order Type* is **Installation** and the order's document term names a warranty-contract book
 and term, committing the order **creates and commits a maintenance contract** of type *Warranty
 Contract*. It copies the warranty period and dates, the machine, serial, customer and contact, and
-the machines, spare-part and service grids. Cancelling the order — or changing its type away from
-Installation — deletes that contract again.
+the machines, spare-part and service grids. Cancelling or deleting the Installation order deletes
+that contract again.
 
 ::: danger The generated warranty contract carries the full money block
 The copy includes the whole money block, not just the coverage. A maintenance contract has its own
@@ -236,8 +239,11 @@ grids. Nothing is saved until you save it:
 ::: warning These are an alternative to invoice-driven issuing, never a supplement
 The invoice generates its own stock issue from the same lines. If a technician issues the parts from
 here and the back office then saves an invoice whose term generates stock, **the parts leave the
-store twice** — there is no netting, no "already issued" flag and no link between the two documents.
-Decide once, per installation, which of the two routes you use.
+store twice** — nothing nets one against the other. The *Satisfied Qty* and *Unsatisfied Quantity*
+columns on the order's spare-parts grid count only the supply-chain documents that name this order in
+their *From document*, such as the issue request this button opens; the stock issue an invoice
+generates names the invoice, so it is not counted against the order. Decide once, per installation,
+which of the two routes you use.
 :::
 
 ## Actions on this screen

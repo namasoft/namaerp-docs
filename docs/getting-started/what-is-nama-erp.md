@@ -152,21 +152,10 @@ Two things deliberately freeze a committed document:
 
 ### Taking a committed document back
 
-There is no button that turns a committed document back into a draft. What there is instead is a
-**[Document Cancel Document](/platform/documents-and-records/document-cancel-document.md)** — a small document of its own whose whole job is to name one or more
-committed documents and cancel them.
-
-Committing it reverses their effects and marks each one **Cancelled**. The cancelled document keeps its
-number and stays visible in the list, which is the point: the history shows that the document existed
-and was cancelled, rather than quietly losing a number. A document cannot be cancelled if it is still a
-draft, if it has been revised, if it is waiting on an approval, or if another cancel document already
-cancelled it.
-
-The recall is in the reverse direction. **Deleting the cancel document brings the cancelled documents
-back**, and there is a switch on it that decides in what state: normally they are re-committed exactly
-as they were, but tick **Restore Cancelled Doc As Draft After Deleting Cancel Document** and they come
-back as **drafts** instead — so they can be corrected before they count again. That is the closest thing
-Nama has to "put this document back in my hands".
+There is no button that turns a committed document back into a draft. Instead, a
+**[Document Cancel Document](/platform/documents-and-records/document-cancel-document)** names one or more committed documents,
+reverses their effects and marks them **Cancelled**, and deleting it brings them back, re-committed or
+as drafts. That page has what stops a cancellation and how the documents come back.
 
 ### Deleting, and when it refuses
 
@@ -177,28 +166,18 @@ reversal is queued as a business request of its own — which can fail for exact
 original could, and needs looking at in the same place. Along with the record itself, its attachments,
 its additional fields and its number sequence go too.
 
-Several rules will stop a delete outright:
-
-- **A cancelled document cannot be deleted.** Undo the cancellation first by deleting the cancel
-  document.
-- **A revised document cannot be deleted** until it is unrevised.
-- **A record in an approval cycle cannot be deleted** until the cycle has finished, and a record whose
-  approval has already completed can only be deleted by someone holding the specific permission for
-  that.
-- **A record that has been printed** can be locked against deletion, again by permission.
-- **Deleting drafts is its own permission**, separate from deleting committed records — and it can be
-  narrowed further to "only the drafts I created myself".
+Several rules stop a delete outright: the document is cancelled or revised, it is in an approval
+cycle, it has been printed or approved and the security profile forbids deleting it then, or the user
+lacks the separate permission for deleting drafts.
+[Why a Record Will Not Save or Delete](/platform/documents-and-records/why-a-record-will-not-save-or-delete)
+lists every check with its message and the way out.
 
 ### Creation date, issue date, and value date
 
-Documents carry three dates and they are not interchangeable. Support calls go wrong when they get
-mixed up.
-
-| Date | What it is |
-|---|---|
-| **Creation Date** (تاريخ الإنشاء) | When the record entered the system. The system stamps it the first time the document is committed and does not move it afterwards. It is a fact about the data entry, not about the business. |
-| **Issue Date** (تاريخ التحرير) | The date written on the paper — when the document was issued to whoever received it. |
-| **Value Date** (التاريخ الفعلي) | **The one that matters.** It is the business date of the transaction, and it decides which fiscal period and which fiscal year the document belongs to — and therefore which period its ledger entry and its stock movement land in. |
+Documents carry three dates and they are not interchangeable: the **Creation Date** (when it was keyed
+in), the **Issue Date** (the date on the paper) and the **Value Date**, the only one that decides the
+fiscal period and year, and so where its ledger entry and stock movement land. Each is defined in
+[Dates and periods](/getting-started/nama-erp-glossary#Dates-and-periods) in the glossary.
 
 So a receipt entered on 3 February for money taken on 28 January has a creation date in February and a
 value date in January, and it belongs to January's figures. Change a document's value date and you

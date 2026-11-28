@@ -32,7 +32,7 @@ the right answer automatically — nothing does that.
 ## Where an FAQ comes from
 
 You can create one from the menu like any other record, but the intended route is the
-**Convert To FAQ / تحويل إلي سؤال شائع** button on a trouble ticket. The story it is built for goes
+**Convert To FAQ / تحويل إلى سؤال شائع** button on a trouble ticket. The story it is built for goes
 like this: a ticket comes in, the technicians work it, they write up what they did in their
 execution notes, the ticket is closed — and the agent presses one button to turn the whole episode
 into a reusable entry.
@@ -70,8 +70,8 @@ Then the **Dimensions / محددات** group.
 
 ::: tip The English labels say "Criteria" and "Result"
 On an English interface the two large boxes at the bottom of the screen are labelled **Criteria**
-and **Result**. They hold the **question** and the **answer**, and they are the two boxes the *Convert To FAQ* button fills. The Arabic interface reads
-correctly: **السؤال** and **الإجابة**.
+and **Result**. They hold the **question** and the **answer**, and they are the two boxes the *Convert To FAQ* button fills. The Arabic interface labels
+them **السؤال** and **الإجابة**.
 
 Tell new English-language agents this once, so they look for **Criteria** rather than a Question
 box.

@@ -24,7 +24,7 @@ The command only appears for users whose security profile grants **Can Import** 
 | **Continue On Errors** | المتابعة عند حدوث خطأ | **On** | On, every row is attempted and the failures are reported at the end. Off, the import stops at the first failing row. |
 | **Trim Extra Spaces** | حذف المسافات الزائدة | **On** | Strips leading and trailing spaces from every cell before using it. This is what stops a code typed as `CUST01 ` from failing to match `CUST01`. |
 | **Save As Draft** | الحفظ كمسودة | Off | Imported records are saved as drafts rather than committed, so you can review them before they take effect. |
-| **Use User Dimensions While Importing** | استعمال محددات المستخدم اثناء الاستيراد | Off | Resolves codes and saves records under your own legal entity, branch, sector and department rather than the record's. Useful when the same code exists in several companies. |
+| **Use User Dimensions While Importing** | استعمال محددات المستخدم أثناء الاستيراد | Off | Resolves codes and saves records under your own legal entity, branch, sector and department rather than the record's. Useful when the same code exists in several companies. |
 | **Add To Current Lines** | إضافة إلى السطور الحالية | Off | Off, the detail lines in the file replace the record's existing lines. On, they are added alongside them. |
 
 ::: warning "Continue On Errors" does not mean "undo on errors"
@@ -97,7 +97,7 @@ The `evalsql(...)` cell function (see [Importing Data from Excel or Queries](/pl
 
 ## Watching It Run, and Reading the Result
 
-The import is handed to a background task, so your screen stays usable. A progress entry counts through the file — *"Importing 12 of 400 — Fail: 1 Success: 11"* — and you can cancel it partway if you spot something going wrong.
+The import is handed to a background task, so your screen stays usable. A progress entry counts through the file, naming the record it is on — *Importing 12 of 400 - Customer: C0012 Fail: 1 Success: 11* — and you can cancel it partway if you spot something going wrong.
 
 When it finishes you get **your own file back**, annotated. That returned workbook is the real result report:
 
@@ -113,9 +113,7 @@ An import does not appear in the Business Requests list and is not retried from 
 
 ## Supported File Types
 
-Excel workbooks (`.xlsx`), `.csv` and `.txt` files with the same row layout, `.json`, `.xml` and `.zip` bundles are all accepted.
-
-`.xls` — the old Excel 97 format — is **not**. Uploading one produces a message asking you to save it as `.xlsx` first.
+Excel workbooks (`.xlsx`, and the older `.xls`), `.csv` and `.txt` files with the same row layout, `.json`, `.xml` and `.zip` bundles are all accepted.
 
 ## Importing Into the Record You Have Open
 

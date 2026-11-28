@@ -39,9 +39,6 @@ automatically from the
 the vehicle. There is one insurer and one warranty
 provider per job order — you cannot split one line between two different insurers.
 
-The split is applied to the line's value **after discounts**, not to its gross price. If you give a
-10 % discount on a 380 part, the four shares divide the 342 that remains.
-
 ## The rule, stated once
 
 Every time the document is saved, each priced line is put through the same three steps.
@@ -85,15 +82,11 @@ above the exact percentage.
 
 On commit, for every priced line:
 
-- the four percentages must total **100** (within a hundredth of a percent), and
+- the four percentages must total **100** (within 0.1 of a percentage point), and
 - the four values must total the **line price**.
 
 If either fails, the commit is refused and the error is reported against the **customer percentage**
 column of the offending grid — so look at the whole line, not just the column the message points at.
-
-Note the asymmetry with the estimation: the
-[job estimation performs no checks of its own](/modules/servicecenter/job-cycle/servicecenter-job-estimation.md),
-so a broken split can sit quietly on a quote and only announce itself on the job order built from it.
 
 ## The eight header percentage fields
 
@@ -165,19 +158,11 @@ able to read them:
 | **Warranty** | The warranty invoice, raised against the header's warranty company as the accounting الذمة; the closing's *Total Warranty* box |
 | **Internal** | The closing's *Total Internal* box, and nothing else |
 
-::: danger The internal share is a memo figure, not an accounting entry
-There is no invoice button for the internal share, no book, no
-[term option](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md) and no fetcher — nothing anywhere
-generates a document from it. And the closing's journal entry carries the **customer** amount only.
-
-So the 60 that Al-Sahra absorbed for Fahad's wash appears on one screen, in one box, and reaches the
-general ledger by no route at all. If you need the cost of goodwill work in your accounts, you have
-to raise that entry yourself.
-
-The insurance and warranty shares are better off — but only because their
-**[invoices](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md)** record them.
-Skip the invoice and that money never reaches accounting either.
-:::
+So the 60 that Al-Sahra absorbed for Fahad's wash appears in one box and reaches the general ledger
+by no route; if you need the cost of goodwill work in your accounts, you raise that entry yourself.
+Why only the customer amount reaches the ledger from the closing, and how the insurance and warranty
+shares get there through their invoices, is explained in
+[What reaches the ledger](/modules/servicecenter/job-cycle/servicecenter-job-order-closing#What-reaches-the-ledger).
 
 The job order also tracks an invoicing status per payer. A payer whose percentages across all lines
 come to zero is shown as **Not Applicable** rather than *Not Invoiced*, which is how you tell "there

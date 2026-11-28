@@ -26,8 +26,9 @@ The **Title** column is the caption the entity flow line shows above each parame
 | Parameter 2 | Records To Embed Query, eg: select entityType,id from CRMLead where lastUpdateDate >= '20250901' and commitedBefore = 1 | A query whose first column is the entity type and second column is the record id. See [SQL Query Requirements](#SQL-Query-Requirements). |
 
 Only master files can be embedded (customers, items, leads, ...). Of those, only the types listed in the
-**AI Record Embedding Config** screen are embedded; a row of any other type is skipped without a message.
-See [AI Module Configuration](../../modules/ai/ai-configuration.md).
+**AI Record Embedding Config** screen are embedded, plus **AI Tool Definition** and **AI Nama Docs Utility Manager** records, which are always embedded;
+a row of any other type is skipped without a message.
+See [AI Module Configuration](/modules/ai/ai-configuration).
 
 ## How It Works
 

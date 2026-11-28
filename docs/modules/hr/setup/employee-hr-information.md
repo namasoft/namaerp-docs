@@ -24,7 +24,7 @@ Found at **Payroll > Main > Employee HR Information**, this is a master file wit
 |---|---|
 | Calendar (التقويم) | Which [HR Calendar](hr-calendar-and-holidays.md) this employee's payroll math follows. |
 | Transportation Allowance (بدل مواصلات) / Housing Allowance (بدل سكن) | Each one of **None** (بدون), **Applicable** (مطبق), or **Insured** (مؤمن) — and this is precisely the switch behind the salary-engine warning that "Housing/Transportation allowances self-zero unless actually enabled on the employee's own record." A structure alone is not enough; it has to be turned on here. |
-| Days For Worth Paid Vacation — Number Of Days In Year For Balance Calculation (عدد الأيام لاستحقاق بدل الأجازة) | The day-count basis used to calculate this employee's paid-vacation entitlement. |
+| Days For Worth Paid Vacation — Number Of Days In Year For Balance Calculation (عدد الأيام لاستحقاق بدل الإجازة - عدد أيام العام لحساب رصيد الإجازة) | The day-count basis used to calculate this employee's paid-vacation entitlement. |
 | Contract Period In Months (مدة العقد بالشهور) | For fixed-term contracts. |
 
 A **Vacations** grid lists per-employee entitlement overrides — Vacation Type, Assigned Vacation Days, and the Vacation Balance Range File (see [Vacation Types & Balances](../vacations/vacation-types-and-balances.md)) — followed by a read-only **Totals** block (Total Additions / Deductions / Other / Salary) so support staff can sanity-check an employee's overall pay at a glance without opening a salary document.
@@ -45,18 +45,26 @@ The most important part of the screen is the **Salary Components** grid (مفر�
 Its **Collect Employees** block defines a range or criteria — from/to employee, department, organization position, job position, branch, sector, analysis set, group, work place, department section, nationality, health insurance company — and a **Collect Employees** (تجميع الموظفين) button pulls in every employee that matches. Once collected:
 
 - A **Salary Components** grid (the same shape as HR Information's: employee, HR calendar, component type, value, formula, issuance) lets HR key in the same component setup for the whole batch in one pass.
-- A **Collect Vacations** (تجميع الأجازات) button populates a Vacancies grid so assigned vacation days can be pre-set for the same batch.
+- A **Collect Vacations** (تجميع الإجازات) button populates a Vacancies grid so assigned vacation days can be pre-set for the same batch.
 
 ::: info Not a payroll or accounting document
-Employment Information generates no accounting effect and runs no payroll on its own. It's purely a convenience tool for writing the same component and vacation setup into many employees' records in one operation — typically right after a batch of hires has gone through [work starting](../recruitment/work-starting.md).
+Employment Information generates no accounting effect and runs no payroll on its own. It's a convenience tool for writing the same component and vacation setup into many employees' records in one operation — typically right after a batch of hires has gone through [work starting](../recruitment/work-starting.md). On save it writes each listed employee's lines into their Employee HR Information record and sets that record's calendar to the document's **Calendar** (when it is left empty, save fills it from the first Salary Components employee whose HR Information has a calendar, and that calendar then goes to every listed employee). An employee who has no HR Information record yet gets one, and is recorded as **Working** from the document's value date.
 :::
+
+The document refuses to save when both grids are empty, when one employee appears twice with the same component type, or twice with the same vacation type:
+
+| Message | Why |
+|---|---|
+| *Empty salary components and vacations* — «مفردات الرواتب والإجازات فارغة» | Neither grid has a line. |
+| *Repeated employee with salary component type* — «موظف مع نوع مفرد راتب مكرر» | Two Salary Components lines carry the same employee and component type. |
+| *Repeated employee with vacation type* — «موظف مع نوع إجازة مكرر» | Two Vacancies lines carry the same employee and vacation type. |
 
 ## Actions on this screen
 
 The **Employee HR Information** screen has no buttons of its own. **Employment Information** has two:
 
 - **Collect Employees** — adds a line for every employee matching the range or criteria. It does not check what is already in the grid, so pressing it twice lists the same employees twice; clear the grid first if you change the range.
-- **Collect Vacations** — fills the **Vacancies** grid with the vacation types that apply to the **first** employee on the grid, each with its type's default days. The grid is rebuilt, not added to. At least one employee must be on the grid.
+- **Collect Vacations** — fills the **Vacancies** grid with the vacation types that apply to the **first** employee on the grid, each with its type's default days. The grid is rebuilt, not added to, and the **Employee** column of the new lines is left empty for you to fill. At least one line must be on the Salary Components grid, otherwise the button stops with *You must enter at least one employee in element Lines* — «يجب علي الأقل إدخال موظف واحد في مفردات الرواتب».
 
 ## How it fits into onboarding
 

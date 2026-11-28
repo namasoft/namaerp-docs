@@ -10,7 +10,7 @@ quarterly, and the whole first year has already been collected. On go-live day t
 eight quarters to run, and the property manager needs to see them, accrue them and collect them —
 without Nama accruing revenue for four quarters that were earned and banked before it existed.
 
-**Opening rent contract / عقد ايجار افتتاحي**, under **Real Estate and Property > Rents**, is the
+**Opening rent contract / عقد إيجار افتتاحي**, under **Real Estate and Property > Rents**, is the
 document for exactly that.
 
 ![The opening rent contract with its prepaid figure and the installments grid](../../../ar/modules/realestate/images/opening/re-opening-rent-contract-en.png)
@@ -20,7 +20,7 @@ document for exactly that.
 There is very little to learn here, because the opening contract *is* the rent contract. Same five
 pages — Basic Information, Terms And Fees And Expenses, Yearly Discount And Increase, Terms, Related
 Records. Same contract values block, same expenses grid, same yearly increase and discount, same
-standard clauses. **Create Rents / إنشاء الايجارات** builds the schedule with the same engine and
+standard clauses. **Create Rents / إنشاء الإيجارات** builds the schedule with the same engine and
 the same rules, the accrual ledgers are generated the same way, and the **Extend Contract** and
 **Cancel Rent Contract** buttons are both there.
 
@@ -47,10 +47,10 @@ plan to have all of them in before you close it. The wider go-live order is in
 
 ## 2. A prepaid figure for rent collected before go-live
 
-The header carries a **Prepaid / المدفوع مسبقا** amount: the rent the tenant had already handed over
+The header carries a **prepaid / المدفوع مسبقا** amount: the rent the tenant had already handed over
 before the migration, sitting on the books as an obligation to give him occupancy rather than as
 revenue still to come. The document's term has a page of its own for the accounting effect of that
-figure — *Pre paid effects / تأثيرات المدفوع مسبقا* — so the opening entry can put the prepaid money
+figure — *Prepaid effects / تأثيرات المدفوع مسبقا* — so the opening entry can put the prepaid money
 where your chart of accounts expects it. The rest of the term is the ordinary rent-contract term,
 described in [Rent Document Terms](/modules/realestate/document-terms/realestate-terms-rent).
 

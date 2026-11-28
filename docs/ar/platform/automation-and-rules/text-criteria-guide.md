@@ -16,6 +16,7 @@ entities: [CriteriaDefinition]
     * `StartsWith`, `NotStartsWith`
     * `EndsWith`, `NotEndWith`
     * `Contains`, `NotContain`
+    * `ContainsWithAnyOrder` (يجب أن تظهر كل كلمة من القيمة في الحقل، بأي ترتيب)
     * `In`, `NotIn` (انظر [قيم متعددة مع In/NotIn](#qym-mtaadd-maa-InNotIn) أدناه)
     * `WithinPeriod`, `OutsidePeriod` (لحقول التاريخ / التاريخ والوقت، انظر [معاملات الفترة (WithinPeriod/OutsidePeriod)](#maamlt-lftr-WithinPeriodOutsidePeriod) أدناه)
     * `OpenBracket`, `CloseBracket` (تُستخدم لتجميع التعبيرات، ولا تتطلب Field ID أو قيمة)
@@ -270,6 +271,6 @@ dueDate,LessThanOrEqual,$todayPlusDays(30),AND;
 
 ::: tip
 يمكنك استخدام شاشة [تعريف معايير](/ar/platform/automation-and-rules/criteria-definitions) لبناء شروط الفلترة المطلوبة بصريًا عبر واجهة النظام.
-وبعد بناء المعايير التي تريدها، اضغط زر **تحويل الي نص** لتوليد التمثيل النصي المكافئ.
+وبعد بناء المعايير التي تريدها، اضغط زر **تحويل إلى نص** لتوليد التمثيل النصي المكافئ.
 يمكن بعد ذلك استخدام هذا النص مباشرةً في APIs أو سكريبتات الأتمتة.
 :::

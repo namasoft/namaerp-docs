@@ -32,7 +32,7 @@ It is a short file, and deliberately so:
 | Name | الاسم | The Arabic name is `name1`, the English name is `name2` |
 | Customer | العميل | Load-bearing — see below |
 | Machine Category | تصنيف آلة | Genuinely used: it filters the task-template lookup on documents |
-| Tasks | المهام | The checklist held on this record |
+| Tasks | المهام | The checklist held on this record; it is copied into an execution sheet when this service is picked in the sheet's Service field |
 
 That is very nearly the whole file. There is **no serial number, no warranty period, no odometer, no ownership history and no price** on a service record. If you have read the machine file page you will notice how much is absent — and that absence is the honest difference between the two branches, not something waiting to be switched on.
 
@@ -50,7 +50,7 @@ The contract screen has a button, **Collect All Services Related To Customer** (
 
 The record carries building, floor and room fields internally, but **they are not on its screen**. In practice you set the location on the **document lines** — the services grid on the contract, work plan, order or execution carries its own Building, Floor and Room columns, and those are what the order generator groups by when it decides how many service orders to create for a day.
 
-That is worth knowing before you design your data: two branches in the same building will be grouped into one service order, because the grouping key is date, employee and **building**.
+That is worth knowing before you design your data: two branches in the same building will be grouped into one service order, because the grouping key is date, technician and **building**.
 
 ## Creating Service Records
 
@@ -70,7 +70,7 @@ The generator fills only the **Arabic name** (from the line's Service Name), the
 Two consequences bite immediately:
 
 - *Collect All Services Related To Customer* cannot find any of them, because they have no customer.
-- Execution sheets generated for them arrive with no checklist for the technician to tick.
+- Picking one of them in the Service field of an execution sheet loads no checklist, because the record has no tasks. (Execution sheets generated from a service order take their checklist from the line's task template instead.)
 
 After pressing *Generate Service*, open every record it created and give it a customer, an English name and its tasks. Nothing warns you that this step is outstanding.
 :::

@@ -17,11 +17,11 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 *ينطبق على: التوريد المخزني (Stock Receipt).*
 
-**قابل للإرجاع (Returnable)** `termConfig.config.returnable` — يجعل الأثر المحاسبي للتوريد أثر مردود حتى يُتحقَّق من جانب المورد/العميل وفقاً لذلك.
+**مرتجع (Returnable)** `termConfig.config.returnable` — يجعل الأثر المحاسبي للتوريد أثر مردود حتى يُتحقَّق من جانب المورد/العميل وفقاً لذلك.
 
-**حساب التكلفة المؤقتة بناءً على المستند (Calculate Temp Cost By From Doc)** `termConfig.calculateTempCostByFromDoc` — يستخدم تكلفة المستند المبني عليه كتكلفة مؤقتة للتوريد بدلاً من إعادة حسابها.
+**حساب التكلفة المؤقتة من بناءً على (أمر شراء) (Calculate Temp Cost By From Doc (Purchase Order))** `termConfig.calculateTempCostByFromDoc` — يستخدم تكلفة المستند المبني عليه كتكلفة مؤقتة للتوريد بدلاً من إعادة حسابها.
 
-**السماح بشراء الإصدارات من مورد مختلف** `termConfig.allowRevsionPurchaseFromDifSupplier` — يسمح باستلام إصدار الصنف من مورد غير المورد الافتراضي لذلك الإصدار. وعنوانه على الشاشة الإنجليزية *Prevent Revsion Purchase From Different Supplier*، لكن تفعيله **يسمح** بالشراء ولا يمنعه.
+**السماح بشراء الإصدارات من مورد مختلف** `termConfig.allowRevsionPurchaseFromDifSupplier` — يسمح باستلام إصدار الصنف من مورد غير المورد الافتراضي لذلك الإصدار.
 
 **تسليم غير مكلف (Receipt Without Cost)** `termConfig.config.rwc` — يسمح بحفظ التوريد المخزني مستقلًا دون فاتورة وراءه: تدخل البضاعة المخزن توريدًا غير مكلف وتُكلَّف لاحقًا. وعند إلغاء التعليم يُرفض حفظ التوريد غير المبني على فاتورة بالرسالة
 «المستند غير مرتبط بفاتورة».
@@ -34,20 +34,20 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 | الخيار | معرّف الحقل |
 |---|---|
-| اعتبار المراجعة في التكلفة (Consider Revision For Cost) | `termConfig.considerRevisionForCost` |
-| اعتبار المقاس في التكلفة (Consider Size For Cost) | `termConfig.considerSizeForCost` |
-| اعتبار اللون في التكلفة (Consider Color For Cost) | `termConfig.considerColorForCost` |
-| اعتبار الصندوق في التكلفة (Consider Box For Cost) | `termConfig.considerBoxForCost` |
-| اعتبار رقم اللوت في التكلفة (Consider Lot Id For Cost) | `termConfig.considerLotIdForCost` |
-| اعتبار النسبة الفعّالة في التكلفة (Consider Active Percent For Cost) | `termConfig.considerActivePercentForCost` |
-| اعتبار النسبة غير الفعّالة في التكلفة (Consider Inactive Percent For Cost) | `termConfig.considerInActivePercentForCost` |
-| اعتبار الصنف الفرعي في التكلفة (Consider Sub Item For Cost) | `termConfig.considerSubItemForCost` |
+| اعتبار الإصدارة في التكلفة المؤقتة (Consider Revision For Cost) | `termConfig.considerRevisionForCost` |
+| اعتبار المقاس في التكلفة المؤقتة (Consider Size For Cost) | `termConfig.considerSizeForCost` |
+| اعتبار اللون في التكلفة المؤقتة (Consider Color For Cost) | `termConfig.considerColorForCost` |
+| اعتبار الصندوق في التكلفة المؤقتة (Consider Box For Cost) | `termConfig.considerBoxForCost` |
+| اعتبار الشحنة في التكلفة المؤقتة (Consider Lot Id For Cost) | `termConfig.considerLotIdForCost` |
+| اعتبار النسبة الفعالة في التكلفة المؤقتة (Consider Active Percent For Cost) | `termConfig.considerActivePercentForCost` |
+| اعتبار النسبة الغير فعالة في التكلفة المؤقتة (Consider Inactive Percent For Cost) | `termConfig.considerInActivePercentForCost` |
+| اعتبار الصنف الفرعي في التكلفة المؤقتة (Consider Sub Item For Cost) | `termConfig.considerSubItemForCost` |
 
 ## الصرف المخزني (Stock Issue)
 
 *ينطبق على: الصرف المخزني (Stock Issue).*
 
-**قابل للإرجاع (Returnable)** `termConfig.config.returnable` — يجعل الأثر المحاسبي للصرف أثر مردود؛ يُفحَص عند التحقق من جانب المورد/العميل في المستند.
+**مرتجع (Returnable)** `termConfig.config.returnable` — يجعل الأثر المحاسبي للصرف أثر مردود؛ يُفحَص عند التحقق من جانب المورد/العميل في المستند.
 
 **عدم التجميع في الفواتير (Do Not Auto Collect In Invoices)** `termConfig.doNotAutoCollectInInvoices` — يعلِّم كل صرف يُحفظ بهذا التوجيه فيتخطاه زر **تجميع** في فاتورة المبيعات، ويظل ربطه يدويًا ممكنًا.
 
@@ -83,7 +83,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **نوع التحويل (Transfer Type)** `termConfig.transferType` — يصنّف التحويل (مثل داخلي مقابل بين الفروع)، وهو ما يتحكم في آثاره.
 
-**صلاحية عكس التحويل (Reverse Transfer Capability)** `termConfig.reverseTransferCapability` — الصلاحية الأمنية المطلوبة لعكس/إلغاء التحويل.
+**صلاحية التحويل العكسي (Reverse Transfer Capability)** `termConfig.reverseTransferCapability` — الصلاحية الأمنية المطلوبة لعكس/إلغاء التحويل.
 
 **نوع التحويل الداخلي (Internal Transfer Type)** `termConfig.internalTransferType` — تصنيف فرعي للتحويلات الداخلية يحكم المعالجة من مخزن إلى مخزن.
 
@@ -91,51 +91,51 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 *ينطبق على: مردود المبيعات ومردود المشتريات (Sales Return / Purchase Return).*
 
-**نوع المردود (Return Type)** `termConfig.returnType` — يحدد نمط المردود، ويؤثر على التسعير والمعالجة المخزنية (مردود مبيعات).
+**نوع الارتجاع (Return Type)** `termConfig.returnType` — يحدد نمط المردود، ويؤثر على التسعير والمعالجة المخزنية (مردود مبيعات).
 
 **طريقة حساب الفاتورة (Invoice Calculation)** `termConfig.sourceInvoiceCalculation` — يتحكم في كيفية إعادة حساب القيم مقابل الفاتورة المصدر (تناسبي، بناءً على المستند، أو معاد الحساب).
 
-**استخدام المستند المبني عليه لأعمار الديون (Use From Doc For Debt Ages)** `termConfig.useFromDocForDebitAges` — يستخدم تواريخ المستند الأصلي لتقادم الديون بدلاً من تاريخ المردود نفسه.
+**استخدام بناء على لأعمار الديون (Use From Doc For Debt Ages)** `termConfig.useFromDocForDebitAges` — يستخدم تواريخ المستند الأصلي لتقادم الديون بدلاً من تاريخ المردود نفسه.
 
-**السماح بإرجاع فواتير لم يُصرف منها (Allow Return Not Issued Invoices)** `termConfig.allowReturnNotIssuedInvoices` — يسمح بالإرجاع مقابل فواتير لم تُصرف بضاعتها من المخزن (مردود مبيعات).
+**السماح برد فواتير المبيعات التي لم يتم صرف أصنافها (Allow Return Not Issued Invoices)** `termConfig.allowReturnNotIssuedInvoices` — يسمح بالإرجاع مقابل فواتير لم تُصرف بضاعتها من المخزن (مردود مبيعات).
 
-**منع إرجاع الفاتورة إذا وُجدت أصناف مجانية (Prevent Return Invoice If Free Items Found)** `termConfig.preventReturnInvoiceIfFreeItemsFound` — يمنع إرجاع فاتورة تحتوي على أصناف مجانية/ترويجية (مردود مبيعات).
+**منع ارتجاع الفاتورة في حالة وجود أصناف مجانية (Prevent Return Invoice If Free Items Found)** `termConfig.preventReturnInvoiceIfFreeItemsFound` — يمنع إرجاع فاتورة تحتوي على أصناف مجانية/ترويجية (مردود مبيعات).
 
-**إعادة إنشاء مستند مخزون الفاتورة عند حفظ فاتورة المردود (Recreate Invoice Stock Document With Return Invoice Saving)** `termConfig.recreateInvStockDocWithReturnInv` — يعيد إنشاء مستند مخزون الفاتورة الأصلية عند حفظ فاتورة المردود (مردود مشتريات).
+**إعادة إنشاء السندات المخزنية للفاتورة مع حفظ المردود (Recreate Invoice Stock Document With Return Invoice Saving)** `termConfig.recreateInvStockDocWithReturnInv` — يعيد إنشاء مستند مخزون الفاتورة الأصلية عند حفظ فاتورة المردود (مردود مشتريات).
 
 ## المردودات والإحلال — الكوبونات والدفع (Returns & Replacement — Coupons & Payment)
 
 *ينطبق على: مردود المبيعات / مردود المشتريات / مردود مشتريات مركز الخدمة ومستندات طلباتها.*
 
-**تعليم الكوبون المنشأ بفاتورة المردود كمستخدم (Mark Generated Coupon By Returned Invoice As Used)** `termConfig.markGeneratedCouponByReturnedInvoiceAsUsed` — يعلّم الكوبونات التي أنشأتها الفاتورة المرتجعة كمستخدمة لمنع إعادة استعمالها.
+**التعليم على القسيمة المنشأة بفاتورة تم ارتجاعها كقسيمة مستخدمة (Mark Generated Coupon By Returned Invoice As Used)** `termConfig.markGeneratedCouponByReturnedInvoiceAsUsed` — يعلّم الكوبونات التي أنشأتها الفاتورة المرتجعة كمستخدمة لمنع إعادة استعمالها.
 
-**منع إرجاع الفاتورة بكوبون منشأ مستخدم (Prevent Return Invoice With Used Generated Coupon)** `termConfig.preventReturnInvoiceWithUsedGeneratedCoupon` — يمنع إرجاع فاتورة استُخدم كوبونها المنشأ بالفعل.
+**منع ارتجاع الفاتورة التي تم استخدام القسيمة المنشأة منها بفواتير أخرى (Prevent Return Invoice With Used Generated Coupon)** `termConfig.preventReturnInvoiceWithUsedGeneratedCoupon` — يمنع إرجاع فاتورة استُخدم كوبونها المنشأ بالفعل.
 
-**إضافة المردود إلى سندات دفع الفاتورة وخصم المتبقي (Add Return To Invoice Payment Docs and Decrease Remaining)** `termConfig.addReturnToInvoicePayment` — يضيف قيمة المردود إلى سندات دفع الفاتورة ويخفّض رصيدها المتبقي.
+**إضافة المردود إلى سندات دفع الفاتورة وتقليل المتبقي (Add Return To Invoice Payment Docs and Decrease Remaining)** `termConfig.addReturnToInvoicePayment` — يضيف قيمة المردود إلى سندات دفع الفاتورة ويخفّض رصيدها المتبقي.
 
-**سداد أقساط الفاتورة بفاتورة المردود (Payment Of Invoice Installments With Return Invoice)** `termConfig.allowPaymentOfInvoiceInstallementsWithReturn` — يسمح للمردود بسداد أقساط الفاتورة.
+**دفع أقساط الفاتورة من خلال المردود (Payment Of Invoice Installments With Return Invoice)** `termConfig.allowPaymentOfInvoiceInstallementsWithReturn` — يسمح للمردود بسداد أقساط الفاتورة.
 
 ## إحلال المبيعات (Sales Replacement)
 
 *ينطبق على: إحلال المبيعات (Sales Replacement) ومستندات طلبات الإحلال.*
 
-**يجب وجود سطور بيع وسطور مردود (Must Have Sales And Return Lines)** `termConfig.mustHaveSalesAndReturnLines` — يشترط أن يحتوي مستند الإحلال على سطر بيع وسطر مردود معاً.
+**يجب وجود سطور بيع و سطور مردود معا (Must Have Sales And Return Lines)** `termConfig.mustHaveSalesAndReturnLines` — يشترط أن يحتوي مستند الإحلال على سطر بيع وسطر مردود معاً.
 
-**منع الحفظ إذا لم يوجد الصنف المُحلَّل في المستند المبني عليه (Prevent Save If Replaced Item Not Exist In From Doc)** `termConfig.preventSaveIfReplacedItemNotExistInFromDoc` — يمنع الحفظ عند عدم العثور على الصنف المُحلَّل في المستند المبني عليه.
+**منع الحفظ إذا كان الصنف المستبدل غير موجود في بناء على (Prevent Save If Replaced Item Does Not Exist In From Doc)** `termConfig.preventSaveIfReplacedItemNotExistInFromDoc` — يمنع الحفظ عند عدم العثور على الصنف المُحلَّل في المستند المبني عليه.
 
 ## الفواتير (Invoices)
 
 *ينطبق على: فاتورة المبيعات وفاتورة المشتريات (Sales Invoice / Purchase Invoice) كما هو موضّح بجانب كل خيار.*
 
-**يجب تطابق كمية الفاتورة مع المستند المخزني (Quantity Of Invoice Should Match Stock Document)** `termConfig.quantityOfInvoiceShouldMatchStockDocument` — يتحقق من تساوي كميات الفاتورة مع كميات المستند المخزني المرتبط (فاتورة مشتريات).
+**يجب تطابق كميات الفاتورة مع كميات المستند المخزني (Quantity Of Invoice Should Match Stock Document)** `termConfig.quantityOfInvoiceShouldMatchStockDocument` — يتحقق من تساوي كميات الفاتورة مع كميات المستند المخزني المرتبط (فاتورة مشتريات).
 
-**توزيع التكلفة بناءً على كمية التوريد (Distribute Cost Based On Receipt Quantity)** `termConfig.distributeCostBasedOnReceiptQty` — يوزّع التكلفة الإضافية على السطور بترجيح الكمية المستلمة (فاتورة مشتريات).
+**توزيع التكلفة على الكمية الموردة بغض النظر عن الكمية بالفاتورة (Distribute Cost Based On Receipt Quantity)** `termConfig.distributeCostBasedOnReceiptQty` — يوزّع التكلفة الإضافية على السطور بترجيح الكمية المستلمة (فاتورة مشتريات).
 
-**استخدام بضائع خارجية (Use External Wares)** `termConfig.useExtenalWares` — يعامل المخزون كبضائع خارجية/غير نظامية فيتخطى التحقق المخزني الداخلي (فاتورة/مردود مشتريات ومردود مبيعات).
+**استخدام مخازن خارجية (Use External Wares)** `termConfig.useExtenalWares` — يعامل المخزون كبضائع خارجية/غير نظامية فيتخطى التحقق المخزني الداخلي (فاتورة/مردود مشتريات ومردود مبيعات).
 
-**عن السنة السابقة (For Previous Year)** `termConfig.previousYear` — يعلّم الفاتورة بأنها تخص السنة المالية السابقة لأغراض المحاسبة والتقادم.
+**سنوات سابقة (For Previous Year)** `termConfig.previousYear` — يعلّم الفاتورة بأنها تخص السنة المالية السابقة لأغراض المحاسبة والتقادم.
 
-**آجل (Credit)** `termConfig.creditInvoice` — يعامل الفاتورة كفاتورة آجلة (بيع آجل).
+**آجلة (Credit)** `termConfig.creditInvoice` — يعامل الفاتورة كفاتورة آجلة (بيع آجل).
 
 **فرد مكونات الصنف المجمع مع الحفظ (Spread Assembly Components With Save)** `termConfig.spreadAssemblyComponentsWithSave` — للصنف الذي له **طريقة فرد مكونات الصنف المجمع**، يضيف حفظ مستند المبيعات مكونات تلك الطريقة سطورًا مجانية تحت سطر الصنف، ويُستبعد سطر الصنف نفسه من سند الصرف المنشأ، فيخرج المخزون على هيئة المكونات (مستندات المبيعات).
 
@@ -156,43 +156,43 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **إعادة حفظ المستندات الأعلي من النوع (Re-commit Upper Document Of Type)** `termConfig.recommitUpperDocumentOfType` — بعد الإلغاء، يعيد حفظ المستند الأب/الأعلى من نوع الكيان المحدد.
 
-**حذف السطر المبني على المستند إذا كانت الكمية المحجوزة صفراً (Remove Line With From Document If Reserved Quantity Is Zero)** `termConfig.removeLineWithFromDocIfReservedQtyIsZero` — يحذف السطر المرتبط بالمستند المبني عليه عندما تصبح كميته المحجوزة صفراً (إلغاء حجز).
+**حذف سطور بناء على إذا كانت الكمية المحجوزة تساوي صفر (Remove Line With From Document If Reserved Quantity Is Zero)** `termConfig.removeLineWithFromDocIfReservedQtyIsZero` — يحذف السطر المرتبط بالمستند المبني عليه عندما تصبح كميته المحجوزة صفراً (إلغاء حجز).
 
 ## التجميع والتجميع المتعدد (Assembly / Multi-Assembly)
 
 *ينطبق على: مستند التجميع (Assembly) والتجميع المتعدد (Multi-Assembly) كما هو موضّح بجانب كل خيار.*
 
-**حساب كمية قائمة المكونات من المنتجات المصاحبة (Calculate BOM Qty From Co-Products)** `termConfig.calculateBOMQtyFromCoProducts` — يشتق كميات قائمة المكونات من كميات مخرجات المنتجات المصاحبة (تجميع).
+**حساب كمية الصنف المجمع من الأصناف الموردة (Calculate BOM Quantity From CoProducts)** `termConfig.calculateBOMQtyFromCoProducts` — يشتق كميات قائمة المكونات من كميات مخرجات المنتجات المصاحبة (تجميع).
 
-**إعادة توزيع سطور الصرف عند تغيّر كمية المنتجات المصاحبة (Spread Issue Lines When Co-Products Qty Changed)** `termConfig.spreadIssueLinesWhenCoProductsQtyChanged` — يعيد توزيع سطور المواد المصروفة عند تغيّر كميات المنتجات المصاحبة (تجميع).
+**فرد سطور الأصناف المسحوبة من طريقة التجميع مع تغيير كمية الصنف المورد (Spread Issue Lines When CoProducts Quantity Changes)** `termConfig.spreadIssueLinesWhenCoProductsQtyChanged` — يعيد توزيع سطور المواد المصروفة عند تغيّر كميات المنتجات المصاحبة (تجميع).
 
-**استخدام التفاصيل المخططة في حساب التكلفة (Use Planned Details For Cost Calculation)** `termConfig.usePlannedDetailsForCostCalculation` — يستخدم التفاصيل المخططة (لا الفعلية) عند حساب التكلفة (تجميع).
+**استخدام الأصناف المسحوبة المخططة في حساب التكاليف (Use Planned Details For Cost Calculation)** `termConfig.usePlannedDetailsForCostCalculation` — يستخدم التفاصيل المخططة (لا الفعلية) عند حساب التكلفة (تجميع).
 
-**توزيع التكلفة بمتوسط سعر البيع (Distribute Cost By Avg Sales Price)** `termConfig.distributeCostByAvgSalesPrice` — يوزّع التكلفة المشتركة على المنتجات حسب متوسط سعر بيعها (تجميع).
+**توزيع تكلفة الخامات بإجمالي متوسط سعر البيع و ليس الكمية (Distribute Material Cost By Total Average Sales Price Not By Quantity)** `termConfig.distributeCostByAvgSalesPrice` — يوزّع التكلفة المشتركة على المنتجات حسب متوسط سعر بيعها (تجميع).
 
-**حساب المنتجات المصاحبة من قائمة تجميع الصنف المصروف (Calculate Co-Products From Issued Item Assembly BOM)** `termConfig.calculateCoProductsFromIssuedItemAssemblyBom` — يحسب المنتجات المصاحبة من قائمة تجميع الصنف المصروف (تجميع).
+**حساب الأصناف الموردة من خلال طريقة التجميع للأصناف المسحوبة (Calculate Co-Products From Issued Item Assembly BOM)** `termConfig.calculateCoProductsFromIssuedItemAssemblyBom` — يحسب المنتجات المصاحبة من قائمة تجميع الصنف المصروف (تجميع).
 
-**السماح بصرف وتوريد نفس الصنف في مستند التجميع نفسه (Allow Issue And Receipt The Same Item In The Same Assembly Doc)** `termConfig.allowIssueAndReceiptTheSameItemInTheSameAssemblyDoc` — يسمح بصرف وتوريد نفس الصنف ضمن مستند تجميع واحد (تجميع).
+**السماح بصرف وتوريد نفس الصنف في نفس سند التجميع (Allow Issue And Receipt The Same Item In The Same Assembly Document)** `termConfig.allowIssueAndReceiptTheSameItemInTheSameAssemblyDoc` — يسمح بصرف وتوريد نفس الصنف ضمن مستند تجميع واحد (تجميع).
 
-**منع الحفظ إذا لم يكن المنتج المصاحب ضمن عمليات التجميع (Prevent Save If Co-Product Not In Assembly Operations)** `termConfig.preventSaveIfCoProdNotInAssemblyOperations` — يمنع الحفظ عندما لا يكون المنتج المصاحب جزءاً من عمليات التجميع (تجميع).
+**منع الحفظ حال لم تحتوي عمليات التجميع على الأصناف الموردة (Prevent Saving If Co-Products Not In Assembly Operations)** `termConfig.preventSaveIfCoProdNotInAssemblyOperations` — يمنع الحفظ عندما لا يكون المنتج المصاحب جزءاً من عمليات التجميع (تجميع).
 
-**توزيع التكلفة على سطر المنتج المصاحب المصدر فقط (Distribute Cost On Source Co-Product Line Only)** `termConfig.distributeCostOnSourceCoProdLineOnly` — يقصر توزيع التكلفة على سطر المنتج المصاحب المصدر (تجميع).
+**قصر التوزيع الصنف المسحوب على الصنف المورد الخاص به من طريقة التجميع (Distribute Details Line Cost On Co-Product Line From Assembly BOM Only)** `termConfig.distributeCostOnSourceCoProdLineOnly` — يقصر توزيع التكلفة على سطر المنتج المصاحب المصدر (تجميع).
 
-**منع الحفظ بدون أصناف مصروفة عند استخدام قائمة المكونات (Prevent Save Without Issued Items If Using BOM)** `termConfig.preventSaveWithoutIssuedItemsIfUsingBOM` — يمنع الحفظ بدون أصناف مصروفة عند استخدام طريقة تجميع بقائمة مكونات (تجميع).
+**منع الحفظ بدون أصناف مسحوبة عند استخدام طريقة تجميع (Prevent Save Without Issued Items If Using BOM)** `termConfig.preventSaveWithoutIssuedItemsIfUsingBOM` — يمنع الحفظ بدون أصناف مصروفة عند استخدام طريقة تجميع بقائمة مكونات (تجميع).
 
-**حساب متوسط سعر البيع من تكلفة صرف التفكيك (Calc Average Sales Price From Disassembly Issue Cost)** `termConfig.calcAverageSalesPriceFromDisAssemblyIssueCost` — يشتق متوسط سعر البيع من تكلفة صرف التفكيك (تجميع).
+**حساب متوسط سعر البيع من خلال تكلفة صرف سند الفك (Calculate Average Sales Price From Disassembly Issue Cost)** `termConfig.calcAverageSalesPriceFromDisAssemblyIssueCost` — يشتق متوسط سعر البيع من تكلفة صرف التفكيك (تجميع).
 
 **عدم تأثير كمية الاستلام الفعلية على الكمية المسحوبة (Do Not Affect Issued Qty By Actual Receipt Qty)** `termConfig.doNotAffectDetailsQtyByActualReceiptQty` — في الوضع الافتراضي تُعاد كميات الأصناف المسحوبة (كميات التفاصيل) بناءً على كمية المنتج النهائي المستلمة فعليًا. وعند تفعيل هذا الخيار تبقى الكميات المسحوبة محسوبة من كمية التجميع، فلا يؤدي تعديل كمية الاستلام الفعلية إلى تغيير الكميات المسحوبة (تجميع).
 
 **دفتر / توجيه صرف المنتج التام (Finished Product Issue Book / Term)** `termConfig.finishedProductIssueBook` / `termConfig.finishedProductIssueTerm` — عند ملء الاثنين، يُنشئ حفظ سند التجميع سند صرف ثانيًا يُخرج السطور المستلمة مباشرة من مخزن الاستلام. وإن تُرك أحدهما فارغًا لا يُنشأ هذا الصرف (تجميع). انظر [طلبات التجميع وسندات التجميع](../assembly-and-packaging/assembly-documents-and-requests.md).
 
-**إنشاء مستند للسطور التي لها حالة (Create Document For Lines Which Have Status)** `termConfig.createDocLineWithStatus` — ينشئ مستندات التجميع فقط للسطور عند الحالة المختارة (تجميع متعدد).
+**إنشاء سند التجميع للسطور التي حالتها (Create Document For Lines Which Have Status)** `termConfig.createDocLineWithStatus` — ينشئ مستندات التجميع فقط للسطور عند الحالة المختارة (تجميع متعدد).
 
-**استخدام الكمية المطلوبة للمواد النهائية (Use Required Quantity For Final Materials)** `termConfig.useRequiredQtyForFinalMaterials` — يستخدم الكمية المطلوبة (المخططة) لاستهلاك المواد النهائية (تجميع متعدد).
+**استخدام الكمية المطلوبة لعرض الخامات النهائية بدل كمية التجميع (Use Required Quantity For Final Materials)** `termConfig.useRequiredQtyForFinalMaterials` — يستخدم الكمية المطلوبة (المخططة) لاستهلاك المواد النهائية (تجميع متعدد).
 
-**دفتر مستند التجميع (Assembly Document Book)** `termConfig.assemblyDocumentBook` — دفتر مستندات التجميع المُنشأة من التجميع المتعدد.
+**دفتر سند تجميع (Assembly Document Book)** `termConfig.assemblyDocumentBook` — دفتر مستندات التجميع المُنشأة من التجميع المتعدد.
 
-**توجيه مستند التجميع (Assembly Document Term)** `termConfig.assemblyDocumentTerm` — توجيه مستندات التجميع المُنشأة تلك.
+**توجيه سند تجميع (Assembly Document Term)** `termConfig.assemblyDocumentTerm` — توجيه مستندات التجميع المُنشأة تلك.
 
 **فرد سطور (بناءا على) إلى الأصناف الرئيسية (Spread From Document Lines To Main Items)** `termConfig.addFromDocLinesToMainItems` — ينسخ سطور مستند **بناءا على** إلى جدول **الأصناف الرئيسية** بدلًا من **التفاصيل**، وتتبع متابعة الكميات مقابل المصدر حينئذٍ سطور الأصناف الرئيسية (تجميع متعدد).
 
@@ -220,21 +220,21 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 *ينطبق على: أمر تشغيل الزجاج (Glass Job Order).*
 
-**فرض قائمة الأسعار (Force Price List)** `termConfig.forcePriceList` — يفرض أن تأتي أسعار السطور من قائمة أسعار.
+**الالتزام بقوائم الأسعار (Force Price List)** `termConfig.forcePriceList` — يفرض أن تأتي أسعار السطور من قائمة أسعار.
 
-**عدم التحقق من الأصناف التي ليس لها قائمة أسعار (Do Not Check Items Without Price List)** `termConfig.doNotCheckItemsWithoutPriceList` — يتخطى التحقق من وجوب أن يكون للأصناف بند في قائمة الأسعار.
+**السماح بالحفظ مع وجود أصناف ليس لها سعر (مع الالتزام بقوائم الأسعار) (Do Not Check Items Without Price List (With Force Price Lists Option))** `termConfig.doNotCheckItemsWithoutPriceList` — يتخطى التحقق من وجوب أن يكون للأصناف بند في قائمة الأسعار.
 
-**عدم فرض قائمة الأسعار عند وجود مستند مبيعات في المبني عليه (Do Not Force Price List When There Sales Doc In From Doc)** `termConfig.doNotForcePriceListWhenThereSalesDocInFromDoc` — يخفّف فرض قائمة الأسعار عندما يكون المستند المبني عليه مستند مبيعات.
+**تجاهل الالتزام بقوائم الأسعار في حالة وجود سند بيع في بناء على (Do Not Force Price List When There is Sales Doc In From Doc)** `termConfig.doNotForcePriceListWhenThereSalesDocInFromDoc` — يخفّف فرض قائمة الأسعار عندما يكون المستند المبني عليه مستند مبيعات.
 
 **تجاهل السعر الحالي عند حساب الأسعار (Ignore Current Price When Calculating Prices)** `termConfig.ignoreCurrentPriceWhenCalculatingPrices` — يتجاهل الأسعار الموجودة أثناء إعادة الحساب.
 
-**الاعتماد غير مطلوب (Approval Not Required)** `termConfig.approvalNotRequired` — يتخطى خطوة الاعتماد.
+**لا يحتاج إلى تشغيلة يوم (Approval Not Required)** `termConfig.approvalNotRequired` — يتخطى خطوة الاعتماد.
 
-**الإنهاء غير مطلوب (Finish Not Required)** `termConfig.finishNotRequired` — يتخطى خطوة الإنهاء.
+**لا يوجد تسليم لصالة التسليم (Finish Not Required)** `termConfig.finishNotRequired` — يتخطى خطوة الإنهاء.
 
-**دفتر الصرف المخزني (Stock Issue Book)** `termConfig.stockIssueBook` — دفتر الصرف المخزني المُنشأ من أمر التشغيل.
+**دفتر سند صرف مخزني (Stock Issue Book)** `termConfig.stockIssueBook` — دفتر الصرف المخزني المُنشأ من أمر التشغيل.
 
-**توجيه الصرف المخزني (Stock Issue Term)** `termConfig.stockIssueTerm` — توجيه ذلك الصرف المخزني المُنشأ.
+**توجيه سند صرف مخزني (Stock Issue Term)** `termConfig.stockIssueTerm` — توجيه ذلك الصرف المخزني المُنشأ.
 
 **له تأثير محاسبي (Has Accounting Effects)** `termConfig.hasAccountingEffects` — عند تفعيله يسجّل حفظ أمر الشغل القيد المحاسبي المضبوط في تبويب التأثير بالتوجيه، كما تفعل الفاتورة. وعند إلغائه لا يُسجَّل قيد، ويُلغى القيد المسجَّل سابقًا عند الحفظ التالي.
 
@@ -248,21 +248,21 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 *ينطبق على: تسليم الأمر (Order Delivery) وتنفيذ الأمر (Order Execution).*
 
-**التعبئة التلقائية لأصناف الأمر (Automatic Fill Order Items)** `termConfig.automaticFillOrderItems` — يملأ سطور التسليم تلقائياً من أصناف الأمر (تسليم أمر).
+**ملء التفاصيل تلقائيا بناءً على العميل (Automatic Fill Order Items)** `termConfig.automaticFillOrderItems` — يملأ سطور التسليم تلقائياً من أصناف الأمر (تسليم أمر).
 
-**التسليم التلقائي (Automatic Delivery)** `termConfig.automaticFinished` — ينشئ مستند إنهاء الأمر تلقائياً عند التسليم (تسليم أمر).
+**تسليم تلقائي للعميل (Automatic Delivery)** `termConfig.automaticFinished` — ينشئ مستند إنهاء الأمر تلقائياً عند التسليم (تسليم أمر).
 
-**دفتر إنهاء الأمر (Order Finish Book)** `termConfig.finishBook` — دفتر مستند إنهاء الأمر المُنشأ.
+**دفتر تسليم لصالة التسليم (Order Finish Book)** `termConfig.finishBook` — دفتر مستند إنهاء الأمر المُنشأ.
 
-**توجيه إنهاء الأمر (Order Finish Term)** `termConfig.finishTerm` — توجيه مستند إنهاء الأمر المُنشأ.
+**توجيه المستند تسليم لصالة التسليم (Order Finish Term)** `termConfig.finishTerm` — توجيه مستند إنهاء الأمر المُنشأ.
 
-**مخزن الإنهاء (Finishing Warehouse)** `termConfig.finishingWarehouse` — المخزن المستخدم في خطوة الإنهاء.
+**صالة التسليم (Finishing Warehouse)** `termConfig.finishingWarehouse` — المخزن المستخدم في خطوة الإنهاء.
 
 **الدفع مع الفاتورة (Payment With Invoice)** `termConfig.paymentWithInvoice` — يلتقط الدفع مع فاتورة المبيعات المُنشأة.
 
-**فاتورة مبيعات تلقائية (Automatic Sales Invoice)** `termConfig.automaticSalesInvoice` — ينشئ فاتورة مبيعات تلقائياً عند التسليم (باستخدام `termConfig.salesInvoiceBook` / `termConfig.salesInvoiceTerm`).
+**إنشاء فاتورة تلقائيا (Automatic Sales Invoice)** `termConfig.automaticSalesInvoice` — ينشئ فاتورة مبيعات تلقائياً عند التسليم (باستخدام `termConfig.salesInvoiceBook` / `termConfig.salesInvoiceTerm`).
 
-**نمط التكلفة (Cost Mode)** `termConfig.costMode` — يحدد كيفية حساب تكلفة التنفيذ (تنفيذ أمر).
+**نوع التكلفة (Cost Mode)** `termConfig.costMode` — يحدد كيفية حساب تكلفة التنفيذ (تنفيذ أمر).
 
 **المخزن (Warehouse)** `termConfig.warehouse` — المخزن الذي يوضع على سند الصرف الذي ينشئه تنفيذ الأمر لخاماته؛ ويأتي دفتر الصرف وتوجيهه من مجموعة الإنشاء (تنفيذ أمر).
 
@@ -276,7 +276,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 |---|---|---|
 | دفتر أمر الشراء (Purchase Order Book) | `termConfig.purchaseOrderBook` | دفتر الأوامر المنشأة. إلزامي: يُرفض الإجراء وهو فارغ بالرسالة «الحقل {0} الموجود في التوجية لا يمكن أن يكون فارغاً». |
 | توجيه أمر الشراء (Purchase Order Term) | `termConfig.purchaseOrderTerm` | توجيه الأوامر المنشأة. إلزامي، بالرسالة نفسها. |
-| نسخ تم النسخ من سند بالسطور إلى بناءا على في امر الشراء المنشأ (Copy Origin Doc From Lines To From Doc In Generated Purchase Order) | `termConfig.copyOriginDocToPurchaseOrderFromDoc` | يجعل **بناءا على** في الأمر المنشأ هو **تم النسخ من سند** في أول سطوره (عادةً عرض سعر المورد) بدلًا من سند المقارنة. |
+| نسخ تم النسخ من سند بالسطور إلى بناءً على في أمر الشراء المنشأ (Copy Origin Doc From Lines To From Doc In Generated Purchase Order) | `termConfig.copyOriginDocToPurchaseOrderFromDoc` | يجعل **بناءا على** في الأمر المنشأ هو **تم النسخ من سند** في أول سطوره (عادةً عرض سعر المورد) بدلًا من سند المقارنة. |
 | Purchase Order Fields Map | `termConfig.purchaseOrderFieldsMap` | حقول إضافية تُنسخ إلى كل أمر منشأ، مكتوبة على هيئة خريطة حقول. لا يوجد لهذا الحقل عنوان عربي فيظهر بالإنجليزية. |
 | Run Fields Map on First Origin Doc from Details | `termConfig.runFieldsMapOnFirstOriginDocFromDetails` | يقرأ قيم المصدر في خريطة الحقول من **تم النسخ من سند** في أول سطر بدلًا من سند المقارنة. يظهر عنوانه بالإنجليزية كذلك. |
 
@@ -284,34 +284,34 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 *ينطبق على: بدء الجرد (Start Stock Taking).*
 
-**استراتيجية الأصناف المفقودة (Missing Items Strategy)** `termConfig.missingItemsStrategy` — يتحكم في معالجة الأصناف الموجودة في المخزون والغائبة عن الجرد.
+**الأصناف التي ليس لها كميات جرد (Missing Items Strategy)** `termConfig.missingItemsStrategy` — يتحكم في معالجة الأصناف الموجودة في المخزون والغائبة عن الجرد.
 
-**حساب رصيد النظام (System Stock Calculation)** `termConfig.stockCalculation` — الطريقة المستخدمة لحساب رصيد النظام (الدفتري) للمقارنة.
+**حساب الكمية الدفترية للأصناف (System Stock Calculation)** `termConfig.stockCalculation` — الطريقة المستخدمة لحساب رصيد النظام (الدفتري) للمقارنة.
 
-**عرض الأصناف التي لها تفاصيل جرد فقط (Show Only Items That Have Stock Taking Details)** `termConfig.showOnlyItemsThatHaveStockTakingDetail` — يقصر قائمة الجرد على الأصناف التي لها سطر تفاصيل جرد بالفعل.
+**عرض الأصناف التي لها لجنة جرد فقط في إنهاء الجرد (Show Only Items That Have Stock Taking Details)** `termConfig.showOnlyItemsThatHaveStockTakingDetail` — يقصر قائمة الجرد على الأصناف التي لها سطر تفاصيل جرد بالفعل.
 
 تستخدم مستندات تسوية المخزون المُنشأة هذه الدفاتر والتوجيهات:
 
 | الخيار | معرّف الحقل |
 |---|---|
-| دفتر الصرف المخزني (Stock Issue Book) | `termConfig.issueBook` |
-| توجيه الصرف المخزني (Stock Issue Term) | `termConfig.issueTerm` |
-| دفتر التوريد المخزني (Stock Receipt Book) | `termConfig.receiptBook` |
-| توجيه التوريد المخزني (Stock Receipt Term) | `termConfig.receiptTerm` |
+| دفتر الأصناف المسحوبة (Issue Items Book) | `termConfig.issueBook` |
+| توجيه الأصناف المسحوبة (Issued Items Term) | `termConfig.issueTerm` |
+| دفتر الأصناف المستلمة (Received Items Book) | `termConfig.receiptBook` |
+| توجيه الأصناف المستلمة (Received Items Term) | `termConfig.receiptTerm` |
 
 ## مراقبة/ضمان الجودة (Quality Control / Assurance)
 
 *ينطبق على: مستند مراقبة الجودة ومستند ضمان الجودة (Quality Control / Quality Assurance).*
 
-**استخدام تفاصيل المسار لأمر الإنتاج (Use Routing Details For Production Order)** `termConfig.useRoutingDetailsForProductionOrder` — يسحب تفاصيل المسار/العمليات من أمر الإنتاج المرتبط إلى مستند الجودة.
+**استخدام سطور عمليات التشغيل من أمر الإنتاج (Use Routing Details For Production Order)** `termConfig.useRoutingDetailsForProductionOrder` — يسحب تفاصيل المسار/العمليات من أمر الإنتاج المرتبط إلى مستند الجودة.
 
 ## تقطيع الأصناف (Item Cutting)
 
 *ينطبق على: مستند تقطيع الأصناف (Item Cutting).*
 
-**دفتر مستند التجميع المُنشأ (Generated Assembly Document Book)** `termConfig.generatedDocAssembBook` — دفتر مستند التجميع المُنشأ من مستند التقطيع.
+**دفتر سند التجميع المنشأ (Generated Assembly Doc Book)** `termConfig.generatedDocAssembBook` — دفتر مستند التجميع المُنشأ من مستند التقطيع.
 
-**توجيه مستند التجميع المُنشأ (Generated Assembly Document Term)** `termConfig.generatedDocAssembTerm` — توجيه مستند التجميع المُنشأ ذاك.
+**توجيه سند التجميع المنشأ (Generated Assembly Doc Term)** `termConfig.generatedDocAssembTerm` — توجيه مستند التجميع المُنشأ ذاك.
 
 ## سند المعالجة (Processing Document)
 
@@ -322,7 +322,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | الخيار | معرّف الحقل | ما يفعله |
 |---|---|---|
 | دفتر / توجيه المواد الخام (مجموعة *المواد الخام*) | `termConfig.materialsIssueBook` / `termConfig.materialsIssueTerm` | دفتر وتوجيه سند الصرف المنشأ من جدول المواد الخام. |
-| دفتر / توجيه المواد الخام المساعدة (مجموعة *المواد الخام المساعدة*) | `termConfig.indirectIssueBook` / `termConfig.indirectIssueTerm` | دفتر وتوجيه سند الصرف المنشأ من جدول المواد الخام المساعدة. في الواجهة الإنجليزية يحمل الحقلان العنوان نفسه؛ والثاني هو التوجيه. |
+| دفتر / توجيه المواد الخام المساعدة (مجموعة *المواد الخام المساعدة*) | `termConfig.indirectIssueBook` / `termConfig.indirectIssueTerm` | دفتر وتوجيه سند الصرف المنشأ من جدول المواد الخام المساعدة. |
 | دفتر / توجيه الأصناف المستلمة (مجموعة *المخرجات*) | `termConfig.receiptBook` / `termConfig.receiptTerm` | دفتر وتوجيه سند التوريد المنشأ من المخرجات. |
 | مدين / دائن (تبويب التأثير) | `termConfig.feesDebit` / `termConfig.feesCredit` | جانبا قيد التكاليف غير المباشرة. لا يُسجَّل القيد إلا عند ضبط الاثنين. وكل منهما جانب محاسبي كامل؛ انظر تشريح الجانب المحاسبي في [إعدادات التأثيرات المحاسبية](./doc-term-accounting-effects.md). |
 

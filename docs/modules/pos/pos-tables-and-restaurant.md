@@ -79,10 +79,10 @@ The held-orders list, **List Hold Invoices** («الفواتير المعلقة�
 
 This turns a register into a **call-center station** that takes orders by phone and sends them to the branch that will actually prepare and deliver them.
 
-It is built from two settings on the machine records:
+It is built from two settings on the register records:
 
-- The taking machine runs in **customer-service mode**. The operator builds the order, picks the destination branch/machine, and instead of paying, **suspends** it — which sends it to that destination.
-- The destination machine has **read orders from the customer-service center** switched on. It checks for incoming orders about once a minute, pops up a notification when one arrives, and the order shows up in its suspended-orders list (`Ctrl+Shift+F6`) ready to be opened and completed as a normal sale.
+- The taking machine has **Call Center Mode** («وضع خدمة العملاء») ticked. The operator builds the order, picks the destination branch/machine, and instead of paying, **suspends** it — which sends it to that destination.
+- The destination machine has **Read Orders From Call Center** («قراءة الطلبات من مركز خدمة العملاء») ticked. It checks for incoming orders about once a minute, pops up a notification when one arrives, and the order shows up in its suspended-orders list (`Ctrl+Shift+F6`) ready to be opened and completed as a normal sale.
 
 The whole order travels — items, quantities and prices, the customer details, notes, and any discounts — and the system retries if the network hiccups. It is ideal for delivery operations and centralized order intake across several branches.
 

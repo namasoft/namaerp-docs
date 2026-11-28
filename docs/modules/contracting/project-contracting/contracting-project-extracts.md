@@ -7,7 +7,7 @@ menu: Contracting → Project Contracting → Project Contract Extract
 
 Signing a contract in Nama books nothing. Recording execution books nothing. **The extract** (مستخلص مشروع) is the document where a contracting business finally earns money: it states, term by term, how much work is being billed this time, prices it at the contract's rates, adds VAT, then subtracts everything the contract says must be withheld or recovered — retention, the advance the owner already paid, any penalties — and arrives at a **net payable**.
 
-It is the certified payment application you send to the project owner, it is the record sent to the tax authority as an e-invoice, and on the owner side of this module it is **the only document that reaches the ledger at all**. Everything upstream of it is preparation.
+It is the certified payment application you send to the project owner, it is the record sent to the tax authority as an e-invoice, and on the owner side of this module it is **the document that books the revenue**. Everything upstream of it is preparation; the only other owner-side documents that book are the [advance payment](/modules/contracting/project-contracting/contracting-project-advances.md), the [fine](/modules/contracting/project-contracting/contracting-project-fines.md) and, when its document term carries accounts, the [assay](/modules/contracting/project-contracting/contracting-assays.md).
 
 That makes it the page to read carefully.
 
@@ -26,7 +26,7 @@ That makes it the page to read carefully.
 
 Exactly as on [execution](/modules/contracting/project-contracting/contracting-project-execution.md), **an extract bills only the work of its own period.** In the Details grid the column you fill is **Quantity | Paid Amount** — its Arabic label reads *الكمية | حالي*, "current quantity", and that is the better description of what it means: the quantity being billed *now*.
 
-**Quantity | Previous** is derived: it is the quantity already billed on every earlier extract of this contract for the same term. **Quantity | Total** is previous plus paid, and **Finished Percentage** is that total against the contracted quantity. As on the execution, the cumulative "billed to date" figure lives on the [contract's](/modules/contracting/project-contracting/contracting-project-contract.md) term line, not on any extract.
+**Quantity | Previous** is derived: it is the quantity already billed on every earlier extract of this contract for the same term. **Quantity | Total quantity** is previous plus paid, and **Finished Percentage** is that total against the contracted quantity. As on the execution, the cumulative "billed to date" figure lives on the [contract's](/modules/contracting/project-contracting/contracting-project-contract.md) term line, not on any extract.
 
 So the netting-off of previous extracts is not something you do — it is the shape of the document. You bill 300 m³ this month because that is what happened this month; the fact that 400 m³ went out last month is why *previous* says 400 and why the contract line reads 700 afterwards.
 
@@ -46,11 +46,11 @@ The first two describe two different arithmetics for the same idea, so choose on
 
 | Type | What is different about it |
 |---|---|
-| **Initial** (مبدأي) | The opening certificate. Only **one** Initial extract is permitted per contract, and contract conditions marked *With Initial Extract* are collected only here — mobilisation allowances, insurance premiums, anything payable once at the start |
+| **Initial** (مبدئي) | The opening certificate. Only **one** Initial extract is permitted per contract, and contract conditions marked *With Initial Extract* are collected only here — mobilisation allowances, insurance premiums, anything payable once at the start |
 | **Ongoing** (جاري) | The normal interim certificate. No special behaviour; this is what most extracts are |
 | **Final** (ختامي) | The closing certificate — see *What a Final extract does differently*, below |
 
-Once a Final extract is committed on a contract, no further extract can be saved on it, and executions and fines are refused as well — unless the module option that allows using finalised contracts has been switched on in [module configuration](/modules/contracting/contracting-configuration.md).
+Once a Final extract is committed on a contract, no further extract can be saved on it — *Extract Can not be Save Final Extract Is Made* — «لا يمكن عمل هذا المستخلص تم عمل مستخلص ختامي على هذا المشروع». Executions, job orders, advance payments, fines and the cost and material documents that name the contract are refused as well, with *You can not use the contract {0} because it has a final extract {1}* — «لا يمكنك استخدام العقد {0} حيث أنه منتهي طبقًا للمستخلص الختامي {1}» — unless the module option **Allow Creating Documents For Contracts That Have a Final Extract** is ticked in [module configuration](/modules/contracting/contracting-configuration.md). That option does not reopen the contract to further extracts.
 
 ## Filling the Details grid
 
@@ -72,7 +72,7 @@ The "all terms" pair matters more than it looks: it is the only way to bring in 
 Two term options tune what the quantity comes out as: one fills the line with the *entire* remaining quantity from the previous extract, and another deliberately leaves the quantity at zero so nobody bills by accident on a document that was only opened to be looked at.
 
 ::: warning Collecting refuses to run while From Document is filled
-The Collect actions and the From Document route are alternatives. Press Collect on an extract built on an execution and it declines rather than overwriting the surveyed quantities.
+The Collect actions and the From Document route are alternatives. Press Collect on an extract built on an execution and it declines rather than overwriting the surveyed quantities, with *Can not collect because of from document* — «لا يمكن التجميع لأن بناءا علي ليست فارغة».
 :::
 
 **Restore Taxes** (its Arabic label, *احتساب الضرائب*, is the accurate one) re-reads the tax percentages of every [standard term](/modules/contracting/setup/contracting-standard-terms.md) used in the lines and recalculates the money block. Use it after somebody changes a tax policy mid-project.
@@ -86,7 +86,7 @@ The Collect actions and the From Document route are alternatives. Press Collect 
 | **Term Code** | yours | must exist on the contract, or on the source execution |
 | **Standard Term** | yours or copied | supplies the tax policy, and can override the revenue accounts for this line alone |
 | **Quantity \| Paid Amount** | **yours** | the quantity billed on this extract |
-| **Quantity \| Previous** / **Quantity \| Total** / **Finished Percentage** | the system's | the netting-off described above |
+| **Quantity \| Previous** / **Quantity \| Total quantity** / **Finished Percentage** | the system's | the netting-off described above |
 | **Quantity \| Contracted** | the system's | from the contract term |
 | **Count** and the dimensions behind it, **Discounted Quantity** | yours | the same dimension calculator as on the execution: the billed quantity becomes the dimension quantity less the discounted quantity |
 | **Executed \| Quantity**, **Executed \| %** | the system's | mirrored from the contract's execution figures, so you can see how much of what was surveyed you are actually billing |
@@ -138,43 +138,13 @@ Two different populations end up in that grid.
 
 ### Contract conditions
 
-These are copied from the contract's own conditions grid. Each condition has a **type** that decides *when* it applies:
-
-| Condition type | Collected onto |
-|---|---|
-| **With Every Extract** | every extract |
-| **With Initial Extract** | the Initial extract only |
-| **With Final Extract** | the Final extract only |
-| **Contract End** | the Final extract, once the contract is finished |
-| **Related To Completion Percent** | the extract on which the term's completion percentage reaches the figure on the condition line |
-| **Other** | every extract |
-| **Text Condition** | never — it is contract wording, not a calculation |
-
-And a **value type** that decides *how much*:
-
-| Value type | The amount |
-|---|---|
-| **Value** | the flat amount on the condition line |
-| **Percentage From Extract** | a percentage of this extract's works value, before discounts and taxes |
-| **Percentage From Total** | a percentage of the whole contract value |
-| **Percentage From Total Due Value** | a percentage of this extract's total due value |
-| **Percentage From Term Net Value** / **Percentage From Term Due Value** | a percentage of one term's line on this extract, matched by term code |
-| **Query** | the result of the query stored on the condition |
-| **Percent Of Custom Equation** | a percentage of an equation you write, evaluated over the current extract's lines, the previous extract's lines, both, or the current-or-previous |
+These are copied from the contract's own conditions grid. Each condition has a **type** that decides *when* it applies — every extract, the Initial or the Final extract only, contract end, a completion percentage, or never for a text condition — and a **value type** that decides *how much* — a flat value, a percentage of this extract's works value (before discounts and taxes), of the contract, of the extract's due value or of one term's line, a custom equation, or a query. Both lists, with the exact rule for each, are on [the conditions page](/modules/contracting/setup/contracting-conditions.md) under *When Does It Apply — Condition Types* and *How Much — Value Types*.
 
 Conditions marked *do not collect in extract conditions* are skipped, as are conditions already tied to a document of their own.
 
 ### Payment documents — advances and fines
 
-The second population is not on the contract at all. When conditions are collected, the extract looks for every committed [advance payment](/modules/contracting/project-contracting/contracting-project-advances.md) and [fine](/modules/contracting/project-contracting/contracting-project-fines.md) on this contract that still has a remaining balance and is dated on or before the extract, and turns each into a **deduction** row. How much comes off is decided by the **Payment Method** on the advance or the fine:
-
-| Payment method | Recovered on an ordinary extract |
-|---|---|
-| **First Next Extract** | the whole remaining balance, on the very next extract |
-| **Fixed Value With Every Extract** | the fixed amount, or the remaining balance if that is smaller |
-| **Percentage With Every Extract** | that percentage of the document's own total, capped at the remaining balance |
-| **Percentage From Due Value With Every Extract** | that percentage of *this extract's* works value, capped at the remaining balance |
-| **Final Extract** | nothing — this one waits for the Final extract |
+The second population is not on the contract at all. When conditions are collected, the extract looks for every committed [advance payment](/modules/contracting/project-contracting/contracting-project-advances.md) and [fine](/modules/contracting/project-contracting/contracting-project-fines.md) on this contract that still has a remaining balance and is dated on or before the extract, and turns each into a **deduction** row. How much comes off is decided by the **Payment Method** on the advance or the fine — five methods, from the whole balance on the next extract to nothing until the Final extract, every one capped at the remaining balance. The table of methods is under [The recovery rule](/modules/contracting/project-contracting/contracting-project-advances#The-recovery-rule) on the advances page.
 
 On a **Final** extract all of that is bypassed: the entire remaining balance of every advance and every fine is swept, and the commit is refused if anything is still outstanding afterwards.
 

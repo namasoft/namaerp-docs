@@ -17,8 +17,8 @@ Misc purchasing is part of the core `accounting` license. Its documents are unde
 The flow mirrors a normal purchase cycle, minus the warehouse:
 
 1. **Misc Purchase Request** (`Accounting > Documents > Misc Purchase Request`) — someone asks to buy a service or non-stock item.
-2. **Misc Purchase Order** (`Accounting > Documents > Misc purchase Order`) — the order placed with the supplier. Like its inventory cousin, the order doesn't touch the ledger; it's a commitment, not an expense yet.
-3. **Miscellaneous Invoice** (`Accounting > Documents > Miscellaneous Invoice`) — the supplier's bill. **This is the document that creates the journal entry**: it debits the expense and credits the supplier.
+2. **Misc Purchase Order** (`Accounting > Documents > Misc purchase Order`) — the order placed with the supplier. A request or an order creates an accounting effect only when its own document term has the main **Debit** or **Credit** side filled; with both sides empty it is a commitment, not an expense yet.
+3. **Miscellaneous Invoice** (`Accounting > Documents > Miscellaneous Invoice`) — the supplier's bill. **This document always creates the journal entry**: it debits the expense and credits the supplier.
 
 The **Purchase Element** (`Accounting > Master Files > Purchase Element`) is the master file behind it all — it describes a purchasable thing (a service, a category of expense) and carries its default account, so an invoice line just picks the element and the account follows.
 
@@ -46,7 +46,7 @@ A close variant is the **Machine Rent Invoice** (`Accounting > Documents > Machi
 
 ## For Support
 
-- **"The order created a journal entry"** — it shouldn't; only the **invoice** creates one. The request and order are pre-accounting steps.
+- **"The order created a journal entry"** — a request or an order creates an accounting effect when the main **Debit** or **Credit** side is filled in its document term. Empty both sides in that term to keep it a pre-accounting step; the **invoice** always creates its entry.
 - **"The wrong expense account was used"** — check the line's **purchase element** default account and the line **account** override.
 - **"The invoice wasn't submitted to the authority"** — review the supplier's commercial-registration and tax-registration fields; e-invoicing is a separate topic from the accounting effect.
 - **"Where do the supplier / tax / discount accounts come from?"** — from the **Miscellaneous Invoice** document term; see [Document terms](../support/accounting-document-terms.md).

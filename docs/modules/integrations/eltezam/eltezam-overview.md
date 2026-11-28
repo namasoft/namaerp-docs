@@ -62,7 +62,9 @@ The details of every value — where it comes from and which code table translat
 ::: tip Dates travel in Hijri
 Every date is sent to the ministry as a Hijri date (`dd-MM-yyyy`), converted with Nama's Hijri
 calendar table. The table must reach back far enough to cover the oldest birth date and hiring
-date you send, or those requests are held back with a message that says so.
+date you send. A date outside it fails Nama's own checks with a message that says so, and the
+request is held back when **Do Not Send Records Having Validation Errors** is ticked on the
+configuration (see [Setting up Eltezam](/modules/integrations/eltezam/eltezam-setup#Checking-records-before-they-leave-Nama)).
 :::
 
 ## The workflow at a glance

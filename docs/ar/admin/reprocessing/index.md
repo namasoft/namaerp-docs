@@ -101,10 +101,10 @@ http://localhost:8080/erp/utils?util=com.namasoft.erp.gui.server.RecommitFromFil
 ## أدوات الوحدات
 
 <LandingGrid>
-  <LandingCard icon="🏬" title="أدوات المخزون" link="/ar/admin/reprocessing/inventory-utilities.md" details="استعلامات وإصلاحات موجّهة لمستندات المخزون والأرقام المسلسلة وبيانات المخازن." />
-  <LandingCard icon="🏭" title="أدوات التصنيع" link="/ar/admin/reprocessing/manufacturing-utilities.md" details="إصلاحات مستندات التجميع وأوامر الإنتاج وآثارها على التكلفة." />
-  <LandingCard icon="🏗️" title="أدوات الأصول الثابتة" link="/ar/admin/reprocessing/fixed-asset-utilities.md" details="الإهلاك وبطاقات الأصول والقيود التي وراءها." />
-  <LandingCard icon="🏢" title="أدوات العقارات" link="/ar/admin/reprocessing/real-estate-utilities.md" details="الوحدات والعقود وبيانات الأقساط التي خرجت عن الاتساق." />
+  <LandingCard icon="🏬" title="أدوات المخزون" link="/ar/admin/reprocessing/inventory-utilities.md" details="استعلامات وإصلاحات موجّهة لمستندات المخزون والوحدات الأساسية والشحنات وتواريخ الصلاحية ومواقع المخازن." />
+  <LandingCard icon="🏭" title="أدوات التصنيع" link="/ar/admin/reprocessing/manufacturing-utilities.md" details="فحص أوامر الإنتاج التي لا تطابق تكلفة تسليمها تكلفة الخامات المصروفة، وتنظيف قيود حركة الإنتاج المتروكة." />
+  <LandingCard icon="🏗️" title="أدوات الأصول الثابتة" link="/ar/admin/reprocessing/fixed-asset-utilities.md" details="إعادة ضبط تاريخ آخر إهلاك للأصل وإصلاح قيود الإضافة والاستبعاد التي تظهر صفراً." />
+  <LandingCard icon="🏢" title="أدوات العقارات" link="/ar/admin/reprocessing/real-estate-utilities.md" details="إعادة حساب القيم المسددة والمحصلة على أقساط العقود حين تفقد قيود السداد مرجعها." />
 </LandingGrid>
 
 ## أدوات تُشغَّل من رابط

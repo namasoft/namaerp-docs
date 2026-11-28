@@ -32,16 +32,16 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | Finder Query(Retriever) | استعلام يبحث عن سجل قائم يطابق البيانات الواردة. |
 | Fields Map | يصف كيف تُسقط القيم الواردة على حقول السجل. |
 | Response Template (Tempo) | يصوغ الرد المُعاد إلى المستدعي، ويُكتب بلغة Tempo. |
-| إغلاق نافذة المتصفح بعد الانتهاء (Close Browser Window) | للمنافذ التي تُفتح في تبويب متصفح: يغلق التبويب عند انتهاء الاستدعاء. |
+| إغلاق نافذة المتصفح بعد الانتهاء (Close Browser Window) | للمنافذ التي تُفتح في تبويب متصفح: يغلق التبويب عند انتهاء الاستدعاء. وهذا العمود ليس في الجدول افتراضياً؛ أضفه عبر [معدّل الشاشات](/ar/platform/screen-modifier/screen-modifier-edit-screen). |
 | Run Entity Flow | يسلّم البيانات الواردة إلى مسار كيان بدلاً من ملء الحقول مباشرة. |
 | Export Integrator | يجعل السطر منفذاً يُصدّر البيانات إلى الخارج بدلاً من استقبالها. |
-| Create Only (No-Updates) | يُسمح للمنفذ بإنشاء سجل جديد فقط، ويُمنع من المساس بسجل قائم. |
+| إنشاء فقط (بدون تحديث) (Create Only (No-Updates)) | يُسمح للمنفذ بإنشاء سجل جديد فقط، ويُمنع من المساس بسجل قائم. |
 
 ### العمودان اللذان يحددان هل الاستدعاء مرتين آمن
 
 **Finder Query(Retriever)** هو أهم عمود هنا على الإطلاق. بدونه يكون كل استدعاء سجلاً جديداً: يعيد المتجر المحاولة مرة واحدة فتجد أمري بيع متطابقين. ومعه يبحث المنفذ أولاً عن سجل قائم يطابق البيانات الواردة — نفس رقم طلب المتجر، نفس مرجع العميل — ويحدّث ذلك السجل بدلاً من إنشاء غيره. استعلام بحث مكتوب جيداً هو ما يجعل المنفذ آمناً للاستدعاء مراراً وتكراراً، وهو ما يحدث فعلاً في اللحظة التي تتعثر فيها الشبكة.
 
-**Create Only (No-Updates)** يفرض السلوك المعاكس، وهو اختيار مقصود لا اختصار. عند تأشيره يرفض المنفذ المساس بأي سجل قائم: إما ينشئ شيئاً جديداً أو يفشل. استعمله حيث يجب اعتبار الاستدعاء المكرر خطأً لا تصحيحاً — منفذ يسجل المتحصلات الواردة مثلاً، حيث الكتابة الصامتة فوق متحصل الأمس أسوأ بكثير من رسالة خطأ.
+**إنشاء فقط (بدون تحديث)** يفرض السلوك المعاكس، وهو اختيار مقصود لا اختصار. عند تأشيره يرفض المنفذ المساس بأي سجل قائم: إما ينشئ شيئاً جديداً أو يفشل. استعمله حيث يجب اعتبار الاستدعاء المكرر خطأً لا تصحيحاً — منفذ يسجل المتحصلات الواردة مثلاً، حيث الكتابة الصامتة فوق متحصل الأمس أسوأ بكثير من رسالة خطأ.
 
 ### ملء الحقول، أو تشغيل مسار كيان
 
@@ -94,16 +94,16 @@ https://<عنوان الخادم لديك>/erp/integrator?integrator=<Integrator
 | المتابعة عند حدوث خطأ (Continue On Errors) | يُتخطى السطر الخاطئ ويستكمل باقي الملف. |
 | حذف المسافات الزائدة (Trim Extra Spaces) | تُزال المسافات الزائدة حول القيم الواردة. |
 | الحفظ كمسودة (Save As Draft) | تُحفظ النتيجة كمسودة لمراجعتها بدلاً من اعتمادها. |
-| استعمال محددات المستخدم اثناء الاستيراد (Use User Dimensions While Importing) | تُطبَّق محددات المستخدم المستورِد على السجلات المستوردة. |
+| استعمال محددات المستخدم أثناء الاستيراد (Use User Dimensions While Importing) | تُطبَّق محددات المستخدم المستورِد على السجلات المستوردة. |
 
 هذه المفاتيح السبعة هي بالضبط الخيارات التي تضعها شاشة الاستيراد أمام الشخص — لكنها هنا مثبَّتة مسبقاً، فلا يحتاج النظام الخارجي إلى إرسالها ولا يستطيع أن يخطئ فيها. وأسرع طريق لفهم ما يفعله كل منها فعلاً هو قراءة توثيق الاستيراد أولاً ثم العودة إلى هنا: [استيراد السجلات](/ar/platform/import-export/importing-records) يغطي الأساسيات، و[الاستيراد المتقدم للسجلات](/ar/platform/import-export/advanced-record-import) يغطي الحالات الأصعب مثل المراجع غير الموجودة والفشل الجزئي.
 
 اثنان منها يستحقان لحظة تفكير قبل التأشير. **المتابعة عند حدوث خطأ** يحدد هل يُفسد سطر واحد خاطئ ملفاً من ألفي سطر أم يُبلَّغ عنه ويُتخطى؛ ففي قائمة أسعار ليلية يكون التخطي هو الصواب غالباً، أما في دفعة من المستندات المالية فالتوقف الكامل أأمن. و**الحفظ كمسودة** يحوّل المنفذ إلى اقتراح لا قرار — تصل السجلات إلى نما لكنها تنتظر إنساناً قبل أن يُعتد بها. وهو الإعداد الذي تلجأ إليه ما دمت في طور بناء الثقة بتكامل جديد.
 
 ::: tip متكامل يبدو صحيحاً لكن النظام لا يجده
-لا يُلتقط السطر إلا إذا كان عمود **غير نشط** يحمل قيمة صريحة تعني «لا». والسطر الذي أُنشئ قبل أن تبدأ هذه الشاشة بتتبع هذا العمود قد لا يحمل فيه شيئاً أصلاً، فيُبلِّغ المنفذ بأن لا متكامل مطابقاً — بينما السطر أمامك على الشاشة يبدو صحيحاً تماماً.
+لا يُلتقط سطر Import Integrators إلا إذا كانت علامة عدم النشاط المخزّنة فيه تحمل قيمة صريحة تعني «لا». وهذه العلامة ليست عموداً تراه: بل تُنسخ إلى كل سطر من مفتاح **غير نشط** في رأس السجل كلما حُفظ السجل. والسطر الذي أُنشئ قبل أن تبدأ الشاشة بتتبعها قد لا يحمل فيها شيئاً أصلاً، فيُبلِّغ المنفذ بأن لا متكامل مطابقاً — بينما السطر أمامك على الشاشة يبدو صحيحاً تماماً.
 
-والعلاج يستغرق ثوانٍ: افتح السجل واحفظه مرة واحدة فيُملأ العمود. فإذا بدا تكوين ما صحيحاً ولم يُعثر عليه، أعد حفظ السجل قبل أن تبحث في أي شيء آخر.
+والعلاج يستغرق ثوانٍ: افتح السجل واحفظه مرة واحدة فتُملأ العلامة. فإذا بدا تكوين ما صحيحاً ولم يُعثر عليه، أعد حفظ السجل قبل أن تبحث في أي شيء آخر.
 :::
 
 ## Invoice Retriever Lines — سطور استرجاع الفواتير
@@ -217,7 +217,7 @@ https://<your server>/erp/r/{retrieverFileId}
 | Save As User | Save As User | `integratorConfig.saveAsUser` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
 | Run Entity Flow | Run Entity Flow | `integratorConfig.runEntityFlow` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
 | Export Integrator | Export Integrator | `integratorConfig.exportIntegrator` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
-| Create Only (No-Updates) | Create Only (No-Updates) | `integratorConfig.createOnly` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
+| إنشاء فقط (بدون تحديث) | Create Only (No-Updates) | `integratorConfig.createOnly` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
 | Authenticate From URL User and Pass | Authenticate From URL User and Pass | `integratorConfig.authenticateFromURL` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
 | Authenticate From Session | Authenticate From Session | `integratorConfig.authenticateFromSession` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
 | Integrator URL | Integrator URL | `integratorConfig.integratorUrl` | [Integrator Config](#Integrator-Config----aaddt-lmtkmlt) |
@@ -237,7 +237,7 @@ https://<your server>/erp/r/{retrieverFileId}
 | المتابعة عند حدوث خطأ | Continue On Errors | `importIntegratorLines.continueOnErrors` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
 | حذف المسافات الزائدة | Trim Extra Spaces | `importIntegratorLines.trimExtraSpaces` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
 | الحفظ كمسودة | Save As Draft | `importIntegratorLines.saveAsDraft` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
-| استعمال محددات المستخدم اثناء الاستيراد | Use User Dimensions While Importing | `importIntegratorLines.useUserDimensions` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
+| استعمال محددات المستخدم أثناء الاستيراد | Use User Dimensions While Importing | `importIntegratorLines.useUserDimensions` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
 | Integrator URL | Integrator URL | `importIntegratorLines.integratorUrl` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
 | Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | `importIntegratorLines.responseFields` | [Import Integrators](#Import-Integrators----mtkmlt-lstyrd) |
 | Invoice Retriever Lines | Invoice Retriever Lines | `invoiceRetrieverLines` | [Invoice Retriever Lines](#Invoice-Retriever-Lines----sTwr-strjaa-lfwtyr) |

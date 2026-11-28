@@ -27,7 +27,7 @@ both.
 |---|---|---|
 | **Complaint Type / نوع شكوى** | Support / الدعم | The *Complaint Type* box on the Complaint |
 | **Complaint Source / مصدر شكوى** | Support / الدعم | The *Complaint Source* box on the Complaint |
-| **Problem Classification / تصنيف مشكله** | Support / الدعم | The Problem file, and the classification column of the Complaint's problem grid |
+| **Problem Classification / تصنيف مشكلة** | Support / الدعم | The Problem file, and the classification column of the Complaint's problem grid |
 | **Problem / مشكلة شائعة** | Support / الدعم | The problem column of the Complaint's problem grid |
 
 Only one order constraint exists: **Problem Classification before Problem**, because each problem
@@ -50,7 +50,7 @@ Both fill Responsible Employee with your user's employee the moment you press Ne
 [setting](/modules/crm/crm-configuration.md) does not govern these screens, only the Lead screen.
 
 **Problem** carries **Code, Group, Name1, Name2** and one extra box,
-**Problem Classification / تصنيف المشكله**, then Dimensions. **Problem Classification** carries the
+**Problem Classification / تصنيف المشكلة**, then Dimensions. **Problem Classification** carries the
 four basic boxes and nothing else. Neither has a Remarks box, and neither fills anything in for you.
 
 ## Getting the right box on the Complaint screen
@@ -61,10 +61,10 @@ this page:
 
 | Box on the Complaint | What it is |
 |---|---|
-| **Type / النوع** | A fixed system list — Complaint, Suggestion, Remark. Not a master file; you cannot add to it. |
-| **Complaint Type / نوع الشكوي** | **Your** list, from the Complaint Type file. |
+| **Type / النوع** | A fixed system list — Complaint, suggestion, Remark. Not a master file; you cannot add to it. |
+| **Complaint Type / نوع الشكوى** | **Your** list, from the Complaint Type file. |
 | **Source / المصدر** | A fixed system list — Sales Invoice or Service Contract. Not a master file. This is the one that decides what the Complaint's invoice search button looks through, and its starting value comes from CRM Settings. |
-| **Complaint Source / مصدر الشكوي** | **Your** list, from the Complaint Source file. |
+| **Complaint Source / مصدر الشكوى** | **Your** list, from the Complaint Source file. |
 
 So "Type" and "Source" are system behaviour; "Complaint Type" and "Complaint Source" are your
 vocabulary and drive nothing at all beyond being recorded and reportable.

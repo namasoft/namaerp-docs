@@ -147,12 +147,13 @@ escape hatch: each line describes a situation in which a required-field rule is 
 | On Field | …the rule is on this field. Leave empty to mean every field. |
 | Fiscal Period / Fiscal Year | …the document falls in this period or year. Only documents have these; master files ignore the two columns. |
 | User | …this specific user is the one saving. |
-| Allow For | …the user saving is this employee, or belongs to this security profile, employee group or master group. The column comes in two parts — pick which of the four you mean, then pick the record. |
+| Allow For | …the user saving is this employee's user, has this security profile, or belongs to this group (the user's own master group). The column comes in two parts — pick the type, then pick the record. |
 | Legal Entity, Analysis set, Sector, Branch, Department | …the record carries this dimension value. |
 
 A line's blank columns simply do not restrict anything, and the line applies when *all* of its
-filled columns match. That has a sharp edge worth knowing: a line with every column left blank
-matches everything, and switches off every rule in the record.
+filled columns match. A line with every column blank is refused when you save the record. That
+check ignores **On Field**, so a line that names only a field is refused too; give it at least an
+**Entity Type**, a period or year, a user, an **Allow For** or a dimension.
 
 ::: danger Adding an exception changes how the "always" rules are enforced
 This is the least obvious behaviour on the screen, and the one that causes support calls.
@@ -165,7 +166,8 @@ The moment you add **one line** to Ignore Required Fields When, that stops. The 
 rules are moved into the same engine that handles the criteria rules — because that is the only
 engine that knows about exceptions — and from then on they are checked when the record is
 **committed**, not before. The field keeps working as a rule; what it loses is the on-screen
-required marker.
+required marker. A generic "always" line — one with neither Entity Type nor Entity Type List — is
+the exception: it is enforced only while its record's Ignore grid is empty.
 
 So if a colleague reports that a field "stopped showing as required after we added an exception for
 the Cairo branch", nothing is broken: this is why. If you want to keep the marker, put the
@@ -241,7 +243,7 @@ select case when {description5} = 'Export' then 1 else 0 end
 
 **Fields Required Always** — Entity Type `PaymentVoucher`, On Field `manualRef1`.
 
-**Ignore Required Fields When** — On Field `manualRef1`, **Allow For** the accounting employee group.
+**Ignore Required Fields When** — On Field `manualRef1`, **Allow For** the accounting team's security profile.
 
 Remember what that second line costs you: the field will no longer be marked as required on screen,
 because the record now has an exception. If the marker matters more than the exception, split the
@@ -263,6 +265,7 @@ lines are left alone.
 | Message | Why | What to do |
 |---|---|---|
 | *Field {0} is required, can not be empty* — «لا يمكن ترك {0} فارغا» | A field this screen requires is empty. The same message is used whether the rule came from this screen, from the field's own definition, or from the product's built-in checks — the name in the message is the field, not the rule. | Fill the field. If you do not think it should be required, search this screen's three grids for its field id before looking anywhere else. |
+| *Line number {0} must enter at least one field* — «السطر رقم {0} يجب إدخال حقل واحد على الأقل» | Saving a Required Fields record whose **Ignore Required Fields When** grid has a line with no Entity Type, period, year, user, Allow For or dimension. **On Field** alone does not count. | Fill at least one of those columns on that line, or delete it. |
 | *Error while validating required field {0} with condition {1},query {2}, required fields {3}* — «خطأ عند التحقق من الحقل المطلوب {0} للشرط {1} الاستعلام {2} لملف الحقول المطلوبة {3}» | A conditional line could not be evaluated — almost always a **When Query** that will not run. The rule is not skipped quietly: the save fails for everyone the line applies to. | The message names the field, the criteria, the query and the Required Fields record that holds the broken line, and the error panel can take you straight to it. Fix or clear the query. |
 
 ## In practice

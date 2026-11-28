@@ -38,19 +38,19 @@ The **Applicable For** field decides the scope of the modifier:
 | Applicable For | What it targets |
 | --- | --- |
 | **Entity Type** | A single screen — you pick exactly one type in the **For Type** field (e.g. Sales Invoice). |
-| **EntityType List** | A specific set of screens — you list the types in the **For Type List** field, so one modifier can apply the same change to several screens at once. |
-| **Master Files** | Every master-file screen (customers, items, accounts, …). |
+| **Entity Type List** | A specific set of screens — you list the types in the **For Type List** field, so one modifier can apply the same change to several screens at once. |
+| **Master Files** | Every master-file screen (customers, items, accounts, …), except the edit screens of document terms and module configurations. |
 | **Documents** | Every document screen (invoices, receipts, journal entries, …). |
-| **All Screens** | Every screen in the system. |
+| **All Screens** | Every screen in the system, except the edit screens of document terms and module configurations. |
 
-When you choose **Entity Type**, only **For Type** is enabled; when you choose **EntityType List**, only **For Type List** is enabled. Switching between them clears the field you are no longer using.
+When you choose **Entity Type**, only **For Type** is enabled; when you choose **Entity Type List**, only **For Type List** is enabled. Switching between them clears the field you are no longer using.
 
 ::: tip
-Use **Entity Type** for a targeted change to one screen, and **EntityType List** when the same tweak should land on a handful of related screens. Reserve **Master Files**, **Documents**, and **All Screens** for sweeping, system-wide changes — for example, removing an attachment from the discussion block everywhere.
+Use **Entity Type** for a targeted change to one screen, and **Entity Type List** when the same tweak should land on a handful of related screens. Reserve **Master Files**, **Documents**, and **All Screens** for sweeping, system-wide changes — for example, removing an attachment from the discussion block everywhere.
 :::
 
 ::: warning
-Two actions — **Open In Editor** (the visual editor) and **Regenerate GUI For Applicable Types Only** — only work when *Applicable For* is **Entity Type** or **EntityType List**, because they need a concrete list of types to work with. They cannot run for the broad *All Screens* / *Master Files* / *Documents* scopes.
+Two actions — **Open In Editor** (the visual editor) and **Regenerate GUI For Applicable Types Only** — only work when *Applicable For* is **Entity Type** or **Entity Type List**, because they need a concrete list of types to work with. They cannot run for the broad *All Screens* / *Master Files* / *Documents* scopes.
 :::
 
 ## Modify or Copy (Effect Type)
@@ -58,13 +58,13 @@ Two actions — **Open In Editor** (the visual editor) and **Regenerate GUI For 
 The **Effect Type** field (labelled **Component Effect Type** on screen) has two options:
 
 - **Modify** — change the screen the user already sees. Your instructions are applied on top of the default layout, and users keep opening the same screen as before, now altered.
-- **Copy** — leave the original screen untouched and produce a **new, separately named layout**. When you pick *Copy*, the **Copy To Layout ID (View name)** field becomes available so you can give the new layout its own code. This is how you offer an *alternative* version of a screen (for example, a simplified data-entry layout) alongside the standard one.
+- **Copy** — leave the original screen untouched and produce a **new, separately named layout**. When you pick *Copy*, the **Copy To Layout ID (View name)** field becomes available — and required — so you can give the new layout its own code. This is how you offer an *alternative* version of a screen (for example, a simplified data-entry layout) alongside the standard one.
 
-The **Modified Layout Id** field lets you state which existing layout your changes should start from, when a screen has more than one layout defined.
+The **Modified Layout Id (can be empty)** field lets you state which existing layout your changes should start from, when a screen has more than one layout defined. Left empty, the modifier applies only to the screen's default layout; filled in, it applies only to the layout with that id.
 
 ## Priority and Activation
 
-- **Priority** *(required)* — when several modifiers apply to the same screen, they run in priority order. Lower-priority instructions are applied first and higher-priority ones afterwards, so priority is your tool for controlling which change "wins" when two modifiers touch the same part of a screen.
+- **Priority** *(required)* — when several modifiers apply to the same screen, they run in ascending order of the **Priority** number: the smallest number is applied first and larger numbers afterwards, so the modifier with the larger number has the last word. Priority is your tool for controlling which change "wins" when two modifiers touch the same part of a screen.
 - **Activate** — only activated modifiers are loaded and applied. Leaving this off is a safe way to keep a modifier on the shelf while you build or test it, without affecting anyone's screens.
 - **Allow System Modifiers** — only relevant when you've redesigned this screen in the [Visual Layout Editor](/platform/screen-modifier/screen-modifier-visual-editor.md). Normally, once you save a hand-built visual design, Nama treats it as the final word and stops adding its own automatic extras to that screen — for example the "related documents" links grid, or module-specific blocks it would otherwise inject. Turn this on to keep those automatic additions layered on top of your design, just as they would appear on a screen you never opened in the editor. It has no effect on a modifier built only from the ordinary collections.
 
@@ -97,11 +97,11 @@ A Screen Modifier does not change anything the moment you save it. Saving only r
 | Action | What it does |
 | --- | --- |
 | **Regenerate Screens** | Rebuilds **all** screens, applying the system defaults together with every active user modifier. Use this after a change that could affect many screens. |
-| **Regenerate GUI For Applicable Types Only** | Rebuilds only the screens this modifier applies to. Faster and safer for a targeted change. *(Only for the Entity Type / EntityType List scopes.)* |
+| **Regenerate GUI For Applicable Types Only** | Rebuilds only the screens this modifier applies to. Faster and safer for a targeted change. *(Only for the Entity Type / Entity Type List scopes.)* |
 | **Reset To System Defaults** | Throws away user customizations and rebuilds screens from the system defaults only. Use this to get back to a clean, out-of-the-box state. |
 | **Reset Display Columns** | Rebuilds just the list-view display columns from defaults. |
 | **Delete Unused Layouts** | Cleans up layout records that are no longer referenced by any screen. |
-| **Open In Editor** | Opens the screen in the [Visual Layout Editor](/platform/screen-modifier/screen-modifier-visual-editor.md) so you can redesign it by hand. *(Only for the Entity Type / EntityType List scopes.)* |
+| **Open In Editor** | Opens the screen in the [Visual Layout Editor](/platform/screen-modifier/screen-modifier-visual-editor.md) so you can redesign it by hand. *(Only for the Entity Type / Entity Type List scopes.)* |
 
 ::: tip
 The usual rhythm is: build or adjust your modifier → **Save** → run **Regenerate GUI For Applicable Types Only** → reopen the affected screen to confirm. Reach for the full **Regenerate Screens** only when a change is broad enough to touch many screens.

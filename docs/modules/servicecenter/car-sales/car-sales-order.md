@@ -34,7 +34,7 @@ Three fields appear here that you will not find on most of the other car documen
 |---|---|
 | نوع البيع (Sale Type) | Cash or Instalment. It classifies the deal; it does not open or close anything. |
 | المرخص له (Licensee) | Whether the car is being licensed to the customer or to a third party. |
-| سعر تأمين السيارة (Car Insurance Price) | The insurance figure agreed alongside the sale. |
+| سعر تأمين السيارة (Car Insurance Price) | The insurance figure agreed alongside the sale. It becomes the car price on an [insurance policy](/modules/servicecenter/car-insurance/car-insurance-policy.md) raised from this order. |
 
 Two more fields sit here read-only and are never typed by anyone: the **cancelled** marker and
 **ملغي من سند (Cancelled From Doc)**. They are stamped by a Car Sales Order Cancel document — see
@@ -43,7 +43,7 @@ Two more fields sit here read-only and are never typed by anyone: the **cancelle
 ### The lines
 
 One line is one car. The grid carries the item, the quantity, the unit price and price, the taxes,
-the department and salesman, the dimensions — and the column that matters most here, **السياره
+the department and salesman, the dimensions — and the column that matters most here, **السيارة
 (Customer Car)**, which is the specific chassis this line is about — a record in the
 [car file](/modules/servicecenter/cars-setup/car-master-file.md).
 
@@ -55,9 +55,24 @@ reason.
 :::
 
 Two columns appear on the sales order line and nowhere else in the sales chain: the **insurance
-programme** and the **insurance category** to be sold with this car. They feed the
-[insurance policy](/modules/servicecenter/car-insurance/car-insurance-policy.md) that may be raised
-later; they change nothing on the order itself.
+programme** and the **insurance category** to be sold with this car. The first line's programme is
+copied onto the
+[insurance policy](/modules/servicecenter/car-insurance/car-insurance-policy.md) raised from this
+order; neither column changes anything on the order itself.
+
+### The insurance policy link
+
+The order's **Policy** (*الوثيقة*) field names the car insurance policy sold with the car. Committing
+a policy that points at this order fills it in; you can also pick it here, and the picker offers only
+policies not yet linked to a sales order. An order naming a policy that belongs to another order is
+refused with *Car insurance policy {0} is already used in sales order {1}* — «وثيقة تأمين السيارة {0} مستخدمة بالفعل في أمر بيع سيارة {1}».
+
+To charge the policy on the order itself, name the insurance service item in **Policy Service Item**
+(*صنف خدمة الوثيقة*) in the Service Center configuration and tick **Add Policy Service Item Line With
+Save** (*إضافة سطر صنف خدمة الوثيقة مع الحفظ*) on the order's term. Saving the order then adds one
+line for that item, quantity one, priced at the linked policy's value, and keeps its price in step
+whenever the policy value changes. When the order has no policy, or the configuration names no item,
+saving removes that line again.
 
 The **Used Car Info** tab records a trade-in — the car number, model, manufacture year, odometer,
 colour, the price the customer wants for it, chassis and engine numbers, and how the trade-in is
@@ -70,7 +85,7 @@ This is the part of the screen that has no equivalent anywhere else in the chain
 approval:
 
 - **Payment method lines** — how the customer pays, including card and payment-gateway columns.
-- A **payment template** plus a **GeneratePayments** (*إنشاء الدفعات*) action, which builds the schedule for you.
+- A **payment template** plus a **Generate Payments** (*إنشاء الدفعات*) action, which builds the schedule for you.
 - **Schedule lines** — the dated instalments of the agreed price.
 - **External payment documents** — payments already collected on other documents.
 - **Standard terms** — the contractual clauses printed with the order.
@@ -85,16 +100,17 @@ For a financed deal the order carries an instalment block: the instalment progra
 bank or finance company and the reservation value — the details the salesperson enters from a
 [car instalment quotation](/modules/servicecenter/car-installments/car-installment-quotation.md).
 
-**قيمة الحجز (Reservation Value) is the booking deposit, and it creates a journal entry.** When the document term has
-its reservation-value debit and credit accounts filled and the value is not zero, the order produces
-a journal entry for it. This is the only accounting effect anywhere in the car sales chain before
-the invoice, and the only place in the whole module where those two accounts are used.
+**قيمة الحجز (Reservation Value) is the booking deposit, and it can be booked.** The order's journal
+entry is built only when its document term fills the generic debit or credit side. That entry then
+also carries the deposit, against the term's reservation-value debit and credit accounts, when both
+are filled and the value is not zero. The sales order is the only document in the module that uses
+those two accounts.
 
 ## What the order does
 
 | Effect | Detail |
 |---|---|
-| Accounting | Only if the term fills its debit and credit accounts — plus the booking deposit against the reservation-value pair |
+| Accounting | Only if the term fills its generic debit or credit side; that entry then also carries the booking deposit against the reservation-value pair |
 | Inventory | None. The car is not reserved unless the term's **Reserve** switch is on, which creates an ordinary quantity reservation; pinning one chassis to the customer is the job of a [car allocation](/modules/servicecenter/car-sales/car-allocation.md) |
 | Documents generated | None |
 | The car | A status line if a status updater targets the sales order; the sales-order and salesman references stamped onto the car's Statistics tab if the term says so |
@@ -117,8 +133,8 @@ Layla Al-Harbi agrees to buy `CAR-000318`, a NAWA Rimal 2.4, on **24 February 20
 | Agreed price | **87,000** |
 | قيمة الحجز (Reservation Value) | **5,000** |
 
-The 5,000 is recorded on the reservation-value accounts on the order's term. Nothing else on this
-document reaches the ledger, and the car does not move an inch in inventory.
+The 5,000 is recorded on the reservation-value accounts on the order's term, in the entry the term's
+generic debit/credit side produces. The car does not move an inch in inventory.
 
 ## The Car Sales Approval
 
@@ -160,7 +176,7 @@ The Car Sales Order and the Car Sales Approval carry the same three actions.
   appends the line you are standing on to a
   [shortage document](/modules/supplychain/sales-operations-documents.md), using the shortage book and
   term named on this document's term; it refuses with a message if they are missing.
-- **GeneratePayments** (*إنشاء الدفعات*, main page, beside the payment template) — splits the
+- **Generate Payments** (*إنشاء الدفعات*, main page, beside the payment template) — splits the
   remaining value into an instalment schedule. It asks for the number of payments, the period between
   them and its unit, the start date, a grace period, down / first / second / last payment values and a
-  rounding mode. The English label ships as the raw name shown here.
+  rounding mode.

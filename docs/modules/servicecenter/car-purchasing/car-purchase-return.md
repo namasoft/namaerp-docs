@@ -24,7 +24,7 @@ The return shares its layout with the
 [Car Purchase Order](/modules/servicecenter/car-purchasing/car-purchase-order.md): a basic group with
 the supplier, the purchasing agent, the warehouse and locator, the invoice classification, the money block, the price
 classifiers and remarks; then a line grid with item, measures, quantities, prices, discounts, taxes,
-net value, the **السياره (Customer Car)** column, dimensions and remarks.
+net value, the **السيارة (Customer Car)** column, dimensions and remarks.
 
 ![The Car Purchase Return screen](../../../ar/modules/servicecenter/images/car-purchasing/sc-car-purchase-return-en.png)
 

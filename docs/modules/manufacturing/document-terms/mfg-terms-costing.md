@@ -22,7 +22,7 @@ The order close voucher creates two kinds of entry.
 
 **Overhead** (التكاليف الغير مباشرة, `termConfig.overhead`), in the same block, is the voucher's default overhead type. It takes priority over the production order term's overhead.
 
-**Standard cost deviation.** **Standard Deviation Debit** (مدين الإنحراف, `termConfig.deviationDebit`) and **Standard Deviation Credit** (دائن الإنحراف, `termConfig.deviationCredit`) are the accounts of the standard cost deviation entry. The entry is made only when both are filled, the deviation is not zero, and the production order's term has **Calculate Deviations With Save** ticked — without that option no deviation is ever worked out. The block they sit in shows an untranslated title on screen.
+**Standard cost deviation.** **Standard Deviation Debit** (مدين الانحراف, `termConfig.deviationDebit`) and **Standard Deviation Credit** (دائن الانحراف, `termConfig.deviationCredit`) are the accounts of the standard cost deviation entry. The entry is made only when both are filled, the deviation is not zero, and the production order's term has **Calculate Deviations With Save** ticked — without that option no deviation is ever worked out.
 
 How the close works is on [Production Costing](/modules/manufacturing/production-costing).
 

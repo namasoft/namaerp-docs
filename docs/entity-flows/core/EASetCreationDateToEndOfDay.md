@@ -11,19 +11,18 @@ entities: [EntityFlow]
 
 ## Overview
 
-**⚠️ DEPRECATED/UNSUPPORTED ACTION**
-
-This entity action is currently unsupported and will throw an error when executed. The functionality appears to be intended for adjusting entity creation dates to end-of-day time, but the implementation is incomplete.
+This entity flow is not supported. It changes no creation date.
 
 ## When This Action Runs
 
-**DO NOT USE** - This action is not functional and will cause errors.
+It is not meant to be added to an entity flow.
 
 ## How It Works
 
-1. **Checks creation date** - Verifies if the entity has a creation date
-2. **Throws exception** - Immediately throws "Unsupported operation" error
-3. **No processing** - No actual date modification occurs
+1. **Checks creation date** - On a record that has no creation date the flow does nothing
+2. **Stops** - On any other record the flow stops with the message below and no date is changed
+
+*Unsupported operataion, please contact technical support team.  EASetCreationDateToEndOfDay*
 
 ## Parameters
 
@@ -31,13 +30,11 @@ This entity action is currently unsupported and will throw an error when execute
 
 ## Database Tables Affected
 
-**None** - Action does not modify any data due to unsupported status
+**None** - Action does not modify any data
 
 **Module:** core
 
 **Full Class Name:** `com.namasoft.infor.domainbase.util.actions.EASetCreationDateToEndOfDay`
-
-**Status:** Unsupported/Deprecated - Contact Technical Support
 
 
 </div>

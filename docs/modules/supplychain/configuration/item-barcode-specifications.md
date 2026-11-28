@@ -4,7 +4,7 @@ menu: Inventory → Settings → Supply Chain Configurations
 ---
 # Item Barcode Specifications
 
-This page documents the **Barcode Specifications** tab — the rules that tell the system how to read a composite/structured barcode and turn it into an item plus its properties and quantity.
+This page documents the **Item Barcode Specs** tab — the rules that tell the system how to read a composite/structured barcode and turn it into an item plus its properties and quantity.
 
 ![The Item Barcode Specs tab of Supply Chain Configurations](../../../ar/modules/supplychain/images/configuration/sc-config-item-barcode-specifications-en.png)
 
@@ -15,7 +15,7 @@ A retail or warehouse barcode is often **not** just the item code. It can be a s
 Item Barcode Specifications tell the system **how to parse such a string** into its parts — the item **code**, item **properties** (size, color, revision, lot, box, expiry/production date, serial numbers, unit of measure), and a **quantity / unit price / total price**. You can define up to **five** independent specifications. When a barcode is scanned, the system matches it against the five specs by prefix and length and uses the first one that fits.
 
 ::: info Prerequisite
-Barcode parsing only runs when **Allow Item Search by Barcode Specification** (on the [Items & Master Data](./items-and-master-data-configuration.md) tab) is enabled.
+Barcode parsing only runs when **Allow Item Search By Bar Code Specification** (on the [Items & Master Data](./items-and-master-data-configuration.md) tab) is enabled.
 :::
 
 ## Defining a Specification
@@ -52,7 +52,7 @@ The parts grid lists, in order, the segments the barcode is split into. The syst
 
 ## Specifications 1–5
 
-Each of the five slots has its own field ID:
+Each of the five slots has its own field ID. On the tab the slots are the groups titled **1** to **5**, each followed by its parts grid:
 
 | Slot | Field ID |
 | --- | --- |

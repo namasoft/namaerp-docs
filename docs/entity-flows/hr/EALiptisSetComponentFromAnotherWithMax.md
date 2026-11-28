@@ -20,18 +20,18 @@ Manual execution during salary processing when you need to set a component value
 ## How It Works
 
 1. **Validates parameters** - Ensures both required parameters are provided
-2. **Parses component list** - Converts CSV parameter into list of component codes to sum
-3. **Calculates total** - Sums additions minus deductions for all specified components
-4. **Finds target component** - Locates the salary line with the target component code
-5. **Applies maximum limit** - Sets value to the lesser of calculated total or original value
+2. **Parses component list** - Converts CSV parameter into list of component type codes to sum
+3. **Calculates total** - Sums additions minus deductions for all salary lines whose component type is in the list
+4. **Finds target component** - Locates the first salary line whose component type has the target code
+5. **Applies maximum limit** - Sets value to the lesser of the calculated total (as an absolute value) or original value
 6. **Handles zero totals** - Uses original value if calculated total is zero
 7. **Updates calculations** - Recalculates addition/deduction amounts and salary totals
 
 ## Parameters
 
-**Parameter 1:** Target Component Type (Required) - Code of the salary component to update
+**Parameter 1:** Target Component Type (Required) - Code of the salary component type to update
 
-**Parameter 2:** Components To Normalize (Required) - Comma-separated list of component codes to sum (e.g., "basic,insurance")
+**Parameter 2:** Components To Normalize (Required) - Comma-separated list of component type codes to sum (e.g., "basic,insurance")
 
 ## Database Tables Affected
 

@@ -112,6 +112,7 @@ title: خدمة العملاء
   <LandingCard icon="👤" title="مواعيدي" link="/ar/modules/crm/technician-appointments/crm-my-appointments.md" details="جدول الميدان للفنيين ومشرفي الأقسام ومديري النظام، مع التصفية." />
   <LandingCard icon="📝" title="سند توزيع الخدمات" link="/ar/modules/crm/technician-appointments/crm-technician-service-distribution.md" details="ما نُفِّذ فعلاً ومن نفّذه وفي كم من الوقت، وكيف ينقل الموعد إلى «تم التنفيذ»." />
   <LandingCard icon="🔀" title="سندات نقل الفنيين" link="/ar/modules/crm/technician-appointments/crm-technician-transfers.md" details="نقل فني من فريق إلى فريق في مستند واحد، وما الذي لا تمسّه النقلة." />
+  <LandingCard icon="🚫" title="سند إيقاف فني عن الحجز" link="/ar/modules/crm/technician-appointments/crm-technician-unavailability.md" details="حجب وقت الفني لإجازة أو تدريب حتى لا يُحجز فريقه." />
 </LandingGrid>
 
 ## المراجع
@@ -126,5 +127,6 @@ title: خدمة العملاء
   <LandingCard icon="⚖️" title="المنافسون" link="/ar/modules/crm/master-files/crm-competitors.md" details="تسجيل من تنافسه، والحدود الصريحة لهذا التسجيل." />
   <LandingCard icon="❔" title="الأسئلة الشائعة" link="/ar/modules/crm/master-files/crm-faq.md" details="ملف الإجابات المنشأ من طلب دعم — ولماذا ليس قاعدة معرفة." />
   <LandingCard icon="📐" title="توجيهات المستندات" link="/ar/modules/crm/document-terms/crm-terms-basics.md" details="أي مستندات لها توجيهات، والحسابات خلفها، وأزواج التوليد التي تقود كل زر." />
+  <LandingCard icon="🧩" title="توجيهات مستندات الصيانة" link="/ar/modules/crm/document-terms/crm-maintenance-terms.md" details="أزواج الدفتر والتوجيه خلف كل زر إنشاء في الصيانة، وأي مستندات الصيانة تصل إلى دفتر الأستاذ." />
   <LandingCard icon="⚠️" title="سجل المخاطر" link="/ar/modules/crm/risk-register/crm-risk-register.md" details="سجل لمشكلات الشركة نفسها واحتمالاتها وحلولها." />
 </LandingGrid>

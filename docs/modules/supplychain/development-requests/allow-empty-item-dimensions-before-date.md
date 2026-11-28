@@ -31,7 +31,9 @@ On each tracking dimension in the item configuration you'll find two new fields:
 - **Allow Admin To Receipt With Empty Value** — a stricter switch that governs *incoming* stock (see below).
 
 ::: warning These are sensitive settings
-Both fields are treated as **critical (dangerous) fields**. Turning them on, or changing the cut-off date, requires the appropriate privilege and is recorded as a critical-field change. They directly affect what the system will and won't accept on inventory documents, so they're not meant to be flipped casually on a live database.
+Both fields sit at the protected `L2Dangerous` security level. Setting or changing the cut-off date, or ticking the admin switch, by a user not authorised for that level is refused with
+*"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"* — «أنت لا تمتلك صلاحية التعديل على الحقل {0} لأنه ينتمي لمستوى الأمان {1} برجاء التواصل مع الدعم الفني»
+— so the change goes through technical support. Clearing the date or unticking the switch is not gated.
 :::
 
 ![Allow Empty Values Before Date on the Lot Configurations block of Item Configurations](../../../ar/modules/supplychain/images/items/item-config-allow-empty-before-date-en.png)

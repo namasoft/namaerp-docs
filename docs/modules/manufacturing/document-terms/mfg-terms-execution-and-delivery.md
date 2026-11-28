@@ -22,10 +22,10 @@ Every time an execution is saved, it rebuilds the documents it is responsible fo
 | Block | Field id | What is generated | When |
 |---|---|---|---|
 | **Material Issue** (صرف المواد الخام) | `termConfig.matIssueConfig.generationBook` / `termConfig.matIssueConfig.generationTerm`, `termConfig.considerApprovalForGeneratingMatIssue` | A raw materials issue | From the order's component lines whose issue type says they are issued with execution. |
-| **Resource Voucher** (سند موارد) | `termConfig.resVoucherConfig.generationBook` / `termConfig.resVoucherConfig.generationTerm`, `termConfig.considerApprovalForGeneratingResVoucher` | A resource voucher | From the routing resources of the operations executed. |
-| **Manufacturing Mold Voucher** (سند استهلاك قالب تصنيع) | `termConfig.moldVoucherConfig.generationBook` / `termConfig.moldVoucherConfig.generationTerm`, `termConfig.considerApprovalForGeneratingMFGMoldVoucher` | A mold voucher | From the molds used by the operations executed. |
+| **Resource Voucher** (سند موارد) | `termConfig.resVoucherConfig.generationBook` / `termConfig.resVoucherConfig.generationTerm`, `termConfig.considerApprovalForGeneratingResVoucher` | A resource voucher | From the order's resource rows that have **Auto Charge** ticked, at the operation each line moves into and at the auto-charge operations it passes on the way. Lines moving to a scrap or sample step charge nothing. |
+| **Manufacturing Mold Voucher** (سند استهلاك قالب تصنيع) | `termConfig.moldVoucherConfig.generationBook` / `termConfig.moldVoucherConfig.generationTerm`, `termConfig.considerApprovalForGeneratingMFGMoldVoucher` | A mold voucher | From the order's mold rows whose **Charge Type** is **Automatic**, at those same operations. |
 | **Product Delivery** (تسليم منتج) | `termConfig.prodDeliveryConfig.generationBook` / `termConfig.prodDeliveryConfig.generationTerm`, `termConfig.considerApprovalForGeneratingProdDelivery` | A product delivery | Only when **Automatic Product Delivery** is ticked — see below. |
-| **Sample Document Generation** (انشاء سند سحب العينة) | `termConfig.sampleConfig.generationBook` / `termConfig.sampleConfig.generationTerm`, `termConfig.considerApprovalForGeneratingSample` | Production sample documents | Only when the execution is set to generate samples. |
+| **Sample Document Generation** (إنشاء سند سحب العينة) | `termConfig.sampleConfig.generationBook` / `termConfig.sampleConfig.generationTerm`, `termConfig.considerApprovalForGeneratingSample` | Production sample documents | Only when the execution is set to generate samples. |
 
 A generated document that ends up with no lines is deleted. One that has lines but no book or term stops the save with *To generate {0}, you must define book and term for it* — an English-only message — so fill the blocks for every document your executions will really produce.
 
@@ -35,7 +35,7 @@ Each block has a **Consider Approval For Generating …** switch (اعتبار �
 
 ### Automatic delivery
 
-**Automatic Product Delivery** (تسليم المنتج النهائي تلقائيا, `termConfig.autoDelivery`) is copied onto the execution when the term is chosen. With it on, every line that moves quantity into the order's **last** operation creates or updates a product delivery for that order, so finishing a run and receiving the product into stock is one step. A line whose quantity has not reached the last operation is refused with *Can not auto delivery because quantity is not in last operation* — «لا يمكن تسليم المنتج تلقائيا لأن الكميات لم تتحرك لأخر عملية». Untick it on an execution that already generated deliveries and those deliveries are cancelled.
+**Automatic Product Delivery** (تسليم المنتج النهائي تلقائيا, `termConfig.autoDelivery`) is copied onto the execution when the term is chosen. With it on, every line that moves quantity into the order's **last** operation creates or updates a product delivery for that order, so finishing a run and receiving the product into stock is one step. A line whose quantity has not reached the last operation is refused with *Can not auto delivery because quantity is not in last operation* — «لا يمكن تسليم المنتج تلقائيا لأن الكميات لم تتحرك لآخر عملية». Untick it on an execution that already generated deliveries and those deliveries are cancelled.
 
 Two options shape the generated delivery:
 
@@ -53,10 +53,8 @@ Two options shape the generated delivery:
 |---|---|---|
 | **Generated Quality Control Type** (نوع فحص الجودة المنشأ) | `termConfig.generatedQualityControlType` | **Quality Control Doc** or **Quality Control Request**. After save, the execution creates one such document for the lines moving into operations that have a quality check list. |
 | **Quality Control Doc Book** / **Quality Control Doc Term** | `termConfig.qualityControlDocBook` / `termConfig.qualityControlDocTerm` | Its book (required) and term (optional). With no book and type, nothing is generated. |
-| **Can not Execute Routing without Approved QC Doc** (لايمكن تنفيذ عملية تشغيل في أمر إنتاج بدون سند فحص جودة تمت الموافقة عليه) | `termConfig.qcDocApprovalIsRequired` | Quantity cannot leave an operation that has a quality check list until a committed quality control document for the order approves that operation (or marks it not applicable). Refused with *Operation {0} is not approved by quality control doc* — «العملية {0} لم يتم الموافقة عليها عن طريق سند فحص جودة». |
-| **Can not Execute Routing without Approved QA Doc** (لايمكن تنفيذ عملية تشغيل في أمر إنتاج بدون سند تأكيد جودة تمت الموافقة عليه) | `termConfig.qaDocApprovalIsRequired` | The same gate for operations with a quality assurance list: *Operation {0} is not approved by quality assurance doc* — «العملية {0} لم يتم الموافقة عليها عن طريق سند تأكيد جودة». |
-
-The Arabic label of the book field reads «دفنر مستند فحص جودة» on screen.
+| **Can not Execute Routing without Approved QC Doc** (لا يمكن تنفيذ عملية تشغيل في أمر إنتاج بدون سند فحص جودة تمت الموافقة عليه) | `termConfig.qcDocApprovalIsRequired` | Quantity cannot leave an operation that has a quality check list until a committed quality control document for the order approves that operation (or marks it not applicable). Refused with *Operation {0} is not approved by quality control doc*, which has no Arabic translation. |
+| **Can not Execute Routing without Approved QA Doc** (لا يمكن تنفيذ عملية تشغيل في أمر إنتاج بدون سند تأكيد جودة تمت الموافقة عليه) | `termConfig.qaDocApprovalIsRequired` | The same gate for operations with a quality assurance list: *Operation {0} is not approved by quality assurance doc*, also English-only. |
 
 ## Product Delivery
 
@@ -89,7 +87,7 @@ A scrap receipt always creates a **stock receipt** for the scrap. The **Generati
 | Message | Why | What to do |
 |---|---|---|
 | *To generate {0}, you must define book and term for it* | An execution needs to generate a document whose block on the term has no book or term. The message has no Arabic translation. | Fill **Generation Book** and **Generation Term** in that block of the Production Execution term. |
-| *Can not auto delivery because quantity is not in last operation* — «لا يمكن تسليم المنتج تلقائيا لأن الكميات لم تتحرك لأخر عملية» | Automatic delivery is on, but a line has not moved its quantity into the last operation. | Execute up to the last operation, or untick **Automatic Product Delivery** on this execution. |
-| *Operation {0} is not approved by quality control doc* — «العملية {0} لم يتم الموافقة عليها عن طريق سند فحص جودة» | The operation has a quality check list and no committed quality control document approves it. | Commit an approved quality control document for the order and operation, then save again. |
-| *Operation {0} is not approved by quality assurance doc* — «العملية {0} لم يتم الموافقة عليها عن طريق سند تأكيد جودة» | The same for a quality assurance list. | Commit an approved quality assurance document first. |
+| *Can not auto delivery because quantity is not in last operation* — «لا يمكن تسليم المنتج تلقائيا لأن الكميات لم تتحرك لآخر عملية» | Automatic delivery is on, but a line has not moved its quantity into the last operation. | Execute up to the last operation, or untick **Automatic Product Delivery** on this execution. |
+| *Operation {0} is not approved by quality control doc* | The operation has a quality check list and no committed quality control document approves it. The message has no Arabic translation. | Commit an approved quality control document for the order and operation, then save again. |
+| *Operation {0} is not approved by quality assurance doc* | The same for a quality assurance list. The message has no Arabic translation. | Commit an approved quality assurance document first. |
 | *You can not edit document {0} because it is auto generated* — «لا يمكنك التعديل في المستند {0} حيث أنه منشأ تلقائيًا» | The document was generated by an execution whose term does not allow editing generated documents. | Change the execution instead; it rebuilds the document on save. |

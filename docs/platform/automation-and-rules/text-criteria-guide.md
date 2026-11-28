@@ -16,6 +16,7 @@ Each filter condition in Nama ERP consists of the following components:
     * `StartsWith`, `NotStartsWith`
     * `EndsWith`, `NotEndWith`
     * `Contains`, `NotContain`
+    * `ContainsWithAnyOrder` (every word of the value must appear in the field, in any order)
     * `In`, `NotIn` (see [Multiple Values with In/NotIn](#Multiple-Values-with-InNotIn) below)
     * `WithinPeriod`, `OutsidePeriod` (for date / date-time fields, see [Period Operators (WithinPeriod/OutsidePeriod)](#Period-Operators-WithinPeriodOutsidePeriod) below)
     * `OpenBracket`, `CloseBracket` (used for grouping expressions, and do not require a field ID or value)
@@ -270,6 +271,6 @@ This example filters records where:
 
 ::: tip
 You can use the screen [Criteria Definition](/platform/automation-and-rules/criteria-definitions) to visually build the required filter conditions through the system interface.
-Once you've defined the desired criteria using the UI, simply click the **Convert to Text** button to generate the equivalent text-based representation.
+Once you've defined the desired criteria using the UI, simply click the **Convert To Text** button to generate the equivalent text-based representation.
 This text can then be used directly in APIs or automation scripts.
 :::

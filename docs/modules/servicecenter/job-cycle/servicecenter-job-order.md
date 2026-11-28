@@ -56,7 +56,7 @@ odometer all arrive from the vehicle file.
 | Product details | The vehicle block: chassis, plate, engine, gear box, supplier code, accessories, last and current odometer with dates and their difference, recall campaign, insurance kilometre and dates, brand, model, production year, average daily mileage, service contract and status |
 | Operations (العمليات) | The work — see below |
 | Total (إجمالي السعر) | Materials total cost, tasks total cost, total cost |
-| Expected Next Visit (الزيارة القادة — the Arabic caption is missing a letter; read it as الزيارة القادمة) | Date and type — typed here, but overwritten by the closing |
+| Expected Next Visit (الزيارة القادمة) | Date and type — typed here; the closing overwrites the date when it can project one |
 | Dimensions (المحددات) | Legal entity, analysis set, branch, sector, department |
 
 A few of these are calculated and cannot be typed:
@@ -123,7 +123,7 @@ are recorded, they drive each task line's status, and they are visible for revie
 money.
 
 On our example job the technicians spent **7 hours 20 minutes**; the customer is billed for the
-catalogue's **6.5 hours**. That is not a bug, it is the design: a fixed-price workshop.
+catalogue's **6.5 hours**. That is the design: a fixed-price workshop.
 :::
 
 ## The details page
@@ -158,14 +158,8 @@ pairs, *Restrict In Issuing*, warehouse, locator, remarks.
 - As spare-parts issues consume the order, each line's satisfied and unsatisfied quantities are
   tracked in the ordinary way.
 
-If the module setting *Show Taxes Grid In Job Order And Other Documents* is on, four tax
+If the module setting *Show Taxes Grid In Job Order and Other Documents* is on, four tax
 percent-and-value pairs and a total-after-taxes column are appended to both grids.
-
-::: warning One tax only on operation lines
-On operation lines the second, third and fourth tax columns are filled with the **first** tax's
-value. A multi-tax setup does not work on labour lines — build your examples and your tax plans
-around a single tax.
-:::
 
 ## The Actions page
 
@@ -177,15 +171,15 @@ what was actually drawn, and the history of the order's own status changes.
 
 ## Statuses and what they block
 
-A job order moves through **Not Started, Under Processing, Stopped, Pending, Cancelled, Finished,
-Closed**. The status is never typed — it is derived from the entries other documents write, with one
+A job order moves through **Not Started, Under Processing, Manually Stopped, Pending, Cancelled,
+Finished, Closed**. The status is never typed — it is derived from the entries other documents write, with one
 override: if any entry says *Closed*, the order is Closed.
 
 | Status | What it means for you |
 |---|---|
 | Not Started | Freshly committed; nothing clocked yet |
 | Under Processing | Work has been clocked against at least one task |
-| Pending / Stopped | [Suspended](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md). A closing refuses these unless its term allows closing suspended orders |
+| Pending / Manually Stopped | [Suspended](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md). A closing refuses these unless its term allows closing suspended orders |
 | Finished | All work done, not yet closed |
 | Closed | Written by the closing document. **The order can no longer be edited at all** |
 | Cancelled | Abandoned; cannot be edited, cannot normally be closed |
@@ -201,27 +195,24 @@ On commit the document checks:
 
 1. **Lines are complete.** Every operation row must carry a task (unless it is a service row) and
    every spare-part row must carry a task — unless the term switches this off with the
-   *add tasks and materials from outside* option.
+   *Add Tasks And Materials to Job Order From Other Documents* option.
 2. **The master/child rules** described above, including no repeated task.
 3. **The odometer does not go backwards.** If the document's odometer date is on or after the
    vehicle's, the reading entered here may not be lower than the vehicle's current odometer.
 4. **The payer split adds up** — the four percentages must total 100 and the four values must total
    the line price, on every priced line.
 5. **One open job order per vehicle**, if the module setting *Do Not Allow Multiple Opened Job Orders
-   On Product* is on. A second order for the same vehicle is refused while an earlier one is neither
+   On Product At The Same Time* is on. A second order for the same vehicle is refused while an earlier one is neither
    Finished, Cancelled nor Closed.
 6. **Recall campaigns.** If the vehicle appears on an active [recall campaign](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md) that is inside its
    validity window and has not yet been executed, the commit is refused. There are two ways past it:
    tick *Ignore Recall Campaign Validation* on the header, or name the campaign in the header's
    **Recall Campaign** field — which is what you do when this job order *is* the recall work.
 
-::: warning A campaign value in the header switches the check off for every campaign
-The recall check is skipped whenever the header carries any campaign value at all — not just the one
-you named. And once a job order has carried a campaign, that value is copied onto later job orders
-for the same vehicle, so a second, different safety recall on that vehicle will never produce a
-warning. If recalls matter to you, check the campaign lists directly rather than relying on the job
-order to stop you.
-:::
+The recall check runs only while the header's **Recall Campaign** field is empty; any campaign value
+there skips it for every campaign, not only the one named. Picking the vehicle fills that field from
+the vehicle file, and the vehicle file keeps the first campaign a job document gives it, so every
+later job order for a vehicle whose file carries a campaign skips the check.
 
 ## Actions on this screen
 
@@ -257,9 +248,9 @@ The main page carries two action blocks, and the More menu adds one action.
 ![The Add Task To Job Order screen](../../../ar/modules/servicecenter/images/job-cycle/sc-add-task-to-job-order-en.png)
 
 The customer rings at midday and approves an extra repair. There is a document for that —
-**Add Task To Job Order** (إضافة مهام الي أمر الشغل), menu
+**Add Task To Job Order** (إضافة مهام إلى أمر الشغل), menu
 **Service Center > Documents > Add Task To Job Order** — and it works only if the job order's term
-has the *add tasks and materials from outside* option ticked. It can add operations and tasks only;
+has the *Add Tasks And Materials to Job Order From Other Documents* option ticked. It can add operations and tasks only;
 there is no way to add spare parts or resources with it, and it refuses a job order that is already
 Closed.
 
@@ -287,13 +278,15 @@ The canonical example never uses this document.
 No journal entry, no stock movement. What it *does* do:
 
 - Pushes the current odometer reading onto the vehicle file.
-- Records, for every task on the order, that this service was performed on this vehicle at this
-  mileage — which is what makes kilometre-based maintenance intervals work next time.
+- Records, for every task on the order that carries a kilometre recurrence for this vehicle, that
+  this service was performed on this vehicle at this mileage — which is what makes kilometre-based
+  maintenance intervals work next time.
 - Marks a matching recall campaign line as executed and stamps the execution date and document.
 - Closes the reception queue ticket named in the header.
 - Adds a product status entry, if the term names one.
-- Moves the source estimation, and the service request behind it, to *Under Processing* and stamps
-  its own number onto them.
+- Moves the document in *From Document* to *Under Processing* and stamps its own number up the
+  trail; the exact rule, including what an estimation update moves, is in
+  [Statuses travel back up the chain](/modules/servicecenter/job-cycle/servicecenter-job-cycle-overview#Statuses-travel-back-up-the-chain).
 
 From here the work is recorded on the shop floor, and then the order is
 [closed](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md).

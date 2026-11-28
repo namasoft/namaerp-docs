@@ -288,7 +288,8 @@ Users who may not create printing forms get no dialog. Their Print button says:
 
 The administrator then presses Print on any record of that screen, or uses the **More** menu, and from
 then on everyone can print it. Printing automatically after saving a document never opens the dialog,
-because a question after every save would get in the way; it still shows *There is no form to print*.
+because a question after every save would get in the way; it shows *There is no form to print* to a user
+who may create printing forms, and the message above to anyone else.
 
 ### Running it again
 

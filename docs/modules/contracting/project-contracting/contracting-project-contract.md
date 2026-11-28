@@ -10,7 +10,7 @@ The project contract is the centre of gravity of the whole contracting module. I
 And it is a **master file**, not a document. That single fact explains most of what surprises people about it:
 
 ::: tip What "master file" means here
-A project contract has **no document book, no document code, no value date, no fiscal period and no document term (توجيه)**. It has a code, a group, an Arabic name and an English name like any other master file. And because there is no document term, there are no accounts on it — so **saving or amending a contract produces no journal entry and no stock movement whatsoever**. Money reaches the ledger only when a [project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) is issued against the contract, using the accounts on the [standard terms](/modules/contracting/setup/contracting-standard-terms.md) and on the extract's own document term.
+A project contract has **no document book, no document code, no value date, no fiscal period and no document term (توجيه)**. It has a code, a group, an Arabic name and an English name like any other master file. And because there is no document term, there are no accounts on it — so **saving or amending a contract produces no journal entry and no stock movement whatsoever**. Money reaches the ledger only through the documents raised against the contract: the [project extract](/modules/contracting/project-contracting/contracting-project-extracts.md), using the accounts on the [standard terms](/modules/contracting/setup/contracting-standard-terms.md) and on the extract's own document term, and the [project advance payment](/modules/contracting/project-contracting/contracting-project-advances.md) and [project contract fine](/modules/contracting/project-contracting/contracting-project-fines.md), each through its own document term.
 :::
 
 The other consequence of being a master file is that the contract stays **alive**. A document is a frozen statement of a moment; this record is continuously written to. Every quantity survey, every extract, every cost document stamps its running total back onto the contract's term lines, which is exactly why the contract — and not some report — is where you look to see how the job is going.
@@ -23,17 +23,17 @@ Our worked example is contract **`PC-2026-001`** — the **Tower A** project for
 
 ## How terms arrive on a contract
 
-Nobody types a bill of quantities twice, and the module offers exactly two routes for getting one onto a contract. It is worth being precise about them, because the button readers go looking for does not exist.
+Nobody types a bill of quantities twice, and the module offers two main routes for getting one onto a contract. It is worth being precise about them, because the button readers go looking for does not exist.
 
-**Route 1 — from a bid, through the Source field.** Point the contract's **Source** (المصدر) field at a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md), a [contracting offer](/modules/contracting/project-contracting/contracting-offers.md), a [term sheet](/modules/contracting/setup/contracting-term-sheets.md), an [estimated budget](/modules/contracting/budgets/contracting-estimated-budget.md) or an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md), and choosing it pulls across the project, the customer and the whole terms and conditions collections. Lines marked as rejected on the bid are left behind. This is also what happens when you press *Convert Contract* on an offer or an assay — the conversion opens a new contract with the source already set and the lines already copied.
+**Route 1 — from a bid, through the Source field.** Point the contract's **Source** (المصدر) field at a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md), a [contracting offer](/modules/contracting/project-contracting/contracting-offers.md), a [term sheet](/modules/contracting/setup/contracting-term-sheets.md), an [estimated budget](/modules/contracting/budgets/contracting-estimated-budget.md) or an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md), and choosing it pulls across the project, the customer and the whole terms and conditions collections. Lines whose *Term Status* is *Rejected* on the bid are left behind. Pressing *Convert Contract* on an offer or an assay gets you to the same place by a different road: the conversion opens a new contract with the source already set and the lines already copied — every line, rejected ones included, because the conversion does not look at the term status.
 
 **Route 2 — from a contract template.** Choosing a [contract template](/modules/contracting/setup/contracting-contract-templates.md) in the **Contract Template** (نموذج العقد) field on the terms page copies the template's terms and conditions onto the contract. The act of selecting the template is what triggers the copy; there is no separate button to press afterwards. What the template does depends on how it was set up: a template flagged to replace terms and conditions clears whatever is already on the contract first, while a template flagged not to copy terms does nothing at all.
 
 ::: info There is no "copy terms" button, and Collect Terms is not it
-No action anywhere copies terms onto an existing contract on demand. If you have signed a contract and now want a different bill of quantities on it, you either re-pick the Source, choose a template, or raise a [contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md). The action named *Collect Terms* on the assay screen (Arabic *تجميع التحليلات*) copies analysis-card **costs** onto term lines that already exist — it does not bring terms in.
+No button copies terms onto an existing contract on demand. If you have signed a contract and now want a different bill of quantities on it, you either re-pick the Source, choose a template, use the *Copied From Doc* column described below, or raise a [contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md). The action named *Collect Terms* on the assay screen (Arabic *تجميع التحليلات*) copies analysis-card **costs** onto term lines that already exist — it does not bring terms in.
 :::
 
-A third, narrower route exists per line: the **Copied From Doc** column on a term line lets you pull a single line's content from another contract.
+A third route works from inside the grid: choosing a document (an assay, offer, term sheet, budget or another project contract) in the **Copied From Doc** column of a term line replaces that line with **all** the term lines of the chosen document, each tagged with that document in its *Copied From Doc* column.
 
 ## The header — page 1
 
@@ -86,9 +86,9 @@ Whether a row is a parent or a leaf is not a field you set on the line. It comes
 
 Beyond the money columns, three groups of columns are worth knowing:
 
-**Columns you fill.** Quantity, unit price, unit cost, additional costs, the discount and tax pairs, the permitted percentage (how much over-execution the client tolerates on this item), the payment percentage, the physical dimensions and count, the warranty block, the work area and the term categories.
+**Columns you fill.** Quantity, unit price, unit cost, additional costs, the discount and tax pairs, the permitted percentage (how much over-execution the client tolerates on this item), the physical dimensions and count, the warranty block, the work area and the term categories.
 
-**Columns the system fills.** *Quantity | From Execution*, *Quantity | From Extract*, *Quantity | From Cost Execution*, *Quantity | From Opening Extracts*, *Term Quantity From Contractors Extract*, *Actual Quantity* and *Actual Cost* are all written back by other documents. You never type them, and they are the reason this record is a master file: after two extracts on `PC-2026-001`, line `1.01` still reads 1,000 contracted, but its *Quantity | From Extract* reads 700, and its **Actual Cost** reads whatever the material issues, labour books and subcontractor extracts have actually consumed against term `1.01`. Contract value and actual cost sitting side by side in one grid is one of the few places a reader gets both numbers in one view — the other is the Statistics page.
+**Columns the system fills.** *Quantity | From Execution*, *Quantity | From Extract*, *Quantity | From Cost Execution*, *Quantity | From Opening Extracts*, *Term Quantity From Contractors Extract*, *Actual Quantity* and *Actual Cost* are all written back by other documents, and the line's payment percentage is copied from the term's line on the latest extract. You never type them, and they are the reason this record is a master file: after two extracts on `PC-2026-001`, line `1.01` still reads 1,000 contracted, but its *Quantity | From Extract* reads 700, and its **Actual Cost** reads whatever the material issues, labour books and subcontractor extracts have actually consumed against term `1.01`. Contract value and actual cost sitting side by side in one grid is one of the few places a reader gets both numbers in one view — the other is the Statistics page.
 
 **Columns that are reporting dimensions only.** **Work Area** (منطقة العمل) is copied forward from the contract to the execution to the extract, and it is genuinely useful for analysis, but nothing in the module filters, prices, totals or validates on it.
 
@@ -98,15 +98,7 @@ Above the grid sit three buttons. **Update Codes** (تحديث الأكواد) r
 
 A condition is not a note; it is a money rule that will be applied to every extract. Each line names a **Condition** from the [conditions catalogue](/modules/contracting/setup/contracting-conditions.md), a **Value Type** and a **Value**, and optionally a term code and a phase to restrict it to.
 
-The value type decides what the value means:
-
-| Value Type | The planned amount is |
-|---|---|
-| **Value** (قيمة) | the flat amount you typed |
-| **Percentage From Total** (نسبة من الإجمالي) | that percentage of the whole contract value |
-| **Percentage From Extract** (نسبة من المستحق) | that percentage of the work value on each extract |
-| **Percentage From Total Due Value** | that percentage of the extract's due value |
-| **Percent Of Custom Equation** | that percentage of a formula you define on the condition master file |
+The value type decides what the value means — a flat **Value** (قيمة), **Percentage From Total** (نسبة من الإجمالي) of the contract, **Percentage From Extract** (نسبة من المستحق) of each extract's work value, and five more; the full list of eight, with the formula each one computes, is under *How Much — Value Types* on [the conditions page](/modules/contracting/setup/contracting-conditions).
 
 Whether the amount is added to or deducted from what the client owes comes from the **condition master file**, not from the line — each condition is defined once as an addition, a deduction or "other", and every contract that uses it inherits that direction. The *Condition Planned Value* columns — addition, deduction, their tax and their after-tax figures — are then calculated for you on each save, so you can see the effect of a clause before a single extract exists.
 
@@ -128,7 +120,7 @@ Four columns: the execution company's tasks with remarks, and the customer's tas
 
 ### The Payments grid — the client's instalment plan
 
-Instalment code (mandatory), description, percentage, value, paid value, remaining, payment date, and the commercial paper the instalment is settled by. You can type the lines, or choose a **Payment Template** (نموذج الدفع) and press **GeneratePayments**, which asks for a number of instalments, a period, a grace period, a preferred day of week, a rounding rule and any explicit down/first/second/last amounts, then fills the grid.
+Instalment code (mandatory), description, percentage, value, paid value, remaining, payment date, and the commercial paper the instalment is settled by. You can type the lines, or choose a **Payment Template** (نموذج الدفع) and press **Generate Payments**, which asks for a number of instalments, a period, a grace period, a preferred day of week, a rounding rule and any explicit down/first/second/last amounts, then fills the grid.
 
 Two things follow from filling this grid. First, if a payment template is set, the contract will not save unless the instalment lines add up to the contract's total price — 230,000 on `PC-2026-001`. Second, each line can create a **commercial paper** (a cheque or promissory note, received from the client) automatically when the contract is committed, if your [configuration](/modules/contracting/contracting-configuration.md) permits this document type to create them.
 
@@ -138,9 +130,9 @@ Three buttons work on the grid: **Select all installment lines**, **Generate Rec
 
 **Employees** carries the staff assigned to this contract, with a from-date and a to-date on each row. Note the column is labelled *Technician* (الفني) although the page and the collection are called *Employees* and the field is a plain employee reference — read it as "assigned employee". Like tasks, these rows are documentary.
 
-**Contactor Contracts** lists the subcontracts carved out of this contract, so you can see the whole subcontracting picture from the owner contract.
+**Contractor Contracts** lists the subcontracts carved out of this contract, so you can see the whole subcontracting picture from the owner contract.
 
-**Statistics** is the "everything that happened against this contract" dashboard, and it is the page to open when somebody asks how the job is doing. Fourteen read-only lists show the project executions, the contractor executions, the project extracts, the contractor extracts, the actual costs, the cost sources, the cost execution documents, the contracting material issues and returns, the contract addendums, and three site-quality registers whose titles are in English on both language versions of the screen (*Finishing Works CheckList*, *Digging And BackFiling CheckList*, *Test Report*). Alongside them is an *Additional Info* grid — a few numbers, texts, dates and references for your own data, to record, filter and report on.
+**Statistics** is the "everything that happened against this contract" dashboard, and it is the page to open when somebody asks how the job is doing. Fourteen read-only lists show the project executions, the contractor executions, the project extracts, the contractor extracts, the actual costs, the costs, the cost sources, the cost execution entries, the contracting material issues and returns, the contract addendums, and three site-quality registers whose titles are in English on both language versions of the screen (*Finishing Works CheckList*, *Digging And BackFiling CheckList*, *Test Report*). Alongside them is an *Additional Info* grid — a few numbers, texts, dates and references for your own data, to record, filter and report on.
 
 **Related Documents** lists the [contract updates](/modules/contracting/project-contracting/contracting-project-contract-updates.md) raised against this contract, which together form the amendment history of the record.
 
@@ -198,16 +190,17 @@ Most of these you will never hit, but the ones that catch people are worth listi
 | The parent estate must be a Real Estate project, and a line's estate must belong to it | |
 | A payment period value needs its unit | |
 | The main contract is required when the type is *Addendum* | |
+| A *Source* that is a confirmed contracting assay, or an assay whose term sheet or measurements request is already converted to a contract | *Assay is confirmed* / *Rejected assay* — see [the assay's status](/modules/contracting/project-contracting/contracting-assays#Status) |
 
 ## Once extracts exist, the contract freezes
 
-This is the behaviour that sends people looking for the amendment document, so it deserves a plain statement. As soon as **any** extract has been issued against the contract — and unless your configuration explicitly allows editing prices and quantities after extracts — three sets of fields become read-only:
+This is the behaviour that sends people looking for the amendment document, so it deserves a plain statement. As soon as **any** extract has been issued against the contract — and unless the contracting configuration option **Allow Edit Prices And Quantities In Project Contract After Make Extracts** is ticked — three sets of fields become read-only:
 
 - on the header: the main contract, the record category, project, customer, start and end dates, phases group and all three discount fields;
 - on **term lines that have been extracted or executed**: the term code, quantity, unit, prices, discounts, the standard term, the taxes, the dimensions and count, and the phase, quantity and price percentage of all five phase slots;
 - on **every** condition line: the condition, value type, value, completion percentage, term code, phase and the calculated-after-previous flag.
 
-Untouched term lines stay editable, and you can still add new lines. But for anything else you raise a [project contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md), which exists precisely for this and which rewrites the contract on your behalf. Note that the update goes through the contract's own validation, so it is subject to the same freeze — the update is a controlled, audited path through it, not a way around it.
+Untouched term lines stay editable, and you can still add new lines. A [project contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md) records a change as a dated document and rewrites the contract on your behalf, but it goes through the contract's own validation, so it is subject to the same freeze: changing a frozen field needs the option above ticked, whichever route you take.
 
 ## Two side effects on commit
 
@@ -219,7 +212,7 @@ Committing a contract does not create any journal entry, but it can start two th
 
 ## Carving out a subcontract
 
-**Convert Selected Lines To Contractor Contract** (تحويل السطور المختارة لعقد مقاول باطن) is the single bridge from the owner side to the cost side. Tick the term lines you are giving away — on `PC-2026-001`, `3.01` *Blockwork*, all 2,000 m² of it — and press it. A new, unsaved [subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) opens, pre-filled with this contract as its project contract, the same project and customer, the price before discount and both discount figures, the remarks, the contract type and the main-contract reference, a source reference back to this contract, and the converted term and condition lines. You review the rates you are prepared to pay, save, and the subcontractor chain takes over from there.
+**Convert Selected Lines To Contractor Contract** (تحويل السطور المختارة لعقد مقاول باطن) is the single bridge from the owner side to the cost side. Tick the term lines you are giving away — on `PC-2026-001`, `3.01` *Blockwork*, all 2,000 m² of it — and press it; with no term line ticked it only asks you to select rows. A new, unsaved [subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) opens, pre-filled with this contract as its project contract, the same project and customer, the price before discount and both discount figures, the remarks, the contract type and the main-contract reference, a source reference back to this contract, the ticked term lines (a line under a ticked heading line comes along, ticked or not) and the ticked condition lines. You review the rates you are prepared to pay, save, and the subcontractor chain takes over from there.
 
 ## Actions on this screen
 
@@ -229,12 +222,12 @@ Above the terms grid:
 
 - **Update Codes** — renumbers every term line from scratch by walking the grid top to bottom (`1`, `1.1`, `1.2`, `2` …), following the parent/leaf type of each line. It overwrites codes you typed yourself.
 - **Update Empty Term Codes Only** — the safe version: gives a code only to lines that have none, leaving existing codes alone.
-- **Convert Selected Lines To Contractor Contract** — opens a new, unsaved subcontract carrying the ticked term lines and the conditions, pointing back at this contract (see [Carving out a subcontract](#Carving-out-a-subcontract)).
+- **Convert Selected Lines To Contractor Contract** — opens a new, unsaved subcontract carrying the ticked term lines and the ticked condition lines, pointing back at this contract (see [Carving out a subcontract](#Carving-out-a-subcontract)).
 
 Above the payments grid:
 
 - **Select all installment lines** — ticks every instalment line.
-- **GeneratePayments** — the label really reads like that on English screens. Splits the contract's due value into instalments from the payment template.
+- **Generate Payments** — splits the contract's due value into instalments from the payment template.
 - **Generate Receipt Voucher** — opens a receipt voucher against the customer for the whole remaining amount.
 - **Generate Receipt Voucher For Selected Payments** — the same, for the ticked instalment lines only.
 

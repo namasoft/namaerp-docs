@@ -27,7 +27,7 @@ Automatic execution during document save/commit operations to validate that item
    - Warehouse location (if enabled)
    - Free item status for invoice lines (if enabled)
 4. **Detects duplicates** - Tracks line numbers where each unique key appears
-5. **Reports violations** - Creates errors or warnings when duplicate keys are found
+5. **Reports violations** - Adds the error (or, when Parameter 8 is true, the warning) *The item {0} appeared in line {1} and {2}* when duplicate keys are found. Lines without an item are skipped
 6. **Shows line numbers** - Identifies specific lines containing duplicate items
 
 ## Parameters

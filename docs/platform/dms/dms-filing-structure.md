@@ -58,14 +58,14 @@ hierarchy can go as deep as you need.
 
 | Field | Arabic label | What it does |
 |---|---|---|
-| **Parent** | المجموعة الأعلي | The folder above this one. The picker offers only folders that do **not** accept elements. |
+| **Main Folder** | المجموعة الأعلى | The folder above this one (its parent). The picker offers only folders that do **not** accept elements. |
 | **Accepts Elements** | يقبل عناصر | The switch that decides what this folder is for. See below — it matters more than it looks. |
 | **Aclaseir Folder** | حافظة | Marks the folder as a binder rather than a normal folder. A document can be filed in a binder *in addition to* its normal folder. |
-| **Importance** | الأهميه | A numeric priority you can filter and sort on. |
-| **Default Topic** | الموضوع الأفتراضي | Pushed onto any document filed here. |
-| **Default Location** | الموقع الأفتراضي | Pushed onto any document filed here. |
-| **Default Sub Location** | الموقع الفرعي الأفتراضي | Pushed onto any document filed here. |
-| **Default Detailed Location** | الموقع التفصيلي الأفتراضي | Pushed onto any document filed here. |
+| **Importance** | الأهمية | A numeric priority you can filter and sort on. |
+| **Default Topic** | الموضوع الافتراضي | Pushed onto any document filed here. |
+| **Default Location** | الموقع الافتراضي | Pushed onto any document filed here. |
+| **Default Sub Location** | الموقع الفرعي الافتراضي | Pushed onto any document filed here. |
+| **Default Detailed Location** | الموقع التفصيلي الافتراضي | Pushed onto any document filed here. |
 
 ### Accepts Elements — the switch that trips everyone up
 
@@ -73,7 +73,7 @@ A folder is either a **container** for other folders, or a **filing place** for 
 cannot be both, and *Accepts Elements* is how you say which:
 
 - **Ticked** — documents can be filed here. The folder appears in the Folder picker on the
-  document screen. It will **not** appear in the Parent picker of another folder.
+  document screen. It will **not** appear in the Main Folder picker of another folder.
 - **Cleared** — the folder is a branch. It can be a parent, but no document can be filed directly
   in it.
 
@@ -82,7 +82,7 @@ Every folder is created with *Accepts Elements* already ticked, and adding a chi
 **not** clear it. So when you build a tree top-down, you must untick the box on each branch
 folder yourself before it will show up as a possible parent.
 
-If you have just created a folder and it refuses to appear in another folder's Parent picker,
+If you have just created a folder and it refuses to appear in another folder's Main Folder picker,
 this is why.
 :::
 
@@ -91,7 +91,7 @@ this is why.
 The four `Default …` fields are a convenience that saves a lot of typing, and they flow in two
 directions:
 
-1. **Parent folder → child folder.** Choose a parent, and its four defaults are copied down into
+1. **Parent folder → child folder.** Choose a Main Folder, and its four defaults are copied down into
    the folder you are creating. Change them afterwards if the child differs.
 2. **Folder → document.** File a document into a folder, and the folder's default topic, archive,
    sub location and detailed location are written onto the document.

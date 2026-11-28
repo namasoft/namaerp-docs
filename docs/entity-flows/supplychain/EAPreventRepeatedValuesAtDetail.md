@@ -28,8 +28,7 @@ Automatic execution during document save/commit operations to validate that spec
    - Creates composite key from field values
    - Checks if key already exists from previous lines
 5. **Detects duplicates** - Tracks which line number first used each unique key combination
-6. **Reports violations** - Creates failure results when duplicate keys are found
-7. **Shows line numbers** - Identifies specific lines containing duplicate field combinations
+6. **Reports violations** - Adds a failure for every line whose combination of values already appeared on an earlier line
 
 ## Parameters
 
@@ -39,7 +38,7 @@ Example: `details`, `packingList`, `paymentLines`
 
 **Parameter 2:** Not To Repeat Field Names (Required) - Field names that should not have duplicate combinations, separated by comma (,) or Enter
 
-Format: Comma-separated or newline-separated field names with collection prefix
+Format: Comma-separated or newline-separated field names with collection prefix. A name that does not start with the details name of Parameter 1 followed by a dot is refused with *The field {0} does not belong to the details {1}*
 
 Example: `details.text1,details.item.item`
 

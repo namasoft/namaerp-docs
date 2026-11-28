@@ -28,7 +28,7 @@ Reshape screens, lists, and even built-in labels to fit how your team actually w
   <LandingCard icon="⚙️" title="Global Configuration" link="/platform/global-config/" details="The one settings file that belongs to every module — decimal places, tax arithmetic, login rules, appearance and more, one tab at a time." />
   <LandingCard icon="🎚️" title="Screen Modifier" link="/platform/screen-modifier/" details="Rearrange fields, hide what you don't use, and redesign edit screens, list views, and selectors with the visual layout editor." />
   <LandingCard icon="🌲" title="The Menu" link="/platform/menus/" details="The navigation tree itself — how it is built, how to change it so your changes survive a rebuild, and why one person sees an entry another does not." />
-  <LandingCard icon="📋" title="List Views" link="/platform/list-views/" details="Quick filters for finding records fast, and limiting a user to a single fiscal year." />
+  <LandingCard icon="📋" title="List Views" link="/platform/list-views/" details="Custom list views, quick filters, bulk edit and mass operations on the rows you select, and limiting a user to a single fiscal year." />
   <LandingCard icon="🔤" title="Modifying Translations" link="/platform/translations.md" details="Change any label or term in the system to match your organisation's wording." />
   <LandingCard icon="🔧" title="Fields and Entities Settings" link="/platform/fields-and-entities-settings/" details="Change how fields behave: input rules, lookups, icons, calculated fields, automatic coding, and integrators." />
 </LandingGrid>

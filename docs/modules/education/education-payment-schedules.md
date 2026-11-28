@@ -13,10 +13,10 @@ to — and **Payment Methods**, which is the reality — the money that has actu
 Keeping those two apart is the whole idea. The schedule says what is due and when; the payment lines
 say what was received and how. This page covers both.
 
-## Three ways a schedule comes into being
+## Two ways a schedule comes into being
 
-You can build the plan by hand, let a saved template build it, or let a dialog build it. All three
-end up writing lines into the same **Payments** grid.
+You can build the plan by hand or let a saved template build it. Both end up writing lines into the
+same **Payments** grid.
 
 ### Typing the lines yourself
 
@@ -26,60 +26,27 @@ when you save (see below).
 
 This is the right approach for the awkward cases: a family that pays half in September and half in
 February, a company that insists on paying against milestones, a plan that was negotiated line by
-line. It is also the slowest, which is why the other two options exist.
+line. It is also the slowest, which is why templates exist.
 
 ### Choosing a Payment Template
 
 The header field **Payment Template** points at a saved plan — *four equal monthly instalments after
-a 20% down payment*, say — that your organisation set up once and reuses on every contract. Picking
-one on the contract immediately builds the schedule.
-
-The template works in two steps. First it applies its **down payment**, either as a fixed amount or
-as a percentage; that amount is set aside as paid at signing and comes off the top. Then it spreads
-what is left:
-
-- An **equal-payment** template produces the number of instalments it specifies, each worth the
-  balance divided by that count, with dates marching forward one period at a time. Rounding is
-  handled by letting the **last** instalment absorb the difference, so the lines always add back up
-  to the exact balance. The template decides whether the first instalment sits on the contract's
-  value date or one full period after it.
-- A **variable-payment** template produces one instalment per line in the template, each either a
-  fixed amount or a percentage of the balance, with its own interval and its own description carried
-  across.
-
-If the template specifies a rounding approximation, every instalment except the last is rounded to
-that multiple and the last one takes the balance — which keeps the plan tidy without losing a
-piastre.
+a fixed down payment*, say — that your organisation set up once and reuses on every contract.
+Picking one on the contract immediately builds the schedule, counting from the contract's **Value
+Date** and spreading what the contract leaves to be paid. A fixed down payment on the template is
+written into the contract as paid at signing and comes off the top.
 
 ::: warning Choosing a template replaces the schedule
 The template does not merge with what is already in the Payments grid; it **rebuilds it**. Anything
-you had typed there by hand is gone. So set the template first, and hand-adjust afterwards — never
-the other way round.
+you had typed there by hand is gone. The schedule is built only at the moment you pick the template:
+saving the contract never rebuilds it, whatever updating type the template carries. So finish the
+student lines, set the template, and hand-adjust afterwards — never the other way round.
 :::
 
-Payment templates are a platform-wide feature and are set up outside the Education menu; the
-[Payment Schedules User Guide](/modules/invoicing/payment-schedules-user-guide) covers building them.
-
-### The Generate Payments button
-
-When the plan is a one-off and does not deserve a saved template, use the **Generate Payments**
-button on the contract's toolbar. It asks the same questions a template would answer, but asks them
-now:
-
-- **How many instalments** to produce.
-- **The period between them** — a number plus a unit (Day, Week, Month, Year; Month is the default).
-  "1 Month" gives monthly instalments, "3 Month" gives quarterly ones.
-- **Where to start** — the date the first instalment is measured from — plus an optional **grace
-  period**, again a number and a unit, that pushes the first due date out before the count begins.
-  A one-month grace on a course starting in September means the first instalment falls in October.
-- **Rounding** — an approximation to round each instalment to, and whether to round up, down or to
-  the nearest.
-- Optional **down payment**, and optional overrides for the **first**, **second** and **last**
-  instalment when those need to differ from the rest.
-- A **day of the week** to align the due dates on, when a collection run happens on a fixed weekday.
-
-Generate Payments needs the contract to be worth something first — it refuses to run against a
-contract whose lines have not been filled in.
+Payment templates are a platform-wide feature and are set up outside the Education menu. How a
+template spreads the balance — equal or variable payments, the first payment date, rounding, and the
+last instalment absorbing the difference — is explained in the
+[Payment Schedules User Guide](/modules/invoicing/payment-schedules-user-guide).
 
 ## A worked example
 
@@ -100,10 +67,13 @@ Add a rounding approximation of 100 rounding down, and it gets tidier again: sev
 exact total for the ledger.
 
 ::: tip When the totals do not match
-*Payments total {0} is not equal to remaining {1}* means the schedule and the contract disagree. It almost
-always happens because someone edited a student line — changed a price, added a student, applied a
-discount — **after** the schedule was generated. Regenerate the schedule, or adjust a line by hand,
-so the instalments add back up to what is left to pay.
+*Payments total {0} is not equal to remaining {1}* — «مجموع الدفعات {0} لا يساوي قيمة المتبقي {1}» —
+means the schedule and the contract disagree. The check runs whenever the contract has schedule lines
+or a Payment Template. It almost always happens because someone edited a student line — changed a
+price, added a student, applied a discount — **after** the schedule was built. Pick the template
+again, or adjust a line by hand, so the instalments add back up to what is left to pay. The check is
+switched off for the whole installation by **Do Not Compare Remaining With Payment Total In
+Invoices** in the global configuration.
 :::
 
 ## Instalment codes
@@ -135,9 +105,8 @@ code, and so does any payment document that pays one off.
 
 **Remaining** and **Paid** are maintained for you and are the two columns to look at when someone
 asks whether an instalment is settled. **System paid** is the interesting one: it rises whenever
-another document settles this instalment, and the **Installment Payments** button on the contract's
-toolbar opens the list of exactly which documents did so and for how much. That list is the answer to
-"who paid this, and when?".
+another document — a receipt voucher or a [Course Contract Cancel](./education-contract-cancellation) —
+settles this instalment by its code.
 
 If the document term has **Pay Installments In Order** switched on, instalments must be settled
 oldest first — a useful guard against a family paying June while May is still open.

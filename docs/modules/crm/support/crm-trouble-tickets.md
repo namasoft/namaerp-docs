@@ -17,7 +17,7 @@ Marina Plaza's split unit becomes ticket `TKT-0451`, raised on 6 April 2026 from
 
 ## Opening a ticket
 
-A ticket arrives one of two ways: pressing **تحويلة إلي طلب دعم / Convert To Ticket** on a complaint, which opens a ticket pre-filled with the customer, product, serial number, description and external responsible party; or by opening **Customer Relationship Management → Support → Trouble Ticket** and starting from scratch.
+A ticket arrives one of two ways: pressing **تحويله إلى طلب دعم / Convert To Ticket** on a complaint, which opens a ticket pre-filled with the customer, product, serial number, description and external responsible party; or by opening **Customer Relationship Management → Support → Trouble Ticket** and starting from scratch.
 
 Either way the new record opens with **Ticket Date** set to today, **Estimated Fix Period** measured in hours, **Responsible Employee** set to whoever is logged in, and **Status** = *مبدئي / Initial*.
 
@@ -32,9 +32,9 @@ Four fields, two of which you cannot type into:
 - **Estimated Fix Period** (*وقت التنفيذ المقدر*) — your estimate, in hours by default.
 - **Actual Fix Period** (*وقت التنفيذ الفعلي*) — read-only, accumulated from Ticket Execution documents.
 - **Ticket Date** (*تاريخ الطلب*) — defaults to today, and it is this date the coverage lookup tests.
-- **Closing Date** (*تاريخ الإغلاق*) — read-only.
+- **Closed Date** (*تاريخ الإغلاق*) — read-only.
 
-Closing Date is stamped when the ticket itself is saved with status *Closed*, or when a Ticket Execution reaches 100 % completion.
+Closed Date is stamped when the ticket itself is saved with status *Closed* and the date is still empty, or when a Ticket Execution reaches 100 % completion.
 
 ### The discussion thread
 
@@ -42,9 +42,9 @@ Below the main fields sits the ticket's conversation: twenty text boxes. Type in
 
 ## Coverage
 
-The moment you pick a Customer and a Product, two read-only fields fill themselves in:
+Once the ticket has a Product, two read-only fields fill themselves in:
 
-- **نوع التغطيه / Covering Type** — *Covered By Contract*, *In Warranty Period* or *Not Covered*.
+- **نوع التغطية / Covering Type** — *Covered By Contract*, *In Warranty Period* or *Not Covered*.
 - **سند التغطية / Covering Document** — the contract or warranty that produced the answer.
 
 They are recomputed every time the ticket is read, so they always reflect today's contracts and warranties rather than a snapshot taken when the ticket was raised.
@@ -74,10 +74,10 @@ Status is **not** something you type. The field is read-only on screen, and the 
 
 ### 1. Assign — and the status jumps on its own
 
-Open the **مسند إلي / Assigned To** tab and add rows to the **الموظفين / Employees** grid. On `TKT-0451` that means the two technicians, `EMP-2011` and `EMP-2014`.
+Open the **مسند إلى / Assigned To** tab and add rows to the **الموظفين / Employees** grid. On `TKT-0451` that means the two technicians, `EMP-2011` and `EMP-2014`.
 
 ::: warning Filling the Employees grid forces the status to Assigned
-Every single time the ticket is saved, if the Employees grid has at least one row the status is set to *مسند / Assigned* before anything else is applied. You cannot leave a ticket on *Initial* once technicians are on it, and — more surprisingly — a status set by some other route can be pushed back to *Assigned* by an unrelated later save.
+Every single time the ticket is saved, if the Employees grid has at least one row the status is set to *مسند / Assigned* before anything else is applied; then the status last chosen through Change Status or a Ticket Follow-Up, if there is one, is applied on top. You cannot leave a ticket on *Initial* once technicians are on it, and — more surprisingly — a status written by a Ticket Execution is replaced at the next save of the ticket: by that chosen status, or by *Assigned* when none was ever chosen.
 :::
 
 The grid is also what makes the ticket's technicians selectable on a Ticket Execution: the employee picker there offers only the ticket's responsible employee and the people in this grid.
@@ -86,32 +86,13 @@ The grid is also what makes the ticket's technicians selectable on a Ticket Exec
 
 The **تغيير الحالة / Change Status** action on the Main tab opens a small dialog. It offers exactly five choices:
 
-**In Progress · Cancelled · Closed · Finished · ReOpen**
+**In Progress · Cancelled · Closed · Finished · Reopen**
 
-Choosing one writes that status onto the ticket and makes it stick across later saves. Choosing **In Progress** also starts a stopwatch row for the current employee; choosing anything except **ReOpen** stops it.
+Choosing one writes that status onto the ticket and makes it stick across later saves. Choosing **In Progress** also starts a stopwatch row for the current employee; choosing anything except **Reopen** stops it.
 
 ### 3. The status gateway — eight statuses live somewhere else
 
-The ticket has **thirteen** statuses, and this is the single least discoverable fact in the whole support area:
-
-| Reachable from Change Status | Reachable **only** through a Ticket Follow-Up |
-|---|---|
-| قيد التنفيذ / In Progress | مبدئي / Initial |
-| ملغي / Cancelled | مسند / Assigned |
-| مغلقة / Closed | تم التنفيذ / Done |
-| منتهي / Finished | مؤجل / Postponed |
-| معاد فتحه / ReOpen | طلب تطوير / Development Request |
-| | بانتظار رد العميل / Customer Feedback |
-| | OutSideContractScope *(no translation in either language)* |
-| | خارج الضمان / Out Of Warranty |
-
-::: danger The eight missing statuses are not on the ticket screen at all
-If your desk wants to park a case as *Postponed*, *Waiting for Customer Feedback*, *Out Of Warranty* or *Development Request*, the Change Status dialog will never offer them and the Status field itself is read-only. The **only** way to set those eight is to raise a [Ticket Follow-Up](/modules/crm/support/crm-ticket-follow-ups.md) with the value in its *Ticket New Status* field and commit it.
-
-(*Initial* and *Assigned* also appear in the right-hand column because the system sets them for you — Initial on a new record, Assigned whenever the Employees grid has rows — but if you ever need to put a ticket **back** to one of them by hand, the follow-up is again the only route.)
-
-Two of those statuses show a raw Latin word rather than a translated label: **OutSideContractScope** has no translation in Arabic or English, and *Modification* on the Ticket Type list is translated in Arabic only.
-:::
+The ticket has **thirteen** statuses, and this is the single least discoverable fact in the whole support area: Change Status reaches five of them, and the other eight — *Initial*, *Assigned*, *Done*, *Postponed*, *Development Request*, *Feedback from Customer*, *OutSideContractScope* and *Out Of Warranty* — can be set by hand **only** by committing a Ticket Follow-Up with the value in its *Ticket New Status* field. The Status field itself is read-only. [The status gateway](/modules/crm/support/crm-ticket-follow-ups#The-status-gateway) on the Ticket Follow-Ups page has the full table.
 
 Train the desk on this early. Sites that do not know about it end up using only five statuses and inventing conventions in the description field to express the rest.
 
@@ -119,10 +100,10 @@ Train the desk on this early. Sites that do not know about it end up using only 
 
 Two routes:
 
-- **Change Status → Closed**, then save — the ticket is closed and Closing Date is filled with the date of that save.
-- **Commit a Ticket Execution at 100 % completion** — the ticket shows *Finished* and Closing Date is set to that line's From Date. On `TKT-0451`, execution `TEXE-0679` on 13 April does exactly this.
+- **Change Status → Closed**, then save — the ticket is closed and Closed Date is filled with the date of that save.
+- **Commit a Ticket Execution at 100 % completion** — the ticket shows *Finished* and Closed Date is set to that line's From Date. On `TKT-0451`, execution `TEXE-0679` on 13 April does exactly this.
 
-**ReOpen** puts the ticket back into play; nothing else changes, and the Closing Date is not cleared.
+**Reopen** puts the ticket back into play; nothing else changes, and the Closed Date is not cleared.
 
 ## The ticket's stopwatch
 
@@ -154,15 +135,15 @@ Tell technicians to press **إنهاء / End** before starting work on another t
 |---|---|
 | **تنفيذ / Execute** | Opens an unsaved **Ticket Execution** in a pop-up, already pointing at this ticket, with one line for the responsible employee starting now |
 | **تغيير الحالة / Change Status** | The five-value dialog described above |
-| **تحويل إلي سؤال شائع / Convert To FAQ** | Creates a CRM FAQ entry: the question is the ticket's description, the answer is every Ticket Execution note recorded against this ticket, run together |
-| **تصعيد الي / escaleted to** | Stamps the chosen employee into *Escalated To* |
-| **إنشاء طلب تطوير / Development Request** | Opens an unsaved Development Request carrying this ticket, customer, product and description |
+| **تحويل إلى سؤال شائع / Convert To FAQ** | Opens a new, unsaved CRM FAQ: the product is the ticket's product, the question is the ticket's description, the answer is every Ticket Execution note recorded against this ticket, run together. Refused with *"You must enter the product"* («يجب عليك إدخال المنتج») or *"You must enter the ticket description"* («يجب عليك إدخال وصف المشكلة») when either is empty |
+| **تصعيد إلى / escalated to** | Stamps the chosen employee into the *escalated to* field |
+| **إنشاء طلب تطوير / Create Development Request** | Opens an unsaved Development Request carrying this ticket, customer, product and description |
 | **عمل متابعة / Create CRM Follow Up** | Opens an unsaved **Ticket Follow Up** |
 
-::: warning Two buttons that do not do what their label says
-**Create CRM Follow Up** opens a **Ticket Follow-Up**, not the CRM Follow-Up document from the Activities folder. Those are two different screens with different fields; the CRM Follow-Up is reachable only from its own menu item. See [Tasks and Follow-Ups](/modules/crm/activities/crm-tasks-and-follow-ups.md).
+::: warning What Create CRM Follow Up and escalated to actually do
+**Create CRM Follow Up** opens a **Ticket Follow-Up**, not the CRM Follow-Up document from the Activities folder. Those are two different screens with different fields; the CRM Follow-Up is reachable only from its own menu item. See [Tasks and Follow-Ups](/modules/crm/activities/crm-tasks-and-follow-ups).
 
-**escaleted to** saves and commits the whole stored record the moment you press it — and it commits the version held on the server, so any edits you have made on screen but not yet saved are **not** included. It also does not change the status: there is no *Escalated* state for a ticket, no escalation queue and no notification. Save your work before pressing it.
+**escalated to** saves and commits the whole stored record the moment you press it — and it commits the version held on the server, so any edits you have made on screen but not yet saved are **not** included. It also does not change the status: there is no *Escalated* state for a ticket, no escalation queue and no notification. Save your work before pressing it.
 :::
 
 The **Assigned To** tab carries two more buttons, **بدء / Start** and **إنهاء / End**. Start opens a stopwatch row for the current user's employee (or, failing that, the ticket's responsible employee), first closing that person's open row on any other ticket; End closes the current user's open rows on this ticket. Both are described under [The ticket's stopwatch](#The-tickets-stopwatch).

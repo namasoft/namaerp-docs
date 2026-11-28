@@ -15,18 +15,18 @@ Copies subsidiary account assignments from account bag to fill empty subsidiary 
 
 ## When This Action Runs
 
-Manual or automated execution on entities implementing HasSubsidiaryAccounts interface to populate empty subsidiary account fields.
+Manual or automated execution on records that carry subsidiary accounts (customers, suppliers and the other subsidiary types) to populate empty subsidiary account fields.
 
 ## How It Works
 
-1. **Validates entity** implements HasSubsidiaryAccounts interface
-2. **Checks account structure** and account bag configuration 
-3. **Retrieves account templates** from account bag
-4. **Identifies empty fields** and selectively fills with template assignments
+1. **Checks the record** has subsidiary accounts; on any other record the flow does nothing
+2. **Checks the accounts bag** chosen on the record; when no accounts bag is chosen the flow does nothing
+3. **Retrieves the accounts** of that accounts bag
+4. **Identifies empty fields** and fills only those from the accounts bag
 
 ## Key Parameters
 
-**No Parameters Required** - Automatically detects entities with subsidiary accounts and uses configured account bag for template source.
+**No Parameters Required** - The accounts bag is the one chosen on the record itself.
 
 
 ## Database Tables Affected

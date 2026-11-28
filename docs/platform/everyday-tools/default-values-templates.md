@@ -96,8 +96,8 @@ and warehouse set by three lines per row.
 
 The **Expression** column takes a calculation instead of a fixed value, evaluated against the record
 being created. It is how you set a value that depends on something else on the same record rather
-than on a constant — and because it runs after the fixed values in the grid have been applied, it can
-build on them.
+than on a constant. The grid is applied row by row, in order, and a row's expression is worked out
+right after that row's fixed value, so it can build on the values set by the rows above it.
 
 The **Fields Map** box below the grids does the same job in bulk, taking `target=source` lines. Both
 use the same expression language as entity flows, so anything you can write in one you can write in
@@ -125,9 +125,13 @@ takes the **first** of these that applies:
 
 1. **A template you picked explicitly** — from the More menu, a keyboard shortcut, or a menu entry
    that has a template pinned to it.
-2. **The template named on the document's book or term**, or on a master file's group. Document
-   books, document terms and master groups each carry their own **Template** field, and it beats the
-   user's own automatic template.
+2. **The template named on a book or term the system fills in by itself.** When the Global
+   Configuration option *If Single Book Is Defined For Entity Use It With New* (or *If Single Term Is
+   Defined For Entity Use It With New*) is ticked and the document type has exactly one book (or
+   term), a new document starts with that book (or term) already chosen. The book's **Template** is
+   used, or the term's when the book has none, and it beats the user's own automatic template.
+   A book, term or group the user picks later applies its own template at that point — see
+   [Applying a template part-way through typing](#Applying-a-template-part-way-through-typing).
 3. **Your automatic template** for that entity type.
 
 ### What makes a template automatic
@@ -206,7 +210,6 @@ the fields in the file and nothing else.
 | Manual | Never applied automatically; only on demand |
 | Do Not Add To More Menu | Keeps the template out of the screen's More menu — **starts ticked** |
 | Cursor Field | Which field the cursor lands in after the record is created |
-| Inactive | Takes the template out of automatic use and out of the More menu |
 | Do Not Use With Mobile | Skips this template when the record is being created from the mobile app |
 
 **Cursor Field** is a small thing that saves a great deal of time. If a template fills in the first

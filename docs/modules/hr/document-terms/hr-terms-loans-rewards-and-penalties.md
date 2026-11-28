@@ -1,5 +1,5 @@
 ---
-entities: [HRLoanDocument, HRLoanRequest, AggHRLoanDocument, HRLoanPaymentDocument, HRLoanReliefDocument, AggHRLoanInstallReschedule, RewardAndPenaltieDocument, AggrRewardAndPenaltieDoc, HOPenaltyDocument]
+entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
 
@@ -28,15 +28,15 @@ its own:
 | Option | Field | What it does |
 |---|---|---|
 | **Without Accounting Effect** | `termConfig.withoutAccountingEffect` | Suppresses the document's entry. |
-| **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | Skips the loan-type conditions — length of service, maximum amount, the employee-state list on [HR Configuration](/modules/hr/setup/hr-configuration) and the rest. This is the exception term, for the loan that management approved despite the rules. |
-| **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | The instalment schedule is built automatically when the document is saved, instead of waiting for the user to press *Generate Installments*. |
+| **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | Skips the loan type's **Conditions Should Be Matched In Loan Document** grid (see [Loan Types](/modules/hr/loans/hr-loan-types#Eligibility-conditions)). The other checks still run: the employee's state against the allowed states on [HR Configuration](/modules/hr/setup/hr-configuration), and the loan type's minimum and maximum loan amount and instalment count. This is the exception term, for the loan that management approved despite the condition rows. |
+| **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | When the document has no instalment lines, the instalment schedule is built automatically when it is saved, instead of waiting for the user to press *Generate Installments*. Lines already on the document are left alone. |
 
 **The Loan Request term** has a *Home* tab with the two loan options and nothing else — a request
 creates no accounting entry:
 
 | Option | Field | What it does |
 |---|---|---|
-| **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | The request is saved without checking the loan type's conditions, exactly as on the loan document. |
+| **Ignore Conditions For Loan Document** | `termConfig.ignoreConditionsForLoanDocument` | The request is saved without checking the loan type's condition rows, exactly as on the loan document. |
 | **Generate Installments With Save** | `termConfig.generateInstallmentsWithSave` | When the request has no instalment lines, saving it builds the instalment schedule from the amount, the instalment count and the payment start date. Lines already on the request are left alone. |
 
 **The Loan Payment and Loan Relief terms** each carry only the two account sides, **Debit**

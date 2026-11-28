@@ -47,7 +47,7 @@ Below the header the screen splits into three panels, one per party. This is the
 
 **The first panel is the site team.** A **Survey Engineer** — the person who set out and verified the levels — followed by the site team's **Civil Engineer**, **Mechanical Engineer** and **Electrical Engineer**.
 
-**The second panel is quality control.** A verdict — **Reviewed By Qc** — followed by the same three discipline slots, so the QC engineer of the relevant trade signs against his own discipline.
+**The second panel is quality control.** A verdict — **Reviewed By QC** — followed by the same three discipline slots, so the QC engineer of the relevant trade signs against his own discipline.
 
 **The third panel is the consultant.** Again a verdict, and again the three discipline slots.
 
@@ -62,8 +62,6 @@ The QC verdict and the consultant verdict each offer the same three answers:
 | **Acceptable** | proceed |
 | **Acceptable with comments** | proceed, and fix the listed points as you go |
 | **Not acceptable** | do not proceed; rework and re-raise the request |
-
-The list shows these as short internal option names rather than translated captions, so read them by their order: acceptable first, acceptable-with-comments second, not-acceptable third.
 
 Because the choices carry no remark box of their own, the reason for anything other than a clean *Acceptable* has to go in the document's description. Make that a rule for your QC team — a *not acceptable* with no written reason is an argument waiting to happen.
 

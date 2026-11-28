@@ -43,8 +43,8 @@ What follows from that shape is worth being explicit about:
 - the asset register is untouched: nothing is created, no status changes, no location or custody is
   written;
 - nothing reaches the general ledger, and the computed taxes are informational;
-- if it was built from a purchase request, committing it does advance that request's satisfied
-  quantities, the same as an offer or an order does.
+- if it was built from a purchase request, committing it stamps the request's **Processed By** but
+  leaves the request's satisfied quantities alone — only a purchase order advances them.
 
 Its real value comes later. When the invoice finally arrives, raise the
 [purchase document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md) with **From
@@ -76,7 +76,7 @@ is why. There is nothing to fix on the screen — it is a licensing question.
 :::
 
 The screen is short, because it only answers two questions. The header carries the document book and
-code, issue date, value date, fiscal period, **From Document** (بناءا على), the **Letter Of Credit**
+code, issue date, value date, fiscal period, **From Document** (بناءً على), the **Letter Of Credit**
 reference, an attachment and a description. There is **no Term field** — this document has no
 accounting to wire.
 
@@ -110,7 +110,7 @@ document removes the custody history row again.
 
 ::: info The custody history row, not the Custodian field
 The receipt document adds to the asset's **custody history grid**; it does not change the
-**Custodian** field on the asset's main page. The document that sets that field is the
+**Custodian** field on the asset's main page. The hand-over document that sets that field is the
 [Custodies Delivery Receipt](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md), which
 is designed around handing things from one named employee to another. So after a receipt document,
 read the history grid — that is where the answer is.
@@ -119,7 +119,7 @@ read the history grid — that is where the answer is.
 ## Actions on these two screens
 
 The **Fixed Asset Initial Receipt** borrows the purchase order's payments page, and with it the only
-button on either screen: **GeneratePayments** (إنشاء الدفعات). Choose a payment schedule template,
+button on either screen: **Generate Payments** (إنشاء الدفعات). Choose a payment schedule template,
 press it, and answer what it asks — how many payments, how far apart, when the first falls due, any
 grace period, a down payment, named first, second and last amounts, and how to round — and it spreads
 what is still outstanding across the schedule grid. It is a typing convenience for the schedule and

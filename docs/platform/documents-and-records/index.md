@@ -1,6 +1,6 @@
 # Documents and Records
 
-Every screen in Nama ERP saves one of two things: a **document** — something that happens on a date, such as an invoice or a voucher — or a **master file** that documents point at, such as a customer or an item. These pages cover the machinery the two share: how a document moves from draft to committed and back, where its number comes from, how master files are coded and grouped, what you can attach to a record, and why the system sometimes refuses to save or delete one.
+Every screen in Nama ERP saves one of two things: a **document** — something that happens on a date, such as an invoice or a voucher — or a **master file** that documents point at, such as a customer or an item. These pages cover the machinery the two share: how a document moves from draft to committed and how it is cancelled, where its number comes from, how master files are coded and grouped, what you can attach to a record, and why the system sometimes refuses to save or delete one.
 
 ## How Records Behave
 

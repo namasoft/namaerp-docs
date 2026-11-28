@@ -11,7 +11,7 @@ they are among the most frequently used screens in the whole module — one scho
 several of them, every day, all year.
 
 Education Attendance and Education Leave Permission live under
-**Education → Time Attendance** (**التعليم ← الحضور / الإنصراف**), together with the
+**Education → Time Attendance** (**التعليم ← الحضور / الانصراف**), together with the
 **Education Leave Reason** list. Daily Monitoring is reached from
 **Education → Master Files → Daily Monitoring** (**التعليم ← الملفات ← متابعة يومية**).
 
@@ -33,7 +33,7 @@ The header is what fixes that. Alongside the document code and the **Issue Date*
 - a **Fiscal Period** (الفترة), and a **Description** (ملاحظات) for anything the sheet as a whole
   needs to say — "school closed at 11:00 for the sandstorm".
 
-Then a single grid, **Time Attendance** (الحضور / الإنصراف), with one line per pupil:
+Then a single grid, **Time Attendance** (الحضور / الانصراف), with one line per pupil:
 
 | Column | What goes in it |
 |---|---|
@@ -88,7 +88,7 @@ Each line holds two pieces of writing:
 |---|---|
 | **student** (الطالب) | The pupil being followed up |
 | **Teacher Monitoring** (ملاحظة المدرس) | What the teacher observed — **required** |
-| **Guardian Monitoring** (ملاحظة ولى الأمر) | What the guardian said, or what the guardian was told — **required** |
+| **Guardian Monitoring** (ملاحظة ولي الأمر) | What the guardian said, or what the guardian was told — **required** |
 
 ![Daily Monitoring — the same header as attendance, but each line carries the teacher note and the guardian note instead of a presence tick](../../ar/modules/education/images/attendance/daily-monitoring-en.png)
 
@@ -121,7 +121,8 @@ The document names the **student** (الطالب) and the period, alongside the 
 |---|---|
 | **From Date** (من تاريخ) | The first day away — required |
 | **To Date** (إلى تاريخ) | The last day away — required |
-| **From Hour** (من ساعة) / **To Hour** (إلي ساعة) | The times, when the absence is part of a day rather than whole days |
+| **From Hour** (من ساعة) / **To Hour** (إلى ساعة) | The times, when the absence is part of a day rather than whole days |
+| **Duration** (المدة) | Filled in by the system from From Date and To Date as soon as both are set — a number and its unit |
 | **Reason** (السبب) | **Free text** — you type the reason onto the document in your own words |
 | **Attachment** (مرفق) | One file: the scanned request, the medical note, the guardian's letter |
 
@@ -140,7 +141,7 @@ on a house style for it.
 
 ### Education Leave Reason — the school's standard list
 
-**Education Leave Reason** (سبب الإنصراف) sits in the same **Time Attendance** menu group and is
+**Education Leave Reason** (سبب الانصراف) sits in the same **Time Attendance** menu group and is
 where a school writes down its own standard list of reasons: a code, the Arabic and English names,
 and a **Description** (الوصف) spelling out what the reason covers.
 

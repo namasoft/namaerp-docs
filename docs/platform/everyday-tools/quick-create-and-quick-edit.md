@@ -61,7 +61,7 @@ In a grid column — the Item column of an invoice's lines, for example — the 
 |---|---|
 | **OK** | Puts the first selected record in the current line and the others in the lines below it — reusing the lines that are there and adding new ones when the grid runs out — then closes the window. |
 | **Insert** | The same as **OK**, but the window stays open for more. |
-| **InsertAtEnd** | Adds the selected records as new lines at the end of the grid, each repeated as many times as its **#** says. The window stays open. |
+| **Insert At End** | Adds the selected records as new lines at the end of the grid, each repeated as many times as its **#** says. The window stays open. |
 | **Insert At End By Order** | Adds each selected record once at the end of the grid, in the order of the numbers typed in **#**. The window stays open. |
 
 After each insert a message confirms how many lines were added:

@@ -17,9 +17,10 @@ The fastest route is to pick the folder first and let it do the work for you.
 
 1. **Open a new DMS Document** and give it a code and names. If your implementation uses
    auto-coding, the code fills itself.
-2. **Choose the Folder / المجلد.** Only folders that accept elements are offered. As soon as you
-   pick one, its defaults land on the record — topic, archive, sub location and detailed location
-   all fill in together.
+2. **Choose the Folder / المجلد.** Only folders that accept elements are offered. When the folder
+   has a Default Topic, picking it copies the folder's defaults onto the record — topic, archive,
+   sub location and detailed location all fill in together. A folder with no Default Topic fills
+   none of them.
 3. **Adjust the physical position** if this particular document sits somewhere other than the
    folder's usual shelf. Sub Location and Detailed Location offer suggestions drawn from the
    archive's slot catalogue.
@@ -37,7 +38,7 @@ The fastest route is to pick the folder first and let it do the work for you.
 | **Name1** / **Name2** | الاسم العربي / الاسم الإنجليزي | Arabic name and English name respectively. |
 | **Document Owner** | مالك المستند | Who the paper belongs to. Limited to **Customer, Employee, Supplier, Third Party** and **Fixed Asset**. New records start with the type set to Customer — change it if that is not what you want. |
 | **Folder** | المجلد | Where it is filed. Drives the defaults described above. |
-| **Importance** | الأهميه | A number you can filter and sort on. |
+| **Importance** | الأهمية | A number you can filter and sort on. |
 | **Document State** | حالة المستند | Filled in by the system; always read-only. See below. |
 | **Copy Of** | نسخة من | Points at the original when this record was produced by **Copy To**. |
 | **Topic** | موضوع | The subject classification. |
@@ -49,9 +50,9 @@ The fastest route is to pick the folder first and let it do the work for you.
 
 ::: tip Getting warned about lapsing documents
 To be warned about lapsing licences, build a
-[scheduled task](/platform/automation-and-rules/scheduled-tasks.md) over a document list filtered on
+[scheduled task](/platform/automation-and-rules/scheduled-tasks) over a document list filtered on
 Renewal Date or Expiration Date, or keep a saved
-[quick filter](/platform/list-views/quick-filters.md) that people actually look at.
+[quick filter](/platform/list-views/quick-filters) that people actually look at.
 :::
 
 ## Pages and Owners
@@ -75,7 +76,7 @@ findable from the owning record.
 ## Document States
 
 The state is written by the system, never by hand. A new document starts at **Initial**; after
-that, only a committed [movement voucher](/platform/dms/dms-movements.md) changes it.
+that, only a committed [movement voucher](/platform/dms/dms-movements) changes it.
 
 | State | Arabic | What it means |
 |---|---|---|
@@ -114,8 +115,7 @@ Two panels live here, and **both open collapsed** — click the header of either
 
 - **History / تاريخ الحركات** — one row per movement this document has been through, showing the
   date, the movement type, the responsible employee and the archive position recorded at the time.
-- **Related Recods** — the copies made from this document with **Copy To**. (The label is spelled
-  this way on screen.)
+- **Related Records / السجلات المرتبطة** — the copies made from this document with **Copy To**.
 
 ::: warning History records where a document came from, not where it went
 Each history row stores the position the document was at **before** the movement, together with
@@ -140,7 +140,7 @@ position.
 
 **From the owning record** — open a customer, supplier or employee and use **DMS Documents
 Archive / أرشيف المستندات** in the More menu, or add a permanent DMS Documents page to those
-screens. Both are covered in [Settings and Integration](/platform/dms/dms-configuration.md).
+screens. Both are covered in [Settings and Integration](/platform/dms/dms-configuration).
 
 ::: tip There is no search inside the files
 Every route above searches the *register* — codes, names, folders, topics, owners. None of them
@@ -157,7 +157,7 @@ numbers, twenty-five extra text fields, ten extra references, five times and ten
 They exist precisely because every business archives something with attributes nobody could
 anticipate: a deed's plot number, a contract's governing law, a certificate's issuing body. Give
 them proper labels through
-[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance.md)
+[Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-field-appearance)
 and put them on the screen with the
-[screen modifier](/platform/screen-modifier/screen-modifier-edit-screen.md); no customisation is
+[screen modifier](/platform/screen-modifier/screen-modifier-edit-screen); no customisation is
 needed.

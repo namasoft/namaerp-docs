@@ -8,7 +8,7 @@ menu: Manufacturing → Cartoon → Carton Order
 
 A carton order is your sales document - it's how customers purchase cartons from you. Think of it as a sales order specialized for the carton manufacturing business.
 
-On the surface, it looks like any sales document: customer, quantities, prices, delivery date. But behind the scenes, it's doing something smarter - translating customer requirements into manufacturing requirements.
+On the surface, it looks like any sales document: customer, quantities, prices, taxes. But behind the scenes, it's doing something smarter - translating customer requirements into manufacturing requirements.
 
 When a customer orders assembled cartons, Nama automatically figures out all the component cartons that need to be manufactured. When they order 5000 units, Nama tracks which of those units have been planned for production, which are still pending, and prevents you from accidentally planning the same order twice.
 
@@ -30,11 +30,11 @@ Start a new carton order and fill in the essentials:
 
 **Customer** (العميل): Select the customer placing the order. This is required - you can't create orders without a customer.
 
-**Issue Date** (تاريخ الإصدار): When the order was placed
+**Issue Date** (تاريخ التحرير): When the order was placed
 
-**Value Date** (تاريخ القيمة): When the order should be valued (for accounting purposes)
+**Value Date** (التاريخ الفعلي): When the order should be valued (for accounting purposes)
 
-**Sales Person** (م.المبيعات): The salesperson handling this account (optional)
+**Salesman** (مندوب المبيعات): The salesperson handling this account (optional)
 
 **Book** (الدفتر) and **Term** (توجيه المستند): These control numbering and automatic document generation settings
 
@@ -46,14 +46,11 @@ Start a new carton order and fill in the essentials:
 
 In the **Details** (التفاصيل) grid, add lines for each carton the customer wants:
 
-**Carton Specs** (مواصفات الكرتونة): Select the carton specification. Here's the smart part - Nama filters the list to show only specifications for this customer. You won't accidentally see specs for other customers.
+**Carton Specs** (مواصفات الكرتونة): Select the carton specification. Here's the smart part - once the order has a customer, Nama filters the list to show only specifications for this customer. You won't accidentally see specs for other customers.
 
 That filter is backed by a validation, not merely a convenience. The customer on the specification must equal the customer on the order, and a line that breaks the rule is refused at save with a message naming both customers. The picker keeps you out of trouble when you type an order by hand; the validation is what catches it when a document is copied, imported or generated.
 
-When you select a specification, Nama automatically:
-- Fills in the **Item** field (if the spec is linked to an inventory item)
-- Sets up pricing (if a price is defined in the spec)
-- Populates descriptions
+When the order is saved, Nama sets each line's **Item** to the specification's **Item**, and records the specification's current version in **Carton Specs Version** (رقم نسخة المواصفة).
 
 **Quantity** (الكمية): How many cartons the customer wants
 
@@ -61,12 +58,13 @@ When you select a specification, Nama automatically:
 
 The system calculates line totals, applies discounts, calculates taxes, and updates the document money totals automatically.
 
-**Important**: You can only select carton specifications with manufacturing types:
-- Normal Carton (كرتونة عادية)
-- Assembled Carton (كرتونة مجمعة)
-- Normal Separator (فاصل عادي)
+**Important**: The list offers only carton specifications with these manufacturing types:
+- Normal Carton - Manufactured And For Sale (كرتونة عادية - يصنع ويباع)
+- Assembled Carton - Not Manufactured And For Sale (كرتونة مجمعة - يباع ولا يصنع)
+- Normal Separator - Manufactured And For Sale (فاصل عادي - يصنع ويباع)
+- Small Separator - Not Manufactured And For Sale (فاصل صغير - يباع ولا يصنع)
 
-You can't directly order "Small Separators" or "Assembled Separators" in orders - those are components manufactured as part of other products.
+You can't order an "Assembled Separator" - it is manufactured to supply the small separators cut from it, and a line that names one is refused at save.
 
 ### Step 3: Manufacturing Details
 
@@ -92,7 +90,7 @@ Manufacturing Details:
 
 The **Money** section shows financial totals:
 
-**Net Value** (القيمة الصافية): Subtotal before taxes
+**Net value** (الصافي): Subtotal before taxes
 **Taxes**: Tax amounts if tax plan is applied
 **Total** (الإجمالي): Final amount due
 
@@ -146,7 +144,7 @@ Next week you create MP-002 for the same order. Its items grid is filled with th
 - Manufacturing Details: two lines - 3000 from MP-001 and 2000 from MP-002
 - Order list: Fully Planned ticked, Used In Document = MP-001
 
-The order is now fully planned. A third planning document for it is refused with *CRTN order {0} is fully planned*, and so is **Genrate Carton Material Planning** on the order.
+The order is now fully planned. A third planning document for it is refused with *CRTN order {0} is fully planned*, and so is **Generate Carton Material Planning** on the order.
 
 ### Scenario 3: Assembled Carton, One Child at a Time
 
@@ -173,11 +171,11 @@ You can still edit a planned order, within two limits. A line's **Quantity** can
 
 Once you have a committed order, there's a quick path to material planning:
 
-Click **Genrate Carton Material Planning** (إنشاء مستند تخطيط خامات الكرتون) on the order — the button's English label really is spelt that way. The order must be saved first.
+Click **Generate Carton Material Planning** (إنشاء مستند تخطيط خامات الكرتون) on the order. The order must be saved first.
 
 Nama:
-1. Creates a new material planning document
-2. Adds this order to the planning document
+1. Creates a new material planning document and saves it
+2. Adds this order to the planning document, so saving fills its Items grid with what the order still has open
 3. Opens the planning document for you
 
 You're now in material planning, ready to run optimization. This shortcut saves you from manually creating a planning document and selecting the order - it does it in one click.
@@ -230,11 +228,9 @@ The actual assembly of bases + lids into complete shippers typically happens out
 
 ## Small Separator Handling
 
-Assembled separators work similarly but with an extra twist:
+Separators work the other way round from assembled cartons. A small separator is sold but not manufactured on its own: it is cut from the assembled separator named in its **Manufacturing Parent Specification**.
 
-If you order an assembled separator specification, Nama finds all the small separator children and marks them as needing manufacturing. However, it groups by the assembled parent.
-
-If you have multiple assembled separator specs that use the same small separator child, Nama makes sure you don't double-count that child - it only manufactures the required quantity once to support all assemblies.
+So when an order line names a small separator, the manufacturing line Nama plans is its parent assembled separator, not the small separator itself, for the line's full quantity. Each such line gives its own manufacturing line, even when several lines name small separators of the same parent.
 
 This is an advanced scenario - most factories don't use assembled separators heavily.
 
@@ -279,7 +275,7 @@ A: Yes. Material planning documents don't care about customers - they care about
 A: Nama prevents deletion if it's referenced in committed planning documents. You'd need to cancel/delete the planning documents first. This protects you from breaking the link between orders and production plans.
 
 **Q: Why can't I select my assembled separator specification in an order?**
-A: Assembled separators aren't sold directly - they're manufacturing structures. You'd order the normal separator specification that uses the assembled separator internally, or you'd order the final product that incorporates the separators.
+A: Assembled separators aren't sold directly - they're manufacturing structures. Order the small separator specifications cut from it; planning then manufactures the assembled separator for them.
 
 **Q: How do I handle rush orders?**
 A: Enter the order normally, then use the "Find Companion Orders" feature in material planning to see if batching with other orders would delay the rush order too much. You might choose to plan the rush order alone to prioritize it.
@@ -298,8 +294,8 @@ The "Fully Planned" flag is your quick indicator of order readiness. Use it to f
 
 | Message | Why | What to do |
 |---|---|---|
-| *CRTN order {0} is fully planned* — «تم تخطيط أمر الكرتون {0} بالكامل» | The order has no quantity left to plan. It appears when you press **Genrate Carton Material Planning**, and when a planning document listing the order is saved. | Nothing more to plan. Raise the order quantity first if more is really needed. |
+| *CRTN order {0} is fully planned* — «تم تخطيط أمر الكرتون {0} بالكامل» | The order has no quantity left to plan. It appears when you press **Generate Carton Material Planning**, and when a planning document listing the order is saved. | Nothing more to plan. Raise the order quantity first if more is really needed. |
 | *Quantity {0} is less than the quantity already planned {1}* — «الكمية {0} أقل من الكمية التي تم تخطيطها بالفعل {1}» | A line's quantity was lowered below its **Executed Quantity**. | Keep it at least at the planned quantity, or cancel or delete the planning document first. |
 | *Carton specs {0} is planned in material planning {1} and can not be removed from the order* — «مواصفة الكرتون {0} مخططة في تخطيط الخامات {1} ولا يمكن حذفها من الأمر» | A line was removed, or its carton specification changed, after a planning document planned it. | Put the line back, or cancel or delete the planning document named in the message first. |
 | *Customer {0} in carton specifications {1} is not the same as the customer {2} in the order* — «العميل {0} الموجود بمواصفات الكرتونة {1} مختلف عن العميل {2} الموجود بالطلبية» | A line uses a specification tagged to another customer. | Pick a specification of the order's customer. |
-| *Carton spec {0} at line {1} can not be used in orders because manufacturing type is {2}* — «لا يمكن استخدام المواصفة {0} في السطر {1} في أوامر بيع الكرتون لأن نوع التصنيع {2}» | The line names an assembled separator, which is a manufacturing structure, not something sold. | Order the specification that uses the separator instead. |
+| *Carton spec {0} at line {1} can not be used in orders because manufacturing type is {2}* — «لا يمكن استخدام المواصفة {0} في السطر {1} في أوامر بيع الكرتون لأن نوع التصنيع {2}» | The line names an assembled separator, which is a manufacturing structure, not something sold. | Order the small separators cut from it instead. |

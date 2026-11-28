@@ -14,7 +14,7 @@ Automatically generates control journal entries for Receipt and Payment Vouchers
 
 ## When This Action Runs
 
-- **Trigger:** Automatic during RVPV processing for accounting effects
+- **Trigger:** The event chosen in **Target Action** on the flow line. The flow adds lines only while the voucher's accounting (ledger) request is being sent, so the line is set to **Pre Send Business Request**
 - **Target:** Receipt and Payment Voucher entities with related subsidiary
 - **Purpose:** Create control journal entries for subsidiary tracking
 - **Timing:** When voucher is sent to generate ledger transaction request

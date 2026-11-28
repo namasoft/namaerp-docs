@@ -47,7 +47,7 @@ Assets that Al-Waha already owned before it started using Nama do not come in th
 
 ### 2. It depreciates — every month
 
-Once a fiscal period closes, somebody runs a **Depreciation Document** for that period, collects the eligible assets into it, reviews the lines and commits. For `MCH-0007` in January 2026 the charge is:
+At the end of each fiscal period, and before that period is closed, somebody runs a **Depreciation Document** for it, dated on the period's last day, collects the eligible assets into it, reviews the lines and commits. For `MCH-0007` in January 2026 the charge is:
 
 > (240,000 − 24,000) ÷ 60 = **3,600**
 
@@ -71,7 +71,7 @@ Servicing the machine — the quarterly inspection, replacing the coolant pump �
 
 ### 4. It moves — mid-2027
 
-The machine is wheeled from Hall 2 to Hall 3. Al-Waha records a **Transfer Document**, and the interesting part is what it books: **nothing**. A move that changes only the physical location leaves the ledger untouched, because no account and no accounting dimension changed. Change the department or the accounts on the same document and one entry appears; move the machine to Al-Waha's Jeddah company and two entries appear, one in each company, joined through a mediator account, with the receiving company taking the machine at its net book value of **176,100**. See [Transferring an Asset](/modules/fixedassets/movement/fixedassets-transfer-document.md) and [Transfers Between Companies](/modules/fixedassets/movement/fixedassets-intercompany-transfers.md).
+The machine is wheeled from Hall 2 to Hall 3. Al-Waha records a **Transfer Document**, and the interesting part is what it books: **nothing**. A move that changes only the physical location leaves the ledger untouched, because no account and no accounting dimension changed. Change the department or the accounts on the same document and one entry appears; move the machine to Al-Waha's Jeddah company and two entries appear, one in each company, joined through a mediator account, with the receiving company taking the machine at its net book value on the transfer date. See [Transferring an Asset](/modules/fixedassets/movement/fixedassets-transfer-document.md) and [Transfers Between Companies](/modules/fixedassets/movement/fixedassets-intercompany-transfers.md).
 
 ### 5. It is sold — 31 December 2027
 
@@ -113,10 +113,10 @@ By default everything sits under **Assets** (الأصول), in seven folders.
 | Folder | What lives there |
 |---|---|
 | **Master Files** | Asset types, the fixed assets themselves, component types, the five classification levels, asset locations, and the Fixed Asset Creation Document — a document filed among the master files, which turns a finished contracting project into an asset. |
-| **Documents** | The working documents: depreciation, revaluation, prevent-depreciation, additions and deductions, the properties document, the purchase chain (request, offer, order, purchase, initial receipt), opening and opening update, and the disposal documents — each with an aggregated variant that runs many assets in one action. |
+| **Documents** | The working documents: depreciation, revaluation, prevent-depreciation, additions and deductions, the properties document, the purchase chain (request, offer, order, purchase, initial receipt), opening and opening update, and the disposal documents. Depreciation, additions and deductions, the properties document and disposal each also have an aggregated variant that runs many assets in one action. |
 | **Custody Of Assets** | Stocktaking, transfers and transfer requests, the delivery/receipt of custodies, the asset receipt document, and the movement-out and return documents. |
-| **Fixed Asset Letter of Credits** | The expense item catalogue, the letter of credit, the proforma invoice, the expense document and the cost document — the chain that lands imported machinery at its true landed cost. |
-| **Custodys** | The custody register: custody types, custodies and the four custody documents. *(The plural is spelled that way in the menu.)* |
+| **Fixed Asset Letters of Credit** | The expense item catalogue, the letter of credit, the proforma invoice, the expense document and the cost document — the chain that lands imported machinery at its true landed cost. |
+| **Custodies** | The custody register: custody types, custodies and the four custody documents. |
 | **Fixed Asset Maintenance** | Maintenance plans, records and record requests, maintenance types, checklists and checklist items. |
 | **Settings** | The module's own settings record — one per database. See [Module Configuration](/modules/fixedassets/fixedassets-configuration.md). |
 
@@ -129,8 +129,8 @@ The module ships as one base licence plus three sub-module licences. Quote the c
 | Licence code | What disappears without it |
 |---|---|
 | `fixedassets` | Everything: the asset register, asset types, classifications, locations, component types, and every depreciation, purchase, opening, transfer, movement, stocktaking and disposal document. Without this code there is no module. |
-| `fixedassets-custody` | The whole **Custodys** folder — custody types, custodies, custody purchase, delivery, transfer and disposal — plus the **Custodies Delivery Receipt Document** that sits in the Custody of Assets folder. |
-| `fixedassets-lc` | The **Fixed Asset Letter of Credits** folder: the letter of credit, the proforma invoice, the expense document and the cost document — **and the Fixed Asset Receipt Document**, which is filed under Custody of Assets. That last one catches people out: a customer holding only the base licence looks for the asset receipt document in its menu folder and does not find it. |
+| `fixedassets-custody` | The whole **Custodies** folder — custody types, custodies, custody purchase, delivery, transfer and disposal — plus the **Custodies Delivery Receipt Document** that sits in the Custody of Assets folder. |
+| `fixedassets-lc` | The **Fixed Asset Letters of Credit** folder: the letter of credit, the proforma invoice, the expense document and the cost document — **and the Fixed Asset Receipt Document**, which is filed under Custody of Assets. That last one catches people out: a customer holding only the base licence looks for the asset receipt document in its menu folder and does not find it. |
 | `fixedassets-maintenance` | The whole **Fixed Asset Maintenance** folder: plans, records, record requests, types, checklists and checklist items. |
 
 Note the mixed folder: **Custody of Assets** draws items from all three of the base, custody and letter-of-credit licences, so it never appears or disappears as a block.

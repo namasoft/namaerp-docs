@@ -31,7 +31,7 @@ The reports list opens from the slide menu (**Actions → Reports**). Its icon b
 
 The viewer has its own toolbar for saving the report to a file, printing it, moving between pages and zooming.
 
-Which reports appear here is decided centrally — any report in the main Nama system can be made available to the POS. A report can run against the **local** register database (fast, and works offline, but only this register's data) or against the **server** database (a complete, up-to-date picture across all points). The [POS FAQ](./pos-faq.md) walks through making a report available in POS.
+Which reports appear here is decided centrally — any report in the main Nama system can be made available to the POS by ticking **Used In POS** («مستخدم لنقاط البيع») on its **Report Definition**. Build and test the report on the main system first. A report runs against the **local** register database (fast, and works offline, but only this register's data) unless **Run On Server Database Not On POS Database** («تشغيل على قاعدة بيانات الخادم وليس قاعدة بيانات نقاط البيع») is ticked; then the register asks the server to run it, which gives a complete, up-to-date picture across all points and needs the connection to the server.
 
 ## Internal messages and notifications
 
@@ -83,7 +83,7 @@ The menu entry is kept out of sight until it is needed: in the slide menu, press
 | **Confirm** | «تأكيد» | Runs the utility. *Done* («تم التنفيذ») means it finished; anything else is the utility's error message. |
 | **Cancel** | «إلغاء» | Closes the dialog without running anything. |
 
-You would normally only do this when asked to by support, with the exact name they give you. One common example appears in the [POS FAQ](./pos-faq.md): a utility that fixes a payment method whose cash/non-cash setting was changed after it had already been used.
+You would normally only do this when asked to by support, with the exact name they give you. One example is `com.namasoft.pos.util.plugnplay.POSPaymentMethodToggledCashProperty`: given a payment method's code as its parameter, it brings the register's recorded payment lines for that method in line with the method's current **Cash Payment Method** setting, for use after that box was changed on a method already in use.
 
 ::: warning
 Utilities are maintenance tools — run one only when you know what it does (or have been told to by support) and with the parameters you were given. They act directly on the register's data.

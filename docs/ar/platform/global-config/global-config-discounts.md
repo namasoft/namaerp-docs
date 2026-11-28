@@ -22,9 +22,9 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **نوع تطبيق خصم الرأس** `value.info.headerDiscountApplyType` — الوعاء الذي تُطبَّق عليه نسبة خصم الرأس، بالقائمة نفسها المستعملة مع خصومات الأسطر أدناه. ويُطبَّق خصم الرأس على المستند ككل بعد حساب الأسطر.
 
-**السماح باستعمال قسيمة الخصومات اكثر من مرة اذا كان النوع نسبة** `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` — يُستهلك كوبون الخصم عادةً بأول مستند يستخدمه. وكوبون النسبة ليس له رصيد يُستنفد، فيتيح هذا الخيار استخدامه مراراً — وهو السلوك الصحيح لكود حملة «خصم 10٪ طوال الموسم».
+**السماح باستعمال قسيمة الخصومات أكثر من مرة إذا كان النوع نسبة** `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` — يُستهلك كوبون الخصم عادةً بأول مستند يستخدمه. وكوبون النسبة ليس له رصيد يُستنفد، فيتيح هذا الخيار استخدامه مراراً — وهو السلوك الصحيح لكود حملة «خصم 10٪ طوال الموسم».
 
-**السماح بإلغاء مكافأة حتي وإن تم استخدامها في فواتير** `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` — يسمح بعكس استخدام كوبون استهلكته فواتير بالفعل. ويلزم لتصحيح خطأ، لكنه يعني بقاء خصم على الفواتير لم يعد الكوبون يسجّله.
+**السماح بإلغاء مكافأة حتى وإن تم استخدامها في فواتير** `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` — يسمح بعكس استخدام كوبون استهلكته فواتير بالفعل. ويلزم لتصحيح خطأ، لكنه يعني بقاء خصم على الفواتير لم يعد الكوبون يسجّله.
 
 ## من الخصم 1 إلى الخصم 8
 
@@ -38,7 +38,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **احتساب نسبة خصم ن من القيمة** `value.info.calcDiscNPercentFromValue` — يكتب المستخدم النسبة عادةً فيحسب النظام المبلغ. ومع تفعيل هذا الخيار تنعكس العلاقة: يكتب المستخدم المبلغ فيستنتج النظام النسبة التي يمثلها. فعّله مع الخصومات المتفاوض عليها كمبالغ مقطوعة («انزل 500») لا كنسب.
 
-**خصم ضريبة 1** / **خصم ضريبة 2** / **خصم ضريبة 3** / **خصم ضريبة 4** `value.info.discountN.considerTax1` حتى `...considerTax4` — هل تدخل كل ضريبة من الأربع في الوعاء الذي يُحسب عليه هذا الخصم. والحالة الشائعة خصم يؤخذ على الصافي قبل ضريبة القيمة المضافة، ومعناها ترك خانة تلك الضريبة فارغة. ولا تؤشّرها إلا حيث يخصم الاتفاق التجاري فعلاً من المبلغ شامل الضريبة.
+**خصم ضريبة 1** / **خصم ضريبة 2** / **خصم ضريبة 3** / **خصم ضريبة 4** `value.info.discountN.considerTax1` حتى `...considerTax4` — تأشير أي منها يُخرج تلك الضريبة من وعاء هذا الخصم: فيحسب النظام الضريبة بنسبتها على الوعاء المختار في **وعاء خصم N**، ويطرحها، ثم يطبّق نسبة الخصم على الباقي. وإن تُركت غير مؤشرة استُعمل الوعاء كما يعطيه نوع الوعاء تماماً. فأشّر ضريبة القيمة المضافة حين يقع الوعاء على مبلغ يشمل الضريبة أصلاً ويجب أن يؤخذ الخصم على المبلغ قبل الضريبة.
 
 ## الإعدادات في هذه الصفحة
 
@@ -48,8 +48,8 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 |---|---|---|---|
 | وقت حساب التخفيض في الفاتورة | Invoice discount apply on | `value.discountLocation` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
 | وعاء خصم 8 | Header Discount Apply Type | `value.info.headerDiscountApplyType` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
-| السماح باستعمال قسيمة الخصومات اكثر من مرة اذا كان النوع نسبة | Allow Using Discount Coupon Many Times If Type Is Percentage | `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
-| السماح بإلغاء مكافأة حتي وإن تم استخدامها في فواتير | Allow Reverse Discount Coupon Even If Used In Invoices | `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
+| السماح باستعمال قسيمة الخصومات أكثر من مرة إذا كان النوع نسبة | Allow Using Discount Coupon Many Times If Type Is Percentage | `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
+| السماح بإلغاء مكافأة حتى وإن تم استخدامها في فواتير | Allow Reverse Discount Coupon Even If Used In Invoices | `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` | [إعدادات الخصومات العامة](#aaddt-lkhSwmt-laam) |
 | وعاء خصم 1 | Discount 1 Apply Type | `value.info.discount1ApplyType` | [من الخصم 1 إلى الخصم 8](#mn-lkhSm-1-l-lkhSm-8) |
 | احتساب نسبة خصم 1 من القيمة | Calculate discount 1 percentage from value | `value.info.calcDisc1PercentFromValue` | [من الخصم 1 إلى الخصم 8](#mn-lkhSm-1-l-lkhSm-8) |
 | خصم ضريبة 1 | Discount Tax 1 | `value.info.discount1.considerTax1` | [من الخصم 1 إلى الخصم 8](#mn-lkhSm-1-l-lkhSm-8) |

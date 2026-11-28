@@ -19,7 +19,7 @@ Manual execution when sales return transactions need to be synchronized with the
 
 ## How It Works
 
-1. **Validates return document** - Ensures the document is actually a return (ifOut = false)
+1. **Validates return document** - Fails with *The document you try to send not a return document* when the document is not a return (ifOut = true)
 2. **Validates reward config** - Looks up the RewardPointsConfig by provided code or ID
 3. **Extracts POS register** - Gets POS register code from the sales document
 4. **Initializes API client** - Creates DatanuumApiClient with config and POS register information

@@ -44,7 +44,7 @@ Backup preparation for TaskSchedule entities requiring Google Drive folder struc
 
 ## Database Tables Affected
 
-- **TaskSchedule Parameters** - Updates parameter6 with generated configuration, optionally parameter2 of target task
+- **TaskSchedule Parameters** - Updates Parameter 6 (output) and Parameter 7 (errors) of the running task schedule; when Parameter 5 is filled, also saves the output in Parameter 2 of the task schedule named in Parameter 5, ready for [EACheckDailyBackupOnGoogleDrive](/entity-flows/core/EACheckDailyBackupOnGoogleDrive) in multi-folder mode
 - **OAuthFile Access** - Reads Google Drive OAuth credentials for authentication
 - **Google Drive** - Read-only access to folder structures, no modifications
 

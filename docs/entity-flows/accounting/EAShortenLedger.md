@@ -39,9 +39,11 @@ Lines are consolidated if they have identical:
 
 ## Configuration
 
-Controlled by `shortenLedger` setting in:
-- **Document Term Info** - Applies to all documents using this term
-- **Book Info** - Applies to all documents in this book
+The flow line takes no parameters and merges the lines of every ledger request sent by the records the entity flow applies to.
+
+The same merge runs without any entity flow when **Shorten Ledger** is ticked on:
+- **Document Term** - Applies to all documents using this term
+- **Document Book** - Applies to all documents in this book
 
 ## Exclusions
 

@@ -80,9 +80,9 @@ keys move through the results, and **Escape** closes the list.
 
 ## Utility pages for administrators
 
-For `admin`, and for users treated as admin, the screen list also contains five pages that are not
-entities: **Utilities**, **View Users**, **Monitor Tasks**, **SQL Runner** and **View Web Socket
-Sessions**. Typing `utils` lists them all. Other users never see them in the box.
+For `admin`, and for users treated as admin, the screen list also contains six pages that are not
+entities: **Utilities**, **View Users**, **Monitor Tasks**, **Utility Runner**, **SQL Runner** and
+**View Web Socket Sessions**. Typing `utils` lists them all. Other users never see them in the box.
 
 ## What configures it
 

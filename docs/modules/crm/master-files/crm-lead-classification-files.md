@@ -48,10 +48,10 @@ the second says what it should become:
 | Update Lead Classification To / تحديث تصنيف العميل إلى | Written back onto the lead on commit |
 | Current Activity Type / نوع النشاط الحالي | Filled from the lead when the box is still empty |
 | Next Activity Type / نوع النشاط التالي | Written back onto the lead on commit |
-| Current Rejection Reason | Filled from the lead when the box is still empty |
+| Current Rejection Reason / سبب الرفض الحالي | Filled from the lead when the box is still empty |
 | New Rejection Reason / سبب الرفض الجديد | Written back onto the lead on commit |
 | Change Status To / تغيير الحالة إلى | Written back onto the lead on commit |
-| Planned Re-Call Date / التاريخ المخطط لمعاودة الإتصال | Written back onto the lead on commit |
+| Planned Re Call Date / التاريخ المخطط لمعاودة الاتصال | Written back onto the lead on commit |
 
 So in the worked example, `CALL-0342` on 14 January sets *Change Status To* = Contacted, *Update
 Lead Classification To* = `LC-B` (عميل متوسط / Mid-Market) and *Next Activity Type* = `AT-02`
@@ -108,8 +108,7 @@ cannot find a box with that name.
   the box on the Lead and Potential screens is labelled **المجال / Industry**. Same file, two
   different words.
 - **Activity Type** is called **نوع النشاط** as a master file, but its box on the Lead and Potential
-  screens reads **نوع النشاط للفرع** — "activity type for the branch". Nothing about the file has
-  anything to do with a branch.
+  screens reads **نوع النشاط للفرع** on the Arabic interface (*Activity Type* in English).
 
 ## Reporting
 

@@ -1,11 +1,11 @@
 ---
-description: "The Pending Tasks screen, the outbox for email, SMS, WhatsApp and mobile push messages: what queues them, reading status, trials and errors, what to do about a failure, and when nothing is sent at all."
+description: "The Pending Tasks screen, the outbox for email, SMS, WhatsApp, Telegram and mobile push messages: what queues them, reading status, trials and errors, what to do about a failure, and when nothing is sent at all."
 menu: Administration → Settings → Pending Tasks
 ---
 # Pending Tasks
 
 Despite the general-sounding name, this screen is one specific thing: **the outbox**. Every message
-Nama sends to the outside world — email, SMS, WhatsApp, and push notifications to the mobile app —
+Nama sends to the outside world — email, SMS, WhatsApp, Telegram, and push notifications to the mobile app —
 is queued here first and sent by a background worker a moment later.
 
 That makes it the first place to look whenever somebody says a message did not arrive. The
@@ -27,7 +27,7 @@ and leave as sent messages.
 
 The **Type** column separates them, and it is worth knowing that one of the values behaves
 differently from the rest: a task of type **Create Notification** is not an outbound message at
-all and is not dispatched anywhere. Only email, SMS, WhatsApp and push notifications are actually
+all and is not dispatched anywhere. Only email, SMS, WhatsApp, Telegram and push notifications are actually
 sent.
 
 The **Owner** column points back at whatever raised the message, and the screen offers a quick

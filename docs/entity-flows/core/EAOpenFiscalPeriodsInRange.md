@@ -10,7 +10,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Opens fiscal periods that overlap with a specified target date. Changes status from Closed/Locked to "Opened" to allow transaction entry and modifications.
+Opens fiscal periods that overlap with a specified target date. Changes status from "Closed" to "Opened" to allow transaction entry and modifications. The record the flow runs on is not used, so the flow is normally run from a task schedule.
 
 ## When This Action Runs
 

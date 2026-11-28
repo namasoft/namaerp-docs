@@ -57,7 +57,8 @@ The list is hidden from a user in either of two ways:
 
 - **Do Not Display Critical Errors To This User** (عدم إظهار الأخطاء الحرجة لهذا المستخدم) on the
   user's own settings, or
-- **Do Not Display Critical Errors** (عدم إظهار الأخطاء الحرجة) on their
+- the option with the same English label, **Do Not Display Critical Errors To This User**
+  (عدم إظهار الأخطاء الحرجة on Arabic screens), on their
   [security profile](/platform/security/security-profiles), which hides it from a whole role at once.
 
 The `admin` user is the exception: it may not be shielded from them. Trying to save that
@@ -175,13 +176,13 @@ deletes only notifications the user has already seen.
 
 ### Dangerous options that were left switched on
 
-Some options exist for a one-off recovery and are dangerous to leave on. Nama watches four of them
+Some options exist for a one-off recovery and are dangerous to leave on. Nama watches five of them
 and complains for as long as they are enabled. All of these appear in English only.
 
 | Message | What raised it | What to do |
 |---|---|---|
 | *There are fiscal years with AllowCostProcessingWithClosingEntry set to TRUE* | At least one fiscal year has **Allow Cost, Quantity, and Ledger Processing For Documents Before Closing Entry** ticked. By default Nama refuses to change entries dated before the closing entry; with this on, it allows them — which silently changes the financial statements of a closed year. | Open **Fiscal Years**, untick it on every year that has it, save, then refresh the critical errors. Leave it off except during a deliberate, approved correction. |
-| *The option {0} in {1} config is enabled, it should be disabled. Please contact our support team.* | One of the reprocessing-before-closing-entry options in Global Configuration, or **Allow Changing Cost And Qty Tracking After Usage** / **Allow Overdraft In Stock Transfers** in the supply-chain configuration, is on. The message names the option and the configuration, and links to it. | Follow the link, turn the option off, refresh. If it was turned on for a recovery, this message is the reminder to turn it back off afterwards. |
+| *The option {0} in {1} config is enabled, it should be disabled. Please contact our support team.* | One of the reprocessing-before-closing-entry options in Global Configuration, or **Allow Changing Cost And Quantity Tracking After Item Usage** / **Allow Overdraft In Stock Transfers** in the supply-chain configuration, is on. The message names the option and the configuration, and links to it. | Follow the link, turn the option off, refresh. If it was turned on for a recovery, this message is the reminder to turn it back off afterwards. |
 | *Debt ages processing of document {0} had to {1} {2} rows; its account/subsidiary debt ages history is huge and slows the ledger queue - consider stopping debt ages tracking for it* | One document's debt-age history is so large that processing it is holding up the ledger queue for everybody. | Consider switching debt-ages tracking off for that account or subsidiary — see [Accounts](/modules/accounting/ledger-setup/accounts). |
 
 ### Supply chain and cost
@@ -191,7 +192,7 @@ and complains for as long as they are enabled. All of these appear in English on
 | *There are inconsistent transfer costs, please contact customer support - THIS IS URGENT* | A consistency check over transfer costs found a mismatch. Checked only where costing is not FIFO. English only. | This one is meant for us, not for the site: it says the cost data itself is wrong, and it needs a cost reprocessing run decided by support. Raise it. |
 | *The columns currentNetCost and currentNetQty have errors, please contact customer support - THIS IS URGENT* | The running cost and quantity totals do not agree with the movements behind them. Nama asks for a repair of the quantity side by itself unless that has been switched off. English only. | Raise it with support; do not run cost utilities on a hunch. |
 | *There are failed stock ages tasks, please contact customer support* | A stock-ages task ended in *Failed*. Stock-age reports will be wrong or empty until it is re-run. English only. | Look at the failed task, fix the cause, run it again. |
-| *There are {0} expired sales price list lines for more than {1} days, please review them* — «يوجد {0} سطور قوائم أسعار مبيعات منتهية منذ أكثر من {1} يوم. يرجى المراجعة» | More than a thousand price-list lines expired longer ago than the configured number of days. Large dead price lists slow pricing down. | Delete or archive the old lines. The threshold is **Number of Days of Expired Price List to Show Critical Errors After Them** — see [Pricing and Price Lists](/modules/supplychain/configuration/pricing-and-price-lists); a negative value switches the check off. |
+| *There are {0} expired sales price list lines for more than {1} days, please review them* — «يوجد {0} سطور قوائم أسعار مبيعات منتهية منذ أكثر من {1} يوم. يرجى المراجعة» | More than a thousand price-list lines expired longer ago than the configured number of days. Large dead price lists slow pricing down. | Delete or archive the old lines. The threshold is **Number Of Days Of Expired Price List To Show Critical Errors After Them** — see [Pricing and Price Lists](/modules/supplychain/configuration/pricing-and-price-lists); a negative value switches the check off. |
 | *You need to recommit the receipt additional cost document {0} because it contains an old bug* | A named receipt-additional-cost document was created by an old version whose distribution is known to be wrong. English only. | Open the document named in the message and recommit it. |
 
 ### Point of sale and e-commerce
@@ -223,7 +224,7 @@ developer's review, so none of them is fixed automatically at start-up; the supp
 fixes outside working hours.
 
 The utility's name at the end of each message is a link. It opens
-[the Utility Runner](/admin/reprocessing/utility-runner.md) in a new tab and starts that utility's
+[the Utility Runner](/admin/reprocessing/utility-runner) in a new tab and starts that utility's
 dry run, which lists what it would fix and changes nothing.
 
 | Message | What raised it | What to do |

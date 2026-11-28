@@ -13,7 +13,7 @@ These features are part of the banks license `accounting-banks`.
 
 ## The Bank
 
-The **Bank** file (`Banks > Master Files > Bank`) defines the banking institution, and supports a **hierarchy** (a parent bank and branches) via the parent field. It carries contact data, can be linked to its own **subsidiary accounts**, and offers a **daily consolidated** option for those who need to consolidate its movements daily.
+The **Bank** file (`Banks > Master Files > Bank`) defines the banking institution, and supports a **hierarchy** (a parent bank and branches) via the parent field. It carries contact data and can be linked to its own **subsidiary accounts**.
 
 ## The Bank Account
 
@@ -23,7 +23,7 @@ The **Bank Account** (`Banks > Master Files > Bank Account`) is the actual accou
 
 - The **Bank** it belongs to (mandatory), the **Account Type**, the **Bank Branch Code**, the **bank account number**, and the **IBAN**.
 - In the **Accounts** block: the **Main Account**, **Account 01** through **Account 05**, the **Currency**, and the **Accounts Bag** — this mapping is what translates this bank account's movements into the correct debit/credit side in the accounts.
-- A **Fixed Deposit Account** option marks accounts tied to deposits.
+- The **Fixed Deposit Account** option marks the accounts a [Fixed Deposit](/modules/accounting/bank-facilities/fixed-deposits) may use: the deposit's bank account search lists only accounts with it ticked, and saving a deposit on any other account is refused with *This bank account is not a fixed deposit account* — «هذا الحساب البنكي ليس حساب وديعة».
 - The **Tax Information** block carries tax-registration data and the Zakat-authority identity when needed.
 
 ## Bank Transfer
@@ -36,7 +36,7 @@ Because it is built on the voucher, the bank transfer also carries the voucher's
 
 ## Bank Adjustment
 
-Sometimes the bank makes a movement on its side with no corresponding document of yours: a service fee, credit interest, a deduction. The **Bank Adjustment** (`Banks > Master Files > Bank Adjustment`) is the direct tool to record these differences: you choose the **bank account**, the **amount**, and the **type** (**Debit** or **Credit**), and the entry is recorded directly. Unlike other documents, the **bank adjustment needs no term** — it's a direct entry for the bank side.
+Sometimes the bank makes a movement on its side with no corresponding document of yours: a service fee, credit interest, a deduction. The **Bank Adjustment** (`Banks > Master Files > Bank Adjustment`) is the direct tool to record these differences. It is a journal entry with a bank header: you choose the **type** (**Debit** or **Credit**), the **bank account** and the **amount**, and the screen writes the bank's line in the lines grid for you — the bank account's main account, with the bank account as its subsidiary (it rewrites the line that already carries that account, or adds one). The type is the bank's own wording: **Credit** puts the amount on the debit side of that line (the bank added to your account), **Debit** puts it on the credit side (the bank took from your account). You complete the other side in the lines grid, and the entry is built from those lines. Unlike other documents, the **bank adjustment needs no term**.
 
 ::: tip
 Don't confuse **Bank Adjustment** with **Bank Reconciliation**: the former records an actual difference movement in your accounts, while the latter ([Bank reconciliation page](./bank-reconciliation.md)) is a comparison process that creates no journal entry by itself — it surfaces the differences, which are then handled via a bank adjustment.

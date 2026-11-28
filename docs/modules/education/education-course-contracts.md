@@ -65,7 +65,9 @@ line's value is simply quantity × unit price. A line left with an empty quantit
 nothing, so it is worth glancing down that column before committing.
 
 You do not normally type the unit price. **When you choose the Course on the header, the system
-copies that course's Sales Price into the Unit price of the detail lines.** The Course master file is
+copies that course's Sales Price into the Unit price of every detail line already on the grid.**
+Add the students first, then pick the course: a line added after the pick arrives with no unit
+price, and you type it yourself. The Course master file is
 therefore the price list for training: set the fee once on the course, and every contract written
 against it is priced consistently. You can still override a line afterwards — a scholarship student
 or a negotiated corporate rate is just an edited unit price — but the default comes from the course.
@@ -107,19 +109,11 @@ and the credit is the company side, your training revenue account. The
 [cancellation document](./education-contract-cancellation) uses its own term and reverses those
 roles.
 
-**The party side resolves at the moment of processing**, from whichever source the term names:
-
-| The term's account source points at | The system uses |
-|---|---|
-| Student | The student on the line |
-| Guardian | The guardian of the student on the line |
-| Document Subsidiary | The **Subsidiary** on the contract header |
-| Line Subsidiary | The **Subsidiary** on that detail line |
-
-Discounts, taxes and any cash paid at signing have their own sides on the term, so a discount can be
-booked to a discount account rather than simply shrinking the revenue. All of this is set up once per
-document term and then applies to every contract written under it; the
-[Document Terms](./education-document-terms) page walks through the screens.
+**The party side resolves at the moment of processing**, from the source the term names: the student
+on the line, that student's guardian, the header **Subsidiary** or the line **Subsidiary**. Discounts,
+taxes and any cash paid at signing have their own sides on the term. All of this is set up once per
+document term and then applies to every contract written under it; the four account sources, the
+discount and tax groups and a worked example are on [Document Terms](./education-document-terms).
 
 ::: tip Nothing is hard-coded
 Education ships no settings screen of its own. If a contract is booking to the wrong account, the
@@ -128,36 +122,35 @@ answer is always in the document term it was saved under — not in a module opt
 
 ## Watching the effect land
 
-Saving is instant, because the accounting effect is not written line by line while you wait. The
-contract raises a **business request** that is processed in the background, and the document carries
-a **processing status** that tells you how that went.
-
-Almost always it simply succeeds and there is nothing to do. When it does not — a closed fiscal
-period, an account missing from the term, a party with no accounts set up — the request is left in a
-failed state and can be retried without re-entering anything. Power users do this from the
-**Business Requests** list view: filter by status, select the failed rows, and use the **More** menu
-to reprocess them. The general mechanics, including how to read the processing status, are covered in
+The contract's ledger entry is created as a **business request** processed in the background, and
+the document carries a **processing status**. A request that fails — a closed fiscal period, an
+account missing from the term, a party with no accounts set up — is retried from the **Business
+Requests** list view without re-entering anything; the mechanics are on
 [How documents are processed into accounting effects](/modules/accounting/support/accounting-request-processing).
 
-There is also a **Regenerate Accounting Effects** action on the contract's toolbar. Use it after
-correcting a document term: it re-issues the ledger entry from the term as it now stands, and removes
-the entry altogether if the term no longer has a debit or a credit side configured.
+After correcting a document term, use **Regenerate Accounting Effects** in the contract's **More**
+menu (press **Ctrl + Alt + X** first to bring it out; see
+[Keyboard Shortcuts](/platform/everyday-tools/shortcuts)). On a committed contract it re-issues the
+ledger entry from the term as it now stands, and removes the entry altogether when the term has
+neither a debit nor a credit side configured.
 
 ## What the system checks before it lets you commit
 
 A handful of rules will stop a save, and knowing them saves a lot of guessing:
 
-- **A contract needs at least one student line.** An empty Details grid is refused outright.
-- **The instalment plan has to add up.** If the contract has a payment schedule, the total of the
-  scheduled instalments must match what the contract leaves to be paid. This is by far the most
-  common message people meet, and it is explained with worked numbers on
+- **A contract needs at least one student line.** An empty Details grid is refused with
+  *Details must be filled* — «لا يمكن ترك التفاصيل فارغة».
+- **The instalment plan has to add up.** If the contract has a payment schedule or a Payment
+  Template, the total of the scheduled instalments must match what the contract leaves to be paid.
+  This is by far the most common message people meet, and it is explained with worked numbers on
   [Payment Schedules and Collection](./education-payment-schedules).
-- **Money collected cannot exceed the contract's value.** Recording more than the contract is worth
-  is treated as an error rather than as an overpayment.
+- **Money collected cannot exceed the contract's value.** A collection that takes the contract's
+  remaining below zero is refused rather than treated as an overpayment.
 - **Unit prices and discount values cannot be negative.** If you need to reduce a fee, use a discount
   column; if you need to unwind an enrolment, use the cancellation document.
-- **Two instalments cannot share the same code.** Codes are filled in automatically on save, so this
-  normally only bites when someone has typed them by hand.
+- **Two instalments cannot share the same code.** The message is *Repeated code {0}* — «الكود {0} مكرر».
+  Codes are filled in automatically on save, so this normally only bites when someone has typed them
+  by hand.
 
 ## Where to go from here
 

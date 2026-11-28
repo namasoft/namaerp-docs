@@ -27,7 +27,7 @@ and of the two numbers — cost and price — that travel with it.
 3. **Issued.** The storekeeper raises a **Spare Parts Issue** (صرف قطع غيار) against the job order.
    Depending on the term, this either issues the parts out of the store or transfers them into the
    job order's work-in-progress store.
-4. **Returned** *(when something comes back)*. A **Spare Parts Return** (إرتجاع قطع غيار) puts unused
+4. **Returned** *(when something comes back)*. A **Spare Parts Return** (ارتجاع قطع غيار) puts unused
    parts back.
 5. **Consumed.** The
    [job order closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) splits
@@ -58,10 +58,11 @@ its term says *Transfer Not Issue* — and it is that generated document which r
 business request, moves the quantity and books the cost. The return generates a stock receipt (or the
 reverse transfer) in exactly the same way.
 
-::: danger A blank generation book and term means nothing moves
-The generated document is created with the **Generation Book** and **Generation Term** named on the
-spare-parts document's own
-[term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md). If either is empty,
+::: danger A blank book and term means nothing moves
+The generated document is created with the book and term named on the spare-parts document's own
+[term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md): the **Generation Book**
+and **Generation Term** for the stock issue or receipt, or the **Transfer Book** and **Transfer
+Term** when the term says *Transfer Not Issue*. If either of the pair in use is empty,
 **no stock document is created at all** — and
 any one previously generated is deleted. The spare-parts document still saves, still commits, still
 shows quantities and prices, and still writes the job order's parts ledger. The parts simply never
@@ -113,25 +114,26 @@ the item, or from the price you plan on the job order. Do not expect a percentag
 
 ## The system parts ledger
 
-Behind the documents sits a small system table — **جدول قطع الغيار النظامى**, the parts ledger — with
-one row per job order and item. Every commit of an issue or a return rebuilds it from all the
+Behind the documents sits a small system table — **جدول قطع الغيار النظامي**, the parts ledger — with
+one row per job order, item and item-specific dimensions (size, colour, lot, revision and the like). Every commit of an issue or a return rebuilds it from all the
 job order's committed issues and returns, accumulating the issued, transferred, returned and
 transferred-back quantities into a net total, and storing a unit price.
 
 That table is what the job order's materials grid is rebuilt from when the job order's term is set to
-accept tasks and materials from other documents, and therefore what the closing and the invoices are
+accept tasks and materials from other documents (unless the term's *Spread Items Quantity If It Is
+Issued In Different Material Issues* rebuilds it straight from the issue and return lines, as
+[Issuing Spare Parts](/modules/servicecenter/spare-parts/servicecenter-spare-parts-issue) explains), and therefore what the closing and the invoices are
 ultimately built on. It is worth knowing it exists, because it explains why cancelling a document can
 change a quantity you thought was typed by hand.
 
 ::: tip One row per item, or one per warehouse
-By default the ledger keys on the item alone. Switch on **إعتبار المخزن و الموقع في جدول قطع الغيار
-النظامى / Consider Warehouse And Locator In Material Entries** in the Service Center settings and it
+By default the ledger ignores the store: the same item issued from two warehouses shares one row. Switch on **اعتبار المخزن و الموقع في جدول قطع الغيار النظامي / Consider Warehouse And Locator In Material Entries** in the Service Center settings and it
 keys on warehouse and locator too, giving you separate rows per store.
 :::
 
 ## The plan, and whether it is a limit
 
-The job order term option **إضافة مهام قطع غيار لأمر الشغل من سندات خارجيه / Add Tasks And Materials
+The job order term option **إضافة مهام قطع غيار لأمر الشغل من سندات خارجية / Add Tasks And Materials
 to Job Order From Other Documents** decides which of the two regimes you are in, and it is the most
 consequential option in this whole area.
 

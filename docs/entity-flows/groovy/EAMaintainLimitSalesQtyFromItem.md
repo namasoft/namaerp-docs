@@ -22,7 +22,7 @@ These scripts were written for one customer, who had spare numeric fields to hol
 |---|---|
 | **Class names** | `EAMaintainLimitSalesQtyFromItem` (item), `EAMaintainLimitSalesQtyFromCustomer` (customer) |
 | **Scripts** | [EAMaintainLimitSalesQtyFromItem.groovy](/groovy-examples/EAMaintainLimitSalesQtyFromItem.groovy), [EAMaintainLimitSalesQtyFromCustomer.groovy](/groovy-examples/EAMaintainLimitSalesQtyFromCustomer.groovy) |
-| **Runs on** | **Item** and **Customer**. Target action **PostCommit**. |
+| **Runs on** | **Item** and **Customer**. Target action **Post Commit**. |
 | **Uses** | Parameter 2 and Parameter 3. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -44,7 +44,7 @@ They also show a reusable pattern: a flow that **finds a target record by query,
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow with target type **Item**.
-2. In the **Details** grid, add a line with **Target Action** set to **PostCommit**, and paste the whole item script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
+2. In the **Details** grid, add a line with **Target Action** set to **Post Commit**, and paste the whole item script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
 3. Fill in the parameters:
 
 | Parameter | Title shown after saving | What to enter |

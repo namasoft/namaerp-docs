@@ -20,9 +20,9 @@ Manual execution or automated through entity flows on DocumentFile entities with
 
 1. **Validates parameters** ensure all reference same detail collection
 2. **Iterates through collection** processing each detail line
-3. **Calculates rates** using ExchangeRateUtil for each line's currency
+3. **Calculates rates** for each line's currency, in the ledger of the document's legal entity on the document's value date
 4. **Sets individual rates** on each detail line separately
-5. **Handles errors gracefully** continuing with remaining lines
+5. **Skips empty lines:** a line whose currency field is empty keeps its rate
 
 ## Key Difference
 
@@ -31,14 +31,16 @@ Unlike EACalcCurrencyRate which handles single document header currencies, this 
 ## Key Parameters
 
 - **Parameter 1:** Currency Field (Required) - Full path including collection (e.g., `details.currency`)
-- **Parameter 2:** Rate Field (Required) - Full path including collection (e.g., `details.exchangeRate`)
-- **Parameter 3:** Detail Name (Required) - Collection name (e.g., `details`, `lines`, `items`)
+- **Parameter 2:** Rate Field (Required) - Full path including collection (e.g., `details.rate`)
+- **Parameter 3:** Detail Name (Required) - Collection name (e.g., `details`, `lines`)
+
+Parameters 1 and 2 must start with the detail name of Parameter 3; otherwise saving the entity flow is refused with *Parameter {0} must start with the detail name {1}*.
 
 ### Parameter Examples:
 ```
-Currency Field: details.currency, lines.foreignCurrency
-Rate Field: details.exchangeRate, lines.currencyRate
-Detail Name: details, lines, items, invoiceLines
+Currency Field: details.currency
+Rate Field: details.rate
+Detail Name: details
 ```
 
 ## Database Tables Affected

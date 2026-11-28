@@ -25,11 +25,11 @@ Manual execution when estate reservations need to be cancelled in bulk. Typicall
 4. **Starts editing** - Puts the contract in edit mode
 5. **Cancels reservation** - Sets reserveEstate flag to false
 6. **Commits changes** - Saves the updated contract
-7. **Accumulates results** - Collects success/failure status for each contract
+7. **Stops at the first failure** - When a contract cannot be saved, the run stops and returns that failure; the remaining contracts are not processed
 
 ## Parameters
 
-**Parameter 1:** SQL Query (Required) - Query to select contract IDs that should have reservations cancelled
+**Parameter 1:** Query (Required) - Query whose first column is the id of each initial sales contract that should have its reservation cancelled
 
 ## Example Query
 

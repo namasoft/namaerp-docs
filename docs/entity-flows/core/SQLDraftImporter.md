@@ -27,7 +27,7 @@ Manual execution for bulk data import from external sources, automated data migr
 
 ## Parameters
 
-**Parameter 1:** Update SQL (Optional) - SQL statement to run during import process for updates
+**Parameter 1:** Update SQL (Optional) - SQL statement run after each imported record is saved
 
 **Parameter 2:** SQL Statement 1 (Required) - Main SQL query for entity import with column mapping
 
@@ -37,33 +37,7 @@ Manual execution for bulk data import from external sources, automated data migr
 
 **Parameter 5:** SQL Statement 4 (Optional) - Fourth SQL query for extended data processing
 
-## SQL Query Format
-
-### Entity Record Query
-```sql
-select 
-  '' [:-record:PurchaseOrder],
-  'PurchaseOrder$#PO' book,
-  'PO'+CONVERT(NVARCHAR(10), GETDATE(), 112) code,
-  'PurchaseOrder$#PO' term,
-  getdate() valueDate
-```
-
-### Detail Record Query
-```sql
-select 
-  '' [:-detail:details],
-  'PO'+CONVERT(NVARCHAR(10), GETDATE(), 112) #code,
-  i.code [details.item.itemCode],
-  i.id [details.item.item],
-  i.dfMinQuantity-sum(coalesce(q.net,0)) [details.quantity.quantity.primeQty.value],
-  i.primBaseUnit_id [details.quantity.quantity.primeQty.uom] 
-from InvItem i 
-left join ItemDimensionsQty q on q.item_id = i.id 
-where i.dfMinQuantity > 0
-group by i.id,i.dfMinQuantity,primBaseUnit_id,i.code
-having sum(coalesce(q.net,0))<i.dfMinQuantity
-```
+The statements, the column headings, the Update SQL and the error handling are those of [SQLImporter](/entity-flows/core/SQLImporter); this flow saves the imported records as drafts instead of saving them as final.
 
 ## Database Tables Affected
 

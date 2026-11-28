@@ -34,13 +34,13 @@ The sub-module is small enough to describe in one breath.
 
 | Document | Arabic | What it is for |
 |---|---|---|
-| **Rental Asset Request** | طلب حجز تأجيرى | The reservation. Holds the slot. |
-| **Rental Asset Invoice** | فاتورة حجز تأجيرى | The bill for the booked period. |
+| **Rental Asset Request** | طلب حجز تأجيري | The reservation. Holds the slot. |
+| **Rental Asset Invoice** | فاتورة حجز تأجيري | The bill for the booked period. |
 | **Rental Asset Reservation Cancel** | إلغاء حجز أصل تأجيري | Frees the slot and records a typed cancellation charge. |
 
 Both the request and the invoice are full sales documents underneath — they carry taxes, discounts, payment lines, an instalment schedule, sales terms and dimensions, exactly like an ordinary sales invoice. Neither moves stock: the line they generate is a service item, so there is nothing to issue.
 
-The chain is **request → invoice**, and the invoice takes over the reservation from the request it was built on. It is not mandatory: you can raise a rental invoice on its own and skip the request entirely. Doing so costs you the double-booking check, for reasons the [booking page](/modules/servicecenter/rental-assets/servicecenter-rental-booking.md) explains.
+The chain is **request → invoice**, and the invoice takes over the reservation from the request it was built on. It is not mandatory: you can raise a rental invoice on its own and skip the request entirely. A request is always checked for overlapping bookings, while an invoice is checked only when its *Asset Reservation Confirmed* box is ticked; the [booking page](/modules/servicecenter/rental-assets/servicecenter-rental-booking.md) has the full rule.
 
 ## One switch decides how the whole area behaves
 
@@ -78,9 +78,5 @@ Everything on that list has to be handled the same way: as extra hand-typed line
 
 ## Where to read next
 
-- [The Rental Asset File](/modules/servicecenter/rental-assets/servicecenter-rental-asset.md) — the bookable resource itself, its working hours, its rest time and its price tiers.
-- [Booking, Invoicing and Cancelling](/modules/servicecenter/rental-assets/servicecenter-rental-booking.md) — the three documents in order, with the double-booking qualifier stated in full.
-
-::: info A note on the Arabic menu
-The Rental Assets folder reads **أصول تأجيرىة** in the Arabic menu, spelled with ى where ي is intended, and the Rental Asset entity title is **أصل تأجيرى** for the same reason. Both are reproduced here as they appear on screen so you can find them; the correct spellings are *أصول تأجيرية* and *أصل تأجيري*. In an English session some of these entity titles also fall back to Arabic — take the English names from the menu, not from the screen title.
-:::
+- [The Rental Asset File](/modules/servicecenter/rental-assets/servicecenter-rental-asset.md) — the bookable resource itself, its working hours, its rest period and its price tiers.
+- [Booking, Invoicing and Cancelling](/modules/servicecenter/rental-assets/servicecenter-rental-booking.md) — the three documents in order, with the double-booking rule stated in full.

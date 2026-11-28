@@ -26,7 +26,8 @@ Manual execution to generate related documents from source documents, typically 
 5. **Copies document lines** - Transfers filtered lines with field transformations
 6. **Handles workflow** - Manages approval processes and draft status
 7. **Inverse mapping** - Copies fields back from generated document to source
-8. **Cleanup** - Deletes empty documents or orphaned records
+8. **Cleanup** - Deletes a generated document that ends up with no lines, and, when grouping, the documents returned by Parameter 12 that this run did not create or update
+9. **Flush** - Writes the changes to the database after each generated document
 
 ## Parameters
 
@@ -46,7 +47,7 @@ fromDoc=$this
 ref5=$this
 ```
 
-**Parameter 4:** After Copy Lines Map (Optional) - Additional field mapping after line copying
+**Parameter 4:** After Copy Lines Fields Map (Optional) - Field map applied after the lines are copied. Both sides of each mapping refer to the generated document
 
 **Parameter 5:** Inverse Copy (Optional) - Copy fields from generated back to source
 
@@ -65,9 +66,9 @@ description5=n1
 totalizesql(select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end)
 ```
 
-**Parameter 9:** Line Criteria Filter (Optional) - Criteria definition code for line filtering
+**Parameter 9:** Copy only lines matching criteria (Criteria Definition Code) (Optional) - Code of a criteria definition; only the source lines that match it are copied
 
-**Parameter 10:** Line Query Filter (Optional) - SQL query for line filtering
+**Parameter 10:** Copy Only Lines Matching Query (Optional) - SQL query evaluated per source line to decide which lines are copied
 
 ```sql
 select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end
@@ -75,7 +76,7 @@ select case when {details.item.item.code} in ('a','b','c') then 1 else 0 end
 
 **Parameter 11:** Group Lines By (Optional) - Field(s) to group lines creating multiple documents
 
-**Parameter 12:** Cleanup Query (Optional) - SQL to identify documents for deletion when grouping
+**Parameter 12:** Query to list all docs that should be deleted if not handled by the entity flow (For Group Lines By) (Optional) - Used only when Parameter 11 is filled. A query returning the ids of documents of the target type; every one of them that this run did not create or update is deleted
 
 ## Database Tables Affected
 

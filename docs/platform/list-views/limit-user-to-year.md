@@ -5,7 +5,7 @@ menu: Administration → Security → Limit User To Year
 
 # Limit User To Year
 
-This feature lets you restrict users' access to specific fiscal years and accounting periods, preventing them from viewing or creating documents in fiscal years they are not authorized to work with.
+This feature lets you restrict users to specific fiscal years and fiscal periods: document list screens show them only the documents of the years or periods they are allowed, and reports start no earlier than a minimum date you set.
 
 ## Screen Location
 
@@ -15,7 +15,7 @@ This feature lets you restrict users' access to specific fiscal years and accoun
 
 The "Limit User To Year" screen is used to control:
 
-1. **Document restrictions**: Prevent users from viewing or creating documents in specific fiscal years or accounting periods
+1. **Document restrictions**: Hide documents outside the allowed fiscal years or fiscal periods from the user's document list screens. The restriction filters lists only; it does not stop the user from creating a document.
 2. **Report restrictions**: Set a minimum date that a user can use in reports
 
 ## Details
@@ -24,17 +24,18 @@ The "Limit User To Year" screen is used to control:
 
 | Field | Description |
 |-------|-------------|
-| **Apply To** | The party the restriction will be applied to: user, user group, permission file, or employee |
+| **Apply To** | The party the restriction will be applied to: user, user group, security profile, or employee |
 | **Document Type** | The document type to restrict (optional) |
 | **Type List** | A predefined list of document types to restrict at once (optional) |
 | **Fiscal Year** | The fiscal year the user is allowed to work with |
-| **Fiscal Period** | The accounting period allowed (optional — for more granular restriction) |
+| **Fiscal Period** | The fiscal period allowed (optional). A line with a period allows that period instead of its year. |
 
 ### Fiscal Year and Period Restriction Behavior
 
 - If you leave both "Document Type" and "Type List" blank, the restriction will apply to **all document types**
 - You can add multiple lines for the same party to allow several fiscal years
-- Restrictions are **cumulative**: if a user has multiple restrictions (directly, through their group, permission file, or employee), the system combines all allowed years
+- Restrictions are **cumulative**: see [Application Priority](#Application-Priority)
+- When a user ends up with both year lines and period lines, a document must match both: its fiscal year must be one of the allowed years **and** its fiscal period one of the allowed periods
 
 ## Limit User to Dates In Reports
 
@@ -44,12 +45,13 @@ The "Limit User To Year" screen is used to control:
 |-------|-------------|
 | **Apply To** | The party the restriction will be applied to |
 | **Min Date** | A fixed minimum date the user can select in reports |
-| **Min Date From Today** | Number of days before the current date as a minimum date (a dynamic value) |
+| **Min Date From Today (Days)** | Number of days before the current date as a minimum date (a dynamic value) |
 
 ### Date Restriction Behavior
 
-- If "Min Date From Today" is specified, it takes priority and the date is calculated dynamically
-- The system chooses the most recent (largest) date from all restrictions applied to the user
+- If "Min Date From Today (Days)" is filled with a number other than zero, it takes priority over "Min Date" and the date is calculated from today
+- Give each party one line. When the same party has several date lines, only one of them is used
+- When several parties apply to the user, see [Application Priority](#Application-Priority)
 
 ![A Limit User To Year record: fiscal-year lines for two users above, report date limits below](../../ar/platform/images/list-views/limit-user-to-year-en.png)
 
@@ -61,8 +63,8 @@ When displaying a document list (such as an invoice list), the system automatica
 
 ```
 1. Checks the document type
-2. Looks up restrictions for the current user (directly or via group/permission file/employee)
-3. Adds an automatic filter on the fiscal year and/or accounting period
+2. Looks up restrictions for the current user (directly or via group/security profile/employee)
+3. Adds an automatic filter on the fiscal year and/or fiscal period
 ```
 
 ::: tip Note
@@ -73,9 +75,9 @@ The user will not see documents in unauthorized years, even if they have permiss
 
 When running a report, the system:
 
-- **Date fields**: Automatically adjusts the "from" date to be the minimum allowed date
-- **Fiscal Year fields**: Automatically selects the first allowed year if the selected value is not permitted
-- **Fiscal Period fields**: Automatically selects the first allowed period
+- **Date fields**: Raises a "from" date that is earlier than the minimum allowed date to that minimum date
+- **Fiscal Year fields**: When the selected year is empty or starts before the earliest allowed year, replaces it with the earliest allowed year (the allowed year with the earliest start date). Only lines that leave both "Document Type" and "Type List" blank count here, and a prompt whose name contains `to` and not `from` is left alone
+- **Fiscal Period fields**: The same rule, with the allowed periods
 
 ::: warning "To Date" is recognised by name, not by meaning
 A to-date prompt has to be left alone or the range would collapse, and Nama decides which prompts those are from the parameter's **name**: a prompt is exempt when its name contains `to` and does not contain `from` (case ignored), or when the name is exactly `tdate`. So `toDate`, `dateTo` and `ToDocDate` are exempt, and `fromDate` is correctly raised.
@@ -100,37 +102,17 @@ A to-date named anything else — `endDate`, `until`, `dueDate` — matches none
 1. Create a new record
 2. In the "Limit User to Dates In Reports" grid:
    - **Apply To**: Select the user group
-   - **Min Date From Today**: 90
+   - **Min Date From Today (Days)**: 90
 3. Save the record
 
 **Result**: Any report run by a user in this group will have the "from" date set to at least 90 days before today.
 
-### Example 3: Restrict to a Specific Document Type
-
-1. Create a new record
-2. In the details grid:
-   - **Apply To**: Select the user
-   - **Document Type**: Select "Sales Invoice" for example
-   - **Fiscal Year**: 2024
-3. Add another line:
-   - **Apply To**: Same user
-   - **Document Type**: Leave blank (for the remaining document types)
-   - **Fiscal Year**: 2023
-
-**Result**: The user sees sales invoices for 2024 only, but all other documents for 2023.
-
 ## Application Priority
 
-When a user has multiple restrictions, they are applied as follows:
+A restriction can reach a user from four sources: a line for the user directly, for the user's group, for the user's security profile, and for the employee linked to the user.
 
-1. Direct user restrictions
-2. User group restrictions
-3. Permission file restrictions
-4. Linked employee restrictions
-
-::: info
-All restrictions are **combined** — meaning the user receives the union of all allowed years/periods from all sources.
-:::
+- **Fiscal years and periods** from all four sources are **combined**: the user receives the union of all allowed years and periods.
+- **Report dates** are not combined that way. A date line for the user directly wins on its own. Only when there is none does the system take the latest (largest) date among the group, security profile and employee lines.
 
 ## Technical Notes
 

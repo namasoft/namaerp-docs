@@ -43,19 +43,19 @@ These options decide how a Hijri date is written when Nama writes one out — fo
 
 ## Measures
 
-Many businesses describe an item by three physical measures rather than a single quantity: a sheet of glass is 2 metres by 1.5, a length of cable is 200 metres. Nama carries three measure fields on document lines, and this group decides what they are called and how they combine.
+Many businesses describe an item by three physical measures rather than a single quantity: a sheet of glass is 2 metres by 1.5, a length of cable is 200 metres. Nama carries three measure fields on document lines and writes them together as one measures text, and this group decides how that text is written.
 
-**Length** / **Width** / **Height** `value.measuresConfiguration.length`, `...width`, `...height` — The label shown for each measure. Leaving one empty hides that measure from the screens that use them, which is what you want when only two of the three are meaningful.
+**Length** / **Width** / **Height** `value.measuresConfiguration.length`, `...width`, `...height` — The prefix written before each value in the measures text, and recognised when a user types the text. With `L` and `W` the text reads `L2*W1.5`. All three are empty by default, so the text is just `2*1.5`.
 
-**Separator** `value.measuresConfiguration.seperator` *(default `*`)* — The character used when the three measures are written as one descriptive string, giving `2*1.5`. The system restores the default if you save this empty.
+**Separator** `value.measuresConfiguration.seperator` *(default `*`)* — The character between the measures in the measures text, giving `2*1.5`. The system restores the default if you save this empty.
 
-**Calculate Count Based On Qty in Invoices** `value.info.calculateCountBasedOnQty` *(default on)* — With this on, the *count* on a line is derived from the quantity multiplied by the measures rather than typed by hand, so entering 10 sheets of 2 × 1.5 gives a count of 30 square metres automatically. The unit of measure decides which measures participate: a unit flagged to ignore length or width leaves that factor out of the multiplication.
+**Calculate Count Based On Qty in Invoices** `value.info.calculateCountBasedOnQty` *(default on)* — On sales document lines that carry measures, changing the quantity recalculates the count (**Measures | Qty**) as the quantity divided by length × width × height, so a quantity of 30 square metres on sheets of 2 × 1.5 gives a count of 10. A measure that is empty, or that the line's unit of measure is flagged to ignore, counts as 1.
 
 ## Notes and reloading
 
 **Notes** `info` — A free text field on the configuration record itself. Useful for recording *why* an unusual option was switched on, and when.
 
-The **Reload Configuration** action in the toolbar forces every server node to drop its cached copy and re-read the record. You rarely need it — saving already refreshes the cache — but it is the first thing to try if one node appears to be behaving differently from another.
+The **Reload Configuration** button on this tab forces every server node to drop its cached copy and re-read the record. You rarely need it — saving already refreshes the cache — but it is the first thing to try if one node appears to be behaving differently from another.
 
 ## Settings on this tab
 
@@ -75,7 +75,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.hijriFormat.monthPosition` | Month Position | موقع الشهر | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFormat.yearPosition` | Year Position | موقع السنة | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFormat.seperator` | Separator | الفاصل | [Hijri date format](#Hijri-date-format) |
-| `value.info.hijriFormat.addZeroToNumbersLessThan10` | Add Zero To Numbers Less Than 10 | إضافة صفر قبل الارقام اقل من 10 | [Hijri date format](#Hijri-date-format) |
+| `value.info.hijriFormat.addZeroToNumbersLessThan10` | Add Zero To Numbers Less Than 10 | إضافة صفر قبل الأرقام أقل من 10 | [Hijri date format](#Hijri-date-format) |
 | `value.info.hijriFields` | Hijri Fields | الحقول الهجري دائما | Date fields that are always shown as Hijri dates, whatever calendar the user logged in with. |
 | `value.info.hijriFields.entityType` | Entity Type | النوع | The screen the line applies to; leave it empty to cover the field on every screen. |
 | `value.info.hijriFields.fieldId` | On Field | الحقل | The date field to show as Hijri. |
@@ -83,4 +83,4 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.measuresConfiguration.width` | Measures \| Width | الأبعاد \| العرض | [Measures](#Measures) |
 | `value.measuresConfiguration.height` | Measures \| Height | الأبعاد \| الارتفاع | [Measures](#Measures) |
 | `value.measuresConfiguration.seperator` | Separator | الفاصل | [Measures](#Measures) |
-| `value.info.calculateCountBasedOnQty` | Calculate Count Based On Qty in Invoices | حساب العدد بناءا على الكمية في الفواتير | [Measures](#Measures) |
+| `value.info.calculateCountBasedOnQty` | Calculate Count Based On Qty in Invoices | حساب العدد بناءً على الكمية في الفواتير | [Measures](#Measures) |

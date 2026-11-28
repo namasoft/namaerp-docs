@@ -32,14 +32,19 @@ Automatically generates Investment Document Claiming records for treasury bonds 
 - **Links:** References to original investment documents
 - **Copies:** Specified fields based on field mapping parameter
 - **Generates:** Document codes automatically
+- **Dimensions:** Copied from the book of the new claiming document
+- **Saves:** Each claiming document as final; the run stops at the first one that fails to save
 - **Limit:** Maximum 500 records per execution
+
+The record the flow runs on is not used: the bonds are always found by the criteria above, so the
+flow is normally run from a task schedule.
 
 ## Parameters
 
 ### Parameter 1: Fields Map (Required)
+- **Title:** Fields Map
 - **Type:** Text field mapping configuration
-- **Purpose:** Specifies which fields to copy from source to target document
-- **Format:** Field mapping syntax for data transfer
+- **Purpose:** A [field map](/entity-flows/core/ai-generated-field-maps-documentation) from the investment document to the new claiming document, one `target field=investment document field` per line. Use it for what the flow does not fill, such as the claiming document's book and term.
 
 ## Business Use Cases
 

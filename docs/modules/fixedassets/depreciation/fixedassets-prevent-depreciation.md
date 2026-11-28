@@ -29,7 +29,7 @@ then treats that range as a documented gap rather than a hole — it excludes th
 block is running, and picks them up cleanly in the first period after it ends.
 
 You will find it at **Assets → Documents → Prevent Assets Depreciation Document**
-(`الأصول > المستندات > مستند منع اهلاك اصول`), under the `fixedassets` licence.
+(`الأصول > المستندات > مستند منع إهلاك أصول`), under the `fixedassets` licence.
 
 ![The prevent depreciation document — the header period range and the per-asset details grid](../../../ar/modules/fixedassets/images/depreciation/fa-prevent-depreciation-main-en.png)
 
@@ -37,7 +37,7 @@ You will find it at **Assets → Documents → Prevent Assets Depreciation Docum
 
 The screen is short. Under **Basic Information** you have the document code and book, the term, the
 issue date, the value date, the fiscal period, a description field, and the pair that does the real
-work: **From Period** (من فترة) and **To Period** (الي فترة).
+work: **From Period** (من فترة) and **To Period** (إلى فترة).
 
 The details grid then lists the assets, each with its own From Period and To Period. In practice you
 set the range once on the header, because the header values are pushed down onto every line each
@@ -74,9 +74,10 @@ lines.
 
 ## Actions on This Screen
 
-The prevent-depreciation document has no buttons of its own. It is a header, an asset, two dates and
-a reason: fill them in, save and commit. There is no collect button to pull in a range of assets, so
-freezing a group of them means one document per asset.
+The prevent-depreciation document has no buttons of its own. It is a header period range and a grid
+of assets: fill them in, save and commit. There is no collect button to pull in a range of assets,
+so each asset to be frozen is added to the grid by hand; one document can carry as many asset lines
+as you need.
 
 ## What Happens While the Block Is On
 
@@ -123,6 +124,6 @@ documents.
 
 | Message | Why | What to do |
 |---|---|---|
-| *The asset {0} does not have opening or purchase document before fiscal period {1}* — «الأصل {0} ليس له افتتاحي او سند شراء قبل الفترة {1}» | The asset on the line has no opening or purchase document dated before the From Period, so it has never been capitalised. | Capitalise the asset first. A prevention can only cover an asset that already exists financially. |
-| *The asset {0}, last used period {1} and from period is {2}, you must cover this gap* — «الأصل {0}, اخر فترة مٌستخدمة {1} ومن فترة {2}, لابد الا يكون هناك فجوة بين الفترات» | The From Period does not follow the asset's last used period immediately — there are untouched periods in between. | Move the From Period back so the block starts right after the last activity, or depreciate the gap first. |
-| *The asset {0} has transaction in document {1} between period {2} and {3}* — «الأصل {0} له حركات في المستند {1} بين الفتره {2} و الفترة {3}» | The asset has a document dated inside the range you are trying to block. The message names it. | Shorten the range so it clears that document, or reverse the document if it was entered by mistake. |
+| *The asset {0} does not have opening or purchase document before fiscal period {1}* — «الأصل {0} ليس له افتتاحي أو سند شراء قبل الفترة {1}» | The asset on the line has no opening or purchase document dated before the From Period, so it has never been capitalised. | Capitalise the asset first. A prevention can only cover an asset that already exists financially. |
+| *The asset {0}, last used period {1} and from period is {2}, you must cover this gap* — «الأصل {0}, آخر فترة مُستخدمة {1} ومن فترة {2}, لابد ألا يكون هناك فجوة بين الفترات» | The From Period does not follow the asset's last used period immediately — there are untouched periods in between. | Move the From Period back so the block starts right after the last activity, or depreciate the gap first. |
+| *The asset {0} has transaction in document {1} between period {2} and {3}* — «الأصل {0} له حركات في المستند {1} بين الفترة {2} و الفترة {3}» | The asset has a document dated inside the range you are trying to block. The message names it. | Shorten the range so it clears that document, or reverse the document if it was entered by mistake. |

@@ -1,6 +1,6 @@
 ---
-description: "The Tour document: its header, filling a tour from a tour program, its three grids, status, checks on commit and creating tourism service purchase orders."
-entities: [TRTour]
+description: "The Tour document: its header, filling a tour from a tour program, its three grids, the Pax Data tab and the Pax Check-In document, status, checks on commit and creating tourism service purchase orders."
+entities: [TRTour, TRPaxCheckIn]
 menu: Travel → Documents → Tour
 ---
 # Tours
@@ -20,8 +20,9 @@ You reach it from **Travel → Documents → Tour** (in Arabic
 
 ::: info A tour carries no prices at all
 There is no rate, no cost, no total and no currency anywhere on a tour — not on the header, not on
-any of its three grids. Saving a tour creates no journal entry, no receivable and no payable, and
-touches no stock.
+any of its three grids. The only number of that kind is the **Net** column on the Pax Data tab, a
+figure you record per traveller that nothing else reads. Saving a tour creates no journal entry, no
+receivable and no payable, and touches no stock.
 
 This is deliberate, and it is the shape of the whole module. The tour is the **operations file**:
 who is coming, where they sleep, what they do, when they fly. The money is raised separately, on
@@ -44,11 +45,14 @@ The one bridge between the halves is a button, and it is described at the end of
 | **Term** (توجيه المستند) | The [document term](./travel-document-terms). Fill it in — the purchase-order button will not run without one |
 | **Issue Date** (تاريخ التحرير) / **Value Date** (التاريخ الفعلي) | The document dates. Both are carried onto any purchase orders the tour generates |
 | **Fiscal Period** (الفترة) | The period the document belongs to |
-| **Status** (الحالة) | Initial, In Progress, Finished, Canceled — a label you keep, see below |
+| **Status** (الحالة) | Initial, In Progress, Finished, Canceled — see below |
 | **Tour Guide** (المرشد السياحي) | The guide running the trip |
 | **Tour Leader** (قائد الرحلة) | The employee leading it |
 | **Tour Operator** (منظم الرحلة) | The employee who owns the file. A new tour starts with the employee linked to the user creating it |
 | **Care Of** (عناية) | The employee the agent deals with. Picking the agent fills this in from that customer's salesman, and you can override it |
+| **Internal Driver** (السائق الداخلي) | The employee who drives the group |
+| **External Driver** (السائق الخارجي) | A driver from the [External Driver](/modules/travel/travel-master-files#External-Driver) master file, when the driver is not on your staff |
+| **Car** (السيارة) | The car (the basic Car master file) assigned to the trip |
 | **Description** (ملاحظات) | Free text for whatever the group's file needs to say |
 
 ### Guest Details (تفاصيل الضيف)
@@ -63,18 +67,21 @@ The one bridge between the halves is a button, and it is described at the end of
 
 ### Pax Details
 
-**PAX**, **SGL**, **DBL**, **TPL** — the group size and the room split you have to book.
+**PAX**, **Adult** (بالغ), **Child** (طفل), **SGL**, **DBL**, **TPL** — the group size, how many of
+them are adults and children, and the room split you have to book.
 
 This is checked when the tour commits: **PAX must equal (TPL × 3) + (DBL × 2) + SGL**. For our 40
 travellers, `10 TPL + 4 DBL + 2 SGL` gives `30 + 8 + 2 = 40` and the tour saves. Anything else is
 rejected with a message naming both numbers, which is usually a sign that somebody changed the room
-split without re-counting heads.
+split without re-counting heads. **Adult** plus **Child** must not exceed **PAX**.
 
 ### Arrival Departure Details (تفاصيل القيام و الوصول)
 
-**Arrival Date** (تاريخ الوصول), **Departure Date** (تاريخ القيام) and **VISA** (تأشيرة, the number
-of visas). The departure date can never be earlier than the arrival date, and this pair of dates
-becomes the window that every other date on the document is checked against.
+**Arrival Date** (تاريخ الوصول), **Arrival Time** (وقت الوصول), **Departure Date** (تاريخ القيام),
+**Departure time** (وقت القيام) and **VISA** (تأشيرة, the number of visas). The departure date can
+never be earlier than the arrival date, and this pair of dates becomes the window that every other
+date on the document is checked against. When both times are filled in, the departure (date and
+time) must come after the arrival (date and time).
 
 ### Flight Details (تفاصيل الرحلات الجوية)
 
@@ -245,14 +252,47 @@ the row you were standing on:
 ![The Hotel Voucher column on an accommodation row — where the voucher for that stay is created and linked](../../ar/modules/travel/images/tours/tour-accommodation-voucher-column-en.png)
 
 ::: tip Save the tour first
-Create vouchers from a tour that has already been saved once. A voucher created from a saved tour
-carries the tour reference back with it, so the voucher and the tour can each be found from the
-other. See [Hotel & Restaurant Vouchers](./travel-vouchers) for what the vouchers do next.
+Create hotel vouchers from a tour that has already been saved once. A hotel voucher created from a
+saved tour carries the tour reference back with it, so the voucher and the tour can each be found
+from the other. A restaurant voucher created from the Services grid does not get the tour
+reference; fill its **Tour** field yourself. See [Hotel & Restaurant Vouchers](./travel-vouchers) for what the vouchers do next.
 :::
+
+## Pax Data and Pax Check-In
+
+The **Pax Data** tab (بيانات الركاب) lists the travellers one per row:
+
+| Column | Meaning |
+|---|---|
+| **Name** (الاسم) | The traveller's name |
+| **Confirmation Code** (كود التأكيد) | The booking confirmation code |
+| **Net** (الصافي) | A figure you record for the traveller. It has no accounting effect |
+| **Phone Number** (رقم الهاتف) | The traveller's phone |
+| **Platform** (المنصة) | The [platform](/modules/travel/travel-master-files#Platform) the booking came through |
+| **Attachment 1 / 2 / 3** (مرفق 1 / 2 / 3) | Files for the traveller, such as a passport copy |
+| **Status** (الحالة) | **Confirm**, **No Show**, **Reschedule** or **Cancel** |
+
+You cannot set **Status** on the tour itself. A changed value is refused on commit with
+*"Pax status can only be changed through a Pax Check-In"*. The statuses are written by a separate
+document, **Pax Check-In** (تسجيل وصول الركاب), under **Travel → Documents → Pax Check-In**:
+
+1. Create a Pax Check-In and pick the **Tour**. Its **Pax Data** grid fills with a copy of the tour's
+   travellers, each row linked to the tour row it came from.
+2. Set **Status** on each row and save. On commit, every row's status is written onto the matching
+   row of the tour.
+3. Saving the check-in again first clears the statuses its previous version wrote, then writes the
+   current ones, so a row you removed from the check-in goes back to an empty status on the tour.
+   Deleting the check-in clears all the statuses it wrote.
+
+A tour has only one Pax Check-In: a second one for the same tour is refused with
+*"Tour {0} already has Pax Check-In {1}"*. Every row must still exist on the tour's Pax Data, or the
+check-in is refused with *"This line does not exist in the Pax Data of tour {0}"*.
 
 ## Status and Situation
 
-Two pick-lists appear on the tour, and both are **labels you keep for follow-up and reporting**.
+Two pick-lists appear on the tour, and both are **labels you keep for follow-up and reporting**,
+with one exception: a **Canceled** tour is left out of the double-booking check on the guide, car
+and drivers (see [What Nama checks before it commits](#What-Nama-checks-before-it-commits)).
 
 **Status** (الحالة) on the header — **Initial**, **In Progress**, **Finished**, **Canceled**. You
 can move it from any value to any other. It is copied from the program when you pick one.
@@ -275,9 +315,19 @@ The validations are all about keeping the file internally consistent:
 4. **Every accommodation check-in and check-out falls between arrival and departure.**
 5. **Every service date and flight line date falls between arrival and departure.**
 6. **A city belongs to its country**, on accommodation and service lines.
+7. **Adult plus Child does not exceed PAX.**
+8. **Departure comes after arrival**, counting the times, when both the arrival and departure times
+   are filled in.
+9. **The tour guide, the car and the drivers are not booked twice.** The header's **Tour Guide**,
+   **Car**, **Internal Driver** and **External Driver** cannot be on another saved tour, that is not
+   Canceled, whose period overlaps this one. A period runs from the arrival date and time to the
+   departure date and time; an empty arrival time counts as the start of the day, and an empty
+   departure time as the end of the departure day. So a car can drop one group at 10:00 and pick
+   up the next at 14:00 the same day. A Canceled tour is not checked at all.
+10. **Pax statuses are not edited on the tour** — only a Pax Check-In changes them.
 
-The date-window rules only run once both the arrival and departure dates are filled in, so complete
-the header before working through the grids.
+The date-window rules and the double-booking check only run once both the arrival and departure
+dates are filled in, so complete the header before working through the grids.
 
 ## Create Tourism Service Purchase Orders
 
@@ -331,22 +381,11 @@ invoicing against it, and paying the hotel.
 
 ### The setup it depends on
 
-The button reads the tour's **Term** (توجيه المستند) to know how to build each family of orders.
-For every one of the five passes, the term names the **book** and the **term** the generated order
-should use — a hotel purchase order book and term, a flight one, a service one, a tour guide one, a
-restaurant one. A pass whose book and term are both empty is simply not run, which is how a company
-that never buys guides separately keeps guide orders switched off.
-
-Two more fields on the term matter for the two passes that are not driven by a service on the line.
-An accommodation line names a hotel but no tour service, and a flight line names a supplier but no
-tour service, so the term supplies a fixed one for each: **Hotel Service** (خدمة الفندق) and
-**Flight Service** (خدمة رحلة الطيران). Set both to the tour services you use for room nights and
-for air tickets, and every generated hotel and flight line carries the right service.
-
-Service, tour guide and restaurant lines need no such setting — they use the service already named
-on the tour line.
-
-For the whole setup screen, see [Document Terms](./travel-document-terms).
+The button reads the tour's **Term** (توجيه المستند): for each of the five passes it names the book
+and term of the generated orders, and it supplies the **Hotel Service** and **Flight Service** that
+hotel and flight lines lack. A pass with an empty book and term is skipped, and a tour line goes onto
+an order only when it has both a party and a service. The settings and these rules are on
+[Document Terms](/modules/travel/travel-document-terms#The-tour-term).
 
 ### Re-running it
 
@@ -376,12 +415,21 @@ rebuild touched.
 
 | Message | Why | What to do |
 |---|---|---|
-| *PAX {0} must equal the sum of individual distributions {1} according to the equation (Tpl * 3) + (Dbl * 2 ) + Sgl* — «(Tpl * 3) + (Dbl * 2 ) + Sgl عدد الأفراد {0} يجب ان يساوى مجموع توزيعات الافراد {1} طبقاً للمعادلة» | The PAX figure on the header does not match the room split: triples by 3, plus doubles by 2, plus singles. | Correct PAX or the TPL / DBL / SGL boxes until the two agree. |
-| *Departure date {0} can not be before arrival date {1}* — «لا يمكن ان يكون تاريخ القيام {0} قبل تاريخ الوصول {1}» | The tour's departure date falls before its arrival date. | Fix the two header dates; every date rule below is measured against that window. |
-| *Flight departure date {0} must be between {1} and {2}* — «تاريخ قيام الرحلة {0} يجب ان يكون فى الفترة بين {1} و {2}» | The header's flight departure date falls outside the arrival-to-departure window. | Move the flight date inside the window, or widen the window if the tour really runs longer. |
-| *Flight arrival date {0} must be between {1} and {2}* — «تاريخ وصول الرحلة {0} يجب ان يكون فى الفترة بين {1} و {2}» | The header's flight arrival date falls outside the arrival-to-departure window. | As above. |
-| *Check in {0} must be between {1} and {2}* — «تاريخ الدخول {0} يجب ان يكون فى الفترة بين {1} و {2}» | An accommodation row's check-in falls outside the tour window. The offending row is highlighted. | Correct the row, or the header dates. |
-| *Check out {0} must be between {1} and {2}* — «تاريخ الخروج {0} يجب ان يكون فى الفترة بين {1} و {2}» | An accommodation row's check-out falls outside the tour window — most often a stay running a day past the departure date. | Correct the row, or extend the departure date. |
-| *Date {0} must be between {1} and {2}* — «التاريخ {0} يجب ان يكون فى الفترة بين {1} و {2}» | A row in the Services grid or in the Flights grid carries a date outside the tour window. | Check both grids — the same wording is used for each, so read the highlighted row. |
+| *PAX {0} must equal the sum of individual distributions {1} according to the equation (Tpl * 3) + (Dbl * 2 ) + Sgl* — «(Tpl * 3) + (Dbl * 2 ) + Sgl عدد الأفراد {0} يجب أن يساوي مجموع توزيعات الأفراد {1} طبقاً للمعادلة» | The PAX figure on the header does not match the room split: triples by 3, plus doubles by 2, plus singles. | Correct PAX or the TPL / DBL / SGL boxes until the two agree. |
+| *Departure date {0} can not be before arrival date {1}* — «لا يمكن أن يكون تاريخ القيام {0} قبل تاريخ الوصول {1}» | The tour's departure date falls before its arrival date. | Fix the two header dates; every date rule below is measured against that window. |
+| *Flight departure date {0} must be between {1} and {2}* — «تاريخ قيام الرحلة {0} يجب أن يكون في الفترة بين {1} و {2}» | The header's flight departure date falls outside the arrival-to-departure window. | Move the flight date inside the window, or widen the window if the tour really runs longer. |
+| *Flight arrival date {0} must be between {1} and {2}* — «تاريخ وصول الرحلة {0} يجب أن يكون في الفترة بين {1} و {2}» | The header's flight arrival date falls outside the arrival-to-departure window. | As above. |
+| *Check in {0} must be between {1} and {2}* — «تاريخ الدخول {0} يجب أن يكون في الفترة بين {1} و {2}» | An accommodation row's check-in falls outside the tour window. The offending row is highlighted. | Correct the row, or the header dates. |
+| *Check out {0} must be between {1} and {2}* — «تاريخ الخروج {0} يجب أن يكون في الفترة بين {1} و {2}» | An accommodation row's check-out falls outside the tour window — most often a stay running a day past the departure date. | Correct the row, or extend the departure date. |
+| *Date {0} must be between {1} and {2}* — «التاريخ {0} يجب أن يكون في الفترة بين {1} و {2}» | A row in the Services grid or in the Flights grid carries a date outside the tour window. | Check both grids — the same wording is used for each, so read the highlighted row. |
+| *Adult {0} plus child {1} must not exceed PAX {2}* — «مجموع البالغين {0} والأطفال {1} يجب ألا يزيد عن عدد الأفراد PAX {2}» | Adult plus Child is more than PAX. | Correct the counts. |
+| *Departure time {0} must be after arrival time {1}* — «وقت الرحيل {0} يجب أن يكون بعد وقت الوصول {1}» | With the times counted, the departure is not after the arrival — typically a same-day tour whose departure time is earlier than its arrival time. | Correct the times or the dates. |
+| *Tour guide {0} is already booked in tour {1} during this period* — «المرشد {0} محجوز بالفعل في الرحلة {1} خلال هذه الفترة» | The header's tour guide is on another saved, non-canceled tour whose period overlaps this one. | Choose another guide, or fix the dates or status of the other tour. |
+| *Car {0} is already booked in tour {1} during this period* — «السيارة {0} محجوزة بالفعل في الرحلة {1} خلال هذه الفترة» | The car is on another overlapping tour. | Choose another car, or fix the other tour. |
+| *Driver {0} is already booked in tour {1} during this period* — «السائق {0} محجوز بالفعل في الرحلة {1} خلال هذه الفترة» | The internal or external driver is on another overlapping tour. | Choose another driver, or fix the other tour. |
+| *Pax status can only be changed through a Pax Check-In* — «لا يمكن تغيير حالة الراكب إلا من خلال مستند تسجيل وصول الركاب» | A Status on the Pax Data tab was changed on the tour. | Put the status back and record it on the tour's Pax Check-In. |
+| *Tour {0} already has Pax Check-In {1}* — «الرحلة {0} لها بالفعل مستند تسجيل وصول الركاب {1}» | On a Pax Check-In: the tour already has a saved check-in. | Open and edit that check-in instead. |
+| *This line does not exist in the Pax Data of tour {0}* — «هذا السطر غير موجود في بيانات الركاب للرحلة {0}» | On a Pax Check-In: the row's traveller has been removed from the tour since the check-in was filled. | Remove the row from the check-in. |
+| *TRTour {0} must have term* — «مستند الرحلة السياحية {0} يجب أن يحتوي على توجيه» | **Create Tourism Service Purchase Orders** was pressed on a tour with no Term. | Fill in the tour's Term and save, then press the button again. |
 
-The date rules only run once both header dates are filled, so a tour with an empty arrival or departure date passes all of them.
+The date rules and the double-booking check only run once both header dates are filled, so a tour with an empty arrival or departure date passes all of them.

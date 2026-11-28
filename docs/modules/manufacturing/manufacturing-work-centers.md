@@ -13,7 +13,7 @@ So two master files sit underneath routings and hold that detail once:
 - A **Work Center** (صالة إنتاج) is a *place* — a line, a cell, an area of the shop floor — and the resources stationed there.
 - A **Standard Operation** (عملية قياسية) is a *step* — cutting, taping, packing — with its own resources, rates and tolerances.
 
-A routing then just points at them. Change the rate on the standard operation and every routing that references it is corrected at once.
+A routing then just points at them. Picking a standard operation on a routing row copies its settings, resources and molds onto the routing; a later change to the standard operation reaches the routings only when you run **Insert Resources From Standard Operations To Routing** on them ([Routings](/modules/manufacturing/manufacturing-routing#Refreshing-resources-from-the-standard-operations)).
 
 ::: info Required license
 Work centers and standard operations are part of the core `manufacturing` license. If the **Manufacturing** menu is missing altogether, that license is not enabled.
@@ -31,13 +31,9 @@ Each **Details** row is a resource stationed at this work centre:
 
 **Resource** is the machine or crew. The AC Kit Assembly Line above has two — Assembly Crew A and a Pipe Cutting & Flaring Machine.
 
-**Resources Count** is how many of that resource exist here. Four for the crew means four people, and that number is what turns a work centre into a capacity figure rather than a name.
+**Resources Count** is how many of that resource exist here. Four for the crew means four people, and that number is a ceiling the system enforces: when a routing or a production order is saved, the resource rows of each operation are added up per work centre, and an operation that uses a resource its work centre does not list, or more of it than the work centre's count, is refused with *The resource {0} not found in work center {1}* — «المورد {0} غير موجود في صالة الإنتاج {1}» — or *Resource {0} count in workcenter {1} is {2} and you are using {3}* — «عدد المورد {0} في صالة التشغيل {1} هو {2} والمستخدم {3}». The module option **Allow Resource Count To Exceed Work Center Count** switches the check off.
 
-**Work Hours** is how many hours a day the resource is available — 8 on both rows. **Available All Day** is the override for resources that don't work to a shift pattern: tick it and the hours figure stops applying.
-
-::: tip Capacity comes from this grid, not from a capacity field
-There is no field on this screen that says "this line can produce 400 units a day". Capacity is derived: resources × count × work hours, against the durations and rates on the operations that run here. If planning tells you a line is overloaded and you disagree, this grid is the first place to look — an understated Resources Count is the usual culprit.
-:::
+**Work Hours** is how many hours a day the resource is available — 8 on both rows, and never more than 24. **Available All Day** is the alternative for resources that don't work to a shift pattern. A row needs one or the other, or saving stops with *Must enter available all the day or work hours* — «يجب عليك إدخال تشغيل دائم أو ساعات العمل».
 
 The **Dimensions** section — **Legal Entity**, **Branch**, **Department**, **Analysis set**, **Sector** — places the work centre in the organisation, and is what lets costs and output be reported by branch or department later.
 
@@ -57,11 +53,11 @@ This is the richer of the two files, because a step carries more meaning than a 
 
 **Output | Unit** and **Output | Value**, together with **Rate**, describe what the step produces per pass. **Default UOM** is the unit the operation is measured in when nothing more specific applies.
 
-**Auto Charge**, ticked here, applies the operation's cost automatically as production is recorded. Leave it off for steps whose real consumption varies too much for an automatic figure to be honest — those get a [resource voucher](/modules/manufacturing/manufacturing-resource-voucher) entered by hand instead.
+**Auto Charge**, ticked here, is copied onto the routing row and onto every resource row the operation brings, which is what puts those resources into the [resource voucher](/modules/manufacturing/manufacturing-resource-voucher) a production execution generates ([Routings](/modules/manufacturing/manufacturing-routing) explains the step-level effect). Leave it off for steps whose real consumption varies too much for an automatic figure to be honest — those get a resource voucher entered by hand instead.
 
-**Permitted Percentage** (5 here) and **Unlimited Overcompletion** set the over-production tolerance for this step, in the same way the routing header sets it for the first operation.
+**Permitted Percentage** (5 here) and **Unlimited Overcompletion** set the over-production tolerance for this step and are copied onto the routing row, where they work as described on [Routings](/modules/manufacturing/manufacturing-routing#The-Header).
 
-**Allow Negative Quantity** lets executions move more out of this step than it holds, for steps that run an order several times past the planned quantity; the step's balance stops at zero. It is copied onto routing lines and production orders that use the operation, and needs **Use Production Movement System Entry** in the manufacturing configuration.
+**Allow Negative Quantity** is the step's flag for letting executions move more out of it than it holds, for steps that run an order several times past the planned quantity; the step's balance stops at zero. Production orders generated by [carton material planning](/modules/manufacturing/carton-material-planning) take it from the standard operation; on routings and other production orders it is ticked on the routing row itself. It needs **Use Production Movement System Entry** in the manufacturing configuration.
 
 **Allow Over (Turn On Parallel)** is the field worth pausing on. Normally a unit finishes one operation before starting the next — strict sequence. Ticking this allows the step to run in parallel with its neighbours, which is what you need for a line where cutting on the next batch starts while taping on the current one is still going. Leave it unticked and the system will hold work back until the preceding step has released it.
 
@@ -71,19 +67,17 @@ This is the richer of the two files, because a step carries more meaning than a 
 
 This is where an operation's cost actually comes from. Each row is a resource the step consumes:
 
-**Resource** and **Resources Count** — what, and how many. **Resource Rate** (**Value** + **Unit**) is the rate: both rows above read `0.25` against `5 - Hour`.
+**Resource** and **Resources Count** — what, and how many. **Resource Rate** (**Value** + **Unit**) is the time the resource works: both rows above read `0.25` against `5 - Hour`, a quarter of an hour. The money comes from the resource's own rate when a resource voucher prices it.
 
 **Cost Basis** decides what the rate attaches to. Both rows here read **Item**, meaning the cost scales with the number of items produced. The alternative attaches cost to the lot instead, which is how you model a setup cost that is the same whether you run ten units or a thousand. Getting this wrong is one of the quieter ways a product cost goes astray — a setup charged per item makes small runs look cheap and large runs look expensive, exactly backwards.
 
-**Qty or Lot Count** and **Max Lot Quantity** bound how far one resource line stretches. **Charge Type** — **Automatic** on both rows — controls whether the charge lands by itself or waits to be entered. **Activity** classifies the work for reporting, and **Description** documents the row.
+**Qty or Lot Count** and **Max Lot Quantity** travel with the row onto routings and production orders; how a resource voucher uses them is on [Resource Vouchers](/modules/manufacturing/manufacturing-resource-voucher#The-Details-Grid). Whether a row is charged by the voucher an execution generates follows the operation's **Auto Charge** above, which every copied resource row takes. **Activity** decides which of the resource's rates prices the time, and **Description** documents the row.
 
 ### The Molds Grid
 
-Operations that need tooling list it here. **Mold** references the [manufacturing mold](/modules/manufacturing/manufacturing-molds), **Count** is how many are needed, and **Hours Count** is how long the tooling is engaged.
+Operations that need tooling list it here. **Mold** references the [manufacturing mold](/modules/manufacturing/manufacturing-molds) and **Count** is how many are needed; a mold voucher charges each line at the mold's cost per hour times this count.
 
-**Specify Hours Count From Operation Execution** changes where that number comes from: instead of the fixed figure on this row, the hours are taken from what the execution document actually records. Use it when tooling time genuinely tracks the work rather than being a constant — which for most presses and dies it does.
-
-**Charge Type** controls how the tooling cost is applied, as it does for resources.
+**Charge Type** decides which mold voucher charges the tooling: **Automatic**, the one a production execution generates; **Manual**, one entered by hand.
 
 ## Putting Them Together
 

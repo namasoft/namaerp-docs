@@ -1,7 +1,7 @@
 ---
 description: "The Fixed Asset Expense Document and the Expense Item master file: entering import costs on a letter of credit and distributing each line across the assets by value, weight or hand, with its entries and messages."
 entities: [FALcExpenseDocument, AdditionalCost]
-menu: Assets → Fixed Asset Letter of Credits → Fixed Asset Expense Document
+menu: Assets → Fixed Asset Letters of Credit → Fixed Asset Expense Document
 ---
 # Expenses and Distribution
 
@@ -28,7 +28,7 @@ presses will be capitalised at freight and customs only.
 Before any of this works you need a small master file for each *kind* of expense you will charge:
 customs duty, ocean freight, marine insurance, clearance fees, bank commission, inland haulage — and
 the goods value itself. That file is the **Expense item** (بند مصروف), and it sits in the same menu
-folder as the letter of credit, at **Assets › Fixed Asset Letter of Credits › Expense item**. It is a
+folder as the letter of credit, at **Assets › Fixed Asset Letters of Credit › Expense item**. It is a
 shared file: the supply-chain letter-of-credit chain uses the very same records for imported goods,
 so a site that imports both stock and machinery keeps one catalogue of expense items and two sets of
 document books.
@@ -137,7 +137,7 @@ real liability to a real party:
 | **Customs Company Account** | the customs party named on the letter of credit |
 | **Insurance Company Account** | the insurance party named on the letter of credit |
 | **Specific Account** | the account typed on this line |
-| **Specefic Subsidiary** | the account on this line if there is one, otherwise the line's subsidiary |
+| **Specific Subsidiary** | the account on this line if there is one, otherwise the line's subsidiary |
 | **Current User Subsidiary** | the employee record of whoever entered the document |
 
 The first four are why it is worth filling in the parties on the credit: with them set, the whole
@@ -159,7 +159,7 @@ The second page is where the split is set up and where the result is read back.
 
 ![The distribution page of an expense document](../../../ar/modules/fixedassets/images/lc/fa-lc-expense-distribution-en.png)
 
-It carries one button, **Collect Fixed assets** (تجميع الأصول الثابته), and two grids.
+It carries one button, **Collect Fixed assets** (تجميع الأصول الثابتة), and two grids.
 
 Pressing **Collect Fixed assets** reads the credit's proforma invoice and, **for every line whose
 expense item distributes manually**, creates one row per machine in the **Manual Lines** grid — the
@@ -298,7 +298,7 @@ which removes those costs from anything the cost document recalculates afterward
 | Message | Why | What to do |
 |---|---|---|
 | *There is no invoice for this letter of credit {0}* — «لا توجد فاتورة لهذا الاعتماد {0}» | The letter of credit on the document has no proforma invoice yet, so there is no total to distribute over. | Enter and commit the proforma invoice on the credit first. |
-| *Can Not Handel Closed Letter Of Credit* — «لا يمكن التعامل مع اعتماد حالته مغلقة» | The credit named on the document is already **Closed**. | Cancel the cost document to reopen the credit, then enter the expense. |
+| *Can not handle a closed letter of credit* — «لا يمكن التعامل مع اعتماد حالته مغلقة» | The credit named on the document is already **Closed**. | Cancel the cost document to reopen the credit, then enter the expense. |
 | *Can not delete expense docs for closed letter of credit {0}* — «لا يمكن حذف سند مصروفات لاعتماد مستندي حالته مغلق {0}» | You tried to delete an expense document that belongs to a closed credit. | Cancel the cost document first; until then the expense's figures are already inside an asset's cost. |
 
 Next: [The Cost Document](/modules/fixedassets/letters-of-credit/fixedassets-lc-cost-document.md).

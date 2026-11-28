@@ -38,7 +38,7 @@ Two 10% discounts applied to the total price take 20% off. The same two applied 
 
 **Calculate discount N percentage from value** `value.info.calcDiscNPercentFromValue` — Normally the user types a percentage and the system computes the amount. With this on the relationship is reversed: the user types the amount and the system works out the percentage it represents. Turn it on for discounts that are negotiated as round sums ("take 500 off") rather than as rates.
 
-**Discount Tax 1** / **Discount Tax 2** / **Discount Tax 3** / **Discount Tax 4** `value.info.discountN.considerTax1` through `...considerTax4` — Whether each of the four taxes is included in the base this discount is calculated on. The common case is a discount taken on the net amount before VAT, which means leaving the VAT tax unchecked. Check it only where the commercial agreement genuinely discounts the tax-inclusive figure.
+**Discount Tax 1** / **Discount Tax 2** / **Discount Tax 3** / **Discount Tax 4** `value.info.discountN.considerTax1` through `...considerTax4` — Ticking one takes that tax out of this discount's base: the system works out the tax at its rate on the base chosen in **Discount N Apply Type**, subtracts it, and applies the discount percentage to what is left. Left unticked, the base is used exactly as the apply type gives it. Tick the VAT tax when the apply type lands on a figure that already includes VAT and the discount must be taken on the amount before VAT.
 
 ## Settings on this tab
 
@@ -48,8 +48,8 @@ Every field on this tab with its exact on-screen label in both languages, so you
 |---|---|---|---|
 | `value.discountLocation` | Invoice discount apply on | وقت حساب التخفيض في الفاتورة | [General discount settings](#General-discount-settings) |
 | `value.info.headerDiscountApplyType` | Header Discount Apply Type | وعاء خصم 8 | [General discount settings](#General-discount-settings) |
-| `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` | Allow Using Discount Coupon Many Times If Type Is Percentage | السماح باستعمال قسيمة الخصومات اكثر من مرة اذا كان النوع نسبة | [General discount settings](#General-discount-settings) |
-| `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` | Allow Reverse Discount Coupon Even If Used In Invoices | السماح بإلغاء مكافأة حتي وإن تم استخدامها في فواتير | [General discount settings](#General-discount-settings) |
+| `value.info.allowUsingDiscountCouponManyTimesIfPercentageType` | Allow Using Discount Coupon Many Times If Type Is Percentage | السماح باستعمال قسيمة الخصومات أكثر من مرة إذا كان النوع نسبة | [General discount settings](#General-discount-settings) |
+| `value.info.allowReverseDiscountCouponEvenIfUsedInInvoices` | Allow Reverse Discount Coupon Even If Used In Invoices | السماح بإلغاء مكافأة حتى وإن تم استخدامها في فواتير | [General discount settings](#General-discount-settings) |
 | `value.info.discount1ApplyType` | Discount 1 Apply Type | وعاء خصم 1 | [Discount 1 through Discount 8](#Discount-1-through-Discount-8) |
 | `value.info.calcDisc1PercentFromValue` | Calculate discount 1 percentage from value | احتساب نسبة خصم 1 من القيمة | [Discount 1 through Discount 8](#Discount-1-through-Discount-8) |
 | `value.info.discount1.considerTax1` | Discount Tax 1 | خصم ضريبة 1 | [Discount 1 through Discount 8](#Discount-1-through-Discount-8) |

@@ -31,27 +31,13 @@ Throughout this journey, the system does much more than just track numbers; it:
 
 ## How Documents Work in NaMa ERP
 
-::: tip Understanding Document States
-Unlike some systems where a saved document needs a separate step before it takes effect, NaMa ERP works differently:
-
-**Draft Mode**: Create and edit documents with no effect on inventory or accounting. Perfect for preparation and review.
-
-**Saved**: Once a document is saved (out of draft mode), it **immediately** affects:
-- Inventory quantities
-- Accounting balances
-- Customer and supplier accounts
-- Available stock calculations
-
-**Edits**: Any changes you make to saved documents appear in the system immediately, with no separate confirmation step needed.
-:::
-
-This immediate approach means:
-- Real-time inventory accuracy
-- Up-to-date accounting at all times
-- No delays from periodic batch updates
-- Instant visibility of changes
-
-But it also means you need to be careful - once saved (out of draft), a document has a real effect!
+A document stored with **Draft** is written down but counts for nothing: no stock movement, no
+journal entry, no customer or supplier balance. Pressing **Save** commits it: the document is
+validated, numbered from its book, sent for approval when an approval definition matches, and then
+raises the business requests that create its stock and ledger effects, which are processed in the
+background. There is no separate posting step, and nothing turns a live document back into a draft.
+[The Life of a Document](/platform/documents-and-records/document-lifecycle) explains each step, the
+statuses a document carries, and how a live document is edited or cancelled.
 
 ## How This Guide Is Organized
 

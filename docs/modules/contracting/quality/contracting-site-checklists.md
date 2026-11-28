@@ -26,9 +26,9 @@ None of the eight has any behaviour: committing one creates no journal entry, mo
 
 If you are only going to use two screens from this group, use these. They are the most broadly useful documents in the family and — helpfully — the two that need only the plain **`contracting`** licence rather than `contracting-qc`.
 
-| | Finishing Works CheckList | Digging And BackFiling CheckList |
+| | Finishing Works CheckList | Digging And Backfilling CheckList |
 |---|---|---|
-| Menu | Contracting > Quality > Finishing Works CheckList | Contracting > Quality > Digging And BackFiling CheckList |
+| Menu | Contracting > Quality > Finishing Works CheckList | Contracting > Quality > Digging And Backfilling CheckList |
 | Licence | `contracting` | `contracting` |
 
 ![The Finishing Works CheckList: a header tied to a project and contract, then activity rows ticked off by the site engineer and the QC engineer](../../../ar/modules/contracting/images/quality/finishing-works-checklist-main-en.png)
@@ -37,9 +37,9 @@ What makes them general is the grid. Instead of fixed questions, every row is **
 
 Both are also, unlike most of this family, **tied to the job**: their header carries a **Project Contract** and a **Project**, so the checklist belongs to something. See [Project Contracts](/modules/contracting/project-contracting/contracting-project-contract.md).
 
-**Finishing Works CheckList** takes the customer, the site and QC engineers, a proper reference to the [consultant master file](/modules/contracting/setup/contracting-contractors-and-consultants.md) — the only screen in the group that types the consultant properly — a building or location, and a drawing reference. Below that it has **two grids with the same three columns**. The screen does not label them, so know this from the order: **the first grid is civil works, the second is finishing works**. Splitting them is genuinely useful — the blockwork and screeds get signed off by one team, the paint and joinery by another — but you have to remember which is which.
+**Finishing Works CheckList** takes the customer, the site and QC engineers, a proper reference to the [consultant master file](/modules/contracting/setup/contracting-contractors-and-consultants.md) — the only screen in the group that types the consultant properly — a building or location, and a drawing reference. Below that it has **two grids with the same four columns** — the activity, a site-engineer tick, a QC-engineer tick and a remark: the first grid is titled **Civil Works**, the second **Finishing Works**. Splitting them is genuinely useful — the blockwork and screeds get signed off by one team, the paint and joinery by another.
 
-**Digging And BackFiling CheckList** takes the site and QC engineers, the client's **Representative** by name, what the checklist was **Issued For**, a serial number, the building, an activity and a drawing and document number. Its rows carry **three ticks rather than two** — site engineer, client's representative, and QC engineer — which suits earthworks, where the client's man usually has to see the trench before it is filled. Type the activity for each row into the row's **description** column; the header's own activity field describes the document as a whole.
+**Digging And Backfilling CheckList** takes the site and QC engineers, the client's **Representative** by name, what the checklist was **Issued For**, a serial number, the building, an activity and a drawing and document number. Its rows carry **three ticks rather than two** — site engineer, client's representative, and QC engineer — which suits earthworks, where the client's man usually has to see the trench before it is filled. Type the activity for each row into the row's **description** column; the header's own activity field describes the document as a whole.
 
 **Worked example.** Excavation for the Tower A raft, on the **Tower A** project for **Al-Fanar Development**, contract `PC-2026-001`. Representative *Eng. S. Mahmoud*, issued for `Substructure`, serial `14`, building `Tower A`, activity `Excavation & backfilling`, drawing `104`, document number `2026014`. Three rows:
 
@@ -55,7 +55,7 @@ Read down the Rep column and you can see exactly what is outstanding. That is th
 
 Two forms bracket a pour, and the question set on each is standard reinforced-concrete practice rather than anything client-specific. Both need `contracting-qc`.
 
-**Pre-Concrete Inspection** — *the formwork and the steel are ready; may we pour?* Its header is a readiness statement: the site engineer, the QC engineer, the consultant by name, the **site location** on the job (the caption is borrowed from the warehouse screens; it means a position on site), the **level**, the **element** being poured, the **concrete grade**, and the date the pour is planned for together with the volume expected. Those last two are typed as free text, so they record the intention rather than being figures the system can sort or total.
+**Pre-Concrete Inspection** — *the formwork and the steel are ready; may we pour?* Its header is a readiness statement: the site engineer, the QC engineer, the consultant by name, the **location** on the job (typed text, a position on site), the **level**, the **element** being poured, the **concrete grade**, and the date the pour is planned for together with the volume expected. Those last two are typed as free text, so they record the intention rather than being figures the system can sort or total.
 
 Its grid is not a checklist — it is the **paperwork the pour is being checked against**, one row per drawing: the contract drawing number and its revision, then the bending schedule number and its revision. The two revision columns carry the same caption on screen; the first belongs to the **drawing**, the second to the **bending schedule**, and you tell them apart by their position.
 
@@ -67,7 +67,7 @@ Its header records the precast units involved, the **date and time of the pour**
 
 - **Dimensional** — is the element the size it should be, yes or no, with a remark.
 - **Curing** — was curing applied, and by which method: compound, water, or both.
-- **Surface Appearance** — ten questions, each with its own remark box. Honeycombing and other voids answer yes or no. Formwork joints, construction joints and chamfers answer *OK* or *needs treatment*. Tie holes, cracks, formwork marks and sand runs answer *none* or *needs treatment*.
+- **Surface Appearance** — ten questions, each with its own remark box. Honeycombing, other voids and embedments answer yes or no. Formwork joints, construction joints and chamfers answer *OK* or *needs treatment*. Tie holes, cracks, formwork marks and sand runs answer *none* or *needs treatment*.
 
 The remark boxes are what make this document worth filling. *"Honeycombing — Yes"* tells a manager there is a problem somewhere; *"Honeycombing — Yes; two patches near column C4, 150 × 200 mm"* tells a foreman what to do on Monday.
 
@@ -83,14 +83,14 @@ Three forms cover the mechanical and fire-protection trades. They only suit cont
 
 **Cleaning And Flushing** certifies that pipework was blown through and flushed before commissioning. Its header adds the area, building, specification and drawing, the three signatures, and the **type of fluid used**. Its grid has five text columns: the **piping line number**, the **P/ID number**, what was **blown at** what pressure, the **flushing** detail, and a spare column for anything else. One row per line flushed.
 
-**HydroStatic Test Report For Fire Protection System** is the most elaborate questionnaire in the module and the most obviously written around a single job: it is a fire-loop pressure test report, section by section, and it will not adapt to anything else. Six groups, no grid:
+**Hydrostatic Test Report For Fire Protection System** is the most elaborate questionnaire in the module and the most obviously written around a single job: it is a fire-loop pressure test report, section by section, and it will not adapt to anything else. Six groups, no grid:
 
 | Group | What it captures |
 |---|---|
-| Basic Information | area, building, specification, drawing, and the three signatures |
-| **UnderGround Pipes And Joints** | the pipe type and class, the joint type, and three yes/no conformance questions — do the pipes conform, do the fittings conform, are the joints as required — each with a text box, and two of the three with a further box for explaining a *no* |
+| Basic Information | area, building, specification, drawing, the three signatures and the owner |
+| **Underground Pipes And Joints** | the pipe type and class, the joint type, and three yes/no conformance questions — do the pipes conform, do the fittings conform, are the joints as required — each with a text box, and two of the three with a further box for explaining a *no* |
 | **Hydrostatic Test** | the test pressure and its duration, and whether the joints were covered |
-| **LeakAge Test** | the leakage measured, over how long, against the allowable leakage, over how long |
+| **Leakage Test** | the leakage measured, over how long, against the allowable leakage, over how long |
 | **Hydrants** | how many were installed, their type and make, and whether they operate |
 | **Control Valves** | whether they were left open, with a box for explaining a *no* |
 
@@ -115,8 +115,9 @@ Its groups run in the order the test does:
 - **Test Information** — the system tested, the boundaries of the test, the pipe class, the design and service pressures, the fluid used, and the reference code the test is run to.
 - **The test method** — tick-boxes for hydrostatic, leakage, pneumatic or other, with a box to say what "other" was.
 - **The test requirements** — the required pressure in psi or bar, the test duration and the minimum duration, the actual pressure at examination, and the hold time against the minimum hold time. This is the group that says what a pass looks like.
-- **A signature row** — the site engineer and the quality control engineer, each with a date beside them. These are the only dated signatures anywhere in the quality family.
-- **Test Results** — the start time, the period, the finish time and the test date. One AM/PM selector applies to both times, so record a test that crosses midday by noting it in the description.
+- **Pre Test Review** — the site engineer and the quality control engineer, each with a date beside them (**Date 1** and **Date 2**). These are the only dated signatures anywhere in the quality family.
+- **Test Results** — the start time, the period, the finish time and the test date. The period is one AM/PM selector, captioned **Postponed Period**, that applies to both times, so record a test that crosses midday by noting it in the description.
+- **Test Acceptance** — the same site engineer, quality control engineer, **Date 1** and **Date 2** fields again (one value, shown in both groups), plus a third signature typed as text, **PGESCO**, with its own date, **Date3**.
 - **The equipment grid** — one row per gauge or instrument used: its **type**, its **range**, its calibration date and the date the calibration falls due. This is what a consultant checks first, because a reading from an out-of-calibration gauge is not a reading.
 
 **Worked example.** The Tower A fire loop again, tested 12/03/2026 for **Al-Fanar Development** under contract `PC-2026-001`. System `Fire protection — underground loop`, boundaries `Pump room outlet to hydrant H4`, pipe class `DI K9`, design pressure `16 bar`, service pressure `12 bar`, fluid `Potable water`, reference code `NFPA 24`. Method: **hydrostatic**. Requirements: `12 bar`, duration `2 h` against a minimum of `2 h`, actual pressure at examination `12 bar`, hold time `2 h` against a minimum `2 h`. Results: start `09:00`, finish `11:00`, AM, test date `12/03/2026`. Signed by the site engineer on 12/03 and the QC engineer on 13/03. Equipment: one row — type `Pressure gauge, 0–25 bar`, range `0–25 bar`, calibrated `04/01/2026`, due `04/07/2026`.
@@ -127,10 +128,10 @@ Worth knowing before you build a procedure around any of them, because some of t
 
 | Form | How it reads |
 |---|---|
-| **Finishing Works CheckList**, **Digging And BackFiling CheckList** | fully general. Free-form activity rows with per-party ticks; any contractor can use them for anything. Start here |
+| **Finishing Works CheckList**, **Digging And Backfilling CheckList** | fully general. Free-form activity rows with per-party ticks; any contractor can use them for anything. Start here |
 | **Pre-Concrete Inspection**, **Post-Concrete Inspection** | general within their trade. The question set is standard reinforced-concrete practice |
 | **Underground Piping Check List**, **Cleaning And Flushing** | trade-specific but reusable. Only useful to MEP contractors, but not tied to one job |
-| **HydroStatic Test Report For Fire Protection System** | written around a specific fire-system test. Excellent if that is your test, unusable for anything else |
+| **Hydrostatic Test Report For Fire Protection System** | written around a specific fire-system test. Excellent if that is your test, unusable for anything else |
 | **Test Report** | broadly usable for pressure and leak testing, though a few of its boxes read as though written for one particular client's paperwork |
 
 If none of the eight fits the check you need to record, the two general activity checklists will hold it — that is what free-form rows are for — and if you need a real gate rather than a record, put a generic approval cycle on the document and enforce the discipline through your site procedure. The [overview page](/modules/contracting/quality/contracting-quality-overview.md) explains why.

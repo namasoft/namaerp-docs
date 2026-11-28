@@ -73,15 +73,7 @@ Forwarders use these terms every day, and the screens use them too.
 
 ## How documents work in Nama ERP
 
-::: tip Understanding document states
-Unlike systems where a saved document needs a separate step before it reaches the accounts, Nama ERP acts immediately:
-
-**Draft mode:** Create and edit a document with no accounting effect.
-
-**Saved:** Once a document is saved out of draft, its accounting effect is created **immediately** (revenue/cost/customer and supplier balances).
-
-**Edits:** Any change to a saved document is reflected at once, with no separate confirm step.
-:::
+Freight documents follow the same life as every Nama ERP document: a draft has no effect, a saved document creates its accounting effect as a business request processed in the background, and an edit to a saved document updates that effect. The whole cycle is on [The Life of a Document](/platform/documents-and-records/document-lifecycle).
 
 ## Licensing
 
@@ -108,7 +100,7 @@ The module is large, so we've split it into two main areas that mirror how the s
 <LandingGrid>
   <LandingCard icon="📮" title="Postal System Overview" link="/modules/freight/ips-postal-intro.md" details="The core concepts: mail items, receptacles, offices, and receipt/delivery areas." />
   <LandingCard icon="✉️" title="Mail Items" link="/modules/freight/ips-mail-items.md" details="The mail-item lifecycle: manifesting, transfer between offices, adjustment, stock taking, retention, and sorting." />
-  <LandingCard icon="👜" title="Receptacles" link="/modules/freight/ips-receptacles.md" details="Receiving receptacles, dispatching them on route schedules, and the customs manifest." />
+  <LandingCard icon="👜" title="Receptacles" link="/modules/freight/ips-receptacles.md" details="Receiving receptacles, dispatching them with Transfer Receptacles, and the customs manifest." />
   <LandingCard icon="🚚" title="Delivery Service" link="/modules/freight/ips-delivery.md" details="Delivery requests and invoices, how the sort creates and prices them, and non-delivery handling." />
   <LandingCard icon="🔌" title="IPS Integration" link="/modules/freight/ips-integration.md" details="Reading data from the external IPS server, reporting events, and following up failed events." />
 </LandingGrid>

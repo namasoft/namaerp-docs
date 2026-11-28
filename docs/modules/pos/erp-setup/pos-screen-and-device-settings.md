@@ -13,14 +13,14 @@ Most of these records are **attached**: you create one or more, then pick one on
 
 | Settings record | Arabic name on screen | Where it is picked |
 |---|---|---|
-| Pos UI Settings | إعدادات واجهة نقاط البيع الجديده | Register, else POS Settings (else the built-in layout) |
+| Pos UI Settings | إعدادات واجهة نقاط البيع الجديدة | Register, else POS Settings (else the built-in layout) |
 | Pos Mobile UI Settings | إعدادات واجهة نقاط البيع للموبايل | Register, else POS Settings |
 | Nama POS Shortcuts | اختصارات نقطة البيع | Register, else POS Settings |
 | POS Customer Phone Country Codes | أكواد الدول لأرقام عملاء نقاط البيع | Register, else POS Settings |
 | Nama POS Payment Methods Settings | إعدادات طرق دفع نقاط البيع | Register, else POS Settings |
-| Pos Defaults Template | قالب قيم افتراضيه لنقاط البيع | Register only (**Default Values Template**) |
+| Pos Defaults Template | قالب قيم افتراضية لنقاط البيع | Register only (**Default Values Template**) |
 | Pos Pole Display Specs | خصائص ال Pole Display لنقاط البيع | Register only |
-| Pos Required Fields | الحقول المطلوبه لنقاط البيع | Not attached — every record applies to every register |
+| Pos Required Fields | الحقول المطلوبة لنقاط البيع | Not attached — every record applies to every register |
 | Payment From Pos Settings | إعدادات دفع من خلال نقاط البيع | Not attached — applies to server documents |
 
 Like every setting, a change reaches a register with its next data sync ([How POS Data Syncs with the Server](../pos-data-sync.md)).
@@ -33,9 +33,9 @@ Like every setting, a change reaches a register with its next data sync ([How PO
 
 **One page per screen** — **Invoice Settings**, **Return Settings**, **Replacement Settings**, **Transfer Settings**, **Taking Settings**, **Order Reservation Settings**, **Cancel Reservation Settings**, **Shortfalls Settings**, **Scrap Settings** and **Receipt Settings**. Each has:
 
-- **Columns Count Per Row** (*عدد الأعمده في الصف الواحد*), **Do Not Add Favourites Part** and **Favourite Pane Width Percentage** — how the header is laid out and whether the favourites panel shows;
-- **Main Page Fields** (*حقول الصفحة الرئيسيه*) — the header fields shown on the screen itself;
-- **Other Page Fields** (*حقول الشاشة الفرعيه*) — fields moved to the secondary page;
+- **Columns Count Per Row** (*عدد الأعمدة في الصف الواحد*), **Do Not Add Favourites Part** and **Favourite Pane Width Percentage** — how the header is laid out and whether the favourites panel shows;
+- **Main Page Fields** (*حقول الصفحة الرئيسية*) — the header fields shown on the screen itself;
+- **Other Page Fields** (*حقول الشاشة الفرعية*) — fields moved to the secondary page;
 - **Sales Grid Fields** (*حقول جدول المبيعات*) — the columns of the item grid, in order, each with a **Width Size**;
 - **Copy From** (*نسخ من*) — pick another screen and, on save, this page's fields are replaced by that screen's. A page you leave completely empty copies the invoice page automatically.
 
@@ -69,7 +69,7 @@ Each line says: for documents of **For Type** (sales invoice, return, replacemen
 
 ## Making fields mandatory: Pos Required Fields
 
-Each line names a document type and a field (**On Field**) and a **Field Type**: **Required** (*إجبارى*) or **Must Be Empty** (*يجب تركه فارغا*). The rule can be made conditional on the customer, salesman, invoice classification, record category, warehouse and locator: for each, choose a relation — **Equal**, **Not Equal**, **Empty** (*بدون*) or **Without Relation** — and the value to compare with. **Do Not Apply On Hold** (*عدم التطبيق مع التعليق*) lets the cashier hold the document without the field.
+Each line names a document type and a field (**On Field**) and a **Field Type**: **Required** (*إجباري*) or **Must Be Empty** (*يجب تركه فارغا*). The rule can be made conditional on the customer, salesman, invoice classification, record category, warehouse and locator: for each, choose a relation — **Equal**, **Not Equal**, **Empty** (*بدون*) or **Without Relation** — and the value to compare with. **Do Not Apply On Hold** (*عدم التطبيق مع التعليق*) lets the cashier hold the document without the field.
 
 **Example.** "Salesman is required on POS sales invoices whose invoice classification is *Delivery*": document type POS Sales Invoice, field Salesman, Field Type Required, relation with classification **Equal**, classification *Delivery*.
 
@@ -100,6 +100,6 @@ If part of a document has already been paid at the register, its amount cannot b
 | *You must select key* — «يجب اختيار مفتاح» | A shortcut line has no key. | Pick the key. |
 | *You must use Ctrl/Alt with alphabetic letters* — «يجب استخدام Ctrl/Alt مع الحروف الأبجدية» | A letter key was chosen without Ctrl or Alt. | Tick Ctrl or Alt. |
 | *Shortcut in line {0} repeated in line {1}* — «الاختصار في سطر رقم {0} متكرر في سطر رقم {1}» | Two lines use the same combination. | Change one of them. |
-| *You must select functionality or field ID* | A shortcut line has neither a functionality nor a field. | Choose one. |
-| *You must select functionality or field ID, Not both* | A shortcut line has both. | Keep one. |
+| *You must select functionality or field ID* — «filed id يجب اختيار إجراء أو» | A shortcut line has neither a functionality nor a field. | Choose one. |
+| *You must select functionality or field ID, Not both* — «و ليس كليهما filed id يجب اختيار إجراء أو» | A shortcut line has both. | Keep one. |
 | *value of {0} cannot be less than paid amount from pos is {1}* | A server document's amount was lowered below what the register already collected for it. Shown in English on Arabic screens too. | Keep the amount at or above what was paid. |

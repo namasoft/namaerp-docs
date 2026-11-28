@@ -4,7 +4,7 @@ entities: [CRTNType, CRTNCorrugatingFactor, CRTNCorrugatingType, CRTNPattern, CR
 ---
 # Carton Lookup Files
 
-Every carton specification picks from a handful of small lookup files, all under **Manufacturing → Cartoon**: CRTN Type, CRTN Fluting, CRTN Join Type, CRTN Slotting Type, CRTN Corrugating Factor, CRTNCorrugatingType, CRTN Loading Type, CRTN Pattern and Printing Type. Each is a code and a name, and five of them carry one or two values that the specification's calculations and checks actually use. Set them up once, before the first [carton specification](/modules/manufacturing/carton-specifications); the specifications then fill and check themselves from them.
+Every carton specification picks from a handful of small lookup files, all under **Manufacturing → Cartoon**: CRTN Type, CRTN Fluting, CRTN Join Type, CRTN Slotting Type, CRTN Corrugating Factor, CRTN Corrugating Type, CRTN Loading Type, CRTN Pattern and Printing Type. Each is a code and a name, and five of them carry one or two values that the specification's calculations and checks actually use. Set them up once, before the first [carton specification](/modules/manufacturing/carton-specifications); the specifications then fill and check themselves from them.
 
 All lengths in the carton screens are in **centimetres**. A pattern formula, a maximum sheet length and a sheet dimension typed in millimetres will make every figure ten times too large.
 
@@ -12,7 +12,7 @@ All lengths in the carton screens are in **centimetres**. A pattern formula, a m
 
 ### CRTN Type — the board, and its starch
 
-A carton type (نوع الكرتونه) names a kind of board — single wall, double wall, and so on — and carries a **Starch Level** (منسوب النشا), the grams of starch per square metre that bond the layers.
+A carton type (نوع الكرتونة) names a kind of board — single wall, double wall, and so on — and carries a **Starch Level** (منسوب النشا), the grams of starch per square metre that bond the layers.
 
 - Choosing a type on a specification copies its starch level into the specification's **Starch Level**.
 - Saving the specification refuses a starch level that differs from the type's. A type with no starch level is not checked.
@@ -48,7 +48,7 @@ A printing type (نوع الطباعة) names a press or printing process and ca
 
 ## The four that only describe
 
-**CRTN Fluting** (الريجة), **CRTN Join Type** (نوع التقفيل), **CRTN Slotting Type** (نوع التفتيح) and **CRTN Loading Type** (نوع التحميل) are named lists. You pick them on the specification so that the production floor and the customer see what the carton is — E flute, glued or stitched, which slotting, how the finished cartons are stacked — but no calculation or check reads them. Keep them short and consistent; they are labels, not settings.
+**CRTN Fluting** (الريجة), **CRTN Join Type** (نوع التقفيل), **CRTN Slotting Type** (نوع التفتيح) and **CRTN Loading Type** (نوع التحميل) are named lists. You pick them on the specification so that the production floor and the customer see what the carton is — E flute, glued or stitched, which slotting, how the finished cartons are stacked — but no calculation or check reads them. CRTN Fluting also carries a **Type** (a CRTN Type), and CRTN Join Type and CRTN Loading Type an **Item**; those fields are kept for reference only. Keep them short and consistent; they are labels, not settings.
 
 ## Messages you may see
 

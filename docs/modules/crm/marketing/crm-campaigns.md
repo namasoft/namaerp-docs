@@ -50,14 +50,14 @@ The **CRM Campaign** group underneath is the campaign itself:
 | تاريخ البداية / Start Date | the date the campaign begins |
 | نوع الحملة / Campaign Type | a reference to the Campaign Type file — exhibition, mailshot, road show |
 | تاريخ الإغلاق المتوقع / Expected Closing Date | the only "end" the campaign has; there is no enforced end date |
-| الجمهور المستهدف / Target Kind | a fixed list: Factories, Projects, Trade Shows |
+| الجمهور المستهدف / Target audience | a fixed list: Factories, Projects, Trade Shows |
 | الحجم المستهدف / Target Size | **free text** — `120 qualified visitors` is a perfectly normal value |
 | الراعي / Sponsor | **free text** — a department, a partner, a budget holder |
-| حالة الحملة / Campaign Status | Planning, Active, InActive, Completed, Cancelled |
+| حالة الحملة / Campaign Status | Planning, Active, Inactive, Completed, Cancelled |
 | مرفق / Attachment | one file slot |
 
 For our expo, that reads: type `CT-03` معرض / Exhibition, start 8 January 2026, expected closing
-31 March 2026, target kind Trade Shows, target size `120 qualified visitors`, sponsor
+31 March 2026, target audience Trade Shows, target size `120 qualified visitors`, sponsor
 `Marketing Department`, status Active.
 
 ::: tip There is no channel field
@@ -68,9 +68,9 @@ file for it, which is what most sites end up doing.
 
 ### The products grid — mandatory, and easy to be surprised by
 
-The **productdetails** grid (its title is untranslated, so it shows literally as `productdetails` in
-both languages) lists what the campaign promotes: one row per item or rental unit, with the item's
-section, brand, category, classifications and dimensions alongside.
+The products grid, titled `productdetails` on screen in both languages, lists what the campaign
+promotes: one row per item or rental unit, with an attachment slot and the item's section, brand,
+category, classifications and dimensions alongside.
 
 **At least one row is required.** A campaign with an empty products grid cannot be saved, which
 catches people out on the very first campaign they create. For the expo we list `AC-CHL-300`
@@ -78,7 +78,7 @@ catches people out on the very first campaign they create. For the expo we list 
 
 ### The Assigned To grid — this one genuinely does something
 
-*مسند إلي / Assigned To* lists the employees working the campaign, with a remarks column. The
+*مسند إلى / Assigned To* lists the employees working the campaign, with a remarks column. The
 employee picker offers only employees flagged as **salesmen** on their employee file, so if a
 colleague is missing from the list, that flag is the reason.
 
@@ -90,7 +90,7 @@ without anyone typing them.
 
 ## Expectations and Actuals — read this before you use it
 
-The group titled **المتوقع والفعلى / Expectations And Actuals** looks like a small business case:
+The group titled **المتوقع والفعلي / Expectations And Actuals** looks like a small business case:
 expected and actual cost, expected and actual sales count, expected and actual response count,
 expected and actual return on investment.
 
@@ -109,7 +109,7 @@ keep in step by hand.
 
 So for the expo, the eight boxes read: expected cost 180,000.00 against actual cost 196,500.00;
 12 sales expected against 5 recorded; 120 responses expected against 94 recorded; expected return
-3.5 against actual 2.1. Every one of those ten figures was typed by a person reading them off
+3.5 against actual 2.1. Every one of those eight figures was typed by a person reading them off
 somewhere else. That is a perfectly reasonable way to keep a campaign scorecard — as long as
 everybody knows that is what it is.
 
@@ -119,14 +119,9 @@ A campaign does not produce leads. There is no button on this screen that create
 response list or opens a pipeline record. **The link is made in the other direction, one record at a
 time**: the salesperson opens a [lead](/modules/crm/sales-pipeline/crm-leads.md) or a
 [potential](/modules/crm/sales-pipeline/crm-potentials.md) and picks the campaign in its *Campaign*
-box.
-
-::: warning The campaign picker shows every campaign
-The picker on the lead and potential screens was meant to hide cancelled and inactive campaigns. It
-does not — the filter never excludes anything, so a campaign you closed two years ago is still
-offered alongside this quarter's. Give campaigns dated names (`Cooling Expo 2026`, not `Expo`) so
-the person choosing can tell them apart.
-:::
+box. The one exception is [Facebook Lead Ads](/modules/crm/sales-pipeline/crm-facebook-lead-ads):
+leads brought in by its *Update Leads* button arrive with the campaign whose code is the Facebook
+campaign name.
 
 The second tab, **الإحصائيات / Statistics**, is where the attributions come back to you. It holds
 three read-only lists — the leads that carry this campaign, the potentials that carry it, and the
@@ -134,14 +129,15 @@ customers that carry it. Nothing there is editable; it is a live look at who poi
 campaign.
 
 The Customers list deserves a word, because it fills up less often than people expect. A customer
-only carries a campaign when *Convert To Customer* was pressed **on a Lead** that already had the
-campaign. In our example the lead was first converted to a potential — and conversion to a potential
-does not carry the campaign across — so when the customer `C-01188` was finally created from the
+only carries a campaign when *Convert To Customer* was pressed on a lead or a potential whose
+*Campaign* box was filled at that moment. *Convert To Potential* does not copy the campaign to the
+new potential. In our example the lead was first converted to a potential and nobody picked the
+campaign again on the potential, so when the customer `C-01188` was finally created from the
 potential, it arrived with no campaign, and the expo campaign's Customers list stayed empty even
 though the deal came from the expo. See [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion.md)
-for what each conversion button carries. If campaign attribution on customers matters to you, decide
-early that leads are converted straight to customers, because there is no other route: the campaign
-field does not appear on the customer screen, so it cannot be set or corrected afterwards.
+for what each conversion button carries. If campaign attribution on customers matters to you, either
+convert leads straight to customers or pick the campaign on the potential before converting it: the
+campaign field does not appear on the customer screen, so it cannot be set or corrected afterwards.
 
 ## The question this screen cannot answer
 
@@ -159,8 +155,8 @@ campaigns by revenue, and cannot produce a cost-per-lead or a return-on-investme
 That is not the end of the road, though — it just means the arithmetic happens outside the screen.
 What works in practice:
 
-1. **Be strict about the campaign field on leads.** It is the only attribution point that exists, so
-   a lead created without it is invisible to the campaign forever.
+1. **Be strict about the campaign field on leads and potentials.** It is the only attribution point
+   that exists, so a lead created without it is invisible to the campaign forever.
 2. **Read the counts off the Statistics tab**, or from the CRM Lead list view filtered by campaign.
    That gives you a real, trustworthy *number of leads* for the campaign — the one figure in this
    whole area the system does compute for you.

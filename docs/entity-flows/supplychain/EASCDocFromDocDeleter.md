@@ -19,7 +19,7 @@ Manual execution to clean up related documents, typically used to delete generat
 
 ## How It Works
 
-1. **Validates parameters** - Ensures first two parameters are provided (target type and field ID)
+1. **Validates parameters** - Fails with *You Must Specify the first two parameters for entity flow {0}* unless the first two parameters are provided (target type and field ID)
 2. **Locates target document** - Uses the findDoc utility method to locate the referenced document:
    - Reads the specified field from the source document
    - Handles different reference types (direct BasicSCDocument, GenericReference, or ID/code)
@@ -31,7 +31,7 @@ Manual execution to clean up related documents, typically used to delete generat
 
 **Parameter 1:** Target Type (Required) - Entity type of document to delete
 
-Example: `SalesInvoice`, `PurchaseOrder`, `CreditNote`
+Example: `SalesInvoice`, `PurchaseOrder`. It must be a supply chain document type
 
 **Parameter 2:** Field ID To Keep Doc (Required) - Field containing the document reference to delete
 
@@ -42,7 +42,7 @@ Example: `ref1`, `ref2`, `ref3`, `ref4`, `ref5`
 - **Target Document Tables** - Completely removes the target document and all associated data
 - **Target Document Lines** - Deletes all lines associated with the target document
 - **Document Relationships** - Removes relationships and references involving the target document
-- **Source Document** - Field containing the reference may become null after deletion
+- **Source Document** - Read only; the action does not clear the field that held the reference
 
 **Module:** supplychain
 

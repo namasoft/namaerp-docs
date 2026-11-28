@@ -42,11 +42,13 @@ Pick one and leave it alone: three separate places in the system read this flag,
 
 ## The Migration Cut-Off Date
 
-Every estate carries a chronological chain of rent- and reservation-status entries — reserved, rented, cancelled, sold — and the system refuses sequences that make no sense, such as a cancellation with nothing before it. That validator is exactly what you do *not* want when you are importing ten years of history that was never entered in Nama.
+Every estate carries a chronological chain of rent- and reservation-status entries — reserved, rented, cancelled, sold — and the system refuses sequences that make no sense, such as a rent cancellation whose previous document is not a rent contract. That validator is exactly what you do *not* want when you are importing ten years of history that was never entered in Nama.
 
 The date field near the bottom of the group, **Do Not Validate Estate Before** (`value.doNotValidateEstateBefore`), is the cut-off. Set it to your go-live date and the validator ignores any pair of entries whose earlier entry predates that date, so imported contracts are accepted while everything entered in Nama afterwards is still policed.
 
-Because getting this wrong quietly disables a real validation, the system treats it as a critical field and warns you when you change or clear it after it has been set. It matters most during [going live](/modules/realestate/opening/realestate-opening-balances.md) and it is also the switch behind the estate rent-status timeline described in [The Leasing Cycle](/modules/realestate/rent/realestate-rent-cycle.md).
+While the date is set, one more rule applies: a rent cancellation dated after it cannot be the first document in an estate's chain (*"Document {0} can not be the first document for estate {1}"*).
+
+Because getting this wrong quietly disables a real validation, the date is a protected field: entering a date or changing it to another date is refused unless your login carries the authority for that security level, with *"You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team"*. Clearing it is not checked. It matters most during [going live](/modules/realestate/opening/realestate-opening-balances.md) and it is also the switch behind the estate rent-status timeline described in [The Leasing Cycle](/modules/realestate/rent/realestate-rent-cycle.md).
 
 ## Which Way the Maintenance Deposit Is Calculated
 
@@ -56,9 +58,9 @@ On a sales contract, the maintenance deposit has both a percentage and a value, 
 
 ## Letting a Typed Contract Price Survive
 
-By default the contract price is a computed field: every recalculation overwrites it with unit area × metre price + garden area × garden metre price + distinction + garage. That is right for a developer selling off a price book and wrong for one who negotiates a lump sum.
+By default the contract price is a computed field: whenever unit area × metre price + garden area × garden metre price + distinction + garage is not zero, every recalculation overwrites the price with that sum. That is right for a developer selling off a price book and wrong for one who negotiates a lump sum.
 
-The last option in the group — the one about not calculating the unit price from the unit and garden areas, `value.doNotCalcUnitPriceFromUnitAndGardenArea` — switches that overwrite off, so a manually typed contract price survives saving even when the areas and metre prices are filled in. (Its caption is generated automatically from the field name, so it may read slightly differently from the wording used here.) The distinction and garage percentages are still computed either way.
+**Do Not Calculate Unit Price From Unit And Garden Area** (`value.doNotCalcUnitPriceFromUnitAndGardenArea`) switches that overwrite off, so a manually typed contract price survives saving even when the areas and metre prices are filled in. The distinction and garage percentages are still computed either way.
 
 ## The Rounding Tolerance — the One Everybody Meets
 
@@ -88,16 +90,16 @@ This grid (`value.legalEntityTaxes`) is the module-wide tax policy, and it is th
 
 > **The term wins. This grid is the fallback.** Both the sales side and the rent side first look at the tax grid on the document's own term. Only when that grid is **empty** do they fall back to the grid here.
 
-Each row is a policy that is matched by installment type, unit model, entity type (or a list of entity types) and an effective-from / effective-to date range, and supplies **Tax 1** and **Tax 2** as percentages. The two *is deduction* flags mark a tax as withheld rather than added, and **Calculate Tax From Main Price** bases the tax on the contract's main price instead of the line's own net.
+Each row is a policy matched by installment type, unit model and an **Effective From** / **Effective To** date range (an empty column matches anything, and the first matching row wins), and it supplies **Tax 1** and **Tax 2** as percentages. The two *is deduction* flags mark a tax as withheld rather than added (the tax value is negative), and **Calculate Tax From Main Price** bases the tax on the installment line's amount, before its discount and penalty, instead of the line's net value.
 
 In practice: put the group-wide rate here once, and only add a tax grid to a specific term when one book genuinely needs a different rate. A term with a single row in its own tax grid switches this entire grid off for that book — including the rows you thought were still applying.
 
 ## Grid 3 — Excluded Installment Types
 
-The last grid (`value.excludedInstallmentsTypes`) is a list of installment types, and it exists to keep the balance check described above from getting in your way.
+The last grid, **Excluded Installment Types From Adding To Sales Contract Total** (`value.excludedInstallmentsTypes`), is a list of installment types, and it exists to keep the balance check described above from getting in your way.
 
 An installment whose type is listed here is **excluded from the contract's installments total**, which is the figure the "net versus installments" check compares against. It still counts everywhere else — towards total paid, total remaining, discounts, penalties and the total due — so the customer is still billed for it and still collected from normally.
 
-That is what lets you add a utility charge, a registration fee or a service installment to a contract without the contract refusing to save because its installments no longer equal its price. Each row's installment type is required and duplicates are rejected. Maintenance-cost installments are always excluded from the totals whether or not they appear here.
+That is what lets you add a utility charge, a registration fee or a service installment to a contract without the contract refusing to save because its installments no longer equal its price. Each row's installment type is required and duplicates are rejected. Installments of type **Maintenance Cost** and **Fees** are always left out of the installments total, whether or not they appear here.
 
 The types themselves, and what each one means on a plan, are covered in [Building the Installment Plan](/modules/realestate/sales/realestate-installment-plans.md); how a type is routed to its own accounts is in [How Real Estate Document Terms Work](/modules/realestate/document-terms/realestate-terms-basics.md).

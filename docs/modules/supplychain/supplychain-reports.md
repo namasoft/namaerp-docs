@@ -29,16 +29,17 @@ misspelled ones (`ProfitabilityofItems`, `Invintory Types`). Search for them as 
 Every report opens on a criteria screen. A handful of conventions repeat across almost all of them, and
 learning them once saves reading each report's screen:
 
-- **From/To pairs.** Most criteria come in pairs — from item to item, from warehouse to warehouse, from
-  legal entity to legal entity. **An empty pair does not filter at all.** Fill only one side and the
-  range is open on the other: *from item* `ITM-0100` alone means that item and every code after it.
+- **Pick lists and From/To pairs.** Items, warehouses, legal entities, branches, suppliers, customers and
+  most other files are pick lists: choose one value or several. **An empty list does not filter at all.**
+  A few criteria (lot, batch, colour, size, revision) come as From/To pairs instead; fill only one side
+  and the range is open on the other.
 - **Dates default to the current month** on most reports; a few default to the start of the year or to
   today. The reports that show a balance *on* a date ask for a single date instead of a range.
 - **Unit** (الوحدة). Quantity reports let you choose which unit to show quantities in: the item's base
   unit (the default), a reporting unit, or its default purchase or sales unit.
 - **Filter Type 1 / Filter Type 2** (with **Filter 1 / Filter 2**). Many inventory reports let you pick
   *which* item classification to filter on — item group, item section, item category, item class 1, 2
-  and so on — and then a range of values for it. Pick the classification first, then the range.
+  and so on — and then one or more of its values. Pick the classification first, then the values.
 - **Hide Zero Values** / **Hide Zero Items** removes items with no balance and no movement, which is
   usually what you want for anything you intend to print.
 
@@ -68,8 +69,8 @@ quantity.
 | `SYSR-INV011` | كشف الاستلامات الورادة من صنف | Total Supply | You want the receipts of an item only, with their cost, lot and expiry. |
 
 Their criteria are the same family throughout: the date range, legal entity, branch, warehouse, item and
-supplier ranges, the **Unit**, **Hide Zero Values**, and on the costed ones **Group By Lot**. INV001 and
-INV002 also take a lot range.
+supplier lists, the **Unit**, **Hide Zero Values**, and on the costed ones **Group By Lot**. INV001, INV002,
+INV026 and INV011 also take a lot range.
 
 ::: tip Which statement for which question
 A quantity dispute ("the system says 12, the shelf says 10") starts on **INV001**. A value question ("why
@@ -89,7 +90,7 @@ closing) or on a single date.
 | `SYSR-INV030` | ميزان مراجعة تحليلى كميات الاصناف - مخازن | Items Quantities Analytical Trial Balance - Warehouse | The same, with an optional breakdown by warehouse or legal entity (**Detailing By**). |
 | `SYSR-INV006` | ميزان مراجعة تحليلى كميات وتكاليف الاصناف | Items Quantity and Cost Analytical Trial Balance | Opening, in and out split into purchases, sales, issues, adjustments and others, closing — in quantity and cost, per item group. |
 | `SYSR-INV031` | ميزان مراجعة تحليلى كميات وتكاليف الاصناف - مخازن | Items Quantity and Cost Analytical Trial Balance - Warehouse | The same, per warehouse. |
-| `SYSR-INV009` | كميات الاصناف بالمخازن | Items Quantity In Warehouses | Item-by-warehouse quantity grid, with item section and brand ranges. |
+| `SYSR-INV009` | كميات الاصناف بالمخازن | Items Quantity In Warehouses | Item-by-warehouse quantity grid, with item section and brand filters. |
 | `SYSR-INV010` | القيمة الحالية للمخزون | Inventory Current Cost Value | Quantity, average cost and value per item and warehouse on a date, with warehouse totals. |
 | `SYSR-INV028` | القيمة الحالية للمخزون - FIFO | Inventory Current Cost Value - FIFO | The same valued from FIFO layers. |
 | `SYSR-INV019` | رصيد المواقع بالتكلفة | Locators Quantity With Cost | Quantity, average cost and value per locator inside each warehouse. |
@@ -177,7 +178,7 @@ so you can see what has not been matched.
 | `SYSR-PIV007` | قائمة اسعار مشتريات | Purchases PriceList | The prices on purchase price lists, item by item, with the supplier. |
 
 PIV004, PIV005 and PIV006 share one criteria screen: date, legal entity, branch, warehouse, supplier,
-created-by user and item ranges, the **Unit**, **Show Details**, and three sort levels (**First Sort**,
+created-by user and item lists, the **Unit**, **Show Details**, and three sort levels (**First Sort**,
 **Second Sort**, **Third Sort**) each with its own **Show … Totals** switch. The sort levels are what turn
 the report from a line list into "by supplier, then by item" or "by item section, then by item".
 
@@ -186,7 +187,7 @@ the report from a line list into "by supplier, then by item" or "by item section
 | Code | Arabic name | English name | What it shows |
 |---|---|---|---|
 | `SYSR-SLS011` | تفاصيل مبيعات الاصناف | ItemSalesDetails | Sales invoice lines (and returns, unless switched off) with three sort levels and totals — by customer, item, salesman, paying customer, sector or section. **With Sub Customers** folds sub-customers into their parent. |
-| `SYSR-SLS012` | تفاصيل مردودات الاصناف | Sales Return Details | The same for sales returns, with a return-reason range. |
+| `SYSR-SLS012` | تفاصيل مردودات الاصناف | Sales Return Details | The same for sales returns, with an **Invoice Classification** filter that matches each line's **Return Reason**. |
 | `SYSR-SLS013` | اجمالى مبيعات ومردودات | Total Sales and Returns | Sales and returns per item, quantity and value, filterable by customer, legal entity and document term. |
 | `SYSR-SLS014` | اجمالى مبيعات ومردودات بالتصنيف | Total Sales and Returns By ItemClass | The same grouped by item class, including free-item quantities. |
 | `SYSR-SLS015` | اجمالى قيم مبيعات ومردودات اصناف | TotalSalesandReturnsbyItems | Per item: price, discounts, tax and net value. |

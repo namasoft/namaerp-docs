@@ -16,8 +16,8 @@ This entity flow adds extra accounting effects (journal entries) to documents th
 - **Target Documents**: Works on any Document File (invoices, receipts, etc.) that has accounting effects
 - **Timing**: Executes just before the accounting request is sent to create journal entries
 
-::: info The "With Action" field does not apply to this flow
-Whatever you put in **With Action** (مع الإجراء) - on the entity flow header or on the action
+::: info The "Target Action" field does not apply to this flow
+Whatever you put in **Target Action** (مع الإجراء) - on the entity flow header or on the action
 line itself - is replaced with **Automatic** the moment the entity flow is saved, and an
 Automatic line is considered on every event. Leaving the field empty and setting it to
 *Post Commit* therefore behave exactly the same here, and neither is ever the reason an effect
@@ -73,7 +73,8 @@ This means: "Only apply this accounting effect if the reference field (ref1) in 
 **Recommendation:** Usually set to `true` to keep ledger clean and organized
 
 Two lines count as "similar" only when they agree on all of: the account, the subsidiary, the
-entity dimension, the currency, the rate, both narrations and the three reference fields. Lines
+dimensions (analysis set, branch, department and sector), the entity dimension, the currency, the
+rate, both narrations and the three reference fields. Lines
 that agree on all of that are merged by **netting** them - the totals of the two sides are
 subtracted from each other and the difference is written to whichever side it belongs on.
 

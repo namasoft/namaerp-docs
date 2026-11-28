@@ -40,7 +40,7 @@ A stock receipt or a purchase invoice usually introduces a lot for the first tim
    - when the item has **Has Lot** off, the **Lot ID** is cleared together with the line's **Expiry Date**, **Production Date** and retest date;
    - otherwise, when the item has **Has Expiry** off, only the **Expiry Date** is cleared;
    - when the item has **Has Serial** off, the **Serial Number** is cleared;
-   - when the item has **HasTwo Serials** off, the **Second Serial** is cleared.
+   - when the item has **Has Two Serials** off, the **Second Serial** is cleared.
 2. **It checks the remaining lots in one go.** Lines of lot-tracked items that still have a lot are collected, and the system's stock records are searched once for all their item and lot pairs together. The warehouse does not matter: the lot only has to exist for that item somewhere.
 3. **It clears the lots that are not found.** A line whose item and lot pair has no stock record loses its lot and the three dates. The comparison ignores letter case and leading or trailing spaces, so `test-a ` on the line matches a lot saved as `TEST-A`.
 

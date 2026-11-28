@@ -48,12 +48,12 @@ The top of the screen answers "which piece of which project is this?".
 | **Project Type**, **Proj Sub Type** | inherited from the project; whatever you type here is replaced from the project every time the task is saved |
 | **Task Status** | maintained by the system and by the status button, not typed |
 | **Sales Quotation** | filled in for you when the task was generated from a [project sales quotation](/modules/ecpa/projects/ecpa-sales-quotation) |
-| **Task Period** | a value plus a unit — "10 · Day". Type it and the planned end date is worked out from the planned start; change either date and the period follows |
+| **Task Period** | a value plus a unit — "10 · Day". Type it, or change the planned start, and the planned end date is worked out from the planned start; change the planned end and the planned start is worked back from it. The period itself is never recalculated from the dates |
 | **Description** | free text |
 
 Below that sits the **Planned** group — **Planned start date** and **Planned end in**, which have to fall inside the project's own planned window, plus **Total Planned Time** and **Total Actual Time**, both of them sums over the executers grid.
 
-At the bottom of the page an **Actual** group shows what the approvals have produced: **Start From** (pulled back to the earliest approved working day), **Actual Cost** and **% OF Finished**. All three are read-only; nothing on this group is typed.
+At the bottom of the page an **Actual** group shows what the approvals have produced: **Start From** (pulled back to the earliest working day on the approval rows for this task), **Actual Cost** and **% Of Finished**. All three are read-only; nothing on this group is typed.
 
 ### Task Type
 
@@ -81,7 +81,7 @@ One row per person. Each row is simultaneously a budget line ("Sara has sixty ho
 | **Employee Rate** | the hourly rate this task costs the person at. Defaulted from the employee's file, editable afterwards |
 | **Cost ǀ Planned** | Employee Rate × Planned hours, recomputed as you type either |
 | **Cost ǀ Actual** | **read-only.** Employee Rate × Actual hours |
-| **% OF Finished** | **read-only.** Actual hours ÷ planned hours for this row |
+| **% Of Finished** | **read-only.** Actual hours ÷ planned hours for this row |
 | **Work Done** | tick it when this person has finished. He can no longer record time on the task, and he drops off the list of people the task offers |
 | **Planned start date** / **Planned end in** | this person's own slice of the task's schedule; both must sit inside the task's planned dates |
 
@@ -107,7 +107,7 @@ This is the single most common source of confusion in the module, so it is worth
 | | **Employee Rate** (on the executer row) | **Cost of Hour** (on the timesheet line) |
 |---|---|---|
 | Where you see it | the task's Executers grid | each line of a Tasks Executing document |
-| Where the number comes from | the hourly rate held on the employee's own file, copied in when you pick him — and editable on the row afterwards | the employee's total constant salary in HR, divided by **Standard Monthly Hours** from the module settings, recalculated on every save |
+| Where the number comes from | the hourly rate held on the employee's own file, copied in when you pick him — and editable on the row afterwards | the employee's total constant salary in HR, divided by **Standard Monthly Hours** from the module settings, recalculated on every save while *Update Hour Cost of TimeSheet From HR* is ticked; typed on the line when it is not |
 | Who controls it | the project manager, per task | payroll and the module settings, globally |
 | What it produces | **Cost ǀ Planned** and **Cost ǀ Actual** on the task, which roll up into the project's cost total | **Total Cost** on the timesheet line, which is the amount that reaches the general ledger |
 | What else reads it | the project invoice, when it bills approved hours | the project invoice, when it collects executions |
@@ -130,11 +130,11 @@ Two actions on the task **list view** work on several tasks at once, which is ho
 Recalculate Hourly Rate overwrites **every** executer row on every selected task with the employee's current file rate. Any rate you tuned by hand for a particular task is lost. Select deliberately.
 :::
 
-Note that neither action touches hours already recorded. Planned cost is recomputed from the new rate; actual cost follows on the next save.
+Note that neither action touches hours already recorded. Both actions save each task they change, so its planned and actual cost are recomputed from the new rate in that same save.
 
 ## Task status
 
-A task carries one of six states — **Not Started**, **In Progress**, **Finished**, **Closed**, **Postponed**, **Cancelled** — and only the first two ever change on their own. A new task opens at *Not Started*, and the moment the first timesheet naming it is committed it becomes **In Progress** (the parent project makes the same jump at the same moment). Everything after that is a human decision, taken with the **Change Task Status** button on the screen, or with **Change Status** on the list view for a batch of tasks at once.
+A task carries one of six states — **Not Started**, **In Progress**, **Finished**, **Closed**, **Postponed**, **Cancelled** — and only the first two ever change on their own. A new task opens at *Not Started*, and the moment the first timesheet naming it is committed it becomes **In Progress** (the timesheet's header project, if it is still *Not Started*, makes the same jump at the same moment). Everything after that is a human decision, taken with the **Change Task Status** button on the screen, or with **Change Status** on the list view for a batch of tasks at once.
 
 The two buttons behave slightly differently and it is worth knowing which you pressed. On the edit screen, Change Task Status writes your choice onto the open form and leaves it there — **you still have to save**. On the list view, the choice is applied and saved on every selected task immediately.
 
@@ -150,11 +150,11 @@ Saving is quiet but consequential. Every save:
 
 1. re-copies the project type and sub-type from the project;
 2. recomputes each row's planned cost from rate × planned hours, and each row's actual cost and completion percentage from the approved hours;
-3. rolls those up into the task's **Actual Cost**, **Total Planned Time**, **Total Actual Time** and **% OF Finished**;
+3. rolls those up into the task's **Actual Cost**, **Total Planned Time**, **Total Actual Time** and **% Of Finished**;
 4. **refreshes the parent project's totals** — its planned and actual time, its cost figure and its completion percentage;
-5. rebuilds the list of employees who are allowed to book time to this task and to this project.
+5. rebuilds the list of employees who are allowed to book time to this task, and adds them to the project's own team list.
 
-Point 5 deserves a sentence of its own, because it is the answer to "why can't the employee find the task on his timesheet?". An employee appears in a task's picker only if he is on that task's executers grid and his row is *not* ticked Work Done — and the task is only offered inside a project the employee belongs to, which the project builds from its manager, vice-manager and [Team Work](/modules/ecpa/projects/ecpa-managed-project) page. Add someone to a task and save it, and he can record time against it a moment later. Forget to save, and he cannot.
+Point 5 deserves a sentence of its own, because it is the answer to "why can't the employee find the task on his timesheet?". An employee appears in a task's picker only if he is on that task's executers grid and his row is *not* ticked Work Done, and the task must be *Not Started* or *In Progress*. Saving the task also adds him to the project's team list, which the timesheet's project picker reads — the full rule for that list is under Team Work on [The Managed Project](/modules/ecpa/projects/ecpa-managed-project). Add someone to a task and save it, and he can record time against it a moment later. Forget to save, and he cannot.
 
 ## Rules that stop a save
 
@@ -185,8 +185,8 @@ These are the refusals listed under *Rules that stop a save*, in the words the s
 
 | Message | Why | What to do |
 |---|---|---|
-| *This project {0} is not belong to this customer {1}* — «هذا المشروع {0} لايرتبط بهذا العميل {1}» | The customer on the task is not the customer on the project it belongs to. | Clear the customer so it comes from the project, or move the task to the right project. |
+| *This project {0} is not belong to this customer {1}* — «هذا المشروع {0} لا يرتبط بهذا العميل {1}» | The customer on the task is not the customer on the project it belongs to. | Clear the customer so it comes from the project, or move the task to the right project. |
 | *Total value of field {0} and field {1} can not be greater than value of field {2}* — «إجمالي قيمة الحقل {0} والحقل {1} لا يمكن أن تتخطى قيمة الحقل {2}» | On an executer row, approved hours plus registered hours together exceed the planned hours. Planned hours are a ceiling, not a target. | Raise that row's planned hours, or reject the excess time before saving. |
 | *You can not delete the employee {0} because he has {1} approved hours in this task* — «لا يمكنك حذف الموظف {0} حيث أن لديه {1} ساعة فعلية في هذه المهمة» | An executer row carrying approved hours was removed from the grid. Approved work cannot be dropped. | Tick *Work Done* on the row instead of deleting it, or cancel the approvals first. |
 | *You can not change the employee {0} to {1} because he has {2} approved hours in this task* — «لا يمكنك تغيير الموظف {0} إلى الموظف {1} حيث أنه لديه {2} ساعة فعلية في هذه المهمة» | The employee was swapped on a row that already carries approved hours, which would reassign work somebody else did. | Leave the row as it is and add a new row for the other employee. |
-| *The employee {0} has intersect Periods* — «الموظف {0} لديه فترات متقاطعة فى نفس المهمة» | The same employee appears on two executer rows whose From–To ranges overlap. | Split the dates so the two rows do not overlap, or merge them into one row. |
+| *The employee {0} has intersect Periods* — «الموظف {0} لديه فترات متقاطعة في نفس المهمة» | The same employee appears on two executer rows whose From–To ranges overlap. | Split the dates so the two rows do not overlap, or merge them into one row. |

@@ -25,7 +25,7 @@ title: إدارة المستندات
 
 <LandingGrid>
   <LandingCard icon="📄" title="المستندات الأرشيفية" link="/ar/platform/dms/dms-documents.md" details="سجل المستند نفسه: الحفظ والملاك والصور المرفقة والحالات والنسخ والطرق الأربع للعثور عليه ثانية." />
-  <LandingCard icon="🔁" title="إخراج المستندات وإعادتها" link="/ar/platform/dms/dms-movements.md" details="سند الحركة: أنواعه الأربعة وما يغيّره الاعتماد فعلًا ولماذا تحتاج حركة النقل إلى متابعة يدوية." />
+  <LandingCard icon="🔁" title="إخراج المستندات وإعادتها" link="/ar/platform/dms/dms-movements.md" details="سند الحركة: أنواعه وما يغيّره الاعتماد فعلًا ولماذا تحتاج حركة النقل إلى متابعة يدوية." />
   <LandingCard icon="📦" title="تحميل أرشيف من ملف مضغوط" link="/ar/platform/dms/dms-bulk-import.md" details="تحويل ملف مضغوط واحد إلى مئات المستندات، وأي أعمدة تصل إلى المستندات المُنشأة." />
 </LandingGrid>
 
@@ -37,9 +37,6 @@ title: إدارة المستندات
 
 ::: tip تبحث عن شيء آخر؟
 إرفاق ملف بسجل عادي — فاتورة أو عميل — ليس من إدارة المستندات في شيء؛ فذلك حقل المرفق القياسي،
-ويُضبط في [المرفقات والتخزين](/ar/platform/global-config/global-config-attachments.md) ولكل حقل في
-[إعدادات الحقول والكيانات](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance.md).
-وإن كنت تبحث عن طريقة لحذف السجلات القديمة بدل حفظها فذلك تنقية البيانات، وموضعها
-[إقفال السنة والتحكم في الفترات](/ar/modules/accounting/ledger-setup/year-end-and-period-control.md) — وهو أمر
-مختلف تمامًا رغم تشابه المفردات.
+ويُضبط في [المرفقات والتخزين](/ar/platform/global-config/global-config-attachments) ولكل حقل في
+[إعدادات الحقول والكيانات](/ar/platform/fields-and-entities-settings/fields-settings-field-appearance).
 :::

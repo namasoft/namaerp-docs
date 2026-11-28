@@ -17,7 +17,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 كل جانب مدين أو دائن أو ضريبي أو خصم أو نقدي أو رسوم أو مخزن أو تغطية أو مصاريف خدمة في صفحات التأثير هو **نفس وحدة البناء** — كائن جانب محاسبي واحد. تستخدم معرّفات الحقول أدناه الجانب المدين الرئيسي (`termConfig.config.debit`) كبادئة مثال؛ وكل جانب آخر يعرض نفس الحقول الفرعية تحت بادئته الخاصة (مثل `termConfig.config.credit.subsidiaryAccountType`، `termConfig.cash.accountSource.type`).
 
-**إعداد الجانب المحاسبي (Side Configuration)** `termConfig.config.debit.sideConfig` — يوجّه الجانب إلى سجل [جانب محاسبي](/ar/platform/shared-master-files/accounting-side-config): نفس كتلة الإعدادات محفوظة مرة واحدة كملف رئيسي ومُشتركة بين ما شئت من التوجيهات.
+**الجانب المحاسبي (Side Configuration)** `termConfig.config.debit.sideConfig` — يوجّه الجانب إلى سجل [جانب محاسبي](/ar/platform/shared-master-files/accounting-side-config): نفس كتلة الإعدادات محفوظة مرة واحدة كملف رئيسي ومُشتركة بين ما شئت من التوجيهات.
 
 ::: warning إعداد الجانب المحاسبي يحلّ محلّ الكتلة ولا يندمج معها
 بمجرد ملء هذا الحقل يُتجاهل كل حقل آخر في نفس الكتلة — الحساب، ونوع الحافظة، والبيانات، ومصادر المحددات، وكل شيء. وتظل الحقول ظاهرة على الشاشة تعرض ما كُتب فيها من قبل، فيبدو الجانب وكأنه يُسجِّل على حساب بينما هو يُسجِّل على حساب آخر تمامًا. أفرغ حقل إعداد الجانب المحاسبي للعودة إلى القيم المكتوبة في الكتلة.
@@ -29,7 +29,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **البيان (Narration)** `termConfig.config.debit.narrationTemplate` / `termConfig.config.debit.narrationQuery` — البيان (الوصف) الأول لسطر القيد، إما من قالب أو من استعلام SQL. ويُضبط سطر البيان الثاني عبر `termConfig.config.debit.narration2Template` / `termConfig.config.debit.narration2Query`.
 
-**مصادر المحددات (القطاع / الفرع / الإدارة / مجموعة التحليل)** — كل محدِّد مركز تكلفة يمكن أن يكون قيمة ثابتة أو مسحوبًا من حقل على المستند. ويُعرض كل مصدر مركّب فقط عند تفعيل علامة الإعدادات العامة المقابلة له (`AddSectorSourceToTerms`, `AddBranchSourceToTerms`, `AddDeptSourceToTerms`, `AddAnalysisSourceToTerms`).
+**مصادر المحددات (القطاع / الفرع / الإدارة / مجموعة التحليل)** — كل محدِّد مركز تكلفة يمكن أن يكون قيمة ثابتة أو مسحوبًا من حقل على المستند. ويُعرض كل مصدر مركّب فقط عند تفعيل خيار الإعدادات العامة المقابل له (**إضافة تفاصيل القطاع للتوجيه**، **إضافة تفاصيل الفرع للتوجيه**، **إضافة تفاصيل الإدارة للتوجيه**، **إضافة تفاصيل المجموعة التحليلية للتوجيه**).
 
 | المحدِّد | معرّف الحقل |
 |---|---|
@@ -38,7 +38,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | مصدر الإدارة (Department source) | `termConfig.config.debit.departmentSource` |
 | مصدر مجموعة التحليل (Analysis-set source) | `termConfig.config.debit.analysisSetSource` |
 
-**البعد الكياني والمراجع (Entity dimension & reference dimensions)** — بُعد كياني عام وحتى ثلاثة مراجع عامة، كلٌّ منها مركّب (نوع المصدر + نوع الكيان + معرّف الحقل + قيمة ثابتة). ويُعرض كلٌّ منها فقط عند تفعيل علامة إعداداته العامة (`AddEntityDimSourceToTerms`, `AddRef1SourceToTerms` … `AddRef3SourceToTerms`).
+**محدد السجل والمراجع (Entity dimension & reference dimensions)** — محدد سجل عام وحتى ثلاثة مراجع عامة، كلٌّ منها مركّب (نوع المصدر + نوع الكيان + معرّف الحقل + قيمة ثابتة). ويُعرض كلٌّ منها فقط عند تفعيل خيار إعداداته العامة (**إضافة تفاصيل مصدر السجل للتوجيه**، **إضافة تفاصيل مصدر مرجع 1 للتوجيه** … مرجع 3).
 
 | المحدِّد | معرّف الحقل |
 |---|---|
@@ -47,9 +47,9 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | مصدر مرجع 2 (Reference 2) | `termConfig.config.debit.ref2Source` |
 | مصدر مرجع 3 (Reference 3) | `termConfig.config.debit.ref3Source` |
 
-**تجاهل الحقول غير الموجودة في المراجع والبعد الكياني (Ignore unfound fields in refs and entity dimension)** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — عدم فشل المعالجة عندما يكون حقل مصدر مرجعي مفقودًا. يُعرض عند تفعيل أي مصدر مرجع/بعد كياني.
+**تجاهل خطأ عدم وجود حقل في المراجع والسجل (Ignore Unfound Fields In References And Entity Dimension)** `termConfig.config.debit.ignoreUnfoundFieldsInRefsAndEntityDimension` — عدم فشل المعالجة عندما يكون حقل مصدر مرجعي مفقودًا. يُعرض عند تفعيل أي مصدر مرجع/بعد كياني.
 
-**حقل مصدر العملة / المعدل (Currency / Rate source field)** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — حقول مصدر عملة ومعدل سطر القيد؛ يُعرضان عند تفعيل `AddCurrencyAndRateSourceToTerms`.
+**حقل مصدر العملة / المعدل (Currency / Rate source field)** `termConfig.config.debit.currencySourceField` / `termConfig.config.debit.rateSourceField` — حقول مصدر عملة ومعدل سطر القيد؛ يُعرضان عند تفعيل خيار الإعدادات العامة **إضافة مصدر العملة و المعدل للتوجيه**.
 
 ::: tip
 في المجموعات أدناه، تعني "الجانب المحاسبي" دائمًا كتلة كاملة بالحقول الفرعية أعلاه. وملاحظة كل مجموعة تعطي **بادئتها** فقط — أضِف أي معرّف حقل فرعي للوصول إلى إعداد محدّد (مثل `termConfig.cash.subsidiaryAccountType`).
@@ -100,10 +100,10 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | الجانب | معرّف الحقل (البادئة) |
 |---|---|
 | النقدي (Cash) | `termConfig.cash` |
-| ضريبة 1 (Tax 1) | `termConfig.tax` |
-| ضريبة 2 (Tax 2) | `termConfig.tax2` |
+| ضريبة مبيعات 1 (Tax 1) | `termConfig.tax` |
+| ضريبة مبيعات 2 (Tax 2) | `termConfig.tax2` |
 | ضريبة 3 (Tax 3) | `termConfig.htax` |
-| ضريبة 4 (Tax 4) | `termConfig.htax2` |
+| ضريبة الفاتورة 4 (Tax 4) | `termConfig.htax2` |
 
 **مدين / دائن الضريبة (مستندات المصروفات والتكاليف)** — على JOrderExpense وReceiptAdditionalCost وLcExpense تكون الضرائب الأربعة حسابات مدين/دائن مسطّحة بدلًا من كتل جوانب محاسبية.
 
@@ -147,17 +147,19 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **الجوانب المحاسبية للخصم (الفواتير)** — الجوانب الثمانية للخصم، كلٌّ منها كتلة جانب محاسبي كاملة.
 
-| الخصم | معرّف الحقل (البادئة) |
+| المجموعة في الصفحة | معرّف الحقل (البادئة) |
 |---|---|
-| خصم السطر (Line discount) | `termConfig.lineDiscount` |
-| تخفيض الفاتورة (Invoice/header discount) | `termConfig.invoiceDiscount` |
-| خصم 1 (Discount 1) | `termConfig.firstDiscountAcc` |
-| خصم 2 (Discount 2) | `termConfig.secondDiscountAcc` |
-| خصم 3 (Discount 3) | `termConfig.thirdDiscountAcc` |
-| خصم 4 (Discount 4) | `termConfig.fourthDiscountAcc` |
-| خصم 5 (Discount 5) | `termConfig.fifthDiscountAcc` |
-| خصم 6 (Discount 6) | `termConfig.sixthDiscountAcc` |
-| خصم 7 (Discount 7) | `termConfig.seventhDiscountAcc` |
+| خصم 1 (Discount 1) | `termConfig.lineDiscount` |
+| تخفيض الفاتورة (Invoice Discount) | `termConfig.invoiceDiscount` |
+| خصم 2 (Discount 2) | `termConfig.firstDiscountAcc` |
+| خصم 3 (Discount 3) | `termConfig.secondDiscountAcc` |
+| خصم 4 (Discount 4) | `termConfig.thirdDiscountAcc` |
+| خصم 5 (Discount 5) | `termConfig.fourthDiscountAcc` |
+| خصم 6 (Discount 6) | `termConfig.fifthDiscountAcc` |
+| خصم 7 (Discount 7) | `termConfig.sixthDiscountAcc` |
+| خصم 8 (Discount 8) | `termConfig.seventhDiscountAcc` |
+
+معرّفات الحقول متأخرة خطوة عن عناوين المجموعات: فـ`firstDiscountAcc` هو مجموعة **خصم 2**، وهكذا حتى `seventhDiscountAcc` لمجموعة **خصم 8**. أما حقل الجانب الآخر في كل مجموعة فيطابق عنوانها (`discount1OtherSide` يقع في **خصم 1**).
 
 **مدين / دائن خصم 1 (مستندات المصروفات والتكاليف)** `termConfig.discount1Debit` / `termConfig.discount1Credit` — حساب الخصم المسطّح لمجموعة الخصم الواحدة على JOrderExpense وReceiptAdditionalCost وLcExpense.
 
@@ -252,7 +254,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **ربط الفاتورة فى جريد الفواتير فى سندات القبض والدفع (Link With Invoice Lines In accounting Document)** `termConfig.linkWithInvoiceLinesInAccountingDocument` — عندما يسدد سند قبض أو صرف هذه الفاتورة عبر جدول سندات الدفع فيها، تُضاف الفاتورة إلى جدول الفواتير في ذلك السند وتبقى متوافقة معه.
 
-**استعال سندات الدفع في أعمار الديون (Use Payment Docs As Debt Ages)** `termConfig.usePaymentDocsAsDebtAges` — تُعامل سطور جدول سندات الدفع في الفاتورة كسطور أعمار ديون، فيرى تحليل أعمار الديون ما سدده كل سند. فاتورة المبيعات، وإحلال المبيعات (وطلبه)، وفاتورة المشتريات.
+**استعمال سندات الدفع في أعمار الديون (Use Payment Docs As Debt Ages)** `termConfig.usePaymentDocsAsDebtAges` — تُعامل سطور جدول سندات الدفع في الفاتورة كسطور أعمار ديون، فيرى تحليل أعمار الديون ما سدده كل سند. فاتورة المبيعات، وإحلال المبيعات (وطلبه)، وفاتورة المشتريات.
 
 **عدم إختصار قيود مصروفات طرق الدفع (Expand Payment Method Effect)** `termConfig.expandPaymentMethodEffect` — تُكتب قيود سطور السداد كاملة: قيمة الدفع ومصروفات طريقة الدفع في سطرين منفصلين، بدلًا من خصم المصروفات من سطر الدفع. مستندات المبيعات والمشتريات.
 

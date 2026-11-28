@@ -27,12 +27,16 @@ has never been saved, and you get *"Cannot print record before saving changes"*.
 resolved; save and press Print again.
 
 Second, the browser asks the server a much simpler question than "which form?" — it asks *"is there
-any form at all for this record and this tab?"*. If the answer is no, the user sees
-*"Could not find form to print record"* and the print stops there. That answer is remembered in
-the browser tab for as long as the page stays open, keyed on the record type, the tab and the view.
-So when you add a form for a user who has just been told there is nothing to print, that user has
-to **reload the page** before the new form is noticed — a plain refresh is enough, there is no need
-to log out. This catches people out mid-implementation: the form is correct,
+any form at all for this record and this tab?"*. That answer is remembered in the browser tab for as
+long as the page stays open, keyed on the record type, the tab and the view, not on the record, so the
+first answer is reused for every record of that type printed from the same tab. If the answer is no,
+the print stops there. A user who may create printing forms is offered to build one from the screen
+(see [Straight from the Print button](/platform/reports/printing-form-wizard-guide#Straight-from-the-Print-button));
+anyone else sees *"There is no printing form for this screen. Ask your system administrator to create one."*
+If the remembered answer is yes but the server finds no form for this particular record, the user sees
+*"Could not find form to print record"*. So when you add a form for a user who has just been told
+there is nothing to print, that user has to **reload the page** before the new form is noticed — a
+plain refresh is enough, there is no need to log out. This catches people out mid-implementation: the form is correct,
 the configuration is correct, and the user's browser is still repeating an answer it was given an
 hour ago.
 
@@ -84,8 +88,8 @@ filter do the rest.
 
 ::: warning A restriction removes the form, it does not demote it
 There is no fallback. If the only form you have for Sales Invoice names book `SI-A` and the user
-prints a document from book `SI-B`, the result is not "print the other one" — it is *"Could not
-find form to print record"*.
+prints a document from book `SI-B`, the result is not "print the other one" — it is no print at all,
+with one of the messages described in [Before the server is asked](#Before-the-server-is-asked).
 :::
 
 ## The order the survivors are tried in
@@ -112,15 +116,12 @@ these:
   profile**, or a [master group](/platform/documents-and-records/master-groups). Point it at a profile and every user
   carrying that profile gets the form; point it at a master group and every user in the group does.
   Leave it empty and the form serves everyone.
-- **Dimensions** — the same five dimensions again, this time as a match rather than a filter, and
-  slightly more forgiving: a [composite dimension](/platform/shared-master-files/dimensions-and-composite-dimensions) on the form that *contains* the record's dimension
-  counts as a match, so a form set to a branch group covers every branch inside it.
 - **Menu Code** — a form carrying a menu code is taken only when the print request arrives with the
   same code. Almost all forms leave this empty.
 
-The first form clearing all four is the one that prints. Nothing further down the list is consulted,
-and nothing is offered to the user to choose from. If **no** form clears them, the print ends with
-*"Could not find form to print record"* even though candidates existed. That distinction is worth
+The first form clearing all three is the one that prints. Nothing further down the list is consulted,
+and nothing is offered to the user to choose from. If **no** form clears them, the print ends as
+described in [Before the server is asked](#Before-the-server-is-asked) even though candidates existed. That distinction is worth
 holding on to when you are staring at a form that looks perfectly configured: it may have been
 eliminated by the hard filter, or it may have been skipped by the first-match tests, and only in the
 second case were other forms still in play behind it.
@@ -255,7 +256,8 @@ are candidates for it.
 | What the user reports | Where to look |
 |---|---|
 | *"Cannot print record before saving changes"* | Unsaved edits on screen. Save first. |
-| *"Could not find form to print record"* — and a form exists | The hard filter: does the form name a book, term, category or dimension the record does not match? Then the first-match tests: criteria, **For User**, dimensions. |
+| *"Could not find form to print record"* — and a form exists | The hard filter: does the form name a book, term, category or dimension the record does not match? Then the first-match tests: criteria, **For User**, menu code. |
+| *"There is no printing form for this screen. Ask your system administrator to create one."* — and a form exists | The same two checks, for the first record printed from that tab since the page was loaded. Reload the page and print the record again. |
 | Nothing to print, but it worked for a colleague | The user's own dimensions (the form may be invisible to them), **For User**, or the remembered answer below — have them reload the page. |
 | A form was just created and is not offered | The page's remembered "is there a form?" answer. Reload the page. |
 | The wrong layout printed | Ordering. A non-system form always beats a system one; below that it is **Report Order**, lowest first. Give the specific form a lower number, or a book/criteria restriction so the general one is eliminated. |

@@ -80,10 +80,10 @@ maintenance company, the value, the plan, the checklist, the asset, the plan lin
 maintenance type, the start and end dates and times, the five attachments, and the whole checklist
 grid — questions and any answers already on it.
 
-What it does not copy is the date arithmetic. The next expected maintenance date on the request was
-calculated from the *request's* value date; if the record carries a different value date, re-pick
-the maintenance type — or type the date — so that what gets stamped onto the asset is measured from
-the day the work actually happened.
+It does not copy the **Fixed Asset Component Type** or the **Next Expected Maintenance Date**. Pick
+the component type again on the record, then re-pick the maintenance type — or type the date — so
+that the next expected date is measured from the record's own value date, the day the work actually
+happened.
 
 ## Actions on these screens
 
@@ -104,21 +104,32 @@ Everything the record does to the asset and to the plan happens on commit.
 ## Two rules that decide whether a record will commit
 
 Both are about components, and both are worth knowing before your first record rather than after.
+A maintenance record request is held to the same two rules when it is committed.
 
 **The component type must belong to the asset.** Every maintenance record is filed against a part of
 the machine, so the Fixed Asset Component Type field has to be filled in and has to match one of the
 lines in the asset's Asset Components grid. The screen does not mark the field as required, but a
-commit without it is refused, and so is a commit against an asset that has no components at all. If
-you are meeting the message *"Fixed asset component type does not belong to fixed asset"*, the fix
-is on the asset, not on the record — go and define its
+commit without it is refused, and so is a commit against an asset that has no components at all. The
+message is:
+
+*Fixed asset component type {0} does not belong to fixed asset {1}* — «نوع مكون الأصل {0} لا ينتمي إلى الأصل الثابت {1}»
+
+When the asset has no components, the fix is on the asset, not on the record — go and define its
 [components](/modules/fixedassets/master-files/fixedassets-components.md) first.
 
 **The maintenance type must be allowed for that component type.** Each component type carries its
 own list of permitted maintenance types; if that list is not empty, the record's maintenance type
-has to be on it. An empty list means anything is allowed.
+has to be on it. An empty list means anything is allowed. Otherwise the commit is refused with:
+
+*Fixed asset maintenance type {0} does not belong to fixed asset component type {1}* — «نوع الصيانة {0} لا ينتمي إلى نوع مكون الأصل {1}»
 
 One further check applies to the record only: a plan line that has been **cancelled** will not
-accept a record. Reinstate the line, or point the record at a different one.
+accept a record. The message has no Arabic text in the product, so it appears in English on Arabic
+screens too:
+
+*Status of maintenance plan line with code {0} must not be cancelled in maintenance plan {1}*
+
+Reinstate the line, or point the record at a different one.
 
 ## What committing a record does
 
@@ -175,9 +186,9 @@ date of 23 June — 90 days from the request's own date. The CNC Routine Inspect
 it; its four questions will be filled in on the record. Commit: nothing moves.
 
 **1 April 2026 — the record.** Maintenance Record `FAMR-000031` is created with value date 1 April
-and **From Document** set to the request. Everything copies across. The engineer re-picks the maintenance type
-so that the next expected date is recalculated from 1 April, giving **30 June 2026** — the second
-line of the plan. The technician's results go into the grid:
+and **From Document** set to the request. The request's details copy across; the engineer picks the
+**Spindle** component type again and re-picks the maintenance type, so that the next expected date is
+calculated from 1 April, giving **30 June 2026** — the second line of the plan. The technician's results go into the grid:
 
 | Criteria | Result | Description |
 |---|---|---|

@@ -51,7 +51,7 @@ For each operation, you specify where it happens (which work center), how long i
 
 A **Work Center** represents a physical location in your factory where work gets done. It could be a cutting machine, an assembly station, a paint booth, or a packaging area.
 
-Work centers are important because they help you understand capacity. If your cutting machine can only process 100 pieces per day, and you have orders for 150 pieces, you have a problem. The system helps you spot these bottlenecks before they become crises.
+Work centers are important because they hold the resources stationed there — how many machines and crews, and their working hours. A routing or production order that asks an operation for more of a resource than its work center holds is refused, unless the manufacturing configuration allows it.
 
 ### Standard Operations - Templates for Common Tasks
 
@@ -232,4 +232,4 @@ Each guide goes into the details, the workflows, and the options available. But 
 The main documents you'll work with daily:
 - Production Order (أمر إنتاج) - Your authorization to manufacture
 - Production Execution (تنفيذ إنتاج) - Recording what actually happened
-- Order Close Voucher (إغلاق أمر إنتاج) - Finalizing costs when done
+- Order Close (إغلاق أمر إنتاج) - Finalizing costs when done

@@ -62,7 +62,7 @@ Invoke-WebRequest https://namasoft.com/bin/nama-jstack.exe -OutFile "$env:USERPR
 #### سيناريو عملية واحدة
 إذا كان هناك مثيل واحد فقط من Tomcat يعمل، ستختاره الأداة تلقائيًا:
 ```
-Auto-detected: Tomcat101010 (PID: 29500)
+Auto-detected: Tomcat101010.exe (PID: 29500)
 ```
 
 #### سيناريو عمليات متعددة
@@ -70,9 +70,9 @@ Auto-detected: Tomcat101010 (PID: 29500)
 ```
 Found 3 Tomcat processes:
 
-[1] Tomcat109999 (PID: 2972)
-[2] Tomcat101010 (PID: 29500)
-[3] Tomcat101111 (PID: 20984)
+[1] Tomcat109999.exe (PID: 2972)
+[2] Tomcat101010.exe (PID: 29500)
+[3] Tomcat101111.exe (PID: 20984)
 
 Select process (1-3):
 ```
@@ -95,7 +95,7 @@ Select process (1-3):
 5. فتح الملف تلقائيًا في محرر النصوص الافتراضي
 
 ```
-Process: Tomcat101010 (PID: 29500)
+Process: Tomcat101010.exe (PID: 29500)
 Running jstack...
 
 Thread dump saved to: C:\Users\YourName\nama-dumps\Tomcat101010-20251102-143025.txt

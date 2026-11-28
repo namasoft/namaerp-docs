@@ -1,7 +1,7 @@
 ---
 description: "How the Credit Note and Debit Note documents adjust a customer's or supplier's balance without cash: the screen fields, settling the related invoice, the accounting effect, actions and reports."
 entities: [CreditNote, DebitNote]
-menu: Accounting → Documents → CreditNote
+menu: Accounting → Documents → Credit Note
 ---
 
 # Credit & Debit Notes
@@ -14,8 +14,8 @@ Credit and debit notes are part of the core `accounting` license.
 
 ## The idea: adjusting a party's balance in two directions
 
-- **Credit Note** (`Accounting > Documents > CreditNote`) — makes the party's account **credit**: it reduces what a customer owes us (a return/discount in their favor), or increases what we owe a supplier.
-- **Debit Note** (`Accounting > Documents > DebitNote`) — makes the party's account **debit**: it increases what a customer owes (a fee/extra cost), or reduces what we owe a supplier.
+- **Credit Note** (`Accounting > Documents > Credit Note`) — makes the party's account **credit**: it reduces what a customer owes us (a return/discount in their favor), or increases what we owe a supplier.
+- **Debit Note** (`Accounting > Documents > Debit Note`) — makes the party's account **debit**: it increases what a customer owes (a fee/extra cost), or reduces what we owe a supplier.
 
 The two screens are identical in structure and differ only in the direction of the effect, so explaining one is enough.
 
@@ -23,11 +23,11 @@ The two screens are identical in structure and differ only in the direction of t
 
 ## Anatomy of a note
 
-In the header you set the **Document Term** and **Value Date** (which determines the **Period**), the **Customer-Supplier** (the party concerned), and the **Related Subsidiary**, **Contract**, and **Cost Type** as needed.
+In the header you set the **Document Term** and **Value Date** (which determines the **Period**), the **Customer - Supplier** (the party concerned), and the **Related Subsidiary**, **Contract**, and **Cost Type** as needed.
 
 In the **Amount** block you enter the **Amount** and **Currency** (with the corresponding **local value** shown), and the value can be computed as a **percentage of the linked invoice's amount**.
 
-The **Taxes** block carries the **sales tax** (percentage and value) and a second tax if needed, plus the **net after tax**. And because the note is an official tax document, it's integrated with the **e-invoicing (ZATCA)** system: it carries the Zakat and Tax Authority fields (submission identifiers and approval status) that track its submission to the authority.
+The **Taxes** block carries the **sales tax** (percentage and value) and a second tax if needed, plus the **Total After Taxes**. And because the note is an official tax document, it's integrated with the **e-invoicing (ZATCA)** system: it carries the Zakat and Tax Authority fields (submission identifiers and approval status) that track its submission to the authority.
 
 In the **Details** tab you match the note's value against specific **invoices** (each line shows the **invoice value**, **net**, and **remaining**), so the note's effect is deducted directly from the invoice balance. The document also provides an **installments** grid and a **Payments** tab.
 

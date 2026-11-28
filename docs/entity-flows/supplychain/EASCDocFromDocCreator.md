@@ -19,15 +19,15 @@ Manual execution to generate related documents from source documents, typically 
 
 ## How It Works
 
-1. **Validates parameters** - Ensures first four parameters are provided (target type, book, term, field ID)
+1. **Validates parameters** - Fails with *You Must Specify the first four parameters for entity flow {0}* unless the first four parameters are provided (target type, book, term, field ID)
 2. **Checks for existing document** - Looks for existing target document in the specified field
 3. **Resolves book and term** - Finds DocumentBook and DocumentTerm by ID or code, with document type matching
 4. **Creates or updates target** - Creates new document or starts editing existing one
 5. **Sets book and term** - Assigns the specified book and term to target document
-6. **Determines source document** - Uses main document or specified field as source for copying
+6. **Determines header source** - Takes the header data from the current document, or from the document held in the field of Parameter 5 when that parameter is filled
 7. **Copies common data** - Transfers header information using standard copying logic
 8. **Sets header details** - Applies warehouse, locator, and other header information
-9. **Copies all lines** - Transfers all document lines from source to target
+9. **Copies all lines** - Copies all the lines of the current document to the target, whatever Parameter 5 holds. A target line that already points to a source line is reused; other target lines are removed
 10. **Commits document** - Saves the target document
 11. **Updates reference** - Sets the target document reference in the specified field
 
@@ -45,9 +45,7 @@ Example: `SalesInvoice`, `PurchaseOrder`
 
 Example: `ref1`, `ref2`, `ref3`, `ref4`, `ref5`
 
-**Parameter 5:** Field ID to Keep Make From Document (Optional) - Alternative source document field
-
-Example: `fromDoc`, `originDoc`
+**Parameter 5:** Field ID to Keep Make From Document (Optional) - Id of a header field of the current document that holds the supply chain document to take the header data from. The lines are always copied from the current document
 
 ## Database Tables Affected
 

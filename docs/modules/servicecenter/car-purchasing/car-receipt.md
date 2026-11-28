@@ -23,7 +23,7 @@ destination warehouse and locator, the invoice classification and remarks. There
 block — the receipt is an internal movement record, not a supplier transaction.
 
 Then the line grid: item, measures and quantities, unit and total price, discounts and taxes, net
-value, box / revision / size / colour / lot, the **السياره (Customer Car)** column, dates,
+value, box / revision / size / colour / lot, the **السيارة (Customer Car)** column, dates,
 department, warehouse and locator, attachment, remarks and line type.
 
 ![The Car Receipt screen](../../../ar/modules/servicecenter/images/car-purchasing/sc-car-receipt-en.png)
@@ -32,11 +32,11 @@ And the piece that is unique to this document — **five accessory tick boxes on
 
 | Column | English |
 |---|---|
-| كتالوج | Has Catalog |
-| دواسات | Has Mats |
-| عدة | Has Toolkit |
-| مفتاح احتياطي | Has Spare Key |
-| ضمان | Has Warranty |
+| تشمل دليل مستخدم | Has Catalog |
+| تشمل دواسات | Has Mats |
+| تشمل عدة | Has Toolkit |
+| تشمل مفتاح احتياطي | Has Spare Key |
+| تشمل ضمان | Has Warranty |
 
 That checklist is the practical reason the Car Receipt exists. When the transporter drops six cars
 off, somebody walks the line with a clipboard confirming that each one arrived with its manual, its
@@ -82,7 +82,7 @@ there is no already-in-stock validation on a car record at all.
 Run the natural-looking sequence —
 [purchase order](/modules/servicecenter/car-purchasing/car-purchase-order.md) → car receipt →
 purchase invoice — with both terms configured to generate, and every car is received **twice**.
-On-hand quantity 2 for a car that exists once. Double cost on the cost row. No error, no warning, nothing in a log. The eventual sale
+On-hand quantity 2 for a car that exists once, and double cost on the cost row. The eventual sale
 relieves one of the two, and the phantom sits in stock until somebody counts the yard.
 
 **The rule: fill the Generation Book and Generation Term on exactly one of the two document terms.**
@@ -125,7 +125,7 @@ every other, has to be a legal row in the movements grid, or the cancel itself w
 ## The worked example
 
 `SIR-2026-0088` records the six NAWA Rimal 2.4s arriving at Al-Sahra. Each line names its chassis
-through the **السياره** column, carries the four accessory ticks the transporter confirmed, and gets
+through the **السيارة** column, carries the four accessory ticks the transporter confirmed, and gets
 its yard slot — `CAR-000318` into `A-14`, `CAR-000319` into `A-15`, and so on.
 
 Its term has **no generation book and no generation term**, so it moves no stock. The stock came in

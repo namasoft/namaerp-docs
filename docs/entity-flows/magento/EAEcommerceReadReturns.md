@@ -21,7 +21,7 @@ Manual execution or a scheduled task that keeps ERP sales returns in sync with t
 
 1. **Resolves the site** - Finds the `MAGMagentoSite` by the given site code; if no site matches the code and the action runs on a site record, that record is used instead
 2. **Guards against parallel runs** - Only one return read may run per site at a time; simultaneous runs are prevented and a concurrent attempt fails with a clear message
-3. **Reads returns from the site** - Calls the site reader's `readReturns`, either from the supplied date or from the site's configured read-from date when no date is given
+3. **Reads returns from the site** - Reads the returns from the site, either from the supplied date or from the site's configured read-from date when no date is given
 4. **Skips already-imported returns** - Loads the source ids of returns already present in the ERP for that site and date range, and ignores returns that were imported before
 5. **Links to the source invoice** - For each new return, searches for the originating sales document and attaches it as the source document
 6. **Saves each return** - Imports the return using the entity type configured in the site's return generation info (defaults to `SalesReturn`)
@@ -31,7 +31,7 @@ Manual execution or a scheduled task that keeps ERP sales returns in sync with t
 
 **Parameter 1:** Site Code (Required) - Code of the MagentoSite to read returns from
 
-**Parameter 2:** Read Returns From Date (Optional) - Start date in `yyyy-MM-dd` format; when empty, the date configured on the site is used
+**Parameter 2:** Read Returns From Date (yyyy-MM-dd, empty = site configured date) (Optional) - Start date in `yyyy-MM-dd` format; when empty, the date configured on the site is used
 
 ## Example Usage
 

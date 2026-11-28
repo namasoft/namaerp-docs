@@ -43,7 +43,7 @@ This is where returns catch people out. The return reverses the *sale*; it does 
 everything the sale left behind.
 
 ::: warning Four things a return leaves untouched
-- **The allocation fields on the car.** *Allocated To Customer*, *Branch*, *Department*, *Sales Man*
+- **The allocation fields on the car.** *Allocated To Customer*, *Branch*, *Department*, *SalesMan*
   and *Warehouse* still name the customer who returned the car. Only a
   [Car Allocation Cancel](/modules/servicecenter/car-sales/car-allocation.md) clears them.
 - **The reference stamps on the car's Statistics tab.** The returned car still shows the old sales
@@ -133,7 +133,7 @@ Reprocess / Recommit**.
 
 **Installments page:**
 
-- **collect Installments By From Doc** (*تجميع الدفعات من بناءاً علي*) — rebuilds the return's
+- **collect Installments By From Doc** (*تجميع الدفعات من بناءً على*) — rebuilds the return's
   instalment grid from the unpaid instalments of the invoice in *From Document*, consuming the return
   value from the earliest instalment onward until it runs out.
 - **Distribute Return Value On All Unpaid installments** (*توزيع قيمة العائد على جميع الأقساط الغير

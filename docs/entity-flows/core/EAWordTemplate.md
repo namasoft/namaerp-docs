@@ -25,18 +25,18 @@ Manual execution for generating entity-specific documents like invoices, contrac
 4. **Drops empty loop rows** - Removes table rows that a loop produced but that rendered no text
 5. **Replaces image markers** - Inserts images from binary fields using `image(fieldName)` syntax
 6. **Generates document** - Creates final Word document with populated data
-7. **Applies protection** - Optionally makes document read-only with password protection
+7. **Applies protection** - Unless Parameter 3 is `true`, protects the document as read-only with a random password
 8. **Saves result** - Stores generated document in specified attachment field
 
 ## Parameters
 
 **Parameter 1:** Save To Field (Required) - Target attachment field to save generated document (e.g., "attachment", "generatedDoc")
 
-**Parameter 2:** Read Attachment From Field (Optional) - Source field for template document (e.g., "customer.remarks")
+**Parameter 2:** Read Attachment From Field (Optional) - Attachment field holding the template document (e.g., "customer.attachment1"). Empty: the file in the **Attachment** field of the entity flow itself
 
 **Parameter 3:** Do Not Make Document Read-Only (Optional) - "true" to keep document editable, "false" for read-only (default: false)
 
-**Parameter 4:** Generated File Name Tempo (Optional) - Template for output filename using entity data
+**Parameter 4:** Generated File Name Tempo (Optional) - Template for output filename using entity data. Empty: the file name of the entity flow's attachment
 
 **Parameter 5:** Keep Empty Loop Rows (Optional) - "true" to keep table rows whose loop iteration rendered nothing, "false" or empty to remove them (default: false, meaning empty rows are removed)
 
@@ -47,7 +47,7 @@ Manual execution for generating entity-specific documents like invoices, contrac
 @#fieldName#@
 @#customer.name1#@
 @#valueDate#@
-@#moeny.netValue#@
+@#money.netValue#@
 ```
 
 ### Filtering Loop Rows
@@ -92,8 +92,10 @@ image(productImage)
 The system will:
 - Extract the image data from the specified field (must be a LargeData/attachment field)
 - Replace the marker with the actual image in the document
-- Automatically detect image format (PNG, JPEG, GIF, BMP, TIFF)
-- Size the image to 100x100 EMU (default size)
+- Take the image format from the file name's extension (`.png`, `.jpg`/`.jpeg`, `.gif`, `.bmp`, `.tif`/`.tiff`); any other extension is treated as PNG
+- Size the image to 100 x 100 points
+
+The marker must be the whole text of its run in the Word document (type it in one go, without changing its formatting halfway).
 
 ::: tip Image Field Requirements
 The field referenced in `image(fieldName)` must be a binary/attachment field containing image data. Supported formats: PNG, JPEG, GIF, BMP, TIFF.

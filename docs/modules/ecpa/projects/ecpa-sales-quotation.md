@@ -21,7 +21,7 @@ project from template* action anywhere; a template feeds the **quotation**, and 
 creates the project.
 
 You will find it under **Project Management → Projects → CPA Projects Sales Quotation**
-(**ادارة المشاريع ← مشاريع ← عرض أسعار مشروع**).
+(**إدارة المشاريع ← مشاريع ← عرض أسعار مشروع**).
 
 ::: tip A quotation books nothing
 A quotation is a document — it has a book, a document term (توجيه), an issue date and a value date,
@@ -100,9 +100,9 @@ figures are computed on save:
 
 | Figure | Comes from |
 |---|---|
-| **Expected Time Total** (إجمالى عدد الساعات المتوقعة) | the Total Time column of the Details grid |
-| **Employee Rate Total** (إجمالى أجر الساعة لكل المهام) | every Tasks row's planned hours × its hourly rate |
-| **Project Expense Item Total** (إجمالى بند المصروف) | the Value column of the Expected Costs grid |
+| **Expected Time Total** (إجمالي عدد الساعات المتوقعة) | the Total Time column of the Details grid |
+| **Employee Rate Total** (إجمالي أجر الساعة لكل المهام) | every Tasks row's planned hours × its hourly rate |
+| **Project Expense Item Total** (إجمالي بند المصروف) | the Value column of the Expected Costs grid |
 
 Finally, the accounts group at the foot of the page holds the sub-ledger accounts the project will
 carry — a main account and five more. The pickers only offer accounts that are set up as project
@@ -112,8 +112,9 @@ empty, the template's accounts are used instead.
 ### The Details grid — a list of names, with a derived total
 
 The Details grid has two columns: the **Task** name and its **Total Time**. The task name is typed
-text, not a picker, because at quotation time the task does not exist yet — the system offers a
-suggestion list built from the names already on the grid so you spell them the same way everywhere.
+text, not a picker, because at quotation time the task does not exist yet. The task column on the
+Tasks and Expected Costs pages then offers a suggestion list built from the names on this grid, so
+you spell them the same way everywhere.
 
 The **Total Time** column is not something you type. On every save it is overwritten with the sum of
 the planned hours of every row on the **Tasks** page whose task name matches. So the Details grid is
@@ -136,8 +137,8 @@ Our four rows:
 | E-101 Ahmed | Report Writing | 30 | 120 | 3,600 |
 | E-103 Omar | Report Writing | 10 | 200 | 2,000 |
 
-On save, the Details grid's Total Time reads **60** for Site Survey and **40** for Report Writing;
-**Expected Time Total** is **100** and **Employee Rate Total** is **13,400**.
+On save, the Details grid's Total Time reads **60** for Site Survey and **40** for Report Writing,
+and **Employee Rate Total** is **13,400**.
 
 ::: tip The rate here is the selling rate, and it follows the job all the way to the invoice
 The hourly rate you enter on this grid is copied onto the created task's executors grid, and that is
@@ -204,9 +205,9 @@ will run:
 
 - the quotation must be **saved**;
 - its status must be **Accepted** — otherwise it refuses with the message
-  *"Sales Quotation Status Must Be Accpeted"* — «حالة العرض يجب أن تكون مقبول» (the English typo is in the message itself);
-- it must have a **Template Project** — a quotation without one is refused with
-  *"You must choose template project"* — «يجب عليك إختيار قالب مشروع».
+  *"Sales Quotation Status Must Be Accepted"* — «حالة العرض يجب أن تكون مقبول»;
+- it must have a **Template Project** — on a quotation without one, no project and no task is
+  created.
 
 It then asks you two questions — a **Project Group** and a **Task Group** — which decide the coding
 groups the new records are filed under. Leave the project group empty and the project takes the
@@ -216,7 +217,8 @@ What it builds, for our example:
 
 1. **One project.** Named from *Generated Project Name*, customer C-0012, status **In Progress**. It
    receives the quotation's project type and sub type, manager and vice manager, planned and actual
-   dates, planned project time, responsible and estimated cost, its dimensions, and the Subsidiary Accounts
+   dates, planned project time, the **Responsible** third party (not the Responsible Employee) and
+   estimated cost, its dimensions, the fee inputs from the Fees page, and the Subsidiary Accounts
    from the quotation (or from the template if the quotation had none). One periodic-billing line is
    added carrying the Auto Invoice value. The finished project is written back into
    **Generated CPA Project** on the quotation.
@@ -243,7 +245,7 @@ After it has run, edit the project and the tasks, not the quotation.
 Worth knowing before somebody goes looking for it on the new project:
 
 - **The agreed price stays on the quotation.** Neither the Sales Price nor the Net value is written
-  onto the project, so there is no contract figure on the project to compare invoices against.
+  onto the project, so the project's **Contract Total Cost** stays empty until someone types it.
   Nothing in the module caps what you can bill — see the
   [Project Invoice](/modules/ecpa/invoicing/ecpa-project-invoice) page.
 - **The expected costs stay on the quotation**, as described above.
@@ -261,7 +263,7 @@ Worth knowing before somebody goes looking for it on the new project:
 3. Expected Costs page: Travel **1,500** (external), Printing **300** (internal) → **1,800**.
 4. Sales Price **25,000**, discount 4 % = **1,000**, **Net value 24,000**.
 5. Payment template `50-30-20` → instalments of **12,000 / 7,200 / 4,800**.
-6. Save. Consolidation reads 100 / 13,400 / 1,800.
+6. Save. Employee Rate Total reads 13,400 and Project Expense Item Total 1,800.
 7. **Accept Offer**, save again.
 8. **Create Project And Tasks** with a project group and a task group → project **Q-000123** at
    status In Progress, tasks *Site Survey* and *Report Writing* with their executors.

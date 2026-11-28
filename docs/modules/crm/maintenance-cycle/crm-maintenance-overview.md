@@ -72,7 +72,7 @@ Here is the whole cycle in one picture. Every arrow is marked, and the marking i
                  +--AUTO on save--> a warranty Maintenance Contract
 
   Maintenance Estimation <--MANUAL (button: Copy All From MnOrders)-- Maintenance Orders
-                 +--AUTO on save--> a supply-chain Stock Issue    [no path onward - a dead end]
+                 +--MANUAL (From document)--> a Maintenance Order or Maintenance Invoice that names it
 
   Maintenance Visit - typed by hand, nothing ever creates one
                  +--AUTO on save--> raises the contract's performed-visit counter
@@ -145,7 +145,7 @@ Accounting and inventory effects are created as **business requests** and proces
 
 Coverage in this suite is **quantity at a price**, and nothing else.
 
-The contract lists the spare parts and services the customer has pre-paid for, each with a quantity. As orders, invoices and returns are committed against the contract, those quantities are drawn down, and a document that asks for more than the contract has left is refused. If the contract prices a service at 1,200.00 while the service catalogue says 1,500.00, the contract price is the one that lands on the document.
+The contract lists the spare parts and services the customer has pre-paid for, each with a quantity. As maintenance orders that name the contract — in *From document* or in their *Maintenance Contract* field — are committed, those quantities are drawn down, and an order or order request that asks for more than the contract has left is refused. If the contract prices a service at 1,200.00 while the service catalogue says 1,500.00, the contract price is the one that lands on the document.
 
 ::: warning Coverage is not a date check, and it does not decide who pays
 Nothing compares the date of the work to the warranty period or to the contract's dates. Work on a machine whose contract expired last year is priced and billed exactly like work on a live one, and no warning appears. There is no free-versus-billed flag anywhere in the suite: the only sense in which covered work is "free" is that the contract may price it at zero. Whether to charge the customer stays a human decision.

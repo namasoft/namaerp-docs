@@ -37,19 +37,19 @@ The ledger is the heart of the setup. You'll find it under **Accounting → Sett
 - **Calendar** — the calendar on which this ledger's years and periods are built.
 - **Current Year** — the fiscal year currently adopted for the ledger.
 
-The ledger also carries **default dimensions** (legal entity, branch, sector, department, analysis set) shown in the lower section of the screen, used as initial values when working on this ledger.
+The lower section of the screen is the standard **Dimensions** group. A ledger is not divided by branch, sector, department or analysis set: those four are cleared when the ledger is saved, and only the **Legal Entity** dimension is kept.
 
 The ledger prints on the **Ledger** form (`SYSF-ACC012`):
 
 ![Ledger form (SYSF-ACC012)](../../../ar/modules/accounting/images/forms/SYSF-ACC012-en.png)
 
 ::: warning Core fields can't be changed after use
-Once you link any **Legal Entity** to this ledger, the system blocks changing the **Main Currency**, **Chart Type**, or **Calendar**. These decisions shape every recorded balance, so changing them after go-live would corrupt the historical data. Plan them carefully before the first transaction — if you try to edit them after linking, you'll get a save-blocking message. The **Reporting Currency** is not locked, because nothing is recorded in it: you can set or change it after go-live.
+Once you link any **Legal Entity** to this ledger, the system blocks changing the **Main Currency**, **Chart Type**, or **Calendar**. These decisions shape every recorded balance, so changing them after go-live would corrupt the historical data. Plan them carefully before the first transaction — if you try to edit them after linking, the save is refused with *"Cannot change record after using it"* — «لا يمكن تعديل السجل بعد استخدامه». The **Reporting Currency** is not locked, because nothing is recorded in it: you can set or change it after go-live.
 :::
 
 ## The Account Chart Type
 
-You might wonder: why is there a separate file called **Account Chart Type**? The idea is simple: in groups that span several companies, some companies may share the same chart of accounts while others differ. The "account chart type" is the classification that groups everyone working on the same chart. If you have a single company, you'll define one type, link your ledger and chart to it, and not give it another thought.
+You might wonder: why is there a separate file called **Account Chart Type** (`Accounting > Master Files > Account Chart Type`)? The idea is simple: in groups that span several companies, some companies may share the same chart of accounts while others differ. The "account chart type" is the classification that groups everyone working on the same chart. If you have a single company, you'll define one type, link your ledger and chart to it, and not give it another thought.
 
 The file itself is just a code and a name — its importance is in the linking, not the content. The details of building the chart itself (accounts, levels, classifications) are covered in the [Chart of Accounts](./chart-of-accounts.md) page.
 
@@ -84,25 +84,27 @@ Each period has one of two statuses: **Opened** (accepts transactions) or **Clos
 
 Above the periods grid, three buttons save you the manual work:
 
-- **Create Next Fiscal Year** — generates next year and its periods from the same calendar, with no re-keying.
-- **Open Periods** — opens a set of periods at once to receive transactions.
-- **Close Periods** — closes a set of periods at once.
+- **Create Next Fiscal Year** — works on a saved year. It opens a new, unsaved fiscal year on the same calendar, with the start and end dates moved one year forward, the end date's year as its code, and one period for each period of the current year, moved one year forward and keeping its type. Every period of the new year starts **Closed**; review it and save.
+- **Open Periods** — sets the status of every period in the grid to **Opened**. Save the year to apply it.
+- **Close Periods** — sets the status of every period in the grid to **Closed**. Save the year to apply it.
+
+To open or close a single period, change its **Period Status** in the grid and save.
 
 ::: tip
-Fine-grained locking doesn't stop at the period. If you need to block transactions on a specific account or within a particular date range without closing the entire period, that's the job of the **Prevent Accounting Transactions** document, covered in the [Year-end & period control](./year-end-and-period-control.md) page.
+Fine-grained locking doesn't stop at the period. If you need to block transactions on a specific account or within a particular date range without closing the entire period, that's the job of the **Prevent Transactions On Accounts Or Subsidiaries** master file, covered in the [Year-end & period control](./year-end-and-period-control.md) page.
 :::
 
-The **Allow processing costs, quantities and entries after the closing entry** option lets certain transactions keep processing even after the closing entry is recorded — used in special cases when late processing must be completed in a year that has been closed.
+The **Allow Cost, Quantity, and Ledger Processing For Documents Before Closing Entry** option on the fiscal year lets business requests dated on or before the closing entry carry on processing. It is a recovery switch that only a Namasoft support session can tick, and saving any closing entry switches it off again; see [Adjustments that arrive after the close](/modules/accounting/ledger-setup/year-end-and-period-control#Adjustments-that-arrive-after-the-close).
 
 ## Linking a Legal Entity to a ledger
 
 The last step of setup is linking the **Legal Entity** (`Basic > Dimensions > Legal Entity`) to the ledger you created. With this link the company inherits its main currency, chart, and calendar from the ledger, and becomes ready to receive transactions. And it's precisely from the moment of this link that the system begins protecting the ledger's core fields from edits, as noted above.
 
-Broader detail on the legal entity as one of the **dimensions** (alongside branch, sector, and department) will be in the **Dimensions, cost centers & distribution** technical reference.
+The legal entity as one of the **dimensions** (alongside branch, sector and department) is described on [Dimensions and Composite Dimensions](/platform/shared-master-files/dimensions-and-composite-dimensions).
 
 ## For Support
 
 - **"The accounting screens don't appear at all"** — check that the `accounting` license is enabled.
-- **"The system refuses to save a transaction on a certain date"** — most likely the accounting period for that date has status **Closed**, or no period covers the date, or a **Prevent Accounting Transactions** document is blocking it. Open the fiscal year and review the periods grid and their statuses.
-- **"A blocking message when editing the ledger"** — appears when trying to change the main currency, chart type, or calendar after the ledger has been linked to a legal entity. These fields are deliberately locked after use.
-- Year creation and bulk open/close of periods will be covered in depth in the **Fiscal periods & currency** reference, and the module's option catalog in [Accounting configuration](../support/accounting-configuration.md).
+- **"The system refuses to save a transaction on a certain date"** — most likely the accounting period for that date has status **Closed**, or no period covers the date, or a **Prevent Transactions On Accounts Or Subsidiaries** record is blocking it. Open the fiscal year and review the periods grid and their statuses.
+- **"A blocking message when editing the ledger"** — *"Cannot change record after using it"* appears when trying to change the main currency, chart type, or calendar after the ledger has been linked to a legal entity. These fields are deliberately locked after use.
+- Period locking and multi-currency are summarised in [Fiscal Periods, Period Locking & Multi-Currency](/modules/accounting/support/accounting-periods-and-currency), and the module's option catalog is in [Accounting configuration](../support/accounting-configuration.md).

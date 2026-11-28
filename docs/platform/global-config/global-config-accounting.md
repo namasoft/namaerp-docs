@@ -19,9 +19,9 @@ Any system that multiplies quantities by prices and applies percentages eventual
 The name is a promise. The system refuses to save a value greater than 10 with an explicit complaint that the number "is not low at all", because a large low margin silently swallows genuine imbalances. The default of 0.0001 is right for almost everyone.
 :::
 
-**Maximum Debit/Credit Difference Correction Value** `value.info.maximumDrCrDiffCorrection` — The largest imbalance the system will silently correct rather than reject when writing a ledger transaction. Sits above the low margin: below the low margin nothing happened, between the two the system fixes it, above it the entry is refused.
+**Maximum Debit/Credit Difference Correction Value** `value.info.maximumDrCrDiffCorrection` — The largest local-currency difference between debit and credit that the system absorbs into one line of a ledger transaction when it writes it. Before comparing, every local amount is rounded to the local currency's decimal places. A difference no larger than the smallest local-currency unit times the number of lines is always absorbed. When **Adjust Currency Difference** is ticked in the Accounting configuration, the limit rises to this value (or to the low margin when this value is empty), whichever is larger. A larger difference is left as it is, and a transaction whose local debit and credit still differ by more than the low margin is refused with *Transaction is not balanced, difference is {0}*.
 
-**Min Debit Credit Value** `value.info.minDebitCreditValue` *(default 0.0005)* — Amounts below this count as zero when deciding whether an entry is a debit or a credit, which stops a residual fraction from creating a meaningless one-sided line.
+**Min Debit Credit Value** `value.info.minDebitCreditValue` *(default 0.0005)* — When a document's accounting effect is built, a line whose amount and local amount are both below this value is left out, which stops a residual fraction from creating a meaningless one-sided line.
 
 ## Subsidiary accounts
 
@@ -81,46 +81,46 @@ Every field on this tab with its exact on-screen label in both languages, so you
 |---|---|---|---|
 | `value.info.lowMargin` | Ignored margin when comparing fractions | القيمة المتجاهلة عند مقارنة الكسور | [Rounding tolerances](#Rounding-tolerances) |
 | `value.info.maximumDrCrDiffCorrection` | Maximum Debit/Credit Difference Correction Value | أقصى قيمة لتصحيح فرق المدين عن الدائن | [Rounding tolerances](#Rounding-tolerances) |
-| `value.info.minDebitCreditValue` | Min Debit Credit Value | اقل قيمة للحركة المدينة والدائنة | [Rounding tolerances](#Rounding-tolerances) |
-| `value.info.useAccount6` | Use Account 6 | إستخدام حساب 6 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount7` | Use Account 7 | إستخدام حساب 7 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount8` | Use Account 8 | إستخدام حساب 8 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount9` | Use Account 9 | إستخدام حساب 9 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount10` | Use Account 10 | إستخدام حساب 10 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount11` | Use Account 11 | إستخدام حساب 11 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount12` | Use Account 12 | إستخدام حساب 12 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount13` | Use Account 13 | إستخدام حساب 13 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount14` | Use Account 14 | إستخدام حساب 14 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount15` | Use Account 15 | إستخدام حساب 15 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount16` | Use Account 16 | إستخدام حساب 16 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount17` | Use Account 17 | إستخدام حساب 17 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount18` | Use Account 18 | إستخدام حساب 18 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount19` | Use Account 19 | إستخدام حساب 19 | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.useAccount20` | Use Account 20 | إستخدام حساب 20 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.minDebitCreditValue` | Min Debit Credit Value | أقل قيمة للحركة المدينة والدائنة | [Rounding tolerances](#Rounding-tolerances) |
+| `value.info.useAccount6` | Use Account 6 | استخدام حساب 6 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount7` | Use Account 7 | استخدام حساب 7 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount8` | Use Account 8 | استخدام حساب 8 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount9` | Use Account 9 | استخدام حساب 9 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount10` | Use Account 10 | استخدام حساب 10 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount11` | Use Account 11 | استخدام حساب 11 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount12` | Use Account 12 | استخدام حساب 12 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount13` | Use Account 13 | استخدام حساب 13 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount14` | Use Account 14 | استخدام حساب 14 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount15` | Use Account 15 | استخدام حساب 15 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount16` | Use Account 16 | استخدام حساب 16 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount17` | Use Account 17 | استخدام حساب 17 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount18` | Use Account 18 | استخدام حساب 18 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount19` | Use Account 19 | استخدام حساب 19 | [Subsidiary accounts](#Subsidiary-accounts) |
+| `value.info.useAccount20` | Use Account 20 | استخدام حساب 20 | [Subsidiary accounts](#Subsidiary-accounts) |
 | `value.info.subsidiaryCurrencyShouldMatchAccountsCurrency` | Subsidiary Currency Should Match Accounts Currency | يجب أن تطابق العملة في الذمة عملة الحساب | [Subsidiary accounts](#Subsidiary-accounts) |
-| `value.info.addLegalEntityToCustCredits` | Add Legal Entity To Customer Credits | إضافة الشركة للحدود الإتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
-| `value.info.addSectorToCustCredits` | Add Sector To Customer Credits | إضافة القسم للحدود الإتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
-| `value.info.addBranchToCustCredits` | Add Branch To Customer Credits | إضافة الفرع للحدود الإتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
-| `value.info.addDeptToCustCredits` | Add Department To Customer Credits | إضافة الإدارة للحدود الإتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
-| `value.info.addAnalysisSetToCustCredits` | Add Analysis Set To Customer Credits | إضافة المجموعة التحليلية للحدود الإتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
-| `value.info.trackDebtAgesOn.trackDebtAgesOnSector` | Track Debt Ages On Sector | متابعة اعمار الديون على القطاع | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.trackDebtAgesOnBranch` | Track Debt Ages On Branch | متابعة اعمار الديون على الفرع | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.trackDebtAgesOnDepartment` | Track Debt Ages On Department | متابعة اعمار الديون على القسم | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.trackDebtAgesOnAnalysisSet` | Track Debt Ages On Analysis Set | متابعة اعمار الديون على المجموعة التحليلية | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.trackDebtAgesOnEntityDimension` | Track Debt Ages On Entity Dimension | متابعة اعمار الديون على السجل | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.maxInvoicesInSuggestionList` | Max Invoices In Search | اقصي عدد من الفواتير عند البحث | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.reprocessAllUnmatchedDebtAgesEveryTime` | Reprocess All Unmatched Debt Ages Every Time | إعادة معالجة الديون المربوطة بالخطا كل مرة | [Debt ages](#Debt-ages) |
-| `value.info.trackDebtAgesOn.doNotDisplayAutomaticMatchedDebitAges` | Do Not Display Automatically Matched Debt Ages | عدم عرض اعمار الديون المسددة الياً | [Debt ages](#Debt-ages) |
+| `value.info.addLegalEntityToCustCredits` | Add Legal Entity To Customer Credits | إضافة الشركة للحدود الائتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
+| `value.info.addSectorToCustCredits` | Add Sector To Customer Credits | إضافة القسم للحدود الائتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
+| `value.info.addBranchToCustCredits` | Add Branch To Customer Credits | إضافة الفرع للحدود الائتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
+| `value.info.addDeptToCustCredits` | Add Department To Customer Credits | إضافة الإدارة للحدود الائتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
+| `value.info.addAnalysisSetToCustCredits` | Add Analysis Set To Customer Credits | إضافة المجموعة التحليلية للحدود الائتمانية للعميل | [Customer credit limits](#Customer-credit-limits) |
+| `value.info.trackDebtAgesOn.trackDebtAgesOnSector` | Track Debt Ages On Sector | متابعة أعمار الديون على القطاع | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.trackDebtAgesOnBranch` | Track Debt Ages On Branch | متابعة أعمار الديون على الفرع | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.trackDebtAgesOnDepartment` | Track Debt Ages On Department | متابعة أعمار الديون على القسم | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.trackDebtAgesOnAnalysisSet` | Track Debt Ages On Analysis Set | متابعة أعمار الديون على المجموعة التحليلية | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.trackDebtAgesOnEntityDimension` | Track Debt Ages On Entity Dimension | متابعة أعمار الديون على السجل | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.maxInvoicesInSuggestionList` | Max Invoices In Search | أقصى عدد من الفواتير عند البحث | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.reprocessAllUnmatchedDebtAgesEveryTime` | Reprocess All Unmatched Debt Ages Every Time | إعادة معالجة الديون المربوطة بالخطأ كل مرة | [Debt ages](#Debt-ages) |
+| `value.info.trackDebtAgesOn.doNotDisplayAutomaticMatchedDebitAges` | Do Not Display Automatically Matched Debt Ages | عدم عرض أعمار الديون المسددة آلياً | [Debt ages](#Debt-ages) |
 | `value.info.trackDebtAgesOn.doNotShowUnpaidDebtsBefore` | Do Not Display Unpaid Debt Ages Before Date | عدم عرض أعمار الديون الغير مسددة يدويا قبل تاريخ | [Debt ages](#Debt-ages) |
 | `value.info.trackDebtAgesOn.shortenDebtAgesInSameDocument` | Shorten Debt Ages In Same Document | اختصار أعمار الديون في نفس السند | [Debt ages](#Debt-ages) |
 | `value.info.trackDebtAgesOn.neverAutoMatchDebtAges` | Never Automatically Match Debt Ages (Manual Matching Only) | عدم ربط أعمار الديون آليا (يدويا فقط) | [Debt ages](#Debt-ages) |
 | `value.info.usePayReceiptDocsSysEntries` | Use System Entries For Payment/Receipt Documents Relationship to Invoices | استعمال الجداول النظامية لمتابعة ربط الصرف والقبض بالفواتير | [Payments and receipts](#Payments-and-receipts) |
 | `value.info.deductPaymentAndReceiptInRemaining` | Deduct Payments And Receipts In Invoices Remaining | خصم المدفوع والمقبوض عند حساب المتبقي في الفواتير | [Payments and receipts](#Payments-and-receipts) |
 | `value.info.enableDaysBeforeAllowingReturnInPaymentMethod` | Enable Days Before Allowing Return in Payment Methods | تفعيل عدد الأيام قبل السماح بالمرتجع حسب طريقة الدفع | [Payments and receipts](#Payments-and-receipts) |
-| `value.info.allowValuesChangeOfYear1` | Allow changing in budget year 1 values | إمكانية التعديل في قيم السنة الأولي للموازنة | [Budgets](#Budgets) |
+| `value.info.allowValuesChangeOfYear1` | Allow changing in budget year 1 values | إمكانية التعديل في قيم السنة الأولى للموازنة | [Budgets](#Budgets) |
 | `value.info.allowValuesChangeOfYear2` | Allow changing in budget year 2 values | إمكانية التعديل في قيم السنة الثانية للموازنة | [Budgets](#Budgets) |
 | `value.info.allowValuesChangeOfYear3` | Allow changing in budget year 3 values | إمكانية التعديل في قيم السنة الثالثة للموازنة | [Budgets](#Budgets) |
 | `value.info.allowValuesChangeOfYear4` | Allow changing in budget year 4 values | إمكانية التعديل في قيم السنة الرابعة للموازنة | [Budgets](#Budgets) |
-| `value.info.useToPeriodInFinancialBudget` | Use To Period In Financial and Sales Budgets | استخدام إلى فترة فى الموازنات المالية و البيعية | [Budgets](#Budgets) |
+| `value.info.useToPeriodInFinancialBudget` | Use To Period In Financial and Sales Budgets | استخدام إلى فترة في الموازنات المالية و البيعية | [Budgets](#Budgets) |
 | `value.info.disableWarehousesAdjustment` | Disable Warehouses Adjustment | إيقاف قيود التسوية المخزنية | [Cost](#Cost) |
 | `value.info.enablePresendRequestsForCostLedger` | Enable PresendRequests For Cost Ledger | Enable PresendRequests For Cost Ledger | [Cost](#Cost) |

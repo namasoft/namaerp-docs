@@ -105,40 +105,40 @@ English: "Confirmation: This is a large amount, do you want to proceed?"
 - **Calculated Values**: Custom calculations or formatted values
 
 #### Revise On Completion
-When **Revise On Completion** is enabled, the system automatically marks the record as "revised" after the approval process is successfully completed. This provides an additional layer of data integrity and audit control.
+When **Revise Record On Approval Completion** is ticked, the system marks the record as "revised" when an approval that started on saving the record (an insert or update approval) ends approved. A delete approval or a budget approval does not revise the record. This provides an additional layer of data integrity and audit control.
 
 #### Modify While Under Approval
 By default, records awaiting approval cannot be edited to maintain data integrity during the approval process. However, the system provides flexible options to allow modifications under specific conditions.
 
 **Configuration Options:**
 
-**Allow Modify While Under Approval** (on the Approval Definition):
-- When **disabled** (default): Records cannot be edited during approval process
-- When **enabled**: Records can be modified based on the policy settings below
+**Allow Modification While Waiting Approval** (on the Approval Definition):
+- When **unticked** (default): Records cannot be edited during approval process
+- When **ticked**: Records can be modified based on the policy settings below
 
 **Modify While Under Approval Policy** (Per Step):
-The system supports three different policies for controlling modifications during approval:
+The system supports three different policies for controlling modifications during approval. The policy of the step currently waiting decides; a step with no policy behaves as **Allow For Authorized Users**. The definition also carries its own **Modify While Under Approval Policy**: when it is filled, saving the definition copies it onto every step. While **Allow Modification While Waiting Approval** is unticked, a step's policy must be **Prevent Modify** or empty.
 
 ::: info Modify Policies
 1. **Allow For Authorized Users** (Default)
-   - Users with `EditUnderApproval` capability can modify the record
+   - Users with the **Edit While Under Approval** capability on the record's type can modify the record
    - Requires specific security permission
    - Most flexible option for authorized personnel
 
-2. **Allow For Authorized And Can Approve**
-   - Users must have `EditUnderApproval` capability AND be eligible to approve current step
+2. **Allow For Authorized Users Who Can Approve The Step**
+   - Users must have the **Edit While Under Approval** capability AND be a candidate of the step currently waiting
    - More restrictive - only current step approvers can modify
    - Ensures modifications are made by those responsible for approval
 
 3. **Prevent Modify**
    - No modifications allowed regardless of user permissions
    - Highest security level for critical approval steps
-   - Overrides the definition's **Allow Modify While Under Approval** option
+   - Applies even when the definition's **Allow Modification While Waiting Approval** is ticked
 :::
 
 #### Field-Level Editing Control
 
-Beyond the **Allow Modify While Under Approval** option on the Approval Definition, the system provides granular field-level control over what can be edited during approval. This allows organizations to permit modifications to specific fields while keeping others locked.
+Beyond the **Allow Modification While Waiting Approval** option on the Approval Definition, the system provides granular field-level control over what can be edited during approval. This allows organizations to permit modifications to specific fields while keeping others locked.
 
 **Configuration Options:**
 
@@ -172,13 +172,14 @@ The system provides enhanced security through OTP verification for approval deci
 **Configuration Options:**
 
 **Require OTP For All Steps** (on the Approval Definition):
-- When **enabled**: All approval steps require OTP verification
-- Applies to every step in the approval definition
-- Overrides individual step settings
+- A shortcut on the screen: ticking or unticking it sets **Require OTP** on every row of the steps grid at once
+- You can still change a single step's **Require OTP** afterwards; at run time only each step's own **Require OTP** counts
 
 **Require OTP** (Per Step Setting):
-- When **enabled**: Specific approval step requires OTP verification
+- When **ticked**: each candidate of that step gets a six-digit OTP, and the decision asks for it
 - Allows selective OTP requirement for sensitive steps
+
+The candidate has to receive the code somehow, so a definition with any step on **Require OTP** saves only when at least one of its templates (e-mail, SMS, notification or the mobile-app title or body) contains `$notificationInfo.otp`, or the definition has a WhatsApp message.
 
 #### Require All Approvers
 
@@ -234,8 +235,8 @@ Approval Rules are pre-built business logic components that automatically detect
 1. **Rule Evaluation**: When a document is saved, attached rules are evaluated
 2. **Applicability Check**: Each rule determines if it applies to the current transaction
 3. **Line Detection**: Rules can identify specific lines that triggered the approval
-4. **Approval Triggering**: If any rule applies, the approval process starts
-5. **Context Information**: The triggering lines are stored in `$map.approvalRuleLines` for use in templates
+4. **Approval Triggering**: The definition starts an approval only when **every** rule in its **Rules** grid applies (and its other conditions match); if any one rule does not apply, the definition is skipped
+5. **Context Information**: The lines found by the first rule in the grid are stored in `$map.approvalRuleLines` for use in templates
 
 #### Available Built-in Rules
 
@@ -258,7 +259,7 @@ The system includes several pre-built rules for sales and purchasing scenarios:
 In the approval definition, add rules in the "Rules" section:
 - Select from available rules for your entity type
 - Rules are evaluated in sequence
-- All rules must pass for approval to be skipped
+- All rules must apply for the approval to start; if one of them does not apply, the record is not sent for approval by this definition
 
 #### Using Rule Information in Templates
 
@@ -406,7 +407,7 @@ The approval system provides two optional reference fields that can be used to s
 
 #### Consider Request Date As Creation Date
 
-By default, the system sets the record's `creationDate` when the final approval step is completed and the record is committed. However, the `considerRequestDateAsCreationDate` option changes this behavior to use the approval request date instead.
+By default, the system sets the record's `creationDate` when the final approval step is completed and the record is committed. However, the **Consider Approval Request Date As Creation Date** option changes this behavior: when the approval starts, the record's `creationDate` is set to that moment, the approval request date.
 
 #### Approval Summary Configuration
 
@@ -443,14 +444,13 @@ The system can generate customized summaries for approval requests that provide 
 | Field | Description |
 |-------|-------------|
 | **Approval Entity** | Type of record to approve |
-| **Priority** | Processing order when multiple definitions match |
-| **Use With Insert** | Trigger on new records |
+| **Priority** | Order in which the definitions of one type are tried: lowest first (each dimension filled on the definition adds one), and the first that matches the record is used. Two definitions of the same type cannot share a priority |
+| **Use With Insert** | Trigger on new records (ticked by default) |
 | **Use With Update** | Trigger on modifications |
-| **Comment Required** | Force approvers to add comments |
 | **Require Execution** | Add final execution step for initiator |
 | **Confirm Before Starting** | Show confirmation dialog before starting approval |
-| **Revise On Completion** | Mark record as revised after approval (locks editing/deletion) |
-| **Allow Modify While Under Approval** | Allow editing records during approval process |
+| **Revise Record On Approval Completion** | Mark record as revised after approval (locks editing/deletion) |
+| **Allow Modification While Waiting Approval** | Allow editing records during approval process |
 | **Require OTP For All Steps** | Require OTP verification for all approval decisions |
 | **Approve Lines** | Ask for approval on the lines that meet the definition's conditions instead of on the whole record; approvers decide on those lines |
 | **Reject Line Delete It** | When the case ends approved, the lines an approver rejected are deleted from the record. Only record types that support approval per line accept it |
@@ -459,12 +459,12 @@ The system can generate customized summaries for approval requests that provide 
 | **Ignore Usage Capability When Approving** | When an approver's decision saves the record, the approver's usage permissions on the records it refers to are not checked |
 | **Remove Other Employees From approval When Escalate** | When an approver escalates the step to a specific employee, the step's other candidates are dropped, so only the escalated-to employee decides |
 | **WhatsApp Message**, **WhatsApp Preferred Sender**, **Telegram Message** | Also send each approver the request over [WhatsApp](/platform/notifications/sms-and-whatsapp) or [Telegram](/platform/notifications/telegram) |
-| **Fallback** | Employee to handle system errors (required) |
-| **Alternate** | Employee who can approve any step |
+| **Fallback Employee** | Employee to handle system errors (required) |
+| **Alternate Employee** | Employee who can approve any step |
 | **Other Alternates** | Dynamic alternates (supervisor, field-based, etc.) |
 | **Approval Reference 1 Source** | Source field for first approval reference (approvalRef1Source) |
 | **Approval Reference 2 Source** | Source field for second approval reference (approvalRef2Source) |
-| **Consider Request Date As Creation Date** | Use approval request date as record creation date |
+| **Consider Approval Request Date As Creation Date** | Use approval request date as record creation date |
 | **Summary Template** | Tempo template for custom approval summaries |
 | **Summary Query** | SQL query to gather data for summary generation |
 | **Flush Before Summary** | Commit changes to database before generating summary |
@@ -474,7 +474,7 @@ The system can generate customized summaries for approval requests that provide 
 1. **Add Approval Steps**
    - Step Sequence: 1, 2, 3, etc.
    - Step Name: "Department Manager Approval"
-   - Required Status: All candidates must approve
+   - **Require All Approvers**: tick it when every candidate must approve (see [Require All Approvers](#Require-All-Approvers))
 
 2. **Assign Responsibilities**
    - **Direct Assignment**: Specific employee
@@ -528,11 +528,11 @@ The system provides global configuration options to control which approval decis
 | Configuration Option | Arabic Name | English Name | Description |
 |---------------------|-------------|--------------|-------------|
 | **useRejectDecision** | استعمال قرار الرفض | Use Reject Decision | Controls availability of "Reject" (رفض) decision option |
-| **useReturnDecision** | استعمال قرار الارجاع | Use Return Decision | Controls availability of "Return" (إرجاع) decision option |
-| **useEscalateToSupervisor** | استخدام قرار تصعيد إلى المدير الأعلي | Use Escalate To Supervisor | Controls availability of "Escalate to Supervisor" (تصعيد إلى المدير الأعلي) option |
+| **useReturnDecision** | استعمال قرار الإرجاع | Use Return Decision | Controls availability of "Return" (إرجاع) decision option |
+| **useEscalateToSupervisor** | استخدام قرار تصعيد إلى المدير الأعلى | Use Escalate To Supervisor | Controls availability of "Escalate to Supervisor" (تصعيد إلى المدير الأعلى) option |
 | **useEscalateToDirectSupervisor** | استخدام قرار تصعيد إلى المشرف المباشر | Use Escalate To Direct Supervisor | Controls availability of "Escalate to Direct Supervisor" (تصعيد إلى المشرف المباشر) option |
-| **useEscalateToSpecificEmployee** | استخدام قرار تصعيد الي موظف بعينه | Use Escalate To Specific Employee | Controls availability of "Escalate to Specific Employee" (تصعيد الي موظف بعينه) option |
-| **useReturnToPreviousStep** | استخدام قرار إرجاع إلي الخطوة السابقة | Use Return To Previous Step | Controls availability of "Return to Previous Step" (إرجاع للخطوة السابقة) option |
+| **useEscalateToSpecificEmployee** | استخدام قرار تصعيد إلى موظف بعينه | Use Escalate To Specific Employee | Controls availability of "Escalate to Specific Employee" (تصعيد إلى موظف بعينه) option |
+| **useReturnToPreviousStep** | استخدام قرار إرجاع إلى الخطوة السابقة | Use Return To Previous Step | Controls availability of "Return to Previous Step" (إرجاع للخطوة السابقة) option |
 | **useReturnToSpecificStep** | استخدام قرار الإرجاع لخطوة محددة | Use Return To Specific Step | Controls availability of "Return To A Specific Step" (إرجاع لخطوة محددة) option |
 
 All of these options are **enabled by default** — a fresh system offers every decision until you switch one off.
@@ -543,7 +543,7 @@ Escalating hands your step to somebody else instead of deciding it yourself, and
 
 | Decision | Reads the employee field | Typical meaning |
 |---|---|---|
-| **Escalate to Supervisor** (تصعيد إلى المدير الأعلي) | **Supervisor** (المدير الأعلي) | The higher manager in the organizational chain — the person above the approver's own line manager |
+| **Escalate to Supervisor** (تصعيد إلى المدير الأعلى) | **Supervisor** (المدير الأعلى) | The higher manager in the organizational chain — the person above the approver's own line manager |
 | **Escalate to Direct Supervisor** (تصعيد إلى المشرف المباشر) | **Direct Supervisor** (المشرف المباشر) | The line manager the approver reports to day to day |
 
 Think of a purchase request sitting with a warehouse keeper. If the amount is unusual but routine, the keeper escalates to their **Direct Supervisor** — the warehouse manager who signs off on stock decisions every day. If the request is contentious enough that the warehouse manager shouldn't be the one to decide it, the keeper escalates to their **Supervisor** instead, jumping straight to the operations director recorded in that field.
@@ -551,7 +551,7 @@ Think of a purchase request sitting with a warehouse keeper. If the amount is un
 In both cases the escalation targets the manager of **the approver who made the decision**, not the manager of whoever created the document. The escalated-to employee becomes a candidate on the same step — the workflow does not move forward a step — so once they decide, the case continues from where it paused.
 
 ::: warning The target field must be filled in
-The decision fails with a message such as *"Employee X does not have a direct supervisor"* when the approver's employee record has no value in the field that decision reads. Before enabling either decision system-wide, make sure the Supervisor and Direct Supervisor fields are actually maintained on your employee records — an empty field turns the decision into a dead end for that approver.
+The decision fails with *Employee {0} does not have a supervisor* or *Employee {0} does not have a direct supervisor* (English only — the product has no Arabic for them) when the approver's employee record has no value in the field that decision reads. Before enabling either decision system-wide, make sure the Supervisor and Direct Supervisor fields are actually maintained on your employee records — an empty field turns the decision into a dead end for that approver.
 :::
 
 ::: tip Reasons and comments cover both decisions
@@ -592,7 +592,7 @@ To copy a step's approval e-mail to addresses outside the approver list, fill **
 ### Step 4: Advanced Features
 
 #### Critical Fields
-The **Critical Fields** grid at the bottom of the **Advanced** tab lists field ids. For an update, the definition applies only when one of those fields actually changed. **Skip notification when only critical fields changed** reverses that: the definition applies only when something *other* than the listed fields changed. Leave the grid empty and every update qualifies.
+The **Critical Fields** grid at the bottom of the **Advanced** tab lists field ids. For an update, the definition applies only when one of those fields actually changed. **Skip notification when only critical fields changed** reverses that: the definition applies only to an update that leaves every listed field unchanged, and an update that changes any listed field is not sent for approval. Leave the grid empty and every update qualifies.
 
 #### Auto-escalation
 **Automatic Escalate To After Period** on the main tab takes a number and a unit. Once an approver has had a case for longer than that, a scheduled action escalates it on their behalf. Each candidate is escalated only once.
@@ -639,11 +639,11 @@ For auto-escalation to work, you must create a **Task Schedule** with the follow
 
 ## Actions on these screens
 
-The decisions above are what an approver chooses. These are the buttons that get them there, and they sit on the ordinary record screens rather than on the Approval Definition itself.
+The decisions above are what an approver chooses. These are the buttons that get them there, and they sit on the approvals list, the record screens and the Delegation screen rather than on the Approval Definition form itself.
 
-- **Approve Selected Lines** — the bulk decision, offered on the list view of any entity under approval. Tick the pending rows and press it, and one dialog settles them all. Fill in what the decision needs — **Escalate To** (an employee, a security profile or an employee group), **OTP** where the step requires one, **Description** for the reasoning, and an **Approval Reason** — then press the decision itself: the dialog has an **Approve**, a **Reject** and a **Return** button. The other decisions sit behind **Other Decision**, which opens a second dialog with one button per decision. It refuses if you ticked nothing. Six of the eight decisions are offered here: Approve, Reject, Return, Escalate To Supervisor, Return To Previous Step and Escalate To Specific Employee — **Return To A Specific Step and Escalate To Direct Supervisor are only available one record at a time**, because both need you to look at the case's own step list first.
+- **Approve Selected Lines** — the bulk decision, offered on the **Current Approvals** list: the approvals icon in the top bar shows the newest cases waiting for you, and its **View All Approvals** link opens that list (it is also in the menu at **Administration → Other → Current Approvals**). Tick the pending rows and press it, and one dialog settles them all. Fill in what the decision needs — **Escalate To** (an employee, a security profile or an employee group), **OTP** where the step requires one, **Description** for the reasoning, and an **Approval Reason** — then press the decision itself: the dialog has an **Approve**, a **Reject** and a **Return** button. The other decisions sit behind **Other Decision**, which opens a second dialog with one button per decision. It refuses if you ticked nothing. Six of the eight decisions are offered here: Approve, Reject, Return, Escalate To Supervisor, Return To Previous Step and Escalate To Specific Employee — **Return To A Specific Step and Escalate To Direct Supervisor are only available one record at a time**, because both need you to look at the case's own step list first.
 - **Revoke Approval Request** — cancels the pending approval request and takes the record back out of the workflow. It works on the record you are in, or on every row you ticked in a list.
-- **Move Approvals To Delegated Employee** — on the **Delegation** screen. Save the delegation, tick the rows, and the pending approval cases belonging to the delegating employee move across to the delegate. This is the button that makes a delegation retroactive; without it a new delegation only catches cases raised after it.
+- **Move Approvals To Delegated Employee** — on the **Delegation** screen; it hands the cases already waiting for the delegator to the stand-in. Which cases move, and how it differs from the ongoing delegation, is in [What was already waiting](/platform/approvals/responsibilities-and-delegation#What-was-already-waiting).
 
 ## Notification System
 
@@ -927,20 +927,20 @@ For organizations requiring detailed audit trails, the system supports granular 
 
 **Global Configuration option**: **Add Approval Steps To Action History**
 
-When **enabled**, this option creates an Actions History record for **each individual approval step**:
+When **enabled**, this option creates an Actions History record for **each decision that leaves the case open**:
 
 ::: info Enhanced Tracking Features
-- **Individual Step Records**: Separate audit entry for each approval decision
+- **Individual Step Records**: Separate audit entry for each such decision, with the decision as its action type
 - **Decision Types Tracked**:
-  - `Approve` - When a step is approved
-  - `Reject` - When a step is rejected
-  - `Return` - When returned for modifications
+  - `Approve` - When an approval leaves the case open (another step follows, or other approvers of a **Require All Approvers** step still have to approve)
+  - `Reject` - When an approver rejects only some lines on a definition with **Reject Line Delete It**, so the case stays open
   - `Return To Previous Step` - When handed back one step
   - `Return To A Specific Step` - When handed back to a named step
   - `Escalate To Supervisor` - When escalated to the approver's Supervisor
   - `Escalate To Direct Supervisor` - When escalated to the approver's Direct Supervisor
   - `Escalate To Specific Employee` - When escalated to a chosen employee
-- **Final Completion Record**: Still creates the standard `Approval` record when workflow completes
+- **The decision that closes the case** (the approval of the last step, a return, or a rejection that ends the case) gets no step record of its own
+- **Final Completion Record**: Still creates the standard `Approval` record when the case ends approved
 - **User Context**: Captures who made each decision and when
 :::
 
@@ -1000,10 +1000,10 @@ Refusals raised while a record is in an approval cycle:
 
 | Message | Why | What to do |
 |---|---|---|
-| *Can not edit while under Approval* — «لا يمكن التعديل أثناء الموافقات» · *Can not edit while under Approval for step {0}* — «لا يمكن التعديل أثناء انتظار الموافقة للخطوة {0}» | The record has an open approval case and you do not hold the edit-under-approval capability, or the step's policy forbids it. | Finish or cancel the approval, or use **Allow Modify While Under Approval** with the right per-step policy and the capability. |
-| *The employee {0} can not approve the step {1} in record {2}, so he also can not edit while under approval* — «الموظف {0} لا يمكنه الموافقة على  الخطوة {1} في السجل {2} لذلك لا يمكنه التعديل أثناء انتظار الموافقة» | The step's policy is **Allow For Authorized And Can Approve**, and this person is not an approver of the step currently waiting. | Let one of that step's approvers make the change, or relax the policy to **Allow For Authorized Users**. |
-| *Object is in approval cycle, can not commit any new changes unless approval is finished* — «السجل بانتظار موافقة. لا يمكن حفظ أي تعديلات إلى أن يتم انهاء الموافقات» | A commit was attempted on a record whose approval is still open. The variant ending *…but you can save it as draft* means the draft route is still available. | Wait for the decision, or save as a draft where the message offers it. |
-| *Object is in approval cycle, can not delete unless approval is finished* — «السجل بانتظار موافقة. لا يمكن الحذف إلى أن يتم انهاء الموافقات» | Deleting a record with an open approval case. | Complete or cancel the approval first. |
+| *Can not edit while under Approval* — «لا يمكن التعديل أثناء الموافقات» · *Can not edit while under Approval for step {0}* — «لا يمكن التعديل أثناء انتظار الموافقة للخطوة {0}» | The record has an open approval case. The first form: the definition's **Allow Modification While Waiting Approval** is unticked. The second form: the policy of the step currently waiting is **Prevent Modify**. | Finish or cancel the approval, or tick **Allow Modification While Waiting Approval** with a step policy other than **Prevent Modify**; the user also needs the **Edit While Under Approval** capability. |
+| *The employee {0} can not approve the step {1} in record {2}, so he also can not edit while under approval* — «الموظف {0} لا يمكنه الموافقة على  الخطوة {1} في السجل {2} لذلك لا يمكنه التعديل أثناء انتظار الموافقة» | The step's policy is **Allow For Authorized Users Who Can Approve The Step**, and this person is not an approver of the step currently waiting. | Let one of that step's approvers make the change, or relax the policy to **Allow For Authorized Users**. |
+| *Object is in approval cycle, can not commit any new changes unless approval is finished* — «السجل بانتظار موافقة. لا يمكن حفظ أي تعديلات إلى أن يتم إنهاء الموافقات» | A commit was attempted on a record whose approval is still open. The variant ending *…but you can save it as draft* means the draft route is still available. | Wait for the decision, or save as a draft where the message offers it. |
+| *Object is in approval cycle, can not delete unless approval is finished* — «السجل بانتظار موافقة. لا يمكن الحذف إلى أن يتم إنهاء الموافقات» | Deleting a record with an open approval case. | Complete or cancel the approval first. |
 | *Record {0} is being approved* — «السجل {0} خاضع لموافقة حاليا» | Revising or a similar operation was attempted mid-cycle. | Wait for the approval to finish. |
 | *Current user can not delete {0} after approval* — «لا يمكن للمستخدم الحالي حذف {0} بعد الموافقة» | The record is approved and your security profile does not allow deleting approved records. | Ask someone whose profile permits it, or cancel the record instead of deleting it. |
 | *Reject can be used only with documents and requests - use Return with master files* — «يمكن استعمال الرفض مع المستندات و الطلبات فقط - في الملفات قم باستعمال قرار الإرجاع» | **Reject** was pressed on a master file. | Use **Return** — master files are handed back, not rejected. |
@@ -1013,11 +1013,12 @@ Refusals raised while saving the Approval Definition itself:
 | Message | Why | What to do |
 |---|---|---|
 | *Approval definition must at least have one step* — «تعريف سير العمل يجب أن يحتوي على خطوة واحدة على الأقل» | The steps grid is empty. | Add a step. |
-| *Must specify when to use the approval. (with insert, delete, update, etc)* — «يجب تحديد حالة علي الأقل يتم استخدام سير العمل معها (عند الانشاء أو الحذف ... إلخ)» | None of the *use with* switches is ticked, so the definition would never fire. | Tick at least one of insert, update, delete and the rest. |
+| *Must specify when to use the approval. (with insert, delete, update, etc)* — «يجب تحديد حالة على الأقل يتم استخدام سير العمل معها (عند الإنشاء أو الحذف ... إلخ)» | None of the *use with* switches is ticked, so the definition would never fire. | Tick at least one of insert, update, delete and the rest. |
 | *Duplicate step sequence : {0}* — «مسلسل خطوة مكرر : {0}» | Two steps carry the same sequence number. | Renumber one of them. |
 | *Update approval can not be used with documents, can be used with documents only* — «لا يمكن استعمال "مع التعديل" مع المستندات - تستعمل مع الملفات فقط» | **Use With Update** is ticked on a definition for a document. | See [An update approval on a document will not save](#An-update-approval-on-a-document-will-not-save). |
 | *Approval Definition priority repeated before in definition {0}* — «أولوية تعريف سير العمل مكررة مسبقا في تعريف آخر {0}» | Another definition for the same entity already uses that priority, so the order between them would be undefined. | Give this one a different priority. |
-| *Modify while under approval policy should be {0} or empty, as allow modify while under approval is not checked* — «سياسة التعديل أثناء الموافقة يجب أن تكون {0} أو فارغة لأن اوبشن التعديل أثناء الموافقة غير مفعل» | A per-step modify policy was chosen while the global **Allow Modify While Under Approval** is off. | Enable the global option, or clear the step's policy. |
-| *You must enable the option {0} in accounting configuration to be able to use the option {1}* — «يتوجب عليك تفعيل الأوبشن {0} في إعدادات الحسابات حتي تتمكن من استعمال الأوبشن {1}» | **Use With Budget Exceeded** is ticked while **Enable Approvals For Budgets** is off in the accounting configuration. | Turn the option on in the accounting configuration, or untick **Use With Budget Exceeded**. |
-| *You can not select the field {0} and also any of the fields {1},{2},{3}, please unselect these fields* — «لا يمكنك التعليم علي الحقل {0} و أي من الحقول {1},{2},{3} في نفس الوقت. يرجي ازالة العلامة من تلك الحقول» | **Use With Budget Exceeded** is ticked together with insert, delete or update. | Keep a separate definition for the budget approval. |
+| *Modify while under approval policy should be {0} or empty, as allow modify while under approval is not checked* — «سياسة التعديل أثناء الموافقة يجب أن تكون {0} أو فارغة لأن اوبشن التعديل أثناء الموافقة غير مفعل» | A step carries a modify policy other than **Prevent Modify** while the definition's **Allow Modification While Waiting Approval** is unticked. | Tick that option on the definition, or set the step's policy to **Prevent Modify** or clear it. |
+| *You must add $notificationInfo.otp to at least one template* (English only — the product has no Arabic for it) | A step has **Require OTP** ticked, but no template of the definition shows the code and the definition has no WhatsApp message. | Put `$notificationInfo.otp` in the e-mail, SMS, notification or mobile-app template. |
+| *You must enable the option {0} in accounting configuration to be able to use the option {1}* — «يتوجب عليك تفعيل الأوبشن {0} في إعدادات الحسابات حتى تتمكن من استعمال الأوبشن {1}» | **Use With Budget Exceeded** is ticked while **Enable Approvals For Budgets** is off in the accounting configuration. | Turn the option on in the accounting configuration, or untick **Use With Budget Exceeded**. |
+| *You can not select the field {0} and also any of the fields {1},{2},{3}, please unselect these fields* — «لا يمكنك التعليم على الحقل {0} و أي من الحقول {1},{2},{3} في نفس الوقت. يرجى إزالة العلامة من تلك الحقول» | **Use With Budget Exceeded** is ticked together with insert, delete or update. | Keep a separate definition for the budget approval. |
 | *The entity type {0} can not be used with budget approval because it does not generate an accounting request.* (English only — the product has no Arabic for it) | The definition, or its **Apply Also To** list, names a type that never produces accounting effects, so it can never go over a budget. | Remove that type from the budget definition. |

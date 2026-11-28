@@ -59,11 +59,17 @@ are four places a style reference appears, and which ones you see depends on whi
    up visually.
 3. **Header components.** The blocks you add to a form's header — a title, a logo, a free text
    element — each take a single **Style**.
-4. **Conditional style lines.** Here you pair a style with a **Condition Expression**, and the style
-   is applied only where that condition is true. This is how you get negative balances in red or
-   overdue rows on a yellow band: the field keeps its normal style, and the conditional style
-   overrides it when the condition matches. Both halves are required on such a line — a style with no
-   condition, or a condition with no style, is rejected when you save.
+4. **Conditional style lines.** A wizard has five conditional style grids, **Conditional Style 1
+   Lines** to **Conditional Style 5 Lines**. Each line pairs a style with a **Condition Expression**,
+   and the style is applied only where that condition is true. A field line picks a grid by entering
+   its number in **Conditional Style Grid** (**Summary Conditional Style Grid** for its total; a
+   printing form's header field lines have **Label Conditional Style Grid** and **Value Conditional
+   Style Grid**). This is how you get negative balances in red or overdue rows on a yellow band: the
+   field gets a base look from the detail band settings (see below), and the conditional style
+   overrides it when the condition matches. The grid number is read only when the line's own style
+   is empty: a line that has a Style prints in that style and its conditional style grid is not used.
+   Both halves of a conditional style line are required — a style with no condition, or a condition
+   with no style, is rejected when you save.
 
 ![The Style column on the detail field lines of a printing form wizard, with every line pointing at the Table Header style](../../ar/platform/reports/images/style-wizard-field-style-column-en.png)
 
@@ -72,15 +78,24 @@ the generated layout and every line points at that single copy.
 
 ## What happens when you leave the style empty
 
-Wizard fields are perfectly usable with no style at all; there is a built-in fallback. A field with no
-style prints centred horizontally, middle-aligned vertically, in 10-point text, black on white,
-**with no border**.
+Wizard fields are perfectly usable with no style at all; there is a built-in fallback, and which one
+applies depends on where the field sits:
 
-That last detail is worth pausing on, because it produces a result people rarely expect. When a field
-*does* have a style and that style's Line Width is left empty, the width falls back to **0.5** — a
-hairline border. So attaching a completely blank style to a field does not leave it unchanged: it
-draws a thin box around it that was not there before. If you want a style that only sets, say, the
-font, and you do not want borders appearing, set Line Width explicitly to 0.
+- **A header component** with no style (a title, the date, the page number, a free text element)
+  prints centred horizontally, middle-aligned vertically, in 10-point text, black on white, **with no
+  border**.
+- **A field line in a wizard grid** with no style takes the settings of the band it prints in: that
+  band's background and foreground colours and its font size (10 when the band has none), centred and
+  middle-aligned, bold in every band except the detail rows. Its borders come from the wizard's own
+  border settings. A printing form's header field line takes its colours and font size from
+  **Header Band Labels Specs** (the label half) or **Header Band Values Specs** (the value half)
+  instead, and is not made bold.
+
+A style, on the other hand, always draws a border, and this produces a result people rarely expect.
+When the style's Line Width is empty or 0, the width falls back to **0.5** — a hairline border. So
+attaching a completely blank style to a field does not leave it unchanged: it draws a thin black box
+around it that was not there before. If you want a style that only sets, say, the font, and you do
+not want the line to show, set Line Color to the same colour as the field's background.
 
 Grids that use conditional styles arrive at the same place from a different starting point. They get a
 base look built from the wizard's own detail band settings — the band's colours, Times New Roman at
@@ -155,7 +170,7 @@ signature.
 | Toggle Italic | Italic on or off | Default, TRUE, FALSE |
 | Toggle Underline | Underline on or off | Default, TRUE, FALSE |
 | Line Through | Strike-through on or off | Default, TRUE, FALSE |
-| MarkUp | How the text content of the field is interpreted | None, styled, html, rtl |
+| Markup | How the text content of the field is interpreted | None, styled, html, rtl |
 
 Leaving one of the four toggles on **Default** is not the same as setting it to FALSE. Default means
 "inherit", so the field keeps whatever the surrounding design gives it, while FALSE actively switches
@@ -172,7 +187,7 @@ fields long enough to wrap — remarks, addresses, terms and conditions.
 
 | Field | What it does |
 |---|---|
-| First LineIndent | Indents the first line of the paragraph |
+| First Line Indent | Indents the first line of the paragraph |
 | Left Indent | Indents every line from the left |
 | Right Indent | Indents every line from the right |
 | Spacing Before | Blank space above the paragraph |
@@ -185,7 +200,7 @@ fields long enough to wrap — remarks, addresses, terms and conditions.
 |---|---|---|
 | Line Color | The colour of the border | `#RRGGBB` — default black |
 | Border Style | The kind of line drawn | Solid, Dashed, Dotted, Double |
-| Line Width | The thickness of the line; set it to 0 for no border | number — default 0.5 |
+| Line Width | The thickness of the line | number — empty or 0 means 0.5 |
 
 ### Padding Style
 
@@ -207,9 +222,10 @@ four individual fields and ignores Padding.
 
 Most sites do not need many styles. A workable starting set for a printed form is four records:
 
-- **`Label`** — the caption half of every header field. Bold, no border, small padding.
-- **`Value`** — the value half. Plain weight, no border, the same padding, so labels and values sit on
-  the same baseline.
+- **`Label`** — the caption half of every header field. Bold, Line Color the same as the background
+  so the border does not show, small padding.
+- **`Value`** — the value half. Plain weight, the same hidden border, the same padding, so labels and
+  values sit on the same baseline.
 - **`TableHeader`** — the column headings of the detail grid. Bold, white text on a dark background
   (leave Transparent on Opaque so the fill actually prints), centred, a solid 0.5 border.
 - **`Total`** — attached as the **Summary Style** on the amount columns. Bold, one or two points

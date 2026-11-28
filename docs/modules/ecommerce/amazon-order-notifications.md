@@ -99,11 +99,11 @@ Then on the user, go to **Security credentials → Create access key**, choose *
 
 ## Part 2 — Configure the Amazon site in Nama
 
-Open your Amazon **e-commerce site** record (`MAGMagentoSite`) and fill in:
+Open the **Magento Site** record of your Amazon store (**Site Type** = Amazon) and fill in:
 
 | Field | What to put there |
 |-------|-------------------|
-| Username / Password | Your SP-API app **client ID** / **client secret** |
+| **User Name (Consumer Key)** / **Password (Consumer Secret)** | Your SP-API app **client ID** / **client secret** |
 | Amazon Marketplace ID | Your marketplace |
 | **Amazon SQS Queue ARN** | The ARN from Part 1, Step 1 |
 | **AWS Access Key** | The Access Key ID from Part 1, Step 3 |
@@ -112,7 +112,7 @@ Open your Amazon **e-commerce site** record (`MAGMagentoSite`) and fill in:
 
 **Save** the record, then:
 
-1. Click **Add Refresh Token** and authorize the app on Amazon.
+1. Click **Add Refresh Token** and paste into **Refresh Token** the refresh token Amazon gave you when you authorized the app for the seller account. Nama stores it on the site.
 2. Click **Register Webhooks**. This tells Amazon to start delivering `ORDER_CHANGE` notifications to your SQS queue. Behind the scenes Nama registers the queue as a notification *destination* and subscribes to `ORDER_CHANGE`; on success the **Amazon Destination ID** and **Amazon Subscription ID** fields fill in.
 
 ::: tip Re-registering is safe
@@ -125,22 +125,16 @@ If you click **Register Webhooks** again, Nama reuses the destination already re
 
 ## Part 3 — Schedule the polling task
 
-The last piece is the recurring job that drains the queue. Create a **Task Schedule** record:
+The last piece is the recurring job that drains the queue. Create a **Task Schedule** with **Task Type** = Action running `com.namasoft.modules.magento.utils.EAEcommerceReadAmazonNotifications`, scheduled every one or two minutes:
 
-- **Action:** `EAEcommerceReadAmazonNotifications`
-- **Parameter 1 — Site Code:** the code of your Amazon site
-- **Parameter 2 — Max Messages Per Run:** how many messages to drain per run (leave empty for the default of 500)
-- **Parameter 3 — Process Notifications For Last (N) days:** notifications older than this many days are removed from the queue without being processed. Leave it empty to use the site's **Orders Updated Until** date instead (and, when that is empty too, to process everything).
-- **Parameter 4 — Process Only Order Statuses:** a comma-separated list of Amazon statuses, such as `Shipped`. Leave it empty to process **every** status.
-- **Interval:** every 1–2 minutes
+- **Parameter 1 — Site Code:** the code of your Amazon site.
+- **Parameter 2 — Max Messages Per Run:** leave empty for 500.
+- **Parameter 3 — Process Notifications For Last (N) days:** leave empty to start from the site's **Orders Updated Until** date.
+- **Parameter 4 — Process Only Order Statuses:** for example `Shipped`, to create Sales Orders only for shipped orders. Leave it empty to process **every** status.
 
-Every run pulls the new notifications waiting in the queue, reads each changed order from Amazon and passes it to the site's document generation lines — whatever its status, unless Parameter 4 narrows it. To create Sales Orders only for shipped orders, put `Shipped` in Parameter 4. A notification whose status is not in that list is removed from the queue and not read again.
+Every run pulls the new notifications waiting in the queue, reads each changed order fresh from Amazon and passes it to the site's document generation lines. Notifications left out by Parameters 3 and 4 are deleted from the queue, and several notifications for the same order cost a single read; [EAEcommerceReadAmazonNotifications](/entity-flows/magento/EAEcommerceReadAmazonNotifications) explains each parameter and the order of the steps.
 
 An order whose Amazon status equals the one already saved in the **Order Status Field Id** of its document is skipped, so a repeated notification never creates a second document.
-
-::: info One order, one read
-If several notifications for the same order pile up between polls, Nama collapses them and reads that order only once — the order is always read fresh from Amazon's Orders API, so there's no point reading it twice. This keeps you well within Amazon's rate limits even on a busy queue.
-:::
 
 ---
 
@@ -149,4 +143,4 @@ If several notifications for the same order pile up between polls, Nama collapse
 - **Quick test:** In the AWS console open the queue → **Send and receive messages** → send a test `ORDER_CHANGE` message. On the next poll Nama processes it — watch the server log.
 - **Real test:** Mark a test order as **Shipped** in Amazon Seller Central. Within one polling interval the matching Sales Order should appear in Nama.
 
-If a notification fails to process for some reason, Nama leaves it on the queue so it gets retried on the next run. After repeated failures Amazon's SQS moves it to the queue's dead-letter queue — provided you configured one — so a single bad message never blocks the rest.
+A notification that fails to process stays on the queue and is retried on the next run; after the queue's maximum receive count, SQS moves it to the queue's dead-letter queue if you configured one.

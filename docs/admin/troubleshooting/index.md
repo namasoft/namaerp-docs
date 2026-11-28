@@ -20,7 +20,7 @@ page that explains it.
   <LandingCard icon="⏳" title="System Hanging or Unresponsiveness" link="/admin/troubleshooting/troubleshooting-system-hanging.md" details="The system has stopped responding: capture thread dumps before restarting, and send them to Namasoft." />
   <LandingCard icon="🚨" title="Critical Errors at Login" link="/admin/troubleshooting/critical-errors.md" details="The red list of health checks shown at login: every check, what raises it, and what to do about it." />
   <LandingCard icon="🧾" title="Fixing a Failed Business Request" link="/admin/troubleshooting/failed-business-requests.md" details="A saved document whose ledger or stock effect failed: what each message means, what to fix, and whether to Reprocess or Recommit." />
-  <LandingCard icon="❓" title="General FAQ" link="/admin/troubleshooting/general-faq.md" details="Answers to everyday administration questions, from blank lens errors to SMS formatting." />
+  <LandingCard icon="❓" title="General FAQ" link="/admin/troubleshooting/general-faq.md" details="Answers to everyday administration questions, from blank lens errors to text fields that open as links." />
 </LandingGrid>
 
 ## Find the page by the symptom

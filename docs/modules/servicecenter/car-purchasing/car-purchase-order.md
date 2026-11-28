@@ -25,7 +25,7 @@ NAWA Motors Import Co., as `SIPO-2026-014`.
 The basic group holds the supplier, the purchasing agent, the destination warehouse and locator, the
 invoice classification, an invoice-money block, the five price classifiers and remarks. Then the
 line grid: item, measures and quantities, unit and total price, the eight discount blocks, the tax
-blocks, net value, box / revision / size / colour / lot, the **السياره (Customer Car)** column,
+blocks, net value, box / revision / size / colour / lot, the **السيارة (Customer Car)** column,
 production and expiry dates, department, warehouse and locator, an attachment, remarks and the line
 type.
 
@@ -91,16 +91,15 @@ the real purchase invoice — see
 This is the decision that shapes your whole chain, and it belongs here because the purchase order is
 the first place it can be made.
 
-::: danger Any of the four Car Purchases documents can create car records — switch it on for exactly one
+::: danger Every Car Purchases document can create car records — switch it on for exactly one
 The option is **إنشاء صنف فرعي من السطر / Create Sub Item From Line Information**, on the
 [document term](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md). When it
 is on, saving the document creates one car record per qualifying line, from the data typed on that
 line.
 
-It is available, and behaves identically, on **all four** documents: the Car Purchase Order, the Car
-Proforma Purchase Invoice, the Car Purchase Invoice and the
-[Car Purchase Return](/modules/servicecenter/car-purchasing/car-purchase-return.md). **The purchase
-invoice is not privileged in any way** — it is simply where most dealerships choose to put it. Switch
+It is available, and behaves identically, on the Car Purchase Order, the Car Proforma Purchase
+Invoice, the Car Purchase Invoice, the [Car Receipt](/modules/servicecenter/car-purchasing/car-receipt.md)
+and the [Car Purchase Return](/modules/servicecenter/car-purchasing/car-purchase-return.md). **The purchase invoice is not privileged in any way** — it is simply where most dealerships choose to put it. Switch
 the option on for **exactly one** document type in your chain.
 
 What happens if two documents in the same chain both have it on:
@@ -124,7 +123,7 @@ Type a line by hand with a quantity of 6 and press save, and you get **one** car
 six physical cars, with one chassis number. Nothing warns you.
 
 Two defences, and use both: enter **one line per chassis**, and tick
-*الكمية الرئيسية يجب ان تساوي الواحد الصحيح (Prime Quantity Must Be One)* on the item's
+*الكمية الرئيسية يجب أن تساوي الواحد الصحيح (Prime Quantity Must Be One)* on the item's
 [Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations.md) so the
 mistake is refused instead of accepted.
 :::
@@ -137,7 +136,7 @@ appears to happen, check the term first.
 And remember the prerequisite from
 [The Car Dealership in Nama](/modules/servicecenter/cars-setup/servicecenter-cars-overview.md):
 **neither of these screens shows a chassis-number column out of the box.** The order and the
-pro-forma display only the **السياره (Customer Car)** picker, so there is nowhere to type the chassis
+pro-forma display only the **السيارة (Customer Car)** picker, so there is nowhere to type the chassis
 number the creation routine is meant to read. Add the car-property columns through a screen
 modification first.
 
@@ -149,10 +148,9 @@ modification first.
   car-creation routine against the lines, as described above: for every line whose item has sub items
   it creates the car record (or refreshes the one already on the line) and writes it back onto the
   line. The car record is saved straight away, even before you save the order.
-- **GeneratePayments** (*إنشاء الدفعات*, details page) — splits the order value into an instalment
+- **Generate Payments** (*إنشاء الدفعات*, details page) — splits the order value into an instalment
   schedule. It asks for the number of payments, the period between them and its unit, the start date,
-  a grace period, down / first / second / last payment values and a rounding mode. The English label
-  ships as the raw name shown here.
+  a grace period, down / first / second / last payment values and a rounding mode.
 
 **Car Proforma Purchase Invoice:**
 
@@ -167,7 +165,7 @@ modification first.
 - **Reset discounts** (*حذف الخصومات*, More menu) — clears all eight discounts on every line.
 - **Installment Payments** (*سندات سداد الدفعات*, More menu) — opens a list of the vouchers that paid
   this document's instalments.
-- On the shipping and billing page: **GeneratePayments** (*إنشاء الدفعات*), the same scheduling
+- On the shipping and billing page: **Generate Payments** (*إنشاء الدفعات*), the same scheduling
   dialog; **Generate payment voucher** (*إنشاء سند صرف*) — the pro-forma must be saved; it creates a
   payment voucher for the whole remaining value against the supplier; **Generate Payment Voucher For
   Selected Payments** (*إنشاء سند صرف للسطور المختارة*) — the same for only the instalment lines you

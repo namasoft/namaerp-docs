@@ -59,29 +59,31 @@ Because the check is re-run on every commit against the whole history, back-dati
 
 ### Insurance Policy Issuance Order — أمر إصدار وثيقة تأمين
 
-The first document in the chain. The header carries the currency, the **insurance company** (required) and a calculated total; the grid carries the policies.
+The first document in the chain. The header carries the currency, the **insurance company** (required), a **Policy Type** (*Issuance* or *Renew*) and a calculated total; the grid carries the policies, each row with its sales order date and, once the policy is handed over, the **Policy Delivery Document** (*مستند تسليم الوثيقة*) and its date.
 
 ![The Insurance Policy Issuance Order screen](../../../ar/modules/servicecenter/images/car-insurance/sc-car-insurance-policy-order-en.png)
 
-On commit it stamps each policy with **Processed By** pointing at itself and — only if the policy has not already been received — sets *Physical Status* to **Requested From Supplier**, *Payment Status* to **Fully or Partially Paid** and *Policy Status* to **First Time**. Cancelling or deleting the document clears all four, dropping the physical status back to *Initial* and the payment status to *Unpaid*.
+On commit it stamps each policy with **Processed By** pointing at itself and — only if the policy has not already been received — sets *Physical Status* to **Requested From Supplier**, works out its *Payment Status* from the customer's payments (see [the policy record page](/modules/servicecenter/car-insurance/car-insurance-policy.md)) and sets *Policy Status* to **First Time**. Cancelling or deleting the document clears all four, dropping the physical status back to *Initial* and the payment status to *Unpaid*.
 
-Its policy picker offers only policies with no *Processed By* — that is, policies not yet ordered.
+Its policy picker offers only policies with no *Processed By* — that is, policies not yet ordered — of the header's insurance company. With the Policy Type set to *Issuance* it offers only policies whose own Policy Type is *Issuance* or *External Issuance*; with *Renew*, only *Renewal* or *External Renewal*. A row whose policy has another type is refused with *Policy {0} type {1} does not match order policy type {2}* — «نوع الوثيقة {0} ({1}) لا يطابق نوع أمر الوثائق {2}».
 
 **Accounting:** yes. One journal line pair per grid row, using the **Total Insurance Price Debit / Credit** (*مدين / دائن قيمة التأمين*) accounts on its term, for the amount in the row's **Insurance Price** column. See the danger box below.
 
-Selecting an insurance company in the header fills the grid with one row for every policy of that insurer that has not been ordered yet. To order only some of them, pick the policies through the grid's own picker instead.
+Selecting an insurance company in the header, or changing the Policy Type, fills the grid with one row for every policy of that insurer, of the matching type, that has not been ordered yet. To order only some of them, pick the policies through the grid's own picker instead.
 
 ### Car Insurance Policy Receipt — استلام وثيقة تأمين سيارة
 
-Records the paper arriving from the insurer. The header carries the insurance company, the **Supplier** (*مورد*), a **Received Date** (*تاريخ الاستلام*) that is copied down onto every grid row on save, the **Net Value** (the total of the rows' policy values) and the **Total Cost**. A second grid holds the **external payment documents** — the payment instruments Al-Sahra handed the insurer, each with a value and a date.
+Records the paper arriving from the insurer. The header carries the insurance company, the **Supplier** (*مورد*), a **Receipt Date** (*تاريخ الاستلام*) that, when filled, is copied onto every grid row on save, the **Net Value** (the total of the rows' policy values) and the **Total Cost**. A second grid holds the **external payment documents** — the payment instruments Al-Sahra handed the insurer, each with a value and a date.
 
 If the supplier is left empty, it is copied from the first policy in the grid that has one. Each row's **Cost** column is filled from its policy: the policy's *Initial Cost* until the policy is bought from the insurer, its *Actual Cost* afterwards (see [the policy record page](/modules/servicecenter/car-insurance/car-insurance-policy.md)).
 
-On commit it sets each policy's *Physical Status* to **Received From Supplier**, ticks its **Received** flag and writes the received date onto the policy. Cancelling or deleting the document clears the received date and puts the status back to *Requested From Supplier*.
+Each row also needs the **Policy Number** (*رقم الوثيقة*) the insurer printed, a **Start Date** (*تاريخ البداية*) and an expiry date, and can hold an **Insurance Policy Image** (*صورة وثيقة التأمين*).
+
+On commit it sets each policy's *Physical Status* to **Received From Supplier**, ticks its **Received** flag and writes the received date onto the policy. It also copies the row's policy number onto the policy (as its number and its name) and the row's start and expiry dates, unless a renewal or period adjustment already exists for that policy. Cancelling or deleting the document clears the received date and the policy number (the name goes back to the policy code), restores the dates from the order row, and puts the status back to *Requested From Supplier*.
 
 Its picker offers only policies with no received date, narrowed to the header's insurance company when one is set.
 
-To stop the paper being received for a policy the customer has not paid for, tick **Prevent Saving  If Policy Is Unpaid**
+To stop the paper being received for a policy the customer has not paid for, tick **Prevent Saving If Policy Is Unpaid**
 on the receipt's term. A row whose policy still has the *Payment Status* *Unpaid* is then refused with
 *Cannot save receipt {0}. Insurance policy {1} is not paid by the customer* — «لا يمكن حفظ مستند الاستلام {0}. وثيقة التأمين {1} غير مسددة من العميل».
 
@@ -104,11 +106,11 @@ It has the same screen as the receipt plus a **From Document** field: pick the r
 
 ### Car Insurance Policy Delivery — تسليم وثيقة تأمين سيارة
 
-The hand-over — and the document that charges the customer for the policy. The header carries a **Delivered Date** (*تاريخ التسليم*), copied down to every row, the **Supplier** (copied from the policies when left empty) and the **Total Cost**, plus five attachment slots for a signed receipt.
+The hand-over — and the document that charges the customer for the policy. Its picker offers only policies not yet delivered. The header carries a **Delivery Date** (*تاريخ التسليم*), copied onto every row on save when filled, the **Supplier** (copied from the policies when left empty) and the **Total Cost**, plus five attachment slots for a signed receipt.
 
 The delivery is built like an invoice. Each row's unit price is the policy's **Policy Value**, and the row carries the usual discount columns; the totals and the payment methods sit below the grid, and a **Payment Documents** page holds the payment lines and the external payment documents. Taxes are calculated only when the delivery's term has **Taxable** (*خاضع للضريبة*) ticked; otherwise the rows carry no tax. Each row also carries a **Cost** column, filled from the policy's *Initial Cost* or, once the policy is bought, its *Actual Cost*. The delivery cannot be saved with a negative remaining amount.
 
-The one date check is that the delivery date is not earlier than the policy's received date. On commit it sets *Physical Status* to **Delivered To Customer**, ticks the policy's **Delivered** flag and writes the delivered date onto the policy; cancelling or deleting the document clears them.
+The one date check is that the delivery date is not earlier than the policy's received date. On commit it sets *Physical Status* to **Delivered To Customer**, ticks the policy's **Delivered** flag, writes the delivered date onto the policy and records the delivery and its date on the policy's row of the issuance order; cancelling or deleting the document clears them.
 
 **Accounting:** yes — two pairs from the delivery's term:
 
@@ -125,7 +127,7 @@ On commit it puts each policy back to **Received From Supplier** and clears its 
 
 ### Car Insurance Policy Renewal — تجديد وثيقة تأمين سيارة
 
-Extends the cover into a new period. The header carries a **New Insurance Date** (*تاريخ التأمين الجديد*) and a **New Expiry Date** (*تاريخ الانتهاء الجديد*), both copied down to the rows, and either can be overridden per row.
+Extends the cover into a new period. Its picker offers only policies not yet renewed. The header carries a **New Insurance Date** (*تاريخ التأمين الجديد*) and a **New Expiry Date** (*تاريخ الانتهاء الجديد*); saving copies each one that is filled onto every row. To give rows different dates, leave the header date empty and fill it row by row.
 
 On commit it writes the new dates onto each policy — its effective date and its expiry date — and sets *Policy Status* to **Renewal**.
 
@@ -133,7 +135,7 @@ On commit it writes the new dates onto each policy — its effective date and it
 
 ### Car Insurance Policy Cancellation — إلغاء وثيقة تأمين سيارة
 
-Records that cover has ended. The header carries a **Cancellation Date** (*تاريخ الإلغاء*) and a free-text **Cancellation Reason** (*سبب الإلغاء*), plus an attachment slot.
+Records that cover has ended. Its picker offers only policies not yet cancelled. The header carries a **Cancellation Date** (*تاريخ الإلغاء*) and a free-text **Cancellation Reason** (*سبب الإلغاء*), plus an attachment slot.
 
 On commit it writes the cancellation date onto each policy, sets *Policy Status* to **Cancelled** and records itself as the cancelling document. Cancelling or deleting the cancellation document clears all three — but only for policies this particular document cancelled, so a second cancellation cannot undo the first one's work. Committing a cancellation against a policy another document has already cancelled is refused with a message naming that document.
 
@@ -141,11 +143,19 @@ On commit it writes the cancellation date onto each policy, sets *Policy Status*
 
 ### The two adjustments
 
-**Car Insurance Policy Value Adjustment** (*تعديل قيمة وثيقة تأمين سيارة*) changes what the policy is worth. Type a **New Value** on the header; on commit each policy's value is overwritten with it and the *Policy Status* becomes **Value Adjustment**. The header value is used for every row, so the per-row *New Value* column is decorative — filling it differently per row achieves nothing. The one check is that the new value must not be zero.
+**Car Insurance Policy Value Adjustment** (*تعديل قيمة وثيقة تأمين سيارة*) changes what the policy is worth. Type a **New Value** on the header; on commit each policy's value is overwritten with it, its payment status is worked out again against the new value, and the *Policy Status* becomes **Value Adjustment**. Saving copies the header value onto every row's *New Value*, so every policy on the document gets the same value. A header value left empty or zero is refused with *New policy value must be filled* — «يجب إدخال القيمة الجديدة للبوليصة».
 
-**Car Insurance Policy Period Adjustment** (*تعديل فترة وثيقة تأمين سيارة*) changes when the policy ends. Type a **New Expiry Date** on the header; on commit each policy's expiry date is overwritten with it and the *Policy Status* becomes **Period Adjustment**.
+**Car Insurance Policy Period Adjustment** (*تعديل فترة وثيقة تأمين سيارة*) changes when the policy ends. Type a **New Expiry Date** on the header (saving copies it onto every row); on commit each policy's expiry date is overwritten with its row's date and the *Policy Status* becomes **Period Adjustment**.
 
 Neither adjustment recalculates anything — no premium, no pro-rata figure — and neither books anything. Extending a policy or changing its value produces no journal entry and no change to what the insurer is owed; record the money side as a separate accounting document. Cancelling or deleting a value adjustment restores the policy value stored on its rows.
+
+### Linking the new policy
+
+When the renewed or adjusted cover comes as a new policy record, name it in the row's **New Insurance Policy** (*الوثيقة الجديدة*) column of the renewal, value adjustment or period adjustment. On commit the old policy is ticked **Renewed** (*تم التجديد*) and points at the new one; a row with no new policy still ticks **Renewed** on its policy. Cancelling or deleting the document clears both. The column's picker offers only policies not yet renewed, and the commit is refused when:
+
+- the new policy is the row's own policy: *New insurance policy {0} cannot be the same as the renewed policy* — «الوثيقة الجديدة {0} لا يمكن أن تكون نفس الوثيقة المجددة»
+- two rows name the same new policy: *New insurance policy {0} is repeated in more than one line* — «الوثيقة الجديدة {0} مكررة في أكثر من سطر»
+- the new policy has already been renewed by another document: *New insurance policy {0} is already renewed by document {1}* — «الوثيقة الجديدة {0} تم تجديدها بالفعل في المستند {1}»
 
 ## What actually reaches the ledger
 

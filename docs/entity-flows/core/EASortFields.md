@@ -29,7 +29,7 @@ Manual execution for organizing detail collections, improving data presentation,
 
 **Parameter 1:** Detail Field (Required) - Name of the detail collection field to sort (e.g., "details", "lines")
 
-**Parameter 2:** Sort On Field (Required) - Field within detail records to sort by (e.g., "details.item.itemCode", "paymentDetails.amount")
+**Parameter 2:** Sort On Field (Required) - Field of the detail lines to sort by, written with the detail name first (e.g., "details.n2", "details.text1")
 
 **Parameter 3:** Save Original Order In Field (Optional) - Field to store original position numbers before sorting (e.g. "details.n1")
 
@@ -37,18 +37,18 @@ Manual execution for organizing detail collections, improving data presentation,
 
 ## Usage Examples
 
-Sort invoice lines by item code:
+Sort lines by a number field and keep their original order in another:
 ```
 Parameter 1: details
-Parameter 2: details.item.itemCode  
+Parameter 2: details.n2
 Parameter 3: details.n1
 Parameter 4: asc
 ```
 
-Sort payment details by amount (descending):
+Sort lines by a text field (descending):
 ```
-Parameter 1: paymentDetails
-Parameter 2: paymentDetails.amount
+Parameter 1: details
+Parameter 2: details.text1
 Parameter 3: (empty)
 Parameter 4: desc
 ```

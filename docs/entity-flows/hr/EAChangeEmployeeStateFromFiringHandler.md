@@ -32,8 +32,8 @@ This flow should be configured as a **scheduled task** that runs periodically (t
 2. **Processes Each Document**: For each qualifying document:
    - Creates a new transaction to ensure data consistency
    - Retrieves the full FiringDocument record
-   - Verifies the document has a firing reason
-   - Calls the `updateEmpState` method to change the employee's status
+   - Skips the document when it has no firing reason
+   - Changes the employee's state according to the firing reason, dated the work end date, and clears the delayed flag on the document
    - Tracks any failures for reporting
 
 3. **Reports Results**: 
@@ -66,16 +66,18 @@ Key fields in the FiringDocument entity:
 
 ### Setting Up the Scheduled Task
 
-1. Navigate to **System Settings > Scheduled Tasks**
-2. Create a new scheduled task with:
-   - **Entity Flow**: Select `EAChangeEmployeeStateFromFiringHandler`
+1. Open **Basic → Settings → Task Schedule**
+2. Create a new task schedule with:
+   - **Task Type**: `Action`
+   - **Class Name**: `com.namasoft.modules.humanresource.utils.actions.EAChangeEmployeeStateFromFiringHandler`
    - **Schedule**: Typically set to run daily at a specific time (e.g., 12:01 AM)
-   - **Active**: Set to Yes
+
+The flow takes no parameters. See [Scheduled Tasks](/platform/automation-and-rules/scheduled-tasks) for the scheduling options.
 
 ### HR Configuration
 
 Check the HR module configuration for the setting:
-- **UpdateEmpStatusFromFiringDocInSameDate**: When enabled, if a firing document is created with a future work end date, the system will automatically set `empStatusUpdateDelayed = 1`
+- **Update Employee Status From Firing Document Only If Work End Date is Today** (`updateEmpStatusFromFiringDocInSameDate`): When ticked, a firing document saved with a work end date after today does not change the employee's state; the system sets `empStatusUpdateDelayed = 1` on the document instead, and this flow applies the change once the work end date arrives
 
 ## Performance Considerations
 
@@ -84,18 +86,10 @@ Check the HR module configuration for the setting:
 - **Error Handling**: If one document fails, others will still be processed
 - **Maximum Error Reporting**: Only the first 20 failed documents are reported to avoid overwhelming error messages
 
-## Best Practices
-
-1. **Schedule During Off-Hours**: Run this task during low-activity periods to minimize impact
-2. **Monitor Regularly**: Check task execution logs weekly to catch any recurring failures
-3. **Clean Up Old Documents**: Periodically review and clean up old firing documents that may have incorrect flags
-4. **Test in Development**: Always test configuration changes in a development environment first
-
 ## Related Entities and Flows
 
 - **FiringDocument**: The main document entity being processed
 - **Employee**: The employee entity whose status is updated
 - **EmployeeStateSysEntry**: System entries tracking employee state changes
-- **VacationDocument**: Related vacation balance adjustments
 
 </div>

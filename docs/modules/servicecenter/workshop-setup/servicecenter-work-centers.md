@@ -41,14 +41,16 @@ Every [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md), 
 |---|---|---|
 | Code, Group, Name1, Name2 | الكود، المجموعة، الاسم العربي، الاسم الإنجليزي | The usual master-file identity. Name1 is the Arabic name, Name2 the English one. |
 | Warehouse | المخزن | The shop's default store. `WH-PARTS` for both Al-Sahra halls — [spare parts are issued](/modules/servicecenter/spare-parts/servicecenter-spare-parts-issue.md) from here onto a job order. |
-| Hour Price | سعر الساعة | The **fallback** labour rate for this shop: `120` in the mechanical hall, `150` in body and paint. It is used only when a service task has no rate of its own for the vehicle's model — see below. |
-| Reception Start Time / Reception End Time | وقت بدء الاستقبال / وقت انتهاء الاستقبال | The window during which the shop takes cars in. `08:00` → `14:00` at Al-Sahra. Bookings outside the window are refused — with the qualification below. |
+| Hour Price | سعر الساعة | The **fallback** labour rate for this shop: `120` in the mechanical hall, `150` in body and paint. It is used only when prices are recalculated and a service task has no rate of its own for the vehicle's model — see below. |
+| Reception Start Time / Reception End Time | وقت بدء الاستقبال / وقت انتهاء الاستقبال | The window during which the shop takes cars in. `08:00` → `14:00` at Al-Sahra. It is copied onto the [loading table](/modules/servicecenter/workshop-execution/servicecenter-loading-table.md), and it is there that a booking outside the window is refused. |
 | Reception Average Time | متوسط مدة الاستقبال | How long the reception desk takes with one car — 15 minutes at Al-Sahra. |
 | Reception Engineers Count | عدد مهندسي الاستقبال | How many service advisors staff the desk — 2 at Al-Sahra. |
-| Work Bays Count | عدد اماكن العمل | Physical working positions. `5` in the mechanical hall. |
-| Hours Per WorkBay | الساعات لكل مكان | How many hours a bay is worked in a day. `8`. |
+| Work Bays Count | عدد أماكن العمل | Physical working positions. `5` in the mechanical hall. |
+| Hours Per Work Bay | الساعات لكل مكان | How many hours a bay is worked in a day. `8`. |
 
-Three of these fill themselves in if you leave them blank when you save: reception start becomes **08:00**, reception end becomes **14:00**, and the average reception time becomes **15 minutes**. If you want different values, type them — do not expect a blank field to stay blank.
+Below them sits a **Resources** grid — resource, **Resources Count** (العدد) and **Work Hours** (ساعات العمل) — that lists the hall's equipment for reference; nothing else in the module reads it.
+
+Three fields fill themselves in if you leave them blank when you save: when both reception times are blank, reception start becomes **08:00** and reception end **14:00**, and a blank average reception time becomes **15 minutes**. If you want different values, type them — do not expect a blank field to stay blank.
 
 ### Bays × Hours — the Only Capacity Number
 
@@ -66,7 +68,7 @@ The standard block — Legal Entity (الشركة), Branch (الفرع), Sector 
 
 ### The Job Orders Tab
 
-The second tab, **Job Orders** (أوامر الشغل), is read-only. It carries three lists — **Executions** (التنفيذات), **Exceptions** (الإستثناءات) and **Waiting Orders** (الأوامر المؤجلة) — so a supervisor can open the hall's file and see what it is carrying, including the orders [suspended and waiting to be resumed](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md), without going to the job-order list view. Nothing is typed here.
+The second tab, **Job Orders** (أوامر الشغل), is read-only. It carries three lists — **Executions** (التنفيذات), **Exceptions** (الاستثناءات) and **Waiting Orders** (الأوامر المؤجلة) — so a supervisor can open the hall's file and see what it is carrying, including the orders [suspended and waiting to be resumed](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md), without going to the job-order list view. Nothing is typed here.
 
 ## The Hour Price Is a Fallback, Not a Price List
 
@@ -90,7 +92,7 @@ Do not model your bays as stations. Model them as the bay count on the work cent
 
 1. Decide how many work centers you really need. One per hall that has its **own labour rate** or its **own store** is a good rule; splitting further buys you nothing, because the module gives you no cross-shop scheduling.
 2. Create the record with its code and both names, point **Warehouse** at the store the shop draws parts from, and set **Hour Price** to the rate you will also put on your task rows.
-3. Set the reception window to the hours the desk really takes cars in — an appointment outside it is refused, so a wrong window is felt immediately.
+3. Set the reception window to the hours the desk really takes cars in — the loading table copies it, and an appointment outside it is then refused, so a wrong window is felt immediately.
 4. Type the bay count and hours per bay. These are the two factors behind the shop's daily hours; get them right before anyone publishes capacity.
 
 Once the work center exists you can build the [task catalogue](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) and bundle tasks into [services](/modules/servicecenter/workshop-setup/servicecenter-operations.md).

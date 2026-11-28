@@ -21,9 +21,9 @@ Synchronizes data between different Nama ERP servers by sending entity records t
 
 ## How It Works
 
-1. **Prepares data** by converting entity to DTO and applying field overrides
+1. **Prepares data** by converting the record to the form the other server's entity service receives
 2. **Authenticates** with target server using provided credentials
-3. **Transmits data** via web service calls (EntityService interface)
+3. **Transmits data** via the other server's web services
 4. **Tracks results** with audit logging and retry logic for failures
 
 ## Key Parameters
@@ -34,23 +34,21 @@ Synchronizes data between different Nama ERP servers by sending entity records t
 - **Parameter 3:** Password (Required) - Plain text password (automatically hashed)
 
 ### Processing Options
-- **Parameter 4:** Append @draft to Code - Adds "@draft" suffix for first-time saves
-- **Parameter 5:** Ignore Not Found References - Allows saving without dependencies
-- **Parameter 6:** Save As Draft - Controls draft vs commit mode
-- **Parameter 7:** Fields Value Overrider - Custom field mapping syntax
-- **Parameter 8:** Do Not Use Current User Dimensions - Preserves original dimensions
-- **Parameter 9:** Max Trials Count - Retry attempts (default: 10)
+- **Parameter 4:** Append @draft to document files code if first save - `true` adds `@draft` to the code when the record has never been saved as final and its code does not already end with `@draft`
+- **Parameter 5:** Ignore Not Found References on the Other Server (true/false) - `true` saves the record even when some of its references do not exist on the other server
+- **Parameter 6:** Save As Draft (true/false) - `true` saves the record as a draft on the other server; empty or `false` saves it as final
+- **Parameter 9:** Max Trials Count (default 10) - How many times the send is tried when the connection fails. A refusal returned by the other server is not retried
 
 ### Advanced Options
-- **Parameter 10:** Save From Query - T-SQL for bulk synchronization
-- **Parameter 11:** Add Manual Code Prefix - For auto-coded entities
-- **Parameter 12:** Keep Creation Date - Preserves original timestamps
+- **Parameter 10:** Save From Query - A query returning `entityType, id` of the records to send instead of the current record, e.g. `select entityType,id from SalesInvoice where valueDate >= {date1}`. Each record is sent in its own transaction and a record returned twice is sent once
+- **Parameter 11:** Add Manual Code Prefix (true/false) - For a record already saved as final whose code is generated automatically on its type: `true` sends the code marked as a manual code, so the other server keeps it instead of generating a new one
+- **Parameter 12:** Keep Creation Date - `true` keeps the record's creation date on the other server
 
 ## Database Tables Affected
 
 ### SentEntityToAnotherServerSysEntry
 - **targetRecord** - Reference to synchronized entity
-- **status** - Success or failure status  
+- **status** - `Executed` when the record was sent, `Failed` otherwise
 - **remoteServer** - Target server URL
 - **executionTime** - Synchronization timestamp
 - **errorMessage** - Error details if failed
@@ -62,7 +60,7 @@ Synchronizes data between different Nama ERP servers by sending entity records t
 3. **Integration:** Real-time or scheduled data replication
 
 ```sql
-SELECT s.targetRecord_entityType, s.status, s.remoteServer, s.executionTime, s.errorMessage
+SELECT s.targetRecordEntityType, s.targetRecordCode, s.status, s.remoteServer, s.executionTime, s.errorMessage
 FROM SentEntityToAnotherServerSysEntry s
 WHERE s.executionTime >= DATEADD(day, -7, GETDATE())
 ORDER BY s.executionTime DESC;

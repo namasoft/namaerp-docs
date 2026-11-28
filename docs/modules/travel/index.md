@@ -60,8 +60,8 @@ Suppose you run the same eight-day Cairo–Luxor–Aswan itinerary a dozen times
 3. You issue **Hotel Vouchers** and **Restaurant Vouchers** so each supplier knows exactly what
    has been booked in their name.
 4. You press **Create Tourism Service Purchase Orders** on the tour. The system raises one
-   **Travel Service Purchase Order** per hotel, per restaurant, per guide and per airline, and
-   you enter the agreed prices on each.
+   **Travel Service Purchase Order** per hotel, per restaurant, per guide, per airline and per
+   service supplier, and you enter the agreed prices on each.
 5. As suppliers bill you, those orders become **Travel Service Purchase Invoices** — the cost of
    the trip.
 6. You raise a **Travel Service Sales Invoice** on the partner agency for the package price.
@@ -106,7 +106,7 @@ follows the same shape.
 ### Setting up
 
 <LandingGrid>
-  <LandingCard icon="🗂️" title="Master Files" link="/modules/travel/travel-master-files.md" details="The foundation: travel countries and cities, hotel and restaurant classes, the hotels, restaurants and guides you work with, and the tour services that every invoice line sells." />
+  <LandingCard icon="🗂️" title="Master Files" link="/modules/travel/travel-master-files.md" details="The foundation: travel countries and cities, hotel and restaurant classes, the hotels, restaurants and guides you work with, the tour services that every invoice line sells, and the platforms and external drivers a tour picks from." />
   <LandingCard icon="⚙️" title="Document Terms" link="/modules/travel/travel-document-terms.md" details="The real configuration of the module. Which accounts each document uses, and what the tour's generate button should produce." />
 </LandingGrid>
 
@@ -114,7 +114,7 @@ follows the same shape.
 
 <LandingGrid>
   <LandingCard icon="🗺️" title="Tour Programs" link="/modules/travel/tour-programs.md" details="The reusable, day-numbered itinerary template." />
-  <LandingCard icon="🧳" title="Tours" link="/modules/travel/tours.md" details="One real group, on real dates, with its accommodation, services and flights, and the button that raises the purchase orders for it." />
+  <LandingCard icon="🧳" title="Tours" link="/modules/travel/tours.md" details="One real group, on real dates, with its accommodation, services, flights and travellers, the Pax Check-In, and the button that raises the purchase orders for it." />
   <LandingCard icon="🏨" title="Hotel & Restaurant Vouchers" link="/modules/travel/travel-vouchers.md" details="The reservation slips that tell each supplier what you have booked in their name." />
 </LandingGrid>
 

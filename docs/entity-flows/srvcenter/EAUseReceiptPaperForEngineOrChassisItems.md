@@ -22,8 +22,8 @@ Automatically triggered on post-commit and post-delete events for supply chain d
 ### For Document Commits:
 1. **Clears previous assignments** - Releases any receipt papers previously assigned to this document
 2. **Validates lot IDs** - Ensures all document lines have required lot ID information
-3. **Matches receipt books** - Finds receipt books that match the line's lot ID
-4. **Allocates papers** - Assigns unused receipt papers based on document line quantities
+3. **Matches receipt books** - Finds the unused receipt papers of the receipt book whose code equals the line's lot ID
+4. **Allocates papers** - Assigns as many unused receipt papers as the line's quantity; when there are fewer, the flow fails with *Could not find {0} unused receipt papers*
 5. **Updates serial numbers** - Sets serial numbers from allocated receipt paper codes
 6. **Marks papers as used** - Updates receipt papers as used and linked to the document
 

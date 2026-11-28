@@ -18,7 +18,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 المتصفح وحده يمكن تجاوزها، أما القاعدة التي تُفحص عند الحفظ فلا.
 
 كل جدول هنا يبدأ بأعمدة النطاق نفسها — **للنوع (For Type)** و**قائمة الأنواع (Entity List)**
-و**الحقل (On Field)** و**غير نشط (Inactive)** — وسلوكها واحد في كل مكان. إن لم يكن واضحًا لديك ما
+و**الحقل (On Field)** — وسلوكها واحد في كل مكان. إن لم يكن واضحًا لديك ما
 معنى السطر «العام» أو كيف يُربط السطر بالشاشة، فاقرأ أولًا
 [إعدادات الحقول والشاشات — نظرة عامة](/ar/platform/fields-and-entities-settings/fields-settings-overview)؛
 هذه الصفحة لا تعيد شرحه.
@@ -31,9 +31,9 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 لنفترض أن أكواد العملاء لديك يجب أن تبدو هكذا `CU-000431`: تبدأ دائمًا بـ `CU-`، وبحروف كبيرة
 دائمًا، وطولها بين ستة وعشرة أحرف، وحروف وأرقام فقط. سطر واحد على العميل، الحقل `code`، مع
-**بادئة التكويد (Prefix)** بقيمة `CU-`، و**اقل طول (Min Length)** بقيمة `6`، و**اقصي طول
+**بادئة التكويد (Prefix)** بقيمة `CU-`، و**أقل طول (Min Length)** بقيمة `6`، و**أقصى طول
 (Max Length)** بقيمة `10`، و**الحروف المسموح بها (Letter Case Type)** = `Upper Case`، مع تعليم
-**السماح بالارقام (Allow Numbers)** و**السماح بالحروف (Allow Alpha)** — وبذلك لا يستطيع أحد اختراع
+**السماح بالأرقام (Allow Numbers)** و**السماح بالحروف (Allow Alpha)** — وبذلك لا يستطيع أحد اختراع
 كود خارج هذا الشكل، لا من الشاشة ولا من خلال استيراد.
 
 الرقم الضريبي هو الحالة الكلاسيكية الأخرى. بدلًا من وصفه بالأطوال والبادئات، تضع تعبيرًا واحدًا في
@@ -45,21 +45,24 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | للنوع (For Type) | الكيان الذي تنطبق عليه القاعدة، مثل العميل أو فاتورة المبيعات. |
 | قائمة الأنواع (Entity List) | قائمة مسمّاة بأنواع الكيانات، فيغطي السطر الواحد عدة شاشات. |
 | الحقل (On Field) | الحقل الذي تحرسه القاعدة، مثل `code` أو `remarks` أو `details.item`. |
-| اقل طول (Min Length) | تُرفض القيم الأقصر من هذا العدد من الأحرف. |
-| اقصي طول (Max Length) | تُرفض القيم الأطول من هذا العدد من الأحرف. |
-| السماح بالارقام (Allow Numbers) | أزل العلامة لمنع الأرقام في أي موضع من القيمة. |
-| السماح بالحروف (Allow Alpha) | أزل العلامة لمنع أي شيء غير الأرقام — مفيد للمعرّفات الرقمية البحتة. |
+| أقل طول (Min Length) | تُرفض القيم الأقصر من هذا العدد من الأحرف. |
+| أقصى طول (Max Length) | تُرفض القيم الأطول من هذا العدد من الأحرف. |
+| السماح بالأرقام (Allow Numbers) | لا تُقبل الأرقام إلا إذا عُلّم هذا الخيار. وبلا علامة تُرفض أي قيمة فيها رقم. |
+| السماح بالحروف (Allow Alpha) | لا يُقبل أي شيء غير الأرقام إلا إذا عُلّم هذا الخيار. وبلا علامة لا تحمل القيمة إلا أرقامًا — مفيد للمعرّفات الرقمية البحتة. |
 | بادئة التكويد (Prefix) | يجب أن تبدأ القيمة بهذا النص. |
 | نهاية التكويد (Suffix) | يجب أن تنتهي القيمة بهذا النص. |
-| المعايير (Criteria Definition) | لا تعمل القاعدة إلا مع السجلات المطابقة لهذه المعايير — انظر أدناه. |
+| المعايير (Criteria) | لا تعمل القاعدة إلا مع السجلات المطابقة لهذه المعايير — انظر أدناه. |
 | تطبيق عند التوافق مع الاستعلام (Apply When Query) | لا تعمل القاعدة إلا عند تطابق هذا الاستعلام — انظر أدناه. |
-| الحروف المسموح بها (Letter Case Type) | `All` أو `Lower Case` أو `Upper Case`. تُرفض القيم التي تحوي الحالة الخاطئة. |
-| لغة الكتابة (Text Language) | `All` أو `Only Arabic` أو `Only English`. تُرفض القيم المكتوبة بالأبجدية الأخرى. |
+| الحروف المسموح بها (Letter Case Type) | `All` أو `Lower Case` أو `Upper Case`. فـ`Upper Case` يرفض القيمة التي فيها أي حرف صغير، و`Lower Case` لا يقبل إلا قيمة كل محارفها حروف صغيرة، فيُرفض معه الرقم والمسافة والرمز أيضًا. |
+| لغة الكتابة (Text Language) | `All` أو `Only Arabic` أو `Only English`. تُرفض القيم المكتوبة بالأبجدية الأخرى. وهذا العمود ليس في الجدول افتراضيًا؛ أضفه عبر [معدّل الشاشات](/ar/platform/screen-modifier/screen-modifier-edit-screen). |
 | يجب مطابقة السطور (Lines Should Match) | تقصر القاعدة على سطور الجدول التي طابقتها المعايير أو الاستعلام فعلًا. |
 | تجاهل لاحقة المسودة (Ignore Draft Suffix) | يزيل علامة المسودة من القيمة قبل فحصها. |
 | Prevent Leading White Space | يرفض القيم التي تبدأ بمسافة. |
 | Prevent Trailing White Space | يرفض القيم التي تنتهي بمسافة. |
 | Regular Expression | يجب أن تطابق القيمة هذا النمط. |
+
+ولأن **السماح بالأرقام** و**السماح بالحروف** يبدآن بلا علامة، فالسطر الجديد يرفض كل قيمة حتى تعلّم
+واحدًا منهما على الأقل؛ فعلّم الاثنين ما لم تقصد منع الأرقام أو الحروف.
 
 القيمة الفارغة مقبولة دائمًا. تنسيقات الحقول تحدد شكل القيمة **إن وُجدت**، ولا تجعل الحقل إلزاميًا
 أبدًا. إن أردت إلزام المستخدم بملء الحقل فذلك إعداد آخر.
@@ -193,7 +196,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 |---|---|
 | الحقل (Field) | الجدول المحدود، مثل `details`. |
 | للنوع (For Type) | الكيان المالك للجدول، مثل فاتورة المبيعات. أضف سطرًا لكل كيان. |
-| أقصى عدد لسطور السندات والملفات (Max Lines Count) | أكبر عدد سطور مسموح به. اتركه فارغًا أو صفرًا لإلغاء الحد. |
+| أقصى عدد لسطور السندات والملفات (Max Lines Count For Documents And Files) | أكبر عدد سطور مسموح به. وإن تُرك فارغًا أو صفرًا رجع الجدول إلى **أقصى عدد لسطور السندات والملفات** في [الإعدادات العامة](/ar/platform/global-config/global-config-documents) (750 افتراضيًا). |
 
 سلوكان يستحقان المعرفة قبل ضبط الحد، وكلاهما مقصود وكلاهما يجنّبك مفاجآت غير سارة.
 
@@ -220,7 +223,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 |---|---|
 | للنوع (For Type) | الكيان المالك للحقل. أضف سطرًا لكل كيان. |
 | الحقل (Field) | الحقل الذي يتغير طوله. |
-| اقصي طول (Max Length) | الطول الجديد بالأحرف. |
+| أقصى طول (Max Length) | الطول الجديد بالأحرف. |
 
 والأمر الثاني لا يتاح إلا عبر إجراء **Update Fields Max Length In DB** أسفل الجدول. فرفع الطول
 المقبول لا ينفع كثيرًا إذا ظل التخزين الأساسي بالحجم القديم، ولذلك يمر هذا الإجراء على السطور ويعيد
@@ -255,7 +258,7 @@ Query)** و**يجب مطابقة السطور (Lines Should Match)** موجود�
 |---|---|
 | النوع (POS Entity Type) | سجل نقاط البيع الذي يتغير حجم حقله. |
 | الحقل (Field) | الحقل الذي يتغير طوله. |
-| اقصي طول (Max Length) | الطول الجديد بالأحرف. |
+| أقصى طول (Max Length) | الطول الجديد بالأحرف. |
 
 يوجد أيضًا عمود **نوع الحقل (Field Type)**، لكنك لا تملؤه — يستنتج النظام عند الحفظ إن كان الحقل
 نصيًا أو رقميًا ويضبطه نيابة عنك.
@@ -280,12 +283,12 @@ Replication ويُطبَّق هناك، فسلسلة بأربعين فرعًا �
 | الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
 |---|---|---|---|
 | Field Formats | Field Formats | `fieldFormats` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
-| اقل طول | Min length | `fieldFormats.minLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
-| اقصي طول | Max length | `fieldFormats.maxLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| أقل طول | Min length | `fieldFormats.minLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| أقصى طول | Max length | `fieldFormats.maxLength` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | بادئة التكويد | Prefix | `fieldFormats.prefix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | نهاية التكويد | Suffix | `fieldFormats.suffix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | السماح بالحروف | Allow alpha | `fieldFormats.allowAlpha` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
-| السماح بالارقام | Allow numbers | `fieldFormats.allowNumbers` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
+| السماح بالأرقام | Allow numbers | `fieldFormats.allowNumbers` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | الحروف المسموح بها | Letter Case Type | `fieldFormats.letterCaseType` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | تجاهل لاحقة المسودة | Ignore Draft Suffix | `fieldFormats.ignoreDraftSuffix` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
 | منع وجود مسافة في البداية | Prevent Leading White Space | `fieldFormats.preventLeadingWhiteSpace` | [Field Formats](#Field-Formats----tnsyqt-lHqwl) |
@@ -310,11 +313,11 @@ Replication ويُطبَّق هناك، فسلسلة بأربعين فرعًا �
 | أقصى عدد لسطور السندات والملفات | Max Lines Counts For Documents And Files | `maxLinesCounts` | [أقصى عدد لسطور السندات والملفات (Max Lines Counts For Documents And Files)](#qS-aadd-lsTwr-lsndt-wlmlft-Max-Lines-Counts-For-Documents-And-Files) |
 | أقصى عدد لسطور السندات والملفات | Max Lines Count For Documents And Files | `maxLinesCounts.maxLinesCount` | [أقصى عدد لسطور السندات والملفات (Max Lines Counts For Documents And Files)](#qS-aadd-lsTwr-lsndt-wlmlft-Max-Lines-Counts-For-Documents-And-Files) |
 | Max Fields Length In DB | Max Fields Length In DB | `maxFieldsLengthInDB` | [Max Fields Length In DB](#Max-Fields-Length-In-DB----qS-Twl-llHqwl-fy-qaad-lbynt) |
-| اقصي طول | Max length | `maxFieldsLengthInDB.maxLength` | [Max Fields Length In DB](#Max-Fields-Length-In-DB----qS-Twl-llHqwl-fy-qaad-lbynt) |
+| أقصى طول | Max length | `maxFieldsLengthInDB.maxLength` | [Max Fields Length In DB](#Max-Fields-Length-In-DB----qS-Twl-llHqwl-fy-qaad-lbynt) |
 | Max POS Fields Length In DB | Max POS Fields Length In DB | `maxPOSFieldsLengthInDB` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
 | النوع | Entity Type | `maxPOSFieldsLengthInDB.posEntityType` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
 | نوع الحقل | Field Type | `maxPOSFieldsLengthInDB.fieldType` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
-| اقصي طول | Max length | `maxPOSFieldsLengthInDB.maxLength` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
+| أقصى طول | Max length | `maxPOSFieldsLengthInDB.maxLength` | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB----qS-Twl-lHqwl-nqT-lbyaa-fy-qaad-lbynt) |
 
 ## صفحات ذات صلة
 

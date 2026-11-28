@@ -98,7 +98,7 @@ Each page is marked one of two ways:
 
 <LandingGrid>
   <LandingCard icon="🚚" title="Set the Delivery Status of the Lines a Document Was Made From" link="/entity-flows/groovy/EASetDeliveryStatusInFromDocLines.md" details="Stamps a fixed delivery status on source lines, climbing the from-document chain to the type you name." />
-  <LandingCard icon="✅" title="Mark the From Document as Fulfilled" link="/entity-flows/groovy/EAMarkFromDocFulfilled.md" details="Writes Fullfilled into the from-document's Description 1 once the documents made from it cover every line." />
+  <LandingCard icon="✅" title="Mark the From Document as Fulfilled" link="/entity-flows/groovy/EAMarkFromDocFulfilled.md" details="Writes Fullfilled into the from-document's description1 field once the documents made from it cover every line." />
   <LandingCard icon="🗂️" title="Record Inventory Effects Under the Warehouse's Analysis Set" link="/entity-flows/groovy/EASetInvRequestAnalysisSetFromWarehouse.md" details="Inventory request lines take their warehouse's analysis set." />
   <LandingCard icon="🔏" title="Lock Saved Price Lines on Items and Sales Price Lists" link="/entity-flows/groovy/EAPreventChangingItemPriceLines.md" details="Refuses deleting or editing existing price lines. New lines are still allowed." />
   <LandingCard icon="🆓" title="Add Free Lines From the References on Each Sales Line" link="/entity-flows/groovy/EAAddFreeLinesFromLineReferences.md" details="Reference 1-3 plus Number 1-3 on a sales line become free lines under it." />

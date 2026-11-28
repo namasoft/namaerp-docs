@@ -1,7 +1,7 @@
 ---
-description: "Moving a property's title from one owner to another without a sale, using the OwnerShip Transfer Document: its fields, what committing it changes and the journal entry it makes, and where transfers show up afterwards."
+description: "Moving a property's title from one owner to another without a sale, using the Ownership Transfer Document: its fields, what committing it changes and the journal entry it makes, and where transfers show up afterwards."
 entities: [REOwnerShipTransfer]
-menu: Real Estate and Property → Documents → OwnerShip Transfer Document
+menu: Real Estate and Property → Documents → Ownership Transfer Document
 ---
 # Transferring Ownership Between Owners
 
@@ -13,12 +13,12 @@ to be made.
 
 That is what the ownership transfer document is for: one screen, four fields, one journal entry.
 
-*Real Estate and Property > Documents > OwnerShip Transfer Document*
+*Real Estate and Property > Documents > Ownership Transfer Document*
 (العقارات و الممتلكات > المستندات > سند تحويل ملكية)
 
 ## What Is on the Screen
 
-![The OwnerShip Transfer Document screen with the source document, transferred estate, both owners and the price](../../../ar/modules/realestate/images/properties/re-ownership-transfer-en.png)
+![The Ownership Transfer Document screen with the source document, transferred estate, both owners and the price](../../../ar/modules/realestate/images/properties/re-ownership-transfer-en.png)
 
 The document is deliberately short:
 
@@ -27,7 +27,7 @@ The document is deliberately short:
 | Source document | the sales contract or opening sales contract that put the estate in the current owner's hands |
 | Transferred estate | the property whose title is moving — a **land plot**, a **block** or a **rental unit** |
 | **From Owner** (من مالك) | who holds the title today |
-| **To Owner** (إلي مالك) | who will hold it after this document |
+| **To Owner** (إلى مالك) | who will hold it after this document |
 | Price and currency | the agreed transfer price |
 
 Both owner fields only offer parties with the **Owner** role ticked — see
@@ -38,9 +38,10 @@ if the party you want is missing from the list.
 
 You can type the four fields by hand, but the fast path is to start from the **source document**.
 Pick the sales contract that originally sold the estate and the screen fills itself: the transferred
-estate is taken from that contract — its plot or its block — and the from-owner, the to-owner, the
-price and the currency all arrive prefilled from the same contract. You then change the to-owner to
-whoever is actually receiving the title and adjust the price to what was agreed today.
+estate is taken from that contract — its plot or its block — the from-owner and the to-owner both
+arrive set to that contract's **Owner** (the party that sold it), and the price and currency come
+from the same contract. You then set the from-owner to whoever holds the title today, the to-owner to
+whoever is receiving it, and adjust the price to what was agreed today.
 
 If you skip the source document and pick the **transferred estate** first, both owner fields default
 to the estate's current owner, and you overwrite the to-owner. Either route ends in the same place;
@@ -49,7 +50,7 @@ that was actually sold.
 
 ## What Happens When You Commit
 
-Two things, in this order.
+Two things.
 
 **1. The estate's title is rewritten.** The system opens the transferred estate and stores the
 **to-owner** as its original owner and the document's **price** as its price, then saves it. From
@@ -65,7 +66,7 @@ Recommit).
 
 Which accounts the two lines hit comes from the document's own term (توجيه). Its single *Effects*
 page holds the debit and the credit side of the transfer price — the accounts, the subsidiary source
-and the dimensions for each. Both sides have to be configured for the entry to be produced; see
+and the dimensions for each. Configure both sides; see
 [Collection, Maintenance, Investment and Cost Document Terms](/modules/realestate/document-terms/realestate-terms-other.md).
 
 ::: info Land plots and blocks are rewritten; a rental unit is not
@@ -84,8 +85,9 @@ on an ordinary sales contract. A year later owner A transfers the title to **own
 **1,200,000**.
 
 1. Open a new ownership transfer document and pick the March 2024 sales contract as the source
-   document. Plot LX-04, owner A as the from-owner, owner A as the to-owner and 1,000,000 all appear.
-2. Change the **to-owner** to owner B and the **price** to 1,200,000.
+   document. Plot LX-04, that contract's owner (the seller) in both owner fields, and 1,000,000 all
+   appear.
+2. Change the **from-owner** to owner A, the **to-owner** to owner B and the **price** to 1,200,000.
 3. Commit.
 
 Plot LX-04 now shows **owner B** as its original owner and 1,200,000 as its price. A single entry is

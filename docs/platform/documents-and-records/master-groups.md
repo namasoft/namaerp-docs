@@ -24,14 +24,14 @@ every group in the system; the **For Type** column tells you what each one is fo
 ## One group, one master file type
 
 The first field on a group is **For Type**, and it decides everything else. A group whose For Type
-is Customer can be put on customers and on nothing else. Try it on an item and the save fails:
-*"Selected group is for type Customer, it should be for type Item."*
+is Customer can be put on customers and on nothing else. Try it on an item and the save fails with
+*"Selected group is for type {0}, it should be for type {1}"* — here `Customer` and `Item`.
 
 For Type accepts any master file — anything that is not a document.
 
 ::: warning For Type freezes the moment the group is first saved
-Save the group once and the type can never be changed again: *"Can not change group type after
-first save."* There is no way round it. A group created for the wrong type is a group to abandon,
+Save the group once and the type can never be changed again:
+*"Can not change group type after first save from {0} to {1}"*. There is no way round it. A group created for the wrong type is a group to abandon,
 not to correct.
 :::
 
@@ -55,8 +55,7 @@ can be put on. A group with it **unticked** is a folder: it can have children, b
 ever be put on it directly.
 
 The two are mutually exclusive, and the system enforces both directions. Choose a group that
-accepts elements as somebody's parent and the save fails with *"Group … Can not be used as a
-parent"*. Try to put a folder group on a customer and the save fails with *"Selected group cannot
+accepts elements as somebody's parent and the save fails with *"Group {0} Can not be used as a parent"*. Try to put a folder group on a customer and the save fails with *"Selected group cannot
 be used in elments directly"* — quoted here with its shipped spelling, because that is what you
 will see.
 
@@ -117,7 +116,7 @@ The full order the system works through, for a record that has a group:
 This is the same series engine a document book uses, with the same six fields and the same
 arithmetic. Rather than repeat it, read
 [Document Books](/platform/documents-and-records/document-books) — the prefix and padded serial, the per-year restart
-through **prefixFormula**, **Do Not Use Prefix Formula For Next Number**, **Use Next Real Number
+through **Prefix Formula**, **Do Not Use Prefix Formula For Next Number**, **Use Next Real Number
 For Drafts**, and what happens when the numbers run out all behave identically here. Master files
 get provisional `@draft` codes exactly as documents do.
 
@@ -135,7 +134,7 @@ switch Automatic Coding off and the prefix simply is not asked for.
 
 **Every record in the group must start with the group's prefix, even one you type by hand.** Put a
 customer in a group whose prefix is `WH-` and give it the code `X001`, and the commit fails with
-*"code must start with WH-"*. The prefix is a property of the group, not merely of the numbers it
+*"code must start with {0}"* — here `{0}` is `WH-`. The prefix is a property of the group, not merely of the numbers it
 generates.
 
 ::: tip Each group runs its own series
@@ -214,7 +213,7 @@ Only committed records count. A group with fifty drafts hanging off it is still 
 first commit is what locks it.
 :::
 
-Everything else stays open, and that includes rather a lot: **Suffix Maximum**, **prefixFormula**,
+Everything else stays open, and that includes rather a lot: **Suffix Maximum**, **Prefix Formula**,
 **Replication Site**, the whole formula block and the whole details grid. The freeze protects
 the counting series and nothing more — a per-criteria formula can be rewritten after it has coded
 thousands of records.
@@ -225,21 +224,22 @@ the same as for books: make a new group.
 ## Retiring a group
 
 A group has **Prevent Usage**, and that is the retirement switch. Set it and no new record can be
-committed on the group — *"Can not use record …, usage is prevented"* — while every record already
+committed on the group — *"Can not use record {0}-{1}, usage is prevented"* — while every record already
 on it carries on untouched. What Prevent Usage means in general, and who can be allowed past it, is
 covered in [Preventing a Record From Being Used](/platform/everyday-tools/prevent-usage).
 
 Note that a group has no **Inactive** or **Inactive From Date** field. Those belong to document
 books; on a group, Prevent Usage is the whole story.
 
-::: warning A group that has ever been used can never be deleted
+::: warning A group that has ever been used cannot be deleted
 Once any record has referenced a group, the delete is refused — *"Can not Delete this  record
 because it used in another record"*, quoted with its shipped spacing. And the mark that causes this
-is never cleared: deleting every last record that used the group does **not** make the group
-deletable again.
+is never cleared on its own: deleting every last record that used the group does **not** make the
+group deletable again. Only the hidden action described in
+[Why a Record Will Not Save or Delete](/platform/documents-and-records/why-a-record-will-not-save-or-delete)
+clears it.
 
-Prevent Usage is therefore not a second-best option, it is the only option. Plan on groups being
-permanent.
+Prevent Usage is therefore the normal way to retire a group. Plan on groups being permanent.
 :::
 
 One more way a group retires itself: if the series reaches its **Suffix Maximum**, the group sets

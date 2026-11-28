@@ -9,7 +9,7 @@ The customer has not approved the extra 1,850. The car is waiting on a decision 
 bay is needed for a warranty job that arrived on a truck.
 
 Nama gives you a pair of documents for exactly that: **Pending Operation** (إيقاف خدمة) puts named
-tasks on hold with a reason, and **Resuming Operation** (إستكمال خدمة) puts them back. Both live under
+tasks on hold with a reason, and **Resuming Operation** (استكمال خدمة) puts them back. Both live under
 **Service Center > Documents**.
 
 ::: info Required licence
@@ -109,13 +109,15 @@ Committing puts the job order's matching task lines and their execution lines ba
 Processing**, marks those lines of the pending document as resumed so they are not offered again, and
 writes the status entries that move the order and the vehicle back.
 
-Cancelling either document reverses precisely the steps it performed — a cancelled suspension puts the
-tasks back where they were, a cancelled resumption re-suspends them.
+Cancelling a suspension puts its tasks on the job order back to **Under Processing** and removes its
+status entries; cancelling a resumption puts its tasks back to **Pending** and offers its lines on the
+pending document again.
 
 ::: tip Resume before you clock
-An order at *Pending* is not collected by the *Collect Job Orders* button on the execution document,
-whatever you answer to its question about postponed orders. If a technician cannot find the car's job
-order on the shop-floor screen, the first thing to check is whether it is still suspended.
+The *Collect Job Orders* button on the execution document collects only orders that are *Not
+Started* or *Under Processing*, so an order at *Pending* is not collected. If a technician cannot find
+the car's job order on the shop-floor screen, the first thing to check is whether it is still
+suspended.
 :::
 
 ## Both documents in one sentence each
@@ -125,9 +127,3 @@ document. Both belong to the
 [workshop document term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md)
 family and show a **توجيه المستند / Term** field that they do not actually require — you may leave
 it empty and the document will still save and still work.
-
-::: warning Say it again, because it is the question people ask
-Suspending work records **no time**. It does not pause the clock on an execution line, it does not
-subtract anything from the technician's recorded hours, and it does not reduce what the customer
-pays. It marks the tasks — and the order — as stopped, says why, and blocks the closing. Nothing more.
-:::

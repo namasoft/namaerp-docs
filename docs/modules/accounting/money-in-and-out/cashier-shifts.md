@@ -46,7 +46,6 @@ For collection away from the office (a field rep with a phone), the **Electronic
 
 ## For Support
 
-- **"I can't open a shift"** — the cashier already has an open shift; close it first with a Close Shift document.
 - **"The cashier receipt voucher won't let me pick an account"** — that's intentional; the simplified voucher takes its accounts from the shift and the term, not manually.
 - **"A difference at closing"** — the gap between counted and system is recorded on the **Difference Debit/Credit** sides in the Close Shift term.
 - **"Where do the difference/transfer accounts come from?"** — from the **Close Shift** term (see the [Document terms](../support/accounting-document-terms.md) reference).
@@ -58,5 +57,5 @@ For collection away from the office (a field rep with a phone), the **Electronic
 |---|---|---|
 | *You must close the shift {0} before opening a new shift* — «يجب غلق الوردية {0} قبل فتح وردية جديدة» | The cashier user on this **Open Shift** already has a committed shift that has not been closed. | Close the open shift with a **Close Shift** document, then open the new one. |
 | *You must delete the document {0} with code {1} or remove the open shift from it* — «يجب حذف السند {0} كود {1} أو حذف فتح الوردية من هذا السند» | You are deleting an **Open Shift** that vouchers are still attached to; the message lists each document type and code that points at it. | Delete those documents, or clear the open-shift field on them, then delete the shift. |
-| *Transferred Amount {0} Could not be Greater Than Actual Amount {1}* — «المبلغ المحول {0} لا يمكن ان يكون أكبر من المبلغ الفعلى {1}» | A **Close Shift** detail line transfers more than the amount actually counted in that line. | Cap the transferred amount at the actual amount; the rest stays with the cashier or becomes a difference. |
-| *The shift {0} is already closed by {1}* — «الوردية {0} مغلقة بالفعل بواسطة {2}» | Another committed **Close Shift** document already closed the shift this one points at. | Use the existing close document; delete this one. (The Arabic text of this message leaves a placeholder unfilled.) |
+| *Transferred Amount {0} Could not be Greater Than Actual Amount {1}* — «المبلغ المحول {0} لا يمكن أن يكون أكبر من المبلغ الفعلي {1}» | A **Close Shift** detail line transfers more than the amount actually counted in that line. | Cap the transferred amount at the actual amount; the rest stays with the cashier or becomes a difference. |
+| *The shift {0} is already closed by {1}* — «الوردية {0} مغلقة بالفعل بواسطة {1}» | Another committed **Close Shift** document already closed the shift this one points at. | Use the existing close document; delete this one. |

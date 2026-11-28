@@ -76,7 +76,7 @@ These options restrict which origin lines (and which from-documents) are brought
 
 **Filter On Selected Items Only With From Doc** `termConfig.filterOnSelectedItemsOnlyWithFromDoc` — When copying, only bring origin lines for the items already entered on the current document.
 
-**Show Only Orders With Unsatisfied Quantities In FromDoc** `termConfig.showOnlyOrdersWithUnsatisfiedQtyInFromDoc` — Restricts the from-document / origin-document lookup to orders that still have an unsatisfied (outstanding) quantity, hiding fully-executed orders. When the lookup is triggered from a specific line, results are further narrowed to orders that have an outstanding quantity for that line's item.
+**Show Only Orders With Unsatisfied Quantities In From Doc** `termConfig.showOnlyOrdersWithUnsatisfiedQtyInFromDoc` — Restricts the from-document / origin-document lookup to orders that still have an unsatisfied (outstanding) quantity, hiding fully-executed orders. When the lookup is triggered from a specific line, results are further narrowed to orders that have an outstanding quantity for that line's item.
 
 The following options each restrict copying to origin lines whose accounting dimension matches the current document's dimension.
 
@@ -151,7 +151,7 @@ These options appear on sales invoices and the other sales documents that carry 
 
 ## Creation Criteria
 
-**Criteria Definitions** `termConfig.criteriaDefinitions` *(grid)* — Defines per-target-type copy rules: when a criteria matches, the named created type uses the given extra-fields copier.
+**Criteria Definition** `termConfig.criteriaDefinitions` *(grid)* — Defines per-target-type copy rules: when a criteria matches, the named created type uses the given extra-fields copier.
 
 | Column | Field ID | Meaning |
 |---|---|---|
@@ -171,7 +171,7 @@ When an invoice or return auto-collects (links) stock documents, these options c
 
 **Copy Stock Docs From Origin Doc** `termConfig.copyStockDocsFromOriginDoc` — When a document is copied from an origin, also carry over the stock-document links attached to that origin.
 
-**Copy Pricing Qty From Stock Doc Field** `termConfig.copyPricingQtyFromStockDocField` — Selects which numeric quantity field (`N1`/`N2`/`N3`) of the linked stock document supplies the pricing quantity used on the invoice line.
+**Copy Pricing Quantity From Stock Document Field** `termConfig.copyPricingQtyFromStockDocField` — Selects which numeric quantity field (`N1`/`N2`/`N3`) of the linked stock document supplies the pricing quantity used on the invoice line.
 
 **Mark Do Not Show In Stock Docs If All Items Type Are Service** `termConfig.markDoNotShowInStockDocsIfAllItemsService` — When every line of the document is a service item, saving ticks the document's own **Do Not Show In Stock Docs**, so it no longer appears in the From Document picker of stock receipts and issues — there is nothing to receive or issue against it. Purchase invoices and sales returns.
 
@@ -218,7 +218,7 @@ The **Filter Stock Docs By** family limits collected stock docs to those whose a
 
 When the **Apply** button links stock documents to an invoice or return, these options control whether and how line prices are recalculated. They apply to the invoice/return family.
 
-**Don Not Update Price When Apply** `termConfig.donNotUpdatePriceWhenApply` — When applying (linking) stock documents to the invoice, do not recalculate/update line prices.
+**Do Not Update Price When Apply** `termConfig.donNotUpdatePriceWhenApply` — When applying (linking) stock documents to the invoice, do not recalculate/update line prices.
 
 **Instantly Apply On Stock Doc Selection** `termConfig.instantlyApplyOnSIssuesSelection` — Applies a stock issue/document to the invoice immediately upon selecting it, without a separate Apply step.
 
@@ -240,6 +240,6 @@ These options apply when copying remaining quantities into material-issue docume
 
 **Copy Remaining Quantity Considering Previously Issued Quantity** `termConfig.copyRemainingQtyConsideringPreviouslyIssued` — When copying remaining quantity from the origin, subtract quantities already issued on previous issue documents so only the truly remaining amount is brought over.
 
-**Do Not Save If Actual Quantity Greatr Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` — Blocks save when the actual issued quantity exceeds the planned quantity on the analysis card.
+**Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` — Blocks save when the actual issued quantity exceeds the planned quantity on the analysis card.
 
-**Do Not Save If Actual Cost Greatr Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — Blocks save when the actual cost exceeds the planned cost on the analysis card.
+**Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — Blocks save when the actual cost exceeds the planned cost on the analysis card.

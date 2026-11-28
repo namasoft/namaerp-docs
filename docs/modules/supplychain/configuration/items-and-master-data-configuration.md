@@ -12,8 +12,6 @@ This page documents the **Items & Master Data** tab — settings that affect the
 
 **Activate Item Categories** `value.activateItemCategories` *(default on)* — Turns on the item-category field so items can be assigned to categories. Turn off to hide it when unused.
 
-**Activate Item Classes** `value.activateItemClasses` *(default on)* — Turns on the item-classification fields (Item Class 1–10) on the item and across documents, so items can be grouped into classification hierarchies.
-
 **Show Item Classes Relations** `value.showItemClassesRelations` — Reveals the "relations" grid on item classes, letting you define links between class levels (e.g. to filter one class by another).
 
 **Allow Update Base UOM if Item has transactions** `value.allowUpdateItemUOMInTrans` — Allows changing an item's base unit of measure even after it has stock transactions (normally locked because it affects costing and historical quantities). Use only for careful corrections.
@@ -22,11 +20,9 @@ This page documents the **Items & Master Data** tab — settings that affect the
 
 **Allow Duplicate Details in Item** `value.allowDuplicateItemDetails` — Permits duplicate rows in the item's detail grids, which the system normally rejects.
 
-**Allow Editing Item Name** `value.allowEditingItemName` — Lets users edit the item name/description directly on a document line instead of it being fixed from the item master.
+**Allow Changing Item Type From Service To Stock and Vice-Versa After Using It in Stock Issue, Receipt, or Transfer** `value.allowChangeItemTypeFromServiceToStockAndOppositeAfterUsingIt` — Allows switching an item between "service" and "stock" type even after it has been used in stock documents (normally blocked because the type governs whether the item carries balances). Use only to correct a wrongly-typed item.
 
-**Allow Changing Item Type from Service to Stock and Vice-Versa After Use** `value.allowChangeItemTypeFromServiceToStockAndOppositeAfterUsingIt` — Allows switching an item between "service" and "stock" type even after it has been used in stock documents (normally blocked because the type governs whether the item carries balances). Use only to correct a wrongly-typed item.
-
-**Allow Receipt of Service Items** `value.allowReceiptServiceItems` — Allows service-type items to appear on stock receipt/return documents, which are otherwise meant for stock items only.
+**Allow Receipt Service Items** `value.allowReceiptServiceItems` — Allows service-type items to appear on stock receipt/return documents, which are otherwise meant for stock items only.
 
 **Do Not Include Service Items in Items Count Offers** `value.doNotIncludeServiceItemsInItemsCountOffers` — Excludes service items from count-based promotions, so only physical stock items count toward them.
 
@@ -38,15 +34,15 @@ This page documents the **Items & Master Data** tab — settings that affect the
 
 **Do Not Copy Code When Convert to Item** `value.doNotCopyCodeWhenConvertToItem` — When converting an item-open-request into an actual item, the request's code is not carried over — a fresh code is assigned by the item's own coding rules.
 
-**Ignore Quantity Tracking with Document Delete** `value.ignoreQtyTrackingWhithDocumentDelete` — Controls whether the quantity-tracking figures shown on document lines are recalculated when a document is deleted; when on, deletion skips that recalculation.
+**Ignore Quantity Tracking with Document Delete** `value.ignoreQtyTrackingWhithDocumentDelete` — When on, deleting a document is never refused by a quantity-tracking error — *Satisfied quantity ({0}) greater than order quantity ({1})* — «الكمية المسلمة ({0}) أكبر من كمية المستند الأصلي ({1})» — or *You can not manually add lines to this document* — «لا يمكن إضافة سطور يدويا إلى هذا المستند» — raised against the document it was created from. The source document's satisfied quantities are still reduced by the deleted lines.
 
 ## Item Codes & Coding Formula
 
 **Stop Using Alt-Code in Items** `value.stopUsingAltCodeInItems` — Disables the alternative-code feature on items entirely, so the alt-code field is no longer used for entry or search.
 
-**Neglect Customer-Assigned Codes in Item** `value.neglectCustAssignedCodesInItem` — Item search ignores the codes customers use for the item, so they are not treated as part of the item's searchable codes.
+**Neglect Customers Assigned Codes In Item** `value.neglectCustAssignedCodesInItem` — Item search ignores the codes customers use for the item, so they are not treated as part of the item's searchable codes.
 
-**Neglect Supplier-Assigned Codes in Item** `value.neglectSuppAssignedCodesInItem` — The same for supplier-assigned item codes.
+**Neglect Suppliers Assigned Codes In Item** `value.neglectSuppAssignedCodesInItem` — The same for supplier-assigned item codes.
 
 **Use Custom Item Codes as Alternative Code** `value.useCustomItemCodesInItemSearch` *(default on)* — Lets custom item codes be matched when searching/scanning for an item. Turn off to restrict search to the main item code only.
 
@@ -56,14 +52,14 @@ This page documents the **Items & Master Data** tab — settings that affect the
 
 | Name | Field ID |
 | --- | --- |
-| Name 1 for Color & Size | `value.info.itemCodingFormula.szName1Formula` |
-| Name 2 for Color & Size | `value.info.itemCodingFormula.szName2Formula` |
-| Name 1 for Revision | `value.info.itemCodingFormula.rvName1Formula` |
-| Name 2 for Revision | `value.info.itemCodingFormula.rvName2Formula` |
+| Name 1 Encoding Formula For Colour And Size | `value.info.itemCodingFormula.szName1Formula` |
+| Name 2 Encoding Formula For Colour And Size | `value.info.itemCodingFormula.szName2Formula` |
+| Name 1 Encoding Formula For Revision | `value.info.itemCodingFormula.rvName1Formula` |
+| Name 2 Encoding Formula For Revision | `value.info.itemCodingFormula.rvName2Formula` |
 
 ## Item Search & Buttons
 
-**Allow Item Search by Barcode Specification** `value.allowItemSearchByBarCodeSpecification` — Enables parsing a scanned barcode through the configured Item Barcode Specifications when searching for an item, so a single scanned string yields the item code plus properties/quantity. Required for the [Item Barcode Specifications](./item-barcode-specifications.md) to take effect.
+**Allow Item Search By Bar Code Specification** `value.allowItemSearchByBarCodeSpecification` — Enables parsing a scanned barcode through the configured Item Barcode Specifications when searching for an item, so a single scanned string yields the item code plus properties/quantity. Required for the [Item Barcode Specifications](./item-barcode-specifications.md) to take effect.
 
 **Search for Item Coupons in Sales by Item Code** `value.searchForItemCouponsInSalesByItemCode` — In sales, entering an item code also looks up item coupons keyed to that code.
 
@@ -87,7 +83,7 @@ This page documents the **Items & Master Data** tab — settings that affect the
 
 **Do Not Add Locator to Warehouse** `value.doNotAddLocatorToWarehouse` *(default on)* — Prevents the system from auto-adding a newly used locator to the warehouse's locator list, keeping warehouse locator lists controlled. Turn off to auto-register locators as they are used.
 
-**Allow Update Locator Policy if Warehouse has Transactions** `value.allowUpdateLocatorOfWarehouseInTrans` — Allows changing a warehouse's "use locators" policy even after it has stock movements (normally locked). Use cautiously.
+**Allow Update Locator Policy if it has transactions** `value.allowUpdateLocatorOfWarehouseInTrans` — Allows changing a warehouse's "use locators" policy even after it has stock movements (normally locked). Use cautiously.
 
 **Allow Changing Warehouse Legal Entity** `value.allowChangingWareHouseLegalEnt` — Allows changing the company assigned to a warehouse (normally locked because it affects ownership and accounting of the stock held there). Use only for corrections.
 

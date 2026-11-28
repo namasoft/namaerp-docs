@@ -9,7 +9,7 @@ Salaries don't stay still. Once a year — or whenever a company decides on a ra
 
 ## Where to find it
 
-**Payroll > Main > Annual Increases Document** (الرواتب > الأساسيات > مستند الزياده السنوية).
+**Payroll > Main > Annual Increases Document** (الرواتب > الأساسيات > مستند الزيادة السنوية).
 
 ## Why it exists
 
@@ -27,7 +27,7 @@ The top of the document fixes the timing and the population, and offers a few wh
 |---|---|---|
 | HR Year / HR Period / HR Calendar | سنة الرواتب / فترة الرواتب / تقويم الرواتب | The [payroll year, period and calendar](../setup/hr-years-and-periods.md) the raise round belongs to. |
 | Issue Date / Value Date | تاريخ الإصدار / التاريخ الفعلي | When the document is written up, and the effective date the increase takes hold. |
-| Generation Type | نوع الإنشاء | Tracks whether the per-employee lines have been generated yet, and whether they are still editable. |
+| Generation Type | نوع الإنشاء | The field every document carries: whether this document was itself created by another record. It says nothing about the employee lines. |
 | Basic Fixed Insurance Percent / Basic Fixed Insurance Value | نسبة الزيادة في الأساسي التأميني الثابت / قيمة الزيادة في الأساسي التأميني الثابت | A blanket percentage or fixed amount added to the **fixed insurable basic salary** for the whole round. |
 | Basic Variable Insurance Percent | نسبة الزيادة في الأساسي التأميني المتغير | A blanket percentage added to the **variable insurable basic salary**. |
 | Daily Salary Percent | نسبة الزيادة في الأجر اليومي | A blanket percentage added to the **daily wage**, for daily-paid labor. |
@@ -43,23 +43,25 @@ The **Details** grid (التفاصيل) is where the actual raise rule lives. Ea
 
 | Field (Arabic → English) | Purpose |
 |---|---|
-| نوع المفرد (Component Type) | The category of [salary component](salary-components.md) the rule applies to. |
-| مفرد الراتب هدف الزيادة (Target Salary Component) | The specific component being increased. |
-| نوع الزيادة (Increase Type) | *How* the component moves — see the values below. |
+| نوع المفرد (Component Type) | The [salary component](salary-components.md) whose current value on the employee is the base of a percentage increase. It is also the component that receives the increase when **Target Salary Component** is empty. |
+| مفرد الراتب هدف الزيادة (Target Salary Component) | The component that receives the increase. Leave it empty to raise the **Component Type** itself; fill it to raise one component by a percentage of another (for example, a housing allowance raised by 5% of the basic salary). |
+| نوع الزيادة (Increase Type) | *How* the component moves — see the values below. Empty means **Addition Percentage**. |
 | نسبة/قيمة الزيادة (Increase Percentage / Value) | The magnitude — read as a percentage or an amount, depending on the increase type. |
 
 **Increase Type** (نوع الزيادة) decides the mechanism:
 
 | Value (Arabic → English) | Meaning |
 |---|---|
-| نسبه مضافة (Addition Percentage) | Raise the component by a percentage of its current value. |
-| قيمة مضافة (Addition Value) | Add a fixed amount to the component. |
-| نسبه مخصومة (Deduction Percentage) | Reduce the component by a percentage — a negative round. |
-| قيمة مخصومة (Deduction Value) | Subtract a fixed amount from the component. |
-| استبدال القيمة (Replace Value) | Overwrite the component's value with the figure entered — used when the new pay is set outright rather than nudged. |
+| نسبة مضافة (Addition Percentage) | Add the percentage of the **Component Type**'s current value to the target component. |
+| قيمة مضافة (Addition Value) | Add a fixed amount to the target component. |
+| نسبة مخصومة (Deduction Percentage) | Subtract the percentage of the **Component Type**'s current value from the target component — a negative round. |
+| قيمة مخصومة (Deduction Value) | Subtract a fixed amount from the target component. |
+| استبدال القيمة (Replace Value) | Overwrite the target component's value with the figure entered — used when the new pay is set outright rather than nudged. |
+
+When the document term ticks **Apply Increase relative to Service months count** (تطبيق الزيادة نسبة لعدد شهور الخدمة), an employee with fewer than 12 months of service on the value date gets only *months ÷ 12* of each increase (Replace Value is not prorated). The term's fields are described under [The Annual Increases term](/modules/hr/document-terms/hr-terms-salary-and-dues#The-Annual-Increases-term).
 
 ::: tip Blanket rules apply to everyone collected — exceptions handle the edge cases
-The Details grid is the *blanket* rule for the whole round. When a handful of employees should be treated differently — a larger raise for a top performer, no raise for someone still on probation — you record them in the **Exceptions** grid (الإستثناءات) instead. Each exception line names the employee, the target component, an increase type and a magnitude of its own, overriding the blanket rule for that one person.
+The Details grid is the *blanket* rule for the whole round. When a handful of employees should be treated differently — a larger raise for a top performer, no raise for someone still on probation — you record them in the **Exceptions** grid (الاستثناءات) instead. Each exception line names the employee, the target component, an increase type and a magnitude of its own, overriding the blanket rule for that one person.
 :::
 
 ## Workflow
@@ -68,8 +70,8 @@ The Details grid is the *blanket* rule for the whole round. When a handful of em
 2. **Define the scope** by filling the employee range criteria — as wide or as narrow as the round requires.
 3. **Define the rule(s)** in the Details grid: for each component you want to move, pick the target component, the increase type, and the magnitude. Add any per-employee overrides in Exceptions.
 4. **Collect the employees.** Use **Collect Employees** (تجميع الموظفين) to resolve the range criteria into concrete employee lines, then, if individual employees need fine-tuning, **Collect Employees With Components** (تجميع الموظفين مع المفردات) to write every employee × Details rule into the **Exceptions** grid, where you edit the few that differ.
-5. **Review the generated lines.** Each collected employee appears in the **Employees Lines** grid (سطور الموظفين), showing the employee, their supervisor, and — once processed — a link to the per-employee change document that actually carries the new figures onto the employee's record.
-6. **Save and process.** The document then generates one employee-info change per collected line, applying the raised figures going forward.
+5. **Review the generated lines.** Each collected employee appears in the **Employees Lines** grid (سطور الموظفين), showing the employee, their supervisor, and — once saved — a link to the per-employee change document that actually carries the new figures onto the employee's record.
+6. **Save.** The document then creates one employee-info change per line in the Employees Lines grid, applying the raised figures going forward.
 
 ::: warning Edit the campaign, not the generated changes
 Like other batch documents in Nama, the per-employee changes an Annual Increases Document produces are managed *by* the document. Re-collecting or reprocessing the campaign is the right way to adjust the round — editing the generated single changes directly puts them out of step with the campaign that owns them.
@@ -82,7 +84,11 @@ Like other batch documents in Nama, the per-employee changes an Annual Increases
 
 ## How it's processed
 
-When saved, the document resolves its scope into employee lines and, per line, produces a per-employee change that writes the raised figures back onto each employee's record. This happens as background **business requests** with a **processing status**; if a line fails to process, it can be retried from the **Business Requests** view like any other request. No amount is recorded in the general ledger by this document — the money only moves when the *next* salary run picks up the new figures.
+Saving works only on the lines already in the **Employees Lines** grid; the range criteria are read only by **Collect Employees**. The save is refused while the **Details** grid is empty, or while an employee line repeats an employee, names an employee who is not **working**, or names an employee with no job offer.
+
+For each employee line the save creates an **Update Employee Info** document (in the book named by the term's **update Employee Info Book**) and saves it as part of the same save, so one failing line refuses the whole document. That document starts from the employee's information as it stood the day before the **Value Date**, raises the components as the Details and Exceptions grids say, and adds the blanket insurance and daily-salary increases. When **Basic Fixed Insurance Value** is filled it is added as an amount; otherwise **Basic Fixed Insurance Percent** is applied. It also carries the line's supervisor, contact information, references and descriptions. Saving the document again rebuilds these changes; removing an employee line deletes that employee's change, and deleting the document deletes all of them.
+
+No amount is recorded in the general ledger by this document — the money only moves when the *next* salary run picks up the new figures.
 
 ![Annual Increases Document, with its increase rule and collected employee lines](../../../ar/modules/hr/images/payroll/annual-increases-en.png)
 
@@ -91,10 +97,13 @@ When saved, the document resolves its scope into employee lines and, per line, p
 | Message | Why | What to do |
 |---|---|---|
 | *You can fill only the field Basic Fixed Insurance Value or Percent the field , not both* — «يمكنك ملء الحقل نسبة الزيادة في الأساسي التأميني الثابت أو حقل القيمة و ليس كلاهما معا» | Both **Basic Fixed Insurance Percent** and **Basic Fixed Insurance Value** carry a figure, so the blanket increase to the fixed insurable basic could be read two ways. | Keep the percentage or the amount, and clear the other. |
-| *Employee {0} must be in employee lines* — «يجب ان يكون الموظف {0} فى سطور الموظفين» | An **Exceptions** row names an employee who is not among the employees the document collected, so there is no blanket rule for the exception to override. | Widen the employee range so the document collects that employee, or remove the exception row. |
-| *You must enter one of the target component or the component type* — «يجب ان يتم إدخال مكون الراتب هدف الزيادة او مكون الراتب» | An exception row says nothing about *what* is being increased — both **Target Salary Component** and **Component Type** are empty. | Fill one of the two on that row. |
-| *Target component {0} must be in the details* — «مكون الراتب هدف الزيادة {0} يجب ان يكون فى التفاصيل» | The exception targets a component that the **Details** grid does not raise at all; an exception can only override a blanket rule that exists. | Add the component to the Details grid, or point the exception at a component the round already covers. |
-| *The employee {0} with component type {1} is repeated in line {2} and {3}* — «الموظف {0} مع مكون الراتب {1} مكرر فى السطر {2} و {3}» | Two exception rows give the same employee a different treatment for the same component. | Delete one of the two rows — the message gives both line numbers. |
+| *The Employee {0} is not working* — «الموظف {0} ليس على رأس العمل» | An employee line names someone whose state is no longer **Working**. | Remove the line. |
+| *The Employee {0} does not have a job offer* | An employee line names someone with no job offer, so there is no employee information to raise. | Remove the line, or complete the employee's hiring first. |
+| *The Employee {0} is repeated* | The same employee appears twice in the **Employees Lines** grid. | Delete one of the two lines. |
+| *Employee {0} must be in employee lines* — «يجب أن يكون الموظف {0} في سطور الموظفين» | An **Exceptions** row names an employee who is not among the employees the document collected, so there is no blanket rule for the exception to override. | Widen the employee range so the document collects that employee, or remove the exception row. |
+| *You must enter one of the target component or the component type* — «يجب أن يتم إدخال مكون الراتب هدف الزيادة أو مكون الراتب» | An exception row says nothing about *what* is being increased — both **Target Salary Component** and **Component Type** are empty. | Fill one of the two on that row. |
+| *Target component {0} must be in the details* — «مكون الراتب هدف الزيادة {0} يجب أن يكون في التفاصيل» | The exception targets a component that the **Details** grid does not raise at all; an exception can only override a blanket rule that exists. | Add the component to the Details grid, or point the exception at a component the round already covers. |
+| *The employee {0} with component type {1} is repeated in line {2} and {3}* — «الموظف {0} مع مكون الراتب {1} مكرر في السطر {2} و {3}» | Two exception rows give the same employee a different treatment for the same component. | Delete one of the two rows — the message gives both line numbers. |
 
 ## Related pages
 

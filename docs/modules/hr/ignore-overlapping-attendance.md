@@ -23,7 +23,7 @@ The usual solution is to manually edit the automatically imported voucher to fix
 
 ### The Solution with This Feature
 
-This feature allows the HR department to create a separate **manual attendance voucher** containing the correct data (with complete From and To date/time), and enable the **Ignore Overlapping Attendance** option on that voucher. The system will then automatically ignore the incomplete lines in the automatically imported voucher and rely on the manual voucher when calculating working hours.
+This feature allows the HR department to create a separate **manual attendance voucher** containing the correct data (with complete From and To date/time), and enable the **Ignore Overlapping Attendance With This Document** option on that voucher. The system will then automatically ignore the incomplete lines in the automatically imported voucher and rely on the manual voucher when calculating working hours.
 
 This way, the original data from the machine remains preserved as-is for review and auditing, while the manual correction is used only for payroll calculation purposes.
 
@@ -35,35 +35,39 @@ This feature does not work by default in order to preserve existing customer beh
 
 Open **Payroll Settings**, and in the **Attendance Settings** group, you will find the option:
 
-<HRConfigOption option-code="value.allowIgnoreOverlappingAttendance" link-title="Allow ignoring overlapping attendance and departure vouchers" />
+<HRConfigOption option-code="value.allowIgnoreOverlappingAttendance" link-title="Allow Ignore Overlapping Attendance Documents" />
 
 Once this option is enabled, you can use the overlapping line ignore feature on attendance and departure vouchers.
 
 ::: tip
-If a user tries to enable the ignore option at the attendance voucher level without enabling this setting, the system will refuse to save the voucher and will direct the user to enable the setting first.
+If a user tries to enable the ignore option at the attendance voucher level without enabling this setting, the system will refuse to save the voucher and will direct the user to enable the setting first, with a message that has no Arabic text and shows in English on both interfaces:
+
+*Ignoring overlapping attendance is not allowed. Enable it in HR configuration first.*
 :::
 
 ## Using the Feature at the Attendance and Departure Voucher Level
 
 When opening any attendance and departure voucher, you will find a new option in the header:
 
-> **Ignore attendance and departure that overlaps with this document**
+> **Ignore Overlapping Attendance With This Document**
 
 When this option is enabled, this voucher becomes the "primary source" for the lines it contains. Any line in another voucher that overlaps with a line in this voucher — according to the rules below — will be automatically ignored when calculating working hours.
 
-### The "Line Was Ignored Due to Overlap with Other Vouchers" Field
+### The "Line Ignored Due To Overlap With Other Documents" Field
 
-At the line level, you will find a new field called **Line was ignored due to overlap with other vouchers**.
+At the line level, you will find a new field called **Line Ignored Due To Overlap With Other Documents**.
 
-This field is **automatically flagged on save**, and you do not need to edit it manually. The system checks the lines when the voucher is saved and marks every line that overlaps with a line in another voucher that has the ignore option enabled.
+This field is **flagged automatically when the voucher is committed**, and you do not need to edit it manually. The system checks the lines at that point and marks every line that overlaps with a line in another **committed** voucher that has the ignore option enabled.
 
 ![Ignore Overlapping Attendance With This Document on a Time Attendance document](../../ar/modules/hr/images/attendance/time-attendance-ignore-overlapping-en.png)
 
 ## Overlap Rules Between Lines
 
+The rules compare the employee and the **dates** of the lines only; the times on the lines play no part.
+
 ### Rule 1: Lines in the Voucher with Ignore Enabled Are Not Subject to the Rule
 
-If the current voucher has the **Ignore attendance and departure that overlaps with this document** option enabled, all its lines remain active and none of them are marked as ignored. This feature applies only to other vouchers.
+If the current voucher has the **Ignore Overlapping Attendance With This Document** option enabled, all its lines remain active and none of them are marked as ignored. This feature applies only to other vouchers.
 
 ### Rule 2: A Line with Both a From Date and a To Date
 
@@ -99,13 +103,13 @@ If the line contains a **To Date** only (without a From Date), it is ignored if 
 | Automatically imported voucher (check-in line) | Ahmed | 2026-05-15 | – | Line is ignored (From Date match) |
 | Automatically imported voucher (check-out line) | Ahmed | – | 2026-05-16 | Line is ignored (To Date match) |
 
-## What Happens After Saving?
+## What Happens When the Voucher Is Committed?
 
-When an attendance and departure voucher is saved:
+When an attendance and departure voucher is committed:
 
 1. The system first clears the flag on all lines of the current voucher (returning them to their default state).
-2. If the current voucher has the ignore option enabled, it stops here — no lines are flagged.
-3. If the ignore option is not enabled, the system searches the database for lines in other vouchers that have the ignore option enabled, belonging to the same employees, within the same time range.
+2. If the current voucher has the ignore option enabled, or the Payroll Settings option is off, it stops here — no lines are flagged.
+3. Otherwise, the system searches the database for lines in other committed vouchers that have the ignore option enabled, belonging to the same employees, whose From Date or To Date falls between the earliest and the latest date on the current voucher.
 4. It applies the overlap rules described above and marks the matching lines as ignored.
 
 ## Effect of Ignoring on Working Hours Calculation
@@ -118,7 +122,7 @@ The advantage of this design is that ignored lines remain stored in the database
 
 ## Notes on Updates
 
-When editing an old attendance voucher and saving it:
+When editing an old attendance voucher and committing it again:
 
 * Overlaps are re-checked and the field is updated automatically.
 * The system does not check the current voucher against itself (even when changing the option from enabled to disabled).

@@ -15,13 +15,13 @@ Refreshes the system's critical errors cache to update error notifications and s
 
 ## When This Action Runs
 
-Manual execution when critical error indicators need to be refreshed, typically after resolving system issues or updating configurations that affect error detection.
+Manual execution when critical error indicators need to be refreshed, typically after resolving system issues or updating configurations that affect error detection. The checks themselves are described on [Critical Errors](/admin/troubleshooting/critical-errors).
 
 ## How It Works
 
-1. **Triggers refresh** - Calls the CriticalErrorsUtil.refreshErrors() method to update the critical errors cache
+1. **Triggers refresh** - Rebuilds the critical errors cache
 2. **Re-evaluates conditions** - System re-checks all critical error conditions across modules
-3. **Updates displays** - Refreshes error indicators in user interfaces and dashboards
+3. **Updates displays** - The refreshed list is what users see the next time the critical errors are shown
 
 ## Parameters
 

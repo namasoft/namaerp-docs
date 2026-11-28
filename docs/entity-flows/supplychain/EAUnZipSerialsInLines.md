@@ -24,8 +24,8 @@ Manual execution on supply chain documents containing serialized items with mult
    - Valid items that have serial number tracking enabled (hasSerial = true)
    - Quantity greater than 1
    - Serial numbers that can be "unzipped" into individual serials
-3. **Validates serial counts** - Ensures the number of serial numbers matches the line quantity
-4. **Processes second serials** - Handles secondary serial numbers if present and validates count consistency
+3. **Validates serial counts** - Skips the line, leaving it unchanged, when the number of serial numbers differs from the line quantity
+4. **Processes second serials** - Handles secondary serial numbers if present; the line is also skipped when their number differs from the number of primary serials
 5. **Creates individual lines** - For each serial number:
    - Clones the original line
    - Sets quantity to 1

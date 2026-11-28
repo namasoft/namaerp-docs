@@ -1001,7 +1001,7 @@ runCommand="guessPeriod"
 runCommand="makeValueDateToday"
 # Set code from book or group
 runCommand="setCodeIfNeeded"
-# Copy Dimensions (legal entity, branch, department, analysis set, and branch) from book or group
+# Copy Dimensions (legal entity, sector, branch, department and analysis set) from book or group
 runCommand="copyDimensionsFromBookOrGroup"
 # Update all calculated fields
 runCommand="systemUpdateCalculatedFields"
@@ -1031,10 +1031,14 @@ customer.runCommand="saveConsideringApprovals"
 
 #### Common Command Combinations
 ```fieldmap
-# Set value date to today and auto-detect accounting period
+# Set value date to another date, then auto-detect the accounting period for it
+valueDate=sql(select getdate() + 1)
 runCommand="guessPeriod"
-valueDate=sql(select getdate())
 ```
+
+`guessPeriod` uses the value date the record has at that moment, so it comes after the line that changes the value date.
+It changes the period only when the period is empty or does not contain the value date. `runCommand="makeValueDateToday"`
+sets the value date to today and does the same period check by itself.
 
 ### Adding Discussions
 You can add discussion entries to an entity:

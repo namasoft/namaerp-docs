@@ -23,8 +23,7 @@ will not find it.
 ## Where the settings live, and who they apply to
 
 The settings are a **system settings record** whose code is `modulehumanresource` and whose name is
-*Human Resource Settings* — «أعدادات الموارد البشرية», with the shipped Arabic missing the hamza on
-the first word. It opens with **three tabs**:
+*Human Resource Settings* — «إعدادات الموارد البشرية». It opens with **three tabs**:
 
 - **Basic Information** — the record's own header: code, name, configuration group, type and the
   dimensions the record applies to. Nothing HR-specific.
@@ -60,9 +59,11 @@ period*, *Consider Extended Attendance in First Day*, *Handle Overlap Between At
 and Leave Permissions*, *Prevent Multi Reward - Penalty Of Same Type On Day* and *Add Default Dues
 Liquidation Additions And Deductions*. A few numbers ship with a value — 30 days in the month, 23
 hours as the longest continuous attendance, 25 salary documents generated at a time, 18 hours as the
-widest gap the system will bridge when it pairs a punch-in with a punch-out, and 1/2/3/4 as the
-overlap priorities. Everything else is off or empty, which means the module's behaviour out of the
-box is the plain one described throughout these pages.
+widest gap the system will bridge when it pairs a punch-in with a punch-out, 2 and 10 hours for the
+two arrival windows, and 1/2/3/4 as the overlap priorities. The choice fields of the absence
+deductions and the day-type collisions ship with the values given in their sections below, and the
+two regeneration notification templates ship with text. Everything else is off or empty, which means
+the module's behaviour out of the box is the plain one described throughout these pages.
 
 ## Reading the Salary Config tab
 
@@ -72,10 +73,10 @@ three things about the layout before you hunt for an option.
 - **The first two groups have no title.** The three permission ceilings sit in one, and about sixty
   unrelated options sit in the other, in no particular order. That is how the screen is built, not a
   fault in your installation.
-- **Four group titles show an internal name instead of a translated one** — `AttendanceConfig`,
-  `overtimeInMultiVacationDayHandling`, `SalaryDeductions` and `ProvisionCalculation` appear in that
-  code-like form in both the Arabic and the English interface. They are the attendance group, the day-type collision group, the
-  absence-deduction group and the provisions group respectively.
+- **The attendance group is titled `AttendanceConfig`** in both the Arabic and the English
+  interface. The other groups' titles include **Handling of Overtime in Days with Multiple Off-Reasons (Week end, Vacation, or
+  Holiday)** (the day-type collision group), **Salary Deductions** (the absence-deduction group) and
+  **Provisions Calculation**.
 - **A handful of fields have no label at all** and show their internal name: the ten salary
   component slots and the five constant-salary groups (see
   [Component slots](#Component-slots-and-constant-salary-groups) below).
@@ -114,9 +115,9 @@ reads one of them.
 
 | Option | Field | What it does |
 |---|---|---|
-| **Calender** | `value.calender` | The HR calendar the module uses when a document does not name one. |
-| **Days In Month** | `value.daysInMonth` | The fixed divisor for a month. Ships as **30**. |
-| **number Of Days Of Year** | `value.numberOfDaysOfYear` | The fixed divisor for a year. |
+| **Calendar** | `value.calender` | The HR calendar the module uses when a document does not name one. |
+| **Days In Month** | `value.daysInMonth` | The fixed divisor for a month. Ships as **30**. An HR Period's or HR Calendar's own **Days In Month** comes before it; the order is on [HR Calendar](hr-calendar-and-holidays.md). |
+| **Number Of Days Of Year** | `value.numberOfDaysOfYear` | The fixed divisor for a year. |
 | **Number Of Days Of Year For Termination** | `value.daysOfYearForTermination` | A separate year length used only for end-of-service arithmetic, because labour law often prescribes a different one. |
 | **Ignore Leap Year In Termination Dues Liquidation Net Days** | `value.ignoreLeapYearInTerminationDuesLiquidationNetDays` | Leaves 29 February out when a dues liquidation counts net working days. |
 | **Make Work Days Of Month Fixed For Salary Document** | `value.makeWorkDaysFixedForSalaryDoc` + `value.fixedWorkDaysCount` | Every salary document is generated with the same number of working days, whatever the month holds. The count comes from *Fixed Work Days Count*. |
@@ -137,7 +138,7 @@ first.
 |---|---|---|
 | **Vacation Calculation Policy** | `value.calcPolicy` | The entitlement rule the module follows. |
 | **Calculate Vacation Balance Based On Start Date** | `value.calcVacBalanceBasedOnWorStart` | Accrues from the employee's work-start date rather than the calendar year. The Arabic label marks it as Gulf-specific — «خاص بالخليج». |
-| **validate Balance On Vacation Request** | `value.validateBalanceOnVacRequest` | **On by default.** A vacation request is refused when the balance will not cover it. |
+| **Validate Balance On Vacation Request** | `value.validateBalanceOnVacRequest` | **On by default.** A vacation request is refused when the balance will not cover it. |
 | **Calculate Worth Vacation Balance On Return Date** | `value.calculateWorthVacationBalanceOnReturnDate` | Entitlement is computed as at the return date instead of the start of the vacation — which matters for a vacation that straddles an accrual boundary. |
 | **Allow Ignore Previous Years Balance In Gulf Vacations** | `value.allowIgnorePreviousYearsBalance` | Lets the Gulf vacation calculation drop what was carried forward. |
 | **Approximation Policy For Vacations Transfer** | `value.approxPolicyForVacTrans` | The rounding applied to years of service when vacation balance is carried over. |
@@ -159,12 +160,12 @@ Vacation types, balances and the documents themselves are covered in
 | **Update Employee Info With Period Start Only** | `value.updateInfoWithPeriodStart` | **On by default.** An employee-information change takes effect from the start of a payroll period rather than mid-period. |
 | **Multiple Documents To Update Employee Info In The Same Period Handling** | `value.multipleUpdateInfoInPeriodHandling` | How the engine reconciles more than one update document covering the same period. This choice also decides which of the four deduction sets applies — see [Absence and unpaid days](#Absence-unpaid-days-and-the-four-deduction-sets). |
 | **Allow More Than One Update Employee Info Document For Same Employee In Same Day** | `value.allowMoreThanOneUpdateEmployeeInfoDocForSameEmpInSameDay` | Removes the one-per-day restriction. |
-| **Prevent Editing Job Offers And Update Employee Info Docs If There A Document Created After** | `value.preventEditingJobOffersAndUpdateEmpInfoDocsIfThereADocAfter` | Locks a job offer or update document once any later document exists for that employee, so history cannot be rewritten underneath a salary that was already generated. |
+| **Prevent Editing Job Offers And Update Employee Info Docs If There Is A Document Created After** | `value.preventEditingJobOffersAndUpdateEmpInfoDocsIfThereADocAfter` | Locks a job offer or update document once any later document exists for that employee, so history cannot be rewritten underneath a salary that was already generated. |
 | **Do not Copy Dimensions From Job Offer and Update Info To Employee** | `value.dontCopyDimensionsToEmployee` | Stops the branch, department, sector and analysis-set values on a job offer or update document from being written onto the employee master file. |
 | **Update Employee Status From Firing Document Only If Work End Date is Today** | `value.updateEmpStatusFromFiringDocInSameDate` | The employee's state changes on the firing document only when the end date has actually arrived; a firing document dated next month leaves the employee on the books until then. |
-| **Prevent More Than One Liquidation At The Same Liquidation Date** | `value.preventMoreThanOneLiquidationAtTheSameLiquidationDate` | One dues liquidation per liquidation date. |
+| **Prevent More Than One Liquidation At The Same Liquidation Date** | `value.preventMoreThanOneLiquidationAtTheSameLiquidationDate` | A new dues liquidation is refused when a saved liquidation of the same employee and **Vacation Liquidation Type** has a **Liquidate To Date** after the new one's **Last Liquidation Date**. Once a liquidation is saved, its employee, Last Liquidation Date and Vacation Liquidation Type can no longer be changed. |
 | **Add Default Dues Liquidation Additions And Deductions** | `value.addDefaultDuesLiquidationAdditionsAndDeductions` | **On by default.** A dues liquidation is pre-filled with the standard additions and deductions. |
-| **Always Create Salary Document For Dues Liquidation** | `value.alwaysCreateSalaryDocumentForDuesLiquidation` | A liquidation always produces its own salary document. Its label is untranslated — the Arabic screen shows the English text. |
+| **Always Create Salary Document For Dues Liquidation** | `value.alwaysCreateSalaryDocumentForDuesLiquidation` | A liquidation always produces its own salary document. |
 
 ## What stops a salary document
 
@@ -172,7 +173,7 @@ These are the refusals. Each one exists because someone shipped a payroll they s
 
 | Option | Field | What it prevents |
 |---|---|---|
-| **Allow Negative Salary** | `value.allowNegativeSalary` | Off, a net salary below zero is refused. On, it is allowed — normally only wanted where a loan or a penalty is expected to swallow the whole month and the balance is carried. |
+| **Allow Negative Salary** | `value.allowNegativeSalary` | Off, a net salary below zero is refused, except on an employee's last salary document before firing. On, it is allowed — normally only wanted where a loan or a penalty is expected to swallow the whole month and the balance is carried. |
 | **Prevent issuance of salary sheet out of HR period** | `value.prevIssuOfSalarySheetOutOfHRPeriod` | **On by default.** A salary sheet dated outside the payroll period it belongs to. |
 | **Prevent salary before measures** | `value.preventSalaryBeofreMeasures` | A salary document generated before the performance indicators for the period exist. |
 | **Prevent Issue Salary Document If Loans are Greater Than Net Salary** | `value.preventIssueIfLoansMore` | A salary document where the loan instalments exceed the net. |
@@ -180,7 +181,7 @@ These are the refusals. Each one exists because someone shipped a payroll they s
 | **Collect Working Employees Only In Salary Sheet** | `value.collectWorkingEmployeesOnlyInSalarySheet` | Non-working employees from being collected onto a sheet at all. |
 | **Do Not Collect Employees With No Work Starting Document After Vacation** | `value.doNotCollectEmpsWithNoWorkStartingDocAfterVacation` | Collecting someone who went on vacation and has not been recorded as back at work. |
 | **Do not Collect Employees With Any Salary Sheet Line** | `value.doNotCollectEmployeesWithAnySalarySheetLine` | Collecting an employee who already appears on **any** sheet for the period, not just a paid one. |
-| **Allow Salary Issue If Vacation Includes Holiday** | `value.allowSalaryIssueIfVacationIncludesHoliday` | (Permits, rather than prevents) a salary run over a vacation that swallows an official holiday. |
+| **Allow Salary Issue If Vacation Includes Holidays** | `value.allowSalaryIssueIfVacationIncludesHoliday` | (Permits, rather than prevents) a salary run over a vacation that swallows an official holiday. |
 
 The two *collect* options here are only part of how a sheet chooses its employees; the full funnel —
 the employee search, the five Collect By Ref slots, the ranges that stack — is on
@@ -219,6 +220,15 @@ Then three grids decide *when* regeneration is allowed, and they are the useful 
 Each grid row can carry a **Criteria** so the rule applies to some employees or documents and not
 others; criteria are written on [Criteria Definitions](/platform/automation-and-rules/criteria-definitions).
 
+How the two allowed-statuses grids decide:
+
+- A salary document or sheet that is **rejected** or **cancelled** is never regenerated
+  (*You can not regenerate because the document {0} status is {1}* — «لا يمكن إعادة الإصدار لأن المستند {0} حالته {1}»).
+- While a grid is empty, the only other refusal is a document or sheet that is awaiting approval, with the same message.
+- Once a grid has rows, the **last** row that matches the document decides: *Allow Regenerate* = No
+  refuses with that row's message. A document that matches no row is refused.
+- A row must have an Arabic or an English message; the record does not save otherwise.
+
 The two templates, **Salary Documents Regeneration Notification Template**
 `value.regenSalaryDocsNotificationTemplate` and **Salary Documents Regeneration Failure Notification
 Template** `value.regenSalaryFailureNotificationTemplate`, are the messages sent when a regeneration
@@ -226,7 +236,7 @@ finishes or fails. Both ship with a default that links back to the document.
 
 ## Absence, unpaid days and the four deduction sets
 
-This is the group the screen labels `SalaryDeductions`, it holds a third of the options on the
+This is the group titled **Salary Deductions**, it holds a third of the options on the
 page, and it is the one that produces support tickets, so it is worth understanding its shape rather
 than reading its thirty-odd fields one at a time.
 
@@ -279,8 +289,8 @@ The group the screen labels `AttendanceConfig` decides how punches become hours.
 of it is explained in full on
 [Overtime and Lateness](/modules/hr/attendance/overtime-and-lateness); this is the rest.
 
-**Which dimensions an attendance plan may be chosen by.** Six switches — *use LegalEntity /
-AnalysisSet / Branch / Department / Sector / Job Position In Attendance Plan*
+**Which dimensions an attendance plan may be chosen by.** Six switches — *Use Legal Entity /
+Analysis Set / Branch / Department / Sector / Job Position In Attendance Plan*
 (`value.useLegalEntityInAttPlan`, `value.useAnalysisSetInAttPlan`, `value.useBranchInAttPlan`,
 `value.useDepartmentInAttPlan`, `value.useSectorInAttPlan`, `value.useJobPositionInAttPlan`) — add
 that dimension to the matching an attendance plan does when it looks for the plan that applies to an
@@ -304,7 +314,7 @@ shift, the start is taken as the second shift's start.
 `value.mergeLinesMissingPucnhInOrOut` — pairs an orphaned punch-in with an orphaned punch-out, up to
 the gap allowed by **Max Difference In Hours To Merge Lines Missing Punch In Or Out**
 `value.maxDiffInHoursToMergeLinesMissingPucnhInOrOut`, which ships as **18** hours. This is the pair
-to reach for when a machine drops punches. Both labels carry the shipped misspelling *Pucnh*.
+to reach for when a machine drops punches.
 
 **Consider Arrival Time For Work Day When Arriving Before Attendance Time With Period**
 `value.considerArrivalTimeForWorkDayWithPeriod` (ships as **2** hours) and **Do Not Consider Arrival
@@ -312,7 +322,7 @@ Time For Work Day When Arriving After Departure Time With Period**
 `value.doNotConsiderArrivalTimeForWorkDayWithPeriod` (ships as **10** hours) — the window either
 side of a shift within which an early or very late punch still counts as that work day.
 
-**unOfficial Working Time** `value.unOfficialWorkingTime` — what to do with hours worked outside
+**Unofficial Working Time** `value.unOfficialWorkingTime` — what to do with hours worked outside
 official working time: *Ignore*, count them as *OverTime*, or count them as *Normal* hours.
 
 **Leave Permission Starts The Day** `value.leavePermissionStartsTheDay` — the label explains itself:
@@ -320,12 +330,11 @@ official working time: *Ignore*, count them as *OverTime*, or count them as *Nor
 morning permission, the gap between the end of the permission and the employee actually arriving is
 not counted as lateness.
 
-**Prevent Leave / Mission / Vacation Document With In No Attendence Plan**
+**Prevent Leave / Mission / Vacation Document With In No Attendance Plan**
 `value.preventLeaveDocWithInNoAttendencePlan`, `value.preventMissionDocWithInNoAttendencePlan`,
 `value.preventVacationDocWithInNoAttendencePlan` — refuse each of the three documents for an
 employee with no attendance plan on that date. Worth turning on: without a plan there is nothing to
 measure the absence against, so the document records an intention that the engine cannot price.
-(All three labels carry the shipped misspelling *Attendence*.)
 
 **Take Weekends from the Weekend Document Instead of the Attendance Plan**
 `value.takeWeekendsFromWeekendDocNotAttPlan` — the weekly days off come from the dedicated weekend
@@ -359,14 +368,14 @@ and they ship ranked **mission (1), attendance (2), leave permission (3), partia
 | **Mission Document Priority With Overlap** | `value.missionDocPriorityWithOverlap` | 1 |
 | **Time Attendance Priority With Overlap** | `value.timeAttendancePriorityWithOverlap` | 2 |
 | **Leave Permission Priority With Overlap** | `value.leavePermissionPriorityWithOverlap` | 3 |
-| **Partial Vacation Priority WithOverlap** | `value.partialVacationPriorityWithOverlap` | 4 |
+| **Partial Vacation Priority With Overlap** | `value.partialVacationPriorityWithOverlap` | 4 |
 
 ## When two day types collide
 
 A single date can be an official holiday, a weekly day off **and** a vacation day all at once, and
 the engine has to pick one identity for it, because the answer changes whether the day is paid, is
-deducted, or turns the whole attendance into overtime. The group the screen labels
-`overtimeInMultiVacationDayHandling` holds the four rulings:
+deducted, or turns the whole attendance into overtime. The group titled **Handling of Overtime in
+Days with Multiple Off-Reasons (Week end, Vacation, or Holiday)** holds the four rulings:
 
 | Collision | Field | Ships as |
 |---|---|---|
@@ -382,7 +391,7 @@ vacation.
 
 Two unrelated options sit in the same group: **Do Not Use Performance Measures**
 `value.doNotUsePerformanceMeasures`, which takes the performance indicators out of the salary
-calculation entirely, and **Allow Salary Issue If Vacation Includes Holiday**
+calculation entirely, and **Allow Salary Issue If Vacation Includes Holidays**
 `value.allowSalaryIssueIfVacationIncludesHoliday`.
 
 ## Ignoring electronic attendance
@@ -403,13 +412,16 @@ four narrow it, and they come in two pairs — one pair selects **documents**, t
 | **Ignore Employee Electronic Attendance By Query** | `value.ignoreElectronicAttendanceEmployeeQuery` | The same, by query. |
 
 The employee pair is the one to use for a group of staff whose machine records are unreliable — a
-site with a broken reader, or field staff who never pass one.
+site with a broken reader, or field staff who never pass one. With **Ignore Electronic Attendance**
+ticked, the four narrowing fields must be left empty, or the settings do not save.
 
 ## Loans
 
 **Allowed Employee Statuses For Loan Document** `value.allowedEmployeeStatusesForLoanDocument` is a
-grid of employee states. An employee whose state is listed may have a loan document or loan request;
-anyone else may not. Leave it empty and no state is restricted.
+grid of employee states. A **Working** employee may always have a loan document or loan request; an
+employee in any other state may have one only when that state is listed. Leave the grid empty and
+only working employees can get a loan. The check runs when the document is new or its employee is
+changed, and refuses with *This Employee is not working* — «هذا الموظف ليس بالعمل».
 
 The loan options in [What stops a salary document](#What-stops-a-salary-document) — *Prevent Issue
 Salary Document If Loans are Greater Than Net Salary* and *Do not pay loans if there are no addition
@@ -430,7 +442,8 @@ is not forgiven; it is postponed, and the two components below carry it:
 - **Penalties Postponed From Previous Month Component Type**
   `value.penaltiesPostponedFromPreviousMonthComponentType` — the component it arrives in next month.
 
-Both must be set for postponement to work; a ceiling with no components quietly loses the excess.
+The three fields go together: once any one of them is filled, the settings do not save until the
+ceiling and both component types are filled.
 
 **Prevent Multi Reward - Penalty Of Same Type On Day**
 `value.preventMultiRewardPenaltyOfSameTypePerDay`, in the big untitled group, is **on by default**
@@ -446,8 +459,8 @@ show their internal name on screen. They are worth knowing precisely because of 
   and every installation points component 1 at whatever it calls the basic salary. This is what makes
   a formula portable between customers.
 - `value.employeeConstantSalary1Gruop` … `value.employeeConstantSalary5Gruop` — five salary
-  component **groups** used as the employee's constant (fixed) salary buckets. The field name carries
-  a shipped misspelling of "Group", which is also what you see on screen.
+  component **groups** used as the employee's constant (fixed) salary buckets. These field names are
+  exactly what the screen shows as their labels.
 
 Set these before writing salary formulas, not after: a formula that refers to slot 3 changes meaning
 the moment slot 3 is repointed. Formulas themselves are on
@@ -484,12 +497,12 @@ dimensions themselves are explained in
 
 ## Provisions
 
-The group the screen labels `ProvisionCalculation` is small and consequential.
+The **Provisions Calculation** group is small and consequential.
 
 | Option | Field | What it does |
 |---|---|---|
-| **Employee Provision Recalculation From Date** | `value.employeeProvisionRecalculationFromDate` | The earliest date a provision recalculation may reach back to. |
-| **Consider Opening Vacation Document In First Liquidation Document** | `value.considerOpeningVacDocInFirstLiquidationDoc` | The opening vacation balance document is taken into account by the first liquidation. |
+| **Employee Provision Re Calculation From Date** | `value.employeeProvisionRecalculationFromDate` | The earliest date a provision recalculation may reach back to. |
+| **Consider Date From Last Opening Vacation Document In First Liquidation Document** | `value.considerOpeningVacDocInFirstLiquidationDoc` | An employee's first dues liquidation starts from the **From Date** of the employee's latest opening vacation balance line (the commencement date when there is none), instead of the last work-starting date. |
 | **Termination Calculation Based On Whole Period** | `value.terminationCalculationBasedOnWholePeriod` | End-of-service is computed over the whole service period rather than period by period. |
 
 See [HR Provisions](/modules/hr/end-of-service/hr-provisions) for what the provisions are and what
@@ -499,7 +512,7 @@ accounting effect they have.
 
 Two fields, and one of them is a language.
 
-**Consider Legal Entity To Find Employee** `value.considerLegalEntityToFindEmployee` — the machine's
+**Consider Legal Entity To Find Employee While Importing Attendance Data** `value.considerLegalEntityToFindEmployee` — the machine's
 employee code is matched within the legal entity as well, which is what you need when two companies
 in one database use overlapping employee numbers on their readers.
 
@@ -576,7 +589,7 @@ without being on its default screen.
 |---|---|---|
 | **Do Not Consider Weekends In Working Days** | `value.doNotConsiderWeekendsInWorkingDays` | The mirror of the non-working-days option: weekends are not counted among working days. |
 | *Use Employee Work Place In Attendance Plan* | `value.useEmpWorkPlaceInAttPlan` | A seventh dimension for attendance-plan matching, alongside the six that **are** on screen. It has no label in either language. |
-| *Egyptian vacation not migrated by new system* | `value.egyptionVacationNotMigratedByNewSystem` | A migration flag for Egyptian vacation balances carried over from an older system. No label in either language; the field name carries a shipped misspelling of "Egyptian". |
+| *Egyptian vacation not migrated by new system* | `value.egyptionVacationNotMigratedByNewSystem` | A migration flag for Egyptian vacation balances carried over from an older system. No label in either language. |
 
 If you need one of them, add it to the screen with a
 [Screen Modifier](/platform/screen-modifier/screen-modifier-edit-screen) rather than editing the record directly.
@@ -588,19 +601,20 @@ open the configuration and look at the option named in the *Why* column.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You Must Entre Calender In HR configuration* | No **Calender** is set on the configuration, and something needs one. The shipped text misspells "Enter". | Set *Calender* on the configuration. This message has no Arabic text, so it appears in English on Arabic screens too. |
+| *You Must Entre Calender In HR configuration* | A vacation request was saved for an employee whose own **Vacation Calendar** is empty, and no **Calendar** is set on the configuration either. | Set *Calendar* on the configuration. This message has no Arabic text, so it appears in English on Arabic screens too. |
 | *You Must Fill Salary Generation Range* — «يجب ملء حقل مجال إصدار الرواتب» | A salary sheet was collected with no Salary Generation Range, so the collection has no way to know which employees are in scope. | Fill the range on the sheet, or set one on the issuance so the sheet inherits it. |
 | *Employee {0} has no attendance plan on day {1}* — «الموظف {0} ليس له خطة دوام في اليوم {1}» | The employee has no attendance plan covering a day in the document's range, and the matching *Prevent Leave / Mission / Vacation Document With In No Attendence Plan* option is on. | Give the employee a plan for those dates. If a plan does exist, check the six dimension switches in the attendance group — a plan that exists can still fail to match on a dimension. |
-| *Performance Measures was not created for employee {0}* | *Prevent salary before measures* is on and the period's performance indicators have not been generated for this employee yet. | Generate the performance indicators for the period, then reissue. No Arabic text exists for this message. |
+| *Performance Measures was not created for employee {0}* — «لم يتم إنشاء مؤشرات أداء للموظف {0}» | *Prevent salary before measures* is on and the period's performance indicators have not been generated for this employee yet. | Generate the performance indicators for the period, then reissue. |
 | *Salary For {0} is negative* | The net came out below zero and *Allow Negative Salary* is off. | Find what swallowed the month — usually a loan instalment or a penalty. Switch *Allow Negative Salary* on only if carrying a negative net is genuinely your policy. No Arabic text exists for this message. |
-| *The Net Salary {0} of Employee {1} is Less than paid Loans {2}* — «صافي المرتب {0} للموظف {1} اقل من مجمل السلف {2}» | *Prevent Issue Salary Document If Loans are Greater Than Net Salary* is on and this month's instalments exceed the net. | Reschedule or relieve the instalment for this month, or raise the ceiling for this employee through the loan document rather than switching the check off for everyone. |
+| *The Net Salary {0} of Employee {1} is Less than paid Loans {2}* — «صافي المرتب {0} للموظف {1} أقل من مجمل السلف {2}» | *Prevent Issue Salary Document If Loans are Greater Than Net Salary* is on and this month's instalments exceed the net. | Reschedule or relieve the instalment for this month, or raise the ceiling for this employee through the loan document rather than switching the check off for everyone. |
 | *Can not regenerate salary for the employee {0} because it is already paid for him* — «لا يمكن إعادة إصدار الراتب للموظف {0} لأنه تم قبضه بالفعل» | The document has been paid and *Allow Regenerate Paid Salary Documents* is off. | Decide deliberately: either reverse the payment, or switch the option on for the duration of the correction. |
 | *Can not regenerate because the document {0} does not match any line in grid {1} in hr configuration* — «لا يمكن إعادة الإصدار لأن المستند {0} لا يقابله أي سطر في جريد {1} الموجود في إعدادات الموارد البشرية» | Regeneration is governed by the allowed-statuses grids, and the document's status combination matches no row — and no row means no permission. | Add a row to the grid the message names for this status combination, with *Allow Regenerate* ticked. |
-| *This employee can have {0} permissions per month. Your are trying to give him {1} permissions* — «الموظف لديه  {0} إذن شهريا وانت تحاول ان تعطيه  {1} إذن» | The *Max Permissions Per Month* ceiling. The shipped English reads "Your are". | Raise the ceiling, or record the excess another way. Check *Max Permission Count Per Reason* and *Max Permission Count Per Hr Period Not Fiscal Period* too — they change what is being counted. |
-| *This employee can have {0} permission Hours per month. Your are trying to give him {1} permission hours* — «الموظف لديه عدد {0} ساعات إذن شهريا وانت تحاول ان تعطيه  {1} ساعات إذن» | The *Max Permission Hours Per Month* ceiling. | As above. |
-| *This employee max single permission hours is {0}. Your are trying to give him {1} permission hours* — «أقصى عدد ساعات للإذن الواحد للموظف هي {0} ساعات وانت تحاول ان تعطيه  {1} ساعات إذن» | The *Max Single Permission Hours* ceiling — this one is about a single document, not the month. | Split the permission into two, or raise the single-permission ceiling. |
+| *This employee can have {0} permissions per month. Your are trying to give him {1} permissions* — «الموظف لديه {0} إذن شهريا وأنت تحاول أن تعطيه {1} إذن» | The *Max Permissions Per Month* ceiling. | Raise the ceiling, or record the excess another way. Check *Max Permission Count Per Reason* and *Max Permission Count Per Hr Period Not Fiscal Period* too — they change what is being counted. |
+| *This employee can have {0} permission Hours per month. Your are trying to give him {1} permission hours* — «الموظف لديه عدد {0} ساعات إذن شهريا وأنت تحاول أن تعطيه {1} ساعات إذن» | The *Max Permission Hours Per Month* ceiling. | As above. |
+| *This employee max single permission hours is {0}. Your are trying to give him {1} permission hours* — «أقصى عدد ساعات للإذن الواحد للموظف هي {0} ساعات وأنت تحاول أن تعطيه {1} ساعات إذن» | The *Max Single Permission Hours* ceiling — this one is about a single document, not the month. | Split the permission into two, or raise the single-permission ceiling. |
 | *This document can not be used if the option manual attendance is selected* | *Attendance Manual Calculation* is on, and this document only works with automatic calculation. | Either switch manual calculation off, or stop using this document. There is a matching message for entity flows: *The entity flow {0} can not be used if the option manual attendance is selected*. Neither has Arabic text. |
-| *Document {0} was created in the same date {1}* — «{1} السند {0} تم إنشاؤه في نفس التاريخ» | A one-per-day rule refused a second document — for employee-update documents this is *Allow More Than One Update Employee Info Document For Same Employee In Same Day*, for liquidations it is *Prevent More Than One Liquidation At The Same Liquidation Date*. | Edit the existing document instead of adding a second one, or switch the relevant option on if two per day is genuinely valid here. |
+| *Document {0} was created in the same date {1}* — «السند {0} تم إنشاؤه في نفس التاريخ {1}» | A saved Update Employee Information document already exists for this employee on this date. An Update Employee Information document is refused this way while *Allow More Than One Update Employee Info Document For Same Employee In Same Day* is off; a job offer for the employee is refused this way whatever the option says. | Edit the existing document instead of adding a second one, or switch the option on if two update documents per day are genuinely valid here. |
+| *You can not create liquidation doc for employee {0} because field {1} must be greater than the field {2} in liquidation {3}* — «لا يمكنك إنشاء سند تصفية للموظف {0} لأن الحقل {1}  يجب أن يكون أكبر من الحقل {2} الموجود في سند التصفية {3}» | *Prevent More Than One Liquidation At The Same Liquidation Date* is on, and a saved liquidation of the same employee and type reaches past the new one's Last Liquidation Date. | Set the Last Liquidation Date after that liquidation's Liquidate To Date. |
 
 ::: info Messages quoted here are copied, not translated
 Where a message has no Arabic text in the product it is shown in English on Arabic screens as well.

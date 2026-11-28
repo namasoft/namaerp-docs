@@ -27,21 +27,21 @@ menu: المخازن ← الإعدادات ← إعدادات Supply Chain
 
 ## ما الذي يُقترح
 
-**إضافة الكميات للبحث في خصائص الأصناف في سندات الصرف (Add Quantity to Item Property Suggestion in Issues)** `value.addQtyToItemDimensionsSuggestion` *(مفعّل افتراضيًا)* — يعرض الكميات المتاحة فعليًا لكل خاصية عند إدخال صنف في مستندات **الصرف / الخارجة** (المبيعات، الصرف المخزني)، حتى يستطيع المستخدم اختيار ما يصرفه. أوقفه لإدخال الخصائص يدويًا دون البحث.
+**إضافة الكميات للبحث في خصائص الأصناف في سندات الصرف (Add Qty To Item Property Suggestion In Issues)** `value.addQtyToItemDimensionsSuggestion` *(مفعّل افتراضيًا)* — يعرض الكميات المتاحة فعليًا لكل خاصية عند إدخال صنف في مستندات **الصرف / الخارجة** (المبيعات، الصرف المخزني)، حتى يستطيع المستخدم اختيار ما يصرفه. أوقفه لإدخال الخصائص يدويًا دون البحث.
 
-**إضافة الكميات للبحث في خصائص الأصناف في سندات التوريد (Add Quantity to Item Property Suggestion in Receipts)** `value.addQtyToItemDimensionsSuggestionInRecipts` *(مفعّل افتراضيًا)* — نفس الأمر بالنسبة لمستندات **التوريد / الواردة** (المشتريات، التوريد المخزني)، حيث يعرض الكميات المتاحة فعليًا أثناء التوريد.
+**إضافة الكميات للبحث في خصائص الأصناف في سندات التوريد (Add Qty To Item Property Suggestion In Receipts)** `value.addQtyToItemDimensionsSuggestionInRecipts` *(مفعّل افتراضيًا)* — نفس الأمر بالنسبة لمستندات **التوريد / الواردة** (المشتريات، التوريد المخزني)، حيث يعرض الكميات المتاحة فعليًا أثناء التوريد.
 
-**استعمال اقتراح الكميات فقط في السندات التالية (Use Quantity Suggestion Only in the Following Types)** `value.addQtyToItemDimensionsSuggestionInTypes` *(جدول)* — يقصر اقتراح الكميات على أنواع المستندات المذكورة **فقط**. الجدول الفارغ يعني عدم وجود قيود (يسري المفتاحان أعلاه بشكل طبيعي).
+**استعمال اقتراح الكميات فقط في السندات التالية (Add Qty To Item Dimensions Suggestion Only In Types)** `value.addQtyToItemDimensionsSuggestionInTypes` *(جدول)* — يقصر اقتراح الكميات على أنواع المستندات المذكورة **فقط**. الجدول الفارغ يعني عدم وجود قيود (يسري المفتاحان أعلاه بشكل طبيعي).
 
-**اعتبار تاريخ الفاتورة في اقتراح الكميات (Consider Invoice Date in Quantity Suggestion)** `value.considerInvoiceDateInQtySuggestion` — عند تفعيله، تُحسب الكمية المتاحة المقترحة **اعتبارًا من تاريخ المستند** بدلًا من الرصيد الحالي اللحظي — وهو مفيد للمستندات المؤرّخة بتاريخ سابق.
+**اعتبار التاريخ عند اقتراح الكميات في البحث (Consider Invoice Date In Qty Suggestion)** `value.considerInvoiceDateInQtySuggestion` — عند تفعيله، تُحسب الكمية المتاحة المقترحة **اعتبارًا من تاريخ المستند** بدلًا من الرصيد الحالي اللحظي — وهو مفيد للمستندات المؤرّخة بتاريخ سابق.
 
-**عرض الكميات الأكبر من الصفر فقط في اقتراحات سندات التوريد (Show Only Non-Zero Quantities in Receipt Docs Suggestions)** `value.showOnlyNonZeroQtiesInReceiptDocsSuggestions` — في مستندات التوريد، يمكن للاقتراحات عادةً أن تشمل خصائص رصيدها صفر (حتى تتمكن من التوريد في شحنة جديدة). عند تفعيله، تُقترح فقط الخصائص ذات الكمية الموجبة.
+**عرض الكميات أكبر من الصفر فقط في الاستلام (Show Only Non-Zero Qties In Receipt Docs Suggestions)** `value.showOnlyNonZeroQtiesInReceiptDocsSuggestions` — في مستندات التوريد، يمكن للاقتراحات عادةً أن تشمل خصائص رصيدها صفر (حتى تتمكن من التوريد في شحنة جديدة). عند تفعيله، تُقترح فقط الخصائص ذات الكمية الموجبة.
 
-**اعتبار المخزن في اقتراحات سندات التوريد (Consider Warehouse in Receipt Docs Suggestions)** `value.considerWarehouseInReceiptDocsSuggestions` *(مفعّل افتراضيًا)* — في مستندات الصرف يُفلتر الاقتراح دائمًا حسب مخزن/موقع السطر؛ أما في مستندات التوريد فلا يحدث ذلك إلا عند تفعيل هذا الخيار. أوقفه للبحث عبر جميع المخازن أثناء التوريد.
+**اعتبار المخزن في سندات الاستلام (Consider Warehouse In Receipt Docs Suggestions)** `value.considerWarehouseInReceiptDocsSuggestions` *(مفعّل افتراضيًا)* — في مستندات الصرف يُفلتر الاقتراح دائمًا حسب مخزن/موقع السطر؛ أما في مستندات التوريد فلا يحدث ذلك إلا عند تفعيل هذا الخيار. أوقفه للبحث عبر جميع المخازن أثناء التوريد.
 
 **الوحدة المستعملة لاقتراح الكميات (Unit Used for Quantity Suggestions)** `value.unitUsedForSuggestions` — عند عدم وجود وحدة على السطر، يحدد هذا الخيار وحدة الصنف (الأساسية، أو وحدة البيع، أو وحدة الشراء) التي تُعرض بها الكميات المقترحة.
 
-**وضع إجمالي الكمية بعد تغيير الخاصية (Set Total Quantity with Property Change)** `value.addTotalQtyWithPropertyChange` — عند تفعيله، وبعد أن يختار المستخدم قيمة خاصية (مثل شحنة)، تُملأ كمية السطر تلقائيًا بـ**إجمالي الكمية المتاحة** لتلك الخاصية. استعمله عندما ينقل المستخدمون عادةً كامل الكمية المتاحة للشحنة المختارة.
+**وضع إجمالي الكمية بعد اختيار الشحنة (Set Total Quantity With Property Change)** `value.addTotalQtyWithPropertyChange` — عند تفعيله، وبعد أن يختار المستخدم قيمة خاصية (مثل شحنة)، تُملأ كمية السطر تلقائيًا بـ**إجمالي الكمية المتاحة** لتلك الخاصية. استعمله عندما ينقل المستخدمون عادةً كامل الكمية المتاحة للشحنة المختارة.
 
 ### عدم اقتراح أي شيء عند عدم وجود مخزون
 
@@ -59,11 +59,11 @@ menu: المخازن ← الإعدادات ← إعدادات Supply Chain
 
 ### ضبط التصفية والاحتساب
 
-**احتساب كمية الأبعاد بناءً على معامل تحويل وحدة الحركة إلى الوحدة الأساسية (Calculate Measures Quantity Based on Transaction Unit Rate to Base Unit)** `value.calcMeasuresQtyBasedOnTransUOMRateToBaseUOM` — للأصناف ذات الأبعاد/المقيسة، يحتسب كمية الأبعاد باستخدام معامل تحويل وحدة الحركة إلى الوحدة الأساسية للصنف، مع توحيدها عندما تختلف وحدة الإدخال عن الوحدة الأساسية.
+**تحويل كمية الأبعاد حسب معامل تحويل وحدة الحركة إلى الوحدة الأساسية (Calculate Measures Quantity Based on Transaction UOM Rate to Base UOM)** `value.calcMeasuresQtyBasedOnTransUOMRateToBaseUOM` — للأصناف ذات الأبعاد/المقيسة، يحتسب كمية الأبعاد باستخدام معامل تحويل وحدة الحركة إلى الوحدة الأساسية للصنف، مع توحيدها عندما تختلف وحدة الإدخال عن الوحدة الأساسية.
 
-**عدم تصفية المخزن والموقع حسب المحددات في اقتراح الكميات (Do Not Filter Warehouse and Locator by Dimensions in Quantity Suggestion)** `value.doNotFilterWarehouseAndLocatorByDimensionsInQtySuggestion` — عادةً تُفلتر المخازن/المواقع المقترحة حسب محددات المستند (الفرع/الإدارة/القطاع). عند تفعيله، يُتخطّى هذا الفلتر بحيث يُقترح أي مخزن/موقع.
+**عدم فلترة المخزن والموقع بناءً على المحددات عند اقتراح الكميات (Do Not Filter Warehouse And Locator By Dimensions In Quantity Suggestion)** `value.doNotFilterWarehouseAndLocatorByDimensionsInQtySuggestion` — عادةً تُفلتر المخازن/المواقع المقترحة حسب محددات المستند (الفرع/الإدارة/القطاع). عند تفعيله، يُتخطّى هذا الفلتر بحيث يُقترح أي مخزن/موقع.
 
-**اقتراح الكميات لكل موقع تخزيني أو مخزن (Suggest Quantity in Locator and Warehouse)** `value.suggestQtyInLocatorAndWarehouse` — عند تفعيله، توفّر حقول الموقع/المخزن اقتراح كمية لكل موقع / لكل مخزن. وعند إيقافه، يُعطّل اقتراح الموقع في الصرف المخزني. فعّله للمخازن التي تستخدم المواقع.
+**اقتراح الكميات لكل موقع تخزيني أو مخزن (Suggest Qty In Locator And Warehouse)** `value.suggestQtyInLocatorAndWarehouse` — عند تفعيله، توفّر حقول الموقع/المخزن اقتراح كمية لكل موقع / لكل مخزن. وعند إيقافه، يُعطّل اقتراح الموقع في الصرف المخزني. فعّله للمخازن التي تستخدم المواقع.
 
 ### عرض التشكيلة والتعبئة والتجميع
 
@@ -73,7 +73,7 @@ menu: المخازن ← الإعدادات ← إعدادات Supply Chain
 
 **عرض الأصناف الموردة الخاصة بالطريقة فقط في سند التجميع (Show BOM Materials Only in Assembly Document)** `value.showBOMMaterialsOnlyInAssembly` — عند تفعيله، لا يعرض سند التجميع إلا الأصناف التابعة للطريقة المختارة، مع إخفاء المدخلات غير المرتبطة.
 
-**عرض الخامات الناتجة الخاصة بالطريقة فقط في سند التجميع (Show BOM Co-Products Only in Assembly Document)** `value.showBOMCoProdsOnlyInAssembly` — نفس القيد بالنسبة للمنتجات الناتجة المعرّفة في الطريقة المختارة.
+**عرض الخامات الخاصة بالطريقة فقط في سند التجميع (Show BOM CoProds Only In Assembly Document)** `value.showBOMCoProdsOnlyInAssembly` — نفس القيد بالنسبة للمنتجات الناتجة المعرّفة في الطريقة المختارة.
 
 ### عرض أسماء الخصائص
 

@@ -9,7 +9,7 @@ Before anybody signs anything, a prospective tenant wants a number: what would S
 
 An offer also does something a quotation on letterhead cannot: it can **hold the unit**. That is the second half of this page, and it is the part that produces the errors people ask about.
 
-You will find both documents under **Real Estate and Property > Rents** — *Rent offer* (عرض سعر ايجار) and *Rent offer Cancel* (إلغاء حجز عرض سعر إيجار). Both need the `realestate-rent` licence.
+You will find both documents under **Real Estate and Property > Rents** — *Rent offer* (عرض سعر إيجار) and *Rent offer Cancel* (إلغاء حجز عرض سعر إيجار). Both need the `realestate-rent` licence.
 
 ![Rent offer edit screen](../../../ar/modules/realestate/images/rent/re-rent-offer-en.png)
 
@@ -24,7 +24,7 @@ What is different is deliberately small:
 | A **Reservation Status** field, and a read-only field showing the rent contract that was generated from this offer | The reservation decision, and the trail to the lease it became. |
 | The collection-commission figures are hidden | They belong to a live lease, not to a quotation. |
 | No *Other Fees Lines* grid | Fee lines are entered on the contract. |
-| One attachment slot instead of five | |
+| One attachment slot instead of three | |
 | No *Related Records* page | There is nothing generated from an offer to list. |
 | No accrual-date column on the installment lines | Offers never generate accrual ledgers. |
 
@@ -53,7 +53,7 @@ This is what protects a held quotation from a colleague leasing the unit out fro
 
 ## Whether the offer creates an accounting effect at all
 
-A quotation is not revenue, so an offer normally creates no accounting entry. That is controlled by **Create Accounting Effects** (إنشاء التأثير المحاسبى) on the offer's term, and on a quotation term you leave it off.
+A quotation is not revenue, so an offer normally creates no accounting entry. That is controlled by **Create Accounting Effects** (إنشاء التأثير المحاسبي) on the offer's term, and on a quotation term you leave it off.
 
 If you do turn it on, the offer produces the same entry the contract would. And if you later switch the flag off on a term whose offers have already created entries, Nama does not leave the old entries behind: the next time such an offer is updated, its existing entry is removed. Which means the flag is safe to correct after the fact — but also means you should not use it to "freeze" an entry you wanted to keep.
 
@@ -74,7 +74,7 @@ The offer keeps a link to the contract it became, so you can always get from the
 
 When a held prospect walks away, the reservation has to be released or the unit stays invisible to everyone else. That is the job of **Rent offer Cancel**. It is the same screen as the offer, and committing it writes a reservation-cancelled entry that frees the estate.
 
-It can only follow a reservation. Raise one against a unit that no offer is holding and the commit is rejected — the message names the document that actually sits last on that estate's timeline and tells you it must be a rent offer. In other words: cancel a reservation, not a lease. A lease is ended by [the termination document](/modules/realestate/rent/realestate-rent-renewal-and-termination.md), not by an offer cancel.
+It can only follow a reservation. Raise one when the document that sits last on that estate's timeline is not a reserving offer — a lease, for example — and the commit is rejected with *"The previous doc is {0} and it must be rent offer"*, naming that document. In other words: cancel a reservation, not a lease. A lease is ended by [the termination document](/modules/realestate/rent/realestate-rent-renewal-and-termination.md), not by an offer cancel.
 
 Note that a unit reserved by an offer and then leased through that offer needs no cancel at all — the contract supersedes the reservation on its own. You only need an offer cancel when the reservation ends *without* a lease.
 

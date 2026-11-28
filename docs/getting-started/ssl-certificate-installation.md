@@ -117,7 +117,7 @@ When it finishes, the installer saves a copy of the certificate as `<host>-for-d
 
 Whatever the source, the installer:
 
-1. keeps a backup of the current certificate files in `letsencrypt\backup\` and, for an imported certificate, a copy of the files you added in `letsencrypt\imported\`, for support;
+1. for a certificate you added (bought, received or self-signed), keeps a backup of the current certificate files in `letsencrypt\backup\` and a copy of the files you added in `letsencrypt\imported\`, for support. A Let's Encrypt installation skips this step;
 2. writes the certificate as `<host>-chain.pem` and its key as `<host>-key.pem` in the `letsencrypt` folder. The key is saved without a password, because Apache runs as a Windows service and cannot ask for one;
 3. writes the HTTPS site for Apache, and turns the plain `http://` address into a redirect to `https://`;
 4. **tests the new Apache configuration before restarting.** If Apache rejects it, the log says *Apache rejected the new configuration, the previous configuration was restored*, followed by Apache's own explanation, and the previous files are put back. A mistake therefore never takes down the other sites on the same Apache;

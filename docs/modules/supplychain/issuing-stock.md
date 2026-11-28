@@ -47,12 +47,12 @@ The system then reduces the inventory quantity at the source location, decreases
 
 ## The Request-First Approach: Stock Issue Request (StockIssueReq)
 
-In many organizations, items aren't issued at random - someone requests them first. The **Stock Issue Request** is a request for items that must be reviewed and approved before the actual issue.
+In many organizations, items aren't issued at random - someone requests them first. The **Stock Issue Request** records what is wanted before anything leaves the warehouse; it moves no stock itself.
 
 **Workflow:**
 1. **Request**: The department creates an issue request: "we need 100 kg of material, 50 pieces for work order #12345."
 2. **Review**: The warehouse supervisor checks availability, the request's validity, and the reasonableness of quantities.
-3. **Approval**: After approval, the request is authorized.
+3. **Approval**: When an [approval definition](/platform/approvals/approvals-system) covers the Stock Issue Request, the request waits for its approvers before it becomes live.
 4. **Execution**: The warehouse creates the actual issue document linked to the request.
 
 **Why the extra step?** Because it gives you control (no one takes items without a request and approval), planning (preparing items in advance), visibility (management sees consumption before it happens), and a clear audit trail. This is critical for high-value items, controlled materials, and budget-restricted items.
@@ -63,12 +63,14 @@ Issuing raw materials to production orders has its documents in the **Manufactur
 
 ## Cutting Two-Dimensional Materials (ItemCuttingDoc)
 
-The **Item Cutting Document** handles a special case for **two-dimensional** items (such as steel, glass, and wood sheets): when you don't just issue the material, but transform it into smaller pieces of specific dimensions.
+The **Item Cutting Doc** handles a special case for items whose measures type is **Two Dimensions** (steel, glass and wood sheets, measured by length and width) or **Single Dimension** (bars and profiles, measured by length): when you don't just issue the material, but cut it into smaller pieces of specific dimensions. Any other measures type is refused on the line.
 
-**Example**: You have a steel sheet measuring 2×3 meters. You cut it into several pieces of various dimensions per the manufacturing need. This document **issues** the full sheet, **receives** the resulting pieces with their dimensions, and **tracks** the waste (the difference between the sheet's area and the sum of the pieces' areas). It's an issue and a receipt at once - a transformation document for two-dimensional items.
+Each line gives the measures of the piece you take from stock and the measures and number of the pieces you want. When the document's term names a **Generated Assembly Doc Book** and a **Generated Assembly Doc Term**, saving the cutting document creates an **Assembly Document** that consumes as many source pieces as the cut needs and receives the requested pieces and the leftover offcuts back into stock, each with its own dimensions.
+
+**Example**: You have a steel sheet measuring 2×3 meters and need several 1×1 pieces. The generated assembly document issues the sheet, receives the 1×1 pieces, and receives what is left of the sheet as offcut pieces of their actual sizes, so the remainder stays in stock rather than disappearing.
 
 ::: tip Not for weight loss
-The cutting document is for the geometric transformation of two-dimensional items, not for handling weight loss or natural shrinkage (such as meat losing weight); that's handled through [Stock Taking](./stock-taking.md).
+The cutting document is for the geometric transformation of items measured by length or by length and width, not for handling weight loss or natural shrinkage (such as meat losing weight); that's handled through [Stock Taking](./stock-taking.md).
 :::
 
 ## Batch Selection: Which Items Are Issued?
@@ -112,25 +114,11 @@ Choose based on your organization's controls, the time elapsed, and whether down
 
 The Stock Issue carries one screen action of its own: **Collect Lots**. It fills the batch on every detail line from what the header warehouse and locator actually hold, following the document's term, instead of picking a batch line by line. It asks first whether to clear the batches already entered — answer no and it only fills the blanks.
 
-## Tips for Accurate Issuing
-
-::: tip Best Practices
-**Verify before saving**: Review quantities and items before saving (not as a draft). Once saved, the document affects the system immediately.
-
-**Use locators precisely**: Issue from the actual location where the items reside, not from the warehouse in general.
-
-**Link to source documents**: Always link the issue to its purpose. This traceability is essential when investigating discrepancies.
-
-**Don't delay recording issues**: Record them as soon as they happen. Real-time inventory accuracy requires real-time recording.
-
-**Handle partial issues**: If only part of the request is available, issue what you have and record the shortage rather than waiting.
-:::
-
 ## Frequently Asked Questions
 
 **Q: Can we issue items not in stock (go negative)?**
 
-A: It depends on the item's overdraft policy; some critical items prevent negative stock, while others warn but allow. See [Understanding Inventory Items](./understanding-items.md#Inventory-Control-How-Does-Stock-Behave).
+A: It depends on the item's **Over Draft Policy**: **Yes** lets it go negative, **No** refuses the issue, and **Inherited** leaves the decision to the item section and then the company-wide policy. See [Understanding Inventory Items](./understanding-items.md#Inventory-Control-How-Does-Stock-Behave).
 
 **Q: What's the difference between an issue and a transfer?**
 

@@ -17,8 +17,8 @@ The chart of accounts and the classifications are part of the core `accounting` 
 
 Every node in the tree has a **parent** that links it to its ancestor, and that's how the tree forms. The essential distinction is between two kinds of node:
 
-- **Grouping node** — carries the **Accepts Elements** (`يقبل عناصر`) flag, meaning it has branches beneath it. No entries are recorded on these nodes directly; they aggregate the balances of everything under them.
-- **Leaf node** — does not accept elements beneath it, and is the level the actual accounts attach to and where balances are recorded.
+- **Leaf node** — carries the **Accepts Elements** (`يقبل عناصر`) flag: it accepts accounts. The **Chart When Debit** and **Chart When Credit** fields on the Account screen offer only nodes with this flag ticked. A new node starts with the flag ticked.
+- **Grouping node** — has the flag unticked. The account's chart fields do not offer it; it aggregates the balances of the nodes under it.
 
 ![The Accounts Chart screen](../../../ar/modules/accounting/images/chart/accounts-chart-en.png)
 
@@ -44,7 +44,7 @@ When you change either field, or the **Class**, on a node that already has child
 
 ## Automatic account coding
 
-Instead of numbering accounts by hand, the **Code Formula Settings** section on a grouping node lets the system compute a new account's code automatically from a formula: a sequence prefix, a numeric-suffix length, and a starting number. You can also generate the Arabic/English name from a computed formula and set a code-validity query. The benefit is that every new account under that group gets a code consistent with its siblings, effortlessly.
+Instead of numbering accounts by hand, the **Master Files Coding Formula Configurations** section on a node lets the system compute the code of each new account attached to that node (the node chosen as the account's **Chart When Debit**) from a formula: a sequence prefix, a numeric-suffix length, and a starting number. You can also generate the Arabic/English name from a computed formula and set a code-validity query. The benefit is that every new account under that node gets a code consistent with its siblings, effortlessly.
 
 ## Account Category
 
@@ -57,7 +57,8 @@ Its key fields:
 - **Cash Flow Type** — places the account in the cash-flow statement; its values are **Operating Activities**, **Investment Activities**, **Financing Activities**, **Cash Account**, **Profit - Loss**, **Adjustment**, or **Not Involved** for accounts that don't enter the statement.
 - **Equation Type** — places the account in the income statement: **Revenue**, **Cost Of Revenue**, **Expenses**, **Other Revenue**, **Taxes**, or **Not Involved**.
 - **Class** and **Natural Side** — as in the chart of accounts.
-- The report display options (**Show Total Income**, **Show Taxes**, **Show Category Detail**) control the level of detail the category shows when statements are printed.
+- The report display options — **Show Total Income before This Category In Report**, **Show Net After Taxes before This Category In Report** and **Show Category Detail In Report** — control the subtotal lines printed before the category and the level of detail it shows when statements are printed.
+- **Accepts Elements** — as in the chart, but stricter: only a category with the flag unticked can be chosen as another category's **Parent**, and an account can be given only a category with the flag ticked and the same **Natural Side** as the account. The same two rules apply to Account Tax Category.
 
 ## Account Tax Category
 
@@ -79,7 +80,7 @@ An account category prints on the **Account Category** form (`SYSF-ACC009`), whi
 
 ## For Support
 
-- **"I can't record entries on a certain account"** — make sure the node is a **leaf** (doesn't carry the "Accepts Elements" flag); entries can't be recorded on grouping nodes.
+- **"I can't attach an account to a certain node"** — the node must carry the **Accepts Elements** flag; the account's chart fields do not offer a node without it, and once the account has a chart type they offer only nodes of that type.
 - **"The balance shows with a reversed sign in the statement"** — review the account's **Natural Side**; setting it wrong flips the balance's sign in reports.
 - **"An account doesn't appear in the income/cash-flow statement"** — check the **Equation Type** and **Cash Flow Type** in the account category; the **Not Involved** value excludes the account from the statement.
 - Building the leaf accounts themselves (currency, subsidiary types, entry-control and dimension properties) is covered in the [Accounts](./accounts.md) page.

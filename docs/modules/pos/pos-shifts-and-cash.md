@@ -24,8 +24,8 @@ The opening and closing screens share one layout: a row of icon buttons under th
 | **RePrint Last Open Shift** (second printer icon; closing screen only, same permission) | «إعادة طباعة آخر مستند فتح وردية» | Prints the opening document of the shift you are closing. |
 | **Sign out** (power icon) | «خروج» | Returns to the login screen, asking first if something typed on screen would be lost. |
 | **Show Document** (needs **Can Open Old Document**) | «عرض مستند» | Lists earlier documents of this kind so you can open one and look at it. |
-| **Settings** (gear icon; needs **Edit Settings**) | «الإعدادات» | Opens the register's settings window — the same one filled in at [installation](./pos-installation.md). |
-| **Send All** (cloud icon) | «إرسال الكل» | Opens a small window with **Force Send** («إرسال إجباري»), which sends every document still waiting to go to the server now, and **Reset and Force Send** («إعادة تعيين وإرسال إجباري»), which gives documents that ran out of automatic retries a fresh start and sends them. See [How POS data syncs](./pos-data-sync.md). |
+| **Settings** (gear icon; needs **Can Edit Settings**) | «الإعدادات» | Opens the register's settings window — the same one filled in at [installation](./pos-installation.md). |
+| **Send All** (cloud icon) | «إرسال الكل» | Opens the **Force Send** / **Reset and Force Send** window described in [How POS data syncs](/modules/pos/pos-data-sync#When-a-document-will-not-go-up). |
 | **Arabic** / **English** (language icon) | «العربية» / «الإنجليزية» | Switches the register's interface to the language its name shows. |
 | **Open in Nama** (only once the document has reached the server) | «فتح المستند في نما» | Opens the same document in the ERP in your web browser. |
 | **Ok** (`F2`) | «موافق» | Saves the shift document, prints it and returns to the sales screen. A closing document prints only for a cashier whose profile has **Can Print Shift Closing Document**. POS Settings can switch the `F2` key off with **Prevent Saving Shift By F2 Shortcut**. |

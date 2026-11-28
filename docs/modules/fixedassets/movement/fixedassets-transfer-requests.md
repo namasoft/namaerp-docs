@@ -45,10 +45,10 @@ The screen is a simplified version of the transfer document:
 
 | Group | Fields |
 |---|---|
-| Top | Book and code, issue date, value date, **Fixed Asset**, **To Location** (إلي موقع), description, five attachment slots |
+| Top | Book and code, issue date, value date, **Fixed Asset**, **To Location** (إلى موقع), description, five attachment slots |
 | **الحسابات / Detail Accounts** | The asset's three accounts, labelled generically as **Main Account**, **Account 01** and **Account 02** — respectively the asset's cost account, its depreciation account and its accumulated-depreciation account |
 | **من / From** | **Custodian**, and the company, branch and department the asset sits in today |
-| **إلى / To** | The company, branch and department it should move to |
+| **إلى / To** | The company, branch and department it should move to, and **To Fixed Asset Classification 1** to **5** (إلى تصنيف أصل ثابت) |
 | **المحددات / Dimensions** | The document's own dimensions, for filing and access rights |
 
 Two mechanics make it quick. Picking the **Fixed Asset** fills the whole *From* side, the accounts and
@@ -71,8 +71,10 @@ analysis-set reassignment is described on the document itself rather than reques
 
 There is no button. The accountant opens a new
 [transfer document](/modules/fixedassets/movement/fixedassets-transfer-document.md) and picks the
-request in the **بناءا على / From Document** field. That copies across the asset, both locations, both
-dimension sets, the custodian and the three accounts — the whole request, in one click.
+request in the **بناءً على / From Document** field. That copies across the asset, both locations, both
+dimension sets and the custodian. The request's three accounts and its *To* classifications are not
+copied: the transfer takes the accounts from the asset when it is saved, so an account change or a
+reclassification that was requested is entered again on the transfer document.
 
 From there the transfer is an ordinary transfer: it is validated, it can be edited before committing,
 and it books whatever its changes call for. The link back to the request is kept on the document as a

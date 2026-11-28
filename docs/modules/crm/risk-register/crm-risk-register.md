@@ -72,7 +72,7 @@ row's Solution Description for you. That is the one automatic convenience in the
 
 *Next Step* offers **Problem Solved Temporarily** (تم حل المشكلة مؤقتًا), **Move To Another
 Solution** (الانتقال إلى حل آخر), **Expert Help** (الاستعانة بخبير), **Approve Solution As Best
-Practice** (اعتماد الحل كـ BP) and **Other** (أخري).
+Practice** (اعتماد الحل كـ BP) and **Other** (أخرى).
 
 ::: warning The priority number is calculated in one place only
 On the Problem Declaration the Risk Priority Number fills itself from the three factors, both in
@@ -83,7 +83,7 @@ right above it. Whoever fills in that screen has to do the multiplication themse
 
 ## The Solution Suggestion
 
-A proposal for fixing a declared problem. It carries **From Document** (بناءا على), a **Solution
+A proposal for fixing a declared problem. It carries **From Document** (بناءً على), a **Solution
 Elements Description**, the **Solution Cost**, the **Problem Cost After Solution**, the three
 after-solution factors, the hand-typed priority number, ten attachments, and a one-column grid
 **Solution Proposers** (أسماء مقترحي الحل) listing the employees behind the idea.

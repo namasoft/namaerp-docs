@@ -180,7 +180,7 @@ Configure Omniful to send webhooks to your Nama ERP webhook endpoint with the fo
 #### Supported Events
 
 1. **Order Events**
-   - `sto.request-approve.event` → Creates a Stock Transfer Request when an STO request is approved in Omniful (once per request; a repeated event creates nothing)
+   - `sto.request-approve.event` → Creates a Stock Transfer Request when an STO request is approved in Omniful (once per request; a repeated event creates nothing). When the approved request is a Stock Transfer Request that Nama sent, no new request is created: Nama records the Omniful ID on the request it sent
    - `order.*` with `type: "sto"` → Creates Stock Transfer Requests or Issue Stock Transfers
    - `order.*` (non-STO) → Creates Sales Orders
 
@@ -240,7 +240,7 @@ Reference Field For Orders** is empty.
 | Action | Use it to | Run it from |
 |---|---|---|
 | `EAReadOmnifulOrders` | Pull every order in a status and date range | A Task Schedule — on a schedule as a safety net, or with **Run Now** |
-| `EAReadOmnifulOrdersByIds` | Pull particular orders by their sales channel order numbers | A Task Schedule with **Run Now** |
+| `EAReadOmnifulOrdersByIds` | Pull particular orders by their sales channel order numbers | A Task Schedule with **Run Now**, or an entity flow that takes the numbers from the record (parameter 4) |
 | `EAReReadOmnifulOrder` | Refresh the order behind the record the flow runs on | An entity flow on the Sales Order |
 
 **`EAReadOmnifulOrders`** parameters:
@@ -258,8 +258,11 @@ It asks Omniful for 100 orders at a time, page after page, until a page comes ba
 
 | # | Parameter | Meaning |
 |---|---|---|
-| 2 | Sales Channel Order IDs (CSV) | The order numbers as the sales channel knows them, separated by commas, for example `100045, 100046`. Required — empty fails with "No order IDs provided". |
+| 2 | Sales Channel Order IDs (CSV) | The order numbers as the sales channel knows them, separated by commas, for example `100045, 100046`. |
 | 3 | Allow Update (true/false) | As above. |
+| 4 | Sales Channel Order IDs template | Used only when parameter 2 is empty: a template filled from the record the flow runs on, for example `{remarks}`, that gives the comma-separated order numbers. Parameters 2 and 4 cannot both be filled. |
+
+When parameters 2 and 4 give no order number, the run fails with "No order IDs provided".
 
 An order number Omniful does not know is counted as failed. Both actions end with the warning
 "Saved N order(s), M failed. Failed order aliases: ..." naming the orders that could not be read.
@@ -325,17 +328,3 @@ Before processing, the system validates:
 - Document Generation Info Lines are defined
 - Required reference fields are configured
 - Webhook secret key matches the configuration
-
-## API Clients
-
-The integration uses two API client types:
-
-### OmnifulSalesChannelAPIClient
-- Used for customer and order-related operations
-- Handles sales channel API endpoints
-- Manages customer creation and updates
-
-### OmnifulTenantAPIClient
-- Used for warehouse management and inventory operations
-- Handles tenant-level API endpoints
-- Manages items, warehouses, and supply chain operations

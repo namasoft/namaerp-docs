@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Retrieves orders from Magento e-commerce sites based on a date range calculated from the current date. Imports all orders created within a specified number of days before today, enabling bulk order synchronization and catch-up processing.
+Reads orders from an e-commerce site starting from a point in time: the site's last order-read date when parameter 2 is empty, or a point counted back from the current time when it is filled. The orders are saved through the site's order import.
 
 ## When This Action Runs
 
@@ -19,28 +19,20 @@ Manual execution or scheduled tasks for bulk order imports. Typically used for r
 
 ## How It Works
 
-1. **Validates site code** - Finds the Magento site using the provided site code
-2. **Creates utility instance** - Initializes EcommerceReaderUtils with the site ID
-3. **Calculates date range** - Subtracts specified days from current date to determine start date
-4. **Calls API** - Invokes readSales method to fetch orders from the calculated date onwards
-5. **Processes results** - Handles returned order information and integration results
-6. **Accumulates results** - Collects status information and errors during processing
+1. **Validates site code** - Finds the e-commerce site (`MAGMagentoSite`) by the code in parameter 1; the flow fails with *Can not find site with code {0}* when there is none
+2. **Calculates the start** - With parameter 2 empty, the start is the date and time the site's orders were last read up to. With a number N in parameter 2, the start is the current time minus N minutes
+3. **Reads and saves the orders** - Reads the site's orders from that start onwards and saves them through the site's order import
+4. **Accumulates results** - Collects status information and errors during processing
 
 ## Parameters
 
 **Parameter 1:** Site Code (Required) - Code of the MagentoSite to read orders from
 
-**Parameter 2:** Read Orders Before N Days (Required) - Number of days back from today to start reading orders
-
-## Example Usage
-
-- Parameter 2: "7" - Reads orders from 7 days ago to today
-- Parameter 2: "30" - Reads orders from 30 days ago to today
-- Parameter 2: "1" - Reads orders from yesterday to today
+**Parameter 2:** Read Orders Before (N - Number) days (Optional) - A whole number N, or empty. Empty reads from the site's last order-read date. A number reads from the current time minus N minutes
 
 ## Database Tables Affected
 
-- **MAGMagentoSite** - References the Magento site configuration (read-only)
+- **MAGMagentoSite** - References the e-commerce site configuration
 - **Order Tables** - Creates or updates order data (varies by implementation)
 - **Customer Tables** - May update customer information from orders
 - **Product Tables** - May update product information from order lines

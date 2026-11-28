@@ -19,7 +19,7 @@ Find it at **Real Estate and Property > Documents > Collect Document** (العق
 ### Filling it in
 
 1. **Pick the book, the term and the dates as usual.** The term matters more here than on most documents: it carries the accounts, the *installment Effect* and the payment-order rules. If the term names an installment type, the document's own *Type* is filled from it, and a document whose type disagrees with its term will not commit.
-2. **Choose the contract in *Based On* (بناءا على).** Selecting it fills in the owner, the buyer, the debtor account, the estate and its location breadcrumb, and proposes an amount based on the installment matching the header due date and type. The owner field is filled for you and cannot be edited — it comes from the contract.
+2. **Choose the contract in *From Document* (بناءً على).** Selecting it fills in the owner, the buyer, the estate and its location breadcrumb — and, for a rent contract, the *Subsidiary* with the tenant — and proposes an amount based on the installment matching the header due date and type. The owner field is filled for you and cannot be edited — it comes from the contract.
 3. **Add a details line per installment.** The *Installment Code* column offers a suggestion list of the codes on the selected contract. Picking one copies the installment's due date, its value, its penalty and discount, its type and its tax percentages into the read-only "installment …" columns, and — this is the useful part — sets the **Collected Value** (القيمة المحصلة) to whatever is still outstanding on that installment.
 4. **Overwrite the collected value for a partial payment.** Type 8,000 against a 10,000 installment and the taxes, the line net and the header total all follow immediately.
 5. **Enter a collection discount** in the discount column that follows the collected value, if you are forgiving part of the balance to close the line. It shrinks what the installment owes rather than paying it — see the [basics page](/modules/realestate/collections/realestate-collection-basics.md).
@@ -29,24 +29,24 @@ The details grid also lets you name the **cheque** (commercial paper) an install
 
 ### Collecting several contracts in one document
 
-The *Based On* field is not the only way to point at a contract. Each detail line has its own contract column, and a document whose lines each name their own contract needs no header contract at all. That is how you collect from one customer who holds three units, or sweep up a handful of unrelated installments into a single receipt.
+The *From Document* field is not the only way to point at a contract. Each detail line has its own contract column, and a document whose lines each name their own contract needs no header contract at all. That is how you collect from one customer who holds three units, or sweep up a handful of unrelated installments into a single receipt.
 
-The rule to remember is the precedence: **if the header *Based On* is filled, it wins** and is copied onto every line. So either work header-first with one contract, or leave the header empty and drive everything from the lines.
+The rule to remember is the precedence: **if the header *From Document* is filled, it wins** and is copied onto every line. So either work header-first with one contract, or leave the header empty and drive everything from the lines.
 
-The contract picker on the lines is helpful about what it offers: rent contracts that have been cancelled are hidden, and once a buyer is on the header only that buyer's contracts are listed.
+The contract picker on the lines filters rent contracts: cancelled ones are hidden, and once a buyer is on the header only that buyer's rent contracts are listed. Sales contracts are listed without these filters.
 
 ### Turning the collection into cash
 
 Committing the collect document creates the receivable movement, not the receipt. Two buttons finish the job:
 
 - **Create Receipt Voucher** (إنشاء سند قبض) opens a brand-new, unsaved receipt voucher for the document's total, addressed to the buyer, already carrying one installment line per collect line and one commercial-paper line for every line that named a cheque. You review it and save it yourself.
-- **Create receipt voucher req** (إنشاء طلب قبض) does the same in a popup as a receipt request, for organisations that route incoming money through a request first. It copies the amount and the party only.
+- **Create receipt voucher req** (إنشاء طلب قبض) does the same in a popup as a receipt request, for organisations that route incoming money through a request first. It copies only the amount and its currency, with the collect document as the request's *From Document*.
 
 The document's second page, *Details*, lists the receipt vouchers, receipt requests and ownership transfer documents that ended up linked to it, so you can see from the collection whether the money was ever actually received.
 
 ### It is also an invoice
 
-A collect document is a tax document in its own right: it can be validated against the tax authority, viewed on the e-invoicing site and uploaded for online payment. The tax plan it uses is looked up in order — the buyer's plan first, then the estate's, and the term's plan only as a last resort. The taxes themselves are computed from the plan onto each line, unless the term switches on *Editable Taxes*, in which case the percentages you type are left alone.
+A collect document is a tax document in its own right: it can be validated against the tax authority, viewed on the e-invoicing site and uploaded for online payment. The tax plan it reports to the tax authority is the buyer's plan, else the estate's, else the term's. The tax percentages on each line are filled on save from the first tax plan found on the line's expense type, then the unit, then the unit's model, then the term — and are zero when any of those is marked *Not Taxable* — unless the term switches on *Editable Taxes*, in which case the percentages you type are left alone.
 
 ### A shortcut worth knowing
 
@@ -87,7 +87,7 @@ The screen is one page of range pairs — from/to date, from/to owner, from/to b
 
 Two details of the sweep are worth knowing. Installments already marked paid are never pulled. And **if you leave both dates empty, only installments that are already due are collected** — the sweep compares the due date against the document's value date. Fill the date range and you get exactly that window instead.
 
-If your process runs this every month, switch on the term option *Exclude Installments Previously Added To AggrCollectDoc* (استثناء الأقساط التي تم تجميعها سابقا في سند قبض مجمع). The sweep then asks the server whether each installment code has already been aggregated somewhere else and skips the ones that have, so a second run in the same month does not pull the same rent twice.
+If your process runs this every month, switch on the term option *Exclude Installments Previously Added To Aggregated Collect Document* (استثناء الأقساط التي تم تجميعها سابقا في سند قبض مجمع). The sweep then asks the server whether each installment code has already been aggregated somewhere else and skips the ones that have, so a second run in the same month does not pull the same rent twice.
 
 ### What commit actually does
 
@@ -112,13 +112,8 @@ The aggregated document performs no validation of its own; everything is checked
 
 ## Actions on these screens
 
-**On the collect document and the collect request** — the same two buttons on both:
+**On the collect document and the collect request** — the same two buttons on both: **Create Receipt Voucher** and **Create receipt voucher req**, described under *Turning the collection into cash* above.
 
-- **Create Receipt Voucher** — opens a new, unsaved receipt voucher for the document's total, addressed to the buyer, with one installment line per collect line and a commercial-paper line for every line that named a cheque.
-- **Create receipt voucher req** — opens a receipt request for the document's amount in a pop-up; it copies the amount and the party only.
-
-**On the aggregated collect document:**
-
-- **Collect Rent Contracts** — fills the grid with the unpaid installments of every rent contract and opening rent contract matching the owner, buyer, site and date ranges, as described in *The monthly run* above. It only fills the grid; nothing is saved until you save.
+**On the aggregated collect document:** **Collect Rent Contracts**, which only fills the grid, as described in *The monthly run* above.
 
 The collect document can also be opened ready-made from a contract: the **Create collect doc from selected line** button on each installment row of the rent contract, the sales contract and the other installment-bearing documents (see *A shortcut worth knowing* above).

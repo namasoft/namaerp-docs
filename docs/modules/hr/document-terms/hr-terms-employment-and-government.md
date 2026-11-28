@@ -1,5 +1,5 @@
 ---
-entities: [JobOffer, CandidateJobOffer, UpdateEmployeeInfo, AggrUpdateEmpInfo, EmployeeRelocate, AggFiringDocument, AggFiringRequest, HODefinitionLetter, AggrResidenceRenewReq, AggrHOSponsorshipTransferDoc, AggrHOExitReEntryVisaReq]
+entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
 
@@ -23,9 +23,10 @@ the three differently-named accounting switches — are on
 
 **The Job Offer term** has exactly one field, and it answers a question every implementation hits:
 *Do Not Change Hiring Date Of Employee* `termConfig.doNotChangeHiringDateOfEmployee`. Normally
-accepting a job offer sets the employee's hiring date to the offer's date. Tick this and the hiring
-date is left alone — which is what you want when the offer is a re-issue, a correction, or a
-formality for somebody who has been working for months.
+saving a job offer made to an existing employee, with its **Start Date** filled, sets both the
+employee's **Commencement date** and **Hiring date** to that Start Date. Tick this and the hiring date is
+left alone (the commencement date still changes) — which is what you want when the offer is a
+re-issue, a correction, or a formality for somebody who has been working for months.
 
 **The Candidate Job Offer term** repeats that option and adds the pair that makes it an aggregated
 document: *Generated Job Offer Book* and *Generated Job Offer Term* (`termConfig.genJobOfferBook`,
@@ -43,12 +44,14 @@ of them are about provisions.
 |---|---|---|
 | **Employee Provision Book** | `termConfig.employeeProvisionBook` | The book of the provisions recalculation document the update creates. |
 | **Employee Provision Term** | `termConfig.employeeProvisionTerm` | Its term. |
-| **Copy Boolean Fields To Employee** | `termConfig.copyBooleanFieldsToEmployee` | The yes/no fields on the update document are copied onto the employee master file, not only the values and references. The shipped Arabic label keeps the English word *Boolean*. |
+| **Copy Boolean Fields To Employee** | `termConfig.copyBooleanFieldsToEmployee` | The five generic yes/no fields on the update document are copied onto the employee master file, not only the values and references. The shipped Arabic label keeps the English word *Boolean*. |
 
 The provisions pair matters more than it looks. A raise changes what the end-of-service provision
-should be, so the update document triggers a recalculation — but only if it knows which book and
-term to create it under. An empty pair here is a common cause of provisions that quietly stop
-tracking salary changes.
+should be, so saving the update document creates (or updates) an employee provisions recalculation
+document — but only when the value of at least one component whose component type has **Generate
+Auto Adjustment If Value Changed** ticked has changed, and only when both the book and the term are
+filled here. An empty pair here is a common cause of provisions that quietly stop tracking salary
+changes.
 
 **The aggregated update term** names *update Employee Info Book* and *Update Employee Info Term* for
 the individual documents, and adds two tolerances: *Allow Empty Employee In Components*
@@ -60,38 +63,33 @@ being repeated per person.
 ## Relocation and termination
 
 **The Employee Relocate term** carries a single *Without Accounting Effect*
-`termConfig.withoutAccountingEffect`, for implementations where a relocation does have an accounting effect —
-a relocation allowance, typically — and others where it does not.
+`termConfig.withoutAccountingEffect`. By default a relocation creates an entry that moves the
+employee's open balance-sheet balances from the old dimensions to the new ones; ticking this stops
+that entry. The entry itself is explained on
+[Employee Relocation](/modules/hr/recruitment/employee-relocation).
 
 **The firing terms** — both the aggregated firing document and the aggregated firing request — share
 one field inherited from a common shape: *Generated Firing Document Book*
-`termConfig.generatedFiringBook`. Neither adds anything of its own. A firing request that is
-approved becomes a firing document, and this is the book that document lands in.
+`termConfig.generatedFiringBook`. Neither adds anything of its own. Saving the aggregated document
+creates one document per line in this book: a **Firing Document** per line from the Aggregated
+Firing Document, and a **Firing Request** per line from the Aggregated Firing Request. With the
+book empty the save is refused with *You must fill firing book in term {0}*.
 
 What the termination actually pays is not here: it is on the dues liquidation term, covered in
 [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues).
 
 ## The definition letter term
 
-A definition letter («خطاب تعريف») is the letter an employee asks for to show a bank or an embassy:
-it confirms that they work here and what they earn. Its term decides **what the letter is allowed to
-disclose and to whom**.
+A definition letter («خطاب تعريف موظف») is the letter an employee asks for to show a bank or an embassy:
+it confirms that they work here and what they earn. Its term decides **which salary the letter
+states**.
 
-**Seven component slots.** *component Type 1* through *component Type 7*
-(`termConfig.componentType1` … `termConfig.componentType7`) name which salary components appear in
-the letter. This is the whole point of having more than one definition letter term: a letter for a
-bank might show basic salary and housing allowance, and a letter for a visa application might show
-the full package.
-
-**Seven employee states.** *Employee State* and *Employee State1* through *Employee State6*
-(`termConfig.employeeState` … `termConfig.employeeState6`) list the states an employee may be in for
-this letter to be issued at all — so a letter can be refused to someone suspended or already
-terminated.
-
-**Allow Definition Letter Regardless Of Employee State** `termConfig.allowRegardlessOfEmpState`
-turns that whole check off in one tick, for the term used to write a letter for a former employee.
-
-See [Definition Letters](/modules/hr/government-relations/government-relations-overview).
+**Seven component slots.** *Component Type 1* through *Component Type 7*
+(`termConfig.componentType1` … `termConfig.componentType7`) name the salary component types that
+add up to the letter's **Monthly Salary**. This is the whole point of having more than one definition
+letter term: a letter for a bank might state basic salary and housing allowance, and a letter for a
+visa application might state the full package. How the amount is read from the salary documents is on
+[Government Relations Overview](/modules/hr/government-relations/government-relations-overview).
 
 ## The Gulf government-relations terms
 
@@ -105,8 +103,8 @@ the book and term of the individual requests the batch creates:
 | **Aggregated Exit / Re-Entry Visa Request** | *Exit ReEntry Visa Book* `termConfig.hoExitReEntryVisaBook`, *Exit ReEntry Visa Term* `termConfig.hoExitReEntryVisaTerm` |
 
 The residence renewal term adds one thing the others do not: an **Excluded Nationalities** grid
-`termConfig.excludedNationalities`. Employees of the listed nationalities are skipped by the batch —
-which is how a renewal run leaves out nationals of the country itself, or any group whose residence
+`termConfig.excludedNationalities`. Employees whose **Nationality** is listed are skipped by the
+**Collect Employees** action — which is how a renewal run leaves out nationals of the country itself, or any group whose residence
 is handled outside the system.
 
 Government relations are on

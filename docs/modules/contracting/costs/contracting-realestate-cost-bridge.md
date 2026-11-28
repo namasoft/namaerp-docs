@@ -22,7 +22,7 @@ your contract terms empty and the bridge is a silent no-op.
 
 The Real Estate module has its own cost machinery — a catalogue of cost elements, each carrying its own
 distribution rule, and a cost voucher that spreads amounts over estates. That is described in
-[Distributing Project Costs Over Properties](/modules/realestate/costs/realestate-cost-distribution.md),
+[Distributing Project Costs Over Properties](/modules/realestate/costs/realestate-cost-distribution),
 and it is the right tool for land, permits, lifts, marketing and every other lump sum a developer
 absorbs.
 
@@ -105,7 +105,7 @@ The rule is straightforward, and it errs towards "before":
 Both figures are refreshed on the unit every time the background task runs for any document touching it.
 The sales side reads them: the cost accumulated before delivery is what a sales contract can book as the
 unit's cost, and cost arriving afterwards is swept up separately — see
-[Handing the Unit Over](/modules/realestate/sales/realestate-handover.md).
+[Handing the Unit Over](/modules/realestate/sales/realestate-handover).
 
 ## Worked example: a tower's plastering across twenty flats
 
@@ -145,8 +145,8 @@ pre-hand-over figure, and anything dated after it — a defect put right in Apri
 post-hand-over figure instead.
 
 Which of those numbers is used, and where, belongs to the Real Estate module:
-[Distributing Project Costs Over Properties](/modules/realestate/costs/realestate-cost-distribution.md)
+[Distributing Project Costs Over Properties](/modules/realestate/costs/realestate-cost-distribution)
 for the estate cost picture as a whole, and
-[Handing the Unit Over](/modules/realestate/sales/realestate-handover.md) for the moment the pre- and
+[Handing the Unit Over](/modules/realestate/sales/realestate-handover) for the moment the pre- and
 post-hand-over distinction starts to matter. For where the 27,000 came from in the first place, see
 [How Project Cost Is Built](/modules/contracting/costs/contracting-cost-model).

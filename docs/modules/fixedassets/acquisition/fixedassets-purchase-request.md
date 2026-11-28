@@ -31,7 +31,7 @@ The header is the usual document header, plus the people and place involved:
 | Employee | الموظف | Who is asking |
 | Supplier | مورد | A preferred supplier, if there is one — a suggestion, not a commitment |
 | Asset Location | موقع الأصل | Where the equipment is wanted |
-| Processed By | تمت معالجتة بواسطة | Filled in by the system: the document that consumed this request |
+| Processed By | تمت معالجته بواسطة | Filled in by the system: the document that consumed this request |
 | Total Unsatisfied Qty | إجمالي الغير مسلم | Filled in by the system: how much of the request is still outstanding |
 | Description | ملاحظات | Free text — the place to justify the ask |
 
@@ -39,9 +39,9 @@ Then the **Details** grid (التفاصيل), which is where the request lives:
 
 | Column | Arabic label | Notes |
 |---|---|---|
-| Fixed Asset Name | أسم الأصل | Free text. You are naming a *thing you want*, not picking an asset record — the record does not exist yet |
+| Fixed Asset Name | اسم الأصل | Free text. You are naming a *thing you want*, not picking an asset record — the record does not exist yet |
 | Quantity | الكمية | How many |
-| Satisfied Qty | نفذت | System-maintained: how many have been ordered or received against this line |
+| Satisfied Qty | نفذت | System-maintained: how many have been ordered against this line |
 | Unsatisfied Quantity | الكمية الغير مستلمة | System-maintained: quantity minus satisfied |
 | Description | ملاحظات | Per-line note — specification, model, urgency |
 
@@ -71,8 +71,9 @@ The Fixed Asset Purchase Request has no buttons of its own. You type the ask, sa
 and that is the whole of your side of the work. The request is consumed from the *other* end: when
 somebody raises an
 [offer or a purchase order](/modules/fixedassets/acquisition/fixedassets-purchase-offers-and-orders.md)
-and points its **From Document** at this request, the lines come across and the satisfied quantities
-here start moving. Nothing on the request screen pushes it forward.
+and points its **From Document** at this request, the lines come across; when that document is a
+purchase order, the satisfied quantities here start moving as it is committed. Nothing on the request
+screen pushes it forward.
 
 ## How the request knows it has been answered
 
@@ -80,16 +81,16 @@ The two quantity columns are the only moving parts, and they are worth understan
 are the module's only "open orders" report.
 
 Every time an [offer, an order or an initial receipt](/modules/fixedassets/acquisition/fixedassets-purchase-offers-and-orders.md)
-is raised with **From Document** (بناءا على) pointing at this request, the lines that came from the
-request carry a hidden link back to the request line they were copied from. When that downstream
-document is committed:
+is raised with **From Document** (بناءً على) pointing at this request, the lines that came from the
+request carry a hidden link back to the request line they were copied from, and on commit the
+document stamps itself in the request's **Processed By**. Only a **purchase order** moves the
+quantities. When such an order is committed:
 
 - the matching request line's **Satisfied Qty** goes up by the quantity ordered,
 - its **Unsatisfied Quantity** is recomputed as quantity minus satisfied,
-- the header's **Total Unsatisfied Qty** is refreshed as the sum of the line figures,
-- and **Processed By** on the request is stamped with the document that consumed it.
+- the header's **Total Unsatisfied Qty** is refreshed as the sum of the line figures.
 
-Cancel or delete that downstream document and every one of those figures is put back. Because the counters
+Cancel or delete that order and every one of those figures is put back, and Processed By is cleared. Because the counters
 are driven by the link between lines, they only work when the downstream document was genuinely
 *built from* the request — typing the same asset name onto an unrelated order proves nothing and
 counts for nothing.

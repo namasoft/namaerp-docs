@@ -44,11 +44,11 @@ And throughout the journey, the **adjustment, stock-taking, and retention** docu
 
 Defined once under **Freight Management System → Master Files**:
 
-- **Mail Class / Category / Subclass** — classification of mail items per postal-union standards.
+- **IPS Mail Class**, **Mail Category** and **Mail Subclass** — classification of mail items per postal-union standards.
 - **Mail Condition** and **Parcel Status** — describe the item's situation.
-- **Delivery & Receipt Area** — offices and areas.
-- **Delivery Service Item** and **Delivery Service Price** — delivery pricing.
-- **Retention Reason** and **Non-Delivery Reason / Measure** — handling exceptions.
-- **Event** — item-tracking events.
+- **Delivery And Receipt Area** — offices and areas.
+- **Delivery Service Item** and **IPS Delivery Service Price** — delivery pricing.
+- **Mail Retention Reason**, **IPS Non Delivery Reason** and **IPS Non Delivery Measure** — handling exceptions.
+- **IPS Event** — item-tracking events.
 
 The following pages detail each group of documents.

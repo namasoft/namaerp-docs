@@ -57,11 +57,11 @@ For example, a tax plan set to **Tax Plan Line** has two rows: one for legal ent
 
 | Field Name | Database Field | Description | Impact |
 |------------|---------------|-------------|---------|
-| **Item Plan** | `itemPlan` | Indicates if this plan applies to items | When true, plan is used for item-level taxes (Tax1, Tax2) |
-| **No Item Taxes With This Policy** | `noItemTaxesWithThisPolicy` | Disables Tax1 and Tax2 | When true, item taxes are zeroed regardless of rates |
-| **No Invoice Taxes With This Policy** | `noInvoiceTaxesWithThisPolicy` | Disables Tax3 and Tax4 | When true, invoice taxes are zeroed regardless of rates |
+| **Item Plan** | `itemPlan` | Marks the plan as an item plan | Ticked: the plan is offered in the item's **Tax Plan** field. Unticked: it is offered in a document term's **Tax Plan** field. It cannot be ticked together with **No Item Taxes With This Policy** |
+| **No Item Taxes With This Policy** | `noItemTaxesWithThisPolicy` | Disables Tax1 and Tax2 | When the document header's tax plan has it ticked, Tax 1 and Tax 2 are zeroed on every line regardless of rates |
+| **No Invoice Taxes With This Policy** | `noInvoiceTaxesWithThisPolicy` | Disables Tax3 and Tax4 | When a line's tax plan (from the item) has it ticked, Tax 3 and Tax 4 are zeroed on that line regardless of rates |
 | **Prioritize This Policy Over Policy Specified In Customer and Supplier** | `priorityPolicyOverCusOrSup` | Policy precedence control | When true, this plan overrides customer/supplier tax settings |
-| **Default Tax Configuration** | `defaultTaxConfig` | Source of tax configuration | Options: GlobalConfig, TaxPlanHeader, TaxPlanLine |
+| **Default Tax Configuration** | `defaultTaxConfig` | Source of tax configuration | Options: **Global Configuration** (the default on a new plan), **Tax Plan Header**, **Tax Plan Line** |
 | **Tax Configuration** | `taxConfiguration` | Embedded tax behavior settings | Contains all tax calculation rules |
 | **Legal Entity Taxes** | `legalEntityTaxes` | Tax rates by entity and date | List of entity-specific tax rates |
 | **Subsidiary Accounts** | `subsidiaryAccounts` | Account-level settings | Contains tax exemption flags |
@@ -101,45 +101,7 @@ Each row of the **Legal Entity Taxes** grid holds:
 
 ### Discount Configuration Fields
 
-#### Global Configuration - Discount Apply Types
-
-These are set on the global configuration's [Discounts tab](/platform/global-config/global-config-discounts):
-
-| Field Name | Database Field | Description | Available Values |
-|------------|---------------|-------------|------------------|
-| **Discount 1 Apply Type** | `discount1ApplyType` | Base amount for Discount 1 | TotalPrice, AfterDiscount1-8, AfterHeaderDiscount, Custom, Tax/Discount Values |
-| **Discount 2 Apply Type** | `discount2ApplyType` | Base amount for Discount 2 | Same as above |
-| **Discount 3 Apply Type** | `discount3ApplyType` | Base amount for Discount 3 | Same as above |
-| **Discount 4 Apply Type** | `discount4ApplyType` | Base amount for Discount 4 | Same as above |
-| **Discount 5 Apply Type** | `discount5ApplyType` | Base amount for Discount 5 | Same as above |
-| **Discount 6 Apply Type** | `discount6ApplyType` | Base amount for Discount 6 | Same as above |
-| **Discount 7 Apply Type** | `discount7ApplyType` | Base amount for Discount 7 | Same as above |
-| **Discount 8 Apply Type** | `discount8ApplyType` | Base amount for Discount 8 | Same as above |
-| **Header Discount Apply Type** | `headerDiscountApplyType` | Base amount for header discount | Same as above |
-
-#### Discount Calculation Method Fields
-
-| Field Name | Database Field | Description | Impact |
-|------------|---------------|-------------|---------|
-| **Calculate discount 1 percentage from value** | `calcDisc1PercentFromValue` | Calculation direction for Discount 1 | True: Calculate % from fixed value<br>False: Calculate value from % |
-| **Calculate discount 2 percentage from value** | `calcDisc2PercentFromValue` | Calculation direction for Discount 2 | Same as above |
-| **Calculate discount 3 percentage from value** | `calcDisc3PercentFromValue` | Calculation direction for Discount 3 | Same as above |
-| **Calculate discount 4 percentage from value** | `calcDisc4PercentFromValue` | Calculation direction for Discount 4 | Same as above |
-| **Calculate discount 5 percentage from value** | `calcDisc5PercentFromValue` | Calculation direction for Discount 5 | Same as above |
-| **Calculate discount 6 percentage from value** | `calcDisc6PercentFromValue` | Calculation direction for Discount 6 | Same as above |
-| **Calculate discount 7 percentage from value** | `calcDisc7PercentFromValue` | Calculation direction for Discount 7 | Same as above |
-| **Calculate discount 8 percentage from value** | `calcDisc8PercentFromValue` | Calculation direction for Discount 8 | Same as above |
-
-#### Tax Effect on Discount Configuration
-
-Each of Discount 1 to 8 has its own group of these options:
-
-| Field Name | Database Field | Description | Impact |
-|------------|---------------|-------------|---------|
-| **Discount Tax 1** | `discount[N].considerTax1` | Subtract Tax 1 from the discount base | When on, Tax 1 is deducted from the base before the discount is applied |
-| **Discount Tax 2** | `discount[N].considerTax2` | Subtract Tax 2 from the discount base | When on, Tax 2 is deducted from the base before the discount is applied |
-| **Discount Tax 3** | `discount[N].considerTax3` | Subtract Tax 3 from the discount base | When on, Tax 3 is deducted from the base before the discount is applied |
-| **Discount Tax 4** | `discount[N].considerTax4` | Subtract Tax 4 from the discount base | When on, Tax 4 is deducted from the base before the discount is applied |
+The options that set each discount's base and behaviour (**Discount N Apply Type**, **Header Discount Apply Type**, **Calculate discount N percentage from value**, and the **Discount Tax 1**–**Discount Tax 4** group of each discount) are set on the global configuration's Discounts tab and are explained there, with their options and field ids: see [Discount 1 through Discount 8](/platform/global-config/global-config-discounts#Discount-1-through-Discount-8) and [General discount settings](/platform/global-config/global-config-discounts#General-discount-settings).
 
 ### How Discounts Are Calculated
 
@@ -156,9 +118,11 @@ New Total = Base Amount - Discount Amount
 ```
 
 #### Tax-Inclusive Discounts
-When taxes are included in the price, the discount calculation adjusts:
+When a discount's group ticks **Discount Tax N**, that tax is first taken out of the discount's base, and the discount percentage is applied to what is left. How the tax part is worked out depends on whether the price includes that tax:
 ```
-Discount Amount = Base Amount - (Base Amount × 100) ÷ (100 + Tax Percentage)
+Tax Part = Base Amount - (Base Amount × 100) ÷ (100 + Tax Percentage)    (Price Includes Tax N on)
+Tax Part = (Base Amount × Tax Percentage) ÷ 100                          (Price Includes Tax N off)
+Discount Amount = ((Base Amount - Tax Part) × Discount Percentage) ÷ 100
 ```
 
 ::: tip Discounts that disappear when the term or customer changes
@@ -169,75 +133,7 @@ Changing the term, the value date, the subsidiary or the customer can make the d
 
 ### The Tax Options
 
-These are the options a tax configuration carries, whichever of the three places above it comes from:
-
-#### Tax Location Fields
-
-| Field Name | Database Field | Description | Impact |
-|------------|---------------|-------------|---------|
-| **Tax 1 Location** | `tax1Location` | Where Tax1 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 1 Is Discount** |
-| **Tax 2 Location** | `tax2Location` | Where Tax2 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 2 Is Discount** |
-| **Tax 3 Location** | `tax3Location` | Where Tax3 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 3 Is Discount** |
-| **Tax 4 Location** | `tax4Location` | Where Tax4 sits in the calculation chain | Effects after it see a running total that includes it; adding or deducting is set by **Tax 4 Is Discount** |
-
-Available Location Values:
-- `MainPrice`: Applied to original line total
-- `Discount1` through `Discount8`: Applied after specific discount
-- `HeaderDiscount`: Applied after header discount
-
-#### Tax Apply Type Fields
-
-| Field Name | Database Field | Description | Impact |
-|------------|---------------|-------------|---------|
-| **Tax 1 Apply Type** | `tax1ApplyType` | Base for Tax1 calculation | Determines what amount Tax1 applies to |
-| **Tax 2 Apply Type** | `tax2ApplyType` | Base for Tax2 calculation | Determines what amount Tax2 applies to |
-| **Tax 3 Apply Type** | `tax3ApplyType` | Base for Tax3 calculation | Determines what amount Tax3 applies to |
-| **Tax 4 Apply Type** | `tax4ApplyType` | Base for Tax4 calculation | Determines what amount Tax4 applies to |
-
-#### Tax Behavior Control Fields
-
-| Field Name | Database Field | Description | Impact on Calculation |
-|------------|---------------|-------------|----------------------|
-| **Tax 1 Is Discount** | `tax1IsDiscount` | Tax1 reduces total | When true: Amount is subtracted<br>When false: Amount is added |
-| **Tax 2 Is Discount** | `tax2IsDiscount` | Tax2 reduces total | When true: Amount is subtracted<br>When false: Amount is added |
-| **Tax 3 Is Discount** | `tax3IsDiscount` | Tax3 reduces total | When true: Amount is subtracted<br>When false: Amount is added |
-| **Tax 4 Is Discount** | `tax4IsDiscount` | Tax4 reduces total | When true: Amount is subtracted<br>When false: Amount is added |
-
-#### Tax Calculation Method Fields
-
-| Field Name | Database Field | Description | Calculation Formula |
-|------------|---------------|-------------|---------------------|
-| **Tax 1 Is Value Not Percentage** | `tax1IsValue` | Tax1 as fixed amount | True: Fixed amount<br>False: Percentage of base |
-| **Tax 2 Is Value Not Percentage** | `tax2IsValue` | Tax2 as fixed amount | True: Fixed amount<br>False: Percentage of base |
-| **Tax 3 Is Value Not Percentage** | `tax3IsValue` | Tax3 as fixed amount | True: Fixed amount<br>False: Percentage of base |
-| **Tax 4 Is Value Not Percentage** | `tax4IsValue` | Tax4 as fixed amount | True: Fixed amount<br>False: Percentage of base |
-
-#### Tax Value Application Fields
-
-| Field Name | Database Field | Description | Impact |
-|------------|---------------|-------------|---------|
-| **Tax 1 Value Is For Total Not Per Piece** | `tax1ValueIsForTotal` | Tax1 value application | True: Flat amount<br>False: Multiplied by quantity |
-| **Tax 2 Value Is For Total Not Per Piece** | `tax2ValueIsForTotal` | Tax2 value application | True: Flat amount<br>False: Multiplied by quantity |
-| **Tax 3 Value Is For Total Not Per Piece** | `tax3ValueIsForTotal` | Tax3 value application | True: Flat amount<br>False: Multiplied by quantity |
-| **Tax 4 Value Is For Total Not Per Piece** | `tax4ValueIsForTotal` | Tax4 value application | True: Flat amount<br>False: Multiplied by quantity |
-
-#### Price Inclusion Fields
-
-| Field Name | Database Field | Description | Calculation Impact |
-|------------|---------------|-------------|-------------------|
-| **Price Includes Tax 1** | `priceIncludesTax` | Tax1 in quoted price | True: Tax extracted from price<br>False: Tax added to price |
-| **Price Includes Tax 2** | `priceIncludesTax2` | Tax2 in quoted price | True: Tax extracted from price<br>False: Tax added to price |
-| **Price Includes Tax 3** | `priceIncludesTax3` | Tax3 in quoted price | True: Tax extracted from price<br>False: Tax added to price |
-| **Price Includes Tax 4** | `priceIncludesTax4` | Tax4 in quoted price | True: Tax extracted from price<br>False: Tax added to price |
-
-#### Total Inclusion Fields
-
-| Field Name | Database Field | Description | Invoice Total Impact |
-|------------|---------------|-------------|---------------------|
-| **Tax 1 Not Included In Total** | `tax1NotIncludedInTotal` | Tax1 excluded from total | True: Not added to invoice total<br>False: Added to invoice total |
-| **Tax 2 Not Included In Total** | `tax2NotIncludedInTotal` | Tax2 excluded from total | True: Not added to invoice total<br>False: Added to invoice total |
-| **Tax 3 Not Included In Total** | `tax3NotIncludedInTotal` | Tax3 excluded from total | True: Not added to invoice total<br>False: Added to invoice total |
-| **Tax 4 Not Included In Total** | `tax4NotIncludedInTotal` | Tax4 excluded from total | True: Not added to invoice total<br>False: Added to invoice total |
+A tax configuration carries the same group of options for each of the four taxes, whichever of the three places above it comes from: **Tax N Location**, **Tax N Apply Type**, **Tax N Is Discount**, **Tax N Is Value Not Percentage**, **Tax N Value Is For Total Not Per Piece**, **Price Includes Tax N**, **Tax N Not Included In Total** and **Do Not Use TaxN Percentage As Additional ValueN**. Each one is explained once, with its options, on the global configuration's [How a tax is described](/platform/global-config/global-config-taxes#How-a-tax-is-described). On a tax plan the same options sit on the plan header (field ids such as `taxConfiguration.tax1Location`) and on each **Legal Entity Taxes** row (`legalEntityTaxes.taxConfiguration.tax1Location`). The rest of this section shows how they combine in the arithmetic.
 
 ### Tax as Addition vs Deduction
 
@@ -348,20 +244,9 @@ The switch that lets it through is **Ignore Force Price List With Free Item** on
 
 Two further term settings belong here. **Do Not Calculate Prices, Discounts, and Free Items If Unit Price Exists**, on that same pricing page, stops the pricing engine overwriting a unit price somebody typed by hand. And when a free line ends up at a zero unit price anyway, the [EARecalcFreeLinesUnitPriceIfZero](/entity-flows/supplychain/EARecalcFreeLinesUnitPriceIfZero) entity flow re-runs pricing for just those lines and puts a price back.
 
-::: warning Free lines can print a zero price
-A free line prints its unit price correctly only if the form reads **Unit price** directly. Some form templates derive the printed unit price by dividing the line's after-discount value by its quantity instead — and since that value is zero on a free line, the form prints zero while the screen plainly shows the real price. The shipped Sales Quotation form (**SYSF-SIV004**) reads the unit price directly and is fine; the shipped Purchase Order form (**SYSF-PIV004**) does the division.
-:::
-
 ### Additional Value Usage
 
-These fields control whether tax percentages are added as additional values to line totals:
-
-| Field Name | Database Field | When False (Default) |
-|------------|---------------|---------------------|
-| **Do Not Use Tax1 Percentage As Additional Value1** | `doNotUseTax1PercentageAsAdditionalValue1` | Tax1 percentage added to line total |
-| **Do Not Use Tax2 Percentage As Additional Value2** | `doNotUseTax2PercentageAsAdditionalValue2` | Tax2 percentage added to line total |
-| **Do Not Use Tax3 Percentage As Additional Value3** | `doNotUseTax3PercentageAsAdditionalValue3` | Tax3 percentage added to line total |
-| **Do Not Use Tax4 Percentage As Additional Value4** | `doNotUseTax4PercentageAsAdditionalValue4` | Tax4 percentage added to line total |
+**Do Not Use Tax1 Percentage As Additional Value1** through **Do Not Use Tax4 Percentage As Additional Value4** (`doNotUseTax1PercentageAsAdditionalValue1` … `doNotUseTax4PercentageAsAdditionalValue4`) decide whether the figure in a line's tax percentage field is also added to the line's total price as an additional value. They are explained with the other tax options under [How a tax is described](/platform/global-config/global-config-taxes#How-a-tax-is-described).
 
 ### Subsidiary Account Tax Exemptions
 
@@ -376,30 +261,7 @@ Customers and suppliers can have tax exemptions configured in their subsidiary a
 
 ### Document-Level Extra Discount (Egypt Tax Authority)
 
-When sending invoices to the Egypt Tax Authority (ETA), you sometimes need to grant a cash / "pay-now" discount on the whole invoice **after tax** — it lowers the total the customer pays without changing the VAT already calculated. ETA exposes a dedicated **Extra Discount** field on the invoice header for exactly this, separate from the ordinary line discounts.
-
-A field on the **Tax Payer Configuration** named **Document Level Extra Discount Location** controls it: you pick which line discount slot (Discount 1–8) carries this extra discount. That slot's value is then reported in ETA's Extra Discount field instead of being folded into the normal Total Discount Amount.
-
-For example: an item at 10,000, with Discount 1 = 300 and Discount 2 = 200 applied **before** tax, VAT at 14%, plus an 830 cash discount applied **after** tax and designated as the extra discount:
-
-| ETA field | Value |
-|-----------|-------|
-| Total Sales Amount | 10,000 |
-| Total Discount Amount | 500 (Discount 1 + 2, before tax) |
-| Net Amount | 9,500 |
-| Total Tax (14% of 9,500) | 1,330 |
-| Extra Discount Amount | 830 (after tax) |
-| Total Amount | 10,000 |
-
-The portal reconciles the invoice as `Net + Tax − Extra Discount = 9,500 + 1,330 − 830 = 10,000`, and VAT stays exactly 14% of the net.
-
-::: warning
-The discount slot chosen as the Extra Discount Location must be applied **after all taxes** in the effect order. An extra discount is post-tax by definition — if the chosen slot is calculated before tax, the reported net amount and tax no longer reconcile, so NamaERP stops the submission with a clear error naming the discount. Move the slot to after the taxes to resolve it.
-:::
-
-::: info
-This applies to Egypt Tax Authority e-invoices only (tax invoices, credit/debit notes, and their export variants). ZATCA, JoFotara, UAE, and the Egyptian e-receipt are unaffected.
-:::
+A cash ("pay-now") discount granted on an Egyptian e-invoice after tax can be reported in the authority's separate **Extra Discount** field: **Document Level Extra Discount Location** on the **Electronic Tax Authority Configuration** names the discount slot that carries it, and that slot must come after all the taxes in the line's calculation. The rule, the message you get when the slot sits before a tax, and a worked example are in the Egypt e-invoice guide under [The other line settings](/modules/invoicing/egypt-einvoice-guide#The-other-line-settings).
 
 ## Common Scenarios and Examples
 

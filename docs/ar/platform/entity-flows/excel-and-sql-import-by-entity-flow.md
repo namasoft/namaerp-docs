@@ -34,7 +34,7 @@ evalsql(select top 1 id from SalesInvoice order by valueDate desc)
 ="evalsql(select code from Account where subsidiaryType = '" & U13 & "')"
 ```
 
-ولأنها تنفذ استعلاماً على قاعدة البيانات، فإن `evalsql` لا تعمل في [استيراد السجلات](/ar/platform/import-export/importing-records.md) والـ REST API وأداة الاستيراد في خادم MCP إلا لأصحاب الصلاحيات الكاملة (Full Authority). أما غيرهم فيفشل السطر بالرسالة:
+ولأنها تنفذ استعلاماً على قاعدة البيانات، فإن `evalsql` لا تعمل في [استيراد السجلات](/ar/platform/import-export/importing-records) والـ REST API وأداة الاستيراد في خادم MCP إلا لأصحاب الصلاحيات الكاملة (Full Authority). أما غيرهم فيفشل السطر بالرسالة:
 
 «استخدام evalsql في القيم المستوردة متاح فقط للمستخدمين أصحاب الصلاحيات الكاملة»
 
@@ -120,7 +120,7 @@ $D1 * $H
 - الأعمدة هي: A و B و C … Z، ثم AA و AB … AZ، ثم BA و BB … BZ، ثم CA … وهكذا حتى IZ.
 
 - `details.text1=sql(select case when {excel.row1.A} = 'item' then 'ABC' when {excel.row1.B} = 'item' then 'BAC' else 'CAB' end)`
-- `exel.row1` يمنحك الوصول إلى الصف الأول حتى لو كان مُتجاهَلاً، لتسهيل الاستعلام عن صفوف العناوين.
+- `excel.row1` يمنحك الوصول إلى الصف الأول حتى لو كان مُتجاهَلاً، لتسهيل الاستعلام عن صفوف العناوين.
 
 
 ![سطر مسار كيان يقرأ ملف Excel المرفق إلى سطور المستند](../images/entity-flows/entity-flow-excel-import-field-map-ar.png)
@@ -156,7 +156,7 @@ Column1, column2 from Table
 
 - وبالمثل في عنوان الشحن والدفع.
 
-- يمكنك استعمال التالي في مسار كيان `EAFieldValuesCalculator` لنسخ المسميات باللغة العربية:
+- يمكنك استعمال التالي في مسار كيان `EAFieldsValuesCalculator` لنسخ المسميات باللغة العربية:
 
 ```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryAr

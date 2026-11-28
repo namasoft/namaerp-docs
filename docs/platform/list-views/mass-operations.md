@@ -18,12 +18,13 @@ whole page in a single click.
 
 ::: warning "Select all" means the page you are looking at, not the whole search
 The tick box in the column header selects **the rows currently displayed** — not every record that
-matched your filter. With the default page size of 25, a search that found 900 records and one
-click on the header tick box gives you 25 selected records, not 900.
+matched your filter. With a page size of 25 (the default unless the screen or the user sets
+another), a search that found 900 records and one click on the header tick box gives you 25
+selected records, not 900.
 
 If you need to act on more than a page's worth, raise the page size first — the control at the
-foot of the list offers 25, 50, 75, 100 and All — and then select. What you can see is what you
-get.
+foot of the list offers 25, 50, 100, 250, 500, 1000, 2500, 5000 and 50000 — and then select. What
+you can see is what you get.
 :::
 
 Start an action with nothing ticked and it stops straight away with **Please Select Rows**.
@@ -50,7 +51,7 @@ reported. To a user it looks as though the menu item did not work.
 
 ::: tip Leave "Stop With First Error" unticked unless you have a reason not to
 Unticked — the default — the run carries on past any record it cannot delete and finishes by
-listing the codes of all the records that failed, each with its reason. Tick it and the run stops
+reporting every record that failed, each with its reason. Tick it and the run stops
 at the first refusal, leaving everything after it untouched.
 
 Unticked is usually what you want. One run then tells you about every problem at once, instead of
@@ -70,7 +71,8 @@ the ones that were already committed without saying anything about them.
 
 It is the quick way to finish off a batch of documents that were entered and left as drafts,
 without opening each one. Each record goes through the ordinary commit, so a draft that fails its
-validations fails here exactly as it would have on its own screen.
+validations fails here exactly as it would have on its own screen. It asks the same **Stop With
+First Error** question as the deletion, with the same meaning.
 
 ## Retiring records from use
 
@@ -114,8 +116,9 @@ works through the selection in the background, reporting progress as it goes. A 
 too long, or was started by mistake, can be ended from the same place with **Kill Task** — records
 already processed stay processed; the rest are left alone.
 
-When a run finishes with failures, the report names the records that failed by code and gives the
-reason for each, so the list can be worked through afterwards.
+When a run finishes with failures, the report gives the reason for each record that failed, so the
+list can be worked through afterwards. When a delete, commit or usage run succeeds, the list is
+refreshed.
 
 ## What ends up in the history
 

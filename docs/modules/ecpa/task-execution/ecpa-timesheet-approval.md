@@ -96,7 +96,7 @@ This is the payoff, and it reaches three places at once.
 
 - an accepted row moves the approved hours across — **Actual Time += Approved Time**, and **Registered Time −= Approved Time**;
 - a rejected row simply removes the claim — **Registered Time −= Net Time** — and adds nothing to actual;
-- the task's **Start From** is pulled back to the earliest day approved on it.
+- the task's **Start From** is pulled back to the earliest day on the document's rows for that task, accepted or rejected.
 
 ![The executer row after approval: hours have moved from Registered Time into Actual](../../../ar/modules/ecpa/images/tasks/task-executers-hours-en.png)
 
@@ -109,17 +109,17 @@ In the worked example, Sara's row on CPAT-0207 now reads:
 | Time In Hours ǀ Registered Time | 7.50 | **0.50** |
 | Time In Hours ǀ Actual | 0.00 | **7.00** |
 | Cost ǀ Actual | 0.00 | **630.00** (7.00 × 90.00) |
-| % OF Finished | 0 % | **11.67 %** (7.00 ÷ 60.00) |
+| % Of Finished | 0 % | **11.67 %** (7.00 ÷ 60.00) |
 
 ::: info The half hour that was cut stays registered
-Notice the 0.50 left in Registered Time. When a manager approves less than was claimed, the difference is not returned to zero — it leaves the registered bucket only when it is decided on, and it never was. It is neither costed on the task nor billable, but it does sit against the executer row's planned-hours ceiling. If a task starts refusing timesheets sooner than its planned hours suggest it should, cut-back time from earlier approvals is usually the reason; raising the row's planned hours is the way to clear the path.
+Notice the 0.50 left in Registered Time. On an accepted row, only the Approved Time leaves Registered Time, so when a manager approves less than was claimed the difference stays there. It is neither costed on the task nor billable, and it counts toward the executer row's actual + registered total that is compared with its planned hours.
 :::
 
-The document also finishes off two jobs that belong to the timesheet. Any timesheet line carrying an expense item produces its [project expense request](/modules/ecpa/expenses/ecpa-project-expenses) at this point rather than earlier — which most sites will never see, because the expense columns are not on the standard timesheet grid and have to be placed there by a screen layout change first — and — if the approval's document term has **Regenerate Accounting Effect For Time Sheet Documents** ticked — each affected timesheet's ledger entry is re-issued as a business request and **processed** in the background. That single option is what makes *Create Accounting Effects For Approved Lines Only* on the timesheet's term useful: without the re-issue, a timesheet configured to book only approved lines would never book anything.
+The document also finishes off two jobs that belong to the timesheet. Any timesheet line carrying an expense item produces its [project expense request](/modules/ecpa/expenses/ecpa-project-expenses) at this point rather than earlier — which most sites will never see, because the expense columns are not on the standard timesheet grid and have to be placed there by a screen layout change first — and — if the approval's document term has **Regenerate Accounting Effect For Time Sheet Documents** ticked — each affected timesheet's ledger entry is re-issued as a business request and **processed** in the background. How this option pairs with *Create Accounting Effects For Approved Lines Only* on the timesheet's term is set out under the ledger effect on [Recording Worked Hours](/modules/ecpa/task-execution/ecpa-timesheets).
 
 ## Reversing a decision
 
-Cancelling the approval undoes all of it. The source timesheet lines go back to **Waiting Approval** with no verdict on them, the approved hours are moved back out of the task's actual bucket and into registered, and the expense request the approval generated is removed. The hours are then available to be collected and decided on again.
+Cancelling the approval reverses it. The source timesheet lines go back to **Waiting Approval** with no verdict on them, and the expense request the approval generated is removed. On each executer row, an accepted row's **Net Time** is taken back out of Actual Time and added back to Registered Time, and a rejected row's Net Time is added back to Registered Time; the tasks and projects are then re-totalled. The hours are then available to be collected and decided on again.
 
 ## What happens next
 

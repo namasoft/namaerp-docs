@@ -43,8 +43,11 @@ Automatically escalates overdue approval cases to the fallback employee defined 
 ## Configuration Requirements
 
 ### Approval Definition Setup
-- **fallBack employee** must be specified
-- **autoEscalateAfter** must have valid time period (value > 0 and uom)
+- **Fallback Employee** (`fallBack`) must be specified
+- **Automatic Escalate To After Period** (`autoEscalateAfter`) must have valid time period (value > 0 and uom)
+
+The period is counted for each waiting candidate from the time the approval was requested from that candidate.
+A candidate who is the fallback employee is not escalated.
 
 ### Approval Case Requirements
 - Must be in "InProgress" state

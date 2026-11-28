@@ -30,28 +30,28 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 |---|---|---|
 | عدم إظهار المستندات المرسلة لنما / **Do Not Show Documents Sent To Nama** | `value.doNotShowDocsSentToNama` | يُخفي من قوائم المستندات المحفوظة على الهاتف ما أُرسل منها إلى الخادم، فلا يبقى إلا ما لم يُرسل. |
 | **copyScheduleLinesWithFromDocToReceiptDoc** (بلا عنوان) | `value.copyScheduleLinesWithFromDocToReceiptDoc` | لسند القبض الإلكتروني في نما موبايل حين ينسخ من مستند له أقساط. إن كان معلَّماً نزلت الأقساط في سطور سداد الأقساط في السند، وإلا نزلت في سطور الجدولة. وتعرض الشاشة معرّف الحقل نفسه لأن الخيار بلا ترجمة. |
-| مطالعة نموذج الطباعة قبل طباعة المستند فى التطبيق / **Preview Printing Form Before Printing Document** | `value.reviewPrintingFormBeforePrintingDocument` | يعرض معاينة للنموذج قبل إرساله إلى الطابعة. |
+| مطالعة نموذج الطباعة قبل طباعة المستند في التطبيق / **Preview Printing Form Before Printing Document** | `value.reviewPrintingFormBeforePrintingDocument` | يعرض معاينة للنموذج قبل إرساله إلى الطابعة. |
 | طباعة المستندات مع الحفظ دائما / **Print Documents On Save** | `value.printDocumentsOnSave` | يطبع المستند فور حفظه في التطبيق بدلاً من الاكتفاء بإغلاق الشاشة. ينطبق على سندات القبض الإلكترونية، وأذون الصرف والاستلام المخزني، والتحويلات المخزنية، ومردودات المبيعات. |
 | عدم زيادة كمية السطر الموجود عند اختيار الصنف من الهيدر / **Do Not Increment Quantity With Header Item** | `value.doNotIncrementQtyWithHeaderItem` | في الأصل، مسح صنف موجود في المستند يزيد كمية سطره. ومع تعليم هذا الخيار يصنع كل مسح سطراً جديداً. |
 | السماح بتعديل السطور المجانية / **Allow Editing Free Lines** | `value.allowEditFreeLines` | في سطور المبيعات بالتطبيق تكون السطور المجانية للقراءة فقط ما لم يُعلَّم هذا الخيار. ومع تعليمه يستطيع المستخدم تعديلها وتغيير علامة المجاني. |
-| تحديد سطور مردود المبيعات فى التطبيق / **Custom Sales Return Lines In Mobile App** | `value.customSalesReturnLines` | يغيّر شاشة مردود المبيعات في التطبيق: النسخ من الفاتورة لا يجلب كل سطورها، بل تصير قائمة يختار منها المستخدم الأصناف المرتجعة فعلاً. والصنف غير الموجود في المستند الأصلي يُرفض. |
-| عدم تحديث أسعار وخصومات الأصناف المنسوخة من بناءا على فى مردود المبيعات / **Do Not Update Prices And Discounts Copied From Doc In Sales Return** | `value.doNotUpdatePricesAndDiscountsCopiedFromDocInSalesReturn` | لمردود المبيعات المنسوخ من مستند. إن كان معلَّماً احتفظ كل سطر بسعر المستند الأصلي وخصوماته، وإلا جلب التطبيق سعر البيع الحالي للصنف. |
+| تحديد سطور مردود المبيعات في التطبيق / **Custom Sales Return Lines In Mobile App** | `value.customSalesReturnLines` | يغيّر شاشة مردود المبيعات في التطبيق: النسخ من الفاتورة لا يجلب كل سطورها، بل تصير قائمة يختار منها المستخدم الأصناف المرتجعة فعلاً. والصنف غير الموجود في المستند الأصلي يُرفض. |
+| عدم تحديث أسعار وخصومات الأصناف المنسوخة من بناءً على في مردود المبيعات / **Do Not Update Prices And Discounts Copied From Doc In Sales Return** | `value.doNotUpdatePricesAndDiscountsCopiedFromDocInSalesReturn` | لمردود المبيعات المنسوخ من مستند. إن كان معلَّماً احتفظ كل سطر بسعر المستند الأصلي وخصوماته، وإلا جلب التطبيق سعر البيع الحالي للصنف. |
 | نوع طابعة الموبايل / **Mobile Printer Type** | `value.mobilePrinterType` | يفرض الطابعة التي يطبع بها التطبيق. وتركه فارغاً يُبقي الطابعة المختارة في إعدادات الطابعة داخل التطبيق. ولا يُطبَّق كما اخترته إلا **Old SDK** و**New SDK** و**Bluetooth** و**External Bluetooth**، وأي اختيار آخر يطبع كطابعة عادية، فاتركه فارغاً لبقية الطابعات واختر الطابعة من الهاتف. |
-| إظهار رقم الشحنة وتاريخ الصلاحية فى سطور التطبيق / **Show LotId And Expire Date In Mobile App Lines** | `value.showLotIdAndExpireDateInMobileAppLines` | يُظهر رقم الشحنة وتاريخ الصلاحية في سطور المبيعات وسطور الجرد الإلكتروني. |
-| عدد خانات الكسر فى أسعار التطبيق / **Fraction Decimal Places In Mobile App** | `value.fractionDecimalPlacesInMobileApp` | عدد الخانات العشرية التي يُقرَّب إليها إجمالي سطر المبيعات في التطبيق. الفارغ أو الصفر يعني 3. |
-| اقصى مسافة مسموحة للفاتورة بالنسبة لموقع العميل / **Allowance Distance For Customer Invoice** | `value.allowanceDistanceForCustomerInvoice` | أقصى بُعد بالمتر بين المستخدم وموقع العميل على الخريطة عند حفظ مستند مبيعات أو مخزون. فإن كان أبعد مُنع الحفظ وظهرت خريطة بالنقطتين. الفارغ أو الصفر يوقف الفحص، والعميل الذي لا موقع له على الخريطة لا يُفحص أبداً. |
+| إظهار رقم الشحنة وتاريخ الصلاحية في سطور التطبيق / **Show Lot ID And Expire Date In Mobile App Lines** | `value.showLotIdAndExpireDateInMobileAppLines` | يُظهر رقم الشحنة وتاريخ الصلاحية في سطور المبيعات وسطور الجرد الإلكتروني. |
+| عدد خانات الكسر في أسعار التطبيق / **Fraction Decimal Places In Mobile App** | `value.fractionDecimalPlacesInMobileApp` | عدد الخانات العشرية التي يُقرَّب إليها إجمالي سطر المبيعات في التطبيق. الفارغ أو الصفر يعني 3. |
+| أقصى مسافة مسموحة للفاتورة بالنسبة لموقع العميل / **Allowance Distance For Customer Invoice** | `value.allowanceDistanceForCustomerInvoice` | أقصى بُعد بالمتر بين المستخدم وموقع العميل على الخريطة عند حفظ مستند مبيعات أو مخزون. فإن كان أبعد مُنع الحفظ وظهرت خريطة بالنقطتين. الفارغ أو الصفر يوقف الفحص، والعميل الذي لا موقع له على الخريطة لا يُفحص أبداً. |
 | طريقة الدفع الافتراضية / **Default Payment Method** | `value.defaultPaymentMethod` | طريقة الدفع التي يقترحها التطبيق في مستندات المبيعات. بعد اختيار العميل يضيف التطبيق سطر دفع بالإجمالي كله بهذه الطريقة. |
 | **Default Payment Method Expression** | `value.defaultPaymentMethodExpression` | يأخذ طريقة الدفع من المستند بدلاً من ذلك، من حقل على العميل مثلاً. فإن أعطى طريقة غلبت **طريقة الدفع الافتراضية**. |
 | دفتر سند تعريف هاتف مستخدم / **User Mobile Identifier Document Book** | `value.mobileIdentifierDocumentBook` | الدفتر المستخدم حين يسجّل المستخدم هاتفه من التطبيق. والدفتر الموجود على سطر مطابق في جدول المستندات أدناه له الأولوية. انظر [ربط المستخدمين بهواتفهم](./mobile-device-binding.md). |
-| تأكيد الحضور والانصراف الإلكترونى بالبصمة / **Use Biometrics Authorization For Electronic Attendance** | `value.useBiometricsAuthorizationForElecAttendance` | يطلب بصمة الإصبع أو الوجه (أو رمز قفل الهاتف إن لم يكن فيه أيهما) قبل كل تسجيل حضور أو انصراف. والهاتف الذي لا قفل له إطلاقاً لا يستطيع تسجيل الحضور. |
-| إظهار زر الحفظ كمسودة فى التطبيق / **Show Save As Draft Button In Mobile** | `value.showSaveAsDraftInMobile` | يُظهر زر **حفظ كمسودة** في مستندات المبيعات والمخزون بالتطبيق، ويُبقي تلك المسودات قابلة للتعديل. ويشغّل أيضاً مؤقت **الحفظ كمسودة كل (بالثانية)** في جدول المستندات أدناه. وفي التطبيق الحالي يقرر كذلك هل تظهر نافذة «لا يوجد سجل» حين لا يطابق الكود المكتوب أو الممسوح أي سجل. |
-| إظهار المستندات المحفوظة كمسودة فى التطبيق / **Show Draft Documents In Mobile** | `value.showDraftDocsInMobile` | القوائم التي ينزّلها التطبيق لا تضم في الأصل إلا السجلات المحفوظة. ومع تعليم هذا الخيار تُضم المسودات أيضاً. ولا يتأثر البحث داخل الحقول. |
-| منع إنشاء سند زيارة جديد فى حالة وجود سند غير مغلق / **Prevent Create New Visit If There are One Open** | `value.preventNewCRMVisitIfThereAreOpenOne` | المندوب الذي ما زالت له زيارات مفتوحة لا يستطيع بدء زيارة جديدة، ويخبره التطبيق بعدد زياراته المفتوحة. |
-| خيارات الحضور و الإنصراف / **Attendance Options** | `value.attendanceOptions` | ما تعرضه شاشة الحضور: **Attending Only** (حضور فقط، ويُسجَّل الانصراف منسياً)، أو **Leaving Only** (انصراف فقط، ويُسجَّل الحضور منسياً)، أو **Attending And Leaving**. الفارغ يعني الحضور والانصراف معاً. |
-| **Use Web Sockets** | `value.useWebSockets` | يُبقي اتصالاً حياً بين التطبيق والخادم. فإذا تغيّرت هذه الإعدادات سجّل التطبيق الدخول من جديد بنفسه وأخذ الإعدادات الجديدة. |
+| تأكيد الحضور والانصراف الإلكتروني بالبصمة / **Use Biometrics Authorization For Electronic Attendance** | `value.useBiometricsAuthorizationForElecAttendance` | يطلب بصمة الإصبع أو الوجه (أو رمز قفل الهاتف إن لم يكن فيه أيهما) قبل كل تسجيل حضور أو انصراف. والهاتف الذي لا قفل له إطلاقاً لا يستطيع تسجيل الحضور. |
+| إظهار زر الحفظ كمسودة في التطبيق / **Show Save As Draft Button In Mobile** | `value.showSaveAsDraftInMobile` | يُظهر زر **حفظ كمسودة** في مستندات المبيعات والمخزون بالتطبيق، ويُبقي تلك المسودات قابلة للتعديل. ويشغّل أيضاً مؤقت **الحفظ كمسودة كل (بالثانية)** في جدول المستندات أدناه. وفي التطبيق الحالي يقرر كذلك هل تظهر نافذة «لا يوجد سجل» حين لا يطابق الكود المكتوب أو الممسوح أي سجل. |
+| إظهار المستندات المحفوظة كمسودة في التطبيق / **Show Draft Documents In Mobile** | `value.showDraftDocsInMobile` | القوائم التي ينزّلها التطبيق لا تضم في الأصل إلا السجلات المحفوظة. ومع تعليم هذا الخيار تُضم المسودات أيضاً. ولا يتأثر البحث داخل الحقول. |
+| منع إنشاء سند زيارة جديد في حالة وجود سند غير مغلق / **Prevent Create New Visit If There Is One Open** | `value.preventNewCRMVisitIfThereAreOpenOne` | المندوب الذي ما زالت له زيارات مفتوحة لا يستطيع بدء زيارة جديدة، ويخبره التطبيق بعدد زياراته المفتوحة. |
+| خيارات الحضور و الانصراف / **Attendance Options** | `value.attendanceOptions` | ما تعرضه شاشة الحضور: **Attending Only** (حضور فقط، ويُسجَّل الانصراف منسياً)، أو **Leaving Only** (انصراف فقط، ويُسجَّل الحضور منسياً)، أو **Attending And Leaving**. الفارغ يعني الحضور والانصراف معاً. |
+| استخدام Web Sockets / **Use Web Sockets** | `value.useWebSockets` | يُبقي اتصالاً حياً بين التطبيق والخادم. فإذا تغيّرت هذه الإعدادات سجّل التطبيق الدخول من جديد بنفسه وأخذ الإعدادات الجديدة. |
 | رمز إعدادات الموبايل / **Mobile Settings Pin** | `value.mobileSettingsPin` | إن مُلئ طلبت شاشة الإعدادات في التطبيق هذا الرمز قبل أن تُفتح. ويتحقق التطبيق منه لدى الخادم في كل مرة، فلا تُفتح الإعدادات بلا اتصال. والفارغ يترك الإعدادات مفتوحة للجميع. |
 | تعطيل تسجيل الدخول بالبصمة في الموبايل / **Disable Biometric Login In Mobile** | `value.disableBiometricLoginInMobile` | في الأصل يطلب التطبيق البصمة أو الوجه عند إعادة فتحه بدخول محفوظ. وتعليم هذا الخيار يُسقط هذه الخطوة. |
-| **Mobile Request Timeout In Seconds** | `value.mobileRequestTimeOutInSeconds` | المدة التي ينتظر فيها التطبيق رد الخادم على كل طلب قبل أن يتوقف. الفارغ أو الصفر يعني 60 ثانية. ارفعها مع الاتصالات البطيئة أو القوائم الثقيلة. |
+| مهلة طلب الموبايل بالثواني / **Mobile Request Timeout In Seconds** | `value.mobileRequestTimeOutInSeconds` | المدة التي ينتظر فيها التطبيق رد الخادم على كل طلب قبل أن يتوقف. الفارغ أو الصفر يعني 60 ثانية. ارفعها مع الاتصالات البطيئة أو القوائم الثقيلة. |
 | الحد الأقصى لعدد أسطر التفاصيل في الموبايل / **Mobile Details Max Length** | `value.mobileDetailsMaxLength` | أقصى عدد من السطور للمستند الواحد في التطبيق. وإضافة سطر زائد تُظهر *Lines limit reached (N) You must create a new document.* الفارغ أو الصفر يعني 500. |
 | ملحوظة سند التوصيل الافتراضية / **Default Delivery Note** | `value.defaultDeliveryNote` | نص يوضع في ملاحظات سند التوصيل الجديد في التطبيق، ما لم تكن له ملاحظات. |
 
@@ -74,13 +74,13 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | إضافة سطر جديد تلقائيا وجعل الكمية واحد / **Auto Add New Line And Set Quantity To One** | `value.docOrFileConfigList.autoAddNewLineAndSetQtyToOne` | الصنف الممسوح أو المختار يُضاف إلى المستند مباشرة بكمية 1 بدلاً من فتح شاشة السطر. |
 | التأكد من معرف الجهاز قبل الحفظ / **Check Mobile Identifier Document Before Save** | `value.docOrFileConfigList.checkMobileIdentifierBeforeSave` | يرفض الحفظ من هاتف ليس له سند تعريف هاتف مستخدِم مقبول لهذا المستخدم. انظر [ربط المستخدمين بهواتفهم](./mobile-device-binding.md). |
 | طباعة السجلات كتقرير / **Print Record As Report** | `value.docOrFileConfigList.printRecordAsReport` | يطبع التطبيق سجلات هذه الشاشة من خلال تقرير في النظام يعمل على الخادم، بدلاً من صيغة HTML. |
-| حفظ المستند كمسودة كل (بالثانية) / **Auto Save Doc As Draft Every (In Seconds)** | `value.docOrFileConfigList.autoSaveDocAsDraftInSeconds` | ما دام مستند غير محفوظ مفتوحاً يحفظه التطبيق مسودةً كل هذا العدد من الثواني إن تغيّر. يحتاج **إظهار زر الحفظ كمسودة فى التطبيق**. الفارغ أو الصفر يوقفه. |
+| حفظ المستند كمسودة كل (بالثانية) / **Auto Save Doc As Draft Every (In Seconds)** | `value.docOrFileConfigList.autoSaveDocAsDraftInSeconds` | ما دام مستند غير محفوظ مفتوحاً يحفظه التطبيق مسودةً كل هذا العدد من الثواني إن تغيّر. يحتاج **إظهار زر الحفظ كمسودة في التطبيق**. الفارغ أو الصفر يوقفه. |
 | تعريف التقرير / **Report Definition** | `value.docOrFileConfigList.reportDefinition` | التقرير الذي يستعمله **طباعة السجلات كتقرير** حين لا يناسب طابعةَ الهاتف أيٌّ من النماذج الخاصة بالطابعات أدناه. |
-| نسخ التفاصيل من بناءا علي / **Copy Details From Doc** | `value.docOrFileConfigList.copyDetailsFromDoc` | في شاشات الصرف والاستلام والتحويل المخزني وطلب التحويل وفاتورة المشتريات: اختيار المستند الأصلي ينسخ سطوره مباشرة. وبدونه يمسح المستخدم السطور أو يبحث عنها، ويبقى المستند الأصلي مرجعاً. |
+| نسخ التفاصيل من بناءً على / **Copy Details From Doc** | `value.docOrFileConfigList.copyDetailsFromDoc` | في شاشات الصرف والاستلام والتحويل المخزني وطلب التحويل وفاتورة المشتريات: اختيار المستند الأصلي ينسخ سطوره مباشرة. وبدونه يمسح المستخدم السطور أو يبحث عنها، ويبقى المستند الأصلي مرجعاً. |
 | **Old SDK Printer Form** | `value.docOrFileConfigList.oldSdkFormDefinition` | التقرير المستعمل في **طباعة السجلات كتقرير** على الهواتف المضبوطة على طابعة Old SDK. |
 | **New SDK Printer Form** | `value.docOrFileConfigList.newSdkFormDefinition` | مثله لطابعة New SDK. |
 | **Bluetooth Printer Form** | `value.docOrFileConfigList.bluetoothSdkFormDefinition` | مثله للبلوتوث وبقية الطابعات. |
-| تطبق علي / **Apply To** | `value.docOrFileConfigList.applyTo` | يقصر السطر على موظف أو مستخدم أو مجموعة موظفين أو ملف صلاحيات أو مجموعة، أو على الموظفين أو المستخدمين المطابقين لمعايير. |
+| تطبق على / **Apply To** | `value.docOrFileConfigList.applyTo` | يقصر السطر على موظف أو مستخدم أو مجموعة موظفين أو ملف صلاحيات أو مجموعة، أو على الموظفين أو المستخدمين المطابقين لمعايير. |
 | تطبق عند توافق ملف المستخدم مع الاستعلام / **Apply To Matched User Profile** | `value.docOrFileConfigList.applyToMatchedUserProfile` | استعلام على سجل المستخدم، فلا ينطبق السطر إلا على من يطابقه. ويُهمل حين تُملأ **تطبق علي**. |
 | الشركة / **Legal Entity**، الفرع / **Branch**، القطاع / **Sector**، الإدارة / **Department**، المجموعة التحليلية / **Analysis set** | `value.docOrFileConfigList.dimensions.legalEntity`، `.branch`، `.sector`، `.department`، `.analysisSet` | تقصر السطر على المستخدمين الداخلين بهذه المحددات. الفارغ يعني أي قيمة. |
 | **Object HTML Print Formula** | `value.docOrFileConfigList.objectHTMLFormula` | قالب HTML الذي يُطبع به سجل واحد من هذه الشاشة على طابعة الهاتف. |
@@ -89,7 +89,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | كود الجهاز / **Device Code** | `value.docOrFileConfigList.deviceCode` | يقصر السطر على الهواتف التي تحمل إعداداتها هذا الكود. الفارغ يعني أي هاتف. |
 
 ::: warning بعض الخيارات للشاشة كلها لا للسطر
-**السماح بالتعديل من التطبيق** و**نسخ التفاصيل من بناءا علي** و**إضافة سطر جديد تلقائيا** و**السماح بالحفظ بدون إنترنت** و**طباعة السجلات كتقرير** تصل إلى التطبيق لكل شاشة. فإذا عُلِّم أحدها على أي سطر من سطور الشاشة سرى على كل المستخدمين والأجهزة في تلك الشاشة. وصيغتا HTML تؤخذان من **آخر** سطر للشاشة، حتى لو تركهما فارغتين. اجعل هذه الخيارات متماثلة في كل سطور الشاشة الواحدة.
+**السماح بالتعديل من التطبيق** و**نسخ التفاصيل من بناءً على** و**إضافة سطر جديد تلقائيا** و**السماح بالحفظ بدون إنترنت** و**طباعة السجلات كتقرير** تصل إلى التطبيق لكل شاشة. فإذا عُلِّم أحدها على أي سطر من سطور الشاشة سرى على كل المستخدمين والأجهزة في تلك الشاشة. وصيغتا HTML تؤخذان من **آخر** سطر للشاشة، حتى لو تركهما فارغتين. اجعل هذه الخيارات متماثلة في كل سطور الشاشة الواحدة.
 :::
 
 ### الأنواع المقروءة من النظام مباشرة (Online Read For Savable Types In Mobile)
@@ -100,7 +100,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 جدولان يضيّقان ما يستطيع المستخدم إدخاله في حقل.
 
-جدول **القيم المسموح بها لحقول المراجع فى شاشات تطبيق الموبايل** (`value.allowedFieldsInMobileScreens`) يخص الحقول المرجعية التي تشير إلى أكثر من نوع سجل، مثل *متعلق بـ* أو *بناءً على*، ويحدد الأنواع التي يجوز للمستخدم اختيارها.
+جدول **القيم المسموح بها لحقول المراجع في شاشات تطبيق الموبايل** (`value.allowedFieldsInMobileScreens`) يخص الحقول المرجعية التي تشير إلى أكثر من نوع سجل، مثل *متعلق بـ* أو *بناءً على*، ويحدد الأنواع التي يجوز للمستخدم اختيارها.
 
 | العمود (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
@@ -108,7 +108,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | الحقل / **On Field** | `value.allowedFieldsInMobileScreens.fieldId` | الحقل. وإذا ذكر سطران الشاشة والحقل نفسيهما غلب الأول. |
 | القيمة المسموح بها 1 … 10 / **Allowed Value 1** … **10** | `value.allowedFieldsInMobileScreens.allowedValue1` … `allowedValue10` | أنواع السجلات المعروضة، والأول منها مختار افتراضياً. وإن لم يُملأ شيء طُبِّق الافتراضي الخاص بالتطبيق. |
 
-وجدول **القيم المسموح بها للحقول النصية فى شاشات تطبيق الموبايل** (`value.allowedValuesForTextFields`) يحوّل الحقل النصي الحر إلى قائمة منسدلة بقيم ثابتة، أو إلى رابط.
+وجدول **القيم المسموح بها للحقول النصية في شاشات تطبيق الموبايل** (`value.allowedValuesForTextFields`) يحوّل الحقل النصي الحر إلى قائمة منسدلة بقيم ثابتة، أو إلى رابط.
 
 | العمود (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
@@ -140,8 +140,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | العمود (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
 | تعريف التقرير / **Report Definition** | `value.mobileReportLines.reportDefinition` | التقرير الذي يعمل. ويحتاجه كل سطر، فالسطر الخالي منه يعطّل شاشة التقارير كلها. |
-| عنوان التقرير عربى / **Report Arabic Title** | `value.mobileReportLines.reportArabicTitle` | العنوان الظاهر حين يكون التطبيق بالعربية. |
-| عنوان التقرير إنجليزى / **Report English Title** | `value.mobileReportLines.reportEnglishTitle` | العنوان الظاهر بالإنجليزية. |
+| عنوان التقرير عربي / **Report Arabic Title** | `value.mobileReportLines.reportArabicTitle` | العنوان الظاهر حين يكون التطبيق بالعربية. |
+| عنوان التقرير إنجليزي / **Report English Title** | `value.mobileReportLines.reportEnglishTitle` | العنوان الظاهر بالإنجليزية. |
 | **URL Prefix** | `value.mobileReportLines.urlPrefix` | مفتاح قصير يعرّف التقرير، ويُستعمل أيضاً اسماً للملف المنزَّل. املأه في كل سطر، واجعله فريداً بلا مسافات، ولا تكرر مفتاحاً من جدول **تقارير** KAS لأنه سيغلب. |
 | الصيغة / **Output Format** | `value.mobileReportLines.outputFormat` | صيغة الملف. الفارغ يعني PDF. |
 
@@ -166,24 +166,24 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | العنصر الثالث / **AppBar Item 3** | `value.appBarItem3` | التبويب الثالث. فارغ افتراضياً. |
 | العنصر الرابع / **AppBar Item 4** | `value.appBarItem4` | التبويب الرابع. فارغ افتراضياً. |
 
-املأ عنصرين أو أربعة. والحفظ بعنصر واحد أو ثلاثة يُرفض بالرسالة *Only two or four items can be displayed!* ولا يفهم تطبيق NAMA ESS إلا **Attendance** و**Vacation** و**Dashboard** و**Permission**، ويُسقط أي اختيار آخر. أما الشريط السفلي في نما موبايل فثابت (الرئيسية، القائمة، الموافقات، المحادثات، المزيد)، فلا تغيّره هذه الحقول، وتُضبط صفحته الرئيسية وقائمته بـ[تعريف قائمة التطبيق](./mobile-application-guide.md) بدلاً منها.
+املأ عنصرين أو أربعة. والحفظ بعنصر واحد أو ثلاثة يُرفض بالرسالة «لا يمكن عرض غير عنصرين أو 4 عناصر فقط». ولا يفهم تطبيق NAMA ESS إلا **Attendance** و**Vacation** و**Dashboard** و**Permission**، ويُسقط أي اختيار آخر. أما الشريط السفلي في نما موبايل فثابت (الرئيسية، القائمة، الموافقات، المحادثات، المزيد)، فلا تغيّره هذه الحقول، وتُضبط صفحته الرئيسية وقائمته بـ[تعريف قائمة التطبيق](./mobile-application-guide.md) بدلاً منها.
 
 ## إعدادات تطبيق NAMA ESS
 
 يضم التبويب الثاني قواعد الخدمة الذاتية للموظف: الحضور الإلكتروني، وطلبات الإجازة، وطلبات الإذن. ويقرؤه نما موبايل وتطبيق NAMA ESS الأقدم معاً، وحين لا يقرأ الخيارَ إلا NAMA ESS يذكر الجدول ذلك. أما جانب التطبيق فمشروح في [الخدمة الذاتية للموظف](./mobile-hr-self-service.md).
 
-### إعدادات الحضور والإنصراف الإلكترونية (Electronic Attendance Configurations)
+### إعدادات الحضور والانصراف الإلكترونية (Electronic Attendance Configurations)
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| عدم السماح بإنشاء سند حضور/إنصراف إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Attendance Through Application** | `value.onlyAllowCreationOfElecAttendanceThroughApp` | معلَّم افتراضياً. لا يُحفظ الحضور الإلكتروني إلا من التطبيق، والحفظ من المتصفح يُرفض. ولا يُرفض أبداً للمدير ولا في الـ Replication ولا في الحفظ الذي تجريه الموافقة. |
+| عدم السماح بإنشاء سند حضور/انصراف إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Attendance Through Application** | `value.onlyAllowCreationOfElecAttendanceThroughApp` | معلَّم افتراضياً. لا يُحفظ الحضور الإلكتروني إلا من التطبيق، والحفظ من المتصفح يُرفض. ولا يُرفض أبداً للمدير ولا في الـ Replication ولا في الحفظ الذي تجريه الموافقة. |
 | السماح بتعديل مستند "حضور الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Attendance For Authorized** | `value.onlyAllowUpdateOfElecAttendanceForAuthorized` | لا أثر له إلا والخيار السابق معلَّم. ومع تعليمه يستطيع أي مستخدم له صلاحية التعديل العادية على الشاشة أن يعدّل من المتصفح حضوراً حُفظ من قبل، ويبقى الحضور الجديد من التطبيق وحده. |
-| عدد الساعات المسموح بها قبل منع تسجيل الانصراف من خلال التطبيق / **Number Of Hours Allowed Before Preventing CheckOut** | `value.numberOfHoursAllowedBeforePreventingCheckOut` | أقصى عدد ساعات بين الحضور والانصراف. الافتراضي 24، والفارغ أو الصفر يعني 24 أيضاً. الحضور الأقدم من ذلك لا يُعرض للانصراف في التطبيق، وحفظ حضور أطول منه يُرفض. والقيمة غير الصفرية على وردية حضور الموظف تغلب هذا الحقل. |
+| عدد الساعات المسموح بها قبل منع تسجيل الانصراف من خلال التطبيق / **Number Of Hours Allowed Before Preventing Check Out** | `value.numberOfHoursAllowedBeforePreventingCheckOut` | أقصى عدد ساعات بين الحضور والانصراف. الافتراضي 24، والفارغ أو الصفر يعني 24 أيضاً. الحضور الأقدم من ذلك لا يُعرض للانصراف في التطبيق، وحفظ حضور أطول منه يُرفض. والقيمة غير الصفرية على وردية حضور الموظف تغلب هذا الحقل. |
 | تنبيه رمز التحقق / **Verification Code Notification** | `value.verificationCodeNotification` | تعريف تنبيه يُستعمل لخطوة دخول ثانية: في كل دخول إلى التطبيق يُنشئ الخادم رمزاً لمرة واحدة ويرسله إلى المستخدم بهذا التنبيه. ولا يطلب الرمز إلا تطبيق NAMA ESS. والفارغ يعني بلا خطوة رمز. |
 | استخدام مناطق الحضور الإلكتروني / **Use Electronic Attendance Zone** | `value.useAttendanceZones` | يشغّل مناطق الحضور. يسجّل كل حضور وانصراف أقرب منطقة مسموحة والمسافة منها، ويُرفض ما لا توجد له منطقة مسموحة للموظف. وتُعرَّف المناطق نفسها في شاشات مناطق الحضور، وحفظ منطقة مسموحة يُرفض ما دام هذا الخيار غير معلَّم. |
 | منع حفظ الحضور الإلكتروني إذا كان الحضور أو الانصراف خارج النطاق / **Prevent Save If Attendance Out Of Zone** | `value.preventSaveIfAttendanceOutOfZone` | يحتاج تشغيل المناطق. يرفض الحضور أو الانصراف الأبعد عن أقرب منطقة مما تسمح به. وبدونه يُحفظ ويُعلَّم خارج النطاق فقط. |
-| يجب أن تكون منطقة الحضور نفس منطقة الإنصراف / **Check Out Zone Must Be Same As Check In Zone** | `value.checkOutZoneMustBeSameAsCheckIn` | يحتاج تشغيل المناطق. يرفض الانصراف من منطقة غير منطقة الحضور. |
-| السماح بحفظ سند حضور وانصراف الكتروني على تطبيق الهاتف بدون اتصال بالإنترنت / **Allow Save Electronic Attendance On Mobile Without Connection** | `value.allowSaveElectronicAttendanceOnMobileWithoutConnection` | لتطبيق NAMA ESS فقط. إذا فشل إرسال الحضور لأن الخادم رفض دخول التطبيق احتفظ به التطبيق على الهاتف وأرسله لاحقاً. وفي نما موبايل يُضبط الحفظ دون اتصال لكل مستند بـ**السماح بالحفظ بدون إنترنت** في جدول المستندات. |
+| يجب أن تكون منطقة الحضور نفس منطقة الانصراف / **Check Out Zone Must Be Same As Check In Zone** | `value.checkOutZoneMustBeSameAsCheckIn` | يحتاج تشغيل المناطق. يرفض الانصراف من منطقة غير منطقة الحضور. |
+| السماح بحفظ سند حضور وانصراف إلكتروني على تطبيق الهاتف بدون اتصال بالإنترنت / **Allow Save Electronic Attendance On Mobile Without Connection** | `value.allowSaveElectronicAttendanceOnMobileWithoutConnection` | لتطبيق NAMA ESS فقط. إذا فشل إرسال الحضور لأن الخادم رفض دخول التطبيق احتفظ به التطبيق على الهاتف وأرسله لاحقاً. وفي نما موبايل يُضبط الحفظ دون اتصال لكل مستند بـ**السماح بالحفظ بدون إنترنت** في جدول المستندات. |
 | التأكد من معرف الجهاز قبل الحفظ / **Check Mobile Identifier Document Before Save** | `value.checkMobileIdentifierBeforeSave` | فحص الهاتف العام للحضور والإجازات والأذون المحفوظة من تطبيق NAMA ESS، ويغلبه سطر المستند في جدول المستندات. انظر [ربط المستخدمين بهواتفهم](./mobile-device-binding.md). |
 | إخفاء لوحة معلومات الحضور بالتطبيق / **Hide Mobile Attendance Dashboard** | `value.hideMobileAttendanceDashboard` | يُخفي بطاقة ملخص الحضور الشهري من الصفحة الرئيسية في نما موبايل. |
 | معايير عرض عملاء المهام في تطبيق NAMA ESS / **List Attendance Customers Criteria For ESS App** | `value.listAttendanceCustomersCriteria` | لتطبيق NAMA ESS فقط. يحدد العملاء الذين ينزّلهم التطبيق ليُربط بهم الحضور. والفارغ يرسل كل عميل يراه المستخدم. |
@@ -209,8 +209,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| عدم السماح بإنشاء طلب اجازة إلا من خلال التطبيق / **Only Allow Creation Of Vacation Request Through Application** | `value.onlyAllowCreationOfElecVacationReqThroughApp` | لا يُحفظ طلب الإجازة إلا من التطبيق، بالاستثناءات نفسها التي في الحضور. ولا يشمل سند الإجازة. |
-| السماح بتعديل مستند "طلب اجازة الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Vacation Request For Authorized** | `value.onlyAllowUpdateOfElecVacationReqForAuthorized` | يسمح بتعديل طلب إجازة حُفظ من قبل من المتصفح لمن له صلاحية التعديل العادية. |
+| عدم السماح بإنشاء طلب إجازة إلا من خلال التطبيق / **Only Allow Creation Of Vacation Request Through Application** | `value.onlyAllowCreationOfElecVacationReqThroughApp` | لا يُحفظ طلب الإجازة إلا من التطبيق، بالاستثناءات نفسها التي في الحضور. ولا يشمل سند الإجازة. |
+| السماح بتعديل مستند "طلب إجازة الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Vacation Request For Authorized** | `value.onlyAllowUpdateOfElecVacationReqForAuthorized` | يسمح بتعديل طلب إجازة حُفظ من قبل من المتصفح لمن له صلاحية التعديل العادية. |
 | عدم السماح بإنشاء طلب إذن إلا من خلال التطبيق / **Only Allow Creation Of Permission Request Through Application** | `value.onlyAllowCreationOfElecPermissionReqThroughApp` | لا يُحفظ طلب الإذن إلا من التطبيق. ولا يشمل سند الإذن نفسه. |
 | السماح بتعديل مستند "طلب إذن الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic permission request For Authorized** | `value.onlyAllowUpdateOfElecPermissionReqForAuthorized` | يسمح بتعديل طلب إذن حُفظ من قبل من المتصفح لمن له صلاحية التعديل العادية. |
 
@@ -222,7 +222,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| عدم السماح بإنشاء جرد إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Stocktaking Through Application** | `value.onlyAllowCreationOfElecStockTakingThroughApp` | معلَّم افتراضياً. لا يُحفظ الجرد الإلكتروني إلا من التطبيق. ويُستثنى المدير والـ Replication والحفظ الذي تجريه الموافقة. |
+| عدم السماح بإنشاء جرد إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Stocktaking Through Application** | `value.onlyAllowCreationOfElecStockTakingThroughApp` | معلَّم افتراضياً. لا يُحفظ الجرد الإلكتروني إلا من التطبيق. ويُستثنى المدير والـ Replication والحفظ الذي تجريه الموافقة. |
 | السماح بتعديل مستند "جرد الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Stock Taking For Authorized** | `value.onlyAllowUpdateOfElecStockTakingForAuthorized` | لا أثر له إلا والخيار السابق معلَّم. ومع تعليمه يُعدَّل الجرد المحفوظ من قبل من المتصفح لمن له صلاحية التعديل العادية. |
 | ماسك كود الصنف / **Item Regular Expression** | `value.itemRegEx` | نمط يجب أن يطابقه كل كود صنف ممسوح أو مكتوب. الفارغ يعني بلا فحص. ونما موبايل يقبل الكود إذا طابق النمطُ أي جزء منه، فاكتب `^…$` لتشترط مطابقة الكود كله. |
 | رسالة خطأ كود الصنف / **Item Regular Expression Error MSG** | `value.itemRegExErrorMSG` | الرسالة الظاهرة تحت كود الصنف حين لا يطابق النمط. |
@@ -250,14 +250,14 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| عدم السماح بإنشاء قبض إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Receipt Through Application** | `value.onlyAllowCreationOfElecReceiptThroughApp` | معلَّم افتراضياً. لا يُحفظ سند القبض الإلكتروني إلا من التطبيق. ويُستثنى المدير والـ Replication والحفظ الذي تجريه الموافقة. |
+| عدم السماح بإنشاء قبض إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Receipt Through Application** | `value.onlyAllowCreationOfElecReceiptThroughApp` | معلَّم افتراضياً. لا يُحفظ سند القبض الإلكتروني إلا من التطبيق. ويُستثنى المدير والـ Replication والحفظ الذي تجريه الموافقة. |
 | السماح بتعديل مستند "القبض الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Receipt For Authorized** | `value.onlyAllowUpdateOfElecReceiptForAuthorized` | لا أثر له إلا والخيار السابق معلَّم. ومع تعليمه يُعدَّل السند المحفوظ من قبل من المتصفح لمن له صلاحية التعديل العادية. |
 | معايير عرض العملاء في تطبيق سندات القبض / **List Customers Criteria For Receipts App** | `value.listReceiptsCustomersCriteria` | لتطبيق سندات القبض على أندرويد فقط. يحدد العملاء الذين ينزّلهم التطبيق، والفارغ يرسلهم كلهم. |
 | **LegalEntity Logo** | `mobileLegalEntityLogo` | شعار الشركة الذي تنزّله التطبيقات. يعرضه نما موبايل في القائمة الجانبية وفي سندات القبض والملاحظات وزيارات الصيانة، ويطبعه تطبيق سندات القبض على أندرويد في `{companyLogo}`. |
-| **Html Receipt Formula** | `value.mobileHtmlFormula` | لتطبيق سندات القبض على أندرويد فقط. قالب HTML الذي يُطبع به سند واحد. يمكنه استعمال `{receipt.code}` وبقية حقول السند، و`{customer}` و`{currency}` و`{createdAtDate}` و`{createdAtTime}` و`{userName}` و`{collector}` و`{companyLogo}` و`{customerSignature}` و`{salesmanSignature}`. وزر **Receipt Formula Example** في التبويب يستبدل به نموذجاً قصيراً. |
-| **Multi Receipt Html Formula** | `value.multiReceiptHtmlFormula` | لتطبيق سندات القبض على أندرويد فقط. قالب طباعة عدة سندات في ملخص واحد. يمكنه استعمال `{docsCount}` و`{cashCount}` و`{totalCash}` و`{chequeCount}` و`{totalCheque}`، وكتلة `{loop(list)}…{endloop}` تتكرر لكل سند. وزر **Multi Receipt Formula Example** يملؤه بنموذج. |
-| حفظ سندات القبض الالكتروني كمسودة اذا حدث خطأ / **Save Electronic Receipts as Draft When Errors Happen** | `value.saveDocAsDraftIfErrorInReceiptsApp` | لتطبيق سندات القبض على أندرويد فقط. السند الذي يفشل حفظه، لخطأ في التحقق مثلاً، يُحفظ مسودة بدلاً من رفضه. |
-| عدم حفظ السند اذا لم يتم اختيار النوع / **Do Not Save If No Type Is Selected** | `value.doNotSaveIfNoTypeSelectedInReceiptsApp` | لتطبيق سندات القبض على أندرويد فقط. لا يحفظ التطبيق السند حتى يُختار نوع القبض. |
+| Html Receipt Formula / **HTML Receipt Formula** | `value.mobileHtmlFormula` | لتطبيق سندات القبض على أندرويد فقط. قالب HTML الذي يُطبع به سند واحد. يمكنه استعمال `{receipt.code}` وبقية حقول السند، و`{customer}` و`{currency}` و`{createdAtDate}` و`{createdAtTime}` و`{userName}` و`{collector}` و`{companyLogo}` و`{customerSignature}` و`{salesmanSignature}`. وزر **Receipt Formula Example** في التبويب يستبدل به نموذجاً قصيراً. |
+| Multi Receipt Html Formula / **Multi Receipt HTML Formula** | `value.multiReceiptHtmlFormula` | لتطبيق سندات القبض على أندرويد فقط. قالب طباعة عدة سندات في ملخص واحد. يمكنه استعمال `{docsCount}` و`{cashCount}` و`{totalCash}` و`{chequeCount}` و`{totalCheque}`، وكتلة `{loop(list)}…{endloop}` تتكرر لكل سند. وزر **Multi Receipt Formula Example** يملؤه بنموذج. |
+| حفظ سندات القبض الإلكتروني كمسودة إذا حدث خطأ / **Save Electronic Receipts as Draft When Errors Happen** | `value.saveDocAsDraftIfErrorInReceiptsApp` | لتطبيق سندات القبض على أندرويد فقط. السند الذي يفشل حفظه، لخطأ في التحقق مثلاً، يُحفظ مسودة بدلاً من رفضه. |
+| عدم حفظ السند إذا لم يتم اختيار النوع / **Do Not Save If No Type Is Selected** | `value.doNotSaveIfNoTypeSelectedInReceiptsApp` | لتطبيق سندات القبض على أندرويد فقط. لا يحفظ التطبيق السند حتى يُختار نوع القبض. |
 
 ### قيم إعدادات الدخول الافتراضية (Default Login Settings)
 
@@ -267,7 +267,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 |---|---|---|
 | عنوان السيرفر / **Server Url** | `value.serverUrl` | عنوان الخادم في رمز QR. والفارغ يستعمل العنوان المفتوح في المتصفح، وهو خطأ حين يصل المستخدمون إلى الخادم من الخارج بعنوان آخر. |
 | الايميل / **Default Email** | `value.defaultEmail` | البريد الإلكتروني في رمز QR، ويملأ إعداد البريد في التطبيق الجاري ضبطه. |
-| نسخة sdk الطباعه / **Default Printing Sdk Version** | `value.defaultPrintingSdkVersion` | لتطبيق سندات القبض على أندرويد فقط. طريقة الطباعة في رمز QR: Old SDK Version أو New SDK Version أو Normal Print. |
+| نسخة sdk الطباعة / **Default Printing Sdk Version** | `value.defaultPrintingSdkVersion` | لتطبيق سندات القبض على أندرويد فقط. طريقة الطباعة في رمز QR: Old SDK Version أو New SDK Version أو Normal Print. |
 | أنواع مستندات القبض (تكتب نصية بينهم ,) / **Receipt Types(Text Separated by ,)** | `value.receiptTypes` | أنواع القبض التي تعرضها التطبيقات مفصولة بفواصل، مثل `Cash,Cheque,Transfer`، ويُحفظ النوع المختار على السند. وهي أيضاً قيم **للنوع** المسموح بها في سطور سند القبض الإلكتروني في جدول المستندات. لا تضع مسافات بعد الفواصل، وإلا رُفضت هناك الأنواع التالية للأول. وهذا الحقل ليس جزءاً من رمز QR. |
 
 ### الحسابات البنكية الظاهرة في التطبيق (Electronic Receipt Vouchers Bank Accounts)
@@ -285,7 +285,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| السماح بإستخدام كاميرا الهاتف لمسح كود الصنف / **Allow Using Mobile Camera To Scan Item Code** | `value.allowUsingCameraToScanItemCode` | تطبيق NAMA SCM. يُظهر زر كاميرا لمسح الباركود. وبدونه يُكتب الكود أو يُقرأ بماسح منفصل. |
+| السماح باستخدام كاميرا الهاتف لمسح كود الصنف / **Allow Using Mobile Camera To Scan Item Code** | `value.allowUsingCameraToScanItemCode` | تطبيق NAMA SCM. يُظهر زر كاميرا لمسح الباركود. وبدونه يُكتب الكود أو يُقرأ بماسح منفصل. |
 | استعلام الصنف / **Item Query** | `value.itemQuery` | استعلام SQL اختياري يعمل على الصنف المستعلم عنه، لجلب سعره أو رصيده مثلاً. يمكنه استعمال `{item…}` و`{barcode}` و`{user…}` و`{dimensions…}`، وتتاح أعمدته للقالبين أدناه. والفارغ يملأ القالبين من سجل الصنف مباشرة. |
 | النموذج الإنجليزي / **Item English Template** | `value.itemEnglishTemplate` | القالب الذي تُعرض به نتيجة الاستعلام والتطبيق بالإنجليزية. الفارغ يستعمل القالب العربي. |
 | النموذج العربي / **Item Arabic Template** | `value.itemArabicTemplate` | مثله بالعربية. الفارغ يستعمل القالب الإنجليزي. |
@@ -300,24 +300,24 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| المستوي الاول / **Level One** | `value.config.levelOne` | المستوى الأعلى في الكتالوج: قسم الصنف أو أحد تصنيفات الصنف من 1 إلى 10. تعرض الشاشة الأولى في التطبيق تلك السجلات. |
-| معيار عرض المستوي الاول / **Level One Criteria** | `value.config.levelOneCriteria` | يحدد سجلات المستوى الأول المعروضة. الفارغ يعرضها كلها. |
-| المستوي الثاني / **Level Two** | `value.config.levelTwo` | المستوى الثاني، وهو تصنيف أعمق من المستوى الأول. الفارغ ينتقل من المستوى الأول إلى الأصناف مباشرة. |
-| معيار عرض المستوي الثاني / **Level Two Criteria** | `value.config.levelTwoCriteria` | يحدد سجلات المستوى الثاني. |
-| المستوي الثالث / **Level Three** | `value.config.levelThree` | المستوى الثالث، أعمق من الثاني، ويحتاج المستويين الأول والثاني. |
-| معيار عرض المستوي الثالث / **Level Three Criteria** | `value.config.levelThreeCriteria` | يحدد سجلات المستوى الثالث. |
+| المستوى الأول / **Level One** | `value.config.levelOne` | المستوى الأعلى في الكتالوج: قسم الصنف أو أحد تصنيفات الصنف من 1 إلى 10. تعرض الشاشة الأولى في التطبيق تلك السجلات. |
+| معيار عرض المستوى الأول / **Level One Criteria** | `value.config.levelOneCriteria` | يحدد سجلات المستوى الأول المعروضة. الفارغ يعرضها كلها. |
+| المستوى الثاني / **Level Two** | `value.config.levelTwo` | المستوى الثاني، وهو تصنيف أعمق من المستوى الأول. الفارغ ينتقل من المستوى الأول إلى الأصناف مباشرة. |
+| معيار عرض المستوى الثاني / **Level Two Criteria** | `value.config.levelTwoCriteria` | يحدد سجلات المستوى الثاني. |
+| المستوى الثالث / **Level Three** | `value.config.levelThree` | المستوى الثالث، أعمق من الثاني، ويحتاج المستويين الأول والثاني. |
+| معيار عرض المستوى الثالث / **Level Three Criteria** | `value.config.levelThreeCriteria` | يحدد سجلات المستوى الثالث. |
 | معيار عرض الأصناف / **InvItem Criteria** | `value.config.itemsCriteria` | يحدد الأصناف التي يعرضها المتجر. وتأتي الأسعار من قوائم أسعار البيع العادية. |
 | نوع طلب المبيعات المنشأ / **Order Entity Type** | `value.config.orderEntityType` | المستند الذي يصير إليه الطلب المرسل من التطبيق: أمر بيع، أو عرض سعر، أو طلب عرض سعر. ويجب ملء النوع والدفتر والتوجيه معاً. |
 | دفتر طلب المبيعات المنشأ / **Order Book** | `value.config.orderBook` | دفتر ذلك المستند، ويعطيه محدداته أيضاً. وبدونه يفشل إرسال الطلب بالرسالة *Please contact administrator to config order book and term*. |
 | توجيه طلب المبيعات المنشأ / **Order Term** | `value.config.orderTerm` | توجيه ذلك المستند. ويُحفظ الطلب باسم العميل المرتبط بمستخدم المتسوق. |
 | **Mobile Application Action Group** | `value.config.mobileAppActionFileGroup` | المجموعة، ومن ثم بادئة الكود، التي تُعطى للسجل الذي ينشئه التطبيق حين يسجّل أحدهم حساباً أو يطلب استعادة كلمة المرور. |
-| دفتر اقتراح / شكوي / **Suggest / Complaint Book** | `value.config.suggestOrComplainBook` | دفتر الشكوى في CRM المنشأة من شاشة الاقتراحات والشكاوى في التطبيق. |
+| دفتر اقتراح / شكوى / **Suggest / Complaint Book** | `value.config.suggestOrComplainBook` | دفتر الشكوى في CRM المنشأة من شاشة الاقتراحات والشكاوى في التطبيق. |
 | اسم المستخدم للمستخدمين الغير مسجلين / **Not Logged In Users User Name** | `value.config.notLoggedInUserName` | حساب الضيف الذي يستعمله الخادم لكل ما يجري قبل أن يسجّل المتسوق دخوله: التصفح والأسعار والتسجيل والشكاوى. ويجب أن تكون له صلاحية الاعتماد على Mobile App Action. |
 | كلمة المرور للمستخدمين الغير مسجلين / **Not Logged In Users Password** | `value.config.notLoggedInPassword` | كلمة مرور حساب الضيف، ويجب أن تطابق كلمة مرور المستخدم الحقيقية. |
 | رقم التواصل / **Contact Phone** | `value.config.contactPhone` | الرقم الذي يتصل به زر الاتصال في التطبيق. |
 | ارتفاع نموذج الصنف / **Item Card Height** | `value.config.itemCardHeight` | ارتفاع بطاقات الأصناف والفئات في التطبيق. الفارغ أو الصفر يعني 300. |
-| **IOS Application Link** | `value.iosKASAppLink` | رابط App Store الذي يستعمله زرا المشاركة والتقييم في التطبيق على آيفون. |
-| **Andriod Application Link** | `value.androidKASAppLink` | رابط Google Play للزرين نفسيهما على أندرويد. |
+| IOS Application Link / **iOS Application Link** | `value.iosKASAppLink` | رابط App Store الذي يستعمله زرا المشاركة والتقييم في التطبيق على آيفون. |
+| Andriod Application Link / **Android Application Link** | `value.androidKASAppLink` | رابط Google Play للزرين نفسيهما على أندرويد. |
 
 ### سطور التسوق لكل دولة
 
@@ -338,8 +338,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | العمود (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
 | تعريف التقرير / **Report Definition** | `value.reportLines.reportDefinition` | التقرير الذي يعمل، ويحتاجه كل سطر. |
-| عنوان التقرير عربى / **Report Arabic Title** | `value.reportLines.reportArabicTitle` | اسم التقرير والتطبيق بالعربية. |
-| عنوان التقرير إنجليزى / **Report English Title** | `value.reportLines.reportEnglishTitle` | اسمه والتطبيق بالإنجليزية. |
+| عنوان التقرير عربي / **Report Arabic Title** | `value.reportLines.reportArabicTitle` | اسم التقرير والتطبيق بالعربية. |
+| عنوان التقرير إنجليزي / **Report English Title** | `value.reportLines.reportEnglishTitle` | اسمه والتطبيق بالإنجليزية. |
 | **URL Prefix** | `value.reportLines.urlPrefix` | مفتاح قصير يعرّف التقرير في الرابط الذي يفتحه التطبيق، ويُستعمل اسماً للملف المنزَّل. يجب أن يكون فريداً. اكتبه بأحرف صغيرة وبلا مسافات، لأن تطبيق Mobile Delivery يحوّله إلى أحرف صغيرة قبل الطلب. |
 | الصيغة / **Output Format** | `value.reportLines.outputFormat` | صيغة الملف الناتج. الفارغ يعني PDF. |
 | كود المجموعة / **Group Code** | `value.reportLines.groupCode` | مجموعة التقارير، من جدول مجموعات التقارير في تبويب Mobile Delivery، التي يظهر تحتها التقرير في تطبيق Mobile Delivery. ولا يستعمله تطبيق KAS. |
@@ -355,9 +355,9 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | عنوان الفرع / **Branch Address** | `value.branchLines.branchAddress` | العنوان على البطاقة. |
 | تليفون الفرع / **Branch Phone** | `value.branchLines.branchPhone` | رقم الهاتف على البطاقة. |
 | لينك موقع الفرع / **Branch Location Link** | `value.branchLines.branchLocationLink` | رابط الخريطة الذي تفتحه البطاقة. |
-| لينك فيسبوك / **Branch FaceBook Link** | `value.branchLines.branchFaceBookLink` | يضيف أيقونة فيسبوك إلى البطاقة. |
+| لينك فيسبوك / **Branch Facebook Link** | `value.branchLines.branchFaceBookLink` | يضيف أيقونة فيسبوك إلى البطاقة. |
 | لينك يوتيوب / **Branch Youtube Link** | `value.branchLines.branchYoutubeLink` | يضيف أيقونة يوتيوب. |
-| لينك واتساب / **Branch Whats App Link** | `value.branchLines.branchWhatsAppLink` | يضيف أيقونة واتساب. |
+| لينك واتساب / **Branch WhatsApp Link** | `value.branchLines.branchWhatsAppLink` | يضيف أيقونة واتساب. |
 | لينك تيليجرام / **Branch Telegram Link** | `value.branchLines.branchTelegramLink` | يضيف أيقونة تيليجرام. |
 
 ### ملفات إعدادات تطبيق التسوق (ShoppingMobAppConfig)
@@ -398,8 +398,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | إنشاء عميل في حال عدم وجوده / **Generate Customer If Not Exist** | `value.ordersGenCustomerIfNotExist` | حين يذكر الطلب عميلاً غير موجود ينشئ عميلاً كوده رقم الجوال في الطلب واسمه اسم العميل في الطلب. إن عُلِّم هنا سرى على كل الأجهزة. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.ordersItemsSendingCriteria` | يحدد الأصناف التي تُنزَّل إلى الهاتف. ومعايير سطر الجهاز لها الأولوية. والفارغ يرسلها كلها. |
 | معايير استقبال العملاء / **Customers Sending Criteria** | `value.ordersCustomersSendingCriteria` | مثله للعملاء. |
-| نسخ اسم الجهاز الي / **Copy Device Id To** | `value.ordersCopyDeviceIdTo` | حقل نصي في المستند المنشأ، كأحد الأوصاف، يستقبل اسم الجهاز. الفارغ لا ينسخ شيئاً. |
-| نسخ كود المستند الي / **Copy Document Code To** | `value.ordersCopyDocCodeTo` | حقل نصي يستقبل الكود الذي أعطاه التطبيق للطلب. |
+| نسخ اسم الجهاز إلى / **Copy Device Id To** | `value.ordersCopyDeviceIdTo` | حقل نصي في المستند المنشأ، كأحد الأوصاف، يستقبل اسم الجهاز. الفارغ لا ينسخ شيئاً. |
+| نسخ كود المستند إلى / **Copy Document Code To** | `value.ordersCopyDocCodeTo` | حقل نصي يستقبل الكود الذي أعطاه التطبيق للطلب. |
 | إضافة حقل دولة الشحن / **Add Customer Shipping Country** | `value.addCustomerShippingCountry` | يُظهر خانة الدولة في نافذة العميل والشحن بالتطبيق. وتذهب القيمة إلى عنوان الشحن في المستند، وفي العميل المنشأ. |
 | إضافة حقل مدينة الشحن / **Add Customer Shipping City** | `value.addCustomerShippingCity` | مثله للمدينة. |
 | إضافة حقل محافظة الشحن / **Add Customer Shipping State** | `value.addCustomerShippingState` | مثله للمحافظة. |
@@ -435,9 +435,9 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.ordersConfigLines.ordersItemsSendingCriteria` | يغلب معايير الأصناف في الرأس إن مُلئ. |
 | الحفظ كمسودة / **Save As Draft** | `value.ordersConfigLines.ordersSaveAsDraft` | يحفظ طلبات هذا الجهاز مسودات. |
 | إنشاء عميل في حال عدم وجوده / **Generate Customer If Not Exist** | `value.ordersConfigLines.ordersGenCustomerIfNotExist` | ينشئ العملاء غير الموجودين لطلبات هذا الجهاز. |
-| الحقول المحسوبه للعميل / **Customers Calculated Fields** | `value.ordersConfigLines.ordersCustomerCalculatedFields` | إسنادات حقول تُكتب كقيم الحقول في مسار كيان (مثل `group = "G1"`)، وتُطبَّق على العميل المنشأ من طلبات هذا الجهاز. |
-| نسخ اسم الجهاز الي / **Copy Device Id To** | `value.ordersConfigLines.ordersCopyDeviceIdTo` | يغلب حقل الرأس إن مُلئ. |
-| نسخ كود المستند الي / **Copy Document Code To** | `value.ordersConfigLines.ordersCopyDocCodeTo` | يغلب حقل الرأس إن مُلئ. |
+| الحقول المحسوبة للعميل / **Customers Calculated Fields** | `value.ordersConfigLines.ordersCustomerCalculatedFields` | إسنادات حقول تُكتب كقيم الحقول في مسار كيان (مثل `group = "G1"`)، وتُطبَّق على العميل المنشأ من طلبات هذا الجهاز. |
+| نسخ اسم الجهاز إلى / **Copy Device Id To** | `value.ordersConfigLines.ordersCopyDeviceIdTo` | يغلب حقل الرأس إن مُلئ. |
+| نسخ كود المستند إلى / **Copy Document Code To** | `value.ordersConfigLines.ordersCopyDocCodeTo` | يغلب حقل الرأس إن مُلئ. |
 | استعلام الصنف / **Item Query** | `value.ordersConfigLines.ordersItemQuery` | يغلب استعلام المسح في الرأس إن مُلئ. |
 | النموذج العربي / **Item Arabic Template** | `value.ordersConfigLines.ordersItemArabicTemplate` | يغلب القالب العربي في الرأس إن مُلئ. |
 | النموذج الإنجليزي / **Item English Template** | `value.ordersConfigLines.ordersItemEnglishTemplate` | يغلب القالب الإنجليزي في الرأس إن مُلئ. |
@@ -448,7 +448,7 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| عدد الأيام السابقة للبحث عن مستند حركة / **Previous Days Count To Limit Mob Deliver Document Search Period** | `value.previousDaysCountToLimitMobDeliveryDocSearchPeriod` | لا تعرض قائمة طلبات المندوب إلا سطور التوصيل المؤرخة خلال هذا العدد من الأيام السابقة. الفارغ أو الصفر يعني 3 أيام. |
+| عدد الأيام السابقة للبحث عن مستند حركة / **Previous Days Count To Limit Mob Delivery Document Search Period** | `value.previousDaysCountToLimitMobDeliveryDocSearchPeriod` | لا تعرض قائمة طلبات المندوب إلا سطور التوصيل المؤرخة خلال هذا العدد من الأيام السابقة. الفارغ أو الصفر يعني 3 أيام. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.deliveryItemsSendingCriteria` | يحدد الأصناف التي يعرضها التطبيق حين يطلب العميل أصنافاً أو يرسل أمراً أو يرتجع أصنافاً منتهية الصلاحية. ومعايير سطر التوصيل المطابق لها الأولوية. الفارغ يعرض كل الأصناف. |
 | مجموعة مهمة العمل / **Work Task File Group** | `value.deliveryConfig.workTaskFileGroup` | المجموعة، ومن ثم بادئة الكود، لمهام العمل التي ينشئها التطبيق. وإن كانت فارغة استُعمل أول سطر توصيل فيه مجموعة. |
 
@@ -458,8 +458,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 |---|---|---|
 | كود/اسم جهاز الجرد / **Device Code/Name** | `value.deliveryLines.deviceId` | الجهاز الذي تنطبق عليه معايير الأصناف في السطر. الفارغ يعني أي جهاز. ويُستعمل أول سطر جهازه مطابق أو فارغ. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.deliveryLines.deliveryItemsSendingCriteria` | معايير الأصناف لذلك الجهاز. الفارغ يرجع إلى معايير الرأس. |
-| دفتر اقتراح / شكوي / **Suggest / Complaint Book** | `value.deliveryLines.config.suggestOrComplainBook` | دفتر الشكوى في CRM المنشأة من شاشة الاقتراحات والشكاوى في التطبيق. يأخذ الخادم أول سطر فيه هذا الدفتر والتوجيه التالي معاً، أياً كان جهازه. |
-| توجيه اقتراح / شكوي / **Suggest / Complaint Term** | `value.deliveryLines.config.suggestOrComplainTerm` | يجب ملؤه ليُستعمل دفتر الشكوى في السطر، لكن الشكوى نفسها تُنشأ بلا توجيه. وإن لم يكن أي سطر يحمل الاثنين معاً تلقى التطبيق الرسالة «لا يمكن العثور على دفتر و توجيه للاقتراح أو الشكوى». |
+| دفتر اقتراح / شكوى / **Suggest / Complaint Book** | `value.deliveryLines.config.suggestOrComplainBook` | دفتر الشكوى في CRM المنشأة من شاشة الاقتراحات والشكاوى في التطبيق. يأخذ الخادم أول سطر فيه هذا الدفتر والتوجيه التالي معاً، أياً كان جهازه. |
+| توجيه اقتراح / شكوى / **Suggest / Complaint Term** | `value.deliveryLines.config.suggestOrComplainTerm` | يجب ملؤه ليُستعمل دفتر الشكوى في السطر، لكن الشكوى نفسها تُنشأ بلا توجيه. وإن لم يكن أي سطر يحمل الاثنين معاً تلقى التطبيق الرسالة «لا يمكن العثور على دفتر و توجيه للاقتراح أو الشكوى». |
 | مجموعة مهمة العمل / **Work Task File Group** | `value.deliveryLines.config.workTaskFileGroup` | لا يُستعمل إلا حين تكون **مجموعة مهمة العمل** في الرأس فارغة، ويُؤخذ أول سطر فيه مجموعة أياً كان جهازه. |
 
 ### جداول الدفاتر
@@ -478,11 +478,11 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 | إعدادات دفاتر أوامر الشراء / **Mobile Item Request Configurations** | `value.deliveryItemRequestBooks` (`.book`، `.deviceId`، `.forType`، `.term`) | طلب الصنف الذي يرسله العميل من شاشة الطلب. للنوع: `ItemRequest`. | يُرفض: «لا يمكن العثور على دفتر و توجيه لطلب صنف». |
 | إعدادات دفاتر أوامر البيع / **Mobile Sales Order Configurations** | `value.deliverySalesOrderBooks` (الأعمدة الأربعة نفسها) | أمر البيع الذي يرسله العميل. للنوع: `SalesOrder`. | يُرفض: «لا يمكن إيجاد دفتر و توجيه لطلب صنف». |
 | إعدادات دفاتر سندات القبض / **Mobile Receipt Voucher Configurations** | `value.deliveryReceiptVoucherBooks` (الأعمدة الأربعة نفسها) | سند القبض الإلكتروني الذي يأخذه المندوب. للنوع: `ElectronicReceiptVoucher`. | يبقى السند بلا توجيه ولا مبلغ. فاحتفظ دائماً بسطر هنا. |
-| إعدادات دفاتر طلب مردود مبيعات / **Mobile Expired Sales Return Request Configurations** (العنوان الإنجليزي يكرر عنوان الجدول التالي) | `value.deliverySalesReturnReqBooks` (الأعمدة الأربعة نفسها) | طلب مردود المبيعات الذي يرفعه المندوب من فاتورة. للنوع: `SalesReturnRequest`. | بلا خطأ، ويُنشأ المستند بغير الدفتر المضبوط. |
+| إعدادات دفاتر طلب مردود مبيعات / **Mobile Sales Return Request Configurations** | `value.deliverySalesReturnReqBooks` (الأعمدة الأربعة نفسها) | طلب مردود المبيعات الذي يرفعه المندوب من فاتورة. للنوع: `SalesReturnRequest`. | بلا خطأ، ويُنشأ المستند بغير الدفتر المضبوط. |
 | إعدادات دفاتر طلب مردود أصناف منتهية الصلاحية / **Mobile Expired Sales Return Request Configurations** | `value.deliveryExpSalesReturnReqBooks` (الأعمدة الأربعة نفسها) | طلب المردود الذي يرفعه العميل للأصناف منتهية الصلاحية. للنوع: `SalesReturnRequest`. | يُرفض: «لا يمكن العثور على دفتر و توجيه لأمر ارتجاع أصناف مبيعات منتهبة الصلاحية». |
 | إعدادات دفاتر مردودات مبيعات / **Mobile Sales Return Configurations** | `value.deliverySalesReturnBooks` (الأعمدة الأربعة نفسها) | مردود المبيعات الذي ينشئه المندوب من فاتورة مؤرخة خلال الأيام السبعة الأخيرة. للنوع: `SalesReturn`. | بلا خطأ، ويُنشأ المستند بغير الدفتر المضبوط. |
 
-في هذا التبويب جدولان بالعنوان الإنجليزي نفسه، **Mobile Expired Sales Return Request Configurations**. الأعلى منهما (`value.deliverySalesReturnReqBooks`) لطلبات مردود المبيعات العادية، وعنوانه العربي «إعدادات دفاتر طلب مردود مبيعات» هو الصحيح. وبينهما مجموعة فيها **معايير استقبال طلبات مردودات الأصناف المنتهية الصلاحية** (Delivery Expired Products Sales Return Requests Criteria، `value.deliveryExpProdSalesReturnCriteria`)، وهي تفلتر قائمة العميل بطلبات مردود الأصناف منتهية الصلاحية التي رفعها من قبل. الفارغ يعرضها كلها.
+وبعد جدول الأصناف منتهية الصلاحية مباشرةً مجموعة بالعنوان نفسه، «إعدادات دفاتر طلب مردود أصناف منتهية الصلاحية»، فيها **معايير استقبال طلبات مردودات الأصناف المنتهية الصلاحية** (Delivery Expired Products Sales Return Requests Criteria، `value.deliveryExpProdSalesReturnCriteria`)، وهي تفلتر قائمة العميل بطلبات مردود الأصناف منتهية الصلاحية التي رفعها من قبل. الفارغ يعرضها كلها.
 
 ### مجموعات التقارير والتقارير
 
@@ -490,8 +490,8 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 |---|---|---|
 | مجموعات تقارير / **Report Groups** | `value.reportGroupLines` | مجموعات التقارير الظاهرة بطاقاتٍ في الصفحة الرئيسية للعميل في تطبيق Mobile Delivery. |
 | كود المجموعة / **Group Code** | `value.reportGroupLines.groupCode` | الكود الذي تشير إليه التقارير. وحفظ تقرير كود مجموعته غير موجود في هذا الجدول يُرفض. |
-| **Arabic Name** | `value.reportGroupLines.arabicName` | عنوان البطاقة بالعربية. |
-| **English Name** | `value.reportGroupLines.englishName` | عنوان البطاقة بالإنجليزية. |
+| الاسم العربي / **Arabic Name** | `value.reportGroupLines.arabicName` | عنوان البطاقة بالعربية. |
+| الاسم الإنجليزي / **English Name** | `value.reportGroupLines.englishName` | عنوان البطاقة بالإنجليزية. |
 
 وجدول **تقارير** تحته هو جدول `value.reportLines` نفسه الظاهر في تبويب KAS؛ انظر «التقارير» هناك. وفي تطبيق Mobile Delivery أعطِ كل تقرير **كود مجموعة**، لأن التقرير بلا مجموعة لا يظهر تحت أي بطاقة.
 
@@ -501,10 +501,10 @@ menu: الأساسيات ← إعدادات التطبيقات ← إعدادا�
 |---|---|---|
 | «يمكنك حفظ المستند من نوع {0} من خلال تطبيق الهاتف المحمول فقط» | حُفظ حضور إلكتروني أو طلب إجازة أو طلب إذن أو جرد إلكتروني أو سند قبض إلكتروني من المتصفح والخيار **عدم السماح بإنشاء … إلا من خلال التطبيق** الخاص به معلَّم. | أنشئه من التطبيق. ولتسمح للمستخدمين بتصحيح المحفوظ من المتصفح علِّم خيار **السماح بتعديل … لمن له الصلاحية** المقابل. |
 | «إجمالي الساعات {0} للمستند {1} تجاوز الحد الأقصى المسموح به وهو {2}» | الانصراف أبعد عن الحضور من **عدد الساعات المسموح بها قبل منع تسجيل الانصراف**، أو من الساعات المضبوطة على وردية الموظف. | تحقق هل نسي الموظف الانصراف في اليوم السابق. ولا ترفع الحد إلا إن كانت الورديات الطويلة حقيقية. |
-| «لا يمكن إيجاد مناصق مسموح تسجيل دخول بها» (ومثلها «…تسجيل خروج بها») | المناطق مشغّلة ولا توجد منطقة مسموحة تغطي هذا الموظف. | أضف سطر منطقة مسموحة للموظف أو إدارته أو مجموعته. |
+| «لا يمكن إيجاد مناطق مسموح تسجيل دخول بها» (ومثلها «لا يمكن إيجاد مناطق مسموح تسجيل خروج بها») | المناطق مشغّلة ولا توجد منطقة مسموحة تغطي هذا الموظف. | أضف سطر منطقة مسموحة للموظف أو إدارته أو مجموعته. |
 | «لا يمكنك تسجيل دخول من الموقع الحالي, المسافة بين موقعك وأقرب منطقة ({0}) هي {1}» (ومثلها لتسجيل الخروج) | **منع حفظ الحضور الإلكتروني إذا كان الحضور أو الانصراف خارج النطاق** معلَّم والهاتف خارج كل المناطق. | اطلب من الموظف الدخول إلى المنطقة، أو وسّع أقصى مسافة للمنطقة. |
-| *Check in zone {0} is not the same as check out zone {1}* | **يجب أن تكون منطقة الحضور نفس منطقة الإنصراف** معلَّم. وهذه الرسالة بلا نص عربي فتظهر بالإنجليزية على الشاشات العربية. | سجّل الانصراف من منطقة الحضور، أو أزل علامة الخيار. |
-| *Only two or four items can be displayed!* | عنصر واحد أو ثلاثة من عناصر شريط التطبيق مملوءة. | املأ عنصرين أو أربعة. |
+| *Check in zone {0} is not the same as check out zone {1}* | **يجب أن تكون منطقة الحضور نفس منطقة الانصراف** معلَّم. وهذه الرسالة بلا نص عربي فتظهر بالإنجليزية على الشاشات العربية. | سجّل الانصراف من منطقة الحضور، أو أزل علامة الخيار. |
+| «لا يمكن عرض غير عنصرين أو 4 عناصر فقط» | عنصر واحد أو ثلاثة من عناصر شريط التطبيق مملوءة. | املأ عنصرين أو أربعة. |
 | «كود مجموعة التقارير {0} غير موجود» | **كود المجموعة** في أحد التقارير غير موجود في جدول مجموعات التقارير. | أضف المجموعة، أو صحّح الكود. |
 | *Please contact administrator to config order book and term* | أرسل تطبيق KAS طلباً بلا دفتر طلب أو توجيه في الإعدادات المنطبقة. وهذه الرسالة بلا نص عربي. | املأ **دفتر طلب المبيعات المنشأ** و**توجيه طلب المبيعات المنشأ** في المجموعة، أو في سطر التسوق المطابق. |
 | «لا يمكن العثور على دفتر و توجيه لطلب صنف» | لم يجد تطبيق Mobile Delivery سطراً للجهاز في جدول طلبات الأصناف. وأمر البيع يُظهر في الحالة نفسها «لا يمكن إيجاد دفتر و توجيه لطلب صنف». | أضف سطراً، بجهاز فارغ ليكون سطراً عاماً. |

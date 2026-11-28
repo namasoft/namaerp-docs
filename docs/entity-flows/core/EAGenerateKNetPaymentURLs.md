@@ -19,11 +19,11 @@ For a comprehensive guide on setting up payment gateways, configuring templates,
 
 ## When This Action Runs
 
-Online payment URL generation for documents implementing ISupportOnlinePaymentDoc interface (invoices, orders, bills).
+Online payment URL generation for documents that support online payment (invoices, orders, bills).
 
 ## How It Works
 
-1. **Validates entity compatibility** with ISupportOnlinePaymentDoc interface
+1. **Validates entity compatibility:** on a record that does not support online payment the flow fails with *Entity flow {0} only could be run with document instance of ISupportOnlinePaymentDoc*
 2. **Retrieves payment configuration** using provided config code
 3. **Generates payment URLs** for both direct KNet gateway and redirect processing
 4. **Creates payment entries** for tracking and audit purposes

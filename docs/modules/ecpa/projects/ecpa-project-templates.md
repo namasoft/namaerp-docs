@@ -29,7 +29,7 @@ Design your templates for the estimator writing the quotation, not for the proje
 
 **Project Details** — the defaults for a job of this kind: **Project Type** and **Proj Sub Type**, **Manager** and **Vice Manager**, the planned **From Date** and **To Date**, the **Planned Project Time** with its unit, the **Responsible Employee**, the **Responsible** third party, an **Estimated Cost** and the **Currency**.
 
-**Details** — a one-column grid listing the **Task**s a job of this kind normally involves. Each row points at an existing task record, which is how a house methodology gets written down: the standard steps, in order, named the same way every time.
+**Details** — a one-column grid listing the **Task**s a job of this kind normally involves. Each row is a task *name* typed as text, not a link to an existing task record; the tasks themselves are created later, from the quotation. This is how a house methodology gets written down: the standard steps, in order, named the same way every time.
 
 **Detail Accounts** and **Dimensions** — the main account plus five numbered accounts, and the usual legal entity, sector, branch, department and analysis set.
 
@@ -51,7 +51,7 @@ Because the Subsidiary Accounts are the only thing that reaches a project direct
 
 ## What a new project still needs
 
-A project built through this chain arrives with its header, its dates and its task list, and with **nothing else**. Specifically, its **Milestones**, **Disciplines** and **Details** matrix are all empty, and so is its **Team Work** roster.
+A project built through this chain arrives with its header, its dates and its task list, one **Auto Invoice** line carrying the quotation's auto invoice value, and the quotation's fee inputs — and with **nothing else**. Specifically, its **Milestones**, **Disciplines** and **Details** matrix are all empty, and so is its **Team Work** roster.
 
 That is not a gap in your template — a template has no milestones or disciplines to give. Build them on the project the usual way: either type them on the Milestones and Disciplines pages, or pick a **Phases Discipline Group**, which fills all three grids in one step. The [milestones and matrix page](/modules/ecpa/projects/ecpa-milestones-and-matrix) covers that.
 

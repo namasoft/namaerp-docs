@@ -71,7 +71,7 @@ By default none of the three charges is added to an **order reservation** or its
 
 ## Return reasons
 
-**Nama POS Return Reason** (*سبب الإرجاع*, **Point of sale → Settings → Nama POS Return Reason**) is a simple list — code and name — that the cashier picks from on a sales return ("Wrong size", "Damaged", "Changed mind"). It carries no calculation; it is there so returns can be reported by reason. To force cashiers to explain every return in words as well, turn on **Remarks Required In Sales Return** (*الملحوظه مطلوبه في مردود نقاط البيع*, `value.remarksRequiredInSalesReturn`) on POS Settings.
+**Nama POS Return Reason** (*سبب الإرجاع*, **Point of sale → Settings → Nama POS Return Reason**) is a simple list — code and name — that the cashier picks from on a sales return ("Wrong size", "Damaged", "Changed mind"). It carries no calculation; it is there so returns can be reported by reason. To force cashiers to explain every return in words as well, turn on **Remarks Required In Sales Return** (*الملحوظة مطلوبة في مردود نقاط البيع*, `value.remarksRequiredInSalesReturn`) on POS Settings.
 
 ## Depreciation reasons
 
@@ -95,9 +95,9 @@ When both **Debit** and **Credit** are filled on a line, a POS sales invoice car
 
 | Message | Why | What to do |
 |---|---|---|
-| *No service item defined* | A service line was due but no **Service Charge Item** is set on the register or POS Settings. Shown in English on Arabic screens too. | Choose the item. |
-| *No delivery item defined* | The same for **Delivery Item**. Shown in English on Arabic screens too. | Choose the item. |
-| *No min charge item defined* | The same for **Minimum Charge Item**. Shown in English on Arabic screens too. | Choose the item. |
+| *No service item defined* — «لم يتم تعريف صنف خدمة سياحية» | A service line was due but no **Service Charge Item** is set on the register or POS Settings. | Choose the item. |
+| *No delivery item defined* — «لم يتم تعريف صنف توصيل» | The same for **Delivery Item**. | Choose the item. |
+| *No min charge item defined* — «لم يتم تعريف صنف الحد الأدنى» | The same for **Minimum Charge Item**. | Choose the item. |
 | *Service item is already added* — «تمت إضافة صنف الخدمة السياحية بالفعل» | The cashier tried to add the service item a second time. | Leave the existing line; the register prices it. |
 | *Delivery item is already added* — «تمت إضافة صنف التوصيل بالفعل» | The same for the delivery item. | None. |
 | *Minimum charge item has been recalculated* | The order changed after the top-up line was priced. Shown in English on Arabic screens too. | Check the new amount and save again. |

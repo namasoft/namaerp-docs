@@ -21,7 +21,8 @@ A crew is a named group of employees, attached to a department section, carrying
 
 **Department Section** (*القسم الوظيفي*) — which part of the organisation this crew belongs to. It has a practical effect immediately: the **Technician** picker in the grid below is filtered to employees whose own department section matches. Set the section before you start adding people, or the picker will offer you the whole employee file.
 
-**Crew Supervisor** (*مشرف الفريق*) — the team leader, the person answerable for the crew. It must be one of the crew's own technicians, so the picker offers only the people in the Technicians grid. If the supervisor is later removed from that grid, the record refuses to commit with *"Crew supervisor … must be one of the crew technicians"*.
+**Crew Supervisor** (*مشرف الفريق*) — the team leader, the person answerable for the crew. It must be one of the crew's own technicians, so the picker offers only the people in the Technicians grid. If the supervisor is later removed from that grid, the record refuses to commit with
+*"Crew supervisor {0} must be one of the crew technicians"* — «يجب أن يكون مشرف الفريق {0} أحد فنيي الفريق».
 
 ::: tip Crew Supervisor is not a section supervisor
 Naming someone Crew Supervisor does not let them see other crews on [My Appointments](/modules/crm/technician-appointments/crm-my-appointments#Who-sees-what). That comes from the **Supervisors** grid on the department section.
@@ -33,10 +34,12 @@ Naming someone Crew Supervisor does not let them see other crews on [My Appointm
 
 One row per member: the **Technician** — an employee — and a free **Description**.
 
-Each row also carries an **Assign As Supervisor** (*تعيين كمشرف*) button, which copies that row's technician into the Crew Supervisor field. It is a shortcut for the common case, and it works before the crew is saved.
+Each row also carries the **Assign As Supervisor** button, described under [Actions on this screen](#Actions-on-this-screen).
 
 ::: tip A technician belongs to one crew only
-When you commit the crew, every technician on it is checked against every other crew in the system. If somebody is already a member elsewhere you get *"Technician … already exists in another technician crew …"* and the commit stops.
+When you commit the crew, every technician on it is checked against every other crew in the system. If somebody is already a member elsewhere you get
+*"Technician {0} already exists in another technician crew {1}"* — «الفني {0} موجود بالفعل في فريق فنيين آخر {1}»
+and the commit stops.
 
 This is the rule that makes the calendar trustworthy — a crew's bookings really are that person's bookings. It also means you never move somebody by editing two crews: use a [Technician Transfer](/modules/crm/technician-appointments/crm-technician-transfers), which takes them out of one crew and puts them into the other in a single committed document.
 :::

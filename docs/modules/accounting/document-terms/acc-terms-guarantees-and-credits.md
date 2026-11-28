@@ -39,8 +39,8 @@ The issue document is where the letter's money first moves. Its term has one **E
 | **LGT Amount Debit / Credit** *(record)* | `termConfig.lgtAmountDebit`, `termConfig.lgtAmountCredit` | The letter's face value — taken from the letter of guarantee record itself, not from the issue document. This is the memo pair most customers point at off-balance-sheet commitment accounts. |
 | **Debit / Credit Facilities Amount** *(record)* | `termConfig.facilitiesDebit`, `termConfig.facilitiesCredit` | The facilities amount on the document — the share of the bank facility the letter consumes. |
 | Covering debit / credit | `termConfig.coveringDebit`, `termConfig.coveringCredit` | The **covered amount**: the cash the bank sets aside as margin against the letter. |
-| **Fess Debit / Fees Credit** | `termConfig.feesDebit`, `termConfig.feesCredit` | The **fees value** on the document. |
-| **Issue Feeses Debit / Credit** | `termConfig.collectDebit1`, `termConfig.collectCredit1` | The **issue fees** on the document. |
+| **Fees Debit / Fees Credit** | `termConfig.feesDebit`, `termConfig.feesCredit` | The **fees value** on the document. |
+| **Issue Fees Debit / Credit** | `termConfig.collectDebit1`, `termConfig.collectCredit1` | The **issue fees** on the document. |
 | **Guarantee Type** | `termConfig.guaranteeType` | Not a side — see below. |
 
 ::: tip The covering groups' English title
@@ -50,8 +50,8 @@ On these documents they hold the current cover — there is no "old" cover on an
 :::
 
 **Guarantee Type** `termConfig.guaranteeType` ties the term to one kind of letter (bid bond,
-performance bond, advance payment…). When both the term and the document carry a type and the two
-differ, the document refuses to save with:
+performance bond, advance payment…). On the changing and closing documents, when both the term and
+the document carry a type and the two differ, the document refuses to save with:
 
 *Guarantee Type in the Term and the Document must be the same*
 
@@ -102,7 +102,7 @@ amount and a pair for the new one.
 | **New Fees Debit / Credit** | `termConfig.feesDebit`, `…Credit` | The **new** fees value. |
 | **Fees Debit / Old Fees Credit** | `termConfig.issuedDebit`, `…Credit` | The **old** fees value. |
 | **Change Fees Debit / Credit** | `termConfig.loanValDebit`, `…Credit` | The **change fees** the bank charges for the amendment. |
-| **Guarantee Type** | `termConfig.guaranteeType` | The same type check as on the issue term, with the same message. |
+| **Guarantee Type** | `termConfig.guaranteeType` | The type check described under the issue term, with the same message. |
 | **Shorten Ledger Effect** | `termConfig.shortenLedgerEffect` | Merges ledger lines that share the same account, dimensions and narration into one. |
 
 ::: warning Old amounts are recorded in the same direction as new ones
@@ -126,7 +126,7 @@ sides records the covered amount:
 |---|---|---|
 | Finished | **Closed Debit / Credit** | `termConfig.closedDebit`, `termConfig.closedCredit` |
 | Canceled | **Cancel Debit / Credit** | `termConfig.cancelDebit`, `termConfig.cancelCredit` |
-| Liquidated | **Liquied Debit / Liquied credit** | `termConfig.liquidDebit`, `termConfig.liquidCredit` |
+| Liquidated | **Liquidation Debit / Liquidation credit** | `termConfig.liquidDebit`, `termConfig.liquidCredit` |
 
 Liquidation is the case where the beneficiary called the guarantee and the bank paid out of the
 cover; that is why it has its own pair, usually crediting the cover account and debiting an expense
@@ -137,21 +137,29 @@ The rest of the closing term:
 | Group on screen | Field | What it books |
 |---|---|---|
 | **LGT Amount Debit / Credit** | `termConfig.lgtAmountDebit`, `…Credit` | The letter's value on the closing document — typically the reverse of the issue's face-value pair, to clear the commitment. |
+| **Old Covering Debit / Credit** | `termConfig.coveringDebit`, `…Credit` | The covered amount again, in addition to the status pair above. |
 | **Debit / Credit Facilities Amount** *(record)* | `termConfig.facilitiesDebit`, `…Credit` | The facilities amount released. |
 | **Fees Value Debit / Credit** | `termConfig.feesDebit`, `…Credit` | The **LGT Closing Fees** on the document. |
-| **Guarantee Type** | `termConfig.guaranteeType` | The same type check as the issue term. |
+| **Guarantee Type** | `termConfig.guaranteeType` | The type check described under the issue term. |
 
 ## Letter of credit terms
 
 The letter-of-credit documents copy the guarantee terms almost field for field, with *Bank LC* in
 place of *LGT*.
 
-**Bank LC Opening** is laid out like the LG issue term: facilities, covering, fees (**Fess Debit /
-Fees Credit**), issue fees (**Issue Feeses Debit / Credit**) and the **Tax Effect** tab with tax 1
+**Bank LC Opening** is laid out like the LG issue term: facilities, covering, fees (**Fees Debit /
+Fees Credit**), issue fees (**Issue Fees Debit / Credit**) and the **Tax Effect** tab with tax 1
 and tax 2, **Tax Plan** and **Is Editable Tax**. The amounts come from the opening document in the
 same way, and are always recorded in the legal entity's main currency.
 
-**Bank LC Closing** is laid out like the LG closing term: **Closed**, **Cancel** and **Liquied**
+**Bank LC Changing** is laid out like the LG changing term: **Bank LC Amount Debit / Credit**
+(`termConfig.blcAmountDebit`, `…Credit`) for the credit's current value, the facilities pair, **New
+Covering** and **Old Covering**, **New Fees** and **Fees Debit / Old Fees Credit** for the old fees,
+**Change Fees Debit / Credit** for the change fees, **Issue Fees Debit / Credit** for the issue
+fees, **Shorten Ledger Effect**, and the **Tax Effect** tab. As on the LG changing term, the old-amount
+pairs are recorded exactly as their debit and credit are set.
+
+**Bank LC Closing** is laid out like the LG closing term: **Closed**, **Cancel** and **Liquidation**
 pairs chosen by the document's status, **Bank LC Amount Debit / Credit**
 (`termConfig.blcAmountDebit`, `…Credit`) for the credit's value, the facilities pair, and **Fees
 Value Debit / Credit** for the **Bank LC Closing Fees**. Its **Guarantee Type**
@@ -164,5 +172,5 @@ with:
 
 | Message | Why | What to do |
 |---|---|---|
-| *Guarantee Type in the Term and the Document must be the same* — «لابد من تشابه نوع الضمان في المستند وتوجيه المستند» | The guarantee document and its term both carry a guarantee type, and they differ. | Choose the term made for this guarantee type, or clear the type on the term if it should serve every type. |
+| *Guarantee Type in the Term and the Document must be the same* — «لابد من تشابه نوع الضمان في المستند وتوجيه المستند» | An LG changing or closing document and its term both carry a guarantee type, and they differ. | Choose the term made for this guarantee type, or clear the type on the term if it should serve every type. |
 | *Bank LC Type in the Term and the Document must be the same* — «لابد من تشابه نوع الاعتماد في المستند وتوجيه المستند» | On a letter-of-credit closing, the term's type and the document's LC type differ. | Choose the matching term, or clear the type on the term. |

@@ -6,16 +6,16 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 # مرجع BI — وضع المعالج (Wizard Mode)
 
 هذه الصفحة مرجع عناصر اللوحة المبنية من **أداة إنشاء عنصر لوحة**، أي العناصر التي امتلأ فيها حقل
-**Wizard Data Source**. ارجع إليها حين يعرض عنصر من هذا النوع بيانات خاطئة، أو حين لا يتصرف التنقل التفصيلي أو
-الفلتر المتقاطع منه كما يُتوقع، أو حين تعدّل حقل **Chart Config JSON** الخاص به يدويًا. أما العناصر المكتوبة
-مباشرة بـ SQL فيغطيها [المرجع التقني لوحدة BI](./bi-module-technical-reference.md)، ولا ينطبق عليها شيء مما
+**مصدر بيانات المعالج**. ارجع إليها حين يعرض عنصر من هذا النوع بيانات خاطئة، أو حين لا يتصرف التنقل التفصيلي أو
+الفلتر المتقاطع منه كما يُتوقع، أو حين تعدّل حقل **إعدادات الرسم البياني JSON** الخاص به يدويًا. أما العناصر المكتوبة
+مباشرة بـ SQL فيغطيها [المرجع التقني لوحدة BI](/ar/platform/bi/bi-module-technical-reference)، ولا ينطبق عليها شيء مما
 في هذه الصفحة.
 
 عندما يحتوي widget على `wizardDataSource`، يشير `chartConfigJSON` إلى **معرّفات حقول المعالج (wizard field IDs)** بدلاً من أسماء أعمدة SQL الخام. يُحلّل الخادم كل معرّف إلى اسم مستعار SQL من البيانات الوصفية المخزّنة مؤقتاً؛ لا تتأثر widgets وضع SQL بأي شيء هنا.
 
 ## 1. التخزين المؤقت للبيانات الوصفية (Metadata caching)
 
-عند حفظ `DashBoardWidgetWizard`، يُشغِّل `postCommitAction` دالة `ReportWizardQuery.build()` مرة واحدة ويخزّن البيانات الوصفية لكل حقل في JSON الخاصة بالنظام `fieldMetadata` في كل سطر:
+عند حفظ `DashBoardWidgetWizard`، يبني الخادم استعلام المعالج مرة واحدة ويخزّن البيانات الوصفية لكل حقل في JSON الخاصة بالنظام `fieldMetadata` في كل سطر:
 
 - `fieldId` — مسار خاصية حقل المعالج
 - `chartUsage` — `Dimension` | `Measure`
@@ -27,11 +27,11 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 - `sqlLeftHandSide` — الجانب الأيسر المؤهل بالكامل المستخدم لحقن WHERE في الفلاتر المتقاطعة
 - `arabicTitle` / `englishTitle` — يُمرَّران كما هما
 
-يُفكّك البحث عند التصيير السجلات المخزّنة مؤقتاً — دون إعادة بناء `ReportWizardQuery`.
+يقرأ البحث عند التصيير السجلات المخزّنة مؤقتاً — دون إعادة بناء استعلام المعالج.
 
 ## 2. مفاتيح تعيين البيانات (Data-mapping keys)
 
-لكل فتحة عمود في §3 من المرجع الرئيسي، يضيف وضع المعالج نظيراً `*WizardFieldId`:
+لكل فتحة عمود في §3 من [المرجع التقني](/ar/platform/bi/bi-module-technical-reference)، يضيف وضع المعالج نظيراً `*WizardFieldId`:
 
 | مفتاح SQL | نظير المعالج | يُحلَّل إلى |
 |---|---|---|
@@ -78,11 +78,11 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 قائمة "المحددات النشطة حالياً" بالترتيب:
 
 1. إذا كان الطلب يحمل `drillDownByTargetDimension`، يكون معرّف الحقل هذا أولاً.
-2. ثم `categoryWizardFieldId`, `labelWizardFieldId`, `xWizardFieldId`, `yWizardFieldId` — أيها كان مُعيَّناً في `dataMapping`.
+2. ثم `categoryWizardFieldId`, `labelWizardFieldId`, `xWizardFieldId`, `yWizardFieldId`, `innerLabelWizardFieldId`, `outerLabelWizardFieldId` — أيها كان مُعيَّناً في `dataMapping`، بهذا الترتيب.
 
 يُتخطى المكرر. تقود هذه القائمة:
 
-- **إعادة بناء SQL** عبر `ReportWizardQuery.buildForDrillDown(wizard, primary, otherDims)`. يصبح الأساسي أول GROUP BY؛ تُلحَق الأخرى؛ تبقى القياسات.
+- **إعادة بناء SQL** لاستعلام المعالج: يصبح المحدد الأساسي أول GROUP BY، وتُلحَق المحددات الأخرى، وتبقى القياسات.
 - **فلترة النقر/التفصيل** (§3 أعلاه).
 - **استبعاد قائمة التنقل التفصيلي** — المحددات النشطة بالفعل مخفية من قائمة "Drill down by…" عند النقر بالزر الأيمن.
 
@@ -183,8 +183,13 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 | `Heatmap` | `xWizardFieldId`, `yWizardFieldId` | `valueWizardFieldId` | لا |
 | `Gauge` | — | `valueWizardFieldId` | لا |
 | `Tree` | `labelWizardFieldId` | `valueWizardFieldId` | لا |
+| `Waterfall` | `categoryWizardFieldId` | `valueWizardFieldId` | لا |
+| `Radar` | `categoryWizardFieldId` | — | لا |
+| `GaugeMulti` | `labelWizardFieldId` | `valueWizardFieldId` | لا |
+| `NestedLabelValue` | `innerLabelWizardFieldId`, `outerLabelWizardFieldId` | `innerValueWizardFieldId`, `outerValueWizardFieldId` | لا |
+| `FunnelComparison` | `labelWizardFieldId` | `leftValueWizardFieldId`, `rightValueWizardFieldId` | لا |
 
-`Waterfall`, `NestedLabelValue`, `GaugeMulti`, `Radar`, `FunnelComparison`, `Custom`, `Raw` ← لا يوجد أداة اختيار في وقت التشغيل.
+`Custom` و`Raw` ← لا يوجد أداة اختيار في وقت التشغيل.
 
 **CategoryValue مرن مقابل ثابت**: يكون CategoryValue "مرناً" فقط عندما تكون جميع إدخالات `series[]` موحّدة — نفس `type`، بدون `yAxisIndex`، بدون `stack`، بدون `target`. الرسوم البيانية ذات المحورين / bar+line المدمج / المكدّسة / ذات الهدف ثابتة: يُخفى منتقي متعدد القياسات.
 

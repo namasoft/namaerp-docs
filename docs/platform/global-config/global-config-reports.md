@@ -7,7 +7,7 @@ menu: Administration → Settings → System Settings
 
 Everything about producing output: the format a report opens in, what appears on the printed page, how dimension parameters are filled, what is logged, how values are formatted, and how Excel exports are built.
 
-For writing and running reports, see the [Reports guide](../reports/reports-guide.md).
+For writing and running reports, see the [Reports guide](/platform/reports/reports-guide).
 
 ![Reports and Printing tab](../../ar/platform/global-config/images/gc-reports-en.png)
 
@@ -27,21 +27,23 @@ For writing and running reports, see the [Reports guide](../reports/reports-guid
 
 **Do Not Show Document Code In Nama Server Printing Log** `value.info.doNotShowDocumentCodeInNamaServerPrintingLog` — Keeps document codes out of that agent's log.
 
-**use Entity Code As File Name** `value.info.useEntityCodeForFileName` — Names the exported or printed file after the record's code, so a saved invoice PDF is recognisable in a downloads folder.
+**Use Entity Code As File Name** `value.info.useEntityCodeForFileName` — Names the exported or printed file after the record's code, so a saved invoice PDF is recognisable in a downloads folder.
 
-**Use Adobe Syntax For PDF Printing** `value.info.useAdobeSyntaxForPDFPrinting` — Produces PDF using Adobe-compatible syntax. Try it if a particular viewer or printer mishandles your output.
+**Use Legacy Printing Code In PDF** `value.info.useLegacyPrintingCodeInPDF` — When a PDF is produced to be printed, with the print dialog or straight to a printer, embeds a print script in the PDF so that opening it starts the printing. With this off, no print script is added.
 
-**Use Legacy Printing Code In PDF** `value.info.useLegacyPrintingCodeInPDF` — Falls back to the older PDF rendering path, for layouts that depended on its behaviour.
+**Use Adobe Syntax For PDF Printing** `value.info.useAdobeSyntaxForPDFPrinting` — Writes that print script in Adobe Reader's print-parameters form, which can also name the target printer. It has an effect only while **Use Legacy Printing Code In PDF** is on.
 
 ## Report content
 
 **Reports Footer Note 1** / **Reports Footer Note 2** `value.info.reportsFooterNote1`, `value.info.reportsFooterNote2` *(default "Powered by Nama ERP" and "www.namasoft.com")* — The two footer lines on every report. Most installations replace these with the company name and contact details.
 
-**Use This Legal Entity Logo For Public** `value.info.useLogoForPublic` — Which legal entity's logo to use when the record being printed is public and so has no legal entity of its own.
+A report prints the logo of the legal entity the user logged in with. These three options decide the logo only for a user logged in with the public legal entity:
 
-**Use Document LegalEntity Logo When Print Form** `value.info.useEntityLegalEntityLogoWhenPrintForm` *(default on)* — A printed form carries the logo of the record's own legal entity. In a group of companies this is what makes each subsidiary's invoice look like its own.
+**Use Document Legal Entity Logo When Print Form** `value.info.useEntityLegalEntityLogoWhenPrintForm` *(default on)* — Printing a form, or a list of selected records, passes the record's own legal entity to the report as a parameter, and a public login then takes the logo of that legal entity. In a group of companies this is what makes each subsidiary's invoice look like its own.
 
-**Search LegalEntity Logo In Report Parameters When Public LegalEntity** `value.info.whenPublicLegalEntitySearchLegalEntityLogoInReportParameters` *(default on)* — For a public legal entity, look the logo up from the report's parameters instead.
+**Search Legal Entity Logo In Report Parameters When Public Legal Entity** `value.info.whenPublicLegalEntitySearchLegalEntityLogoInReportParameters` *(default on)* — A public login takes the logo of the first legal entity found among the report's parameters. Either this option or the one above is enough for that search to run.
+
+**Use This Legal Entity Logo For Public** `value.info.useLogoForPublic` — The legal entity whose logo a public login gets when no legal entity was found that way.
 
 ## Report definitions
 
@@ -69,9 +71,9 @@ This affects the report parameter only. It does not change what any report retur
 
 ## Dimension parameters in reports
 
-**Override Selected LegalEntity** / **Override Selected Sector** / **Override Selected Branch** / **Override Selected Department** / **Override Selected AnalysisSet** `value.info.overrideSelectedLegalEntity`, `...overrideSelectedSector`, `...overrideSelectedBranch`, `...overrideSelectedDepartment`, `...overrideSelectedAnalysisSet` — Each takes **Never**, **Always** or **When Not Public**, and decides whether the dimension the user currently has selected is forced into the report's matching parameter.
+**Override Selected Legal Entity** / **Override Selected Sector** / **Override Selected Branch** / **Override Selected Department** / **Override Selected Analysis Set** `value.info.overrideSelectedLegalEntity`, `...overrideSelectedSector`, `...overrideSelectedBranch`, `...overrideSelectedDepartment`, `...overrideSelectedAnalysisSet` — Each takes **Never**, **Always** or **When Logged In with Non-public Dimensions**, and decides whether the dimension the user currently has selected is forced into the report's matching parameter. A report definition that sets its own value for a dimension uses that one instead.
 
-**Always** guarantees a user only ever reports on their own branch, at the cost of not being able to run a cross-branch report. **When Not Public** is the usual middle ground: force the dimension when the user is working inside one, leave the parameter free when they aren't. **Never** leaves the choice entirely to whoever runs the report.
+**Always** guarantees a user only ever reports on their own branch, at the cost of not being able to run a cross-branch report. **When Logged In with Non-public Dimensions** is the usual middle ground: force the dimension when the user is working inside one, leave the parameter free when they aren't. **Never** leaves the choice entirely to whoever runs the report.
 
 ## Report logging
 
@@ -87,7 +89,7 @@ This affects the report parameter only. It does not change what any report retur
 Turning on any of the three above while report performance logging is off is refused at save time with an explicit message naming the option. They record detail *about* a logged run, so there has to be a logged run to attach it to.
 :::
 
-**Add Report Runs To Action History** / **Add Export Action To Action History** `value.info.addReportRunsToActionHistory`, `value.info.addExportToActionHistory` — Write report runs and exports into the record's own action history. This is the audit-trail answer to "who exported this customer list?".
+**Add Report Runs To Action History** / **Add Export Action To Action History** `value.info.addReportRunsToActionHistory`, `value.info.addExportToActionHistory` — The first writes every report run, and every report produced in a format other than HTML, to action history. The second adds an export entry to the action history of each record exported to a file. Together they are the audit-trail answer to "who exported this customer list?".
 
 ## Value patterns in reports
 
@@ -130,26 +132,25 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.openPrintInBrowserWindow` | Open Print In Browser Window | فتح الطباعة في نافذة جديدة | [Viewing and printing](#Viewing-and-printing) |
 | `value.info.printUsingNamaServer` | Print Using Nama Server | الطباعة باستخدام تطبيق الطباعة المباشرة | [Viewing and printing](#Viewing-and-printing) |
 | `value.info.doNotShowDocumentCodeInNamaServerPrintingLog` | Do Not Show Document Code In Nama Server Printing Log | إخفاء كود المستندات في سجل تطبيق الطباعة المباشرة | [Viewing and printing](#Viewing-and-printing) |
-| `value.info.useEntityCodeForFileName` | use Entity Code As File Name | استعمال الكود كإسم لملف الطباعه | [Viewing and printing](#Viewing-and-printing) |
+| `value.info.useEntityCodeForFileName` | Use Entity Code As File Name | استعمال الكود كاسم لملف الطباعة | [Viewing and printing](#Viewing-and-printing) |
 | `value.info.useAdobeSyntaxForPDFPrinting` | Use Adobe Syntax For PDF Printing | Use Adobe Syntax For PDF Printing | [Viewing and printing](#Viewing-and-printing) |
 | `value.info.useLegacyPrintingCodeInPDF` | Use Legacy Printing Code In PDF | Use Legacy Printing Code In PDF | [Viewing and printing](#Viewing-and-printing) |
 | `value.info.reportsFooterNote1` | Reports Footer Note 1 | Reports Footer Note 1 | [Report content](#Report-content) |
 | `value.info.reportsFooterNote2` | Reports Footer Note 2 | Reports Footer Note 2 | [Report content](#Report-content) |
-| `value.info.showCompanyNameNextToLogo` | Show Company Name Next To Logo In New GUI | عرض اسم الشركه بديل عن اللوجو في ال GUI الجديد | Shows the company name instead of the logo in the top bar of the older web interface. |
 | `value.info.useLogoForPublic` | Use This Legal Entity Logo For Public | استعمال لوجو هذه الشركة عند الدخول بالعام | [Report content](#Report-content) |
-| `value.info.useEntityLegalEntityLogoWhenPrintForm` | Use Document LegalEntity Logo When Print Form | استعمال لوجو شركة السند عند طباعة نموذج الشاشة | [Report content](#Report-content) |
-| `value.info.whenPublicLegalEntitySearchLegalEntityLogoInReportParameters` | Search LegalEntity Logo In Report Parameters When Public LegalEntity | البحث عن لوجو الشركة في مدخلات التقرير عند الدخول بالشركة عام | [Report content](#Report-content) |
-| `value.info.allowReportIfUserAllowedThroughSecurityTableRegardlessOfSecurity` | Allow Report If User/Group/Security Profile Allowed Through Security Table Regardless Of Security | عرض التقرير اذا كان المستخدم/المجموعة/ملف الصلاحية مسموح له من خلال جدول الصلاحيات بغض النظر عن الصلاحيات | [Report definitions](#Report-definitions) |
-| `value.info.allowChangeSystemReportToNonSystem` | Allow Change System Report To Non System | السماح بتغيير التقرير النظامي الي غير نظامي | [Report definitions](#Report-definitions) |
+| `value.info.useEntityLegalEntityLogoWhenPrintForm` | Use Document Legal Entity Logo When Print Form | استعمال لوجو شركة السند عند طباعة نموذج الشاشة | [Report content](#Report-content) |
+| `value.info.whenPublicLegalEntitySearchLegalEntityLogoInReportParameters` | Search Legal Entity Logo In Report Parameters When Public Legal Entity | البحث عن لوجو الشركة في مدخلات التقرير عند الدخول بالشركة عام | [Report content](#Report-content) |
+| `value.info.allowReportIfUserAllowedThroughSecurityTableRegardlessOfSecurity` | Allow Report If User/Group/Security Profile Allowed Through Security Table Regardless Of Security | عرض التقرير إذا كان المستخدم/المجموعة/ملف الصلاحية مسموح له من خلال جدول الصلاحيات بغض النظر عن الصلاحيات | [Report definitions](#Report-definitions) |
+| `value.info.allowChangeSystemReportToNonSystem` | Allow Change System Report To Non System | السماح بتغيير التقرير النظامي إلى غير نظامي | [Report definitions](#Report-definitions) |
 | `value.info.dontUpdateReportNotASystemReportButHaveSameCodeOfSystemReport` | Do Not Update Report Not A System Report But Have Same Code Of System Report | عدم تحديث تقرير غير نظامي ولكن له كود تقرير نظامي | [Report definitions](#Report-definitions) |
 | `value.info.fetchReviewedAndApprovedReportsOnlyWhenUpdateSystemReports` | Get Reviewed And Approved Reports Only When Update System Reports | جلب التقارير المعتمدة فقط عند تحديث تقارير النظام | [Report definitions](#Report-definitions) |
-| `value.info.showOnlyTheseSubsidiaryTypesInReports` | Show Only These Subsidiary Types In Reports Subsidiary Type Parameter | اظهار الذمم التالية فقط في مدخل نوع الذمة بالتقارير | [Subsidiary types in report parameters](#Subsidiary-types-in-report-parameters) |
+| `value.info.showOnlyTheseSubsidiaryTypesInReports` | Show Only These Subsidiary Types In Reports Subsidiary Type Parameter | إظهار الذمم التالية فقط في مدخل نوع الذمة بالتقارير | [Subsidiary types in report parameters](#Subsidiary-types-in-report-parameters) |
 | `value.info.showOnlyTheseSubsidiaryTypesInReports.subsidiaryType` | Subsidiary Type | نوع الذمة | [Subsidiary types in report parameters](#Subsidiary-types-in-report-parameters) |
-| `value.info.overrideSelectedLegalEntity` | Override Selected LegalEntity | تعديل الشركة المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
+| `value.info.overrideSelectedLegalEntity` | Override Selected Legal Entity | تعديل الشركة المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
 | `value.info.overrideSelectedSector` | Override Selected Sector | تعديل القطاع المختار | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
 | `value.info.overrideSelectedBranch` | Override Selected Branch | تعديل الفرع المختار | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
-| `value.info.overrideSelectedDepartment` | Override Selected Department | تعديل الادارة المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
-| `value.info.overrideSelectedAnalysisSet` | Override Selected AnalysisSet | تعديل المجموعة التحليلية المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
+| `value.info.overrideSelectedDepartment` | Override Selected Department | تعديل الإدارة المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
+| `value.info.overrideSelectedAnalysisSet` | Override Selected Analysis Set | تعديل المجموعة التحليلية المختارة | [Dimension parameters in reports](#Dimension-parameters-in-reports) |
 | `value.info.logReportPerformanceToDB` | Log Report Performance To DB | تسجيل أداء التقارير في قاعدة البيانات | [Report logging](#Report-logging) |
 | `value.info.logParametersToDB` | Log Report Parameters To DB When Running | تخزين مدخلات التقارير في قاعدة البيانات عند التشغيل | [Report logging](#Report-logging) |
 | `value.info.logExportsToDB` | Log Report Exports To DB | Log Report Exports To DB | [Report logging](#Report-logging) |
@@ -175,6 +176,6 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.excelExportConfig.dontRemoveFirstPageHeader` | Do Not Remove First Page Header | عدم حذف رأس أول صفحة | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.removePageFooter` | Remove Page Footer | حذف ذيل الصفحة | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.removeColumnHeader` | Remove Column Header | حذف رأس الأعمدة | [Excel export](#Excel-export) |
-| `value.info.excelExportConfig.removeColumnFooter` | Remove Column Footer | حذف رأس الأعمدة | [Excel export](#Excel-export) |
+| `value.info.excelExportConfig.removeColumnFooter` | Remove Column Footer | حذف ذيل الأعمدة | [Excel export](#Excel-export) |
 | `value.info.excelExportConfig.removeReportTitle` | Remove Report Title | حذف عنوان التقرير | [Excel export](#Excel-export) |
 | `value.info.exportDraftVersion` | Export Draft Version | استعمال نسخة المسودة عند التصدير | [Excel export](#Excel-export) |

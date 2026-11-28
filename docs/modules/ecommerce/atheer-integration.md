@@ -15,7 +15,7 @@ Atheer is set up as a record on the **Magento Site** screen. The screen keeps th
 
 1. Create a record with **Site Type** = **Atheer Site**. Give it a short code, for example `ATHEER`: Atheer uses that code in every call.
 2. Fill the generation information that Atheer's operations use (see the table below): **Order Info**, **Request Info** and **Return Info**, each with the document type, book and term Nama should create. Also fill the customer, payment-method and item-linking settings. The [e-commerce integration guide](/modules/ecommerce/ecommerce-integration-guide.md) explains all of these.
-3. On the Main tab, fill **Seller Name (ZATCA)** and **Vat Number (ZATCA)** with your company's registered name and VAT number. Nama uses them to build the ZATCA QR code it returns to Atheer.
+3. On the Main tab, fill **Seller Name (ZATCA)** and **VAT Number (ZATCA)** with your company's registered name and VAT number. Nama uses them to build the ZATCA QR code it returns to Atheer.
 4. On the **Atheer Site** tab, fill **Reset Order Link Template** (explained below). The record cannot be saved without it.
 5. Give Atheer a Nama user name and password for the calls. The calls run as that user, so it needs the right to create the documents in step 2.
 
@@ -61,7 +61,7 @@ This message has no Arabic text and appears in English on both screens. It means
 
 ## What Nama answers
 
-Every successful call returns JSON with `success`, plus the `code`, the `id` and the `entityType` of the Nama document that was created. For `add_invoice` and `request_confirm`, when the document is a sales document, the answer also carries `qr_code`: the ZATCA QR code built from **Seller Name (ZATCA)**, **Vat Number (ZATCA)**, the document's dates and its totals, ready for Atheer to print on the customer's receipt.
+Every successful call returns JSON with `success`, plus the `code`, the `id` and the `entityType` of the Nama document that was created. For `add_invoice` and `request_confirm`, when the document is a sales document, the answer also carries `qr_code`: the ZATCA QR code built from **Seller Name (ZATCA)**, **VAT Number (ZATCA)**, the document's dates and its totals, ready for Atheer to print on the customer's receipt.
 
 Every call is recorded in the **Atheer Integration Log List** on the **Statistics** tab of the Magento Site: the date, the operation, the Nama document and the body Atheer sent. When a customer asks what Atheer sent for an order, this list holds the original request.
 

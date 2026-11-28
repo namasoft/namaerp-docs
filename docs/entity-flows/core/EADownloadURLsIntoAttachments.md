@@ -19,7 +19,7 @@ Manual or automated execution to pull externally hosted files into Nama attachme
 
 ## How It Works
 
-1. **Reads both fields** (URL field and attachment field) using `EntityReflection.getFieldValueConsideringLists`, so header and detail-line values are resolved into two parallel lists
+1. **Reads both fields** (URL field and attachment field), so header and detail-line values are resolved into two parallel lists
 2. **Validates compatibility** by requiring both fields to resolve to the same number of values; otherwise the action fails
 3. **Skips values that should not change** — empty URLs are skipped, and non-empty attachments are skipped unless overwriting is enabled
 4. **Downloads each file** via an HTTP GET request, streaming the response into the attachment and deriving the file name from the `Content-Disposition` header or, failing that, the URL path

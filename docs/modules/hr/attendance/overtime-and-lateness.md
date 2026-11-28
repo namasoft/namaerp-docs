@@ -46,17 +46,12 @@ arrival, early leave, early arrival, mid-day out time, excuse time, mission time
 / no-check-out flags) is held per part. That is why the system indicators come in
 `Shift1`/`Shift2`/`Shift3` flavours as well as day totals.
 
-::: warning Several of these columns carry no English or Arabic label
-The net columns were only ever translated into French, so on an English or Arabic screen a few of
-them show their internal name instead of a caption. The order is the one in the table above.
-:::
-
 ![An Attendance Plan and the employees it covers](../../../ar/modules/hr/images/attendance/attendance-plan-en.png)
 
 ## The two ways overtime is measured
 
 One switch on [HR Configuration](/modules/hr/setup/hr-configuration) decides which rule runs:
-**Over Time calculated after last Work Time** («حساب الوقت الإضافي من إنتهاء الدوام»)
+**Over Time calculated after last Work Time** («حساب الوقت الإضافي من انتهاء الدوام»)
 `value.overTimeAfterWorkTime`. It is **off** by default.
 
 **Off — hours beyond the expected hours.** The system adds up what the employee actually worked in
@@ -107,31 +102,23 @@ Two options let you take holidays and vacations out of that rule:
 Switch either on and that kind of day is measured like an ordinary working day instead.
 
 ::: danger There is no equivalent option for the weekly day off
-Weekends and weekly rest days are **always** treated as all-overtime days. Whatever you set for
-holidays and vacations, work on a day off is credited in full as overtime, and there is no setting
-that changes it. This is deliberate, but it catches people who assume the three day types behave
-alike.
+A weekly rest day is treated as an all-overtime day, whatever you set for holidays and vacations.
+The only exception comes from the shift itself: when the shift has **Allow Specifying Times For
+Weekends** ticked and the rest day carries its own start and end times, that day is measured against
+those times like a working day. Without such times, work on a day off is credited in full as
+overtime.
 :::
 
 **A mission on a day off produces equal overtime and mission time.** When the day is a rest day, a
 holiday or a vacation and *Consider Missions in Overtime Calculation* is on, the day's overtime is
-**set to** the mission time rather than added to it. So a three-day delivery run that crosses a
-Friday shows that Friday with, say, nine hours of mission time and nine hours of overtime — the same
-nine hours reported in two columns, not eighteen hours of credit. Neither figure is wrong: the
-employee worked their day off. If that ends up paying twice, the fault is in how the salary
-components read the two indicators, not in the attendance figures. Rest-day work is best separated
-by **indicator type** — `OverTime In Week Ends` and `Hours Missions` are different indicators
-precisely so they can be priced differently.
-
-A related trap lives on the indicator rather than the document: the indicator flag
-*Not Included In Week Ends* zeroes the whole indicator for that day type, so it also throws away
-ordinary punched rest-day overtime. It is not a mission switch. See
-[Leave Permissions and Missions](/modules/hr/attendance/leave-permissions-and-missions).
+**set to** the mission time rather than added to it, so the same hours appear in two columns. Why
+that is right, and how to keep the salary components from paying it twice, is on
+[A mission on the weekly rest day](/modules/hr/attendance/leave-permissions-and-missions#A-mission-on-the-weekly-rest-day).
 
 ## Hours outside official working time
 
 When a day has no time ranges at all — no shift to measure against — the setting
-**unOfficial Working Time** `value.unOfficialWorkingTime` decides what the punches are worth:
+**Unofficial Working Time** `value.unOfficialWorkingTime` decides what the punches are worth:
 
 | Value | Result |
 |---|---|
@@ -206,7 +193,8 @@ Overlapping **records** are a different problem with a different answer. An atte
 mission, a leave permission and a partial vacation can all cover the same minutes; *Handle Overlap
 Between Attendance, Missions, and Leave Permissions* is on by default and resolves them by priority,
 which ships as mission first, then attendance, then permission, then partial vacation. Switch it off
-and the same hours are counted — and paid — more than once.
+and the same hours are counted — and paid — more than once. The priorities and how the trimming works
+are on [Leave Permissions and Missions](/modules/hr/attendance/leave-permissions-and-missions), under *The same hours claimed twice*.
 
 ## From hours to money
 
@@ -257,12 +245,12 @@ calculated takes effect the next time they are calculated.
 |---|---|---|
 | *Employee {0} has no attendance plan on day {1}* — «الموظف {0} ليس له خطة دوام في اليوم {1}» | A leave permission, mission or vacation document covers a day on which the employee has no attendance plan, and the matching *Prevent … With In No Attendence Plan* option is on. | Give the employee a plan covering those dates. If a plan exists but is not matching, check the six dimension switches that control attendance-plan matching. |
 | *Employee {0} has no Attendance Plan in {1}* — «الموظف {0} ليس له خطة دوام في يوم {1}» | The same gap, found while attendance was being calculated rather than while a document was being saved. Without a plan there are no expected hours, so neither overtime nor lateness can be measured. | Create or extend the plan for that period, then recalculate attendance. |
-| *Leave permission {0} overlaps with {1} for the employee {2}, From Date {3}* — «إذن الإنصراف {0} يتداخل مع إذن الإنصراف {1} للموظف {2} من تاريخ {3}» | Two leave permissions cover the same time for one employee. | Shorten or delete one of them. Overlapping permissions would otherwise both be excused against the same lateness. |
-| *Full day mission must include week ends* | A full-day mission was saved with *Not Include Week Ends* ticked. A full-day mission runs round the clock from its start date to its end date, so every day in between was worked, weekly rest days included. | Clear *Not Include Week Ends*. Use it only for a multi-day hours-based mission. No Arabic text exists for this message. |
-| *Cannot calculate indicator {0} for employee {1}* | The attendance figures could not be turned into an indicator value — most often because the day has no plan or the employee has no HR information for the period. | Check the employee's attendance plan and HR information for those dates, then recalculate. No Arabic text exists for this message. |
-| *The employee {0} has a repeated attendance code {1}, please change it* | Two employees share one attendance machine code, so a punch cannot be attributed. | Give one of them a different code. If the duplication is across companies, *Consider Legal Entity To Find Employee* on the configuration resolves it without renumbering. No Arabic text exists for this message. |
+| *Leave permission {0} overlaps with {1} for the employee {2}, From Date {3}* — «إذن الانصراف {0} يتداخل مع إذن الانصراف {1} للموظف {2} من تاريخ {3}» | Two leave permissions cover the same time for one employee. | Shorten or delete one of them. Overlapping permissions would otherwise both be excused against the same lateness. |
+| *Full day mission must include week ends* — «مهمة اليوم الكامل يجب أن تشمل العطلات الأسبوعية» | A full-day mission was saved with *Not Include Week Ends* ticked. A full-day mission runs round the clock from its start date to its end date, so every day in between was worked, weekly rest days included. | Clear *Not Include Week Ends*. Use it only for a multi-day hours-based mission. |
+| *Cannot calculate indicator {0} for employee {1}* — «تعذر حساب قيمة المؤشر {0} للموظف {1}» | The attendance figures could not be turned into an indicator value — most often because the day has no plan or the employee has no HR information for the period. | Check the employee's attendance plan and HR information for those dates, then recalculate. |
+| *The employee {0} has a repeated attendance code {1}, please change it* | Two employees share one attendance machine code, so a punch cannot be attributed. | Give one of them a different code. If the duplication is across companies, *Consider Legal Entity To Find Employee While Importing Attendance Data* on the configuration resolves it without renumbering. No Arabic text exists for this message. |
 | *Could not find employee with attendance machine code {0}* | A punch arrived with a code no employee carries. | Add the code to the right employee's HR information, or correct the machine. No Arabic text exists for this message. |
-| *This document can not be used if the option manual attendance is selected* | *Attendance Manual Calculation* is on and this document only works with automatic calculation. | Switch manual calculation off, or stop using the document. No Arabic text exists for this message. |
+| *This document can not be used if the option manual attendance is selected* | Raised when saving a **Holidays And Rest Days Balance Compensation Document** while *Attendance Manual Calculation* is on; that document only works with automatic calculation. | Switch manual calculation off, or stop using the document. No Arabic text exists for this message. |
 
 ## Related pages
 

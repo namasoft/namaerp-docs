@@ -23,9 +23,9 @@ The list view is your product catalogue — every carton design you can quote an
 Carton specifications are part of the `manufacturing-crtn-pln` license, the carton-planning sub-license of the Manufacturing module. Without it the **Cartoon** menu does not appear, even when the core `manufacturing` license is on.
 :::
 
-## The Four Types of Specifications
+## The Five Types of Specifications
 
-Nama supports four manufacturing approaches for cartons:
+**Manufacturing Type** has five values, and a new specification starts as **Normal Carton - Manufactured And For Sale**:
 
 ### Normal Carton (نوع التصنيع: كرتونة عادية)
 
@@ -48,19 +48,19 @@ When you create an assembled carton specification:
 2. But instead of defining material layers, you add "child carton lines"
 3. Each child line references a normal carton specification
 
-Order the assembled carton, and Nama automatically knows it needs to manufacture all the child components.
+The assembled carton itself is sold but not manufactured. Order it, and Nama automatically knows it needs to manufacture all the child components.
 
 **Important**: Assembled cartons reference normal cartons as children. The children must already exist as separate "Normal Carton" specifications.
 
 ### Assembled Separator (نوع التصنيع: فاصل مجمع)
 
-Similar to assembled cartons, but for complex separator configurations. An assembled separator is made of multiple "Small Separator" components.
+Similar to assembled cartons, but the other way round. An assembled separator is manufactured but not sold: it is the board from which its "Small Separator" children are cut.
 
-You define the assembled separator and link it to its small separator children. This type is less common - used mainly for intricate internal packaging systems.
+You define the assembled separator and link it to its small separator children in **Child Carton Lines**. This type is less common - used mainly for intricate internal packaging systems.
 
 ### Small Separator (نوع التصنيع: فاصل صغير)
 
-Small separators are individual components of an assembled separator. You typically don't order these directly - they're manufactured as part of the assembled separator parent.
+Small separators are the pieces cut from an assembled separator. They are sold but not manufactured on their own: a carton order names the small separator, and planning manufactures its assembled separator parent, shown read-only in **Manufacturing Parent Specification**. Nama fills that field when the parent's child line is saved.
 
 ## Creating a Basic Carton Specification
 
@@ -99,11 +99,11 @@ This is where it gets manufacturing-specific. The flat corrugated sheet, before 
 **Sheet Length**: How long the flat sheet needs to be
 **Sheet Width**: How wide the flat sheet needs to be
 
-**Flap Value** (اللسان): The extra material for flaps that fold over — a few centimetres.
+**Flap Value** (اللسان): The extra material for flaps that fold over — a few centimetres. A new specification starts with 5.
 
 **Here's the clever part**: You don't always calculate these manually. You can use formulas.
 
-If you select a **Pattern** (باترون) that has formulas defined, or a **Crease Mold** (قالب الطيات) with formulas, Nama automatically calculates sheet dimensions using those formulas.
+If you select a **Pattern** (النمط) that has formulas defined, or a **Crease Mold** (قالب الطيات (فورم)) with formulas, Nama calculates sheet dimensions using those formulas when the specification is saved. Where both carry a formula, the crease mold's wins.
 
 The formulas can reference:
 - `l` - length
@@ -112,13 +112,13 @@ The formulas can reference:
 - `f` - flap value
 - `ml`, `mw`, `mh` - mold dimensions (if a crease mold is selected)
 
-For example, a pattern might have:
-- Width formula: `2*(l+w) + f`
-- Length formula: `h + w + f`
+For example, a new pattern starts with:
+- Length formula: `(l+w)*2 + f`
+- Width formula: `w+h`
 
 Select that pattern, and sheet dimensions populate automatically based on your physical dimensions.
 
-**Multiplication factors**: If you want to cut multiple cartons from one sheet (maybe two across), you can set multiplication width or length. Most specs leave these blank (one carton per sheet).
+**Multiplication factors**: If you want to cut multiple cartons from one sheet (maybe two across), you can set **Multiplication Width** or **Multiplication Length**; material planning then divides the ordered quantity by their product to get the number of sheets. With either one filled, the formulas are not applied and you type the sheet dimensions yourself. Most specs leave these blank (one carton per sheet).
 
 ### Step 4: Carton Structure and Materials
 
@@ -126,17 +126,17 @@ Now define what the carton is made of. The type, fluting, join, slotting, loadin
 
 **Type** (نوع الكرتونة): Select a carton type like "Standard Corrugated", "Double Wall", etc. Types can have default starch levels.
 
-**Fluting** (نوع التموج): Choose the fluting profile - E-flute, C-flute, B-flute, etc. This determines the thickness and strength of the corrugated medium.
+**Fluting** (الريجة): Choose the fluting profile - E-flute, C-flute, B-flute, etc. This determines the thickness and strength of the corrugated medium.
 
 **Fluting**, **Corrugating Type** and **Corrugating Factor** are three different things and are easy to confuse. **Fluting** here on the header is a descriptive profile for the board as a whole. **Corrugating Type**, chosen per layer, is the record that ties a flute to a carton type and carries the **Corrugating Factor** — the numeric take-up ratio the calculations actually use. The header tells a person what the board is; the layer tells the system how much paper it eats.
 
 ![A corrugating type, tying a flute profile to a carton type and a factor](../../ar/modules/manufacturing/images/carton/corrugating-type-en.png)
 
-**Join Type** (نوع التلصيق): How the carton is joined - glued, stitched, taped, etc.
+**Join Type** (نوع التقفيل): How the carton is joined - glued, stitched, taped, etc.
 
-**Slotting Type** (نوع التخريم): The slotting pattern - standard, special, etc.
+**Slotting Type** (نوع التفتيح): The slotting pattern - standard, special, etc.
 
-**Pattern** (باترون): The overall design pattern (regular slotted carton, half-slotted, etc.)
+**Pattern** (النمط): The overall design pattern (regular slotted carton, half-slotted, etc.)
 
 **Loading Type**: How finished cartons are stacked or loaded.
 
@@ -164,23 +164,23 @@ A single-wall carton is three rows — Front, Stuffing, Back. A double-wall cart
 
 #### Second Production Stage (Optional)
 
-Use this if you have additional lamination or processing after initial corrugating. Maybe you laminate printed sheets or add special coatings. Same structure as first stage - define layers and materials.
+Use this to record materials added after initial corrugating — laminating printed sheets or special coatings, say. Each row carries an **Item**, the item section and classes, and a material and finished quantity; it has no corrugating type, factor or layer type.
 
 #### Third Production Stage (Optional)
 
-For final finishing processes that add materials - maybe stickers, labels, special tape, etc.
+The same columns, for final finishing materials - maybe stickers, labels, special tape, etc.
+
+Material planning reads only the **First Production Stage**. The second and third stage grids are a record on the specification; the optimizer does not plan them and they do not reach the generated production orders.
 
 ### Step 6: Molds and Printing
 
 If this carton uses molds:
 
-**Crease Mold** (قالب الطيات): Select the mold used for creasing/folding. The mold should be set up in the Molds master file as type "Crease Mold".
+**Crease Mold** (قالب الطيات (فورم)): Select the mold used for creasing/folding. The mold must be set up in the Molds master file as type "Crease Mold".
 
-**Printing Mold** (قالب الطباعة): Select the printing cylinder or plate if this is a printed carton. Set up as type "Printing Mold".
+**Printing Mold** (قالب الطباعة (سريلة)): Select the printing cylinder or plate if this is a printed carton. Set up as type "Printing Mold".
 
 **Printing Type** (نوع الطباعة): Select the printing process (flexo, offset, digital, etc.). Printing types can have maximum sheet length limits - Nama validates you're not exceeding them.
-
-**Has Badge**: Check if the carton includes a badge or label.
 
 ### Step 7: Routings (Operations)
 
@@ -196,14 +196,12 @@ When you generate production orders from this specification, these routing lines
 
 ### Step 8: Packaging and Quantities
 
-**Quantity**: Default order quantity (optional)
+**Quantity** and **Price**: A reference quantity and price kept on the specification (optional). Carton orders do not copy them; prices are entered on the order line.
 
-**Price**: Default selling price (optional)
+**Permitted Percentage**: How far material planning may overrun the ordered quantity. The plan never makes less than ordered, and it may go above it by less than this percentage of the ordered quantity, or by fewer than 20 cartons when that allowance is larger (like 5% to absorb whole-strike overruns).
 
-**Permitted Percentage**: How much over/under production is allowed (like 5% to account for waste/overruns)
-
-**Count in Package**: How many finished cartons fit in one package
-**Count on Pallet**: How many cartons fit on one pallet
+**Count Of Carton In Package**: How many finished cartons fit in one package
+**Count Of Carton In Pallet**: How many cartons fit on one pallet
 
 These help with shipping and logistics planning.
 
@@ -236,11 +234,11 @@ Define each with their own dimensions, materials, routings, etc.
 - **Manufacturing Type**: "Assembled Carton"
 - **Dimensions**: The overall dimensions when assembled
 
-**Step 3**: In the **Child Carton Lines** tab, add:
-- Line 1: Carton Specs = "DISPLAY-BASE", Quantity = 1
-- Line 2: Carton Specs = "DISPLAY-LID", Quantity = 1
+**Step 3**: In the **Child Carton Lines** grid on the main tab, add one line per child — the grid has a single **Carton Specs** column:
+- Line 1: Carton Specs = "DISPLAY-BASE"
+- Line 2: Carton Specs = "DISPLAY-LID"
 
-Now when someone orders "DISPLAY-FULL", Nama's manufacturing details will show it needs to produce 1 base and 1 lid.
+Now when someone orders 500 "DISPLAY-FULL", Nama plans 500 bases and 500 lids: each child carries the full ordered quantity.
 
 **Important validations**:
 - All child cartons must be for the same customer as the parent
@@ -290,7 +288,7 @@ Most cartons only use First Production Stage. But if you have multi-stage proces
 **Second Stage**: Printing - adds graphics
 **Third Stage**: Special coating or laminating - adds protective layers
 
-Each stage can have different material requirements. The material planning optimizer handles multi-stage specs by finding appropriate materials for each stage independently.
+Each stage can record different materials, but only the First Production Stage layers are planned by the material planning optimizer.
 
 ## Working With Specifications in Practice
 
@@ -314,21 +312,19 @@ Nama enforces several validations when you save a specification:
 
 **Sheet length limits**: If you select a printing type with a maximum sheet length, Nama checks your sheet length doesn't exceed it.
 
-**Corrugating factors must match types**: If you select a corrugating type in a layer, its corrugating factor must match the factor specified in the corrugating type master data.
+**Corrugating factors must match types**: If you select a corrugating type in a First Production Stage layer, the layer's corrugating factor must match the factor specified in the corrugating type master data.
 
-**Starch levels must match types**: If your carton type has a starch level defined, the specification's starch level should match.
+**Starch levels must match types**: If your carton type has a starch level defined, the specification's starch level must equal it.
 
-**The specification's customer must be the order's customer**: A carton order accepts only specifications belonging to the customer on its header. Put a Spinneys specification on a Metro Markets order and the save is refused with a message naming both customers. This is deliberate — carton specifications are customer-specific tooling and artwork rather than a shared catalogue — but it does mean the same product for a second customer needs its own specification.
+**The specification's customer must be the order's customer**: a carton order accepts only specifications of its own customer, so the same product for a second customer needs its own specification. The rule is enforced on the order; see [Carton Orders](/modules/manufacturing/carton-orders).
 
-**Assembled cartons require children**: If manufacturing type is "Assembled Carton" or "Assembled Separator", you must add child carton lines. Conversely, normal cartons can't have children.
+**Assembled cartons require children**: If manufacturing type is "Assembled Carton" or "Assembled Separator", you must add child carton lines. Conversely, every other type must leave the grid empty.
 
 **Child carton restrictions**:
 - Must be for the same customer
 - Must be the appropriate type (normal cartons for assembled cartons, small separators for assembled separators)
 - Can't reference yourself (no circular references)
 - Can't be already used as a child in another specification
-
-**Customer consistency**: All child cartons must be for the same customer as the parent specification.
 
 ## Common Questions
 
@@ -342,7 +338,7 @@ A: Create separate specifications. Even if dimensions are identical, having cust
 A: Create separate specifications for each variation. The base structure might be the same, but printing molds are different, so they're different products from a manufacturing standpoint.
 
 **Q: Can layers use items from different warehouses?**
-A: Yes. Item classes don't specify warehouses. When planning materials, you can choose which warehouse to pull from. The specification just defines what type of material is needed.
+A: Yes. Item classes don't specify warehouses, and material planning has no warehouse field; the warehouse is chosen on the [Carton Material Issue](/modules/manufacturing/carton-material-issue). The specification just defines what type of material is needed.
 
 **Q: What happens if I delete a specification?**
 A: Nama prevents deletion if it's used in any orders or production orders. You'd need to delete those first, which is rarely advisable. Instead, mark it as "Prevent Usage" to stop it from being selected in new orders while preserving history.
@@ -362,11 +358,11 @@ For material planning to work, you need inventory items set up with the same ite
 | Message | Why | What to do |
 |---|---|---|
 | *The Spec {0} at line {1} used in spec {2}* — «المواصفة {0} في السطر {1} مستخدمة في المواصفة {2}» | A child carton listed on an assembled specification is already a child of another specification. A component carton belongs to one parent only. | Take the line out, or make a copy of that specification to use as the child here. |
-| *Customer {0} in carton specifications {1} is not the same as the customer {2} in this file* — «العميل {0} الموجود بمواصفات الكرتونة {1} مختلف عن العميل {2} الموجود بهذه الملف» | A child carton line names a specification belonging to a different customer from the one on the parent specification. | Use a child specification of the same customer, or correct the customer on one of the two files. |
+| *Customer {0} in carton specifications {1} is not the same as the customer {2} in this file* — «العميل {0} الموجود بمواصفات الكرتونة {1} مختلف عن العميل {2} الموجود بهذا الملف» | A child carton line names a specification belonging to a different customer from the one on the parent specification. | Use a child specification of the same customer, or correct the customer on one of the two files. |
 | *The record {0} in line {1} is the same as the current record* — «السجل {0} في السطر {1} هو نفس السجل الحالي» | The specification lists itself as one of its own child cartons. | Remove that line. |
-| *Field {0} in {1} must be of type {2}* — «الحقل {0} في {1} يجب أن يكون من نوع {2}» | A child line is not of the manufacturing type its parent requires: an assembled carton takes normal cartons as children, an assembled separator takes separators. The message names the type it expected and links to the offending specification. | Swap the child for one of the named type, or change that specification's manufacturing type if it was set wrongly. |
+| *Field {0} in {1} must be of type {2}* — «الحقل {0} في {1} يجب أن يكون من نوع {2}» | A child line is not of the manufacturing type its parent requires: an assembled carton takes normal cartons as children, an assembled separator takes small separators. The message names the type it expected and links to the offending specification. | Swap the child for one of the named type, or change that specification's manufacturing type if it was set wrongly. |
 | *Starch level {0} in the document  is not the same as Starch level {1} in the type {2}* — «منسوب النشا {0} الموجود في المستند لا يساوي منسوب النشا {1} الموجود في النوع {2}» | The starch level typed on the specification differs from the one carried by the carton type it points at. | Match the specification to the type, or use a type whose starch level is the one you want. The message gives both values. |
-| *Corrugating factor {0} in the line is not the same as the corrugating factor {1} in the corrugating type {2}* — «معامل التضليع {0} الموجود علي السطر لا يساوي معامل التضليع {1} الموجود في نوع التضليع {2}» | A first production stage line carries a corrugating factor that does not match the factor on the corrugating type chosen on the same line. | Take the factor from the corrugating type, or choose the corrugating type that really carries the factor you need. |
-| *The sheet length {0} must be less than or equal to the value of max sheet length {1} in the printing type {2}* — «طول الشيت {0} يجب أن يكون أقل من أو يساوي قيمة أقصي طول {1} للشيت الموجودة في نوع الطباعة {2}» | The sheet the specification produces is longer than the printing type can take. The check only runs when the printing type has a maximum sheet length filled. | Shorten the sheet, or use a printing type — a press — that accepts it. |
+| *Corrugating factor {0} in the line is not the same as the corrugating factor {1} in the corrugating type {2}* — «معامل التضليع {0} الموجود على السطر لا يساوي معامل التضليع {1} الموجود في نوع التضليع {2}» | A first production stage line carries a corrugating factor that does not match the factor on the corrugating type chosen on the same line. | Take the factor from the corrugating type, or choose the corrugating type that really carries the factor you need. |
+| *The sheet length {0} must be less than or equal to the value of max sheet length {1} in the printing type {2}* — «طول الشيت {0} يجب أن يكون أقل من أو يساوي قيمة أقصى طول {1} للشيت الموجودة في نوع الطباعة {2}» | The sheet the specification produces is longer than the printing type can take. The check only runs when the printing type has a maximum sheet length filled. | Shorten the sheet, or use a printing type — a press — that accepts it. |
 | *The mold {0} is not a crease mold* — «القالب {0} يجب أن يكون قالب طيات (فورم)» | The **Crease Mold** field points at a mold whose own type is not a crease mold. | Pick a crease mold, or correct the type on the mold's file. |
 | *The mold {0} is not a printing mold* — «القالب {0} يجب أن يكون قالب طباعة (سريلة)» | The same mix-up on the **Printing Mold** field. | Pick a printing mold, or correct the type on the mold's file. |

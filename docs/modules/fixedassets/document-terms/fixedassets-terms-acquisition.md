@@ -33,10 +33,10 @@ tax behaviour that every purchase on this term inherits:
 |---|---|---|
 | Taxable (`خاضع للضريبة`) | `termConfig.taxable` | Turns the tax columns on for documents using this term |
 | Tax Plan (`سياسة الضريبة`) | `termConfig.taxPlan` | The plan the header taxes are computed from |
-| Is tax modifiable (`الضريبة قابلة للتعديل`) | `termConfig.modifiableTax` | Whether the user may type over a computed tax value |
-| Header taxes editable per line | `termConfig.allowEditingHdrTaxInDetails` | Whether a line may depart from the header's taxes |
-| Prevent adding tax 1 to 4 | `termConfig.preventAddTax1` … `termConfig.preventAddTax4` | Blocks a specific tax from being added on a line, whatever the plan says |
-| Link with invoice lines in the accounting document | `termConfig.linkWithInvoiceLinesInAccountingDocument` | Ties each ledger line back to the invoice line that produced it, so the entry can be read line by line |
+| Modifiable Tax (`يمكن تعديل الضريبة`) | `termConfig.modifiableTax` | Whether the user may type over a computed tax value |
+| Allow Editing Header Tax In Details (`السماح بتعديل ضريبة الفاتورة في السطر`) | `termConfig.allowEditingHdrTaxInDetails` | Whether a line may depart from the header's taxes |
+| Prevent add tax 1 to 4 (`منع إضافة ضريبة 1` …) | `termConfig.preventAddTax1` … `termConfig.preventAddTax4` | Blocks a specific tax from being added on a line, whatever the plan says |
+| Link With Invoice Lines In Accounting Document (`ربط الفاتورة في جريد الفواتير في سندات القبض والدفع`) | `termConfig.linkWithInvoiceLinesInAccountingDocument` | When the document lists payment documents on its external-payment lines, committing it writes the document into the invoices grid of each of those payment documents, and the same payment document may not appear on two of its lines |
 
 And the one option people come to this screen for:
 
@@ -65,7 +65,7 @@ Alongside it:
 - **Allow Payment More Than Invoice Amount** (`السماح بدفع مبلغ أكبر من قيمة الفاتورة`, `termConfig.allowPaymentMoreThanInvoiceAmount`) — lets the
   payment documents settled against the purchase add up to more than its value. With it off, a payment that
   would push the document's remaining amount below zero is refused with
-  *Remaining {0} in document {1} became negative* — «المتبقي {0} فى المستند {1} أصبح بالسالب».
+  *Remaining {0} in document {1} became negative* — «المتبقي {0} في المستند {1} أصبح بالسالب».
 - **Update asset dimensions from the invoice** (`termConfig.updateAssetDimensionsFromInvoice`) — pushes the line's legal entity, sector, branch,
   department and analysis set onto the asset itself, so the asset inherits the dimensions of the
   document that bought it.
@@ -82,7 +82,8 @@ Page 4 holds the discount accounts: a line-discount side (`termConfig.lineDiscou
 `additionalDiscount8` (`termConfig.firstDiscountAcc` … `termConfig.seventhDiscountAcc`). It also carries the
 *other side* of each discount (`termConfig.taxesOtherSide.discount1OtherSide` … `termConfig.taxesOtherSide.discount8OtherSide`,
 and `termConfig.taxesOtherSide.headerDiscountOtherSide` for the invoice discount), and the external-effect lines grid
-(`termConfig.externalEffectLines`) for entries that must reach accounts outside this document's normal reach.
+(`termConfig.externalEffectLines`): per payment-document type, an extra debit and credit side that apply when a
+payment document on the purchase's external-payment lines matches the line's criteria or query.
 
 ### Worked example — `MCH-0007`
 
@@ -102,25 +103,25 @@ Only two of those three lines were decided by the term. The first came from the 
 
 ## Offers, Orders and the Initial Receipt
 
-The Fixed Asset Purchase Offer, the Purchase Order and the Initial Receipt are configured through one
-shared arrangement, and it is a short one: document type, code, name, and the same tax settings as
-the purchase term's first page.
+The terms of the Fixed Asset Purchase Order and the Initial Receipt are short: document type, code,
+name, and the same tax settings as the purchase term's first page. The Fixed Asset Offer shares the
+order's term type, but the offer screen has no Term field, so an offer never picks one.
 
-There is deliberately nothing else, because **none of these three documents reaches the ledger**. They
+There is deliberately nothing else, because **none of these documents reaches the ledger**. They
 compute prices, discounts and taxes so that you can compare a quotation against another and carry the
 figures forward — but nothing is booked until a purchase document is raised. Treat the tax figures on
 an offer or an order as informational: they tell you what the invoice will look like, they do not
 create a liability.
 
 The Purchase Order term adds one switch in a **From Document** group: **Consider Satisfied Qties In From Doc**
-(`اعتبار الكميات المسلمة في بناءا علي`, `termConfig.considerSatisfiedQtiesInFromDoc`). An order is often raised
+(`اعتبار الكميات المسلمة في بناءً على`, `termConfig.considerSatisfiedQtiesInFromDoc`). An order is often raised
 *from* a purchase request or an offer, and normally it copies every line at its full quantity. With this switch on,
 it copies only what is still outstanding on each line of the source document — the quantity not yet covered by
 earlier orders — and leaves out the lines that are already fully covered. Use it when one request is ordered in
 several instalments.
 
-The Purchase Request shares the same configuration too, and needs even less: a request records what
-somebody wants, with no prices and no effects at all.
+The Purchase Request shares the same term type too, and, like the offer, its screen has no Term
+field: a request records what somebody wants, with no prices and no effects at all.
 
 ## The Opening Term
 
@@ -145,7 +146,7 @@ Pick the pair that matches the shape of the data you are importing, load a handf
 the resulting instalments before you load the rest.
 
 The **Opening Update** term, used for correcting an opening after the fact, carries no accounts either, but it
-has one switch on its Effects page: **Do Not Copy Details Of From Doc** (`عدم نسخ التفاصيل من بناءاً على`,
+has one switch on its Effects page: **Do Not Copy Details Of From Doc** (`عدم نسخ التفاصيل من بناءً على`,
 `termConfig.doNotCopyDetailsOfFromDoc`). When you pick the opening document to correct, the update normally copies
 its header and every one of its lines — asset, depreciation start date, properties, acquisition and accumulated
 depreciation values, location and purchase date — so you only change what was wrong. With the switch on, only the

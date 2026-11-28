@@ -109,7 +109,7 @@ This field helps you narrow down the selection of the Main Table for the report 
 
 ---
 
-### `Report Title (Arabic)` and `Report Title (English)`
+### `Report Arabic Title` and `Report English Title`
 
 These fields define the report title displayed at the top of the final report. The value shown depends on the user's language: if the interface is in Arabic the Arabic title is shown, and if it is in English the English title is shown.
 
@@ -144,9 +144,10 @@ narrows actually lives.
 date picker, a customer lookup, a number box) and adds the matching condition to the report's query.
 This is what you want almost every time.
 
-**Point it at a column you already listed.** Leave **On Field** empty and type, in **User Alias (In
+**Point it at a column you calculated.** Leave **On Field** empty and type, in **User Alias (In
 Case SQL Expression)**, the alias of a row from the **Fields** grid. The parameter then narrows that
-column — including a column you calculated yourself.
+column. Only a row that has a **Custom SQL Expression** can be used this way, and the parameter row
+needs an **Arabic Title** or an **English Title**, because there is no field to take a caption from.
 
 **Give it its own expression.** Fill **Custom SQL Expression** on the parameter row and it narrows
 that expression instead of a stored column. Use **Param Type** to tell the wizard what kind of value
@@ -190,8 +191,8 @@ Everything that comes in pairs on the parameter row exists because of this:
 - **Generated Parameter Name** ends up holding *both* names, separated by a comma — for a Between on
   the value date it reads `FromvalueDate,TovalueDate`. That comma pair is not a mistake; it is how
   the rest of the wizard refers to the two halves.
-- Tick **Show as Date Range** on a Between over a date and the two separate boxes are replaced by a
-  single from–to range control.
+- On a Between over a date field the wizard ticks **Show as Date Range** on its own when the report
+  is generated, and the two separate boxes are replaced by a single from–to range control.
 
 ::: info Generated Parameter Name is written for you
 You do not fill **Generated Parameter Name** in — the wizard writes it when you save, from the field
@@ -214,10 +215,6 @@ is under [Default values](/platform/reports/reports-guide#Default-values) in the
 
 The pairing readers like most is `$monthStart()` in **Default Value** and `$today()` in **Default
 Value (works with Between)**: the report opens on month-to-date every time it is run.
-
-The last row is the only one that fills a **lookup** rather than a date, and the employee token is
-`$currentUserEmployee()` — there is no `$currentEmployee()`. The whole list, including the forms that
-only the XML definition uses, is on the [Report Definition guide](/platform/reports/reports-guide).
 
 ### Making the reader answer
 
@@ -293,9 +290,8 @@ the report's query. Nothing happens until you use the value somewhere yourself.
 
 Building one takes three steps:
 
-1. Add a row to **Parameters**, leave **On Field** empty, set **Parameter Type** to **Custom** and
-   give the row a **User Alias (In Case SQL Expression)** — that alias is what the parameter will be
-   named after. Set **Param Type** to the kind of value you want (text, number, date, and so on), and
+1. Add a row to **Parameters**, set **Parameter Type** to **Custom** and type a name in **On Field**
+   — a custom parameter must have one, and the parameter is named after it. Set **Param Type** to the kind of value you want (text, number, date, and so on), and
    give it Arabic and English titles.
 2. Save, reopen the record, and read the **Generated Parameter Name** column. That is the name to use
    in step 3 — remember it is a comma pair if you chose **Between**.
@@ -348,7 +344,7 @@ Two more columns matter on a calculated row:
 - **Pattern Type** decides how the result is treated and formatted: **Text**, **Date**, **Time**,
   **Date Time**, **Number**, **Currency** or **Quantity**. If you leave it empty and your expression
   mentions at least one field, the wizard copies the formatting of the *first* field you referenced —
-  it sets **Pattern Type** to **Custom From Field** and fills **Pattern Field** with that field. So a
+  it sets **Pattern Type** to **Copy From Field** and fills **Pattern Field** with that field. So a
   difference between two quantity fields comes out formatted as a quantity without you doing
   anything, while an expression that mentions no field at all needs **Pattern Type** set by hand.
 
@@ -694,11 +690,11 @@ Refusals raised when you save a Report Wizard record.
 | Message | Why | What to do |
 |---|---|---|
 | *The background image opacity must be between 0 and 255* — «يجب أن تكون شفافية صورة الخلفية بين 0 و 255» | A background image is set and its opacity is outside the 0–255 range. | Put the opacity inside the range, or clear the image. |
-| *You can not use include tables by parameters if there are no union tables* — «لا يمكنك تضمين الجداول بشرط من خلال مدخلات اذا لم تكن هناك Union Tables» | The **Include Tables By Parameters** grid has rows while **Union Tables** is empty, so there is nothing for the reader's tick-boxes to include or leave out. | Fill in the union tables first, or clear the include-by-parameters grid. |
+| *You can not use include tables by parameters if there are no union tables* — «لا يمكنك تضمين الجداول بشرط من خلال مدخلات إذا لم تكن هناك Union Tables» | The **Include Tables By Parameters** grid has rows while **Union Tables** is empty, so there is nothing for the reader's tick-boxes to include or leave out. | Fill in the union tables first, or clear the include-by-parameters grid. |
 | *Can not repeat table {0}* — «لا يمكن تكرار الجدول {0}» | One **Include Tables By Parameters** row names the same table twice across its ten table columns. | Remove the duplicate name from that row. |
 | *Selected Group is Empty* — «الجروب المختار فارغ» | A field or a header component points at one of the five grouping levels whose grid has no lines — either a header/footer component placed in that group, or a field asking for that group's running total. | Add lines to that group's grid, or point the field or component at a group you have actually filled. |
-| *The parameter type {0} is repeated in lines {1} and {2}* — «نوع المدخل {0} مكرر في السطر {1} و {2}» | Two rows of the parameters grid carry the same parameter type. | Keep one of them and delete or retype the other. |
-| *Parameter type {0} at line {1} intersects with the type {2} at line {3}* — «نوع المدخل {0} في السطر {1} متقاطع مع النوع {2} في السطر {3}» | Two parameter types overlap — one asks for a value that the other's range already covers, so the two filters would fight. | Choose parameter types that do not cover the same ground. |
+| *The parameter type {0} is repeated in lines {1} and {2}* — «نوع المدخل {0} مكرر في السطر {1} و {2}» | Two rows of the parameters grid carry the same special parameter type (any type other than **Normal**, **Custom** and **Group By Selection**, such as **UOM Conversion** or **Hide Details**). | Keep one of them and delete or retype the other. |
+| *Parameter type {0} at line {1} intersects with the type {2} at line {3}* — «نوع المدخل {0} في السطر {1} متقاطع مع النوع {2} في السطر {3}» | Two rows hide the same part of the same group: a **Hide Group N Header And Footer** row together with a **Hide Group N Header** or **Hide Group N Footer** row for the same group. | Keep the one row that hides what you want. |
 | *The {0} lines are empty - you can not use it in line numbers* — «سطور {0} فارغة - لا يمكنك استعمالها في أرقام السطور» | A field set to count lines inside a group names a grouping level whose grid is empty. | Fill that group's grid, or count inside a group that has lines. |
 | *Can not choose sort method {0} with ascending or descending {1}* — «لا يمكن اختيار طريقة الترتيب {0} مع تنازلي أو تصاعدي {1}» | The report sorts by its own sort-fields grid, while the ascending/descending choice is one of the variable settings that only make sense when the reader picks the sort at run time. | Either let the reader choose the sort with a parameter, or fix ascending or descending here. |
 | *Sort parameters count must be less than or equal to {0}* — «عدد مدخلات الترتيب يجب أن يكون أقل من أو يساوي {0}» | The report sorts by a run-time parameter and asks the reader for more sort choices than there are rows in the sort-fields grid. | Lower the count, or add sort fields. |
@@ -707,6 +703,6 @@ Refusals raised when you save a Report Wizard record.
 | *The parameter group {0} is repeated in lines {1} and {2}* — «مجموعة المدخلات {0} مكررة في السطرين {1} و {2}» | Two rows of the **Parameter Groups** grid carry the same name, so a parameter row naming it could belong to either. | Rename one of the two sections, or merge them into one row. |
 | *The parameter group name {0} is already used as a parameter name* — «اسم مجموعة المدخلات {0} مستخدم بالفعل كاسم مدخل» | A section's name is the same as the name of one of the report's parameters — a field, a generated name such as `customer_Equals`, or one of the parameters Nama fills in by itself. Each section becomes a parameter of its own in the report, so the two names would clash. The same message can also appear when the report is generated, for the few names the wizard only creates at that point. | Give the section a name that cannot be mistaken for a parameter, for example with a `grp` prefix. |
 | *The parameter group {0} is not defined in the parameter groups grid* — «مجموعة المدخلات {0} غير معرفة في جدول مجموعات المدخلات» | A row of the **Parameters** grid names a section in its **Parameter Group** column that has no row in the **Parameter Groups** grid — usually a typo. | Correct the name on the parameter row, or add the section to the **Parameter Groups** grid. |
-| *Summary card {0} needs a field or an expression* — «بطاقة الملخص {0} تحتاج إلى حقل أو تعبير» | Line {0} of the **Summary Cards** grid has neither a **Field** nor an **Expression**. | Fill one of them, or delete the line. |
-| *The field {0} of summary card {1} is not one of the report fields* — «الحقل {0} في بطاقة الملخص {1} ليس من حقول التقرير» | The card names a field that the report does not read. | Pick a field that is a column of the report, or add it as a hidden column. |
-| *Summary card {0} adds or averages the field {1}, which is not a number* — «بطاقة الملخص {0} تجمع أو تحسب متوسط الحقل {1} وهو ليس رقما» | **Sum** and **Average** need numbers; the field is a text, a date or a reference. | Choose **Count**, **Distinct Count**, **Highest** or **Lowest**, or a number field. |
+
+The messages about the **Summary Cards** grid are listed under
+[Messages you may see](/platform/reports/report-designs#Messages-you-may-see) on the Report Designs page.

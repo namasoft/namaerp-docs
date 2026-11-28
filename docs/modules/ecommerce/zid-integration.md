@@ -85,7 +85,7 @@ Returns come in the same way, through **Read Orders As Sales Return If Status Li
 
 Nama recognises a Zid order by its Zid order id, so reading the same order again does not create a second document. The shared guide explains what happens when an order that was already read changes.
 
-Read Sales reports success on screen even when some orders fail. Each order that could not be saved is listed, with its reason, in the **Log List** on the record's **Statistics** tab. Fix the cause there (a missing item, for example) and re-read the orders from the list.
+An order that could not be saved is listed, with its reason, in the **Log List** on the record's **Statistics** tab, while **Read Sales** still reports success; see [When an order fails](/modules/ecommerce/ecommerce-integration-guide#When-an-order-fails).
 
 ### What comes over with each order
 

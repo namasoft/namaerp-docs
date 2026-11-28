@@ -19,7 +19,7 @@ The **Car Allocation** document is where that decision is recorded. It is at
 
 ## What it writes
 
-One line is one car. On the line you name the chassis in the **السياره (Customer Car)** column, and
+One line is one car. On the line you name the chassis in the **السيارة (Customer Car)** column, and
 fill five allocation columns that exist on this document and on no other:
 
 | Column | Meaning |
@@ -27,7 +27,7 @@ fill five allocation columns that exist on this document and on no other:
 | مُخصصة لعميل (Allocated To Customer) | The buyer this car is set aside for |
 | مُخصصة لفرع (Allocated To Branch) | The branch that owns the deal |
 | مُخصصة لقسم (Allocated To Department) | The department |
-| مُخصصة لمندوب مبيعات (Allocated To Sales Man) | The salesperson credited with it |
+| مُخصصة لمندوب مبيعات (Allocated To SalesMan) | The salesperson credited with it |
 | مُخصصة لمخزن (Allocated To Warehouse) | Where the car is being held for the customer |
 
 ![The Car Allocation screen](../../../ar/modules/servicecenter/images/car-sales/sc-car-allocation-en.png)
@@ -102,8 +102,8 @@ Al-Sahra's configuration has no *Allocated → Allocated* movement line — no s
 ## Undoing an allocation
 
 The **Car Allocation Cancel** document lives with the other sales cancellations, at
-**cars > Cars Sales Cancellation > Car Allocation Cancel**
-(`سيارات > الغاء مبيعات سيارات > إلغاء تخصيص سيارة`). Link it to the original allocation through
+**cars > Car Sales Cancellation > Car Allocation Cancel**
+(`سيارات > إلغاء مبيعات سيارات > إلغاء تخصيص سيارة`). Link it to the original allocation through
 **From Document**, put the car on a line, and commit.
 
 It does two things: it stamps the original allocation as cancelled, and it **clears all five

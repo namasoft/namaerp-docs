@@ -67,7 +67,7 @@ Navigate to **Basic > Documents > Online Payment Configuration** to create your 
 ### Basic Setup
 
 1. **Create a new configuration** and give it a meaningful code (e.g., "KNET-MAIN" or "MYFATOORAH-PROD")
-2. **Select the Type** (`type`) - Choose KNet, My Fatoorah or Geidea
+2. **Select the Type** (`type`) - Choose **K-Net**, **My Fatoorah** or **Geidea**
 3. **Enter the gateway credentials** based on your provider (see fields above)
 4. **Set the GUI URL** (`guiUrl`) - This is your server's public address, typically something like `https://yourcompany.com/erp/`
 5. **Edit As User** (`editAsUser`) - The user Nama acts as when a KNet reply updates the document. Left empty, the `admin` user is used.
@@ -80,12 +80,10 @@ Payment links don't last forever. You can control how long they remain valid:
 
 - **Expire Link After (Hours)** (`expireLinkAfter`) - Number of hours before the link expires. If left empty, links expire after one year.
 
-The system is smart about expiration - it can skip weekends and holidays when calculating expiry times. Configure this using:
+When **Expire Link After (Hours)** is filled, weekend days and holidays lengthen the link's life. They are set with:
 
 - **Weekend Days** (`saturdayIsWeekend` … `fridayIsWeekend`) - Check which days are weekends (Friday/Saturday for GCC, Saturday/Sunday elsewhere)
 - **Holidays** (`holidays`: `holidays.holidayDate`, `holidays.remarks`) - Add specific dates that should be excluded from expiry calculations
-
-For example, if you set "Expire After 24 Hours" and Friday/Saturday are weekends, a link generated on Thursday at 10 AM won't expire until Sunday at 10 AM (skipping Friday and Saturday).
 
 ### Payment Templates
 
@@ -206,18 +204,7 @@ The `opResponse` object is available in templates (via `{$map.opResponse.fieldNa
 }
 ```
 
-**MyFatoorah Error Codes in `errorMessage`:**
-- `MF001` - 3DS authentication failed
-- `MF002` - Bank declined (insufficient funds, invalid card)
-- `MF003` - Gateway blocked (fraud detection)
-- `MF004` - Insufficient funds
-- `MF005` - Session timeout
-- `MF006` - Transaction canceled
-- `MF007` - Card expired
-- `MF008` - Issuer not responding
-- `MF009` - Denied by risk
-- `MF010` - Wrong CVV
-- `MF020` - Unspecified failure
+The `MF` codes that can appear in `errorMessage` are listed in the **Error Codes (MyFatoorah)** section below.
 :::
 
 #### Using in Entity Flows
@@ -380,7 +367,7 @@ When the customer pays a link from a **Payment Links Creation Document**, Nama c
 
 | Field | Field id | Description |
 |-------|----------|-------------|
-| **Receipt Voucher sCreation Method** | `termConfig.receiptVouchersCreationMethod` | **Without** creates nothing. **Receipt Voucher Per Invoice** creates one voucher for each paid document. **Receipt Voucher Per Subsidiary** creates one voucher per customer, covering all their documents in the link. |
+| **Receipt Vouchers Creation Method** | `termConfig.receiptVouchersCreationMethod` | **Without** creates nothing. **Receipt Voucher Per Invoice** creates one voucher for each paid document. **Receipt Voucher Per Subsidiary** creates one voucher per customer, covering all their documents in the link. |
 | **Receipt Voucher Term** | `termConfig.receiptVoucherTerm` | The term of the created vouchers. |
 | **Receipt Voucher Book** | `termConfig.receiptVoucherBook` | The book of the created vouchers. |
 | **Default Values Template** | `termConfig.defaultValuesTemplate` | Applied to each new voucher before anything else is filled. |

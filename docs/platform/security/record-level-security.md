@@ -37,8 +37,8 @@ That check runs when the document is **saved**. If the problem is earlier — th
 Inside the user screen you will find:
 
 - **Login Context** — the default set of five dimensions the session starts with.
-- **Login Context Table** — complete alternative sets the user can switch between at login (for example, an accountant who serves two branches).
-- **Prevent Modify Context** — when enabled the user *cannot* choose freely at login; each dimension is restricted to the values listed on the header and the table rows. The user record will not save until at least one set (the header or a row) has all five dimensions filled in, and every value must fall within the user record's own dimensions.
+- **Login Dimensions** — a grid of complete alternative sets the user can switch between at login (for example, an accountant who serves two branches). Rows in this grid need **Prevent Modify Context** ticked; without it the user record refuses to save with *You did not check the (Prevent Modifying Login Context checkbox, even though there are lines in the login dimensions grid)* (this message has no Arabic text, so Arabic screens show it in English).
+- **Prevent Modify Context** — when enabled the user *cannot* choose freely at login; each dimension is restricted to the values listed on the header and the grid rows. The user record will not save until at least one set (the header or a row) has all five dimensions filled in (*Please fill all login contexts dimensions in header or in at least one line*, also English-only), and every value must fall within the user record's own dimensions.
 - When not enabled, the login context works as a default only, and the user can adjust their session dimensions after login (within their record's dimensions) from the dimensions switcher on the top bar — see [Changing company, branch or department](/platform/everyday-tools/top-bar-and-user-menu#Changing-company-branch-or-department).
 
 With **Prevent Modify Context** ticked, the header and the table rows together are simply a list of allowed values, and each dimension is checked on its own: a value is allowed if it appears on any row, whatever the other dimensions on that row say. Say an accountant's record has two rows:
@@ -60,16 +60,16 @@ Setting the user record's dimensions (for example Branch = Jeddah) is the strong
 
 Three flags on the basic permission row (at the profile or user level — see [Security Profiles](/platform/security/security-profiles.md)) tie a permission to the record's creator:
 
-- **View Only Created Records** — the user's lists, searches, and screens only show records they themselves created.
-- **Edit Only Created Records** — other users' records open read-only.
-- **Delete Only Created Records** — a matching flag for deletion; a separate flag covers drafts only.
+- **View Records Created By Him Only** — the user's lists, searches, and screens only show records they themselves created.
+- **Edit Only Created Records** — saving changes to another user's record is refused with *You can not edit the record {0} because you did not create it*.
+- **Delete Only Created Records** — a matching flag for deletion; a separate flag, **Delete Only Created Drafts**, covers drafts only.
 
 Two user-level settings redefine the concept of "creator" itself:
 
-- **Treat-as users in first author**: a table in the user permissions page listing other users whose records are treated as if this user created them — ideal for a supervisor who must see their whole team's documents under a *View Only Created Records* policy.
-- **Do not use as first author**: this user is never recorded as the first author of documents (useful for shared service accounts).
+- **View Records created by Users**: a table on the user's **User Security Profile** page listing other users whose records this user sees as if they had created them — ideal for a supervisor who must see their whole team's documents under a *View Records Created By Him Only* policy. It widens viewing only: the edit-only and delete-only checks still compare the user with the real creator.
+- **Don't Use As First Author**: a record whose creator has this flag does not keep them as its creator — the next user who saves it is recorded as the creator instead (useful for shared service accounts).
 
-One escape hatch: **Allow viewing other users' records in search** makes other users' records appear in reference-search results even when the user cannot browse them — a collections clerk who only sees their own receipts can still pick any customer on a new receipt.
+One escape hatch: **Allow View Other Records at Search** makes other users' records appear in reference-search results even when the user cannot browse them — a collections clerk who only sees their own receipts can still pick any customer on a new receipt.
 
 ## Extra Filters
 
@@ -81,7 +81,7 @@ Each row targets a type or type list, then defines the filter in one of two ways
 
 ### 1. The field that must match the Related Entity
 
-The simplest and most common form. The user record holds a **Related Entity** reference — typically the employee, but it could be a customer, supplier, sales rep, or anything else. Enter a field ID here, and only records where that field equals the user's Related Entity will appear.
+The simplest and most common form. The user record holds a **Related Entity** reference — typically the employee, but it could be a customer, supplier, sales rep, or anything else. Enter a field ID in the **Field Matching Related Subsidiary** column, and only records where that field equals the user's Related Entity will appear. The field id `id` compares the record itself, so a Customer row with `id` shows the user only the customer that is their own Related Entity.
 
 Example: on a sales invoice row, set the field to `salesMan`. A user whose Related Entity is sales rep *Ahmed* will now only see invoices where the sales rep field is Ahmed.
 
@@ -101,7 +101,7 @@ Sometimes the filter that suits a list is wrong inside one particular field. A c
 |---|---|
 | **Works Only When Searching Inside Fields** | The reference fields the row applies to, by field id — `customer`, for example. Separate several with commas. Leave it empty to cover every field on the screens named next. |
 | **Works Only When Searching Inside Type** | The screen the lookup is opened from — Sales Invoice in the example. |
-| **Works Only When Searching Inside Types List** | The same, for every type in an EntityType List. |
+| **Works Only When Searching Inside Types List** | The same, for every type in an Entity Type List. |
 | **Criteria** | A criteria definition the offered records must meet. |
 | **Dynamic Tempo Criteria** | A Tempo criteria expression, as on the Extra Filters grid. |
 
@@ -122,8 +122,8 @@ Users whose security profile has Full Authority are not filtered.
 Sometimes sensitivity lives in a *specific record*, not the whole type: one particular contract, or a handful of confidential journal entries. For this, individual records can be tagged with a **Capability Type** record that gates read/edit access:
 
 1. Define a Capability Type record — see [Security Profiles](/platform/security/security-profiles.md).
-2. Grant the **Can Change Capability** permission on the basic permission row to those who may tag records.
-3. Those users apply the Change Capability action on a record to link it to the capability.
+2. Grant the **Can Change Capability** permission on the basic permission row to those who may tag records (an *Add & Edit* level of *Save & Edit* grants it too).
+3. Those users run **Change Capabilities** from the record's More menu to link it to the capability.
 4. From that point on, only users who hold that capability (through their dedicated permission rows) can see or edit the tagged record; untagged records remain visible to everyone with normal permissions.
 
 Global Configuration provides switches to skip record capability checks in list views where the overhead is undesirable.

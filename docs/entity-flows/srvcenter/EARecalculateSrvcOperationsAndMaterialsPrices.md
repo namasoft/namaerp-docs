@@ -33,13 +33,14 @@ Manual execution on service center jobs when pricing needs to be updated. Typica
 - Sets total price to the model-specific amount
 
 ### For Operations with Hourly Pricing Strategy
+- Sets the operation line's own total price to zero
 - Processes slave task lines under the operation
-- Updates each task's hour price and total price from operation definition
-- Calculates total based on hours × rate × count
+- Copies each task's hour price and total price from the matching task line of the operation definition; a task that is not in the operation definition is left as it is
 
 ### For Individual Tasks (No Operation)
+- Applies to task lines that have no operation and are not slave lines of an operation
 - Gets hours and hourly rate from task definition
-- Calculates total price as: hours × hourly rate × count
+- Calculates total price as: hours × hourly rate × count (an empty or zero count is taken as 1)
 - Updates all pricing fields on the task line
 
 ## Material Price Calculation

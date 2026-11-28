@@ -22,12 +22,16 @@ Manual execution for bulk data import from trusted sources, automated data synch
 1. **Executes SQL queries** - Runs all provided SQL statements in sequence
 2. **Processes results** - Converts SQL result rows into import format with column mapping
 3. **Formats data types** - Handles dates, decimals, UUIDs, and other data types appropriately
-4. **Creates committed entities** - Imports results as fully committed entities using the import framework
-5. **Handles errors** - Collects and reports any import errors that occur
+4. **Creates committed entities** - Imports results as fully committed entities using the import framework, each record in its own transaction
+5. **Runs the update SQL** - After each record is saved, the Update SQL of Parameter 1 (when filled) runs on that record
+6. **Handles errors** - Collects the import errors and, when there are any, ends the run with *Errors occurred: {0}*
+
+The rows of all the statements are read in order as one import sheet: each statement's column names are the sheet's headings, so a column named `[:-record:<entity type>]` starts records of that type and `[:-detail:<grid>]` starts lines of a grid, joined to their record by the `#code` column. The headings follow the import file format described on [Anatomy of the Export File](/platform/import-export/export-file-format). Dates are passed in `dd-MM-yyyy` form.
+Only one SQL importer flow runs at a time (this flow and the other SQL importer flows share the same lock).
 
 ## Parameters
 
-**Parameter 1:** Update SQL (Optional) - SQL statement to run during import process for updates
+**Parameter 1:** Update SQL (Optional) - SQL statement run after each imported record is saved, in the same transaction
 
 **Parameter 2:** SQL Statement 1 (Required) - Main SQL query for entity import with column mapping
 
@@ -36,6 +40,8 @@ Manual execution for bulk data import from trusted sources, automated data synch
 **Parameter 4:** SQL Statement 3 (Optional) - Third SQL query for complex imports
 
 **Parameter 5:** SQL Statement 4 (Optional) - Fourth SQL query for extended data processing
+
+Parameters 6 to 15 have no title but are read the same way, as further SQL statements.
 
 ## SQL Query Format
 

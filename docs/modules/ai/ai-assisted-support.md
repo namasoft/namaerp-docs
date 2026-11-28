@@ -130,10 +130,10 @@ This is the tool that transforms troubleshooting. Combined with the data model i
 It is also the tool that demands the most care, for one specific reason:
 
 ::: danger The SQL tool is not limited by user permissions
-The record tools are bounded by what the linked user may read. **The SQL tool is not.** It reads the database directly, so it sees every company, every branch, every salary and every price — regardless of what its user is allowed to open on screen. Restrict it to administrators through the **Security (Access Control)** grid on the tool definition, and to administrators only.
+The record tools are bounded by what the linked user may read. **The SQL tool is not.** It reads the database directly, so restrict it to administrators through the **Security (Access Control)** grid on the tool definition, and to administrators only.
 :::
 
-What it cannot do is change anything. Only a single `SELECT` is accepted: `INSERT`, `UPDATE`, `DELETE`, `EXEC`, DDL, `SELECT ... INTO`, several statements in one call, and pass-through functions that could reach another server are all rejected before the statement runs. Whatever does run executes inside a transaction that is always rolled back, so even a statement that somehow slipped past the check leaves nothing behind. Results are capped as well — 200 rows per call by default, which you can raise to at most 5000 by putting the number in the line's first parameter column, with a one-minute query timeout.
+What it cannot do is change anything: only a single `SELECT` is accepted, and it runs inside a transaction that is always rolled back. What exactly is rejected, the row cap and the query timeout are listed with the tool under [Other system tools](/modules/ai/ai-tool-definitions#Other-system-tools).
 
 ### The term and configuration tools — the everyday administrator's superpower
 

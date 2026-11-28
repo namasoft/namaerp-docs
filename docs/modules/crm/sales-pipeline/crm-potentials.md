@@ -15,20 +15,20 @@ The CRM Potential screen is unlocked by the licence code `crm`.
 
 Find it at **Customer Relationship Management → Marketing → CRM Potential** / **خدمة العملاء ← التسويق ← فرصة**.
 
-![The CRM Potential screen, with the read-only Source Lead reference and the conversion buttons](../../../ar/modules/crm/images/sales-pipeline/crm-potential-en.png)
+![The CRM Potential screen, with the Source Lead reference and the conversion buttons](../../../ar/modules/crm/images/sales-pipeline/crm-potential-en.png)
 
 ## It Is the Lead Screen, Slightly Smaller
 
 The honest description of the Potential screen is that it is the [Lead](/modules/crm/sales-pipeline/crm-leads) screen with one field added and eleven removed. It is not a richer screen, and it does not unlock anything the Lead could not do.
 
-**What it adds:** **Source Lead** (خيط البيع), a read-only reference to the lead this potential was promoted from. The conversion button fills it; you do not type it.
+**What it adds:** **Source Lead** (خيط البيع), a reference to the lead this potential was promoted from. The conversion button fills it.
 
-**What it drops from the screen:** English Code, Activity Type, Lead Classification, Rejection Reason, Planned Re-Call Date, Lead Type, Platform, Project, Area, Budget and Internal Source.
+**What it drops from the screen:** English Code, Activity Type, Lead Classification, Rejection Reason, Planned Re Call Date, Lead Type, Platform, Project, Area, Budget and Internal Source.
 
 Everything else is the same: name, legal-entity text, responsible employee, salesman and sales manager, mediator, industry, lead source, campaign, status, sales stage, probability, customer classification, remarks and attachments, the currency group, the contact-information block, the **Contacts** grid with its *Create Contact For Every Line* switch, the **Products** grid with its competitor columns, the **Assigned To** grid with its Assigning History, dimensions, and the read-only *Converted To Customer* / *Customer* / *Generated Record* fields.
 
 ::: info Four dropped fields are still alive behind the screen
-Activity Type, Lead Classification, Rejection Reason and Planned Re-Call Date are missing from the Potential's screen but still exist on the record — and a committed [CRM Call](/modules/crm/activities/crm-calls) or [Visit](/modules/crm/activities/crm-visits) still writes them. So a potential can be carrying a lead classification and a planned re-call date that nobody can see on the screen. Read them from the list view's columns, or from an Excel export, if you need them.
+Activity Type, Lead Classification, Rejection Reason and Planned Re Call Date are missing from the Potential's screen but still exist on the record — and a committed [CRM Call](/modules/crm/activities/crm-calls) or [Visit](/modules/crm/activities/crm-visits) still writes them. So a potential can be carrying a lead classification and a planned re-call date that nobody can see on the screen. Read them from the list view's columns, or from an Excel export, if you need them.
 :::
 
 ::: info The Mediator box appears twice
@@ -45,9 +45,10 @@ The practical effect: the record that is supposed to represent a deal you expect
 
 ## What the System Refuses
 
-One rule, and one rule only, is enforced on this screen:
+Two rules, and only two, are enforced on this screen:
 
 - **A potential cannot claim a source lead that already belongs to a different potential.** The save fails with *"Lead has a different potential {0}"*, naming the other one. This is what stops a lead being promoted twice.
+- **Generated contacts need a code source**, exactly as on the Lead: with *Create Contact For Every Line* ticked, a Contacts row with no contacts group and no contact code is refused with *"You should choose contacts group or fill contact code field"*.
 
 Beyond that, the Potential validates nothing.
 
@@ -61,8 +62,8 @@ If your process depends on the record being frozen after the win, that guarantee
 
 | Button | What it does |
 |---|---|
-| Convert To Customer (تحويل إلي عميل) | Opens a new, unsaved Customer — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion) |
-| Convert To REOwner (تحويل الي مشتري) | Opens a new, unsaved Real Estate owner; only present when Real Estate is installed |
+| Convert To Customer (تحويل إلى عميل) | Opens a new, unsaved Customer — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion) |
+| Convert To REOwner (تحويل إلى مشتري) | Opens a new, unsaved Real Estate owner; only present when Real Estate is installed |
 | Create Sales Quotation (إنشاء عرض أسعار) | Refused until the potential has been converted to a customer |
 | Create Contact (إنشاء جهة اتصال) | A new Contact linked back, with the header contact details copied |
 | create CRM Call (إنشاء اتصال) | A new Call with the potential's current status pre-loaded |
@@ -73,10 +74,10 @@ There is deliberately **no "convert to offer" button**, and no button that produ
 
 ## The List Screen
 
-The Potential list shows Status, Sales Stage, Probability, Customer, Salesman and Sales Manager as columns, with the same two quick-filter chips (Status and Sales Stage) and the same criteria as the Lead list. It carries the same two mass actions in its toolbar, and the same trap:
+The Potential list shows Status, Sales Stage, Probability, Customer, Salesman and Sales Manager as columns, with the same two quick-filter chips as the Lead list (Status and Sales Stage). Its criteria are responsible employee, mediator, legal-entity text, industry, lead source, campaign, status, sales stage, probability, customer classification, *Converted To Customer*, customer, salesman and sales manager. It carries the same two mass actions in its toolbar, and the same trap:
 
 ::: danger "Assign Records To" replaces the assignees
-On the Potential list, exactly as on the Lead list, **Assign Records To** (تصعيد إلي) clears the whole *Assigned To* grid on each selected record and leaves a single row for the employee you chose. It is a re-assignment tool, not a way to add somebody. To add an employee, open the potential and add a grid row by hand.
+On the Potential list, exactly as on the Lead list, **Assign Records To** (إسناد السجلات إلى) clears the whole *Assigned To* grid on each selected record and leaves a single row for the employee you chose. It is a re-assignment tool, not a way to add somebody. To add an employee, open the potential and add a grid row by hand.
 :::
 
 ## One Setting That Does Not Apply Here

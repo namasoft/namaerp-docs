@@ -52,7 +52,7 @@ Choosing a COM connection type fills the **COM Port** list with the ports Window
 
 ### TCP/IP connections
 
-Type the machine's address into the four **TCP/IP** boxes, one number per box, and **press Enter** in a box once all four are filled. PGW saves the address only when Enter is pressed. If you type the address and click away, PGW keeps using the previous address.
+Type the machine's address into the four **TCP/IP** boxes, one number per box. Enter moves to the next box. PGW saves the address as soon as you leave a box with all four filled, and again when **Test Connection** is pressed. Each part must be a number from 0 to 255. Otherwise PGW keeps the previous address and shows *Please enter a valid IP address, each part must be a number from 0 to 255*.
 
 Give the machine a fixed address on the router. If the address changes, PGW keeps calling the old one, and every payment fails until the new address is entered.
 
@@ -98,7 +98,8 @@ PGW has no Arabic interface. All its messages are in English.
 |---|---|---|
 | *Another instance of Namasoft payment gateway is already running!* | PGW was started while it was already running. | Nothing. Use the copy already running. Double-click its icon in the notification area to see it. |
 | *Please select Com port* | **Test Connection** was pressed for a COM connection type without a port. | Pick the port, using the refresh button if the list is empty. |
-| *Please enter ip* | **Test Connection** was pressed for a TCP/IP connection type with an empty address box. | Fill all four boxes and press Enter. |
+| *Please enter ip* | **Test Connection** was pressed for a TCP/IP connection type with an empty address box. | Fill all four boxes. |
+| *Please enter a valid IP address, each part must be a number from 0 to 255* | A part of the TCP/IP address is not a number from 0 to 255. PGW keeps the previous address. | Correct that part. |
 | *Connection failed, Choose another COM Port and Make Sure the machine is correctly connected* | A Geidea machine did not answer on the chosen port. | Check the cable and pick the port Device Manager shows for the machine. |
 | *Connection failed, Choose another Ip* | A Geidea machine did not answer at that address. | Check the machine's address and that it is on the same network as the PC. |
 | *Failed! please check setup, the connection and cable* | PGW could not load its Neoleap connection. | Check the cable, set the port or the address, then choose the connection type again and test. |

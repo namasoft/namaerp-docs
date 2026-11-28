@@ -14,7 +14,7 @@ The question usually arrives without details, so answering it with a quick "yes"
 For this reason, we present in this document a systematic framework for answering that question — one that allows our colleagues in sales and implementation teams, and even the customer themselves, to ask the right questions before requesting a technical or financial proposal. This saves many rounds of back-and-forth and leads to a sound decision in less time.
 
 ::: tip Quick Summary
-Nama is **open by default** for integration with other systems via a fully documented REST API following the OpenAPI 3.0 specification, available to every customer at no additional cost. Any additional cost — if it exists at all — typically originates from the other system's side, not ours.
+Nama is **open by default** for integration with other systems via a fully documented REST API described in OpenAPI (Swagger 2.0) format, available to every customer at no additional cost. Any additional cost — if it exists at all — typically originates from the other system's side, not ours.
 :::
 
 ## The Central Question: In Which Direction Does the Data Flow?
@@ -214,5 +214,5 @@ Once we have complete answers to these questions, we can — with full confidenc
 
 ## Related References
 
-* [Nama ERP REST API – Full Developer Guide](./nama-erp-api.md) — The complete technical guide for using Nama's API (in English).
+* [Nama ERP REST API – Full Developer Guide](./nama-erp-api.md) — The complete technical guide for using Nama's API.
 * [Attendance Machines Integration](./attendance-machines-integration.md) — A practical example of integrating Nama with attendance machines.

@@ -34,11 +34,12 @@ that catches people:
 - **When the condition has its own debit and credit accounts, they win.** Retention typically debits a
   retention receivable and credits a retentions-payable account, so the withheld money sits visibly on
   the balance sheet until it is released. That is a proper journal entry, defined once, on the clause.
-- **When the condition has no accounts of its own, the amount lands on the extract's own accounting
-  sides instead — and a deduction is booked there as a negative.** Nothing is lost and nothing fails;
-  the deduction simply reduces the same pair of accounts the extract's value went to, rather than
-  parking it in a dedicated account. If you want retention visible as a balance, give the condition
-  its own accounts.
+- **When the condition has no accounts of its own, the amount lands on the default debit and credit
+  sides of the extract's document term instead — and a deduction is booked there as a negative.**
+  Nothing is lost and nothing fails; the deduction simply reduces those default accounts rather than
+  parking it in a dedicated account. When the condition fills only one of its two sides, the other
+  side falls back to the term's default, and the amount is not negated. If you want retention
+  visible as a balance, give the condition its own accounts.
 - **Tax on a condition is booked separately.** If the condition line carries a tax percentage, the tax
   amount is booked against the condition's tax debit and tax credit rather than being folded into the
   main pair.
@@ -66,9 +67,9 @@ The **Type** field decides the *occasion* on which the clause fires. Seven types
 | Text Condition | never — it is a clause you want printed and tracked, not calculated. It has no money effect at all, and the system insists its effect type stays "other" |
 | Related To Completion Percent | the term's executed percentage reaches the completion percentage you set on the clause. This is how "release the second half of retention at 80% complete" is modelled |
 | Contract End | the contract has been flagged as finished **and** the extract contains the clause's phase |
-| With Initial Extract | only on an extract whose type is Initial |
+| With Initial Extract | only on an extract whose type is Initial (and, when the clause names a phase, that contains it) |
 | With Every Extract | on every extract that contains the clause's phase. Leave the phase blank and it means every extract, full stop. This is the type retention and advance recovery normally use |
-| With Final Extract | only on an extract whose type is Final — for the release of retention, or a final adjustment |
+| With Final Extract | only on an extract whose type is Final (and, when the clause names a phase, that contains it) — for the release of retention, or a final adjustment |
 | Other | always. The catch-all for a clause that has no natural occasion |
 
 The remaining fields on the Main page tune the clause:
@@ -77,7 +78,7 @@ The remaining fields on the Main page tune the clause:
 |---|---|
 | Effect Type | addition, deduction, or other — see below |
 | Value Type and Value | how the money is computed, and the number that drives it. Covered in the next section |
-| Calculated After Previous Conditions | include the net effect of the clauses already collected in this clause's base, so a chain of deductions compounds rather than each taking its own slice of the gross |
+| Calculated After Previous Conditions | include the net effect of the clauses already collected in this clause's base, so a chain of deductions compounds rather than each taking its own slice of the gross. Available only with the value type Percentage From Extract; any other value type clears and disables it |
 | Phase or Cycle | restrict the clause to one milestone |
 | Finished Percentage | required for a completion-percentage clause |
 | Maximum Value Type and Maximum Value | the ceiling. See below |
@@ -85,7 +86,7 @@ The remaining fields on the Main page tune the clause:
 | Can Update Condition Value | whether a user may overwrite the computed amount on the extract |
 | Do Not Collect In Extract Conditions | keep the clause out of automatic collection entirely — for clauses you always enter by hand |
 | Do Not Use With Project Contract / Do Not Use With Contractor Contract | keep the clause out of the lookup on one side or the other, so a subcontractor clause never appears on an owner contract |
-| Condition Value Can Exceed Contract Planned Value | allow the clause to go beyond what the contract planned for it |
+| Condition Value Can Exceed Contract Planned Value | for a clause with **Can Update Condition Value** ticked, an extract is refused when the clause's amount on it plus on the contract's earlier extracts exceeds the contract's planned value for the clause. Tick this to lift that check |
 | Do Not Affect Remaining | the amount does not reduce the contract's remaining value. Use it for clauses that are cash movements rather than consumption of the contract |
 | Taxable and Tax Percentage | whether the clause carries tax on subcontracts and subcontractor extracts, and the default percentage their condition lines take. Untick **Taxable** and those lines' tax percentage is set to 0 on every save — see [A Condition Is a Journal Entry](#A-Condition-Is-a-Journal-Entry-Not-a-Number) |
 
@@ -125,7 +126,7 @@ either a flat value or a percentage of the total, and the **maximum value** itse
 *with every extract* clause the check is against the **running total accumulated across all extracts**
 — exactly what you want for retention, which must stop at the agreed percentage of the contract, not
 of each certificate. For every other type the check is against the current extract alone. Breach it and
-the save is refused with an invalid-condition-value message, and the amount is not written.
+the save is refused with *Invalid condition value {0}*, and the amount is not written.
 
 ## Clauses Satisfied by a Separate Document
 
@@ -142,7 +143,8 @@ raised elsewhere. The **relation with documents** column on a condition line say
 A clause with anything other than *none* is skipped when the extract collects its conditions, and then
 picked up from the payment or fine document instead: the amount is whatever that document says should
 be recovered against this certificate, or — on a final extract — the whole of what remains. Whether it
-arrives as an addition or a deduction is the payment document's decision.
+arrives as an addition or a deduction is the payment document's decision, except that a clause whose
+effect type is *Other* puts it in the "other" column.
 
 That is the mechanism behind
 [Project Advance Payments](/modules/contracting/project-contracting/contracting-project-advances) and
@@ -182,8 +184,8 @@ added up, and finally the clause's percentage is applied to the sum. A percentag
 ::: tip Building an equation that works
 Two habits save a lot of trouble:
 
-- **Never leave the equation grid empty.** A percent-of-custom-equation clause with no steps computes
-  zero on every extract, quietly and forever.
+- **Fill the equation grid before you save.** A percent-of-custom-equation clause with no steps is
+  refused on save (see [What Blocks a Save](#What-Blocks-a-Save)).
 - **Only reference components your lines actually carry.** If your extract lines use main price, one
   discount and one tax, build the equation from those three. Referencing a fourth tax or an eighth
   discount that never appears on a line will stop the extract's condition collection in its tracks.
@@ -263,8 +265,9 @@ bundle: a code, a name, and a list of conditions.
   the term's Conditions grid with the group's clauses, and a list-view action re-applies each selected
   term's group over its grid in bulk.
 
-Two things to know before you rely on it. The rows are **replaced, not merged** — whatever was in the
-term's Conditions grid is overwritten. And the group itself is not validated, so an empty group or a
+Two things to know before you rely on it. The group's clauses **replace** the term's own rows rather
+than being merged with them — exactly how each of the two routes does it is on
+[Standard Terms](/modules/contracting/setup/contracting-standard-terms). And the group itself is not validated, so an empty group or a
 group listing the same clause twice will save; the clauses are only sanity-checked when they land on a
 term.
 
@@ -299,4 +302,17 @@ extract. Everything else is filtered out silently — which is precisely why the
 - A completion-percentage clause needs its completion percentage.
 - A maximum value type needs a maximum value, and vice versa. A percentage ceiling above 100 is
   refused, and a flat ceiling below the clause's own flat value is refused.
-- A percent-of-custom-equation clause needs its lines source.
+- A percent-of-custom-equation clause needs its lines source and at least one equation line.
+
+## Messages you may see
+
+| Message | Why | What to do |
+|---|---|---|
+| *can not exceed 100%* — «لا يمكن أن يتخطى نسبة 100 %» | a percentage-of-extract or percentage-of-total value, or a percentage ceiling, is above 100 | enter a percentage of 100 or less |
+| *Text condition effect must be other* — «تأثير الشرط النصي يجب أن يكون أخرى» | the type is Text Condition and the effect type is Addition or Deduction | set the effect type to Other, or choose a type that carries money |
+| *Max Value can not be Less Than Value* — «القيمة لا يمكن أن تكون أكبر من اقصى قيمة» | value type and maximum value type are both Value, and the value is above the maximum | raise the maximum value or lower the value |
+| *Value type is percent of custom equation. Custom equation lines can not be empty* — «نوع قيمة الشرط القياسي هي معادلة مخصصة. لذا سطور المعادلة المخصصة لا يجب أن تكون فارغة.» | the value type is Percent Of Custom Equation and the equation grid is empty | add the equation steps |
+| *Invalid condition value {0}* | on an extract, the clause's amount (running total for With Every Extract) breaks the condition's ceiling | check the maximum value on the condition and the amounts on earlier extracts |
+| *Sum of current and previous {0} value of condition {1} can not exceed {2}* — «مجموع القيمة الحالية والسابقة {0} للشرط {1} لا يمكن أن تتخطى {2}» | on an extract, an edited amount of a clause with Can Update Condition Value ticked, plus the earlier extracts' amounts, exceeds the contract's planned value for it | lower the amount, or tick Condition Value Can Exceed Contract Planned Value on the condition |
+
+*Invalid condition value {0}* has no Arabic text and appears in English on Arabic screens.

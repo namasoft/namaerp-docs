@@ -43,17 +43,18 @@ a city or straight under a state. When a parent doesn't fit, saving is refused w
 
 | Message | Why |
 |---|---|
-| *Country must not has a parent* — «يجب ألا يكون للدوله مجموعه اعلي» | The record is a country and the **Parent** is filled. |
-| *State parent must be a country* — «االمجموعه الأعلي للمحافظه يجب ان تكون دوله» | The record is a state and its parent is not a country. |
-| *City parent must be a State* — «المجموعه الأعلي للمدينه يجب أن تكون محافظه» | The record is a city and its parent is not a state. |
-| *Street parent must be an area* — «المجموعة الأعلي للشارع يجب أن تكون منطقة» | The record is a street and its parent is not an area. |
+| *Country must not has a parent* — «يجب ألا يكون للدولة مجموعة أعلى» | The record is a country and the **Parent** is filled. |
+| *State parent must be a country* — «المجموعة الأعلى للمحافظة يجب أن تكون دولة» | The record is a state and its parent is not a country. |
+| *City parent must be a State* — «المجموعة الأعلى للمدينة يجب أن تكون محافظة» | The record is a city and its parent is not a state. |
+| *Street parent must be an area* — «المجموعة الأعلى للشارع يجب أن تكون منطقة» | The record is a street and its parent is not an area. |
 | *Invalid Parent* | The record names itself as its own parent. This message has no Arabic text, so it shows in English on Arabic screens too. |
 
 ## Freight Line
 
 A **Freight Line** is a shipping line: the carrier that moves an export shipment. It is a code-and-name
 list. You pick from it in the **Freight Line** field on the **Shipping** tab of a **Sales Order**, next to
-the **Arriving Port**, the **Freight Bill Code** and the **vessel Name**.
+the **Arriving Port** and the **Vessel Name**. The **Payments** tab shows the same field again, beside the
+**Freight Bill Code**.
 
 The Freight Management module doesn't use this list. Its operation orders and sailing schedules record the
 shipping line as a supplier; see [Freight Master Files](/modules/freight/freight-master-files).

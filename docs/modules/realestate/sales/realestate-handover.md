@@ -22,13 +22,13 @@ You will find it at **Real Estate and Property > Documents > Estate Handover**, 
 
 It is a deliberately small screen — one page, no grids, no buttons. The usual document header, then:
 
-- **From Document** (بناءا على) — **mandatory**, and it must be a [sales contract](/modules/realestate/sales/realestate-sales-contract.md) or an opening sales contract. Everything the document does, it does to that contract.
-- **Estate** (العقار), **Buyer** and **Owner**, plus the location breadcrumb (project, square, block, building, floor, land, unit).
+- **From Document** (بناءً على) — **mandatory**, and it must be a [sales contract](/modules/realestate/sales/realestate-sales-contract.md) or an opening sales contract. Everything the document does, it does to that contract.
+- **Sold estate** (العقار), **Buyer** and **Document Owner**, plus the location breadcrumb (project, square, block, building, floor, land, unit).
 - **Handover Date** (تاريخ التسليم).
 - **Document Term** — optional here. The handover is one of the few documents in the module that does not insist on a توجيه, because a handover that only changes status needs no accounts.
 
-::: tip Keep the handover date and the value date the same
-The date stamped onto the property record is the document's **value date**, not the Handover Date field. Fill both with the same day and the two views of the unit — the contract and the property record — agree with each other.
+::: tip Which date reaches the property record
+The date stamped onto the property record is the **Handover Date** field. When that field is empty, the document's **value date** is used instead.
 :::
 
 Two validations stand between you and a commit: the From Document must be a sales or opening sales contract (*"From doc must be opening sales or sales doc"*), and the contract must not already have been handed over — if it has, the message names the document that did it, which is usually all you need to sort out a duplicate.
@@ -40,14 +40,14 @@ Two validations stand between you and a commit: the From Document must be a sale
 3. **The suppressed journal entry is released**, if the contract's term was holding it back — see below.
 4. **A second entry is created**, if the handover term asks for one — again, see below.
 
-Cancelling or deleting the handover reverses all of it: the contract and the property are un-marked and any entry the handover created is removed. Changing the From Document on a committed handover un-marks the old contract and property before marking the new ones.
+Cancelling or deleting the handover un-marks the contract and the property and removes the second entry, if the handover created one. Changing the From Document on a committed handover un-marks the old contract and property before marking the new ones.
 
 ### The two flags that must be decided together
 
 This is the part worth slowing down for, because the two settings live on **different** term records and only make sense as a pair:
 
-- on the **sales contract's** term: *Create Accounting Effects For Handovered Documents Only* (إنشاء تأثير محاسبى لمستندات التسليم فقط);
-- on the **handover's** own term: *Create Accounting Effects* (إنشاء التأثير المحاسبى).
+- on the **sales contract's** term: *Create Accounting Effects For Handed Over Documents Only* (إنشاء تأثير محاسبي لمستندات التسليم فقط);
+- on the **handover's** own term: *Create Accounting Effects* (إنشاء التأثير المحاسبي).
 
 | Contract term | Handover term | What happens |
 |---|---|---|
@@ -64,9 +64,9 @@ The account sides behind both flags are described on the [sales document terms p
 
 ![The inspection document](../../../ar/modules/realestate/images/properties/re-inspection-doc-en.png)
 
-The screen is a unit, five attachments and a grid. Each grid row is one thing you looked at — paintwork, plumbing, the air conditioner, the keys — with a **status** and a **remark**, and up to five photographs of its own. Both the item and the status are **free text**, not a fixed list, which is deliberate: the checklist for a furnished flat and the checklist for a shop are not the same checklist, and no dropdown would suit both.
+The screen is a unit, six attachments and a grid. Each grid row is one thing you looked at — paintwork, plumbing, the air conditioner, the keys — with a **status** and a **remark**, and up to five photographs of its own. Both the item and the status are **free text**, not a fixed list, which is deliberate: the checklist for a furnished flat and the checklist for a shop are not the same checklist, and no dropdown would suit both.
 
-It has no accounting effect, no term and no effect on the unit's status — it is purely documentary, and it is the only document in this area that needs no توجيه at all. Nothing links back to it automatically either, so give inspection documents a code or a remark that names the unit and the date if you want to find them again.
+It has no accounting effect, no term and no effect on the unit's status — it is purely documentary, and it is the only document in this area that needs no توجيه at all.
 
 Use it twice in a lease: once when the tenant takes the unit and once when they give it back, so the two reports can be compared when the [deposit is settled](/modules/realestate/rent/realestate-rent-renewal-and-termination.md).
 
@@ -80,7 +80,7 @@ A developer's costs do not stop on delivery day. Snagging, finishing work, a con
 
 The header is a **range**, not a single property. Choose the kind of estate you are sweeping — rental units by default, but also lands, blocks, buildings, floors or unit groups — and give a from/to range at every level of the tree that matters: project, square, block, building, floor, land. Add the subsidiary the cost is charged against.
 
-Then press **Collect Units** (تجميع الوحدات). The grid fills with every handed-over property in that range.
+Then press **Collect Units** (تجميع الوحدات). The grid is replaced with every committed, handed-over property of that kind in that range that still has cost to book: a property whose post-handover cost equals what earlier committed documents already booked is left out.
 
 ### The arithmetic
 
@@ -123,9 +123,9 @@ committed.
 
 | Message | Why | What to do |
 |---|---|---|
-| *From doc must be opening sales or sales doc* — «بناءا على يجب ان يكون عقد بيع أو عقد بيع إفتتاحى» | **From Document** on the handover is empty, or points at something that is neither a sales contract nor an opening sales contract. | Point it at the contract being handed over. The handover has no meaning on its own. |
-| *You cannot handover document {0}, it was handovered by document {1}* — «لا يمكن تسليم المستند {0},حيث تم تسليمه بواسطة {1}» | That contract has already been handed over, and the message names the handover document that did it. | Open the named document. If it was a mistake, cancel it before raising a second one. |
+| *From doc must be opening sales or sales doc* — «بناءً على يجب أن يكون عقد بيع أو عقد بيع افتتاحي» | **From Document** on the handover is empty, or points at something that is neither a sales contract nor an opening sales contract. | Point it at the contract being handed over. The handover has no meaning on its own. |
+| *You cannot handover document {0}, it was handovered by document {1}* — «لا يمكن تسليم المستند {0}, حيث تم تسليمه بواسطة {1}» | That contract has already been handed over, and the message names the handover document that did it. | Open the named document. If it was a mistake, cancel it before raising a second one. |
 | *Estate {0} is repeated* — «العقار {0} مكرر» | The same property appears on two lines of the post-handover cost grid. | Delete the duplicate line; one line per property. |
 | *Estate {0} is not handed over* — «العقار {0} لم يتم تسليمه» | A post-handover cost line names a property that has never been handed over, so there is no handover to charge costs after. | Hand the unit over first, or take the line off. |
-| *Estate {0} is handed over on {1}, this is after (or equals) {2}* — «تم تسليم العقار {0} بتاريخ {1} و هو بعد ( او يساوى ) {2}» | The property's handover date is later than the value date of the post-handover cost document — the cost would fall before the handover it is supposed to follow. | Date the cost document on or after the handover date shown in the message. |
-| *You can not use estate {0} on value date {1} because it is already used in the document {2}* — «لا يمكن ستخدام العقار {0} فى التاريخ الفعلى {1} لأنه مستخدم فى المستند {2}» | Another committed post-handover cost document for the same property carries a later date, and the message names it. | Enter this cost with a date after that document, or cancel and re-enter the later one. Post-handover costs have to be entered in date order. |
+| *Estate {0} is handed over on {1}, this is after (or equals) {2}* — «تم تسليم العقار {0} بتاريخ {1} و هو بعد ( أو يساوي ) {2}» | The property's handover date is later than the value date of the post-handover cost document — the cost would fall before the handover it is supposed to follow. | Date the cost document on or after the handover date shown in the message. |
+| *You can not use estate {0} on value date {1} because it is already used in the document {2}* — «لا يمكن استخدام العقار {0} في التاريخ الفعلي {1} لأنه مستخدم في المستند {2}» | Another committed post-handover cost document for the same property carries a later date, and the message names it. | Enter this cost with a date after that document, or cancel and re-enter the later one. Post-handover costs have to be entered in date order. |

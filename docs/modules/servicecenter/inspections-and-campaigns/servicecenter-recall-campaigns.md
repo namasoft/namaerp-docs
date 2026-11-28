@@ -27,7 +27,7 @@ The header is short:
 |---|---|---|
 | Code, Name1, Name2 | الكود، الاسم العربي، الاسم الإنجليزي | The campaign's reference, such as `RC-2026-PSP`, and its Arabic and English names. |
 | Type | النوع | Free text for your own grouping, for example *Safety* or *Service bulletin*. Nothing reads it. |
-| Valid From Date / Valid To Date | صالحه من تاريخ / صالحه إلي تاريخ | The window in which the campaign blocks job orders. Either end may be left empty, meaning open-ended. |
+| Valid From Date / Valid To Date | صالحة من تاريخ / صالحة إلى تاريخ | The window in which the campaign blocks job orders. Either end may be left empty, meaning open-ended. |
 | Inactive | غير نشط | Tick it to switch the campaign off without deleting it. |
 
 Below it sit three grids.
@@ -61,7 +61,7 @@ vehicle and are still waiting for it. A campaign counts when all of these hold:
 
 If such a campaign exists, the job order is refused with:
 
-*{0} exists in recall campaign {1}* — «{0} موجود في حملة الإستدعاء {1}»
+*{0} exists in recall campaign {1}* — «{0} موجود في حملة الاستدعاء {1}»
 
 where `{0}` is the vehicle and `{1}` the campaign. The message carries a link to the campaign line, so
 the reception engineer can open it straight away.

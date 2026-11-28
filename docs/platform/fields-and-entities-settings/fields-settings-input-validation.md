@@ -19,8 +19,8 @@ means they hold no matter where the data came from — someone typing on screen,
 import, or an outside system pushing records in through an integration. A rule that is only applied
 by the browser can be bypassed; a rule applied on save cannot.
 
-Every grid here starts with the same scope columns — **For Type**, **Entity List**, **On Field**,
-**Inactive** — and they behave the same way everywhere. If you are not sure what "generic" means or
+Every grid here starts with the same scope columns — **For Type**, **Entity List**, **On Field** —
+and they behave the same way everywhere. If you are not sure what "generic" means or
 how a line is matched to a screen, read
 [Fields and Entities Settings — Overview](/platform/fields-and-entities-settings/fields-settings-overview)
 first; this page does not repeat it.
@@ -49,19 +49,22 @@ and the value either matches the pattern or it is rejected.
 | On Field | The field the rule guards, e.g. `code`, `remarks`, `details.item`. |
 | Min Length | Values shorter than this number of characters are rejected. |
 | Max Length | Values longer than this number of characters are rejected. |
-| Allow Numbers | Untick to forbid digits anywhere in the value. |
-| Allow Alpha | Untick to forbid anything that is not a digit — useful for numeric-only identifiers. |
+| Allow Numbers | Digits are accepted only when this is ticked. Left unticked, a value containing any digit is rejected. |
+| Allow Alpha | Anything that is not a digit is accepted only when this is ticked. Left unticked, the value may hold digits only — useful for numeric-only identifiers. |
 | Prefix | The value must start with this text. |
 | Suffix | The value must end with this text. |
-| Criteria Definition | The rule only fires for records that match this saved [Criteria Definition](/platform/automation-and-rules/criteria-definitions) — see below. |
+| Criteria | The rule only fires for records that match this saved [Criteria Definition](/platform/automation-and-rules/criteria-definitions) — see below. |
 | Apply When Query | The rule only fires when this query matches — see below. |
-| Letter Case Type | `All`, `Lower Case`, or `Upper Case`. Rejects values containing the wrong case. |
-| Text Language | `All`, `Only Arabic`, or `Only English`. Rejects values written in the other script. |
+| Letter Case Type | `All`, `Lower Case`, or `Upper Case`. `Upper Case` rejects a value with any lower-case letter. `Lower Case` accepts only values made entirely of lower-case letters, so a digit, space or symbol is rejected too. |
+| Text Language | `All`, `Only Arabic`, or `Only English`. Rejects values written in the other script. This column is not on the grid by default; add it with the [Screen Modifier](/platform/screen-modifier/screen-modifier-edit-screen). |
 | Lines Should Match | Restricts the rule to the grid lines the criteria or query actually matched. |
 | Ignore Draft Suffix | Strips the draft marker from the value before checking it. |
 | Prevent Leading White Space | Rejects values that start with a space. |
 | Prevent Trailing White Space | Rejects values that end with a space. |
 | Regular Expression | The value must match this pattern. |
+
+Because both **Allow Numbers** and **Allow Alpha** start unticked, a new line rejects every value
+until you tick at least one of them; tick both unless you mean to forbid digits or letters.
 
 An empty value is always accepted. Field Formats decides what a value must look like *if there is
 one* — it never makes a field mandatory. If you want the field filled in, that is a different
@@ -210,7 +213,7 @@ over.
 |---|---|
 | Field | The grid being limited, e.g. `details`. |
 | For Type | The entity that owns the grid, e.g. Sales Invoice. Add one line per entity. |
-| Max Lines Count | The largest number of lines allowed. Leave empty or zero for no limit. |
+| Max Lines Count For Documents And Files | The largest number of lines allowed. Left empty or zero, the grid falls back to **Max Lines Count For Documents And Files** in the [global configuration](/platform/global-config/global-config-documents) (750 by default). |
 
 Two behaviours are worth knowing before you set a limit, because both of them are deliberate and
 both save you from unpleasant surprises.
@@ -306,12 +309,12 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
 | `fieldFormats` | Field Formats | Field Formats | [Field Formats](#Field-Formats) |
-| `fieldFormats.minLength` | Min length | اقل طول | [Field Formats](#Field-Formats) |
-| `fieldFormats.maxLength` | Max length | اقصي طول | [Field Formats](#Field-Formats) |
+| `fieldFormats.minLength` | Min length | أقل طول | [Field Formats](#Field-Formats) |
+| `fieldFormats.maxLength` | Max length | أقصى طول | [Field Formats](#Field-Formats) |
 | `fieldFormats.prefix` | Prefix | بادئة التكويد | [Field Formats](#Field-Formats) |
 | `fieldFormats.suffix` | Suffix | نهاية التكويد | [Field Formats](#Field-Formats) |
 | `fieldFormats.allowAlpha` | Allow alpha | السماح بالحروف | [Field Formats](#Field-Formats) |
-| `fieldFormats.allowNumbers` | Allow numbers | السماح بالارقام | [Field Formats](#Field-Formats) |
+| `fieldFormats.allowNumbers` | Allow numbers | السماح بالأرقام | [Field Formats](#Field-Formats) |
 | `fieldFormats.letterCaseType` | Letter Case Type | الحروف المسموح بها | [Field Formats](#Field-Formats) |
 | `fieldFormats.ignoreDraftSuffix` | Ignore Draft Suffix | تجاهل لاحقة المسودة | [Field Formats](#Field-Formats) |
 | `fieldFormats.preventLeadingWhiteSpace` | Prevent Leading White Space | منع وجود مسافة في البداية | [Field Formats](#Field-Formats) |
@@ -336,11 +339,11 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `maxLinesCounts` | Max Lines Counts For Documents And Files | أقصى عدد لسطور السندات والملفات | [Max Lines Counts For Documents And Files](#Max-Lines-Counts-For-Documents-And-Files) |
 | `maxLinesCounts.maxLinesCount` | Max Lines Count For Documents And Files | أقصى عدد لسطور السندات والملفات | [Max Lines Counts For Documents And Files](#Max-Lines-Counts-For-Documents-And-Files) |
 | `maxFieldsLengthInDB` | Max Fields Length In DB | Max Fields Length In DB | [Max Fields Length In DB](#Max-Fields-Length-In-DB) |
-| `maxFieldsLengthInDB.maxLength` | Max length | اقصي طول | [Max Fields Length In DB](#Max-Fields-Length-In-DB) |
+| `maxFieldsLengthInDB.maxLength` | Max length | أقصى طول | [Max Fields Length In DB](#Max-Fields-Length-In-DB) |
 | `maxPOSFieldsLengthInDB` | Max POS Fields Length In DB | Max POS Fields Length In DB | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
 | `maxPOSFieldsLengthInDB.posEntityType` | Entity Type | النوع | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
 | `maxPOSFieldsLengthInDB.fieldType` | Field Type | نوع الحقل | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
-| `maxPOSFieldsLengthInDB.maxLength` | Max length | اقصي طول | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
+| `maxPOSFieldsLengthInDB.maxLength` | Max length | أقصى طول | [Max POS Fields Length In DB](#Max-POS-Fields-Length-In-DB) |
 
 ## Related pages
 

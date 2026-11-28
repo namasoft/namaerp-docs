@@ -21,9 +21,8 @@ Manual execution for bulk revision status changes, typically when documents need
 
 1. **Executes query** - Runs the provided SQL query to find entities (must return entityType and id columns)
 2. **Processes results** - Extracts entity type and ID pairs from query results
-3. **Optional flush** - Flushes database before starting if configured
-4. **Marks entities** - Calls EntityMediator.markRevised() on each entity with specified revision status
-5. **Handles errors** - Stops processing on first error
+3. **Marks entities** - Marks each record as revised or unrevised, as Parameter 2 says
+4. **Handles errors** - Stops processing on first error
 
 ## Parameters
 

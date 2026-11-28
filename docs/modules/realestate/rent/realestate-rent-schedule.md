@@ -8,11 +8,11 @@ A lease is signed once, but it is paid many times. You agree an annual rent with
 that single number Nama has to produce the actual list of amounts and dates the tenant will owe:
 this quarter's rent, the security deposit due on day one, the agency commission, the share of the
 water bill, the annual escalation that kicks in from the second year, the cleaning contract that is
-charged every three months. That list is the **Rents** grid (الايجارات) at the bottom of the
+charged every three months. That list is the **Rents** grid (الإيجارات) at the bottom of the
 [rent contract](/modules/realestate/rent/realestate-rent-contract.md), and it is what everything
 downstream — collection, accrual, fines, termination — is measured against.
 
-You never type it. You press **Create Rents** (إنشاء الايجارات) and the whole grid is built for you.
+You never type it. You press **Create Rents** (إنشاء الإيجارات) and the whole grid is built for you.
 
 Throughout this page we will use one lease: a shop in Al-Nakheel Tower, let from **1 March 2026 to
 28 February 2029**, at an annual base of **120,000**, paid **quarterly**, with a **10% insurance
@@ -25,10 +25,10 @@ and a **5% compound yearly increase**.
 is why the order of work matters: fill the header first, press the button last.
 
 It reads the contract dates and the **Rent Period** (فترة العقد), the annual base
-(**Rent Value Per Year** / اساس العقد السنوي) and the **Rent type** (نوع الايجار) that sets how often
+(**Rent Value Per Year** / أساس العقد السنوي) and the **Rent type** (نوع الإيجار) that sets how often
 rent falls due, the commission / insurance / maintenance / water figures in the values block, the
 yearly discounts and the yearly increase on the *Yearly Discount And Increase* page, the
-**Yearly Rent Types** (أنواع الايجارات سنوياً) grid, and the **Expense** (مصروفات) grid on the
+**Yearly Rent Types** (أنواع الإيجارات سنوياً) grid, and the **Expense** (مصروفات) grid on the
 *Terms And Fees And Expenses* page.
 
 ![The Terms, Fees and Expenses page of the rent contract, showing the Expense grid that feeds the generated schedule](../../../ar/modules/realestate/images/rent/re-rent-contract-expenses-en.png)
@@ -95,8 +95,10 @@ Both figures behave the same way, and each has its own switch on the contract:
   Unticked, it is charged as a single line once a year, in the **anniversary month** of the contract.
 - **Treat Water Costs As Installments** (معاملة المياه معاملة الأقساط) does the same for water.
 
-Maintenance also tracks the escalation: it is recomputed each period as its percentage of the
-*current* rent base, not of the original one. Our shop's 2% therefore produces 600 a quarter in year
+Maintenance also tracks the escalation: once the rent has been increased, it is recomputed each
+period as its percentage of the *current* rent base, not of the original one — unless the contract's
+term ticks **Fixed Maintenance** (صيانة بقيمة ثابتة), which keeps the entered maintenance value for
+the whole lease. Our shop's 2% therefore produces 600 a quarter in year
 one (2% of 120,000, quartered), 630 in year two and 661.50 in year three. Water, at 1% and with its
 switch left unticked, produces a single 1,200 line every March.
 
@@ -110,16 +112,16 @@ begins, the generator works out every date on which that row falls, from its **P
 The amount depends on the **Expense Value Type** (نوع قيمة المصروف):
 
 - *Value* — the figure in **Expense Value** is used as it stands.
-- *Percentage* — the percentage is taken from the **first year's rent** or from the **rent of the
-  same year**, depending on the **Percentage Basis** (اساس النسبة) you chose. That choice is
+- *Percentage* — the percentage is taken from the **First Year Rent Value** or from the **Rent Value
+  Of the Same Year**, depending on the **Percentage Basis** (أساس النسبة) you chose. That choice is
   mandatory whenever the type is Percentage.
 
 Whatever comes out is then scaled by `months in period ÷ 12` — unless the row ticks
-**Do Not Multiply Expense Value In Period** (عدم ضرب قيمة المصروف في الفترة), or its Paid Every is
+**Do Not Multiply Expense Value By Period** (عدم ضرب قيمة المصروف في الفترة), or its Paid Every is
 *Once* or *Yearly*.
 
-A cleaning contract on our shop at 1% of the same year's rent, paid quarterly, therefore comes out at
-300 a quarter in year one and rises with the rent afterwards. The line takes its installment type
+A cleaning contract on our shop at 1% of the first year's rent, paid quarterly, therefore comes out at
+300 a quarter (1% of 120,000, quartered) for the whole lease. The line takes its installment type
 from the expense row, so you can route it to its own accounts later — the catalogue behind these
 rows is described in
 [Fee, Commission, Broker and Expense Catalogues](/modules/realestate/costs/realestate-fee-commission-and-expense-types.md).
@@ -127,21 +129,24 @@ rows is described in
 ### 6. It emits the rent line
 
 Last for the period comes the rent itself, as a line of type **Installment** (قسط). Only lines of
-this type count towards **Total Rent Values** (إجمالي ايجارات العقد); everything else — commission,
+this type count towards **Total Rent Value** (إجمالي إيجارات العقد); everything else — commission,
 insurance, water, maintenance, expenses — is counted in **Total Contract Value**
 (إجمالي قيمة التعاقد) only.
 
-If the contract's term ticks **Rent Value Include Commission** (قيمة الايجار تشمل السعي), the rent
+If the contract's term ticks **Rent Value Include Commission** (قيمة الإيجار تشمل السعي), the rent
 line is reduced by the expense value charged in the same period, so the headline rent the tenant sees
 already contains the charge instead of sitting beside it.
 
 ### 7. Codes, taxes, and the grid is replaced
 
-When the walk finishes, the generator numbers the lines: the due date as `yyyyMMdd` followed by a
-two-digit sequence, so the first two lines of our lease are `2026030101` and `2026030102`. If the
-term ticks **Manual Coding** (تكويد يدوي) it leaves the codes empty for you to fill instead — and
-because installment codes must be unique and cannot be changed after commit, it is worth deciding
-which way round you want this before the first contract is signed.
+When the walk finishes, the generator numbers the lines: the due date as `yyyyMMdd` followed by the
+line's position in the whole grid, padded to two digits, so the first two lines of our lease are
+`2026030101` and `2026030102`, and the numbering runs on across dates: 1 March carries five lines
+(commission, insurance, water, maintenance, rent), so the maintenance line due on 1 June 2026 is
+`2026060106`. If the term ticks **Manual Coding** (تكويد يدوي) it leaves the codes empty for you to
+fill instead — and because installment codes must be unique and cannot be changed once money has
+been collected against them, it is worth deciding which way round you want this before the first
+contract is signed.
 
 Lines whose expense was copied from a previous contract are dropped when their expense type says so.
 Then each line's taxes are computed — from the **Legal Entity Taxes** grid on the term, falling back
@@ -153,11 +158,13 @@ produced.
 Each finished line therefore carries three figures that are easy to confuse. **Amount** (المبلغ) is
 the rent the walk worked out, **Net value** (الصافي) is that amount plus any penalty and less any
 discount, and **Total After Taxes** (الصافي بعد الضريبة) — the last column of the grid — is what
-the tenant is actually billed. Collection, accrual and the contract's own tax totals are all measured
-against the last of the three, so that is the column to read and the one to report on.
+the tenant is actually billed, and the contract's own tax totals add up that column. What collection
+treats as the line's due amount depends on the module option *Consider Taxes In Calculation Of
+Installment Net Value Upon Payment* in the [module configuration](/modules/realestate/realestate-configuration.md):
+the net value while it is off (the default), the total after taxes when it is ticked.
 
 ::: warning The rent base is not the installment
-Neither **Rent Value Per Year** (اساس العقد السنوي) nor **Rent Value per period**
+Neither **Rent Value Per Year** (أساس العقد السنوي) nor **Rent Value per period**
 (قيمة الإيجار بالفترة الواحدة) is an amount anybody pays. Both are the pre-tax base this page
 starts from — before the escalation of step 3 and before the taxes of step 7. On our shop lease the
 base says 30,000 a quarter while a third-year line is billed at 33,075 plus tax. A report or a query
@@ -174,8 +181,9 @@ generated schedule, so any line you added by hand, any amount you edited and any
 lost the moment you press it again.
 
 Generate the schedule first, adjust afterwards, and never press it once collection has started —
-already-paid lines cannot be removed or reduced, so on a live contract the button will simply fail
-and leave you to sort out the difference by hand.
+a line that collection has paid cannot be removed, so on a live contract the next save fails with
+*"Can not delete or change code of a paid line {0}"* and leaves you to sort out the difference by
+hand.
 :::
 
 ## Changing the frequency mid-lease
@@ -191,8 +199,7 @@ filled grid is perfectly valid.
 Ticking **Dates in hijri** (العمل بالتاريخ الهجري) on the contract does not simply relabel the
 dates. It switches **every** date calculation in the module to the Hijri table: the conversion
 between the contract dates and the **Rent Period**, the step from one due date to the next, the
-anniversary month that water and maintenance are charged in, the year boundaries that decide which
-contract year's increase and discount apply — and the installment codes, which are then built from
+year boundaries that decide which contract year's increase and discount apply — and the installment codes, which are then built from
 the Hijri `yyyyMMdd` of the due date.
 
 ::: tip Decide the calendar before you generate
@@ -206,8 +213,7 @@ create the contract.
 A mall handing over forty shops on the same day does not need forty trips through the contract
 screen. The **Multi rent contract doc** (سند عقود مجمعة) is a batch front-end to the same generator:
 you fill the commercial terms once in the header, list the units in the grid, and press
-**createContracts** (إنشاء عقود الايجار on the Arabic screen) to have Nama create one real rent
-contract per line.
+**Create Contracts** (إنشاء عقود الإيجار) to have Nama create one real rent contract per line.
 
 ![The multi rent contract document, listing the units that will each get their own lease](../../../ar/modules/realestate/images/rent/re-multi-rent-contract-en.png)
 
@@ -215,22 +221,23 @@ The header carries the dates, the period, the tenant and the default commission,
 maintenance, water and collection-commission figures, plus a single yearly discount percentage. Each
 grid line names the estate and can override any of it — the estate, tenant, owner, salesman, dates,
 period, rent type, annual rent, and the whole set of percentages and values. Anything a line leaves
-at zero inherits the header value when the document is committed, and every empty year discount
-inherits the header's single percentage.
+empty or at zero — the tenant, the dates, the percentages and values — inherits the header value
+when the document is saved, and every empty year discount inherits the header's single percentage.
 
 For each line the button then copies the book and term named on the multi document's own term,
-rebuilds the line's contract schedule through exactly the generator described above, and commits the
-contract, writing the new contract's reference back onto the line.
+builds the line's contract schedule with the same rules described above (with no expenses, no
+yearly rent types and no yearly increase), and commits the contract, writing the new contract's
+reference back onto the line.
 
 ::: tip The button is re-runnable, not duplicating
-Pressing **createContracts** again re-opens the contracts it created last time and updates them
+Pressing **Create Contracts** again re-opens the contracts it created last time and updates them
 rather than creating a second set. Taking a duplicate of the multi document, on the other hand,
 clears those links, so the copy generates fresh contracts.
 :::
 
 Two things to know before you commit to the batch route. First, a validation: for each of
 commission, insurance, water expenses and maintenance you may fill **either** the percentage
-**or** the value on a line, not both — filling both fails with *"One field must be filled"*. Second,
+**or** the value in the header, not both — filling both fails with *"One field must be filled"*. Second,
 and more important, the batch document is deliberately narrow. It has **no expenses grid, no other
 fees, no standard terms, no terms and conditions, no yearly rent types and no yearly increase**, and
 it creates no accounting entry of its own — the contracts it creates carry all of that. So it is the
@@ -255,8 +262,7 @@ The two screens on this page each have one button, and both are generators:
   contract values, exactly as walked through above. It asks nothing and replaces the grid. The
   contract's other buttons are listed on
   [The Rent Contract](/modules/realestate/rent/realestate-rent-contract#Actions-on-this-screen).
-- **createContracts** (on the multi rent contract doc; the English screen shows the button under this
-  name, the Arabic screen as **إنشاء عقود الايجار**) — creates, or on a second press updates, one
+- **Create Contracts** (إنشاء عقود الإيجار, on the multi rent contract doc) — creates, or on a second press updates, one
   committed rent contract per grid line, as described in the previous section. The document must be
   saved first. If a contract cannot be committed, the button reports that contract's own validation
   message.

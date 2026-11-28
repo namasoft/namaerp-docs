@@ -34,13 +34,13 @@ Here is the whole of it. Every arrow below is a **button that exists on a screen
    CRM Lead                          the prospect you are working on
    خيط بيع
        |
-       |  Convert To Potential   (تحويل إلي فرصة)
+       |  Convert To Potential   (تحويل إلى فرصة)
        |  opens a new, unsaved Potential - you complete it and save it
        v
    CRM Potential                     the same prospect, promoted
    فرصة
        |
-       |  Convert To Customer   (تحويل إلي عميل)
+       |  Convert To Customer   (تحويل إلى عميل)
        |  opens a new, unsaved Customer - the lead is only flagged
        |  "converted" once that Customer is actually SAVED
        v
@@ -58,7 +58,7 @@ Here is the whole of it. Every arrow below is a **button that exists on a screen
 Two side exits leave the same two screens:
 
 ```text
-   CRM Lead / CRM Potential  --->  Convert To REOwner   (تحويل الي مشتري)
+   CRM Lead / CRM Potential  --->  Convert To REOwner   (تحويل إلى مشتري)
                                    a Real Estate owner record, same pattern as
                                    Convert To Customer - only offered when the
                                    Real Estate feature is installed
@@ -81,7 +81,7 @@ The Offer, the Analysis and the CRM Project sit in the same menu and use the sam
 
 ::: info Offers, Analysis and Projects are stand-alone screens
 - **No button anywhere creates an Offer from a Lead or a Potential.** None exists on either screen. An Offer is typed from scratch and, if you want it connected to the prospect, you fill its *Related To* (يرتبط بـ) reference field by hand.
-- **No button anywhere creates a CRM Project from an Offer or an Analysis** — and, the part that surprises people, **you cannot make that link by hand either.** The Project's *Related To* field accepts a Lead, a Potential, another Project, a Campaign, a Trouble Ticket, a Customer or a Development Request. An Offer is not in that list and neither is an Analysis. A project can therefore never point at the work package that preceded it, by any route at all.
+- **No button anywhere creates a CRM Project from an Offer or an Analysis** — and, the part that surprises people, **you cannot make that link by hand either.** The Project's *Related To* field accepts a Lead, a Potential, another Project, a Campaign, a Trouble Ticket, a Complaint, a Customer or a Development Request. An Offer is not in that list and neither is an Analysis. A project can therefore never point at the work package that preceded it, by any route at all.
 - **Nothing is generated out of an Offer, an Analysis or a Project.** No quotation, no order, no invoice, no accounting entry, no stock movement.
 
 The only place an Analysis and an Offer are ever shown together is a read-only *Offers* list on the Analysis screen, and that list is driven by the Offer's **second** reference field (مرتبط ب2), not by its main one.
@@ -91,7 +91,7 @@ The honest summary is that the pipeline half of CRM (Lead → Potential → Cust
 
 ## Sales Stage and Probability Are Labels
 
-The Lead and the Potential both carry a **Sales Stage** (مرحلة البيع) with twelve values — Prospecting, Qualification, Needs Analysis, Value Proposition, Decision Makers, Perception Analysis, Price Quote, Review, Closed Won, Closed Lost, Contract Preparation and Price Negotiation — and a **Probability (%)** (الإحتمالية) box beside it.
+The Lead and the Potential both carry a **Sales Stage** (مرحلة البيع) with twelve values — Prospecting, Qualification, Needs Analysis, Value Proposition, Decision Makers, Perception Analysis, Price Quote, Review, Closed Won, Closed Lost, Contract Preparation and Price Negotiation — and a **Probability(%)** (الاحتمالية (%)) box beside it.
 
 Both are pure record-keeping. Nothing in the product calculates from either one:
 
@@ -116,10 +116,10 @@ Out of the box, therefore, **a NaMa pipeline carries no value**. There is nothin
 This is worth stating once, plainly, because every part of the pipeline invites the opposite assumption.
 
 - Putting an employee in the **Assigned To** grid notifies nobody. There is no e-mail, no alert, no task and no inbox item.
-- The **Planned Re-Call Date** (التاريخ المخطط لمعاودة الإتصال) on a lead is a date you read with your eyes. Nothing reminds anyone when it arrives.
+- The **Planned Re Call Date** (التاريخ المخطط لمعاودة الاتصال) on a lead is a date you read with your eyes. Nothing reminds anyone when it arrives.
 - There is no scheduler anywhere in the CRM module — no task schedule, no reminder, no alarm, no escalation. Everything that looks scheduled happens because somebody pressed a button.
 
-The one thing that does move by itself is the **status**: a committed [CRM Call](/modules/crm/activities/crm-calls) or [Visit](/modules/crm/activities/crm-visits) writes its *Change Status To*, *Update Lead Classification To*, *Next Activity Type*, *New Rejection Reason* and *Planned Re-Call Date* onto the lead or potential it points at. That is the real state machine of the pipeline, and it lives on the activity documents rather than on the lead itself.
+The one thing that does move by itself is the **status**: a committed [CRM Call](/modules/crm/activities/crm-calls) or [Visit](/modules/crm/activities/crm-visits) writes its *Change Status To*, *Update Lead Classification To*, *Next Activity Type*, *New Rejection Reason* and *Planned Re Call Date* onto the lead or potential it points at. That is the real state machine of the pipeline, and it lives on the activity documents rather than on the lead itself.
 
 ## Books, Terms and Effects
 

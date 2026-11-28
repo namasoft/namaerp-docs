@@ -34,7 +34,7 @@ accounting effect.
 
 - **السنة / Year** — a whole number, and it is **required**. Unlike the marketing plan's free-text
   year, this one is a real number, so `2026` it is.
-- **الفرع / Branch** — the branch the plan belongs to, a label you can filter the list view by.
+- **الفرع / header Branch** — the branch the plan belongs to, a label you can filter the list view by.
 - Responsible employee, mediator and remarks.
 
 ## One row per employee, per activity type
@@ -47,8 +47,8 @@ The details grid is where the quota is written. Each row answers "who, and what 
 | الموظف / Employee | **whose** quota this row is |
 | النوع / Type | **what** is being counted |
 | مخطط · فعلي · الانحراف, twelve times | planned count, actual count and deviation for each month |
-| إجمالي المخطط / Total Planned | the sum of the twelve planned counts |
-| إجمالي المنفذ / Total Executed | the sum of the twelve actual counts |
+| إجمالي المنفذ / total Executed | the sum of the twelve actual counts |
+| إجمالي المخطط / total planned | the sum of the twelve planned counts |
 
 The *Type* column offers seven things to count, and only these seven:
 **CRM Call**, **Visit**, **CRM Lead**, **CRM Potential**, **CRM Task**, **CRM Project** and
@@ -71,8 +71,8 @@ target plan says "forty calls", never "four hundred thousand".
 
 That is a real limitation, not a setting you can switch on. If your sales targets are monetary, the
 target plan is the wrong sheet for them — use the
-[Marketing Plan](/modules/crm/marketing/crm-marketing-plans.md), which is at least denominated in
-money (per section rather than per employee), or keep the monetary target outside NaMa and use this
+[Marketing Plan](/modules/crm/marketing/crm-marketing-plans.md), whose plain figures per section
+(rather than per employee) can hold a money target, or keep the monetary target outside NaMa and use this
 screen for the activity discipline that supports it.
 :::
 
@@ -104,7 +104,7 @@ list view away. For each employee and month:
    Ticket Execution.
 2. Filter by the employee and the month's date range.
 3. Read the record count off the list, or export the filtered list to Excel and count there.
-4. Type the number into the month's *فعلي / Actual* cell.
+4. Type the number into the month's *فعلي / executed* cell.
 
 If this is a monthly ritual for a dozen employees, it is worth building a small BI dashboard that
 produces the whole matrix in one place — the underlying data is complete and perfectly countable;
@@ -112,8 +112,7 @@ what is missing is only a screen that adds it up. Then transcribing twelve numbe
 few minutes and the target plan stays the single sheet everybody reviews.
 
 ::: tip Keep an eye on the year
-Because the plan's *actual* figures are typed and nothing re-derives them, a target plan is a
-snapshot of whoever last updated it. Nothing in the module reminds anybody that a month has
+A target plan's *actual* figures are a snapshot of whoever last updated them. Nothing in the module reminds anybody that a month has
 closed — there is no scheduler, no alarm and no notification anywhere in CRM. Put the update in
 someone's monthly routine, and use the
 *Remarks* box to record how far the actuals have been brought up to date — there is no "last
@@ -123,10 +122,4 @@ updated" indicator that means anything on this screen.
 ::: info Reporting
 Reporting: none. This module ships no system reports, and this screen has no print form. The
 activity list views, their Excel export and BI are where achievement figures actually come from.
-:::
-
-::: tip A note on the English column headers
-As on the marketing plan, some English month headers in this grid are spelled this way on screen
-(`Jan|Panned`, `Mars|Planned`, `Jan |excuted`, `Sept|Planned`, `total Excuted`). The columns behave as
-described above.
 :::

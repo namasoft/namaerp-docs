@@ -28,7 +28,7 @@ row key is Insert with a modifier.
 - **Alt + F**: Toggle the find (search) bar for the grid
 
 ::: tip Adding a row while the grid is filtered
-If a column filter is active, adding a row asks first — *"The grid currently has filters, the line you want to add may not be displayed even though it will added. Are you sure?"* The row is added either way; it is the filter that hides it.
+If a column filter is active, adding a row asks first — *"The grid currently has filters, the line you want to add may not be displayed even though it will be added. Are you sure?"* — «الجدول يوجد به فلاتر حاليا. السطر المراد إضافته قد لا يظهر مع السطور الحالية بالرغم من إضافته فعليا. هل أنت متأكد؟». The row is added either way; it is the filter that hides it.
 :::
 
 ## Find Bar Shortcuts

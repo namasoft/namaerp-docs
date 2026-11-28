@@ -18,7 +18,7 @@ The edit screen's tabs depend on the document type: most terms have an **Effect*
 
 Most terms hold one or more **pairs** of account sides — a debit and a credit for each amount the document records: the voucher amount, the fees, the tax, the cash cover of a letter of guarantee, and so on. A side is either a full account-side block, whose **account source** decides how the account is derived (a fixed account, the document's party with its **subsidiary account type** and **account bag code**, a field of the document…), or a single reference to a saved [Accounting Side Config](/platform/shared-master-files/accounting-side-config) record.
 
-Receipt and payment vouchers work differently. Their cash side comes from the **account resource type**: a fixed account (**Specific**), a **Bank Account**, a **Safe Deposit**, the **Current User Subsidiary** or an **Employee**; a payment method chosen on the voucher must belong to that safe or bank (see [Payment Methods](/platform/payments/payment-methods-and-terminals)). The **related subsidiary** field on the other side names the kind of party on the lines, and you can constrain the user with **prevent inserting values different from the term's** so everyone sticks to the term's setup.
+Receipt and payment vouchers work differently. Their cash side comes from the **account resource type**: a fixed account (**Specific**), a **Bank Account**, a **Safe Deposit**, the **Current User Subsidiary** or an **Employee**; a payment method chosen on the voucher must belong to that safe or bank (see [Payment Methods](/platform/payments/payment-methods-and-terminals)). The **related subsidiary** field on the other side names the kind of party on the lines, and you can constrain the user with **Prevent Insert Different Values Of Term Config…** so everyone sticks to the term's setup.
 
 ### Conditional sources (based on "from doc")
 
@@ -37,9 +37,9 @@ Many term features (like invoice usage or commercial-paper usage) aren't set wit
 
 | Value | Meaning |
 |---|---|
-| Must Use | the feature is mandatory; the user must fill it in. |
-| May Use | the feature is optional; available but not required. |
-| Cannot Use | the feature is hidden/forbidden for this type. |
+| Must Use It | the feature is mandatory; the user must fill it in. |
+| May Use It | the feature is optional; available but not required. |
+| Cannot Use It | the feature is hidden/forbidden for this type. |
 
 ## A term per document
 

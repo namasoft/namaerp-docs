@@ -70,7 +70,7 @@ and you are told which code is repeated.
 | English | Arabic | Meaning |
 |---|---|---|
 | Planned | مخطّطة | Scheduled and still outstanding. Every new line starts here. |
-| Executed | منفذه | Done — written by the maintenance record that carried it out. |
+| Executed | منفذة | Done — written by the maintenance record that carried it out. |
 | Cancelled | ملغي | Called off. Set by hand when a visit will not happen. |
 
 *Cancelled* has one piece of teeth to it: a maintenance record that points at a cancelled plan line

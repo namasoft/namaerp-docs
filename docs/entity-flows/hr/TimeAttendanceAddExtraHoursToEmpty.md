@@ -22,7 +22,7 @@ Manual execution during attendance data processing. Typically used when you have
 1. **Processes each attendance line** - Iterates through all attendance records
 2. **Identifies missing times** - Finds records with dates but no corresponding times
 3. **Retrieves attendance plans** - Gets employee's work schedule for the date
-4. **Calculates work times** - Determines standard shift times from attendance plan
+4. **Calculates work times** - Takes the start and end of the first work period of the plan's work day for the line's date
 5. **Applies hour adjustments** - Adds extra hours to start/end times if specified
 6. **Updates missing times** - Sets calculated times only where previously empty
 7. **Caches plan lookups** - Stores retrieved plans for performance optimization

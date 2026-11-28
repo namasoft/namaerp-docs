@@ -40,7 +40,7 @@ After the usual book-and-term information, the tax group:
 | **Pay Installments In Order** | `termConfig.payInstallmentsInOrder` | The document's instalments must be paid in their sequence, earliest first. |
 | **Allow Payment More Than Invoice Amount** | `termConfig.allowPaymentMoreThanInvoiceAmount` | Accepts payment lines that add up to more than the document total. |
 
-Three more options matter to the sales family — Sales Invoice, Sales Return and Sales Order. The first is shown on every invoice term but only the sales family uses it; the other two appear on the sales terms only:
+Four more options matter to the sales family — Sales Invoice, Sales Return and Sales Order. The first is shown on every invoice term but only the sales family uses it; the other three appear on the sales terms only:
 
 - **Do not Send Line for Cost of Service Item With Commission**
   `termConfig.doNotSendLineForCostOfItemsWithCommission` — the agent-model switch for e-invoicing.
@@ -50,9 +50,13 @@ Three more options matter to the sales family — Sales Invoice, Sales Return an
   is saved, it records this status against its operation order, and the operation order shows the
   most recent status recorded for it. A term for final invoices can carry "Invoiced", so the
   operation-order list tells you at a glance which shipments are billed.
-- **Link With Invoice Lines In accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument`
+- **Link With Invoice Lines In Accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument`
   — the invoice is linked line by line in the invoices grid of the receipt and payment vouchers
   that settle it.
+- **ENS Quantity Calculation Method** `termConfig.ensQtyCalcMethod` — the quantity of the ENS-CDD
+  line that an ocean-freight service line adds when the document's lines are brought in from the
+  operation order. **Number Of Containers** (the default) uses the service line's container
+  quantity; **Fixed Value (1)** always uses 1. The ISPS line always takes the container quantity.
 
 ![The Settings tab of an FRM sales invoice term](../../ar/modules/freight/images/document-terms/freight-term-sales-invoice-en.png)
 
@@ -102,7 +106,7 @@ status follows the shipment through the yard without anybody typing it.
 usual invoice options — **Expand Payment Method Effect** `termConfig.expandPaymentMethodEffect`
 (payment-method fee entries are not shortened), **Taxable**, **Modifiable Tax**, **Tax Plan**,
 **Allow Editing Header Tax In Details**, **Pay Installments In Order**, **Allow Payment More Than
-Invoice Amount** and **Link With Invoice Lines In accounting Document** — then **Debit** and
+Invoice Amount** and **Link With Invoice Lines In Accounting Document** — then **Debit** and
 **Credit**.
 
 The **Delivery Request** term adds a group that turns the request into an invoice by itself:
@@ -113,7 +117,7 @@ The **Delivery Request** term adds a group that turns the request into an invoic
 | **Generated Invoice Book** / **Generated Invoice Term** | `termConfig.generatedInvoiceBook`, `termConfig.generatedInvoiceTerm` | The book and term the generated invoice is saved under. |
 | **Delivery Invoice Payment Method** | `termConfig.deliveryInvoicePaymentMethod` | The payment method of the single payment line put on the generated invoice, carrying the amount the delivery document collected. |
 
-The **Serivce Fees** group (the label is misspelt on screen) handles the fees a payment method
+The **Service Fees** group handles the fees a payment method
 charges: **Service Fees 1 Deduction** to **Service Fees 4 Deduction** treat a fee as a deduction
 rather than an added charge, the **Service Fees N Debit / Credit** sides book it, and **Do Not Add
 Service Fees Effect Without Account Side** skips a fee whose sides are empty instead of booking it
@@ -124,14 +128,13 @@ The whole delivery cycle is on [Delivery Service](./ips-delivery.md).
 
 ## The postal movement terms
 
-The remaining ten postal documents have small terms, and most of what they do is reported to the
+The remaining nine postal documents have small terms, and most of what they do is reported to the
 external IPS server.
 
 **Event** `termConfig.event` is required on all of them. It names an **IPS Event** — a master file
 under **Freight Management System → Master Files** whose **code** is the postal event code the
 IPS server expects. When a document on the term is saved, every mail item (or receptacle) on it is
-queued to be reported to IPS with that event. The Arabic screen shows this field's label as
-"event". How the reporting works, and how to resend, is on [IPS Integration](./ips-integration.md).
+queued to be reported to IPS with that event. How the reporting works, and how to resend, is on [IPS Integration](./ips-integration.md).
 
 ::: tip Receptacle events need a numeric code
 The **Receptacles Receipt** and **Transfer Receptacles** report the receptacle's event using the

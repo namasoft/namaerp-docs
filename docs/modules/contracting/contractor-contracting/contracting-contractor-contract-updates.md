@@ -1,11 +1,11 @@
 ---
-description: "The Contractor Contract Update document, which changes a subcontract after its first certified extract: how it differs from the owner-side update, actions, a worked example and what blocks commit or delete."
+description: "The Contractor Contract Update document, the dated record that changes a subcontract and keeps what it was before: how it differs from the owner-side update, the freeze once an extract exists, actions, a worked example and what blocks commit or delete."
 entities: [ContractorContractUpdate]
 menu: Contracting → Contractor Contracting → Contractor Contract Update
 ---
 # Subcontract Updates
 
-Scope moves. The client adds 300 m² of wall, a rate is renegotiated after the first month, an item nobody priced has to be added, the programme slips. Early in a subcontract's life you simply open it and edit it — but [the subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) freezes its prices, quantities and conditions as soon as the first extract has been certified against it, and from that point the sanctioned way to change it is this document.
+Scope moves. The client adds 300 m² of wall, a rate is renegotiated after the first month, an item nobody priced has to be added, the programme slips. Early in a subcontract's life you simply open it and edit it — but [the subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) freezes its prices, quantities and conditions as soon as an extract exists against it. This document is the dated, numbered way to change a subcontract: it rewrites the contract and keeps a record of what it was before. It is subject to the same freeze, though: once an extract exists, an update that touches a frozen field commits only when **Allow Editing Contractor Contract After Making Contractor Contr Extract On It** is ticked in the [contracting configuration](/modules/contracting/contracting-configuration).
 
 ::: tip It is the same document as the owner-side variation order
 The subcontract update and the [project contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md) are one mechanism with two front doors: the same behaviour, the same buttons, the same "before" grids, the same rules about ordering and cancellation. **Read that page for how a variation order works.** This page covers only what is different when the contract being amended is a subcontract — which is three fields and one important consequence.
@@ -51,8 +51,12 @@ The three edit types behave as they do on the owner side: **Add** (إضافة) i
 
 And that last point leads to the consequence that matters most on this side:
 
-::: warning An update is not a way around the cross-subcontract quantity ceiling
-The update re-commits the subcontract through its ordinary route, so **every rule on [the subcontract page](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) applies** — including the two checks that exist only on the cost side. Raise a quantity beyond what the client contract carries for that item, across all subcontracts on it, and the commit fails and names the totals. Leave a new line's project term code blank and the commit fails on that too. Vary the client's contract first, then the subcontract.
+::: warning An update goes through every rule of the subcontract, the freeze included
+The update re-commits the subcontract through its ordinary route, so **every rule on [the subcontract page](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) applies** to it:
+
+- **The freeze.** Once an extract exists on the subcontract, the commit is refused when the update changes a frozen field of any term line, adds or deletes a term line, fills the *Conditions* grid with a list that differs from the contract's in number or in a frozen field, or sets **Updated End In** to a different date — unless **Allow Editing Contractor Contract After Making Contractor Contr Extract On It** is ticked in the contracting configuration. The frozen fields are listed on [the subcontract page](/modules/contracting/contractor-contracting/contracting-contractor-contract.md).
+- **The cross-subcontract quantity ceiling.** Raise a quantity beyond what the client contract carries for that item, across all subcontracts on it, and the commit fails and names the totals. Vary the client's contract first, then the subcontract.
+- **The project term code.** Leave a new line's project term code blank and the commit fails on that too.
 :::
 
 ## Actions on this screen
@@ -64,7 +68,7 @@ The three buttons sit on the **Terms and Conditions Before Edit** page, above th
 
 ## The worked example: 300 m² more blockwork
 
-CC-0042 is three months in. One extract has been certified — 800 m² of the 2,000 — so the subcontract is frozen. Al-Fanar has since varied its own contract to 2,300 m² of blockwork through a [project contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md), and the extra wall is going to the same firm.
+CC-0042 is three months in. One extract has been certified — 800 m² of the 2,000 — so the subcontract is frozen, and this update commits only because **Allow Editing Contractor Contract After Making Contractor Contr Extract On It** is ticked in the contracting configuration. Al-Fanar has since varied its own contract to 2,300 m² of blockwork through a [project contract update](/modules/contracting/project-contracting/contracting-project-contract-updates.md), and the extra wall is going to the same firm.
 
 The subcontract before:
 
@@ -77,7 +81,7 @@ Retention clause 10% → planned deduction 8,000, total due value 72,000.
 The update document:
 
 1. New update, value date 1 June. **Contractor Contract** = CC-0042. The client, the contractor, the project, the contracting date and the dates fill themselves; the single term line and the retention clause are snapshotted into the "before" grids.
-2. On the "before" terms grid, tick line `3.01`, set the header **Edit Type** to *Edit*, and press **Copy Lines To Editable Terms** (نقل السطور الي البنود المعدلة). One editable row appears, already carrying the project term code `3.01`.
+2. On the "before" terms grid, tick line `3.01`, set the header **Edit Type** to *Edit*, and press **Copy Lines To Editable Terms** (نقل السطور إلى البنود المعدلة). One editable row appears, already carrying the project term code `3.01`.
 3. Change its quantity from 2,000 to **2,300**. The rate stays at 40.
 4. Leave the **Conditions** grid empty — the retention clause is not changing, and anything typed there would become the contract's complete new list of clauses.
 5. Optionally set **Updated End In** to the new completion date, four weeks out.
@@ -93,7 +97,9 @@ Total 92,000, retention now planned at **9,200**, total due value **82,800**, an
 
 And — the point worth repeating — **none of this produced a journal entry**. The extra 12,000 of commitment reaches the ledger only as the extra wall is built and certified.
 
-Had the order been reversed — the subcontract raised to 2,300 while the client contract still carried 2,000 — the commit would have been refused, because the total sublet against that client-contract item would have exceeded what was sold.
+Had the order been reversed — the subcontract raised to 2,300 while the client contract still carried 2,000 — the commit would have been refused, because the total sublet against that client-contract item would have exceeded what was sold. And with the configuration option unticked, the commit is refused at step 6 because line `3.01` already has an extract against it:
+
+*Field ({0}) Value changed from {1} to {2} line number {3} in grid ({4})* — «لقد تغيرت قيمة الحقل ({0}) من {1} إلى {2} في السطر رقم {3} في الجدول ({4})»
 
 ## What blocks a commit or a delete
 
@@ -105,7 +111,9 @@ Had the order been reversed — the subcontract raised to 2,300 while the client
 | **Add After** is required on any *Add* line. | column-required |
 | An *Add*, *Edit* or *Delete* line must match a code the snapshot actually has. | *Could not find term line with the code {0}* |
 | Deleting the update is refused while a later update exists for the contract. | *Cannot delete document {0} because of the update document {1}* |
-| Anything the subcontract itself rejects, since it is re-committed on your behalf. | the subcontract's own messages |
+| Once an extract exists on the subcontract and the configuration option is unticked: no frozen field of a term line, a condition line or the header may change. | *Field ({0}) Value changed from {1} to {2} line number {3} in grid ({4})* for a line, *Field ({0}) Value changed from {1} to {2}* for the header |
+| Under the same freeze: the number of term lines and of condition lines may not change. | *There was {0} lines in the table {1}, now there are {2}* |
+| Anything else the subcontract itself rejects, since it is re-committed on your behalf. | the subcontract's own messages |
 
 Cancelling an update restores the subcontract from the two snapshots — which also restores the progress figures as they stood **when the snapshot was taken**, so after cancelling an old update, check those figures.
 

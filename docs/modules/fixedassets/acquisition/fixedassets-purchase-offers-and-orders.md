@@ -30,7 +30,7 @@ record. Both name the wanted asset as **free text**, exactly like the
 [request](/modules/fixedassets/acquisition/fixedassets-purchase-request.md) does.
 
 ::: tip What the taxes on these screens are for
-If you pick a term with a tax plan, the tax columns fill in and the totals include tax. Treat those
+If you pick a term with a tax plan on the order, the tax columns fill in and the totals include tax. Treat those
 figures as informational — they let you compare a quotation inclusive of VAT against one that is not.
 The tax that is actually recorded and claimed is the tax on the purchase document.
 :::
@@ -41,15 +41,15 @@ The tax that is actually recorded and claimed is the tax on the purchase documen
 
 The header carries the document book and code, issue and value dates, the requesting **Employee**,
 the **Supplier** who is quoting, the **Asset Location** the equipment is wanted at, up to five
-attachments for the quotation PDF itself, and a **From Document** (بناءا على) field for building the
-offer from the request that triggered it. **Processed By** and **Purchase Document** are filled in by
-the system when something downstream consumes the offer.
+attachments for the quotation PDF itself, and a **From Document** (بناءً على) field for building the
+offer from the request that triggered it. The offer has no **Term** field. **Processed By** and
+**Purchase Invoice** are filled in by the system when something downstream consumes the offer.
 
 The **Details** grid is a price list:
 
 | Column | Arabic label |
 |---|---|
-| Fixed Asset Name | أسم الأصل |
+| Fixed Asset Name | اسم الأصل |
 | Quantity | الكمية |
 | Unit price / total price | سعر الوحدة / السعر الكلي |
 | Discount 1 to 8 — percentage, value, after value | خصم 1 إلى 8 — % / قيمة / صافي |
@@ -57,12 +57,12 @@ The **Details** grid is a price list:
 | Net value | الصافي |
 | Description | ملاحظات |
 
-The second page, **Shipping and payment** (الشحن و الدفع), repeats the request's logistics block and
-adds the payment side: a **payment schedule template**, the **GeneratePayments** (إنشاء الدفعات)
-action that expands
-it into instalment lines, and the schedule grid itself. The schedule has to reconcile with the
-document's remaining amount before the offer can be committed — a quotation offering four instalments
-that do not add up to the price is rejected.
+The second page, **Shipping** (الشحن), repeats the request's logistics block and adds the payment
+side: a **payment schedule template**, the **Generate Payments** (إنشاء الدفعات) action that expands
+it into instalment lines, and the schedule grid itself, followed by a standard-terms grid for the
+contractual clauses. The schedule has to reconcile with the document's remaining amount before the
+offer can be committed — a quotation offering four instalments that do not add up to the price is
+rejected.
 
 ## The purchase order
 
@@ -76,26 +76,27 @@ Everything the offer has, plus:
   what it consumed;
 - a **Payment Documents** grid (سندات الدفع) on the second page — payment document, payment date,
   payment value and a flag for payments that should not reduce the remaining amount — for advances
-  paid against the order;
-- a standard-terms grid, for the contractual clauses that go with the order.
+  paid against the order.
 
-The second page also repeats the book, code and term, so an order can be completed entirely from
-there.
+The order's second page is titled **Details** (التفاصيل) rather than Shipping. It also repeats the
+book, code and term, so an order can be completed entirely from there.
 
 ## Consuming a request, and being consumed
 
 The rule that governs the quantity counters is simple and worth stating precisely: **the counters on
-a request move when a document is built directly from that request.** An offer, an order or an
-[initial receipt](/modules/fixedassets/acquisition/fixedassets-receipts.md) whose **From Document**
-points at a purchase request will, on commit, raise that request's Satisfied Qty, lower its
-Unsatisfied Quantity, refresh its Total Unsatisfied Qty and stamp Processed By. Cancelling or
-deleting it puts it all back.
+a request move only when a purchase order is built directly from that request.** An order whose
+**From Document** points at a purchase request will, on commit, raise that request's Satisfied Qty,
+lower its Unsatisfied Quantity and refresh its Total Unsatisfied Qty. Cancelling or deleting it puts
+them back.
 
-An order built from an *offer* copies the offer's lines and prices happily, but it does not tick
-anything off — the offer was never a demand to be satisfied in the first place.
+An offer or an [initial receipt](/modules/fixedassets/acquisition/fixedassets-receipts.md) built from
+a request copies its lines but leaves the counters alone, and so does an order built from an *offer*
+— it copies the offer's lines and prices happily, but the offer was never a demand to be satisfied in
+the first place. Any of these documents, once committed, stamps itself in the **Processed By** field
+of the document it was built from, and clears it again when cancelled.
 
 In the other direction, an order remembers what became of it. When a purchase document is committed
-against it, the order's **Purchase Document** field is filled in, and from then on that order stops
+against it, the order's **Purchase Invoice** field is filled in, and from then on that order stops
 appearing in the From Document picker of new purchase documents. One order, one invoice.
 
 ## Gulf Machinery Trading wins the CNC machine

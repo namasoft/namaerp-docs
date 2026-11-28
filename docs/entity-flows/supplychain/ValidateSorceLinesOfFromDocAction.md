@@ -29,7 +29,7 @@ Validation action executed during document save or processing when the document 
 4. **Validates source line reference** - For each line:
    - Extracts the sourceLineId from the current line
    - Searches for matching line in source document using the ID
-   - Records error if no matching source line is found
+   - Records the error *No matching line found in source document for line number {0}* if no matching source line is found
 5. **Accumulates validation errors** - Collects all orphaned line errors with line numbers
 6. **Returns validation result** - Success if all lines have valid sources, failure with details if orphaned lines exist
 

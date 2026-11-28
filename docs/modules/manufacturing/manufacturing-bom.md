@@ -31,19 +31,15 @@ The top half of the screen answers "what does this BOM make, and how much of it?
 
 **Item** is the product this BOM produces. This is the link that makes everything else automatic: when a production order names an item, Nama looks for that item's BOM and pulls the components in.
 
-**Qty | UOM** is the crucial pair, and the one most often misunderstood. It says *how many finished units the component quantities below refer to*. Set it to 1 and the grid lists what one unit consumes. Set it to 100 and the grid lists what a batch of a hundred consumes, and Nama divides accordingly when an order asks for 250.
+**Qty | UOM** gives the unit the product is made in. A production order that picks this BOM takes the unit as its own. The value counts only when a production order picks the BOM before its own quantity is filled: the order then takes **Batch Quantity**, or this Qty when Batch Quantity is empty. The scaling of the components is done row by row, by each row's **Final Quantity** (see the details grid below).
 
-::: tip Use a batch quantity when small numbers get ugly
-If one unit consumes 0.0035 kg of adhesive, don't write 0.0035. Set **Qty** to 1000 and record 3.5 kg. The arithmetic is identical, and the number in the grid is one a human can sanity-check.
-:::
-
-**Batch Quantity** is separate from that, and it trips people up. Qty|UOM is the *reference* quantity for the recipe; Batch Quantity is the quantity the shop floor actually makes in one go — the size of the mixer, the capacity of the oven. Leave it at 1 unless your process genuinely has a fixed batch size.
+**Batch Quantity** is the quantity the shop floor actually makes in one go — the size of the mixer, the capacity of the oven. Besides being the default quantity of a new production order, it is the batch size [MRP](/modules/manufacturing/material-requirements-planning) plans the product's production in.
 
 **Routing** points at the manufacturing steps this product goes through. A BOM says what goes in; a [routing](/modules/manufacturing/manufacturing-routing) says what happens. Naming one here means a production order that picks up this BOM gets the matching operations too, without anyone selecting them separately.
 
 **Default BOM** is a checkbox that matters more than its size suggests. A product can have several BOMs — a standard recipe and a reduced-cost variant, or an old revision and a new one. Exactly one of them should be the default, and that's the one a production order will reach for when nobody says otherwise.
 
-**Issue Type** decides how the components leave the store. Set to **Manual**, somebody records a [raw materials issue](/modules/manufacturing/raw-material-issue) and physically decides what goes out. The alternative hands that job to the system, which draws the components automatically as production is recorded.
+**Issue Type** decides how the components leave the store. Every component row carries its own **Issue Type**; when the header one is filled, saving copies it onto every row, and a row left empty takes the module's **Default Issue Type** ([Manufacturing Configuration](/modules/manufacturing/manufacturing-configuration)). **Manual** rows are the ones proposed when somebody records a [raw materials issue](/modules/manufacturing/raw-material-issue) against the order and decides what goes out. **Automatic With Execution** rows are issued by the raw materials issue that a production execution generates, as production is recorded. **Non Issued Supplies** rows are never copied into a document made from the order.
 
 The remaining header fields — **Group**, **Item Classifier**, **Warehouse**, **Revision ID**, **Size**, **Color**, **Lot ID**, **Box**, **Active Percentage** / **Inactive Percentage**, **Finished Product Density**, **Default Operation Duration**, **Attachment** — are optional refinements. Most implementations leave nearly all of them empty and are none the worse for it.
 
@@ -51,19 +47,25 @@ The remaining header fields — **Group**, **Item Classifier**, **Warehouse**, *
 
 Each row in **Details** is one component. In the pipe-pair example above there are four rows, and the columns worth understanding are these.
 
-**Op.** (operation sequence) is the step at which this component gets consumed. All four rows carry `10`, meaning everything is issued at the first operation. On a longer routing this is where the recipe gets interesting: the copper goes in at cutting (10), the insulation at taping (20), the label at packing (30). Getting these right is what lets the system tell you that an order stalled at operation 20 still hasn't consumed the label stock.
+**Operation Seq.** is the step at which this component gets consumed. All four rows carry `10`, meaning everything is issued at the first operation. On a longer routing this is where the recipe gets interesting: the copper goes in at cutting (10), the insulation at taping (20), the label at packing (30). Getting these right is what lets the system tell you that an order stalled at operation 20 still hasn't consumed the label stock.
 
 **Item** is the component itself — the raw material or sub-assembly being consumed.
 
 **Code**, right after it, is the quicker way to fill a row: type an item code or barcode and the row picks up the item, its first unit, and the size, colour and revision that code stands for. When the row names a **Component Class**, the codes offered are limited to items of that class. The component grid of a production order has the same column.
 
-**Item Quantity** (**Value** + **UOM**) is how much of it. Read together with the header's Qty|UOM: with Qty = 1 and a row reading `2 Each`, one finished pair consumes two insulation sleeves.
+**Item Quantity** (**Value** + **UOM**) is how much of it. Read it together with the row's **Final Quantity**: with Final Quantity = 1 and a row reading `2 Each`, one finished pair consumes two insulation sleeves.
 
-**Final Quantity** is what the system will actually plan for, after the percentage columns have had their say. On a clean BOM with no waste allowance it equals Item Quantity, which is why the two columns so often look redundant — they aren't, they just agree.
+**Final Quantity** (**Value** + **UOM**) is the quantity of finished product that the row's Item Quantity makes. A production order scales every row by its own quantity divided by the row's Final Quantity, so with Final Quantity = 1 the row lists what one unit consumes, and with 100 it lists what a hundred consume. When the module's **Default Issue Type** is set, saving fills an empty Final Quantity unit with the header unit, and the module option **Make Finished Product Qty 1 in New BOMs** fills an empty value with 1.
+
+::: tip Use a larger Final Quantity when small numbers get ugly
+If one unit consumes 0.0035 kg of adhesive, don't write 0.0035. Set the row's **Final Quantity** to 1000 and record 3.5 kg. The arithmetic is identical, and the number in the grid is one a human can sanity-check.
+:::
 
 **Component Class** (**Entity Type** + **Reference**) is how a BOM line stops being a single fixed part. Instead of naming one specific item, a line can name a *class* of items, and the actual part is chosen when the order is created. This is how you model "any of our three approved 3/8-inch pipes" without maintaining three near-identical BOMs.
 
-**Percentage**, **Revision**, **Size**, **Color** and **Warehouse** round out the row: a waste allowance, which revision of the component applies, and where it should be drawn from if not the order's default store.
+**Yield %** is the waste allowance: the production order raises the row's quantity to cover the loss, so 10 kg at a yield of 80% is planned as 12.5 kg (quantity × 100 ÷ yield, when the item's **Max Yield** is empty and the module option **Invert Yield Percentage** is off). **Permitted Percentage** is how far the raw materials issues of an order may go above the planned quantity when the module option **Can Issue Materials More Than Order Quantities** is off. **Revision ID**, **Size**, **Color** and **Warehouse** say which variant of the component applies and where it should be drawn from if not the order's default store.
+
+Below the details sits the **Co Products** grid: what else the recipe yields besides the main product, with the same quantity columns. **Product Type** marks each row as a **Co Product** or a **By Product**. A co product takes a share of the order's cost, either by **Cost Percentage** or by **Fixed Cost Per Unit**, as its **Cost Type** says; with **Cost Type** empty the row shares cost by percentage.
 
 ::: warning A BOM is master data, not a document
 Changing a BOM changes what *future* production orders will consume. It does not reach back into orders already created — those captured their component list when they were made. This is deliberate and it is what you want, but it does mean that fixing a wrong BOM does not fix the orders that were built on it. Those have to be corrected individually.
@@ -95,7 +97,7 @@ That last one is worth sitting with. An inaccurate BOM does not announce itself.
 | *Item {0} does not contain uom {1}* — «الصنف {0} لا يحتوي على الوحدة {1}» | The unit on the header quantity — the unit the recipe produces in — is not one of the units defined on the produced item. | Use one of the item's own units, or add the unit to the item file. |
 | *Item {0} in line number {1} does not contain uom {2}* — «الصنف {0} في السطر {1} لا يحتوي على الوحدة {2}» | The same check on a component line or a co-product line: the unit typed there is not defined on that item. | Change the unit on the line, or add it to the item. |
 | *The operation {0} is not in the routing {1}* — «العملية {0} ليست من عمليات التشغيل {1}» | A component line is assigned to an operation sequence that the chosen routing does not contain. It usually appears after the routing was changed under a finished recipe. | Renumber the component onto an operation the routing really has, or put the operation back in the routing. |
-| *The Item and the component class can not both be empty. At least one must be not empty* — «لا يمكن ترك الصنف و تصنيف المكون كلاهما فارغين, يجب أن يكون إحداهما له قيمة» | A component line names neither an item nor a component class. This is the wording you get when **Allow Empty Item In BOM Details If Component Class Exist** is on; with it off, the item is simply required. | Name the item, or name the class the item will be picked from at production time. |
-| *Cost percentage can not be zero* — «قيمة التكلفة لايمكن ان تكون صفر» | A co-product line is set to share cost by percentage and the percentage is left empty or zero, so it would absorb none of the order's cost. | Give it a percentage, or change the line's cost type to a fixed cost. |
-| *Option {0} in details {1} only one line must activate this option* — «بالنسبة للأوبشن {0} في سطور{1} - سطر واحد فقط يمكنه تفعيل هذا الأوبشن» | More than one component line has **Weight Supplement** ticked. Only one component may play that role in a recipe. | Untick it everywhere but the one component that takes up the weight difference. |
-| «القيمة المئوية للتكلفة اكبر من المئة» | The co-product cost percentages add up to more than 100, which would charge the order more cost than it holds. | Bring the percentages back to 100 or less. This message is stored in Arabic only, so it appears in Arabic on an English screen too, and it is reported against a line number that is always 1 rather than the offending line. |
+| *The Item and the component class can not both be empty. At least one must be not empty* — «لا يمكن ترك الصنف و تصنيف المكون كلاهما فارغين, يجب أن يكون أحدهما له قيمة» | A component line names neither an item nor a component class. This is the wording you get when **Allow Empty Item In Bom Details If Component Classifier Exists** is on; with it off, the item is simply required. | Name the item, or name the class the item will be picked from at production time. |
+| *Cost percentage can not be zero* — «قيمة التكلفة لا يمكن أن تكون صفر» | A co-product line is set to share cost by percentage and the percentage is left empty or zero, so it would absorb none of the order's cost. | Give it a percentage, or change the line's cost type to a fixed cost. |
+| *Option {0} in details {1} only one line must activate this option* — «بالنسبة للأوبشن {0} في سطور {1} - سطر واحد فقط يمكنه تفعيل هذا الأوبشن» | More than one component line has **Weight Supplement** ticked. Only one component may play that role in a recipe. | Untick it everywhere but the one component that takes up the weight difference. |
+| «القيمة المئوية للتكلفة اكبر من المئة» | The co-product cost percentages add up to more than 100, which would charge the order more cost than it holds. | Bring the percentages back to 100 or less. This message is stored in Arabic only, so it appears in Arabic on an English screen too. |

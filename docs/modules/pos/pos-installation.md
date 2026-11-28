@@ -12,12 +12,14 @@ Have these ready before you touch the new machine:
 
 - A **Windows machine** to act as the register.
 - The **Nama ERP server** reachable over the network — its address and port.
-- A **server login** (user name and password) that POS may use to talk to the server, or an **API key** instead.
+- A **server login** (user name and password) that POS may use to talk to the server, and optionally an **API key** for it.
 - The **register already defined on the server**, with a code. The setup connects by that code and the server checks it exists, so the register record must be created first.
 
 ## Step 1 — Install SQL Server
 
 Each register stores its sales locally in **SQL Server**, so the first thing to install on the machine is SQL Server itself.
+
+**Which version?** SQL Server **2016 or newer** (version 13 and up). The settings dialog in step 4 refuses an older server with *Error in SQL Server version, it should be at least 13 (SQL Server 2016)* — «خطأ في إصدار SQL Server، يجب أن يكون 13 على الأقل (SQL Server 2016)».
 
 **Which edition?** Nama POS works with **SQL Server Express**, which is free — fine for a register with a modest catalogue. For customers with a large number of items and customers we recommend **Standard edition**, which removes Express's size and memory limits and holds up better under load. **Developer edition** is also free and full-featured, but it is licensed for **testing and development only** — never run a production register on it.
 
@@ -89,7 +91,8 @@ The very first time POS starts it has no idea where its database or its server a
 **Server Settings** describes the central ERP the register syncs with:
 
 - **Server Url** and **Server Port** — where the Nama ERP server answers (for example port `8080`). You can also enter a full `http://…` / `https://…` address; **Server Port** is then greyed out because the address already carries it.
-- **Server Login Id** and **Server Login Password** — the server login POS uses. Instead of a user and password you may supply an **API Key**, which keeps working even after the user's password changes.
+- **Server Login Id** and **Server Login Password** — the server login POS uses. Both are required by the dialog's checks.
+- **API Key** — optional; an API key that keeps working even after the user's password changes. How the key is created is in the [technical points guide](/modules/pos/nama-pos#Logging-In-Using-an-API-Key-in-POS).
 - **Gui Server** — the image server; optional, leave it empty unless you serve item images from a separate address.
 
 **Read / Write Settings** controls the sync itself:
@@ -102,11 +105,11 @@ The very first time POS starts it has no idea where its database or its server a
 - **Registery Code** — the **register's code as defined on the server**. This is the link between this machine and its register record.
 - **Language** — the register's interface language.
 
-Each of the first two groups has its own check button. **Check Database Settings** tests the database connection, and **Check Server Settings** signs in to the server and confirms the register code exists; the result shows next to the button (**Settings are valid**, or what is wrong). **Check Data** in the footer runs both checks at once and also flags any required field left empty. Once it checks out, press **Confirm**. The footer's language button (**العربية** on the English dialog, **English** on the Arabic one) reopens the dialog in the other language without losing what you have typed.
+Each of the first two groups has its own check button. **Check Database Settings** tests the database connection, and **Check Server Settings** signs in to the server and confirms the register code exists; the result shows next to the button (**Settings are valid**, or what is wrong). **Check Data** in the footer runs both checks at once and also flags any required field left empty: every field of the Database Settings group except Data Base Type, Server Url, Server Port (when the address carries no port), Server Login Id, Server Login Password and Registery Code. Once it checks out, press **Confirm**; it runs the same checks and keeps the dialog open while any of them fails. The footer's language button (**العربية** on the English dialog, **English** on the Arabic one) reopens the dialog in the other language without losing what you have typed.
 
 ## Step 5 — Restart, and the first sync
 
-Confirming saves your settings and **closes** Nama POS. That is expected. Start the register again (run `pos-launcher.exe`).
+Confirming saves your settings, and Nama POS then **restarts itself** through `pos-launcher.exe`. That is expected.
 
 This second time, POS connects to the server and downloads the foundation data into its local database — **users, the register itself, branches, currencies, items, prices and configuration**. On a fresh register with a large catalogue this first sync can take a little while; it only happens once. When it finishes, the login screen appears and the register is ready.
 

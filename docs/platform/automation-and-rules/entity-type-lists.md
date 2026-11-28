@@ -1,7 +1,7 @@
 ---
-description: "The EntityType List screen: a saved list of screens that settings point at instead of a single screen, building it from a menu group, the Use As Module option, and where lists are used."
+description: "The Entity Type List screen: a saved list of screens that settings point at instead of a single screen, building it from a menu group, the Use As Module option, and where lists are used."
 entities: [EntityTypeList]
-menu: Administration → Display Customization → EntityType List
+menu: Administration → Display Customization → Entity Type List
 ---
 # Entity Type Lists
 
@@ -15,7 +15,7 @@ at instead of naming a single screen. You will meet it under a handful of labels
 List**, **Apply Also To**, **For Type List**, **Entity List** — and they all take the same record.
 Rename the record's contents and every setting that borrowed it follows.
 
-You will find it under **Administration → Display Customization → EntityType List**.
+You will find it under **Administration → Display Customization → Entity Type List**.
 
 ## The screen
 
@@ -26,7 +26,7 @@ record — the rest of the screen is there to spare you typing.
 |---|---|
 | **copy Entities From Menu** and **copy Entities From Group** | A menu and one of its groups. They are not saved as part of the rule; they are the input to the button below. |
 | **Add From Group** | Reads that menu group — and the groups under it — and adds every screen it opens to the grid, skipping any already there. |
-| **useAsModule** | Turns the list into a filter group named *Module* on the screens described below. |
+| **Use As Module** | Turns the list into a filter group named *Module* on the screens described below. |
 
 ![An Entity Type List holding three sales document types, with the copy-from-menu fields and the Add From Group button above the grid](../../ar/platform/images/entity-type-lists/entity-type-list-screen-en.png)
 
@@ -40,16 +40,10 @@ once, with a different group each time, and keep adding to the same list.
 The same screen may not be listed twice: save with a repeated row and the grid answers *"Repeated
 EntityType"* on the offending line.
 
-::: warning The Use As Module tick shows its field id in English
-The checkbox described here as **useAsModule** has no English label of its own, so the English screen
-renders the field id itself — `useAsModule`. In Arabic it reads «تستعمل كموديول». It is the last field
-in the top group, beside the two copy-from-menu boxes.
-:::
-
 ## What Use As Module does
 
 Some system screens list records of every kind at once — pending tasks, version history, the
-notification inbox, the employee approvals screen. A list of entity types with **useAsModule** ticked
+notification inbox, the employee approvals screen. A list of entity types with **Use As Module** ticked
 becomes a filter group called **Module** on exactly those screens, with one button per list, so a user
 can narrow a mixed list down to "the documents my team cares about" in a click. The list's own name is
 the button's name.

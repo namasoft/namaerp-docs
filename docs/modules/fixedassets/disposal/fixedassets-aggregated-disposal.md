@@ -60,15 +60,14 @@ The header is small — document book and code, issue date, value date, fiscal p
 attachments and a description, plus the **Dimensions** group carrying the legal entity, analysis set,
 branch, sector and department.
 
-One header field does real work: **Related Subsidiary** (الذمة المتعلق), the counterparty. Fill it and
+One header field does real work: **Related Subsidiary** (الذمة المتعلقة), the counterparty. Fill it and
 it is pushed down onto every line when the document is saved, which is exactly what you want for a
 fleet sold to one dealer. Leave it empty and each line keeps whatever counterparty you gave it
 individually.
 
 The counterparty here — on the header and on the lines — may be an **employee, a ledger account, a
 safe deposit or a bank account**. If a disposal has to name a supplier or a third party as the
-buyer — which is what submitting the sale as an electronic invoice requires — raise that one as an
-individual disposal document instead.
+buyer, raise that one as an individual disposal document instead.
 
 ![The lines grid on the aggregated disposal](../../../ar/modules/fixedassets/images/disposal/aggr-fa-disposal-lines-grid-en.png)
 
@@ -79,7 +78,7 @@ The **Details** grid is where the batch lives, one row per asset:
 | **Disposal Document** (سند تخلص من الأصل) | read-only — the document generated for this line. Empty until you commit; afterwards it is your link straight to the entry |
 | **Fixed Asset** (الأصل الثابت) | the asset being retired. Required, and no asset may appear twice in the same batch |
 | **Dispose value** (قيمة التخلص) | what you are getting for it, before tax; **0** for a scrap or a write-off. May not be negative |
-| **Related Subsidiary** (الذمة المتعلق) | the counterparty for this line, overwritten from the header when the header carries one |
+| **Related Subsidiary** (الذمة المتعلقة) | the counterparty for this line, overwritten from the header when the header carries one |
 | **Tax 1 %** and **Tax 1 Value**, **Tax 2 %** and **Tax 2 Value** | the two tax pairs, per line |
 
 Type the tax **percentages** on the lines. Saving works the values out from the dispose value, and

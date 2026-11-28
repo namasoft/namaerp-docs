@@ -23,20 +23,14 @@ Manual execution on item sections or item classes when strict item generation is
 2. **Enhances allow rule validation** - Overrides the allowRangeApplicable method with stricter logic:
    - Groups allow rules by item class level (section, class1, class2, etc.)
    - For each item class in the combination, checks if it appears in the allowed set for its level
-   - Requires that ALL item classes must be explicitly allowed at their respective levels
-   - Rejects combinations where any class level is not explicitly permitted
+   - First applies the parent's rule: at least one allow rule must be fully contained in the combination
+   - Then every item class of the combination must be among the classes the allow rules list for its level; a level that no allow rule mentions is not restricted
 3. **Applies level-by-level validation** - Ensures comprehensive rule coverage across all hierarchy levels
 4. **Maintains parent processing** - All other item generation logic remains identical to parent class
 
 ## Parameters
 
-**Parameter 1:** Test Only (Optional) - Any value (for example `true`) skips creating and updating items; leave empty to create them
-
-**Parameter 2:** Log Into Field (Optional) - Field name to log generation details and tree structure
-
-**Parameter 3:** Mark Items for Deletion (Optional) - true to write `Delete` in the Description 5 field of the section's items that are not in the generated set (and clear it on the others)
-
-**Parameter 4:** Delete Unneeded Items (Optional) - true to actually delete items not in generated set
+It takes the same 4 parameters, in the same order and with the same meaning, as EAUniCreteGenItems: see [its Parameters section](/entity-flows/supplychain/EAUniCreteGenItems#Parameters).
 
 ## Database Tables Affected
 

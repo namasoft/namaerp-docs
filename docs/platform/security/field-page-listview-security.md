@@ -16,11 +16,11 @@ Each row targets a type (or a type list, or nothing — meaning all types) and a
 
 | Column | Meaning |
 |---|---|
-| **Type / Type List** | The types this row applies to. Leave both empty to apply to all types. |
-| **Field** | The field ID to control. Use `*` as a wildcard to cover *all* fields of the targeted type. |
-| **Control Type** | **Normal** — no restriction; **Disabled** — field is visible but read-only; **InVisible** — field is hidden from the screen entirely. |
-| **Apply on: New / Edit / Draft** | Three flags that define *when* the restriction takes effect. Enable all three (or leave the default) for it to always apply; or enable *Edit* only so the user can fill the field on creation but cannot change it afterward. |
-| **Prevent Insert Row / Prevent Delete Row / Prevent Copy Row** | When the "Field" is a detail grid (such as invoice lines), these columns prevent adding, deleting, or copying rows in that grid — independently of whether existing rows can be edited. |
+| **Entity Type / Entity Type List** | The types this row applies to. Leave both empty to apply to all types. |
+| **On Field** | The field ID to control. Use `*` as a wildcard to cover *all* fields of the targeted type. |
+| **Preview Type** | **Normal** — no restriction; **Disabled** — field is visible but read-only; **Invisible** — field is hidden from the screen entirely. |
+| **Applicable With New Mode / Update Mode / Draft Mode** | Three flags that define *when* the restriction takes effect: on a record being created, on a saved (committed) record, and on a draft. Enable all three (or leave all three empty, which the save turns into all three) for it to always apply; or enable *Update Mode* only so the user can fill the field on creation but cannot change it after saving. |
+| **Prevent Insert Line / Prevent Delete Line / Prevent Copy Line** | When the field is a detail grid (such as invoice lines), these columns prevent adding, deleting, or copying rows in that grid — independently of whether existing rows can be edited. |
 
 ### How are field rows resolved?
 
@@ -28,20 +28,20 @@ When a screen shows a field, the system looks for the first matching row in this
 
 1. User rows first, then security profile rows — the user record wins.
 2. Within each group: a row for the exact type, then a row for a type list containing that type, then a row with no type at all.
-3. A row naming the specific field takes precedence over a wildcard `*` row at the same level.
+3. A row naming the field takes precedence over a wildcard `*` row: the search takes a named-field row for the exact type, then a named-field row for a type list, then the first `*` row of either of those two levels, and only then the rows with no type (named field before `*`).
 
 If no row matches, the field behaves normally. Users with a full-access security profile bypass field settings entirely.
 
 ::: tip Locking data at creation time
-The very common requirement — "the Customer field on an invoice must not change after the document is created" — is a single row: target the invoice, field `customer`, Control Type *Disabled*, apply on **Edit** only.
+The very common requirement — "the Customer field on an invoice must not change after the document is created" — is a single row: target the invoice, field `customer`, Preview Type *Disabled*, **Applicable With Update Mode** only.
 :::
 
 ### Imports, exports and the API follow the same rows
 
-The same Field Settings rows also decide what data a user can bring in and take out without opening a screen: [Import Records](/platform/import-export/importing-records.md), the [Excel export](/platform/import-export/exporting-records.md), the [REST API](/integration/nama-erp-api.md#Field-Settings-and-Approval-Locks-in-the-API) and the [MCP import and export tools](/modules/ai/ai-mcp-server.md#Field-Settings-and-Approval-Locks). There, the *Apply on* flags are matched against each record: a record the import is about to create counts as **New**, a saved draft as **Draft**, and a committed record as **Edit**.
+The same Field Settings rows also decide what data a user can bring in and take out without opening a screen: [Import Records](/platform/import-export/importing-records.md), the [Excel export](/platform/import-export/exporting-records.md), the [REST API](/integration/nama-erp-api.md#Field-Settings-and-Approval-Locks-in-the-API) and the [MCP import and export tools](/modules/ai/ai-mcp-server.md#Field-Settings-and-Approval-Locks). There, the *Applicable With* flags are matched against each record: a record the import is about to create counts as **New Mode**, a saved draft as **Draft Mode**, and a committed record as **Update Mode**.
 
-- **Writing.** A field the user may not change — one marked *Disabled* or *InVisible* for that kind of record — is skipped by default: its imported value is ignored, the field keeps its current value (or its default, on a new record), the rest of the record is saved, and the result names the fields that were left unchanged. That happens whether or not the value differs. When the Global Config option **Reject Imports Containing Fields The User Cannot Change** ([Security and Login](/platform/global-config/global-config-security.md#Record-security)) is on, the record is refused instead, even when the locked field carries the value it already has. *Prevent Insert Row* and *Prevent Delete Row* always refuse an import that adds lines to a grid or removes lines from it, whatever the option.
-- **Reading.** An *InVisible* field is left out of what the user gets back. It is left out entirely, not sent as an empty value.
+- **Writing.** A field the user may not change — one marked *Disabled* or *Invisible* for that kind of record — is skipped by default: its imported value is ignored, the field keeps its current value (or its default, on a new record), the rest of the record is saved, and the result names the fields that were left unchanged. That happens whether or not the value differs. When the Global Config option **Reject Imports Containing Fields The User Cannot Change** ([Security and Login](/platform/global-config/global-config-security.md#Record-security)) is on, the record is refused instead, even when the locked field carries the value it already has. *Prevent Insert Line* and *Prevent Delete Line* always refuse an import that adds lines to a grid or removes lines from it, whatever the option.
+- **Reading.** An *Invisible* field is left out of what the user gets back. It is left out entirely, not sent as an empty value.
 - A row on a grid or a group of fields also covers every field inside it. A row on `details` covers `details.price`, for example.
 
 The fields an approval step locks while a record waits for approval are enforced the same way when the record is imported — see [Approvals](/platform/approvals/approvals-system.md#Field-Level-Editing-Control).
@@ -58,11 +58,11 @@ Type edit screens are organized into pages (tabs). The **Page Security** page le
 
 | Column | Meaning |
 |---|---|
-| **Type / Type List** | The types this row applies to (at least one is required here — there is no all-types wildcard). |
+| **Entity Type / Entity Type List** | The types this row applies to (at least one is required here — there is no all-types wildcard). |
 | **Page Name** | The page identifier — or simply the page *number* as the user sees it (1, 2, 3...). |
-| **Control Type** | **Disabled** — page opens read-only; **InVisible** — page is hidden; **Normal** — no restriction explicitly set. |
+| **Preview Type** | **Disabled** — page opens read-only; **Invisible** — page is hidden; **Normal** — no restriction explicitly set. |
 
-User-level page rows are checked before profile rows, and a full-access profile bypasses the feature entirely.
+User-level page rows are checked before profile rows, and within each set the first row that names the page and covers the type decides — a type-list row placed above an exact-type row wins. A full-access profile bypasses the feature entirely.
 
 ## List View Security
 
@@ -72,11 +72,11 @@ A single type may have several list views — and you can add more: a Screen Mod
 
 | Column | Meaning |
 |---|---|
-| **Type / Type List** | The types this row applies to. |
-| **List View ID** | The list view identifier. |
-| **Allow / Prevent** | Whether the targeted list view is allowed or blocked. |
+| **Entity Type / Entity Type List** | The types this row applies to. |
+| **List View Id** | The list view identifier. |
+| **Allow - Prevent** | *Allow* or *Prevent*: whether the targeted list view is allowed or blocked. |
 
-Resolution follows the usual pattern — user rows first, then profile rows, and the first row that matches the view and type decides. **If nothing matches, the view is allowed**: list view security is an opt-in restriction, so only add rows for the views you care about.
+Resolution follows the usual pattern — user rows first, then profile rows; within each set, among the rows for that list view, a row for the exact type wins, then a row for a type list, then a row with no type. **If nothing matches, the view is allowed**: list view security is an opt-in restriction, so only add rows for the views you care about.
 
 ::: info
 A full-access security profile cannot contain list view security rows at all — the system rejects that combination on save, because the full-access profile would ignore them anyway.
@@ -84,7 +84,7 @@ A full-access security profile cannot contain list view security rows at all —
 
 ## Related Settings Worth Knowing
 
-- **Minimum characters to start search** (on basic permission rows) prevents reference lookups from listing large master files — see [Security Profiles](/platform/security/security-profiles.md).
+- **Min Search Query Length** (on basic permission rows) prevents reference lookups from listing large master files — see [Security Profiles](/platform/security/security-profiles.md).
 - **Maximum records per list page** exists in the security profile header, user settings, and Global Configuration; the most specific value wins.
 - A field can also be greyed out from the **Disabled Fields** grid in [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-input-validation). That is a data-entry convenience, not a security control — it applies to everyone rather than to a role, and it only stops typing in the browser. When a field genuinely must be protected, use the *Field Settings* page above. The same screen is also where per-field input rules — formats, allowed values, row limits, maximum lengths — are set.
 - To restrict the *rows* visible within an allowed list view, you want Extra Filters — see [Record-Level Security](/platform/security/record-level-security.md).

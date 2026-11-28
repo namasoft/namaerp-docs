@@ -8,15 +8,15 @@ menu: Administration → DashBoards → DashBoard Widget
 This page is the setting-by-setting reference for the two card widgets made on the **DashBoard Widget** screen:
 the modern **EnhancedMetricsCard**, configured in the **Chart Config JSON** field, and the older **MetricsCards**.
 Open it when a card strip shows the wrong figure, colour or icon, or when a customer asks for a card that the
-dashboard does not have yet. The [BI module guide](./bi-module-guide.md) explains dashboards as a whole, and the
-settings shared by every widget are in the [BI technical reference](./bi-module-technical-reference.md).
+dashboard does not have yet. The [BI module guide](/platform/bi/bi-module-guide) explains dashboards as a whole, and the
+settings shared by every widget are in the [BI technical reference](/platform/bi/bi-module-technical-reference).
 
 `EnhancedMetricsCard` reads `chartConfigJSON` end-to-end, supports embedded sparklines, conditional card backgrounds, icon swaps, and the full BI interaction stack (cross-filter / drill-down / link). The legacy `MetricsCards` widget continues to coexist; opt into the new one via `type: "EnhancedMetricsCard"`.
 
 ## 1. When to use which
 
 - **Quick KPI strip — header / value / subtitle / icon, optional percent badge** → legacy `MetricsCards` (no JSON authoring; no sparklines or conditional bg either).
-- **Anything richer** — sparklines, conditional card colors, drill-down per card, partition-driven aggregation across multiple SQL rows → `EnhancedMetricsCard`.
+- **Anything richer** — sparklines, conditional card colors, a widget-level `clickAction`, partition-driven aggregation across multiple SQL rows → `EnhancedMetricsCard`.
 
 Either way, what lands on the dashboard is a strip of cards like this one:
 
@@ -24,7 +24,7 @@ Either way, what lands on the dashboard is a strip of cards like this one:
 
 ## 2. Legacy `MetricsCards` (`type: "MetricsCards"`)
 
-Reads a **top-level** `metricsCardConfig` value object on the `DashBoardWidget` itself — **not** `chartConfigJSON`. One card per SQL row. Tempo strings substitute `{columnName}` against the row.
+Reads its card content from a **top-level** `metricsCardConfig` value object on the `DashBoardWidget` itself — **not** `chartConfigJSON`. One card per SQL row. Tempo strings substitute `{columnName}` against the row. Only the Tempo fields below drive the card; to show a column as it is, write `{columnName}` as the whole template.
 
 ```json
 {
@@ -49,16 +49,15 @@ Reads a **top-level** `metricsCardConfig` value object on the `DashBoardWidget` 
 | Field | Description |
 |---|---|
 | `headerTempoAr` / `headerTempoEn` | Header template with `{col}` substitution. |
-| `headerColumnAr` / `headerColumnEn` | Bare column name (alternative to template). |
-| `valueTempo` / `valueColumn` | Main number — template or bare column. |
-| `subtitleTempoAr` / `subtitleTempoEn` / `subtitleColumnAr` / `subtitleColumnEn` | Secondary line. |
+| `valueTempo` | Main number — a template that must render to a number. |
+| `subtitleTempoAr` / `subtitleTempoEn` | Secondary line. |
 | `iconCode` | Material icon name; supports `{col}` substitution to drive icon per row. |
-| `badgePercentTempo` / `badgePercentColumn` | Optional percent-delta badge (legacy widget's only chart-like decoration). |
-| `linkTempo` / `linkColumn` | Click-through URL — Tempo template or bare column. |
+| `badgePercentTempo` | Optional percent-delta badge, shown as `+12.5%` / `-3.0%` (one decimal) and hidden when it renders to zero or nothing (legacy widget's only chart-like decoration). |
+| `linkTempo` | Click-through URL — Tempo template. |
 | `numberFormat` | numeral.js mask string (`"0,0"`, `"0,0.00"`, `"0a"`). **Different format language** from the structured `formatting` object used elsewhere. |
 | `suffix` | Static string appended after the formatted value (e.g. `" SAR"`). |
 
-When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCard`. Move to `EnhancedMetricsCard` when you need sparklines, conditional card colors, or click-emit/drill-down.
+When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCard`. Its cross-filter, drill-down and link mappings (`clickEmitMapping`, `drillDownMapping`, `linkMappings`) still go in `chartConfigJSON`, exactly as for `EnhancedMetricsCard`. Move to `EnhancedMetricsCard` when you need sparklines, conditional card colors, partition mode or a widget-level `clickAction`.
 
 ## 3. EnhancedMetricsCard `chartConfigJSON`
 
@@ -136,7 +135,7 @@ When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCar
       "borderWidth":  "1px",
       "borderRadius": "12px",
       "padding":      "16px",
-      "shadow":       "sm"               // none | xs | sm | md | lg
+      "shadow":       "sm"               // none | sm | md | lg
     },
 
     // Conditional card bg / icon swap (§7)
@@ -157,7 +156,7 @@ When this shape is enough, the legacy widget is shorter than `EnhancedMetricsCar
 }
 ```
 
-A `percent` value is shown **as is** unless the formatting says otherwise: `12.5` becomes `12.5%`. When the SQL returns a fraction (`0.125`), add `"percentScale": "fraction"` as in the badge above, or the badge reads `0.1%`. The other formatting options — decimals, currency, dates, `nullDisplay` — are the same as the EnhancedTable's; see [Formatting](/platform/bi/bi-reference-enhanced-table.md#41-formatting).
+A `percent` value is shown **as is** unless the formatting says otherwise: `12.5` becomes `12.5%`. When the SQL returns a fraction (`0.125`), add `"percentScale": "fraction"` as in the badge above, or the badge reads `0.1%`. The other formatting options — decimals, currency, dates, `nullDisplay` — are the same as the EnhancedTable's; see [Formatting](/platform/bi/bi-reference-enhanced-table#41-formatting).
 
 ### `cardLayout.direction`
 
@@ -284,8 +283,8 @@ whenever it still reads against the active theme, and adapts it only when it doe
 
 - **A card `bg`** is always painted as a **wash** — 30% of the colour you wrote, composited over the
   theme's own card surface — so it tints the card in either theme instead of trapping the card's
-  text on a light fill. This is long-standing behaviour; what changed is that every CSS colour
-  notation now resolves, not just 6-digit hex.
+  text on a light fill. In dark mode a light colour (a pastel or near-white) drops to a 6% wash, and
+  a light `borderColor` to 12%, so it shows as a faint lift instead of a grey slab.
 - **A text colour** — the card's `color`, the value slot's `color`, a badge or icon colour given on
   its own — is kept as written while it still reads on the card behind it, and otherwise walked
   towards the theme (lighter on a dark card, darker on a light one) in steps that keep its hue. A
@@ -329,14 +328,14 @@ ORDER BY sortOrder
 
 ## 8. Cross-filtering, drill-down, links
 
-`clickEmitMapping`, `drillDownMapping`, `linkMappings`, `clickAction` use exactly the same shape as EnhancedTable / legacy Table (main reference §4 / §5 / §5b). The wire `points` array aligns 1:1 with rendered cards by index. In partition mode, only the representative row's columns are available for click payloads — non-key columns of other partition rows are ignored.
+`clickEmitMapping`, `drillDownMapping`, `linkMappings`, `clickAction` use exactly the same shape as EnhancedTable / legacy Table ([technical reference](/platform/bi/bi-module-technical-reference) §4 / §5 / §5a / §5b). The wire `points` array aligns 1:1 with rendered cards by index. In partition mode, only the representative row's columns are available for click payloads — non-key columns of other partition rows are ignored.
 
 ## 9. Wizard mode
 
-Each `*field` slot accepts a `wizardFieldId` sibling that resolves to the wizard's `displayAlias` at render time, identical to the EnhancedTable / EChart wizard pattern. **Exception**: `sparkline.valuesField` (inline mode) — CSV / JSON-array columns don't fit the wizard-field abstraction; raw column references only there.
+The `value`, `subtitle`, `icon` and `badge` slots each accept a `wizardFieldId` in place of `field`; it resolves to the wizard's `displayAlias` at render time, identical to the EnhancedTable / EChart wizard pattern. A `field` that is set wins over `wizardFieldId`. Every other column reference — `headerArField` / `headerEnField`, the `colorField` / `bgField` keys, `cardLayout.partitionKeys`, and the sparkline's `valueField`, `valuesField` and `orderByField` — takes a raw result-set column name.
 
 ## 10. Designer
 
-Open the chart-config dialog from the widget's own record with the **Edit Chart Config** action. The dialog detects `type: "EnhancedMetricsCard"` and shows a **Card Template** tab alongside **Click & Links** and **Drill-Down Mapping** — there is no Data Mapping tab for this widget type, and no live preview pane either. Card Template has expandable sections: Card Layout, Header, Value Slot, Subtitle, Icon, Badge, Sparkline, plus raw-JSON editors for Card Style and Card Conditional Formatting. Field pickers switch automatically between SQL columns (raw mode) and wizard fields (when `wizardDataSource` is set).
+Open the chart-config dialog from the widget's own record with the **Edit Chart Config** action. The dialog detects `type: "EnhancedMetricsCard"` and shows a **Card Template** tab alongside **Click & Links** and **Drill-Down Mapping** — there is no Data Mapping tab for this widget type, and no live preview pane either. Card Template has expandable sections: Card Layout, Header, Value Slot, Subtitle Slot, Icon Slot, Badge Slot, Sparkline Slot, plus the raw-JSON editors Card Style (JSON) and Card Conditional Formatting (JSON). Field pickers switch automatically between SQL columns (raw mode) and wizard fields (when `wizardDataSource` is set).
 
 ![The metrics-card designer on its Card Template tab, with Card Layout (direction, minimum width, gap, columns per row, partition keys), Header, and Value Slot (field, aggregate, formatting, font size, colour field) expanded and the remaining slots collapsed](../../ar/platform/bi/images/bi-metrics-card-designer-en.png)

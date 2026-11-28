@@ -18,19 +18,18 @@ because the agent itemised it per machine. When the last document commits, each 
 that includes its own share of everything, and the credit closes.
 
 ::: danger The one rule that catches everybody
-The proforma invoice's value is a **distribution base, not a cost**. It never capitalises by itself.
-
-The proforma invoice tells the system *how to split* what you spend — 300,000 for Press A against
-200,000 for Press B means Press A takes 60 % of everything and Press B takes 40 %. It does not tell
-the system that you spent 500,000. If you want the supplier's goods value in the assets' cost, you
-must enter it as an **expense line** on an expense document, exactly like freight and customs. Skip
-that step and the two presses will be capitalised at freight and customs only, with the machines
-themselves missing.
+The proforma invoice's value is a **distribution base, not a cost**. It never capitalises by itself:
+the supplier's goods value reaches the assets only when it is entered as an **expense line** on an
+expense document, exactly like freight and customs. Skip that step and the presses are capitalised at
+freight and customs only. The section
+[Why the goods value is entered twice-looking](#Why-the-goods-value-is-entered-twice-looking) below
+explains why.
 :::
 
-Everything described on these five pages requires the `fixedassets-lc` licence. Without it the whole
-**Fixed Asset Letter of Credits** menu folder — the credit, the proforma invoice, the expense
-document and the cost document — is not there, and imported assets have to be brought in through the
+Everything described on these five pages requires the `fixedassets-lc` licence. Without it the
+credit, the proforma invoice, the expense document and the cost document are missing from the
+**Fixed Asset Letters of Credit** menu folder (only the **Expense item** catalogue, which belongs to the
+core `basic` licence, stays), and imported assets have to be brought in through the
 ordinary [purchase document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md)
 instead, with landed cost worked out by hand.
 
@@ -41,7 +40,7 @@ Fixed asset Letter of Credit          the file card for one import deal
         │                              (a master file — it is never committed)
         │  exactly one
         ▼
-Fixed Asset ProformaInvoice           the machines and their supplier prices
+Fixed Asset Proforma Invoice          the machines and their supplier prices
         │                              = the distribution base. Creates no entry.
         │  as many as you need
         ▼
@@ -110,8 +109,8 @@ writes it as that press's cost:
 | `PRS-0002` Press B | 40 % | **246,000** |
 | | | **615,000** |
 
-Both presses move out of their initial state and into service, both start depreciating from the date
-on the document, and `LC-2026-004` closes. See
+Both presses move out of their initial state and into service, each starts depreciating from the
+depreciation start date on its line, and `LC-2026-004` closes. See
 [The Cost Document](/modules/fixedassets/letters-of-credit/fixedassets-lc-cost-document.md).
 
 ![The Fixed Asset Letter of Credit cost document](../../../ar/modules/fixedassets/images/lc/fa-lc-cost-document-main-en.png)
@@ -145,7 +144,7 @@ is very often the supplier's own invoice.
 | Document | Books to the ledger? | Changes the assets? |
 |---|---|---|
 | Fixed asset Letter of Credit | no | no |
-| Fixed Asset ProformaInvoice | no | no |
+| Fixed Asset Proforma Invoice | no | no |
 | Fixed Asset Expense Document | yes — cost into a holding account, party credited | no |
 | Fixed Asset Letter of Credit cost | yes — holding account onto the assets' cost accounts | yes — writes the cost, puts them into service |
 
@@ -160,7 +159,7 @@ re-typing the document.
 Three of the four documents have no buttons at all: the credit is a peg, the proforma invoice is a
 price list, and the cost document builds itself the moment you name the credit. The only button in
 the whole chain sits on the **expense document**, on its distribution page: **Collect Fixed assets**
-(تجميع الأصول الثابته), which creates the manual-distribution rows for the expense items you have
+(تجميع الأصول الثابتة), which creates the manual-distribution rows for the expense items you have
 chosen to split by hand. Everything else follows from the credit reference you pick and from
 committing the documents in order.
 
@@ -179,9 +178,9 @@ The chain is strict about sequence, and the reasons are worth knowing before you
 4. **The cost document last, once.** It closes the credit, and a closed credit accepts no further
    expense documents.
 
-If a late invoice turns up after the credit is closed, cancel the cost document. That reverses the
-capitalisation, puts the assets back into their initial state and reopens the credit, so the extra
-expense document can be entered and the cost document committed again.
+If a late invoice turns up after the credit is closed, the route is to cancel the cost document, enter
+the extra expense document and commit the cost document again; what the cancellation reverses is set
+out in [Undoing it](/modules/fixedassets/letters-of-credit/fixedassets-lc-cost-document#Undoing-it).
 
 ## Where the assets come from
 

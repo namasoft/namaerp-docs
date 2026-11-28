@@ -68,16 +68,16 @@ under it.
 
 ### Filling the header from the admission
 
-This and the next two sections hold for every invoice and return on this page. For an inpatient, start with the **Patient Admission**. The lookup offers only admissions that have no
-exit yet, narrowed to the patient when one is already chosen. Picking the admission fills in the
-patient, the doctor, the insurance company, the five price classifiers, the patient and company
-endurance percentages, the **Record Category** and the **Accommodation Info** group — the building,
-section, floor, room and bed the patient occupies right now. On save, the patient must be the patient
-of that admission.
-
-The two endurance percentages complete each other: type 80 in **Patient Endurance Percent** and
-**Company Endurance Percent** becomes 20. The header **Medical Specialty** is copied onto every item line
-on save, so set it once on the header rather than line by line.
+This and the next two sections hold for every invoice and return on this page. For an inpatient, start
+with the **Patient Admission**. It works as on every hospital invoice — the lookup offers only admissions
+with no exit yet, picking one fills the patient, doctor, insurer, price classifiers, endurance
+percentages and the **Accommodation Info** group, the two endurance percentages complete each other, the
+header **Medical Specialty** is copied onto every item line on save, and the patient must be the
+admission's patient — see
+[Starting an invoice from the admission](/modules/hms/hms-invoicing#Starting-an-invoice-from-the-admission).
+Two details are worth knowing here: the lookup is narrowed to the patient when one is already chosen,
+and picking the admission also fills the **Record Category** with the admission's, when that category's
+**For Type** is empty.
 
 ### The lines and their prices
 
@@ -245,15 +245,11 @@ Invoice** does the same for the services grid.
 
 ## Prices on these invoices
 
-Two term options and three actions control whether a saved invoice's prices can change.
-
-**Update Prices With Save** on the document term re-prices every line from the approval and the price
-lists each time the invoice is saved. That keeps the invoice in line with the current agreements, but it
-also overwrites any price somebody typed by hand. For the exception, every invoice on this page except
-the three returns carries three actions in the **More** menu — **Allow Changing Main Prices**, **Allow
-Changing Services Prices** and **Allow Changing Supplies Prices**. Each ticks the flag of the same name
-on the saved invoice, and a ticked flag keeps the prices of its grid exactly as entered on every later
-save. Which flag guards which grid depends on the invoice:
+**Update Prices With Save** on the document term re-prices every line on each save, and the three
+**More** menu actions **Allow Changing Main Prices**, **Allow Changing Services Prices** and **Allow
+Changing Supplies Prices** keep a grid's prices as entered — see
+[Freezing a price](/modules/hms/hms-invoicing#Freezing-a-price). On this page every invoice carries the
+three actions except the three returns, and which flag guards which grid depends on the invoice:
 
 | Invoice | Item grid | Service rows |
 |---|---|---|
@@ -315,6 +311,6 @@ line and service row is sent, and the three returns go as credit notes (or retur
 | *Unit price can not be negative* — «سعر الوحدة لا يمكن أن يكون سالب» | A line's unit price is below zero. | Correct the unit price; to give something away, use a discount or, on a supplies line of a service invoice, the Free Item tick. |
 | *Patient {0} does not match patient {1} in admission {2}* — «المريض {0} لا يطابق المريض {1} الموجود في استمارة الدخول {2}» | The patient on the invoice is not the patient on the patient admission it names. | Pick the admission that belongs to this patient, or correct the patient. |
 | *Total of patient endurance percent and company endurance percent must equal 100* — «مجموع حقلي نسبة تحمل المريض ونسبة تحمل الشركة يجب أن يساوي 100» | The patient and company endurance percentages, on the header or on a line, do not add up to 100. | Fix the two percentages so that together they make 100. |
-| *The current discount value {0} is greater than the max discount value {1} of current employee* — «قيمة الخصم الحالي {0} أكبر من أقصى قيمة خصم {1} للموظف الحالي» | A line discount on one of the four invoices is above the Max Discount value on the employee file of the user saving it. On a line the two numbers are not filled in, so the message shows `{0}` and `{1}` as they are. | Reduce the discount, or have the invoice saved by a user whose employee file allows it. |
+| *The current discount value {0} is greater than the max discount value {1} of current employee* — «قيمة الخصم الحالي {0} أكبر من أقصى قيمة خصم {1} للموظف الحالي» | A line discount on one of the four invoices is above the Max Discount value on the employee file of the user saving it. | Reduce the discount, or have the invoice saved by a user whose employee file allows it. |
 | *The current discount percentage {0} is greater than the max discount percentage {1} of current employee* — «نسبة الخصم الحالية {0} أكبر من أقصى نسبة خصم {1} للموظف الحالي» | As above, for the discount percentage. | As above. |
 | *Overhead item {0} is repeated in line {1}* — «بند التكلفة الغير مباشرة {0} مكرر في السطر {1}» | The same overhead item appears twice in the invoice's overhead grid. | Delete the duplicate row. |

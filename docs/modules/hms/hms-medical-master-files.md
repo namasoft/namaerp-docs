@@ -24,7 +24,7 @@ These files have no buttons of their own.
 
 ## The doctor
 
-**Doctor** is one of the richest files. It records the physician's details, specialty and degree, can be linked to an HR **Employee** record, and — crucially — it acts as an **accounting party**, with its own ledger account so the doctor's share/commission can be paid out. Its data spans tabs: Basic Information (employee, job title, specialty, degree, attachment), Personal Information (gender, birth date and place, marital status, religion, first and last name, national ID, remarks), Accounts, Taxes, Contact Info, and Tax Information.
+**Doctor** is one of the richest files. It records the physician's details, specialty and degree, can be linked to an HR **Employee** record, and — crucially — it acts as an **accounting party**, with its own ledger account so the doctor's share/commission can be paid out. Its **Main** tab holds the Basic Information group (employee, job title, specialty, degree, attachment), the Personal Information group (gender, birth date and place, marital status, religion, first and last name, national ID, remarks), and the Accounts and Taxes groups; two more tabs hold Contact Info and Tax Information.
 
 Two fields on the doctor decide prices:
 
@@ -75,7 +75,7 @@ This is what drives the sample-collection instructions. On a **Lab Test Request*
 
 - **Feeding Type** — a patient diet (normal, diabetic, liquid…). It defines a priority **Type Order**, up to five diseases it is meant for (the **Diagnosis Disease** group), and a recipe-like list of food items with quantities to issue from the kitchen. On each item line, picking the item fills **Assembly BOM** with a matching bill of materials — one built for that item, or one with no item — and the BOM list then offers only the item's BOMs. This file plays a central role in **[Feeding Issues](./hms-accommodation.md)**.
 
-  How the diet is chosen automatically: when a feeding issue collects the meals, each admitted patient with a diagnosis gets the feeding type whose diseases all appear in the diagnosis — a disease slot left empty matches anything, so a type with no diseases fits every diagnosed patient. When several types fit, the one with the **highest** Type Order wins. Patients without a diagnosis are skipped. So give the general diet a low order and the specific diets (diabetic, renal…) higher ones.
+  When a feeding issue collects the meals, each diagnosed patient gets the matching feeding type with the **highest** Type Order; the full matching rule is under [Feeding issue](/modules/hms/hms-accommodation#Feeding-issue). So give the general diet a low order and the specific diets (diabetic, renal…) higher ones.
 
 ![Feeding type](../../ar/modules/hms/images/master-files/feeding-type-en.png)
 

@@ -61,9 +61,9 @@ Which totals (12 + 4) + (12 + 4) + 12 = **44 rows** — matching the 44 pre-paid
 
 | Generation type | Produces |
 |---|---|
-| Generate WorkPlan Based On Contract Priority *(the default when the field is empty)* | one work plan per **calendar month** of the expected order date, with the work plan's value date set to the first of that month |
-| Generate WorkPlan Based On Visit Type | one work plan per **visit type** |
-| Generate WorkPlan Based On Visit Type And Contract Priority | one work plan per visit type, per month |
+| Generate Work Plan Based On Contract Priority *(the default when the field is empty)* | one work plan per **calendar month** of the expected order date, with the work plan's value date set to the first of that month |
+| Generate Work Plan Based On Visit Type | one work plan per **visit type** |
+| Generate Work Plan Based On Visit Type And Contract Priority | one work plan per visit type, per month |
 
 `MC-0021` uses the first, so its 44 rows land in twelve monthly documents:
 
@@ -111,7 +111,9 @@ Machine lines are grouped by **(expected order date, technician, building)** —
 
 Each generated order arrives with **From document** pointing back at the work plan and its **maintenance contract** field set to the contract the work plan came from — which is what makes contract pricing and entitlement draw-down work on it later. The order's reference is written back into the work-plan line it came from, so pressing **Generate Mn Orders** again on the same work plan **edits the same orders** rather than creating duplicates.
 
-If the button does nothing, check the work plan's document term for the maintenance-order book and term.
+If the button refuses with the message below, the work plan's document term has neither a maintenance-order book nor a maintenance-order term; fill both:
+
+*You must select mn order book and term in the term {0}* — «يجب اختيار دفتر وتوجيه أمر الصيانة في التوجيه {0}»
 
 ::: tip Two things worth knowing before you press it
 Split the work sensibly first. Because grouping is by date, technician and building, changing a line's technician before generating is how you split one day's work between two crews; leaving them identical is how you keep it in one order. And because the generated order carries the contract, it is the order — not the work plan — that draws down the pre-paid quantities.

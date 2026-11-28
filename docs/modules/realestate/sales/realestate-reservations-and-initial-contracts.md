@@ -33,7 +33,7 @@ paid. The contracting-parties group holds the owner, the buyer, the salesman and
 together with the **Status** field and **Valid Until**. Page 1 is the terms and conditions grid, and
 page 2 lists the collect documents raised against this reservation.
 
-The estate picker is deliberately narrow: it only offers estates whose status is *Avaliable* and
+The estate picker is deliberately narrow: it only offers estates whose status is *Available* and
 whose reserved flag is not already set. If the villa you expect is missing from the list, it is
 already reserved or already sold.
 
@@ -48,13 +48,14 @@ already reserved or already sold.
 
 The **Status** field is read-only — you cannot type into it. It moves when you press the
 **Confirmed** or **Cancelled** action on the document, and it moves on its own when a sales contract
-is committed.
+is committed. The two buttons only change the field: the unit is locked or released when you then
+save the document.
 
 ::: info A reservation left at Initial protects nothing
 Committing the document is not enough. Until somebody presses **Confirmed**, villa B-12 still shows
 as available in every estate searcher and a colleague can sell it. The sales contract enforces the
 same rule from the other side: a contract built on a reservation that is still *Initial* — or that is
-*Cancelled* — is rejected with an invalid-reservation-status message.
+*Cancelled* — is rejected with *"Invalid Reservation Document Status"*.
 :::
 
 Cancelling reverses the lock in exactly the same way: moving a confirmed reservation to *Cancelled*
@@ -96,7 +97,7 @@ used again.
 Two validations catch the common mistakes:
 
 - A reservation that already points at a *different* sales contract cannot be reused — the commit is
-  rejected with a "reservation document is already used" message.
+  rejected with *"Reservation Document is already used"*.
 - If the unit carries a reservation document but the contract's own reservation field is empty, the
   commit fails with *"The estate {0} has a reservation doc"*. That field is system-maintained: you do
   not fill it by hand, you set the contract's **Based On** to the reservation and the link is made
@@ -164,8 +165,7 @@ The settings that *are* on the term are about validation and about how the plan 
 |---|---|
 | **Has Buyer** | Makes the buyer mandatory before the document can be committed. |
 | **Reserve Estate** | Forces the document's *Reserve Estate* flag on, so every contract on this term locks its unit. |
-| **Merge Similar Payment Lines** | Merges identical installment lines when the plan is generated. |
-| **Force Price List** | Refuses the commit unless the price equals the price-list price for that unit. |
+| **Merge Similar Payment Lines** | When the plan is generated, joins lines that share an installment type and a due date into one line. |
 | **Consider Paid With Reservation Paid From Installments** | Treats what was already paid on the reservation as settling installments rather than reducing the balance. |
 
 ### From preliminary to binding
@@ -174,7 +174,7 @@ There is no "create sales contract" button here. You open a new sales contract a
 On** field to the initial contract; because the initial contract is a reservation-carrying document,
 the contract picks up the link automatically. On commit, the initial contract is stamped **Sold** and
 points at its sales contract — and a second sales contract built on the same initial contract is
-rejected, because it has already been sold.
+rejected with *"initial sales doc is already sold"*.
 
 ::: tip Carrying the paid installments across
 If customers pay installments against the preliminary agreement, switch on *Copy paid installments

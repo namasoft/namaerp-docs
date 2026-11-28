@@ -11,7 +11,7 @@ When a reference field offers the wrong records — too many, too few, or the wr
 | The complaint | The tool |
 |---|---|
 | "The lookup won't show records from another branch, legal entity or department." | **Field Filtering** — loosens the dimension narrowing on one field. |
-| "The lookup shows records it shouldn't — service items, another supplier's items." | **Field Filter With Criteria** — narrows a field by a condition, switched on per term, book, group or menu entry. |
+| "The lookup shows records it shouldn't — service items, another supplier's items." | **Field Filter With Criteria** — narrows a field by a condition, switched on per term, book, group or menu entry, or automatically for every record of a type. |
 | "The same condition should apply to this field everywhere, always." | The **Extra Filter** grid in [Fields and Entities Settings](/platform/fields-and-entities-settings/fields-settings-reference-lookups) — the quick, always-on version of the one above. |
 
 <LandingGrid>

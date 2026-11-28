@@ -111,7 +111,7 @@ part of the daily routine — customers, contracts, service jobs — you can hav
 **tab on the record's own screen** instead, always visible, no menu needed.
 
 That is switched on centrally rather than per user. In **Global Configuration**, on the **Entities Screens**
-tab, the **Screens Additions** group holds one list per note type:
+tab, below the **Screens Additions** group, there is one list per note type:
 
 ![Screens Additions in Global Configuration](../../ar/platform/images/remarks-and-agenda/global-config-screens-additions-en.png)
 
@@ -213,7 +213,7 @@ actual side is where progress is recorded; nothing derives it, somebody types it
 ### Splitting a task across several people
 
 Responsible names one owner, which is enough for most work. When a task is shared, switch on
-**Detailed Work Tasks** in Global Configuration (**Entities Screens → Screens Additions**, the same group as
+**Detailed Work Tasks** in Global Configuration (**Entities Screens → Screens Additions**, on the same tab as
 the remark lists) and the task screen grows an extra **Details** page holding an **Executers** grid.
 Each row names an employee with their own planned and actual hours, planned and actual cost, and
 their own percentage complete — so a task can be costed per person rather than as a lump.

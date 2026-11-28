@@ -58,8 +58,8 @@ see the file name appear as a chip next to the clip.
 **Drag a file onto the field** and it is picked up the same way, which is usually faster when the file
 is already sitting in a mail client or a folder next to the browser.
 
-**Alt-click or Ctrl-click the paper-clip** to scan instead of uploading, if a scanner is set up for
-that field. On fields configured the other way round — where scanning is the normal case — the icon is
+**Alt-click or Ctrl-click the paper-clip** to scan instead of uploading, on any attachment field, with
+a scanner connected to your machine. On fields configured the other way round — where scanning is the normal case — the icon is
 a scanner and Alt-click gives you the file picker. Both routes are always available; the configuration
 only decides which one is one click away.
 
@@ -80,8 +80,11 @@ catches people out because the file name appears immediately and looks committed
 Once a field holds a file, the chip carries the file name.
 
 - **Click the chip** to download or open the file.
-- **Hover over it** for a second and an image attachment shows a preview without downloading, which is
-  what makes scanned paperwork practical to skim.
+- **Hover over it** for a second and the file opens in a preview window without downloading: images,
+  PDFs, video, audio and text files, and Word, Excel and PowerPoint files unless
+  **Do Not Use Google Docs To Preview Office Files** is ticked (see
+  [Attachments and Storage](/platform/global-config/global-config-attachments)). That is what makes
+  scanned paperwork practical to skim.
 - **Click the × on the chip** to detach the file. As with attaching, the removal takes effect when the
   record is saved.
 

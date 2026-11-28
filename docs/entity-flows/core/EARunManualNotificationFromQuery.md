@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Bulk sends manual notifications to multiple entities identified by a SQL query. Extends EARecommitFromQuery but sends notifications instead of recommitting, useful for mass communication campaigns and alerts.
+Bulk sends manual notifications to multiple entities identified by a SQL query. It works like [EARecommitFromQuery](/entity-flows/core/EARecommitFromQuery), with the same first six parameters and rules, but sends a notification for each record instead of recommitting it.
 
 ## When This Action Runs
 
@@ -22,7 +22,7 @@ Manual execution for bulk notification operations, such as sending payment remin
 1. **Executes query** - Runs the provided SQL query to find entities (must return entityType and id columns)
 2. **Processes results** - Extracts entity type and ID pairs from query results
 3. **Optional pre-update** - Runs optional update query after selection but before notifications
-4. **Sends notifications** - Calls NotificationsEngine.manualNotify() on each entity
+4. **Sends notifications** - Runs the notification definition of Parameter 7 on each entity
 5. **Handles errors** - Processes errors based on configuration (continue or stop)
 
 ## Parameters
@@ -31,18 +31,18 @@ Manual execution for bulk notification operations, such as sending payment remin
 
 Example Query:
 ```sql
-select entityType,id from SalesInvoice where dueDate < getdate() and balance > 0
+select entityType,id from SalesInvoice where valueDate = cast(getdate() as date)
 ```
 
 **Parameter 2:** Flush Before Starting (Optional) - true/false to flush database before starting (default: false)
 
-**Parameter 3:** Do not Send Notifications to cancelled Records (Optional) - true/false to skip cancelled DocumentFile entities (default: true)
+**Parameter 3:** Do not Run Manual Notification On  cancelled Records (Optional) - true/false to skip cancelled DocumentFile entities (default: true)
 
-**Parameter 4:** Flush After Each Notification (Optional) - true/false to flush after each entity (default: false)
+**Parameter 4:** Flush After Each Run Manual Notification On  (Optional) - true/false to flush after each entity (default: false)
 
 **Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - true/false to continue processing if individual entities fail (default: false)
 
-**Parameter 6:** Run Update Query After Selecting Entities, and Before Notifications (Optional) - SQL update query to run before notifications
+**Parameter 6:** Run Update Query After Selecting Entities, and Before Run Manual Notification On  (Optional) - SQL update query to run before notifications
 
 **Parameter 7:** Manual Notification ID or Code (Required) - Business code or ID of NotificationDefinition to send
 

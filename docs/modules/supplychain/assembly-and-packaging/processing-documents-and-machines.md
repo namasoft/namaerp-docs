@@ -35,8 +35,8 @@ The tabs:
 | Tab | What goes there |
 |---|---|
 | **main Page** (*الصفحة الرئيسية*) | the machine, the raw-materials **Warehouse** and **Locator**, and the **Raw Materials** grid |
-| **Indirect Materials** (*المواد الخام المساعدة*) | **Indirect Material Warehouse**, **Indirect Materials Locator**, and the consumables with their **Quantity PerUnit** and **Application Method** |
-| **Outputs Materials** (*المخرجات*) | **Reciept Warehouse**, **Receipt Locator**, and the outputs, each showing its **Total Indirect Costs** |
+| **Indirect Materials** (*المواد الخام المساعدة*) | **Indirect Material Warehouse**, **Indirect Materials Locator**, and the consumables with their **Quantity Per Unit** and **Application Method** |
+| **Outputs Materials** (*المخرجات*) | **Receipt Warehouse**, **Receipt Locator**, and the outputs, each showing its **Total Indirect Costs** |
 | **Indirect Costs** (*التكاليف الغير مباشرة*) | the machine's costs for this run |
 | **Generated Documents** (*المستندات المنشأه*) | the stock documents the run created |
 | **Direct Labor** (*العمالة المباشرة*) | who worked on the run, and when |
@@ -48,7 +48,7 @@ The header warehouses are written onto every line of their grid when you save.
 ### What is calculated
 
 - **Total Processed Quantity** (on the Indirect Materials tab) is the total quantity of all outputs.
-- An indirect material with a **Quantity PerUnit** gets its quantity from it: *Per Item* multiplies it by Total Processed Quantity; *Per Batch* uses it as it stands. A filter used once per run is Per Batch 1; film at 0.02 m per bag is Per Item 0.02.
+- An indirect material with a **Quantity Per Unit** gets its quantity from it: *Per Item* multiplies it by Total Processed Quantity; *Per Batch* uses it as it stands. A filter used once per run is Per Batch 1; film at 0.02 m per bag is Per Item 0.02.
 - An indirect cost line's **Total Quantity** is the total of the outputs in its **Unit** — or of all outputs when Unit is empty. **Total Cost** is Value × Total Quantity for *Per Item*, or Value alone for *Per Batch*. 1,200 kg of output at 0.15 per kg is 180 of electricity.
 - Each output's **Total Indirect Costs** is its share of those costs, by quantity, among the outputs in the cost's unit.
 
@@ -59,7 +59,7 @@ On save the processing document generates, and lists on **Generated Documents** 
 | Generated document | From | Book and term on the processing term |
 |---|---|---|
 | Stock Issue | Raw Materials | **Materials Issue Book** / **Materials Issue Term** (group *Raw Materials*) |
-| Stock Issue | Indirect Materials | the two fields of group *Indirect Materials* — both labelled **Indirect Materials Issue Book** in English; the second is the term (*توجيه المواد الخام المساعدة*) |
+| Stock Issue | Indirect Materials | **Indirect Materials Issue Book** / **Indirect Materials Issue Term** (group *Indirect Materials*) |
 | Stock Receipt | Outputs Materials | **Received Items Book** / **Received Items Term** (group *Outputs Materials*) |
 
 When the issues are costed, their cost is passed to the outputs. Materials and outputs are matched by **Box**: an output receives the cost of the materials issued with the same box value, split by quantity among the outputs sharing that box, and the cost of materials whose box matches no output is spread over all outputs by quantity. If you do not use boxes, all the material cost is simply shared by quantity.

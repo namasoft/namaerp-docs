@@ -37,13 +37,13 @@ The search box at the top is laid out like a request: `GET https://<your-server>
 
 Under the search box, entities are grouped exactly as the main menu groups them (**Accounting / Master Files**, **Basic / Documents** and so on), because the list is built from the default menu itself. An entity the menu shows in two places appears in both. The list on the left narrows the page to one top-level menu group and shows how many entities in each group match your search. Entities that have an API but no menu entry are collected at the end under **Not in the menu**.
 
-Only entities available on this server are listed: modules, features and entities that the license or your user's security settings leave out do not appear.
+Only entities available on this server are listed: modules, features and entities that the license leaves out do not appear.
 
 Each row shows the English name, the Arabic name and the entity ID; click the ID to copy it. **Open** opens the entity's reference in a new tab.
 
 ### Using a Real Record as the Example
 
-A reference is much easier to follow when the example body is a real document rather than empty fields. **With a record** opens a small panel under the row: type the code or ID of a saved record and choose **Open with this record**, and the reference shows that record's data as the example. Leave the box empty to use the first saved record. **Data model** next to it opens the entity's page on the data model site.
+A reference is much easier to follow when the example body is a real document rather than empty fields. **With a record** opens a small panel under the row: type the code or ID of a saved record and choose **Open with this record**, and the reference shows that record's data as the example. Leave the box empty to use the first saved record that is not a draft. **Data model** next to it opens the entity's page on the data model site.
 
 ![Opening the customer reference with a saved record as the example](../ar/integration/images/rest-api-browser-record.png)
 
@@ -81,7 +81,7 @@ http[s]://<server-ip-or-domain>/erp/browseapi/openapi/{EntityName}.json?exampleC
 - `{code}`: Optional - specific record code or UUID to use as example
 
 **Special Example Codes:**
-- `Find@First`: Uses the first available record as example
+- `Find@First`: Uses the first record that is not a draft as example
 - Any valid business code or UUID from your system
 
 ::: tip Example URLs
@@ -112,10 +112,9 @@ The OpenAPI specification includes detailed schema definitions for each entity:
 
 #### Excluded Fields
 The API automatically excludes:
-- System-generated fields (unless specifically requested)
-- Calculated fields
+- System fields, calculated fields and internal user tracking fields, unless `responseFields` names them
+- Fields whose value is empty or zero
 - The contents of binary fields (images, documents) from read responses — an attachment field comes back as its id, file name and size instead, and can be written on save; see [Uploading and Attaching Files](#Uploading-and-Attaching-Files)
-- Internal user tracking fields
 - Fields the key's user cannot see — see [Field Settings and Approval Locks in the API](#Field-Settings-and-Approval-Locks-in-the-API)
 
 ### Working with Entity Collections
@@ -264,15 +263,9 @@ Re-exposing an API key is logged in the audit trail for security tracking.
 
 ## CORS Configuration
 
-The API Browser automatically handles Cross-Origin Resource Sharing (CORS) for API requests:
+The REST API and the API browser answer every request with CORS headers that allow any origin, any method and any header (`Access-Control-Allow-Origin: *`), and they answer preflight `OPTIONS` requests. A page served from another domain can therefore call the API from the browser, as long as it sends a valid key.
 
-- Allows cross-origin requests from any domain (development mode)
-- Supports preflight OPTIONS requests
-- Includes necessary CORS headers in responses
-
-::: warning Production CORS
-In production environments, configure CORS policies to restrict access to specific domains for security.
-:::
+Nama has no setting that narrows these headers to particular domains.
 
 ---
 
@@ -337,8 +330,10 @@ Content-Type: application/json
 
 **Response includes:**
 - `totalRecordsCount`: Total matching records
-- `records`: Array of requested records
+- `records`: An object keyed by entity type, whose value is the array of this page's records — `"records": {"Customer": [ ... ]}`
 - `records_count`: Number of records in response
+
+`startPage` counts from 1 and defaults to 1. `pageSize` defaults to 25, and a value above 1000 is cut to 1000. The request must carry a JSON body with `Content-Type: application/json`, even when it is only `{}`.
 
 #### 3. Create/Update Entity (POST/PUT)
 ```http
@@ -346,37 +341,46 @@ POST /erp/rest/v1/{entity}/save
 X-API-Key: {api-key}
 Content-Type: application/json
 
-# Request Headers/Parameters:
-saveAsDraft: false           # Save as draft without validation
-addRecord: true              # Allow creating new records
-updateRecord: true           # Allow updating existing records
-addToCurrentLines: false     # Append to existing detail lines
-trimExtraSpaces: false       # Trim whitespace from strings
-continueOnErrors: true       # Continue processing on errors
-useUserDimension: true       # Apply user dimension filters
-ignoredUnFoundRefs: false    # Ignore missing references
-responseFields: code,id      # Fields to return after save
-
-# Body: Entity data in JSON format
 {
-  "code": "CUST001",
-  "name1": "Customer Name",
-  "contactInfo": {
-    "email": "customer@example.com",
-    "mobile": "+966501234567"
-  }
+  "Customer": [
+    {
+      "code": "CUST001",
+      "name1": "Customer Name",
+      "contactInfo": {
+        "email": "customer@example.com",
+        "mobile": "+966501234567"
+      }
+    }
+  ]
 }
 ```
 
-A document's lines are sent in the same body, inside its collection — for a sales invoice:
+The body is always an object whose key is the entity type and whose value is an **array** of records, even for a single record. A bare record object, or a bare array of records, is not accepted. One request can carry several records:
 
 ```json
 {
-  "details": [
+  "Customer": [
+    { "code": "CUST001", "name1": "Customer 1" },
+    { "code": "CUST002", "name1": "Customer 2" }
+  ]
+}
+```
+
+A record whose code or id already exists is updated; otherwise a new record is created. Send `updateRecord: false` for a request that may only create, or `addRecord: false` for one that may only update. These and the other save options go in request headers or query parameters, and are listed with their defaults under [Import Options](#Import-Options).
+
+A document's lines are sent inside the record, in its collection — for a sales invoice:
+
+```json
+{
+  "SalesInvoice": [
     {
-      "item": { "item": "ITEM001" },
-      "quantity": { "quantity": { "primeQty": { "value": 5 } } },
-      "price": { "unitPrice": 100 }
+      "details": [
+        {
+          "item": { "item": "ITEM001" },
+          "quantity": { "quantity": { "primeQty": { "value": 5 } } },
+          "price": { "unitPrice": 100 }
+        }
+      ]
     }
   ]
 }
@@ -425,13 +429,18 @@ Content-Type: application/json
       "indexInRequest": 2,
       "errors": [
         {
-          "message": "Record is referenced by other entities"
+          "message": {
+            "arabicText": "...",
+            "englishText": "..."
+          }
         }
       ]
     }
   ]
 }
 ```
+
+Each entry of `errors` carries its text in a `message` object with `arabicText` and `englishText`. `indexInRequest` is the record's position in the request: it counts from 0 in `findByIdOrCode` and `delete` responses, and from 1 in `save` responses.
 
 ### Field Settings and Approval Locks in the API
 
@@ -609,144 +618,62 @@ curl -H "X-API-Key: {api-key}" \
 #### 3. Interactive Reference
 Open the entity from the [API browser](#Finding-an-Entity) and send requests from its reference page: **Test Request** in Scalar, **Try it out** in Swagger UI.
 
-### Example Request Formats
-
-#### Finding Single Record
-```http
-GET /erp/rest/v1/Customer/findByIdOrCode/CUST001
-X-API-Key: {api-key}
-```
-
-#### Finding Multiple Records
-```http
-POST /erp/rest/v1/Customer/findByIdOrCode
-X-API-Key: {api-key}
-Content-Type: application/json
-
-["CUST001", "CUST002", "CUST003"]
-```
-
-#### Creating New Record
-```http
-POST /erp/rest/v1/Customer/save
-X-API-Key: {api-key}
-Content-Type: application/json
-addRecord: true
-updateRecord: false
-
-{
-  "code": "CUST001",
-  "name1": "Customer Name",
-  "contactInfo": {
-    "email": "customer@example.com",
-    "mobile": "+966501234567"
-  }
-}
-```
-
-#### Updating Existing Record
-```http
-POST /erp/rest/v1/Customer/save
-X-API-Key: {api-key}
-Content-Type: application/json
-addRecord: false
-updateRecord: true
-
-{
-  "code": "CUST001",
-  "name1": "Updated Customer Name",
-  "contactInfo": {
-    "email": "newemail@example.com"
-  }
-}
-```
-
-#### Listing with Filters
-```http
-POST /erp/rest/v1/Customer/list
-X-API-Key: {api-key}
-Content-Type: application/json
-
-{
-  "startPage": 1,
-  "pageSize": 50,
-  "textCriteria": "city,Equal,Riyadh,AND;status,Equal,Active,AND;",
-  "orderBy": "status,creationDate:desc,name1"
-}
-```
-
 ---
 
 ## Error Handling
 
-The API returns standard HTTP status codes and detailed error messages:
-
 ### Common Response Codes
-- **200 OK**: Successful request
-- **201 Created**: Resource created successfully
-- **400 Bad Request**: Invalid request parameters
-- **401 Unauthorized**: Missing or invalid API key
-- **403 Forbidden**: Insufficient permissions
-- **404 Not Found**: Resource not found
-- **500 Internal Server Error**: Server-side error
+- **200 OK**: The request was handled. On `save` it means at least one record was saved; the records that failed are listed under `failed_records` in the same response.
+- **400 Bad Request**: On `save`, no record was saved. On `findByIdOrCode`, `list` and `delete`, nothing was found or deleted, or one of the requested records was refused.
+- **401 Unauthorized**: The API key is missing, invalid, not yet valid, expired or prevented from login, or its user is not authorized for the operation.
+- **500 Internal Server Error**: An unexpected server-side error.
+
+The API never answers 201, 403 or 404. A code or id that does not exist is reported inside the body, under `failed_records`.
 
 ### Error Response Format
+A record that fails inside a `save`, `findByIdOrCode` or `delete` request is listed under `failed_records` with its `errors`. When the whole request fails, with an invalid key for example, the body is a single failure object:
+
 ```json
 {
-  "error": {
-    "code": "ENTITY_NOT_FOUND",
-    "message": "Customer with code CUST999 not found",
-    "details": "Additional error information"
-  }
+  "failureOccurred": true,
+  "errors": [
+    {
+      "message": {
+        "arabicText": "...",
+        "englishText": "Invalid API key"
+      }
+    }
+  ]
 }
 ```
+
+The object can also carry `errorType`, `log` and `warning`.
+
+### Messages you may see
+
+These are the refusals of the key itself. All of them answer 401, and none has an Arabic translation, so they show in English whatever the language.
+
+| Message | Why | What to do |
+|---|---|---|
+| *Invalid API key* | The key sent matches neither the **Client Id (Can Be Ignored)** nor the **API Key (Client Secret)** of any saved API Credentials record. | Copy the key again from the API Credentials record (tick **View API Key** and save to show it). |
+| *Invalid API secret* | `X-API-Key` holds the record's Client Id, and `X-API-Secret` is not the secret of that record. | Send the record's own secret, or send the secret alone in `X-API-Key`. |
+| *Your API key can be used only after {0}* | **Valid from** on the record is a later date than today. | Change **Valid from**, or wait for that date. |
+| *Your API key expired on {0}* | **Valid to** on the record is before today. | Extend **Valid to**. |
+| *The provided API key is prevented from login* | **Prevent Login (Includes POS, Apps, and All Other System Components)** is ticked on the record. | Untick it. |
 
 ---
 
 ## Special Purpose APIs
 
-Beyond standard entity CRUD operations, Nama ERP provides specialized APIs:
+Beyond the entity operations, the **Special Purpose APIs** list of the API browser holds one API:
 
 ### Attendance Machine Integration
-- Endpoint: `attcron-open-api-template`
-- Purpose: Synchronize attendance data from biometric devices
-- Supports batch processing of attendance records
-
-### Data Export API
-- Export records as JSON with full relationship data
-- Supports filtering and pagination
-- Preserves data integrity for backup/migration
-
-### Batch Operations
-- Process multiple records in single request
-- Transactional processing with rollback on errors
-- Optimized for high-volume integrations
+- Name in the list: **Attendance Machine Cron**. Its description is served at `/erp/browseapi/openapi/attcron-open-api-template.json`
+- Purpose: the two calls the [attcron agent](/integration/attcron-agent) makes, one to fetch its Attendance Machine Config and one to deliver the punches it collected
 
 ---
 
 ## Performance Considerations
-
-### Pagination
-All list endpoints support pagination with configurable page size:
-
-```http
-POST /erp/rest/v1/{entity}/list
-Content-Type: application/json
-
-{
-  "startPage": 1,     # 1-based indexing
-  "pageSize": 50      # Maximum 1000 per request
-}
-```
-
-**Pagination Response:**
-```json
-{
-  "totalRecordsCount": 2547,
-  "records_count": 50,
-  "records": { ... }
-}
-```
 
 ### Field Selection
 Control which fields are returned to optimize payload size:
@@ -760,36 +687,7 @@ responseFields: code,name1,status,balance
 - Pass as HTTP header: `responseFields: field1,field2,field3`
 - Or as query parameter: `?responseFields=field1,field2,field3`
 - Supports nested fields: `contactInfo.email,address.city`
-- Default fields if not specified: `code,id`
-
-### Batch Operations
-Process multiple records in a single request for better performance:
-
-#### Batch Retrieval
-```http
-POST /erp/rest/v1/Customer/findByIdOrCode
-Content-Type: application/json
-
-["CUST001", "CUST002", "550e8400-e29b-41d4-a716-446655440000"]
-```
-
-#### Batch Import/Save
-```http
-POST /erp/rest/v1/Customer/save
-Content-Type: application/json
-continueOnErrors: true
-
-[
-  {
-    "code": "CUST001",
-    "name1": "Customer 1"
-  },
-  {
-    "code": "CUST002", 
-    "name1": "Customer 2"
-  }
-]
-```
+- When it is not specified, `findByIdOrCode` and `list` return every field of the record that has a value and that the key's user may see, except system, calculated and user tracking fields; `save` returns `code,id`
 
 ### Query Criteria & Sorting
 Use Nama ERP's structured text criteria format for filtering and sorting:
@@ -834,7 +732,7 @@ type,In,Type1|Type2|Type3,AND;
   - Example: `customer.code,Equal,CUST001,AND;`
 
 ::: tip Building Criteria
-Use the [Criteria Definition](/platform/automation-and-rules/criteria-definitions) screen in Nama ERP to visually build filter conditions, then click **Convert to Text** to get the text representation for API use.
+Use the [Criteria Definition](/platform/automation-and-rules/criteria-definitions) screen in Nama ERP to visually build filter conditions, then click **Convert To Text** to get the text representation for API use.
 :::
 
 ### Order By Format
@@ -871,6 +769,7 @@ Fine-tune import behavior with request headers:
 | `continueOnErrors` | true | Continue processing remaining records on error |
 | `useUserDimension` | true | Apply user's dimension filters |
 | `ignoredUnFoundRefs` | false | Skip validation of reference fields |
+| `responseFields` | `code,id` | Fields returned for each saved record |
 
 ---
 
@@ -886,9 +785,9 @@ Fine-tune import behavior with request headers:
 #### Empty Example Data
 - Verify records exist for the entity
 - Check user data visibility permissions
-- Use `Find@First` to get any available record
+- Use `Find@First` to get the first record that is not a draft
 
 #### Missing Fields in Response
-- System fields excluded by default
+- System and calculated fields are left out unless `responseFields` names them
+- Fields that are empty or zero are left out
 - File contents are not included in API responses — an attachment field returns only its id, file name and size (and can be written — see [Uploading and Attaching Files](#Uploading-and-Attaching-Files))
-- Calculated fields not available via API

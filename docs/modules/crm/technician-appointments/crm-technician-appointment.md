@@ -16,18 +16,19 @@ The **Technician Appointment** (*موعد فني*) is the booking itself — one
 
 Alongside the usual document frame — **Document Code** and book, **Term** (*توجيه المستند*), **Issue Date**, **Value Date**, **Fiscal Period**, **Description** — the appointment carries fields of its own.
 
-**From Document** (*بناءا على*) — the commercial document this visit was promised by: a sales invoice, a sales order, a contract, a maintenance document. It is a general reference, so it accepts any document, and it is the thread that ties the visit back to what was sold. `PTA101PUBLIC202600009` was raised from car sales invoice `SISI10101202600001`.
+**From Document** (*بناءً على*) — the commercial document this visit was promised by: a sales invoice, a sales order, a contract, a maintenance document. It is a general reference, so it accepts any document, and it is the thread that ties the visit back to what was sold. `PTA101PUBLIC202600009` was raised from car sales invoice `SISI10101202600001`.
 
-**Based On Document** (*المستند الأعلى لبناءاّ علي*) — filled in by the system and not editable: it is the document that *your* From Document came from. When the visit is booked from a sales invoice that was itself raised from a sales order, this field shows the sales order. It saves the follow-the-chain click when somebody asks which order this installation belongs to. On `PTA101PUBLIC202600009` it reads car sales order `SISO10101202600001`.
+**Based On Document** (*المستند الأعلى لبناءً على*) — filled in by the system and not editable: it is the document that *your* From Document came from. When the visit is booked from a sales invoice that was itself raised from a sales order, this field shows the sales order. It saves the follow-the-chain click when somebody asks which order this installation belongs to. On `PTA101PUBLIC202600009` it reads car sales order `SISO10101202600001`.
 
 **Customer** (*العميل*) — filled in by the system on every save. It is the customer named on the Based On Document, or on the From Document when the Based On Document has none. The customer is read from maintenance documents, invoice-type documents (sales invoices, orders and the like) and CRM complaints. For any other kind of document, the field stays empty.
 
 The **Customer Address** (*عنوان العميل*) page holds a read-only copy of that customer's shipping address, refreshed on every save, so the crew has the address of the visit on the booking itself: Region, Country Code, Country, City, State, Area, Street, Building Number, Postal Code, District, Land Plot Number, Address 1 and Map Location.
 
-**Status** (*الحالة*) — where the booking stands. A new appointment starts at *Booked* (*محجوز*). Two events move it on their own:
+**Status** (*الحالة*) — where the booking stands. A new appointment starts at *Booked* (*محجوز*). Three events move it on their own:
 
 - Committing a [service distribution](/modules/crm/technician-appointments/crm-technician-service-distribution.md) against it moves it to *Executed* (*تم التنفيذ*); cancelling that distribution moves it back to *Booked*.
-- Saving the appointment after one of its periods was moved or removed sets it to *Rescheduled* (*معاد جدولته*).
+- Saving the appointment while any row of its Items And Services grid has an Actual Quantity sets it to *Booked*, whatever status it had.
+- Saving the appointment after one of its periods was moved or removed sets it to *Rescheduled* (*معاد جدولته*). This rule is applied last, so it wins over the Actual Quantity rule in the same save.
 
 The remaining values, *Cancelled* (*ملغي*) and *No Show* (*لم يحضر*), record what actually happened on the day: the customer called off, or nobody was home. Set them here, or from the calendar's right-click menu. *Executed* can also be set by hand, with the calendar's **Mark as executed** or directly in this field.
 
@@ -51,6 +52,7 @@ Everything about *when* lives in the **Details** (*التفاصيل*) grid. One 
 | Day (*اليوم*) | The date — required |
 | From-Time (*من وقت*) | Start time |
 | To-Time (*إلى وقت*) | End time |
+| Remark (*ملحوظة*) | The reason for the latest change to this period. The booking calendar writes the reason you type there into this column, and the Change History reads it from here |
 
 On screen, the two time columns sit under a shared **Time** heading and are headed **From** and **To**.
 
@@ -122,17 +124,17 @@ The **Change History** (*سجل التغييرات*) page answers the question e
 |---|---|
 | Change Date (*تاريخ التغيير*) | When the change was saved |
 | User (*المستخدم*) | Who saved it |
-| Change Type (*نوع التغيير*) | *Add* for a new period, *Edit* for a period moved or resized, *Delete* for a period removed |
+| Change Type (*نوع التغيير*) | *Add* for a new period, *Edit* for a period moved or resized or whose Remark was changed to a new, non-empty text, *Delete* for a period removed |
 | Old Day, Old From-Time, Old To-Time | Where the period was — empty for a new period |
 | New Day, New From-Time, New To-Time | Where it is now — empty for a removed period |
-| Remark (*ملحوظة*) | The latest reason recorded for that period on the booking calendar (see [The reason for a change](/modules/crm/technician-appointments/crm-technician-appointment-calendar#The-reason-for-a-change)). Rows for periods changed on this screen have none, unless the period already carried a reason |
+| Remark (*ملحوظة*) | The period's Remark in the Details grid after the change. When that Remark is empty, or the period was removed, it is the Remark the period had before the change. It is typed in the Details grid on this screen or entered as the reason on the booking calendar (see [The reason for a change](/modules/crm/technician-appointments/crm-technician-appointment-calendar#The-reason-for-a-change)) |
 
 The list on this page opens folded; click its **Change History** heading to show the rows. The newest change is at the top. You can filter by Change Date, User, Change Type, Old Day and New Day, which is the quick way to find "everything Ahmed moved last week". Nobody can edit the rows. Cancelling the appointment document itself, or deleting it, removes its history. Setting its Status to *Cancelled* does not.
 
 ![The Change History page of a technician appointment](../../../ar/modules/crm/images/technician-appointments/technician-appointment-change-history-en.png)
 
 ::: info What the history does not record
-The rows are about **periods**. Creating the appointment, changing only its status, changing only the crew on a row, or editing the Items And Services grid writes nothing here. So an appointment that has been booked and executed without ever moving has an empty Change History — which is exactly what you would expect.
+The rows are about **periods**. Creating the appointment, changing only its status (without a reason), changing only the crew on a row, or editing the Items And Services grid writes nothing here. So an appointment that has been booked and executed without ever moving has an empty Change History — which is exactly what you would expect.
 :::
 
 ## Editing a booking after the fact

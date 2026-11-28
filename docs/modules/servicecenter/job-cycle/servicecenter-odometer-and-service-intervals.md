@@ -17,8 +17,8 @@ distance, the job order records which service was performed at which reading, an
 projects a date from all of it. This page walks that chain and names the documents involved.
 
 ::: info Required licence
-`srvcenter`. Neither document on this page needs a document term to work — the Kilo Metrage document
-requires none at all.
+`srvcenter`. The Kilo Metrage document needs no document term; the Product Task Opening Document
+requires one.
 :::
 
 ![The Kilo Metrage screen](../../../ar/modules/servicecenter/images/job-cycle/sc-kilometrage-en.png)
@@ -75,22 +75,23 @@ be entered on Thursday's job order with Tuesday's date. Use a Kilo Metrage docum
 Menu: **Service Center > Documents > Kilo Metrage** (مركز خدمة > المستندات > سجل قراءة العداد).
 
 A simple document: a header with the usual code, dates and one tick — *Update Odometer Regardless
-Date* — and a grid with one row per vehicle:
+Of Odometer Date* — and a grid with one row per vehicle:
 
 | Column | Arabic | Typed or filled in |
 |---|---|---|
 | Product | المنتج | Typed |
-| Previous KM date | | Filled in from the vehicle file |
-| Previous KM | | Filled in from the vehicle file |
-| Current KM | | **Typed** — the new reading |
-| Due task 1 … 5 | | Filled in — see below |
+| Previous Kilo Metrage Date | تاريخ القراءة السابقة | Filled in from the vehicle file |
+| Previous Kilo Metrage | القراءة السابقة | Filled in from the vehicle file |
+| Current Kilo Metrage | القراءة الحالية | **Typed** — the new reading |
+| Task To Execute 1 … 5 | المهمة الواجب تنفيذها 1 … 5 | Filled in — see below |
 
-The **Update Odometer Regardless Date** tick is the escape hatch: with it on, an older-dated reading
-is allowed to overwrite the vehicle's current odometer. Use it to correct a mistake, not as routine.
+The **Update Odometer Regardless Of Odometer Date** tick is the escape hatch: with it on, an
+older-dated reading is allowed to overwrite the vehicle's current odometer, and the lower-reading
+check is skipped. Use it to correct a mistake, not as routine.
 
 ### The due-task columns
 
-When you enter a reading, the five *due task* columns fill themselves with the maintenance tasks that
+When you enter a reading, the five *Task To Execute* columns fill themselves with the maintenance tasks that
 are **now due at that reading** — the ones whose last execution mileage plus their recurrence
 interval has been reached or passed. Only the first five are shown, and they are purely
 informational: nothing is created from them, and no document is generated.
@@ -103,7 +104,8 @@ the job order by hand.
 How does the system know that Fahad's oil change was last done at 36,000 km?
 
 Because the job order told it. When a job order is committed, it records for every task on it that
-this service was performed on this vehicle at this reading on this date. Those records accumulate
+carries a kilometre recurrence for this vehicle that this service was performed on this vehicle at
+this reading on this date. Tasks with no recurrence are not recorded. Those records accumulate
 into a per-vehicle, per-task register — visible as a read-only list on the vehicle's own file — and
 that register is what the due-task calculation reads.
 
@@ -112,9 +114,21 @@ The recurrence interval itself comes from the
 kilometres, optionally different per model. Fahad's oil change recurs every **10,000 km**.
 
 So: last done at 36,000, recurs every 10,000, next due at **46,000**. The car reads 45,300 on
-arrival — 700 km short. At 60.7 km a day that is about **11.5 days**, which is how the
-[closing document](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) arrives at
-an expected next visit of **15 March 2026**.
+arrival — 700 km short — so the oil change appears in the *Task To Execute* columns once a reading
+reaches 46,000.
+
+## The expected next visit
+
+The [closing document](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) projects
+the expected next visit with a simpler rule that does not look at the register. It takes the
+**shortest kilometre interval** among the job order's tasks, divides it by the vehicle's average
+daily distance, and adds that many whole days to the vehicle's **current odometer date**. It writes
+the date onto both the closing and the job order. When the vehicle has no average daily distance, or
+none of the tasks has an interval, the closing keeps the job order's own *Expected Next Visit Date*.
+
+For Fahad's car the shortest interval on the order is the oil change's 10,000 km, and
+10,000 ÷ 60.7 is 164 whole days. Counted from the current odometer date of 3 March, the closing
+projects **14 August 2026**.
 
 ## Seeding history for vehicles you inherit
 

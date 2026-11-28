@@ -10,7 +10,7 @@ entities: [QueueServiceConfig, QueueServiceBranch]
 
 At 08:12 on 3 March 2026, Fahad Al-Otaibi walks into Al-Sahra Motors' reception hall with his Saif 1.6. He presses a button on a small tablet by the door and it prints him a slip that says **`A014`**. He sits down. A screen on the wall shows which numbers are being served and at which desk, with the dealership's own advert beside them. A few minutes later `A014` appears on that screen next to Majed Al-Qahtani's desk, Fahad walks over, and the visit begins — from there it is the ordinary [workshop job cycle](/modules/servicecenter/job-cycle/servicecenter-job-cycle-overview.md).
 
-That is the whole of the Service Queues sub-module: a ticket, a display, and an advisor who calls the next customer. It is a small, self-contained feature and — unusually for something this peripheral — it works end to end.
+That is the whole of the Service Queues sub-module: a ticket, a display, and an advisor who calls the next customer. It is a small, self-contained feature.
 
 You reach its two records from **Service Center → Queue Service**.
 
@@ -60,7 +60,7 @@ An advisor presses *next* on their station (or a supervisor pulls the ticket for
 1. **Anyone who has waited too long comes first.** If a queue has a *Max Time To Switch Queues* set and a ticket has been waiting at least that many minutes, it jumps ahead of the whole branch's waiting list regardless of its letter — oldest such ticket first. Al-Sahra sets 20 minutes on queue `A`.
 2. Otherwise tickets are taken **in queue-letter order**, so `A` before `B`.
 3. Within a letter, **oldest first**, and then by ticket number.
-4. That candidate must be in a queue the advisor is allowed to serve, according to the configuration's **Queue Providers** grid. An advisor whose provider row leaves *Queue Code* blank is offered the first waiting ticket of **any** queue.
+4. That candidate must be in a queue the advisor is allowed to serve, according to the configuration's **Queue Providers** grid; the first waiting ticket in that order from one of the advisor's queues is the one called.
 
 One more rule matters in practice: **calling the next ticket closes whatever the advisor still had open.** An advisor is never serving two customers at once, so if Majed pulls a new ticket while `A014` is still open, `A014` is stamped finished at that moment.
 
@@ -70,15 +70,7 @@ A ticket can be closed explicitly — the advisor ends the visit, or signs out a
 
 ## The ticket is closed by the job order — not by the service request
 
-This is worth stating flatly because the opposite is the natural guess.
-
-**The queue is not linked to the [Service Request](/modules/servicecenter/job-cycle/servicecenter-service-request.md).** The service request is the appointment book: Fahad's visit was booked on `SCSR-2026-0881` two days earlier. That document carries no ticket fields.
-
-The link lives on the [**Job Order**](/modules/servicecenter/job-cycle/servicecenter-job-order.md). Its Basic Information group carries two fields — **Service Branch** (فرع الخدمة) and the ticket code — and when Majed raises job order `SCJO-2026-0417` for Fahad's car he picks branch `QSB-RUH` and then chooses `A014` from a suggestion list. **When that job order is committed, ticket `A014` is stamped finished and the wall display drops it.**
-
-So the ticket is not closed when the customer stops standing at the desk. It is closed when the paperwork the visit produced is committed. On a busy day that can be an hour later, and the display will keep showing the ticket as in progress until it happens. If your advisors save job orders as drafts and commit them in a batch at the end of the day, your wall display will be wrong all day — commit the job order at the desk.
-
-The link is covered in full, including what happens if the job order is later cancelled, on the [branches page](/modules/servicecenter/service-queues/servicecenter-queue-branches.md).
+**The queue is not linked to the [Service Request](/modules/servicecenter/job-cycle/servicecenter-service-request.md)**; the link lives on the [**Job Order**](/modules/servicecenter/job-cycle/servicecenter-job-order.md). When Majed raises job order `SCJO-2026-0417` he picks branch `QSB-RUH` and ticket `A014` on it, and **when that job order is committed, ticket `A014` is stamped finished and the wall display drops it** — so commit the job order at the desk. The fields, the suggestion list and what cancelling the job order does are on the [branches page](/modules/servicecenter/service-queues/servicecenter-queue-branches#The-job-order-closes-the-ticket).
 
 ## Ticket numbering, in one paragraph
 
@@ -86,7 +78,7 @@ Each queue has a letter and a suffix length. Numbering restarts at the branch's 
 
 ## Printing
 
-The ticket slip is a [report](/modules/servicecenter/servicecenter-reports-and-forms.md). The configuration names a **Ticket Design** — a report definition — and it is mandatory: no design, no configuration. When a ticket is issued, that report is rendered for the new ticket and is handed the **number of people still waiting in the same queue**, which is how a slip can print *"you are 6th in line"*. Give the configuration the address of the machine that runs the Nama Printing Server for the counter printer in **Printer URL**, so the slip comes out of the counter printer rather than a server-side one.
+The ticket slip is a [report](/modules/servicecenter/servicecenter-reports-and-forms.md): the configuration's required **Ticket Design**, printed on the counter printer named in **Printer URL**. What the report receives and how the printer address is written are on the [configuration page](/modules/servicecenter/service-queues/servicecenter-queue-configuration.md).
 
 ## What the queue does not touch
 

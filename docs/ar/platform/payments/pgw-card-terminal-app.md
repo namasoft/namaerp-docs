@@ -52,7 +52,7 @@ description: "تثبيت برنامج PGW وإعداده، وهو برنامج �
 
 ### الاتصال عبر TCP/IP
 
-اكتب عنوان الجهاز في خانات **TCP/IP** الأربع، رقمًا في كل خانة، ثم **اضغط Enter** في إحدى الخانات بعد امتلاء الأربع. لا يحفظ PGW العنوان إلا عند ضغط Enter، فإن كتبت العنوان ثم انتقلت بالفأرة إلى مكان آخر يظل PGW يستخدم العنوان السابق.
+اكتب عنوان الجهاز في خانات **TCP/IP** الأربع، رقمًا في كل خانة، وزر Enter ينقلك إلى الخانة التالية. يحفظ PGW العنوان بمجرد مغادرة أي خانة والخانات الأربع ممتلئة، ومرة أخرى عند ضغط **Test Connection**. ويجب أن يكون كل جزء رقمًا من 0 إلى 255، وإلا يُبقي PGW العنوان السابق ويعرض *Please enter a valid IP address, each part must be a number from 0 to 255*.
 
 أعطِ الجهاز عنوانًا ثابتًا من الراوتر. فإذا تغيّر العنوان يظل PGW يتصل بالعنوان القديم، وتفشل كل دفعة حتى يُكتب العنوان الجديد.
 
@@ -98,7 +98,8 @@ description: "تثبيت برنامج PGW وإعداده، وهو برنامج �
 |---|---|---|
 | *Another instance of Namasoft payment gateway is already running!* | شُغّل PGW وهو يعمل بالفعل. | لا شيء. استخدم النسخة التي تعمل، وانقر نقرًا مزدوجًا على أيقونتها في منطقة الإشعارات لتظهر. |
 | *Please select Com port* | ضُغط **Test Connection** لنوع اتصال COM دون اختيار منفذ. | اختر المنفذ، واستخدم زر التحديث إن كانت القائمة فارغة. |
-| *Please enter ip* | ضُغط **Test Connection** لنوع اتصال TCP/IP وإحدى خانات العنوان فارغة. | املأ الخانات الأربع واضغط Enter. |
+| *Please enter ip* | ضُغط **Test Connection** لنوع اتصال TCP/IP وإحدى خانات العنوان فارغة. | املأ الخانات الأربع. |
+| *Please enter a valid IP address, each part must be a number from 0 to 255* | جزء من عنوان TCP/IP ليس رقمًا من 0 إلى 255، فيُبقي PGW العنوان السابق. | صحّح ذلك الجزء. |
 | *Connection failed, Choose another COM Port and Make Sure the machine is correctly connected* | جهاز Geidea لم يستجب على المنفذ المختار. | افحص الكابل واختر المنفذ الذي تعرضه إدارة الأجهزة للجهاز. |
 | *Connection failed, Choose another Ip* | جهاز Geidea لم يستجب على هذا العنوان. | تحقق من عنوان الجهاز ومن أنه على شبكة الكمبيوتر نفسها. |
 | *Failed! please check setup, the connection and cable* | لم يستطع PGW تحميل اتصال Neoleap. | افحص الكابل، واضبط المنفذ أو العنوان، ثم اختر نوع الاتصال من جديد واختبر. |

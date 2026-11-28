@@ -12,7 +12,7 @@ If your work touches the general ledger, auditing, cash and bank management, or 
 
 The module's screens hang off two main roots in the menu tree:
 
-- **Accounting** — the general ledger, chart of accounts, journals, vouchers, credit/debit notes, year-end closing, financial statements and budgets.
+- **Accounting** — the general ledger, chart of accounts, journals, vouchers, credit/debit notes, year-end closing, financial statements, investment portfolios, financial commitments and prepaid expense contracts.
 - **Banks** — banks and bank accounts, transfers and adjustments, cheques (financial papers), loans, letters of guarantee, letters of credit, deposits and investments.
 
 There's also a **Budgets** root for financial planning. Each page points you to the exact path to reach the screen it covers.

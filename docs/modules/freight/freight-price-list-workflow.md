@@ -92,11 +92,9 @@ that created its element, and each new line becomes a new list line (and so a ne
 
 ## Messages you may see
 
-These messages have no Arabic text and show in English on Arabic screens too.
-
 | Message | Why | What to do |
 |---|---|---|
-| `No Price List Selected To Update` | **Update Sales Quotation** was confirmed without choosing a sales price list. | Run it again and pick the list. |
-| `ValidFrom is Required`, `ValidTo is Required`, `Currency is Required` | **Update Prices** met a hand-typed sales line without the field it needs to find a purchase element. | Fill the line's validity dates and currency. |
-| *Details must be filled* | An **Edit Purchase Price List** is being saved with an empty grid. | Press **Collect Elements** or add lines. |
-| *duplicate Line Code {0}* | Two lines of an **Edit Purchase Price List** carry the same line code. | Remove the duplicate line. |
+| `No Price List Selected To Update` | **Update Sales Quotation** was confirmed without choosing a sales price list. This message has no Arabic text and shows in English on Arabic screens too. | Run it again and pick the list. |
+| *Valid from date on line is required* — «يجب اختيار تاريخ متاح من على السطر», *Valid to date on line is required* — «يجب اختيار تاريخ متاح إلى على السطر», *Currency on line is required* — «يجب اختيار العملة على السطر» | **Update Prices** met a hand-typed sales line without the field it needs to find a purchase element. | Fill the line's validity dates and currency. |
+| *Details must be filled* — «لا يمكن ترك التفاصيل فارغة» | An **Edit Purchase Price List** is being saved with an empty grid. | Press **Collect Elements** or add lines. |
+| *duplicate Line Code {0}* — «كود سطر مكرر {0}» | Two lines of an **Edit Purchase Price List** carry the same line code. | Remove the duplicate line. |

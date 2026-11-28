@@ -19,10 +19,10 @@ Manual execution or scheduled tasks for inventory data export. Typically used fo
 
 ## How It Works
 
-1. **Validates site code** - Finds the Magento site using the provided site code
-2. **Exports CSV data** - Calls the site's exportCSVForSKUAndQty method to generate inventory data
-3. **Handles file pagination** - Splits large datasets into multiple files based on row count limit
-4. **Generates file names** - Creates unique file names for paginated files (e.g., items-1.csv, items-2.csv)
+1. **Validates site code** - Finds the e-commerce site using the provided site code; the flow fails with *Can not find site with code {0}* when there is none
+2. **Exports CSV data** - Builds the site's SKU and quantity data as CSV text
+3. **Handles file pagination** - When parameter 8 is filled, splits the data into files of at most that many rows; when it is empty, one file is produced
+4. **Generates file names** - When parameter 8 is filled, a number is added before the extension of the file name (e.g., items-1.csv, items-2.csv), even when there is only one file; when it is empty, the file name is used as it is
 5. **Uploads to server** - Uses FTP utilities to transfer each file to the specified server
 6. **Manages connections** - Handles FTP/FTPS/SFTP connections with proper authentication
 
@@ -32,7 +32,7 @@ Manual execution or scheduled tasks for inventory data export. Typically used fo
 
 **Parameter 2:** Server URL (Required) - FTP/SFTP server hostname or IP address
 
-**Parameter 3:** Protocol (Required) - Transfer protocol: "ftp", "ftps", or "sftp"
+**Parameter 3:** Protocol (ftp, ftps, or sftp) (Required) - Transfer protocol: `ftp`, `ftps`, or `sftp`, in lower case
 
 **Parameter 4:** Server Port (Required) - Port number (21 for FTP, 990 for FTPS, 22 for SFTP)
 
@@ -40,7 +40,7 @@ Manual execution or scheduled tasks for inventory data export. Typically used fo
 
 **Parameter 6:** Server Password (Optional) - Password for server authentication
 
-**Parameter 7:** File Name (Required) - Target file name (e.g., "nama-items.csv")
+**Parameter 7:** File Name(ex: nama-items.csv) (Required) - Target file name with its extension (e.g., "nama-items.csv")
 
 **Parameter 8:** File Rows Count (Optional) - Maximum rows per file for pagination
 

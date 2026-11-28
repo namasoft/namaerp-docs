@@ -26,7 +26,7 @@ Manual or automated execution for real-time JSON data export to external APIs an
 
 ## Parameters
 
-**Parameter 1:** Request Type (Optional) - HTTP method "GET" or "POST" (default: POST)
+**Parameter 1:** Request Type (Optional) - HTTP method "GET" or "POST" (default: POST). With POST the JSON is the request body; with GET it is sent in a query parameter named `entity`
 
 **Parameter 2:** URL Tempo (Required) - Destination URL with optional Tempo field references (e.g., `https://api.example.com/customers/{customer.code}`)
 

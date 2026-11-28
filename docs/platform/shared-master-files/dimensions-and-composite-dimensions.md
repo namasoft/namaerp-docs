@@ -52,7 +52,7 @@ The identity block is the usual master-file one — **Code**, **Group** (the [ma
 
 - **Composite dimension** — this record stands for several others. The [next section](#Composite-dimensions-one-record-that-stands-for-several) is about what that means.
 - **Show Only In User Fields** — the dimension disappears from every lookup in the system *except* the ones on the user screen. It is how you create a value that exists only to describe a user's scope and can never be typed onto a document by mistake.
-- **Visible to every one** — the record behaves like PUBLIC for *viewing*: whoever the dimension belongs to, everybody can see records carrying it. Use it for the head office or the shared warehouse that every branch is allowed to look at.
+- **Visible to everyone** — the record behaves like PUBLIC for *viewing*: whoever the dimension belongs to, everybody can see records carrying it. Use it for the head office or the shared warehouse that every branch is allowed to look at.
 - **Attachment 1–5**, **Tax Authority Code**, **Bank account**, a background image and up to five logos — descriptive extras. The logos matter in printed forms, where a form can print the logo of the branch or company the document belongs to.
 - **Contact Info** — a full address, phones, e-mail and website. A branch's address is real data: printed forms and e-invoicing read it.
 - **Dimensions** — the dimension's own five dimensions, minus itself. A branch belongs to a legal entity and a sector; a department belongs to a branch. This is what makes the dimensions a hierarchy rather than five unrelated lists.
@@ -73,9 +73,9 @@ The **Dimensions** group on a Branch offers Legal Entity, Analysis Set, Sector a
 - **Commercial Registration Number**, **Foundation Year**, **Practice Start Date**, **Social Insurance Number**, **Tax File ID**, **Tax Registration Issuing Office** and **Tax Registration Number** are the statutory identifiers printed on documents and sent to the tax authority.
 - **Default Menu** gives the company its own menu, and **Use This Legal Entity Logo For Public** decides whose logo greets a user logged in on PUBLIC.
 - **Unused Entities** and **Unused Features** hide screens and features that this company does not use.
-- **Number Of User** and **Inactive** round it off. On installations hosted in Nama's cloud a **Licenses** tab appears as well.
+- **Number Of Users** and **Inactive** round it off. On installations hosted in Nama's cloud a **Licenses** tab appears as well.
 
-The rest are short: **Branch** adds its own **Tax File ID** and logos, **Sector** adds logos, **Analysis Set** adds an **Alternative Cost AnalysisSet** with a **Start Date** — the analysis set that costing should use instead of this one from that date on — and **Department** adds nothing at all.
+The rest are short: **Branch** adds its own **Tax File ID** and logos, **Sector** adds logos, **Analysis Set** adds an **Alternative Cost Analysis Set** with a **Start Date For Alternative Cost** — the analysis set that costing should use instead of this one from that date on — and **Department** adds nothing at all.
 
 ## Composite dimensions: one record that stands for several
 
@@ -113,7 +113,7 @@ At the bottom sits **Purge The Dimension Data From The System Tables**. It asks 
 
 Two refusals catch people out, and both exist for the same reason: a dimension is referenced by thousands of records, so changing one quietly re-files all of them.
 
-The first is **the dimensions of a dimension**. Once master files point at a branch, the branch's own legal entity, sector and department are frozen. **Allow Changing Dimensions Of Dimensions** in [global configuration](/platform/global-config/global-config-dimensions) unlocks it, and is meant for a deliberate restructuring — expect to review what moved afterwards.
+The first is **the dimensions of a dimension**. Once master files point at a branch, the branch's own legal entity, sector, department and analysis set are frozen (clearing one back to PUBLIC is still allowed). **Allow Changing Dimensions Of Dimensions** in [global configuration](/platform/global-config/global-config-dimensions) unlocks it, and is meant for a deliberate restructuring — expect to review what moved afterwards.
 
 The second is **the composite tick itself**. Once documents reference the dimension, it can no longer be turned from normal into composite or back, unless **Allow Use Composite Dimension In Transaction** is on.
 
@@ -127,5 +127,5 @@ Neither refusal has an Arabic translation, so both appear in English on an Arabi
 | *Sub dimension must be normal not composite* — «لا يمكن السماح بمحددات مركبة داخل محدد مركب» | A row in **Sub Dimensions** points at another composite. | Replace it with the real dimensions. Composites do not nest. |
 | *Entity of type {0} can not use composite dimension of type {1}* — «لا يمكن استعمال المحدد المركب من النوع {1} للسجل {0}» | A document or a warehouse was saved carrying a composite dimension. | Use one of the real dimensions, or tick **Allow Use Composite Dimension In Transaction** on the composite if it is genuinely meant to carry transactions. |
 | *Cannot change dimension if other Documents are referenced From this dimension.* | The **Composite dimension** tick was changed on a dimension that documents already use. | Leave the tick alone, or create a new dimension for the new purpose. |
-| *Cannot change dimensions of dimension if other Master Files are referenced From this dimension.* | The dimension's own legal entity, sector, branch or department was changed after master files started pointing at it. | Switch on **Allow Changing Dimensions Of Dimensions** only if the restructuring is deliberate, and review the affected records afterwards. |
+| *Cannot change dimensions of dimension if other Master Files are referenced From this dimension.* | The dimension's own legal entity, sector, branch, department or analysis set was changed after master files started pointing at it. | Switch on **Allow Changing Dimensions Of Dimensions** only if the restructuring is deliberate, and review the affected records afterwards. |
 | *Please select at least one table to purge* — «برجاء اختيار جدول واحد على الأقل لتفريغه» | The purge action was confirmed without ticking any of the five tables. | Tick the tables to empty, then confirm again. |

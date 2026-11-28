@@ -35,7 +35,7 @@ There are three ways to sign in, and they can all be used at the same register:
 
 **Fingerprint.** If your fingerprint has been enrolled, just place your finger on the reader — no typing at all. The reader is listening in the background on the login screen, the unlock screen, and the supervisor-authorization prompt. Enrolment and setup are covered in [Fingerprint login](./pos-fingerprint-login.md).
 
-**API key.** Instead of storing a password on the machine, a register can sign in with an **API key** tied to a user. This keeps working even after that user's password changes, and avoids keeping a password (even encrypted) in the register's files. You can paste the key into the initial-settings window in place of the user name and password. The detailed setup lives in the [technical points guide](./nama-pos.md#Logging-In-Using-an-API-Key-in-POS).
+**API key.** Instead of storing a password on the machine, a register can sign in with an **API key** tied to a user. This keeps working even after that user's password changes, and avoids keeping a password (even encrypted) in the register's files. You can paste the key into the **API Key** field of the initial-settings window. The detailed setup lives in the [technical points guide](./nama-pos.md#Logging-In-Using-an-API-Key-in-POS).
 
 ![API key in initial settings](../../ar/modules/pos/images/getting-started/pos-login-apikey-en.png)
 
@@ -92,7 +92,7 @@ An entry whose permission the user lacks is hidden, unless the POS settings say 
 | | **Show Images** / **Hide Images** | «عرض الصور» / «إخفاء الصور» | Shows item pictures on the favourite-item buttons, or hides them. |
 | | **Customer Display Window** | «نافذة العميل» | Opens or closes the customer-facing window. |
 | | **ShowMore** | «ShowMore» | Switches the header between its main fields and the extra fields set in the register's UI settings. The caption is shown as written here in both languages. |
-| | **ReSendAllDocs** | «ReSendAllDocs» | Opens **Send All** with two choices: **Force Send** («إرسال إجباري») sends every document again; **Reset and Force Send** («إعادة تعيين وإرسال إجباري») resets the documents that failed and sends them again. The caption is shown as written here in both languages. |
+| | **ReSendAllDocs** | «ReSendAllDocs» | Opens **Send All** («إرسال الكل»), whose **Force Send** and **Reset and Force Send** buttons are described in [How POS data syncs](/modules/pos/pos-data-sync#When-a-document-will-not-go-up). The caption is shown as written here in both languages. |
 | | **Disable Printing** / **Enable Printing** | «تعطيل الطباعة» / «تفعيل الطباعة» | Stops or resumes printing on this register until the application closes. |
 | | **User Security Capabilities By Another User** | «صلاحيات تمت بمستخدم اخر» | Lists the actions a supervisor authorized for the signed-in user. |
 | | **Fingerprint Enrollment** | «تسجيل بصمة إصبع» | Registers a user's fingerprint — see [Fingerprint login](./pos-fingerprint-login.md). |
@@ -100,7 +100,7 @@ An entry whose permission the user lacks is hidden, unless the POS settings say 
 | | **Check Printer Specifications** | «فحص مواصفات الطابعة» | Runs a Windows check that reports the printers' page limits. |
 | **DownloadAppLogs** | — | «DownloadAppLogs» | Saves the application's log files, for support. The caption appears as written here in both languages; its tooltip reads *Download Application Logs* — «تحميل ملفات اللوج». |
 | **Temporal Documents** «المستندات المحفوظة مؤقتا» | **Show Temporarily Saved Documents** / **Delete Temporarily Saved Documents** | «عرض المستندات المؤقتة» / «حذف المستندات المؤقتة» | Only when the POS settings auto-save the open document: reopens or deletes the copies kept in case the register closed unexpectedly. |
-| **Settings** | — | «الإعدادات» | At the bottom of the menu: opens the register's settings window. Needs **Edit Settings**. |
+| **Settings** | — | «الإعدادات» | At the bottom of the menu: opens the register's settings window. Shown only to users with **Can Edit Settings**. |
 | **System Mode** | — | «وضع النظام» | At the bottom of the menu: switches the look between Traditional, Compact, Colorful and Dark modes. |
 
 ### Keyboard shortcuts
@@ -110,14 +110,14 @@ A busy counter runs on the keyboard, not the mouse. Nama POS ships with sensible
 | Shortcut | Action | Shortcut | Action |
 |---|---|---|---|
 | `Alt+F1` | New sale | `F6` | Hold (suspend) the invoice |
-| `F1` | Move between the line grid and header | `Ctrl+F6` | Show held invoices |
+| `F1` | Move from the sales screen to Payments, then Receipts, then back to the sales screen | `Ctrl+F6` | Show held invoices |
 | `Ctrl+F1` | Sales return | `Alt+F6` | Delete the held invoice on screen |
 | `Shift+F1` | Sales replacement (exchange) | `Ctrl+Shift+F6` | Show call-center held orders |
 | `F2` | Shift screen (open/close) | `F7` | Choose the customer |
 | `Ctrl+F2` | Cash Count | `Shift+F7` | Add a new customer |
 | `F3` | Item / record search | `Ctrl+F7` | Remove the customer |
 | `Ctrl+F3` | Open an existing invoice | `F8` | Choose the salesman |
-| `F4` | Change font size | `Ctrl+F8` | Remove the salesman |
+| `F4` | Change the screen font | `Ctrl+F8` | Remove the salesman |
 | `F5` | Payment / tender | `Ctrl+F9` | Price inquiry |
 | `F10` | Invoice discount | `Alt+1` … `Alt+8` | Line discount levels 1–8 |
 | `Ctrl+F10` | Remove the invoice discount | `Ctrl+Q` | Edit the selected line's quantity |
@@ -174,7 +174,8 @@ Changing the shortcut keys is done on the server, on the **Nama POS Shortcuts** 
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must select functionality or field ID* — «filed id يجب أختيار إجراء أو» | A shortcut row names neither an action nor a screen field, so the key would do nothing. (The Arabic text reads back to front and misspells *field*; that is how the product raises it.) | Choose one of the two on that row, or delete the row. |
+| *You must select functionality or field ID* — «filed id يجب اختيار إجراء أو» | A shortcut row names neither an action nor a screen field, so the key would do nothing. | Choose one of the two on that row, or delete the row. |
+| *You must select functionality or field ID, Not both* — «و ليس كليهما filed id يجب اختيار إجراء أو» | A shortcut row names both an action and a screen field. | Keep one of the two on that row. |
 | *You must select key* — «يجب اختيار مفتاح» | A shortcut row has an action but no key. | Pick the key, or delete the row. |
 | *You must use Ctrl/Alt with alphabetic letters* — «يجب استخدام Ctrl/Alt مع الحروف الأبجدية» | A row binds a bare letter key. A plain letter is needed for typing at the register, so a letter shortcut must be combined. | Tick Ctrl or Alt on the row, or move the shortcut to a function key. |
 | *Shortcut in line {0} repeated in line {1}* — «الاختصار في سطر رقم {0} متكرر في سطر رقم {1}» | Two rows bind the same key combination. The message names both line numbers. | Change one of the two combinations. |

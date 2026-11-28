@@ -19,18 +19,18 @@ Manual execution on supply chain documents that require shipping integration. Ty
 
 ## How It Works
 
-1. **Validates document type** - Ensures the document is a supply chain document (BasicSCDocument)
-2. **Finds shipping site** - Locates the EcommerceShippingSite using the provided site code
+1. **Validates document type** - On a record that is not a supply chain document the flow fails with *You can only use this entity flow with supply chain documents*
+2. **Finds shipping site** - Locates the EcommerceShippingSite using the provided site code; the flow fails with *Can not find shipping site with code {0}* when there is none
 3. **Creates request info** - Packages document and parameters into shipping request structure
-4. **Validates request type** - Ensures the request parameter is supported
-5. **Delegates to site** - Calls the shipping site's handleRequest method
+4. **Validates request type** - A request parameter that is not one of the supported values is rejected when the entity flow is saved, with *Request parameter {0} is not supported*
+5. **Delegates to site** - Hands the request to the shipping site, which sends it to the shipping provider
 6. **Processes response** - Handles results and any errors from the shipping operation
 
 ## Parameters
 
 **Parameter 1:** Site Code (Required) - Code of the EcommerceShippingSite to use for shipping
 
-**Parameter 2:** Request Parameter (Required) - Type of shipping operation to perform
+**Parameter 2:** Request Parameter (Required) - Type of shipping operation to perform, one of the values under Supported Request Parameters, written exactly as shown
 
 **Parameter 3:** Default Customer Email (Optional) - Fallback email for shipping notifications
 
@@ -42,7 +42,7 @@ Manual execution on supply chain documents that require shipping integration. Ty
 
 **Parameter 7:** Invoice Code Template (Optional) - Template for generating invoice codes
 
-**Parameter 8:** Count Items Query (Optional) - SQL query executed per line for item counting
+**Parameter 8:** Count Items Query (Executed per line) (Optional) - SQL query executed per line; the order's package count adds the line's quantity multiplied by the number it returns. The quantity sent for the line itself is not changed
 
 **Parameter 9:** Send Warehouse From Line (Optional) - true/false to include warehouse info from line
 
@@ -56,12 +56,12 @@ Manual execution on supply chain documents that require shipping integration. Ty
 
 ## Supported Request Parameters
 
-- **HEALTH_CHECK_REQUEST** - Check API connectivity and status
-- **CREATE_ORDER_REQUEST** - Create new shipping order
-- **CREATE_PICKUP_ORDER_REQUEST** - Create pickup order for returns
-- **UPDATE_ORDER_REQUEST** - Update existing shipping order
-- **CANCEL_ORDER_REQUEST** - Cancel shipping order
-- **ORDER_HISTORY_REQUEST** - Retrieve order history and status
+- `healthCheck` - Check API connectivity and status
+- `createOrder` - Create new shipping order
+- `createPickupOrder` - Create pickup order for returns
+- `updateOrder` - Update existing shipping order
+- `cancelOrder` - Cancel shipping order
+- `orderHistory` - Retrieve order history and status
 
 
 **Module:** magento

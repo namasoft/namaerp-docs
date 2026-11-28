@@ -8,7 +8,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 يأتي نظام نما أصلاً بأيقونة ولون لأغلب أنواع الكيانات وللحالات التي يقابلها المستخدم كل يوم، حتى
 يتعرف على فاتورة المبيعات أو العميل أو حالة «معتمد» من نظرة واحدة دون قراءة العنوان. وتبويب
-**الأيقونات** (Icons) — وهو التبويب الرابع والأخير في شاشة أعدادات الحقول و الشاشات — هو المكان الذي
+**الأيقونات** (Icons) — وهو التبويب الأخير في شاشة أعدادات الحقول و الشاشات — هو المكان الذي
 تغيّر فيه تلك القيم الافتراضية، أو تضيف أيقونة لشيء لا رأي للنظام فيه: نوع مستند تستعمله شركتك
 باستمرار، أو حالة أضفتها بنفسك، أو ذلك الحقل الوحيد في شاشة مزدحمة الذي يغفل عنه الجميع.
 
@@ -40,15 +40,15 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 الكلمة. ويعطي هذا الجدول أيقونة واحدة ولوناً واحداً لقيمة واحدة من قائمة منسدلة واحدة، وتظهر بجوار
 تلك القيمة داخل القائمة المنسدلة وفي خلايا الجداول التي تعرضها.
 
-ويعمل العمودان المعرِّفان معاً. فـ **Enum Type** يسمّي القائمة المنسدلة نفسها، و**القيمة المسموح
+ويعمل العمودان المعرِّفان معاً. فـ **نوع القيم الثابتة (Enum)** يسمّي القائمة المنسدلة نفسها، و**القيمة المسموح
 بها (Allowed Value)** تسمّي الخيار الواحد داخلها. املأ النوع أولاً: فبمجرد أن تكون له قيمة تقترح
 خلية القيمة المسموح بها الخيارات التي تحتويها تلك القائمة بالضبط، فاختر من المقترحات بدل كتابة
 خيار من الذاكرة — فالقيمة التي لا تنتمي للقائمة المختارة لا تطابق شيئاً وقت التشغيل.
 
 | العمود | ما يفعله |
 |---|---|
-| Enum Type | القائمة المنسدلة التي تزيّن قيمها. اختر من المقترحات. |
-| القيمة المسموح بها (Allowed Value) | خيار واحد داخل تلك القائمة. إلزامي. وتظهر المقترحات بعد ملء Enum Type. |
+| نوع القيم الثابتة (Enum) (Enum Type) | القائمة المنسدلة التي تزيّن قيمها. اختر من المقترحات. |
+| القيمة المسموح بها (Allowed Value) | خيار واحد داخل تلك القائمة. إلزامي. وتظهر المقترحات بعد ملء نوع القيم الثابتة. |
 | كود الأيقونة (Icon Code) | الأيقونة التي تظهر بجوار تلك القيمة. |
 | كود اللون في الوضع النهاري (Light Color Code) | اللون المستعمل على الوضع النهاري. |
 | كود اللون في الوضع الداكن (Dark Color Code) | اللون المستعمل على الوضع الداكن. |
@@ -140,17 +140,17 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 | الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
 |---|---|---|---|
-| Entity Icons | Entity Icons | `entityIcons` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
+| أيقونات الكيانات | Entity Icons | `entityIcons` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
 | كود الأيقونة | Icon Code | `entityIcons.iconCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
 | كود اللون في الوضع النهاري | Light Color Code | `entityIcons.lightColorCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
 | كود اللون في الوضع الداكن | Dark Color Code | `entityIcons.darkColorCode` | [Entity Icons](#Entity-Icons----yqwnt-lkynt) |
-| Enum Icons | Enum Icons | `enumIcons` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
-| Enum Type | Enum Type | `enumIcons.enumType` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| أيقونات القيم الثابتة (Enum) | Enum Icons | `enumIcons` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
+| نوع القيم الثابتة (Enum) | Enum Type | `enumIcons.enumType` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
 | القيمة المسموح بها | Allowed Value | `enumIcons.allowedValue` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
 | كود الأيقونة | Icon Code | `enumIcons.iconCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
 | كود اللون في الوضع النهاري | Light Color Code | `enumIcons.lightColorCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
 | كود اللون في الوضع الداكن | Dark Color Code | `enumIcons.darkColorCode` | [Enum Icons](#Enum-Icons----yqwnt-lqwym-lmnsdl) |
-| Field Icons | Field Icons | `fieldIcons` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
+| أيقونات الحقول | Field Icons | `fieldIcons` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
 | كود الأيقونة | Icon Code | `fieldIcons.iconCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
 | كود اللون في الوضع النهاري | Light Color Code | `fieldIcons.lightColorCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |
 | كود اللون في الوضع الداكن | Dark Color Code | `fieldIcons.darkColorCode` | [Field Icons](#Field-Icons----yqwnt-lHqwl) |

@@ -86,7 +86,7 @@ Nama converts Office files and images to PDF for previewing and printing, using 
 
 **Image Magick Path** `value.info.docConverterSettings.imageMagicPath` — The path to the ImageMagick executable on the server, used for image conversion.
 
-**OpenOffice Server Address** / **Open Office Server Port** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — The address and port of the LibreOffice or OpenOffice conversion service that turns Word, Excel and similar files into PDF.
+**OpenOffice Server Address** / **OpenOffice Server Port** `value.info.docConverterSettings.openOfficeServerAddress`, `...openOfficeServerPort` — The address and port of the LibreOffice or OpenOffice conversion service that turns Word, Excel and similar files into PDF.
 
 ::: tip These are server paths, not user paths
 Both settings point at software installed on the application server, not on the user's machine. If document previews stop working after a server move, these are the first two values to check.
@@ -104,7 +104,7 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.attachmentShareURL` | Attachment Shared Folder URL | Attachment Shared Folder URL | [Attachment storage](#Attachment-storage) |
 | `value.info.attachmentShareUser` | Attachment Shared Folder User Name | Attachment Shared Folder User Name | [Attachment storage](#Attachment-storage) |
 | `value.info.attachmentSharePassword` | Attachment Shared Folder User Password | Attachment Shared Folder User Password | [Attachment storage](#Attachment-storage) |
-| `value.info.allowDownloadAttachmentWithoutAuthentication` | Allow Downloading Attachment Without Authentication | السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما | [Attachment storage](#Attachment-storage) |
+| `value.info.allowDownloadAttachmentWithoutAuthentication` | Allow Downloading Attachment Without Authentication | السماح بتحميل المرفقات دون الحاجة إلى التسجيل في نما | [Attachment storage](#Attachment-storage) |
 | `value.info.createAttachmentInfoTable` | Create Attachment Info Table | إنشاء جدول بيانات المرفقات | [Attachment storage](#Attachment-storage) |
 | `value.info.createAttachmentPreviewAndThumbnail` | Create Attachment Preview and Thumbnail | إنشاء نسخة مطالعة للمرفقات | [Attachment storage](#Attachment-storage) |
 | `value.info.dontUseGoogleDocsForOfficeFilesPreview` | Do Not Use Google Docs To Preview Office Files | عدم استعمال Google Docs لعرض مرفقات الأوفيس | [Attachment storage](#Attachment-storage) |
@@ -116,4 +116,4 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.scannerProfile` | Scanner Profile | Scanner Profile | [Scanner](#Scanner) |
 | `value.info.docConverterSettings.imageMagicPath` | Image Magick Path | مسار Image Magick | [Documents converter](#Documents-converter) |
 | `value.info.docConverterSettings.openOfficeServerAddress` | OpenOffice Server Address | عنوان خادم OpenOffice | [Documents converter](#Documents-converter) |
-| `value.info.docConverterSettings.openOfficeServerPort` | Open Office Server Port | منفذ OpenOffice | [Documents converter](#Documents-converter) |
+| `value.info.docConverterSettings.openOfficeServerPort` | OpenOffice Server Port | منفذ OpenOffice | [Documents converter](#Documents-converter) |

@@ -28,7 +28,7 @@ Nothing produces an estimation — no button, no generation, no other document c
 Look at the direction of its one button and the picture clicks into place. The estimation's main page starts with an **Orders** grid and a button labelled **Copy All From MnOrders** — an oddly worded label, but the right one to look for on screen. You list one or more existing maintenance orders and the button appends all of their lines to the estimation. Lines flow **from** the orders **into** the estimation. It sits *after* the order, not before it.
 
 ::: tip An estimation does not become an order
-There is no path from an estimation to a maintenance order. If the customer accepts, type the work into a [maintenance order](/modules/crm/maintenance-cycle/crm-maintenance-orders.md) — or copy it across with the order's own *From document* field.
+There is no path from an estimation to a maintenance order. If the customer accepts, type the work into a [maintenance order](/modules/crm/maintenance-cycle/crm-maintenance-orders.md) — or copy it across with the order's own *From document* field. A maintenance invoice can name an estimation in its *From document* field in the same way.
 :::
 
 Used within those limits it is genuinely useful: a place to assemble the cost of a big repair on `MCH-00311` out of the lines of the orders already raised against it, price it, print nothing, and show the total to a customer or a manager.

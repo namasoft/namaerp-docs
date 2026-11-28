@@ -20,7 +20,7 @@ Manual execution for dynamic field population, automated data formatting, conten
 ## How It Works
 
 1. **Identifies target field** - Locates the specified field ID in the entity (can be header or detail field)
-2. **Processes template** - Renders the Tempo template using DomainComplexRenderer with entity data
+2. **Processes template** - Renders the Tempo template with the record's data
 3. **Replaces placeholders** - Substitutes template variables with actual entity field values
 4. **Sets field value** - Updates the target field with the rendered template result
 5. **Handles type conversion** - Automatically converts string result to appropriate field type
@@ -35,7 +35,7 @@ Manual execution for dynamic field population, automated data formatting, conten
 
 Simple field reference:
 ```tempo
-Customer: {entity.customerName} - Order: {entity.orderNumber}
+Customer: {customer.name1} - Document: {code}
 ```
 
 Complex formatting:

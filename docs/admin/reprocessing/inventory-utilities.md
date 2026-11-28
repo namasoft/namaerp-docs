@@ -296,7 +296,7 @@ update  l set lotId = '',expiryDate=null,productionDate=null
  from AssemblyDocumentLine l left join InvItem i on i.id = l.item_id where i.hasLot = 0 and coalesce(l.lotId,'') <> ''
 
 update  l set lotId = '20200919',expiryDate=case when i.hasExpiry = 1 then '20200919' else null end,productionDate=case when i.hasExpiry = 1 then '20200918' else null end
- from AssemblyDocumentLine l left join InvItem i on i.id = l.item_id where (i.hasExpiry = 1 and l.expiryDate  is null) or (i.hasLot = 1 and coalesce(l.lotId,'') <> '')
+ from AssemblyDocumentLine l left join InvItem i on i.id = l.item_id where (i.hasExpiry = 1 and l.expiryDate  is null) or (i.hasLot = 1 and coalesce(l.lotId,'') = '')
 
 update  l set lotId = '',expiryDate=null,productionDate=null
  from AssemblyDocCoProdLine l left join InvItem i on i.id = l.item_id where i.hasLot = 0 and coalesce(l.lotId,'') <> ''

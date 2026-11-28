@@ -63,7 +63,7 @@ What each one carries:
 |---|---|---|---|
 | **Duties And Tasks** (المهام والواجبات) | ✓ | ✓ | Copied into the employee's own Duties And Tasks when you pick the position and that field is still empty. |
 | **Max Permissions Per Month** / **Max Permission Hours Per Month** / **Max Single Permission Hours** | ✓ | ✓ | Leave-permission caps for the employees who hold the position. |
-| **Finger Print Exception** (الإستثناء من البصمة) | ✓ | ✓ | Fills in missing punches for the holders — see below. |
+| **Finger Print Exception** (الاستثناء من البصمة) | ✓ | ✓ | Fills in missing punches for the holders — see below. |
 | **Responsibilities** grid | | ✓ | Copied into the employee's Responsibilities when you pick the position, except lines ticked **Do Not Copy Responsibility To Employee**. |
 | **Skills** tab (Skill, Level, Description) | | ✓ | The skills the position calls for. |
 | **Minimum / Max Number Of Positions** | | ✓ | The maximum caps vacancies: an HR Vacancy for this position cannot ask for more than this number. |
@@ -76,9 +76,9 @@ exempt from checking out. **Finger Print Exception** tells attendance calculatio
 
 | Value | Effect on a day |
 |---|---|
-| **Check In Exception** (الإستثناء من الحضور) | A punch that has only a check-out takes the shift's start time as its check-in. |
-| **Check Out Exception** (الإستثناء من الانصراف) | A punch that has only a check-in takes the shift's end time as its check-out. |
-| **Check In And Check Out Exception** (الإستثناء من الحضور والانصراف) | A working day with no punches at all is counted as worked for the shift's hours. |
+| **Check In Exception** (الاستثناء من الحضور) | A punch that has only a check-out takes the shift's start time as its check-in. |
+| **Check Out Exception** (الاستثناء من الانصراف) | A punch that has only a check-in takes the shift's end time as its check-out. |
+| **Check In And Check Out Exception** (الاستثناء من الحضور والانصراف) | A working day with no punches at all is counted as worked for the shift's hours. |
 
 The employee file has the same field. Nama uses the employee's own value first, then the
 Organizational Position's, then the Job Position's.
@@ -86,7 +86,7 @@ Organizational Position's, then the Job Position's.
 ### How the leave-permission caps are chosen
 
 The three caps exist on the employee file, the Job Position, the Organizational Position, the Employee
-Department, the Leave Reason, the [Leave Permission Configuration](/modules/hr/attendance/leave-permissions-and-missions#Leave-Permission-Configuration--the-guardrails)
+Department, the Leave Reason, the [Leave Permission Configuration](/modules/hr/attendance/leave-permissions-and-missions#Leave-Permission-Configuration----the-guardrails)
 and the [HR Configuration](/modules/hr/setup/hr-configuration). For each cap, a matching Leave
 Permission Configuration rule wins; otherwise Nama takes the first non-zero value in this order:
 Leave Reason, employee file, Job Position, Organizational Position, Employee Department, HR

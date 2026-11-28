@@ -49,7 +49,7 @@ registration fee to one account and a connection charge to another without touch
 (The contract's term can suppress the whole fee block if a customer wants those lines documentary
 only.)
 
-You will meet a fee type in three places: the **Other Fees Lines / رسوم أخري** grid on the
+You will meet a fee type in three places: the **Other Fees Lines / رسوم أخرى** grid on the
 [sales contract](/modules/realestate/sales/realestate-sales-contract), the opening sales contract,
 the waiver and the rent contracts; as a **Real Estate Fee Type / نوع رسم استثمار عقاري** column on
 every installment grid, marking which fee generated a given installment; and in the fee-schedule
@@ -97,8 +97,8 @@ his account. If the sale is subsequently given up, the
 [waiver](/modules/realestate/sales/realestate-waiver-and-cancellation) can be configured to book the
 same commission types with the sides reversed.
 
-Two boundaries worth knowing. Commission types belong to the **sales** family — the sales contract
-and the waiver. The opening sales contract has no commissions grid at all, so a migrated historic
+Two boundaries worth knowing. Commission types belong to the **sales** family — the sales contract,
+the waiver and the cancel contract request. The opening sales contract has no commissions grid at all, so a migrated historic
 sale carries no commission. And rent contracts do not use commission types either; a lease's
 commission is a value on the contract itself, handled through the rent term — see
 [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule).
@@ -133,28 +133,29 @@ that carries a schedule rather than a single value.
 | Paid Every / يستحق كل | **required** — the recurrence |
 | Expense Value Type / نوع قيمة المصروف | *Percentage / نسبة* (the default) or *Value / قيمة* |
 | Expense Percentage / نسبة المصروف, Expense Value / قيمة المصروف | whichever the value type calls for |
-| Percentage Basis / اساس النسبة | *First Year Rent / قيمة الايجار لأول سنة* or *The Same Year Rent / قيمة الايجار لنفس السنة* |
-| From Year Number / من السنة رقم, To Year Number / الى السنة رقم | limit the charge to certain contract years |
+| Percentage Basis / أساس النسبة | *First Year Rent Value / قيمة الإيجار لأول سنة* or *Rent Value Of the Same Year / قيمة الإيجار لنفس السنة* |
+| From Year Number / من السنة رقم, To Year Number / إلى السنة رقم | limit the charge to certain contract years |
 | Expense Debit / مدين المصروف, Expense Credit / دائن المصروف | the accounts, plus a tax plan and tax 1/2 sides and a *Not Taxable / غير خاضع للضريبة* flag |
 | Do Not Copy With Extension / عدم النسخ مع التمديد | drop this expense when the lease is renewed |
 | Do Not Create Installment If Expense Type Copied From Previous Contract / عدم إنشاء قسط إذا كان المصروف منسوخ من العقد السابق | do not re-charge it on a carried-over lease |
-| Do Not Multiply Expense Value By Period / عدم ضرب قيمة المصروف في الفترة | charge the value once per period instead of once per month in it |
+| Do Not Multiply Expense Value By Period / عدم ضرب قيمة المصروف في الفترة | charge the value as it is on every period instead of pro-rating it to the period's months |
 
 **Paid Every** offers *Yearly / سنوية*, *Half Year / نصف سنوي*, *Quarterly / ربع سنوية*, *Monthly /
-شهرية*, *Year Third / ثلث سنوي*, *Two Years / سنتين*, *Three Years / ثلاث سنوات*, *Five Years /
-خمس سنوات*, *Once / مرة واحدة* and *With Every Installment / مع كل قسط*.
+شهرية*, *Year Third / ثلث سنوي*, *Two years / سنتين*, *Three Years / ثلاث سنوات*, *Five Years /
+خمس سنوات*, *Once / مرة واحدة*, *With Every Installment / مع كل قسط*, *Two Months / شهرين*,
+*Five Months / خمس شهور* and *Seven Months / سبع شهور*.
 
 The arithmetic that turns those settings into money is worth understanding once, because it explains
 why the same expense type produces different amounts on two leases:
 
-- Percentage on **First Year Rent** is fixed the moment the contract is created — the monthly rent
-  amount times the percentage — and never moves again even if the rent escalates.
-- Percentage on **The Same Year Rent** is recomputed for each generated installment against that
-  year's rent, so it rises with the annual increase.
+- Percentage on **First Year Rent Value** is worked out when the schedule is generated — the
+  contract's yearly rent value times the percentage — and does not move with later rent escalations.
+- Percentage on **Rent Value Of the Same Year** is recomputed for each generated installment against
+  the rent of that installment's period, so it rises with the annual increase.
 - A flat **Value** is simply used as typed.
 - Then, unless the recurrence is empty, *Once* or *Yearly*, the amount is multiplied by the number
-  of contract months in the period — which is exactly what *Do Not Multiply Expense Value By Period*
-  switches off.
+  of months in the recurrence (for *With Every Installment*, the months between installments) and
+  divided by 12 — which is exactly what *Do Not Multiply Expense Value By Period* switches off.
 
 Picking an expense type on a lease copies its type, recurrence, value type, value, percentage,
 basis, year range and the do-not-multiply flag onto the grid line, where they can still be adjusted
@@ -167,7 +168,7 @@ the expense type that created it, and so does the collection document that settl
 
 The last one is the shortest. An expense item is a line in a maintenance invoice: "lift maintenance",
 "generator diesel", "cleaning contract", "pool chemicals". It carries a **Related Subsidiary /
-الذمة المتعلق** — the owner, supplier, third party or account this expense is normally owed to — a
+الذمة المتعلقة** — the owner, supplier, third party or account this expense is normally owed to — a
 **Tax Plan / سياسة الضريبة**, tax 1 and tax 2 debit and credit sides, a **Not Taxable / غير خاضع
 للضريبة** flag and a tax authority code.
 

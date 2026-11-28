@@ -25,10 +25,11 @@ Buying a custody item is an invoice, and its term reads like one. It has three p
 identity and tax settings, then the invoice effect, then the other effects.
 
 The settings page carries the same tax options as the fixed asset purchase term — **Taxable**
-(`termConfig.taxable`), **Tax Plan** (`termConfig.taxPlan`), **Is tax modifiable** (`termConfig.modifiableTax`) and
-header taxes editable per line (`termConfig.allowEditingHdrTaxInDetails`) — plus **Link with invoice lines in the
-accounting document** (`termConfig.linkWithInvoiceLinesInAccountingDocument`), which ties each ledger line back to the
-invoice line that produced it.
+(`termConfig.taxable`), **Tax Plan** (`termConfig.taxPlan`), **Modifiable Tax** (`termConfig.modifiableTax`) and
+**Allow Editing Header Tax In Details** (`termConfig.allowEditingHdrTaxInDetails`) — plus **Link With Invoice Lines In
+Accounting Document** (`termConfig.linkWithInvoiceLinesInAccountingDocument`), which writes the purchase into the
+invoices grid of each payment document named on its external-payment lines, as described on
+[Terms for Acquiring Assets](/modules/fixedassets/document-terms/fixedassets-terms-acquisition).
 
 The **invoice effect** page carries the two sides of the purchase — the group `مدين` / Debit
 (`termConfig.config.debit`) and the group `دائن` / Credit (`termConfig.config.credit`) — plus the shorten-ledger option
@@ -36,7 +37,7 @@ The **invoice effect** page carries the two sides of the purchase — the group 
 link-with-invoice-lines switch again, and **Allow Payment More Than Invoice Amount**
 (`السماح بدفع مبلغ أكبر من قيمة الفاتورة`, `termConfig.allowPaymentMoreThanInvoiceAmount`). With that last one off, a
 payment document that would push the purchase's remaining amount below zero is refused with
-*Remaining {0} in document {1} became negative* — «المتبقي {0} فى المستند {1} أصبح بالسالب»; switch it on to
+*Remaining {0} in document {1} became negative* — «المتبقي {0} في المستند {1} أصبح بالسالب»; switch it on to
 accept overpayments. The **other effects** page carries the tax 1 group (`termConfig.tax`, with its other-side option
 `termConfig.taxesOtherSide.tax1OtherSide`) and the cash group (`termConfig.cash`).
 
@@ -134,8 +135,9 @@ The same page carries:
 - **four tax pairs**, a debit and a credit account each (`termConfig.tax1Debit` / `termConfig.tax1Credit` …
   `termConfig.tax4Debit` / `termConfig.tax4Credit`);
 - **a discount pair** (`termConfig.discount1Debit` / `termConfig.discount1Credit`);
-- **Do Not Affect On Cost** (`عدم التأثير في التكاليف`, `termConfig.donotAffectOnCost`) — the switch that marks a line as booked but
-  excluded from the landed cost, for charges you want in the ledger but not in the machine's value;
+- **Do Not Affect On Cost** (`عدم التأثير في التكاليف`, `termConfig.donotAffectOnCost`) — when ticked, every line of an
+  expense document on this term is booked but excluded from the landed cost, for charges you want in the ledger but
+  not in the machine's value (a line is also excluded when its expense item carries the same flag);
 - **Taxable** (`termConfig.taxable`), **Editable Taxes** (`termConfig.editableTaxes`) and **Tax Plan** (`termConfig.taxPlan`).
 
 For `LC-2026-004` the expense documents collect 615,000: goods 500,000, freight 40,000, customs duty

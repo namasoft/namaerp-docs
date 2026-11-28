@@ -21,23 +21,25 @@ The screen has exactly two buttons and they run in order.
 
 ### Step 1 — Spread Internal Files From The Compressed File
 
-**فرد الملفات الداخليه من الملف المضغوط**
+**فرد الملفات الداخلية من الملف المضغوط**
 
 Attach your ZIP in **Compressed File / الملف المضغوط**, save, then press this button. The system
 walks the archive and creates one row in the grid per file, skipping folder entries. Each row
 arrives with the file already attached in its Current Version.
 
-::: warning It clears the grid first
-Pressing this button again wipes every row and starts over, discarding any coding you had typed.
-Do the unpacking once, then do the typing.
+::: warning It rebuilds the grid
+Pressing this button again refills the grid from the ZIP in order: each row keeps what you typed
+in its other columns but gets its file and Name1 replaced, and rows beyond the number of files are
+removed. If the ZIP has changed, typed values can end up on the row of a different file. Do the
+unpacking once, then do the typing.
 :::
 
 Two quirks in what you get back:
 
 - **Name1 is set to the full path inside the archive**, not the file name. A file stored as
   `contracts/2026/acme.pdf` produces a row named exactly that. Plan to overwrite it.
-- **Code is left empty**, so every created document relies on auto-coding unless you type codes
-  yourself.
+- **Code is left empty** on a first unpack, so every created document relies on auto-coding unless
+  you type codes yourself.
 
 ### Step 2 — Create Archival Documents For Lines
 
@@ -64,7 +66,7 @@ button again — the rows that already worked will not be duplicated.
 |---|---|
 | Code | الكود |
 | Name1 / Name2 | الاسم العربي / الاسم الإنجليزي |
-| Importance | الأهميه |
+| Importance | الأهمية |
 | Sub Location | الموقع الفرعي |
 | Detailed Location | الموقع التفصيلي |
 | Renewal Date | تاريخ التجديد |
@@ -86,11 +88,11 @@ their files attached, and to do the filing in a second pass:
    importance, positions and dates.
 3. **Set the filing in bulk afterwards.** Export the newly created documents to a spreadsheet,
    fill in Folder, Topic, Location and Owner down the column, and import it back. See
-   [Importing Records](/platform/import-export/importing-records.md).
+   [Importing Records](/platform/import-export/importing-records).
 
 ::: tip Or skip this screen entirely
 If your scans are already named after something the system knows — an employee code, a contract
-number — a straight [record import](/platform/import-export/importing-records.md) of DMS Documents
+number — a straight [record import](/platform/import-export/importing-records) of DMS Documents
 gives you complete control over every field in one pass, with no second step. The ZIP screen is most useful when the files are all you have and their names mean
 nothing.
 :::

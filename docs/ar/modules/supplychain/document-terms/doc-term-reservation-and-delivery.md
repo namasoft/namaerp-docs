@@ -52,7 +52,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | مصدر مخزن الحجز | `termConfig.reservationWarehouseSource` | `NormalWarehouse` / `ReservationWarehouse` |
 | مصدر موقع الحجز | `termConfig.reservationLocatorSource` | `NormalLocator` / `ReservationLocator` |
 
-**حقول الكمية الملغى حجزها (Reservation Satisfied Fields)** `termConfig.reservationSatisfiedFields` — يحدد أي حقل كمية يُحتسب كالكمية المنفّذة/المفرج عن حجزها. يقبل `TrackInFirst` / `TrackInSecond`.
+**حقول الكمية الملغي حجزها (Reservation Satisfied Fields)** `termConfig.reservationSatisfiedFields` — يحدد أي حقل من حقول متابعة الكميات يُحتسب منفّذًا: فيحجز السطر كميته مطروحًا منها ما يُظهره ذلك الحقل منفّذًا (آليًا ويدويًا). يقبل `TrackInFirst` / `TrackInSecond`.
 
 ## التسلسل والتأكد من الإتاحة (Sequentiality & Availability Checks)
 
@@ -86,12 +86,12 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ### توجيهات مستند التوصيل فقط (Delivery Document Terms Only)
 
-الحقول التالية معرّفة على توجيه مستند التوصيل وتنطبق على **توجيهات مستند التوصيل فقط**. وتنفّذ الحقول الثلاثة الأخيرة بوابة كلمة سر يجب تحقيقها قبل تعليم التوصيل كمُسلَّم.
+الحقول التالية تنطبق على **توجيهات مستند التوصيل فقط** وتقع في مجموعة «بناءً على» في التوجيه. وتنفّذ الحقول الثلاثة الأخيرة بوابة كلمة سر يجب تحقيقها قبل تعليم التوصيل كمُسلَّم؛ والمسار كله مشروح في [التسليم والتحميل](/ar/modules/supplychain/delivery-and-loading).
 
-**تحديث حالة التوصيل في المستند المرتبط (Update Delivery Status In From Doc)** `termConfig.updateDeliveryStatusInFromDoc` — يكتب حالة التوصيل في المستند المرتبط (المصدر).
+**تحديث حالة التوصيل في المستند المرتبط (Update Delivery Status In From Doc)** `termConfig.updateDeliveryStatusInFromDoc` — يكتب حالة توصيل كل سطر في سطره المصدر في المستند المرتبط.
 
-**يجب تطابق كلمة السر حتى يمكن تعديل الحالة إلى "تم التوصيل" (Delivery State Requires Password)** `termConfig.deliveryStateRequiresPassword` — يستلزم إدخال/تطابق كلمة سر نظام قبل تغيير حالة التوصيل إلى "تم التوصيل".
+**يجب تطابق كلمة السر حتى يمكن تعديل الحالة إلى تم التوصيل (Delivery State Requires Password)** `termConfig.deliveryStateRequiresPassword` — لا يمكن ضبط حالة التوصيل على **توصيل كلي** حتى تطابق **كلمة سر العميل** كلمة سر النظام في المستند.
 
-**شكل كلمة سر النظام (System Password Pattern)** `termConfig.systemPasswordPattern` — يحدد شكل أحرف كلمة سر تأكيد التوصيل المولّدة: `NumbersOnly` (أرقام فقط)، أو `LettersOnly` (حروف فقط)، أو `Both` (كلاهما).
+**شكل كلمة سر النظام (System Password Pattern)** `termConfig.systemPasswordPattern` — أحرف كلمة السر المولّدة: `NumbersOnly` (أرقام فقط)، أو `LettersOnly` (حروف فقط)، أو `Both` (كلاهما). والفارغ يعني كلاهما.
 
-**طول كلمة سر النظام (System Password Length)** `termConfig.systemPasswordLength` — يحدد طول (عدد أحرف) كلمة سر تأكيد التوصيل المولّدة.
+**طول كلمة سر النظام (System Password Length)** `termConfig.systemPasswordLength` — عدد أحرف كلمة السر المولّدة. والفارغ يعني 4.

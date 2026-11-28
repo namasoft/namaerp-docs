@@ -37,7 +37,8 @@ helped by a table of two hundred rows.
 | [TimeSheet Approval](/modules/ecpa/task-execution/ecpa-timesheet-approval) | Settings — one option | Whether approved timesheets have their accounting effect re-issued |
 
 The other Project Management documents — the sales quotation, the project stage and the stage
-extension — have no term of their own, and none of them books anything to the general ledger.
+extension — still carry a book and a term, but their term has no settings page of its own, and none
+of them books anything to the general ledger.
 
 ## Where a term's own name lives
 
@@ -152,22 +153,19 @@ line in the project code range — including work dated after the invoice. This 
 makes month-end billing behave: with it on, an invoice dated 31 January cannot accidentally bill
 February's timesheets. Most firms should tick it.
 
-**Calculated Value Collection Method** (`termConfig.calcValueCollectionMethod`). This governs the *Calculated Value* column, the informational
-figure that sits beside the billed amount. Leave the option empty and Calculated Value simply repeats
-the collected total, which tells you nothing. Fill it in — with either of its two values — and
-Calculated Value is instead taken from a separate reading of the underlying timesheet cost for that
-project and task, so the two columns deliberately show different numbers: what the work cost, beside
-what you are charging for it.
+**Calculated Value Collection Method** (`termConfig.calcValueCollectionMethod`). This decides which
+timesheet lines *Collect Executions* pulls into the invoice's Executions grid — and the Executions
+grid is what the *Calculated Value* column is built from: every time the invoice is saved, each
+line's Calculated Value is recalculated from the total cost on the Executions grid, the informational figure
+that sits beside the billed amount (what the work cost, beside what you are charging for it).
 
-The choice between the two values then decides which timesheet lines count:
-
-| Value | Effect |
+| Value | Effect on *Collect Executions* |
 |---|---|
-| **Collect Only Approved Values** | Only approved timesheet lines feed the calculated cost — and, on *Collect Executions*, only approved lines are pulled into the Executions grid at all |
-| **Collect All Values** | Every timesheet line counts, approved or not |
+| **Collect Only Approved Values** | Only approved timesheet lines are pulled into the Executions grid |
+| **Collect All Values** | Every unbilled timesheet line is pulled, approved or not |
 
 For a firm that runs a real approval step, *Collect Only Approved Values* is the sensible setting; it
-is also what keeps unapproved hours out of the Executions grid.
+is what keeps unapproved hours out of the Executions grid.
 
 ## The Project Expense Document and Project Expense Request terms
 
@@ -210,9 +208,13 @@ The rest of it is one account pair and four settings:
 - **Create Accounting Effects For Approved Lines Only** (`termConfig.createAccEffectsForApprovedLinesOnly`) — when ticked, only lines that have been
   approved are turned into journal lines. This is half of the "cost hits the ledger only after the
   manager signs off" arrangement; the other half is the approval term below.
-- **Consider Registered Time With Save** (`termConfig.considerRegisteredTimeWithSave`) — when ticked, the check that compares a task executer's
-  hours against the planned hours also counts hours that are registered but not yet approved, so the
-  warning arrives earlier.
+- **Consider Registered Time With Save** (`termConfig.considerRegisteredTimeWithSave`) — a timesheet's
+  first commit is refused when the executer's actual hours plus this sheet's hours exceed the
+  planned hours on the task (*Actual time {0} is greater than planned time {1} for task {2}* —
+  «الوقت الفعلي {0} أكبر من الوقت المخطط {1} للمهمة {2}»). When this option is ticked, that commit is
+  also refused when the registered, not yet approved, hours are counted in as well:
+  *Registered time {0} is greater than planned time {1} for task {2}* —
+  «الوقت المسجل {0} أكبر من الوقت المخطط {1} للمهمة {2}».
 
 ## The TimeSheet Approval term
 

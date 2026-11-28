@@ -90,8 +90,9 @@ The second grid, titled **Profits**, is the actual schedule — the individual p
 with their codes, amounts, due dates and payment columns. It is filled by the **Create
 installments** button between the two grids.
 
-Pressing it walks the recipe rows in order, working out where each block starts from the contract's
-*Installments Start In* date and each row's offset and period, then hands off to the same
+Pressing it walks the recipe rows in order. Each block starts at the contract's *Installments Start
+In* date pushed forward by the offsets of that row and of every row above it, and the result is handed
+to the same
 installment engine the sales contracts use, with the contract value as the base. Our single row
 produces 20 lines of 25,000 each, dated quarterly from 01/01/2026.
 
@@ -117,9 +118,9 @@ its *Edited Contract* field at the old one. Doing so:
 2. copies over **only the unpaid** installment lines, with their matching recipe rows — so the new
    contract starts life carrying exactly the old one's outstanding schedule;
 3. on commit, marks the old contract as edited, **closes out its entire remaining schedule** by
-   marking those installments paid, and **locks it permanently**.
+   marking those installments paid, and **locks it**.
 
-::: warning A superseded contract is locked forever
+::: warning A superseded contract is locked
 Once a contract has been edited by another, it can no longer be edited or deleted, and neither can
 any profit claim raised against it. If you need to undo an amendment, cancel the *editing* contract
 first — that reverses the supersession and unlocks the original.
@@ -130,9 +131,9 @@ being edited must be **older** than the one editing it, a *New Contract* may not
 contract at all, and the picker for *Edited Contract* only offers contracts belonging to the same
 buyer and the same category that have not already been superseded.
 
-One more restriction: you may not move the contract's value date backwards past a committed profit
-claim. If a claim already exists at or before your new date, the save is refused and names the
-claim.
+One more restriction: once the contract is saved, its value date may not sit after a committed profit
+claim against it. If a committed claim is dated before the contract's value date (or on the same date
+and created earlier), the save is refused and names the claim.
 
 ::: info The contract books nothing
 The agricultural investment contract has **no accounting effect** of its own. It creates the profit
@@ -239,7 +240,7 @@ button.
 | *Can not change value date because profit claim document {0} was created before {1}* — «لا يمكن تغيير التاريخ الفعلى للعقد لأن مستند استحقاق الأرباح {0} تم انشاؤه قبل {1}» | You changed the contract's value date, and a profit claim document already exists that was created before the new date. | Leave the value date alone, or cancel the claim documents that sit before it first. |
 | *Contract {0} is edit by {1} .Contract can be edited only once* — «العقد {0} تم تعديله مسبقا بالعقد {1} .العقد يمكن تعديله مرة واحدة فقط» | The contract you are trying to edit has already been edited once by another edit contract. | Edit the latest contract in the chain. A contract only takes one edit. |
 | *Contract {0} must be older than the current edit contract* — «يجب ان يكون العقد المطلوب تعديلة {0} أقدم من العقد الحالى» | The contract named in **Edited Contract** carries a value date after this edit contract's own. | Date the edit contract after the contract it edits. |
-| *Profits can not be empty* — «لا يمكن ترك الأرباح فارغة» | The **Profits** grid on a profit claim is empty, so there is nothing to claim. | Fill the profit lines, or use the button that loads the contract’s due profits. |
+| *Profits can not be empty* — «لا يمكن ترك الأرباح فارغة» | The **Profits** grid on a profit claim is empty, so there is nothing to claim. | Fill the profit lines, or pick the contract again after setting the date range so its unpaid profits due in that range load. |
 | *Total profits amount {0} must be greater than or equal paid installments amount {1}* — «{1} إجمالي قيمة الفوائد {0} يجب ان يكون أكبر من او يساوى قيمة الأقساط المدفوعة» | The paid-installments lines add up to more than the profit lines on the same claim. | Reduce the paid installments, or raise the profits so the claim at least covers what is being settled. |
 | *Can not use contract {0} because contract value date is after current document value date* — «لا يمكن استخدام العقد {0} لأن تاريخه الفعلي بعد تاريخ الستند الحالي» | The contract's value date is later than the claim document's own value date, so the contract did not yet exist on that day. | Date the claim on or after the contract, or pick an earlier contract. |
 | *Contract {0} is edited by {1} so the claim doc can not be saved ,edited or deleted* — «لا يمكن حفظ أو تعديل أو حذف مستند استحقاق الأرباح لأن العقد {0} تم تعديله بواسطة {1}» | The contract on the claim was superseded by an edit contract, so claims against it are frozen. | Raise the claim against the edit contract instead. |

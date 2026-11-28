@@ -43,7 +43,7 @@ The **Title** column is the caption the entity flow line shows above each parame
 
 | Parameter | Title | What to enter |
 |---|---|---|
-| Parameter 1 | Fields Map | A [field map](../core/ai-generated-field-maps-documentation.md) from the treasury bill to the new close document, one `target field=bill field` per line. It is applied after the treasury bill, bank account, ROI rate, current value and dimensions are copied, so it can override them. Use it for what the flow does not fill, such as the close document's book and term (`book="TBC"`, `term="TBC"`). |
+| Parameter 1 | Fields Map | A [field map](/entity-flows/core/ai-generated-field-maps-documentation) from the treasury bill to the new close document, one `target field=bill field` per line. It is applied after the treasury bill, bank account, ROI rate, current value and dimensions are copied, so it can override them. Use it for what the flow does not fill, such as the close document's book and term (`book="TBC"`, `term="TBC"`). |
 
 ## SQL Queries for Troubleshooting
 

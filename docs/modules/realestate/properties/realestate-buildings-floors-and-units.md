@@ -81,10 +81,10 @@ availability markers, and the *Related contract* group collects whatever documen
 
 ![The RE Floor screen showing the location, status and related-contract groups](../../../ar/modules/realestate/images/properties/re-floor-en.png)
 
-The floor carries the same **Generate Units** (إنشاء وحدات) action as the building, with one extra
-guard: it refuses to run on a floor that is already rented ("The floor is rented") or sold ("The
-floor is sold"). Units generated here get the floor, the building, the block and the project filled
-in for them.
+The floor carries the same **Generate Units** (إنشاء وحدات) action as the building, with the same
+guard: it refuses to run on a record that is already rented ("The floor is rented") or sold ("The
+floor is sold") — the building shows the same two messages. Units generated here get the floor, the
+building, the block and the project filled in for them.
 
 For the worked example that is 20 runs of ten units each — or, if the floors were generated with
 codes `F-01` … `F-20`, ten units per floor coded `F-03-01`, `F-03-02` and so on, using the prefix

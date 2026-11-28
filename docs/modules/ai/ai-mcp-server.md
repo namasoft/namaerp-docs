@@ -105,7 +105,7 @@ A few tools do something that cannot be taken back — upgrading the server, whi
 
 The most useful group for external MCP clients is the export/import system tools — twelve of them, from four tool classes, all added in one click with the **Add Export Tools** button on the System Tool page of the tool definition screen (see [AI Tool Definitions](./ai-tool-definitions.md)).
 
-The tools are named with a prefix taken from the tool definition (the Tool Name, Alt Code, or code field). The examples below assume the prefix is `import`.
+The tools are named with a prefix taken from the tool definition (the first non-empty of **Tool Name (Must Be Unique)**, **English Code** and the record code, followed by an underscore). The examples below assume the prefix is `import`.
 
 ![The system-tools AI Tool Definition that publishes these tools](../../ar/modules/ai/images/ai-tool-definition-system-tools-en.png)
 

@@ -24,16 +24,19 @@ Manual execution or automated workflows requiring document generation on any ent
 4. Creates or updates attachment in specified entity field
 5. Sets attachment filename using report code and output format (e.g., `INVOICE_REPORT.pdf`)
 6. Optionally runs for each detail line when configured
-7. Cleans up temporary files after processing
 
 ## Key Parameters
 
 - **Parameter 1:** Report ID or Code (Required) - Report identifier or unique code
 - **Parameter 2:** Save To Attachment Field ID (Required) - Must be attachment field (LargeData type)
-- **Parameter 3:** Output Format (Required) - PDF, DOCX, XLSX, TXT, PPTX, ODS, ODT, RTF, XLS
-- **Parameter 4:** Parameter Sources (Optional) - Field mapping expressions
-- **Parameter 5:** Custom File Name Template (Optional) - Template expression for custom file naming
-- **Parameter 6:** Run On Detail (Optional) - Detail collection ID to run report for each line (e.g., details, lines, paymentMethods)
+- **Parameter 3:** Output Format (Required) - PDF, DOCX, PPTX, ODS, ODT, RTF, TXT, XLS, XLSX, CSV, JSON
+- **Parameter 4:** Parameter Sources (field map: parameterName=sourceValueExpression) (Optional) - Field mapping expressions
+- **Parameter 5:** Attachment File name tempo (Optional) - Template expression for custom file naming, e.g. `{customer.code}-{$today.$toStringYYYYMMDD}.pdf`
+- **Parameter 6:** Run Report multiple times per each line in detail ID (Optional) - Detail collection ID to run report for each line (e.g., details, lines, paymentMethods)
+
+Parameters 1, 2 and 3 must be filled when the entity flow is saved. When Parameter 6 is filled, Parameter 2 must start with the detail id
+and a dot, otherwise saving is refused with *Attachment field {0} must be a sub-field of the detail {1}*. A report that is not found
+stops the run with *Report not found: {0}*.
 
 ### Parameter Examples:
 
@@ -44,7 +47,6 @@ Field: attachment1
 Format: PDF
 Parameters:
   customerId=customer.id
-  fromDate=startDate
   amount=money.total
   fromDate=$today.$yearStart
   toDate=$today
@@ -68,7 +70,7 @@ Field: details.attachment1
 Format: PDF
 Parameters:
   lineId=details.id
-  itemCode=details.item.itemCOde
+  itemCode=details.item.item.code
   quantity=details.quantity
 Run On Detail: details
 ```

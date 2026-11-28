@@ -101,10 +101,10 @@ A parameter with an `id` such as `{ title: 'Types To Process File', default: 'e:
 ## Module utilities
 
 <LandingGrid>
-  <LandingCard icon="🏬" title="Inventory Utilities" link="/admin/reprocessing/inventory-utilities.md" details="Targeted queries and fixes for stock documents, serials and warehouse data." />
-  <LandingCard icon="🏭" title="Manufacturing Utilities" link="/admin/reprocessing/manufacturing-utilities.md" details="Repairs for assembly documents, production orders and their cost effects." />
-  <LandingCard icon="🏗️" title="Fixed Assets Utilities" link="/admin/reprocessing/fixed-asset-utilities.md" details="Depreciation, asset cards and the entries behind them." />
-  <LandingCard icon="🏢" title="Real Estate Utilities" link="/admin/reprocessing/real-estate-utilities.md" details="Units, contracts and instalment data that has drifted out of line." />
+  <LandingCard icon="🏬" title="Inventory Utilities" link="/admin/reprocessing/inventory-utilities.md" details="Targeted queries and fixes for stock documents, base units, lots and expiry dates, and warehouse locators." />
+  <LandingCard icon="🏭" title="Manufacturing Utilities" link="/admin/reprocessing/manufacturing-utilities.md" details="A check for production orders whose delivery cost does not match the materials issued, and a cleanup of leftover production movement entries." />
+  <LandingCard icon="🏗️" title="Fixed Assets Utilities" link="/admin/reprocessing/fixed-asset-utilities.md" details="Reset an asset's last depreciation date and fix addition and deduction entries that show zero." />
+  <LandingCard icon="🏢" title="Real Estate Utilities" link="/admin/reprocessing/real-estate-utilities.md" details="Recalculate the paid and collected values on contract installments when payment entries have lost their reference." />
 </LandingGrid>
 
 ## Utilities started from a link

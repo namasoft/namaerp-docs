@@ -73,12 +73,12 @@ The same forward-only discipline applies to the value date: the document cannot 
 later document that has already touched the asset, and you will be told which document is in the
 way.
 
-The one recognised exception is on the depreciation side — the depreciation term option that allows
-a depreciation document to be dated before an existing addition, deduction, transfer or partial
+The one recognised exception is on the depreciation side: a depreciation term option lets a
+depreciation document be dated before an existing addition, deduction, transfer or partial
 disposal, described on
-[The Depreciation Document](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md),
-which lets a depreciation run be dated behind an existing addition or deduction. That is the setting
-to reach for when a late invoice has to be capitalised into a month you have not yet closed.
+[The Depreciation Document](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md).
+It relaxes the check on the depreciation document only; an addition or deduction dated before a
+later document on the same asset is still refused.
 
 ## Filling the Document In
 
@@ -89,8 +89,8 @@ to reach for when a late invoice has to be capitalised into a month you have not
 | **Amount**, **Currency**, **Rate**, **Local amount** | the value being added or deducted |
 | **Addition** (إضافة) | the direction switch: ticked = addition, cleared = deduction |
 | **Modify Asset Remaining Life** (تعديل العمر المتبقي للأصل) | see below |
-| **Added Or Deducted Asset Life** (العمر الافتراضي المٌضاف او المٌستبعد) | see below |
-| **Related Subsidiary** (الذمة المتعلق), **Supplier** (مورد) | who the other side of the entry is |
+| **Added Or Deducted Asset Life** (العمر الافتراضي المُضاف أو المُستبعد) | see below |
+| **Related Subsidiary** (الذمة المتعلقة), **Supplier** (مورد) | who the other side of the entry is |
 | **Discount \| Percent**, **Discount Value** | a discount on the amount |
 | Two addition-tax pairs and two discount-tax pairs, each as a percentage and a value | tax handling |
 | **Description** (ملاحظات), **Dimensions** | as everywhere |
@@ -119,7 +119,8 @@ the accounts configured on the term, and identical accounts are collapsed into o
 asks for a shortened entry.
 
 The line's subsidiary is the *Related Subsidiary*, the supplier is the *Supplier*, and the entry's
-dimensions always come from the **asset** — this document has no "dimensions from document" option.
+dimensions come from the **asset** unless the term's account side names its own dimension source —
+this document has no "dimensions from document" option.
 
 The document is also a tax document, so where taxes are involved it produces the invoice data the
 tax and e-invoicing machinery needs.
@@ -144,9 +145,11 @@ The field is required when the switch is ticked and must be left empty when it i
 
 Two things follow from using it, and both matter:
 
-**The asset's next depreciation must be in the same fiscal period as this document.** Once a
-life-adjusting addition or deduction exists in a period, the run will depreciate that asset in that
-period and no other. Enter the document in the period you intend to depreciate in.
+**The asset can be depreciated in this document's fiscal period even if periods before it were
+skipped.** Normally a depreciation run must follow straight on from the asset's last depreciated
+period. In a period that holds a life-adjusting addition or deduction for the asset, that check is
+waived, and the depreciation document's collect picks the asset up in that period. Enter the
+document in the period you intend to depreciate in.
 
 **An asset whose life had run out can be brought back.** Adding life to an asset that had reached
 zero remaining life restarts its depreciation series from the period of the document — which is the
@@ -177,9 +180,9 @@ it deletes them all, and removing a line and re-committing deletes just that lin
 ## Actions on This Screen
 
 Neither the single-asset document nor the aggregated one carries a button of its own. There is no
-*collect* here — you name the asset, type the value, and the new instalment is worked out for you as
-the fields are filled. Everything else follows from committing the document, and is undone by
-cancelling or deleting it.
+*collect* here — you name the asset and type the value, and the asset's new instalment is worked out
+when the document is committed. Everything else follows from committing the document, and is undone
+by cancelling or deleting it.
 
 ## This Is Not the Document for Maintenance
 
@@ -199,5 +202,7 @@ one describing the work and the other carrying the money.
 | Message | Why | What to do |
 |---|---|---|
 | *You can not create addition deduction document for asset {0}, because it is not depreciated until {1}* — «لا يمكنك إنشاء سند إضافة واستبعاد للأصل {0} حيث أنه لم يتم إهلاكه حتى الفترة {1}» | The asset's depreciation is in arrears: its last depreciation sits before the period on this document. | Run the missing depreciation periods first, then enter the addition or deduction. |
-| *Cannot Add or Deduct Asset because the status is not running* — «لا يمكن إضافة او إستبعاد الأصل لأن الحالة غير جاري الإهلاك» | The asset is **Initial** or **Disposed**, or otherwise not running depreciation, and the document is not merely extending its life. | Capitalise the asset first, or reverse its disposal. Extending the remaining life on its own is the one thing a non-running asset accepts. |
-| *You must fill addition deduction book and term in term {0}* — «يجب ملئ دفتر و توجيه سند الإضافة والإستبعاد  فى التوجيه {0}» | The aggregated addition/deduction document has no addition-deduction book and term on its own term, so it cannot create the individual documents. | Open the term of the aggregated document and fill the addition-deduction book and term, then commit again. |
+| *Cannot Add or Deduct Asset because the status is not running* — «لا يمكن إضافة أو استبعاد الأصل لأن الحالة غير جاري الإهلاك» | The asset's status is not **Running** and **Modify Asset Remaining Life** is not ticked. An **Initial** or **Disposed** asset is always refused this way; an asset marked undepreciable is accepted in any other status. | Capitalise the asset first, or reverse its disposal. With **Modify Asset Remaining Life** ticked, an asset that is not running (and not disposed) is accepted. |
+| *Cannot Add or Deduct Asset because of next document {0}* — «لا يمكن عمل إضافة أو استبعاد على الأصل لوجود المستند {0}» | Another document dated after this one has already touched the asset. | Date the document after `{0}`, or undo `{0}` first. |
+| *Cannot make action on asset {0} because it is disposed* | The asset has been disposed. This message has no Arabic text and shows in English on Arabic screens. | Reverse the disposal first. |
+| *You must fill addition deduction book and term in term {0}* — «يجب ملء دفتر و توجيه سند الإضافة والاستبعاد في التوجيه {0}» | The aggregated addition/deduction document has no addition-deduction book and term on its own term, so it cannot create the individual documents. | Open the term of the aggregated document and fill the addition-deduction book and term, then commit again. |

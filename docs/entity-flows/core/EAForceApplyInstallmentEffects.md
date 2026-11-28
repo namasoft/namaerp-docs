@@ -19,7 +19,7 @@ Manual or automated execution for installment recalculation when payment records
 
 ## How It Works
 
-1. **Validates entity** implements IHasInstallmentLines interface
+1. **Validates entity** is a document with installment lines; on any other record the flow fails with *Object {0} does not have installments effects*
 2. **Retrieves installment lines** and payment records
 3. **Calculates payment totals** from installment records
 4. **Updates system fields** with calculated paid and remaining amounts

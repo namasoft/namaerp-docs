@@ -54,7 +54,7 @@ refused on save otherwise.
 | Parameter 3 | Do not Run Bulk Massage Notification cancelled Records (true,false) | Empty or `true`: cancelled bulk messages are skipped. `false`: they are sent too. |
 | Parameter 4 | Flush After Each Run Bulk Massage Notification (true,false) | `true` writes the changes to the database after each message is sent. |
 | Parameter 5 | Do In New Transaction - Continue on Errors (true,false) | `true`: each message is sent in its own transaction; a failing one is reported and the flow moves on to the next, keeping the ones already sent. Empty or `false`: the first failure stops the flow. |
-| Parameter 6 | Run Update Query After Selecting Entities, and Before Run Bulk Massage Notification | Optional. An update statement run once, after Parameter 1 has selected the messages and before the first one is sent. With Parameter 5 `true` it runs in its own transaction. |
+| Parameter 6 | Run Update Query After Selecting Entities, and Before Run Bulk Massage Notification | Optional. An update statement run after Parameter 1 has selected the messages and before the first one is sent. With Parameter 5 `true` it runs once, in its own transaction; otherwise a statement that uses line fields runs once per line. |
 
 **Example query** for Parameter 1:
 ```sql
@@ -65,9 +65,7 @@ This example finds all bulk messages that haven't been sent yet.
 
 ## Technical Notes
 
-This flow extends the base class `EARecommitFromQuery`, which provides the query execution and batch processing framework. The actual notification sending is handled by `NotificationsEngine.manualNotify()`.
-
-**Source Code Location:** `code/infra/domain-base/src/main/java/com/namasoft/infor/domainbase/util/actions/EARunBulkMassagesFromQuery.java:10`
+The six parameters and their rules are those of [EARecommitFromQuery](/entity-flows/core/EARecommitFromQuery); this flow sends each bulk message's notification instead of recommitting the record.
 
 </div>
 

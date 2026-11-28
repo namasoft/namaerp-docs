@@ -29,7 +29,8 @@ and pick the full one from the suggestion list.
 The action creates an empty table for every list that does not have one yet, with the list name
 as both its code and its names (`JobClassCode`, `Gender`, …), and opens it to every legal entity,
 sector, branch, department and analysis set, because the ministry's codes are agency-wide.
-Running it again is harmless: it skips the tables that already exist.
+Running it again is harmless: it skips the tables that already exist, except that a table with an
+empty dimension is opened to every context again.
 
 ## The table screen
 
@@ -49,34 +50,39 @@ The **Details** grid holds the mapping rows:
 | **MCS Code** (كود وزارة الخدمة المدنية) | **Required.** The code exactly as MCS lists it |
 | **MCS Arabic Description** (الوصف العربي لكود الوزارة) | The ministry's Arabic description — for your reference |
 | **MCS English Description** (الوصف الإنجليزي لكود الوزارة) | The ministry's English description — for your reference |
-| **NaMa Record** (سجل نما) | The Nama record that means this code — an organizational position, a work place, a salary component… |
-| **NaMa Value** (قيمة نما) | Or the Nama text that means this code — a nationality, a gender, a specialization… |
+| **Nama Record** (سجل نما) | The Nama record that means this code — an organizational position, a work place, a salary component… |
+| **Nama Value** (قيمة نما) | Or the Nama text that means this code — a gender, a religion, a specialization… |
 
 ## How Nama picks a code
 
 For each value it sends, Nama looks in the matching table in this order and stops at the first
 hit:
 
-1. **A grid row for the record.** A row whose NaMa Record is the record being sent. If you typed
-   the record in NaMa Value instead of picking it, that works too: a NaMa Value equal to the
+1. **A grid row for the record.** A row whose Nama Record is the record being sent. If you typed
+   the record in Nama Value instead of picking it, that works too: a Nama Value equal to the
    record's code, Arabic name or English name counts. The first matching row wins.
 2. **The MCS Code Template**, read from the record and then from the employee.
 3. **The Default MCS Code.**
 
+That order applies to the lists keyed on a record and to the template-only lists (see below). For
+the lists keyed on a value, Nama looks for a row whose Nama Value equals the value exactly, and
+otherwise sends the Default MCS Code; the MCS Code Template is not read for them.
+
 For **LocationCode** and **TransactionCode** the template works one step differently: what it reads
 is a value of your own — say `description5` holds "Riyadh Branch" — which a grid row then translates
-by its NaMa Value. So you can keep something readable on the employee and map it once. For every
-other list, whatever the template reads is sent as the MCS code itself.
+by its Nama Value (the match ignores upper and lower case; a value no row matches is sent as it
+is). So you can keep something readable on the employee and map it once. For every other list,
+whatever the template reads is sent as the MCS code itself.
 
 Numeric codes that MCS expects at a fixed width are padded with leading zeros: job class to 5
 digits, job name and job position to 9, location to 7.
 
 ## Which Nama data each list is keyed on
 
-Knowing what each list is matched against tells you whether to fill **NaMa Record** or
-**NaMa Value**.
+Knowing what each list is matched against tells you whether to fill **Nama Record** or
+**Nama Value**.
 
-**Keyed on a record** — fill NaMa Record:
+**Keyed on a record** — fill Nama Record:
 
 | List | Record |
 |---|---|
@@ -86,16 +92,16 @@ Knowing what each list is matched against tells you whether to fill **NaMa Recor
 | ConsolidationSetID | The issuance of the salary document |
 | QualificationCode | The qualification on the employee's qualification line |
 | VacationCode | The vacation type of the vacation document |
-| AppraisalTypeCode | The evaluation type of the employee evaluation |
+| NationalityCode | The employee's **Nationality** record |
 
-**Keyed on a value** — fill NaMa Value with the text as Nama holds it:
+**Keyed on a value** — fill Nama Value with the text as Nama holds it:
 
 | List | Value |
 |---|---|
 | EmployeeStatusCode | The employee state (Working, Resigned, …) |
 | TerminationReasonCode | The employee state of an employee with a firing date |
-| Gender, Religion, MaritalStatus | The matching option on the employee |
-| NationalityCode | The employee's nationality |
+| Gender, Religion, MaritalStatus | The matching option on the employee, as its stored value (`Male`, `Female`; `Muslim`, `Christian`, …; `Single`, `Married`, `Divorced`, `Widowed`) |
+| AppraisalTypeCode | The evaluation type of the employee evaluation, as its stored value (`Upper`, `Lower`, `Peer`, `Self`, `External`) |
 | MajorCode | The specialization text of the qualification line |
 | UniversityCode | The institute text of the qualification line |
 | EduGrade | The grade text of the qualification line |
@@ -119,8 +125,9 @@ can still be reported. Map any unlisted institute to `999` rather than leaving i
 ### Ratings come from Description 1
 
 The **RatingCode** table is keyed on the **Description 1** of the employee evaluation: type the
-rating there in the same words as the table's NaMa Value — for example `Excellent`, `Very Good` —
+rating there in the same words as the table's Nama Value — for example `Excellent`, `Very Good` —
 and the row's MCS code is sent. An evaluation whose Description 1 matches no row gets the Default
-MCS Code; with no default, it is refused before sending.
+MCS Code; with no default, the request fails Nama's own checks (and is not sent when **Do Not Send
+Records Having Validation Errors** is ticked on the configuration).
 
 Next: [send a submission](./eltezam-submissions-and-sending).

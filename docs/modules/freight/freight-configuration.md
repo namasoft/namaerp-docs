@@ -38,7 +38,7 @@ If an ocean-freight line carries an ENS-CDD or ISPS amount and the matching defa
 extra invoice line is created without a service item.
 :::
 
-**Default LegalEntity If Public** is read by the **Sales Price List** when it is marked
+**Default Legal Entity If Public** is read by the **Sales Price List** when it is marked
 **All-In**. The All-In rate needs a legal entity to work in; when the price list sits on the public
 legal entity, this one is used instead. Without it the list is refused — see
 [Price Lists & Markups](./freight-pricing.md#Messages-you-may-see).

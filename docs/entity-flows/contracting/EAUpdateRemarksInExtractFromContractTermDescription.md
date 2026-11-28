@@ -34,31 +34,41 @@ Foundation Work (Level 1)
 │   ├── Manual Excavation (Level 3)
 │   └── Machine Excavation (Level 3)
 ```
-For "Manual Excavation": collects remarks from levels 3→2→1
+For "Manual Excavation": collects remarks from levels 3→2→1 and writes them from the top level down: `Foundation Work - Excavation - Manual Excavation`
+
+The combined text replaces whatever the remarks field held. A line whose term code is not found in the contract terms gets empty remarks.
 
 ## Parameters
 
-### Parameter 1: Update Details Remarks (Required)
-- **Values:** `true` or `false`
+At least one of Parameters 1 and 2 must be filled.
+
+### Parameter 1: Update Details Remarks
+- **Title:** Update Details Remarks(true or false)
+- **Values:** `true`, `false` or empty
 - **Purpose:** Update remarks in extract detail lines
 
-### Parameter 2: Update Conditions Remarks (Required)
-- **Values:** `true` or `false`  
+### Parameter 2: Update Conditions Remarks
+- **Title:** Update Conditions Remarks(true or false)
+- **Values:** `true`, `false` or empty
 - **Purpose:** Update remarks in extract condition lines
 
 ### Parameter 3: Up to Level (Optional)
+- **Title:** Up to Level
 - **Default:** 255 (all levels)
-- **Purpose:** Maximum hierarchy levels to include
+- **Purpose:** Maximum hierarchy levels to include, counted from the line's own term upward: `1` takes the term's own remarks only, `2` adds its parent. Must be a whole number
 
 ### Parameter 4: Contract Field (Optional)
-- **Purpose:** Custom field path to contract terms
+- **Title:** Contract Field(eg. projContract.executiveBudget) can be left empty
+- **Purpose:** Field of the extract that holds the record whose terms are searched. Empty: the extract's own contract
 - **Examples:** `projContract.executiveBudget`
 
 ### Parameter 5: Term Code Field (Optional)
-- **Purpose:** Custom field for term codes
+- **Title:** Term Code Field (eg. executiveTermCode, estimatedTermCode, termCode) can be left empty
+- **Purpose:** Field of the extract line (or condition line) that holds the term code to look up. Empty: the line's term code
 - **Examples:** `executiveTermCode`, `estimatedTermCode`
 
 ### Parameter 6: Separator (Optional)
+- **Title:** Separator(between level remarks,default ' - ')
 - **Default:** `" - "`
 - **Purpose:** Text to separate hierarchy level remarks
 

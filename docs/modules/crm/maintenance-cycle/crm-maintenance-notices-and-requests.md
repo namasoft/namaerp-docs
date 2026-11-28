@@ -39,7 +39,7 @@ Picking the machine does most of the typing for you: the customer, contact, seri
 
 **The status change page** shows a system-written history of status changes (from status, to status, date, user, remark). You cannot add, edit or remove a line in it — only the system writes there when the current status changes. Underneath it sits something more interesting, which the next section covers.
 
-**The Billing page** has a payment-schedule template, a **GeneratePayments** button, schedule lines, payment documents and payment methods.
+**The Billing page** has a payment-schedule template, a **Generate Payments** button, schedule lines, payment documents and payment methods.
 
 ::: info A notice is a fault log
 The notice works out the spare-part totals, the service totals, the header money block and the payment schedule as you type, so it shows the expected cost of the repair. It creates no accounting entry, no stock movement and no receivable; the money and the stock are recorded by the maintenance order and invoice that follow it.
@@ -51,7 +51,7 @@ The notice is refused if its payment-schedule lines do not add up to the money n
 
 The notice doubles as the attendance document for field technicians. When a technician using Nama Mobile checks in and out on a call, the entries are recorded against the notice and are visible as a read-only list on the notice's **status change** page — who was on site, and between which times.
 
-That is the whole feature: a visible record of arrival and departure against the job. Nothing is compared to a shift, nothing reaches payroll, and no rule stops a technician checking in twice.
+That is the whole feature: a visible record of arrival and departure against the job, with the check-in and check-out locations. Nothing is compared to a shift and nothing reaches payroll. A check-in adds a new entry only when the notice's *Responsible Employee* has no entry on it yet or his last entry is already checked out; checking in again before that entry is checked out adds nothing.
 
 ## From a Notice to a Maintenance Order
 
@@ -89,10 +89,9 @@ Requests move no stock in any configuration.
 
 **Maintenance Notice — Billing page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — splits the value into an instalment schedule. It asks for
+- **Generate Payments** (*إنشاء الدفعات*) — splits the value into an instalment schedule. It asks for
   the number of payments, the period between them and its unit, the start date, a grace period,
-  down / first / second / last payment values and a rounding mode. The English label ships as the
-  raw name shown here.
+  down / first / second / last payment values and a rounding mode.
 - **Request Redeem Customer Amount** — spends the customer's loyalty balance against this document.
   It shows the net value, the points owner and the reward balance still available, and asks how
   much to redeem and against which reward code. The page carries it twice under the same label: the

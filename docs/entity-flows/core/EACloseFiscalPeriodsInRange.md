@@ -10,7 +10,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Automatically closes fiscal periods that have passed their end dates. Changes status from Open/Locked to "Closed" based on date range calculation.
+Automatically closes fiscal periods that have passed their end dates. Changes status from "Opened" to "Closed" based on date range calculation. The record the flow runs on is not used, so the flow is normally run from a task schedule.
 
 ## When This Action Runs
 

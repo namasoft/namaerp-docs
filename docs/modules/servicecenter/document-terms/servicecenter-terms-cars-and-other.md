@@ -34,13 +34,16 @@ car records, and it **stamps** them.
 
 **Create Sub Item From Line Information** / **إنشاء صنف فرعي من السطر**
 (`termConfig.createSubItemFromLineInfo`) is the master switch. With it
-on, saving the document creates a car record from each line's data — chassis, engine, colour, key
-number, price. It also enables the matching *Create Sub Item From Line Information* button in the
-document's More menu.
+on, saving the document creates a car record from each line's data — chassis, engine, gearbox,
+body type, passengers, warranty, key and slot numbers, item classes and categories, the line's
+warehouse and locator, and its price classifiers. It also makes the matching *Create Sub Item From
+Line Information* button in the document's More menu do its work.
 
-> A car record is created automatically when you save **any** Car Purchases document — order,
-> receipt, pro-forma, purchase invoice or purchase return — whose term has *Create Sub Item From
-> Line Information* switched on. Switch it on for exactly one document type in your chain.
+> A car record is created automatically when you save **any** car document whose term has *Create
+> Sub Item From Line Information* switched on — the purchase order, pro-forma purchase invoice,
+> purchase invoice, purchase return, car receipt and its cancel, the car sales family, the sales
+> invoice and the sales return all carry the switch. Switch it on for exactly one document type in
+> your chain.
 
 Al-Sahra Motors switched it on for the **Car Purchase Invoice** term only, so `SIPI-2026-021` on
 10 February 2026 is where six `CAR-…` records were born, each starting at status *Pre Initial*.
@@ -50,13 +53,14 @@ If the flag is on for two documents in the same chain, what happens depends on h
 document was built.
 
 - Built **from** the first — the line carries the car reference forward, so the existing record is
-  found and **re-edited**. No duplicate, but its group, default status and warehouse are silently
-  rewritten, even on a car already in use.
+  found and **re-edited**. No duplicate, but its group, model, warehouse and locator are silently
+  rewritten from the line and the item, even on a car already in use.
 - Lines typed **fresh** — a second, duplicate car record is created with a new code. Nothing checks
   the chassis number; there is no uniqueness rule on it anywhere.
 
-Never switch it on for a **return** term. A purchase return or a sales return with the flag on will
-mint brand-new car records for cars that are going away.
+Never switch it on for a **return** term. A purchase return or a sales return with the flag on
+re-writes each returned car from the return line, and mints a brand-new car record for any line that
+names no car.
 :::
 
 ::: warning Splitting a quantity works only on copied documents
@@ -76,14 +80,16 @@ matters for back-dated documents.
 A long family of *Update … In Sub Item* switches, each of which writes one back-reference onto the
 car's **Statistics** tab when the document commits: the purchase order, the purchase invoice, the
 stock receipt, the sales quotation and quotation request, the sales order, the sales invoice, the
-traffic letter and letter request, the salesperson, the cancelling document and the delivery date
+traffic letter and letter request, the salesperson and the cancelling document (*Update Cancelled By
+Doc In Sub Item*). *Update Delivery Date In Sub Item* writes the document's value date into the
+car's Delivery Date field in the Basic Information block
 (`termConfig.updatePurchaseOrderInSubItem`, `termConfig.updatePurchaseInvoiceInSubItem`,
 `termConfig.updateStockReceiptInSubItem`, `termConfig.updateSalesQuotationInSubItem`,
 `termConfig.updateSalesQuotationReqInSubItem`, `termConfig.updateSalesOrderInSubItem`,
 `termConfig.updateSalesInvoiceInSubItem`, `termConfig.updateTrafficLetterInSubItem`,
 `termConfig.updateTrafficLetterReqInSubItem`, `termConfig.updateSalesmanInSubItem`,
 `termConfig.updateCancelledByDoc`, `termConfig.updateDeliveryDateInSubItem`).
-Cancelling the document clears its own stamp again, provided the car still points at it.
+Cancelling the document clears its own reference stamps again, provided the car still points at it.
 
 Alongside them:
 
@@ -99,13 +105,11 @@ Alongside them:
   `termConfig.copyTax4PercentageFromSubItem`, `termConfig.copyTax1PercentageToSubItem` …
   `termConfig.copyTax4PercentageToSubItem`, `termConfig.copyTaxesFromSubItemAfter`).
 
-::: warning What the Final Delivery does not stamp
-Even with the whole stamping block switched on, a committed [Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md) leaves the car's
-*Delivery Status*, *Delivered To Customer*, *Plate Number* and every registration and customs field
-**empty**. Only *Delivery Date* is written, and only when *Update Delivery Date In Sub Item* is on.
-Al-Sahra types plate `ر ط ص 8318` onto `CAR-000318` by hand on 5 March, after the plates come back.
-There is no term option that changes this.
-:::
+Even with the whole stamping block switched on, a committed
+[Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md) writes only the
+*Delivery Date* (with *Update Delivery Date In Sub Item* on); the hand-over, plate, registration and
+customs fields are typed on the car by hand, as
+[The Car File](/modules/servicecenter/cars-setup/car-master-file) explains.
 
 ![The Sub Item Documents Configurations tab of the Car Purchase Invoice term](../../../ar/modules/servicecenter/images/document-terms/sc-term-car-purchase-sub-item-en.png)
 
@@ -129,7 +133,7 @@ switch that makes an order-class car document touch quantities at all — and on
 never as a stock movement. Al-Sahra's sales order `SISO-2026-0233` reserves chassis
 `NWA7R24C26K000318`; it moves nothing.
 
-The tab also carries *Check Available Quantities* (`termConfig.checkAvailableQties`), the warehouse
+The tab also carries *Check Available Quantities Before Save* (`termConfig.checkAvailableQties`), the warehouse
 and locator sources for the reservation (`termConfig.reservationWarehouseSource`,
 `termConfig.reservationLocatorSource`), *Cancel Reservation Of Related Docs*
 (`termConfig.cancelReservationOfRelatedDocs`) and *Prevent Cancel Reservation*
@@ -153,11 +157,12 @@ purchase invoice — `SIPI-2026-021` produced stock receipt `STR-2026-0552` into
 the car receipt's generation book and term **empty**, so `SIR-2026-0088` records the physical
 arrival, the accessory checklist and the parking slots and moves nothing.
 
-If instead you generate on the receipt, leave *Generate Document* (`termConfig.generationConfigurations.generateDoc`) off on the purchase
+If instead you generate on the receipt, leave *Generate Document(s)* (`termConfig.generationConfigurations.generateDoc`) off on the purchase
 invoice term
 and use its *تجميع / Collect* and *تطبيق / Apply* buttons to link the receipts that already exist. On
-whichever term does generate, switch **Do Not Generate Documents If Manual Documents Found**
-(`termConfig.generationConfigurations.doNotGenDocsIfManualDocsFound`) on as a second line of defence.
+whichever term does generate, switch **Do Not Generate Documents Automatically If Manual Documents
+Are Found** (`termConfig.generationConfigurations.doNotGenDocsIfManualDocsFound`) on as a second line
+of defence.
 
 Treat the receipt and the purchase invoice as **alternatives**, never as a sequence.
 :::
@@ -182,7 +187,8 @@ line discount, seven further discount accounts, approximation discount, the tax 
 pairs, and for the sales order a pair of reservation-value accounts (`termConfig.reservationValueDebit`,
 `termConfig.reservationValueCredit`).
 
-Three of the fourteen documents in the family create a journal entry from it:
+Three of the fourteen documents in the family create a journal entry from it, and only when its
+debit or credit side is filled:
 
 | Document | Creates an entry? |
 |---|---|
@@ -208,9 +214,9 @@ The Car Purchase Invoice term carries the landed-cost machinery, which is what t
 | Option | Field id | Effect |
 |---|---|---|
 | Create Receipt Additional Cost With Service Items | `termConfig.createReceiptAdditionalCostWithServiceItems` | Builds a receipt-additional-cost document from the invoice's service lines — the 9,000 freight, 4,200 clearance and 1,800 transport on `SIPI-2026-021` |
-| Additional Cost Doc Book / Term | `termConfig.additionalCostDocBook` / `termConfig.additionalCostDocTerm` | The book and term of that document — `RAC-2026-009` |
-| Distribute Cost Based On Receipt Qty | `termConfig.distributeCostBasedOnReceiptQty` | Spreads the 15,000 by received quantity: 2,500 per car across six cars |
-| Quantity Of Invoice Should Match Stock Document | `termConfig.quantityOfInvoiceShouldMatchStockDocument` | Refuses an invoice whose quantities disagree with the receipts it collected |
+| Additional Cost Document Book / Term | `termConfig.additionalCostDocBook` / `termConfig.additionalCostDocTerm` | The book and term of that document — `RAC-2026-009` |
+| Distribute Cost Based On Receipt Quantity | `termConfig.distributeCostBasedOnReceiptQty` | Spreads the 15,000 by received quantity: 2,500 per car across six cars |
+| Quantity of invoice should match stock document | `termConfig.quantityOfInvoiceShouldMatchStockDocument` | Refuses an invoice whose quantities disagree with the receipts it collected |
 
 The **Sub Item Assembly Document**, reached from Cars > Car Purchases, has the smallest term in the
 whole car family: the standard Sub Item block described above, plus exactly two options — an
@@ -221,9 +227,9 @@ after creating the vehicle records (`termConfig.assemblyDocumentBook`, `termConf
 supply-chain licence code, `supplychain-assembly`, on top of `srvcenter-subitems`.
 
 The Car Purchase Return term mirrors it with its own generation settings for the Stock Issue, plus
-*Source Invoice Calculation* (`termConfig.sourceInvoiceCalculation`), *Recreate Inventory Stock
-Document With Return Invoice* (`termConfig.recreateInvStockDocWithReturnInv`) and *Add Return To
-Invoice Payment* (`termConfig.addReturnToInvoicePayment`). The Car Purchase Order term is the
+*Invoice Calculation* (`termConfig.sourceInvoiceCalculation`), *Recreate Invoice Stock Document
+With Return Invoice Saving* (`termConfig.recreateInvStockDocWithReturnInv`) and *Add Return To
+Invoice Payment Docs and Decrease Remaining* (`termConfig.addReturnToInvoicePayment`). The Car Purchase Order term is the
 plainest of the four: taxable, tax plan, modifiable tax (`termConfig.taxable`, `termConfig.taxPlan`,
 `termConfig.modifiableTax`), *Disable After Use* (`termConfig.disableAfterUse`) and approximation
 discount (`termConfig.approximationDiscount`).
@@ -233,7 +239,7 @@ discount (`termConfig.approximationDiscount`).
 The insurance sub-module's terms are small. What each document books is explained on
 [the policy cycle page](/modules/servicecenter/car-insurance/car-insurance-policy-documents.md).
 
-**Car Insurance Policy Order** and **Car Insurance Policy Renewal** share one term, whose whole
+**Insurance Policy Issuance Order** and **Car Insurance Policy Renewal** share one term, whose whole
 content is one pair of accounting sides under *Total Insurance Price*: *Total Insurance Price Debit* /
 *Total Insurance Price Credit* (مدين/دائن قيمة التأمين, `termConfig.totalInsurancePriceDebit`,
 `termConfig.totalInsurancePriceCredit`). Al-Sahra's policy order `SIIPO-2026-0212`
@@ -269,9 +275,9 @@ each row adds a debit/credit pair for the payment documents recorded against the
 Al-Sahra's `SIIPI-2026-0074` books 2,835, 315 and 3,150 against three different pairs. The
 **Purchase Return** has a term of the same shape.
 
-And the documents with **no term at all** — Customer Insurance Policy, Policy Cancellation, Policy
-Period Adjustment, Policy Value Adjustment — have nothing to configure and book nothing. Their
-book's *توجيه* tab is empty by design.
+The policy cancellation and the two policy adjustments have no term at all; the full list of
+termless documents is on
+[Document Terms in Service Center](/modules/servicecenter/document-terms/servicecenter-terms-basics).
 
 ## Rental terms
 

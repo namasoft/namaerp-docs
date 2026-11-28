@@ -70,7 +70,7 @@ columns are added after it.
 
 A line with no filter at all is refused on save:
 
-*You must fill at least one filter* — «يجب ملئ عدد فلتر 1 على الأقل»
+*You must fill at least one filter* — «يجب ملء عدد فلتر 1 على الأقل»
 
 ![The Added As a Block To grid: Sales Invoice, filtered on the customer](../../ar/platform/images/list-views/custom-list-view-added-to-en.png)
 

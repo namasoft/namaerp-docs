@@ -23,10 +23,10 @@ When you create a new register, its replacement conditions, currencies, payment 
 | Locator | الموقع | The default locator inside that warehouse. |
 | POS Customer Group | مجموعة عميل نقاط البيع | Customers created at the register are saved on the server in this group. It must be a customer group with no automatic coding — the register codes its own customers. |
 | Invoice Classification | تصنيف الفاتورة | The classification a new invoice starts with. |
-| Default Document Category | تصنيف المستند الأفتراضي | The record category a new document starts with. |
+| Default Document Category | تصنيف المستند الافتراضي | The record category a new document starts with. |
 | Inactive | غير نشط | Switches the register off. An inactive register cannot sync, and does not count towards the licence. |
 | Work Shift Time | وقت وردية العمل | When a shift is expected to end (see [shift settings](./pos-shift-close-settings.md)). |
-| Register Logo / Register Login Title | لوجو الماكينة / عنوان الدخول للماكينه | The picture and title shown on the register's sign-in screen. |
+| Register Logo / Register Login Title | لوجو الماكينة / عنوان الدخول للماكينة | The picture and title shown on the register's sign-in screen. |
 | Available In Mobile Application | متاح للاستخدام في تطبيق الموبايل | Lets the Captain Order mobile app connect to this register. |
 | Subordinate Register For Captain Order | ماكينة فرعية لكابتن أوردر | Marks the record as a sub-register used by Captain Order devices; these are counted against their own licence limit. |
 | Call Center Mode / Read Orders From Call Center | وضع خدمة العملاء / قراءة الطلبات من مركز خدمة العملاء | The two ends of the call-center flow described in [Tables, Reservations & Captain Order](../pos-tables-and-restaurant.md). A register can be one or the other, not both. |
@@ -40,14 +40,14 @@ The **Dimensions** group must carry a real legal entity — a register cannot be
 
 | Field | Arabic on screen | What it is for |
 |---|---|---|
-| Printer Name | إسم الطابعه | The printer the cash drawer is attached to; the open-drawer command is sent to it. Invoices do not use this field. |
+| Printer Name | اسم الطابعة | The printer the cash drawer is attached to; the open-drawer command is sent to it. Invoices do not use this field. |
 | Open Cash Drawer Command | أمر فتح الدرج | The command sent to open the cash drawer. |
-| Documents Print Count | عدد مرات طباعه المستندات في كل أمر طباعه | How many copies each print produces. |
-| Always Print Full Invoice | طباعة الفاتورة الكامله دائماً | The "print full invoice" box in the payment window starts ticked. |
+| Documents Print Count | عدد مرات طباعة المستندات في كل أمر طباعة | How many copies each print produces. |
+| Always Print Full Invoice | طباعة الفاتورة الكاملة دائماً | The "print full invoice" box in the payment window starts ticked. |
 | Full Invoice Printer | طابعة الفاتورة الكاملة | The printer this machine sends the full invoice to. Empty means the printer on the print form. |
 | Small Invoice Printer | طابعة الفاتورة الصغيرة | The printer this machine sends the normal (small) receipt to. Empty means the printer on the print form. |
-| Do Not Print Normal Form With Printing Full Form | عدم طباعه النموذج العادي في حالة طباعه النموذج الكامل | When the full form is printed, the normal receipt is skipped. |
-| Print Preparation Form With Payment / With Hold / With Payment Delay | طباعة فورمة تحضير الاوردر مع الدفع / مع تعليق الفاتوره / مع تأجيل الدفع | When the kitchen (preparation) slip prints. |
+| Do Not Print Normal Form With Printing Full Form | عدم طباعة النموذج العادي في حالة طباعة النموذج الكامل | When the full form is printed, the normal receipt is skipped. |
+| Print Preparation Form With Payment / With Hold / With Payment Delay | طباعة فورمة تحضير الاوردر مع الدفع / مع تعليق الفاتورة / مع تأجيل الدفع | When the kitchen (preparation) slip prints. |
 
 #### Sending the full and the small invoice to different printers
 
@@ -71,25 +71,25 @@ Service charge, delivery and minimum charge are set here or on POS Settings: **S
 
 ### Links to other settings screens
 
-Several fields simply point at a settings record that is shared between registers: **Pos UI Settings**, **Pos Mobile UI Settings**, **Pos Items To Send** and **Pos Items To Not Send**, **Pos Pole Display Specs**, **Item Barcode Parser**, **POS Item Quantity Update Configuration**, **Default Values Template**, **Saving Setting**, **Extra Filters**, **ShortCuts**, **Customer Phone Country Codes**, **Payment Methods Settings**, **Payment Terminal**, **Reward Points Configuration**, and the discount coupon book and group. Each of those is a separate record with its own screen, so one set-up can serve many registers.
+Several fields simply point at a settings record that is shared between registers: **Pos UI Settings**, **Pos Mobile UI Settings**, **Pos Items To Send** and **Pos Items To Not Send**, **Pos Pole Display Specs**, **Item Barcode Parser**, **POS Item Quantity Update Configuration**, **Default Values Template**, **Saving Setting**, **Extra Filters**, **Shortcuts**, **Customer Phone Country Codes**, **Payment Methods Settings**, **Payment Terminal**, **Reward Points Configuration**, and the discount coupon book and group. Each of those is a separate record with its own screen, so one set-up can serve many registers.
 
 ### Keeping the machine in step
 
 | Field | Arabic on screen | What it does |
 |---|---|---|
-| POS Machine Current Release / POS Machine Last Connection Time | رقم اصدار نقاط البيع الحالي / اخر وقت اتصال مع نقاط البيع | Filled by the machine: which version it runs and when it last talked to the server. The quickest health check for a register. |
-| Resend POS Data To Nama | إعادة إرسال بيانات نقاط البيع الي نما | When the machine next receives the register record, it resets its retry counters and sends all its unsent documents again, then clears the box. |
-| Download Latest Release | تحميل اخر اصدار | The machine downloads the latest version and starts the update without asking, then clears the box. |
-| Sales Lines Screen Properties / Connection Properties | خصائص أعمدة المبيعات / خصائص الأتصال | Text you want written into the machine's own screen-settings and connection-settings files. |
-| Send Properties To POS Register | ارسال الخصائص الي ماكينة نقاط البيع | The machine writes the two fields above into its files, then clears the box. |
+| POS Machine Current Release / POS Machine Last Connection Time | رقم إصدار نقاط البيع الحالي / آخر وقت اتصال مع نقاط البيع | Filled by the machine: which version it runs and when it last talked to the server. The quickest health check for a register. |
+| Resend POS Data To Nama | إعادة إرسال بيانات نقاط البيع إلى نما | When the machine next receives the register record, it resets its retry counters and sends all its unsent documents again, then clears the box. |
+| Download Latest Release | تحميل آخر إصدار | The machine downloads the latest version and starts the update without asking, then clears the box. |
+| Sales Lines Screen Properties / Connection Properties | خصائص أعمدة المبيعات / خصائص الاتصال | Text you want written into the machine's own screen-settings and connection-settings files. |
+| Send Properties To POS Register | إرسال الخصائص إلى ماكينة نقاط البيع | The machine writes the two fields above into its files, then clears the box. |
 | Read Properties From POS Register | قراءة الخصائص من ماكينة نقاط البيع | The machine uploads its current files into **Screen Properties From Register** and **Connection Properties From Register**, so you can read them without visiting the shop. |
-| Remove Documents From POS After (In Days) | حذف المستندات من نقطة البيع بعد مرور (بالأيام) | Keeps the machine's local database small: documents already sent to the server and older than this are deleted from the machine. |
+| Remove Documents From POS After (In Days) | حذف المستندات من نقطة البيع بعد مرور (بالأيام) | Keeps the machine's local database small: each time a new shift is opened, documents already sent to the server and older than this many days are deleted from the machine. The machine also keeps its log of errors already reported to the server for this many days (30 when the field is empty or zero). |
 
 These flags act only when the machine receives the updated register record — a machine that is switched off acts on them the next time it syncs.
 
 ## Replacement Conditions And Policy
 
-**Return Invoices With In (In days)** and **Replace WithIn (In Days)** limit how old an invoice may be for a return or a replacement; **Text Condition 1–5** are the policy lines printed for the customer. Empty values fall back to POS Settings. A cashier whose security profile has **Allow Return After Allowed Period** can still return an older invoice (see [POS Security Profiles](./pos-security-profiles.md)).
+**Return Invoices Within (In days)** and **Replace Within (In Days)** limit how old an invoice may be for a return or a replacement; **Text Condition 1–5** are the policy lines printed for the customer. An empty **Replace Within (In Days)** or text condition falls back to POS Settings; **Return Invoices Within (In days)** exists only on the register. A cashier whose security profile has **Allow Return After Allowed Period** can still return an older invoice (see [POS Security Profiles](./pos-security-profiles.md)).
 
 ## The grids
 
@@ -118,16 +118,7 @@ If the register has no payment methods of its own, the **Payment Methods** grid 
 
 ### Which term each document gets
 
-Four grids choose the term per situation, before the **Books And Terms** term is used as the fallback. Each is read from the register when it has lines, otherwise from POS Settings; the **first matching line** wins.
-
-| Grid | Arabic on screen | A line matches when… |
-|---|---|---|
-| Sales Terms | توجيهات المبيعات | **Type** is *Customer Required* when the invoice has a customer (*Customer Not Required* when it does not), **With Subsidiary** matches whether the invoice carries a subsidiary (an on-account party), and the **Record Category** is empty or equals the invoice's. |
-| Sales Return Terms | توجيهات المردودات | **Type** is *Cash* or *To Credit Note* as the refund was made, **With Subsidiary** matches, and the **Record Category** is empty or equal. |
-| Payment Terms | توجيهات المصروفات | **Type** (*From Register*, *From Current Employee*, *To Credit Note*) matches the kind of payment, or the **Record Category** matches. |
-| Receipt Terms | توجيهات المقبوضات | The **Record Category** is empty or equals the receipt's. |
-
-So a chain can process cash sales to walk-in customers and on-account sales to companies with two different terms, without the cashier choosing anything.
+Four grids — **Sales Terms** (*توجيهات المبيعات*), **Sales Return Terms** (*توجيهات المردودات*), **Payment Terms** (*توجيهات المصروفات*) and **Receipt Terms** (*توجيهات المقبوضات*) — choose the term per situation, before the **Books And Terms** term is used as the fallback. Each is read from the register when it has lines, otherwise from POS Settings, and the first matching line wins. The matching rules of each grid are in [POS Document Terms](/modules/pos/erp-setup/pos-document-terms). So a chain can process cash sales to walk-in customers and on-account sales to companies with two different terms, without the cashier choosing anything.
 
 ### Favourites
 
@@ -159,12 +150,12 @@ Select one or more registers in the list and use **More**:
 
 | Action | Arabic on screen | What it does |
 |---|---|---|
-| Resend POS Data To Nama | إعادة إرسال بيانات نقاط البيع الي نما | Ticks the resend flag on every selected register (see above). |
-| Download Latest Release | تحميل اخر اصدار | Ticks the update flag on every selected register. |
-| Send Properties To POS Register | ارسال الخصائص الي ماكينة نقاط البيع | Ticks the send-properties flag. |
+| Resend POS Data To Nama | إعادة إرسال بيانات نقاط البيع إلى نما | Ticks the resend flag on every selected register (see above). |
+| Download Latest Release | تحميل آخر إصدار | Ticks the update flag on every selected register. |
+| Send Properties To POS Register | إرسال الخصائص إلى ماكينة نقاط البيع | Ticks the send-properties flag. |
 | Read Properties From POS Register | قراءة الخصائص من ماكينة نقاط البيع | Ticks the read-properties flag. |
 | Refresh Errors | تحديث الأخطاء | Clears resolved error lines, for all registers. |
-| Delete Errors For Selected Registers | حذف الاخطاء للماكينات المختاره | Deletes every error line of the selected registers. |
+| Delete Errors For Selected Registers | حذف الأخطاء للماكينات المختارة | Deletes every error line of the selected registers. |
 
 The list also shows **Inactive**, **POS Machine Last Connection Time**, **POS Machine Current Release**, **Download Latest Release** and **Warehouse**, so one glance at it shows which machines are behind or have stopped syncing.
 
@@ -174,19 +165,21 @@ The list also shows **Inactive**, **POS Machine Last Connection Time**, **POS Ma
 
 | Message | Why | What to do |
 |---|---|---|
-| *Cannot save, available count of registers is {0}* — «لا يمكن الحفظ , عدد الماكينات لا يمكن ان يتخطي {0}» | Saving this active register would exceed the number of registers the licence allows. | Make an unused register **Inactive**, or extend the licence. |
-| *Cannot save, available count of sub-registers is {0}* — «لا يمكن الحفظ , عدد الماكينات الفرعية الخاصة بكابتن أوردر لا يمكن ان يتخطي {0}» | The same, for Captain Order sub-registers. | As above. |
-| *More than one cash method* — «اكثر من طريقة دفع إفتراضيه» | Two payment-method lines are ticked **Cash Payment Method**. | Tick only one. |
-| *More than one method has the same order* — «اكثر من طريقة دفع لهم نفس الترتيب» | Two lines share an **Appearance order**. | Give each a different number. |
-| *Repeated payment method* — «طريقة دفع مكرره» | A payment method appears twice. | Remove the duplicate. |
-| *Can not be saved on null legal entity* — «لا يمكن الحفظ علي الشركة عام» | No legal entity in the dimensions. | Choose the register's legal entity. |
+| *Cannot save, available count of registers is {0}* — «لا يمكن الحفظ , عدد الماكينات لا يمكن أن يتخطى {0}» | Saving this active register would exceed the number of registers the licence allows. | Make an unused register **Inactive**, or extend the licence. |
+| *Cannot save, available count of sub-registers is {0}* — «لا يمكن الحفظ , عدد الماكينات الفرعية الخاصة بكابتن أوردر لا يمكن أن يتخطى {0}» | The same, for Captain Order sub-registers. | As above. |
+| *More than one cash method* — «أكثر من طريقة دفع افتراضية» | Two payment-method lines are ticked **Cash Payment Method**. | Tick only one. |
+| *More than one method has the same order* — «أكثر من طريقة دفع لهم نفس الترتيب» | Two lines share an **Appearance order**. | Give each a different number. |
+| *Repeated payment method* — «طريقة دفع مكررة» | A payment method appears twice. | Remove the duplicate. |
+| *Can not be saved on null legal entity* — «لا يمكن الحفظ على الشركة عام» | No legal entity in the dimensions. | Choose the register's legal entity. |
 | *This group is not for customer* — «هذه المجموعة ليست لعميل» | **POS Customer Group** is not a customer group. | Choose a customer group. |
-| *POS customer group must not have auto coding* — «مجموعة عملاء نقاط البيع يجب الا يكون بها تكويد آلي» | The chosen group codes customers automatically. | Use a group without automatic coding. |
-| *Book {0} at line {1} is a system book* — «الدفتر {0} فى السطر {1} نظامى» | A system book was chosen in **Books And Terms**. | Choose a normal book. |
-| *Book {0} is for the type {1}, while you selected type {2} on the line number {3}* — «الدفتر {0} للنوع {1}، بينما النوع المختار {2} فى السطر {3}» | The book belongs to another document type. | Choose a book of the line's type. |
-| *Term {0} is for the type {1}, while you selected type {2} on the line number {3}* — «التوجيه {0} للنوع {1}، بينما النوع المختار {2} فى السطر {3}» | The term belongs to another document type. | Choose a term of the line's type. |
-| *The entity type {0} at line {1} is repeated with line {2}, sub type is {3}* — «النوع {0} فى السطر {1} مكرر للسطر {2}، للنوع الفرعى {3}» | Two **Books And Terms** lines for the same type and sub type. | Keep one. |
-| *Subtype must be Normal or empty for type {0}* — «النوع الفرعى يجب أن يكون عادى أو فارغ للنوع {0}» | A sub type was set on a type other than the sales invoice. | Clear it. |
+| *POS customer group must not have auto coding* — «مجموعة عملاء نقاط البيع يجب ألا يكون بها تكويد آلي» | The chosen group codes customers automatically. | Use a group without automatic coding. |
+| *Book {0} at line {1} is a system book* — «الدفتر {0} في السطر {1} نظامي» | A system book was chosen in **Books And Terms**. | Choose a normal book. |
+| *Book {0} is for the type {1}, while you selected type {2} on the line number {3}* — «الدفتر {0} للنوع {1}، بينما النوع المختار {2} في السطر {3}» | The book belongs to another document type. | Choose a book of the line's type. |
+| *Term {0} is for the type {1}, while you selected type {2} on the line number {3}* — «التوجيه {0} للنوع {1}، بينما النوع المختار {2} في السطر {3}» | The term belongs to another document type. | Choose a term of the line's type. |
+| *The entity type {0} at line {1} is repeated with line {2}, sub type is {3}* — «النوع {0} في السطر {1} مكرر للسطر {2}، للنوع الفرعي {3}» | Two **Books And Terms** lines for the same type and sub type. | Keep one. |
+| *Subtype must be Normal or empty for type {0}* — «النوع الفرعي يجب أن يكون عادي أو فارغ للنوع {0}» | A sub type was set on a type other than the sales invoice. | Clear it. |
+| *Subtype can be Normal, Service, or empty for type {0}* — «النوع الفرعي يمكن أن يكون عادي أو خدمة أو فارغ للنوع {0}» | A sales invoice line carries a sub type other than *Normal* or *Service*. | Choose *Normal* or *Service*, or clear it. |
+| *Conflict detected - {0} and {1} cannot be active together. Please disable one of these options to continue.* — «تم اكتشاف تعارض - لا يمكن تفعيل {0} و{1} معا. يرجى تعطيل أحد هذه الخيارات للمتابعة.» | **Call Center Mode** and **Read Orders From Call Center** are both ticked. | Untick one of them. |
 | *The register {0} is inactive* | A list action or a sync call was made for an inactive register. This message has no Arabic translation and appears in English on Arabic screens too. | Untick **Inactive** first, if the register is back in use. |
 | *User ({0}) can not access this register ({1})* — «المستخدم ({0}) لا يمكنه الدخول على هذه الماكينة ({1})» | Shown at the machine: the user is not in **Allowed Users**. | Add the user, or sign in on a machine they are allowed on. |
 | *Please Select Tax Payer Configuration* — «من فضلك قم باختيار إعدادات مصلحة الضرائب» | **Activate e-Receipt POS** was pressed with no tax-authority configuration. | Fill **Electronic Tax Authority Configuration** and save first. |

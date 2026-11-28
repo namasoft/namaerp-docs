@@ -23,10 +23,10 @@ The screen header identifies the tool and controls its general behavior:
 | Field | Role |
 |---|---|
 | **Tool Type** | The kind of tool: `Query Based`, `Report Based`, `Entity Flow Based`, or `System Tool` — this decides which page of the screen you will use |
-| **Alt Code** | The name the tool is advertised under to the language model for the first three types (query/report/entity flow) |
+| **English Code** | The name the tool is advertised under to the language model for the first three types (query/report/entity flow) |
 | **Tool Name (Must Be Unique)** | For System Tools, used as the prefix of the generated tool names — see "Tool Naming" below |
 | **Description** | The tool description. This is **what the language model reads to decide when and how to call the tool** — the more precise the description, the better the model uses the tool |
-| **In Active** | Disables the tool without deleting it — an inactive tool is never shown to the model |
+| **Inactive** | Disables the tool without deleting it — an inactive tool is never shown to the model |
 
 ::: tip When does a tool appear to the assistant?
 A tool is only offered to the language model when it is **committed** and not inactive. Later edits or deletions are picked up automatically — the tool list is rebuilt on the next connection, no restart needed.
@@ -34,8 +34,8 @@ A tool is only offered to the language model when it is **committed** and not in
 
 ### Tool Naming
 
-- **Query, report, and entity-flow tools** are advertised under their **Alt Code** as-is.
-- **System Tools**: each line in the tools grid may generate one or more tools, and each tool name is composed of a prefix plus the internal tool name. The prefix is the first non-empty value of **Tool Name**, then **Alt Code**, then the record **code**, followed by an underscore. For example, a record whose code is `import` containing the `AITReadRecordTools` tool generates two tools, `import_FindRecords` and `import_GetRecord`.
+- **Query, report, and entity-flow tools** are advertised under their **English Code** as-is.
+- **System Tools**: each line in the tools grid may generate one or more tools, and each tool name is composed of a prefix plus the internal tool name. The prefix is the first non-empty value of **Tool Name (Must Be Unique)**, then **English Code**, then the record **code**, followed by an underscore. For example, a record whose code is `import` containing the `AITReadRecordTools` tool generates two tools, `import_FindRecords` and `import_GetRecord`.
 - **Every tool**, of every type, also takes five optional arguments you never define yourself: `loginLegalEntity`, `loginSector`, `loginBranch`, `loginDepartment` and `loginAnalysisSet`. They run the call as if the user had logged in to those dimensions — see [Choosing the login context](./ai-mcp-server.md#Choosing-the-login-context).
 
 ## Security (Access Control)
@@ -43,7 +43,7 @@ A tool is only offered to the language model when it is **committed** and not in
 The **Security (Access Control)** grid decides who may execute the tool. Each line holds:
 
 - **Applicable For**: a user, a security profile, or a user group.
-- **Allow / Prevent**.
+- **Allow - Disallow**: **Allow** or **Prevent**.
 
 When the tool is executed, the system looks for the first line matching the current user in this order: the **user's** own line first, then the user's **security profile** line, then the **group** line. The first matching line decides.
 
@@ -88,17 +88,17 @@ Each line in the parameters grid defines one parameter:
 
 | Column | Role |
 |---|---|
-| **Param Id** | The parameter identifier — must match the name used in the query, and cannot be repeated |
+| **Parameter Id** | The parameter identifier — must match the name used in the query, and cannot be repeated (upper and lower case count as the same id) |
 | **Parameter Description** | The description the model reads to know what to send |
 | **Required** | Whether the parameter is mandatory |
 | **Field Type** | The value type: `Text`, `Number`, `Date`, or `Reference` |
-| **Allowed Values** / **Allowed Values Ar** / **Allowed Values En** | The list of allowed values (if any) with their translations — shown to the model inside the parameter description so it sticks to them |
+| **Allowed Values** / **Arabic Allowed Values** / **English Allowed Values** | The list of allowed values (if any) with their translations — for a `Text` parameter they are shown to the model inside the parameter description so it sticks to them; for the other field types they are not sent to the model |
 | **Supported Reference Type** | For `Reference` parameters: the entity type the parameter points to (such as `Customer`) |
 
 Notes on the types:
 
-- **Date**: the model sends dates in the `yyyy-MM-dd HH:mm` format (this format is automatically appended to the parameter description).
-- **Reference**: the model can send a record code or id, which is looked up directly. If it sends free text instead (such as an approximate customer name) and the entity type is indexed in the records-embedding service, the system performs a semantic search and returns the closest records — and when several match, the model is asked to pick a specific one.
+- **Date**: the model sends dates in the `yyyy-MM-dd HH:mm` format, in the server's local time (this format is automatically appended to the parameter description). A date alone, `yyyy-MM-dd`, is also accepted and means the start of that day.
+- **Reference**: the model can send a record code or id, which is looked up directly. If it sends free text instead (such as an approximate customer name) and the entity type is indexed in the records-embedding service, the system performs a semantic search for the five closest records of that type: a single match is used as the value, and when several match the model is handed the list and asked to pick a specific one. For a type that is not indexed, a value that is neither a code nor an id is refused as an invalid parameter.
 
 ## Type 2: Report Based
 
@@ -107,7 +107,7 @@ Turns any existing report definition in the system into a tool the model can run
 On the **Report Based** page:
 
 1. Pick the report in the **Report Definition** field.
-2. Define the report parameters in the **Report Parameters** grid — one line per report parameter, with **Param Id** matching the report's parameter id.
+2. Define the report parameters in the **Report Parameters** grid — one line per report parameter, with **Parameter Id** matching the report's parameter id.
 3. For each parameter, choose how it is filled in the **AI Parameter Completion** column:
    - **Fill By AI**: the language model chooses the value itself based on the user's request (with the parameter description and allowed values, as in query tools).
    - **Fill Manually**: the value is fixed in the definition itself — a literal value, a reference, a date/time, or a dynamic value, in the same style as report parameters in task schedules — and is never shown to the model.
@@ -282,6 +282,7 @@ The remaining ready-made tools are single classes with no group of their own; ad
 | Tool Class Name | Generated tool(s) | Purpose |
 |---|---|---|
 | `AITCountRecordsTools` | `<prefix>countEntities` and `<prefix>countEntitiesCreatedWithinDateRange` | Count records of an entity type — in total, or between two dates |
+| `AITRegenerateEffectsTools` | `<prefix>RegenerateEffects` | Regenerate the accounting or the inventory effects of committed documents of one document type, as the regenerate actions of the list screen do. The documents are named by their codes, or by a value date range (`fromDate` and `toDate`, both required when no codes are given) optionally narrowed to one term or one book. At most 200 documents per call (`page` moves to the next 200), and `dryRun` lists the matching documents without regenerating anything. Each document is regenerated on its own, so one failure does not undo the others; the security profile permission and the closed period check of the screen action apply |
 | `AINamaERPDocsTool` | `<prefix>erpDocs` | Search the Nama ERP documentation and return the passages closest to the question |
 | `AITAppVersionTools` | `<prefix>GetAppVersion` | Return the build this server is running — the twelve-digit build stamp and the date and time behind it |
 | `AITReadOnlySQLQuery` | `<prefix>runReadOnlySqlQuery` | Run a single read-only SQL `SELECT` against the database and return the rows — see the warning below |
@@ -304,7 +305,7 @@ Some modules add their own system tools that appear in the same list. For exampl
 :::
 
 ::: danger The read-only SQL tool ignores record permissions
-Everything else on this screen runs through the standard gates, so a tool never shows a user more than the screens would. `AITReadOnlySQLQuery` is the exception: it reads the database directly and therefore sees every legal entity, branch, salary and price regardless of what its user may open. Only a single `SELECT` is accepted and the statement runs in a transaction that is always rolled back, so it can never change anything — but restrict it to administrators through the **Security (Access Control)** grid. Its first parameter column sets the default maximum rows per call (200 by default, 5000 at most). See [Getting Better Support with an AI Coding Agent](./ai-assisted-support.md) for how support teams use it.
+Everything else on this screen runs through the standard gates, so a tool never shows a user more than the screens would. `AITReadOnlySQLQuery` is the exception: it reads the database directly and therefore sees every legal entity, branch, salary and price regardless of what its user may open. Only a single `SELECT` is accepted: `INSERT`, `UPDATE`, `DELETE`, `EXEC`, DDL, `SELECT ... INTO`, several statements in one call, and pass-through functions that could reach another server are all rejected before the statement runs. Whatever does run executes in a transaction that is always rolled back, so it can never change anything — but restrict it to administrators through the **Security (Access Control)** grid. Its first parameter column sets the default maximum rows per call (200 by default, 5000 at most), and a query is stopped after one minute. See [Getting Better Support with an AI Coding Agent](./ai-assisted-support.md) for how support teams use it.
 :::
 
 ::: info The statement is checked by JSqlParser 5.0 first

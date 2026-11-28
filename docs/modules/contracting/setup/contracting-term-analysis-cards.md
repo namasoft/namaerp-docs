@@ -35,7 +35,7 @@ The header says which term is being analysed and in whose context:
 | **From Document** | the source bill of quantities — a term sheet, an assay, a project contract or a customer offer. It supplies the list of term codes you are allowed to analyse, and it can fill the cost grids for you |
 | **Assay Document** | the priced document the card belongs to. Filled from the From Document when you leave it empty |
 | Project Contract | derived for you: the assay document itself if it is a contract, otherwise the contract that was created from it |
-| Contract Template | choosing one copies the template's four cost grids into the card |
+| Contract Template | choosing one copies the template's four cost grids into the card, unless the template has *Do Not Copy Terms* ticked |
 | **Term Code** | the term this card analyses. One card, one term |
 | Term Category, Term Category 2 | the two classification axes, stamped down onto every cost line so that cost reporting by trade or by cost nature becomes possible |
 | Total | the sum of all four grids, calculated for you |
@@ -90,17 +90,18 @@ Every cost line gets its own code, generated automatically: a **letter for the f
 | Contractors | `C` | `C2.101` |
 | Other Expenses | `O` | `O2.101` |
 
-Four things are worth knowing about them:
+Five things are worth knowing about them:
 
 - They are generated only once the card knows its contract or assay — a card floating free of any
   priced document gets none.
-- The sequence continues **across all the other cards of the same contract**, so the codes are unique
-  per contract, not per card. Two cards on the same contract will never collide.
+- They are generated when the card is committed, and the sequence for a term code continues
+  **across all the other cards of the same contract**, so the codes are unique per contract, not per
+  card. Two cards on the same contract will never collide.
 - A code you typed yourself is never overwritten.
 - Duplicating a card clears them, so the copy gets a fresh set.
-- Automatic coding can be switched off from
-  [Contracting Configuration](/modules/contracting/contracting-configuration) if your organisation
-  codes cost lines by its own scheme.
+- Automatic coding can be switched off with the module option **Do Not Allow Auto Code Analysis Card
+  Term Codes** in [Contracting Configuration](/modules/contracting/contracting-configuration) if your
+  organisation codes cost lines by its own scheme.
 
 **Why this matters far beyond the card.** The analysis term code is the key that *actual cost is
 collected against*. When a material issue, a subcontractor extract, a labour book or a purchase
@@ -125,15 +126,22 @@ line quantity = term quantity ÷ recipe's executed contract quantity
                 × productivity
 ```
 
+The recipe row's own quantity column does not enter this formula: the consumption per executed
+contract quantity is carried by **productivity**. The line's unit cost is the recipe row's unit cost,
+and its total cost is that unit cost × the line quantity.
+
 ::: tip Scaling in practice
 Standard term `EXC-01`, measured in m³, has its recipe written per 100 m³ and one row: *excavator
-hours, quantity 8*, no waste, productivity 1. A contract term line for 1,200 m³ therefore explodes to
+hours*, no waste, productivity 8. A contract term line for 1,200 m³ therefore explodes to
 1,200 ÷ 100 × 8 = **96 excavator hours**. At a unit cost of 300 that row costs 28,800.
 :::
 
-If the source contract was itself created from a customer offer, the offer's own cost grids are copied
-first, so nothing an estimator already did is lost. The explosion can be switched off on the card's
-document term for organisations that always cost by hand — see
+If the source contract was itself created from a customer offer, each family the offer's own cost
+grids fill is copied from the offer, and only the families the offer leaves empty are exploded from
+the recipes, so nothing an estimator already did is lost. When the From Document is itself a
+customer offer, the module option **Do Not Copy Data In Analysis Card When From Doc Is Contracting
+Offer** stops the fill. The explosion can be switched off on the card's document term for
+organisations that always cost by hand — see
 [Other Contracting Document Terms](/modules/contracting/document-terms/contracting-terms-other).
 
 **2. The four seeding buttons.** *Copy Terms To Materials*, *…To Workers*, *…To Contractors* and
@@ -153,15 +161,19 @@ Two actions do it: one pushes the costs onto the **From Document**, the other on
 Document**. There is a third entry point on the assay itself. Whichever you use, the mechanism is the
 same:
 
-1. Every **committed** analysis card that points at the target document is gathered — not just the
-   card you are standing on.
+1. Every **committed** analysis card whose From Document or Assay Document is the target document is
+   gathered — not just the card you are standing on.
 2. All their cost lines, from all four families, are pooled and **grouped by term code**.
 3. For each term code, the target document's term line is updated: **total cost** becomes the summed
-   cost, and **unit cost** becomes that total divided by the line's quantity.
+   cost, and **unit cost** becomes that total divided by the line's quantity. The summed column is the
+   lines' total cost, unless the module option **Analysis Card Cost Copied Field To From Doc** names
+   another cost column.
 4. The target document is saved and committed for you.
 
 If a card carries a term code the target document does not have, you are told which code could not be
-matched, and nothing silently disappears.
+matched, and nothing silently disappears:
+
+*Could not find a term with code {0} in {1}* — «لم يمكن العثور على كود {0} في مستند {1}»
 
 And then the margin does its work. Because a term sheet or an assay derives the unit price from the
 unit cost and the profit percentage, the number your analysis produced becomes the number your
@@ -202,8 +214,8 @@ read-only columns:
 | Actual Cost | what it actually cost |
 | Purchase Order Quantity | how much has been *ordered* but not yet consumed |
 
-The card also keeps an available quantity — the estimated quantity less the actual — which is your
-remaining budget for that cost element. And the **Related From Documents** page carries a read-only
+On Material lines the card also keeps an available quantity — the estimated quantity less the
+actual — which is your remaining budget for that cost element. And the **Related From Documents** page carries a read-only
 list of every actual-cost entry raised against the card, showing the analysis term code, the term
 code, the contract, the originating document, and the quantity and cost it contributed. It is the
 audit trail from an estimate row to the material issue or subcontractor extract that consumed it.
@@ -230,8 +242,7 @@ to select some rows.
 
 On the main page:
 
-- **Copy Costs To From Document** — sums the costs of every committed analysis card that points at this card's From Document and writes them, per term code, onto that document's term lines as total cost and unit cost, then saves the document. The card must be saved first.
-- **Copy Costs To Assay Document** — the same, aimed at the card's Assay Document.
+- **Copy Costs To From Document** and **Copy Costs To Assay Document** — push the pooled cost onto the card's From Document or its Assay Document, as described in [From Analysed Cost to Selling Price](#From-Analysed-Cost-to-Selling-Price). The card must be saved first.
 - **Convert Selected Lines To Contractor Contract**, **Create Contracting Purchase Order for Selected Items** and **Create Material Issue Order for Selected Items** — see [Turning Analysis Lines into Real Documents](#Turning-Analysis-Lines-into-Real-Documents).
 - **Copy Terms To Materials** — seeds the Material grid with one row per leaf term of the From Document.
 
@@ -242,9 +253,10 @@ When the module option **Merge Term Analysis Card Grids In One Grid** is off, th
 ## What Blocks a Save
 
 - **All four grids empty.** A card must analyse something.
-- **Every line needs a term code**, and it must be one of the terms of the From Document — unless the
-  configuration option that allows a card without an assay or contract is on.
-- **Analysis term codes must be unique within the card.**
+- **Every line needs a term code** — unless the module option **Allow Creating Term Analysis Card
+  Without Assay Or Contract** is on — and a term code that is filled in must be one of the terms of
+  the From Document.
+- **Analysis term codes must be unique within each grid.**
 - **A colour, size or revision typed on a material line must actually exist on that item**, and the
   message names the line.
 
@@ -256,7 +268,7 @@ life of the term.
 | Message | Why | What to do |
 |---|---|---|
 | *Can not leave all details empty* — «لا يمكن ترك جميع التفاصيل فارغة» | All four cost grids — Material, Workers, Contractors, Other Expenses — are empty. A card with nothing analysed on it is not a card. | Enter at least one line in one of the four families before saving. |
-| *Invalid term code* — «كود بند غير صحيح» | A line carries a term code that is not one of the terms of the From Document (the assay or the project contract). | Pick the term code from the From Document's own terms, or change the From Document. |
+| *Invalid term code* — «كود بند غير صحيح» | A line carries a term code that is not one of the terms of the From Document. | Pick the term code from the From Document's own terms, or change the From Document. |
 | *Analysis term code {0} is repeated* — «كود البند التحليلي {0} مكرر» | Two lines in the same grid carry the same analysis term code. The code is the key that actual cost is matched back on, so it has to be unique. | Renumber one of them, or clear the code and let the card generate it on save. |
 | *Color {0} is not found in item {1} - at line {2}* — «الصنف {1} لا يحتوي على اللون {0} - في السطر {2}» | A Material line names a colour that is not among the colours defined on that item. | Choose a colour the item actually has, or add it to the item's colours first. |
 | *Size {0} is not found in item {1} - at line {2}* — «الصنف {1} لا يحتوي علي المقاس {0} - في السطر {2}» | The same, for the size on a Material line. | Choose a size the item actually has, or add it to the item's sizes first. |

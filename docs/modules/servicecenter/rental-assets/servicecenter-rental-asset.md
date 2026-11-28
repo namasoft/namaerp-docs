@@ -22,11 +22,11 @@ What the record actually holds is: how long it may be booked for, how much of a 
 | Field | Arabic label | What it does |
 |---|---|---|
 | Code / Arabic Name / English Name / Group | الكود / الاسم العربي / الاسم الإنجليزي / المجموعة | Standard master-file identity. |
-| Classification | التصنيف | Points at a Rental Asset Classification. Supplies fallback price tiers and default durations — see below. |
+| Rental Asset Classification | التصنيف | Points at a Rental Asset Classification. Supplies fallback price tiers and default durations — see below. |
 | Asset Value | قيمة الأصل | The asset's value, kept on the record for your own reference. Al-Sahra records 62,000 here. |
 | Service Item | صنف الخدمة | **Required.** The item that becomes the revenue line on every invoice generated for this asset. Al-Sahra uses `SRV-RENT-CAR` *Vehicle rental / تأجير مركبة*. |
-| Rest Time | فترة الراحة | A buffer in minutes added on **both** sides of every existing booking when the system checks for an overlap. Al-Sahra sets 60 — an hour to clean and refuel between customers. |
-| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Lets a booking through when the price tiers do not cover its whole duration. See [Pricing](#Pricing----a-tier-table-walked-in-order) below. |
+| Rest Period | فترة الراحة | A buffer, entered as a time (hours and minutes), added on **both** sides of every existing booking when the system checks for an overlap. Al-Sahra sets 01:00 — an hour to clean and refuel between customers. |
+| Ignore Pricing List For Rental Asset | تجاهل قوائم الأسعار للأصل التأجيري | Lets a booking through when the price tiers do not cover its whole duration. See the pricing section below. |
 | Default Number of Hours | عدد الساعات الافتراضي | Visible only when the installation prices By Hour. The booking length that fills in when someone picks this asset. |
 | Default Number of Days | عدد الأيام الافتراضي | Visible only when the installation prices By Day. |
 
@@ -36,15 +36,16 @@ There is no "out of service", "under maintenance" or "retired" flag anywhere on 
 
 1. **The Working Hours grid** on the asset — rows of *from date*, *to date*, *from time*, *to time*, giving the daily window the asset may be booked inside, optionally limited to a date range. Al-Sahra publishes one row: 08:00 → 22:00.
 2. **Existing confirmed bookings** — the reservations already held against this asset.
-3. **The rest time** — which widens each of those existing bookings on both sides before the overlap is tested.
+3. **The rest period** — which widens each of those existing bookings on both sides before the overlap is tested.
 
 ::: warning An empty Working Hours grid means no time check at all
 If the grid has no rows, the time-window validation is skipped entirely and the asset can be booked around the clock. This is easy to miss, because nothing on the screen says so. Fill the grid on every asset you intend to control.
 :::
 
-A further quirk worth knowing when you publish more than one working-hours row: for a booking that spans several days, the check picks the row valid on the booking's **start** date and validates the end time against that same row. A booking that starts inside one row's date range and finishes after it is still judged by the row it started in.
+When the grid has rows, the check picks the first row whose date range (an empty *from date* or *to date* counts as open) contains the booking's **start** date, and validates the end time against that same row. A booking that starts inside one row's date range and finishes after it is still judged by the row it started in. A booking whose start date falls inside no row is refused with
+*There is no line matching the date {0} in the asset {1} working hours grid* — «لا يوجد سطر مطابق للتاريخ {0} في جدول ساعات عمل الأصل للأصل {1}».
 
-Because there is no status field, taking an asset off the market means one of two things: blank its Working Hours grid so every booking is refused, or use the ordinary master-file **Prevent Usage** / *منع الاستعمال* action that applies to any master file in Nama.
+Because there is no status field, taking an asset off the market means using the ordinary master-file **Prevent Usage** / *منع الاستعمال* action that applies to any master file in Nama, or giving its Working Hours grid only rows whose date range has ended, so that every later booking is refused with that message.
 
 ## Pricing — a tier table walked in order
 
@@ -71,10 +72,10 @@ The header's *Total Rental Value* on that same document reads **600** — twelve
 
 Two behaviours round out the picture:
 
-- **If no tier matches at all**, the system builds a single line for the whole duration at the price sitting on the document header.
-- **If the tiers match but do not cover the whole duration**, the save is refused with
+- **If the tiers do not cover the whole duration** — including when no tier matches at all — the save is refused with
 *Could not handle pricing for {0} hours, rental asset {1} - remaining hours: {2}* — or, where the installation prices by day,
 *Could not handle pricing for {0} days, rental asset {1} - remaining days: {2}* — unless *Ignore Pricing List For Rental Asset* is switched on.
+- **With that option on and no tier matching at all**, the system builds a single line for the whole duration at the price sitting on the document header.
 
 There is no price list, no rate card and no weekend or seasonal rate beyond what you can express with the rows' date ranges and the five price classifiers.
 
@@ -103,4 +104,4 @@ So the sensible setup is: put the standard tiers on the classification, and over
 
 The asset screen carries a read-only list headed **فواتير تأجير الأصل / Rental Asset Invoices**, showing the invoice, value date, from date/time, to date/time and number of hours for every confirmed, committed booking held against this asset.
 
-It is worth knowing what that list is, because it is not a report of everything ever booked — it is the reservation ledger, the same set of rows the double-booking check reads. A booking that was saved as a draft, or committed without *Confirm Reservation* ticked, does not appear there and does not block anybody. That distinction is the subject of the next page.
+It is worth knowing what that list is, because it is not a report of everything ever booked — it is the reservation ledger, the same set of rows the double-booking check reads. A booking that was saved as a draft, or committed without *Asset Reservation Confirmed* (*تأكيد الحجز*) ticked, does not appear there and does not block anybody. That distinction is the subject of the next page.

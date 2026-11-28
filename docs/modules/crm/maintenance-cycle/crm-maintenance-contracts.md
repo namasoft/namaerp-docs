@@ -70,7 +70,7 @@ The **Spare parts and services** page is where coverage actually lives, and cove
 
 Those 44 visits are not a coincidence — they are exactly the 44 visits the work-plan generator will produce from the machine lines above. Pricing the contract and scheduling it are two sides of the same arithmetic, and it is worth doing them together.
 
-Each line carries **quantity**, **sold quantity** and **remaining quantity**. As orders, invoices and returns are committed against this contract, the sold quantity rises and the remaining quantity falls, and a document that asks for more than is left is refused with a message naming the item and the contract. After the April order `MO-0513`, `MC-0021` shows `SP-FLT-14` sold 6 / remaining 18, `SP-OIL-05` sold 1 / remaining 3, and `MSV-01` sold 3 / remaining 41.
+Each line carries **quantity**, **sold quantity** and **remaining quantity**. As maintenance orders that name this contract — in *From document* or in their *Maintenance Contract* field — are committed, the sold quantity rises and the remaining quantity falls, and an order or order request that asks for more than is left is refused with a message naming the item and the contract. After the April order `MO-0513`, `MC-0021` shows `SP-FLT-14` sold 6 / remaining 18, `SP-OIL-05` sold 1 / remaining 3, and `MSV-01` sold 3 / remaining 41.
 
 ::: tip The contract price wins
 `MSV-01` is priced at 1,500.00 on the service catalogue and 1,200.00 on this contract; `SP-FLT-14` is 350.00 on the sales price list and 300.00 here. When a document is raised against the contract, the **contract price** is what lands on the line. That is the mechanism sites use to give contract customers a better rate — and, if you price a line at zero, it is also the only sense in which covered work is "free".
@@ -104,7 +104,7 @@ The **Billing** page holds the payment schedule. Marina Plaza pays quarterly:
 The contract is refused if the payment-schedule lines do not sum to exactly the money net value. That is a genuine, useful validation — if the contract will not save, add the schedule up first.
 :::
 
-The two buttons on that page — **GeneratePayments** and **Generate Receipt Voucher For Selected Payments** — are the standard payment-schedule helpers; see [Actions on this screen](#Actions-on-this-screen). The receipt voucher opens pre-filled for you to review and save; nothing is created behind your back.
+The two buttons on that page — **Generate Payments** and **Generate Receipt Voucher For Selected Payments** — are the standard payment-schedule helpers; see [Actions on this screen](#Actions-on-this-screen). The receipt voucher opens pre-filled for you to review and save; nothing is created behind your back.
 
 ## What Committing the Contract Does
 
@@ -126,9 +126,9 @@ The generator walks every machine line, reads its Visit Type columns, and steps 
 
 | Generation type | One work plan per… |
 |---|---|
-| Generate WorkPlan Based On Contract Priority *(the default when the field is left empty)* | calendar month of the expected order date |
-| Generate WorkPlan Based On Visit Type | visit type |
-| Generate WorkPlan Based On Visit Type And Contract Priority | visit type, per month |
+| Generate Work Plan Based On Contract Priority *(the default when the field is left empty)* | calendar month of the expected order date |
+| Generate Work Plan Based On Visit Type | visit type |
+| Generate Work Plan Based On Visit Type And Contract Priority | visit type, per month |
 
 `MC-0021` uses the first, and produces **44 expected-visit rows spread over 12 work-plan documents**, `WP-0087` through `WP-0098`. The arithmetic — why 44, why 12, and what each work plan contains — is on [Maintenance Work Plans](/modules/crm/maintenance-cycle/crm-maintenance-work-plans.md), which is also where you press the second button.
 
@@ -158,7 +158,7 @@ It is a genuinely useful "has anyone actually been there?" view, with one honest
 
 **Main page:**
 
-- **Collect All Machines Related To The Customer** (*تجميع كل الألات المرتبطة بالعميل*) — replaces the
+- **Collect All Machines Related To The Customer** (*تجميع كل الآلات المرتبطة بالعميل*) — replaces the
   Machines grid with every machine of the header customer that is not a sub-machine of another,
   carrying each one's building, floor and room. It is refused when the customer is empty.
 - **Generate Work Plans** (*إنشاء خطط عمل*) — builds the work plans from the machine lines' visit
@@ -167,10 +167,9 @@ It is a genuinely useful "has anyone actually been there?" view, with one honest
 
 **Billing page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — splits the net value into an instalment schedule. It asks
+- **Generate Payments** (*إنشاء الدفعات*) — splits the net value into an instalment schedule. It asks
   for the number of payments, the period between them and its unit, the start date, a grace period,
-  down / first / second / last payment values and a rounding mode. The English label ships as the
-  raw name shown here.
+  down / first / second / last payment values and a rounding mode.
 - **Generate Receipt Voucher For Selected Payments** (*إنشاء سند قبض للدفعات المختارة*) — opens an
   unsaved receipt voucher for the instalment lines you ticked. It is refused when no line is
   selected, or when none of the selected lines has a remaining value.

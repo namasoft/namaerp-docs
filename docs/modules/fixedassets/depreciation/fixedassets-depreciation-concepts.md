@@ -30,8 +30,9 @@ The method is chosen on the asset and cannot be swapped once the asset has any h
 so it is a decision made when the asset is created rather than an ongoing setting. It also decides
 which document may touch the asset: a straight-line asset is depreciated by the
 [depreciation document](/modules/fixedassets/depreciation/fixedassets-depreciation-document.md) and
-is refused by the revaluation document, and a revaluation-method asset is the mirror image — the
-depreciation run will not even collect it. Everything from here to the end of this page is about
+is refused by the revaluation document (unless the revaluation term allows straight-line assets, in
+which case committing the revaluation switches the asset to the Revaluation method), and a
+revaluation-method asset is the mirror image — the depreciation run will not even collect it. Everything from here to the end of this page is about
 straight-line assets; revaluation has
 [its own page](/modules/fixedassets/depreciation/fixedassets-revaluation.md).
 
@@ -118,25 +119,11 @@ Because the instalment is re-derived every period, any change to the asset's val
 remaining life simply changes the next instalment. Nothing is restated, no catch-up entry is ever
 created, and nothing needs to be recalculated by hand.
 
-Follow `MCH-0007` through its first year. Twelve runs at 3,600 leave it here at the end of December
-2026:
-
-| | |
-|---|---|
-| Accumulated depreciation | 12 × 3,600 = **43,200** |
-| Book value | 240,000 − 43,200 = **196,800** |
-| Remaining life | **48** periods |
-
-In January 2027 the machine gets a control-unit upgrade worth **30,000**, capitalised through an
-[addition and deduction document](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions.md).
-The next depreciation run does not consult a schedule; it evaluates the formula again with the new
-numbers:
-
-> (196,800 + 30,000 − 24,000) ÷ 48 = 202,800 ÷ 48 = **4,225**
-
-The instalment moves from 3,600 to 4,225 and stays there. The machine's total cost is now 270,000,
-its end date is unchanged, and the extra 30,000 is spread over the periods that are left rather
-than over the periods that have already gone. The twelve entries of 2026 are untouched.
+After twelve runs at 3,600, `MCH-0007` has a book value of 196,800 and 48 periods left. When a
+30,000 control-unit upgrade is capitalised in January 2027, the next run simply evaluates the formula
+again and the instalment moves from 3,600 to **4,225**, with the end date unchanged and the twelve
+entries of 2026 untouched; the arithmetic is worked through on
+[Additions and Deductions](/modules/fixedassets/depreciation/fixedassets-additions-and-deductions).
 
 Exactly the same thing happens when a
 [properties document](/modules/fixedassets/depreciation/fixedassets-properties-document.md) shortens
@@ -179,11 +166,11 @@ question:
 - its **depreciation start date** falls on or before the end of the chosen period;
 - it has not been depreciated in this period already, and the period is the one **immediately
   following** its last depreciation period — the series has to be consecutive, with no skipped
-  periods;
+  periods (the one exception is a period holding an addition or deduction that changes the asset's
+  remaining life);
 - no committed
   [prevent depreciation document](/modules/fixedassets/depreciation/fixedassets-prevent-depreciation.md)
-  covers it for that period;
-- the computed instalment is greater than zero.
+  covers it for that period.
 
 ## The Asset's Value Timeline
 

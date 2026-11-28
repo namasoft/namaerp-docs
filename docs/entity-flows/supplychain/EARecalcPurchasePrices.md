@@ -22,7 +22,7 @@ Manual execution on purchase documents when prices need to be refreshed with cur
 1. **Initializes update scope** - Creates DiscountUpdateScope if not already present
 2. **Saves current price update setting** - Preserves original updatePrice flag value
 3. **Enables price updates** - Temporarily sets updatePrice to true to allow recalculation
-4. **Triggers price recalculation** - Calls PurchasePriceUtils.updatePurchaseDocument() to recalculate all pricing
+4. **Triggers price recalculation** - Recalculates the price of every line that has an item and is not a free line; free lines and lines without an item are skipped
 5. **Restores original setting** - Returns updatePrice flag to its previous state
 6. **Maintains document consistency** - Ensures pricing updates don't affect other update behaviors
 

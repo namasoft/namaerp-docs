@@ -122,3 +122,5 @@ This is useful when you want the quick filter buttons to reflect only values tha
 3. **Link to Screen Modifier**:
    - In Screen Modifier Quick Filter grid
    - Select the created criteria in the **Criteria** field
+   - Leave the line's **Arabic Title** and **English Title** empty. The group then takes its title from the
+     Quick Filter Criteria record's Arabic and English names, and its buttons from the record's lines.

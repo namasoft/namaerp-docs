@@ -45,11 +45,11 @@ entities: [IPSMailClass, IPSMailCategory, IPSMailSubclass, IPSMailCondition, IPS
 
 تُعرَّف مرّة واحدة تحت **نظام إدارة الشحن ← الملفات**:
 
-- **فئة / صنف / فئة فرعية البريد** (Mail Class / Category / Subclass) — تصنيف المواد البريدية حسب معايير الاتحاد البريدي.
+- **فئة بريد** (IPS Mail Class) و**تصنيف البريد** (Mail Category) و**نوع البريد** (Mail Subclass) — تصنيف المواد البريدية حسب معايير الاتحاد البريدي.
 - **حالة البريد (Mail Condition)** و**حالة الطرد (Parcel Status)** — وصف وضع المادة.
-- **منطقة الاستلام والتسليم (Delivery & Receipt Area)** — المكاتب والمناطق.
-- **بند خدمة التوصيل (Delivery Service Item)** و**سعر خدمة التوصيل (Delivery Service Price)** — تسعير التوصيل.
-- **سبب الاحتجاز (Retention Reason)** و**سبب/إجراء عدم التسليم** (Non-Delivery Reason / Measure) — معالجة الاستثناءات.
-- **الحدث (Event)** — أحداث تتبُّع المادة.
+- **مكان تسليم واستلام (Delivery And Receipt Area)** — المكاتب والمناطق.
+- **بند خدمة توصيل (Delivery Service Item)** و**ملف أسعار خدمة توصيل (IPS Delivery Service Price)** — تسعير التوصيل.
+- **سبب تحقق البريد (Mail Retention Reason)** و**سبب عدم التوصيل (IPS Non Delivery Reason)** و**إجراء عدم التسليم (IPS Non Delivery Measure)** — معالجة الاستثناءات.
+- **IPS Event** — أحداث تتبُّع المادة.
 
 في الصفحات التالية نفصّل كل مجموعة من المستندات.

@@ -4,9 +4,9 @@ entities: [ContractingUOM, ContractingTask, ContrTermCategory, ContrTermCategory
 ---
 # Units, Tasks and Other Lookups
 
-Six small master files sit under **Contracting > Master Files** and do not deserve a page each. They
+Seven small master files sit under **Contracting > Master Files** and do not deserve a page each. They
 are the vocabulary the bigger screens are built from: you fill them once during implementation, add to
-them occasionally, and otherwise forget them. All six need only the `contracting` licence, and none of
+them occasionally, and otherwise forget them. All seven need only the `contracting` licence, and none of
 them creates any journal entry.
 
 This page is a reference. Each section says what the file is, what is on it, and what reads it.
@@ -85,8 +85,8 @@ Unlike most lookups these two do real work in three places:
    keyed on a category, or on a category 2, *instead of* naming a specific standard term — which is how
    you publish "all electrical work at these rates" without listing every term. A price list line must
    name at least one of the three.
-2. **Re-pricing.** Changing the category on a term line re-runs the price lookup for that line, so
-   correcting a misclassified line also corrects its rate.
+2. **Re-pricing.** Changing the *Term Category* (the first axis) on a term line re-runs the price
+   lookup for that line, so correcting a misclassified line also corrects its rate.
 3. **Cost reporting.** An [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md)
    stamps its header's two categories onto every cost row it produces, which is what makes cost
    reporting by trade or by cost nature possible at all.
@@ -130,7 +130,7 @@ that are not items.
 | Account | the expense or cost account the element is charged to |
 | Default Purchase Price | the rate that lands on a line when the element is picked |
 | Tax Plan | the tax policy for lines built from it |
-| Credit Side | where the credit goes: the supplier's account, a specific account, a specific subsidiary, the current user's subsidiary, or the miscellaneous purchase item's own wiring |
+| Credit side (captioned *Account* on English screens, «الجانب الدائن» on Arabic ones) | where the credit goes: the supplier's account, a specific account, a specific subsidiary, the current user's subsidiary, or the miscellaneous purchase item's own wiring |
 | Subsidiary account type, Subsidiary | the counterparty, where the credit side calls for one |
 | Purchase Element | the link into the purchasing element structure |
 | Unit, Standard Item Uom | the unit the element is bought and consumed in |
@@ -177,7 +177,7 @@ your terms onto them is what makes an extract reportable electronically.
 |---|---|
 | Code, Group, Name1, Name2 | the usual identity |
 | Tax Authority Code | the code the authority knows this product by |
-| the unit-type field | the unit of measure the authority expects for it. The caption on this one is in English on both language versions of the screen |
+| Tax Authority Unit Type | the unit of measure the authority expects for it. The caption on this one is in English on both language versions of the screen |
 | Tax Plan | the tax policy applied when the roll-up is priced |
 | Do Not Send To Tax Authority | keep the term out of the electronic submission entirely |
 

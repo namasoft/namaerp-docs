@@ -1,5 +1,5 @@
 ---
-entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard]
+entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard, BIPeriodComparisonConfig]
 ---
 
 # وحدة BI في نما — المرجع التقني
@@ -14,9 +14,9 @@ entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard]
 
 ::: info الملفات المرافقة
 ثلاثة مراجع تفصيلية موجودة بجانب هذا الملف. حمّلها عند الحاجة للإبقاء على السياق مختصراً:
-- [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md) — wizard widgets (`wizardDataSource`) وdrill-by واختيار الفتحات في وقت التشغيل
-- [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md) — widget `EnhancedTable` وpivot/cross-tab
-- [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md) — `EnhancedMetricsCard` والـ`MetricsCards` القديمة
+- [`bi-reference-wizard-mode.md`](/ar/platform/bi/bi-reference-wizard-mode) — wizard widgets (`wizardDataSource`) وdrill-by واختيار الفتحات في وقت التشغيل
+- [`bi-reference-enhanced-table.md`](/ar/platform/bi/bi-reference-enhanced-table) — widget `EnhancedTable` وpivot/cross-tab
+- [`bi-reference-enhanced-metrics-card.md`](/ar/platform/bi/bi-reference-enhanced-metrics-card) — `EnhancedMetricsCard` والـ`MetricsCards` القديمة
 :::
 
 ---
@@ -83,7 +83,7 @@ entities: [DashBoardWidget, BICrossFilter, DashBoard, DashBoardWidgetWizard]
 القواعد العامة لكتابة SQL على جداول نما (احتساب المستندات التي `commitedBefore = 1` فقط، وربط السطور برأس مستندها لمعرفة الحالة، و`name1` عربي و`name2` إنجليزي، والمبالغ من `LedgerTransLine` والكميات من `QtyTransLine`) موجودة في [الاستعلام من جداول نما بلغة SQL](/ar/platform/reports/querying-nama-tables). ويحتاجها كل استعلام widget كذلك.
 
 ::: tip إعادة استخدام SQL المعقد عبر الـwidgets
-إذا ظهر نفس الـ`UNION` / multi-join / SELECT مكتوباً يدوياً عبر عدة widgets بوضع SQL، فكِّر في ترقيته إلى **Virtual Entity** بدلاً من ذلك. يلفّ Virtual Entity الـSELECT في view لـSQL Server ويسجّله ككيان من الدرجة الأولى، فيصبح قابلاً للاختيار من منتقي الجدول الرئيسي في الـwizard (`tableType = "VirtualEntity"`) — ومن هناك تعمل كل ميزات wizard mode (الربط التلقائي على حقول المراجع، وdrill-by الأبعاد، وأعمدة cross-filter المستنتجة تلقائياً) مقابله كما لو كان جدولاً حقيقياً. انظر [دليل Virtual Entity](../automation-and-rules/virtual-entity-guide.md).
+إذا ظهر نفس الـ`UNION` / multi-join / SELECT مكتوباً يدوياً عبر عدة widgets بوضع SQL، فكِّر في ترقيته إلى **Virtual Entity** بدلاً من ذلك. يلفّ Virtual Entity الـSELECT في view لـSQL Server ويسجّله ككيان من الدرجة الأولى، فيصبح قابلاً للاختيار من منتقي الجدول الرئيسي في الـwizard (`tableType = "VirtualEntity"`) — ومن هناك تعمل كل ميزات wizard mode (الربط التلقائي على حقول المراجع، وdrill-by الأبعاد، وأعمدة cross-filter المستنتجة تلقائياً) مقابله كما لو كان جدولاً حقيقياً. انظر [دليل Virtual Entity](/ar/platform/automation-and-rules/virtual-entity-guide).
 :::
 
 ### النمط
@@ -107,7 +107,7 @@ ORDER BY columns
 
 ### قواعد الاستعلام
 
-1. دائماً أدرج `/*AND-FILTERS*/` — حتى لو لم يكن للـwidget روابط cross-filter. يتوقعها الخادم.
+1. دائماً أدرج `/*AND-FILTERS*/`. الـwidget الذي يخلو `dataSource` الخاص به منه يُرفض حفظه بمجرد أن تكون له روابط cross-filter — *This widget is referenced in cross-filter bindings but its datasource does not contain the `/*AND-FILTERS*/` placeholder.* — واللوحة التي تُسمّي `crossFilterBindings` فيها مثل هذا الـwidget تُرفض بالرسالة *Widget {0} has cross-filter bindings but its datasource does not contain the `/*AND-FILTERS*/` placeholder.* وليس لأيٍّ من الرسالتين نص عربي. وفحص الـwidget يتخطى الـwidgets المبنية على Wizard، والفحصان كلاهما يتخطيان الـwidget الذي `dataSource` الخاص به فارغ.
 2. **يُسمح بوجود عدة placeholders من نوع `/*AND-FILTERS*/`** وكلها تُستبدل بنفس تعبير الفلتر. مطلوب للاستعلامات الثقيلة بـCTE: كل جسم CTE يربط جدولاً مُصفَّى يحتاج placeholder خاصاً به حتى يُطبَّق الفلتر داخله.
 3. يوجد الـplaceholder في جملة WHERE فقط. لا يُحقن في `HAVING` أو `JOIN ON` أو CTE خارجي. إذا احتجت تطبيق فلتر على `HAVING`، أعد هيكلة الاستعلام.
 4. استخدم أسماء مستعارة للجداول باستمرار. يستهدف `sqlLeftHandSide` في cross-filter هذه الأسماء (مثل `l.branch_id`). لكي يعمل الربط، **يجب أن يوجد الاسم المستعار في الاستعلام** عند نطاق الـplaceholder.
@@ -313,7 +313,7 @@ ORDER BY salesYear
 
 ### 3.4 Gauge
 
-لمخططات المقياس. يستخدم الصف الأول فقط من مجموعة النتائج.
+لمخططات المقياس. يعرض المقياس رقماً واحداً: **مجموع** `valueColumn` على كل صفوف مجموعة النتائج، فالاستعلام الذي يُرجع صفاً واحداً يعرض قيمة ذلك الصف.
 
 **الحقول المطلوبة:**
 - `type`: `"Gauge"`
@@ -329,15 +329,15 @@ ORDER BY salesYear
 
 | الـPlaceholder | النوع | الوصف |
 |---|---|---|
-| `$DATA.value` | `number` | القيمة العددية من الصف الأول |
-| `$DATA.unit` | `string` | من حقل `unit` |
-| `$DATA.max` | `number` | من حقل `max` |
-| `$DATA.min` | `number` | من حقل `min` |
-| `$DATA.bands` | `array` | من حقل `bands` |
+| `$DATA.value` | `number` | مجموع `valueColumn` على كل الصفوف |
+| `$DATA.unit` | `string` | من حقل `unit` (نص فارغ إن لم يُضبط) |
+| `$DATA.max` | `number` | من حقل `max`. وإن لم يُضبط: `100` إذا كانت `unit` هي `"%"` أو كانت القيمة 100 أو أقل، وإلا فالقيمة مقرَّبة صعوداً إلى 1 أو 2 أو 5 أو 10 أضعاف قوة العشرة التي تخصها (مثل 3,400 ← 5,000) |
+| `$DATA.min` | `number` | من حقل `min`، و`0` إن لم يُضبط |
+| `$DATA.bands` | `array` | من حقل `bands` (غائب إن لم يُضبط) |
 
 ### 3.5 Scatter
 
-لمخططات الانتشار والفقاعات. يصبح كل صف نقطة `[x, y]` أو `[x, y, size]`.
+لمخططات الانتشار والفقاعات. تصبح كل قيمة X متميزة نقطة واحدة `[x, y]` أو `[x, y, size]` بترتيب أول ظهور: الصفوف التي تشترك في قيمة X تُدمج، وتُ**جمع** قيم Y (والأحجام)، وتُؤخذ بيانات drill-down / cross-filter للنقطة من أول صف منها. أعطِ كل صف قيمة X خاصة به إن أردت أن يبقى كل صف نقطة منفصلة.
 
 **الحقول المطلوبة:**
 - `type`: `"Scatter"`
@@ -351,7 +351,7 @@ ORDER BY salesYear
 
 | الـPlaceholder | النوع | الوصف |
 |---|---|---|
-| `$DATA.rows` | `number[][]` | مصفوفة من مصفوفات `[x, y]` أو `[x, y, size]` |
+| `$DATA.rows` | `number[][]` | مصفوفة من مصفوفات `[x, y]` أو `[x, y, size]`، واحدة لكل قيمة X متميزة |
 
 ### 3.6 Heatmap
 
@@ -369,7 +369,7 @@ ORDER BY salesYear
 |---|---|---|
 | `$DATA.xCategories` | `string[]` | القيم الفريدة لـX |
 | `$DATA.yCategories` | `string[]` | القيم الفريدة لـY |
-| `$DATA.rows` | `number[][]` | مصفوفة من مصفوفات `[xIndex, yIndex, value]` |
+| `$DATA.rows` | `number[][]` | مصفوفة من مصفوفات `[xIndex, yIndex, value]`، واحدة لكل زوج X/Y متميز؛ والصفوف التي تشترك في الاثنين تُجمع في خلية واحدة |
 | `$DATA.min` | `number` | أدنى قيمة خلية |
 | `$DATA.max` | `number` | أعلى قيمة خلية |
 
@@ -400,7 +400,7 @@ ORDER BY salesYear
 
 | الـPlaceholder | النوع | الوصف |
 |---|---|---|
-| `$DATA.categories` | `string[]` | القيم الفريدة من `categoryColumn`، بالحفاظ على ترتيب الصفوف |
+| `$DATA.categories` | `string[]` | القيم الفريدة من `categoryColumn`، بالحفاظ على ترتيب الصفوف. والصفوف التي تشترك في فئة تُجمع في دلتا واحدة |
 | `$DATA.series` | `object[]` | مدخلان: `[0]` هو placeholder غير المرئي، `[1]` هو سلسلة القيمة المرئية. كلاهما يحمل `stack: "Total"`. |
 | `$DATA.series[0].data` | `number[]` | ارتفاعات الـplaceholder |
 | `$DATA.series[1].data` | `object[]` | `[{value: <abs delta>, _signedValue: <raw delta>}, ...]`. |
@@ -419,11 +419,11 @@ ORDER BY salesYear
 | الـPlaceholder | النوع | الوصف |
 |---|---|---|
 | `$DATA.indicators` | `{name, max}[]` | واحد لكل فئة فريدة. `max` هو الحد الأقصى العام عبر كل السلاسل. |
-| `$DATA.series` | `{name, value}[]` | واحد لكل إعداد سلسلة. `value` مصفوفة محاذية لـ`$DATA.indicators`. |
+| `$DATA.series` | `{name, value}[]` | واحد لكل إعداد سلسلة. `value` مصفوفة محاذية لـ`$DATA.indicators`؛ والصفوف التي تشترك في فئة تُجمع. |
 
 ### 3.10 GaugeMulti
 
-لمقاييس متعددة الحلقات المتحدة المركز — يصبح كل صف حلقة/عنصر مقياس.
+لمقاييس متعددة الحلقات المتحدة المركز — تصبح كل تسمية متميزة حلقة/عنصر مقياس؛ والصفوف التي تشترك في تسمية تُجمع في حلقة واحدة.
 
 **الحقول المطلوبة:**
 - `type`: `"GaugeMulti"`
@@ -434,7 +434,7 @@ ORDER BY salesYear
 
 | الـPlaceholder | النوع | الوصف |
 |---|---|---|
-| `$DATA.values` | `object[]` | `[{value, name, title: {show: false}, detail: {show: false}}, ...]`. |
+| `$DATA.values` | `object[]` | `[{value, name, itemStyle: {color}, title: {show: false}, detail: {show: false}}, ...]`. تأخذ كل حلقة اللون التالي من لوحة ثابتة من تسعة ألوان (تبدأ بـ `#5470c6` و`#91cc75` و`#fac858`). |
 
 ### 3.11 NestedLabelValue
 
@@ -802,13 +802,9 @@ drill-down للوحة البيانات مفيد بشكل خاص للتحليل �
 | `linkToIdColumn` | نعم | عمود SQL يحتوي على معرّف الكيان |
 | `entityType` | لا | سلسلة نوع الكيان الثابتة. استخدمها بدلاً من `linkToEntityTypeColumn` عند ارتباط كل الصفوف بنفس نوع الكيان. |
 | `openMode` | لا | كيفية فتح الكيان: `"popup"` (نافذة Quasar، الافتراضي)، أو `"navigate"` (نفس التبويب)، أو `"newTab"`. |
-| `labelColumn` | لا | عمود SQL يُستخدم لإثراء تسمية قائمة السياق. |
+| `labelColumn` | لا | عمود SQL يُستخدم لإثراء تسمية قائمة السياق. مثلاً إذا كان `enLabel` هو `"Open Customer"` وأعطى `labelColumn` القيمة `"ABC Trading"`، تعرض القائمة `"Open Customer 'ABC Trading'"`. |
 | `column` | widgets الجداول فقط | يحصر المدخل في عمود محدد. |
 | `onCellClick` | لا | widgets الجداول فقط. عندما `true`، يفتح النقر الأيسر على الخلية المطابقة الرابط. انظر القسم 5a.1. |
-
-::: tip
-حقل `labelColumn` لمسة صغيرة تُحدث فارقاً كبيراً في قابلية الاستخدام. بدلاً من عنصر قائمة عام "Open Customer"، يرى المستخدم "Open Customer 'ABC Trading'" — يعرف تماماً إلى أين سيأخذه الرابط قبل النقر.
-:::
 
 **مثال — widget مخطط، النقر الأيسر ينتقل إلى كيان عميل:**
 
@@ -894,19 +890,19 @@ drill-down للوحة البيانات مفيد بشكل خاص للتحليل �
 
 ### المشغِّلات المدعومة
 
-| المشغِّل | SQL | حالة الاستخدام |
-|---|---|---|
-| `Equal` | `=` | مطابقة تامة (الافتراضي) |
-| `In` | `IN (...)` | تحديد متعدد القيم |
-| `GreaterThanOrEqual` | `>=` | من تاريخ، الحد الأدنى للقيمة |
-| `LessThanOrEqual` | `<=` | إلى تاريخ، الحد الأقصى للقيمة |
-| `GreaterThan` | `>` | أكبر بشكل صارم |
-| `LessThan` | `<` | أصغر بشكل صارم |
-| `NotEqual` | `<>` | الاستبعاد |
-| `Contains` | `LIKE '%value%'` | البحث النصي |
-| `StartsWith` | `LIKE 'value%'` | مطابقة بادئة النص |
+| المشغِّل (JSON) | على الشاشة | SQL | حالة الاستخدام |
+|---|---|---|---|
+| `Equal` | يساوي | `=` | مطابقة تامة (الافتراضي — وهو أيضاً ما يفعله المعامل الفارغ) |
+| `In` | أحد ما يلي | `IN (...)` | تحديد متعدد القيم |
+| `GreaterThanOrEqual` | أكبر من أو يساوي | `>=` | من تاريخ، الحد الأدنى للقيمة |
+| `LessThanOrEqual` | أقل من أو يساوي | `<=` | إلى تاريخ، الحد الأقصى للقيمة |
+| `GreaterThan` | أكبر من | `>` | أكبر بشكل صارم |
+| `LessThan` | أقل من | `<` | أصغر بشكل صارم |
+| `NotEqual` | لا يساوي | `<>` | الاستبعاد |
+| `Contains` | يحتوي على | `LIKE '%value%'` | البحث النصي |
+| `StartsWith` | يبدأ بـ | `LIKE 'value%'` | مطابقة بادئة النص |
 
-هذه هي المشغِّلات الوحيدة التي يطبّقها الفلتر المتقاطع.
+هذه هي المشغِّلات الوحيدة التي يطبّقها الفلتر المتقاطع. والمعامل المضبوط على الربط يتقدم على المضبوط على الفلتر المتقاطع.
 
 ### النطاق المحلي للـWidget (`localScope`)
 
@@ -919,14 +915,7 @@ drill-down للوحة البيانات مفيد بشكل خاص للتحليل �
 ]
 ```
 
-عندما يكون `localScope` هو `true` لربط ما، فإن الفلتر ينتمي إلى نافذة الفلتر المنبثقة الخاصة بالـwidget بدلاً من شريط الفلتر العام للوحة البيانات. تحديداً:
-
-- يُظهر الـwidget زر فلتر في رأسه. النقر عليه يفتح نافذة منبثقة بإدخال واحد لكل ربط `localScope`.
-- cross-filters المُصدَرة بالنقر من مخططات أخرى، والقيم المُدخَلة في شريط فلتر لوحة البيانات، **تُتجاهل** لروابط `localScope`.
-- إذا كان كل ربط لكود cross-filter معين `localScope`، يختفي ذلك الكود من شريط فلتر لوحة البيانات تماماً.
-- طلب drill-down الذي يستهدف كود مرتبطاً بـ`localScope` لا يزال يُمرر قيمته.
-
-استخدم `localScope` عندما يحتاج مخطط واحد إلى محدد مستقل لا يجب أن ينتشر إلى الـwidgets الشقيقة.
+عندما يكون `localScope` هو `true` لربط ما، فإن الفلتر ينتمي إلى نافذة الفلتر المنبثقة الخاصة بالـwidget بدلاً من شريط الفلتر العام للوحة البيانات، ولا يقوده إلا تلك النافذة (أو drill-down). وما يراه المستخدم وكيف يتفاعل الفلتر المحلي مع بقية اللوحة مشروح في قسم الفلاتر المحلية للـ widget من [دليل وحدة BI](/ar/platform/bi/bi-module-guide). وفي رابط اللوحة القابل للمشاركة تحمل كل قيمة محلية `localToChart` (الـwidget الذي تخصه، مكتوباً بالمفتاح `lch`)، فالرابط المنسوخ يستعيد حالة الفلاتر نفسها لكل widget.
 
 ---
 
@@ -1080,8 +1069,6 @@ h.value_date <= :ToDocDate
 
 مفاتيح المدد الجاهزة: `Today` و`Yesterday` و`ThisWeek` و`PreviousWeek` و`ThisMonth` و`PreviousMonth` و`ThisQuarter` و`PreviousQuarter` و`ThisYear` و`PreviousYear` و`Last7` و`Last30` و`Last90` و`Last365`. والأسبوع يبدأ الأحد وينتهي السبت، و`Last7` تعني اليوم والستة أيام التي قبله. و`defaultValue` يقبل الصيغتين.
 
-ولأن المدة الجاهزة تخزّن المدة لا التاريخين، فاللوحة المحفوظة بـ`ThisMonth` تسير مع التقويم بدل أن تتجمد على الشهر الذي أُعدّت فيه.
-
 **كيف تُعرض القيمة** — تعرض رقائق الفلاتر (chips) والشارات (badges) ونافذة drill-down النطاق الصريح بصيغة «من – إلى» (التاريخان معاً)، ويعرض النطاق المفتوح من جهة الطرفَ المحدد وحده.
 
 **ملاحظات على الربط:**
@@ -1105,7 +1092,7 @@ h.value_date <= :ToDocDate
 | `EnhancedMetricsCard` | شريط بطاقات مؤشرات مقاد بالـJSON — بطاقات وخانات وخطوط اتجاه مصغّرة وتلوين شرطي. انظر القسم 15. | نعم |
 | `MetricsCards` | بطاقات مؤشرات قديمة تُقاد بحقول `metricsCardConfig` على سجل الـwidget لا بـ`chartConfigJSON`. | لا |
 | `PieChart` و`ColumnWithRotatedLabels` إلخ | أنواع Highcharts القديمة (تُترجم تلقائياً إلى ECharts من جانب الخادم) | لا |
-| `Calendar` و`ResourceView` و`Timeline` و`Report` و`HTML` و`CardMenu` و`RecentVisits` | تُضبط عبر جدول `params`، أو الحقول `htmlArabic` / `htmlEnglish`، أو `cardMenus`، أو `metricsCardConfig` مع `timelineConfig`، أو `definition` مع `launchType`. انظر [التقويم والخط الزمني والتقرير وعناصر أخرى](./bi-reference-more-widget-types.md). | لا |
+| `Calendar` و`ResourceView` و`Timeline` و`Report` و`HTML` و`CardMenu` و`RecentVisits` | تُضبط عبر جدول `params`، أو الحقول `htmlArabic` / `htmlEnglish`، أو `cardMenus`، أو `metricsCardConfig` مع `timelineConfig`، أو `definition` مع `launchType`. انظر [التقويم والخط الزمني والتقرير وعناصر أخرى](/ar/platform/bi/bi-reference-more-widget-types). | لا |
 
 بالنسبة لـwidgets `Table`، تصبح أسماء أعمدة SQL رؤوس أعمدة الشبكة. لا يلزم `chartConfigJSON` — فقط أدرج `dataSource` بـSQL و`crossFilterBindings`.
 
@@ -1259,7 +1246,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 | `crossFilterBindings` | لا | مصفوفة من `{"crossFilter": "filterCode"}` (مستوى widget — انظر §6). |
 | `metricsCardConfig` | إذا type=`MetricsCards` | كائن قيمة على المستوى الرئيسي (ليس داخل `chartConfigJSON`). انظر §15.1. |
 | `crossFilterRef` | إذا type=`CrossFilterControl` | سلسلة مجردة — كود الـ`BICrossFilter` (مثل `"branchFilter"`). **لا** تستخدم كائناً (`{"code": "..."}`) — الاستيراد يرفضه برسالة "لا يمكن ترك crossFilterRef فارغاً". انظر §9a. |
-| `enableComparison` | لا | يُبدِّل تنفيذ مقارنة الفترة. |
+| `enableComparison` | لا | يشغّل مقارنة الفترات لهذا الـwidget — انظر القسم 10.5. |
 | `mergeComparisonByColumns` | لا | CSV لأسماء الأعمدة التي تُشكِّل مفتاح الدمج. |
 | `comparisonDataMapping` | لا | جدول يقسم المقياس إلى عمود للفترة الحالية وعمود للفترة السابقة: `[{"originalColumn": "netValue", "previousPeriodColumn": "prevNetValue"}]`. فصفوف الفترة السابقة تنقل قيمة `netValue` إلى `prevNetValue`، فيرسم المخطط الاثنين سلسلتين منفصلتين. راجع [10.5](#105-mSfwf-BIPeriodComparisonConfig-khtyry). |
 
@@ -1507,13 +1494,13 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 |---|---|---|
 | `code` | نعم | كود لوحة بيانات فريد |
 | `name1` / `name2` | نعم | الاسم العربي / الإنجليزي |
-| `kind` | نعم | `"Single"` أو `"Tabbed"` |
+| `kind` | نعم | `"Single"` أو `"Tabbed"`. وإن تُرك تُحفظ اللوحة `Single`. |
 | `rowsCount` / `colsCount` | نعم | **مقاما قسمة لا عددا خلايا.** الصف الواحد هو `الارتفاع المتاح ÷ rowsCount` والعمود الواحد هو `العرض المتاح ÷ colsCount`، ووضع الـ widgets يبدأ من 1 بالنسبة إليهما. رفع `rowsCount` يُصغّر كل widget. اقرأ [تحديد الأحجام والتمرير](#tHdyd-lHjm-wltmryr-Sizing-and-scrolling) قبل اختيار القيم. الوضع الأبي Tabbed: اضبط كليهما على `1`. |
 | `charts` | Single فقط | مصفوفة من أماكن الـwidgets (`element` و`rowNumber` و`columnNumber` و`heightInRows` و`widthInColumns`). |
 | `subDashboards` | Tabbed فقط | مصفوفة من `{subDashboard, arTitle, enTitle}`. |
 | `crossFilterBindings` | لا | **تجاوزات** مستوى لوحة البيانات — كل مدخل يحتاج `element` بالإضافة إلى `crossFilter`. عادةً `[]`. انظر §6. |
-| `totalDashboardRowsCount` | لا | حقل خاص بوقت التصميم فقط — ارتفاع لوحة الرسم في محرر التخطيط. تأخذ اللوحة المعروضة أحجامها وتمريرها من `rowsCount`/`colsCount` ومواضع الـ widgets، فاتركه فارغاً أو عند `0` عند التأليف بالاستيراد، ولا تحاول إبقاءه متسقاً مع `rowsCount` أو مع مدى الـ widgets. وفتح محرر التخطيط والضغط على OK يكتب فيه قيمة إن كان فارغاً. |
-| `mobileMaxRowsCount` | لا | خاص بتخطيط الهاتف فقط: كم widget يظهر على شاشة ضيقة واحدة. على الهواتف تُلغى الشبكة — تُرصّ الـ widgets بعرض كامل بترتيب الصف ثم العمود وتُتجاهل `rowsCount` و`colsCount` و`heightInRows` و`widthInColumns` — ويأخذ كل widget عادي `1 ÷ mobileMaxRowsCount` من الارتفاع المرئي، وليس أقل من 260 بكسل أبداً. وتركه فارغاً أو `0` يعني التوزيع الآلي: widget واحد لكل شاشة إن لم يكن في اللوحة إلا widget عادي واحد، وإلا فاثنان. |
+| `totalDashboardRowsCount` | لا | لا يُقرأ عند رسم اللوحة، لا على الشاشة ولا في محرر التخطيط. تأخذ اللوحة المعروضة أحجامها وتمريرها من `rowsCount`/`colsCount` ومواضع الـ widgets، فاتركه فارغاً أو عند `0` عند التأليف بالاستيراد، ولا تحاول إبقاءه متسقاً مع `rowsCount` أو مع مدى الـ widgets. وفتح محرر التخطيط والضغط على OK يكتب فيه قيمة إن كان فارغاً. |
+| `mobileMaxRowsCount` | لا | خاص بتخطيط الهاتف فقط: كم widget يظهر على شاشة ضيقة واحدة — انظر قسم «على الهواتف والشاشات الضيقة» أعلاه. وتركه فارغاً أو `0` يعني التوزيع الآلي. |
 | `refreshDashboardPer` | لا | كائن قيمة `TimePeriod` (مثل `{"value": 5, "uom": "Minute"}`) — فترة التحديث التلقائي. |
 
 ### 10.5 مصفوفة BIPeriodComparisonConfig (اختيارية)
@@ -1521,7 +1508,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 تشغّل مقارنة الفترات استعلام الـ widget مرتين — مرة للتواريخ التي اختارها المستخدم ومرة للتواريخ نفسها
 بعد إزاحتها إلى الوراء — ثم تدمج النتيجتين. يحدد سجل الإعداد مقدار الإزاحة واسم كل فترة؛ وتشير إليه فلاتر
 التاريخ المتقاطعة عبر `comparisonConfig`، ويضبط كل widget يُراد أن يقارن `enableComparison: true`. ويشرح
-قسم [مقارنة الفترات](/ar/platform/bi/bi-module-guide.md#mqrn-lftrt-Period-Comparison) في الدليل الطريقتين اللتين يعرض بهما
+قسم [مقارنة الفترات](/ar/platform/bi/bi-module-guide#mqrn-lftrt-Period-Comparison) في الدليل الطريقتين اللتين يعرض بهما
 المخطط النتيجة.
 
 ```json
@@ -1721,7 +1708,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 3. اختر الملف وشغّل الاستيراد. تُنشأ السجلات بترتيب المفاتيح في الملف — راجع
    [الهيكل الرئيسي](#lhykl-lryysy).
 4. اقرأ ملف النتيجة الذي يعيده الاستيراد — فهو يبيّن كل سجل أُنشئ أو رُفض. راجع
-   [استيراد السجلات](/ar/platform/import-export/importing-records.md) للخيارات ولملف النتيجة.
+   [استيراد السجلات](/ar/platform/import-export/importing-records) للخيارات ولملف النتيجة.
 5. افتح لوحة البيانات بكودها (`ex-sales-dashboard`).
 
 لا يظهر الأمر إلا للمستخدمين الذين يمنحهم ملف الصلاحيات حق **الاستيراد** على نوع السجل.
@@ -1867,7 +1854,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 التفاصيل نُقلت إلى ملف مرافق للحفاظ على هذا المرجع مختصراً. حمِّله فقط عند تأليف widget مع تعيين `wizardDataSource`.
 
-→ [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md)
+→ [`bi-reference-wizard-mode.md`](/ar/platform/bi/bi-reference-wizard-mode)
 
 يغطي: التخزين المؤقت للبيانات الوصفية، ومفاتيح `*WizardFieldId`، وclick-emit / drill-down مع `wizardFieldId`، وقائمة الأبعاد النشطة، ودلالات drill-by (الخيار A)، وLHS cross-filter لمسار wizard، واختيار الفتحات في وقت التشغيل، وعلامات إلغاء الاشتراك.
 
@@ -1877,7 +1864,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 التفاصيل نُقلت إلى ملف مرافق. حمِّله عند تأليف widgets من نوع `type: "EnhancedTable"` (أو وضع pivot/cross-tab).
 
-→ [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md)
+→ [`bi-reference-enhanced-table.md`](/ar/platform/bi/bi-reference-enhanced-table)
 
 يغطي: `tableOptions` (ومنها الترقيم من الخادم عبر `rowModel` / `serverPageSize`)، وتعريفات الأعمدة، و`formatting` (مع `currencySymbol`/`currencyPlacement`)، والمُصيِّرات (`badge`/`bar`/`progress`/`sparkline`/`icon`)، والتنسيق الشرطي (خلية + صف، وصفة traffic-light)، وتخطيط pivot (cross-tab) — أبعاد الصفوف/الأعمدة والمقاييس والإجماليات الجزئية والإجماليات الكلية.
 
@@ -1887,7 +1874,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 التفاصيل نُقلت إلى ملف مرافق. حمِّله عند تأليف widgets من نوع (`type: "EnhancedMetricsCard"` أو `type: "MetricsCards"` القديم).
 
-→ [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md)
+→ [`bi-reference-enhanced-metrics-card.md`](/ar/platform/bi/bi-reference-enhanced-metrics-card)
 
 يغطي: متى تستخدم أيهما، وشكل كائن قيمة `metricsCardConfig` القديم، وشكل `chartConfigJSON` (cardLayout وفتحات value/subtitle/icon/badge/sparkline)، ووضع card-to-row مقابل partition (N صفوف → بطاقة واحدة)، وsparkline مضمَّن + وصفة STUFF/FOR XML PATH، وتبديل bg + icon للبطاقة الشرطي، ووصفة شريط chip.
 
@@ -1897,7 +1884,7 @@ widget HTML غني غير بياني. الاستخدام الرئيسي: رؤو�
 
 | عندما تتضمن المهمة… | حمِّل |
 |---|---|
-| Widget مع `wizardDataSource` محدد، وdrill-by، واختيار الفتحات في وقت التشغيل | [`bi-reference-wizard-mode.md`](./bi-reference-wizard-mode.md) |
-| `type: "EnhancedTable"` — الأعمدة والمُصيِّرات والتنسيق الشرطي وpivot | [`bi-reference-enhanced-table.md`](./bi-reference-enhanced-table.md) |
-| `type: "EnhancedMetricsCard"` أو `type: "MetricsCards"` القديم | [`bi-reference-enhanced-metrics-card.md`](./bi-reference-enhanced-metrics-card.md) |
+| Widget مع `wizardDataSource` محدد، وdrill-by، واختيار الفتحات في وقت التشغيل | [`bi-reference-wizard-mode.md`](/ar/platform/bi/bi-reference-wizard-mode) |
+| `type: "EnhancedTable"` — الأعمدة والمُصيِّرات والتنسيق الشرطي وpivot | [`bi-reference-enhanced-table.md`](/ar/platform/bi/bi-reference-enhanced-table) |
+| `type: "EnhancedMetricsCard"` أو `type: "MetricsCards"` القديم | [`bi-reference-enhanced-metrics-card.md`](/ar/platform/bi/bi-reference-enhanced-metrics-card) |
 | أي شيء آخر (chartConfigJSON وSQL وdataMapping وBICrossFilter وDashBoard والاستيراد الجماعي) | هذا الملف |

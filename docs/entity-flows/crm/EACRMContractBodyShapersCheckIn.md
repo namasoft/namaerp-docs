@@ -15,22 +15,22 @@ Records customer check-in for CRM service contracts by creating or updating meet
 
 ## When This Action Runs
 
-Manual execution when customers check in for services under active CRM service contracts. Typically used for fitness centers, gyms, spas, or other service-based businesses that track customer attendance.
+Runs on a Customer record. Manual execution when customers check in for services under active CRM service contracts. Typically used for fitness centers, gyms, spas, or other service-based businesses that track customer attendance.
 
 ## How It Works
 
 1. **Finds active contract** - Locates the customer's most recent CRM service contract by value date
-2. **Validates contract existence** - Ensures customer has at least one service contract
-3. **Checks contract validity** - Verifies contract has active service lines covering today's date
-4. **Creates/updates check-in record** - Finds existing meeting remark or creates new one using contract code
+2. **Validates contract existence** - Ensures customer has at least one service contract; otherwise it fails with `The customer {0} does not have a service contract`
+3. **Checks contract validity** - Verifies that at least one line of that contract covers today's date; otherwise it fails with `The contract {0} is expired`
+4. **Creates/updates check-in record** - Finds the meeting remark whose code equals the contract code, or creates a new one with that code, and links it to the contract
 5. **Records check-in details** - Adds new meeting remark line with current date, adjusted time, and customer reference
 6. **Saves check-in** - Commits the meeting remark document with check-in information
 
 ## Parameters
 
-**Parameter 1:** Added Hours (Optional) - Number of hours to add to current time for check-in timestamp (can be decimal)
+**Parameter 1:** Added Hours (Required) - Number of hours to add to current time for check-in timestamp (can be decimal). Enter 0 to record the current time
 
-**Parameter 2:** Value for text1 (Optional) - Additional text/comments to record with the check-in
+**Parameter 2:** Value for text1 (Optional) - Additional text/comments to record in the Text 1 field of the new check-in line
 
 ## Database Tables Affected
 

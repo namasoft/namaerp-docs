@@ -47,7 +47,7 @@ Payment vouchers
 
 **3. Award the work.** [The subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) is the centre of gravity of this side, exactly as the project contract is of the other: the rates you have agreed to pay, the retention and other clauses that will reduce every certificate, the instalment schedule, the site team. It stays alive — executions, extracts and cost documents write their running totals back onto its term lines.
 
-**4. Vary it when the scope moves.** Once the first extract exists the subcontract freezes its prices, quantities and conditions, and the sanctioned way to change it is a [subcontract update](/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md). It is a genuine document with a book and a value date, and it rewrites the contract in place.
+**4. Vary it when the scope moves.** A [subcontract update](/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md) is a genuine document with a book and a value date; it rewrites the contract in place and leaves a dated record of the change. Once any extract exists on the subcontract its prices, quantities and conditions are frozen — for a direct edit and for an update alike — unless **Allow Editing Contractor Contract After Making Contractor Contr Extract On It** is ticked in the [contracting configuration](/modules/contracting/contracting-configuration).
 
 **5. Measure what he did.** [Subcontractor execution](/modules/contracting/contractor-contracting/contracting-contractor-execution.md) (حصر كميات) is the site measurement: 800 m² of wall this month. It is **optional**, and it is **incremental per document** — each execution states only what was measured since the last one, and the subcontract's term line carries the running total.
 
@@ -81,7 +81,7 @@ This is the list to read before you assume a screen behaves the way its twin doe
 |---|---|---|
 | Direction of money | a receivable — revenue, the client owes you | a **payable** — cost, you owe the subcontractor |
 | Settled by | receipt vouchers | **payment vouchers** |
-| Whose accounts the balance lands on | the customer's | the **contractor's own accounts**, or those of the supplier linked to him |
+| Whose accounts the balance lands on | the customer's | the accounts of the **supplier linked to him**, or the **contractor's own accounts** when no supplier is linked |
 | Instalment financial papers | received from the customer | **issued to the contractor** |
 | Cross-reference to the other side | none — the project contract *is* the top | every non-parent subcontract line, and every fine line, must carry the **project term code** of the client-contract item it belongs to |
 | A ceiling on quantity | none | the quantities of the **same client-contract item across all subcontracts** may not exceed what you sold, unless the configuration allows over-letting |
@@ -102,27 +102,14 @@ Two of those are worth a sentence more, because they are the ones that generate 
 
 ## The numbers, end to end
 
-CC-0042's three extracts, which the [extracts page](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) builds line by line:
-
-| | Extract 1 | Extract 2 | Extract 3 (Final) |
-|---|---|---|---|
-| Quantity certified | 800 m² | 700 m² | 500 m² |
-| Work value | 32,000 | 28,000 | 20,000 |
-| VAT 15% | 4,800 | 4,200 | 3,000 |
-| Retention 10% | −3,200 | −2,800 | −2,000 |
-| Advance recovered | −6,400 | −5,600 | −4,000 |
-| Material charge-back | −2,400 | — | — |
-| Fine | — | −1,500 | — |
-| **Net payable** | **24,800** | **22,300** | **17,000** |
-
-Retention withheld comes to 8,000 — 10% of the 80,000 subcontract. The advance clears exactly as the last certificate closes. And none of it existed in the ledger until the first extract was committed: the day CC-0042 was signed, the only thing that happened in the system was that his cheques were minted.
+CC-0042 is billed on three extracts — 800, 700 and a Final 500 m² — paying him 24,800, 22,300 and 17,000 net. The [extracts page](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md) builds them line by line and tabulates them under *The three extracts, end to end*. Retention withheld comes to 8,000 — 10% of the 80,000 subcontract — and the advance clears exactly as the last certificate closes. None of the work existed in the ledger until the first extract was committed: the day CC-0042 was signed, the only thing that happened in the system was that his cheques were minted.
 
 ## Messages you may see
 
 | Message | Why | What to do |
 |---|---|---|
 | *The total of contractor contracts for term {0} - {1} in the project contract {2} is {3}, while term quantity is {4}* — «إجمالي كميات عقود مقاول الباطن لكود البند {0} - {1} في عقد المشروع {2} تساوي {3}، بينما كمية كود البند تساوي {4}» | Saving a subcontract that names a project contract: the quantity sublet against that client-contract term, added up over **every** committed subcontract on that contract plus this one, is more than the client contract sold. | Reduce the quantity, vary the client contract first, or — if the business prefers to over-let and vary afterwards — tick **Allow Contractor Contracts to exceed Original Contract Qty** (السماح لكميات عقود مقاولي الباطن بتعدي كمية العقد الرئيسي) in the contracting configuration. |
-| *Sum of current and previous {0} value of condition {1} can not exceed {2}* — «مجموع القيمة الحالية والسابقة {0} للشرط {1} لا يمكن أن تتخطى {2}» | On a subcontractor extract, a condition line — retention, advance recovery, a deduction — would take the running total for that condition past the value planned for it on the subcontract. Previous extracts count towards the total. | Reduce the value on this certificate, or tick **Condition Value Can Exceed Contract Planned Value** (قيمة الشرط يمكن أن تتخطى القيمة المخططة في العقد) on the contracting condition itself when the overrun is legitimate. |
+| *Sum of current and previous {0} value of condition {1} can not exceed {2}* — «مجموع القيمة الحالية والسابقة {0} للشرط {1} لا يمكن أن تتخطى {2}» | On a subcontractor extract, a condition line — retention, advance recovery, a deduction — would take the running total for that condition past the value planned for it on the subcontract. Previous extracts count towards the total. The check runs only for a condition that has **Can Update Condition Value** (يمكن تعديل قيمة الشرط) ticked and that appears, with the same term code, in the subcontract's conditions grid. | Reduce the value on this certificate, or tick **Condition Value Can Exceed Contract Planned Value** (قيمة الشرط يمكن أن تتخطى القيمة المخططة في العقد) on the contracting condition itself when the overrun is legitimate. |
 | *You can not use the contract {0} because it has a final extract {1}* — «لا يمكنك استخدام العقد {0} حيث أنه منتهي طبقًا للمستخلص الختامي {1}» | The contract already carries a committed **Final** extract, which closes it. It is refused on any later document that points at it, not only on extracts. | Work on another contract, or — when late documents on a closed contract are genuinely needed — tick **Allow Creating Documents For Contracts That Have a Final Extract** (السماح بعمل مستندات لعقود لها مستخلص ختامي) in the contracting configuration. |
 
 ## Where to read next

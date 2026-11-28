@@ -14,37 +14,19 @@ Automatically generates related entities from source entities while respecting a
 
 ## When This Action Runs
 
-Automatically on entity save/commit and delete operations. Runs without manual intervention (isAutomaticForced = true).
+On Post Commit and Post Delete of the source record, and on no other event. Whatever is chosen in **Target Action** on the flow line is replaced with **Automatic** when the entity flow is saved.
 
 ## How It Works
 
-1. **Checks approval definitions** for target entity type
-2. **Creates entities** with draft/pending status if approvals required
-3. **Initiates approval workflow** when definitions exist
-4. **Handles deletion** using DeleteRelatedEntityAction for cleanup
+It works as [EAAutomaticGenerateEntityFromEntityAction](/entity-flows/core/EAAutomaticGenerateEntityFromEntityAction)
+(generate on Post Commit, delete on Post Delete, generated records do not block deleting the source), with one difference:
 
-## Key Difference
-
-Unlike standard automatic generation, this version:
-- Respects approval workflows instead of bypassing them
-- Creates entities in draft/pending status when approvals required
-- Initiates approval processes automatically
-- Provides controlled activation through authorization
+- **Saves the target the way the screen does**: when an approval definition applies to it, it is sent for approval
+  instead of being saved as final. The automatic version without approval always saves it as final.
 
 ## Key Parameters
 
-Uses the same parameters as [EAAutomaticGenerateEntityFromEntityAction](EAAutomaticGenerateEntityFromEntityAction.md):
-
-- **Parameter 1:** Target Type (Required) - Entity type to create (checked for approval definitions)
-- **Parameter 2:** Finder SQL (Required) - Query to find existing entity
-- **Parameter 3:** Field Map (Required) - Field mapping expressions
-- **Parameter 4:** Update Only (Optional) - Only update existing entities
-- **Parameter 5:** Inverse Copy (Optional) - Copy fields back to source
-- **Parameter 6:** Run Entity Flow Per Each Line (Optional) - Process collections
-- **Parameter 7:** Insert Only (Optional) - Only create new entities
-- **Parameter 8:** Apply When Query (Optional) - Conditional processing
-- **Parameter 9:** Group Details By (Optional) - Group collection items
-- **Parameter 10:** Run Only If (Optional) - Execution condition
+The ten parameters, their titles and their rules are the same as in [EAGenerateEntityFromEntityAction](/entity-flows/core/EAGenerateEntityFromEntityAction#Key-Parameters): Target Type, Finder SQL, Field Map, Update Only, Inverse Copy, Run Entity Flow Per Each Line, Insert Only, Apply When Query, Group Details By and Run Only If. Parameters 1 and 2 must be filled; on Post Delete only these two are used.
 
 ## Database Tables Affected
 

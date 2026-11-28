@@ -12,18 +12,18 @@ Nothing about Nama Mobile is configured on the phone beyond the server address a
 | Screen (menu name) | Arabic | What it decides | Explained in |
 |---|---|---|---|
 | **Mobile App Screen Modifier** | تعديل شاشة التطبيق | Which fields a document screen shows, in which order, and which are required | [Shaping the app's screens](./mobile-screen-customisation.md) |
-| **Mobile Entity Title Modifier** | طريقة عرض بيانات المستند فى التطبيق | The lines of text shown on each card in a list or a search result | [Shaping the app's screens](./mobile-screen-customisation.md) |
+| **Mobile Entity Title Modifier** | طريقة عرض بيانات المستند في التطبيق | The lines of text shown on each card in a list or a search result | [Shaping the app's screens](./mobile-screen-customisation.md) |
 | **Mobile App Translation Override** | ترجمة حقول تطبيق المحمول | Your own wording for any label the app shows | [Shaping the app's screens](./mobile-screen-customisation.md) |
 | **Mobile App Fields Extra Filter** | معايير إضافية لفلتر حقول تطبيق المحمول | Which records a lookup field in the app offers | [Shaping the app's screens](./mobile-screen-customisation.md) |
 | **Mobile App Menu Definition** | تعريف قائمة التطبيق | The groups and screens in the Menu and More tabs | [Overview, Navigation & Settings](./mobile-application-guide.md#Customizing-the-home-screen-and-the-menu) |
 | **Mobile App Shortcut** | تعريف اختصارات التطبيق | The shortcut cards that can replace the home page | [Overview, Navigation & Settings](./mobile-application-guide.md#Replacing-the-home-page-with-shortcut-cards) |
 | **User Mobile Identifier Document** | سند تعريف هاتف مستخدِم | Which phone each user may save documents from | [Binding users to their phones](./mobile-device-binding.md) |
 | **Mobile Application Dashboard** | لوحة تطبيق الموبايل | The charts on the app's dashboard screen | [Below](#The-Mobile-Application-Dashboard) |
-| **Mobile QR Integrator** | Mobile QR Integrator | What happens when the app scans a QR code | [Mobile QR Integrator](./mobile-qr-integrator.md) |
+| **Mobile QR Integrator** | ربط QR بتطبيق الموبايل | What happens when the app scans a QR code | [Mobile QR Integrator](./mobile-qr-integrator.md) |
 | **Mobile Security Configuration** | إعدادات صلاحيات الموبايل | Extra app rights given to chosen users, such as seeing every driver's delivery status | [Below](#Mobile-Security-Configuration) |
 | **Mobile Apps Configurations** (last item in the menu) | إعدادات تطبيقات الهواتف المحمولة | Books, print templates, draft saving, attendance rules and the rest of the app's behaviour | [Mobile Apps Configurations — option reference](./mobile-apps-configuration.md) |
 
-All of these screens come with the basic licence, except the Mobile Application Dashboard, which needs `basic-mobile-ess`.
+All of these screens come with the basic licence.
 
 ![The Mobile Apps folder of the Basic menu](../../ar/modules/mobile/images/administration/mobile-admin-menu-en.png)
 
@@ -52,7 +52,7 @@ These records are expected — nobody created them by hand, and they should not 
 
 ## The Mobile Application Dashboard
 
-The app's **Dashboard** screen draws charts. Which charts is decided by a **Mobile Application Dashboard** record, and which record a user gets is decided on the **user's own record**, in its **Mobile Application Dashboard** field. A user with no dashboard on their record sees an empty dashboard screen.
+The app's **Dashboard** screen draws charts. Which charts is decided by a **Mobile Application Dashboard** record, and which record a user gets is decided on the **user's own record**, in its **Mobile Application Dashboard** field. A user whose record has no mobile dashboard but has an ERP **Dashboard** in the same settings is given that ERP dashboard instead, shown as a web page inside the app. A user with neither sees an empty dashboard screen.
 
 The charts themselves are not built here. Each one is a **DashBoard Widget** (Administration → DashBoards → DashBoard Widget) — the same widgets the ERP's own dashboards use, see [the BI module guide](/platform/bi/bi-module-guide.md). The mobile dashboard record only picks widgets and arranges them into groups, one line per chart in its **Charts** grid:
 
@@ -63,7 +63,7 @@ The charts themselves are not built here. Each one is a **DashBoard Widget** (Ad
 | **Group Arabic Name** / **Group English Name** | The group's title. Fill one and the other is copied from it when you save. |
 | **Basic Group** | Marks the group the dashboard opens on. Tick it on the lines of one group only. |
 
-The app can draw only some kinds of widget: **PieChart**, **3D Pie Chart**, **Table**, **ColumnWithRotatedLabels**, **Column With Categories And Labels** and **HTML**. A widget of any other kind is refused when you save the dashboard.
+The app can draw only some kinds of widget: **Pie Chart**, **3D Pie Chart**, **Table**, **Column With Rotated Labels**, **Column With Categories And Labels** and **HTML**. A widget of any other kind is refused when you save the dashboard.
 
 A widget the user has no right to view is skipped silently: the rest of the dashboard still draws. If one user is missing a chart that a colleague sees, check that user's view rights on the widget before anything else.
 
@@ -74,7 +74,7 @@ A widget the user has no right to view is skipped silently: the rest of the dash
 | Message | Why | What to do |
 |---|---|---|
 | *Element Type {0} is not supported* — «نوع العنصر {0} غير مدعم» | A line's widget is of a kind the app cannot draw. | Pick a widget of one of the six supported kinds, or change the widget's type. |
-| *Only One Group Can be Main Group* — «مجموعة واحدة فقط يمكن ان تكون المجموعة الرئيسية» | **Basic Group** is ticked on lines that belong to two different groups. | Untick it everywhere except on the lines of the group the dashboard should open on. |
+| *Only One Group Can be Main Group* — «مجموعة واحدة فقط يمكن أن تكون المجموعة الرئيسية» | **Basic Group** is ticked on lines that belong to two different groups. | Untick it everywhere except on the lines of the group the dashboard should open on. |
 
 ## Mobile Security Configuration
 

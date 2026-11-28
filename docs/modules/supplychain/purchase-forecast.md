@@ -15,9 +15,9 @@ Reactive buying is expensive: rush shipping, higher prices, and stockouts that h
 
 ## The Purchase Forecast Document (NewPurchaseForecast)
 
-The **Purchase Forecast** document is the tool you use to estimate future demand for each item over an upcoming period. The estimate is based on a quantity source you choose, then it suggests purchase quantities after deducting what's available in stock and what's actually required.
+The **Purchase Forecast** document is the tool you use to estimate future demand for each item over an upcoming period. Each line's figures come from the sales and stock sources named by the forecast's configuration, and the configuration's formulas turn them into a suggested purchase quantity for the line.
 
-You can narrow the forecast's scope by item, brand, or date range, and set the lookback period (the historical span over which consumption is measured).
+You choose the items line by line or with **Collect Items** (item criteria, brand, default supplier). The lookback period — the historical span over which sales are measured — is set on the sales source configurations described below.
 
 ## Quantity Sources: On What Basis Do We Forecast?
 
@@ -93,9 +93,9 @@ The forecast isn't an end in itself, but a prelude to purchasing. After generati
 
 | Message | Why | What to do |
 |---|---|---|
-| *You should at least select one line* — «يجب تحديد سطر واحد علي الأقل» | A purchase document is being generated from the forecast while no forecast line is ticked in the **Selected Line** column. | Tick the lines you want to buy, then run the generation action again. |
-| *Period end can not be greater than period start* — «نهاية الفترة لا يمكن أن تكون اكبر من بداية الفترة» | On a **Purchase Forecast Sales Source Configuration**, the two periods are counted *backwards* from the record's creation date, so the start of the window must be the further one back. The refusal fires when **Period Start** reaches back less far than **Period End**. | Put the longer period in **Period Start** and the shorter one in **Period End** — six months ago as the start, one month ago as the end. |
-| *Warehouse {0} in line {1} not equal warehouse in locator {2}* — «المخزن {0} في السطر {1} لا يساوي المخزن الموجود في الموقع {2}» | A quantity source line names a warehouse and a locator that belongs to a different warehouse, so the balance it would read is ambiguous. | Use a locator of the warehouse on the line, or clear the warehouse and let the locator decide it. |
+| *You should at least select one line* — «يجب تحديد سطر واحد علي الأقل» | A purchase document is being generated from the forecast while no forecast line is ticked in the **Select** column. | Tick the lines you want to buy, then run the generation action again. |
+| *Period end can not be greater than period start* — «نهاية الفترة لا يمكن أن تكون اكبر من بداية الفترة» | On a **Sales Source Configuration**, the two periods are counted *backwards* from the record's creation date, so the start of the window must be the further one back. The refusal fires when **Start Period** reaches back less far than **End Period**. | Put the longer period in **Start Period** and the shorter one in **End Period** — six months ago as the start, one month ago as the end. |
+| *Warehouse {0} in line {1} not equal warehouse in locator {2}* — «المخزن {0} في السطر {1} لا يساوي المخزن الموجود في الموقع {2}» | A quantity source line names a warehouse and a locator that belongs to a different warehouse, so the balance it would read is ambiguous. | Use a locator of the warehouse on the line, or pick the locator again: choosing a locator fills the line's warehouse with the locator's own. |
 
 ## Next Steps
 

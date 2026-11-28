@@ -109,9 +109,14 @@ go
 truncate table StockAgesTransLine
 go
 delete from StockAgesTrans
+go
+if object_id('NamaSchemaFingerprint', 'U') is not null delete from NamaSchemaFingerprint
 
 ```
 :::
+
+The script drops several tables, and the server creates them again when it starts. A server skips that schema update when its table definitions have not changed since the last update, so the last statement deletes the stored schema fingerprint (`NamaSchemaFingerprint`). The next start-up then runs the full schema update and creates the dropped tables.
+
 ### Partial Reprocess of Average Cost (Fast)
 Reprocesses the average cost of every item from the date you give (written as `yyyyMMdd`, for example `20260101`) without stopping the server. It works for average cost only: on a FIFO installation it refuses with *You are using FIFO costing method, this utility is for average cost*, and while another fast reprocess is still running it refuses with *Can not start fast reprocessing from file, there is one already running*.
 

@@ -86,10 +86,9 @@ For manufactured items, create routings with:
 - Time estimates
 - Associated BOM (optional)
 
-### 4. Warehouses
+### 4. Available quantities
 
-Configure warehouses with:
-- MRP flag enabled (to include in MRP calculations)
+The analysis does not read stock balances by itself. Decide where the quantities already on hand come from: an **MRP Available Quantity Source** naming the warehouses to count, the **Available Quantities Query** and **Potential Available Query** of a **Scenario**, or the remaining quantities of a **Previous MRP Document**. With none of them, every item starts with nothing available (see [Understanding Available Quantities](#Step-5-Review-Analysis-Results)).
 
 ### 5. Scenarios (Optional)
 
@@ -100,10 +99,14 @@ Create MRP scenarios for:
 
 ### 6. Document Terms
 
-Configure MRP document terms with:
+Configure MRP document terms with the book (and term) of each document the run will generate:
+- MRP Purchase Request book/term
 - Purchase order book/term
-- Production order book/term
 - Item request book/term
+- Production order book/term
+- Production order request book
+
+Every one of these books must be auto-coded.
 
 ---
 
@@ -113,7 +116,7 @@ The MRP process in Nama ERP follows this workflow:
 
 ### Step 1: Create MRP Document
 
-1. Navigate to: **Manufacturing > Material Resource Planning > MRP Document**
+1. Navigate to: **Manufacturing > Material Resource Planning > planning raw materials Document**
 2. Click **New** to create a new MRP document
 3. Fill in header information:
 
@@ -125,19 +128,21 @@ The MRP process in Nama ERP follows this workflow:
 | **Value Date** | التاريخ | Document date |
 | **From Date** | من تاريخ | Start date for demand collection |
 | **To Date** | إلى تاريخ | End date for demand collection |
-| **Aggregation Period Type** | نوع فترة التجميع | How to group requirements (Daily, Weekly, Monthly, Quarterly, Yearly) |
-| **Req Qty Method Type** | نوع الحقل المتعامل عليه | For forecasts: use Actual or Forecasted quantities |
-| **Scenario** | السيناريو | Optional scenario for what-if analysis |
+| **Aggregation Period Type** | نوع فترة التجميع | How to group requirements (Daily, Weekly, Monthly, Quarter, Yearly) |
+| **Sales Forecast Field Type** | نوع الحقل المتعامل عليه | For sales forecast lines: use the Actual or the Forecasted quantity of each forecast period (Forecasted when empty) |
+| **Scenario** | سيناريو | Optional scenario for what-if analysis |
 | **Previous MRP Document** | سند التخطيط السابق | Link to previous MRP run (for rolling planning) |
-| **Purchase Doc Type** | نوع مستند الشراء | Type of purchase document to generate (Purchase Order or Item Request) |
-| **Production Doc Type** | نوع مستند الإنتاج | Type of production document to generate (Production Order, Production Order Request) |
+| **Safety Stock Periods Calculation Method** | طريقة حساب فترات الSafty Stock | Used for items whose safety stock is counted in periods (see [Safety Stock Calculation Methods](#Safety-Stock-Calculation-Methods)) |
+| **Available Quantity Source** | مصدر الكميات المتاحة | The MRP Available Quantity Source that decides which warehouses count as available |
+| **Purchase Doc Type** | نوع مستند الشراء المنشأ | Type of purchase document to generate: MRP Purchase Request (the default), Purchase Order or Item Request |
+| **Production Doc Type** | نوع مستند الإنتاج المنشأ | Type of production document to generate: Production Order Request (the default) or Production Order |
 
 ::: tip Aggregation Period
 The **Aggregation Period Type** determines how demand is grouped:
 - **Daily**: Separate requirements for each day
 - **Weekly**: Group requirements by week
 - **Monthly**: Group requirements by month (recommended for most scenarios)
-- **Quarterly**: Group by quarter
+- **Quarter**: Group by quarter
 - **Yearly**: Group by year
 :::
 
@@ -159,7 +164,7 @@ The system will prompt you to select which demand sources to include:
   - Includes sales forecast documents
 
 ::: warning Important
-You must select at least one demand source. The system will show an error if none are selected.
+**From Date** and **To Date** are required, and at least one demand source must be ticked. Otherwise collecting stops with *From date and to date are required* — «يجب ادخال قيم من تاريخ و إلى تاريخ» — or *You must include one or more of the document types* — «يجب إختيار نوع أو أكثر من أنواع المستندات الواجب تجميعها».
 :::
 
 #### What Happens During Collection
@@ -169,36 +174,21 @@ The system will:
 2. Extract item requirements from each document
 3. Populate the **Lines** (التفاصيل) collection with demand sources
 4. Create **Required Lines** (الاحتياجات) by aggregating demand according to the aggregation period
-5. Calculate available quantities for each item
 
 ### Step 3: Review Required Lines
 
-After collection, review the **Required Lines** tab:
-
-#### Required Lines Fields
-
-| Field | Arabic Name | Description |
-|-------|-------------|-------------|
-| **Item** | الصنف | The item required |
-| **Required Qty** | الكمية المطلوبة | Quantity needed |
-| **Required On** | مطلوب في | Date when quantity is needed |
-| **Dimensions** | المحددات | Specific dimensions (warehouse, locator, lot, size, color, etc.) |
-| **Total Available** | الإجمالي المتاح | Current inventory quantity |
-| **Predicted Purchase** | المشتريات المتوقعة | Expected incoming purchases |
-| **Predicted Sales** | المبيعات المتوقعة | Expected outgoing sales |
-| **BOM** | مكونات المنتج | Bill of materials to use (if item is manufacturable) |
-| **Routing** | عملية التشغيل | Routing to use (if item is manufacturable) |
+After collection, review the **Desired** (مطلوب) tab. Its grid shows, for each required line, the **Item**, the **Required Quantity** (UOM and value) and **Required On**, the **BOM** and **Routing** to use, and — once the analysis has run — the line's analysis figures (**Analysis | Safety Stock**, **Analysis | Available**, **Analysis | Potential Available**, **Analysis | Total Required**, **Analysis | Batch Size**, **Analysis | Batches Count**, **Analysis | Net Required**, **Analysis | Order On**, **Analysis | Final Net Required**, **Analysis | Remaining**).
 
 ::: tip Manual Adjustments
 You can manually edit:
 - **BOM** and **Routing** selections for specific items
-- **Edited Net Required** (الاحتياج الصافي المعدل): Override calculated net requirement
-- **Edited Batches Count** (عدد الدفعات المعدل): Specify exact number of batches to produce
+- **Updated Net Required** (صافي المطلوب المعدل): Override calculated net requirement
+- **Updated Batches Count** (عدد الباتش المعدل): Specify exact number of batches to produce
 :::
 
 ### Step 4: Analyze Requirements
 
-Click **Analyze Requirments** (تحليل المطلوب — the English label is spelt that way) to perform MRP explosion.
+Click **Analyze Requirements** (تحليل المطلوب) to perform MRP explosion.
 
 ::: warning Save First
 The document must be saved before you can run the analysis.
@@ -209,8 +199,8 @@ The document must be saved before you can run the analysis.
 The system performs these calculations:
 
 1. **For Each Required Line:**
-   - Fetches the BOM (if item is manufacturable)
-   - Fetches the Routing
+   - Fetches the BOM (if item is manufacturable): the one on the line, otherwise the item's default BOM, otherwise its first BOM
+   - Fetches the Routing: the one on the line, otherwise the BOM's routing, otherwise the item's first routing. A manufacturable item with no routing or no BOM stops with *There is no routing defined for item {0}* — «لا يوجد عمليات تشغيل للصنف {0}» — or *There is no BOM defined for item {0}* — «لا يوجد مكونات منتج للصنف {0}»
    - Calculates available quantity
    - Calculates safety stock
    - Determines net requirement
@@ -243,27 +233,29 @@ After analysis completes, review the **Analysis** (التحليل) tab:
 | Field | Arabic Name | Description |
 |-------|-------------|-------------|
 | **Item** | الصنف | Item being analyzed |
-| **Required On** | مطلوب في | Date needed |
+| **Required On** | تاريخ الاحتياج | Date needed |
 | **Order On** | تاريخ الطلب | Date to order (considers lead time) |
-| **Required Qty** | الكمية المطلوبة | Gross requirement |
+| **Required Quantity** | الكمية المطلوبة | Gross requirement |
 | **Available** | المتاح | Currently available quantity |
-| **Potential Available** | المتاح المحتمل | Expected to be available |
-| **Safety Stock** | مخزون الأمان | Safety stock requirement |
-| **Total Required** | الإجمالي المطلوب | Gross requirement before adjustments |
-| **Net Required** | الاحتياج الصافي | Net requirement after considering availability |
-| **Net Required After Edit** | الاحتياج الصافي بعد التعديل | Final requirement including manual edits |
-| **Batch Size** | حجم الدفعة | Production batch size |
-| **Batches Count** | عدد الدفعات | Number of batches to produce |
+| **Potential Available** | المحتمل أن يكون متاح | Expected to be available |
+| **Safety Stock** | Safety Stock | Safety stock requirement |
+| **Total Required** | إجمالي المطلوب | Required + Safety Stock − Available − Potential Available, before batch and minimum-order rounding |
+| **Net Required** | صافي المطلوب | Net requirement after rounding to batches and the minimum order quantity |
+| **Final Net Required** | صافي المطلوب النهائي | Final requirement including manual edits |
+| **Batch Size** | كمية الشحنة | Production batch size |
+| **Batches Count** | عدد الشحنات | Number of batches to produce |
 | **Remaining** | المتبقي | Quantity remaining after fulfilling requirement |
 | **BOM** | مكونات المنتج | Bill of materials used |
 | **Routing** | عملية التشغيل | Routing used |
 
 ::: details Understanding Available Quantities
-**Available Quantity** can be calculated from:
-- **Current inventory** in MRP-enabled warehouses
-- **Previous MRP Document** remaining quantities (for rolling planning)
-- **Custom Scenario Query** (if scenario is specified)
-- **Available Qty Source Document** (if configured)
+**Available** and **Potential Available** for an item are taken, in this order:
+1. From the **Previous MRP Document**: the **Remaining** of the item's analysis line there (for rolling planning).
+2. From the **Available Quantity Source**, if one is set and gives a quantity: the item's stock balance in the warehouses and locators its lines name, as Total Available or as Predicted Purchase.
+3. From the **Scenario**: the results of its **Available Quantities Query** and **Potential Available Query**.
+4. Otherwise zero.
+
+Once an item has been analysed, its next line in the same run starts from the **Remaining** of the previous one.
 :::
 
 ### Step 6: Review Planned Orders
@@ -272,7 +264,7 @@ The analysis automatically generates planned orders in two tabs:
 
 #### Planned Production Lines (خطوط الإنتاج المخطط)
 
-Contains production orders to be created:
+Contains production orders to be created. An item whose BOM has a batch size gets one line per batch, each for the batch size, unless the scenario has **Create Single Production Order Without Considering Batch Size** ticked, which makes it one line for all the batches. Lines for the same item and date that do not come from batches are combined into one:
 
 | Field | Description |
 |-------|-------------|
@@ -298,7 +290,7 @@ Contains purchase orders to be created:
 | **Date** | Purchase date (considering lead time) |
 | **Supplier** | Preferred supplier (if configured) |
 | **Warehouse** | Receiving warehouse |
-| **Order Type** | Purchase Order or Item Request |
+| **Order Type** | MRP Purchase Request, Purchase Order or Item Request |
 | **Doc** | Generated document (after generation) |
 
 ::: tip Filtering Planned Lines
@@ -334,21 +326,21 @@ Click one of these action buttons:
   - Every selected purchase line goes into that one document; select at least one line first
 
 ::: warning Document Terms Required
-Ensure document terms are properly configured with books for:
+Ensure the MRP document's term names the books (and terms) for the documents you generate:
+- MRP Purchase Request
 - Purchase Order
-- Production Order
 - Item Request
-- Production Order Request
+- Production Order
+- Production Order Request (book only)
 
-The system will show an error if required books/terms are not configured.
+A missing one stops the generation with a message naming it, such as *To generate Purchase Order doc ,Please select book and term of the Purchase Order in The term of this Document* — «لإنشاء أمر الشراء , من فضلك قم باختيار الدفتر والتوجيه الخاص به من توجيه هذا المستند». A book that is not auto-coded is refused with *In this document term the book of {0} must be Auto* — «في توجيه هذا المستند , لابد أن يكون تكويد دفتر {0} آلي».
 :::
 
 #### After Document Generation
 
 - Generated documents are linked in the **Doc** field of each planned line
-- Documents are created in draft status (with @ symbol in code)
-- You can review and edit generated documents before committing
-- The **Selected** checkbox is automatically cleared (if configured)
+- Generated documents are saved straight away, with codes from their auto-coded books
+- The **Selected** checkbox is cleared on every planned line when **Remove Selections In Mrp Document After Generation** is ticked in the manufacturing configuration
 
 ::: tip Reviewing Generated Documents
 Click the document reference in the **Doc** field to open and review the generated document.
@@ -400,32 +392,32 @@ If the item has a **minimum order quantity**:
 
 ### Safety Stock Calculation Methods
 
-Nama ERP supports three safety stock calculation methods:
+The item's **Safety Stock Calculation Type** is **Quantity**, **Periods Count** or **None** (no safety stock). With **Periods Count**, the MRP document's **Safety Stock Periods Calculation Method** picks one of three ways (**Required In Current Period** when it is empty):
 
 #### 1. Quantity-Based
 - Fixed quantity specified on item master
 - Simple and straightforward
 - Best for stable demand items
 
-#### 2. Periods Count - Current Period
-- Safety stock = Required Qty × Safety Stock Factor
-- Example: If required qty = 100 and factor = 1.2, safety stock = 20
+#### 2. Periods Count - Required In Current Period
+- Safety stock = Required Qty × the item's **Safety Stock**
+- Example: If required qty = 100 and Safety Stock = 0.2, safety stock = 20
 
 #### 3. Periods Count - Next Periods
-- Looks ahead at next N periods
-- Sums requirements from future periods
+- Looks ahead at the item's next N required lines, N being the item's **Safety Stock**
+- Sums their required quantities; when fewer than N follow, the last one is counted again for each missing period
 - More dynamic, responds to demand patterns
 
 #### 4. Periods Count - Plan Average
-- Calculates average demand across all periods
-- Multiplies by safety stock factor
+- Calculates the item's average required quantity across its required lines
+- Multiplies it by the item's **Safety Stock**
 - Smooths out demand variability
 
 ::: tip Configuring Safety Stock
 Configure safety stock method on the Item master:
 - **Safety Stock Calculation Type**: Choose the method
 - **Safety Stock**: The quantity or factor (depending on method)
-- **Order Limit**: Fallback if safety stock is not set
+- **Order Limit**: Fallback if safety stock is not set (Quantity type only)
 :::
 
 ### Understanding Lead Times
@@ -484,7 +476,7 @@ When you click generate buttons, the system:
 5. **Commits Documents**
    - Automatically commits documents
    - Links generated documents back to planned lines
-   - Updates MRP document status
+   - Saves the MRP document again
 
 ### Production Order Generation
 
@@ -555,14 +547,15 @@ After generation:
 
 3. **Track Generation**
    - Generated documents have **From Doc** pointing to MRP document
-   - MRP document tracks generated docs count
-   - Can regenerate if needed (previous docs will be deleted if not committed)
+   - Can regenerate if needed (see below)
 
 ::: warning Regeneration Behavior
-If you regenerate documents:
-- Previously generated documents from this MRP document will be **deleted**
-- Only applies to documents that have **From Doc** = this MRP document
-- Committed documents in use (with transactions) will cause errors
+If you generate again:
+- A selected planned line that already has a document of its order type in **Doc** updates that document instead of creating a new one
+- Every other document of the same family that this MRP document generated earlier (production orders and production order requests, or purchase orders and item requests) — those with **From Doc** = this MRP document — is **deleted**
+- A document that cannot be deleted, because other documents depend on it, stops the generation with the deletion's own message
+
+Deleting the MRP document deletes the production orders, production order requests, purchase orders and item requests it generated.
 :::
 
 ---
@@ -600,55 +593,45 @@ Create scenarios for:
 **Scenario Features:**
 - **Available Quantities Query**: Custom SQL query to calculate available quantities
 - **Potential Available Query**: Custom SQL query for potential available
-- **Do Not Divide Qty By Batch Size**: Produce entire batch quantity rather than splitting into multiple production orders
+- **Create Single Production Order Without Considering Batch Size**: One planned production line for all the batches of an item, rather than one line per batch
 
 ::: details Custom Query Format
-Scenario queries should return a single numeric value representing the quantity.
-
-Example query:
-```sql
-SELECT SUM(netQty)
-FROM QtyTransLine
-WHERE item_id = {itemId}
-  AND warehouse_id IN ({warehouseIds})
-```
-
-The system will execute this query for each required line, passing item and dimension parameters.
+The query runs once for each required line that has to look up its available quantity (see [Understanding Available Quantities](#Step-5-Review-Analysis-Results)), with the MRP document as the source of its parameters. The values in the first column of its result are added up and used as the quantity; an empty result counts as zero.
 :::
 
-### 3. Available Qty Source Document
+### 3. MRP Available Quantity Source
 
-Instead of scenario queries, you can create an **MRP Available Qty Source** document:
+Instead of scenario queries, you can create an **MRP Available Quantity Source** (مصدر الكميات المتاحة), under **Manufacturing → Material Resource Planning**:
 
 **Features:**
-- Manually specify available quantities per item/warehouse
-- Specify whether quantity is "Total Available" or "Predicted Purchase"
-- More controlled than scenario queries
-- Easier for users to understand and maintain
+- Each line has a **Quantity Type** — Total Available or Predicted Purchase — and a required **Warehouse**, with an optional **Locator**
+- A line applies to the item it names, or, with no item, to every item matching its item categories, section, classes and criteria (empty filters match everything)
+- The quantity is the item's current stock balance in the warehouses and locators of the matching lines: Total Available lines give **Available**, Predicted Purchase lines give **Potential Available**
+- When the source gives zero for both, the scenario queries are used instead
 
 **Usage:**
-1. Create MRP Available Qty Source document
-2. Add lines for items with custom available quantities
-3. Select this document in MRP Document's **Available Qty Source** field
+1. Create the MRP Available Quantity Source
+2. Add a line per warehouse (or locator) to count
+3. Select it in the MRP Document's **Available Quantity Source** field
 
 ### 4. Manual Edits to Requirements
 
 Override calculated requirements:
 
-**Edited Net Required** (الاحتياج الصافي المعدل):
+**Updated Net Required** (صافي المطلوب المعدل):
 - Manually specify exact net requirement
 - Overrides all calculations
 - Use for special cases or adjustments
 
-**Edited Batches Count** (عدد الدفعات المعدل):
+**Updated Batches Count** (عدد الباتش المعدل):
 - Specify exact number of batches to produce
 - Only works if item has batch size defined
-- Cannot be used with Edited Net Required
+- Cannot be used with Updated Net Required
 
 ::: warning Edit Restrictions
-- Cannot edit net required if batch size > 0 (use edited batches count instead)
-- Cannot edit batches count if batch size = 0 (use edited net required instead)
-- Edits are validated on commit
+- Cannot edit net required if batch size > 0 (use the updated batches count instead)
+- Cannot edit batches count if batch size = 0 (use the updated net required instead)
+- Both are checked when the analysis runs
 :::
 
 ### 5. Merge Planned Lines
@@ -658,8 +641,8 @@ Use the **Merge** action to combine planned lines:
 **Merging Production Lines:**
 1. Select 2 or more planned production lines (same item and order type)
 2. Click **Merge** button
-3. System combines quantities into first selected line
-4. Removes other selected lines
+3. System adds the quantities up into the last selected line in the grid
+4. Removes the other selected lines
 
 **Requirements:**
 - Lines must have same **Item**
@@ -675,51 +658,17 @@ Merge lines when:
 
 ### 6. Dimension Handling in MRP
 
-MRP respects item dimensions during planning:
+Two blocks of the [manufacturing configuration](/modules/manufacturing/manufacturing-configuration#MRP) decide how dimensions are used. The **Use … In MRP** options (revision, color, size, lot, box, measure, active and inactive percent, sub item) keep requirements that differ in a ticked dimension on separate lines; the **Consider … In MRP BOM And Routing Search** options use a requirement's size, lot, revision, color or active and inactive percentages to pick its BOM and routing.
 
-**Supported Dimensions:**
-- Warehouse
-- Locator
-- Size
-- Color
-- Lot ID
-- Revision ID
-- Active Percentage
-- Inactive Percentage
-- Box/Package
-- Measures
-- Sub-item
-- Serial Number
-
-**Configuration:**
-Manufacturing module configuration controls which dimensions are:
-- **Considered in BOM/Routing Search**
-- **Used as aggregation keys** in MRP planning
-
-Example: If "Size" is enabled in MRP:
+Example: If **Use Color In MRP** is ticked:
 - Red chairs and blue chairs are planned separately
-- Different BOMs can exist for different sizes
-- Requirements are tracked per size
+- Requirements are tracked per color
+
+With **Consider Color In MRP BOM And Routing Search** ticked too, red and blue chairs can be exploded with different BOMs.
 
 ### 7. Period-Based Safety Stock
 
-For items with variable demand:
-
-**Configuration:**
-1. Set **Safety Stock Calculation Type** = "Periods Count"
-2. Set **Safety Stock** = number of periods or factor
-3. Choose calculation method on MRP Document
-
-**Periods Calc Method Options:**
-
-- **Required In Current Period**:
-  Safety stock = Current period demand × factor
-
-- **Next Periods**:
-  Safety stock = Sum of next N periods' demand
-
-- **Plan Average**:
-  Safety stock = (Total demand / Total periods) × factor
+For items with variable demand, set the item's **Safety Stock Calculation Type** to **Periods Count** and choose the MRP document's **Safety Stock Periods Calculation Method**; the three methods are under [Safety Stock Calculation Methods](#Safety-Stock-Calculation-Methods).
 
 ::: tip Choosing a Method
 - **Current Period**: Best for steady demand
@@ -729,14 +678,7 @@ For items with variable demand:
 
 ### 8. Multiple UOM Handling
 
-MRP works with items that have multiple units of measure:
-
-**Unit Used for MRP** (configured in Manufacturing Configuration):
-- Base Unit
-- Primary UOM
-- Secondary UOM
-
-All requirements are converted to this unit for planning, then converted back to item's primary UOM for document generation.
+MRP works with items that have multiple units of measure: required quantities are converted to each item's **Unit Used For MRP**, set in the [manufacturing configuration](/modules/manufacturing/manufacturing-configuration#MRP) (empty means the base unit), and the planned lines carry that unit.
 
 ### 9. Handling Recurring Demand
 

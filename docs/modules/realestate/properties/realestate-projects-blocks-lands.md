@@ -22,7 +22,7 @@ The worked example runs throughout: **Palm Compound**, a development split into 
 Each level carries an action that generates the level below it. They chain in one direction:
 
 ```
-RE Project  ──Generate Square──►  Square  ──Generate BlockslandPrice──►  Block
+RE Project  ──Generate Square──►  Square  ──Generate Blocks──►  Block
                                                                  ├──Generate Lands──►  RE Land
                                                                  └──generate buildings──►  RE Building
 ```
@@ -84,7 +84,7 @@ Squares have the same price / length / width / area block as a project, and they
 plots is saved. Its Related Records page lists the square's blocks with their status, area and
 price side by side, which is the fastest view of "how much of Square A is still sellable".
 
-The action here is the block generator, which the English screen labels **Generate BlockslandPrice** (Arabic: إنشاء بلوكات). Generated blocks arrive with the square's
+The action here is the block generator, **Generate Blocks** (إنشاء بلوكات). Generated blocks arrive with the square's
 project, address, original owner and dimensions already filled.
 
 ## Block — the level that nests inside itself
@@ -145,7 +145,7 @@ differently, through a group owner — see
 | **generate buildings** (إنشاء مباني) | the same four questions **plus** two switches, add mosque and add garage; creates buildings under this block with those markers set and the block's original owner as their owner |
 | **Reserve** (حجز) | refuses unless the block reads *Avaliable*; opens a new reservation document in a pop-up, already carrying this block, its owner, its price and its remarks |
 | **Sell** (بيع) | refuses if the block is already *Sold*; opens a new sales contract prefilled the same way |
-| **Revert Sale** (اتاحة للبيع) | only works on a block whose status is *Sold*; puts both the derived status and the user override back to *Avaliable* |
+| **Revert Sale** (إتاحة للبيع) | only works on a block whose status is *Sold*; puts both the derived status and the user override back to *Avaliable* |
 
 Reserving or selling a block is the cascade in action: the reservation or sale runs down to the
 block's child blocks, its plots, its buildings, those buildings' floors and their units, all at
@@ -160,7 +160,7 @@ This is the thing a subdivision business actually sells.
 
 ![The RE Land screen with the land status, usage type and contracts group](../../../ar/modules/realestate/images/properties/re-land-en.png)
 
-A plot's own fields are few. **Land Usage Type** (الإستخدام) classifies it as *Housing* (سكني),
+A plot's own fields are few. **Land Usage Type** (الاستخدام) classifies it as *Housing* (سكني),
 *Commercial* (تجارى) or *Housing Commercial* (سكني تجاري), with fourteen spare "other" slots for
 local classifications. **Length** and **width** produce the **area** as you type. The price carries
 its own currency. Everything else on the screen is either inherited from the estate model or filled
@@ -171,7 +171,7 @@ one glance.
 A plot's **Land Status** starts life as *Avaliable* and is moved by documents: a sales contract sets
 it to *Sold* and rewrites the plot's original owner to the buyer; a reservation sets it to
 *Reserved*; a waiver can push it back to *Avaliable* when the waiver returns the plot to the
-company. The **Revert Sale** button (اتاحة للبيع) is the manual escape hatch — it only accepts a
+company. The **Revert Sale** button (إتاحة للبيع) is the manual escape hatch — it only accepts a
 plot that is currently *Sold*, and it clears both the derived status and the user override back to
 *Avaliable*.
 
@@ -192,7 +192,7 @@ A land plot is small, but committing one touches several records above it:
 
 ::: info The worked example, end to end
 Palm Compound is created and saved, then **Generate Square** with count 2 and prefix `SQ-` produces
-Square A and Square B. On Square A, **Generate BlockslandPrice** with count 5 produces five blocks; Block 3
+Square A and Square B. On Square A, **Generate Blocks** with count 5 produces five blocks; Block 3
 keeps *Accepts Elements* on. On Block 3, **Generate Lands** with count 40, prefix `LX-`, suffix
 length 2 and first number 1 produces `LX-01` … `LX-40`. Each plot is given length 20 and width 20,
 so each area comes out at 400 m² and Block 3's *Calculated Area* reaches 16,000 m².
@@ -209,7 +209,7 @@ All of these are described in the sections above; this is the list in one place.
 needs the record saved first.
 
 - **RE Project:** **Generate Square** — creates squares under the project.
-- **Square:** **Generate BlockslandPrice** — the block generator; creates blocks under the square.
+- **Square:** **Generate Blocks** — the block generator; creates blocks under the square.
 - **Block:** **Generate Lands** and **generate buildings** create plots or buildings under the block;
   **Reserve** and **Sell** open a reservation document or a sales contract for the block in a pop-up;
   **Revert Sale** puts a *Sold* block back to *Avaliable*.

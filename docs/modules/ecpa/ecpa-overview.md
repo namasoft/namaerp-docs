@@ -6,7 +6,7 @@ description: "Overview of the Project Management (ECPA) module for engineering a
 ::: info Required licence
 `ecpa` — one code for the whole module, all or nothing. There are no sub-licences, so there is no
 half-licensed state to explain: either every screen below is in the menu, or none of it is. The menu
-root reads **Project Management** (ادارة المشاريع).
+root reads **Project Management** (إدارة المشاريع).
 :::
 
 An engineering office does not sell anything you can put on a shelf. What it sells is Tuesday
@@ -33,12 +33,13 @@ Several pages in this documentation follow one firm:
 
 "ECPA" is the module's code, and you will meet it in licence dialogs and in support conversations.
 You will not meet it in the menu. The menu group is **Project Management** in English and
-**ادارة المشاريع** in Arabic, and a user hunting the tree for the letters E-C-P-A will not find them.
+**إدارة المشاريع** in Arabic, and a user hunting the tree for the letters E-C-P-A will not find them.
 
 The same split runs one level down. Internally every record type in the module carries a `CPA` prefix,
 but on screen you see ordinary names — **Managed Project**, **Task**, **Tasks Executing**,
-**Project Invoice**. Use the screen names. The only place the internal prefix shows through is in the
-short codes on document books (`CPAP`, `CPATS`, `CPAPI` and so on), where it is harmless.
+**Project Invoice**. Use the screen names. The internal prefix shows through in four English screen
+names — **CPA Project Class**, **CPA Discipline**, **CPA Phases Discipline Group** and **CPA Projects
+Sales Quotation** — and in the short codes on document books (`CPAP`, `CPATS`, `CPAPI` and so on).
 
 ::: info Two words that look identical in Arabic
 **Project Milestone** (مرحلة) and **Project Stage** (مرحلة مشروع) are two completely different
@@ -128,7 +129,7 @@ permit fee — each of which names the account its cost lands in.
 
 Here is the main line of work, in the order a job travels it.
 
-1. **The quotation.** A **Project Sales Quotation** prices the job: priced lines, the tasks the firm
+1. **The quotation.** A **CPA Projects Sales Quotation** prices the job: priced lines, the tasks the firm
    expects to perform with the hours and rates behind them, the expenses it expects to incur, and a
    payment schedule. It is a real document with a book and a term, but it books nothing to the
    ledger — it is a commercial offer.
@@ -181,23 +182,21 @@ Alongside the delivery line there is a second, looser track for schedule and mon
 
 A **Project Stage** is a committed document holding a set of milestone lines with a targeted period,
 an expected period, late-day and non-working-day counts — plus grids for the stage's incomes, its
-stock and supplier costs, its worker costs, its fixed-asset costs and its transportation costs. It is
-the only screen in the module that shows revenue and cost side by side.
+stock and supplier costs, its worker costs, its fixed-asset costs, its transportation costs and its
+other costs. It is the only screen in the module that shows revenue and cost side by side.
 
 A **Project Stage Extension** grants extra time on a stage, per milestone, against a two-level reason
 list.
 
 One fact to carry from the start, because it shapes how the sheet is used: **a project stage is not
-attached to a project.** It has no project field. It reaches a project only through the milestones
-picked on its own lines, and it never writes anything back. Two projects' milestones can legally
-appear on one stage. This is explained where it matters, in
-[Where Project Cost and Revenue Come From](/modules/ecpa/ecpa-costing-and-profitability).
+attached to a project** — it reaches one only through the milestones on its lines. See
+[Project Stages](/modules/ecpa/projects/ecpa-project-stages).
 
 ## The Menu, Group by Group
 
 | Menu group | What you find there |
 |---|---|
-| **Projects** (مشاريع) | Project Type, Project Sub Type, Managed Project, Project Class, Discipline, Phases Discipline Group, Project Milestone, Procedure, a shortcut to the shared **Customer** file, Template Project, Project Sales Quotation, Project Stage, Project Stage Extension, and the two stage-extension reason lists. |
+| **Projects** (مشاريع) | Project Type, Project Sub Type, Managed Project, CPA Project Class, CPA Discipline, CPA Phases Discipline Group, Project Milestone, Procedure, a shortcut to the shared **Customer** file, Template Project, CPA Projects Sales Quotation, Project Stage, Project Stage Extension, Stage Extension Reason and Stage Extension Reason Type. |
 | **Tasks** (المهام) | Task Type and Task. |
 | **Task Execution / Approvals** (تنفيذ / الموافقة على المهام) | Tasks Executing, Time Sheet Request and TimeSheet Approval. |
 | **Expense** (المصــاريف) | Project Expense Item, Project Expense Request and Project Expense Document. |

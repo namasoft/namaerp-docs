@@ -43,7 +43,15 @@ The **Dimensions** section places the request in the organisation.
 
 **Request Status** shows `Initial` in the example, and the field is not editable on the screen. That is deliberate: the status reflects what has happened to the request, and it is moved by the act of processing the request rather than by someone typing into it.
 
-A request starts at Initial — asked for, not yet acted on. It moves on as production orders get created against it. What you get from that is a straightforward answer to a question that is otherwise surprisingly hard to answer in a busy factory: *what has been asked for that nobody has started yet?* Filter the list view by status and you have your backlog.
+The field has three values, and saving the linked production order sets them:
+
+- **Initial** — asked for, not yet acted on. Every new request starts here.
+- **In Progress** — a production order that points to the request (through its **Production Order Request** field, or because it was created from the request) has been saved.
+- **Finished** — that production order has been closed or terminated by its [Order Close](/modules/manufacturing/production-costing). Cancelling or deleting the Order Close of an order created from the request sets the request back to **In Progress**.
+
+Deleting the production order, or pointing it at a different request, puts the request back to **Initial** and clears the link. A request links to one production order only: a second order that names it is refused with *The request {0} is already linked to the order {1}*.
+
+What you get from that is a straightforward answer to a question that is otherwise surprisingly hard to answer in a busy factory: *what has been asked for that nobody has started yet?* Filter the list view by status and you have your backlog.
 
 ::: tip The request list is a planning queue, not an archive
 The value of this document is almost entirely in the list view rather than the individual record. A request sitting at Initial for three weeks is a signal — either the factory is overcommitted or somebody asked for something nobody intends to make. Both are worth knowing, and neither shows up if you only ever open requests one at a time.

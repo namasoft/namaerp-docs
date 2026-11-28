@@ -90,7 +90,7 @@ Each row in the grid is one rule. The columns:
 | **Error Field** / **Show Error By Line Number** | Attach the error to a particular field, so the screen highlights it. |
 | **Validator Type** | **Error**, **Warning** or **Confirm**. Empty means Error. |
 | **Inactive** | Switch a single rule off without deleting it. |
-| **Remarks** | A note to your future self. Nobody but you sees it. |
+| **Description** | A note to your future self. The user who meets the rule never sees it. |
 
 ## Writing the queries
 
@@ -214,19 +214,6 @@ asked for a restricted type is reported. The same holds for a **Then Condition**
 use only header fields, and for a **When** half that reads only the header: when it answers yes,
 every line goes on to the **Then** check.
 
-::: warning Releases before 20261014 judged a header-only half against the first line only
-On releases older than 20261014, a half with no line placeholder counted for the first line only. A
-header-only **Then** then rejected every later line that passed **When**, however it answered, and a
-header-only **When** sent only the first line to the **Then** check. If a customer on one of these
-releases meets this, repeat the line condition inside the header-only query, so it runs once per
-line:
-
-```sql
-select case when {details.vacationType.code} in ('014','016','017')
-    and {employee.gender} = 'Male' then 0 else 1 end
-```
-:::
-
 ::: warning With Lines Should Match on, a line with no answer fails Then
 The "a query that returns nothing counts as yes" rule above does not hold for a **Then Query**
 that runs per line. When it returns no rows for a line, that line counts as failing, and it is
@@ -246,6 +233,11 @@ Selling price is below cost — line {$map.errorLines}
 The placeholder expands to a comma-separated list of 1-based line numbers. At most 50 lines are
 reported; beyond that the list is truncated so a broken 5,000-line import doesn't drown the user
 in messages.
+
+With **Lines Should Match** on, a message that reads line fields — `{details.item.item.code}`, or a
+column of an **Error Message Content Query** that runs per line — is written once for each failing
+line, with that line's values. When the lines produce different texts, the user sees them as one
+numbered list (`1) …`, `2) …`); when every line produces the same text, it appears once.
 
 ### Highlighting the field itself
 
@@ -361,8 +353,8 @@ editing the validator. A user group or a security profile keeps the rule stable.
 ## Only check when something actually changed
 
 The **Critical Fields** grid at the bottom is a filter on *updates*. List a few field IDs there and
-the validator is skipped on update unless at least one of those fields changed. Insert, delete and
-revise are unaffected — the rule always runs for them.
+the validator is skipped on update unless at least one of those fields changed. Insert, draft,
+delete, revise and unrevise are unaffected — the rule always runs for them.
 
 It is the cure for the validator that keeps blocking a document because of a condition nobody on
 this edit touched. If the rule is about the item's "free goods" flag, list
@@ -627,10 +619,10 @@ Refusals raised when you save the validator record itself.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must select at least one value for validate with* — «يجب اختيار على الاقل قيمه فى التحقق مع» | A rules line has none of the **Validate with** actions ticked — not insert, update, delete, revise, unrevise, draft or approval — so the line would never run. | Tick at least one action on that line. |
+| *You must select at least one value for validate with* — «يجب اختيار على الأقل قيمة في التحقق مع» | A rules line has none of the **Validate with** actions ticked — not insert, update, delete, revise, unrevise, draft or approval — so the line would never run. | Tick at least one action on that line. |
 | *Field {0} was not found in entity type {1}* — «الحقل {0} غير موجود فى نوع السجل {1}» | The **Error Field** on a line is not a field of the target screen — usually a typo, or a path copied from a different screen. | Re-pick the error field from the target screen, or clear it and let the message appear at record level. |
 | *Field {0} is a detail field, you must activate {1}* — «الحقل {0} حقل تفاصيل, يجب تفعيل {1}» | The **Error Field** points inside a grid while **Show Error By Line Number** is off, so the system would have no line to attach the error to. | Tick **Show Error By Line Number** on that line, or choose a header field instead. |
-| *Options {0}, {1}, {2}, and {3} could not be used with validator of type Confirm* — «الحقول {0} و {1} و {2} و {3} لا يمكن ان تكون مفعلة عند إستخدام المعيار مع التأكد» | A line of type **Confirm** is tied to draft, revise, unrevise or approval. A Confirm asks the user a question, and those four points have nobody to ask. | Leave a Confirm line on insert, update and delete only, or change its type to Error or Warning. |
+| *Options {0}, {1}, {2}, and {3} could not be used with validator of type Confirm* — «الحقول {0} و {1} و {2} و {3} لا يمكن أن تكون مفعلة عند استخدام المعيار مع التأكد» | A line of type **Confirm** is tied to draft, revise, unrevise or approval. A Confirm asks the user a question, and those four points have nobody to ask. | Leave a Confirm line on insert, update and delete only, or change its type to Error or Warning. |
 
 ## In practice
 

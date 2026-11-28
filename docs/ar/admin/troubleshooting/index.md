@@ -18,7 +18,7 @@ title: استكشاف الأخطاء وإصلاحها
   <LandingCard icon="⏳" title="توقف النظام أو عدم استجابته" link="/ar/admin/troubleshooting/troubleshooting-system-hanging.md" details="توقف النظام عن الاستجابة: التقط Thread Dumps قبل إعادة التشغيل، وأرسلها إلى نما." />
   <LandingCard icon="🚨" title="الأخطاء الحرجة عند الدخول" link="/ar/admin/troubleshooting/critical-errors.md" details="قائمة الفحوص الحمراء التي تظهر عند الدخول: كل فحص، وما الذي يثيره، وما العمل." />
   <LandingCard icon="🧾" title="إصلاح طلب أعمال فاشل" link="/ar/admin/troubleshooting/failed-business-requests.md" details="مستند محفوظ فشل أثره المحاسبي أو المخزني: معنى كل رسالة، وما الذي تصلحه، ومتى تعيد المعالجة ومتى تعيد الحفظ." />
-  <LandingCard icon="❓" title="أسئلة عامة" link="/ar/admin/troubleshooting/general-faq.md" details="إجابات عن أسئلة الإدارة اليومية، من أخطاء العدسة الفارغة إلى تنسيق الرسائل النصية." />
+  <LandingCard icon="❓" title="أسئلة عامة" link="/ar/admin/troubleshooting/general-faq.md" details="إجابات عن أسئلة الإدارة اليومية، من أخطاء العدسة الفارغة إلى الحقول النصية التي تُفتح كروابط." />
 </LandingGrid>
 
 ## ابحث عن الصفحة من العَرَض

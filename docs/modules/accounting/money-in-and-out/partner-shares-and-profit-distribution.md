@@ -43,6 +43,8 @@ For each partner:
 - **Management Profit | Amount** = the partner's profit × **Management Profit | %**.
 - **Profit Share** = the partner's profit minus Management Profit | Amount. This is what the partner earns as an owner.
 
+Two fields that are not on the default screens change the base of the management amount. When the Partner shares record has **Management Profit Share** filled, Management Profit | Amount = Amount × Management Profit Share × the partner's Management Profit | %. Otherwise, when the partner's line on the document has **Management Profit Share Base Value** filled, that value replaces the partner's profit as the base.
+
 The management amounts taken from all partners form the management pool. The **Management Shares** grid splits that pool between the managers by their shares, in **Value**. A partner who is also a manager gets their part of the pool on their own line too, as **Partner Management Share**, and **Total due amount** is Profit Share + Partner Management Share + Partner Capital: everything the business owes that partner from this distribution.
 
 In the header, **Management Shares** is the whole pool and **Partners Shares** is Amount minus all additional expenses minus the pool. If rounding leaves a fraction over, it is added to the first partner's Profit Share, so the lines always add up to the header.

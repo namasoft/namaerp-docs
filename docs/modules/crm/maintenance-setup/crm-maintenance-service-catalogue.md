@@ -45,13 +45,13 @@ Al Nokhba keeps a short list: `MSV-01` for a periodic chiller visit and `MSV-02`
 
 ## Where the Catalogue Is Used
 
-Services are one of the two money grids that run through the whole machine suite — spare parts is the other. The service grid appears on maintenance sales quotations and sales orders, contracts, notices, orders, estimations, invoices and work plans. Wherever you see **الخدمات / Services**, the item you pick in it comes from this catalogue.
+Services are one of the two money grids that run through the whole machine suite — spare parts is the other. The service grid appears on maintenance sales quotations and sales orders, contracts, notices, orders, estimations, invoices and work plans. Wherever you see **الخدمات / Services**, the *Service* you pick on a line comes from this catalogue; the line also has an *Item* column for a stock item.
 
 Two behaviours are worth knowing, because they decide what your customer is actually charged.
 
 **The contract price beats the catalogue price.** On the Marina Plaza contract `MC-0021`, Al Nokhba pre-sells 44 chiller visits at **1,200.00** each — below the catalogue's 1,500.00, because the customer committed to a year. When maintenance order `MO-0513` bills three of those visits, it prices them at 1,200.00, not 1,500.00. The catalogue price is the list price; the contract price is what a contracted customer pays. Full detail is on the [maintenance invoicing page](/modules/crm/maintenance-cycle/crm-maintenance-invoicing).
 
-**Contract "coverage" is a quantity, not a date range.** The 44 visits on the contract are simply 44 units of `MSV-01` at 1,200.00, drawn down as work is billed. Nothing anywhere compares the work date to a warranty period or a contract end date to decide whether a service is free. Coverage in this suite means "there is quantity left at the contract's price" and nothing more — see the [maintenance contracts page](/modules/crm/maintenance-cycle/crm-maintenance-contracts).
+**Contract "coverage" is a quantity, not a date range.** The 44 visits on the contract are simply 44 units of `MSV-01` at 1,200.00, drawn down as maintenance orders are committed against the contract. Nothing anywhere compares the work date to a warranty period or a contract end date to decide whether a service is free. Coverage in this suite means "there is quantity left at the contract's price" and nothing more — see the [maintenance contracts page](/modules/crm/maintenance-cycle/crm-maintenance-contracts).
 
 ## Building the Catalogue
 

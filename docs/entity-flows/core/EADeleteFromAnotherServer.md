@@ -19,21 +19,18 @@ Manual or automated execution during delete operations to remove entities from s
 
 ## How It Works
 
-1. **Validates entity** and checks document cancellation status
+1. **Checks document cancellation status:** when the record is a cancelled document, or the delete is part of cancelling a document, nothing is sent to the other server
 2. **Creates web service client** for remote server connection
 3. **Authenticates** using provided credentials
-4. **Sends delete request** to remote server's entity service
-5. **Processes response** and handles errors
+4. **Sends delete request** to remote server's entity service for the record with the same entity type, id and code
 
 ## Parameters
 
-**Parameter 1:** Other Server URL (Required) - Complete URL to remote Nama ERP server (e.g., `https://erp-backup.company.com/`)
+**Parameter 1:** Other Server URL (Required) - Title: *Other Server URL (ex. `http://localhost:7070/` )*. Complete URL to remote Nama ERP server (e.g., `https://erp-backup.company.com/`)
 
 **Parameter 2:** Login ID (Required) - Valid user login with delete permissions on remote server
 
 **Parameter 3:** Password (Required) - Authentication password (hashed before transmission)
-
-**Parameter 4:** Delete Even Documents (Optional) - "true"/"false" to control cancelled document deletion (default: false)
 
 ## Database Tables Affected
 

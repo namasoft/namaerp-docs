@@ -11,11 +11,11 @@ Fixed Assets ships **thirteen** such forms, coded `SYSF-AST001` to `SYSF-AST013`
 
 A form is not a general-purpose template — it is **bound to one document type**. That binding is the whole mechanism, and it explains everything you will notice in practice.
 
-Open a Fixed Asset Purchase Document and the print action offers `SYSF-AST005`, because that form is bound to purchase documents. Open a revaluation and the print action offers nothing from this module, because no form is bound to revaluations. Nothing is broken when that happens; there is simply no shipped stationery for that document type, and adding one is a small piece of setup rather than a repair.
+Print a Fixed Asset Purchase Document and `SYSF-AST005` comes out, because that form is bound to purchase documents. Print a revaluation and nothing from this module comes out, because no form is bound to revaluations. Nothing is broken when that happens; there is simply no shipped stationery for that document type, and adding one is a small piece of setup rather than a repair.
 
-Beyond the document type, a form can be narrowed further — to a particular **document book**, a particular **document term** (توجيه) or a particular document category. That is how a site prints one layout for its Riyadh purchase book and a different one for Jeddah: two forms, same document type, each pinned to its own book. If more than one form matches the document in front of you, they are all offered and you choose; if only one matches, that one is used.
+Beyond the document type, a form can be narrowed further — to a particular **document book**, a particular **document term** (توجيه), a document category or a dimension. That is how a site prints one layout for its Riyadh purchase book and a different one for Jeddah: two forms, same document type, each pinned to its own book. There is no picker: when several forms fit, the first one in the system's order prints, and a form you created always comes before a shipped one. The full rules are in [Which Printed Form Comes Out](/platform/reports/printed-form-selection).
 
-The thirteen shipped forms are **system forms and cannot be edited** — the system refuses any change to a system report or form. That is deliberate: an upgrade would overwrite your work anyway. When a shipped form is nearly right, take a **copy**, edit the copy, and bind the copy to the book or document term you want it used for. The original stays untouched underneath.
+The thirteen shipped forms are **system forms and cannot be edited** — the system refuses any change to a system report or form. That is deliberate: an upgrade would overwrite your work anyway. When a shipped form is nearly right, take a **copy**, edit the copy, and bind the copy to the book or document term you want it used for. Because your copy is not a system form, it prints in place of the original wherever both fit; the original stays untouched underneath.
 
 ::: tip One form does not mean one printout
 Because forms are bound by document type and optionally by book or document term, the practical question is never "does this document have a form" but "does this document have *my* form". A site that has built its own stationery may have five layouts for purchase documents and none of them the shipped one.
@@ -26,7 +26,7 @@ Because forms are bound by document type and optionally by book or document term
 | Code | Document (Arabic) | Document (English) | What it prints |
 |---|---|---|---|
 | `SYSF-AST001` | سند إهلاك | Depreciation Document | The period's depreciation run: fiscal period, value date, document term and narration in the header, then one line per asset with its instalment amount, the document's dimensions, a total, and a signature block |
-| `SYSF-AST002` | سند نقل الأصل | Transfer document | The asset moved, the destination location, and the *from* and *to* sides of the move side by side — legal entity, branch, sector, department and custodian — with a signature block |
+| `SYSF-AST002` | سند نقل الأصل | Transfer document | The asset moved, the destination location, and the *from* and *to* sides of the move side by side — legal entity, branch, sector, department, analysis set and custodian — with a signature block |
 | `SYSF-AST003` | سند الإضافة و الاستبعاد | Asset addition deduction | The addition or deduction, labelled as whichever it is, with fiscal period, value date, the asset, the amount in document and local currency, and a signature block |
 | `SYSF-AST004` | مصروف اعتماد أصل | Fixed Asset Expense Document | The letter-of-credit expense document: the credit, the shipment, the currency and rate, then one line per expense item with its value, credit side, account and subsidiary, and the local-currency total |
 | `SYSF-AST005` | سند شراء أصل ثابت | Fixed Asset Purchase Document | The acquisition invoice: counterparty, date, remarks, and one line per asset with unit price and value, totalled |
@@ -35,8 +35,8 @@ Because forms are bound by document type and optionally by book or document term
 | `SYSF-AST008` | مستند استلام أصل | Fixed Asset Receipt Document | Physical receipt: fiscal period, the letter of credit and source document it came from, and one line per asset with the receiving employee and the location it went to |
 | `SYSF-AST009` | تخلص من الأصل | Fixed assets disposal document | The disposal: fiscal period, the asset, the disposal value, the source document and remarks |
 | `SYSF-AST010` | افتتاح أصل ثابت | Fixed Asset Opening Document | The opening balances as entered: per asset, the depreciation start date, useful life, salvage value, acquisition value and opening accumulated depreciation — the sheet auditors ask for when a register is first loaded |
-| `SYSF-AST011` | مستند جرد أصول | FixedAssets Taking Document | The stocktaking sheet: fiscal period and status in the header, then one line per asset with its acquisition cost and current book value |
-| `SYSF-AST012` | فاتورة اعتماد مبدئية | Fixed Asset ProformaInvoice | The proforma invoice: credit, supplier, currency and fiscal period, then one line per asset with quantity, unit price and value |
+| `SYSF-AST011` | مستند جرد أصول | Fixed Assets Taking Document | The stocktaking sheet: fiscal period and status in the header, then one line per asset with its acquisition cost and current book value |
+| `SYSF-AST012` | فاتورة اعتماد مبدئية | Fixed Asset Proforma Invoice | The proforma invoice: credit, supplier, currency and fiscal period, then one line per asset with quantity, unit price and value |
 | `SYSF-AST013` | سند تكليف اعتماد أصل | Fixed Asset Letter of Credit cost | The document that closes the import chain: per asset, the landed unit cost, salvage value, useful life and depreciation start date |
 
 Four of these belong to documents that are gated behind a sub-module licence, which is worth knowing before you go looking for them. `SYSF-AST004`, `SYSF-AST012` and `SYSF-AST013` belong to the letter-of-credit chain and appear only where `fixedassets-lc` is installed — and so does `SYSF-AST008`, because the Fixed Asset Receipt Document is itself an LC-licensed document even though it sits in the Custody of Assets menu folder. See [Receipts](/modules/fixedassets/acquisition/fixedassets-receipts.md).
@@ -45,7 +45,7 @@ Four of these belong to documents that are gated behind a sub-module licence, wh
 
 The thirteen forms cover the documents that most often leave the building on paper — the ones a supplier, an auditor, a department head or a storekeeper signs. Plenty of Fixed Assets documents ship with no form at all, and there is no point hunting for one:
 
-- **Revaluation** (إعادة تقييم الأصول) and **Prevent Assets Depreciation** (مستند منع اهلاك اصول) — internal value and policy decisions that stay in the system.
+- **Revaluation** (إعادة تقييم الأصول) and **Prevent Assets Depreciation** (مستند منع إهلاك أصول) — internal value and policy decisions that stay in the system.
 - **Fixed Asset Properties** (خصائص أصل ثابت) and **Fixed Asset Opening Document Update** (تعديل افتتاح أصل ثابت) — corrections to numbers already recorded.
 - **Partial Disposal** (سند تخلص جزئي من أصل) — the full disposal has a form, the partial one does not.
 - **Fixed Asset Offer** (عرض سعر أصل) and **Fixed Asset Initial Receipt** (سند استلام أصل مبدئي) — the two steps of the buying chain either side of the order and the receipt, both of which do have forms.

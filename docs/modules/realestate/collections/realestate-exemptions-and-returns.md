@@ -14,7 +14,7 @@ Two documents cover those two cases, and they have almost nothing in common exce
 
 ![The exemption document screen](../../../ar/modules/realestate/images/collections/re-exemption-doc-en.png)
 
-The first thing to notice is that the screen is the collect document, top to bottom: the same header, the same estate and location breadcrumb, the same details grid with its installment code suggestion list, the same second page of related records. **The only visible difference is the label of one column** — where a collect document says *Collected Value* (القيمة المحصلة), the exemption says **Exemption Value** (القيمة المعفاه).
+The first thing to notice is that the screen is the collect document, top to bottom: the same header, the same estate and location breadcrumb, the same details grid with its installment code suggestion list, the same second page of related records. **Apart from the collect document's read-only *Aggregated Collect Document* link, the only visible difference is the label of one column** — where a collect document says *Collected Value* (القيمة المحصلة), the exemption says **Exemption Value** (القيمة المعفاة).
 
 That is not a cosmetic relabelling. Mechanically an exemption is a collection document that collects no cash:
 
@@ -27,7 +27,7 @@ That is not a cosmetic relabelling. Mechanically an exemption is a collection do
 A tenant leases a shop at 10,000 a month and the contract grants three rent-free months while he fits it out. The schedule already contains those three installments — the accrual and the tax invoice for the period assume they exist — so deleting them is not an option.
 
 1. Raise an exemption document with a term whose accounts point the waived rent where your accountant wants it.
-2. Choose the lease in *Based On*. The header fills with the renter, the owner, the unit and its location.
+2. Choose the lease in *From Document*. The header fills with the renter, the owner, the unit and its location.
 3. Add three lines, picking the installment codes for the three months. Each line arrives with its full outstanding amount already in the **Exemption Value** column — which is exactly what you want when the whole installment is being waived.
 4. Commit. 30,000 is booked as an exemption, the three installments stop showing as outstanding, and the contract's remaining figure drops by 30,000.
 
@@ -60,11 +60,11 @@ Ask where the forgiven money should land in the ledger and whether it should rea
 
 Here the money genuinely goes back to the buyer. The usual case is the commission-style *Fees* (قيمة السعي) installments that a sales contract owes **to** the buyer rather than from him — a rebate on a fee that was charged and is now being returned, in part or in full.
 
-The header is short: book and term, dates, the contract in *Based On*, the estate (required), the buyer, the **Return Value** (قيمة العائد) which is calculated for you, the currency, and the **Payment Method** (طريقة الدفع) that governs everything else on the screen.
+The header is short: book and term, dates, the contract in *From Document*, the estate (required), the buyer, the **Return Value** (قيمة العائد) which is calculated for you, the currency, and the **Payment Method** (طريقة الدفع) that governs everything else on the screen.
 
 ### Two grids, two questions
 
-- **Returns** (العوائد) answers *what do we owe the buyer back?* Its installment code suggestion list offers **only installments of type Fees**, which is the module's way of keeping the document to its purpose. The sum of this grid is the document's return value.
+- **Return Lines** (العوائد) answers *what do we owe the buyer back?* Its installment code suggestion list offers **only installments of type Fees**, which is the module's way of keeping the document to its purpose. The sum of this grid is the document's return value.
 - **Installment Lines** (الأقساط) answers *which of the buyer's outstanding installments do we net it against?* You do not usually fill this by hand — the payment method fills it.
 
 ### Issue, or discount from the contract?
@@ -79,12 +79,12 @@ That second route carries one validation you will meet immediately: **the two gr
 
 A buyer was charged 15,000 in fees on his villa contract and the company agrees to give it back. He still owes installments, so netting is simpler than cutting a cheque.
 
-1. On the sales contract, tick the fee installment line and press **Create RE Return Payment Doc From Selected Line** (إنشاء سداد عائد للأقساط المختارة). The return document opens with that line already in the Returns grid at its outstanding value.
+1. On the sales contract, tick the fee installment line and press **Create RE Return Payment Doc From Selected Line** (إنشاء سداد عائد للأقساط المختارة). The return document opens with that line already in the Return Lines grid at its outstanding value.
 2. Set the payment method to *Discount From Contract Installments*. The Installment Lines grid fills with the buyer's open installments.
 3. Keep the lines that add up to 15,000 — say two installments of 7,500 — and remove the rest.
 4. Commit.
 
-The result: the buyer's fee entitlement is settled, and 15,000 of his future installments are settled at the same time. Both grids feed the contract's installment tracking, so both sides of the swap show up on the contract's paid columns; when the term leaves *installment Effect* empty this document falls back to the *System Paid* column rather than doing nothing.
+The result: the buyer's fee entitlement is settled, and 15,000 of his future installments are settled at the same time. Both grids feed the contract's installment tracking, so both sides of the swap show up on the contract's paid columns; when the term leaves *installment Effect* empty, the document feeds the *System Paid* column.
 
 The accounting effect is one debit and one credit **per return line**, taken from the term's single pair of return-value sides. One detail to plan around: the entry is recorded in the **legal entity's main ledger currency**, whatever currency the document itself carries. On a single-currency installation this never comes up; on a multi-currency one it decides how the rebate is measured.
 
@@ -92,7 +92,7 @@ Everything else about the document behaves the way the rest of the family does �
 
 ## Actions on these screens
 
-**On the exemption document:** it is built on the collect document's screen, so it carries the same two buttons — **Create Receipt Voucher** and **Create receipt voucher req** — which open a receipt voucher or a receipt request for the document's amount, addressed to the buyer (see [Collect Documents and Bulk Collection](/modules/realestate/collections/realestate-collect-documents.md)). An exemption settles the installments without cash, so in ordinary use neither is pressed.
+**On the exemption document:** it is built on the collect document's screen, so it carries the same two buttons — **Create Receipt Voucher** and **Create receipt voucher req** — which open a receipt voucher or a receipt request for the document's amount (see [Collect Documents and Bulk Collection](/modules/realestate/collections/realestate-collect-documents.md)). An exemption settles the installments without cash, so in ordinary use neither is pressed.
 
 **On the return payment document:**
 

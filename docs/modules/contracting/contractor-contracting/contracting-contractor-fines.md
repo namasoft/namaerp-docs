@@ -45,7 +45,7 @@ non-conformance*, and it lands on the second extract.
 
 The header identifies the subcontract and carries the recovery rule; the grid carries the penalties.
 
-Pick the **Contract** and the subcontractor, project, project contract and client fill themselves.
+Pick the **Contractor Contract** and the subcontractor, project, project contract and client fill themselves.
 The header then repeats the same recovery block you know from an
 [advance payment](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md):
 
@@ -55,24 +55,28 @@ The header then repeats the same recovery block you know from an
   methods and **Payment Value** only for the fixed-value method.
 - **Condition** — required. The clause the recovery is recorded through, and the thing that decides which
   accounts the deduction line on the extract lands on.
-- **Total Fines**, **Total Paid** and **Remaining** — read-only, maintained as the extracts consume
+- **Total Fines**, **Total Paid** and **Remaining Value** — read-only, maintained as the extracts consume
   the fine.
+- **Term Code** — optional. When the header term code is filled, every fine line's term code is
+  overwritten with it on save.
 - **Subsidiary** (الذمة) — the account the charge sits against. On a fine this field carries real
   weight: an accounting side on this document takes its subsidiary from here or from the contract, so
   if you leave it empty the entry has nothing to attach to.
-- **Fine Number** — a sequence within the subcontract, filled on commit.
+- **Fine #** — a sequence within the subcontract, filled on commit and counted the same way as the
+  advance's number (see the
+  [advance payment](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md)).
 
 Picking the **document term** (توجيه) pre-fills the payment method, percentage, value and condition,
 which is how a company makes its penalty policy a default rather than something typed from memory.
 
 ::: tip Finding a closed subcontract in the picker
 Once a Final extract has been committed, a subcontract is finished and stops being offered in the
-contract picker of new documents — with one exception. The fine's own document term carries a *show
-finished contracts* option, and when it is on, closed subcontracts appear in the list again. Two
+contract picker of new documents — with one exception. The fine's own document term carries a **Show
+Finished Contracts** option, and when it is on, closed subcontracts appear in the list again. Two
 caveats. This option exists only on the fine's term, so it does not affect what the extract or the
 advance offers. And being able to *pick* a closed subcontract is not the same as being able to commit
-against one: that additionally needs the module configuration option which allows finalised contracts
-to be used at all.
+against one: that additionally needs **Allow Creating Documents For Contracts That Have a Final
+Extract** in the [contracting configuration](/modules/contracting/contracting-configuration).
 :::
 
 ### The fine lines
@@ -95,10 +99,11 @@ are looked up on the **client contract** and its budgets. Pick any of them and t
 and the matching remark fill themselves.
 
 **The project term code is mandatory on every line, and nothing relaxes it.** The subcontract term
-code is required too, though a document-term option can make that one optional for organisations that
-book penalties at project level. The reason for the hard rule is the cross-reference: a penalty that
+code is required too, though the document-term option **Project Term Code is Optional in Cost
+Documents** makes that one optional for organisations that book penalties at project level. The reason for the hard rule is the cross-reference: a penalty that
 cannot be traced to a line of the client contract cannot be reflected in that contract's cost.
-Parent (heading) term codes are refused on fine lines, as they are everywhere else.
+Parent (heading) term codes are refused on fine lines unless **Show Main Terms Codes** is ticked in the
+contracting configuration.
 
 For CC-0042 the document holds a single line: reason *rework — quality non-conformance*, term code
 **3.01**, project term code **3.01**, fine value **1,500**. The header total becomes 1,500 and the
@@ -112,8 +117,9 @@ Recommit**.
 
 The entry is one pair, recorded **per fine line** — so a fine with four penalties produces four rows,
 each carrying its own line's references. The accounts come from the document term, with one
-alternative: a term option takes the accounts from the document's **condition** instead, falling back
-to the term's own pair when the condition has none. That is useful when your penalty accounts are
+alternative: the term option **Calculate Accounting Effects From Contracting Condition** takes each
+side from the document's **condition** instead, falling back to the term's own side when the condition
+has none. That is useful when your penalty accounts are
 already defined on the clause you recover through, and you would rather define them once.
 
 A typical reading is **debit the subcontractor's payable, credit penalty income** — you owe him less,
@@ -122,13 +128,12 @@ independently of the extract. Recovering the fine on an extract is a second, sep
 
 ## How it reaches the extract
 
-Exactly like an advance. Each
+Exactly like an advance: the
 [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md)
-scans the subcontract for fines, advances, other payments and material charges that are committed,
-still carry a balance and are dated no later than the extract, and writes one deduction line per
-source into its **Additions And Deductions** grid — carrying the fine as the condition document.
-Either the surveyor presses *Collect Conditions*, or the extract's document term collects on every
-save.
+collects it as a deduction line in its **Additions And Deductions** grid, carrying the fine as the
+condition document. Which documents are collected, when, and how much each recovery method takes are
+described once, on the
+[advance payment page](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md).
 
 One detail specific to fines: the recovery is grouped **by term code**, not by line. A fine with three
 penalties on term 3.01 and one on term 3.02 is presented to the extract as two amounts, and the recovery
@@ -152,14 +157,17 @@ was for.
 
 The rules are tighter than on an advance, because a fine is an accusation with money attached:
 
-- **Once an extract has consumed a fine it is locked** — *"you can not edit nor delete this fine
-  because it is used in …"*. Correct the extract first if the amount was wrong.
+- **Once an extract has consumed a fine it is locked**, for editing and for deleting. Correct the
+  extract first if the amount was wrong. The message is:
+
+  *You can not edit nor delete this fine because it is used in {0}* — «لا يمكن تعديل أو حذف المستند لأنه مستخدم في {0}»
+
 - You cannot change or remove a term code that already carries recovery transactions.
 - **The remaining balance can never go negative.** An advance has a term option that permits
   over-recovery; a fine does not, and the extract's save fails rather than recover more than the
   fine is worth.
 - A **Final** extract takes the whole remaining balance of every fine regardless of the recovery
-  method, and it refuses to save while any fine still has a balance. You cannot close a subcontract
+  method, and it refuses to save while any fine dated no later than it still has a balance. You cannot close a subcontract
   with an unsettled penalty.
 
 ## The reasons behind the fines

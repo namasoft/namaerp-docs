@@ -38,7 +38,7 @@ Open the document and read the **Term** field on the header — it shows the ter
 
 To see what that term actually says, open *Basic → Settings → Document Term* and find it by code. The term's own **Document Type** field tells you which document it was written for, so a term listed against a Sales Invoice will never appear in the picker on a Purchase Invoice.
 
-If the field is empty and the document still behaves as though it were configured, a term marked **System** is being used as the default for that document type.
+On sales and purchase invoices the field is required: the invoice cannot be saved without a term, just as it cannot be saved without a book.
 :::
 
 Changing the term on a document that already has lines is not a quiet act. The moment the term changes, every detail line is re-priced against the new term's tax plan and pricing rules. That is deliberate — the term is what the price was calculated under — but it surprises people who expected to swap a term and keep their typed prices.
@@ -160,8 +160,8 @@ The line values are what the movement is stamped with — but which value ends u
 
 Supply chain configuration carries a **Sector in Details**, **Branch in Details**, **Department in Details** and **Analysis Set in Details** switch, one per dimension (see [Documents & Details Configuration](./configuration/documents-and-details-configuration.md)). The switch is what settles the argument between the header and the line:
 
-1. **Switched off** — the header wins outright. Whatever the header carries is written onto every line on save, overwriting anything typed there. The dimension is a document-level fact and the line columns are decoration.
-2. **Switched on** — the line wins. A line that carries its own value keeps it. A line that is empty falls back, in order, to the **item card's** own dimension if **Copy Sector From Item** (and its siblings, on the purchasing configuration) is on, and then to the header.
+1. **Switched off** — the header wins outright. Whatever the header carries is written onto every line on save, overwriting anything typed there. The dimension is a document-level fact and the line columns are decoration. Only when the header's own value is empty does a line keep what was typed on it.
+2. **Switched on** — the line wins. A line that carries its own value keeps it. A line that is empty falls back, in order, to the **item card's** own dimension if **Copy Sector From Item** (and its siblings, on the purchasing configuration) is on and the item's quantity is tracked by that dimension, and then to the header.
 
 So the everyday behaviour — set it once on the header, every line follows — is what an installation with these switches off gets, and it is the common case. Turning a switch on is what lets one invoice charge three lines to three different departments.
 
@@ -229,7 +229,7 @@ On the Purchase Invoice the two are merged into a single **Shipping and billing*
 
 A **sub-item** is a serialised, individually tracked unit of an item that has a master record of its own — it carries its own warehouse, locator, status and back-links to every document that touched it. The concept comes from the Service Center module, where it is used for vehicles.
 
-That origin shows in the label. The shipped translation for the sub-item column is **Customer Car** (السياره), and that is what appears as the column heading on a supply chain document line. A support engineer looking for "sub-item" on a purchase invoice will not find it under that name.
+That origin shows in the label. The shipped translation for the sub-item column is **Customer Car** (السيارة), and that is what appears as the column heading on a supply chain document line. A support engineer looking for "sub-item" on a purchase invoice will not find it under that name.
 
 There is no sub-item *grid* on the Sales Invoice or Purchase Invoice. The sub-item is one column in the **Details** grid, sitting with the other tracking dimensions — and it is shipped on the **Purchase Invoice** and on the stock receipt, but is **not** on the Sales Invoice's default lines grid.
 
@@ -277,7 +277,7 @@ The Sales Invoice carries a second button in the **More** menu, **Collect Withou
 - takes the **price** from the stock document's own source document where one exists;
 - **keeps a price you already typed** on a matching line in the grid rather than overwriting it, matching on the tracking dimensions the term's *Price Update With Apply Button Policy* says to consider;
 - **merges similar lines** into one, if either the supply chain configuration (**Collect Similar Issue Lines In Sales** / **Collect Similar Receipt Lines In Purchase**) or the term (**Collect Stock Documents Similar Lines**) asks for it;
-- **re-prices the whole set** through the ordinary pricing engine — the same one described above, with the invoice's customer, value date, invoice classification, salesman, price classifiers, subsidiary and tax plan — unless the term has **Don Not Update Price When Apply** switched on;
+- **re-prices the whole set** through the ordinary pricing engine — the same one described above, with the invoice's customer, value date, invoice classification, salesman, price classifiers, subsidiary and tax plan — unless the term has **Do Not Update Price When Apply** switched on;
 - recalculates the **totals block**.
 
 The result **replaces** the contents of the lines grid.

@@ -30,8 +30,8 @@ The term has one Settings tab with four fields:
 
 | Field | What it decides |
 |---|---|
-| **Call Document Book** (*دفتر سند إتصال*) | The book every generated Call is filed under |
-| **Call Document Term** (*توجيه سند إتصال*) | The term stamped on every generated Call |
+| **Call Document Book** (*دفتر سند اتصال*) | The book every generated Call is filed under |
+| **Call Document Term** (*توجيه سند اتصال*) | The term stamped on every generated Call |
 | **visit Document Book** (*دفتر سند زيارة*) | The book every generated Visit is filed under |
 | **visit Document Term** (*توجيه سند زيارة*) | The term stamped on every generated Visit |
 
@@ -39,9 +39,12 @@ In the worked example the plan is filed under book `WPLAN` with term `T-WPLAN-ST
 `CALL` for calls and book `VISIT` for visits.
 
 ::: warning A missing book stops that half of the generation
-If any ticked line is a Call line and the term has no Call Document Book, generation fails with a
-message telling you to select the book in the term. The same applies to Visit lines and the visit
-book. This is not silent — but it is easy to hit on the day you go live, so set both books before
+If any ticked line is a Call line and the term has no Call Document Book, generation fails with
+this message, where `{0}` is the document type and `{1}` the plan's term:
+
+*To be able to generate {0} you must select the book in the term {1}* — «حتى تتمكن من إنشاء سند {0} يتوجب عليك اختيار الدفتر في التوجيه {1}»
+
+The same applies to Visit lines and the visit book. This is not silent — but it is easy to hit on the day you go live, so set both books before
 anyone raises a plan. See [How CRM Document Terms Work](/modules/crm/document-terms/crm-terms-basics).
 :::
 
@@ -143,7 +146,7 @@ All of them are described in context above; this is the list in one place.
 - **Generate Documents From Selected Lines** (*إنشاء مستندات من السطور المختارة*) — creates and
   commits one Call or Visit per ticked line, under the books named on the term. The plan must be
   **saved** first. See [Generating the documents](#Generating-the-documents).
-- **Choose All Lines** (*إختيار كل السطور*), **Do Not Choose All Lines** (*عدم إختيار كل السطور*) and
+- **Choose All Lines** (*اختيار كل السطور*), **Do Not Choose All Lines** (*عدم اختيار كل السطور*) and
   **Reverse Selected Lines** (*عكس السطور المختارة*) — tick, untick or invert the Selected column on
   every row. They change the screen only; save afterwards.
 - **Start** (*بدء*) and **End** (*إنهاء*) — row buttons on the Details grid that stamp the current
@@ -155,6 +158,7 @@ Nothing beyond the term's books. The From and To dates are not validated against
 against the line dates; a plan with no lines commits happily; a line with no subject commits happily
 and will generate a document with no subject.
 
-**Reporting: none.** This module ships no system reports, and this screen has no print form. The Work
+**Reporting: none.** This screen has no print form, and CRM ships no system reports (see
+[CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms)). The Work
 Plan list view does let you filter by Responsible Employee, which is the usual way supervisors find
 their own plans; beyond that, use Excel export or BI.

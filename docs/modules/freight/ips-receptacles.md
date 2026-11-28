@@ -3,7 +3,7 @@ entities: [IPSReceptaclesReceipt, IPSManifestForCustody, IPSTransferReceptacles]
 ---
 # Receptacles
 
-A receptacle is the transport container that gathers several mail items for movement between offices — a sealed bag or box. Before you deal with individual items, you deal with receptacles: you receive them, clear them through customs, and dispatch them on route schedules. The documents for this stage are found under **Freight Management System → Documents**.
+A receptacle is the transport container that gathers several mail items for movement between offices — a sealed bag or box. Before you deal with individual items, you deal with receptacles: you receive them, clear them through customs, and dispatch them onward. The documents for this stage are found under **Freight Management System → Documents**.
 
 All receptacle documents share a header carrying **Received From** and **Received In**, and the total item count and receptacle weight.
 
@@ -30,7 +30,7 @@ To clear items subject to customs control, this document gathers the mail items 
 
 ## Transfer Receptacles
 
-The reverse of receipt: to dispatch outbound receptacles on transport routes (the route schedule) to the next office or external destination. It records the dispatched receptacles, their weights, and their routes, completing the tracking of a receptacle from the moment it's received until it leaves the network.
+The reverse of receipt: to dispatch outbound receptacles onward. It records the dispatched receptacles with their seal numbers, IPS weights and item counts, and the **Car** and **Driver** that carry them, completing the tracking of a receptacle from the moment it's received until it leaves the network.
 
 ## How receptacles connect to items
 
@@ -39,7 +39,7 @@ The relationship is simple and gradual: **Receptacles Receipt** brings the seale
 ## Reading from and reporting to IPS
 
 On the **Receptacles Receipt**, typing a **Receptacles Id** fills the line's IPS weight, seal number,
-item count and mail subclass from the external IPS server. When the Receptacles Receipt or the
+item count, mail subclass, dispatch id and origin country from the external IPS server. When the Receptacles Receipt or the
 Transfer Receptacles is first saved, it reports the event set on its term for every receptacle on
 it; the **More** menu has **Resend IPS Events** and **Resend Failed IPS Tasks Only** for when that
 failed. The Manifest for Custody reports for every mail item instead. See

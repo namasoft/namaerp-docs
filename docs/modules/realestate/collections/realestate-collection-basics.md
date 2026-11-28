@@ -1,6 +1,6 @@
 # How Installment Collection Works
 
-Every contract in the Real Estate module ends up as a schedule of money: a sales contract, an opening sales contract, a rent contract, an opening rent contract, a reservation and even a waiver all carry a grid of installments. Each line has a code, a due date, a value, its own discount and penalty columns, its taxes — and a family of columns with names like *Requested Collect*, *Collected By Commercial Paper*, *System Paid*, *Remaining* and *Paid*.
+Every contract in the Real Estate module ends up as a schedule of money: a sales contract, an opening sales contract, a rent contract, an opening rent contract, a reservation and even a waiver all carry a grid of installments. Each line has a code, a due date, a value, its own discount and penalty columns, its taxes — and a family of columns with names like *Requested Collect Value*, *Collected By FP Value*, *System paid value*, *Remaining Value* and *paid*.
 
 Those last columns are the ones everybody stares at, and they are the ones nobody may type into. This page explains why, because once you understand it every money document in the module — the collect document, the bulk rent run, the exemption, the return payment — behaves predictably.
 
@@ -20,7 +20,7 @@ So the paid and remaining figures you see on a contract are not stored facts. Th
 - And there is no meaningful way to "fix" a wrong figure by editing the contract. The fix is always to correct the collection document that produced it.
 
 ::: warning Never hand-edit the paid columns
-The paid, system-paid, requested, collected-by-paper and remaining columns on a contract's installment grid are system-maintained. Anything typed into them is overwritten the next time a collection document touches that contract. If a figure looks wrong, look for the collect document behind it.
+The *System paid value*, *Requested Collect Value*, *Collected By FP Value*, *Remaining Value* and *paid* columns on a contract's installment grid are system-maintained. Anything typed into them is overwritten the next time a collection document touches that contract. If a figure looks wrong, look for the collect document behind it.
 :::
 
 ## Which Column Moves Is a Decision You Make on the Term
@@ -29,18 +29,18 @@ A contract carries four separate tracking columns, not one, because a company us
 
 | Column on the installment line | What it is normally used for |
 |---|---|
-| *Requested Collect* / مطلوب تحصيله | The amount a collection officer has been asked to go and collect |
-| *Collected By Commercial Paper* / محصل باوراق قبض | Settled by a cheque that has not necessarily cleared yet |
-| *System Paid* / المحصل نظاميا | Genuinely settled |
-| *Remaining* / المتبقي | What is left, derived from the above |
+| *Requested Collect Value* / مطلوب تحصيله | The amount a collection officer has been asked to go and collect |
+| *Collected By FP Value* / محصل بأوراق قبض | Settled by a cheque that has not necessarily cleared yet |
+| *System paid value* / المحصل نظاميا | Genuinely settled |
+| *Remaining Value* / المتبقي | What is left: the installment's trackable total less *Paid Value* and *System paid value* |
 
 Which of them a collection document feeds is set on the document's term (توجيه), in the *installment Effect* option — the choices are *Requested Collect*, *Collected By Commercial Paper*, *System Paid* and *None*.
 
-::: danger There is no fallback
-The collect family reads this option and nothing else. **If the term leaves *installment Effect* empty, the collection lands nowhere** — the ledger entry is still created, the document still looks committed, and the contract's paid and remaining columns do not move at all. This is the single most common cause of the complaint "I collected the money but the contract still shows it as outstanding". Configure it on every collect, exemption and bulk-collection term you create.
+::: info An empty option means System Paid
+**If the term leaves *installment Effect* empty, the collection is recorded as *System Paid*.** Choose *None* when the document must leave every tracking column alone. Set the option on every collect, exemption and return payment term you create, so the column each one feeds is a decision rather than a default.
 :::
 
-The same term also carries *Do not apply effects on installments* — the deliberate way to say "this document creates its accounting effect but must not touch the schedule". That is a choice; an empty *installment Effect* is an accident that looks like the same thing.
+The same term also carries *Do not apply effects on installments* — the way to say "this document creates its accounting effect but must not touch the schedule". When it is ticked, the payment entries are still written but with the effect *None*, so no column moves.
 
 ## The Three Rules People Fight With
 
@@ -67,7 +67,7 @@ Every line of a collection document is matched to a contract line by its install
 
 It also means that regenerating a contract's installment plan after money has been collected is dangerous: rebuilding the grid can leave collected entries pointing at codes that no longer exist. Build the plan first, then collect. The [installment plan page](/modules/realestate/sales/realestate-installment-plans.md) covers the generator and its overwrite behaviour.
 
-Two smaller gates belong in the same list: a collect document needs a **contract in the *Based On* field**, unless every line names its own contract (that is how you collect several contracts in one document); and a contract that has been cancelled or waivered is closed to collection unless the term carries *Allow Collection From Finished Contracts*.
+Two smaller gates belong in the same list: a collect document needs a **contract in the *From Document* field**, unless every line names its own contract (that is how you collect several contracts in one document); and a contract that has been cancelled or waivered is closed to collection unless the term carries *Allow Collection From Finished Contracts*.
 
 ## The Collection Discount Shrinks the Debt Rather Than Paying It
 
@@ -86,7 +86,7 @@ The discount is not free of accounting either — it carries its own debit and c
 
 ## Do Taxes Count Towards What an Installment Owes?
 
-This is a single, module-wide decision, not a per-document one. In the Real Estate settings record there is an option **Consider Taxes In Calculation Of Installment Net Value Upon Payment** (اعتبار الضرائب في احتساب صافي الاقساط عند الدفع):
+This is a single, module-wide decision, not a per-document one. In the Real Estate settings record there is an option **Consider Taxes In Calculation Of Installment Net Value Upon Payment** (اعتبار الضرائب في احتساب صافي الأقساط عند الدفع):
 
 - **On** — an installment is only settled once the customer has paid it *including* its taxes; the over-payment ceiling and the remaining column both use the tax-inclusive total.
 - **Off** (the default) — tax sits outside the installment's payable amount.
@@ -99,7 +99,7 @@ A committed collection document does two things: it writes the payment entries d
 
 What none of them do is touch a safe or a bank account. Cash movement is always a separate, deliberate step:
 
-- On a collect document or a fine, the *Create Receipt Voucher* button raises the receipt voucher (سند قبض) that actually receives the money — or *Create Receipt Request* if your process routes it through a request first.
+- On a collect document or a fine, the *Create Receipt Voucher* button raises the receipt voucher (سند قبض) that actually receives the money. A collect document also has *Create receipt voucher req*, for a process that routes the money through a receipt request first.
 - On a return payment, *Create Payment Voucher* raises the payment voucher (سند صرف) that pays money out.
 
 Which accounts the collection itself hits is entirely a term matter; the [collection, maintenance, investment and cost terms page](/modules/realestate/document-terms/realestate-terms-other.md) is where those pages are described.
@@ -113,7 +113,7 @@ Which accounts the collection itself hits is entirely a term matter; the [collec
 | Aggregated Collect Document (سند تحصيل مجمع) | None of its own | None of its own — it generates one collect document per line, and those carry everything |
 | Exemption Document (سند إعفاء إيجار) | Yes | Settles installments exactly like a collection, without cash |
 | RE Return Payment Document (سند سداد عائد) | Yes | Yes — money going back to the buyer |
-| Fine Document (سند غرامة) | Yes | **None** — a fine is a separate receivable |
+| Real estate fine Doc (سند غرامة) | Yes | **None** — a fine is a separate receivable |
 | Pay Request For Bank / For Owner | Yes | None — they move already-collected money onward |
 
 The [collect documents page](/modules/realestate/collections/realestate-collect-documents.md) covers the first three, [payouts](/modules/realestate/collections/realestate-collection-payouts.md) the last, and [fines](/modules/realestate/collections/realestate-fines.md) the one document in the family that deliberately stays out of the schedule.

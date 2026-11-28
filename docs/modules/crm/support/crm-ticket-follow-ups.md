@@ -23,14 +23,14 @@ The Trouble Ticket's **تغيير الحالة / Change Status** dialog offers f
 | ملغي / Cancelled | مسند / Assigned |
 | مغلقة / Closed | تم التنفيذ / Done |
 | منتهي / Finished | مؤجل / Postponed |
-| معاد فتحه / ReOpen | طلب تطوير / Development Request |
-| | بانتظار رد العميل / Customer Feedback |
-| | OutSideContractScope *(untranslated in both languages)* |
+| معاد فتحه / Reopen | طلب تطوير / Development Request |
+| | بانتظار رد العميل / Feedback from Customer |
+| | OutSideContractScope |
 | | خارج الضمان / Out Of Warranty |
 
 *Initial* and *Assigned* are normally set for you — Initial when the ticket is created, Assigned whenever the ticket's Employees grid has rows — but if you ever need to force a ticket back to one of them, the follow-up is again the only route.
 
-The mechanism is the field **تغير حاله طلب الدعم الى / Ticket New Status**. Whatever you put there is written onto the ticket when the follow-up is committed. That is the whole gateway.
+The mechanism is the field **تغير حالة طلب الدعم إلى / Ticket New Status**. Whatever you put there is written onto the ticket when the follow-up is committed. That is the whole gateway.
 
 ::: tip The practical rule
 *"If the status you want is not in the Change Status dialog, raise a follow-up."*
@@ -49,12 +49,12 @@ Open **Customer Relationship Management → Support → Ticket Follow Up**, or p
 | Field | Arabic | What it does |
 |---|---|---|
 | **Trouble Ticket** | طلب الدعم | The ticket this follow-up belongs to. Fill it in first; the follow-up is saved against it. |
-| **Ticket Status** | حاله طلب الدعم | A snapshot of where the ticket stood when the follow-up was written. |
-| **Ticket New Status** | تغير حاله طلب الدعم الى | **The field that moves the ticket.** |
+| **Ticket Status** | حالة طلب الدعم | A snapshot of where the ticket stood when the follow-up was written. |
+| **Ticket New Status** | تغير حالة طلب الدعم إلى | **The field that moves the ticket.** |
 | **Expected Execution Date** | تاريخ التنفيذ المتوقع | Copied onto the ticket along with the status. |
 | Attachment 1 / 2, Description | | Free capture. |
 
-**بيانات المتابعه / followUp Info** — Customer, Product, **الجهة المختصة / Concerned Party** (a third party or a supplier), **المسئول لدى الجهة المختصه / Concerned Party Responsible**, **ملاحظات العميل / Customer Remarks** and **ملاحظات الجهة المختصة / Concerned Party Remarks**.
+**بيانات المتابعة / Follow Up Info** — Customer, Product, **الجهة المختصة / Concerned Party** (a third party or a supplier), **المسئول لدى الجهة المختصة / Concerned Party Responsible**, **ملاحظات العميل / Customer Remarks** and **ملاحظات الجهة المختصة / Concerned Party Remarks**.
 
 That second group is what makes the follow-up a genuine conversation record rather than just a status switch: one side of it holds what the customer told you, the other holds what the supplier or subcontractor told you.
 
@@ -78,7 +78,7 @@ Two practical consequences:
 - **A back-dated follow-up leaves the status alone.** A follow-up dated before an existing one is stored and leaves the ticket exactly as it was. If you are correcting history, this is what you want; if you were trying to change the status, it is not.
 - **The newest follow-up owns the ticket's status.** File a follow-up dated today and it overrides whatever an earlier follow-up said, regardless of what the ticket has been through in between.
 
-The status is written straight onto the committed ticket rather than through a normal edit of it, so it does not run the ticket's own checks and it does not show up as somebody having edited the ticket. What it *cannot* escape is the ticket's own rule that a populated Employees grid forces the status to *Assigned* on every save — so a ticket you parked on *Postponed* will jump back to *Assigned* the next time anybody saves it. If a parked status has to survive, the ticket must not be saved again until you are ready to move it on.
+The status is written straight onto the committed ticket rather than through a normal edit of it, so it does not run the ticket's own checks and it does not show up as somebody having edited the ticket. The follow-up records the new status as the ticket's chosen status, exactly as a Change Status choice does, so it survives later saves of the ticket even when the Employees grid has rows: a ticket parked on *Postponed* goes back to *Postponed* on every save until a Change Status choice or a later follow-up replaces that choice.
 
 ## What a follow-up does not do
 

@@ -18,9 +18,9 @@ On the first page:
 - **Amount To Earn Points Groovy Script** (`amountToEarnPointsGroovyScript`): replaces that rule altogether. When it is filled, the script decides the value each invoice line earns on, and the four tax switches above are ignored. The script receives `invoice`, `line` and `price` and must return a number. Leave it empty unless the standard rule cannot express what you need.
 - **Points Owner Field ID** (`pointsOwnerFieldId`): the field on the invoice that holds the party who earns and spends the points. Empty means `customer`. Fill it only when the points belong to someone other than the invoice's customer.
 - **Selected Group** (`applyOn`): limits which documents earn points. Each row can name a document type, book, term, dimensions, an **Apply When Query** or **Criteria**, and an **Applicability** of **Include** or **Exclude**. The first matching row decides. Once the grid has rows, a document that matches none of them earns nothing.
-- **Use Parent ValueDate With Returns** (`useParentValueDateWithReturns`): a sales return is matched against the earning rules using the original invoice's date instead of its own.
+- **Use Parent Value Date With Returns** (`useParentValueDateWithReturns`): a sales return is matched against the earning rules using the original invoice's date instead of its own.
 - **Discount Coupon Book** / **Discount Coupon Group** (`discountCouponBook`, `discountCouponGroup`): where the coupon created by a redemption takes its code from (step 4).
-- **Synchronize Reward Points With Woo Commerce Site** (`synchronizeRewardPointsWithWooCommerceSites`): keeps one balance between Nama and a WooCommerce shop. Pick the shop's site record; how the two sides exchange points is on [WooCommerce Integration](/modules/ecommerce/woocommerce-integration#Reward-points).
+- **Synchronize Reward Points With WooCommerce Site** (`synchronizeRewardPointsWithWooCommerceSites`): keeps one balance between Nama and a WooCommerce shop. Pick the shop's site record; how the two sides exchange points is on [WooCommerce Integration](/modules/ecommerce/woocommerce-integration#Reward-points).
 
 On the **Nama Rewards** page:
 
@@ -88,11 +88,11 @@ On the invoice, **Request Redeem Customer Amount** shows the customer's remainin
 
 | Message | Why | What to do |
 |---|---|---|
-| *Available loyalty points {0} for customer {1} is less than deducted points {2}* — «نقاط المكأفاة المتاحة {0} للعميل {1} أقل من النقاط المخصومة {2}» | A return or a cancellation would take back points the customer has already spent. | Reverse the redemption first, or return less. |
-| *You cannot redeem, available points is zero* — «لا يمكنك الإسترجاع, ليس هناك نقاط متاحه» | The customer has no usable points on that date. Points may still be waiting out **Deserve Points After (Days)**, or may have expired. | Check the customer's points list. |
-| *Redeem points {0} is greater than available points {1} for customer {2}* — «النقاط المطلوب إسترجاعها {0} اكبر من المستحق {1} للعميل {2}» | The amount asked for needs more points than the customer has. | Redeem a smaller amount. |
+| *Available loyalty points {0} for customer {1} is less than deducted points {2}* — «نقاط المكافأة المتاحة {0} للعميل {1} أقل من النقاط المخصومة {2}» | A return or a cancellation would take back points the customer has already spent. | Reverse the redemption first, or return less. |
+| *You cannot redeem, available points is zero* — «لا يمكنك الاسترجاع, ليس هناك نقاط متاحة» | The customer has no usable points on that date. Points may still be waiting out **Deserve Points After (Days)**, or may have expired. | Check the customer's points list. |
+| *Redeem points {0} is greater than available points {1} for customer {2}* — «النقاط المطلوب استرجاعها {0} أكبر من المستحق {1} للعميل {2}» | The amount asked for needs more points than the customer has. | Redeem a smaller amount. |
 | *Invalid OTP* — «كود تحقق غير صالح» | The code is wrong or has expired. | Request a new code. |
 | *The customer {0} prevented from rewards point redeem* — «العميل {0} ممنوع من صرف نقاط مكافأة» | A restriction bars this customer from redeeming on that date. | Check the Reward Points Restriction lines. |
-| *Reward points config file {0} must be {1} type* — «ملف إعدادات نقاط المكافأة {0} يجب ان يكون من النوع {1}» | A calculator points at a configuration that is not Nama Reward. | Choose a Nama Reward configuration. |
+| *Reward points config file {0} must be {1} type* — «ملف إعدادات نقاط المكافأة {0} يجب أن يكون من النوع {1}» | A calculator points at a configuration that is not Nama Reward. | Choose a Nama Reward configuration. |
 | *You can not cancel the document because there are {1} redeemed points for customer {0}* | A periodic grant whose points have been spent cannot be cancelled. This message has no Arabic text and shows in English on Arabic screens too. | Reverse the redemptions first. |
 | *You can not remove the customer {0} because there are {1} redeemed points* | An opening line whose points have been spent cannot be removed. Shown in English on Arabic screens too. | Keep the line. |

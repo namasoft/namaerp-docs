@@ -53,11 +53,10 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\stornvme\Paramet
 The **Nama ERP Installer** provides a graphical interface with the following key features:
 
 ### Core Installation Features
-* Creating database and database users
-* Generating SQL Server Agent **full backup job**
-* Creating **differential backup job** (runs every 2–3 hours)
-* Generating **backup cleanup script** (removes old backups)
-* Option to **upload backups to cloud storage** (Google Drive, Dropbox, OneDrive, etc.)
+* Generating the SQL scripts that create the database and the database user (the **DB Scripts** window; you run the generated script in SQL Server Management Studio)
+* Generating the script of a SQL Server Agent **full backup job** (runs daily at 3:00 AM)
+* Generating the script of a **differential backup job** (runs every 20 minutes)
+* Setting up a **backup cleanup task** (**Setup Cleanup Task** in the DB Scripts window: a Windows scheduled task that runs every hour and keeps the five newest files in each database's `full` and `diff` backup folders)
 * **SSL certificate** installation: a free certificate from [Let's Encrypt](https://letsencrypt.org/), a bought certificate, or a self-signed one — see [Installing an SSL Certificate](/getting-started/ssl-certificate-installation)
 
 ### Interface Sections
@@ -89,7 +88,7 @@ If a static IP is not available, you can use a **Dynamic DNS service** (e.g., se
 
 ## Supported Databases
 
-While SQL Server is the default, other databases may be supported. Please contact Nama ERP technical support for confirmation before using alternatives.
+Microsoft SQL Server is the only supported database. The installer's checks connect to SQL Server, and **Start Installation** does not proceed while the database check fails.
 
 ---
 
@@ -157,7 +156,7 @@ This tool will automatically download and apply the latest Nama ERP updates.
 To enable the system to download and install updates from the **utils** page (i.e., support self-upgrade functionality), the Tomcat service must run under the **Local System Account**.
 
 ::: tip
- This configuration is typically set automatically during the Nama ERP installation. If auto-upgrade stops functioning, follow these steps to restore it
+ The installer's checks (**Perform Checks**, and the checks **Start Installation** runs) report a Tomcat service that does not log on as Local System, and their **Fix** button switches it. If auto-upgrade stops functioning, run **Perform Checks** or follow these steps to restore it
 :::
 
 1. Open the **Tomcat Service Configuration Utility**:
@@ -213,14 +212,14 @@ This will display the output of all commands executed by the installer, helping 
 ### Main Action Buttons
 * **Start Installation**: Begins installation after validation (Enter key or green button)
 * **Perform Checks** (F5): Validates Tomcat, database, Java, and port configuration
-* **Save Config** (Ctrl+S): Saves settings to `installer.properties`
-* **Load From Tomcat** (Ctrl+L): Imports configuration from existing installation
+* **Save Config** (Ctrl+S, or the **More** menu): Saves settings to `installer.properties`
+* **Load From Tomcat** (Ctrl+L, or the **More** menu): Imports configuration from existing installation
 
 ### Advanced Operations  
 * **Request Key**: Automated license key request from Nama servers with approval monitoring — see [Licensing](/getting-started/licensing)
 * **Install SSL**: Opens the SSL helper, which installs a Let's Encrypt, bought or self-signed certificate — see [Installing an SSL Certificate](/getting-started/ssl-certificate-installation)
-* **Migrate Tomcat**: Upgrades from Tomcat 9 to Tomcat 10 with configuration preservation
-* **DB Scripts**: Generates database setup scripts
+* **Migrate Tomcat** (in the **More** menu): Upgrades from Tomcat 9 to Tomcat 10 with configuration preservation
+* **DB Scripts**: Generates the database, user and backup-job scripts
 
 ### Validation & Auto-Detection
 * **Path Detection**: Automatically finds Tomcat in common locations

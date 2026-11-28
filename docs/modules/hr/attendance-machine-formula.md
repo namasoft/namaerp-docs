@@ -22,7 +22,7 @@ ZK1=#empid#datetime{dd-MM-yyyy HH:mm:ss}#type{I-O}#exact
 OldClock=#ignoreLinesFromTop{1}#empid#date{d-M-yyyy}#time{hh:mm}#am_pm{AM-PM}
 ```
 
-Everything before the first `=` is the **formula name** — the label you will pick later when importing. Everything after it is the formula itself. The names you invent here are exactly what appears in the **Attendance Machine** dropdown on the Time Attendance document, so give them names your staff will recognise (`AA`, `ZK1`, `Warehouse-Gate`).
+Everything before the first `=` is the **formula name** — the label you will pick later when importing. Everything after it is the formula itself. The names you invent here are exactly what appears in the **Attendance Machine Name** dropdown on the Time Attendance document, so give them names your staff will recognise (`AA`, `ZK1`, `Warehouse-Gate`).
 
 ![Attendance Formula Settings Page in HR Settings](../../ar/modules/hr/images/attendance-formula-settings-page.png)
 
@@ -30,7 +30,7 @@ Everything before the first `=` is the **formula name** — the label you will p
 The name is compared character for character, including case and spaces. `ZK1` and `zk1` are two different machines, and a stray space before the `=` will stop the formula being found at import time. A name must not contain `=`.
 :::
 
-To use a formula, open a **Time Attendance** document, select the machine name in the **Attendance Machine** field, attach the exported file (up to **five** attachments are read and processed as one continuous list), then run the import action.
+To use a formula, open a **Time Attendance** document, select the machine name in the **Attendance Machine Name** field, attach the exported file (up to **five** attachments are read and processed as one continuous list; the first attachment slot must be filled), then run **Import Attendance Lines**.
 
 ![The Time Attendance document, with the Attendance Machine Name field, the five attachment slots and the Import Attendance Lines button](../../ar/modules/hr/images/attendance-formula-time-attendance-en.png)
 
@@ -55,7 +55,7 @@ Two ideas explain almost everything about how formulas behave.
 **Second: tokens Nama doesn't recognise are simply placeholders.** There is no dictionary check. If your file has a column you don't care about — a department name, a serial number, a blank spacer — put any invented token there to occupy the position and it is skipped. The conventional choice is `#ignore`, but `#ignore` is not a keyword; `#skipMe` or `#column4` work identically.
 
 ::: warning The flip side of that convenience
-Because unknown tokens are accepted silently, **a misspelled token is not an error** — it quietly becomes a skipped column. `#Date{dd-MM-yyyy}` with a capital D does not import the date; it discards the column and leaves every line dateless. Token names are case-sensitive, so use the buttons under the field wherever you can rather than typing tokens by hand.
+Because unknown tokens are accepted silently, **a misspelled token is never reported as a misspelling** — it quietly becomes a skipped column. A misspelled optional token just loses its data: `#machineCode` with a capital C leaves every line without a machine code. A misspelled date token, such as `#Date{dd-MM-yyyy}` with a capital D, leaves the formula with no date to read, and the import fails on the first row with *There is Error in Parsing line {0}*. Token names are case-sensitive, so use the buttons under the field wherever you can rather than typing tokens by hand.
 :::
 
 Not every token consumes a real column. Tokens such as `#exact` or `#sep{,}` change *how* the file is read rather than describing a column — but they still occupy a position in the sequence, so it is good practice to put them all at the end of the formula, after the columns they affect.
@@ -128,7 +128,7 @@ Then add `#copylines`, telling it which invented column should be copied into wh
 #copylines{intime=Checkin2,outtime=Checkout2|intime=Checkin3,outtime=Checkout3}
 ```
 
-Each new row is a full copy of the original with only the named columns replaced, and is inserted immediately after it. If the source column is empty for a given row, that copy is skipped — so a day with only one shift does not produce phantom rows. Drop the second group if the file only ever has two shifts.
+Each new row is a full copy of the original with only the named columns replaced, and is inserted immediately after it. A source column that is empty on a given row is not copied, and when every source column of a group is empty the copy is skipped — so a day with only one shift does not produce phantom rows. Drop the second group if the file only ever has two shifts.
 
 ### `#trim{date}` — strip stubborn whitespace
 
@@ -145,9 +145,9 @@ For Excel files only. Without it, Nama interprets date-formatted cells itself an
 **Required in practice.** This is the employee's code **on the machine**, which Nama matches against the **Attendance Machine Code** field on the Employee record.
 
 - A row whose employee column is empty is silently skipped.
-- If no employee carries that machine code, the import stops with *Could not find employee with attendance machine code {0}* — unless the **Ignore Unfound Employees** option is ticked on the import, in which case the row is skipped quietly.
+- If no employee carries that machine code, the import stops with *Could not find employee with attendance machine code {0}* — unless **Ignore Unfound Employees In Time Attendance Import** is ticked on the Time Attendance document, in which case the row is skipped quietly.
 - If **two** employees share the same machine code, the import stops and lists every offending employee: *"The employee {0} has a repeated attendance code {1}, please change it"*.
-- When **Consider Legal Entity To Find Employee** is enabled in HR Configuration, the search is additionally restricted to the document's legal entity, which lets two companies reuse the same machine codes.
+- When **Consider Legal Entity To Find Employee While Importing Attendance Data** is enabled in HR Configuration, the search is additionally restricted to the document's legal entity, which lets two companies reuse the same machine codes.
 
 ### Dates and times
 
@@ -172,7 +172,7 @@ The pattern inside the braces spells out how the value is written:
 ::: tip Escape sequences in patterns
 `\n` (new line), `\r` (carriage return) and `\t` (tab) can be used inside a date or time pattern when the machine separates parts of a value with those characters — for example `#date{dd-MM-yyyy\t}`.
 
-They work in `#date`, `#indate`, `#outdate`, `#intime`, `#outtime` and `#outdatetime`. They do **not** work in the time half of `#datetime` and `#indatetime`, so `#datetime{dd-MM-yyyy\tHH:mm:ss}` will read the date correctly but not the time. When a tab sits between the date and the time, use separate `#date` and `#time` tokens with `#sep` set to a tab instead.
+They work in `#date`, `#time`, `#indate`, `#outdate`, `#intime`, `#outtime` and `#outdatetime`. They do **not** work in the time half of `#datetime` and `#indatetime`, so `#datetime{dd-MM-yyyy\tHH:mm:ss}` will read the date correctly but not the time. When a tab sits between the date and the time, use separate `#date` and `#time` tokens with `#sep` set to a tab instead.
 :::
 
 ### `#type{I-O}` — is this an entry or an exit?
@@ -194,7 +194,7 @@ If `#type` is left out altogether, **every** reading is treated as an entry.
 | `#ref1Code` / `#ref2Code` | The code of a reference record to attach to the line. |
 | `#ref1EntityType{Project}` / `#ref2EntityType{Branch}` | What kind of record that code refers to. |
 
-The two entity-type tokens work in either of two ways. **With** a value in braces, the type is fixed for every row and the token does not consume a column — `#ref1EntityType{Project}` means "every code in `#ref1Code` is a project". **With empty braces**, the token takes a column and each row states its own type, which lets one file mix projects and departments.
+The two entity-type tokens work in either of two ways. **With** a value in braces, the type is fixed for every row and the column at that position is not read — `#ref1EntityType{Project}` means "every code in `#ref1Code` is a project". Like `#exact`, it still occupies a position, so put it at the end of the formula. **With empty braces**, the token takes a column and each row states its own type, which lets one file mix projects and departments.
 
 If any of `#empid`, `#machinecode`, `#text1`, `#ref1Code` or `#ref2Code` appears more than once in a formula, the values from those columns are joined together, using the text in the repeated token's braces as the glue.
 
@@ -234,8 +234,10 @@ Instead of relying on order or on a type column, this mode compares each reading
 
 The number in braces is a tolerance **in hours**. For an employee scheduled 8:00 AM to 4:00 PM with `{2}`:
 
-- a reading between **6:00 AM and 10:00 AM** counts as an **entry**;
-- a reading between **2:00 PM and 6:00 PM** counts as an **exit**.
+- a reading from **6:00 AM up to 12:00 noon** counts as an **entry**;
+- a reading from **12:00 noon to 6:00 PM** counts as an **exit**.
+
+Inside the shift, a reading counts as an entry when it is nearer the shift start and as an exit when it is nearer the shift end. Outside the shift, it counts only when it falls within the tolerance of the start or the end.
 
 Readings are then grouped by the shift they belong to, and each group becomes one attendance line. Overnight shifts that run past midnight are handled correctly. A reading that matches no shift — an employee punching on a day off, say — is grouped by its date alone.
 
@@ -261,7 +263,7 @@ AA=#empid#date{dd-MM-yyyy}#time{hh:mm}#alternatingWithAttendancePlanPunch{2}#res
 
 ### When the file already has both sides
 
-If your formula uses `#indate`, `#intime` or `#indatetime`, the file is telling Nama that each row **already contains a complete entry and exit** — no pairing is needed and every pairing mode is ignored.
+If your formula uses `#indate`, `#intime` or `#indatetime`, the file is telling Nama that each row **already contains a complete entry and exit** — no pairing is needed, so leave the pairing tokens out. `#exact`, `#exactAlternating`, `#exactWithDifferentDays`, `#exactAlternatingWithDifferentDays` and `#alternatingPunch` each switch the in/out reading off (see [If you combine several modes by mistake](#If-you-combine-several-modes-by-mistake)).
 
 ::: warning A row needs an exit date as well as an exit time
 When you use the in/out columns you must also give Nama somewhere to read the exit **date** from: `#outdate`, `#outdatetime`, or a shared `#date` covering both. A formula with `#indate` and `#intime` and `#outtime` but no exit date fails the import with *"Could not find parameter outdatetime"*.
@@ -277,7 +279,7 @@ Only one mode is ever applied. When more than one is present the system silently
 
 - If any of `#exactWithDifferentDays`, `#exactAlternating` or `#exact` is present, the **first one in that order** is used, and `#alternatingPunch` is ignored.
 - `#exactAlternatingWithDifferentDays` overrides `#exactWithDifferentDays`, but loses to `#exactAlternating` and `#exact`.
-- If none of those four is present, `#alternatingPunch` overrides everything, including in/out columns.
+- If none of `#exactWithDifferentDays`, `#exactAlternating` or `#exact` is present, `#alternatingPunch` overrides everything, including in/out columns and `#exactAlternatingWithDifferentDays`.
 - In/out columns apply unless one of the four above or `#alternatingPunch` is present. Note that `#alternatingWithAttendancePlanPunch` does **not** override them — mixing in/out columns with the plan mode silently ignores the plan.
 - `#alternatingWithAttendancePlanPunch` acts as a mode only when nothing above applies; alongside `#exactAlternatingWithDifferentDays` it acts as a refinement instead.
 
@@ -298,14 +300,6 @@ For files that use a 12-hour clock with markers other than the standard AM/PM �
 ::: warning Use either `a` or `#am_pm`, never both
 `#time{hh:mm a}` already handles a standard AM/PM marker. Combining it with `#am_pm` shifts the same afternoon time twice. Also make sure the parameter contains a dash and both markers — `#am_pm{}` or a parameter without a dash will break the import.
 :::
-
-### `#minimumpunchintime{06:00}`
-
-Only meaningful together with `#alternatingPunch`. An exit recorded **before** the stated time is treated as belonging to the **previous day**, provided the reading before it was an entry on that previous day. This is what stops a night shift ending at 2:00 AM from being filed as a stray departure on the following day.
-
-### `#initialPunch{In}`
-
-A button inserts this token, but it currently has **no effect** on the import — it can safely be removed from any formula you find it in.
 
 ## The buttons under the formula field
 
@@ -339,9 +333,7 @@ The development company strongly recommends building formulas with the buttons r
 | Exact With Different Days | `#exactWithDifferentDays` |
 | Alternating With Attendance Plan Punch | `#alternatingWithAttendancePlanPunch{2.5}` |
 | Respect Attendance Plan Punch Type | `#respectAttendancePlanPunchType` |
-| Initial Punch | `#initialPunch{In}` |
 | Alternating Punch | `#alternatingPunch` |
-| Minimum Punch-in Time | `#minimumpunchintime{06:00}` |
 | Ignore Consecutive Punches | `#ignoreConsecutivePunches{5}` |
 | Type: In or Out | `#type{C/In-C/Out}` |
 | Add Hours: Time Zone Diff | `#addhours{2}` |
@@ -355,7 +347,7 @@ There is no button for `#maxCheckInDistance`; type it by hand if you need it.
 
 Two things quietly reduce the number of lines you end up with, and both surprise people.
 
-**The document's date range.** Readings whose entry date falls outside the Time Attendance document's **From Date** / **To Date** are dropped, both while the file is read and again after pairing. Departure-only lines, which have no entry date, are never dropped by this filter.
+**The document's date range.** Every reading whose date falls outside the Time Attendance document's **From Date** / **To Date** is dropped as the file is read (in an in/out formula, the entry date decides). After pairing, lines whose entry date falls outside the range are dropped again; a departure-only line has no entry date, so this second pass keeps it.
 
 **Rows with no employee code.** As noted above, a row whose `#empid` column is empty never becomes a line at all.
 
@@ -365,11 +357,11 @@ None of the messages below has an Arabic translation, so they appear in English 
 
 | Message | What it means |
 |---|---|
-| *You must specify formula name* | No machine was selected in the **Attendance Machine** field on the document. |
+| *Attachment and machine name must be filled* | The **Attendance Machine Name** field or the first attachment slot on the document is empty. |
 | *Could not find parameter {0}* | The formula refers to something it never defined — most often an exit date missing from an in/out formula. |
-| *Could not find employee with attendance machine code {0}* | No employee carries that code. Fix the Employee record, or tick **Ignore Unfound Employees** to skip such rows. |
+| *Could not find employee with attendance machine code {0}* | No employee carries that code. Fix the Employee record, or tick **Ignore Unfound Employees In Time Attendance Import** to skip such rows. |
 | *The employee {0} has a repeated attendance code {1}, please change it* | Two or more employees share one machine code; codes must be unique. |
-| *There is Error in Parsing line {0}* | A row could not be read — usually a date or time that doesn't match its pattern. The number counts data rows after any `#ignoreLinesFromTop` skipping, so it will not match the physical line number in the file. |
+| *There is Error in Parsing line {0}* | A row could not be read — usually a date or time that doesn't match its pattern. The number counts the rows of all attachments together after any `#ignoreLinesFromTop` skipping, starting at 2 for the first row, so it will not match the physical line number in the file. |
 | *The pattern {0} does not contain right hand side* | A `#copylines` assignment is missing its `=`. |
 | *The pattern {0} left hand side {1} is not found in the formula* | A `#copylines` assignment names a column that the formula never declares. |
 

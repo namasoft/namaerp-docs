@@ -27,7 +27,7 @@ How the system looks and how users move around it: what opens at startup, what t
 
 Both of those settings are read while the menu is being built, not while it is being used, so changing one has no effect on the menu that already exists — see [how the menu is put together](/platform/menus/menu-structure).
 
-**Go To Screen Where Record Was Created When Opening It** `value.info.shouldRedirectEditView` — When a record has a custom edit view defined, opening it redirects there instead of showing the standard screen.
+**Go To Screen Where Record Was Created When Opening It** `value.info.shouldRedirectEditView` — A record remembers where it was last saved: the custom edit view, when one was used, otherwise the menu item the screen was opened from. With this option on, opening the record from a different view or menu item reopens it in the remembered one. The quick-creation pop-up is never redirected.
 
 **Show Old Print Barcode Option in More Menu** `value.info.showOldBarcodeMenu` — Keeps the legacy barcode menu visible. Only needed where an older barcode workflow is still in use.
 
@@ -83,7 +83,7 @@ Everything above paints the whole system the same way. When the meaning you want
 
 **Do Not Use Descriptors In Fields** `value.info.doNotUseDescriptorsInFields` — Reference fields show only code and name rather than the longer descriptor text. Turn it on where descriptors are so long they push the useful part of the field off screen.
 
-**Create DMS Doc In Pop Up Window** `value.info.createDMSDocInPopUpWindow` *(default on)* — The **Create Archive** action opens the new [archived document](/platform/dms/dms-documents.md) in a popup instead of navigating away, so the user does not lose the record they were working on.
+**Create DMS Doc In Pop Up Window** `value.info.createDMSDocInPopUpWindow` *(default on)* — The **Create Archive** action opens the new [archived document](/platform/dms/dms-documents) in a popup instead of navigating away, so the user does not lose the record they were working on.
 
 ## Tooltips
 
@@ -100,23 +100,23 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.startAlwaysByNewGui` | Start Always By New Gui | البدء دائما بال GUI الجديد | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.alwaysUseNewGUI` | Always Use New GUI (Prevent Use Old GUI) | استخدام الGUI الجديد دائماً (يمنع الوصول إلى الGUI القديم) | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.startInMobileByNewGui` | Start With New GUI on Mobile and Tablet Devices | البدء بال GUI الجديد في الأجهزة المحمولة و اللوحية | [Startup and navigation](#Startup-and-navigation) |
-| `value.info.useDetailedGridsInMobile` | Use Detailed Grids In Mobile | استعمال الجداول التفصيليه بشكل افتراضي في الموبايل | [Startup and navigation](#Startup-and-navigation) |
+| `value.info.useDetailedGridsInMobile` | Use Detailed Grids In Mobile | استعمال الجداول التفصيلية بشكل افتراضي في الموبايل | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.fixMenuAsSideBar` | Fix Menu As Side Bar | تثبيت القائمة دائما | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.mfDefaultMenuItemBehavior` | Master Files Default Menu Item Behavior | طريقة عرض الملفات عند اختيارها من القائمة | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.docDefaultMenuItemBehavior` | Document Files Default Menu Item Behavior | طريقة عرض المستندات عند اختيارها من القائمة | [Startup and navigation](#Startup-and-navigation) |
-| `value.info.shouldRedirectEditView` | Go To Screen Where Record Was Created When Opening It | الذهاب الى الشاشة التى تم إنشاء السجل فيها عند فتحة | [Startup and navigation](#Startup-and-navigation) |
+| `value.info.shouldRedirectEditView` | Go To Screen Where Record Was Created When Opening It | الذهاب إلى الشاشة التي تم إنشاء السجل فيها عند فتحه | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.showOldBarcodeMenu` | Show Old Print Barcode Option in More Menu | عرض اوبشن طباعة الباركود القديم في قائمة المزيد | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.defaultGUITheme` | Default System Theme | ثيم النظام الافتراضي | [Startup and navigation](#Startup-and-navigation) |
 | `value.info.companyNameForLoginPage` | Company Name For Login Page | اسم الشركة (للعرض عند تسجيل الدخول ) | [Login page and background](#Login-page-and-background) |
-| `value.info.useBackgroundImage` | Use Background Image | تعين خلفية | [Login page and background](#Login-page-and-background) |
+| `value.info.useBackgroundImage` | Use Background Image | تعيين خلفية | [Login page and background](#Login-page-and-background) |
 | `backgroundImage` | Background Image | صورة الخلفية | [Login page and background](#Login-page-and-background) |
-| `value.info.firstPriority` | First Priority | الاولوية 1 | [Login page and background](#Login-page-and-background) |
-| `value.info.secondPriority` | Second Priority | الاولوية 2 | [Login page and background](#Login-page-and-background) |
-| `value.info.thirdPriority` | Third Priority | الاولوية 3 | [Login page and background](#Login-page-and-background) |
-| `value.info.fourthPriority` | Fourth Priority | الاولوية 4 | [Login page and background](#Login-page-and-background) |
-| `value.info.fifthPriority` | Fifth Priority | الاولوية 5 | [Login page and background](#Login-page-and-background) |
-| `value.info.sixthPriority` | Sixth Priority | الاولوية 6 | [Login page and background](#Login-page-and-background) |
-| `value.info.seventhPriority` | Seventh Priority | الاولوية 7 | [Login page and background](#Login-page-and-background) |
+| `value.info.firstPriority` | First Priority | الأولوية 1 | [Login page and background](#Login-page-and-background) |
+| `value.info.secondPriority` | Second Priority | الأولوية 2 | [Login page and background](#Login-page-and-background) |
+| `value.info.thirdPriority` | Third Priority | الأولوية 3 | [Login page and background](#Login-page-and-background) |
+| `value.info.fourthPriority` | Fourth Priority | الأولوية 4 | [Login page and background](#Login-page-and-background) |
+| `value.info.fifthPriority` | Fifth Priority | الأولوية 5 | [Login page and background](#Login-page-and-background) |
+| `value.info.sixthPriority` | Sixth Priority | الأولوية 6 | [Login page and background](#Login-page-and-background) |
+| `value.info.seventhPriority` | Seventh Priority | الأولوية 7 | [Login page and background](#Login-page-and-background) |
 | `value.info.fontInfo.fontName` | Font Name | اسم الخط | [Fonts](#Fonts) |
 | `value.info.fontInfo.fontSize` | Font Size | حجم الخط | [Fonts](#Fonts) |
 | `value.info.fontInfo.fontColor` | Font Color | لون الخط | [Fonts](#Fonts) |
@@ -126,22 +126,22 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.fontInfo.menuFontName` | Menu Font Name | اسم خط القوائم | [Fonts](#Fonts) |
 | `value.info.fontInfo.menuFontSize` | Menu Font Size | حجم خط القوائم | [Fonts](#Fonts) |
 | `value.info.fontInfo.menuFontColor` | Menu Font Color | لون خط القوائم | [Fonts](#Fonts) |
-| `value.info.gridLevel1Color` | Grid Level 1 Color | لون المستوي الأول للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
-| `value.info.gridLevel2Color` | Grid Level 2 Color | لون المستوي الثاني للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
-| `value.info.gridLevel3Color` | Grid Level 3 Color | لون المستوي الثالث للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
+| `value.info.gridLevel1Color` | Grid Level 1 Color | لون المستوى الأول للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
+| `value.info.gridLevel2Color` | Grid Level 2 Color | لون المستوى الثاني للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
+| `value.info.gridLevel3Color` | Grid Level 3 Color | لون المستوى الثالث للتفاصيل | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.freeLineColor` | Free Line Color | لون السطر المجاني | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.slaveLineColor` | Slave Line Color | لون السطر التابع | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.returnedItemColor` | Returned Item Color | لون الصنف المرتجع | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.sentLineStyle` | Sent Line Style | لون السطور المرسلة | [Grid colours and styles](#Grid-colours-and-styles) |
-| `value.info.inValidSentLineStyle` | Invalid Sent Line Style | لون السطور المرشلة بشكل غير صحيح | [Grid colours and styles](#Grid-colours-and-styles) |
+| `value.info.inValidSentLineStyle` | Invalid Sent Line Style | لون السطور المرسلة بشكل غير صحيح | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.allowTextWrapInGrids` | Allow Text Wrap In Grids | السماح بالتفاف النص في الجداول | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.allowTextWrapInListViews` | Allow Text Wrap In List Views | السماح بالتفاف النص في جداول القوائم | [Grid colours and styles](#Grid-colours-and-styles) |
-| `value.info.linesCountInGrids` | Lines Count In Grids | عدد السطور في الجدوال | [Grid colours and styles](#Grid-colours-and-styles) |
+| `value.info.linesCountInGrids` | Lines Count In Grids | عدد السطور في الجداول | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.legacyUIExtraStyles` | Legacy UI Extra Styles | Legacy UI Extra Styles | [Grid colours and styles](#Grid-colours-and-styles) |
 | `value.info.hideSelectColumnInSelectorPopup` | Hide Select Column In Selector Popup | إخفاء عمود اختيار السطر في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
-| `value.info.hideCountColumnInSelectorPopup` | Hide Count Column In Selector Popup | إخفاء عمود عدد مرات الإدارج في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
+| `value.info.hideCountColumnInSelectorPopup` | Hide Count Column In Selector Popup | إخفاء عمود عدد مرات الإدراج في قوائم الاختيار | [Popups and editors](#Popups-and-editors) |
 | `value.info.alwaysUseTextAreaInSerialPopup` | Always Use Text Area In Serial Popup | Always Use Text Area In Serial Popup | [Popups and editors](#Popups-and-editors) |
 | `value.info.doNotUseDescriptorsInFields` | Do Not Use Descriptors In Fields | عدم استعمال الوصف في الحقول | [Popups and editors](#Popups-and-editors) |
-| `value.info.createDMSDocInPopUpWindow` | Create DMS Doc In Pop Up Window | إنشاء المستند الارشيفي في شاشة منبثقة | [Popups and editors](#Popups-and-editors) |
+| `value.info.createDMSDocInPopUpWindow` | Create DMS Doc In Pop Up Window | إنشاء المستند الأرشيفي في شاشة منبثقة | [Popups and editors](#Popups-and-editors) |
 | `value.info.tooltipPosition` | Tooltip Position | موضع المساعدة السريعة | [Tooltips](#Tooltips) |
 | `value.info.pinToolTip` | Pin Tool Tip | تثبيت المساعدة السريعة | [Tooltips](#Tooltips) |

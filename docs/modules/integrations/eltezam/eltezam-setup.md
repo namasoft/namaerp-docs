@@ -37,11 +37,11 @@ these before the first send, because every gap turns into a failed request:
 | **Sub Agency ID** (رقم الجهة الفرعية) | Your sub-agency number at MCS. It goes on every request except Employee Info |
 | **Agency Organization ID** (رقم الجهة الحكومية) | The agency's organization ID, used as the job's organization unless an employee field overrides it (see below) |
 | **Agency Organization Name** (اسم الجهة الحكومية) | The matching organization name |
-| **Default Location Code** (كود الموقع الافتراضي) | The seven-digit MCS location code to send for any employee whose work place has no location mapping |
+| **Default Location Code** (كود الموقع الافتراضي) | The seven-digit MCS location code to send for any employee for whom the LocationCode code table gives no code (no row for the work place, no template value and no Default MCS Code on that table) |
 | **Connect Timeout Seconds** (مهلة الاتصال بالثانية) | How long to wait for the ministry to accept the connection. Empty means 30 seconds |
 | **Read Timeout Seconds** (مهلة القراءة بالثانية) | How long to wait for the ministry's answer. Empty means 120 seconds |
 | **Do Not Send Records Having Validation Errors** (عدم إرسال السجلات التي بها أخطاء تحقق) | See below |
-| **Do Not Store Request XML** (عدم حفظ ملف الإرسال) | Leave it off to keep a copy of every request and response on the submission document; tick it to save space once the integration is stable |
+| **Do Not Store Request XML** (عدم حفظ ملف الإرسال) | Leave it off to keep a copy of every request on the submission document; tick it to stop storing the requests and save space once the integration is stable. The ministry's response is stored either way |
 | **Log Sending Details** (تسجيل تفاصيل الإرسال) | Tick it while you follow a send: each run then writes to the server log which document or group it is sending, the operations it sends, how many system entries it saved and where they are linked, and — when the run fails and rolls back — the errors. Leave it off in normal use |
 
 ### Checking records before they leave Nama
@@ -53,8 +53,8 @@ on. What happens when a check fails depends on **Do Not Send Records Having Vali
 - **Ticked** — the request is not sent. It is recorded as Failed with the error code `001-000000`
   and the list of problems as its error message. Nothing reaches the ministry, so nothing needs
   cleaning up on their side.
-- **Not ticked** — the request is sent anyway, and Nama's findings are kept alongside the
-  ministry's answer in the error message. Useful early on, when you want to see whether the
+- **Not ticked** — the request is sent anyway. If the ministry refuses it, Nama's findings are
+  kept alongside the ministry's answer in the error message. Useful early on, when you want to see whether the
   ministry really refuses what Nama considers incomplete.
 
 ## Where the data comes from
@@ -75,7 +75,7 @@ field. Write the field the way you would in any Nama template: `description5`, `
 
 | Field | Fills | When left empty |
 |---|---|---|
-| **Job Number From Employee Field** (رقم الوظيفة من حقل بالموظف) | The job number | The employee's labour office ID, then the organizational position code |
+| **Job Number From Employee Field** (رقم الوظيفة من حقل بالموظف) | The job number | The employee's **Labor ID**, then the organizational position code |
 | **Actual Job Name Code From Employee Field** (كود المسمى الفعلي للوظيفة من حقل بالموظف) | The actual job name code | The JobNameCode code table |
 | **First Grade Date From Employee Field** (تاريخ أول مرتبة من حقل بالموظف) | The first grade date | The hiring date |
 | **Agency Organization ID From Employee Field** (رقم الجهة الحكومية من حقل بالموظف) | The job's organization ID | Agency Organization ID above |

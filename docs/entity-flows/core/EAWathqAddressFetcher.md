@@ -14,22 +14,18 @@ Fetches address information from Saudi government's Wathq platform using Commerc
 
 ## When This Action Runs
 
-Manual execution on entities with commercial registration information (customers, suppliers implementing IHasCommercialInfo interface).
+Manual execution on customers and suppliers that have a **Commercial Registration National Number**.
 
 ## How It Works
 
-1. Validates CR National Number and API credentials
-2. Makes API request to `https://api.wathq.sa/spl/national/address/info/{crNationalNumber}`
-3. Maps Wathq response to Nama ERP address fields including GPS coordinates
+The checks, the messages and the recording of each call are those of [EAWathqCommercialInfoFetcher](/entity-flows/core/EAWathqCommercialInfoFetcher). This flow:
+
+1. Makes API request to `https://api.wathq.sa/spl/national/address/info/{crNationalNumber}`
+2. Takes the first address of the response and writes it into the record's address: address 1, address 2, map location (latitude and longitude), postal code, district, city, street, building number and land plot number (from the unit number). A value missing from the response is written as `Not Found`. A response with no address changes nothing
 
 ## Key Parameters
 
-- **Parameter 1:** API Key (Required) - Wathq platform API key
-- **Parameter 2:** Bearer Token (Required) - OAuth token for authentication
-- **Parameter 3:** Extra Fields Copier - Custom field mapping expressions
-- **Parameter 4:** Do Not Copy Any Fields - Skip automatic field copying
-- **Parameter 5:** Log Response - Log API response for debugging
-- **Parameter 6:** Multi Call On Same Data - Allow multiple calls for same CR number
+The six parameters are those of [EAWathqCommercialInfoFetcher](/entity-flows/core/EAWathqCommercialInfoFetcher#Key-Parameters). The title of Parameter 3 shows the example `description1=$map.street`.
 
 ## Database Tables Affected
 

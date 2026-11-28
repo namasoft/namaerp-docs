@@ -15,7 +15,7 @@ The **User** record is where identity, authentication, and personal permission o
 
 The most important parts of the main page:
 
-- **Login ID** — The name typed at login. If left blank it takes the value of the record code. Must be unique system-wide.
+- **Login Id** — The name typed at login. If left blank it takes the value of the record code. Must be unique system-wide.
 - **Password** — Stored encrypted with a hash function (see *Passwords* below).
 - **Employee** — Links the user to an employee record in HR; mandatory for POS users, and is the source of contact data and many behaviors. When set, it is automatically used as the related entity if none is specified.
 - **Related Entity Type / Related Entity** — Who this user *is* in business terms: employee, customer, supplier, salesman… This reference powers additional filters ("show me only my records") — see [Record-Level Security](/platform/security/record-level-security.md).
@@ -55,9 +55,9 @@ Two refusals are worth recognising:
 | Message | Why |
 |---|---|
 | *User login id {0} is already existing* | A committed user already uses that login id. Login ids are unique system-wide; drafts do not count. |
-| *You do not have the authority {1} on entity {0}* — «لا توجد لديك الصلاحية {1} على النوع {0}» — here with **Commit** and **User** in the placeholders | Pressing **Add User** needs commit authority on the User screen itself. Being able to save the request is not enough — the request is a request, not a permission. |
+| *You do not have the authority {1} on entity {0}.* — here with **Commit** and **User** in the placeholders | Pressing **Add User** needs commit authority on the User screen itself. Being able to save the request is not enough — the request is a request, not a permission. |
 
-*User login id {0} is already existing* has no Arabic string in the product, so it appears in English on Arabic screens too.
+Neither message has an Arabic string in the product, so both appear in English on Arabic screens too.
 
 The parallel screens for changing an existing party's own data — *Modify Customer Info Request* and
 its supplier and contractor siblings — are described under
@@ -69,12 +69,12 @@ The user screen repeats the permission tables you know from the Security Profile
 
 ![User — User Security Tab](../../ar/platform/security/images/user-security-tab-en.png)
 
-- **User Security tab** — Basic and custom permissions, and the *Treat Users as Creator* table.
-- **Field Settings tab** — Field-level permissions specific to this user.
+- **User Security Profile tab** — Basic and custom permissions, and the *View Records created by Users* table.
+- **Fields Settings tab** — Field-level permissions specific to this user.
 - **Page Security tab** — Page-level permissions specific to this user.
-- **Extra Filters tab** — Row-level filters specific to this user.
-- **Audit Log tab** — Who modified this user record and when.
-- **Additional Security Profile tab** — Delegation documents that currently grant this user extra permissions; see [Temporary Additional Permissions](/platform/security/security-delegation.md).
+- **Extra Filters tab** — Row-level filters specific to this user, and the user's own Search Extra Filters.
+- **Audit Trail tab** — Who modified this user record and when.
+- **Additional security profile tab** — Two lists of delegation lines: those that grant this user extra permissions, and those that hand this user's own permissions to someone else; see [Temporary Additional Permissions](/platform/security/security-delegation.md).
 
 The intended workflow: keep roles in Security Profiles, and use user-level tables only for personal exceptions. A few rows on a user is healthy; fifty rows usually means you need a new Security Profile.
 
@@ -82,16 +82,16 @@ The intended workflow: keep roles in Security Profiles, and use user-level table
 
 | Setting | Purpose |
 |---|---|
-| **Prevent Login** | Disable the account. The refusal reads *You are prevented from login*, unless **Prevent Login Message for User** is filled — that text replaces the standard message entirely. |
-| **Max Login Sessions** | Maximum concurrent sessions (defaults to 1 for new users). With **Auto Logout on Exceeding Max Sessions** enabled, a new login logs out the oldest session instead of being rejected. |
-| **Auto Logout Time (minutes)** | Minutes of inactivity before the session ends. |
-| **Allow Login From Apps** | Permits login from mobile applications. Mobile users count against the *mobile users* limit in the license. |
-| **Login From Apps Only** | The inverse restriction — no browser login. |
-| **Prevent ESS Login** | Block access to the Employee Self-Service portal. |
-| **Prevent Public Login** | Force the user to choose a specific company at login instead of the general context. |
-| **POS User** + **POS Security Profile** | Marks the user for the POS application and assigns a dedicated POS security profile; POS users must be linked to an employee. |
+| **Prevent Login (Includes POS, Apps, and All Other System Components)** | Disable the account. The refusal reads *You are prevented from login*, unless **Prevented Login Message** is filled — that text replaces the standard message entirely. |
+| **Maximum Concurrent Sessions Per User** | Maximum concurrent sessions (defaults to 1 for new users). With **Auto Logout From Older Sessions When The User Reaches Maximum Concurrent Sessions** enabled, a new login logs out the oldest session instead of being rejected. |
+| **Automatically Logout If No Activity for (Minutes)** | Minutes of inactivity before the session ends. |
+| **Allow Login from Mobile Apps** | Permits login from mobile applications. Mobile users count against the *mobile users* limit in the license. |
+| **Allow Login From Applications Only** | The inverse restriction — no browser login. |
+| **Prevent Login To ESS Application** | Block access to the Employee Self-Service portal. |
+| **Prevent Public Login** | Force the user to choose a specific company at login instead of the general context: a login with the legal entity left public is refused with *User can not login to public legal entity* — «لا يمكن لهذا المستخدم الدخول إلى الشركة العامة». |
+| **Point Of Sale User** + **POS Security Profile** | Marks the user for the POS application and assigns a dedicated POS security profile, which is then required; POS users other than `admin` must also be linked to an employee. |
 
-From the user list screen, the **Change Multi Users Password** action helps administrators reset passwords for several accounts at once, while the **Allow Login After Failed Logins** action on the user screen unlocks an account that was locked by repeated failed login attempts.
+From the user list screen, the **Change Multiple Users Password** action helps administrators reset passwords for several accounts at once, while the **Allow Login After Failed Logins** action on the user screen unlocks an account that was locked by repeated failed login attempts.
 
 Two settings in Global Configuration drive that lock: **Max Failed Login Attempts** is how many wrong passwords are tolerated, and **Minutes To Remember Failed Logins** is how long the block lasts. The block is held in the server's memory, not on the user record, which has three consequences worth knowing: it **clears itself** once that many minutes have passed since the last failed attempt, it is lost when the server restarts, and every further attempt while blocked re-starts the clock — so a user who keeps retrying never gets in. The administrator's unlock is the fast route, not the only one.
 
@@ -111,7 +111,7 @@ Two settings in Global Configuration drive that lock: **Max Failed Login Attempt
 
 ## LDAP / Active Directory
 
-When **Use LDAP for users login** is enabled in Global Configuration, the system authenticates users through the directory instead of a local password. Two exceptions exist for accounts that must remain local:
+When **Use LDAP For Users Login** is enabled in Global Configuration, the system authenticates users through the directory instead of a local password (the server setting this needs is in [Security and Login](/platform/global-config/global-config-security#LDAP)). Two exceptions exist for accounts that must remain local:
 
 - The **Do Not Use LDAP For Login** flag on the user,
 - The same flag on the Security Profile (useful for entire roles, such as service accounts).
@@ -120,13 +120,13 @@ The `admin` user never authenticates via LDAP.
 
 ## Two-Factor Authentication (2FA)
 
-The **Login 2FA Method** setting in Global Configuration accepts:
+The **Login Two-Factor Authentication Method** setting in Global Configuration accepts:
 
 - **Message OTP** — A one-time code sent to the user,
 - **Estidamah API** — Saudi identity-verification integration (Estidamah), or
 - **None**.
 
-Individual users can be exempted via the **Exclude From 2FA** flag. Full setup steps are in the [Two-Factor Authentication Guide](/getting-started/two-factor-authentication.md).
+Individual users can be exempted via the **Exclude From Two-Factor Authentication** flag. Full setup steps are in the [Two-Factor Authentication Guide](/getting-started/two-factor-authentication.md).
 
 ## Administrative Privileges
 
@@ -141,18 +141,18 @@ The account whose code/login ID is `admin` is the built-in super user. It bypass
 
 ### Treat As Admin
 
-The **Treat As Admin** flag in user settings does *not* grant data permissions — it grants access to restricted *administrative functions*: the maintenance page `utils.html`, stopping running tasks, logging out other users, and similar. Grant it carefully to senior system administrators who operate the system but are subject to a normal Security Profile for business data.
+The **Allow Access to Admin Restricted Functionality (utils.html, kill tasks, logout users and so on)** flag in user settings (field id `treatAsAdmin`) does *not* grant data permissions — it grants access to restricted *administrative functions*: the maintenance page `utils.html`, stopping running tasks, logging out other users, and similar. Grant it carefully to senior system administrators who operate the system but are subject to a normal Security Profile for business data.
 
 ### User Level
 
-Licenses can define named user levels with different counts. The **User Level** field places the user in one of the levels available in your license; the system verifies the level exists and enforces the licensed counts (integrated with [**Users Counter**](/admin/users-counter-and-security-capabilities) records that can also be linked at the Security Profile level). What the licence holds and how to read it is on [Licensing](/getting-started/licensing).
+Licenses can define named user levels with different counts. The **User Level (License User Group)** field places the user in one of the levels available in your license; the system verifies the level exists and enforces the licensed counts (integrated with [**Users Counter**](/admin/users-counter-and-security-capabilities) records that can also be linked at the Security Profile level). What the licence holds and how to read it is on [Licensing](/getting-started/licensing).
 
 ## Messages you may see
 
 | Message | Why | What to do |
 |---|---|---|
-| *You are prevented from login* — «تم منع دخولك الي النظام» | **Prevent Login** is ticked on the user. If the account shows a different message instead, it came from **Prevent Login Message for User**. | Untick Prevent Login on the user record. |
-| *You have exhausted your max failed login attempts, please try again after {0} minutes or contact your system administrator - user name: {1}* — «لقد استنفذت أقصى عدد من محاولات الدخول الخطأ. يرجي المحاولة مرة أخرى بعد {0} دقيقة أو التواصل مع مدير النظام. اسم المستخدم: {1}» | More wrong passwords than **Max Failed Login Attempts** allows. | Wait out **Minutes To Remember Failed Logins** without trying again, or have an administrator press **Allow Login After Failed Logins**. |
+| *You are prevented from login* — «تم منع دخولك إلى النظام» | **Prevent Login** is ticked on the user. If the account shows a different message instead, it came from **Prevented Login Message**. | Untick Prevent Login on the user record. |
+| *You have exhausted your max failed login attempts, please try again after {0} minutes or contact your system administrator - user name: {1}* — «لقد استنفذت أقصى عدد من محاولات الدخول الخطأ. يرجى المحاولة مرة أخرى بعد {0} دقيقة أو التواصل مع مدير النظام. اسم المستخدم: {1}» | More wrong passwords than **Max Failed Login Attempts** allows. | Wait out **Minutes To Remember Failed Logins** without trying again, or have an administrator press **Allow Login After Failed Logins**. |
 | *The user was unblocked, here are the IPs that caused the block: {0}* | The unlock worked, and the message names the addresses the failed attempts came from. | Nothing — but the IP list is worth reading before you assume the user simply mistyped. |
 | *The user was not blocked* | The unlock was pressed on a user who is not blocked. | Look elsewhere: **Prevent Login**, the licence limits, or the user's level. |
 | *Invalid authentication information, please re-login* — «معلومات الدخول غير صحيحة. فضلاً حاول الدخول مرة أخرى» | One cause: **Prevent Modify Context** is ticked and one of the session's dimensions has a value that is on neither the login context nor any row of the login context table. Mixing values from different rows is allowed and is not the cause. | Log in with values that are listed, or add the missing value on a row — see [Record-Level Security](/platform/security/record-level-security#Login-Context-and-the-Alternate-Login-Context-Table). |

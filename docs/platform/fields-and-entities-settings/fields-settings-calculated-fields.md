@@ -23,7 +23,7 @@ Once a slot has a query behind it, it behaves like any other field. You can plac
 | For Type List | A reusable named list of entity types, so one line covers many screens at once. |
 | For Type | A single entity type this line applies to (for example Sales Invoice). |
 | Detail Field | Leave empty for the record's own header. Fill it with a grid's field ID (for example `details`) to define the slots for the **rows** of that grid instead, so every line gets its own calculated columns. |
-| Field 1 Query … Field 20 Query | The query behind each of the twenty slots. |
+| Field1 Query … Field20 Query | The query behind each of the twenty slots. |
 
 ::: warning Always name the entity type
 Unlike most grids on this screen, these lines are **not** generic: a line applies only to the entity types it names. Fill **For Type**, or point **For Type List** at a list of types.
@@ -39,7 +39,7 @@ Saving a query does not, on its own, make anything visible. The query fills the 
 
 Give the field a sensible title while you are there. `sqlField3` is a meaningful name to you and to nobody else; the user should see "Customer balance".
 
-Sixteen of the slots hold ordinary short text. Slots 17 and 18 hold long text, so use one of those when the answer is a paragraph rather than a number. Slots 19 and 20 hold a **colour code** rather than text — handy when you want a query to drive the colour of one particular cell.
+Sixteen of the slots hold ordinary short text. On the record's header, slots 17 and 18 hold long text, so use one of those when the answer is a paragraph rather than a number; on grid rows they are short text like the others. Slots 19 and 20 hold a **colour code** rather than text — handy when you want a query to drive the colour of one particular cell.
 
 ::: warning Every slot is text, so format numbers in the query
 There is no numeric slot. A number the query returns is turned into text exactly as the database renders it, and the user sees `1009280.000000000` — nine decimal places and no thousands separator — where they expected `1,009,280.00`. The field is not going to round it for you, and it does not sort as a number either.
@@ -117,7 +117,7 @@ This grid attaches a query to a grid, and the query decides the background colou
 | For Type | The entity type whose screen carries the grid (for example Sales Order). |
 | Entity List | A reusable named list of entity types, so one line covers several screens. |
 | Field | The field ID of the **grid** whose rows are being coloured, for example `details`. **Required** — a line with no field does nothing. |
-| Row Background Colour Query | The query that returns the colour for the row. |
+| Row Background Color Query | The query that returns the colour for the row. |
 
 The query is written exactly like a calculated field query above: same placeholders, same `{$line.…}` form for the current row, and only the first column of the first row is used. The difference is what it returns — a **colour**, applied directly as the row's background. A hexadecimal code is the usual form:
 
@@ -150,7 +150,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
-| `queryBasedScreenField` | calculated Fields Queries | استعلامات الحقول المحسوبة | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField` | Calculated Fields Queries | استعلامات الحقول المحسوبة | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.detailField` | Detail Field | معرف السطور | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.field1Query` | Field1 Query | استعلام الحقل  المحسوب 1 | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.field2Query` | Field2 Query | استعلام الحقل  المحسوب 2 | [calculated Fields Queries](#calculated-Fields-Queries) |
@@ -162,15 +162,15 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `queryBasedScreenField.field8Query` | Field8 Query | استعلام الحقل  المحسوب 8 | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.field9Query` | Field9 Query | استعلام الحقل  المحسوب 9 | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.field10Query` | Field10 Query | استعلام الحقل  المحسوب 10 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field11Query` | Field1 Query | استعلام الحقل  المحسوب 11 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field12Query` | Field2 Query | استعلام الحقل  المحسوب 12 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field13Query` | Field3 Query | استعلام الحقل  المحسوب 13 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field14Query` | Field4 Query | استعلام الحقل  المحسوب 14 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field15Query` | Field5 Query | استعلام الحقل  المحسوب 15 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field16Query` | Field6 Query | استعلام الحقل  المحسوب 16 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field17Query` | Field7 Query | استعلام الحقل  المحسوب 17 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field18Query` | Field8 Query | استعلام الحقل  المحسوب 18 | [calculated Fields Queries](#calculated-Fields-Queries) |
-| `queryBasedScreenField.field19Query` | Field9 Query | استعلام الحقل  المحسوب 19 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field11Query` | Field11 Query | استعلام الحقل  المحسوب 11 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field12Query` | Field12 Query | استعلام الحقل  المحسوب 12 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field13Query` | Field13 Query | استعلام الحقل  المحسوب 13 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field14Query` | Field14 Query | استعلام الحقل  المحسوب 14 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field15Query` | Field15 Query | استعلام الحقل  المحسوب 15 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field16Query` | Field16 Query | استعلام الحقل  المحسوب 16 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field17Query` | Field17 Query | استعلام الحقل  المحسوب 17 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field18Query` | Field18 Query | استعلام الحقل  المحسوب 18 | [calculated Fields Queries](#calculated-Fields-Queries) |
+| `queryBasedScreenField.field19Query` | Field19 Query | استعلام الحقل  المحسوب 19 | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `queryBasedScreenField.field20Query` | Field20 Query | استعلام الحقل  المحسوب 20 | [calculated Fields Queries](#calculated-Fields-Queries) |
 | `styleOverriderLines` | Style Overrider Details | Style Overrider Details | [Style Overrider Details](#Style-Overrider-Details) |
 | `styleOverriderLines.rowBackgroundColorQuery` | Row Background Color Query | استعلام لون خلفية السطر | [Style Overrider Details](#Style-Overrider-Details) |

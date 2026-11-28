@@ -44,12 +44,10 @@ Whatever the document, the inventory effect is always done by ordinary Stock Iss
 | Assembly Process File | ملف عملية تجميع | Expense items charged automatically to an assembly |
 | Assembly Request | طلب تجميع | The planned assembly, before any stock moves |
 | Assembly Document | سند تجميع | Issues components, receives finished goods |
-| Multi Assembly Docuemnt | سند تجميع متعدد | Generates one assembly document per BOM level |
+| Multi Assembly Document | سند تجميع متعدد | Generates one assembly document per BOM level |
 | Aggregated Packaging Document | سند تعبئة متعدد | A day's packing output with cartons, pallets, sorting and waste |
 | Assembly Machine | ماكينة تجميع | A machine's standard materials, outputs and costs |
 | Processing Document | سند معالجة | One run of a machine |
-
-The menu spells the multi-assembly screen *Multi Assembly Docuemnt*; that is how it appears on screen.
 
 ## Related pages
 

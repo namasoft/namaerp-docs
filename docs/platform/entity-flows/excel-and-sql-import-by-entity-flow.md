@@ -33,7 +33,7 @@ evalsql(select top 1 id from SalesInvoice order by valueDate desc)
 ="evalsql(select code from Account where subsidiaryType = '" & U13 & "')"
 ```
 
-Because it runs a database query, `evalsql` works in [Import Records](/platform/import-export/importing-records.md), the REST API and the MCP import tool only for users with Full Authority. For anyone else the row fails with:
+Because it runs a database query, `evalsql` works in [Import Records](/platform/import-export/importing-records), the REST API and the MCP import tool only for users with Full Authority. For anyone else the row fails with:
 
 *Only users with full authority can use evalsql in imported values* — «استخدام evalsql في القيم المستوردة متاح فقط للمستخدمين أصحاب الصلاحيات الكاملة»
 
@@ -119,7 +119,7 @@ Each line below is a field-map line. Type the lines into the field-map parameter
 - Columns are: A, B, C, …, Z, AA, AB, …, AZ, BA, BB, …, BZ, CA, … and so on through IZ
 
 - `details.text1=sql(select case when {excel.row1.A} = 'item' then 'ABC' when {excel.row1.B} = 'item' then 'BAC' else 'CAB' end)`
-- `exel.row1 ` gives you access to the first row, even if that row was ignored, to facilitate header rows querying
+- `excel.row1` gives you access to the first row, even if that row was ignored, to facilitate header rows querying
 
 
 ![An Entity Flow line whose field map reads the attached Excel sheet into the document lines](../../ar/platform/images/entity-flows/entity-flow-excel-import-field-map-en.png)
@@ -155,7 +155,7 @@ Column1, column2 from Table
 
 - The same applies to the shipping and billing address.
 
-- You can use the following in an `EAFieldValuesCalculator` entity flow to copy the Arabic name labels:
+- You can use the following in an `EAFieldsValuesCalculator` entity flow to copy the Arabic name labels:
 
 ```fieldmap
 contactInfo.address.country=contactInfo.address.region.$countryAr

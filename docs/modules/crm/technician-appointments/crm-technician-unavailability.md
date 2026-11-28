@@ -44,7 +44,7 @@ Only **committed** documents count. A draft blocks nothing, and cancelling the d
 
 ## Appointments already booked in the blocked time
 
-Leave is often entered after the visits are already booked. The system does not refuse the document for that, and it does not move or cancel anything. When you commit, you get a warning for each appointment of the technician's crew that falls in the blocked time:
+Leave is often entered after the visits are already booked. The system does not refuse the document for that, and it does not move or cancel anything. When you commit, you get a warning for each period of an appointment of the technician's crew that falls in the blocked time, so an appointment with two such periods is named twice:
 
 *"Appointment {0} is already booked for {1} during the blocked period"*
 

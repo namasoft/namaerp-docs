@@ -16,9 +16,9 @@ Because the same settings are used by the server, by the web client while the us
 
 Each of the four taxes gets an identical group of options. Rather than repeat them four times, here is what each one means, using tax *N* to stand for any of them.
 
-**Tax N Location** `value.info.taxNLocation` — Where the tax sits in the line's calculation chain: right after the main price (**Main Price**), right after one of the eight discounts, or after the header discount. Every effect that comes later in the chain sees a running total that already includes this tax. The location sets the position only — whether the tax adds to the line or comes off it is decided by **Tax N Is Discount** below. When a **Tax and Discounts Effects Configuration** is selected, its own order replaces these positions.
+**Tax N Location** `value.info.taxNLocation` — Where the tax sits in the line's calculation chain: right after the main price (**Main Price**), right after one of the eight discounts, or after the header discount (**Header Discount**). Every effect that comes later in the chain sees a running total that already includes this tax. The location sets the position only — whether the tax adds to the line or comes off it is decided by **Tax N Is Discount** below. When a **Tax and Discounts Effects Configuration** is selected, its own order replaces these positions.
 
-**Tax N Apply Type** `value.info.taxNApplyType` — The base the percentage is applied to, and the single most consequential choice in this group. The options walk down the line calculation: **Total Price**, **After Discount 1 Price** through **After Discount 8 Price**, **After Header Discount**, the value of any single discount, the invoice discount value, the value of another tax, or **Custom**. A VAT that should be charged on the net after all trade discounts is *After Discount N Price* for whichever discount is last in your chain; a tax charged on the gross is *Total Price*.
+**Tax N Apply Type** `value.info.taxNApplyType` — The base the percentage is applied to, and the single most consequential choice in this group. The options walk down the line calculation: **Total**, **Net After Discount 1** through **Net After Discount 8**, **After Net discount** (after the header discount), the value of any single discount (**Discount 1 Value** and so on), the invoice discount value, the value of another tax (**Tax 1 Value** and so on), or **Custom**. A VAT that should be charged on the net after all trade discounts is *Net After Discount N* for whichever discount is last in your chain; a tax charged on the gross is *Total*.
 
 **Tax N Is Discount** `value.info.taxNIsDiscount` — Marks the tax as a deduction rather than an addition. Withholding tax is the usual case: it is computed like a tax but subtracted from what the customer pays.
 
@@ -30,16 +30,16 @@ Each of the four taxes gets an identical group of options. Rather than repeat th
 
 **Tax N Not Included In Total** `value.info.taxNNotIncludedInTotal` — The tax is calculated and displayed, but left out of the document total. Used for informational taxes that are reported but not collected on this document.
 
-**Do Not Use TaxN Percentage As Additional ValueN** `value.info.doNotUseTaxNPercentageAsAdditionalValueN` — The tax percentage is normally mirrored into the line's additional-value field, where reports and integrations can pick it up. Turn this on when you want that field for something else.
+**Do Not Use TaxN Percentage As Additional ValueN** `value.info.doNotUseTaxNPercentageAsAdditionalValueN` — With this off, the figure in a line's tax N percentage field is also added to the line's total price (quantity × unit price) as an additional value, before the discounts and taxes are worked out on it. Tick it so that figure is not added to the total price.
 
-**Tax N Tax Type** / **Tax N Tax SubType** `value.info.taxesCodes.taxNTaxAuthType`, `...taxNTaxAuthSubType` — The codes the tax authority expects for this tax on an electronic invoice.
+**Tax N Tax Type** / **Tax N Tax Sub Type** `value.info.taxesCodes.taxNTaxAuthType`, `...taxNTaxAuthSubType` — The codes the tax authority expects for this tax on an electronic invoice.
 
 **Tax N Zero Tax Auth Type** / **Tax N Zero Tax Auth Sub Type** `value.info.taxesCodes.taxNZeroTaxAuthType`, `...taxNZeroTaxAuthSubType` — The codes used instead when the tax evaluates to zero, since most authorities want a zero-rated supply reported under a different code than a taxed one.
 
 **Send Tax N With Zero** `value.info.taxesCodes.sendTaxNWithZero` — Include the tax element in the submission even when its value is zero. Some authorities require the line to be present; others reject it.
 
 ::: tip Work out the chain before setting anything
-Location, apply type and the discount settings on the [Discounts tab](./global-config-discounts.md) together describe one calculation chain. Write out a real invoice line on paper — list price, each discount, each tax, the total the customer actually pays — and only then set the options so the system reproduces it. Changing an apply type later changes the arithmetic on every document that gets recalculated.
+Location, apply type and the discount settings on the [Discounts tab](/platform/global-config/global-config-discounts) together describe one calculation chain. Write out a real invoice line on paper — list price, each discount, each tax, the total the customer actually pays — and only then set the options so the system reproduces it. Changing an apply type later changes the arithmetic on every document that gets recalculated.
 :::
 
 ## General tax settings
@@ -58,21 +58,21 @@ Location, apply type and the discount settings on the [Discounts tab](./global-c
 
 ## Approximation discount
 
-Cash businesses often round the invoice total to something payable — a total of 99.87 becomes 100.00, or the other way round — and book the difference somewhere sensible.
+Cash counters rarely settle to the last piastre: an invoice of 99.87 is paid with 100.00, or 199.97 with 199.95, and without help the invoice stays open for a few piastres. The approximation discount books that small leftover to an account instead.
 
-**Activate Approximation Discount** `value.info.activateApproximationDiscount` — Enables the rounding.
+**Activate Approximation Discount** `value.info.activateApproximationDiscount` — Turns it on.
 
-**Approximation Discount Value** `value.info.approximationDiscountValue` — The rounding step. Set it to the smallest coin you actually handle: `0.05` if you have no smaller coin than five piastres.
+**Approximation Discount Value** `value.info.approximationDiscountValue` — The largest leftover that is written off. When a document is processed and its remaining amount, over or under, is at most this value, the remaining amount is booked to the approximation discount account side instead of staying on the customer's or supplier's account. With `0.05`, a remaining 0.03 is written off and a remaining 0.10 is not.
 
-**Consider Vouchers Payment With Activate Approximation Discount** `value.info.considerVouchersPaymentWithApproxDisc` — Includes voucher payments in the amount being rounded, rather than rounding only the cash part.
+**Consider Vouchers Payment With Activate Approximation Discount** `value.info.considerVouchersPaymentWithApproxDisc` — Decides whether payments made through vouchers count when the remaining amount is measured. With it on, the remaining is measured after the voucher payments, unless the document's term ticks **Consider Payments Not Affecting Remaining With Approximation Discount** and the document holds a payment flagged *Do Not Affect Remaining*; with it off, or in that case, the voucher payments are added back before the comparison.
 
 These three decide *whether* and *how far* to round. *Where* the rounded-off amount is booked is a per-document decision: each document term carries its own approximation discount account side, and sales terms add a switch for payments flagged *Do Not Affect Remaining* — see [Accounting Effects Configuration](/modules/supplychain/document-terms/doc-term-accounting-effects#Approximation-Discount).
 
 ## Electronic invoice
 
-**e-Invoice Page To Show** `value.info.einvoicePageShowType` — Nama supports several national e-invoicing regimes, and each adds its own page of fields to tax-related screens. Choose **Egypt**, **ZATCA** (Saudi Arabia), **JoFotara** (Jordan), **UAE**, or **All Pages**. Pick the one country you operate in and the other regimes' fields disappear — a large reduction in screen clutter. Leaving it empty behaves like Egypt.
+**e-Invoice Page To Show** `value.info.einvoicePageShowType` — Nama supports several national e-invoicing regimes, and each adds its own page of fields to tax-related screens. Choose **Egypt Page**, **ZATCA Page** (Saudi Arabia), **Jordan Page** (JoFotara), **UAE Page**, or **All Pages**. Pick the one country you operate in and the other regimes' fields disappear — a large reduction in screen clutter. Leaving it empty behaves like **All Pages**.
 
-**Max Number Of Lines When Collect Tax Auth Docs** `value.info.maxNumberOfLinesWhenCollectTaxAuthDocs` — When documents are gathered for submission to the authority, this caps how many go into one batch. Lower it if submissions time out; raise it to submit fewer, larger batches.
+**Max Number Of Lines When Collect Tax Auth Docs** `value.info.maxNumberOfLinesWhenCollectTaxAuthDocs` — When documents are gathered into a **Tax Authority Submission Document**, this caps how many lines one collection brings in. The submission document's own value comes first, then the one in **Electronic Tax Authority Configuration**, then this one; with all three empty the cap is 750. Lower it if submissions time out; raise it to submit fewer, larger batches.
 
 ## Settings on this tab
 
@@ -92,10 +92,10 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.tax1IsValue` | Tax 1 Is Value Not Percentage | ضريبة 1 قيمة و ليست نسبة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.tax1ValueIsForTotal` | Tax 1 Value Is For Total Not Per Piece | قيمة ضريبة 1 للإجمالي و ليس لكل وحدة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.priceIncludesTax` | Price Includes Tax 1 | السعر يشمل الضريبة 1 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.tax1NotIncludedInTotal` | Tax 1 Not Included In Total | ضريبة 1 غير مضافة الي الإجمالي | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.doNotUseTax1PercentageAsAdditionalValue1` | Do Not Use Tax1 Percentage As Additional Value1 | عدم إضافة قيمة إضافية 1 إلي إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.tax1NotIncludedInTotal` | Tax 1 Not Included In Total | ضريبة 1 غير مضافة إلى الإجمالي | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.doNotUseTax1PercentageAsAdditionalValue1` | Do Not Use Tax1 Percentage As Additional Value1 | عدم إضافة قيمة إضافية 1 إلى إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax1TaxAuthType` | Tax 1 Tax Type | الضريبة 1 كود الضريبة 1 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax1TaxAuthSubType` | Tax 1 Tax SubType | الضريبة 1 كود الضريبة الفرعي 1 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax1TaxAuthSubType` | Tax 1 Tax Sub Type | الضريبة 1 كود الضريبة الفرعي 1 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax1ZeroTaxAuthType` | Tax 1 Zero Tax Auth Type | الضريبة 1 كود الضريبة الصفرية 1 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax1ZeroTaxAuthSubType` | Tax 1 Zero Tax Auth Sub Type | الضريبة 1 كود الضريبة الصفرية الفرعي 1 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.sendTax1WithZero` | Send Tax 1 With Zero | إرسال الضريبة 1 بصفر | [How a tax is described](#How-a-tax-is-described) |
@@ -105,10 +105,10 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.tax2IsValue` | Tax 2 Is Value Not Percentage | ضريبة 2 قيمة و ليست نسبة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.tax2ValueIsForTotal` | Tax 2 Value Is For Total Not Per Piece | قيمة ضريبة 2 للإجمالي و ليس لكل وحدة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.priceIncludesTax2` | Price Includes Tax 2 | السعر يشمل الضريبة 2 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.tax2NotIncludedInTotal` | Tax 2 Not Included In Total | ضريبة 2 غير مضافة الي الإجمالي | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.doNotUseTax2PercentageAsAdditionalValue2` | Do Not Use Tax2 Percentage As Additional Value2 | عدم إضافة قيمة إضافية 2 إلي إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax2TaxAuthType` | Tax2 Tax Type | الضريبة 2 كود الضريبة 2 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax2TaxAuthSubType` | Tax2 Tax Sub Type | الضريبة 2 كود الضريبة الفرعي 2 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.tax2NotIncludedInTotal` | Tax 2 Not Included In Total | ضريبة 2 غير مضافة إلى الإجمالي | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.doNotUseTax2PercentageAsAdditionalValue2` | Do Not Use Tax2 Percentage As Additional Value2 | عدم إضافة قيمة إضافية 2 إلى إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax2TaxAuthType` | Tax 2 Tax Type | الضريبة 2 كود الضريبة 2 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax2TaxAuthSubType` | Tax 2 Tax Sub Type | الضريبة 2 كود الضريبة الفرعي 2 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax2ZeroTaxAuthType` | Tax 2 Zero Tax Auth Type | الضريبة 2 كود الضريبة الصفرية 2 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax2ZeroTaxAuthSubType` | Tax 2 Zero Tax Auth Sub Type | الضريبة 2 كود الضريبة الصفرية الفرعي 2 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.sendTax2WithZero` | Send Tax 2 With Zero | إرسال الضريبة 2 بصفر | [How a tax is described](#How-a-tax-is-described) |
@@ -118,10 +118,10 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.tax3IsValue` | Tax 3 Is Value Not Percentage | ضريبة 3 قيمة و ليست نسبة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.tax3ValueIsForTotal` | Tax 3 Value Is For Total Not Per Piece | قيمة ضريبة 3 للإجمالي و ليس لكل وحدة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.priceIncludesTax3` | Price Includes Tax 3 | السعر يشمل الضريبة 3 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.tax3NotIncludedInTotal` | Tax 3 Not Included In Total | ضريبة 3 غير مضافة الي الإجمالي | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.doNotUseTax3PercentageAsAdditionalValue3` | Do Not Use Tax3 Percentage As Additional Value3 | عدم إضافة قيمة إضافية 3 إلي إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax3TaxAuthType` | Tax3 Tax Type | الضريبة 3 كود الضريبة 3 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax3TaxAuthSubType` | Tax3 Tax Sub Type | الضريبة 3 كود الضريبة الفرعي 3 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.tax3NotIncludedInTotal` | Tax 3 Not Included In Total | ضريبة 3 غير مضافة إلى الإجمالي | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.doNotUseTax3PercentageAsAdditionalValue3` | Do Not Use Tax3 Percentage As Additional Value3 | عدم إضافة قيمة إضافية 3 إلى إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax3TaxAuthType` | Tax 3 Tax Type | الضريبة 3 كود الضريبة 3 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax3TaxAuthSubType` | Tax 3 Tax Sub Type | الضريبة 3 كود الضريبة الفرعي 3 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax3ZeroTaxAuthType` | Tax 3 Zero Tax Auth Type | الضريبة 3 كود الضريبة الصفرية 3 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax3ZeroTaxAuthSubType` | Tax 3 Zero Tax Auth Sub Type | الضريبة 3 كود الضريبة الصفرية الفرعي 3 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.sendTax3WithZero` | Send Tax 3 With Zero | إرسال الضريبة 3 بصفر | [How a tax is described](#How-a-tax-is-described) |
@@ -131,15 +131,15 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.tax4IsValue` | Tax 4 Is Value Not Percentage | ضريبة 4 قيمة و ليست نسبة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.tax4ValueIsForTotal` | Tax 4 Value Is For Total Not Per Piece | قيمة ضريبة 4 للإجمالي و ليس لكل وحدة | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.priceIncludesTax4` | Price Includes Tax 4 | السعر يشمل الضريبة 4 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.tax4NotIncludedInTotal` | Tax 4 Not Included In Total | ضريبة 4 غير مضافة الي الإجمالي | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.doNotUseTax4PercentageAsAdditionalValue4` | Do Not Use Tax4 Percentage As Additional Value4 | عدم إضافة قيمة إضافية 4 إلي إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax4TaxAuthType` | Tax4 Tax Type | الضريبة 4 كود الضريبة 4 | [How a tax is described](#How-a-tax-is-described) |
-| `value.info.taxesCodes.tax4TaxAuthSubType` | Tax4 Tax Sub Type | الضريبة 4 كود الضريبة الفرعي 4 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.tax4NotIncludedInTotal` | Tax 4 Not Included In Total | ضريبة 4 غير مضافة إلى الإجمالي | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.doNotUseTax4PercentageAsAdditionalValue4` | Do Not Use Tax4 Percentage As Additional Value4 | عدم إضافة قيمة إضافية 4 إلى إجمالي السعر | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax4TaxAuthType` | Tax 4 Tax Type | الضريبة 4 كود الضريبة 4 | [How a tax is described](#How-a-tax-is-described) |
+| `value.info.taxesCodes.tax4TaxAuthSubType` | Tax 4 Tax Sub Type | الضريبة 4 كود الضريبة الفرعي 4 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax4ZeroTaxAuthType` | Tax 4 Zero Tax Auth Type | الضريبة 4 كود الضريبة الصفرية 4 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.tax4ZeroTaxAuthSubType` | Tax 4 Zero Tax Auth Sub Type | الضريبة 4 كود الضريبة الصفرية الفرعي 4 | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.taxesCodes.sendTax4WithZero` | Send Tax 4 With Zero | إرسال الضريبة 4 بصفر | [How a tax is described](#How-a-tax-is-described) |
 | `value.info.activateApproximationDiscount` | Activate Approximation Discount | تفعيل خصم التقريب | [Approximation discount](#Approximation-discount) |
-| `value.info.approximationDiscountValue` | Approximation Discount Value | خصم قيمة التقريب عندما تكون القيمة اقل من او تساوى | [Approximation discount](#Approximation-discount) |
-| `value.info.considerVouchersPaymentWithApproxDisc` | Consider Vouchers Payment With Activate Approximation Discount | إعتبار إجمالى المدفوع من السندات مع تفعيل خصم التقريب | [Approximation discount](#Approximation-discount) |
+| `value.info.approximationDiscountValue` | Approximation Discount Value | خصم قيمة التقريب عندما تكون القيمة أقل من أو تساوي | [Approximation discount](#Approximation-discount) |
+| `value.info.considerVouchersPaymentWithApproxDisc` | Consider Vouchers Payment With Activate Approximation Discount | اعتبار إجمالي المدفوع من السندات مع تفعيل خصم التقريب | [Approximation discount](#Approximation-discount) |
 | `value.info.einvoicePageShowType` | e-Invoice Page To Show | عرض صفحة الفاتورة الإلكترونية الخاصة بـ | [Electronic invoice](#Electronic-invoice) |
-| `value.info.maxNumberOfLinesWhenCollectTaxAuthDocs` | Max Number Of Lines When Collect Tax Auth Docs | اقصي عدد للسطور عند تجميع مستندات الضرائب | [Electronic invoice](#Electronic-invoice) |
+| `value.info.maxNumberOfLinesWhenCollectTaxAuthDocs` | Max Number Of Lines When Collect Tax Auth Docs | أقصى عدد للسطور عند تجميع مستندات الضرائب | [Electronic invoice](#Electronic-invoice) |

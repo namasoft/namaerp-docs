@@ -23,7 +23,7 @@ Manual execution on documents with missing or incorrect line relationships, typi
 2. **Identifies unlinked lines** - Finds document lines without valid source line references
 3. **Locates source documents** - Uses origin document or from document references  
 4. **Searches potential matches** - Looks for lines in source documents with matching item IDs
-5. **Applies matching criteria** - Compares lines based on enabled parameters (size, color, etc.)
+5. **Applies matching criteria** - Compares lines based on enabled parameters (size, color, etc.) and takes the first source line that has the same item and the same value in every enabled field
 6. **Validates existing links** - Checks if current source line ID still matches criteria
 7. **Updates relationships** - Sets source line ID to establish proper document linkage
 
@@ -57,7 +57,7 @@ Manual execution on documents with missing or incorrect line relationships, typi
 
 **Parameter 14:** Consider Remarks (Optional) - true/false to match remarks/notes (default: false)
 
-**Parameter 15:** Apply Only If Query Applicable (Optional) - Conditional execution query
+**Parameter 15:** Apply Only If Query Applicable (Optional) - Query evaluated per line; only the lines for which it applies are processed
 
 ```sql
 select case when {details.item.item.code} in ('A','B') then 1 else 0 end

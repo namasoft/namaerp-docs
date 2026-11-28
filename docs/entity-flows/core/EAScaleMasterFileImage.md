@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Specialized image scaling action that processes the main file attachment of MasterFile entities. Resizes the primary image to specified dimensions while maintaining aspect ratio, specifically designed for master file image standardization.
+Image scaling action that processes the main file (image) of master files such as items and customers. Resizes the primary image to specified dimensions while maintaining aspect ratio, specifically designed for master file image standardization.
 
 ## When This Action Runs
 
@@ -19,10 +19,10 @@ Manual execution for standardizing master file images, reducing storage space, o
 
 ## How It Works
 
-1. **Accesses main file** - Retrieves the main file attachment from the MasterFile entity
-2. **Validates image data** - Ensures the main file contains valid image data
-3. **Calculates scaling** - Maintains aspect ratio while fitting within specified dimensions
-4. **Resizes image** - Uses Java Graphics2D for high-quality image scaling
+1. **Accesses main file** - Retrieves the main file (the record's image) of the master file; an empty main file, or one that is not a readable image, is left as it is
+2. **Checks the size** - An image whose width and height are both within Parameters 1 and 2 is left as it is
+3. **Calculates scaling** - Keeps the aspect ratio: a portrait image (taller than wide) gets the height of Parameter 2, any other image gets the width of Parameter 1, and the other side follows the ratio
+4. **Resizes image** - Redraws the image at the new size, in the format given by the file name's extension
 5. **Updates main file** - Replaces original image data with scaled version
 
 ## Parameters
@@ -39,9 +39,6 @@ Manual execution for standardizing master file images, reducing storage space, o
 **Module:** core
 
 **Full Class Name:** `com.namasoft.infor.domainbase.util.actions.EAScaleMasterFileImage`
-
-**Related Actions:**
-- [EAScaleImage](EAScaleImage.md) - General image scaling for any attachment field
 
 
 </div>

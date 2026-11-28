@@ -11,7 +11,7 @@ Each one acts on every record in the file, with no confirmation per record. **De
 
 ## Before you run any of them
 
-**Who can run them.** The links work only for a user who is signed in to that server and who is either the `admin` user or has **Allow Access to Admin Restricted Functionality (utils.html, kill tasks, logout users and so on)** ticked — see [Treat As Admin](/platform/security/users-and-login#Treat-As-Admin). Anyone else gets *You are not admin*.
+**Who can run them.** The links work only for a user who is signed in to that server and who is either the `admin` user or has **Allow Access to Admin Restricted Functionality (utils.html, kill tasks, logout users and so on)** ticked — see [Treat As Admin](/platform/security/users-and-login#Treat-As-Admin). For anyone else the link starts nothing, and a link opened with `&sync=true` answers *You are not admin*.
 
 **How to start one.** Each utility below is a launcher link: fill the boxes, set the customer's server address once, then copy the link and open it in a browser tab that is signed in to that server. How the launcher works is described under [Launcher links on these pages](/admin/reprocessing/#Launcher-links-on-these-pages).
 
@@ -27,7 +27,7 @@ Paste the result into the file as it comes out of the query window (tab-separate
 
 **The done file and the errors file.** Every line that succeeds is appended to the done file, and every line already in the done file is skipped. That is what makes these utilities safe to start again: run the same link a second time and it carries on from where it stopped. A line that fails is not added to the done file; its error — the message the record raised, or the technical trace — goes to the errors file. The errors file is rewritten on every run, so read it before you start the next one.
 
-**One run at a time.** While a utility is running, starting it again is refused with a message in English that begins *Please wait until running util of* and ends with the utility's name and *is finished*. Progress — *Finished 120 of 5000* — is reported as a running task, and a run that is stopped as a task stops before the next line.
+**One run at a time.** While a utility is running, opening its link again starts nothing new: the browser lands on the run in progress in [the Utility Runner](/admin/reprocessing/utility-runner). Only a link opened with `&sync=true` is refused, with a message in English that begins *Please wait until running util of* and ends with the utility's name and *is finished*. Progress — *Finished 120 of 5000* — is reported as a running task, and a run that is stopped as a task stops before the next line.
 
 ## Recommit From File
 
@@ -89,7 +89,8 @@ This one behaves differently from the others on this page:
 
 - it works through the file 500 lines at a time, and a refusal from any document **stops the whole run** and undoes the current batch of 500;
 - it cannot be stopped midway as a task;
-- it skips lines already in the done file, but does not add to it, and it writes no errors file — a technical failure on one line is written to the server log and the run carries on. To resume after a stop, remove the lines already processed from the main file.
+- it skips lines already in the done file, and adds the lines of a batch to the done file only when that batch of 500 finishes, so starting the link again carries on from the batch that was undone;
+- it writes no errors file — a technical failure on one line is written to the server log, the line stays out of the done file, and the run carries on.
 
 <UtilityLinkBuilder
 className="com.namasoft.modules.supplychain.domain.utils.plugnplay.RegenInvTransReqFromFile"
@@ -104,7 +105,7 @@ className="com.namasoft.modules.supplychain.domain.utils.plugnplay.RegenInvTrans
 
 Copies every record in the file to another Nama ERP server. Each line is the entity type and the record's **code**. A record that was ever committed is saved and committed on the other server; a record that never was is saved there as a draft. The other server treats the record as if it had arrived by replication. Use it to move a set of master files or documents from one installation to another. Running it again sends the records not yet in the done file.
 
-Fill **Export To Server URL** with the other server's address — the same address users type to reach it.
+Fill **Export To Server URL** with the other server's root address — protocol, server name and port only, without `erp` — for example `http://192.168.1.20:8080/`.
 
 <UtilityLinkBuilder
 className="com.namasoft.erp.gui.server.ExportToServerFromFileByWS"

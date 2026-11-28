@@ -45,7 +45,7 @@ NamaRep.sub("header|subtitle")   // "subtitle"
 ### Day names
 
 ```groovy
-NamaRep.dayName($F{dateField})     // in the current language
+NamaRep.dayName($F{dateField})     // English, whatever the report's language
 NamaRep.arDayName($F{dateField})   // Arabic
 NamaRep.enDayName($F{dateField})   // English
 NamaRep.dayName(dayNumber)         // 1 = Sunday, 2 = Monday, ...
@@ -291,11 +291,13 @@ NamaRep.attachmentLink(serverUrl, attachmentId)
 
 ```groovy
 NamaRep.repLinkByCode($P{REPORT_PARAMETERS_MAP}, "ReportCode")
+  .copyParams()      // hand the current report's shared parameters over
   .p("p1 id").v(value expression)
   .p("p2 id").v(value expression)
-  .copyParams()      // hand the current report's shared parameters over
   .toString()
 ```
+
+`.copyParams()` and `.directLink()` belong to the link itself, not to a parameter, so they go straight after `repLinkByCode(...)`, before the first `.p(...)`; once a `.p(...).v(...)` pair has started, only further pairs, `.toString()` or `.toNoAuthResultLink()` can follow.
 
 `.p(...)` names the target parameter; what follows supplies its value:
 
@@ -306,7 +308,7 @@ NamaRep.repLinkByCode($P{REPORT_PARAMETERS_MAP}, "ReportCode")
 .p("param").refCode($F{entityType}, $F{code})
 ```
 
-Add `.directLink()` to leave the server address off, producing `#rpt:xxx` rather than a full URL — useful when the link is only ever followed from inside the application.
+Add `.directLink()` (right after `repLinkByCode(...)`) to leave the server address off, producing `#rpt:xxx` rather than a full URL — useful when the link is only ever followed from inside the application.
 
 `.toNoAuthResultLink()` produces a link that runs without a login at all, for sending to customers. See [Sharing a report with someone who has no login](/platform/reports/reports-guide) in the guide for what has to be set up first.
 
@@ -446,13 +448,13 @@ screen rather than a link on a printout, start from
 
 ```groovy
 NamaRep.newWithFields("ReceiptVoucher")
+  .menuCode("NormalReceiptMenu")   // menu and view first: they belong to the creator,
+  .viewName("NormalReceipts")      // not to a field, so they cannot follow .f(...).v(...)
   .f("term").value("POTermCode")
   .f("book").value("POBook1")
   .f("remarks").v("Auto Created")
   .f("fromDoc#type").v("SalesInvoice")
   .f("fromDoc#code").v($F{code})
-  .menuCode("NormalReceiptMenu")
-  .viewName("NormalReceipts")
   .toString()
 
 // The same thing, spelled out
@@ -624,7 +626,7 @@ Sometimes a single value is wanted that the report's own query cannot reach.
 ```groovy
 NamaRep.runSQLQuery(sql, paramName, paramValue, paramName, paramValue)
 
-NamaRep.executeQuery(
+NamaRep.runSQLQuery(
   "SELECT cast(w.name1 collate Arabic_CI_AI_KS_WS as varchar(250))
    FROM warehouse w WHERE w.id = :wid",
   "wid", $F{wid}
@@ -646,7 +648,7 @@ NamaRep.getValueFromModuleConfig(moduleId, fieldId)
 NamaRep.getValueFromModuleConfig("basic", "value.info.useCurrentUserAsSalesMan")
 ```
 
-Module ids: `accounting`, `basic`, `supplychain`, `fixedassets`, `humanresource`, `dms`, `project`, `ecpa`, `manufacturing`, `srvcenter`, `crm`, `contracting`, `travel`, `realestate`, `housing`, `auditing`, `education`, `namapos`, `mc`.
+Module ids: `accounting`, `basic` (Global Configuration), `supplychain`, `fixedassets`, `humanresource`, `ecpa`, `manufacturing`, `srvcenter`, `crm`, `contracting`, `travel`, `realestate`, `education`, `namapos`.
 
 ## Security constraints
 
@@ -657,6 +659,7 @@ NamaRep.security()
   .capabilities("firstAuthor", "viewCapability", "usageCapability",
                 "updateCapability", "legalEntity", "branch",
                 "sector", "department", "analysisSet")
+  .toString()
 ```
 
 Returns a SQL boolean fragment for the current user, to be spliced into a `WHERE` clause with `$P!{}`. The full recipe, including the hidden parameter it belongs in and how to cover more than one table, is in [Limiting what each user sees](/platform/reports/reports-guide).

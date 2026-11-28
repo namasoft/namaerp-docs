@@ -20,7 +20,7 @@ point is that the same question is reused on every sheet that needs it: *"Are th
 covers intact?"* belongs on the routine inspection, on the annual overhaul, and on the post-repair
 sign-off, and you want to write it once.
 
-Find them at **Assets > Fixed Asset Maintenance > CheckList Items**.
+Find them at **Assets > Fixed Asset Maintenance > CheckList Item**.
 
 ![The CheckList Items screen, showing the question and its list of answers](../../../ar/modules/fixedassets/images/maintenance/fa-checklist-item-main-en.png)
 
@@ -29,7 +29,7 @@ Find them at **Assets > Fixed Asset Maintenance > CheckList Items**.
 | **Code** | Your identifier, e.g. `CLI-01`. |
 | **Name1 / Name2** | The Arabic name and the English name — a short handle for the item, e.g. "Spindle vibration". |
 | **Criteria** (السؤال) | The question itself, as the technician will read it on the record. |
-| **Answers** (الاجابات) | The answers you expect, written as **one line separated by commas**. |
+| **Answers** (الإجابات) | The answers you expect, written as **one line separated by commas**. |
 
 ### How the answers behave
 
@@ -68,8 +68,9 @@ exists to be pulled onto documents.
 
 ## How a checklist reaches a document
 
-Three routes, all ending in the same place — the **checkList Items** grid on a maintenance record or
-a maintenance record request, one line per question with the Result column blank and waiting.
+Three routes, all ending in the same place — the **checkList Items** grid on a maintenance record,
+one line per question. On a maintenance record request the grid is filled by hand: choosing a
+checklist there names it but does not bring its questions in.
 
 1. **You pick the checklist directly.** The Maintenance CheckList field in the record's header
    explodes its questions onto the grid the moment you choose it.
@@ -77,8 +78,9 @@ a maintenance record request, one line per question with the Result column blank
    [maintenance type](/modules/fixedassets/maintenance/fixedassets-maintenance-types.md) names a
    default checklist; choosing a plan line whose maintenance type carries one fills the grid
    without your having to name the checklist at all.
-3. **The request brings it.** When a record is raised from a maintenance record request, the whole
-   grid comes across with it — questions *and* any answers already recorded on the request.
+3. **The request brings it.** When a record is raised from a maintenance record request, the
+   request's whole grid comes across with it — questions *and* any answers already recorded on the
+   request.
 
 ::: info The questions are copied, not linked
 The grid on the document holds its own copy of each question. Edit the master checklist next month
@@ -92,7 +94,7 @@ was actually asked on the day.
 Neither the checklist item nor the checklist itself carries a button of its own. Both are catalogues:
 you type them, save them, and they are read later by the maintenance type and the maintenance record.
 The copying you may be expecting — the checklist's questions appearing on a record — is not something
-you press for; it happens as the record picks up its maintenance type.
+you press for; it happens when the record's checklist or plan line is chosen, by the routes above.
 
 ## Al-Waha's CNC inspection sheet
 

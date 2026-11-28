@@ -1,5 +1,5 @@
 ---
-entities: [VacationDocument, AggregatedVacationDocument, AggregatedVacationStartingDoc, MultiEmpVacation, VacationCompensation, AggregatedVacationCompensation, AggregatedLeavePermission, AggregatedMissionDocument, HolidaysRestBalanceDoc]
+entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
 
@@ -22,14 +22,14 @@ The vacation document's term is a small set of side effects.
 
 | Option | Field | What it does |
 |---|---|---|
-| **Generate Delegation** | `termConfig.generateDelegation` | Saving the vacation also creates a **delegation** document, so somebody is formally covering the absentee's responsibilities while they are away. |
-| **Generated Delegation Book** | `termConfig.generatedDelegationBook` | The book that delegation is filed in. Setting the switch without the book leaves the delegation nowhere to go. |
-| **Change Employee State only If vacation Start Date Match Today** | `termConfig.changeEmpStateIfDateMatchToday` | The employee's state changes to "on vacation" only when the vacation actually starts, rather than the moment the document is saved. Leave it off and a vacation entered three weeks ahead moves the employee's state today. |
+| **Generate Delegation** | `termConfig.generateDelegation` | Saving the vacation also creates a **delegation** document from the employee to the vacation's **Alternative Employee**, for the vacation's start date to its return date, so somebody is formally covering the absentee's responsibilities while they are away. The delegation is created only when the vacation document has an **Alternative Employee** and its **From Document** is filled (as it is on a vacation document generated from another document); otherwise nothing is created. |
+| **Generated Delegation Book** | `termConfig.generatedDelegationBook` | The book that delegation is filed in. With the switch ticked and this book empty, no delegation is created. |
+| **Change Employee State Only If Vacation Start Date Matches Today** | `termConfig.changeEmpStateIfDateMatchToday` | Saving a vacation document changes the employee's state to the one named in **Change Employee State To** on the vacation reason or, failing that, on the vacation type. With this option ticked, a vacation whose start date is later than today does not change the state when it is saved; the state changes when, on or after the start date, the document is saved again or the entity flow *Change Employee State From Query Based On Vacation Documents* runs over it. Leave it off and a vacation entered three weeks ahead moves the employee's state today. |
 | **Generated Loan Reschedule Book / Term** | `termConfig.generatedLoanRescheduleBook`, `termConfig.generatedLoanRescheduleTerm` | When the vacation document has **Postpone Loans During Vacation** ticked, saving it creates an **Aggregated Loan Installment Reschedule** that pushes the employee's unpaid instalments out. These two name that document's book and term, and both must be for the Aggregated Loan Installment Reschedule type. |
 
 Loans are postponed only for a vacation document that has **Postpone Loans During Vacation** ticked —
 the term alone never postpones anything. With the box ticked and this book or term empty, the
-document is refused (see [Vacation Documents](../vacations/vacation-documents.md#Postponing-loans-during-the-vacation)).
+document is refused (see [Vacation Documents](/modules/hr/vacations/vacation-documents#Postponing-loans-during-the-vacation)).
 
 ## The aggregated vacation terms
 
@@ -38,9 +38,9 @@ usually do — name the book and term of what they create.
 
 | Term | Fields | What it creates |
 |---|---|---|
-| **Aggregated Vacation Document** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook`, plus its own *Generated Loan Reschedule Book / Term* | One vacation document per employee, and any loan reschedules those produce. |
-| **Multi-Employee Vacation** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook` | The same, for the multi-employee vacation screen. |
-| **Aggregated Vacation Starting Document** | `termConfig.generatedWorkStartingDocBook` | The work-starting documents that record a batch of employees coming back. Note it names only a **book** — there is no term field here. |
+| **Aggregated Vacation Document** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook`, plus its own *Generated Loan Reschedule Book / Term* | One vacation document per line. When the aggregated document itself has **Postpone Loans During Vacation** ticked, it also creates one Aggregated Loan Installment Reschedule in that book and term, and is refused if either is empty. |
+| **Multi Employee Vacation** | `termConfig.generatedAggVacationDocTerm`, `termConfig.generatedAggVacationDocBook` | One vacation document per employee, with no loan reschedule. |
+| **Aggregated Vacation work Starting document** | `termConfig.generatedWorkStartingDocBook` | The work-starting documents that record a batch of employees coming back. Note it names only a **book** — there is no term field here. |
 
 ## The Vacation Compensation term
 

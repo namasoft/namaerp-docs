@@ -24,8 +24,8 @@ rejections.
 1. **Queries submission lines** within their 3-day review window with status `Sent` and
    `statusInTaxAuthority = 'Valid'`
 2. **Groups by submission UUID** and tax configuration to optimize API calls
-3. **Processes in batches** of 1000 lines per transaction for better performance
-4. **Checks status** with tax authority API for each submission
+3. **Processes each submission** (one submission UUID with its tax configuration) in its own transaction, so a failed submission does not undo the others
+4. **Checks status** with tax authority API for each submission. A *Status 504* answer is retried up to 6 times with a growing wait
 5. **Updates document status** based on tax authority response:
     - `RejectedByReceiver` - **Rejected by document receiver** (when `rejectRequestDate` is present)
     - `Sent` - Successfully accepted
@@ -40,7 +40,7 @@ rejections.
 ### Default Query
 
 ```sql
-SELECT id, submissionUUID, taxConfiguration_id
+SELECT DISTINCT submissionUUID, taxConfiguration_id
 FROM TaxAuthoritySubmissionLine
 WHERE taxAuthEntityStatusType = 'Sent'
   AND statusInTaxAuthority = 'Valid'
@@ -51,8 +51,8 @@ WHERE taxAuthEntityStatusType = 'Sent'
 
 ### Custom Query Requirements
 
-- Must return exactly 3 columns: `id`, `submissionUUID`, `taxConfiguration_id`
-- Columns must be in the specified order
+- Must return 2 columns: `submissionUUID`, then `taxConfiguration_id`
+- The columns are read by position, so they must be in this order. A row with an empty value in either column is skipped
 
 ### TaskSchedule Setup
 

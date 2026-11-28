@@ -27,14 +27,14 @@ Then tick the events. A definition fires on the events you tick and on nothing e
 | Use With Insert | مع الإدخال | Use With Update | مع التعديل |
 | Use With Delete | مع الحذف | Use With Draft | مع المسودة |
 | Use With Approval Request | مع طلب الموافقة | Use With Reject | مع الرفض |
-| Use With Return | مع الارجاع | Use With Revise | مع المراجعة |
+| Use With Return | مع الإرجاع | Use With Revise | مع المراجعة |
 | Use With Unrevise | مع إلغاء المراجعة | Use With Cancel | مع الإلغاء |
 | Use With Uncancel | مع إلغاء الإلغاء | Use With Print | مع الطباعة |
 | Use With Discussion | مع المناقشة | Use With Replication Failure | مع فشل التكرار |
-| Use With Processing Failure | مع فشل المعالجه | Manually | يدوياً |
+| Use With Processing Failure | مع فشل المعالجة | Manually | يدوياً |
 
 ::: warning Two rules the screen enforces on save
-A definition with **no event ticked at all** is rejected — the system answers *"You must select with insert, update, or delete,… etc"*. And a definition that names neither an **Approval Entity** nor an **Apply Also To** nor an **Applicable For** is rejected too: it has nothing to watch.
+A definition with **no event ticked at all** is rejected — the system answers *"You must select with insert, update, or delete,... etc"*. And a definition that names neither an **Approval Entity** nor an **Apply Also To** nor an **Applicable For** is rejected too: it has nothing to watch.
 :::
 
 Two of those events are how administrators hear about trouble rather than about business. **Use With Processing Failure** fires when a document's [business request](/platform/background-processing/business-requests) fails, and **Use With Replication Failure** fires when a record fails to reach another site. Point them at the systems administrator and the first person to know about a stuck ledger is the person who can fix it.
@@ -43,12 +43,13 @@ Two of those events are how administrators hear about trouble rather than about 
 
 ## Narrowing it down
 
-Ticking *Update* on the sales invoice means every edit of every invoice sends a message, which is how a notification definition becomes noise nobody reads. Four filters narrow it, and they are ANDed — the definition fires only if all the ones you filled in agree:
+Ticking *Update* on the sales invoice means every edit of every invoice sends a message, which is how a notification definition becomes noise nobody reads. Three filters narrow it, and they are ANDed — the definition fires only if all the ones you filled in agree:
 
 - **Criteria** (المعايير) — the ordinary criteria editor: field conditions on the record.
 - **Apply When Query** (تطبيق عند التوافق مع الاستعلام) — a query that must return the record.
-- **Script** (سيناريو) — a scenario script that decides.
-- **Critical Fields** (عندما تتغير الحقول الاتية) — a grid of fields that applies to *updates only*: the notification fires only when one of the listed fields actually changed. Leave the grid empty and every update qualifies.
+- **Critical Fields** (عندما تتغير الحقول الآتية) — a grid of fields that applies to *updates only*: the notification fires only when one of the listed fields actually changed. Leave the grid empty and every update qualifies.
+
+The screen also shows a **Script** (سيناريو) field. Leave it empty: a definition with anything in it is refused on save with *Entity {0} with code {1} : please do not used the next field {2} as scripts replace them with entity flows*, a message that has no Arabic text. Logic that needs a script belongs in an [entity flow](/platform/entity-flows/introduction-to-entity-flows).
 
 **Skip notification when only critical fields changed** (عدم إرسال التنبيه في حالة تغيير الحقول الحرجة فقط) inverts that last one: the message is sent only when something *other* than the listed fields changed. It is the switch for "tell me about any edit except the remark".
 

@@ -37,10 +37,10 @@ Each row is one drop. The columns that matter:
 | Customer Address 1, Area, Map Location, Region | Where it is going — copied from the customer, then corrected by the courier on the road. |
 | Package 1 … Package 7 | How many of each package type ride with this drop. These are the numbers that drive the stock transfer below. |
 | Salesman, Branch | Carried through from the source document. |
-| Delivery State | *Initial*, *Delivered*, *Customer Not Available* or *Moved*. New lines start at *Initial*. |
+| Delivery State | *Initial*, *Totally Delivered*, *Customer Not Available* or *Moved*. New lines start at *Initial*. |
 | Voice Attachment, Courier Remarks, Remarks | What the courier recorded at the stop. |
 
-Four buttons sit above the grid — **اختيار الكل / Select All**, **ازالة الاختيار من الكل / Deselect All**, **عكس الاختيار / Reverse Selected**, and **نسخ عناوين العملاء من السطور المختارة / Copy Customer Locations From Selected Lines**. The last of those writes the addresses on the selected lines back onto the customer master files; the [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md) covers what that means and where it stops short.
+Four buttons sit above the grid — **اختيار الكل / Select All**, **ازالة الاختيار من الكل / Deselect All**, **عكس الاختيار / Reverse Selected**, and **نسخ عناوين العملاء من السطور المختارة / Copy Customer Locations From Selected Lines**. The last of those writes the first address line of each selected line back onto the customer master files; the [overview](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md) covers what that means and where it stops short.
 
 ### The time-check grid
 
@@ -50,7 +50,7 @@ A dimensions block closes the screen.
 
 ### What the document does on save and on commit
 
-On save it tidies the lines: the customer's region, first address line and map location are copied onto each stop, the value date is stamped, and the delivery state is defaulted to *Initial*. A stop for a work task picks up the task's remarks; a stop for a sales return picks up the code of the document the return was raised on.
+On save it tidies the lines: the deliver-to party's mobile, region, first address line, map location and shipping address are copied onto each stop (a stop for an external delivery order keeps the receiver address it carries), the value date is stamped, and the delivery state is defaulted to *Initial*. A stop for a work task picks up the task's remarks; a stop for a sales return picks up the code of the document the return was raised on.
 
 On commit it marks every line as committed, stamps each line with its parent document, and — if the [توجيه](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md) is set up for it — generates stock transfers.
 
@@ -66,13 +66,9 @@ It runs only when **all** of the following hold:
 
 Given that, each line's *Package 1 … Package 7* counts become quantities of the correspondingly numbered transfer item, and the goods move from the توجيه's from-warehouse and from-locator to **the courier's own locator** — a locator whose *related to* is that courier's employee record. One stock transfer is produced per warehouse pair.
 
-If the courier has no locator of their own, the document refuses to commit with *"Courier {0} does not have warehouse"*. It also refuses when transfer items are configured but the from-warehouse, from-locator, transfer term or transfer book is missing — so a half-configured توجيه is caught rather than silently ignored.
+If the courier has no locator of their own, the document refuses to commit with *"Courier {0} does not have warehouse"*. It also refuses when transfer items are configured but both the from-warehouse and the from-locator are empty, or the transfer term or transfer book is missing — so a half-configured توجيه is caught rather than silently ignored.
 
-::: danger Two setup rules you cannot work around
-**One courier per delivery document.** When a document carries lines for two different couriers, the packages of *both* end up transferred to the **second** courier's locator. The first courier's van shows empty and the second's shows double. There is no warning. Keep one courier per document — which is also what the batch document produces when you configure it correctly.
-
-**Cancelling the document does not remove the stock transfers it generated.** They are left standing, so stock stays booked onto a courier who no longer has it. After cancelling or deleting a Mobile Delivery Document, go and find the generated transfers and deal with them by hand. (Re-saving a live document *does* clear away transfers that are no longer needed — the gap is specific to cancellation.)
-:::
+Keep one courier per delivery document — which is what the batch document produces when you group it by courier.
 
 ### What the phone app does with it
 
@@ -88,7 +84,7 @@ The header is four fields — **from creation date**, **to creation date**, **fr
 
 ### Collecting
 
-The action **تجميع الفواتير حسب الوقت والتاريخ المختارين / Collect Invoices By Chosen Date And Time** pulls in every sales invoice and work task created inside that date and time window. It skips any invoice that already appears on a delivery line, so pressing it twice does not duplicate work; where an invoice receipt document already exists for an invoice, that receipt is attached as the delivered document instead. Each collected row arrives with the deliver-to party, the shipping address, the first address line, the salesman and the four dimensions already filled from the source document.
+The action **تجميع الفواتير حسب الوقت والتاريخ المختارين / Collect Invoices By Chosen Date And Time** pulls in every sales invoice and work task created inside that date and time window. It skips any invoice that already appears on a delivery line, so pressing it twice does not duplicate work; where an invoice receipt document already exists for an invoice, that receipt is attached as the delivered document instead. The collected rows replace whatever the grid held. Each collected row arrives with the deliver-to party (the document's customer), the salesman (a work task's actual responsible) and the four dimensions filled from the source document, and with the shipping address, first address line and mobile taken from that customer's file.
 
 You then edit the collected rows — assign couriers, set package counts, drop anything that is not going out today.
 
@@ -96,16 +92,12 @@ You then edit the collected rows — assign couriers, set package counts, drop a
 
 On commit, the collected lines are grouped, and **one Mobile Delivery Document is created per group**, in the book and توجيه named on the batch document's own توجيه, each stamped as having come from this document. Re-committing after a change keeps the groups in step: a group that no longer exists has its generated delivery document deleted, and cancelling the batch document deletes all of them.
 
-The grouping key is built from whichever of eight **"conditions of collecting"** flags are switched on in the توجيه: branch, sector, department, analysis set, courier, deliver-to, region and salesman. The same flags decide which header fields are copied down onto each generated delivery document.
+The grouping key is built from whichever of eight **"conditions of collecting"** flags are switched on in the توجيه: branch, sector, department, analysis set, courier, deliver-to, region and salesman. Each generated delivery document takes its four dimensions from the first line of its group; the courier, deliver-to, region and salesman are copied onto its header only when their flag is on.
 
 ::: danger Tick at least the courier flag
-If **none** of the eight flags is switched on, the grouping key is empty — so every collected invoice and task lands in **one single** Mobile Delivery Document, with no courier, no region and no dimensions copied onto it. Nothing warns you; you simply get one enormous route sheet that no courier can use and that cannot generate a stock transfer, because there is no courier to transfer to.
+If **none** of the eight flags is switched on, the grouping key is empty — so every collected invoice and task lands in **one single** Mobile Delivery Document, with no courier, deliver-to, region or salesman on its header. Nothing warns you; you simply get one enormous route sheet for every courier at once.
 
 In practice, switch **courier** on. Add region, branch or salesman as your dispatching actually requires. Never leave all eight off.
-:::
-
-::: warning Address copying behaves differently on the two screens
-Both screens carry the *Copy Customer Locations From Selected Lines* action, but they do not behave identically when a selected line's recipient cannot hold contact information: on the batch document the remaining lines are still processed, while on the single delivery document the run stops there. Spot-check large selections on the delivery document.
 :::
 
 ## Actions on these screens
@@ -117,8 +109,8 @@ Both screens carry the *Copy Customer Locations From Selected Lines* action, but
 - **Reverse Selected** (*عكس الاختيار*) — flips *Selected* on every line, so the ticked lines become
   unticked and the rest become ticked.
 - **Copy Customer Locations From Selected Lines** (*نسخ عناوين العملاء من السطور المختارة*) — save the
-  document first. Writes the address on each ticked line back onto that recipient's master file, then
-  reloads the screen. With no line ticked it asks you to select rows.
+  document first. Writes the first address line of each ticked line back onto that recipient's master
+  file, clears the ticks, then reloads the screen. With no line ticked it asks you to select rows.
 
 **Multi Mobile Delivery Document only:**
 

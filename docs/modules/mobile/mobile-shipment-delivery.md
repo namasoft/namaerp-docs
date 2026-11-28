@@ -1,11 +1,11 @@
 ---
 description: "Setting up and running shipment delivery for the driver app: the delivery configuration, areas, cars and driver assignments, then the daily plan, delivery and return cycle, what decides a shipment's state, the screen buttons and the messages you may see."
 entities: [DLVDeliveryPlan, DLVDeliveryDocument, DLVDeliveryReturn, DLVDeliveryConfig, DLVDeliveryArea, DLVDriverCarAreaAssignment, DeliveryCar]
-menu: Basic → delivery Setting → Shipment Delivery Plan
+menu: Basic → Delivery Setting → Shipment Delivery Plan
 ---
 # Shipment Delivery: Plan, Deliver, Return
 
-The driver app's **Shipment delivery voucher** and **Delivery orders** screens (see [Customer Service, Delivery & Receipts](/modules/mobile/mobile-crm-delivery.md)) are only the front end. Behind them sit seven screens under **Basic → delivery Setting** that decide which shipments exist, which driver and car take them, and what happens to a shipment that did not reach its customer. This page walks through all seven in the order you set them up and use them.
+The driver app's **Shipment delivery voucher** and **Delivery orders** screens (see [Customer Service, Delivery & Receipts](/modules/mobile/mobile-crm-delivery.md)) are only the front end. Behind them sit seven screens under **Basic → Delivery Setting** that decide which shipments exist, which driver and car take them, and what happens to a shipment that did not reach its customer. This page walks through all seven in the order you set them up and use them.
 
 ::: info Required licence
 `basic-mobile-shipment-delivery`. Six of the seven screens are gated behind it; **Delivery Car** is part of the base installation.
@@ -24,9 +24,9 @@ Every time a document you want delivered is saved — a sales invoice, say — t
 | **Shipment Delivery Config** | إعدادات توصيل شحنات | Which document types create shipments, and where each shipment detail is read from. |
 | **Shipment Delivery Area** | منطقة توصيل شحنات | The delivery zones a city is divided into. |
 | **Delivery Car** | سيارة توصيل | The vans, with their numbered storage spots. |
-| **DLV Driver Car Area Assignments** | مستند تسكين سائق و سيارة توصيل على منطقة توصيل | Which driver and car cover which area, and for which dates. |
+| **DLV Driver Car Area Assignment** | مستند تسكين سائق و سيارة توصيل على منطقة توصيل | Which driver and car cover which area, and for which dates. |
 | **Shipment Delivery Plan** | خطة توصيل شحنات | The day's loading sheet: shipments assigned to drivers and cars. |
-| **Shipment Delivery  Document** | سند توصيل شحنات | The proof of delivery, normally created from the driver app. |
+| **Shipment Delivery Document** | سند توصيل شحنات | The proof of delivery, normally created from the driver app. |
 | **Delivery Return** | مستند مرتجع توصيل | Shipments that came back: retry later, or return for good. |
 
 None of these documents creates a journal entry or moves stock.
@@ -60,7 +60,7 @@ The plan matches shipments to drivers and cars **by delivery area**. A shipment 
 
 - **Shipment Delivery Area** is a plain master file — code and name. Give the areas groups if you want to plan a whole district at once; the plan can filter by area group.
 - **Delivery Car** records the van. Its **Order Location In Car** grid lists the numbered spots in the van (shelf A1, A2, …) in loading order; the plan uses that list to tell the driver where each shipment sits.
-- **DLV Driver Car Area Assignments** is a document whose grid says, line by line: this **Delivery Area** is covered by this **Driver** in this **Delivery Car**, from **From Date** to **To Date**. Leave a date empty for an open-ended assignment. The plan uses the assignment that is valid **today** — the day you press the button, not the plan's date.
+- **DLV Driver Car Area Assignment** is a document whose grid says, line by line: this **Delivery Area** is covered by this **Driver** in this **Delivery Car**, from **From Date** to **To Date**. Leave a date empty for an open-ended assignment. The plan uses the assignment that is valid **today** — the day you press the button, not the plan's date.
 
 ![A DLV Driver Car Area Assignment: each area with its driver and car](../../ar/modules/mobile/images/crm-delivery/driver-car-area-assignment-en.png)
 
@@ -87,7 +87,7 @@ The dispatcher can still edit any line — change a driver, add or delete a ship
 
 ### Step 2 — Deliver: the proof
 
-At each customer the driver opens the **Shipment delivery voucher** in the app, marks each shipment *delivered* or *failed*, takes the customer's and the driver's signatures, and saves. The app creates a **Shipment Delivery  Document** in the ERP with:
+At each customer the driver opens the **Shipment delivery voucher** in the app, marks each shipment *delivered* or *failed*, takes the customer's and the driver's signatures, and saves. The app creates a **Shipment Delivery Document** in the ERP with:
 
 - the arrival address and map point, the **Delivered At** time, and a **Fake Delivery Location** tick when the app flagged the reported position as fake;
 - **Receiver Name**, **Civil Number**, **Client Signature** and **Employee Signature**;
@@ -129,7 +129,7 @@ The driver app's search box (shipment number or phone number) is wider than the 
 |---|---|---|
 | Shipment Delivery Plan | **Collect DLV Delivery Orders** (in the page) | Fills the grid from waiting and returned shipments, with driver, car and van spot. |
 | Delivery Return | **Collect Not Delivered Orders** (in the page) | Fills the grid from failed and waiting shipments. |
-| Shipment Delivery  Document | **Resend IPS Events** (More menu) | Postal installations only — see below. |
+| Shipment Delivery Document | **Resend IPS Events** (More menu) | Postal installations only — see below. |
 
 The other screens carry only the standard toolbar.
 

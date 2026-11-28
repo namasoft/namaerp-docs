@@ -45,7 +45,7 @@ NamaRep.sub("header|subtitle")   // "subtitle"
 ### أسماء الأيام
 
 ```groovy
-NamaRep.dayName($F{dateField})     // باللغة الحالية
+NamaRep.dayName($F{dateField})     // بالإنجليزية أياً كانت لغة التقرير
 NamaRep.arDayName($F{dateField})   // بالعربية
 NamaRep.enDayName($F{dateField})   // بالإنجليزية
 NamaRep.dayName(dayNumber)         // ١ = الأحد، ٢ = الاثنين، ...
@@ -291,11 +291,13 @@ NamaRep.attachmentLink(serverUrl, attachmentId)
 
 ```groovy
 NamaRep.repLinkByCode($P{REPORT_PARAMETERS_MAP}, "ReportCode")
+  .copyParams()      // مرّر مدخلات التقرير الحالي المشتركة
   .p("p1 id").v(value expression)
   .p("p2 id").v(value expression)
-  .copyParams()      // مرّر مدخلات التقرير الحالي المشتركة
   .toString()
 ```
+
+و`.copyParams()` و`.directLink()` تخصّان الرابط نفسه لا مدخلاً بعينه، فموضعهما بعد `repLinkByCode(...)` مباشرة وقبل أول `.p(...)`؛ فبعد أن يبدأ زوج `.p(...).v(...)` لا يتبعه إلا زوج آخر أو `.toString()` أو `.toNoAuthResultLink()`.
 
 و`.p(...)` يسمّي المدخل الهدف، وما بعده يزوّده بقيمته:
 
@@ -306,7 +308,7 @@ NamaRep.repLinkByCode($P{REPORT_PARAMETERS_MAP}, "ReportCode")
 .p("param").refCode($F{entityType}, $F{code})
 ```
 
-وأضف `.directLink()` لحذف عنوان الخادم، فيصير الرابط `#rpt:xxx` بدل عنوان كامل — وهو مفيد حين لا يُتبع الرابط إلا من داخل النظام.
+وأضف `.directLink()` (بعد `repLinkByCode(...)` مباشرة) لحذف عنوان الخادم، فيصير الرابط `#rpt:xxx` بدل عنوان كامل — وهو مفيد حين لا يُتبع الرابط إلا من داخل النظام.
 
 و`.toNoAuthResultLink()` ينتج رابطاً يعمل بلا تسجيل دخول أصلاً، لإرساله إلى العملاء. انظر «مشاركة تقرير مع شخص بلا حساب» في [الدليل](/ar/platform/reports/reports-guide) لما يجب إعداده أولاً.
 
@@ -445,13 +447,13 @@ fieldID,operator,value,logic;
 
 ```groovy
 NamaRep.newWithFields("ReceiptVoucher")
+  .menuCode("NormalReceiptMenu")   // القائمة والعرض أولاً: يخصّان المنشئ لا حقلاً،
+  .viewName("NormalReceipts")      // فلا يصح أن يأتيا بعد .f(...).v(...)
   .f("term").value("POTermCode")
   .f("book").value("POBook1")
   .f("remarks").v("Auto Created")
   .f("fromDoc#type").v("SalesInvoice")
   .f("fromDoc#code").v($F{code})
-  .menuCode("NormalReceiptMenu")
-  .viewName("NormalReceipts")
   .toString()
 
 // الشيء نفسه، مكتوباً بالكامل
@@ -623,7 +625,7 @@ NamaRep.earnedPoints("SalesInvoice", $F{invoiceId})
 ```groovy
 NamaRep.runSQLQuery(sql, paramName, paramValue, paramName, paramValue)
 
-NamaRep.executeQuery(
+NamaRep.runSQLQuery(
   "SELECT cast(w.name1 collate Arabic_CI_AI_KS_WS as varchar(250))
    FROM warehouse w WHERE w.id = :wid",
   "wid", $F{wid}
@@ -645,7 +647,7 @@ NamaRep.getValueFromModuleConfig(moduleId, fieldId)
 NamaRep.getValueFromModuleConfig("basic", "value.info.useCurrentUserAsSalesMan")
 ```
 
-ومعرّفات الوحدات: `accounting`، `basic`، `supplychain`، `fixedassets`، `humanresource`، `dms`، `project`، `ecpa`، `manufacturing`، `srvcenter`، `crm`، `contracting`، `travel`، `realestate`، `housing`، `auditing`، `education`، `namapos`، `mc`.
+ومعرّفات الوحدات: `accounting`، `basic` (الإعدادات العامة)، `supplychain`، `fixedassets`، `humanresource`، `ecpa`، `manufacturing`، `srvcenter`، `crm`، `contracting`، `travel`، `realestate`، `education`، `namapos`.
 
 ## قيود الأمان
 
@@ -656,6 +658,7 @@ NamaRep.security()
   .capabilities("firstAuthor", "viewCapability", "usageCapability",
                 "updateCapability", "legalEntity", "branch",
                 "sector", "department", "analysisSet")
+  .toString()
 ```
 
 يُرجع جزءاً منطقياً من SQL خاصاً بالمستخدم الحالي، يُدرَج في جملة `WHERE` بـ `$P!{}`. أما الوصفة الكاملة، بما فيها المدخل المخفي الذي يسكنه وكيفية تغطية أكثر من جدول، ففي قسم «تحديد ما يراه كل مستخدم» من [الدليل](/ar/platform/reports/reports-guide).

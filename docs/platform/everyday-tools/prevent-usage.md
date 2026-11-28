@@ -24,7 +24,8 @@ currently stands: **Prevent Usage** on a record that is still in use, **Allow Us
 already retired. Choosing it changes nothing on its own — it marks the record the way typing in a
 field would, and **you still have to save**. Close the screen without saving and nothing happened.
 
-On a **list screen**, More offers **both** commands, always, at the very bottom of the menu. These
+On a **list screen**, More offers **both** commands, always, right after the export items and *Save
+selected records if draft*. These
 work on the rows you have ticked, and they are immediate: the records are saved and processed for
 you, with no further confirmation and nothing to save afterwards.
 
@@ -112,7 +113,7 @@ has a **Display Prevent Usage Records** column, set per entity type, with three 
 type; **Same As Config** — the value every row starts on — hands the decision back to the profile
 setting, and then to the global one. So you can hide retired customers from every list while leaving
 retired items visible, without touching anything global. See
-[Security Profiles](/platform/security/security-profiles.md).
+[Security Profiles](/platform/security/security-profiles).
 
 ## Letting some people use them anyway
 
@@ -149,8 +150,8 @@ That grid, and the trap of leaving its scope empty, is covered in
 ## Prevent Usage As From Doc
 
 Alongside the main pair sits a narrower one: **Prevent Usage As From Doc** and **Allow Usage As From
-Doc**. It appears on the record's own More menu the same way, and it exists **only on documents** —
-customers, suppliers, items, accounts and warehouses do not have it.
+Doc**. It appears on the record's own More menu the same way, and it applies **only to documents** — a
+customer, supplier, item, account or warehouse cannot be closed off this way.
 
 It blocks one specific thing: using that document as the **source** another document is generated
 from. A quotation that has already been turned into an order, or an order that has been fully
@@ -183,5 +184,5 @@ visible in the [audit trail](/platform/governance/audit-trail).
 | Message | Why | What to do |
 |---|---|---|
 | *Can not use record {0}-{1}, usage is prevented* — «لا يمكن استعمال السجلات التي تم منع استعمالها {0}-{1}» | The record you are saving names a retired record; the message names its type and code. | Allow its usage again, or use one of the three exceptions above — the two user settings, or the per-field grid. |
-| *Can not use item {0}, it is prevented from using* — «لا يمكن استخدام الصنف {0} ، حيث أنه ممنوع من الإستخدام» | The same block on an item, raised by the item's own check so the message names the item. | As above. On a returns document, the per-field exception is usually the right answer. |
-| *The document {0} is prevented from usage as from doc* — «المستند {0} ممنوع من الإستخدام في بناء على» | The source document you are generating from was closed off with **Prevent Usage As From Doc**. It is not retired — only its use as a source is blocked. | Run **Allow Usage As From Doc** on that document, or generate from a different source. |
+| *Can not use item {0}, it is prevented from using* — «لا يمكن استخدام الصنف {0} ، حيث أنه ممنوع من الاستخدام» | The same block on an item, raised by the item's own check so the message names the item. | As above. On a returns document, the per-field exception is usually the right answer. |
+| *The document {0} is prevented from usage as from doc* — «المستند {0} ممنوع من الاستخدام في بناء على» | The source document you are generating from was closed off with **Prevent Usage As From Doc**. It is not retired — only its use as a source is blocked. | Run **Allow Usage As From Doc** on that document, or generate from a different source. |

@@ -30,21 +30,25 @@ Reverses previously created accounting transactions by creating opposite entries
 ## Parameters
 
 ### Parameter 1: Source Entity Field (Required)
-- **Purpose:** Entity whose ledger transactions should be reversed
-- **Format:** Field reference (e.g., `originalDocument`, `sourceInvoice`)
-- **Examples:** `originalSalesInvoice`, `cancelledPayments`
+- **Title:** The field that provides the entity to cancel its Ledger trans
+- **Purpose:** The record whose ledger request is reversed into the current document's request
+- **Format:** A reference field of the current document, or an `sql(...)` expression that returns the record id. An `sql(...)` expression that uses line fields is run once per line and reverses one record per line. When the value is empty, or the record has no ledger request, nothing is added.
+- **Examples:** `fromDoc`, `ref1`, `sql(select {details.ref1.id})`
 
 ### Parameter 2: Shorten Reversed Lines
+- **Title:** Shorten Ledger of Reversed Lines
 - **Values:** `true` or `false` (defaults to `false`)
-- **Purpose:** Consolidate reversed lines with identical accounts
+- **Purpose:** Merge the similar lines of the reversed request before they are added
 
 ### Parameter 3: Shorten Final Lines  
+- **Title:** Shorten Ledger of Final Lines
 - **Values:** `true` or `false` (defaults to `false`)
-- **Purpose:** Consolidate all ledger lines after adding reversals
+- **Purpose:** Merge the similar lines of the current document's request after the reversed lines are added
 
 ### Parameter 4: Percentages Field (Optional)
-- **Purpose:** Partial reversal percentages (1-100)
-- **Examples:** `details.reversalPercentage`, `sql(SELECT 50)`
+- **Title:** Percentages Field eg: sql(select case when {details.item.item.code} = '123' then {details.n1} else 100 end) Another example: details.n4
+- **Purpose:** The percentage of each original line's amount that is reversed, where 100 reverses the full amount. Empty reverses the full amount. When Parameter 1 returns one record per line, an `sql(...)` here gives each line its own percentage.
+- **Examples:** `details.n4`, `sql(select case when {details.item.item.code} = '123' then {details.n1} else 100 end)`
 
 ## Common Use Cases
 

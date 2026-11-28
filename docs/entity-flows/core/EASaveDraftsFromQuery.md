@@ -21,9 +21,9 @@ Manual execution for bulk conversion of draft entities to committed state, typic
 
 1. **Executes query** - Runs the provided SQL query to find entities (must return entityType and id columns)
 2. **Processes results** - Extracts entity type and ID pairs from query results
-3. **Validates draft status** - Only processes entities that have draftCreated = true
-4. **Commits entities** - Calls EntityMediator.commitFromBusinessAction() on each draft entity
-5. **Handles errors** - Continues processing remaining entities even if individual commits fail
+3. **Validates draft status** - Only processes entities that have draftCreated = true; any other record returned by the query is skipped
+4. **Commits entities** - Saves each draft as final, each in its own transaction
+5. **Handles errors** - Continues processing remaining entities even if individual commits fail; a failed record stays a draft
 
 ## Parameters
 

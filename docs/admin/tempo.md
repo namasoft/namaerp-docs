@@ -61,12 +61,12 @@ separate question, and there are more places than notifications and reports:
 
 - **Notification and approval templates**, and validation messages — the classic home of Tempo.
 - **Reports**, through the `NamaRep` helpers described in the
-  [NamaRep reference](/platform/reports/reports-namarep-reference.md).
+  [NamaRep reference](/platform/reports/reports-namarep-reference).
 - **Screen Modifier → Notifications → URL Template** — the column that turns a template into a
   **button on a screen**. Whatever the template renders is opened as a link, so it can be an
   ordinary address with record values substituted into it (`https://www.google.com/search?q={name2}`),
   a link to another record, or a creator that opens a pre-filled new document. See
-  [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons.md).
+  [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons).
 
 ---
 
@@ -264,16 +264,16 @@ This links to the record identified by `entityType` and `id`, using the record's
 
 ### 4. Open Record in Specific Menu or View
 
-You can customize how a link opens by specifying additional parameters:
+You can customize how a link opens by specifying additional parameters. `menu` and `view` name the menu and the view to open the record in. Add `newwindow="true"` to open the link in a new window, and leave it out to open it in the same window:
 
 ```tempo
-{link(record, menu="MenuCode", newindow="true or false", view="ViewName")}
+{link(record, menu="MenuCode", newwindow="true", view="ViewName")}
 ```
 
 Or with a custom title:
 
 ```tempo
-{titledlink(record, menu="MenuCode", newindow="true or false", view="ViewName")}
+{titledlink(record, menu="MenuCode", newwindow="true", view="ViewName")}
 Link Content Here
 {endlink}
 ```
@@ -282,13 +282,13 @@ Link Content Here
 Open an employee record in a new window via a specific menu and view:
 
 ```tempo
-{link(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
+{link(employee, menu="NewEmp", newwindow="true", view="NewEmpsView")}
 ```
 
 With a title:
 
 ```tempo
-{titledlink(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
+{titledlink(employee, menu="NewEmp", newwindow="true", view="NewEmpsView")}
 Employee code {code}, Name {name1}
 {endlink}
 ```
@@ -569,7 +569,7 @@ To include action buttons in your email or SMS templates for approval workflows,
 
 #### Optional Attributes
 
-Each of the four action links accepts the following optional attributes, written inside parentheses:
+Each of these action links accepts the following optional attributes, written inside parentheses:
 
 | Attribute | Description |
 |-----------|-------------|
@@ -771,7 +771,6 @@ Use the following syntax to get properties of the currently logged-in user:
 
 * Arabic: `{valueDate.$arDayName}`
 * English: `{valueDate.$enDayName}`
-* Based on current language: `{valueDate.$dayName}`
 
 ---
 
@@ -925,7 +924,7 @@ Becomes:
 {translate(orderStatus)}
 ```
 
-This translates the `orderStatus` value to the other language (Arabic ↔ English).
+This renders the `orderStatus` value in the language of the current user.
 
 ::: tip
 You can also use `{orderStatus.$english}` or `{orderStatus.$arabic}` directly.
@@ -943,7 +942,7 @@ Two special keys let you reference the running installation's **branding** inste
 {translate("applicationName")}
 ```
 
-Renders `Nama ERP`, `Capital Solutions ERP`, `Exceed ERP`, etc., according to the current licence branding.
+Renders `Nama ERP 7`, `Capital Solutions ERP`, `Exceed ERP`, etc., according to the current licence branding.
 
 * **Application URL** — the branded website address:
 
@@ -951,7 +950,7 @@ Renders `Nama ERP`, `Capital Solutions ERP`, `Exceed ERP`, etc., according to th
 {translate("appUrl")}
 ```
 
-Renders `namasoft.com`, `exceed-erp.com`, etc., according to the current licence branding.
+Renders the full address, such as `http://www.namasoft.com` or `https://www.exceed-erp.com`, according to the current licence branding.
 
 **Example:**
 
@@ -1006,7 +1005,7 @@ Tempo provides flexible conditional logic using `{if}`, `{ifnot}`, and related s
 {if(code)}Content shown if `code` is not empty{endif}
 ```
 
-* **If a number is not zero**:
+* **If a number is not zero**. Only the whole part of the number is tested, so `0.75` counts as zero:
 
 ```tempo
 {if(money.remaining)}Remaining is {#money.remaining}{endif}
@@ -1023,12 +1022,6 @@ Tempo provides flexible conditional logic using `{if}`, `{ifnot}`, and related s
 ```tempo
 {ifnot(code)}Code is missing{endif}
 {if!(code)}Code is missing{endif}
-```
-
-* **If a string represents a number that's not zero**:
-
-```tempo
-{ifnumber(description1)}
 ```
 
 ---
@@ -1050,10 +1043,12 @@ Tempo provides flexible conditional logic using `{if}`, `{ifnot}`, and related s
 
 ### Number-Specific Conditions
 
+The two-value conditions in the table above compare their values **as text**, so `{if<(n1,5)}` is true when `n1` is `10`, because the text `10` sorts before the text `5`. To compare numbers, use the `ifnumber` forms below.
+
 | Syntax                                            | Description                      |
 | ------------------------------------------------- | -------------------------------- |
-| `{ifnumber(n)}`                                   | Renders if `n` is not zero       |
-| `{ifnumber!(n)}`, `{ifnumbernot(n)}`              | Renders if `n` is zero           |
+| `{ifnumber(n)}`                                   | Same test as `{if(n)}`           |
+| `{ifnumber!(n)}`, `{ifnumbernot(n)}`              | Same test as `{ifnot(n)}`        |
 | `{ifnumber=(a,b)}`, `{ifnumberequal(a,b)}`        | Renders if numbers are equal     |
 | `{ifnumber!=(a,b)}`, `{ifnumbernotequal(a,b)}`    | Renders if numbers are not equal |
 | `{ifnumber<(a,b)}`, `{ifnumberless(a,b)}`         | Renders if `a < b`               |
@@ -1070,7 +1065,7 @@ You can chain multiple conditions using `else if=`, `elseif=`, or `else`.
 ```tempo
 {if=(code,"a")}Case A
 {else if=(code,"b")}Case B
-{else if<(n1,5)}Case C
+{else ifnumber<(n1,5)}Case C
 {else}No match found
 {endif}
 ```
@@ -1079,7 +1074,7 @@ You can chain multiple conditions using `else if=`, `elseif=`, or `else`.
 
 * `else` must come last.
 * `endelse` is optional and not recommended.
-* You can prepend `else` to any `if` condition.
+* You can prepend `else` to `ifnot` and to every two-value condition (`if=`, `if!=`, `if<`, `if<=`, `if>`, `if>=` and their `ifnumber` forms).
 :::
 
 This structure allows full control over conditional content rendering within Tempo templates.
@@ -1188,11 +1183,10 @@ subject:The employee {name2} was updated by {$user.name2}
 
 ### 2. Adding Attachments
 
-Use one or more `emailattachment` tags for fields or server paths:
+Use one or more `emailattachment` tags, each naming an attachment field:
 
 ```tempo
 {emailattachment(attachmentField)}
-{emailattachment("C:\Path\To\File.pdf")}
 ```
 
 **Example:**
@@ -1202,12 +1196,6 @@ subject:Attachments of employee {code} - {name1}
 Dear Sir,  
 Please note that the employee {name1} was changed. The email contains all files attached to the employee.  
 {emailattachment(attachment)}{emailattachment(attachment1)}{emailattachment(attachment2)}{emailattachment(attachment3)}{emailattachment(attachment4)}{emailattachment(attachment5)}{emailattachment(mainFile)}
-```
-
-**Another Example:**
-
-```tempo
-Attached our catalog {emailattachment("E:\Media\Prochures\catalog.pdf")}
 ```
 
 ::: tip 
@@ -1313,7 +1301,7 @@ order by customerCode
 {description1.$trim}
 ```
 
-* **Strip leading and trailing whitespace** (Unicode-aware — handles tabs, NBSP, etc.):
+* **Strip leading and trailing whitespace** (Unicode-aware — handles tabs and Unicode space characters; a non-breaking space is kept):
 
 ```tempo
 {description1.$strip}
@@ -1408,53 +1396,40 @@ Arabic letters are case-less, so these functions only affect Latin (and other bi
 {left(code, 3)} → "Nam" if code is "NamaSoft"
 ```
 
-* **Extract characters from the right:**
+* **Extract a substring by start position and length.** `start` counts from 0. Leave `length` out to take everything up to the end:
 
 ```tempo
-{right(string, length)}
+{substring(string, start, length)}
 ```
 
 **Example:**
 
 ```tempo
-{right(code, 3)} → "oft" if code is "NamaSoft"
-```
-
-* **Extract substring from a specific range:**
-
-```tempo
-{substring(string, startIndex, endIndex)}
-```
-
-**Example:**
-
-```tempo
-{substring("NamaSoft", 3, 5)} → "maS"
+{substring("NamaSoft", 2, 3)} → "maS"
 ```
 
 ---
 
 ### Padding (Truncating or Adding Spaces)
 
-* **Left pad or truncate:**
+* **Left pad** — spaces are added in front of the text until it is `length` characters long:
 
 ```tempo
-{leftpad(length)}YourTextHere{endpad}
+{padleft(length)}YourTextHere{endpad}
 ```
 
-* **Right pad or truncate:**
+* **Right pad or truncate** — spaces are added after the text until it is `length` characters long, and a longer text is cut to its first `length` characters:
 
 ```tempo
-{rightpad(length)}YourTextHere{endpad}
+{padright(length)}YourTextHere{endpad}
 ```
 
 **Examples:**
 
 ```tempo
-{leftpad(10)}123{endpad}     → "       123"
-{rightpad(10)}123{endpad}    → "123       "
-{leftpad(5)}123456789{endpad}→ "12345"
-{rightpad(5)}123456789{endpad}→ "56789"
+{padleft(10)}123{endpad}     → "       123"
+{padright(10)}123{endpad}    → "123       "
+{padright(5)}123456789{endpad}→ "12345"
 ```
 
 ---
@@ -1741,8 +1716,8 @@ This example sends a POST request for each line in `details`, with body parts de
     {requestdescription1}optional description that can be viewed in the list view{enddescription1}
     {requestdescription2}Add row number {@rownumber} to use as extra info{enddescription2}
 
-    {requestrelatedtoid1}{id}{endrelatedto1}
-    {requestrelatedtoid2}{customer.id}{endrelatedto2}
+    {requestrelatedtoid1}{id}{endrelatedtoid1}
+    {requestrelatedtoid2}{customer.id}{endrelatedtoid2}
   {endrequest}
 {endloop}
 ```
@@ -1767,7 +1742,7 @@ This version uses a manually written JSON string in the request body:
     {paramname}company_name{endparamname}
     {paramvalue}{legalEntity.name2}{endparamvalue}
 
-    {requestbody}
+    {fullbody}
       \{
         "user_whatsapp_number":"{details.ref1.$toReal.contactInfo.mobile}",
         "ordernumber":"{details.ref2.$toReal.code}"
@@ -1790,7 +1765,7 @@ In Tempo, a **creator** is used to generate and populate a new entity record (li
 A creator is a Tempo node, not a report feature. The same `{creator(...)}` block works anywhere a
 Tempo template is rendered — including the **URL Template** column of a Screen Modifier, which is how
 you put a "create a pre-filled record" button directly on a screen without going near a report. See
-[Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons.md).
+[Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons).
 :::
 
 ---
@@ -1798,7 +1773,7 @@ you put a "create a pre-filled record" button directly on a screen without going
 ### Basic Creator Syntax
 
 ```tempo
-{creator(entity="EntityName", menu="MenuName", title="Link Title", view="ViewName", newwindow="true/false")}
+{creator(entity="EntityName", menu="MenuName", title="Link Title", view="ViewName", newwindow="true")}
   ...field assignments...
 {endcreator}
 ```
@@ -1807,7 +1782,7 @@ you put a "create a pre-filled record" button directly on a screen without going
 * `menu` *(optional)*: Target menu name (if customized).
 * `title` *(optional)*: Title shown in the creator link.
 * `view` *(optional)*: Custom screen view name.
-* `newwindow` *(optional)*: Whether to open in a new tab.
+* `newwindow` *(optional)*: Add `newwindow="true"` to open in a new tab. Leave it out to open in the same tab.
 
 **Example:**
 
@@ -1955,7 +1930,7 @@ This function returns the sales price for an item. Only `itemIdOrCode` is requir
   branchIdOrCode=...,
   analysisSetIdOrCode=...,
   departmentIdOrCode=...,
-  revisionIdCode=...,
+  revisionIdOrCode=...,
   colorCode=...,
   sizeCode=...,
   priceClassifier1IdOrCode=...,
@@ -2052,7 +2027,7 @@ Use the `itempurchaseprice` function:
   branchIdOrCode=...,
   analysisSetIdOrCode=...,
   departmentIdOrCode=...,
-  revisionIdCode=...,
+  revisionIdOrCode=...,
   colorCode=...,
   sizeCode=...,
   priceClassifier1IdOrCode=...,

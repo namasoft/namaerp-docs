@@ -72,13 +72,9 @@ and no depreciation of their own. See
 [components](/modules/fixedassets/master-files/fixedassets-components.md) for how they are set up
 and how an asset type can seed them automatically.
 
-Two consequences follow, and both are enforced when you commit a record:
-
-- The **Component Type** on the record must be one of the components listed on the asset. An asset
-  with no components at all cannot take a maintenance record — set its components up first.
-- The **Maintenance Type** on the record must be one that the component type allows. Each component
-  type carries its own list of permitted maintenance types; if that list is empty, anything is
-  allowed.
+So an asset with no components at all cannot take a maintenance record, and a record's maintenance
+type must be one its component type allows. Both rules, and the messages they raise, are set out in
+[the two rules that decide whether a record will commit](/modules/fixedassets/maintenance/fixedassets-maintenance-records#Two-rules-that-decide-whether-a-record-will-commit).
 
 The pay-off is that history lands in a useful place. When the record commits, the machine's spindle
 line — not the machine as a whole — is stamped with the dates of the visit and the date the next
@@ -104,12 +100,12 @@ Machinery Trading as the contractor. All four lines start life as *Planned*.
 
 **The first visit.** In late March the plant engineer raises a **Maintenance Record Request** for
 the April visit: the asset, the spindle, Periodic Maintenance, the contractor, an estimated 1,800.
-Choosing the checklist fills the request's grid with the four questions, unanswered. The request
-records the ask and nothing more — it books nothing and changes nothing.
+The request records the ask and nothing more — it books nothing and changes nothing.
 
 On 1 April the contractor comes. A **Maintenance Record** is raised from the request, which copies
-everything across including the four questions. The technician types the results, records that work
-ran from 09:00 to 13:30, and confirms the cost at 1,800. Because the maintenance type repeats every
+its details across; the engineer picks the spindle again and chooses the CNC Routine Inspection
+checklist, which fills the record's grid with the four questions. The technician types the results,
+records that work ran from 09:00 to 13:30, and confirms the cost at 1,800. Because the maintenance type repeats every
 90 days, the record proposes **30 June 2026** as the next expected date — matching the second line
 of the plan.
 
@@ -127,9 +123,8 @@ year of service and the asset carries the full history.
 None of the maintenance screens — component type, checklist item, checklist, maintenance type, plan,
 request or record — carries a button of its own. In particular there is **no button that turns
 a plan into records**: a plan line is closed by somebody raising a maintenance record for that visit,
-by hand. What does happen for you is the copying: the checklist you pick on a record brings its
-questions across, the asset you pick narrows the component-type lookup, and the maintenance type
-fills in the next expected date from its repeat interval.
+by hand. The copying that fills a record for you is described under
+[Actions on these screens](/modules/fixedassets/maintenance/fixedassets-maintenance-records#Actions-on-these-screens).
 
 ## Reading the history back
 

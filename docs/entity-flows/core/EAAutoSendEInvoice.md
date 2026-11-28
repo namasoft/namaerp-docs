@@ -14,13 +14,13 @@ Automatically submits individual invoices to tax authorities (ZATCA/Egyptian Tax
 
 ## When This Action Runs
 
-Automatically after invoice save/commit operations on entities implementing ITaxAuthorityDoc interface. Must be configured to run after commit (runAfterCommitDocAndEffectOnDB = true).
+Automatically after invoice save/commit operations on invoices that are sent to the tax authority. Must be configured to run after commit (**Run After Committing Document And Affect On Database** ticked on the entity flow).
 
 ## How It Works
 
-1. **Validates** entity implements ITaxAuthorityDoc and is eligible for submission
-2. **Creates or finds** submission document for today's date
-3. **Adds submission line** linking invoice to submission document
+1. **Validates** that the record is an invoice sent to the tax authority
+2. **Creates or finds** the submission document: the first one found that either already holds this invoice or is dated today, otherwise a new one
+3. **Adds submission line** linking invoice to submission document. When the invoice's line is already sent, cancelled or rejected the flow stops here and sends nothing
 4. **Applies digital signing** for Egyptian e-Invoices if required
 5. **Submits to tax authority** and processes response
 
@@ -39,7 +39,7 @@ Automatically after invoice save/commit operations on entities implementing ITax
 ## Configuration Requirements
 
 ### Entity Flow Settings
-- Must have **Run After Committing Document And Affect On DataBase** ticked; otherwise the flow refuses with *The action (EAAutoSendEInvoice) should be used only when the option {0} is active*, where {0} is that option's name
+- Must have **Run After Committing Document And Affect On Database** ticked; otherwise the flow refuses with *The action (EAAutoSendEInvoice) should be used only when the option {0} is active*, where {0} is that option's name
 - Only works with invoice documents that are sent to the tax authority; on any other entity it refuses with *This entity flow must be used only with invoice entities*
 - Should run after invoice save operations
 

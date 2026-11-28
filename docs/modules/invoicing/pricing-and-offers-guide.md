@@ -35,7 +35,6 @@ Sales Price Lists define standardized pricing structures for inventory items, al
 **Date Range Management:**
 - **From Date** - Start date when prices become effective
 - **To Date** - End date when prices expire
-- **From Time/To Time** - Optional time-specific pricing
 
 **Customer Targeting:**
 - **Customer** - Link to specific customers, customer classes, or categories
@@ -110,7 +109,7 @@ Each price list contains comprehensive detail lines with extensive configuration
 The system provides a sophisticated 5-stage price update mechanism with comprehensive calculation and rounding capabilities:
 
 **Update Process Overview:**
-The `updatePrices` GUI action orchestrates price updates through a sequential 5-stage process, where each updater can be configured independently and operates on the result of the previous stage.
+The **Update Prices** button (تحديث الأسعار) runs price updates through a sequential 5-stage process, where each updater can be configured independently and operates on the result of the previous stage. It refuses when the list has no lines or when all five updaters are empty.
 
 **Sequential Processing Logic:**
 1. **Stage 1**: Source price → Price Updater 1 → Destination Field 1
@@ -129,7 +128,7 @@ The `updatePrices` GUI action orchestrates price updates through a sequential 5-
 **Destination Field Mapping:**
 - **Destination Field** - Final target field for price updates
 - **Destination Fields 1-4** - Intermediate stage targets
-- **Default behavior**: If no destination specified, uses source field as destination
+- **Default behavior**: If no destination is specified, the source field is used as the destination; with neither a source nor any destination, both are **Default Price**
 
 **Price Updater Configuration (Per Stage):**
 Each of the 5 price updaters supports:
@@ -156,12 +155,12 @@ Each of the 5 price updaters supports:
   - **Not Selected** - Lines not marked for price changes
 
 **Validation & Error Handling:**
-- **Percentage Validation**: System prevents percentage values with multiply/divide operations
+- **Percentage Validation**: System prevents percentage values with multiply/divide operations: *Percentage is only used with addition and subtraction* — «النسبة تستعمل فقط مع الجمع و الطرح»
 - **Empty Updater Handling**: Skips processing for empty updater configurations  
 - **Currency Integration**: Automatically applies currency-specific decimal scaling
 - **Line Filtering**: Respects line-level applicability settings
 
-**Bulk Item Collection (`collectItems` Action):**
+**Bulk Item Collection (Collect Items):**
 Automated item collection for price list population with comprehensive filtering:
 
 **Range-Based Selection:**
@@ -177,12 +176,12 @@ Automated item collection for price list population with comprehensive filtering
 - **Spread Revisions** - Includes all item revision variants
 - **Spread Colors/Sizes** - Expands for all color/size combinations
 
-**Average Cost Price Calculation (`calculateAverageCostPrice` Action):**
+**Average Cost Price Calculation (calculate Price from Average Cost):**
 Automated cost-based pricing with real-time cost calculation:
 
 **Configuration:**
-- **Average Cost Field** - Source field for cost calculation
-- **Destination Field** - Target field for calculated prices
+- **Average Cost Destination Field** - The price field each line's average cost is written into
+- **Destination Field** - Used instead when the field above is empty; with both empty, the cost goes into **Default Price**
 - **Applied On Lines** - Line applicability control
 
 **Calculation Process:**
@@ -192,14 +191,9 @@ Automated cost-based pricing with real-time cost calculation:
 - Updates specified destination fields with calculated costs
 
 **Additional Utility Actions:**
-- **Copy Deactivate Status** - Propagates header deactivation flag to all lines
-- **Add Additional Source Lines** - Merges lines from additional source price lists
+- **Deactivate** (`deactivatePriceList`) on the header - ticking it copies the flag to every line when the supply chain option **Use Inactive In Sales Price List Lines** is on
+- **Add additional source lines** - Merges lines from additional source price lists
 - **Spread Selected Line Data** - Expands selected lines across dimensions
-
-**Automated Spreading:**
-- **Spread Units** - Automatically create lines for all item UOMs
-- **Spread Revisions** - Include all item revisions  
-- **Spread Sizes/Colors** - Expand for all variants
 
 ### Price List Management
 
@@ -239,22 +233,7 @@ Automated cost-based pricing with real-time cost calculation:
 
 #### Price Resolution Logic
 
-When determining prices, the system follows this hierarchy:
-
-1. **Document-Specific Pricing** - Manual overrides on sales documents
-2. **Active Price Lists** - Based on priority, date, and customer matching
-3. **Last Sales Price** - Historical pricing when enabled in configuration
-4. **Item Master Price** - Default item selling price
-5. **Cost-Plus Pricing** - Calculated from item cost with markup
-
-#### Real-Time Price Updates
-
-The pricing engine automatically:
-- Validates date ranges and customer eligibility
-- Applies quantity-based tiered pricing
-- Calculates tax implications
-- Considers contract pricing agreements
-- Factors in promotional offers and discounts
+Where a document line's base price comes from (a matching price list line, then the last sales price, then the item's own prices) and the order in which quantity ranges, offers and coupons then adjust it are explained in [How the Layers Stack](/modules/supplychain/pricing-offers-and-coupons#How-the-Layers-Stack). Among matching price list lines, the lowest **Priority** number wins.
 
 ## Sales Offers
 
@@ -267,8 +246,7 @@ Sales Offers provide sophisticated discount and promotion management, enabling b
 ### Offer Types and Collections
 
 #### 1. Item Discounts
-**Collection**: `details`  
-**Table**: `ItemDiscountLine`
+**Collection**: `details`
 
 Provides sophisticated item-specific discount structures with comprehensive targeting and conditional logic:
 
@@ -295,7 +273,7 @@ Provides sophisticated item-specific discount structures with comprehensive targ
 - **Discount Max Value** - Maximum discount ceiling  
 - **Discount Default Value** - Standard discount amount
 - **Special Discount** - Flag for exceptional discount handling
-- **Deactivate Salesman Discounts Validations** - Discounts from this line are not checked against the employee's maximum discount
+- **Deactivate Salesman Discounts Validations** - A tick box on the offer header, not on the line: discounts from this offer's lines are not checked against the employee's maximum discount
 
 ::: tip Min, Default and Max form a range
 A discount the user types survives only if it lies between Min and Max; anything else is replaced by the Default, silently. An empty Max counts as zero, so a line with only a Default locks the discount at that Default. How this range works together with each employee's own limit is explained in [Salesman Discount Limits](./salesman-discount-limits.md).
@@ -330,8 +308,7 @@ A discount the user types survives only if it lies between Min and Max; anything
 - **Subsidiary** - Multi-entity business unit targeting
 
 #### 2. Free Items  
-**Collection**: `freeItems`  
-**Table**: `FreeItemLine`
+**Collection**: `freeItems`
 
 Comprehensive free item management extending base offer line functionality with sophisticated conditional logic:
 
@@ -394,8 +371,7 @@ Comprehensive free item management extending base offer line functionality with 
 - **Date Fields (date1-date5)** - Custom date tracking
 
 #### 3. Invoice-Level Discounts
-**Collection**: `invDiscountLines`  
-**Table**: `InvoiceDiscountLine`
+**Collection**: `invDiscountLines`
 
 Document-wide discount management with sophisticated threshold and conditional logic:
 
@@ -428,8 +404,7 @@ Document-wide discount management with sophisticated threshold and conditional l
 - **Subsidiary** - Multi-entity business unit targeting
 
 #### 4. Invoice Free Items
-**Collection**: `invOffersLines`  
-**Table**: `InvoiceFreeItemLine`
+**Collection**: `invOffersLines`
 
 Document-level free item promotions with comprehensive threshold management and dimensional controls:
 
@@ -462,8 +437,7 @@ Document-level free item promotions with comprehensive threshold management and 
 - **Subsidiary** - Multi-entity business unit targeting
 
 #### 5. Items Count Offers
-**Collection**: `itemsCountOffers`  
-**Table**: `OfferOnItemsCountLine`
+**Collection**: `itemsCountOffers`
 
 Advanced quantity-based promotional system with sophisticated counting mechanisms and flexible reward structures:
 
@@ -504,8 +478,7 @@ Advanced quantity-based promotional system with sophisticated counting mechanism
 - **Subsidiary** - Multi-entity business unit targeting
 
 #### 6. Coupon Management
-**Collection**: `coupons`  
-**Table**: `OfferCouponLine`
+**Collection**: `coupons`
 
 Comprehensive coupon and voucher management system with advanced validation and tracking capabilities:
 
@@ -566,7 +539,7 @@ The system implements sophisticated discount cascading where:
 3. Priority-based resolution ensures predictable offer application
 
 **Price Updater Integration:**
-Sales offers can use the same 5-level price updater system as price lists:
+Sales offers carry the same 5-level updater as price lists, run by **Update Discounts Values - Percentages**, but it writes discount values and percentages onto the item-discount lines instead of prices:
 - **Source Field** - Base calculation field
 - **Destination Field** - Target field for updates
 - **Mathematical Operations** - Add, subtract, multiply, divide
@@ -574,42 +547,14 @@ Sales offers can use the same 5-level price updater system as price lists:
 
 ## System Price Update Mechanisms
 
-### Automated Price Calculation
-
-The system's `SalesPriceUtils.updateLinePriceAndDiscounts()` method orchestrates complex pricing calculations:
-
-#### Price Resolution Process
-
-1. **Tax Calculation** - Recalculates tax percentages if required
-2. **Detail Validation** - Removes lines without items
-3. **Configuration Loading** - Retrieves system pricing preferences
-4. **Base Price Calculation** - Determines starting prices from:
-   - Price lists (by priority and eligibility)
-   - Last sales prices (if configured)
-   - Item master prices
-   - Cost-plus calculations
-
-#### Discount Application Sequence
-
-1. **Item-Level Discounts** - Applied first from offers
-2. **Header Discount Calculation** - Document-wide discount determination
-3. **Discount Cascade Processing** - Applies discounts in priority order
-4. **Tax Recalculation** - Updates tax amounts after discounts
-5. **Free Item Processing** - Adds qualifying free items
-6. **Boundary Validation** - Ensures min/max price compliance
-
-### Integration Points
-
-#### Sales Document Processing
-
-The `updateLinesPrices()` method in `SalesOrderInvoicePostActions` demonstrates real-world price updating:
+How a document line's price and discounts are worked out is explained in [How the Layers Stack](/modules/supplychain/pricing-offers-and-coupons#How-the-Layers-Stack).
 
 #### Configuration Controls
 
-The system respects various configuration flags:
-- **doNotUpdatePricesAtAll** - Completely disable automatic pricing
-- **doNotUpdatePricesWhenThereSalesDocInFromDoc** - Preserve prices from source documents
-- **considerValueDateFromFromDocInPricingAndOffers** - Use source document dates for price/offer eligibility
+Three options on the sales document's term (توجيه) control automatic pricing:
+- **Do Not Update Prices At All** (عدم تحديث الأسعار على الإطلاق) - Completely disable automatic pricing
+- **Do Not Update Prices When There is Sales Doc In From Doc** (عدم تحديث الأسعار عند وجود سند بيع في بناء على) - Preserve prices from source documents
+- **Consider Value Date From From Document In Pricing And Offers** (اعتبار التاريخ الفعلي من بناءً على في حساب الأسعار والعروض) - Use source document dates for price/offer eligibility
 
 ## Advanced Configuration
 
@@ -621,42 +566,6 @@ When operating across multiple currencies:
 - Consider exchange rate fluctuation impact
 - Implement currency-specific offer strategies
 
-### Integration with Other Modules
-
-**Inventory Management:**
-- Price lists automatically filter for sellable items
-- Item availability impacts free item offers
-- Inventory dimensions integrate with pricing dimensions
-
-**Customer Management:**
-- Customer classes enable group pricing strategies
-- Customer credit limits may affect offer eligibility
-- Sales territory alignment with pricing regions
-
-**Financial Management:**
-- Price changes trigger financial impact reporting
-- Margin analysis based on pricing vs. cost data
-- Revenue recognition implications for free items
-
-This pricing and offers system provides comprehensive tools for maintaining competitive pricing while maximizing profitability through strategic promotional campaigns and automated price management.
-
 ## Messages you may see
 
-| Message | Why | What to do |
-|---|---|---|
-| *Found overlapped price list {0} with same priority* — «قائمة الأسعار {0} لها نفس الترتيب» | Another active price list covers the same period with the same **priority**, so the engine cannot tell which price wins. | Change the priority on one of the two lists, or enable **allow repeating offer priority** in the supply chain configuration if overlaps are intentional. |
-| *The line at {0} is repeated with the line {1}* — «السطر رقم {0} مكرر مع السطر رقم {1}» | Two price-list lines carry the same combination of item, dimensions and unit, so they would give the item two prices. | Delete one of the two lines, or make them differ on a real dimension. |
-| *Line {0} must have either an item or item class, but not both* — «السطر {0} يجب أن يحتوي على صنف أو تصنيف صنف وليس الاثنين معا» | The line names an item **and** an item class; a price line prices one or the other. | Clear whichever of the two columns you did not mean. |
-| *Line {0} must have either an item or item class* — «السطر {0} يجب أن يحتوي على صنف أو تصنيف صنف» | The line names neither an item nor an item class, so there is nothing to price. | Fill one of the two columns, or delete the line. |
-| *Line {0} cannot be priced by item class before setting the supply chain configuration Price By Item Class* — «السطر {0} لا يمكن التسعير على مستوى تصنيف الصنف قبل ضبط إعداد سلسلة الإمداد التسعير على مستوى تصنيف الصنف» | The line prices an item class while the supply chain configuration has no **price by item class** level selected. | Choose the item-class level in the supply chain configuration, or price the individual items instead. |
-| *Line {0} item class must be of type {1} per supply chain configuration* — «السطر {0} تصنيف الصنف يجب أن يكون من نوع {1} حسب إعدادات سلسلة الإمداد» | The line uses a different item-class level from the one the supply chain configuration nominates for pricing. | Use the class level the message names, or change the configuration. |
-| *Revision {0} is not found in item {1} at line number {2}* — «الصنف {1} لا يحتوي على الإصدار {0} في السطر {2}» | The revision typed on the line is not one of the revisions defined on that item. | Pick a revision from the item's own list, or add it on the item first. |
-| *Color {0} is not found in item {1} at line number {2}* — «الصنف {1} لا يحتوي على اللون {0} في السطر {2}» | The colour on the line is not defined on that item. | Pick a colour the item actually has, or add it to the item. |
-| *Size {0} is not found in item {1} at line number {2}* — «الصنف {1} لا يحتوي على المقاس {0} في السطر {2}» | The size on the line is not defined on that item. | Pick a size the item actually has, or add it to the item. |
-| *You must choose offer apply rules, because you mark option discount basis from matched lines* — «يجب عليك إختيار قواعد تطبيق العروض , لأنك قد قمت بتفعيل الأوبشن اساس الخصم من إجمالى السطور المنطبقة فقط» | An invoice-discount line has **discount basis from matched lines** ticked but no **offer apply rules**, so there is nothing to define which lines match. | Choose the offer apply rules on that line, or untick the basis option. |
-| *Discount Minimum Value {0} can not be greater than Discount Maximum Value {1}* — «قيمة الخصم الأدني {0} لا يمكن ان تكون اكبر من قيمة الخصم الأقصي {1}» | The minimum and maximum discount values on an invoice-discount line are the wrong way round. | Swap them, or clear the one you did not mean to cap. |
-| *Activate (Ignore Other Offers If There is Item Count Offers and Ignore Other Offers is active) in supply chain configuration* — «قم بتفعيل اوبشن ( تجاهل العروض الأخرى عند وجود عروض على عدد أصناف الفاتورة بها تجاهل العروض الأخرى ) من اعدادات ال Supply Chain» | An item-count offer line has **ignore other offers** ticked while the matching supply chain configuration option is off, so the line would not behave as written. | Enable that option in the supply chain configuration, or untick **ignore other offers** on the line. |
-| *You must enter discount percentage or discount value* — «يجب عليك إدخال نسبة او قيمة التخفيض» | A free-item line is marked **not free but discount** and carries neither a discount percentage nor a discount value. | Enter one of the two, or untick **not free but discount** to give the item away. |
-| *Invoice Value -from- must be equal to invoice value -to- {0}* — «قيمه الفاتوره يجب ان تساوي قيمة الفاتوره -الي - {0}» | A coupon line counts items as well as invoice value, and a counting coupon needs a single invoice value, not a range. | Make the from and to values equal, or set the sales items count type to **None**. |
-| *Max quantity {0} can not be less than qty {1}* — «لا يمكن ان تكون قيمة أقصى كمية {0} أقل من الكمية {1}» | A **max quantity** ceiling on an offer or free-item line is below the line's own quantity, so the line could never apply. | Raise the max quantity, or lower the quantity. |
-| *Activate free items on invoice from supply chain configuration* — «قم بتفعيل الاوبشن - تفعيل الاصناف المجانية علي قيمة الفاتورة - من اعدادات ال supply chain» | The offer uses invoice-level free items while **activate free items on invoice offers** is off in the supply chain configuration. The same message comes back from the invoice's own offer-calculation button. | Enable that option in the supply chain configuration, or remove the invoice free-item lines. |
+The refusals raised when a sales price list or a sales offer is saved are listed, with their causes and fixes, in [Messages you may see](/modules/supplychain/pricing-offers-and-coupons#Messages-you-may-see) on the Pricing, Offers & Coupons page.

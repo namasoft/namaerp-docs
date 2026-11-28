@@ -71,7 +71,7 @@ The action runs only on a committed submission.
 | Parameter | Meaning |
 |---|---|
 | 1. **MCS Server (IP, host or full URL)** | **Required.** Where to send |
-| 2. **Eltezam Configuration Code (Can be Empty)** | A configuration to use instead of the document's |
+| 2. **Eltezam Configuration Code (Can be Empty)** | A configuration to use instead of the document's. It is written onto the document's **Eltezam Configuration** field and saved there |
 | 3. **From Date (yyyy-MM-dd, Can be Empty)** | Overrides the document's From Date for this run |
 | 4. **To Date (yyyy-MM-dd, Can be Empty)** | Overrides the document's To Date |
 | 5. **HR Period Code (Can be Empty)** | Overrides the document's HR Period |
@@ -87,16 +87,18 @@ For sending at night or re-sending on demand, use a task schedule of type **Acti
 
 | Parameter | Meaning |
 |---|---|
-| 1. **Eltezam Configuration Code (Can be Empty when documents are given)** | The configuration to send with |
+| 1. **Eltezam Configuration Code (Can be Empty when documents are given)** | The configuration to send with. With document codes, it replaces each document's own configuration and is saved on it |
 | 2. **MCS Server (IP, host or full URL)** | **Required.** Where to send |
 | 3. **Eltezam Submission Document Codes (Comma Separated, Can be Empty)** | The committed submissions to send, e.g. `EZS-0012, EZS-0013` |
 | 4–7. **From Date, To Date, HR Period Code, HR Year Code** | The same period overrides as above |
+| 8. **Book Code of the Created Eltezam Submission Document (Can be Empty)** | Used only without document codes: the book of the submission the action creates. Empty means the first book of MCS Eltezam Submission |
 
 With document codes, each listed submission is sent exactly as the post-commit flow would send
-it, and its grid and log are updated. Without document codes, the action sends the employees of
-the configuration's group directly, with no submission document involved — the requests are
-made, but no document shows their results. Use submissions whenever you want to review what
-happened.
+it, and its grid and log are updated. Without document codes, the action creates a new MCS
+Eltezam Submission for the configuration — value date today, From Date, To Date, HR Period and HR
+Year taken from parameters 4–7 — commits it, which fills its grid from the configuration's
+employee group, and sends it. The new document holds the results like any other submission, and
+it is kept even when the run ends as a failure.
 
 ### The MCS Server parameter
 
@@ -121,24 +123,24 @@ A request **succeeds** when the ministry answers with a request number. Anything
 and the ministry's error code and message are kept.
 
 If the ministry's server does not answer — unreachable, timing out, answering with a web page —
-three times in a row, Nama stops rather than wait out every remaining employee. The lines not
-reached stay **Not Sent** and the run reports that it stopped; see
-[troubleshooting](./eltezam-troubleshooting).
+three times in a row, Nama stops rather than wait out every remaining employee, and the run ends
+as a failure. What that failure keeps depends on what started the run; see
+[the three-failures stop rule](/modules/integrations/eltezam/eltezam-troubleshooting#The-three-failures-stop-rule).
 
 ## The request log (second page)
 
-The second page of the document, **MCS Eltezam System Entry** (قيد التزام النظامي), holds two
+The second page of the document, **MCS Eltezam System Entry** (قيد التزام النظامي), holds three
 collapsible lists.
 
 ![The request log on the MCS Eltezam System Entry tab](../../../ar/modules/integrations/images/eltezam-submission-system-entry-en.png)
 
-**MCS Eltezam System Entry** has one row per request: employee, operation, send state, **Request
-Number** (رقم طلب التزام) returned by the ministry, **Error Code** (كود خطأ التزام), **Error
-Message** (رسالة الخطأ), send time, and the key values that were sent — employee ID, job number,
-job codes, organization, location, transaction code, gender, health status, basic salary and
-IsActive. Many more columns are hidden and can be shown from the column chooser, including
-**Request XML** (ملف الإرسال) and **Response XML** (ملف الرد): the exact envelope sent and the
-exact answer received, unless the configuration's **Do Not Store Request XML** is ticked. Filter
+**MCS Eltezam System Entry** has one row per request: employee, operation, send state, **Eltezam
+Request Number** (رقم طلب التزام) returned by the ministry, **Eltezam Error Code** (كود خطأ التزام),
+**Error Message** (رسالة الخطأ), send time, and the key values that were sent — employee ID, job
+number, job codes, organization, location, transaction code, gender, health status, basic salary
+and IsActive. Many more columns are hidden and can be shown from the column chooser, including
+**Request XML** (ملف الإرسال), the exact envelope sent (empty when the configuration's **Do Not
+Store Request XML** is ticked), and **Response XML** (ملف الرد), the exact answer received. Filter
 the list by employee, operation, send state, request number or error code.
 
 **MCS Eltezam Payslip Element** (عنصر مسير رواتب التزام) has one row per payslip element sent:
@@ -146,11 +148,17 @@ employee, state, MCS employee ID, Hijri year and month, consolidation set, eleme
 classification, amount, net pay and paid date. Filter it by employee, state or Hijri year and
 month.
 
+**Eltezam Vacations** (إجازات التزام) has one row per vacation sent: employee, state, MCS employee
+ID, vacation ID, vacation code, start and end date, number of days, transaction type, decision
+number and decision date. Filter it by employee, state, vacation code or start date.
+
 ::: warning Saving a sent submission again clears its log
 Saving a committed submission again — even without changing anything — empties the request log on
-the second page, while the grid keeps its Succeeded / Failed states. It does not send the
-submission again. Check the log before editing a submission you have already sent, and to send it
-again, list it in the `EASubmitEltezamData` task schedule or use **Resend Failed Employees**.
+the second page. An entity flow that runs `EASendEltezamSubmissionDoc` on **Post Commit** runs on
+that save too, so with the usual arrangement the whole submission is sent again and the log is
+rebuilt from the new answers. Without such a flow nothing is sent, and the grid keeps its
+Succeeded / Failed states over an empty log. Check the log before editing a submission you have
+already sent.
 :::
 
 ## Resending the employees that failed
@@ -173,5 +181,6 @@ Retried 3 employees: 5 requests succeeded, 1 failed
 If the ministry's server stops answering during the resend, the summary ends with the same
 "Sending stopped…" line as a normal send.
 
-The resend uses the document's own configuration and period, not the overrides an entity flow or
-task schedule may have passed.
+The resend uses the document's own period, not the period overrides an entity flow or task
+schedule may have passed. It uses the configuration on the document, which is the one an earlier
+run's configuration parameter wrote there, if any.

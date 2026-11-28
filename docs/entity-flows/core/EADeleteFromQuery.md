@@ -27,17 +27,17 @@ Manual or automated execution for bulk deletion operations, data cleanup, cascad
 
 ## Parameters
 
-**Parameter 1:** Query (Required) - SQL query returning entityType and id columns (supports {fieldName} substitution)
+**Parameter 1:** Query (Required) - SQL query whose first column is the entity type and second column is the id (read by position; supports {fieldName} substitution). A record returned more than once is deleted once
 
-**Parameter 2:** Flush Before Starting (Optional) - "true"/"false" to flush database before deletion
+**Parameter 2:** Flush Before Starting (Optional) - `true` writes the pending changes of the current save to the database before the query of Parameter 1 runs
 
-**Parameter 3:** Do not Delete cancelled Records (Optional) - "true"/"false" to skip cancelled documents
+**Parameter 3:** Do not Delete cancelled Records (Optional) - "true"/"false" to skip cancelled documents. Empty means "true": cancelled documents are skipped unless this is set to `false`
 
 **Parameter 4:** Flush After Each Delete (Optional) - "true"/"false" to flush after each deletion
 
-**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - "true"/"false" for separate transactions with error continuation
+**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - `true` deletes each record in its own transaction and carries on after a failure. Empty or `false` stops at the first failure
 
-**Parameter 6:** Run Update Query After Selecting Entities, and Before Delete (Optional) - SQL update query to run before deletions
+**Parameter 6:** Run Update Query After Selecting Entities, and Before Delete (Optional) - SQL update query run after the records are selected and before the first deletion
 
 ## Database Tables Affected
 

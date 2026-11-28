@@ -64,7 +64,7 @@ and "subject" for the lines.
 | Field | What it says |
 |---|---|
 | **Educational Stage** (المرحلة التعليمية) | The stage this offering belongs to |
-| **Semester** (ترم دراسى) | First (الاول), Second (الثاني), Third (الثالث), Fourth (الرابع) or Annual (سنوى) |
+| **Semester** (ترم دراسي) | First (الأول), Second (الثاني), Third (الثالث), Fourth (الرابع) or Annual (سنوي) |
 | **Course Definition** (تعريف دورة) | Which catalogue card this is an offering of |
 | **Lecturer** (المحاضر) | Who teaches it |
 | **Coordinator** (المنسق) | Who administers it |
@@ -127,9 +127,9 @@ marks included.
 The Education module has an academic half and a financial half, and the **Sales Price** on the
 Course is the single field that joins them.
 
-When you raise a [Course Contract](./education-course-contracts) and pick the course on it, that
-course's Sales Price is written into the **Unit Price** (سعر الوحدة) of the contract's student
-lines. Our 1,800 becomes 1,800 per student; twelve students on one contract at a quantity of 1 each
+When you raise a [Course Contract](./education-course-contracts) and pick the course in its header,
+that course's Sales Price is written into the **Unit Price** (سعر الوحدة) of the student lines
+already on the contract. Our 1,800 becomes 1,800 per student; twelve students on one contract at a quantity of 1 each
 gives 21,600 to be scheduled and collected. From there the contract is in charge — discounts,
 taxes, instalments and collection all live on it, and it is the contract, not the course, that
 reaches the general ledger.

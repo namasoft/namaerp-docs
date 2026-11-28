@@ -19,21 +19,22 @@ Scheduled cleanup operations or manual execution for log rotation, backup mainte
 
 ## How It Works
 
-1. **Validates folder** path and permissions
-2. **Lists all files** in target folder (optionally recursive)
-3. **Sorts files** by date or name
-4. **Deletes excess files** keeping only specified number
-5. **Processes subdirectories** independently if recursive mode enabled
+1. **Lists the files** directly inside the target folder. A folder that does not exist is treated as empty
+2. **Sorts files** by last-modified date or by name
+3. **Deletes excess files** from the start of that order (the oldest, or the first by name) until only the specified number remains
+4. **Processes subdirectories** independently if recursive mode enabled: each subfolder keeps its own number of files
+
+The flow runs from a task schedule.
 
 ## Parameters
 
-**Parameter 1:** Folder Path (Required) - Target directory path for cleanup
+**Parameter 1:** Folder Path (Required) - Target directory path for cleanup, on the application server
 
-**Parameter 2:** Order By (Required) - "date" for modification time or "name" for alphabetical sorting
+**Parameter 2:** Order By (date,name) (Required) - `date` for modification time. Any other value sorts by file name
 
-**Parameter 3:** Files To Keep (Required) - Number of files to retain (must be > 0)
+**Parameter 3:** Files To Keep (Required) - Number of files to retain. `0` is refused with *Files to keep must greater than zero*
 
-**Parameter 4:** Recursive (Optional) - "true"/"false" to process subdirectories
+**Parameter 4:** Recursive (true,false) (Optional) - "true"/"false" to process subdirectories
 
 ## Database Tables Affected
 

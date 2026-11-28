@@ -96,7 +96,7 @@ The administrator can completely redefine the structure of menus and groups on t
 The **More** tab gathers settings and utilities:
 
 - **Settings** — which may be protected by an administrator PIN if the organization enables it.
-- **Create Device ID document** — to register the device fingerprint when linking it to the system.
+- **Request Device fingerPrint Document** — sends the phone's identifier to the server so an administrator can bind the user to this phone (see [Binding users to their phones](/modules/mobile/mobile-device-binding)).
 - **Additional items** defined by the administrator on the server side.
 
 ### The Settings screen
@@ -167,11 +167,11 @@ The record has two grids:
 | **App Shortcut** | Required when the target is **Home Shortcut**: the shortcut set to open |
 | **App Home Replacement** | Makes this screen the user's home page — see below |
 
-Screens from modules the organization is not licensed for stay hidden, even when they are listed here.
+Screens in a group whose module the organization is not licensed for stay hidden, even when they are listed here.
 
 The header has two more options:
 
-- **Add To Default Menu** — when ticked, your groups are **added** to the built-in menu and your More items are added after the built-in ones. When it is not ticked, your definition **replaces** the built-in menu and More tab entirely, so remember to include items such as Settings and Log out.
+- **Add To Default Menu** — when ticked, your groups are **added** to the built-in menu and your More items are added after the built-in ones. When it is not ticked, your definition **replaces** the built-in menu and the built-in More items entirely, so remember to include items such as **Change Password** and **Sign out**. The **Settings** entry at the top of the More tab is always there.
 - **Home Shortcuts** — see the next section.
 
 ### Replacing the home page with shortcut cards

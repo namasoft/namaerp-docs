@@ -17,21 +17,21 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **استعمال قرار الرفض** `value.info.useRejectDecision` *(مفعل افتراضياً)* — يُظهر **رفض**، وهو ينهي الموافقة ويرفض المستند.
 
-**استعمال قرار الارجاع** `value.info.useReturnDecision` *(مفعل افتراضياً)* — يُظهر **إرجاع**، وهو يعيد المستند إلى كاتبه ليصححه ويعيد تقديمه بدل إنهائه.
+**استعمال قرار الإرجاع** `value.info.useReturnDecision` *(مفعل افتراضياً)* — يُظهر **إرجاع**، وهو يعيد المستند إلى كاتبه ليصححه ويعيد تقديمه بدل إنهائه.
 
-**استخدام قرار تصعيد إلى المدير الأعلي** `value.info.useEscalateToSupervisor` *(مفعل افتراضياً)* — يُظهر **تصعيد إلى المدير الأعلي**، فيرفع القرار في الهيكل التنظيمي.
+**استخدام قرار تصعيد إلى المدير الأعلى** `value.info.useEscalateToSupervisor` *(مفعل افتراضياً)* — يُظهر **تصعيد إلى المدير الأعلى**، فيرفع القرار في الهيكل التنظيمي.
 
 **استخدام قرار تصعيد إلى المشرف المباشر** `value.info.useEscalateToDirectSupervisor` *(مفعل افتراضياً)* — يُظهر **تصعيد إلى المشرف المباشر**، وهو يمرر القرار إلى المشرف *المباشر* للمعتمِد بدلاً من مديره. والقراران يقرآن حقلين مختلفين على ملف الموظف، فحيث لا يكون المشرف المباشر هو المدير الذي تُصعَّد إليه الموافقات، تستطيع إتاحة القرارين معاً ليختار المعتمِد بينهما. وإن لم يكن أيٌّ منهما مسجلاً على الموظف رُفض القرار برسالة تبين ذلك، وهذا هو السبب المعتاد لأن يبدو الزر وكأنه لا يفعل شيئاً.
 
-**استخدام قرار تصعيد الي موظف بعينه** `value.info.useEscalateToSpecificEmployee` *(مفعل افتراضياً)* — يُظهر **تصعيد الي موظف بعينه**، فيختار المعتمِد من يقرر بدلاً منه.
+**استخدام قرار تصعيد إلى موظف بعينه** `value.info.useEscalateToSpecificEmployee` *(مفعل افتراضياً)* — يُظهر **تصعيد إلى موظف بعينه**، فيختار المعتمِد من يقرر بدلاً منه.
 
-**استخدام قرار إرجاع إلي الخطوة السابقة** `value.info.useReturnToPreviousStep` *(مفعل افتراضياً)* — يُظهر **إرجاع للخطوة السابقة**، فيعيد المستند مرحلة واحدة في سلسلة الموافقة بدل إعادته إلى كاتبه.
+**استخدام قرار إرجاع إلى الخطوة السابقة** `value.info.useReturnToPreviousStep` *(مفعل افتراضياً)* — يُظهر **إرجاع للخطوة السابقة**، فيعيد المستند مرحلة واحدة في سلسلة الموافقة بدل إعادته إلى كاتبه.
 
 **استخدام قرار الإرجاع لخطوة محددة** `value.info.useReturnToSpecificStep` *(مفعل افتراضياً)* — يُظهر **إرجاع لخطوة محددة**، فيختار المعتمِد *أي* مرحلة سابقة يعود إليها المستند بدل إعادته مرحلة واحدة دائماً. وعلى سلسلة طويلة — مقدّم الطلب، ثم مدير الإدارة، ثم المالية، ثم المدير العام — هذا هو الفرق بين تمرير المستند رجوعاً عبر ثلاثة أشخاص وإعادته مباشرةً إلى من عليه التصحيح. ولا يظهر القرار إلا حين تكون في الموافقة خطوات سابقة يصح الإرجاع إليها، فلا تراه أبداً في موافقة من خطوة واحدة مهما كان هذا الإعداد.
 
 **استخدام التوقيع في مرفق الموافقة** `value.info.useSignatureInApprovalAttachment` — يطبع صورة توقيع المعتمِد المحفوظة على المرفق الناتج عن الموافقة، فيحمل السجل المطبوع توقيعاً مرئياً.
 
-**منع التعديل في مستند مرتبط بمستد أخر بإنتظار الموافقه** `value.info.preventUpdateDocAndRelatedDocInApproval` — يقفل المستند *والمستندات المرتبطة به* أثناء انتظار القرار. وبدونه يستطيع الكاتب أن يغيّر في صمت ما ينظر إليه المعتمِد.
+**منع التعديل في مستند مرتبط بمستند آخر بانتظار الموافقة** `value.info.preventUpdateDocAndRelatedDocInApproval` — يقفل المستند *والمستندات المرتبطة به* أثناء انتظار القرار. وبدونه يستطيع الكاتب أن يغيّر في صمت ما ينظر إليه المعتمِد.
 
 **السماح بعمل موافقات لتعديل المستندات** `value.info.allowApprovalsOnDocumentsUpdate` — يسمح لتعريفات الموافقة التي عليها **مع التعديل** بأن تسري على المستندات. وما دام موقوفًا فتعديل مستند محفوظ لا يبدأ موافقة أبدًا، ويُرفض حفظ تعريف موافقة لنوع مستند عليه علامة **مع التعديل**؛ فتقتصر موافقات التعديل على الملفات. راجع [موافقة «مع التعديل» على مستند لا تُحفظ](/ar/platform/approvals/approvals-system#mwfq-maa-ltaadyl-aal-mstnd-l-tuHfZ).
 
@@ -43,7 +43,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **مستويات المراجعة الافتراضية** `value.info.defaultReviseLevel` — عدد مستويات المراجعة التي تسري على الكيانات التي ليست لها قاعدة خاصة. والقيم السالبة مرفوضة.
 
-**استخدام مستند المراجعه لكل الأنواع** `value.info.useReviseDocumentForAllEntities` — تُراجع كل الكيانات عبر مسار مستند المراجعة المنفصل بدل مراجعتها في مكانها على السجل نفسه.
+**استخدام مستند المراجعة لكل الأنواع** `value.info.useReviseDocumentForAllEntities` — تُراجع كل الكيانات عبر مسار مستند المراجعة المنفصل بدل مراجعتها في مكانها على السجل نفسه.
 
 **مستويات المراجعة** `value.info.entitiesReviseLevels` *(جدول)* — قواعد لكل كيان. كل سطر يذكر نوع كيان (أو قائمة أنواع)، وعدد مستويات المراجعة التي يحتاجها، وهل يستعمل مستند المراجعة. وبهذا تشترط اعتمادين على قيود اليومية ولا شيء على التحويل المخزني.
 
@@ -52,7 +52,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 **تفعيل تتبع نسخ السجلات** `value.trackVersionsEnabled` *(مفعل افتراضياً)* — يحفظ تاريخاً كاملاً لنسخ السجلات، فترى كيف كان المستند قبل التعديل ومن غيّره.
 
 ::: danger إيقافه يُفقدك سجل التعديل أيضًا
-تُكتب صورة النسخة وسطر سجل التعديل معًا، فمع إيقاف هذا الخيار لا تعرف بعدها من غيّر السجل، لا أنك تفقد استعادة نسخة سابقة فحسب. راجع [تشغيل تتبع النسخ وإيقافه](/ar/platform/governance/audit-trail#tshGyl-ttbaa-lnskh-wyqfh).
+تُكتب صورة النسخة وسطر سجل التعديل معًا، فمع إيقاف هذا الخيار لا تعرف بعدها من غيّر السجل، لا أنك تفقد استعادة نسخة سابقة فحسب. راجع [كيف تُخزَّن النسخ](/ar/platform/governance/audit-trail).
 :::
 
 ## الإعدادات في هذه الصفحة
@@ -63,21 +63,21 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 |---|---|---|---|
 | تفعيل الموافقة | Enable Approval | `value.approvalEnabled` | [الموافقات](#lmwfqt) |
 | استعمال قرار الرفض | Use Reject Decision | `value.info.useRejectDecision` | [الموافقات](#lmwfqt) |
-| استعمال قرار الارجاع | Use Return Decision | `value.info.useReturnDecision` | [الموافقات](#lmwfqt) |
-| استخدام قرار تصعيد إلى المدير الأعلي | Use Escalate To Supervisor | `value.info.useEscalateToSupervisor` | [الموافقات](#lmwfqt) |
+| استعمال قرار الإرجاع | Use Return Decision | `value.info.useReturnDecision` | [الموافقات](#lmwfqt) |
+| استخدام قرار تصعيد إلى المدير الأعلى | Use Escalate To Supervisor | `value.info.useEscalateToSupervisor` | [الموافقات](#lmwfqt) |
 | استخدام قرار تصعيد إلى المشرف المباشر | Use Escalate To Direct Supervisor | `value.info.useEscalateToDirectSupervisor` | [الموافقات](#lmwfqt) |
-| استخدام قرار تصعيد الي موظف بعينه | Use Escalate To Specific Employee | `value.info.useEscalateToSpecificEmployee` | [الموافقات](#lmwfqt) |
-| استخدام قرار إرجاع إلي الخطوة السابقة | Use Return To Previous Step | `value.info.useReturnToPreviousStep` | [الموافقات](#lmwfqt) |
+| استخدام قرار تصعيد إلى موظف بعينه | Use Escalate To Specific Employee | `value.info.useEscalateToSpecificEmployee` | [الموافقات](#lmwfqt) |
+| استخدام قرار إرجاع إلى الخطوة السابقة | Use Return To Previous Step | `value.info.useReturnToPreviousStep` | [الموافقات](#lmwfqt) |
 | استخدام قرار الإرجاع لخطوة محددة | Use Return To Specific Step | `value.info.useReturnToSpecificStep` | [الموافقات](#lmwfqt) |
 | استخدام التوقيع في مرفق الموافقة | Use Signature In Approval Attachment | `value.info.useSignatureInApprovalAttachment` | [الموافقات](#lmwfqt) |
-| منع التعديل في مستند مرتبط بمستد أخر بإنتظار الموافقه | Prevent Update Document And Related Document In Approval Cycle | `value.info.preventUpdateDocAndRelatedDocInApproval` | [الموافقات](#lmwfqt) |
+| منع التعديل في مستند مرتبط بمستند آخر بانتظار الموافقة | Prevent Update Document And Related Document In Approval Cycle | `value.info.preventUpdateDocAndRelatedDocInApproval` | [الموافقات](#lmwfqt) |
 | السماح بعمل موافقات لتعديل المستندات | Allow Approvals On Documents Update | `value.info.allowApprovalsOnDocumentsUpdate` | [الموافقات](#lmwfqt) |
 | إضافة خطوات الموافقة في سجل التعديل | Add Approval Steps To Action History | `value.info.addApprovalStepsToActionHistory` | [الموافقات](#lmwfqt) |
 | مستويات المراجعة الافتراضية | Default Revise Level | `value.info.defaultReviseLevel` | [المراجعة](#lmrjaa) |
-| استخدام مستند المراجعه لكل الأنواع | Use Revision Document For All Entities | `value.info.useReviseDocumentForAllEntities` | [المراجعة](#lmrjaa) |
+| استخدام مستند المراجعة لكل الأنواع | Use Revision Document For All Entities | `value.info.useReviseDocumentForAllEntities` | [المراجعة](#lmrjaa) |
 | مستويات المراجعة | Revise Levels | `value.info.entitiesReviseLevels` | [المراجعة](#lmrjaa) |
 | النوع | Entity Type | `value.info.entitiesReviseLevels.entityType` | [المراجعة](#lmrjaa) |
 | قائمة الأنواع | Entity Type List | `value.info.entitiesReviseLevels.targetEntities` | [المراجعة](#lmrjaa) |
 | مستويات المراجعة | Revise Levels | `value.info.entitiesReviseLevels.reviseLevels` | [المراجعة](#lmrjaa) |
-| استخدام مستند المراجعه | Use Revise Document | `value.info.entitiesReviseLevels.useReviseDocument` | [المراجعة](#lmrjaa) |
+| استخدام مستند المراجعة | Use Revise Document | `value.info.entitiesReviseLevels.useReviseDocument` | [المراجعة](#lmrjaa) |
 | تفعيل تتبع نسخ السجلات | Track Records Versions | `value.trackVersionsEnabled` | [نسخ السجلات](#nskh-lsjlt) |

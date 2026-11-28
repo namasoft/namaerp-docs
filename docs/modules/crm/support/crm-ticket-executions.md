@@ -23,13 +23,13 @@ The natural route is the **تنفيذ / Execute** button on the Trouble Ticket, 
 
 ![The Ticket Execution screen](../../../ar/modules/crm/images/support/crm-ticket-execution-en.png)
 
-The header carries the Book and Code, Issue Date, Value Date, Fiscal Period, Responsible Employee, the Mediator, **Trouble Ticket**, **Customer**, **Employee**, External Responsible, Escalated To, two attachments, a Status and a Description.
+The header carries the Book and Code, Issue Date, Value Date, Fiscal Period, Responsible Employee, the Mediator, **Trouble Ticket**, **Customer**, **Employee**, External Responsible, escalated to, two attachments, a Status and a Description.
 
 The pickers on this screen are unusually helpful, and worth knowing about:
 
 - The **Employee** picker offers only the ticket's responsible employee plus the technicians in the ticket's Employees grid. If somebody is missing from the list, they have not been assigned on the ticket.
 - The **Customer** picker offers only the ticket's customer.
-- The **Trouble Ticket** picker offers only tickets in *In Progress*, *Assigned* or *Finished* for the chosen customer or employee.
+- The **Trouble Ticket** picker offers only tickets in *In Progress*, *Assigned* or *Finished*, narrowed to the chosen customer and to tickets where the chosen employee is the responsible employee or on the Employees grid.
 
 ## The Details grid
 
@@ -55,7 +55,7 @@ Six days later `TEXE-0679` records Sayed finishing the job:
 |---|---|---|---|---|
 | 2026-04-13 | 09:00 | 12:00 | 3.0 | 100 |
 
-Because a line reached 100 %, the ticket now shows *منتهي / Finished*, its Closing Date is stamped with 13 April, and Actual Fix Period reaches **7.0 hours** — against an estimate of 4.0. Nothing anywhere compares those two figures; if the overrun matters to you, it is a list-view or Excel exercise.
+Because a line reached 100 %, the ticket now shows *منتهي / Finished*, its Closed Date is stamped with 13 April, and Actual Fix Period reaches **7.0 hours** — against an estimate of 4.0. Nothing anywhere compares those two figures; if the overrun matters to you, it is a list-view or Excel exercise.
 
 ## What the checks catch — and what they miss
 
@@ -63,22 +63,16 @@ This is the only document in the support folder with real validation, so it is w
 
 **What it refuses:**
 
-- A ticket in *Cancelled*, *Closed* or *Initial* — on the header and on every line ("Invalid State"). A ticket in *Finished* is accepted only if it was already on the previous version of this document.
-- A header Customer that is not the ticket's customer ("Not the Ticket Customer").
+- A ticket in *Cancelled*, *Closed* or *Initial* — on the header (*"Invalid State{0}"* — «حالة خاطئة {0}») and on every line (*"Ticket {0} at line {1} state is invalid"*, shown in English on Arabic screens too). A ticket in *Finished* is accepted only if it was already on the previous version of this document.
+- A header Customer that is not the ticket's customer (*"Not the Ticket Customer"*, shown in English on Arabic screens too).
 - A negative Net Time, or a From Time later than the To Time.
-- Two lines for the same employee on the same date where one is a duplicate of the other or sits entirely inside it.
-
-::: warning Genuinely overlapping periods are not caught
-The overlap check only rejects duplicate or fully-contained entries. **09:00–10:00 and 09:30–11:00 both pass**, and the same technician is credited 2.5 hours for 2 hours of elapsed time — an inflated figure that then flows straight into the ticket's Actual Fix Period.
-
-If accurate labour hours matter, review the Details grid rather than trusting the check.
-:::
+- Two lines for the same employee on the same date where one is a duplicate of the other or sits entirely inside it (*"There is another time line for this employee from {0} to {1}"* — «يوجد سطر آخر لنفس الموظف من وقت {0} إلى وقت {1}»).
 
 ## The status effect
 
-Each committed detail line pushes the ticket to *Finished* when Finished Percent is 100, and to *In Progress* otherwise, and adds its hours to the ticket's Actual Fix Period. Re-saving the execution subtracts the previous version's hours first, so editing is safe. Cancelling it subtracts all of them, puts the ticket back to *In Progress* and clears its Closing Date.
+Each committed detail line pushes the ticket to *Finished* when Finished Percent is 100, and to *In Progress* otherwise, and adds its hours to the ticket's Actual Fix Period. Re-saving the execution subtracts the previous version's hours first, so editing is safe. Cancelling it subtracts all of them, puts the ticket back to *In Progress* and clears its Closed Date.
 
-To close the ticket itself, use **Change Status → Closed** on the ticket, or a [Ticket Follow-Up](/modules/crm/support/crm-ticket-follow-ups.md) carrying the closing status.
+To close the ticket itself, use **Change Status → Closed** on the ticket, or a [Ticket Follow-Up](/modules/crm/support/crm-ticket-follow-ups) carrying the closing status.
 
 ## The execution's own Status
 
@@ -86,17 +80,17 @@ The header carries a **الحالة / Status** dropdown with four values — *Aw
 
 ## Two clocks, and a third-party hazard
 
-The hours on Ticket Execution documents are **not** the same as the ticket's stopwatch. The ticket's Assigned To tab keeps its own Ticket Execution Time grid, driven by the **بدء / Start** and **إنهاء / End** buttons *there* and by Change Status → In Progress. On `TKT-0451` the stopwatch totals 10:35 while the executions total 7.0 hours. They are maintained independently and nothing reconciles them — pick one as your reporting figure.
+The hours on Ticket Execution documents are **not** the ticket's stopwatch, the Ticket Execution Time grid on the ticket's Assigned To tab: on `TKT-0451` the stopwatch totals 10:35 while the executions total 7.0 hours. [The ticket's stopwatch](/modules/crm/support/crm-trouble-tickets#The-tickets-stopwatch) explains how that grid is driven and why the two never agree.
 
 ::: warning Starting the ticket's stopwatch stops the same technician elsewhere
-This belongs to the ticket rather than to this document, but it catches people out on the same working day: starting a technician's clock on one ticket automatically closes their open clock on **any other** ticket, often recording zero minutes for it. The full story is on [Trouble Tickets](/modules/crm/support/crm-trouble-tickets.md). Have technicians press **End** before moving on.
+This belongs to the ticket rather than to this document, but it catches people out on the same working day: starting a technician's clock on one ticket automatically closes their open clock on **any other** ticket, often recording zero minutes for it. The full story is on [Trouble Tickets](/modules/crm/support/crm-trouble-tickets). Have technicians press **End** before moving on.
 :::
 
 ## Actions on this screen
 
 - **Start** (*بدء*) — when the last Details line is complete, adds a new line for the same employee and ticket with From Date and From Time set to now. While the last line still has no To Time it refuses with *"To Time Shuold not be Empty"* — «لايمكن ترك إلى وقت  فارغاً»; press Stop (or type the time) first.
 - **Stop** (*إيقاف*) — stamps the current time into the last line's To Time and calculates its Net Time.
-- **escaleted to** (*تصعيد الي*) — needs the execution **saved** first; asks for an employee, then saves and commits the stored execution with that name in its escalated-to box and refreshes the screen. Unsaved edits on screen are not included, and nobody is notified.
+- **escalated to** (*تصعيد إلى*) — needs the execution **saved** first; asks for an employee, then saves and commits the stored execution with that name in its escalated-to box and refreshes the screen. Unsaved edits on screen are not included, and nobody is notified.
 
 ![The Ticket Execution header with its Start, Stop and escalation buttons](../../../ar/modules/crm/images/support/crm-ticket-execution-actions-en.png)
 
@@ -104,5 +98,5 @@ This belongs to the ticket rather than to this document, but it catches people o
 
 - The **Executions** tab on the ticket lists the executions raised against it.
 - The **Related Records** tab on the originating complaint lists the executions descending from that complaint.
-- The **Executions** tab on a service contract lists execution lines for tickets that were matched to that contract — with the caveat described on [Service Contracts](/modules/crm/support/crm-service-contracts.md).
+- The **Executions** tab on a service contract lists execution lines for tickets that were matched to that contract — with the caveat described on [Service Contracts](/modules/crm/support/crm-service-contracts).
 - The **Ticket Execution list screen** filters by Trouble Ticket, Employee, External Responsible and Customer. This is the closest thing to a labour report the module has; there are no system reports and no dashboards for it.

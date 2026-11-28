@@ -37,18 +37,18 @@ You rarely fill the grid on the asset by hand. The **Fixed Asset Type** carries 
 
 ![The components types grid on the asset type — the template](../../../ar/modules/fixedassets/images/master/fa-type-component-types-grid-en.png)
 
-Because `FAT-MCH — Machinery & Equipment` lists Spindle, Control Unit and Coolant Pump, every machine created with that type arrives with those three lines already in place. From there you add, remove or edit lines to match the actual machine.
+Because `FAT-MCH — Machinery & Equipment` lists Spindle, Control Unit and Coolant Pump, every machine on which you pick that type arrives with those three lines already in place. The lines come in with the component type only, so you then give each one its maintenance type, and add, remove or edit lines to match the actual machine. An asset created for you by a purchase, opening or creation document does not get these lines; add them on the asset.
 
 ![The components grid on asset MCH-0007](../../../ar/modules/fixedassets/images/master/fixed-asset-components-grid-en.png)
 
 | Column | Arabic label | Filled by |
 |---|---|---|
 | Fixed Asset Component Type | نوع مكون الأصل | You (or the asset type). Required. |
-| Fixed Asset Maintenance Type | نوع الصيانة | You. The list offered is limited to the maintenance types the chosen component type accepts. |
+| Fixed Asset Maintenance Type | نوع الصيانة | You. Required. The list offered is limited to the maintenance types the chosen component type accepts. |
 | Serial Number | الرقم المسلسل | You — the part's own serial number, which is often the one that matters when a warranty claim is made. |
-| Maintenance Start Date | تاريخ بدء الصيانة | The maintenance record. |
-| Maintenance End Date | تاريخ انتهاء الصيانة | The maintenance record. |
-| Next Expected Maintenance Date | تاريخ الصيانة التالية المتوقعة | The maintenance record. |
+| Maintenance Start Date | تاريخ بداية الصيانة | The maintenance record. |
+| Maintenance End Date | تاريخ نهاية الصيانة | The maintenance record. |
+| Next Expected Maintenance Date | تاريخ الصيانة التالية المتوقع | The maintenance record. |
 
 The last three are stamped onto the line when a maintenance visit is recorded, which is the whole point of the grid — see below.
 
@@ -87,5 +87,5 @@ writes the last and next visit dates back onto the component row.
 1. Create three component types: `CT-SPINDLE — Spindle`, `CT-CTRL — Control Unit`, `CT-PUMP — Coolant Pump`. On each, list the maintenance types it accepts — Periodic Maintenance for all three, plus Emergency Repair on the spindle and the pump.
 2. On the asset type `FAT-MCH`, add those three component types to the Components Types grid.
 3. Create `MCH-0007` and pick `FAT-MCH`. The three lines appear.
-4. Type each part's serial number on its line, and pick **Periodic Maintenance** as the maintenance type on the spindle line.
+4. Type each part's serial number on its line, and pick a maintenance type on every line — **Periodic Maintenance** on all three here — because the asset will not save with a line that has none.
 5. Save. From now on the machine's [maintenance plan](/modules/fixedassets/maintenance/fixedassets-maintenance-plans.md) can schedule visits against the spindle, and each completed visit stamps its dates back onto that line.

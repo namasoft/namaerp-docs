@@ -15,7 +15,7 @@ Automatically removes all ledger transaction lines and debt entries from account
 ## When This Action Runs
 
 - **Trigger:** Pre Send Request (automatic)
-- **Target:** LedgerTransReq entities
+- **Target:** Any record that sends an accounting (ledger) request; other requests of the record are left untouched
 - **Purpose:** Clear existing transaction lines before new generation
 - **Timing:** Before accounting request processing
 
@@ -24,8 +24,9 @@ Automatically removes all ledger transaction lines and debt entries from account
 ### Automatic Clearing Process
 - **Transaction Lines:** Removes all entries from the `lines` collection
 - **Debt Entries:** Removes all entries from the `debts` collection  
-- **Safe Operation:** Only processes valid LedgerTransReq objects
-- **Memory Operation:** Works on in-memory objects before database persistence
+- **Ledger requests only:** A request of any other kind (an inventory request, for example) is not touched
+- **Memory Operation:** Works on the request being sent, before it is saved, so the lines the document built for this save never reach the ledger
+- **No parameters:** The flow line needs no parameter
 
 ## Business Use Cases
 

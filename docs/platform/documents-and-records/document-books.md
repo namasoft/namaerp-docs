@@ -31,8 +31,9 @@ column tells you what each one numbers.
 
 The very first field on a book is **Document Type**, and it is the field that decides everything
 else. A book for Sales Invoices numbers sales invoices and nothing else. Put that book on a stock
-issue and the save fails: *"The document book … is for SalesInvoice and you are using it in
-StockIssue."*
+issue and the save fails with
+*The document book {0} is for {1} and you are using it in {2}* — `{1}` is the book's document type
+and `{2}` the type of the document being saved.
 
 Two consequences are worth knowing before you start creating books.
 
@@ -41,7 +42,7 @@ change book document type after first save". Pick the type deliberately; if you 
 new book and retire the old one.
 
 **Books only exist for documents.** Master files — customers, items, employees — are rejected with
-"Entity type … is master file". Their numbering is done by a **Group** (**Basic → Settings →
+"Entity type {0} is master file". Their numbering is done by a **Group** (**Basic → Settings →
 Group**), which is the master-file twin of a book: it names the type it codes in **For Type**, it
 carries the same **Automatic Coding** block with the same six fields, and it locks the same way —
 the type freezes after the first save, and the coding freezes once a committed record uses the
@@ -62,7 +63,7 @@ A book also belongs to a **legal entity**, and unlike most records it may not be
 only exception is the handful of document types that are genuinely global (they exist above any one
 company); for everything else, choosing a real legal entity is enforced at save — a document that
 reaches the save with no legal entity is refused with "Legal entity can not be Null in transactions"
-(whose Arabic reads «لايمكن حفظ المستند على الشركة عام»). And the legal entity must itself carry a
+(whose Arabic reads «لا يمكن حفظ المستند على الشركة عام»). And the legal entity must itself carry a
 ledger: if it does not, the document is refused with "Please assign ledger to the legal entity" —
 «فضلاً قم بتحديد دفتر حسابات في الشركة» — which is a setup gap on the company record, not anything
 wrong with the book.
@@ -80,30 +81,26 @@ The **Automatic Coding** group is where the series is described. Six fields do t
 | Suffix Length | How many digits the serial is padded to. `4` turns 17 into `0017`. |
 | Suffix First Number | The number the series starts at. |
 | Suffix Maximum | The last number the series is allowed to reach. |
-| prefixFormula | Optional extra prefix text calculated per document — see below. |
-
-That last one is worth a word of warning: on the English screen it is labelled with its raw field
-name, **prefixFormula**, rather than a readable title. In Arabic it reads **صيغة التكويد**. It is the
-same field.
+| Prefix Formula | Optional extra prefix text calculated per document — see below. |
 
 So a book with prefix `SI-RYD-`, suffix length `6` and first number `1` produces `SI-RYD-000001`,
 `SI-RYD-000002`, and so on.
 
-The system checks the arithmetic when you save the book. The first number must be smaller than the
-maximum; the suffix length must be long enough to hold the maximum (a maximum of `999999` will not
-fit in a suffix length of `4`); and the suffix length itself cannot exceed 20.
+The system checks the arithmetic when you save the book. The first number must not be greater than
+the maximum; the suffix length must be long enough to hold the maximum (a maximum of `999999` will
+not fit in a suffix length of `4`); and the suffix length itself cannot exceed 10.
 
 ::: tip A prefix is effectively required
-With automatic coding on, the prefix is mandatory. With automatic coding off it is still required by
-default — the idea being that a hand-typed number should at least be recognisable as belonging to
-this book. If you have a book whose numbers really should stand alone, the global option
+Every book except a system book needs a prefix, whether automatic coding is on or off — the idea
+being that even a hand-typed number should be recognisable as belonging to this book. If you have a
+book whose numbers really should stand alone, the global option
 **Allow Empty Prefix For Manual Book** on the
 [Documents tab](/platform/global-config/global-config-documents) relaxes that.
 :::
 
 ### Making the series restart each year
 
-**prefixFormula** is the field that turns a flat series into a per-year, per-branch or per-month
+**Prefix Formula** is the field that turns a flat series into a per-year, per-branch or per-month
 one. It is a small template, evaluated against the document being saved, and whatever it produces is
 appended to the fixed prefix.
 
@@ -151,8 +148,8 @@ When a document takes the number that *equals* the maximum, the book is automati
 **Prevent Usage** — it stops appearing in the book selector, so nobody can start another document on
 it. The document that took the last number saves normally.
 
-If somehow a document would go *past* the maximum, the save fails outright: *"The max suffix of
-record … is …, and the record … will exceed that max."*
+If somehow a document would go *past* the maximum, the save fails outright:
+*The max suffix of record {0} is {1}, and the record {2} will exceed that max* — «أقصى رقم للسجل {0} هو {1}, سوف يتعدي السجل {2} هذا الرقم».
 
 The fix in both cases is the same: create the next book in the series. You cannot simply raise the
 maximum on a book that has already issued numbers, because the auto-coding settings are frozen once
@@ -168,7 +165,7 @@ fact would make the existing numbers meaningless.
   committed document uses the book. The message is "Can not change auto coding as the record was
   used in documents". Drafts do not lock it; a single committed document does.
 
-**Suffix Maximum** and **prefixFormula** are not part of that frozen set, so they can still be
+**Suffix Maximum** and **Prefix Formula** are not part of that frozen set, so they can still be
 adjusted on a book that is already in use.
 
 There is one deliberate escape hatch for the number of a single document. **Allow Changing Book And
@@ -183,7 +180,8 @@ You rarely delete a book — its documents still reference it. You retire it.
 
 **Inactive** stops the book being used on new documents. Documents already committed on it are
 untouched, and a document that was committed before the flag was set can still be edited. Committing
-a *new* document on an inactive book fails with "The book … can not be used as it is inactive".
+a *new* document on an inactive book fails with
+*The book {0} Can not be used as it is inactive* — «الدفتر {0} لا يمكن استخدامه حيث أنه غير نشط».
 
 **Inactive From Date** makes the retirement date-aware, and it works against the document's **value
 date**, not today's date. Set it to 1 January and back-dated documents with a December value date
@@ -269,9 +267,9 @@ Where e-invoicing is in play, the book decides whether its documents are reporte
 **Send To Tax Authority** switches reporting on for this stream. It can only be set on a document
 type that is actually reportable — the system checks and refuses otherwise.
 **Tax Configuration** selects the taxpayer configuration to report under,
-**Tax Authority Customer Field** names the field the customer is read from when the document does not
+**Calculate E Invoice Customer From Field** names the field the customer is read from when the document does not
 have an obvious one, and **Ignore Tax Data Validation With Save** relaxes the tax completeness checks
-at save time. **Drug Traceability Configuration (SFDA RSD)** is the equivalent hook for Saudi
+at save time. **SFDA RSD Configuration** is the equivalent hook for Saudi
 drug-track reporting.
 
 ## System books
@@ -282,7 +280,7 @@ the parent's code plus a sequence, and **System Suffix Length** — capped at 3 
 digits that sequence gets.
 
 A user cannot select a system book on a document they are creating by hand; the save is refused with
-"The book {0} can not be used because it is system book" — «الدفتر  {0} لا يمكن استخدامة حيث أنه دفتر نظامي».
+"The book {0} can not be used because it is system book" — «الدفتر {0} لا يمكن استخدامه حيث أنه دفتر نظامي».
 Leave System off for every book you create
 for users.
 
@@ -315,4 +313,4 @@ type, the automatic selection stops and users are asked again.
 
 By default the search for that single book respects the user's current dimensions, so a user in the
 Riyadh branch gets Riyadh's book. The companion option **Do Not Consider Dimensions When Searching For
-Single Term Book** turns that off and looks across all dimensions instead.
+Single Term And Book** turns that off and looks across all dimensions instead.

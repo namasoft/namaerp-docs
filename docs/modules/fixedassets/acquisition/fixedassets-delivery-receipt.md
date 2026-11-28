@@ -30,7 +30,7 @@ Menu: **Assets > Custody Of Assets > Custodies Delivery Receipt Document**
 | Term | توجيه المستند | The accounting wiring |
 | Issue Date / Value Date / Fiscal Period | تاريخ التحرير / التاريخ الفعلي / الفترة | The value date is the date custody changes |
 | **From Employee** | من موظف | **Required** — who is handing over |
-| **To Employee** | الي موظف | **Required** — who is receiving |
+| **To Employee** | إلى موظف | **Required** — who is receiving |
 | Attachment | مرفق | The signed hand-over sheet |
 | Description | ملاحظات | Free text |
 
@@ -41,7 +41,7 @@ The **Details** grid has just two columns:
 | Custody | عهدة | Either a custody record **or** a fixed asset — the field accepts both |
 | Percentage | نسبة | The share of a custody item this employee holds |
 
-Underneath sits **Custodies Total Cost** (إجمالى تكلفة العهد) with its currency, computed by the
+Underneath sits **Custodies Total Cost** (إجمالي تكلفة العهد) with its currency, computed by the
 system, and then the document's dimensions.
 
 ::: tip Let the screen build the list for you
@@ -67,24 +67,25 @@ For every line, the document closes the old custody and opens the new one:
 
 - the outgoing employee's open custody line is **closed the day before the document's value date**;
 - a new custody line is opened for the receiving employee **from the value date**;
-- the item's **Custodian** field is set to the receiving employee — for a fixed asset this happens
-  when the term option **Change Custodian In Asset** (تغيير مسؤول العهدة في الأصل) is on, or when the
-  asset has no custodian at all, or when its current custodian is the employee handing over.
+- the item's **Custodian** field is set to the receiving employee when the item has no custodian at
+  all or its current custodian is the employee handing over; for a fixed asset it is also set when the
+  term option **Change Custodian In Asset** (تغيير مسؤول العهدة في الأصل) is on.
 
 That last rule is why the document behaves sensibly when the grid was auto-filled: everything on it
 was, by definition, held by the outgoing employee, so the Custodian field follows the hand-over
-without any configuration. Switch the term option on when you want the field to follow the document
-unconditionally.
+without any configuration. Switch the term option on when you want a fixed asset's field to follow
+the document unconditionally.
 
-The document also tidies up after itself: an earlier delivery receipt to the same employee covering
-the same items is flagged as having been passed on, so the trail stays readable when an item moves
+The document also tidies up after itself: on every earlier committed delivery receipt that handed the
+same items **to** the employee now handing over, those lines are ticked **Delivered To Another
+Employee**, so the trail stays readable when an item moves
 through three people in a year.
 
-::: info This is the document that sets the Custodian field
+::: info This is the hand-over document that sets the Custodian field
 The [fixed asset receipt document](/modules/fixedassets/acquisition/fixedassets-receipts.md) adds a
 row to an asset's custody history but leaves the **Custodian** field on its main page alone. The
-delivery receipt is the document that writes it. If the Custodian field on an asset looks stale, this
-is the document that refreshes it.
+delivery receipt is the hand-over document that writes it. If the Custodian field on an asset looks
+stale, this is the document that refreshes it.
 :::
 
 ## What it books

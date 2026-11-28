@@ -98,8 +98,8 @@ The lookup runs in a fixed order, and each step fills its own part of the line's
 | 6 | **Medical Overhead List** — every matching line | One estimated overhead row per overhead item (see [Indirect (overhead) costing](#Indirect-overhead-costing)) |
 
 For the taxes, the tax plan comes from the line's medical service, item, test, radiology, room,
-surgery, specialty or physical-therapy type — or from its parent category when it has none — and
-otherwise from the invoice term's *Tax Plan*. A term that is not *Taxable* gives no tax, and a
+surgery, specialty or physical-therapy type — for a room with no tax plan, from its room
+classification — and otherwise from the invoice term's *Tax Plan*. A term that is not *Taxable* gives no tax, and a
 **Medical Document Category** with *Not Taxable Tax 1* / *Not Taxable Tax 2* removes that tax from its
 invoices. The term options are on
 [Invoice Document Terms](./document-terms/hms-terms-invoices.md#The-Effect-group----the-options). How the

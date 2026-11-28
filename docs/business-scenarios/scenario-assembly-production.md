@@ -77,8 +77,9 @@ Document. The dotted parts are for assembling to an order. Here is the hotel's o
 5. **What saving creates.** The assembly document never touches stock itself. On save it generates a
    **Stock Issue** for the components, out of the issue warehouse, and a **Stock Receipt** for the 200
    bottles, into the receipt warehouse. Because it has expense lines, it also generates a **Receipt
-   Additional Cost**. All three are listed in its **Stock Documents** grid. Editing the assembly updates
-   them, and deleting it deletes them.
+   Additional Cost**. The issue and the receipt are listed in its **Stock Documents** grid, and the
+   additional cost document joins them there when its book is a system book. Editing the assembly updates
+   all of them, and deleting it deletes them.
 6. **The cost.** The documents are processed in the background as business requests, and the receipt is
    costed once the issue's cost is known. Components that cost 9,000 plus 600 of expenses give a bottle
    cost of 48.00.
@@ -172,8 +173,11 @@ Issued Item Assembly BOM** on the term, you issue the finished item and its part
 - **One issue warehouse or several.** A header **Issue Warehouse** is written onto every issued line on
   save. If components come from several stores, leave it empty, or move the components to one store
   first.
-- **How cost splits between co-products.** By quantity, by average sales price, a fixed amount, or no
-  cost at all, set per line. Decide before the first by-product is received. See
+- **How cost splits between co-products.** Each receipt line takes a fixed amount, a percentage or no
+  cost at all, set per line with **Cost Type** and **Cost Percentage**. What remains is split between the
+  other lines by quantity, or by total average sales price when the assembly term has
+  **Distribute Material Cost By Total Average Sales Price Not By Quantity** ticked. Decide before the
+  first by-product is received. See
   [How the cost is split](/modules/supplychain/assembly-and-packaging/assembly-documents-and-requests#How-the-cost-is-split).
 - **A request step or not.** Requests suit companies that plan and reserve ahead, or assemble to order.
   Companies that produce as stock runs low usually go straight to the Assembly Document.

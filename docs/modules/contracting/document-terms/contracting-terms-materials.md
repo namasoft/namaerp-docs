@@ -27,7 +27,7 @@ These terms have no accounts to set, which regularly worries implementers. It sh
 
 | Option | What it does |
 |---|---|
-| **Generation book** and **generation term** `termConfig.generationConfigurations.generationBook` / `termConfig.generationConfigurations.generationTerm` | The book and term of the stock issue (or, on a return, the stock receipt) that the document generates. **Both are required for anything to be generated** — with either missing, the document commits and no stock moves |
+| **Generation book** and **generation term** `termConfig.generationConfigurations.generationBook` / `termConfig.generationConfigurations.generationTerm` | The book and term of the stock issue (or, on a return, the stock receipt) that the document generates. **Both are required for anything to be generated** (see the note below) |
 | **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Makes the contract's term code optional on the lines instead of compulsory |
 | **Executive Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryExecutiveBudgetTermCodeInCostDocuments` | Forces every line to name an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md) term code |
 | **Estimated Budget Term Code is Mandatory in Cost Documents** `termConfig.mandatoryEstimatedBudgetTermCodeInCostDocuments` | The same for the estimated budget's term code |
@@ -35,7 +35,7 @@ These terms have no accounts to set, which regularly worries implementers. It sh
 | **Add Term Analysis Card Lines** `termConfig.addTermAnalysisCardLines` | When a line names an [analysis card](/modules/contracting/setup/contracting-term-analysis-cards.md), its material lines are pulled in automatically |
 | **Do Not Copy Contract Terms When Selected** `termConfig.doNotCopyContractTermsWhenSelected` | Picking a contract on the document does *not* copy its terms onto the lines — for teams who select the few terms they need by hand |
 
-Two further options, **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` and **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost`, act as spending ceilings. They bite when the line's target is an **analysis card** line: issue more material, or more value, than the card planned and the save is refused. Where a line targets a budget or a contract term line instead, the ceiling does not apply — so do not rely on these two as a budget control. The only budget-derived ceiling in the module is the one on the [budget item request](/modules/contracting/budgets/contracting-budget-item-requests.md).
+Two further options, **Do Not Save If Actual Quantity Greater Than Planned Quantity** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` and **Do Not Save If Actual Cost Greater Than Planned Cost** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost`, act as spending ceilings. The cost option refuses the save when the accumulated actual cost on a term line the material is charged to — on the project contract, an estimated or executive budget, or an analysis card — passes that line's planned total cost. The quantity option checks analysis card lines only. The full rule, with the message it raises, is on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests).
 
 ::: info The generation configuration is not optional in practice
 A contracting material issue with no generation book and term is a document that looks complete, commits without complaint, and moves no stock. Because the project's cost only arrives via the generated stock issue, the term code also ends up with no cost against it. Set the book and the term on every material term before it is used in anger.
@@ -46,9 +46,9 @@ A contracting material issue with no generation book and term is a document that
 | Option | What it does |
 |---|---|
 | **Allow Returned Quantity To Be Greater Than Issued Quantity For Contract** `termConfig.allowReturnedQtyBeGreaterThanIssuedQty` | Permits returning more than was issued against the contract — for sites that receive material through more than one route |
-| **Consider Executive Budget Term Code While Validating Return Item Quantity** `termConfig.considerExecutiveTermCodeWhileValidateReturnItemQty` | Narrows the issued-quantity check so it compares within one executive-budget term code rather than across the whole contract |
+| **Consider Executive Term Code While Validate Return Item Quantity** `termConfig.considerExecutiveTermCodeWhileValidateReturnItemQty` | Narrows the issued-quantity check so it compares within one executive-budget term code rather than across the whole contract |
 
-The three term-code options above are also honoured on the return, even though the return's own screen does not offer them. If a return refuses to save because a line has no executive-budget term code, the setting responsible is on the term of the document family, not on the return's own screen — the practical answer is to fill the code.
+The return checks the same three term-code options, read from its own term, but its term screen does not show them, so they keep their defaults: every return line needs the contract's term code, and the executive and estimated budget term codes are not required.
 
 ![The Settings tab of the Contracting Material Issue Req term](../../../ar/modules/contracting/images/terms/contracting-term-material-issue-request-en.png)
 
@@ -71,16 +71,16 @@ Those four fields are read on the material **issue request** as well, but its ow
 
 ## Advance payments and other payments
 
-One term screen serves all three payment documents — the [advance received from a project owner](/modules/contracting/project-contracting/contracting-project-advances.md), the [advance paid to a subcontractor](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md) and the subcontractor's other-payment document. It is a **single page** with nine options and no accounting groups beyond one debit and one credit, which tells you how simple the document is: money moves once, and a condition governs how it is recovered later.
+One term screen serves all three payment documents — the [advance received from a project owner](/modules/contracting/project-contracting/contracting-project-advances.md), the [advance paid to a subcontractor](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments.md) and the subcontractor's other-payment document. It is a **single page** with nine options and no accounting groups beyond one debit and credit pair and one tax pair, which tells you how simple the document is: money moves once, and a condition governs how it is recovered later.
 
 | Option | What it does |
 |---|---|
 | **Debit** `termConfig.debit` | The debit side of the payment's entry — the advance receivable on the subcontractor side, or cash/bank on the owner side |
 | **Credit** `termConfig.credit` | The credit side of the same entry |
 | **Condition** `termConfig.contractingCondition` | The default [condition](/modules/contracting/setup/contracting-conditions.md) the payment is charged against. This is the field that decides *how the advance comes back*, because the condition is what a later extract collects |
-| **Payment Method** `termConfig.paymentMethod` | Whether recovery is by percentage or by fixed value. The English caption on this one field is not resolved on screen; it is the payment method |
+| **Payment Method** `termConfig.paymentMethod` | How the payment is recovered on later extracts: **Fixed Value With Every Extract**, **First Next Extract**, **Final Extract**, **Percentage With Every Extract** or **Percentage From Due Value With Every Extract** |
 | **Payment Percentage** `termConfig.paymentPercent` | The default percentage when the method is percentage-based |
-| **Payment Value** `termConfig.paymentValue` | The default fixed amount when it is not |
+| **Payment Value** `termConfig.paymentValue` | The default fixed amount when the method is a fixed value |
 | **Tax Debit** and **Tax Credit** `termConfig.taxDebit` / `termConfig.taxCredit` | The two sides for the payment's own tax |
 | **Allow Negative Remaining** `termConfig.allowNegativeRemaining` | Permits the payment's remaining balance to go below zero, i.e. to be over-recovered |
 
@@ -96,8 +96,8 @@ The shared six are **Debit**, **Credit**, **Condition**, **Payment Method**, **P
 
 | Option | What it does |
 |---|---|
-| **Calculate Accounting Effects From Contracting Condition** `termConfig.calcAccEffectsFromContrCondition` | The debit and credit are taken from the linked condition record instead of from the term. Use it where different fine reasons must hit different accounts — the reason drives the condition, and the condition drives the accounts |
-| **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Despite its wording, what this actually relaxes is the requirement for a **term code** on the fine's lines. The **project** term code is required either way |
+| **Calculate Accounting Effects From Contracting Condition** `termConfig.calcAccEffectsFromContrCondition` | The debit and credit are taken from the fine's condition record instead of from the term; a side the condition leaves empty falls back to the term's. Use it where different fine reasons must hit different accounts — the reason drives the condition, and the condition drives the accounts |
+| **Project Term Code is Optional in Cost Documents** `termConfig.optionalProjectTermCodeInCostDocuments` | Ticked, the fine's lines may be saved without a **term code**; left off, every fine line needs one |
 | **Link With Invoice Lines In Accounting Document** `termConfig.linkWithInvoiceLinesInAccountingDocument` | Receipt and payment vouchers carry the fine's lines in their invoice grid |
 
 The subcontractor fine's term adds one more, **Show Finished Contracts** `termConfig.showFinishedContracts`, which lets the contract lookup on the fine also list subcontracts already marked finished. It exists on this one term only — on extracts, advances and the project fine, finished contracts are simply not offered.
@@ -110,6 +110,6 @@ The fine's subsidiary is the one on the **document header**, so fill it there; t
 
 **Material to the subcontractor.** Term `CTI-STD` for Contractor Material Issue: the main sides debit the subcontractor's receivable and credit inventory going out, the tax sides carry VAT, generation book and term are set, and the default condition is `MATDED` — "material deducted from extract". Eighty bags of cement worth **2,400** are issued to the blockwork subcontractor. This one *does* book: a receivable on the subcontractor, inventory out, VAT. Because the term carried `MATDED`, the subcontractor's next extract collects a condition line of `MATDED` with a deduction of 2,400, and his net payable falls by exactly that. Nobody typed the deduction.
 
-**The advance.** Term `PAP-STD` for Project Advance Payment: debit bank, credit *advances received from customers*, default condition `ADV-REC`, payment method *percentage with every extract*, payment percentage 25. The owner pays **46,000**. Every subsequent extract collects 25% of it — 11,500 a time — as a deduction, and the advance draws down 46,000 → 34,500 → 23,000 without anyone tracking it by hand. The [extract term](/modules/contracting/document-terms/contracting-terms-extracts.md) option that collects payment documents on save is what makes those condition lines appear on their own.
+**The advance.** Term `PAP-STD` for Project Advance Payment: debit bank, credit *advances received from customers*, default condition `ADV-REC`, payment method **Percentage With Every Extract**, payment percentage 25. The owner pays **46,000**. Every subsequent extract collects 25% of it — 11,500 a time — as a deduction, and the advance draws down 46,000 → 34,500 → 23,000 without anyone tracking it by hand. The [extract term](/modules/contracting/document-terms/contracting-terms-extracts.md) option that collects payment documents on save is what makes those condition lines appear on their own.
 
 **The fine.** Term `PCF-STD` for Project Contract Fine, with *Calculate Accounting Effects From Contracting Condition* ticked so that each fine reason is recorded on its own account through its condition. Fine `PCF-001`, a 5,000 delay penalty, is raised. It creates its own entry immediately, **and** appears as a 5,000 deduction on the next extract's conditions grid — both, which is the behaviour worth knowing before the first month closes.

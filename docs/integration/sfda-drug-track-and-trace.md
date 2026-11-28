@@ -30,7 +30,7 @@ This is a Saudi pharmaceutical requirement, licensed separately under `supplycha
 
 ### Which Authority environment
 
-**Environment Type** chooses between the Authority's test gateway and the live one. The two values are labelled **TestEnvironment** and **ProductionEnvironment**, and anything other than the production value routes to the test gateway — including leaving the field empty. Get your scenarios through the test gateway first; a report accepted there proves that your trade numbers, serial numbers and location codes are the ones the Authority is expecting.
+**Environment Type** chooses between the Authority's test gateway and the live one. The two values are labelled **Test Environment** and **Production Environment**, and anything other than the production value routes to the test gateway — including leaving the field empty. Get your scenarios through the test gateway first; a report accepted there proves that your trade numbers, serial numbers and location codes are the ones the Authority is expecting.
 
 ### One login per reporting warehouse
 
@@ -95,7 +95,7 @@ A pharmacy sale has no counterpart location. The Authority understands that the 
 
 ### Supply reports one batch at a time
 
-**Supply** describes a single batch entering the tracked chain, and the Authority's service accepts exactly one per report. A document mapped to Supply whose lines resolve to more than one distinct batch is refused at commit, and the message tells you how many batches it found. Split it into one document per batch.
+**Supply** describes a single batch entering the tracked chain, and the Authority's service accepts exactly one per report. A document mapped to Supply whose lines resolve to more than one distinct batch still commits, but its report fails when the queue sends it: the report gets the status **Failed** and its error message tells you how many batches it found. Split it into one document per batch.
 
 ## What each line has to carry
 
@@ -177,7 +177,7 @@ Everything above is about telling the Authority what *you* did. The receiving si
 
 ### Where the notification number goes
 
-Pick a field on the Purchase Invoice to hold the notification number — usually a spare text field on the header — and name it in **Purchase Invoice RSD Notification ID Field** on the SFDA RSD Configuration. The field may also sit in a grid; then the first line that carries a value is used, because one invoice receives one notification. The configuration is found from the invoice's book or term, exactly as for outgoing reports.
+Pick a field on the Purchase Invoice to hold the notification number — usually a spare text field on the header — and name it in **Purchase Invoice RSD Notification ID Field** on the SFDA RSD Configuration. The field may also be a column of the invoice's item lines; then each line names its own notification, a line that leaves it empty belongs to the invoice's first notification, and every notification the invoice names is checked and received separately. A field anywhere else — on the header, or in another grid — puts every line under the first value it holds. The configuration is found from the invoice's book or term, exactly as for outgoing reports.
 
 ### The SFDA RSD Incoming Dispatches list
 

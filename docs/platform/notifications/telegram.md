@@ -44,7 +44,7 @@ Open **Administration → Other → Telegram Bot Configuration** and add a new r
 | **Code / Name** | Any code and name that helps you recognise the bot later — e.g. `MAINBOT`, "Customer notifications bot". |
 | **Bot Token** | The token BotFather gave you. Required. |
 | **Bot Username** | The bot's `@username` (without the `@`). Customers use this to find and open the bot. |
-| **Webhook Secret Header** | An optional secret. When set, Nama checks it on every incoming update so that only Telegram — and nobody pretending to be Telegram — can reach your bot's endpoint. Leave it to have Nama generate one. |
+| **Webhook Secret Header** | Filled in by Nama when the record is created; you do not type it. It is handed to Telegram when the webhook is registered, and Nama ignores every incoming update that does not carry it, so only Telegram — and nobody pretending to be Telegram — can reach your bot's endpoint. |
 | **Webhook URL** | The public address Telegram should call back. Leave it empty and Nama uses the public address of the site you are working on; fill it only when your public address differs from the one in the browser. |
 | **API Credentials** | An optional user/credentials record used to authenticate Telegram's inbound calls, the same way Nama's other webhooks authenticate. |
 | **Country Calling Code** | Your country's international dialing code, digits only — `20` for Egypt, `966` for Saudi Arabia, `965` for Kuwait. Nama strips it from the number a person shares (which always arrives in full international form) so it can match that number against the mobile saved on their customer, supplier or employee record. Leave it empty only if your contacts' mobiles are already stored in full international form. |
@@ -52,7 +52,7 @@ Open **Administration → Other → Telegram Bot Configuration** and add a new r
 
 ## Step 3 — Register the webhook
 
-A brand-new bot doesn't yet know where to deliver the messages people send it. Telling it is a single click: make sure **Active** is on, save the configuration, then press the **Register Webhook** action at the bottom of the screen. Nama asks Telegram to send every future update to your Nama site, and from that moment the bot is live. (If the bot is not active Nama refuses to register — you'll see *"The Telegram bot … is not active. Activate it before registering its webhook."*)
+A brand-new bot doesn't yet know where to deliver the messages people send it. Telling it is a single click: make sure **Active** is on, save the configuration, then press the **Register Webhook** action at the bottom of the screen. Nama asks Telegram to send every future update to your Nama site, and from that moment the bot is live. (If the bot is not active Nama refuses to register — you'll see *"The Telegram bot {0} is not active. Activate it before registering its webhook."*)
 
 If the address can't be worked out automatically you'll see *"Cannot determine the webhook URL. Fill the Webhook URL field, or open this screen from the public site address."* — fill the **Webhook URL** field with your public site address and register again. You only ever do this once per bot (or again if you move the site to a new address).
 
@@ -65,7 +65,7 @@ Now the people you want to notify introduce themselves to the bot. Each customer
 …and shows a single button, **Share my phone number**. When the person taps it and confirms, Telegram hands their phone number to Nama, and Nama does two things automatically:
 
 1. It creates a **Registered Chat** entry under your bot configuration, recording their Chat ID, phone number and the time they joined.
-2. It looks up that phone number among your customers, suppliers and employees and, if one of them has a matching mobile, links the chat to that contact and marks it **Linked** — the person is ready to receive messages with no further work.
+2. It looks up that phone number among your customers first, then your suppliers, then your employees and, if one of them has a matching mobile, links the chat to that contact and marks it **Linked** — the person is ready to receive messages with no further work. A contact that is already linked to another chat of the same bot is not linked a second time: the new chat stays **Pending** for you to resolve.
 
 To make that match forgiving of how numbers are written, Nama works out the **national part** of the shared number and matches on that. Telegram always hands over the full international number (e.g. `201065837043`); Nama removes the **Country Calling Code** you configured (`20`), leaving the national number (`1065837043`), and links the first contact whose mobile *ends with* it. So the same person links whether their mobile is on file in full international form (`201065837043`), locally with a leading zero (`01065837043`), or as the bare national number (`1065837043`). If the shared number doesn't begin with your configured code — a genuinely foreign number, say — Nama falls back to matching the whole number. And if nobody matches at all (or it's a brand-new customer), the chat is still saved but left as **Pending**, waiting for a human to finish the link in the next step.
 
@@ -82,11 +82,14 @@ Each row tells you who the chat belongs to and whether it is ready:
 | **Contact** | The customer, supplier or employee this chat belongs to. Empty until it is linked. |
 | **Phone Number** | The number the person shared. |
 | **Chat ID** | Telegram's internal identifier for the conversation. Nama uses this to deliver messages. |
-| **Status** | **Linked** — ready to receive. **Pending** — waiting for you to set a contact. (Rejected and Blocked also exist for chats you have deliberately excluded.) |
-| **Opted Out** | **Yes** if the person has blocked or stopped the bot. Nama never sends to an opted-out chat. |
-| **Received On** | When the chat first joined. |
+| **Status** | **Linked** — ready to receive. **Pending** — waiting for you to set a contact. **Opted Out** — the person blocked or left the bot; Nama never sends to it, and the chat returns to Linked (or Pending) by itself if they start the bot again. **Number Changed** — the contact's number was marked as changed; Nama stops sending to this chat until the person starts the bot from the new number. |
+| **Received On** | When the chat last shared its phone number. |
 
-To finish a **Pending** chat, tick its row, open **Edit Contact**, and pick the customer, supplier or employee it belongs to. The status flips to **Linked** and messages will start flowing.
+To finish a **Pending** chat, tick its row, open **Edit Contact**, and pick the customer, supplier or employee it belongs to. The status flips to **Linked** and messages will start flowing. **Delete Selected Chats** removes the ticked rows.
+
+When a linked person gets a new mobile number, open their customer, supplier or employee record and press **Telegram Number Changed** beside the contact details. Their linked chats become **Number Changed**, and the next time they share their phone from the new number the chat is matched again, the same way as in Step 4, against the mobiles on file. Saving a contact whose mobile no longer matches the number of its linked chat shows a warning that points to this action:
+
+*The mobile of {0} differs from the number {1} linked to the Telegram bot {2}. If the number changed, use the Telegram Number Changed action* — «رقم الموبايل الخاص بـ {0} يختلف عن الرقم {1} المربوط ببوت تيليجرام {2}. إذا تم تغيير الرقم استخدم إجراء تغيير رقم تيليجرام»
 
 ![Edit Contact dialog with the contact picker](../../ar/platform/notifications/images/telegram/telegram-edit-contact-en.png)
 
@@ -104,7 +107,7 @@ A **Telegram Message** is the template of what gets sent — the wording, the fo
 |---|---|
 | **Bot Configuration** | Which bot sends this message. Required. |
 | **Text Message** | The body of the message. It supports the same template syntax as the rest of Nama, so you can weave in record values — `Dear {customer.name2}, your order {code} has been confirmed.` |
-| **Parse Mode** | Choose **HTML** or **Markdown** to make parts of the text bold, italic or linked; leave it empty for plain text. |
+| **Parse Mode** | Choose **HTML**, **Markdown** or **MarkdownV2** to make parts of the text bold, italic or linked; leave it empty for plain text. |
 | **Media URL** | An optional link to a file — an invoice PDF, an image — that is sent along with the text. The address must be reachable from the internet. |
 | **Allowed Repetition Time In Seconds** | A guard against duplicates. If the same message would go to the same chat again within this many seconds, Nama skips it. Leave it empty to allow every send. |
 
@@ -112,20 +115,23 @@ A **Telegram Message** is the template of what gets sent — the wording, the fo
 
 A Telegram Message on its own doesn't do anything until you attach it to an event. In a **Notification Definition** or an **Approval Definition**, set the **Telegram Message** so that when the underlying event fires — an invoice is saved, an approval is requested — Nama sends it.
 
-Here is the crucial part, and the reason all the linking work above matters: **Nama delivers a Telegram message by contact, not by phone number.** When the notification targets a customer, Nama looks for that customer's **Linked** chat on the bot and sends there. If the customer has never started the bot, or their chat is still Pending, or they have opted out, no Telegram message goes out — the customer simply won't receive it on this channel until their chat is linked. That is by design: Telegram is a contact-only channel, so a bare phone number with nobody behind it is never messaged.
+Here is the crucial part, and the reason all the linking work above matters: **Nama delivers a Telegram message by contact, not by phone number.** When the notification targets a customer, Nama looks for that customer's **Linked** chat on the bot and sends there. If the customer has never started the bot, or they have opted out, or their number was marked as changed, no Telegram message goes out — the record is still saved, with a warning that says why. A chat that is still **Pending** is different: the save is refused until you link the chat (Step 5). That is by design: Telegram is a contact-only channel, so a bare phone number with nobody behind it is never messaged.
 
 ## When a message is not sent
 
-Because delivery depends on the recipient having opted in, a Telegram send can legitimately be skipped. When that happens Nama records an explanatory result rather than failing silently, so you always know why:
+Because delivery depends on the recipient having opted in, a Telegram send can legitimately be skipped. When that happens Nama reports why. The first three rows are warnings, and the record is saved; the others refuse the save:
 
 | Message | Why it happened | What to do |
 |---|---|---|
-| *The recipient (contact {0}) is not registered with the Telegram bot {1}…* | The targeted contact has never started the bot, so there is no chat to send to. | Ask the person to open the bot and share their phone number (Step 4). |
-| *The recipient {0} is not linked to a contact yet…* | A chat exists but is still **Pending**. | Set its contact from the Registered Chats tab (Step 5). |
-| *The recipient {0} has opted out of Telegram messages from bot {1}* | The person blocked or stopped the bot. | Nothing on your side — they must restart the bot themselves. |
-| *The message has already been sent to {0} at {1}, you can send it again at {2}* | The **Allowed Repetition Time** guard blocked a duplicate. | Wait until the time shown, or lower the repetition guard on the message. |
+| *The Telegram message was not sent to {0} because the recipient is not subscribed to the bot {1}* — «لم يتم إرسال رسالة تيليجرام إلى {0} لأن المستلم غير مشترك في البوت {1}» | The targeted contact has never started the bot, so there is no chat to send to. | Ask the person to open the bot and share their phone number (Step 4). |
+| *The Telegram message was not sent to {0} because the recipient opted out of the bot {1}* — «لم يتم إرسال رسالة تيليجرام إلى {0} لأن المستلم ألغى الاشتراك في البوت {1}» | The person blocked or left the bot. | Nothing on your side — they must restart the bot themselves. |
+| *The Telegram message was not sent to {0} because the number changed. Ask the recipient to start the bot {1} from the new number* — «لم يتم إرسال رسالة تيليجرام إلى {0} لأن الرقم تم تغييره. اطلب من المستلم بدء محادثة مع البوت {1} من الرقم الجديد» | The contact's chat is marked **Number Changed**. | Ask the person to start the bot from the new number. |
+| *The recipient {0} started the Telegram bot {1} but is not linked yet. Link the contact from the bot registered chats, then try again* — «المستلم {0} بدأ محادثة مع بوت تيليجرام {1} ولكن لم يتم ربطه بعد. قم بربط جهة الاتصال من المحادثات المسجلة للبوت ثم أعد المحاولة» | A chat with the contact's number exists but is still **Pending**. | Set its contact from the Registered Chats tab (Step 5), then save again. |
+| *The message has already been sent to {0} at {1}, you can send it again at {2}* — «هذه الرسالة قد تم إرسالها إلى {0} في الوقت {1} يمكنك إعادة إرسالها في الوقت {2}» | The **Allowed Repetition Time In Seconds** guard blocked a duplicate. | Wait until the time shown, or lower the repetition guard on the message. |
 | *The Telegram bot {0} is not active* | The bot's **Active** switch is off. | Open the Telegram Bot Configuration and turn **Active** on. |
 | *Telegram message {0} has no bot configuration* | The Telegram Message is missing its **Bot Configuration**. | Open the message and set the bot. |
+
+The last two messages have no Arabic text and appear in English on Arabic screens too.
 
 ## Message history
 

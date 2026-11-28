@@ -23,8 +23,8 @@ To configure a pole display for Nama POS, follow these steps:
 1. Go to the **"Pos Pole Display Specs"** screen.
 2. Set:
 
-* **Communication Type**: **CommPort** or **Printer**.
-* **Printer Name Or Port Number**: to define the connection interface.
+* **Communication Type**: **CommPort** — the register drives the pole display through a serial (COM) port.
+* **Printer Name Or Port Number**: the COM port the display is plugged into, such as `COM3`. A `commPortName` line in the register's `nama.properties` file takes precedence over this field; with neither, the register uses `COM4`.
 3. Link the pole display configuration to a machine by setting the **"Pos Pole Display Specs"** field in the machine record.
 
 ---
@@ -41,7 +41,7 @@ Nama POS allows defining **template-based messages** for different events in the
 @CLEARLINE@
 ```
 
-Use it to clear one line on the pole display.
+Each `@CLEARLINE@` sends the display's clear command, which empties the pole display; the text after it is written to the empty display. Text placed before it is written first and then wiped.
 
 **Example:**
 
@@ -49,7 +49,7 @@ Use it to clear one line on the pole display.
 @CLEARLINE@@CLEARLINE@ Welcome
 ```
 
-Clears two lines, then displays: `Welcome`.
+Clears the display, then displays: `Welcome`.
 
 * **Last Modified Line:**
 
@@ -73,13 +73,13 @@ Gets the quantity of the last added item.
 
 ### Idle Template
 
-Displayed when the POS is idle, before any invoice is created.
+Displayed when the register starts, when a screen is opened for the first time in the session, and three seconds after a new, empty document is started (for example after a sale is finished). Its fields are the register's fields.
 
 ```tempo
 @CLEARLINE@@CLEARLINE@**** Welcome to Register {name2}
 ```
 
-Clears both lines and shows a welcome message with the register's name.
+Clears the display and shows a welcome message with the register's name.
 
 ---
 
@@ -112,7 +112,7 @@ Displays the invoice total amount.
 
 ### Remaining Template
 
-Displayed after the customer pays and change is calculated.
+Displayed when the invoice is saved with change to give back; a sale paid with the exact amount does not show it.
 
 ```tempo
 @CLEARLINE@@CLEARLINE@
@@ -123,34 +123,42 @@ Displays the remaining change to be returned to the customer.
 
 ---
 
+### Delete Line Template
+
+Displayed when a line is deleted from the invoice. Like the line adding template, its fields are the invoice's fields.
+
+---
+
 These templates provide a flexible way to control real-time messaging on POS displays using Tempo syntax.
 
 ## Filtering Search Screens in POS Using Machine Dimensions
 
 In Nama ERP, access dimension filters (such as company, branch, sector, etc.) are applied automatically on standard screens. However, in the **POS system**, these filters are not applied automatically because the system relies on the machine's (register's) dimensions rather than the user's dimensions.
 
-To enable filtering in POS search screens based on machine dimensions, use the **POS Settings** screen, specifically the **"Dimension Filtering"** table.
+To enable filtering in POS search screens based on machine dimensions, use the **POS Settings** screen, specifically the **"Filter Dimensions On Sending"** table.
 
 ### Example:
 
-Suppose you want to filter the **Zone (used in the delivery address)** in a **POS Sales Invoice** so that only zones linked to the current machine's branch are displayed:
+Suppose you want to filter the **Address Region (used in the delivery address)** in a **POS Sales Invoice** so that only regions linked to the current machine's branch are displayed:
 
 1. Open the **POS Settings** screen.
-2. In the **"Dimension Filtering"** table:
+2. In the **"Filter Dimensions On Sending"** table:
 
     * Add a new row.
-    * Select the type **"Zone"** in the **Type** field.
+    * Select the type **"Address Region"** in the **For Type** field.
     * In the **"Filtered In Type"** field, select **"POS Sales Invoice"**.
-    * Enable the **"Filter by Branch"** option.
-3. You can also create a **type list** containing "Zone" and other data types to apply the same filtering to all of them.
+    * Enable the **"Filter On Branch"** option.
+3. You can also pick an **Entity Type List** containing "Address Region" and other data types to apply the same filtering to all of them.
+
+A row with **Filtered In Type** left empty applies on every POS screen. When several rows match the same data type on a screen, the first one in the table is used. Records that carry the register's own value of the ticked dimension stay in the list, and so do records that carry the shared record that stands for no value.
 
 ### Available Filtering Options:
 
-* Filter by Company
-* Filter by Branch
-* Filter by Sector
-* Filter by Department
-* Filter by Analytical Group
+* Filter On Legal Entity
+* Filter On Branch
+* Filter On Sector
+* Filter On Department
+* Filter On Analysis Set
 
 ## Logging In Using an API Key in POS
 
@@ -178,13 +186,13 @@ This method enables a smooth transition to API key login without any manual conf
 1. Create an `APICredentials` file manually and assign the user under whose name POS operations will be performed (reading/writing records).
 2. Copy the key from the resulting file.
 3. You can use the key in one of the following places:
-   - Enter it in the initial settings window instead of the username and password.
+   - Enter it in the initial settings window.
    - Or place it directly in the POS `nama.properties` file:
      ```
      apiKey=dddsbddhbskbsdhdd
      ```
 
-In the initial settings window the key goes in the **API Key** field of the **Server Settings** group; the **Server Login Id** and **Server Login Password** fields can then stay empty.
+In the initial settings window the key goes in the **API Key** field of the **Server Settings** group. The window's checks still require the **Server Login Id** and **Server Login Password** fields.
 
 ![The API Key field in the POS initial settings window](../../ar/modules/pos/images/getting-started/pos-login-apikey-en.png)
 
@@ -208,7 +216,7 @@ The sales table is the grid in the middle of the sales screen: one row per invoi
 
 - **Deploying changes to POS machines**:
   - **Option 1**: Paste the file manually on each machine.
-  - **Option 2**: Go to system settings → **Sales Column Properties** → paste the file contents → select **"Send Properties to POS Machines"** → save.
+  - **Option 2**: Open the **Register** record → paste the file contents into **Sales Lines Screen Properties** → tick **"Send Properties To POS Register"** → save. The machine writes the text into its `screenProperties.properties` when it next receives the register record.
 
 - **Advantages**:
   - Flexible and quick for initial adjustments.
@@ -222,21 +230,19 @@ The sales table is the grid in the middle of the sales screen: one row per invoi
 ### Controlling Width via POS Interface Settings
 
 - **How to use**:
-  - In the **"POS Interface Settings"** page, a new column named **"Width"** has been added for each field in the sales table.
-  - You can specify the column size through predefined options (e.g., small, extra small, medium, large, etc.).
-  - Space is distributed automatically based on the size specified for each field.
+  - In the **"Pos UI Settings"** record, each field line of the sales table has a **"Width Size"** column.
+  - You pick the column size from fixed options, each a fixed share of the screen width: **1-Tiny** (2.5%), **2-Very Small** (5%), **3-Small** (7.5%), **4-Medium** (10%), **5-Large** (12.5%), **6-XLarge** (15%) and **7-XXLarge** (17.5%).
 
 - **When to use?**
   - When you want to set widths in an organized way without manual dragging.
   - For proportional distribution of fields within the table.
 
 - **What if you want manual dragging with this feature enabled?**
-  - Leave the **"Width"** field empty, which allows the user to manually adjust the size at runtime.
+  - Leave the **"Width Size"** field empty, which allows the user to manually adjust the size at runtime.
 
 - **Advantages**:
   - No manual editing required on each machine.
   - Provides predefined options for a consistent look across branches.
-  - Automatically distributes space between fields.
 
 - **Disadvantages**:
   - Less flexible than the manual method in some special cases.
@@ -252,9 +258,9 @@ These two topics have moved to the operational guide:
 
 ## Resetting the Send Attempt Counter for Unsent Documents
 
-When POS documents fail to send to the server, the system increments a failed-attempt counter (`writeFailures`). After 25 failed attempts (the default value), the system stops trying to send the document.
+When POS documents fail to send to the server, the system increments a failed-attempt counter (`writeFailures`). The retry limit and the ways to reset it from the register screen or from the register record are described in [How POS Data Syncs with the Server](/modules/pos/pos-data-sync#When-a-document-will-not-go-up).
 
-To reset the counter and allow the system to retry sending, run the following query against the POS database:
+To reset the counter of every unsent document directly, run the following query against the POS database:
 
 ```sql
 UPDATE POSSalesInvoice SET writeFailures = 0 WHERE sent = 0;

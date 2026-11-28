@@ -22,7 +22,7 @@ Manual execution when quantity tracking relationships need to be rebuilt, typica
 1. **Identifies source document** - Gets the fromDoc (source document) that this document is related to
 2. **Processes document lines** - Iterates through all lines in the current document
 3. **Calculates satisfied quantities** - Uses SCRelatedQtiesUtil to determine how much quantity each line satisfies from the source
-4. **Updates tracking relationships** - Applies quantity tracking effects as if document was newly created
+4. **Updates tracking relationships** - Applies quantity tracking effects as if document was newly created: the quantity of each line is added to the satisfied quantity of its source line, without first removing an effect the document applied earlier
 5. **Maintains data consistency** - Ensures quantity relationships are accurately reflected in the system
 
 ## Parameters

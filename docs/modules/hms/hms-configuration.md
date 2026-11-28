@@ -16,18 +16,18 @@ You open it from **Hospital Management System → Settings → Hospital Manageme
 The record carries the usual header (code, name, configuration group and the dimensions it applies to)
 and one tab, **Main** («الرئيسية»), with four groups.
 
-## Check IN/Out Configuration — how a stay becomes billable days
+## Check In/Out Configuration — how a stay becomes billable days
 
 A hospital charges accommodation by the day, but patients do not arrive at midnight. The three options
 in this group set the hotel-style "day" that accommodation invoices count in.
 
 | Option | What it does |
 |---|---|
-| **CheckIn Time** | The hour the billing day starts. A patient who arrives **before** this hour is charged from the previous day. Default 00:00. |
-| **CheckOut Time** | The hour the billing day ends. A patient who leaves **after** this hour is charged one more day. Default 00:00. |
-| **Check Out Time Is Based On Check In Time** | Ignores both hours above. Each patient's day starts at the time of their **first** accommodation and ends one minute before that time the next day, so the stay is billed in 24-hour cycles from arrival. |
+| **Check In Time** | The hour the billing day starts. A patient who arrives **before** this hour is charged from the previous day. Default 00:00. |
+| **Check Out Time** | The hour the billing day ends. A patient who leaves **after** this hour is charged one more day. Default 00:00. |
+| **Check Out Time Is Based On Check In Time** | Ignores both hours above. Each patient's day starts at the time of their **first** accommodation and ends one millisecond before that time the next day, so the stay is billed in 24-hour cycles from arrival. |
 
-Both hour fields show their English labels on Arabic screens too (*CheckIn Time*, *CheckOut Time*);
+Both hour fields show English labels on Arabic screens too (*CheckIn Time*, *CheckOut Time*);
 the shipped product has no Arabic label for them. The third option reads
 «احتساب وقت الدخول والخروج حسب أول وقت دخول في الإقامة».
 
@@ -39,11 +39,11 @@ A patient arrives on 1 January at 10:00 and is discharged on 3 January at 13:00.
 
 - **With both hours left at 00:00** (the default), every calendar day the patient touched counts:
   1, 2 and 3 January — **3 days**.
-- **With CheckIn Time and CheckOut Time both at 12:00**, arriving at 10:00 is before check-in, so the
+- **With Check In Time and Check Out Time both at 12:00**, arriving at 10:00 is before check-in, so the
   stay starts on 31 December at 12:00; leaving at 13:00 is after check-out, so it runs to 4 January at
   12:00 — **4 days**.
-- **With Check Out Time Is Based On Check In Time ticked**, the day runs from 10:00 to 09:59. Leaving
-  at 13:00 on 3 January crosses the second 09:59 boundary — **3 days**. Leaving at 09:00 the same day
+- **With Check Out Time Is Based On Check In Time ticked**, the day runs from 10:00 to just before 10:00 the
+  next day. Leaving at 13:00 on 3 January crosses the second boundary — **3 days**. Leaving at 09:00 the same day
   would have been **2 days**.
 
 The same hours set the **invoicing date** of each accommodation-invoice line (a line whose day began
@@ -52,7 +52,7 @@ ticked, every line is dated on the day it began), and they are the "today at che
 still-running stay is billed up to when temporary accommodation invoices are rebuilt — see
 [Accommodation & Feeding](./hms-accommodation.md).
 
-## Discounts Configurations and Taxs Configurations — which columns you see
+## Discounts Configurations and Taxes Configurations — which columns you see
 
 Every priced hospital document carries the same price block: price, two discounts, the patient and
 insurer split, two taxes, the totals. Most hospitals use one discount and one tax, so these eight

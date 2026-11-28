@@ -36,8 +36,10 @@ Three other routes fill an invoice:
 
 - type it, list the relevant orders in the *Orders* grid and press **Copy All From MnOrders** —
   every detail line of every listed order is appended;
-- type it and pick a predecessor in *From document*, letting the standard copier bring the header
-  and grids across;
+- type it and pick a maintenance order or a
+  [maintenance estimation](/modules/crm/maintenance-cycle/crm-maintenance-estimations) in *From
+  document* (the only two types it offers), letting the standard copier bring the header and grids
+  across;
 - type the lines by hand.
 
 Nothing links these routes to each other. Listing the same order on two invoices copies its lines
@@ -100,7 +102,7 @@ on this screen.
 |---|---|
 | **Ledger** | **Yes.** On `MINV-0298`: debit the customer receivable (subsidiary `C-01188`) 6,840.00; credit spare-parts revenue 2,400.00, maintenance-service revenue 3,600.00 and sales tax payable 840.00. The sides come from the invoice's [document term](/modules/crm/document-terms/crm-maintenance-terms.md); when that term fills both *Services Debit* and *Services Credit*, the service lines are booked against those instead of the main sides. |
 | **Stock** | **Yes**, when the term names a stock-issue book and term and ticks *Generate stock issue with spare parts* and/or *with service items*. A supply-chain **Stock Issue** `SI-1904` is created from `WH-ALX` carrying `SP-FLT-14` × 6 and `SP-OIL-05` × 1, and its reference appears read-only on the invoice. |
-| **Contract entitlement** | **Unchanged here.** The draw-down happened when the order was committed; this invoice's *From document* is the order, not the contract. An invoice raised directly from a contract does draw the contract down. |
+| **Contract entitlement** | **Unchanged here.** The draw-down happened when the order was committed; an invoice's *From document* is an order or an estimation, never the contract. |
 | **Machine fault-warranty history** | Only if the invoice term ticks *Update Machine Dysfunction Warranties* — and then only if the order term does **not**, see below. |
 
 Both effects are created as **business requests** and processed in the background, so the document
@@ -145,7 +147,7 @@ is a configuration for the maintenance order and the order request.
 
 ## Payments on the invoice
 
-The invoice carries the full payments block: a payment-schedule template, a **GeneratePayments**
+The invoice carries the full payments block: a payment-schedule template, a **Generate Payments**
 button that expands it into schedule lines, and buttons to generate a receipt voucher for the
 selected payments, generate one receipt voucher, or collect existing receipt vouchers. The totals
 group shows the total, discount, cash amount, technicians' reward, net value, vouchers' payments,
@@ -159,10 +161,9 @@ total paid and remaining. None of this changes what was billed — it is collect
   spare parts, returned parts, services, dysfunctions, technicians, tools, maintenance groups) of every
   order listed in the *Orders* grid. If the document term ticks *Consider Lines Of FromDoc*, the
   *From document*'s lines are appended too. Pressing it twice appends the lines twice.
-- **GeneratePayments** (*إنشاء الدفعات*) — splits the value into an instalment schedule. It asks for
+- **Generate Payments** (*إنشاء الدفعات*) — splits the value into an instalment schedule. It asks for
   the number of payments, the period between them and its unit, the start date, a grace period,
-  down / first / second / last payment values and a rounding mode. The English label ships as the
-  raw name shown here.
+  down / first / second / last payment values and a rounding mode.
 - **Generate Receipt Voucher For Selected Payments** (*إنشاء سند قبض للدفعات المختارة*) — opens an
   unsaved receipt voucher for the instalment lines you ticked. It is refused when no line is
   selected, or when none of the selected lines has a remaining value.

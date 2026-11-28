@@ -41,7 +41,7 @@ To price one line by hand, fill its **SalesPrice | Manual Edit**: on saving, it 
 
 ## From the list to the operation order
 
-The lists aren't a static reference — they're the actual pricing source. Inside the [operation order](./operation-orders.md), the **Update All Services** button pulls prices from the matching lists (by customer, commodity, ports, container, and service type), filling in the purchase cost and selling price in every service line at once.
+The lists aren't a static reference — they're the actual pricing source. Inside the [operation order](./operation-orders.md), the **Update All Services** button pulls prices from the matching lists, filling in the purchase cost and selling price in every service line at once. Which list lines each service section takes — by customer, ports, commodity, loading point and validity date — is set out on [Operation Orders](/modules/freight/operation-orders#How-the-Update-Data-buttons-find-their-lines).
 
 The **Edit Purchase Price List** document also lets you update purchase prices in bulk without opening each list individually.
 
@@ -59,8 +59,8 @@ All five belong to the **Sales Price List**.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You Must Select at least One Of Service Item Types* — «يجب اختيار خدمة واحدة على الاقل من الخدمات الأربعة التالية(شحن بحري ـ نقل ـ تخليص ـ مولدات)» | None of the four service flags — ocean freight, custom clearance, trucking, genset — is ticked, so the list would price nothing. | Tick the service types this list covers. |
-| *You Must Select at least one Of types: IsCollect, IsPrepaid, IsAllIn* — «يجب إختيار على الأقل نوع من الأنواع الاتيه: IsCollect, IsPrepaid, IsAllIn» | None of Collect, Prepaid or All-In is ticked, so there is no charging basis to match a shipment against. | Tick the one that applies. |
-| *You must use only one of those options [All In Rate, Prepaid and Collect]* — «يجب إختيار واحد فقط من [All In Rate, Prepaid and Collect]» | More than one of those three is ticked; they are mutually exclusive. | Leave one ticked and make a separate list for the other basis. |
-| *You can not calculate All In Rate in public LegalEntity, add default LegalEntity in configuration* — «لا يمكن حساب All In Rate على الشركة العام، قم بإضافة إفتراضى الشركة فى الإعدادات» | The list is marked All-In but no legal entity can be resolved for it — the record sits on the public legal entity and no default is configured. | Set the legal entity on the list's dimensions, or configure a default legal entity, before using All-In. |
+| *You Must Select at least One Of Service Item Types* — «يجب اختيار خدمة واحدة على الأقل من الخدمات الأربعة التالية(شحن بحري ـ نقل ـ تخليص ـ مولدات)» | None of the four service flags — ocean freight, custom clearance, trucking, genset — is ticked, so the list would price nothing. | Tick the service types this list covers. |
+| *You Must Select at least one Of types: IsCollect, IsPrepaid, IsAllIn* — «يجب اختيار على الأقل نوع من الأنواع الآتية: IsCollect, IsPrepaid, IsAllIn» | None of Collect, Prepaid or All-In is ticked, so there is no charging basis to match a shipment against. | Tick the one that applies. |
+| *You must use only one of those options [All In Rate, Prepaid and Collect]* — «يجب اختيار واحد فقط من [All In Rate, Prepaid and Collect]» | More than one of those three is ticked; they are mutually exclusive. | Leave one ticked and make a separate list for the other basis. |
+| *You can not calculate All In Rate in public LegalEntity, add default LegalEntity in configuration* — «لا يمكن حساب All In Rate على الشركة العامة، قم بإضافة شركة افتراضية في الإعدادات» | The list is marked All-In but no legal entity can be resolved for it — the record sits on the public legal entity and no default is configured. | Set the legal entity on the list's dimensions, or configure a default legal entity, before using All-In. |
 | *Header customer {0} does not match line customer {1}* — «العميل برأس السجل {0} لا يطابق العميل على السطر {1}» | The list header names a customer and one of the service lines names a different one. | Clear the customer on the line so it inherits the header, correct it, or move the line to that customer's own list. |

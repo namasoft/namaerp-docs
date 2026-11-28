@@ -53,7 +53,7 @@ Revise is lighter than approval: no routing, no decisions, just a required numbe
 **Track Records Versions** `value.trackVersionsEnabled` *(default on)* — Keeps a full version history of records, so you can see what a document looked like before an edit and who changed it.
 
 ::: danger Switching it off also loses the audit trail
-The version snapshot and the audit-trail line are written together, so with this off you can no longer see who changed a record, not just restore an older version. See [Turning version tracking on and off](/platform/governance/audit-trail#Turning-version-tracking-on-and-off).
+The version snapshot and the audit-trail line are written together, so with this off you can no longer see who changed a record, not just restore an older version. See [How versions are stored](/platform/governance/audit-trail#How-versions-are-stored).
 :::
 
 ## Settings on this tab
@@ -64,21 +64,21 @@ Every field on this tab with its exact on-screen label in both languages, so you
 |---|---|---|---|
 | `value.approvalEnabled` | Enable Approval | تفعيل الموافقة | [Approvals](#Approvals) |
 | `value.info.useRejectDecision` | Use Reject Decision | استعمال قرار الرفض | [Approvals](#Approvals) |
-| `value.info.useReturnDecision` | Use Return Decision | استعمال قرار الارجاع | [Approvals](#Approvals) |
-| `value.info.useEscalateToSupervisor` | Use Escalate To Supervisor | استخدام قرار تصعيد إلى المدير الأعلي | [Approvals](#Approvals) |
+| `value.info.useReturnDecision` | Use Return Decision | استعمال قرار الإرجاع | [Approvals](#Approvals) |
+| `value.info.useEscalateToSupervisor` | Use Escalate To Supervisor | استخدام قرار تصعيد إلى المدير الأعلى | [Approvals](#Approvals) |
 | `value.info.useEscalateToDirectSupervisor` | Use Escalate To Direct Supervisor | استخدام قرار تصعيد إلى المشرف المباشر | [Approvals](#Approvals) |
-| `value.info.useEscalateToSpecificEmployee` | Use Escalate To Specific Employee | استخدام قرار تصعيد الي موظف بعينه | [Approvals](#Approvals) |
-| `value.info.useReturnToPreviousStep` | Use Return To Previous Step | استخدام قرار إرجاع إلي الخطوة السابقة | [Approvals](#Approvals) |
+| `value.info.useEscalateToSpecificEmployee` | Use Escalate To Specific Employee | استخدام قرار تصعيد إلى موظف بعينه | [Approvals](#Approvals) |
+| `value.info.useReturnToPreviousStep` | Use Return To Previous Step | استخدام قرار إرجاع إلى الخطوة السابقة | [Approvals](#Approvals) |
 | `value.info.useReturnToSpecificStep` | Use Return To Specific Step | استخدام قرار الإرجاع لخطوة محددة | [Approvals](#Approvals) |
 | `value.info.useSignatureInApprovalAttachment` | Use Signature In Approval Attachment | استخدام التوقيع في مرفق الموافقة | [Approvals](#Approvals) |
-| `value.info.preventUpdateDocAndRelatedDocInApproval` | Prevent Update Document And Related Document In Approval Cycle | منع التعديل في مستند مرتبط بمستد أخر بإنتظار الموافقه | [Approvals](#Approvals) |
+| `value.info.preventUpdateDocAndRelatedDocInApproval` | Prevent Update Document And Related Document In Approval Cycle | منع التعديل في مستند مرتبط بمستند آخر بانتظار الموافقة | [Approvals](#Approvals) |
 | `value.info.allowApprovalsOnDocumentsUpdate` | Allow Approvals On Documents Update | السماح بعمل موافقات لتعديل المستندات | [Approvals](#Approvals) |
 | `value.info.addApprovalStepsToActionHistory` | Add Approval Steps To Action History | إضافة خطوات الموافقة في سجل التعديل | [Approvals](#Approvals) |
 | `value.info.defaultReviseLevel` | Default Revise Level | مستويات المراجعة الافتراضية | [Revise](#Revise) |
-| `value.info.useReviseDocumentForAllEntities` | Use Revision Document For All Entities | استخدام مستند المراجعه لكل الأنواع | [Revise](#Revise) |
+| `value.info.useReviseDocumentForAllEntities` | Use Revision Document For All Entities | استخدام مستند المراجعة لكل الأنواع | [Revise](#Revise) |
 | `value.info.entitiesReviseLevels` | Revise Levels | مستويات المراجعة | [Revise](#Revise) |
 | `value.info.entitiesReviseLevels.entityType` | Entity Type | النوع | [Revise](#Revise) |
 | `value.info.entitiesReviseLevels.targetEntities` | Entity Type List | قائمة الأنواع | [Revise](#Revise) |
 | `value.info.entitiesReviseLevels.reviseLevels` | Revise Levels | مستويات المراجعة | [Revise](#Revise) |
-| `value.info.entitiesReviseLevels.useReviseDocument` | Use Revise Document | استخدام مستند المراجعه | [Revise](#Revise) |
+| `value.info.entitiesReviseLevels.useReviseDocument` | Use Revise Document | استخدام مستند المراجعة | [Revise](#Revise) |
 | `value.trackVersionsEnabled` | Track Records Versions | تفعيل تتبع نسخ السجلات | [Record versions](#Record-versions) |

@@ -74,4 +74,4 @@ The term settings that actually matter here are covered in [Maintenance Document
 
 ## Reporting on Any of This
 
-There are **no system reports and no dashboards for CRM at all**, and none for this branch in particular. What you have is the list view, its column set and its filters, Excel export, and whatever BI dashboards your site builds. If somebody asks for "the service revenue report", remember that this branch bills spare-part lines: a service fee billed as an item is reported under that item.
+There are **no system reports and no dashboards for CRM at all**, and none for this branch in particular. What you have is the list view, its column set and its filters, Excel export, and whatever BI dashboards your site builds; [CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms) covers the options. If somebody asks for "the service revenue report", remember that this branch bills spare-part lines: a service fee billed as an item is reported under that item.

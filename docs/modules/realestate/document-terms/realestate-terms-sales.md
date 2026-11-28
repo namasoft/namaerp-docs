@@ -18,7 +18,7 @@ once you have configured one of them properly, the rest are variations on the sa
 
 Read [How Real Estate Document Terms Work](/modules/realestate/document-terms/realestate-terms-basics)
 first: the anatomy of an accounting side, the rule that a pair only fires when both halves are
-filled, the Confiuration List routing grid and the tax-policy precedence are all explained there and
+filled, the Configuration List routing grid and the tax-policy precedence are all explained there and
 are not repeated here.
 
 ## What the term books, block by block
@@ -47,7 +47,7 @@ grid is booked from its own fee type's accounts, and each commission line is boo
 commission type's accounts. Both catalogues are described in
 [Fee, Commission, Broker and Expense Catalogues](/modules/realestate/costs/realestate-fee-commission-and-expense-types).
 
-Underneath the account blocks sit the routing grid (Confiuration List, `termConfig.configLineList`) and
+Underneath the account blocks sit the routing grid (Configuration List, `termConfig.configLineList`) and
 the term's own tax policy grid (Legal Entity Taxes, `termConfig.legalEntityTaxes`), then a group of
 behavioural switches.
 
@@ -79,11 +79,10 @@ sixty tax pairs, each carrying its own installment's reference data, so an analy
 the line reaches the tax entry as well. *Shorten Ledger Effect* collapses them into one pair per
 account, exactly as it does the rest of the entry.
 
-**A sales term does not fall back to the expense type or the unit.** This is the one place where the
-sales family behaves differently from collections. A collect term is the *last* stop in a chain that
-starts at the expense type and passes through the unit and the unit model; a sales term is the
-*only* place looked at. Accounts sitting on the unit or on the expense type are not consulted here,
-so if the pair is empty on the term, the tax is not booked at all.
+**A sales term does not fall back to the expense type or the unit.** The term's pair is the only
+place looked at, so if it is empty the tax is not booked at all — the opposite of a collect term, as
+[Where accounts come from something other than the term](/modules/realestate/document-terms/realestate-terms-basics#Where-accounts-come-from-something-other-than-the-term)
+explains.
 
 **A tax marked as a deduction stays negative.** Withheld tax is held as a negative amount on the
 installment line, and the pair books it exactly as it stands — as a negative debit against a negative
@@ -107,7 +106,7 @@ in a group at the bottom of page 0, with two of them on a second page titled **S
 
 | Option | Field id | What it does |
 |---|---|---|
-| Create Accounting Effects For Handoverd Documents Only | `termConfig.createAccEffectsForHandoveredDocumentsOnly` | Suppresses the contract's whole journal entry until the unit has actually been handed over. No entry is created at signature; the handover document releases it later. *(The shipped English label really does read "Handoverd".)* |
+| Create Accounting Effects For Handed Over Documents Only | `termConfig.createAccEffectsForHandoveredDocumentsOnly` | Suppresses the contract's whole journal entry until the unit has actually been handed over. No entry is created at signature; the handover document releases it later. |
 | Validate Remaining And Installments Total Equality | `termConfig.validateInstallmentsTotal` | On by default. Blocks the commit when the installment total does not match the remaining value, within the tolerance set in the [module configuration](/modules/realestate/realestate-configuration). Turn it off only for contracts whose installment plan deliberately does not add up to the price. |
 | Shorten Ledger Effect | `termConfig.shortenLedgerEffect` | Compresses the journal entry: lines sharing the same account and analysis are merged instead of producing one line per installment. On a 60-installment contract this is the difference between a two-line entry and a sixty-line one. |
 | Manual Coding | `termConfig.manualCoding` | Off by default, meaning the system numbers the installment lines itself. Turn it on when installment codes must match an external or legacy numbering the user types by hand. |
@@ -121,7 +120,7 @@ in a group at the bottom of page 0, with two of them on a second page titled **S
 ::: tip Recognising revenue on delivery — the worked example
 This is the most-asked configuration in the module, and it takes **two** terms, not one.
 
-1. On the **sales contract** term, tick *Create Accounting Effects For Handoverd Documents Only*.
+1. On the **sales contract** term, tick *Create Accounting Effects For Handed Over Documents Only*.
    Villa B-12's contract is now committed on 1 March with no journal entry at all.
 2. On the **handover** term, decide its own *Create Accounting Effects*. Leave it off if the handover
    is purely a trigger; turn it on if the handover document should also produce an entry of its own.
@@ -213,12 +212,6 @@ tax blocks, plus a dedicated pair for the **waiver price** — the commission th
 transferring the contract to a new buyer. Below them sit the routing grid and *Validate Remaining And
 Installments Total Equality*. Page 1 is **Settings**.
 
-::: warning The two waiver-price captions are swapped
-The block captioned **Waiver credit** holds the debit side of the waiver price
-(`termConfig.issuedDebit`), and the block captioned **Waiver Debit** holds the credit side
-(`termConfig.issuedCredit`). Put the account you want debited under *Waiver credit*.
-:::
-
 The option that matters is:
 
 | Option | Field id | What it does |
@@ -239,7 +232,7 @@ theirs:
 
 | Option | Field id | What it does |
 |---|---|---|
-| Force Price List | `termConfig.forcePriceList` | Refuses to save the offer unless its price equals the unit's current price-list price, with *"The estate {0} price is {1} in price list, this must match the price {2}"* — «سعر الوحدة {0} في قائمة الأسعار يساوي {1}, سعر الوحدة يجب أن يساوي {2}». Both prices in the message are the price-list price; the offer's own price is not shown. Every other sales-family term that shows this option runs the same check. |
+| Force Price List | `termConfig.forcePriceList` | Refuses to save the offer unless its price equals the unit's current price-list price, with *"The estate {0} price is {1} in price list, this must match the price {2}"* — «سعر الوحدة {0} في قائمة الأسعار يساوي {1}, سعر الوحدة يجب أن يساوي {2}». Every other sales-family term that shows this option runs the same check. |
 | Consider Paid With Reservation Paid From Installments | `termConfig.considerPaidWithReservationPaidFromInstallments` | Applies when the offer's installment plan is generated: the amount paid with the reservation is counted as already paid on the down-payment line, exactly as on a sales contract. |
 
 ## Choosing a starting point

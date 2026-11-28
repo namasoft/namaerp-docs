@@ -49,12 +49,8 @@ a shelf, and saved — at which point it sits in the **Initial** state. From the
 driven only by committed movement vouchers: check it out and it becomes **Temporary Out**, bring
 it back and it returns to **Inside**.
 
-::: tip The state is a label, not a lock
-The document state is filled in by the system and cannot be edited by hand — but it also does not
-*restrain* anything. A document marked **Disposed** can still be edited, moved again, or deleted.
-Treat the state as a report of what the last movement said, not as a control that will stop
-somebody doing the wrong thing.
-:::
+The state is filled in by the system and only reports what the last movement said; it does not
+stop anything. See [Document States](/platform/dms/dms-documents#Document-States).
 
 ## What This Sub-Module Does Not Do
 
@@ -63,27 +59,18 @@ to expect and none of them is there:
 
 - **No expiry reminders.** A document carries a Renewal Date and an Expiration Date, but DMS sends
   no alert or notification of its own. If you need to be warned that a
-  licence lapses next month, build it yourself with a [scheduled task](/platform/automation-and-rules/scheduled-tasks.md)
+  licence lapses next month, build it yourself with a [scheduled task](/platform/automation-and-rules/scheduled-tasks)
   over a filtered list.
 - **No searching inside files.** You can find documents by folder, topic, owner, archive or code.
   You cannot search the *contents* of the attached scans.
 - **No per-folder permissions.** There is no access control specific to a folder or a topic. DMS
-  uses the ordinary [security profiles](/platform/security/security-profiles.md) like any other
+  uses the ordinary [security profiles](/platform/security/security-profiles) like any other
   entity; the closest thing to per-folder access is a row filter on the profile.
-- **No physical relocation.** This one surprises people, so it has its own warning below.
+- **No physical relocation.** A **Transfer** movement writes the destination on the voucher only;
+  the document keeps its own Location, Sub Location and Detailed Location until you edit them. See
+  [What Committing Actually Does](/platform/dms/dms-movements#What-Committing-Actually-Does).
 - **No reports.** Nothing ships for DMS — no printed form, no dashboard. Use the ordinary
   [list views](/platform/list-views/) and exports.
-
-::: warning A Transfer records an intention, not a result
-Transferring documents to another shelf writes the destination onto the movement voucher, and
-records the movement in the document's history — but it does **not** update the document's own
-Location, Sub Location or Detailed Location. Move a contract from shelf A-01 to B-01 and the
-document still reads A-01 afterwards.
-
-So treat Transfer as a log of what somebody did physically, and **edit the
-document's location fields yourself** to keep the register truthful. The same caution applies to
-the History tab, which records where a document came *from*, never where it went *to*.
-:::
 
 ## Where to Start
 
@@ -92,15 +79,15 @@ one before it:
 
 1. **Archives first.** Create your DMS Locations and list their shelves and drawers, because
    folders and topics both point at them. See
-   [Archives, Folders and Topics](/platform/dms/dms-filing-structure.md).
+   [Archives, Folders and Topics](/platform/dms/dms-filing-structure).
 2. **Then the folder tree**, working top-down, and remember to clear *Accepts Elements* on any
    folder that is meant to hold other folders rather than documents.
 3. **Then topics**, tying each one to the folder and archive it belongs with.
 4. **Then a movement book**, if you intend to track borrowing at all — Document Movement is a
    document, so it needs a book before anyone can record anything. See
-   [Checking Documents In and Out](/platform/dms/dms-movements.md).
+   [Checking Documents In and Out](/platform/dms/dms-movements).
 5. **Finally the documents themselves**, either one at a time or in bulk from a ZIP file.
 
 Only after that is it worth turning on the setting that adds a **DMS Documents** page to your
 customer, supplier and employee screens — covered in
-[Settings and Integration](/platform/dms/dms-configuration.md).
+[Settings and Integration](/platform/dms/dms-configuration).

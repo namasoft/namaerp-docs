@@ -1,7 +1,7 @@
 ---
 description: "The Fixed Asset Letter of Credit cost document: how it totals the costs distributed to each machine, sets each asset's cost and depreciation parameters, puts it into service, closes the credit, what it books, and how to undo it."
 entities: [FALCCostDoc]
-menu: Assets → Fixed Asset Letter of Credits → Fixed Asset Letter of Credit cost
+menu: Assets → Fixed Asset Letters of Credit → Fixed Asset Letter of Credit cost
 ---
 # The Cost Document
 
@@ -14,7 +14,7 @@ distributed to each machine, writes the total onto the machine as its cost, puts
 starts its depreciation clock — and closes the letter of credit. It is the only document in the chain
 that changes an asset.
 
-Find it at **Assets › Fixed Asset Letter of Credits › Fixed Asset Letter of Credit cost**.
+Find it at **Assets › Fixed Asset Letters of Credit › Fixed Asset Letter of Credit cost**.
 
 ![The Fixed Asset Letter of Credit cost document](../../../ar/modules/fixedassets/images/lc/fa-lc-cost-document-main-en.png)
 
@@ -77,7 +77,7 @@ Half the grid is filled for you and half is yours to fill.
 | Column | |
 |---|---|
 | **Useful Life** | how many periods the machine will be depreciated over |
-| the salvage value (قيمة الأصل كخردة) | what it is expected to be worth at the end. It may not equal the computed cost |
+| **Salvage Value** (قيمة الأصل كخردة) | what it is expected to be worth at the end. It may not equal the computed cost |
 | **Depreciation Start Date** | required, unless the asset is marked as not depreciable |
 | **Custodian** | the employee the machine is handed to |
 | **Asset Location** | where it physically goes |
@@ -118,7 +118,7 @@ Committing writes, per line:
 | On the asset | Value |
 |---|---|
 | the asset's cost | **369,000** for Press A, **246,000** for Press B |
-| **status** | initial → **Running**, or **Not Depreciable** for an asset flagged as such |
+| **status** | initial → **Running Depreciation**, or **Not Depreciable** for an asset flagged as such |
 | **purchase date** | the document's value date |
 | **depreciation start date** | 1 March 2026 |
 | **custodian** and **location** | as entered on the line, recorded as the asset's current location |
@@ -203,8 +203,9 @@ rather than one.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Fixed asset {0} already exists in {1}* — «الأصل {0} موجدود بالفعل فى {1}» | The asset on the line already carries a transaction entry written by another document — it was capitalised somewhere else. | Take the line off, or reverse the document the message names. A machine cannot be capitalised twice. |
+| *Fixed asset {0} already exists in {1}* — «الأصل {0} موجود بالفعل في {1}» | The asset on the line already carries a transaction entry written by another document — it was capitalised somewhere else. | Take the line off, or reverse the document the message names. A machine cannot be capitalised twice. |
 | *Fixed asset not compatible with its type* | A line's **Fixed Asset Type** is filled and disagrees with the type on the asset record itself. | Correct the line's type, or leave it empty and let the asset's own type stand. This message has no Arabic text in the product, so it appears in English on Arabic screens too. |
-| *Fixed Asset types in cost and expense documents are not consistent* — «هناك اختلاف بين انواع الاصول في سند التكليف وسندات المصروفات» | The number of distinct asset types on the cost lines is not the same as the number of asset types the committed expense documents distributed onto. | Compare the two grids. Every type that was charged an expense has to appear on a cost line, and no extra type may be added. |
-| *The fixed asset type  has expenses but not mentioned in this document* — «نوع الأصل عليه مصروفات غير مذكوره في سند المصروفات» | An asset type received distributed expenses but appears on none of the cost lines. | Add a cost line for that type. Note that the message does not print the type name, so read it off the expense documents. |
+| *Fixed Asset types in cost and expense documents are not consistent* — «هناك اختلاف بين أنواع الأصول في سند التكليف وسندات المصروفات» | The number of distinct asset types on the cost lines is not the same as the number of asset types the committed expense documents distributed onto. | Compare the two grids. Every type that was charged an expense has to appear on a cost line, and no extra type may be added. |
+| *The type {0} has expenses but not mentioned in this document* — «النوع {0} عليه مصروفات غير مذكورة في هذا المستند» | An asset type received distributed expenses but appears on none of the cost lines. | Add a cost line for that type. |
+| *The fixed asset {0} has expenses but not mentioned in this document* | An asset received distributed expenses but appears on none of the cost lines. | Add a cost line for that asset. This message has no Arabic text in the product, so it appears in English on Arabic screens too. |
 | *Cannot delete because there are transactions by the document {0}* — «لا يمكن الحذف لوجود حركات بواسطة المستند {0}» | You tried to delete the cost document while one of its assets carries an entry written by a later document. | Reverse the later document first; it is the one holding the asset. |

@@ -37,8 +37,8 @@ Four things, and only four:
    final delivery.
 3. **Copies the technical properties from its lines onto
    [the car record](/modules/servicecenter/cars-setup/car-master-file.md)** — chassis number, engine
-   number, gearbox, body type, number of passengers, warranty period, key number and slot number.
-   Only non-empty values overwrite; the copy is one-way, from the document to the car.
+   number, gearbox, body type, number of passengers, warranty period, key number, slot number, the
+   item classes 1–10 and the categories 1–5. Only non-empty values overwrite; the copy is one-way, from the document to the car.
 4. **Stamps the delivery date** onto the car, when the term's *update delivery date* option is on —
    along with any of the other reference stamps the term switches on.
 

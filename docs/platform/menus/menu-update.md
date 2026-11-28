@@ -104,7 +104,7 @@ so you can see at a glance what you have chosen.
 
 ### 4. Say what to add or change
 
-The first tab has two more grids — **Added / Modified Groups** and **Added / modified Items** — and
+The first tab has two more grids — **Added / Modified Groups** and **Added / Modified Items** — and
 one grid does both jobs. Whether a row adds or changes depends only on the code:
 
 - a code that exists in the source menu **changes** that group or entry;
@@ -134,14 +134,16 @@ New rows land at the end of their folder unless you say otherwise, and two colum
   Relative To, the order counts from the start of the folder you named.
 
 Leave both empty for a new sub-group and it lands directly after its parent group, which is usually
-what you wanted anyway.
+what you wanted anyway. The same rule applies to an existing sub-group you modify: with both columns
+empty, it moves to directly after its parent group, ahead of its sister sub-groups. An existing entry
+you modify keeps its place unless you fill one of the two columns.
 
 ### 6. Save, then point users at the new menu
 
 Saving is what applies everything — there is no separate button and nothing to run afterwards. Open
 the target menu and you will find it fully populated.
 
-![The Main tab of a Menu Update: Source Menu set to default and Target Menu set to the company menu, one renamed root group in the Added / Modified Groups grid, and one added entry in the Added / modified Items grid with its Relative To and Item Order filled in](../../ar/platform/menus/images/menu-update-main-en.png)
+![The Main tab of a Menu Update: Source Menu set to default and Target Menu set to the company menu, one renamed root group in the Added / Modified Groups grid, and one added entry in the Added / Modified Items grid with its Relative To and Item Order filled in](../../ar/platform/menus/images/menu-update-main-en.png)
 
 Then assign it: on a user, on a security profile, or on the legal entity.
 [Who sees which menu](/platform/menus/menu-visibility) covers the order those are consulted in, and

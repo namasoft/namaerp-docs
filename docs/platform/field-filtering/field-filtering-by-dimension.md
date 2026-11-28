@@ -53,7 +53,7 @@ A user limited to one branch will, in this one field, see records from branches 
 The Riyadh branch sends stock to Jeddah with a stock transfer. The source warehouse must stay limited to Riyadh; the destination must offer every branch.
 
 1. Open **Field Filtering** and add a record, say `TRANSFER-ANY-BRANCH`.
-2. Add a line: **Entity Type** = Stock Transfer, **On Field** = `toWarehouse` (the header **to Warehouse** field), tick **Ignore Login Branch**.
+2. Add a line: **Entity Type** = Stock Transfer, **On Field** = `toWarehouse` (the header **To Warehouse** field), tick **Ignore Login Branch**.
 3. Save. The next time a Riyadh user opens the destination warehouse lookup, Jeddah's warehouses are offered; the source warehouse lookup still shows Riyadh only, because it has no line.
 
 Saving takes effect straight away — no restart, and users do not need to log in again.

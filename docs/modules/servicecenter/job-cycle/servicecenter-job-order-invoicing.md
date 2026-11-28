@@ -43,8 +43,8 @@ Each one:
 1. takes its **book and term** from the corresponding pair on the job order's document term —
    customer invoice book and term, insurance invoice book and term, warranty invoice book and term;
 2. builds the lines from the job order (see below);
-3. saves the document — as a **draft** if the term ticks *Save Invoices As Draft*, otherwise committed
-   through the normal approval pipeline;
+3. saves the document — as a **draft** if the term ticks *Generate Invoices As Draft* and the
+   document has never been committed, otherwise committed through the normal approval pipeline;
 4. navigates you to the invoice it just made.
 
 For Fahad's job the three come out as:
@@ -89,31 +89,32 @@ its 190 share, not its 380 price:
 ## All three invoices name the vehicle's owner as customer
 
 This surprises everybody the first time, so state it plainly to your staff: on the insurance invoice
-and the warranty invoice, the **Customer** field shows **Fahad Al-Otaibi** — the person who owns the
-car — exactly as it does on the customer invoice. What differs is the accounting الذمة (subsidiary):
-Wafa Insurance on the insurance invoice, the NAWA Warranty Programme on the warranty invoice.
+and the warranty invoice, the **Customer** field shows **Fahad Al-Otaibi** — the job order's
+customer — exactly as it does on the customer invoice. What differs is the **Subsidiary** (الذمة):
+the job order's insurance company on the insurance invoice (Wafa Insurance), its warranty company on
+the warranty invoice (the NAWA Warranty Programme), and the customer on the customer invoice.
 
-It is deliberate, not a bug. The commercial relationship on the document is with the vehicle's owner;
-the receivable belongs to the insurer or the warranty provider. If your printed forms need the
+The commercial relationship on the document is with the job order's customer; the receivable belongs
+to the insurer or the warranty provider. If your printed forms need the
 insurer's name in the addressee block, take it from the subsidiary, not from the customer field —
 and remember that every workshop form here is
 [custom work](/modules/servicecenter/servicecenter-reports-and-forms.md).
 
 The rest of the header is inherited from the job order: the salesman is the reception engineer, the
 remarks are the job order's operation remarks, and *From Document* points back at the job order. By
-default the invoice takes the job order's value date; with *Use Today For Invoice Value Date* on the
-term it takes today's instead.
+default the invoice takes the job order's value date; with *Use Today Date For Invoice Value Date* on
+the term it takes today's instead.
 
 ## Sales orders instead of invoices
 
 Some installations do not want the service desk raising invoices directly. Tick
-**Generate Sales Orders Not Invoices** on the job order's term and all three buttons produce **sales
-orders** rather than sales invoices, on the same books and terms — the invoice then follows through
-your ordinary sales process.
+**Generate Sales Orders Not Sales Invoices** on the job order's term and all three buttons produce
+**sales orders** rather than sales invoices, on the same books and terms — the invoice then follows
+through your ordinary sales process.
 
 The pickers for the books and terms on the term screen follow the flag, so you always see the right
-kind of book. Note that switching the flag on a term that has already generated documents deletes
-what was generated before and rebuilds it in the other form.
+kind of book. If the flag is switched after a job order has already generated a document, the next
+press of that button deletes the earlier document and rebuilds it in the other form.
 
 ## Editing a generated invoice
 
@@ -122,7 +123,8 @@ discount.
 
 Whether you *should* is a different question, and the module gives you a switch. With the
 [module setting](/modules/servicecenter/servicecenter-configuration.md)
-**Force Job Order Invoice Qty And Prices** on, the invoice is locked to the job order: the
+**Force Service Center Order Invoice Quantities and Prices** on, the invoice is locked to the job
+order: the
 expected lines are rebuilt and any added, removed or re-priced line is refused. Installations that
 care about the job order being the single source of truth switch it on.
 

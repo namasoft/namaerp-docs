@@ -30,15 +30,11 @@ The screen holds code, group, the two names, and two settings:
 - **Priority** is a number you can sort, filter and report visit types by; it shows as a column in the visit type list.
 - **Always Allow Reservation** exempts [service requests](/modules/servicecenter/job-cycle/servicecenter-service-request.md) of this visit type from the booking checks — the appointment capacity of the day and the reception window. Tick it on an emergency or recovery visit type so such a car can always be booked in; leave it off on scheduled service, so routine bookings stay inside the capacity you published.
 
-::: tip How the menu labels read
-The English menu entry reads **"Visit Type (Debit then Credit)"**; in Arabic it reads نوع الزيارة. The **Settings** folder label begins with a space in both languages (` الإعدادات` / ` Settings`).
-:::
-
 ## Standard Operation Classification
 
 **Standard Operation Classification** (`تصنيف خدمة`), under **Service Center → Master Files**, holds code, both names, attachments and dimensions — nothing more.
 
-It is used in the **classification** field (التصنيف) on the [service task](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) screen.
+It is used in the **Classification** field (التصنيف) on the [service task](/modules/servicecenter/workshop-setup/servicecenter-tasks.md) screen.
 
 ::: tip A free tag on the task
 It is a column you can search and filter a task list by. "Mechanical", "electrical", "body", "valeting" makes a catalogue of two hundred tasks navigable.

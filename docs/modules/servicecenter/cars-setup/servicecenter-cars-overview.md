@@ -31,12 +31,12 @@ actually points at.
 
 The same object has two names, and you will meet both on your first day.
 
-- In the **menu** and on its own screen it is **السياره / Customer Car**.
+- In the **menu** and on its own screen it is **السيارة / Customer Car**.
 - In roughly forty configuration options and
   [document-term option labels](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md)
   it is **الصنف الفرعي / Sub Item**.
 
-*Create Sub Item From Line Information*, *Default SubItem Configuration*, *SubItem Status
+*Create Sub Item From Line Information*, *Default SubItem Configuration*, *Sub Item Status
 Movements* — every one of those options is talking about the car record. There is no separate
 "sub item" screen to hunt for. Throughout these pages we call it **the car record** or **the car
 file** in prose, and reproduce the on-screen label verbatim whenever we quote a field.
@@ -87,19 +87,10 @@ that is a configuration project at your site.
 
 ## Nothing about a car's behaviour is built in
 
-This is the single most important sentence in this half of the documentation, and every page here
-repeats it in some form.
-
-You would reasonably expect that a purchase invoice makes a car *In Transit*, a receipt makes it
-*Free Stock*, and a sales invoice makes it *Invoiced*. **None of that is true out of the box.** The
-only status the product itself ever assigns is the very first one, *ما قبل المبدئي / Pre Initial*,
-stamped at the moment a car record is created from a document line. Everything after that — which
-document sets which status, and which moves from one status to another are even legal — is drawn by
-you, per item, in a **Car Status Configurations** record.
-
-Two dealerships running the identical documents can have completely different status behaviour, and
-a dealership that never fills in the configuration will find that every document saves happily and
-changes nothing. How to draw the lifecycle is the subject of
+A purchase invoice does not make a car *In Transit*, a receipt does not make it *Free Stock* and a
+sales invoice does not make it *Invoiced* out of the box: apart from *ما قبل المبدئي / Pre Initial*,
+stamped when a document line creates the car record, every status and every legal move is drawn by
+you, per item, in a **Car Status Configurations** record. How to draw it is the subject of
 [Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations.md).
 
 ## Before any of it works
@@ -111,47 +102,32 @@ reported at all.
 
 1. **The Sub Items feature must be switched on.** The supply-chain feature `scSubItem`
    (*الأصناف الفرعية / Sub Items*) is what makes every car-related field visible in the first place —
-   the item's *Has Sub Item* tick, the item's configuration slots, and the **السياره (Customer Car)**
-   column on document lines. A database migrator **adds it to the Config Group's *Prevented
-   Features* list on upgrade**, so on a real installation it starts life switched off. Remove it from
-   *Prevented Features* before you look for anything else.
-2. **The item must be flagged as having sub items.** On the NAWA Rimal 2.4 item, tick *Has Sub
-   Item*. Decide this before you transact — the flag is locked once the item has movements.
+   the item's *Has SubItem* tick, the item's configuration slots, and the **السيارة (Customer Car)**
+   column on document lines. A database migrator **added it to the Config Group's *Prevented
+   Features* list when older databases were upgraded**, so on such an installation it is switched
+   off. Remove it from *Prevented Features* before you look for anything else.
+2. **The item must be flagged as having sub items.** On the NAWA Rimal 2.4 item, tick *Has
+   SubItem*. Decide this before you transact — the flag is locked once the item has movements.
 3. **The item must carry a Car Status Configurations record.** It is attached at
-   *Item ▸ Configurations ▸ Car Status Configurations*, and automatic car creation refuses to run
-   without it, failing with *"Item … does not have Car Status Configurations"*. Note the message is
+   *Item ▸ Configurations ▸ SubItem Status Configurations*, and automatic car creation refuses to run
+   without it, failing with *Item {0} does not have {1}* — «الصنف {0} ليس له {1}». Note the message is
    reported against the **item** column of the document line, which sends most people hunting in the
-   wrong place.
-4. **You must add the chassis and engine columns to your purchase screen.** Out of the box **no**
-   Car Purchases screen shows a chassis number, an engine number, a gearbox or a key/slot column.
-   The Car Receipt shows only the five warranty-pack tick boxes; the Purchase Order, Proforma
-   Purchase Invoice, Purchase Invoice and Purchase Return show none of it. So the feature that reads
-   the chassis number off the line has, as shipped, nowhere for anyone to type a chassis number. Add
-   the line-grid columns through a screen modification **before** you rely on automatic car creation.
+   wrong place. The full rule is on
+   [Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations).
+4. **You must add the chassis and engine columns to your purchase screen.** Out of the box the Car
+   Purchase Order, Car Proforma Purchase Invoice, Car Purchase Invoice and Car Purchase Return show no
+   chassis number, engine number, gearbox or key/slot column, and the Car Receipt shows only the five
+   warranty-pack tick boxes (the Sub Item Assembly Document is the one purchasing screen with chassis
+   and engine columns). So the documents that create cars from their lines have, as shipped, nowhere
+   for anyone to type a chassis number. Add the line-grid columns through a screen modification
+   **before** you rely on automatic car creation.
 :::
 
-::: warning The module-level *Default SubItem Configuration* does not do what its name suggests
-There is an option on the Service Center settings screen called
-**إعدادات حالة الصنف الفرعي الإفتراضية / Default SubItem Configuration**. It supplies the status
-filter rows used by the car picker on document lines when the **item** has no configuration of its
-own — and that is all it does.
-
-It is **not** a fallback for the status engine, and it is **not** a fallback for automatic car
-creation. Both of those read the item's own configuration and refuse to proceed without it. Filling
-in the module default and expecting the rest to follow is the most common setup mistake in this
-half of the module; each vehicle model still needs its own **Car Status Configurations** attached to
-its item.
-:::
-
-::: warning Nothing checks that a chassis number is unique
-There is no uniqueness constraint and no validation on the chassis number anywhere. You can create
-two car records carrying the identical chassis, from two documents or by hand, and the system will
-accept both, give each its own code, and track stock and cost against each separately. Nothing warns
-and nothing merges them.
-
-The practical consequence is that the discipline has to be yours: switch automatic creation on for
-exactly one document type, and search the car file before creating one by hand.
-:::
+The Service Center setting **إعدادات حالة الصنف الفرعي الافتراضية / Default SubItem Configuration**
+does not replace step 3: it only feeds the car picker's status filters — see
+[Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations).
+Nothing checks that a chassis number is unique either; see
+[The Car File](/modules/servicecenter/cars-setup/car-master-file).
 
 ## What is in the `cars` menu
 
@@ -160,28 +136,28 @@ where to click. In Arabic it is **سيارات**. Underneath it are seven folder
 
 | Folder | Arabic | What lives there |
 |---|---|---|
-| Car Files | ملفات السيارات | The car record, Car Status Configurations, Insurance Company, External Agency |
-| [Car Purchases](/modules/servicecenter/car-purchasing/car-purchase-invoice.md) | مشتريات السيارات | Purchase order, proforma purchase invoice, purchase invoice, purchase return, assembly |
-| [Car Inventory](/modules/servicecenter/car-purchasing/car-receipt.md) | مخازن السيارات | Car receipt and car receipt cancel |
-| [Car Sales](/modules/servicecenter/car-sales/car-sales-cycle.md) | مبيعات السيارات | Quotation request, quotation, sales order, approval, allocation, invoices, delivery, return, traffic letters |
-| Cars Sales Cancellation | الغاء مبيعات سيارات | The cancel documents for the sales chain |
-| Car Insurance | تأمين السيارات | Insurance programmes, policies and the seven policy documents |
-| Car Installment | تقسيط السيارات | Finance companies, instalment programmes and quotations |
+| Car Files | ملفات السيارات | The car record, Car Status Configurations, the five sales price classifiers, Customer, External Agency, Insurance Company |
+| [Car Purchases](/modules/servicecenter/car-purchasing/car-purchase-invoice.md) | مشتريات السيارات | Purchase order, purchase invoice, proforma purchase invoice, purchase return, Sub Item Assembly Document |
+| [Car Inventory](/modules/servicecenter/car-purchasing/car-receipt.md) | مخازن السيارات | Car receipt and its cancel, car final delivery and its cancel |
+| [Car Sales](/modules/servicecenter/car-sales/car-sales-cycle.md) | مبيعات السيارات | Sales order, sales invoice, traffic letter requests and traffic letters with their cancels, sales return, allocation, quotation request, quotation, sales approval, proforma sales invoice |
+| Car Sales Cancellation | إلغاء مبيعات سيارات | Car Sales Order Cancel and Car Allocation Cancel |
+| Car Installment | تقسيط سيارات | Instalment programmes, finance companies and instalment quotations |
+| Car Insurance | تأمين سيارات | Insurance programmes, customer insurance policies, the nine policy documents, and the insurance purchase invoice and purchase return |
 
-Two of those folders hold master files that surprise people by their location. **Insurance Company**
+Two master files in Car Files surprise people by their location. **Insurance Company**
 sits in Car Files, not in Car Insurance, and it belongs to this licence — which means an
 insurance-only customer cannot create one. And **External Agency** sits there too.
 
 ## External Agency
 
-**الجهة الخارجية / External Agency** is a small party master file in **cars > Car Files**. It can
+**معرض خارجي / External Agency** is a small party master file in **cars > Car Files**. It can
 carry a subsidiary account and tax data like any other party, and it exists so a site can register
 the outside bodies it deals with — a traffic department office, a clearing agent, an inspection
 centre.
 
-It is worth being blunt about it: **no document in the module references an External Agency.** It
-takes part in no car flow, no purchase, no sale and no accounting entry. Record them if the list is
-useful to you, and do not expect anything to consume it.
+It is worth being blunt about it: **no Service Center document references an External Agency.** It
+takes part in no car flow, no purchase and no sale; outside the module it is offered where any party
+can be picked, such as a subsidiary.
 
 ## Where to go next
 

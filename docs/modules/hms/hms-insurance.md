@@ -22,7 +22,7 @@ A **Medical Insurance Company** is the payer we bill for the covered portion of 
 
 - **Medical Insurance Company Class** — the class the company belongs to (see below).
 - **Do Not Endure From Tax1** / **Do Not Endure From Tax2** — tick these when the insurer never pays tax. The insurer's part of that tax becomes zero on every line billed to it, and the **patient pays the whole tax** instead (worked example under [Splitting a line between patient and insurer](#Splitting-a-line-between-patient-and-insurer)).
-- An attachment, the accounts tab, a **Contact Info** tab and a **Tax Information** tab.
+- An attachment, the **Accounts** and **Taxes** groups, a **Contact Info** tab and a **Tax Information** tab.
 
 ![Medical insurance company](../../ar/modules/hms/images/insurance/insurance-company-en.png)
 
@@ -122,7 +122,7 @@ The approval's **Insurance › Max Value** limits the insurer in two ways at onc
 - **Per line** — no single line's insurer value may exceed it.
 - **Per admission** — saving an approval sets the admission's **Insurance Endurance Max Value On All Invoices**. With several approvals for the same admission, it is the **largest** of their max values, not their sum. Deleting an approval recalculates it from the ones that remain. The field can also be typed on the admission itself, but the next approval saved or deleted for that admission resets it.
 
-Each time an invoice of the admission is saved, the system adds up the insurer's due amounts already recorded on the admission's other invoices and compares the rest of the maximum with this invoice. If this invoice would go over, its insurer share is reduced to exactly what is left — spread over its lines in proportion to each line's insurer value — and the patient's share grows by the difference. The admission's **Remaining Of Insurance Endurance Max Value** shows what is still available. Cancelling or deleting an invoice gives its amount back to the admission.
+Each time an invoice of the admission is saved, the system adds up the insurer's due amounts already recorded on the admission's other invoices and compares the rest of the maximum with this invoice. If this invoice would go over, its insurer share is reduced to exactly what is left — spread over its lines in proportion to each line's insurer value — and the patient's share grows by the difference. Each reduced line shows its new insurer share in **Insurance Max Value From Admission**. The admission's **Remaining Of Insurance Endurance Max Value** shows what is still available. Cancelling or deleting an invoice gives its amount back to the admission.
 
 ::: tip Example — services with no tax
 Mona's approval has a max value of 5,000 and a 90 % company share.
@@ -132,7 +132,7 @@ Mona's approval has a max value of 5,000 and a 90 % company share.
 3. If the surgery invoice is cancelled, the 5,000 is available again for her other invoices the next time they are saved.
 :::
 
-An admission whose approvals carry no max value has no cap: the insurer simply pays its percent of every line.
+An admission whose approvals carry no max value has no cap: the insurer simply pays its percent of every line. Likewise, while the admission's **Insurance Endurance Max Value On All Invoices** is empty or zero, no admission-wide ceiling applies.
 
 Because the order of saving decides who consumes the maximum, re-save the admission's invoices after changing an approval's max value if you want them recalculated.
 

@@ -19,9 +19,9 @@ Suppose the company has printed a pad of 50 receipts numbered `R-0101` to `R-015
 | Field | What it does |
 |---|---|
 | **Collector** (المحصل) | The employee who holds the pad. The lookup offers only employees marked as collectors. Leave it empty for a pad any collector may use. |
-| **Generated Receipts Count** (عدد ايصالات الدفترالمنشأه) | How many leaves the pad has — 50 in the example. |
+| **Generated Receipts Count** (عدد إيصالات الدفتر المنشأة) | How many leaves the pad has — 50 in the example. |
 | **Document Type** (نوع المستند) | Restricts the pad to one kind of document, for example **Receipt Voucher**. Leave it empty to allow any document. |
-| **Used With Commercial Papers Books** (يستخدم مع دفاتر الاوراق التجارية) | Tick it for a pad whose receipts are given against cheques. Such a pad is used through a commercial-paper book, not directly on vouchers — see [below](#Receipts-given-against-cheques). |
+| **Used With Commercial Papers Books** (يستخدم مع دفاتر الأوراق التجارية) | Tick it for a pad whose receipts are given against cheques. Such a pad is used through a commercial-paper book, not directly on vouchers — see [below](#Receipts-given-against-cheques). |
 
 The **Automatic Coding** group (التكويد الآلي) decides the receipt numbers. **Prefix** is the fixed start, **Suffix Length** is how many digits follow it, and **Suffix First Number** is where counting starts. For the example, use prefix `R-`, suffix length `4` and first number `101`, which gives `R-0101`, `R-0102` and so on up to `R-0150`.
 
@@ -30,7 +30,7 @@ The **Name Auto Coding** group (التكويد الآلي للإسم) works the 
 Save the book, then press **Generate Receipt Papers** (إنشاء أوراق الدفتر). The system creates one Receipt Paper per leaf. Each paper copies the book's collector, document type, commercial-papers setting and dimensions. The papers appear on the book's **Receipt Papers** tab (إيصالات), and each one shows the document it was later used in.
 
 ::: warning Generate works once per book
-Generating is refused while the book already has any papers, with *To generate new receipt papers, delete the old papers first*. A printed pad is a fixed set of leaves anyway, so a new pad gets a new book. To start the same book again, for example because the count or numbering was wrong, press **Delete Old Receipt Papers Of** (حذف اوراق الدفترالقديمه) first. That works only while none of the papers has been used.
+Generating is refused while the book already has any papers, with *To generate new receipt papers, delete the old papers first*. A printed pad is a fixed set of leaves anyway, so a new pad gets a new book. To start the same book again, for example because the count or numbering was wrong, press **Delete Old Receipt Papers Of** (حذف أوراق الدفتر القديمة) first. That works only while none of the papers has been used.
 :::
 
 You can also add a single leaf by hand on the **Receipt Paper** screen by naming its **Receipt Book**. The book's counts are updated in the same way.
@@ -42,8 +42,8 @@ You can also add a single leaf by hand on the **Receipt Paper** screen by naming
 The book keeps three numbers that update themselves:
 
 - **Total Receipts Count** (إجمالي عدد إيصالات الدفتر) — how many papers the book holds.
-- **Used Receipt Papers Count** (عدد ايصالات الدفترالمستخدمة) — how many have been written on a saved document.
-- **Unused Receipt Papers Count** (عدد ايصالات الدفتر الغيرالمستخدمة) — how many are still blank.
+- **Used Receipt Papers Count** (عدد إيصالات الدفتر المستخدمة) — how many have been written on a saved document.
+- **Unused Receipt Papers Count** (عدد إيصالات الدفتر الغير المستخدمة) — how many are still blank.
 
 The Receipt Book list shows the used and unused counts beside the collector, so a supervisor can see at a glance who is running out of receipts.
 
@@ -51,14 +51,14 @@ The Receipt Book list shows the used and unused counts beside the collector, so 
 
 ## Using a receipt on a voucher
 
-The **Receipt Voucher** and the **Payment Voucher** have a **Receipt Book** (دفتر الايصالات) and a **Receipt Paper** (الايصال) field in the header. The quickest way is to pick the paper directly, because choosing a paper fills in its book.
+The **Receipt Voucher** and the **Payment Voucher** have a **Receipt Book** (دفتر الإيصالات) and a **Receipt Paper** (الإيصال) field in the header. The quickest way is to pick the paper directly, because choosing a paper fills in its book.
 
 The lookups only offer what makes sense for this voucher:
 
 - **Receipt Book** lists books that still have unused papers, that are for this document type or for no specific type, and that belong to the voucher's collector or to no collector.
 - **Receipt Paper** lists unused papers that match the same type and collector rules, are not reserved for commercial papers, and belong to the chosen book when one is chosen.
 
-When the voucher is saved, the paper is marked **Is Used** (مستخدم), its **Document To Be used In** (المستند المستخدم به الايصال) points at the voucher, and the book's counters move by one. Changing the voucher to another paper frees the old one. Deleting the voucher frees its paper too, so the leaf can be used again.
+When the voucher is saved, the paper is marked **Is Used** (مستخدم), its **Document To Be used In** (المستند المستخدم به الإيصال) points at the voucher, and the book's counters move by one. Changing the voucher to another paper frees the old one. Deleting the voucher frees its paper too, so the leaf can be used again.
 
 ![A receipt voucher with its Receipt Book and Receipt Paper columns](../../ar/platform/images/payments/rv-receipt-book-paper-en.png)
 
@@ -74,7 +74,7 @@ Every document type has the same pair of fields, but the default screens show th
 
 When a customer pays by cheque, some companies still hand over a numbered receipt for the cheque. These receipts come from a separate pad that is tied to the cheque register rather than to vouchers:
 
-1. Create the Receipt Book with **Used With Commercial Papers Books** ticked. Its generated papers are marked **Used With Commercial Papers** (يستخدم مع الاوراق التجارية).
+1. Create the Receipt Book with **Used With Commercial Papers Books** ticked. Its generated papers are marked **Used With Commercial Papers** (يستخدم مع الأوراق التجارية).
 2. On the **Commercial Paper Book** (دفتر أوراق تجارية), set its **Receipt Book** to that pad. Only pads with the box ticked are offered there.
 3. On each **Commercial Paper** (ورقة تجارية) in that book, pick the **Receipt Paper**. The lookup lists the unused papers of the book's pad.
 
@@ -93,4 +93,4 @@ The two kinds of pads are kept apart. A commercial-papers receipt cannot be used
 | *Receipt paper {0} can be used only with commercial papers* — «الإيصال {0} لا يُستخدم إلا مع الأوراق التجارية» | A receipt from a commercial-papers pad was used on a voucher or another document. | Use a receipt from an ordinary pad. |
 | *Receipt paper {0} cannot be used with commercial papers* — «الإيصال {0} لا يمكن استخدامه مع الأوراق التجارية» | An ordinary receipt was put on a commercial paper. | Use the pad set on the paper's commercial-paper book. |
 | *Put the receipt paper either in the header or in the lines, not in both* — «ضع الإيصال إما في رأس المستند وإما في سطوره، لا في الاثنين» | A voucher has a receipt paper in the header and on a line. | Keep the papers in one place only. |
-| *Receipt paper {0} in line number {1} is repeated in line number {2}* — «الايصال {0} في السطر رقم {1} متكرر في السطر رقم {2}» | The same paper is on two voucher lines. | Give each line its own paper. |
+| *Receipt paper {0} in line number {1} is repeated in line number {2}* — «الإيصال {0} في السطر رقم {1} متكرر في السطر رقم {2}» | The same paper is on two voucher lines. | Give each line its own paper. |

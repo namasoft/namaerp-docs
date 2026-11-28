@@ -22,7 +22,7 @@ Manual execution on assembly documents where engine and chassis components need 
 1. **Identifies key components** - Finds engine and chassis items from the assembly BOM
 2. **Processes engine serials** - Copies engine serial numbers and lot IDs to co-products as primary serials
 3. **Processes chassis serials** - Copies chassis serial numbers to co-products as secondary serials and lots as boxes
-4. **Matches component lines** - Links assembly document lines to corresponding co-product lines
+4. **Matches component lines** - A component line goes to the co-product line whose id is stored in the component line's text1; when there is none, to the first co-product line whose item is the item of the assembly BOM. A component line with no matching co-product line is skipped
 5. **Updates dimensions** - Sets specific dimensions (serial numbers, lots, boxes) on co-product lines
 6. **Links records** - Updates text1 field with co-product line ID for reference tracking
 

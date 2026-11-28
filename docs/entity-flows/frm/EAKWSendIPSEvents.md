@@ -19,29 +19,29 @@ Manual execution for updating postal tracking status when mail items change loca
 
 ## How It Works
 
-1. **Checks configuration** - Verifies FRM module configuration allows IPS event sending
+1. **Checks configuration** - Does nothing when the FRM module configuration option Do Not Send IPS Documents Events To IPS is ticked
 2. **Processes detail records** - Iterates through specified detail collection containing mail items
-3. **Validates mail items** - Checks mail item IDs against allowed prefix filters
-4. **Builds event data** - Creates JSON payload with mail item details, office codes, and event information
-5. **Looks up classifications** - Finds mail class codes from delivery entries or postal sort lines
+3. **Validates mail items** - Skips a detail line whose mail item is empty. When the configuration field Allowed Mail Item Prefix To Send To IPS is filled (comma-separated), also skips a mail item that starts with none of the listed prefixes (case is ignored)
+4. **Builds event data** - Creates JSON payload with the mail item ID, its origin country (the last two characters of the mail item ID), office codes, and the event information of the IPS Event record
+5. **Looks up classifications** - Finds the mail class code from the delivery entry of the mail item, and if it has none, from a postal parcels sort line of the same mail item; otherwise the class is sent empty
 6. **Creates integration tasks** - Saves IPS integration tasks for asynchronous processing
 7. **Flushes changes** - Ensures all integration tasks are committed to database
 
 ## Parameters
 
-**Parameter 1:** Office Code (Required) - Current postal office code handling the mail item
+**Parameter 1:** office code (Optional) - Current postal office code handling the mail item
 
-**Parameter 2:** Next Office Code (Optional) - Destination office code for forwarding
+**Parameter 2:** next office code (Optional) - Destination office code for forwarding
 
-**Parameter 3:** Non Delivery Reason Code (Optional) - Code indicating reason for delivery failure
+**Parameter 3:** non delivery reason code (Optional) - Code indicating reason for delivery failure
 
-**Parameter 4:** Non Delivery Measure Code (Optional) - Code indicating corrective action taken
+**Parameter 4:** non delivery measure code (Optional) - Code indicating corrective action taken
 
-**Parameter 5:** Details Field ID (Required) - Field ID of the detail collection containing mail items
+**Parameter 5:** details field id (Required) - Field ID of the detail collection containing mail items
 
-**Parameter 6:** Mail Item Field ID (Required) - Field ID within detail records containing mail item identifiers
+**Parameter 6:** mail item field id (Required) - Field ID within detail records containing mail item identifiers
 
-**Parameter 7:** Event Code (Required) - IPS event code defining the type of status update
+**Parameter 7:** event code (Required) - Code or ID of the IPS Event record defining the type of status update
 
 ## Database Tables Affected
 

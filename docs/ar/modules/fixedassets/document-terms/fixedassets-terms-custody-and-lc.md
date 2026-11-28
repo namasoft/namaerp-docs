@@ -23,16 +23,17 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 ثم التأثيرات الأخرى.
 
 تحمل صفحة الإعدادات نفس خيارات الضريبة الموجودة في توجيه شراء الأصل الثابت — **خاضع للضريبة** (`termConfig.taxable`)
-و**سياسة الضريبة** (`termConfig.taxPlan`) و**الضريبة قابلة للتعديل** (`termConfig.modifiableTax`) وتعديل ضريبة الرأس في
-التفاصيل (`termConfig.allowEditingHdrTaxInDetails`) — إضافة إلى **الربط مع أسطر الفاتورة في المستند المحاسبي**
-(`termConfig.linkWithInvoiceLinesInAccountingDocument`)، الذي يربط كل سطر قيد بسطر الفاتورة الذي أنتجه.
+و**سياسة الضريبة** (`termConfig.taxPlan`) و**يمكن تعديل الضريبة** (`termConfig.modifiableTax`) و**السماح بتعديل ضريبة الفاتورة في
+السطر** (`termConfig.allowEditingHdrTaxInDetails`) — إضافة إلى **ربط الفاتورة في جريد الفواتير في سندات القبض والدفع**
+(`termConfig.linkWithInvoiceLinesInAccountingDocument`)، الذي يكتب الشراء في جدول الفواتير في كل سند دفع مسمّى في
+سطور الدفعات الخارجية، كما هو مشروح في [توجيهات اقتناء الأصول](/ar/modules/fixedassets/document-terms/fixedassets-terms-acquisition).
 
 وتحمل صفحة **تأثير الفاتورة** جانبَي قيد الشراء — مجموعة **مدين** (`termConfig.config.debit`) ومجموعة **دائن**
-(`termConfig.config.credit`) — إضافة إلى خيار اختصار القيد (`termConfig.config.shortenLedger`) وقاعدة ترتيب السداد
+(`termConfig.config.credit`) — إضافة إلى خيار **اختصار القيود** (`termConfig.config.shortenLedger`) وقاعدة ترتيب السداد
 (`termConfig.payInstallmentsInOrder`) ومفتاح الربط مع أسطر الفاتورة مرة أخرى، و**السماح بدفع مبلغ أكبر من قيمة الفاتورة**
 (`termConfig.allowPaymentMoreThanInvoiceAmount`). فحين يكون هذا الأخير مغلقًا يُرفض سند الدفع الذي يجعل المتبقي على
 الشراء أقل من صفر بالرسالة:
-«المتبقي {0} فى المستند {1} أصبح بالسالب»
+«المتبقي {0} في المستند {1} أصبح بالسالب»
 وفعّله لتقبل الدفع الزائد. أما صفحة **التأثيرات الأخرى** فتحمل مجموعة الضريبة 1 (`termConfig.tax`، ومعها خيار الجانب
 الآخر `termConfig.taxesOtherSide.tax1OtherSide`) ومجموعة النقدية (`termConfig.cash`).
 
@@ -120,8 +121,9 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 - **أربعة أزواج ضرائب**، كل زوج حساب مدين وحساب دائن (`termConfig.tax1Debit` / `termConfig.tax1Credit` …
   `termConfig.tax4Debit` / `termConfig.tax4Credit`)؛
 - **زوج خصم** (`termConfig.discount1Debit` / `termConfig.discount1Credit`)؛
-- **عدم التأثير في التكاليف** (`termConfig.donotAffectOnCost`) — المفتاح الذي يعلّم السطر بأنه مقيَّد لكنه مستبعد من التكلفة النهائية،
-  للمصاريف التي تريدها في الأستاذ لا في قيمة الماكينة؛
+- **عدم التأثير في التكاليف** (`termConfig.donotAffectOnCost`) — إذا أُشِّر قُيِّد كل سطر في مستند مصروف على هذا التوجيه لكنه
+  استُبعد من التكلفة النهائية، للمصاريف التي تريدها في الأستاذ لا في قيمة الماكينة (ويُستبعد السطر كذلك إذا حمل
+  بند المصروف العلامة نفسها)؛
 - **خاضع للضريبة** (`termConfig.taxable`) و**يمكن تعديل الضريبة** (`termConfig.editableTaxes`) و**سياسة الضريبة** (`termConfig.taxPlan`).
 
 وفي `LC-2026-004` تجمع مستندات المصروف 615,000: بضاعة 500,000، وشحن 40,000، ورسوم جمركية 60,000، وتخليص

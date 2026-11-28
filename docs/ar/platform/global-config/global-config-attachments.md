@@ -29,7 +29,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **Attachment Shared Folder Drive Letter** / **Attachment Shared Folder URL** / **Attachment Shared Folder User Name** / **Attachment Shared Folder User Password** `value.info.attachmentShareDriveLetter`, `value.info.attachmentShareURL`, `value.info.attachmentShareUser`, `value.info.attachmentSharePassword` — حين يكون المجلد مشاركة شبكية لا قرصاً محلياً، فهذه الحقول تربطه. واملأ أياً منها يصر حرف المحرك والرابط مطلوبين؛ ويخبرك النظام أيها ناقص عند الحفظ.
 
-**السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما** `value.info.allowDownloadAttachmentWithoutAuthentication` — تعمل روابط المرفقات دون جلسة. ويحتاجه بعض العارضين والبوابات الخارجية، لكنه يعني أن كل من يملك الرابط يستطيع جلب الملف — فلا تفعّله إلا حين تعلم أن ذلك مقبول.
+**السماح بتحميل المرفقات دون الحاجة إلى التسجيل في نما** `value.info.allowDownloadAttachmentWithoutAuthentication` — تعمل روابط المرفقات دون جلسة. ويحتاجه بعض العارضين والبوابات الخارجية، لكنه يعني أن كل من يملك الرابط يستطيع جلب الملف — فلا تفعّله إلا حين تعلم أن ذلك مقبول.
 
 **إنشاء جدول بيانات المرفقات** `value.info.createAttachmentInfoTable` — يصون جدولاً منفصلاً يصف المرفقات ويعرضه في القوائم والشاشات، فتستطيع رفع تقارير عمّا هو مرفق وأين وكم يشغل من مساحة.
 
@@ -100,7 +100,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | Attachment Shared Folder URL | Attachment Shared Folder URL | `value.info.attachmentShareURL` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
 | Attachment Shared Folder User Name | Attachment Shared Folder User Name | `value.info.attachmentShareUser` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
 | Attachment Shared Folder User Password | Attachment Shared Folder User Password | `value.info.attachmentSharePassword` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
-| السماح بتحميل المرفقات دون الحاجة الي التسجيل في نما | Allow Downloading Attachment Without Authentication | `value.info.allowDownloadAttachmentWithoutAuthentication` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
+| السماح بتحميل المرفقات دون الحاجة إلى التسجيل في نما | Allow Downloading Attachment Without Authentication | `value.info.allowDownloadAttachmentWithoutAuthentication` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
 | إنشاء جدول بيانات المرفقات | Create Attachment Info Table | `value.info.createAttachmentInfoTable` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
 | إنشاء نسخة مطالعة للمرفقات | Create Attachment Preview and Thumbnail | `value.info.createAttachmentPreviewAndThumbnail` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
 | عدم استعمال Google Docs لعرض مرفقات الأوفيس | Do Not Use Google Docs To Preview Office Files | `value.info.dontUseGoogleDocsForOfficeFilesPreview` | [تخزين المرفقات](#tkhzyn-lmrfqt) |
@@ -112,4 +112,4 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | Scanner Profile | Scanner Profile | `value.info.scannerProfile` | [الماسح الضوئي](#lmsH-lDwyy) |
 | مسار Image Magick | Image Magick Path | `value.info.docConverterSettings.imageMagicPath` | [محول المستندات](#mHwl-lmstndt) |
 | عنوان خادم OpenOffice | OpenOffice Server Address | `value.info.docConverterSettings.openOfficeServerAddress` | [محول المستندات](#mHwl-lmstndt) |
-| منفذ OpenOffice | Open Office Server Port | `value.info.docConverterSettings.openOfficeServerPort` | [محول المستندات](#mHwl-lmstndt) |
+| منفذ OpenOffice | OpenOffice Server Port | `value.info.docConverterSettings.openOfficeServerPort` | [محول المستندات](#mHwl-lmstndt) |

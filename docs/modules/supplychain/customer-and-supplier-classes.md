@@ -19,7 +19,7 @@ and English names, and in three cases a few settings — and they mean whatever 
 | **Customers' Class** | *Sales → Master Files → Customers' Class* | **Down Payment Percentage**, **Default UOM**, **Price List Default Price** | **Customers' Class** (`customerClass`) |
 | **Customers' Class 1** … **Customers' Class 5** | *Sales → Master Files → Customers' Class 1* … *5* | none | **Customer Class 1** … **5** (`customerClass1` … `customerClass5`) |
 | **Customer Category** | *Sales → Master Files → Customer Category* | **Price List Default Price** | **Customer Category** (`customerCategory`) |
-| **Suppliers' Class** | *Purchases → Master Files → Suppliers' Class* | **Default UOM** | **Supplier Class** (`supplierClass`) |
+| **Suppliers' Class** | *Purchases → Master Files → Suppliers' Class* | **Default UOM** | **Suppliers' Class** (`supplierClass`) |
 
 All of the customer fields sit together in the **Basic Information** group of the customer file, and the supplier
 class on the supplier file's **Main** tab — see
@@ -38,7 +38,7 @@ on a **Glass Job Order**, the order's down payment percentage is taken from the 
 [Specialized Scenarios](./specialized-scenarios.md).
 
 **Default UOM** (`defaultUOM`) — the unit a line takes when you enter an item by its code on a document that has a
-customer or supplier: the item's **Base Unit(Smallest)**, **Reporting Unit 1**, **Reporting Unit 2**,
+customer or supplier: the item's **Base Unit (Smallest)**, **Reporting Unit 1**, **Reporting Unit 2**,
 **Default Sales Unit** or **Default Purchase Unit**. A barcode that already names a unit keeps that unit. The customer's (or supplier's) own **Default UOM** wins; when it is empty the class's value is
 used, then — for a customer — the paying customer's, and finally the default sales or purchase unit set on the
 warehouse.

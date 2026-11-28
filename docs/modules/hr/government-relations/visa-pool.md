@@ -43,8 +43,10 @@ categories.
 | **Details** — Visas\|Remaining | عدد التأشيرات\|المتبقي | What is left available to delegate — issued minus delegated, in-procedure and finished. |
 
 Only **Issued Number** is something you type in; **Under Delegation**, **Under Procedure**,
-**Finished** and **Remaining** move on their own as Delegation and Handling documents are saved and
-committed against this row — you never edit them directly.
+**Finished** and **Remaining** move on their own as Delegation, Handling and Advent Registeration
+documents are committed against this row — you never edit them directly. The grid needs at least
+one row, the visa issue date cannot be after its end date, and two rows with the same nationality,
+job and arrival region refuse the save.
 
 ![Issued Visas](../../../ar/modules/hr/images/government-relations/issued-visas-en.png)
 
@@ -53,7 +55,9 @@ committed against this row — you never edit them directly.
 Once the quota exists, a **Visas Delegation** (`تفويض تاشيرة`) hands a slice of one nationality's
 visas to a specific PRO office to work with — you are not spending a visa yet, only reserving it
 for that office. You choose the **Issued Visa** grant and the **Nationality** being delegated once
-at the header, then break the quantity down by job in the **Details** grid.
+at the header, then break the quantity down by job in the **Details** grid. Choosing the nationality
+fills the grid with one line per job of that nationality that still has visas remaining on the
+grant; you then enter the number for each.
 
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
@@ -76,8 +80,11 @@ combination exists in the stock and refuses the line if it does not (see
 
 **Visa Handling** (`منح تأشيرة`) is where a delegated allocation is actually spent on a real visa:
 the office has gone to the authorities and obtained a numbered visa with its own validity dates for
-one or more of the hires it was allocated. You reference the **Delegation** it is drawn from (and
-the same **Issued Visa** grant), and each **Details** line records the visa actually granted.
+one or more of the hires it was allocated. You reference the **Delegation** it is drawn from, and
+each **Details** line records the visa actually granted. Choosing the delegation fills the **Issued
+Visa** grant and the **Authorized Office**, and adds one line per job on the delegation with its
+nationality and an **Expiry Period** of 90. Entering **From Date** with the Expiry Period fills **To
+Date** (and entering To Date fills From Date).
 
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
@@ -96,7 +103,7 @@ real, numbered visa in progress.
 
 ## Step 3 — the hire arrives: Employee Advent Registeration
 
-**Employee Advent Registeration** (`تسجيل قدوم موظف`, *Human Resources → Recruting → Employee Advent
+**Employee Advent Registeration** (`تسجيل قدوم موظف`, *Human Resources → Recruiting → Employee Advent
 Registeration*) is the last step of the funnel: the person has landed, cleared the border and
 joined. "Advent" here simply means *arrival*. You pick the **Issued Visa** grant once at the
 header, then add one **Details** line per arriving person — so a group that arrives on the same

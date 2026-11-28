@@ -40,11 +40,11 @@ select code,creationDate [creationDate#ddMMyyy HH:mm:ss] from Employee
 
 **Parameter 4:** Headers Line (Optional) - Text written as the first line of the file, before the rows. If empty, the file starts directly with the data rows (the query's column names are not written)
 
-**Parameter 5:** Protocol (Optional) - Transfer protocol: `local`, `ftp`, `ftps`, or `sftp` (default: local)
+**Parameter 5:** Protocol (Optional) - Transfer protocol, in lower case: `local`, `ftp`, `ftps`, or `sftp` (default: local). Any other value is refused when the entity flow is saved
 
 **Parameter 6:** Server URL (Optional) - Remote server address (required for FTP protocols)
 
-**Parameter 7:** Server Port (Optional) - Server port (21 for FTP, 990 for FTPS, 22 for SFTP)
+**Parameter 7:** Server Port - Server port, a whole number (21 for FTP, 990 for FTPS, 22 for SFTP). Must be filled when Parameter 5 is `ftp`, `ftps` or `sftp`; not used with `local`
 
 **Parameter 8:** Server User (Optional) - Username for remote server authentication
 

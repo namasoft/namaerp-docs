@@ -110,8 +110,8 @@ skipped when cost is attributed, so the material leaves the warehouse and the pr
 about it. If your implementation does not deliberately need blank term codes, keep the code mandatory.
 
 There is one further check, off by default, that links this document to the
-[contracting purchase order](/modules/contracting/costs/contracting-purchasing): tick *prevent saving
-if the issued item quantity exceeds the purchase order quantity* on the term and the system will
+[contracting purchase order](/modules/contracting/costs/contracting-purchasing): tick *Prevent Save If
+Issued Item Quantity Exceeds Purchase Order Item Quantity* on the term and the system will
 compare, per item and per term code, everything ever issued on this contract against everything ever
 ordered on it, and refuse the issue that goes over. It is the only hard link between the two
 documents, and it is how a site is stopped from consuming more than was bought for it.
@@ -147,7 +147,10 @@ works out the unit cost from it, and re-writes the cost entries with the real fi
 
 So the sequence is: commit → stock issue created → costing runs → the project's cost figure becomes
 final. On a busy database that is seconds, not minutes, but it is not instantaneous, and a zero cost
-column immediately after committing is not a fault. The same mechanism can be triggered again if a
+column immediately after committing is not a fault. Until that costing has finished, a
+[Cost Execution](/modules/contracting/costs/contracting-cost-execution) on the same contract refuses to
+commit with *Please wait until document {0} is processed* — «الرجاء الانتظار حتى تتم معالجة المستند {0}»,
+naming the material issue. The same mechanism can be triggered again if a
 cost correction elsewhere changes the answer — and a Cost Execution asks every material issue it is
 about to absorb to refresh its cost first, precisely because average cost moves.
 
@@ -189,8 +192,10 @@ project is the receipt's own inbound cost, again arriving via the background cos
 ## Once a Cost Execution has used it, it is locked
 
 Both the issue and the return refuse to be deleted once one of their lines has been absorbed by a
-Cost Execution: *Can not delete the document {0} because it is linked to cost execution {1}*. Modifying
-such a line is blocked for the same reason. This is deliberate — a committed Cost Execution has
+Cost Execution, and such a line cannot be removed, moved to another term code or contract, or reduced
+below what was absorbed. The attempt fails with
+*You removed or modified line in document {0} which is linked with cost execution {1}* — «لقد تم حذف أو تعديل سطر من المستند {0} وهو مرتبط بمستند حصر تكاليف مقاولات {1}».
+This is deliberate — a committed Cost Execution has
 already turned that cost into a unit cost, and an extract may already have billed against it. To
 correct a mistake that far back, the Cost Execution has to be reversed first, and the project extract
 before it if one exists.
@@ -227,6 +232,6 @@ figure that appears in the *Materials* column when the March
 
 | Message | Why | What to do |
 |---|---|---|
-| *Total purchase orders quantity {0} is less than total issued quantity {1} for item {2} and term code {3}* — «إجمالي كمية أوامر الشراء {0} أقل من الكمية المصروفة {1} للصنف {2} وكود البند {3}» | The issue's document term has *prevent saving if the issued item quantity exceeds the purchase order quantity* ticked, and this item on this term code has now been issued more than was ever ordered for the contract. The totals cover every issue and every contracting purchase order on the contract, not just this document. | Reduce the quantity on the line, or raise a contracting purchase order for the extra quantity first. If the check is not wanted for this document type, untick the option on the term. |
+| *Total purchase orders quantity {0} is less than total issued quantity {1} for item {2} and term code {3}* — «إجمالي كمية أوامر الشراء {0} أقل من الكمية المصروفة {1} للصنف {2} وكود البند {3}» | The issue's document term has *Prevent Save If Issued Item Quantity Exceeds Purchase Order Item Quantity* ticked, and this item on this term code has now been issued more than was ever ordered for the contract. The totals cover every issue and every contracting purchase order on the contract, not just this document. | Reduce the quantity on the line, or raise a contracting purchase order for the extra quantity first. If the check is not wanted for this document type, untick the option on the term. |
 | *The item {0} is not issued for the term {1}* — «لم يتم صرف الصنف {0} للبند {1}» | A Contracting Material Return line returns an item on a term code that never received that item on this contract. | Check the term code on the return line against the issue you are reversing — usually the return was coded to the wrong term. |
 | *The returned quantity is greater than the issued quantity for the item {0} and term {1}* — «الكمية المردودة أكبر من الكمية المصروفة للصنف {0} والبند {1}» | The return would send back more than was issued for that item and term, counting everything already returned. | Return only the remaining quantity. Sites that genuinely need to over-return can allow it with the term option that permits the returned quantity to exceed the issued quantity. |

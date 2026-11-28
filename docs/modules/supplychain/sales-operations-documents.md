@@ -186,9 +186,11 @@ The sibling screen answers a different question. Nothing about *this* discount h
 | Option | Effect |
 |---|---|
 | **Update Price** | Recompute the unit price |
-| **Update Normal Discount** | Recompute the line's main discount |
-| **Update First Discount** | Recompute discount 1 |
-| **Update Second Discount** | Recompute discount 2 |
+| **Update Normal Discount** | Recompute **Discount 1** |
+| **Update First Discount** | Recompute **Discount 2** |
+| **Update Second Discount** | Recompute **Discount 3** |
+
+Vendor discounts that land in **Discount 4** to **Discount 7** are recomputed whatever these ticks say.
 
 Its **Details** page carries the two buttons. **Collect** fills the grid from the supplier, the date range and the invoice type — subject to the same **Apply Discounts** requirement described above — and the grid's **Invoice** and **Value Date** columns are read-only, because they are the result of the search rather than something you type. **Apply**, on a saved document, re-saves each listed document with the scope you ticked, plus the purchase invoices generated from any purchase order in the list.
 
@@ -202,7 +204,7 @@ Use **Discount Update** when there is a *new* discount to introduce and attach t
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must fill sales man or responsible for customer* — «يجب ملئ مندوب المبيعات  أو المسئول عن العميل» | A **Sales Man Update Document** line names neither a salesman nor a person responsible for the customer, so the line would change nothing. | Fill one of the two on that line, or delete it. |
+| *You must fill sales man or responsible for customer* — «يجب ملء مندوب المبيعات أو المسئول عن العميل» | A **Sales Man Update Document** line names neither a salesman nor a person responsible for the customer, so the line would change nothing. | Fill one of the two on that line, or delete it. |
 | *Sale is prevented for the item {0}* — «تم منع البيع للصنف {0}» | A saved **Limit Sales Qty** row matches the invoice line and has **Prevent Sales** ticked — the item is barred for that customer altogether, with no quantity to argue about. The refusal appears on the sales invoice, not on this screen. | Find the Limit Sales Qty row that matches the customer and the item, and either untick Prevent Sales or narrow the row's scope. |
 | *This item {0} has reached its quantity limit {1} for this customer {2} for the period between {3} and {4}* — «هذا الصنف {0} قد بلغ الحد الأقصى {1} لهذا العميل {2} خلال الفترة من {3} إلى {4}» | The customer has already bought the capped quantity of that item inside one of the rolling windows the row defines. The message gives the cap and the exact window it was measured over, which is how you tell which period the invoice fell into. | Wait for the next window, raise the cap on the Limit Sales Qty row, or split the order. The window length comes from the row's period, counted forward from the first sale. |
 | *Line number {0} is repeated with line number {1}* — «السطر رقم {0} مكرر مع السطر رقم {1}» | Two **Limit Sales Qty** lines describe exactly the same combination — the same item and item classifications, and the same customer, customer class and category — so the system cannot tell which cap applies. | Merge the two lines; one combination may appear only once on the document. |

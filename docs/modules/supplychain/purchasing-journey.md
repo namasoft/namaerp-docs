@@ -121,21 +121,21 @@ The purchase documents follow the same two habits as the sales side: a **Collect
 
 **On the Purchase Invoice:**
 
-- **Collect** — asks for a **from date** and a **to date** and fills the stock-documents grid with the receipts already taken from this supplier, in the same warehouse, that have been committed at least once, are not flagged *Do Not Auto Collect In Invoices*, and have not been invoiced yet. Contact and subsidiary narrow the search too, but only when the term has *Consider Contact In Collecting Stock Documents Inside Invoices* / *Consider Subsidiary In Collecting Stock Documents Inside Invoices* switched on.
+- **Collect** — asks for a **from date** and a **to date** and fills the stock-documents grid with the receipts already taken from this supplier, in the invoice's warehouse when it has one, that have been committed at least once, are not flagged *Do Not Auto Collect In Invoices*, and have not been invoiced yet. Contact and subsidiary narrow the search too, but only when the term has *Consider Contact In Collecting Stock Documents Inside Invoices* / *Consider Subsidiary In Collecting Stock Documents Inside Invoices* switched on.
 - **Apply Receipts** — turns those receipts into priced invoice lines, using the invoice's price classifiers, tax settings, classification and term.
 - **Create Inventory Doc.** — for an invoice typed by hand, generates the Stock Receipt and opens it.
 - **Generate payment voucher** — the invoice must be saved; creates a payment voucher for the whole remaining value against the supplier and opens it as a new record. **Generate Payment Voucher For Selected Payments** does the same for only the instalment lines you ticked that still have something remaining. **Collect Payment Vouchers** brings existing vouchers onto the invoice instead.
-- **GeneratePayments** — splits the remaining value into an instalment schedule, asking for the number of payments, the period between them and its unit, the start date, a grace period, a day of the week, down / first / second / last payment values, and a rounding mode.
+- **Generate Payments** — splits the remaining value into an instalment schedule, asking for the number of payments, the period between them and its unit, the start date, a grace period, a day of the week, down / first / second / last payment values, and a rounding mode.
 
 **On the Purchase Order and the Proforma Purchase Invoice:**
 
 - **Copy Lines To Receipt Lines** — copies the order's detail lines into its receipts grid, so the expected deliveries start from what was ordered instead of being typed again.
-- **GeneratePayments** — the same scheduling dialog as on the invoice. It is also on the Purchase Quotation and the Purchase Quotation Request.
+- **Generate Payments** — the same scheduling dialog as on the invoice. It is also on the Purchase Quotation and the Purchase Quotation Request.
 
 **On the Consolidated Purchase Request:**
 
 - **Collect Requests** — gathers the open item requests that fall inside the ranges you set on the header (dates, item request, requester, supplier, legal entity, analysis set, branch, sector, department) and fills both the requests grid and its lines.
-- **Generate Purchase Quotations For Selected Suppliers** — the document must be saved; it asks whether to take quantities from the **approved quantity** on the request lines or the **remaining quantity** on the details, and then creates one purchase quotation per selected supplier.
+- **Generate Purchase Quotations For Selected Suppliers** — the document must be saved; it asks whether to take quantities from the **approved quantity** on the request lines or the **remaining quantity** on the details (remaining is the default), and then creates one purchase quotation per selected supplier.
 - **Generate Purchase Order** — also needs the document saved, and builds a single purchase order from it, carrying the detail lines over.
 
 **On the Purchase Price Comparing:**
@@ -150,12 +150,7 @@ The purchase documents follow the same two habits as the sales side: a **Collect
 
 **On the Purchase Document Update:** **Apply Changes To Purchase Documents** — the document must be saved first; it pushes the changes it carries onto the purchase documents it targets in one run.
 
-**On the Purchase Price List:**
-
-- **Collect Items** — fills the lines from the item-collection criteria you entered rather than item by item.
-- **Update Details** — stamps header values down onto every detail line. It asks, one Yes/No at a time, which of them to push: from date, to date, analysis set, legal entity, branch, department, sector, *Update Customer*, invoice classification, and price classifiers 1 to 5. The supplier question keeps its sales wording — it is labelled *Update Customer* on the purchase list too — and answering Yes simply writes the header's supplier onto every line.
-- **Update Prices** — recalculates prices through the price-updater rules on the header: a source field and up to five updaters, applied to all lines or only the selected ones. A purchase list offers no destination fields to choose from — every updater writes the single **Price** column. It refuses if the list has no lines or if no updater is filled in.
-- **calculate Price from Average Cost** — fills the **Price** column from each item's average cost instead of from another price field. As with Update Prices, a purchase list gives you no destination field to choose.
+**On the Purchase Price List:** **Collect Items**, **Update Details**, **Update Prices** and **calculate Price from Average Cost** are described in [Filling the Lines Without Typing Them](/modules/supplychain/purchase-pricing#Filling-the-Lines-Without-Typing-Them).
 
 ## Tips for Effective Purchasing
 

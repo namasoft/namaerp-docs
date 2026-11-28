@@ -10,7 +10,7 @@ These reports are part of the core `accounting` license.
 :::
 
 ::: tip Financial statements have their own page
-The formal financial statements (balance sheet, income statement, cash flow, `SYSR-FNS*`) aren't here — they're the output of the **financial-statements engine** and are documented with it. This page is for the ledger statements, trial balances, and analysis that aren't tied to a particular document type.
+The formal financial statements (balance sheet, income statement, cash flow, `SYSR-FNS*`) aren't here — they're documented on [Financial Statements](/modules/accounting/financial-reporting/financial-statements), and the group statements on [Consolidated Statements](/modules/accounting/financial-reporting/consolidated-statements). This page is for the ledger statements, trial balances, and analysis that aren't tied to a particular document type.
 :::
 
 ## Chart of accounts
@@ -23,9 +23,9 @@ The **Accounts Chart** report (`SYSR-ACC001`) prints the full tree with its leve
 
 An account statement shows an account's movements over a period with the **running balance** (locally, and in foreign currency when needed). The variants differ by level of detail and angle:
 
-- **General account statement** (`SYSR-ACC002`, `ACC029`) and its variants: by currency (`ACC030`), in detail (`ACC035`), by second side (`ACC037`), by exchange rate (`ACC038`), with revise capability (`ACC039`), by capabilities (`ACC040`).
-- **Subsidiary account statement** (`SYSR-ACC003`, `ACC031`) and **by currency** (`ACC032`) — to show a specific party's movements.
-- **Detail account statement** (`SYSR-ACC004`, `ACC033`), **by analysis set** (`ACC021`), **by currency** (`ACC034`).
+- **General account statement** (`SYSR-ACC029`), in local and foreign currency side by side (`SYSR-ACC002`), and its variants: in the account's currency (`ACC030`), in detail (`ACC035`), by second side (`ACC037`), by exchange rate (`ACC038`), with revise capability (`ACC039`), by capabilities (`ACC040`).
+- **Subsidiary account statement** (`SYSR-ACC031`), in local and foreign currency (`SYSR-ACC003`), and in the account's currency (`ACC032`) — to show a specific party's movements.
+- **Detail account statement** (`SYSR-ACC033`), in local and foreign currency (`SYSR-ACC004`), **by analysis set** (`ACC021`), and in the account's currency (`ACC034`).
 
 ![General account statement sample](../../../ar/modules/accounting/images/reports/acc002-en.png)
 
@@ -143,4 +143,4 @@ Beyond the printed reports, there are **live inquiries** on screen that need no 
 
 - **"The report balance doesn't match expectations"** — check the date/period range and the selected dimensions; most discrepancies are caused by an unintended filter.
 - **"An account doesn't appear in debt ages"** — the **Track Debt Ages** flag isn't enabled on the account.
-- **"The foreign-currency balance isn't shown"** — use the appropriate **by currency** statement variant (`ACC030`/`ACC032`/`ACC034`).
+- **"The foreign-currency balance isn't shown"** — use a currency variant: local and foreign side by side (`ACC002`/`ACC003`/`ACC004`) or in the account's currency (`ACC030`/`ACC032`/`ACC034`).

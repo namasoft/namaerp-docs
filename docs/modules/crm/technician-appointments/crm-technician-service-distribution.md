@@ -49,7 +49,7 @@ The quantity, the unit and the minutes are yours to record as they really were. 
 ::: tip Committing moves the appointment to Executed
 On commit, the appointment named on the header is set to **Executed** (*تم التنفيذ*). Cancel the distribution and the appointment goes back to **Booked** (*محجوز*). Point a committed distribution at a *different* appointment and both are corrected: the new one becomes Executed and the one you moved away from returns to Booked.
 
-One distribution per appointment is a habit, not a rule: the system accepts a second one. Keep in mind that cancelling or deleting **any** distribution of an appointment sets the appointment back to Booked, even when another committed distribution still exists. Also, if a period of an executed appointment is later moved or removed on the appointment's own screen, the appointment becomes *Rescheduled*.
+One distribution per appointment is a habit, not a rule: the system accepts a second one. Keep in mind that cancelling or deleting **any** distribution of an appointment sets the appointment back to Booked, even when another committed distribution still exists. Also, if a period of an executed appointment is later moved or removed on the appointment's own screen, the appointment becomes *Rescheduled*, and saving it while a row of its Items And Services grid has an Actual Quantity sets it back to *Booked* (see Status under [The header](/modules/crm/technician-appointments/crm-technician-appointment#The-header) of the appointment page).
 
 That is the whole of this document's effect. It records effort — it does not price the work, does not move stock and creates no ledger entry. Invoicing continues to run off the sales document the appointment was raised from.
 :::
@@ -68,6 +68,5 @@ Visits that did not happen never get a distribution — set the appointment to *
 
 | Message | Why | What to do |
 |---|---|---|
-| *Technician Crew {0} does not belong to Technician Appointment {1}* — «فريق الفنيين {0} لا ينتمي إلى موعد الفني {1}» | The Technician Crew on the header is no longer the crew the named appointment is booked for — usually because the appointment's crew was changed after this document was typed. | Reselect the appointment so the crew is refilled from it, then recheck the technicians in the grid. |
 | *Technician Service {0} does not belong to Technician Appointment {1}* — «الخدمة الفنية {0} لا تنتمي إلى موعد الفني {1}» | A Details row names a service that is not on the appointment's procedure — commonly because the procedure's service list was edited after the row was typed. | Replace the service with one the picker now offers, or add it to the appointment's procedure. |
 | *Technician {0} does not belong to Crew {1}* — «الفني {0} لا ينتمي إلى الفريق {1}» | A Details row names a technician who is not a member of the header crew — commonly because the technician was moved to another crew after the row was typed. | Choose a current crew member, or put the technician back in the crew if the row is right. |

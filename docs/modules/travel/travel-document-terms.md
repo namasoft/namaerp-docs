@@ -102,7 +102,8 @@ This tab is where the money that is not the deal itself gets its accounts.
 
 - **Cash** `termConfig.cash` — the account for money taken at the counter. It is also the fallback for payment-method
   rows: a card or wallet row is recorded on the account named on its own **Payment Method** master file,
-  and only falls back to this Cash side when the method names none.
+  and only falls back to this Cash side when the method names none. Where the payment method charges
+  fees, the fees and the tax on those fees get entries of their own.
 - **Tax 1**, **Tax 2**, **Tax 3**, **Tax 4** (`termConfig.tax`, `termConfig.tax2`, `termConfig.htax`,
   `termConfig.htax2`) — one group each, and each group carries both the tax side and its **other
   side** (`termConfig.taxesOtherSide.tax1OtherSide` … `termConfig.taxesOtherSide.tax4OtherSide`), the
@@ -204,6 +205,11 @@ take theirs from **Hotel Service** and **Flight Service** on the term. Leave eit
 that pass produces nothing, even with its book and term filled in, because every candidate line is
 dropped for having no service. Pick something meaningful and generic, such as a Tour Service called
 *Accommodation* and one called *Air Ticket*.
+
+The service, tour guide and restaurant passes need no such setting: they use the **Service** named
+on each tour service line. The same rule applies to them, though — a tour line goes onto an order
+only when it names both a party (hotel, supplier, tour guide or restaurant) and a service, so a
+service line with an empty Service column goes onto no order at all.
 
 ::: tip Fill the tour term before the first tour
 Three things have to be in place before the button will produce anything. The tour needs a term at

@@ -26,7 +26,7 @@ You need one when:
 | **Code / Name** | Your own reference. Entity flows and email settings find the file by its code. |
 | **Used For Checking Backups On Google Drive** | Asks Google for read-only access to the list of files on Drive. Needed by the backup check. |
 | **Used For Emptying Trash of Google Drive Account** | Asks Google for full Drive access, which emptying the trash requires. |
-| **Used For Sending Emails From Gmail** | Asks Google for permission to send mail from the account. Needed by an email sender account. |
+| **Used For Sending Emails From Gmail** | Asks Google for full access to the account's Gmail, which is the permission the sending uses. Needed by an email sender account. |
 | **Authorized** | Ticked by the system once Google has granted access. You do not tick it yourself. |
 | **User Email** | Filled by the system with the Google account that granted access. |
 | **Credentials JSON** | Optional. Leave it empty to use Nama's own Google application. Paste your own Google Cloud OAuth client here only if your organisation insists on its own (see below). |
@@ -105,8 +105,9 @@ into **Credentials JSON** and press **Start OAuth Flow**.
 | [Refresh Google Drive token](/entity-flows/core/EARefreshGoogleDriveOrMailToken) (tests the connection to Drive and renews the access) | Used For Emptying Trash of Google Drive Account |
 | [Prepare backup folder list](/entity-flows/core/EANamaCloudBackupPrepare) (lists the backup folders for the backup check) | Used For Checking Backups On Google Drive |
 
-The entity flows take the file's **code** (or ID) as a parameter and refuse to save the task if the
-file cannot be found, is not authorised, or lacks the option they need.
+The entity flows take the file's **code** (or ID) as a parameter. The first three refuse to save the
+task if the file cannot be found, is not authorised, or lacks the option they need. Prepare backup
+folder list does not check the file when the task is saved.
 
 ## Messages you may see
 

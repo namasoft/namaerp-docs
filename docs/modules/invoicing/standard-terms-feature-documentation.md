@@ -12,7 +12,6 @@ The Standard Terms feature in Nama ERP provides a comprehensive mechanism for tr
 
 ### 1. Sales Standard Term (Master File)
 **Entity**: `SalesStandardTerm`  
-**Table**: `SalesStandardTerm`  
 **Type**: Master File
 
 This is the master definition of standard terms that can be attached to sales documents.
@@ -29,13 +28,12 @@ This is the master definition of standard terms that can be attached to sales do
 
 ### 2. Standard Term Fulfillment Document
 **Entity**: `StandardTermFulfillment`  
-**Table**: `StandardTermFulfillment`  
 **Type**: Document File
 
 Document used to formally record that specific terms have been fulfilled.
 
 #### Key Fields:
-- **From Doc** (`fromDoc`): Generic reference to the source document (e.g., Sales Invoice)
+- **From Document** (`fromDoc`): Generic reference to the source document (e.g., Sales Invoice)
 - **Details** (`details`): Collection of fulfillment lines
 
 #### Fulfillment Line Fields:
@@ -44,13 +42,12 @@ Document used to formally record that specific terms have been fulfilled.
 
 ### 3. Standard Term Extension Document
 **Entity**: `StandardTermExtension`  
-**Table**: `StandardTermExtension`  
 **Type**: Document File
 
 Document used to extend the deadline for standard terms that allow extensions.
 
 #### Key Fields:
-- **From Doc** (`fromDoc`): Generic reference to the source document
+- **From Document** (`fromDoc`): Generic reference to the source document
 - **Details** (`details`): Collection of extension lines
 
 #### Extension Line Fields:
@@ -61,7 +58,7 @@ Document used to extend the deadline for standard terms that allow extensions.
 ## Implementation in Sales Documents
 
 ### Sales Invoice Standard Terms Line
-Documents like Sales Invoices can include standard terms through detail lines.
+Sales quotations, sales orders, sales invoices, sales replacements and purchase invoices carry a standard terms grid, and so do some documents of other modules (real estate sales and rent contracts, rental invoice requests, and the service center's sales order, sales approval and proforma sales invoice).
 
 #### Line Fields:
 - **Standard Term** (`standardTerm`): Reference to the Sales Standard Term
@@ -91,10 +88,12 @@ The system provides flexible fields for custom data:
 
 ### 2. Document Creation
 1. Add standard terms to sales documents (invoices, quotations, etc.)
-2. System automatically calculates `termPlannedEndDate` based on:
+2. When `termPlannedEndDate` is empty, the system fills it on save from:
    - Document value date
-   - Term's initial work period
-3. For extendable terms, system calculates `termExtendedEndDate` considering any existing extensions
+   - Term's initial work period (the value date itself when the term has none)
+
+   A planned end date already on the line is kept.
+3. For terms with **Used With Standard Term Extension Document** ticked, the system calculates `termExtendedEndDate` considering any existing extensions
 
 ### 3. Term Extension Process
 1. Create a Standard Term Extension document
@@ -120,42 +119,22 @@ The system provides flexible fields for custom data:
 ## Validation Rules
 
 ### Term Uniqueness
-- Each standard term can only appear once per document (for terms requiring fulfillment or extension)
-- System validates during document save
+- A standard term that requires fulfillment or is used with extensions can appear only once per document. Saving a document that repeats it is refused with *Standard term {0} is repeated at line {1}* — «البند {0} مكرر في السطر {1}»
+
+### Finding the Term
+- A fulfillment or extension document needs its **From Document** (`fromDoc`), and each term may appear on it only once (the same *Standard term {0} is repeated at line {1}* message)
+- Only a term with **Requires Standard Term Fulfillment Document** ticked can go on a fulfillment document, and only a term with **Used With Standard Term Extension Document** ticked on an extension document. Any other term is refused with *Standard term {0} could not be used with {1}* — «البند {0} لا يمكن استخدامه مع {1}»
+- A fulfillment line needs its **Fulfillment Date**, and an extension line both the value and the unit of its **Extension Period**
+- Every line of a fulfillment or extension document must name a term that is on the source document's standard terms grid, otherwise it is refused with *Could not find standard term {0} in document {1}* — «لا يمكن إيجاد البند {0} في المستند {1}»
 
 ### Extension Validation
-- Extensions cannot be applied after a term has been fulfilled
-- Extensions are processed chronologically based on creation date
-- System prevents conflicting extensions
+- Each extension of a term moves its end date on by the extension's **Extension Period**, and the fines of all of them add up into **Total Extension Fine**
+- Once a term has been fulfilled, its extensions are checked in order of value date, then creation date, and one that starts on or after the fulfillment date is refused with *Standard term {0} was fulfilled at date {1} with document {2}, you can not extend after this date using doc {3}* — «البند {0} تم تحقيقه في التاريخ {1} بالمستند {2}, لا يمكن تمديد البند بالمستند {3} بعد هذا التاريخ»
 
 ### Fulfillment Validation
-- A term can only be fulfilled once
-- If a fulfillment document already exists for a term, another document cannot fulfill it
-- System validates fulfillment dates against extension periods
-
-## Technical Implementation
-
-### Key Interfaces
-
-#### IHasStandardTerms
-Implemented by documents that support standard terms:
-- `fetchTerms()`: Returns the collection of standard term lines
-- `termLineClassType()`: Returns the specific line class type
-- `calcStandardTermEndDateAfterExtension()`: Calculates dates considering extensions
-- `validateStandardTerms()`: Validates term uniqueness and rules
-
-#### IStandardTermLine
-Implemented by standard term line classes:
-- Getters and setters for all term-related fields
-- System fields are managed automatically
-
-### Utility Class: StandardTermUtils
-Provides core business logic:
-- `markStandardTermAsFulfilled()`: Processes fulfillment documents
-- `extendStandardTerm()`: Processes extension documents
-- `unFilFullStandardTerms()`: Reverses fulfillment
-- `cancelExtendStandardTerm()`: Reverses extension
-- `calcTermEndDatesAfterExtension()`: Recalculates dates
+- A term can only be fulfilled once. When another fulfillment document already fulfils it, saving is refused with *You could not fulfillment term {0} with document {1}, document {2} assign fulfillment* — «لا يمكنك تحقق البند {0} بالمستند {1}, المستند {2} يحقق البند»
+- The same date check as above runs when a term is fulfilled: its fulfillment date must fall after the end date that was in force before each of its extensions
+- Deleting or cancelling a fulfillment document clears the fulfillment date and document on the source line; cancelling an extension takes its period and fine back off
 
 ## Configuration Examples
 
@@ -188,7 +167,3 @@ Provides core business logic:
 - Initial Period: 365 days
 
 **Usage**: Attached to sales invoices for warranty tracking.
-
-## Summary
-
-The Standard Terms feature provides comprehensive tracking and management of contractual terms and conditions in Nama ERP. Through its flexible configuration, automated calculations, and validation rules, it ensures businesses can effectively monitor and fulfill their obligations while maintaining clear documentation of all extensions and completions.

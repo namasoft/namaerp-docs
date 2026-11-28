@@ -11,8 +11,9 @@ fee is attached to almost every one of those steps. The person who does this —
 relations officer (PRO / مندوب)** — spends the day moving between the labour portal, the passport
 office and the bank. Nama's **Administrative Transactions** and **Visas** menus are the ERP side of
 that desk: a family of short documents that record each official transaction, track the fee that was
-paid, and — once the transaction actually goes through — write the new dates and numbers back onto
-the employee's master record so the rest of HR sees an up-to-date file.
+paid, and — for the residency renewal and the GOSI register, once the transaction actually goes
+through — write the new dates and numbers back onto the employee's master record so the rest of HR
+sees an up-to-date file.
 
 ::: info Gulf / KSA-specific area
 The whole government-relations family models Saudi / Gulf labour-and-immigration procedures — Iqama,
@@ -26,24 +27,25 @@ need the Gulf visa licence (`humanresource-gulf-visa`).
 Almost every document in this area follows the same five-beat rhythm, so it is worth learning once:
 
 1. **Pick the employee.** You open a new transaction and choose the employee it concerns.
-2. **The official documents fill themselves in, read-only.** The employee's current Iqama /
-   residency, work licence, passport number, GOSI and labour details are pulled from the master
-   record and shown as **read-only** context. You are looking at the current state of the file, not
-   editing it here.
+2. **The official documents fill themselves in.** The employee's current Iqama / residency, work
+   licence, passport number, GOSI and labour details are pulled from the master record and shown as
+   context. You are looking at the current state of the file, not editing it here.
 3. **Record the request.** You capture what is being done — the new visa number, the extension date,
    the renewal period, the fee — and save the document.
 4. **Pay the fee or get the approval.** The government charge is recorded (and marked as paid), or
    the internal approval is granted.
-5. **An update action writes the new facts back to the employee.** Once the transaction is genuinely
-   done — the box that says it was **paid** / **renewed** is ticked — a dedicated update step copies
-   the new residency end date, visa number or licence date onto the **employee master file**. This
-   write-back is guarded: it only runs when the transaction is marked complete, and it will not push
-   a date **earlier** than the one already on record, so a stale document can never roll an
-   employee's Iqama backwards.
+5. **Where the transaction changes the employee, the new facts are written back.** Two families do
+   this. On a Residence Renew Request, once the boxes that say it was **paid** and **renewed** are
+   ticked, the **Update Employee Information** action copies the new residency and work-licence end
+   dates onto the **employee master file**; it refuses to run before both boxes are ticked, and it
+   will not push a date **earlier** than the one already on record, so a stale document can never
+   roll an employee's Iqama backwards (see [Residence Renewal](/modules/hr/government-relations/residence-renewal)). The GOSI add
+   and remove documents write the social-insurance details onto the employee when committed (see
+   [Social Insurance & Sponsorship](/modules/hr/government-relations/social-insurance-and-sponsorship)). The visa procedures, the
+   sponsorship transfer and the Definition Letter write nothing back.
 
 Keep in mind throughout that **only the document has an effect** — a request that is still waiting
-for approval changes nothing. The employee's file moves only when the completed transaction runs its
-write-back.
+for approval changes nothing.
 
 ## The fee catalogue: Transaction Type
 
@@ -58,8 +60,8 @@ You will find it under **Human Resources → Administrative Transactions → Tra
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
 | Arabic Name / English Name | الاسم العربي / الاسم الإنجليزي | The transaction's display name (e.g. *Iqama renewal fee*). |
-| Default Price | السعر الافتراضي | The amount proposed automatically when this transaction is chosen. |
-| Min Price / Max Price | أقل سعر / اقصي سعر | The floor and ceiling the recorded fee is allowed to fall between. |
+| Default Price | السعر الافتراضي | Choosing this transaction type in the header of a Payment Request puts this amount on every line of its Details grid. |
+| Max Price | اقصي سعر | When set, a Payment Request whose header carries this transaction type cannot be committed while any line's amount is above it. |
 | Account | الحساب | The general-ledger account the fee is charged to. |
 | Legal Entity / Branch / Sector / Department | الشركة / الفرع / القطاع / الإدارة | The dimensions that scope where the transaction type is used. |
 
@@ -83,11 +85,15 @@ It lives under **Human Resources → Work List → Definition Letter**
 | Letter Purpose | الغرض من الخطاب | Why the certificate is being issued. |
 | Residency (Number / Issue / End) | الأقامة (رقم / تاريخ الإصدار / تاريخ الأنتهاء) | The Iqama details reproduced on the letter. |
 | Hiring Date | تاريخ التعيين | The employment start date. |
-| Monthly Salary (Amount / Currency) | الراتب الشهري (المبلغ / العملة) | The salary the certificate confirms. |
+| Monthly Salary (Amount / Currency) | الراتب الشهري (المبلغ / العملة) | The salary the certificate confirms. Recalculated on every save (see below). |
 
 A Definition Letter is a **statement, not an accounting entry** — issuing one does not touch the general
-ledger. It is governed by its own document term, but that term names print and numbering settings
-rather than accounting accounts.
+ledger. Its document term lists up to seven salary component types (see
+[Employment and Government Relations Document Terms](/modules/hr/document-terms/hr-terms-employment-and-government)).
+On every save the letter takes the employee's most recent committed salary document (by value date) and
+sets **Monthly Salary** to the sum, over the listed types, of the addition on the first line of that
+document whose component is of that type. When the term lists none, or the employee has no committed salary document, Monthly
+Salary is 0.
 
 ![Definition Letter](../../../ar/modules/hr/images/government-relations/ho-definition-letter-en.png)
 
@@ -110,6 +116,13 @@ charges can be logged on one document.
 | Reason | السبب | A free-text explanation of the charge. |
 | Details (grid) | التفاصيل | Multiple fee lines — each with its own receiving party, transaction type, amount and paid flag. |
 
+The header **Amount** is the sum of the line amounts and is recalculated on every save. Choosing the
+header **Transaction Type** fills every line's amount with that type's Default Price. When that type has
+a Max Price, committing refuses any line whose amount is above it, with a message that has no Arabic
+text and shows in English on both interfaces:
+
+*Amount can not exceed max price*
+
 ![Payment Request](../../../ar/modules/hr/images/government-relations/ho-payment-request-en.png)
 
 ::: warning The payment request records a fee — it does not create a ledger entry by itself
@@ -128,12 +141,9 @@ behave the same way.
 
 ## How it's processed
 
-Like every document in Nama, saving one of these is instant; any background effect is raised as a
-**business request** (`طلب أعمال`) with its own **processing status** (`حالة المعالجة`) that can be
-retried from the **Business Requests** view if it fails. For the fee-tracking and letter documents
-here there is **no ledger effect to process** — they record facts and (for visa and residency
-transactions) write dates back to the employee. The money itself is accounted for by the treasury
-payment that settles the fee, not by the request that logged it.
+Saving one of these documents is instant. For the fee-tracking and letter documents here there is
+**no ledger effect to process** — they record facts, and the fee is accounted for as the warning
+above explains.
 
 ## Actions on this screen
 
@@ -141,8 +151,8 @@ The **Transaction Type**, the **Definition Letter** and the **HO Payment Request
 
 ## The rest of the toolkit
 
-The government-relations desk is spread across several focused pages, all sharing the pick-employee →
-read-only-docs → record → update-back cycle described above:
+The government-relations desk is spread across several focused pages, all built on the cycle
+described above:
 
 - [HR Visas](./hr-visas) — exit / re-entry visas (single and batched), visa extensions, final-exit
   visas, family-visit visas and passport delivery.

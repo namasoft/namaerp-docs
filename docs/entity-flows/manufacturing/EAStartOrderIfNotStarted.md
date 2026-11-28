@@ -26,12 +26,11 @@ Manual execution on production orders or automated workflow triggers when orders
 
 ## Parameters
 
-This action accepts optional parameters but does not use them. All functionality is based on the production order's current status.
+This action takes no parameters. All functionality is based on the production order's current status.
 
 ## Database Tables Affected
 
 - **ProductionOrder** - Updates the status field from initial to in-progress
-- **Status Tracking Tables** - May update order status history if configured
 
 **Module:** manufacturing
 

@@ -35,16 +35,21 @@ can point at it: tasks are grouped under milestones, project invoice lines can b
 milestone, and project stage documents and their extensions build their date chains from milestones.
 
 You will find the file at **Project Management → Projects → Project Milestone**
-(**ادارة المشاريع ← مشاريع ← مرحلة**), and it holds the project it belongs to, a responsible
+(**إدارة المشاريع ← مشاريع ← مرحلة**), and it holds the project it belongs to, a responsible
 employee, a start and an end date, its **% Of Project** and its **% of Finishing**.
 
 ![A project milestone record](../../../ar/modules/ecpa/images/projects/milestone-main-en.png)
 
-::: tip Read the milestone file, do not type into it
-You normally never create a milestone here. Milestones are generated from the project's own
-**Milestones** page: each line of that grid becomes a milestone record when the project is saved,
-lines you delete take their milestone record with them, and deleting the project removes them all.
-Creating one by hand produces a record the project's grid knows nothing about.
+::: tip Two ways a milestone record comes to exist
+Each row of the project's own **Milestones** page either points at a milestone record or makes one.
+A row whose **Milestone** column is left empty generates its own milestone record when the project
+is saved; deleting the row, or the project, removes that generated record. A row whose **Milestone**
+column names an existing milestone record (one created on this screen, or one a Phases Discipline
+Group refers to) generates nothing and simply uses that record.
+
+The difference matters for the matrix: the **Details** grid, its three buttons and the save checks
+below work only with the milestone named in a row's **Milestone** column. A generated record is not
+written back into that column, so a milestone generated from a row's name cannot be used in the matrix.
 :::
 
 ### The project's Milestones page
@@ -63,9 +68,10 @@ The row also carries start and end dates, a responsible employee, a **% of Finis
 type yourself as the phase progresses, and a set of estimated-cost columns we will come back to in
 Part 3 — those are filled in for you, not typed.
 
-Above the grid sits **Miles Group**, the coding group used to number the milestone records this page
-generates. Set it once and the generated milestones get tidy codes; leave it and they are coded from
-the project's own code plus the line number.
+Above the grid sits **Miles Group**, the master group the milestone records this page generates are
+filed under. When that group has auto-coding or a coding formula, the generated milestones are coded
+by it; otherwise, or with no group, they are coded from the project's own code plus the row's
+position counting from 0 (`P-2026-0140`, `P-2026-0141`, …).
 
 ![The project's Milestones page](../../../ar/modules/ecpa/images/projects/project-milestones-en.png)
 
@@ -73,7 +79,7 @@ the project's own code plus the line number.
 
 A firm that designs villas does it the same way every time. Re-typing the same phase-and-discipline
 breakdown on every new project is exactly the sort of work an ERP should remove, and the
-**Phases Discipline Group** (**ادارة المشاريع ← مشاريع ← مجموعة المراحل والتخصصات**) is what removes
+**Phases Discipline Group** (**إدارة المشاريع ← مشاريع ← مجموعة المراحل والتخصصات**) is what removes
 it.
 
 The thing to understand about this file — and it surprises almost everyone — is that **it is not a
@@ -102,8 +108,10 @@ Twelve lines, twelve work packages. A second group for interior fit-out work mig
 lines, because structural is not involved in the early phases — and that is the whole point of a
 hand-built template: it captures the shape of a job, including the gaps.
 
-There are no percentages, no hours and no costs anywhere on this file. It carries **names only**.
-Every number is entered per project, because every project is worth a different amount.
+Each line points at an existing milestone record and an existing discipline, so both must be
+created before the group. There are no percentages, no hours and no costs anywhere on this file: the
+only figure on a line is a **Deliveries** number, and it is not copied to the project. Every number
+is entered per project, because every project is worth a different amount.
 
 ![A Phases Discipline Group](../../../ar/modules/ecpa/images/projects/phases-discipline-group-main-en.png)
 
@@ -116,7 +124,7 @@ pairs:
 | Grid | What it receives |
 |---|---|
 | **Details** (the matrix, on the Main page) | one row per group line — twelve rows, each with its milestone and discipline already set |
-| **Milestones** page | one row per *distinct* milestone in the group — four rows: Concept, Schematic, Detailed Design, Tender Documents |
+| **Milestones** page | one row per *distinct* milestone in the group — four rows: Concept, Schematic, Detailed Design, Tender Documents — each naming the group's milestone record in its **Milestone** column, so no new milestone records are generated for them |
 | **Disciplines** page | one row per *distinct* discipline in the group — three rows: Architectural, Structural, Electrical |
 
 Everything else on those rows — the percentages, hours, costs, dates and responsibles — is left
@@ -260,7 +268,9 @@ group-built project satisfies the first two automatically.
 
 1. **Every discipline in the matrix must exist on the Disciplines page.** Otherwise the save is
    refused, naming the discipline it could not find.
-2. **Every milestone in the matrix must exist on the Milestones page.** Same treatment.
+2. **Every milestone in the matrix must be the Milestone of a row on the Milestones page.** Same
+   treatment. A milestone generated from a row's name does not count, because that row's
+   **Milestone** column stays empty.
 3. **One discipline's percentages may not add up to more than 100.** The architectural column of our
    matrix sums to exactly 100; push any of its rows up and the save is refused.
 4. **A milestone's rows may not claim more of the project than the milestone does.** The three
@@ -274,9 +284,11 @@ before you hand the project over is worth the ten seconds.
 ## Building the matrix without a template
 
 If a project does not follow any of the firm's standard shapes, fill the Milestones and Disciplines
-pages by hand and then use the buttons above the matrix on the Main page:
+pages by hand, picking an existing milestone record in each Milestones row's **Milestone** column,
+and then use the buttons above the matrix on the Main page. Rows with an empty **Milestone** column
+are skipped by all three:
 
-- **Create Matrix From Disciplines and Milestones** — builds every possible combination: four
+- **Create Matrix From Disciplines And Milestones** — builds every possible combination: four
   milestones × three disciplines = twelve rows, whether or not all twelve are real work.
 - **Copy Milestones To Details** — one matrix row per milestone, discipline left blank.
 - **Copy Disciplines To Details** — one matrix row per discipline, milestone left blank.

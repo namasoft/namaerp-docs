@@ -41,8 +41,8 @@ account, the same convention as the Inter Company Transfer and inter-company sto
 
 | Field | Used in the entry of | Falls back to |
 |---|---|---|
-| **Mediator Account 1** (حساب وسيط الشركة 1) | The **source** company — the one the asset is leaving | The **destination** company's mediator account |
-| **Mediator Account 2** (حساب وسيط الشركة 2) | The **destination** company — the one receiving it | The **source** company's mediator account |
+| **Mediator Account1** (حساب وسيط الشركة 1) | The **source** company — the one the asset is leaving | The **destination** company's mediator account |
+| **Mediator Account2** (حساب وسيط الشركة 2) | The **destination** company — the one receiving it | The **source** company's mediator account |
 
 ![The To group, where the destination company is set](../../../ar/modules/fixedassets/images/movement/fa-transfer-document-to-dimensions-en.png)
 
@@ -51,9 +51,13 @@ transfer falls back to the other company's when the field on the document is emp
 right way to work; the fields on the document exist for the case where a particular move should pass
 through a different inter-company account.
 
-What you cannot do is skip it. If the companies differ and neither the document nor the legal entity
-supplies a mediator account, the commit is refused with *"You must specify mediator account for legal
-entity …"*, naming the company that is missing one.
+What you cannot do is skip it. When the companies differ, **both** legal entities must carry a
+mediator account on their own record, even if the two fields on the document are filled. If either
+one lacks it, the commit is refused, naming the company that is missing one:
+
+*You must specify mediator account for legal entity {0}*
+
+This message has no Arabic text in the product, so it appears in English on Arabic screens as well.
 
 ### Only between companies on the same currency
 
@@ -69,15 +73,13 @@ has only moved, and the [consolidated statements](/modules/accounting/financial-
 take the gain on the sale back out if it is booked on an intercompany gain account.
 
 ::: warning Set the document's own legal entity to the company the asset is leaving
-The transfer works out how much to move by reading the balances the asset has already accumulated in
-the ledger — gross cost on its cost account, accumulated depreciation on its accumulated-depreciation
-account — as at the value date, in the company named in the document's own **المحددات / Dimensions**
-group.
-
-On an inter-company move it is tempting to file the document under the receiving company. Do not. The
-balances live in the source company; if the document's dimensions name anything else the lookup comes
-back empty, every line is zero, and the transfer commits with no entry at all. Source company in the
-Dimensions group, destination company in the *To* group.
+The transfer reads the asset's ledger balances in the company named in the document's own
+**المحددات / Dimensions** group — see the
+[transfer document](/modules/fixedassets/movement/fixedassets-transfer-document.md). On an
+inter-company move it is tempting to file the document under the receiving company. Do not: the
+balances live in the source company, so the lookup comes back empty, every line is zero, and the
+transfer commits with no entry at all. Source company in the Dimensions group, destination company in
+the *To* group.
 :::
 
 ## The two entries, worked
@@ -169,8 +171,9 @@ and the change of legal entity on the asset then all follow from committing the 
 
 1. **Depreciate the asset up to the month of the move.** The transfer will not commit unless
    depreciation is current, and you want the accumulated figure the transfer moves to be the real one.
-2. **Check that both companies have a mediator account and keep their books in the same currency**, or
-   fill the two mediator fields on the document.
+2. **Check that both companies have a mediator account on their legal entity record and keep their
+   books in the same currency.** Fill the two mediator fields on the document only when this move
+   should use different inter-company accounts.
 3. **Set the document's Dimensions group to the source company.**
 4. **Pick the destination location** — it brings the destination company, branch, sector, department
    and analysis set with it — and check the three accounts in the Detail Accounts group are the

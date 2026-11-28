@@ -14,31 +14,15 @@ Fetches basic commercial registration information from Saudi government's Wathq 
 
 ## When This Action Runs
 
-Manual execution on entities implementing IHasCommercialInfo interface (customers, suppliers, companies) with valid Commercial Registration National Number.
+Manual execution on customers and suppliers that have a **Commercial Registration National Number**.
 
 ## How It Works
 
-1. Uses `/commercial-registration/info/` endpoint (lighter than `/fullinfo/`)
-2. Processes response using shared `EAWathqCommercialInfoFetcher.copyInfo()` method
-3. Updates company name and basic commercial details
-
-## Key Differences from Full Fetcher
-
-| Aspect | Basic Info | Full Info |
-|--------|-----------|-----------|
-| **Endpoint** | `/info/` | `/fullinfo/` |
-| **Response** | Essential data | Complete details |
-| **Performance** | Faster | Slower |
-| **Use Case** | Quick validation | Complete setup |
+It works as [EAWathqCommercialInfoFetcher](/entity-flows/core/EAWathqCommercialInfoFetcher), with the same checks, messages and automatic copy, except that it calls the `/commercial-registration/info/` endpoint (basic information) instead of `/fullinfo/`. The contact details are copied only when the response contains them.
 
 ## Key Parameters
 
-- **Parameter 1:** API Key (Required) - Wathq platform API key
-- **Parameter 2:** Bearer Token (Required) - OAuth token for authentication
-- **Parameter 3:** Extra Fields Copier - Custom field mapping expressions
-- **Parameter 4:** Do Not Copy Any Fields - Skip automatic field copying
-- **Parameter 5:** Log Response - Log API response for debugging
-- **Parameter 6:** Multi Call On Same Data - Allow multiple calls for same CR number
+The six parameters are those of [EAWathqCommercialInfoFetcher](/entity-flows/core/EAWathqCommercialInfoFetcher#Key-Parameters). The title of Parameter 3 shows the example `description1=$map.crNumber`.
 
 ## Database Tables Affected
 

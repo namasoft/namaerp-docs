@@ -17,7 +17,7 @@ delivered).
 A **Car Action** or **Car Problem** here means something that happened to the *vehicle* — an
 accident, a repair, a routine service. Government traffic fines and violations against the *company*
 are a completely different, Gulf-specific area — see
-[Government Penalties](./government-relations/government-penalties) instead.
+[Government Penalties](/modules/hr/government-relations/government-penalties) instead.
 :::
 
 ## Vehicles
@@ -35,7 +35,7 @@ owner's and rider's ID documents), the authorization and operating card, and the
 Accounts** (`حافظة الحسابات`), which are required. **Custodian** names the employee who holds the car
 today, and the **Custody Details** grid keeps who held it from which date.
 
-**Car Brand** (`ماركة سياره`) is a plain code-and-name list, and each **Car Model** (`موديل سياره`) belongs
+**Car Brand** (`ماركة سيارة`) is a plain code-and-name list, and each **Car Model** (`موديل سيارة`) belongs
 to a brand. A Car Model also carries a **Tax Plan**: when a car is itself the item on an electronic
 invoice line, its tax is worked out from its model's tax plan. Both lists sit under
 **Human Resources → Vehicles** next to the Car screen.
@@ -68,10 +68,10 @@ can be raised before a formal Car Action, which creates the ledger entry, is wri
 
 ::: tip How it's processed
 Saving a Car Action raises a background **business request** (`Business Request`) that records the
-cost split in the ledger: the debit side covers the action's cost (net of the responsible employee's
-share), the responsible employee's share and its tax are recorded separately, and the tax on the whole
-action is recorded on its own pair of accounts. Which accounts each part lands on is set on the
-document's term — see [The Car Action term](/modules/hr/document-terms/hr-terms-insurance#The-Car-Action-term).
+cost split in the ledger: the company's part and the responsible employee's part of the cost before
+tax, and the tax split between them the same way. Which accounts each part lands on, and what happens
+when one of the pairs is empty, is set on the document's term — see
+[The Car Action term](/modules/hr/document-terms/hr-terms-insurance#The-Car-Action-term).
 If that request fails, retry it from the **Business Requests** view.
 :::
 
@@ -91,11 +91,13 @@ need correcting — record that with a **Car Info Updater** (`تحديث بيا�
 built as **current value / new value** pairs, one line per car, so the change is explicit and
 auditable rather than a silent overwrite: current driver vs. new driver, current status vs. new
 status, current running KM vs. new running KM, and the same before/after pairing for legal entity,
-branch, sector, department and analysis set. It creates no ledger entry — it only rewrites the
-car's own master data.
+branch, sector, department and analysis set. Saving it makes the new driver the car's **Custodian**
+and writes the new status, running KM and every filled new dimension onto the car. A line whose
+driver, running KM and status are all unchanged is refused, even if its dimensions change. It creates
+no ledger entry — it only rewrites the car's own master data.
 
-A **Car Info Updater Request** (`طلب تحديث بيانات سيارة`) has the same current/new grid and refuses a
-line whose driver, running KM and status are all unchanged, but saving it changes nothing on the car.
+A **Car Info Updater Request** (`طلب تحديث بيانات سيارة`) has the same current/new grid and refuses the
+same unchanged lines, but saving it changes nothing on the car.
 It is the form for asking for the change; the car is updated only when the change is recorded on a
 Car Info Updater.
 
@@ -140,7 +142,7 @@ driver or passenger cover is wanted — and it has no accounting effect.
   Removing Document's **Based On Request** to copy its header and cars.
 
 Unless the document term ticks *Allow Adding Insurances Without Insurance Request or Insurance Offer*,
-the policy, adding and removing documents expect their car pricing to come from an offer or request — see
+the policy and adding documents expect their car pricing to come from an offer or request — see
 [the car insurance terms](/modules/hr/document-terms/hr-terms-insurance).
 
 | Field (English) | Arabic label | Purpose |
@@ -155,10 +157,12 @@ the policy, adding and removing documents expect their car pricing to come from 
 
 ::: tip How it's processed
 The **Cars Insurance Policy**, the **Adding** and **Removing** documents, and the **Installment
-Proof Document** each raise a background business request that records the contracting cost, discount
-and any fees (plus tax on the fees) to the accounts configured on their document term. Only the
-**Insurance Offer Document** has no ledger effect — it is a quote, not yet a commitment. If that processing
-fails, retry it from the **Business Requests** view.
+Proof Document** each raise a background business request that records the insurance value (on a removing
+document, the recovered price) and its tax, and — depending on the document — the discount and the fees, on the accounts configured on their document
+term; which sides each document's term carries is listed on
+[the car insurance terms](/modules/hr/document-terms/hr-terms-insurance). Only the **Insurance Offer
+Document** has no ledger effect — it is a quote, not yet a commitment. If that processing fails, retry
+it from the **Business Requests** view.
 :::
 
 ## Transport: Pickup Plan
@@ -238,23 +242,28 @@ buttons of their own. The **Meal Delivery Plan** has two:
 
 | Message | Why | What to do |
 |---|---|---|
-| *the request is processed by another action* — «تم عمل إجراء من قبل بناءاً على هذا الطلب» | The Car Action's **From Doc** points at a Car Action Request that a *different* Car Action has already processed. | Open the request to see which action consumed it; raise a fresh request for the extra work instead of reusing this one. |
-| *Can not Change Meter Reading* — «لايمكن تغير قراءة العداد» | A Car Action generated from a request changed the **Meter Reading** or **Previous Meter Reading** the request carried. | Restore the readings the request recorded; if the odometer was misread, correct the request first. |
-| *Cant change actionType* — «لايمكن تغير نوع الاجراء» | A details line of a Car Action generated from a request has a different **Action Type** from the matching request line. | Put the original action type back, or start from a new request that says what you mean. |
-| *Cant change problem* — «لايمكن تغير الإجراء» | Same check on the line's **Action** — the specific Car Problem entry no longer matches the request. | Restore the action the request named; a different repair needs its own request. |
-| *Cant change Date* — «لايمكن تغير التاريخ» | A details line's **From Date** or **To Date** differs from the request's line. | Keep the request's dates on the action, or amend the request. |
-| *This Document Cant be Change It ProcessedBy {0}* — «لايمكن التغير فى هذا المستند تم معالجتة ب {0}» | The Car Action Request has already been processed by the Car Action named in the message, so the request itself is frozen. | Make the change on the Car Action instead; the request is only the intake form. |
-| *Please Fill Insurance Document (Number , Issue , End)* — «يجب ان تملا حقول الوثيقه الرقم وتاريخ الاصدار و تاريخ الانتهاء الخاص ببوليصة التأمين» | The Cars Insurance Policy is missing at least one of the insurer's own document fields — **Number**, **Issue** date or **End at** date. | Fill all three from the insurer's policy paper; the adding and removing documents validate their dates against them. |
-| *Empty Main Field* — «حقل رئيسي فارغ» | An instalment line on the Car Insurance Offer Document has no **Percentage**, so its value cannot be derived from the total insurance price. The message is flagged against the line's car-type column even though it is the percentage that is missing. | Enter the percentage of the total each instalment represents, or delete the empty instalment line. |
-| *The car {0} was already added in another adding document {1}* — «السيارة {0} مضافة بالفعل فى سند اضافة اخر{1}» | The car is already covered by another Car Insurance Adding Document on the same policy, and this document's term does not have **Allow Adding Car To Insurance If It Found In Policy** enabled. | Remove the duplicate line, or enable that option on the document term if a second cover really is intended. |
-| *End date {0} must be after issue date {1}* — «تاريخ الأنتهاء {0} يجب ان يكون بعد تاريخ الاصدار {1}» | On an adding line the cover's **End at** date falls before its **Issue** date. | Correct the line's dates. |
-| *End date {0} is after policy end date {1}* — «تاريخ الأنتهاء {0} بعد تاريخ انتهاء البوليصة {1}» | A car is being added with cover that runs past the end of the policy it is attached to. | Shorten the line to the policy's end date, or add the car under a policy that runs that long. |
-| *Removing date {0} must be after issue date {1}* — «تاريخ الحذف {0} يجب ان يكون بعد تاريخ الاصدار {1}» | On a Car Insurance Removing Document the **Removing Date** is on or before the date the cover was issued, so there is no cover period to refund. | Set the removing date inside the cover period. |
-| *Removing date {0} must be before end date {1}* — «تاريخ الحذف {0} يجب ان يكون قبل تاريخ الانتهاء{1}» | The removing date is on or after the cover's end date — the cover has already run out, so nothing is recovered by removing the car. | Either use a date inside the period, or drop the line: expired cover needs no removing document. |
-| *The car {0} was not found in policy {1} or any adding document for the same policy* — «السيارة {0} غير موجودة بالبوليصة {1} او اى سند اضافة اخر على نفس البوليصة» | The car being removed was never on that policy — or was already taken off it by an earlier removing document. | Check the policy's **cars** tab for what the policy currently covers, and remove only cars listed there. |
+| *the request is processed by another action* — «تم عمل إجراء من قبل بناءً على هذا الطلب» | The Car Action's **From Doc** points at a Car Action Request that a *different* Car Action has already processed. | Open the request to see which action consumed it; raise a fresh request for the extra work instead of reusing this one. |
+| *Can not Change The Car* (no Arabic text; shown in English on Arabic screens too) | A Car Action generated from a request names a different **Car** from the request. | Put the request's car back, or raise a request for the other car. |
+| *Can not Change Meter Reading* — «لا يمكن تغيير قراءة العداد» | A Car Action generated from a request changed the **Meter Reading** or **Previous Meter Reading** the request carried. | Restore the readings the request recorded; if the odometer was misread, correct the request first. |
+| *Cant add another service to  the car* (no Arabic text; shown in English on Arabic screens too) | A Car Action generated from a request has a different number of details lines from the request. | Keep exactly the request's lines; record extra work on a new request. |
+| *Cant change actionType* — «لا يمكن تغيير نوع الإجراء» | A details line of a Car Action generated from a request has a different **Action Type** from the matching request line. | Put the original action type back, or start from a new request that says what you mean. |
+| *Cant change problem* — «لا يمكن تغيير المشكلة» | Same check on the line's **Action** — the specific Car Problem entry no longer matches the request. | Restore the action the request named; a different repair needs its own request. |
+| *Cant change Date* — «لا يمكن تغيير التاريخ» | A details line's **From Date** or **To Date** differs from the request's line. | Keep the request's dates on the action, or amend the request. |
+| *This Document Cant be Change It ProcessedBy {0}* — «لا يمكن التغيير في هذا المستند تم معالجته ب {0}» | The Car Action Request has already been processed by the Car Action named in the message, so the request itself is frozen. | Make the change on the Car Action instead; the request is only the intake form. |
+| *Car Info has not Been updated* (no Arabic text; shown in English on Arabic screens too) | A Car Info Updater or Car Info Updater Request line has the same driver, running KM and status in its current and new columns. | Change at least one of the three, or delete the line. |
+| *Please Fill Insurance Document (Number , Issue , End)* — «يجب أن تملأ حقول الوثيقة الرقم وتاريخ الإصدار و تاريخ الانتهاء الخاص ببوليصة التأمين» | The Cars Insurance Policy is missing at least one of the insurer's own document fields — **Number**, **Issue** date or **End at** date. | Fill all three from the insurer's policy paper; the adding and removing documents validate their dates against them. |
+| *Empty Main Field* — «حقل رئيسي فارغ» | An instalment line on the Car Insurance Offer Document has no **Percentage**, so its value cannot be derived from the total insurance price. | Enter the percentage of the total each instalment represents, or delete the empty instalment line. |
+| *The car {0} was already added in the policy {1}* — «السيارة {0} مضافة بالفعل في بوليصة التأمين {1}» | The car on a Car Insurance Adding Document is already on the policy's own lines, and this document's term does not have **Allow Adding Car To Insurance If It Is Found In Policy** enabled. | Remove the line, or enable that option on the document term if a second cover really is intended. |
+| *The car {0} was already added in another adding document {1}* — «السيارة {0} مضافة بالفعل في سند إضافة آخر {1}» | The car is already covered by another committed Car Insurance Adding Document on the same policy, and this document's term does not have **Allow Adding Car To Insurance If It Is Found In Policy** enabled. | Remove the duplicate line, or enable that option on the document term if a second cover really is intended. |
+| *End date {0} must be after issue date {1}* — «تاريخ الانتهاء {0} يجب أن يكون بعد تاريخ الإصدار {1}» | On an adding line the cover's **End at** date falls before its **Issue** date. | Correct the line's dates. |
+| *Issue date {0} is before policy issue date {1}* — «تاريخ الإصدار {0} قبل تاريخ إصدار البوليصة {1}» | On an adding line the cover's **Issue** date falls before the policy's own issue date. | Start the line's cover on or after the policy's issue date. |
+| *End date {0} is after policy end date {1}* — «تاريخ الانتهاء {0} بعد تاريخ انتهاء البوليصة {1}» | A car is being added with cover that runs past the end of the policy it is attached to. | Shorten the line to the policy's end date, or add the car under a policy that runs that long. |
+| *Removing date {0} must be after issue date {1}* — «تاريخ الحذف {0} يجب أن يكون بعد تاريخ الإصدار {1}» | On a Car Insurance Removing Document the **Removing Date** is on or before the date the cover was issued, so there is no cover period to refund. | Set the removing date inside the cover period. |
+| *Removing date {0} must be before end date {1}* — «تاريخ الحذف {0} يجب أن يكون قبل تاريخ الانتهاء {1}» | The removing date is on or after the cover's end date — the cover has already run out, so nothing is recovered by removing the car. | Either use a date inside the period, or drop the line: expired cover needs no removing document. |
+| *The car {0} was not found in policy {1} or any adding document for the same policy* — «السيارة {0} غير موجودة بالبوليصة {1} أو أي سند إضافة آخر على نفس البوليصة» | The car being removed was never on that policy — or was already taken off it by an earlier removing document. | Check the policy's **cars** tab for what the policy currently covers, and remove only cars listed there. |
 
 ## Related
 
-- [Employee HR Information](./setup/employee-hr-information) — the employee master record that Car
+- [Employee HR Information](/modules/hr/setup/employee-hr-information) — the employee master record that Car
   Action's responsible employee, Pickup Plan's riders, and Meal Delivery Plan's eligible staff are
   all drawn from.

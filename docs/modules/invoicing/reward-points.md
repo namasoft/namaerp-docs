@@ -72,7 +72,7 @@ A column left empty matches anything. Lines are tried from the top and the first
 | **Branch ID** | `branchID` | The location code sent when no line of the grid above matches. |
 | **Certificate** / **Private Key** / **Public Key** | `certificate`, `privateKey`, `publicKey` | The key pair Nama signs its Al Rajhi requests with. |
 
-**Generate Cetficate And Keys** creates a fresh key pair and certificate and stores them in those three fields. It works only on an Al Rajhi configuration. Download the public side from its field and send it to Al Rajhi as they instruct; never send the private key. The **Loyalty Points Reward Entries** list on the same page shows every earn and update sent to the provider.
+**Generate Certificate And Keys** creates a fresh key pair and certificate and stores them in those three fields. It works only on an Al Rajhi configuration. Download the public side from its field and send it to Al Rajhi as they instruct; never send the private key. The **Loyalty Points Reward Entries** list on the same page shows every earn and update sent to the provider.
 
 ### STC Rewards page
 

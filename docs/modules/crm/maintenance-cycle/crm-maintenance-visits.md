@@ -26,8 +26,9 @@ single Maintenance Visit document. If you want visits recorded, somebody types t
 
 ## Why you would type one
 
-Because it is the only document that moves the contract's **performed-visit counter**, and the only
-one that updates the machine's odometer.
+Because it is the only document that moves the contract's **performed-visit counter**, and it
+updates the machine's odometer — as a committed maintenance order and a Machine Update Document also
+do.
 
 On 1 April 2026, after the three chiller and AHU jobs are executed, the Alexandria office types
 `MVIS-0055`: *From document* = the maintenance contract `MC-0021`, machine `MCH-00311`, visit status
@@ -38,7 +39,7 @@ Saving it does three things and nothing else:
 
 | Effect | Result |
 |---|---|
-| **On the contract** | *Number Of Performed Visits* on `MC-0021` is recounted — from 0 to **1**. |
+| **On the contract** | When *From document* is a maintenance contract, its *Number Of Performed Visits* is recounted as the number of visits that name it — on `MC-0021`, from 0 to **1**. |
 | **On the machine** | The machine's odometer pair is brought up to date from the visit's readings. |
 | **On the order** | Any lines in the visit's *Additional spare parts* grid are pushed into the linked order's own *Additional spare parts* grid. |
 

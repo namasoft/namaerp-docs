@@ -23,13 +23,15 @@ Manual execution on supply chain documents when service items need warehouse ass
 2. **Filters for service items** - Identifies lines with items that have service item type
 3. **Checks warehouse assignment** - Skips lines that already have warehouse assignments
 4. **Updates dimensions** - Calls updateNulls() to initialize dimension fields
-5. **Assigns warehouse** - Sets the specified warehouse in the line's specific dimensions
+5. **Assigns warehouse** - Looks up the warehouse whose code is in Parameter 2 and sets it in the line's specific dimensions
 6. **Validates assignment** - Verifies the warehouse was found and assigned successfully
-7. **Accumulates errors** - Collects any failures for invalid warehouse codes
+7. **Accumulates errors** - Adds a failure for every service line whose warehouse could not be found by that code
 
 ## Parameters
 
-**Parameter 1:** Warehouse Code (Required) - Code of the warehouse to assign to service items
+**Parameter 1:** Warehouse code (Required) - Must be filled
+
+**Parameter 2:** (shown without a title) - Code of the warehouse to assign to service items
 
 Example: `WH001`, `SERVICES`, `MAIN`
 

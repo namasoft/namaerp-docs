@@ -1,6 +1,6 @@
 ---
 entities: [FinancialBudget, BudgetScenario]
-menu: BUDGETS → Budgets → Financial Budget
+menu: Budgets → Budgets → Financial Budget
 ---
 
 # Financial Budgets
@@ -13,17 +13,19 @@ Financial budgets are part of the `accounting-budget` license, and live under th
 
 ## Building a budget
 
-The **Financial Budget** (`BUDGETS > Budgets > Financial Budget`) is the plan document. Each **details** line targets one **account** (within a chosen **accounts chart**) and carries a planned **value for the year** — and because budgeting is often multi-year, the line holds up to **six years** of values side by side, with optional **change percentages** to grow each year off the previous one automatically. The credit/debit split per year can be filled directly or calculated for you.
+The **Financial Budget** (`Budgets > Budgets > Financial Budget`) is the plan document. It always belongs to a **Scenario**, and the scenario names the **Budget Year** and up to four earlier years to compare against (**Fiscal Year 1**, **Fiscal Year 2**, **Fiscal Year 3** and **Previous Year**). Each **details** line targets one **account** (or an **accounts chart** node) and carries its plan for the budget year in **Predicted Value**. Beside it the line shows the history the plan was built from: **Year 1**, **Year 2**, **Year 3** and **Year 4** hold the account's actual movement in the scenario's four earlier years, each with a **Change Percentage** against the year before, and **Actual Value** holds the budget year's own actual so far and cannot be typed into. **Predicted Value** has its own **Change Percentage** against Year 4: type the percentage and the value is calculated from Year 4, type the value and the percentage follows. The Year 1 to Year 4 figures can be typed over only where Global Configuration allows it (**Allow changing in budget year 1 values** … **year 4 values**). When **Calculate Financial Budget Credit Debit Values** is on in the accounting configuration, each of those figures also shows its **Debit** and **Credit**.
 
-Every line is scoped by the **dimensions** that matter to you — legal entity, sector, branch, department, analysis set, subsidiary, even a record (entity dimension) — and by a **fiscal year / period** (a from–to period range). So "marketing department, branch Riyadh, this year: 500,000" is a single, precise budget line.
+Every line is scoped by the **dimensions** that matter to you — sector, branch, department, analysis set, subsidiary, a record (entity dimension), references 1–3 — and by a **fiscal period** of the scenario's budget year; the legal entity is the document's. A **To Fiscal Period** column, for a period range, appears when **Use To Period In Financial and Sales Budgets** is on in Global Configuration. So "marketing department, branch Riyadh, this year: 500,000" is a single, precise budget line.
 
 ![The Financial Budget screen](../../../ar/modules/accounting/images/budgets/financial-budget-en.png)
 
-You can keep several budgets as **scenarios** (`BUDGETS > Master Files > Budget Scenario`) — an optimistic plan, a conservative one — and tag the budget with the scenario it belongs to.
+You can keep several budgets as **scenarios** (`Budgets > Master Files > Budget Scenario`) — an optimistic plan, a conservative one — and each budget names the scenario it belongs to.
 
 ## Turning a budget into a control
 
-A budget only constrains spending if you tell it to. The switch is **"use this budget for validation"** — set on the budget (and per line, with an optional **validate-from / validate-to** date window). Once a budget is marked for validation, the system checks documents that hit its accounts against the planned figure.
+A budget only constrains spending if you tell it to. The switch is **Use This Budget For Validation and Approvals** on the budget header; saving the budget copies it to every line. A scenario with **Use Scenario Budgets For Validation and Approvals** ticked switches it on for every budget saved under it. Once a budget is marked for validation, the system checks documents that hit its accounts against the line's **Predicted Value**.
+
+When **Use From Date And To Date In Budget Validation And Approval** is on in the accounting configuration, each line also carries a **Validate From Date** and a **Validate To Date**, both required on a validation budget. A line then applies to documents whose value date falls inside that window, instead of being matched by fiscal year.
 
 **What happens on an overrun is decided per account**, by the account's **Budget Exceeded Behavior** (see [Budget control on the account](../ledger-setup/accounts.md#Budget-control-on-the-account)):
 
@@ -36,14 +38,16 @@ Only movement that grows the account on its **natural side** is checked — a de
 
 ### Matching the right budget line
 
-When it validates, the system needs to know *which* budget line a document maps to. The **Budget Validation Options** include a set of **"consider…"** toggles — consider sector, branch, department, analysis set, subsidiary, record (entity dimension), references 1–3, and fiscal period (`value.budgetValidationOptions.considerSector`, `…considerBranch`, `…considerDepartment`, `…considerAnalysisSet`, `…considerSubsidiary`, `…considerEntityDimension`, `…considerRef1` – `…considerRef3`, `…considerFiscalPeriod`) — that define how precisely actuals are matched to budget lines. Turn on the dimensions you budget by; leave off the ones you don't, so the match isn't too narrow to find its line.
+When it validates, the system needs to know *which* budget line a document maps to. A line always has to match the document's account and legal entity, and its fiscal year unless the Validate From Date / Validate To Date window above is in use. On top of that, the **Budget Validation Options** include a set of **"consider…"** toggles — consider sector, branch, department, analysis set, subsidiary, record (entity dimension), references 1–3, and fiscal period (`value.budgetValidationOptions.considerSector`, `…considerBranch`, `…considerDepartment`, `…considerAnalysisSet`, `…considerSubsidiary`, `…considerEntityDimension`, `…considerRef1` – `…considerRef3`, `…considerFiscalPeriod`) — that define how precisely actuals are matched to budget lines. Turn on the dimensions you budget by; leave off the ones you don't, so the match isn't too narrow to find its line.
 
 ## Actions on this screen
 
-Budget lines are rarely typed one figure at a time — two buttons fill the numbers for you once the lines name their accounts and dimensions:
+The history columns are not typed by hand — two buttons read them from the ledger once the lines name their accounts and dimensions:
 
-- **Calculate Values** — fills the planned figures across the budget's year columns from the scenario, the fiscal period range and each line's account and dimensions, applying the line's **change percentages** to grow one year off the previous. This is what turns "these are the accounts I budget by" into an actual multi-year plan.
-- **Calculate Current Year Values** — the narrower version: it computes only the current year's figures, leaving the later years alone. Use it when the out-years were agreed and you are only re-basing this year.
+- **Calculate Values** — for every line, reads the account's actual movement, narrowed by the line's subsidiary, dimensions, references and fiscal period, for the scenario's four earlier years and for the budget year. It fills **Year 1** to **Year 4** and **Actual Value** with the result and recalculates the change percentages. **Predicted Value** stays as you entered it.
+- **Calculate Current Year Values** — the narrower version: it refreshes only **Actual Value**, the budget year's own actual, and leaves Year 1 to Year 4 alone.
+
+With **Calculate By Inputting** ticked on the header, the same calculation runs for a line as soon as you choose its account, accounts chart, fiscal period, dimensions, record or references, without pressing a button.
 
 Both act on the **details** grid, so add and scope your lines first, then press.
 
@@ -65,3 +69,5 @@ The refusals a document meets when it overruns a budget — *The account {0} has
 | *You must enable the option {0} in accounting configuration to be able to use prevent saving if no budget was found* | The same, for **Prevent Save If No Budget Was Found For The Account** — it is unlocked by the same option. | As above. The message has no Arabic translation and appears in English on Arabic screens. |
 | *You must enable the option {0} in accounting configuration to be able to use request approval when budget is exceeded* — «يتوجب عليك تفعيل الأوبشن {0} في إعدادات الحسابات لتتمكن من تفعيل طلب الموافقة عند تخطي الموازنات» | The account is being saved with **Request Approval** while **Enable Approvals For Budgets** is off. | Turn the option on, then save the account again. |
 | *You can not enable replication and use request approval when budget is exceeded at the same time* — «لا يمكنك تفعيل الريبليكشن و طلب الموافقة عند تخطي الموازنات في نفس الوقت» | The installation runs Replication, and **Request Approval** on an account is not allowed there. | Use **Prevent Saving** on that account instead. |
+| *This Period is not in the scenario periods* — «هذه الفترة ليست من فترات السيناريو» | A budget line's **Fiscal Period** is not one of the **Budget Year Period** values in the scenario's **Actual Sources** grid. | Pick a period the scenario lists, or add the period to the scenario. |
+| *From Date {0} can not be after to date {1} at line number {2}* — «من تاريخ {0} لا يمكن أن يكون بعد إلى تاريخ {1} في السطر رقم {2}» | On a validation budget, a line's **Validate To Date** is earlier than its **Validate From Date**. | Correct the two dates on that line. |

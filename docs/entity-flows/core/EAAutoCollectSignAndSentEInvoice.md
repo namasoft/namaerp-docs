@@ -21,8 +21,8 @@ Scheduled task execution for automated e-Invoice processing on TaskSchedule enti
 1. **Collects invoices** of specified entity type using query filtering
 2. **Creates submission documents** (TaxAuthoritySubmissionDoc) for each batch
 3. **Digitally signs** documents using taxpayer certificates
-4. **Submits to ZATCA** and processes responses
-5. **Handles asynchronously** with transaction isolation and error recovery
+4. **Submits to the tax authority** and processes responses
+5. **Saves each submission document in its own transaction**, so a failure in one batch does not undo the batches already sent. The run stops early when the task is marked to be killed
 
 ## Key Parameters
 

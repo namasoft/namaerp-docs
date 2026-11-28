@@ -27,17 +27,18 @@ should be preferred:
 | Header field | What it is for |
 |---|---|
 | **Priority** (required) | The tie-breaker. A **lower number wins** — priority 1 beats priority 10. |
-| **From Date** / **To Date** | The validity window. An empty date means open-ended in that direction. |
+| **From Date** / **To Date** | The validity window. When filled, each date is copied onto every line on save; the lines' own dates are required, so every price ends up with both a start and an end date. |
 | **Currency** | The currency the prices are quoted in. |
 | **Price List Type** (required) | *RE Sales Price* or *RE Rent Price* — see below. |
 | **Inactive** | Retires the list without deleting it; inactive lists are never matched. |
-| Record category | Lets a list apply only to contracts of a particular category. |
+| **Contract Category** | Lets a list apply only to contracts of a particular category; when filled it is copied onto every line. |
 
 The grid underneath holds the actual prices, one line per rule. Its columns follow the estate tree
 from the top down — **Project**, **Square**, **Block**, **Land**, **Building**, **Floor**, **Unit
 Model**, **Unit**, **Unit Group** — then **Price**, an optional **Sales Payment Method**, the line's
-own **From Date** and **To Date**, and a record category. Priority and price list type are not on
-the line: they are copied down from the header, so one list is always one priority band.
+own **From Date** and **To Date** (both required), and a **Contract Category**. Priority and price list
+type are not typed on the line: they are copied down from the header, so one list is always one
+priority band.
 
 Leaving a column empty is how you say "any". A line that names only the project and a price is a
 catch-all for the whole compound; a line that names a specific unit is a rule for that unit alone.
@@ -58,8 +59,9 @@ When the contract asks for a price, the system does this:
    window contains the document's value date (an empty date being open-ended), and only lines whose
    price list type matches the one being asked for.
 2. **It checks every dimension of the remaining lines.** For each of unit, unit model, floor,
-   building, block, land, square, project, unit group, record category and payment method the rule is
-   the same: the line's value must either **equal the estate's own value or be empty**. Note the
+   building, block, land, square, project, unit group, contract category and payment method the rule is
+   the same: the line's value must either **equal the estate's own value (the contract's, for contract
+   category and payment method) or be empty**. Note the
    second half carefully — if the estate has no value for a dimension (a land plot has no floor, for
    instance), then a line that names a floor cannot match it.
 3. **It sorts the survivors by priority and keeps the best band** — the lowest number.
@@ -86,7 +88,7 @@ and the history of what you were charging stays intact.
 Because matching is automatic, two lists that both claim the same unit on the same day would make
 pricing unpredictable. Nama refuses to let that happen: saving a price list fails if another
 **active** list of the same type already has a line with exactly the same combination of criteria —
-same price list type, unit model, unit group, record category, project, square, block, building,
+same price list type, unit model, unit group, contract category, project, square, block, building,
 floor, unit and land — over an **overlapping date range**. The message names the offending list:
 *"The price list {0} contains another price for the same criteria that is overlapping with this
 price list"*. Change the dates, retire the older list, or make one of the two lines more specific.
@@ -95,10 +97,10 @@ price list"*. Change the dates, retire the older list, or make one of the two li
 
 By default the price list is a convenience: it fills the price in, and the salesperson can still
 type over it. Tick **Force Price List** on the document term (توجيه) and it becomes a rule — the
-contract will not commit unless its price equals the price the list produces for that unit, and the
-error quotes all three numbers: *"The estate {0} price is {1} in price list, this must match the
-price {2}"*. The option exists on the sales contract, the initial contract, the reservation, the
-reservation cancellation and the purchase contract, so you can enforce it exactly where you need it.
+contract will not commit unless its price equals the sales price the lists give that unit **today**
+(matched on today's date, with the unit's own default payment method and no contract category), and
+the error names the estate and that price-list price: *"The estate {0} price is {1} in price list, this must match the price {2}"*. The check runs on the sales contract, the opening sales contract, the sales offer, the reservation,
+the reservation cancellation, the waiver and the purchase contract, so you can enforce it exactly where you need it.
 See [Sales Document Terms](/modules/realestate/document-terms/realestate-terms-sales.md).
 
 ## The payment plan template
@@ -121,10 +123,10 @@ its own period, payment date and payment type (*One Value* or *Distributed To In
 receipt installment — the amount due when the customer takes delivery — again as a percentage or a
 value with its period.
 
-**Installement Construction Information** describes the schedule: the installment value or
+**Installment Construction Information** describes the schedule: the installment value or
 percentage, the number of installments, the period between them, the first and last installment
-values, *Make installments multiples of* with its rounding mode, the policy for whatever is left over
-after rounding, and a *Work with Hijri dates* switch that changes how every date in the plan is
+values, *Installments Multiples Of* with its rounding mode, the policy for whatever is left over
+after rounding, and a *Dates in hijri* switch that changes how every date in the plan is
 calculated.
 
 **Multiple Construction Info** is the grid for plans that are not uniform — a first year of small

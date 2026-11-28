@@ -24,7 +24,7 @@ These fields identify the term and define which document type it configures. The
 
 **Name (Arabic) / Name (English)** `name1`, `name2` — The term's display names. `name1` is the Arabic name, `name2` the English name.
 
-**System** `systemBookOrTerm` — Marks the term as system-owned: the default term used on a document when no explicit term is chosen. Shown as a quick-filter column in the list.
+**System** `systemBookOrTerm` — Marks the term as system-owned. A system term is left out of the **Term** lookup on documents, so users cannot pick it by hand. Shown as a list column and a criteria field.
 
 **Inactive** `inActive` — Disables the term so it can no longer be selected on new documents. Pair it with **Inactive From** `termInfo.inActiveFrom` to set the date on which it becomes inactive.
 
@@ -36,21 +36,21 @@ These fields identify the term and define which document type it configures. The
 
 ## Shortage Document Creation
 
-When a document cannot fully satisfy customer demand, the term can auto-create a **Customers-Requests-Shortage** document recording the unmet quantities.
+On a sales invoice, the **Add Current Line To Shortage Document** action (More menu) copies the selected line into a **Customers Requests Shortage Document**, recording demand the invoice could not meet. These three options must all be filled for the action to work.
 
-**Customers Requests Shortage Book** `termConfig.customersReqsShortageBook` — The document book used when generating the shortage document.
+**Customers Requests Shortage Book** `termConfig.customersReqsShortageBook` — The document book of the shortage document.
 
-**Customers Requests Shortage Term** `termConfig.customersReqsShortageTerm` — The document term assigned to that generated shortage document.
+**Customers Requests Shortage Term** `termConfig.customersReqsShortageTerm` — The document term of the shortage document.
 
-**Suggest Customers Requests Shortages** `termConfig.suggestCustomersReqsShortages` — Controls how the system finds an existing shortage document to append the unmet demand to, versus creating a new one.
+**Suggest Customers Requests Shortages** `termConfig.suggestCustomersReqsShortages` — How the action finds an existing shortage document to add the line to: **Date Only** (the first shortage document dated on or after the invoice date), **User Only** (one created by the current user, or with no creator), or **Date And User** (both). When none is found, a new one is created with this book and term.
 
 ## Product Status
 
-**Change Product Status To** `termConfig.changeProductStatusTo` — On save, the document sets each line item's product status to this value, driving a status-tracking workflow.
+**Change Product Status To** `termConfig.changeProductStatusTo` — Used when the document is created from a Service Center document that carries products (the cars or devices being serviced). On save, the document records a product status entry that sets those products' status to this value; deleting the document removes the entry.
 
 ## Cancellation
 
-**Allow Cancel With Non-System-Related Stock Docs** `termConfig.allowCancelWithNonSystemRelatedStockDocs` — Permits cancelling the document even when its related stock documents were not created by the system (they were manually linked). Applies to **Sales Invoice, Sales Return, Purchase Invoice and Purchase Return** only.
+**Allow Cancel Even If It Has Non-System Related Stock Documents** `termConfig.allowCancelWithNonSystemRelatedStockDocs` — Lets a [Document Cancel Document](/platform/documents-and-records/document-cancel-document) cancel this document even when some of its stock documents are not final system-generated ones (created by hand, or generated as drafts). Without it the cancellation is refused with *Document {0} can not be cancelled, because it has non system related stock documents* — «المستند {0} لا يمكن إلغاؤه ، لأن له سندات مخزنية مرتبطة ليست نظامية». Applies to **Sales Invoice, Sales Return, Purchase Invoice and Purchase Return** only.
 
 ## Consolidated Purchase Request Lines
 

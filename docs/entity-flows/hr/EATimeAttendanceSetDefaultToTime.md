@@ -25,15 +25,15 @@ Manual execution for fixing incomplete time attendance records, typically used d
 4. **Calculates distances** - Compares shift start times with recorded punch-in times
 5. **Sets end times** - Assigns shift end times to missing to time fields
 6. **Handles day wrapping** - Adjusts dates for shifts that span multiple days
-7. **Validates duration** - Removes entries that exceed maximum continuous attendance limits
+7. **Validates duration** - When the resulting attendance is longer than **Max Continuous Attendance Hours** in the HR configuration, the to date and to time that were just set are cleared again; the line itself stays
 
 ## Parameters
 
-**Parameter 1:** Criteria Code (For Employee) (Optional) - Employee selection criteria for filtering which employees to process
+**Parameter 1:** Criteria Code (For Employee) (Optional) - Code of a criteria definition; only lines whose employee matches it are processed. Empty processes every employee
 
 **Parameter 2:** Calc Only If Workday (Optional) - "true" to process only on scheduled work days, "false" to process all days
 
-**Parameter 3:** Max Distance In Hours (Optional) - Maximum difference in hours between shift start time and actual punch-in time
+**Parameter 3:** Max Distance In Hours (Optional) - Maximum difference in hours between shift start time and actual punch-in time. Empty or `0` means no limit
 
 ## Database Tables Affected
 

@@ -10,7 +10,7 @@ A contracting business runs two mirrored chains at the same time. On one side it
 Before any of the detail, one fact governs the whole chain and explains most of the questions support staff receive about this module:
 
 ::: tip The single rule to remember
-**Signing a contract books nothing. The extract (مستخلص) books everything.** A project contract is a master file — a priced plan the rest of the module measures itself against. No journal entry, no stock movement and no receivable is created when you save or amend it. Revenue, tax, retention and actual cost all reach the ledger through the extract, and only through the extract.
+**Signing a contract books nothing. The extract (مستخلص) books everything.** A project contract is a master file — a priced plan the rest of the module measures itself against. No journal entry, no stock movement and no receivable is created when you save or amend it. Revenue, tax, retention and actual cost all reach the ledger through the extract. The only other owner-side documents that book are the advance payment, the fine and — only when its document term carries accounts — the assay (see the table below).
 :::
 
 Throughout the owner-side pages we build the same job: the **Tower A** project for **Al-Fanar Development**, contract **`PC-2026-001`**, contracted at **230,000**, broken into four priced items of work — excavation, reinforced concrete, blockwork and plastering — with **10% retention** held back on every payment and a **46,000 advance** received up front and recovered as the work proceeds.
@@ -43,7 +43,7 @@ Receipt vouchers / collection
 
 **5. Record what was built.** [Project execution](/modules/contracting/project-contracting/contracting-project-execution.md) (حصر كميات) is the quantity survey: this month we excavated 400 m³ of the 1,000 contracted. It is **optional** — you can bill straight from the contract — and it is **incremental per document**: each execution states only what was done *since the last one*, and the contract's term line carries the running total.
 
-**6. Bill the client.** [The project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) is the certified payment application, and it is the only document in this chain that reaches the ledger. It prices the billed quantities at contract rates, adds tax, then applies the contract's conditions — the 10% retention withheld, a slice of the 46,000 advance recovered, any [fines](/modules/contracting/project-contracting/contracting-project-fines.md) deducted — and arrives at a net payable. Like the execution, an extract states only *this* period's quantities; the contract line holds the cumulative figure.
+**6. Bill the client.** [The project extract](/modules/contracting/project-contracting/contracting-project-extracts.md) is the certified payment application, and it is the document in this chain that books the revenue. It prices the billed quantities at contract rates, adds tax, then applies the contract's conditions — the 10% retention withheld, a slice of the 46,000 advance recovered, any [fines](/modules/contracting/project-contracting/contracting-project-fines.md) deducted — and arrives at a net payable. Like the execution, an extract states only *this* period's quantities; the contract line holds the cumulative figure.
 
 **7. Collect the money.** Receipt vouchers settle the extract. The contract screen itself can generate a receipt voucher against its instalment schedule, but that is a treasury movement against the customer — it is not revenue recognition, which has already happened on the extract.
 
@@ -75,7 +75,7 @@ The header names the project, the customer, the responsible engineer and sales r
 
 Two behaviours are worth knowing:
 
-- **Every line's term code must already exist on the contract.** If you type a term code the contract does not carry, the commit is refused with *Term code is not found in project contract*. The message does not tell you which line, so on a long job order you check the codes yourself against the contract.
+- **Every line's term code must already exist on the line's contract.** Each line has its own **Contract** column, filled from the header contract when you leave it empty. If you type a term code that contract does not carry, the commit is refused with *Term code is not found in project contract* — «كود البند غير موجود بعقد المشروع». The message does not tell you which line, so on a long job order you check the codes yourself against the contract. When the header contract is an addendum, a line's contract must be that addendum or one of the contracts above it, otherwise the line is refused with *Project contract {0} is not found in {1}* — «عقد المشروع {0} غير موجود بالعقود الملحقة بالعقد {1}».
 - **The quantities are not capped by the contract.** You can raise job orders whose quantities together exceed the contracted quantity, and nothing stops you. The job order is an instruction, not a control.
 
 It has no document term, and it produces no journal entry, no stock movement and no project cost. Its only lasting effect is the quantities recorded on its own lines.

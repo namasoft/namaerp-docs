@@ -14,29 +14,23 @@ You will find it at **Service Center > Documents > Spare Parts Issue**.
 `srvcenter`
 :::
 
-::: tip The screen title is in Arabic even in an English session
-This document — like the return, the request and the external repair — has no English title
-registered, so the screen header shows **صرف قطع غيار** whichever language you are working in. The
-menu entry is in English. Nothing is wrong with your installation.
-:::
-
 ![The spare-parts issue document screen](../../../ar/modules/servicecenter/images/spare-parts/sc-raw-material-issue-en.png)
 
 ## The screen
 
 **Basic Information** carries the document book and code, **توجيه المستند / Term**, issue and value
-dates, fiscal period, **بناءا على / From Document**, and then the fields that matter:
+dates, fiscal period, **بناءً على / From Document**, and then the fields that matter:
 
 | Field | What it is |
 |---|---|
 | **أمر الشغل / Job Order** | Required. Everything on the document hangs off it. |
 | **المخزن / Warehouse** and **الموقع / Locator** | **Typed by you** — the store the parts come out of. Pushed down onto the lines, which may each override it. |
-| **مخزن التشغيل / WIP Warehouse** and **موقع مخزن التشغيل / WIP Locator** | Read-only, copied from the job order. Used only in transfer mode. |
+| **مخزن التشغيل / Work In Progress Warehouse** and **موقع مخزن التشغيل / Work In Progress Locator** | Read-only, copied from the job order. Used only in transfer mode. |
 | **تحويل لا صرف / Transfer Not Issue** | Read-only, copied from the document term. It decides which of the two modes below you are in. |
 
 The **details** grid is a full supply-chain line: **المهمة / Task**, item code and item, quantity and
 unit of measure, the item's own dimensions (serial, lot, size, colour, revision, production and
-expiry dates), a **السياره / Customer Car** column, a line-level warehouse and locator, an attachment,
+expiry dates), a **السيارة / Customer Car** column, a line-level warehouse and locator, an attachment,
 and — the two columns this page keeps returning to — **سعر الوحدة / Unit price** and the resulting
 total price.
 
@@ -84,13 +78,9 @@ work-in-progress store — `WH-WIP` / `WIP-01` at Al-Sahra. The parts remain in 
 moved to the shop floor. Use this when you want work-in-progress visible as inventory, and remember
 that in this mode it is the **Transfer** book and term that must be filled, not the generation pair.
 
-::: warning If the book and term are blank, nothing moves
-In either mode, an empty book or term means **no stock document is generated at all** — and any
-previously generated one is deleted. The issue still commits, still prices, still writes the parts
-ledger and still feeds the invoice. The parts simply never leave the store in inventory terms.
-
-To stop this document generating a stock document, clear the book or the term.
-:::
+In either mode, an empty book or term means **no stock document is generated at all**, while the
+issue still commits and writes the parts ledger; the rule is set out in
+[No Service Center document moves stock by itself](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview#No-Service-Center-document-moves-stock-by-itself).
 
 ::: tip Different warehouses, several stock issues
 The generated stock documents are grouped by the **line's** warehouse. If some lines draw from
@@ -106,7 +96,7 @@ after commit it is written back onto the job order:
 - For every issued line, the matching job order material line is found by task and item, and **if its
   unit price is still zero it is set to the issue line's price**. A price already planned on the job
   order is never overwritten — the plan wins.
-- When the job order's term has **إضافة مهام قطع غيار لأمر الشغل من سندات خارجيه / Add Tasks And
+- When the job order's term has **إضافة مهام قطع غيار لأمر الشغل من سندات خارجية / Add Tasks And
   Materials to Job Order From Other Documents** switched on, the job order's whole materials grid is
   **rebuilt** from the parts ledger instead: net quantity per item, unit price from the ledger, value
   recomputed. The term option **فرد كميات الأصناف… / Spread Items Quantity If It Is Issued In
@@ -134,20 +124,14 @@ own line and its own price.
 ## What is refused
 
 A spare parts issue is refused when the job order is **Closed** or **Cancelled**, or when a customer,
-insurance or warranty invoice has already been raised for it — *"Invoice or more issued for this job
-order"*. With the plan regime in force, it is also refused for a line with no task, an item that is
+insurance or warranty invoice has already been raised for it, with
+
+*Invoice or more issued for this job order {0}*
+
+This message has no Arabic text, so it appears in English on Arabic screens too. With the plan regime in force, it is also refused for a line with no task, an item that is
 not planned for that task, or a quantity that takes the cumulative issued past the plan. Those checks
 are described on the
 [overview page](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md).
-
-::: warning Who may delete a committed issue
-A **committed** spare parts issue can be deleted after its job order has been closed and invoiced,
-and deleting one changes the cost of a job that has already been billed.
-
-Restrict the delete permission on the spare parts issue to a small number of supervisors, and correct
-mistakes with a [return](/modules/servicecenter/spare-parts/servicecenter-spare-parts-return.md)
-rather than a deletion.
-:::
 
 ## Accounting
 

@@ -164,18 +164,19 @@ Three mechanisms look similar from a distance and do quite different things:
 | **Delete** | Reverses the effects and removes the document, its attachments and its number. | Nothing — it is gone |
 
 Cancelling is the middle path, and it is usually the right one: the effects go away, the evidence
-stays. If you want the full picture of how a document gets from draft to live in the first place, the
-[lifecycle section of What is Nama ERP](/getting-started/what-is-nama-erp) walks through it.
+stays. If you want the full picture of how a document gets from draft to live in the first place,
+[The Life of a Document](/platform/documents-and-records/document-lifecycle) walks through it.
 
 ## Messages you may see
 
-The first five are refused when you save the cancel document, reported per row so a batch tells you which document is at fault. The last is refused when you delete it.
+The first six are refused when you save the cancel document, reported per row so a batch tells you which document is at fault. The last is refused when you delete it.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Document {0} can not be cancelled, because it is still draft* — «المستند {0} لا يمكن إلغاؤه ، لانه لا يزال مسودة» | The named document was never committed, so it has produced no effects to reverse. | Delete the draft instead. |
+| *Document {0} can not be cancelled, because it is still draft* — «المستند {0} لا يمكن إلغاؤه ، لأنه لا يزال مسودة» | The named document was never committed, so it has produced no effects to reverse. | Delete the draft instead. |
+| *Document {0} can not be cancelled, because it is Pending Approval* — «المستند {0} لا يمكن إلغاؤه ، لأنه بانتظار الموافقة» | The named document is in an approval cycle that has not finished. | Let the cycle finish, then cancel. |
 | *Document {0} can not be cancelled because it is revised* — «المستند {0} لا يمكن إلغاؤه لأنه تمت مراجعته» | The document carries the revised stamp, which locks it. | Unrevise it, then cancel — see [Revise and unrevise](/platform/governance/revise-and-unrevise). |
-| *Document {0} can not be cancelled, because it is system* — «المستند {0} لا يمكن إلغاءه, لانه نظامي» | The document was generated automatically as the final step of another document, so it has no life of its own. | Cancel the document that generated it; this one goes with it. |
+| *Document {0} can not be cancelled, because it is system* — «المستند {0} لا يمكن إلغاؤه, لأنه نظامي» | The document was generated automatically as the final step of another document, so it has no life of its own. | Cancel the document that generated it; this one goes with it. |
 | *The Document {0} is cancelled by {1}* — «تم إلغاء المستند {0} بمستند إلغاء {1}» | Another cancel document got there first and already holds that document. | Remove the row. If you want it back, delete the cancel document that is named. |
 | *Document {0} can not be cancelled, because it has non system related stock documents* — «المستند {0} لا يمكن إلغاؤه ، لأن له سندات مخزنية مرتبطة ليست نظامية» | Goods moved on a stock voucher somebody entered by hand, and cancelling would leave that voucher stranded. | Deal with the stock voucher first, or tick **Allow Cancel Even If It Has Non-System Related Stock Documents** on the term the document uses. |
-| *You cannot delete this record {0}, document {1} was cancelled at e invoice portal* — «لا يُمكنك حذف المستند {0} , لأن المستند {1} ملغي علي موقع الفاتورة الإلكترونية» | Deleting the cancel document is how a cancellation is undone, and the tax authority has already recorded the invoice as cancelled. | Leave it cancelled and issue a fresh document. |
+| *You cannot delete this record {0}, document {1} was cancelled at e invoice portal* — «لا يُمكنك حذف المستند {0} , لأن المستند {1} ملغي على موقع الفاتورة الإلكترونية» | Deleting the cancel document is how a cancellation is undone, and the tax authority has already recorded the invoice as cancelled. | Leave it cancelled and issue a fresh document. |

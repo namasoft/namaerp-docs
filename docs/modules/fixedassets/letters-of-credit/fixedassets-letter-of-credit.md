@@ -1,7 +1,7 @@
 ---
 description: "The Fixed Asset Letter of Credit master file: opening a credit for an import, its parties and fields, the related documents page with the running cost breakdown, and what closes the credit."
 entities: [FALetterOfCredit]
-menu: Assets → Fixed Asset Letter of Credits → Fixed asset Letter of Credit
+menu: Assets → Fixed Asset Letters of Credit → Fixed asset Letter of Credit
 ---
 # The Letter of Credit
 
@@ -16,9 +16,9 @@ from then on every document of the import points at it. The record's second job 
 you look at when somebody asks "how much have we spent on the Riyadh presses so far?" — it carries
 its own running breakdown.
 
-You find it at **Assets › Fixed Asset Letter of Credits › Fixed asset Letter of Credit**, in the
-same folder as the three documents and the expense item file. The folder needs the `fixedassets-lc`
-licence.
+You find it at **Assets › Fixed Asset Letters of Credit › Fixed asset Letter of Credit**, in the
+same folder as the three documents and the expense item file. The credit and the three documents
+need the `fixedassets-lc` licence.
 
 ![The Fixed asset Letter of Credit screen](../../../ar/modules/fixedassets/images/lc/fa-letter-of-credit-main-en.png)
 
@@ -39,7 +39,7 @@ company" and the system reads the name off the credit.
 | **Code**, **Name (Arabic)** and **Name (English)** | how the credit is found and printed — `LC-2026-004`, *Presses – Riyadh Plant* |
 | **Group** | the coding group that numbers the record |
 | **Supplier** — required | the party the goods value is owed to. Copied automatically onto the proforma invoice and the cost document |
-| the supplier's bank — required | the bank on the other side of the credit |
+| **Bank** — required | the supplier's bank, on the other side of the credit |
 | **Bank account** | your own account the credit is drawn on. An expense line can be credited straight to it |
 | **Other Bank** | the correspondent bank, as a free note |
 | **Customs Party** | the clearance agent. An expense line credited to the customs company lands on this party |
@@ -119,7 +119,7 @@ exactly two meaningful positions:
 
 | State | Meaning |
 |---|---|
-| **Initial** (مبدئى) | the credit is open. Proforma invoices, expense documents and the cost document can all be entered against it |
+| **Initial** (مبدئي) | the credit is open. Proforma invoices, expense documents and the cost document can all be entered against it |
 | **Closed** (مغلقة) | the import is finished and capitalised |
 
 Nothing on the credit itself moves it between the two. **Committing a cost document closes it**, and
@@ -129,9 +129,9 @@ notice:
 - The letter-of-credit picker on a **cost document** offers only credits that are not closed — a
   closed credit has already had its cost document, and there is nothing left to capitalise.
 - A **proforma invoice** cannot be committed unless the credit is still open.
-- An **expense document** of a closed credit can be neither committed nor deleted. A late freight
-  invoice therefore needs the cost document cancelled first: cancel it, the credit reopens, enter the
-  expense, then commit the cost document again with the corrected figures.
+- An **expense document** of a closed credit can be neither committed nor deleted, so a late freight
+  invoice needs the cost document cancelled first — see
+  [Undoing it](/modules/fixedassets/letters-of-credit/fixedassets-lc-cost-document#Undoing-it).
 
 ## Finding credits later
 

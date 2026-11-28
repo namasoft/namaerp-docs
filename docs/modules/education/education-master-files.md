@@ -23,7 +23,7 @@ sections of about thirty pupils. Nama models exactly that shape, in four master 
 
 ### Stage Type
 
-**Stage Type** is a small lookup: a code and the two names, nothing more. It categorises the stages
+**Stage Type** is a small lookup: a code, the two names and free remarks, nothing more. It categorises the stages
 themselves — you might create *General*, *Vocational* and *Language* stage types, or *Basic* and
 *Higher*. Keep the list short and meaningful; it exists so that a school with many stages can group
 them.
@@ -45,7 +45,7 @@ stages appear as an expandable tree.
 ![The Educational Stage screen](../../ar/modules/education/images/master-files/educational-stage-en.png)
 
 ::: tip The most referenced record in Education
-The educational stage turns up almost everywhere: on students, class rooms, ranks, courses,
+The educational stage turns up almost everywhere: on students, class rooms, courses,
 attendance sheets, daily monitoring, mark sheets and the published fee list. If your stage list is
 wrong, every screen downstream inherits the mistake — so agree the stage list with the school before
 entering anything else.
@@ -127,7 +127,8 @@ postal code, district, land plot number, two free address lines and a map locati
 
 A **Guardian** is the father, mother or sponsor who answers for one or more pupils. The record holds
 a code and the two names, the guardian's **Current Vacancy** (their job title), a **Mobile** number
-and an **EMail** address for quick contact, and remarks. A second page, **Contact Info**, holds two
+and an **EMail** address for quick contact, remarks, and a **Students** grid (student and
+educational stage) where you can list the guardian's children. A second page, **Contact Info**, holds two
 complete contact blocks: one for where the family lives now, and one headed *Home land contact info*
 for the country of origin — the pairing schools with expatriate families need. Each block carries a
 full address plus two telephones, a mobile, a fax number, an e-mail and a website.
@@ -145,7 +146,9 @@ record on the second. Decide as a school which one your staff will trust, and fi
 The link between the two people is made **on the student card**: you open the pupil and pick the
 guardian in its *Guardian* field. One guardian can be named by any number of students, which is how a
 family of three brothers ends up on one account. If a guardian's children change — a pupil leaves, a
-younger sibling joins — you edit the pupils, not the guardian.
+younger sibling joins — you edit the pupils. The **Students** grid on the guardian card is a list
+you keep by hand: filling it does not set the Guardian on those students' cards, and it is the
+student card's *Guardian* field that the document term follows when it bills the guardian.
 
 ## Students and guardians are accounting subsidiaries
 
@@ -183,8 +186,10 @@ This is the one piece of design that trips people up most often, so it is worth 
 Education → Master Files → **Lecturer**, and the record has nothing to do with payroll.
 
 It holds the code and the two names, a **Hiring Start Date**, a free-text **Preferred Times** field
-where you note the slots the teacher is willing to take ("Sun/Tue mornings, no Thursdays"), up to
-five attachments for certificates and contracts, a full contact-info block, and the dimensions.
+where you note the slots the teacher is willing to take ("Sun/Tue mornings, no Thursdays"), a
+**Salary Calculation Method** (Specific, Percentage From Sales Price or Percentage From Cost) with
+its amount, recorded on the card for reference, up to five attachments for certificates and
+contracts, a full contact-info block, and the dimensions.
 Lecturers are then named on [Courses](./education-courses).
 
 ![The Lecturer screen](../../ar/modules/education/images/master-files/lecturer-en.png)
@@ -244,7 +249,9 @@ copies its values onto that student's card.
 
 **What it can change**: the educational stage, the guardian, the birth date, the joining date, the
 enrolment state, the contract type, the programme type, the religion, the nationality, the picture,
-the whole address block, and the student's spare description, number and date fields.
+the address (country, country code, region, city, district, area, street, building number and the
+two address lines — not State, Postal Code, Land Plot Number or Map Location), and the student's
+spare description, number and date fields.
 
 **What it cannot change**: the code, the two names, the group, the attachments, the accounting
 settings and the account slots. Those stay the responsibility of the student card itself.

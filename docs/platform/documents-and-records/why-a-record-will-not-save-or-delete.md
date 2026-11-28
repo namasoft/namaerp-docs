@@ -8,8 +8,12 @@ entities: [DocumentFile, MasterFile]
 message that names the rule but not the way out. This page takes the refusals one by one — what the
 system was protecting, and what a support agent actually does about it.
 
-The checks run in a fixed order, and they are cumulative: a record can fail one, be fixed, and then
-fail the next. It helps to know the order, because it tells you which answer to give first.
+The checks are cumulative: a record can fail one, be fixed, and then fail the next. They run in a
+fixed order, and the order tells you which answer to give first. A revised record is refused before
+anything else (section 6). The permission checks of section 4 come next. Then a cancelled document,
+or one whose deletion is already waiting for approval, is refused (section 6). Only after that are
+the record checks of sections 1, 2, 3 and 5 run, and they run only on a record that has been
+committed at least once. A draft is deleted without them.
 
 ## Deleting: the checks, in the order they run
 
@@ -65,17 +69,17 @@ back.
 
 Two different messages, two different mechanisms:
 
-> Cannot delete because there are transactions by the document {0}
+> Record cannot be deleted, {0}-{1} Created from this record
 
-The document has processed effects — ledger lines, stock movements, debt lines. It cannot simply
-vanish; use a [Document Cancel Document](/platform/documents-and-records/document-cancel-document), which reverses the
-effects and leaves a trace.
+Another document was created from this one: it names this document as its From Doc, it was entered
+by a user rather than generated, and it is not cancelled. `{0}-{1}` is the type and code of the
+first such document. Delete or cancel that document first, then delete this one.
 
 > Record {0} can not be deleted because it is used in {1}
 
-An installment document whose installments have already been paid, or a record used by a specific
-named record that the message points at. Open the record named in `{1}` first; if it is a payment,
-undo the payment before the plan.
+A record with installment lines whose installments already have payments against them. `{1}` names
+the payment document, and the message repeats once for each payment. Undo those payments first,
+then delete the plan.
 
 ### 4. The user is not allowed to delete this kind of record, in this state
 
@@ -85,7 +89,7 @@ Four separate permissions decide a delete, and which one applies depends on the 
 |---|---|---|
 | A draft | **Draft Deletion Capability** on the [security profile](/platform/security/security-profiles) | *{0} can not be deleted because current user dos not have the authority for deleting drafts* |
 | A draft, with **Delete Only Created Drafts** on | the same, plus authorship | *{0} can not be deleted because current user is not the creator of this draft* |
-| Committed | **Can Delete** | *You do not have the authority {1} on entity {0}* (with `{1}` = Delete) |
+| Committed | **Delete** | *You do not have the authority {1} on entity {0}* (with `{1}` = Delete) |
 | Approved | **Prevent Delete After Approval** | *Current user can not delete {0} after approval* |
 | Printed at least once | **Prevent Delete After Print** | *Current user can not delete {0} after being printed* |
 
@@ -107,12 +111,19 @@ the Fiscal Year Status Update rules that close it further, and the *Ignore Close
 that open it for chosen users or document types — are explained in
 [Fiscal Period Control](/platform/governance/fiscal-period-control-guide).
 
-### 6. The record is revised, prevented from usage, or in an approval cycle
+### 6. The record is revised, waiting for approval, or cancelled
 
-These three freeze a record for deleting exactly as they freeze it for editing, and they are covered
-in [Revise and Unrevise](/platform/governance/revise-and-unrevise),
-[Prevent Usage](/platform/everyday-tools/prevent-usage) and
-[Approvals](/platform/approvals/approvals-system).
+A revised record is refused with *Can not operate on revised record {0}* before any other check
+runs; unrevise it first, as described in
+[Revise and Unrevise](/platform/governance/revise-and-unrevise). A document whose deletion has
+already been sent for approval is refused with *You cannot delete {0} because it is awaiting
+approval.* until that approval cycle ends (the message has no Arabic translation); see [Approvals](/platform/approvals/approvals-system).
+Retiring a record with [Prevent Usage](/platform/everyday-tools/prevent-usage) does not stop it
+being deleted.
+
+A cancelled document is refused as well, with *You can not delete cancelled Document {0}*. Delete the
+[Document Cancel Document](/platform/documents-and-records/document-cancel-document) that cancelled it
+first; that restores the document, and it can then be deleted.
 
 ## Editing: the same idea, different rules
 
@@ -143,16 +154,18 @@ clearing, the save simply has to be repeated against the current version.
 |---|---|---|
 | *Can not Delete this  record because it used in another record* | One of the fifteen types above was pointed at by a saved record and is marked as used. The message has no Arabic translation, so it appears in English on Arabic screens. | Confirm nothing really uses it, then **Ctrl + Alt + X** → **More** → **cancelActivated**, and delete. |
 | *Record {0} can not be deleted, because it is generated final* — «لا يمكن حذف السجل {0} لأنه خاص بالنظام» | The record was generated by another record as final output. | Delete or cancel the record that generated it. |
-| *Record {0} can not be deleted because it is used in {1}* — «لا يمكن حذف السجل {0} حيث انه مستخدم في {1}» | A named record — typically a payment against an installment plan — depends on this one. | Open the record named in the message and undo it first. |
-| *Cannot delete because there are transactions by the document {0}* — «لا يمكن الحذف لوجود حركات بواسطة المستند {0}» | The document has processed effects in the ledger or the warehouse. | Cancel it with a Document Cancel Document instead of deleting. |
-| *Cannot delete as {0} value is paid* | A point-of-sale payment has been taken against this document. | Reverse the payment first. |
-| *{0} can not be deleted because current user dos not have the authority for deleting drafts* — «لا يمكن حذف {0} لأن المستخدم الحالى لا يملك صلاحية حذف المسودات» | **Draft Deletion Capability** is not granted on the profile. | Grant it on the security profile, or have someone who has it delete the draft. |
-| *{0} can not be deleted because current user is not the creator of this draft* — «لا يمكن حذف {0} لأن المستخدم الحالى ليس هو منشئ المستند» | **Delete Only Created Drafts** is on, and this draft was entered by somebody else. | Its author deletes it, or the option is relaxed for that profile. |
+| *Record {0} can not be deleted because it is used in {1}* — «لا يمكن حذف السجل {0} حيث أنه مستخدم في {1}» | The record has installment lines, and `{1}` is a payment recorded against them. | Undo the payment named in the message first. |
+| *Record cannot be deleted, {0}-{1} Created from this record* — «لا يمكن حذف السجل : {0} - {1} بناءً على هذا السجل» | The document `{0}-{1}` was created from this one (its From Doc is this document). | Delete or cancel that document first. |
+| *You can not delete cancelled Document {0}* — «تم إلغاء المستند {0} فبالتالي لا يمكن حذفه» | A Document Cancel Document has cancelled this document. | Delete the cancel document first; that restores the document, which can then be deleted. |
+| *Can not operate on revised record {0}* — «لا يمكن التعامل مع السجل {0} لأنه تمت مراجعته» | The record is revised. | Unrevise it, then delete. |
+| *Cannot delete as {0} value is paid* — «لا يمكن الحذف حيث تم دفع قيمة {0} من المستند» | A point-of-sale payment has been taken against this document. | Reverse the payment first. |
+| *{0} can not be deleted because current user dos not have the authority for deleting drafts* — «لا يمكن حذف {0} لأن المستخدم الحالي لا يملك صلاحية حذف المسودات» | **Draft Deletion Capability** is not granted on the profile. | Grant it on the security profile, or have someone who has it delete the draft. |
+| *{0} can not be deleted because current user is not the creator of this draft* — «لا يمكن حذف {0} لأن المستخدم الحالي ليس هو منشئ المستند» | **Delete Only Created Drafts** is on, and this draft was entered by somebody else. | Its author deletes it, or the option is relaxed for that profile. |
 | *You do not have the authority {1} on entity {0}* — «لا توجد لديك الصلاحية {1} على النوع {0}» | The profile's line for this type does not grant the named permission. | See [security profiles](/platform/security/security-profiles) — the row that decides is chosen by type, then type list, then wildcard. |
 | *Current user can not delete {0} after approval* — «لا يمكن للمستخدم الحالي حذف {0} بعد الموافقة» | The document completed its approval cycle and the profile has **Prevent Delete After Approval** ticked. | Untick it for that profile, or cancel the document instead. |
-| *Current user can not delete {0} after being printed* — «لا يمكن للمستخدم الحالى حذف {0} بعد طباعته» | The document has been printed and the profile has **Prevent Delete After Print** ticked. | Untick it for that profile, or cancel the document instead. |
+| *Current user can not delete {0} after being printed* — «لا يمكن للمستخدم الحالي حذف {0} بعد طباعته» | The document has been printed and the profile has **Prevent Delete After Print** ticked. | Untick it for that profile, or cancel the document instead. |
 | *Can not delete transactions on closed periods* — «لا يمكن حذف مستندات في فترة مغلقة» | The document's date falls in a closed period. | Reopen the period, or use the *Ignore Closed Periods* permission where policy allows. |
-| *Record cannot be edited, because {0}-{1} use this record in from doc* — «لا يمكن تعديل السجل لأن {0} - {1} يستخدم هذا السجل في بناءا على» | The term option **Prevent Editing Documents After Using In From Doc** is on, and the named document was built on this one. | Delete the dependent document first, or turn the term option off. |
+| *Record cannot be edited, because {0}-{1} use this record in from doc* — «لا يمكن تعديل السجل لأن {0} - {1} يستخدم هذا السجل في بناءً على» | The term option **Prevent Editing Documents After Using In From Doc** is on, and the named document was built on this one. | Delete the dependent document first, or turn the term option off. |
 | *You can not change public records* — «لا يمكنك تعديل السجلات العامة» | The record belongs to no legal entity; your user belongs to one. | Edit it with a user whose legal entity is public. |
 | *Can not use record {0}-{1}, usage is prevented* — «لا يمكن استعمال السجلات التي تم منع استعمالها {0}-{1}» | A field points at a record that has been retired with Prevent Usage. | Pick a live record, or relax the rule — see [Prevent Usage](/platform/everyday-tools/prevent-usage). |
 

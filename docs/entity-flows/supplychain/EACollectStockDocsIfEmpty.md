@@ -11,18 +11,18 @@ entities: [EntityFlow]
 
 ## Overview
 
-Automatically collects and links stock documents into invoices that have stock effects. Used for invoices that directly affect inventory without separate stock documents, ensuring proper inventory tracking and documentation.
+Fills the **Stock Documents** grid of an invoice or return with the committed stock documents that are not linked to any invoice yet. It does nothing when the grid already has lines.
 
 ## When This Action Runs
 
-Manual execution on invoices with stock effects that need associated stock documents generated or linked for inventory management purposes.
+Attach it to sales or purchase invoices and returns that carry a Stock Documents grid, to collect the stock documents without the user picking them.
 
 ## How It Works
 
-1. **Validates invoice type** - Ensures the document is an invoice with stock effects capability
-2. **Checks existing links** - Processes only if stock documents not already linked
-3. **Collects stock documents** - Uses InvoiceWithStockEffectUtils to gather relevant stock documents
-4. **Links to invoice** - Associates collected stock documents with the invoice
+1. **Checks existing links** - Stops if the Stock Documents grid of the invoice already has lines
+2. **Chooses the stock document type** - Stock issues for a sales invoice or a purchase return (and the Service Center sales invoice and purchase return); stock receipts for every other document
+3. **Collects stock documents** - Takes the committed stock documents that have no invoice, are not ticked **Do Not Auto Collect In Invoices**, are in the invoice's warehouse (when the invoice has one) and belong to the same supplier (purchase documents) or customer (sales documents). The collection options of the invoice's document term (contact, subsidiary, sector, branch, department, analysis set, and **Consider From Document When Collect Documents**) narrow the list further
+4. **Links to invoice** - Adds one line per collected stock document to the Stock Documents grid
 
 ## Parameters
 
@@ -31,8 +31,7 @@ This action does not require any parameters.
 ## Database Tables Affected
 
 - **Invoice Tables** - Updates invoice with stock document references
-- **Stock Document Tables** - Links or creates stock documents
-- **Document Relationship Tables** - Establishes invoice-to-stock document relationships
+- **Stock Document Tables** - Reads stock issues or stock receipts (read-only)
 
 **Module:** supplychain
 

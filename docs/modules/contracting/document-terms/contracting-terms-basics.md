@@ -25,21 +25,22 @@ A term is created against **one document type**. Choose the document type first:
 
 ## Debit and Credit — the pair every contracting term has
 
-Every contracting document term carries a **debit side** and a **credit side** for its main entry. On screen they are captioned **Debit 2** and **Credit 2** (مدين 2 / دائن 2) — field ids `termConfig.debit2` and `termConfig.credit2` on the extract, assay, daily labour book and equipment statement terms; the fine and payment terms use `termConfig.debit` / `termConfig.credit`, and the miscellaneous-contracting terms `termConfig.config.debit` / `termConfig.config.credit`. Those are the primary pair — there is no "Debit 1" anywhere to hunt for, and the numbering is historical. Throughout these pages they are called simply the debit and the credit.
+Every contracting document term carries a **debit side** and a **credit side** for its main entry. On screen they sit in the groups captioned **Debit** and **Credit** (مدين / دائن) — field ids `termConfig.debit2` and `termConfig.credit2` on the extract, assay, daily labour book and equipment statement terms; the fine and payment terms use `termConfig.debit` / `termConfig.credit`, and the miscellaneous-contracting terms `termConfig.config.debit` / `termConfig.config.credit`. Those are the primary pair — the "2" in the field id is historical, and there is no "debit 1" anywhere to hunt for. Throughout these pages they are called simply the debit and the credit.
 
 Each side is more than an account number. A side lets you say *where the account comes from* rather than naming one account for all time:
 
 | What you set on a side | What it does |
 |---|---|
-| The accounting side / account source — `termConfig.debit2.sideConfig`, `termConfig.debit2.accountSource.type`, `termConfig.debit2.accountRef`, `termConfig.debit2.bagAccountId` | Whether the account is typed in directly, taken from a reference on the document, or pulled from a bag of accounts |
-| The reference type and the field it comes from — `termConfig.debit2.accountSource.entityType`, `termConfig.debit2.accountSource.fieldID` | For example: take the account from the **project**, or from the **contractor**, or from the **customer** named on the document |
-| The subsidiary type and the account field — `termConfig.debit2.subsidiaryAccountType` | Which kind of subsidiary (customer, supplier, project…) the entry is filed under |
+| **Side Configuration** — `termConfig.debit2.sideConfig` | A saved **Accounting Side Config** record. When it is filled, the side uses that record's settings and ignores everything else set on the side |
+| The account source and the account — `termConfig.debit2.accountSource.type`, `termConfig.debit2.accountRef` | Where the account comes from: **Specific** uses the account chosen in the **Account** field; **Reference** takes it from a record the document refers to, or from an account held in a field of the document; **Current User Subsidiary** takes it from the employee of the user who created the document |
+| The reference type and the field it comes from — `termConfig.debit2.accountSource.entityType`, `termConfig.debit2.accountSource.fieldID` | For a **Reference** source: which record to take the account from, for example the **project**, the **contractor** or the **customer** named on the document. That record also becomes the journal line's subsidiary |
+| The subsidiary account type and the bag account id — `termConfig.debit2.subsidiaryAccountType`, `termConfig.debit2.bagAccountId` | Which of that record's accounts to use: its main account, one of its numbered accounts (Account 1 to Account 20), an account from its accounts bag (named by the bag account id), or an account held in a header or line field |
 | The narration templates — `termConfig.debit2.narrationTemplate`, `termConfig.debit2.narration2Template` | The wording that appears on the journal line |
 | The analysis set source — `termConfig.debit2.analysisSetSource.type` (shown only when the global configuration adds dimension sources to terms) | Where the [dimensions](/modules/contracting/contracting-configuration.md) on the journal line come from |
 
-The ids above are written for the debit side; every other side has the same sub-fields under its own prefix (`termConfig.credit2.…`, `termConfig.tax1Debit.…` and so on).
+The ids above are written for the debit side; the credit side has the same sub-fields under `termConfig.credit2.…`. Most of the other sides on a contracting term — the tax, cost, discount and difference effects, and the debit and credit of the fine and payment terms — are a single field that picks a saved **Accounting Side Config** record (جانب محاسبي), which holds the same settings.
 
-That is why "credit the subcontractor" is not an account at all — it is a credit side whose subsidiary type is *supplier* and whose account is taken from the contractor named on the document. Register a new subcontractor and no term needs editing.
+That is why "credit the subcontractor" is not an account at all — it is a credit side whose account source is **Reference**, pointing at the contractor named on the document, so the account and the subsidiary come from the contractor's own record. Register a new subcontractor and no term needs editing.
 
 ## The standard term can override the accounts, line by line
 
@@ -59,9 +60,9 @@ Both arrangements work. The choice is presentational: a dedicated *retention pay
 
 ## The effects are processed in the background
 
-Nothing on a term takes effect synchronously. When a contracting document is committed it raises a **business request** (طلب أعمال) which is processed in the background, so the save returns immediately whether or not the accounts resolve. A term with an account that cannot be resolved therefore produces a *failed business request*, not a failed save.
+When a contracting document is committed, Nama works out the journal lines from the term during the save and hands them to a **business request** (طلب أعمال), which is processed in the background. A side left empty on the term adds no line. A side that is set but whose account cannot be worked out for a line, such as a **Reference** to a record the document does not name or **Current User Subsidiary** for a user with no employee, stops the save with a message.
 
-Power users watch and retry these from the **Business Requests** list view: filter by processing status, select the failed rows, then **More → Reprocess** or **Recommit**. Fix the term first, then reprocess — the request is re-used rather than duplicated, so a document does not end up with two journal entries.
+Because the request keeps the term's accounts as they were at save time, a corrected term reaches an already committed document only through **Recommit**; **Reprocess** re-runs the old lines. Finding and re-running failed requests is covered on [Business Requests](/platform/background-processing/business-requests).
 
 ## Which documents have contracting term options
 
@@ -98,21 +99,11 @@ That list is not an oversight. None of those documents reaches the ledger, so no
 
 ## Worked example — one term for the Tower A extracts
 
-Tower A is a residential tower contracted with **Al-Fanar Development** at **230,000** on contract `PC-2026-001`, across four work items: excavation `1.01` (1,000 m³ at 50), reinforced concrete `2.01` (60 m³ at 900), blockwork `3.01` (2,000 m² at 46) and plastering `3.02` (1,000 m² at 34). The contract carries a 10% retention condition and the owner has paid a 46,000 advance.
+Tower A is a residential tower contracted with **Al-Fanar Development** at **230,000** on contract `PC-2026-001`, with a 10% retention condition and a 46,000 advance from the owner. One term, code `EXT-STD`, targeted at Project Contract Extract, is all that is needed to make every extract on that contract create its journal entry: a main debit and credit, a Tax 1 pair and a planned-cost pair. It carries no retention accounts, because those are on the retention condition record.
 
-One term, code `EXT-STD`, targeted at Project Contract Extract, is all that is needed to make every extract on that contract create its journal entry:
+Had the concrete standard term `2.01` carried its own credit account, such as *Concrete works revenue*, the concrete line would credit that instead of the general revenue account, without `EXT-STD` knowing anything about it.
 
-| On the term | Set to | Why |
-|---|---|---|
-| Debit | Trade receivable, subsidiary from the customer | The owner owes us the certified amount |
-| Credit | Contract revenue | Revenue is earned as work is certified |
-| Tax 1 debit / credit | Contract revenue / Output VAT payable | VAT on the certificate |
-| Cost debit / credit | Cost of contract works / Contract work in progress | The planned cost of the certified work |
-| Retention accounts | *not here* | They are on the retention condition record |
-
-The concrete standard term `2.01` additionally carries its own credit account — *Concrete works revenue* — so the concrete line credits that instead of the general revenue account, without `EXT-STD` knowing anything about it.
-
-The first extract certifies 400 m³ of excavation, 20 m³ of concrete and 500 m² of blockwork: 61,000 of works, 9,150 VAT, 70,150 gross, less 6,100 retention and 11,500 advance recovery, **52,550 net payable**. The journal that arrives is exactly the shape of the table above, and the whole of it — the amounts, the sides, the subsidiaries — is traceable to `EXT-STD` and to two condition records. This is the example carried through [Extract Document Terms](/modules/contracting/document-terms/contracting-terms-extracts.md).
+The term's groups, the first two extracts and the journal they produce are worked through on [Extract Document Terms](/modules/contracting/document-terms/contracting-terms-extracts.md).
 
 ## Where to go next
 

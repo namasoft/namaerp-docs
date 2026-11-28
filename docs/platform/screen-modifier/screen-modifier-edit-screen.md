@@ -20,7 +20,7 @@ Throughout this page, anywhere you are asked for a field, you enter its **field 
 
 | Collection | What it does |
 | --- | --- |
-| **Add Pages** | Adds new, empty pages (tabs) to the screen that you can then fill with groups and grids. |
+| **Added Pages** | Adds new, empty pages (tabs) to the screen that you can then fill with groups and grids. |
 | **Removed Pages** | Hides existing pages. You pick the page by its id, suggested from the screen's current pages. |
 | **Reorder Pages** | Changes the order pages appear across the top of the screen. Add one line per page you want to move: pick the **page** and give it its **new position number**; pages you don't list keep their existing order. |
 
@@ -87,14 +87,14 @@ That collection is large enough to have its own page: **[Adding Buttons to a Scr
 
 ## Formulas — composite header fields
 
-The **Formulas** collection builds a **composite field**: a single read-only field whose value is assembled from up to **five** other fields. You point each slot (first … fifth field) at an existing field on the screen and choose how they combine, then place the result in a page. This is the way to show a concatenated label, a computed display value, or a combined reference without changing the underlying data model.
+The **Formulas** collection (the **Composite Fields** grid on the **Composite Fields Definition** page) builds a **composite field**: one slot in a header group that shows up to **ten** existing fields side by side. Each line is placed in a group like a **Modified Group Fields** line, then names the first … tenth field, each with a **Percentage** (its share of the slot's width) and, when **Show Titles** is ticked, a **Title Percentage** for its label; **Put Label After Widget** puts each label after its field. Each field keeps its own value and behaviour — nothing is calculated. This is the way to fit several short fields, such as a code and a name, on one row.
 
 ## Embedded Records Editor
 
 The **Embedded Records Editor** lets the user edit a *referenced* record directly inside the host screen, instead of opening it separately. On each line you choose:
 
-- the **reference field** on the host record that points at the object to edit (must be a reference or generic-reference field),
-- the **view name** (layout) to use for the embedded editor,
+- the **Entity Type** of the record to edit, and the **Edited Object Source Type**: *From Field* edits the record that a reference field on the host record points at — you name that field in **Edited Object Field**, which is then required — while *Always Create New* gives a new record of that type,
+- the **view name** (layout) to use for the embedded editor, and **View Only** to show it without editing,
 - an optional **default-values template** to pre-fill a new embedded record,
 - and the page the embedded editor appears on.
 
@@ -121,11 +121,11 @@ adds a scroll bar. Every value, and how the frame is shared among the widgets, i
 
 ## Fill Fields From Column
 
-The **Fill Fields From Column** collection sets up **auto-fill** behaviour. You nominate a trigger column (typically a reference, such as the customer) and, for that reference, which **search field** to read from and which **field to copy into** on the host record. When the user fills the trigger column, Nama copies the chosen value across automatically — a lightweight way to default one field from another without custom code.
+The **Fill Fields From Column** grid, on the modifier's **Search View Modify** page, copies a value from a selector pop-up into the screen the pop-up was opened from. It goes on the modifier of the type being picked — Customer, say. Each line names a display column of that type's selector pop-up (**Column**), the reference field on the other screen that opens the pop-up (**Field That Will Be Searched In**, for example `customer`), optionally that screen's type or type list, and the field on that screen that receives the value (**Field That Column Will Be Copied To**). When the user picks a record in that reference field, Nama copies the column's value into the target field — a lightweight way to default one field from another without custom code.
 
 ## Moving blocks between pages
 
-The **Page Blocks** collection moves a block from one page to another: you state the block, the page it currently lives on (*from page*), and the page it should move to (*to page*). This is handy for reorganising a busy screen — for example, pulling the attachments group onto its own tab.
+The **Blocks** grid, on the modifier's **modified Blocks** page, works on whole blocks. Each line names a block on its **From Page** by its title or position (**Block title/Order**) and sets an **Effect Type**: **Move** takes the block to **To Page** at position **Block Order**, **Copy** puts a copy there and leaves the original in place, and **Delete** removes the block. With **To Page** empty the block stays on its own page, and with **Block Order** empty it keeps its position. The same line can also give the block a new Arabic or English title, an icon and a size. This is handy for reorganising a busy screen — for example, pulling the attachments group onto its own tab.
 
 ## See also
 

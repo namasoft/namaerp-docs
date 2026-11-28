@@ -125,7 +125,9 @@ with its side and its other side: **Discount 1** (`termConfig.lineDiscount`), **
 (`termConfig.invoiceDiscount`), **Discount 2** to **Discount 8** (`termConfig.firstDiscountAcc` …
 `termConfig.seventhDiscountAcc`), and their other sides (`termConfig.taxesOtherSide.discount1OtherSide`
 … `termConfig.taxesOtherSide.discount8OtherSide`, `termConfig.taxesOtherSide.headerDiscountOtherSide`). Configure only the levels your contracts actually use — a group
-with no side configured simply produces no entry, and the discount stays folded into the amounts.
+left without an account source falls back to the company side: on the contract term the discount is
+debited to the **Credit** group's account (your revenue), on the cancellation term it is credited to
+the **Debit** group's account, so the revenue simply nets down by the discount.
 
 ## A worked example — tuition receivable against fees revenue
 
@@ -158,8 +160,9 @@ payer — the exact mirror of the part being undone.
 ::: info Change a term, and old documents keep their old entry
 A term is read when the document is processed. Editing a term does not go back and rewrite entries
 that already exist. If you correct a term that had the wrong account, the documents committed under
-the old configuration have to be reprocessed — the **Regenerate Accounting Effects** toolbar action
-re-issues the ledger entry for the documents you select using the term as it stands now.
+the old configuration have to be reprocessed — **Regenerate Accounting Effects**, in the **More** menu
+of the document or of its list view once you press **Ctrl + Alt + X**, re-issues the ledger entry for
+the committed documents you select using the term as it stands now.
 :::
 
 ## Books, and how a term gets picked

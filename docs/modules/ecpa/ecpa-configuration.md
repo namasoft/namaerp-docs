@@ -14,7 +14,7 @@ settings screen, and almost everything on it answers a single question: **how do
 somebody's time become an amount of money?**
 
 You reach it from **Project Management → Settings → module settings**
-(in Arabic **ادارة المشاريع ← الإعدادات**). There is one settings record per database, so whatever
+(in Arabic **إدارة المشاريع ← الإعدادات**). There is one settings record per database, so whatever
 you set here applies to every project, every timesheet and every invoice in that company file.
 
 ## An hour becomes money twice
@@ -25,7 +25,7 @@ two different places, from two different sources.
 **Once as cost, on the timesheet.** When an engineer records that she worked from 09:00 to 15:30 on
 a task, Nama needs to know what that time cost the firm. It gets that from the payroll: the
 employee's total constant salary, divided by a standard month's worth of hours. That division is
-what **Standard Monthly Hours** and **Update Hour Cost of Time Sheet From HR** are for.
+what **Standard Monthly Hours** and **Update Hour Cost of TimeSheet From HR** are for.
 
 **Once as revenue, on the invoice.** When you bill the customer for approved time, Nama starts from
 the hourly rate recorded against the employee on the task's executers grid — not from the payroll
@@ -40,7 +40,7 @@ Take a firm that runs a 200-hour standard month and an engineer, Hana, whose tot
 in payroll is 10 000.
 
 1. On the settings screen, **Standard Monthly Hours** = `200` and
-   **Update Hour Cost of Time Sheet From HR** is ticked.
+   **Update Hour Cost of TimeSheet From HR** is ticked.
 2. Hana records a Tasks Executing line for 6.5 hours on 3 March.
 3. On save, Nama asks the payroll for Hana's total constant salary on 3 March — 10 000 — and divides:
 
@@ -63,22 +63,22 @@ routes to get there.
 
 ::: tip Normal Time Rate is a multiplier, not a rate
 The name reads like a price per hour, but it is a factor applied on top of the employee's own rate.
-`1` means "charge the rate as it stands"; `1.30` means "charge 30 % above it". Leaving it empty means
-multiplying by nothing — a collected time line comes out at **zero value**, which is by far the most
-common cause of a project invoice that collects lines but shows no money.
+`1` means "charge the rate as it stands"; `1.30` means "charge 30 % above it". At `0` every collected
+time line comes out at **zero value**, so check this factor first when a project invoice collects
+time lines but shows no money.
 :::
 
 ## The settings
 
 | Option | Field id | What it controls | What changes when you set it |
 |---|---|---|---|
-| **Normal Time Rate** (معدل عمل اليوم العادي) | `value.normalTimeRate` | The markup applied when a project invoice collects approved time | The collected line value becomes `employee rate × approved hours × this factor`. Empty or zero produces zero-value lines |
+| **Normal Time Rate** (معدل عمل اليوم العادي) | `value.normalTimeRate` | The markup applied when a project invoice collects approved time | The collected line value becomes `employee rate × approved hours × this factor`. Zero produces zero-value lines |
 | **Standard Monthly Hours** (عدد الساعات المعيارية شهرياً) | `value.standardMonthlyHours` | The divisor that converts a monthly salary into an hourly cost | Together with the option below it sets each timesheet line's Cost of Hour to `monthly salary ÷ this number` |
-| **Update Hour Cost of Time Sheet From HR** (تحديث تكلفة الساعة في تنفيذ المهمه من الرواتب) | `value.updateHourCostOfTimeSheet` | Whether timesheet costing is driven by payroll or typed by hand | On: Cost of Hour and Total Cost are recomputed from payroll on every save. Off: see the warning below |
-| **Filed Query 1 With Changing Date** (استعلام الحقل المحسوب 1 مع تغيير التاريخ) | `value.field1QueryWithChangingDate` | A site-specific query run when a timesheet's value date changes | A customisation hook — see the note at the end of this page. The screen spells it *Filed Query 1* |
+| **Update Hour Cost of TimeSheet From HR** (تحديث تكلفة الساعة في تنفيذ المهمة من الرواتب) | `value.updateHourCostOfTimeSheet` | Whether timesheet costing is driven by payroll or typed by hand | On: Cost of Hour and Total Cost are recomputed from payroll on every save. Off: see the warning below |
+| **Field Query 1 With Changing Date** (استعلام الحقل المحسوب 1 مع تغيير التاريخ) | `value.field1QueryWithChangingDate` | A site-specific query run when a timesheet's value date changes | A customisation hook — see the note at the end of this page |
 
 ::: warning With payroll costing off, timesheets are worth nothing
-When **Update Hour Cost of Time Sheet From HR** is unticked, the Cost of Hour column becomes a
+When **Update Hour Cost of TimeSheet From HR** is unticked, the Cost of Hour column becomes a
 free field the user types — but **Total Cost is never computed at all**. It stays at whatever is in
 the field, which on a fresh line is zero, and nothing else fills it in.
 
@@ -99,7 +99,7 @@ previous value, but Total Cost is still recalculated from that stale rate. On a 
 a total of zero; on an edited line it means a total computed from an out-of-date rate. Fill this
 field in before you rely on timesheet costing at all.
 
-::: details Filed Query 1 With Changing Date — a customisation hook
+::: details Field Query 1 With Changing Date — a customisation hook
 This one is not an ordinary setting. It holds a query that Nama runs whenever the value date on a
 Tasks Executing document changes, passing it the date and the employee, and it was built so a site
 could answer "how many hours did the attendance machine record for this person that day?" while the

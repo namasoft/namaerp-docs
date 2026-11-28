@@ -10,7 +10,7 @@ Every screen in Nama Mobile comes with a sensible default: the sales order shows
 | Screen | Arabic | Changes |
 |---|---|---|
 | **Mobile App Screen Modifier** | تعديل شاشة التطبيق | Which fields a document screen shows, in which order, which are required |
-| **Mobile Entity Title Modifier** | طريقة عرض بيانات المستند فى التطبيق | What each card says in a list, or in the result list of a lookup |
+| **Mobile Entity Title Modifier** | طريقة عرض بيانات المستند في التطبيق | What each card says in a list, or in the result list of a lookup |
 | **Mobile App Translation Override** | ترجمة حقول تطبيق المحمول | The wording of any label in the app |
 | **Mobile App Fields Extra Filter** | معايير إضافية لفلتر حقول تطبيق المحمول | Which records a lookup field offers |
 
@@ -100,9 +100,9 @@ When the user taps a lookup field in the app — the customer on a sales order, 
 | **Screen Name** | The app screen, chosen from the suggestions (*SalesOrder*, *Vacation*, *ElectronicStockTaking*…). |
 | **On Field** | The lookup field on that screen. The suggestions list the fields of the chosen screen that can be filtered. |
 | **Criteria** | A fixed condition, picked from the [Criteria Definitions](/platform/automation-and-rules/criteria-definitions.md) — for example "customers whose salesman is the current user". |
-| **criteria Template** | A condition written in Tempo that is worked out from the document the user is filling at that moment — for example, offering only the items of the warehouse already chosen on the document. See the [Tempo manual](/admin/tempo.md) for writing dynamic criteria. |
+| **Criteria Template** | A condition written in Tempo that is worked out from the document the user is filling at that moment — for example, offering only the items of the warehouse already chosen on the document. See the [Tempo manual](/admin/tempo.md) for writing dynamic criteria. |
 
-When both **Criteria** and **criteria Template** are filled, a record has to pass both. A line with no screen name or no field is ignored.
+When both **Criteria** and **Criteria Template** are filled, a record has to pass both. A line with no screen name or no field is ignored.
 
 The lines apply only to lookups made from the app. For the browser screens, the same job is done by [Field Filter with Criteria](/platform/field-filtering/field-filter-with-criteria.md).
 

@@ -11,7 +11,7 @@ Before an engineering office can open its first project in Project Management (E
 teach Nama its own vocabulary: what kinds of work it sells, how it likes to slice its portfolio for
 reporting, and which professional disciplines its people belong to. Four small master files carry
 that vocabulary, and all four live under **Project Management → Projects**
-(**ادارة المشاريع ← مشاريع**).
+(**إدارة المشاريع ← مشاريع**).
 
 They are not equally important, and it saves a lot of wasted effort to know that up front.
 **Project Type** is the one that actually changes how the system behaves. The other three are
@@ -46,8 +46,8 @@ What makes it load-bearing is what happens elsewhere once a project carries one:
   Type restricts the Project Sub Type list to that type's sub-types. On a task, it restricts the
   task-type list the same way.
 - **It travels with the work.** The type and sub-type are copied from the project onto every task
-  and onto timesheet lines, so time analysis can be sliced by type without joining back to the
-  project. They are also carried over when a project is generated from a quotation.
+  when the task is saved, and the sub-type onto timesheet lines when their project or task is
+  chosen, so time analysis can be sliced without joining back to the project. They are also carried over when a project is generated from a quotation.
 
 The Project Type screen has a second page listing **every project of this type** — a read-only view
 showing each project's code, customer, manager, vice manager and responsible. It is the quickest way
@@ -56,8 +56,7 @@ filtering.
 
 ::: tip Set project types up first
 Everything else in the module either hangs off a project type or is filtered by it. Creating task
-types before project types means going back to edit every one of them, and opening a task type
-lookup on a project that has no project type at all is best avoided.
+types before project types means going back to edit every one of them.
 :::
 
 ## Project Sub Type — a narrower variant of the type
@@ -120,8 +119,9 @@ Nakheel Engineering has four:
 | `ELE` | Electrical |
 | `MEC` | Mechanical |
 
-The record itself is a code, a coding group and the two names. Its value is entirely in the places
-it gets used:
+The record itself is a code, a coding group and the two names, plus an optional **Project Type**,
+**Proj Sub Type** and **Deliveries** number that are stored on it for classification. Its value is
+entirely in the places it gets used:
 
 - on a project's **Disciplines** page, where each discipline gets its share of the project and its
   estimated hours and costs;
@@ -148,7 +148,8 @@ usually what a firm wants.
 2. **Project Sub Types** under them — `RES-VIL`, `RES-APT`, `COM-RET`, `COM-OFF`.
 3. **Project Classes** — `PUB`, `PRV`, and any second axis you want in slot two.
 4. **Disciplines** — `ARC`, `STR`, `ELE`, `MEC`.
-5. **Task types** for each project type, so that tasks can be saved at all — on
+5. **Task types** for each project type, if you classify tasks by type (a task's type is optional,
+   but when set it must belong to the project's type) — on
    [Project Tasks](/modules/ecpa/tasks/ecpa-tasks).
 6. **Milestones and a phases-and-disciplines template**, which is where the vocabulary above starts
    producing an actual work breakdown — on

@@ -50,10 +50,10 @@ maintenance, then:
 - generates **one detail line per unit**, pre-filled with the unit, its area, and the buyer or
   tenant it will be charged to.
 
-::: tip Lines are generated once, into an empty grid
-The lines only appear if the details grid is still **empty**. Changing the fund on a document that
-already has lines re-totals the area but does not rebuild the lines. If you picked the wrong fund,
-clear the grid before picking again.
+::: tip Picking the fund replaces the lines
+Picking or changing the fund on the screen replaces the whole details grid with a fresh line for
+each of that fund's units, so pick the fund before you edit any line. A document saved with an
+empty grid gets its lines generated on save.
 :::
 
 ::: info Two different lists of units
@@ -70,9 +70,10 @@ reference and the *Subject To Maintenance* tick sit together.
 by the total area and writes the result into **Maintenance Cost Basis** — 100 per m², carried to
 five decimal places so that awkward areas still add up.
 
-The cost basis is not locked. You can overwrite it, and the lines recalculate from whatever you
-typed. That is how you charge a rounded rate — set the basis to 100 flat instead of 99.87342 and
-let the total land where it lands.
+You can type over the cost basis on the screen, and the lines recalculate from it. On save,
+though, the basis is recalculated as Annual Maintenance Value ÷ Total Project Area whenever both
+are filled, and the lines follow it. To charge a rounded rate — 100 flat instead of 99.87342 —
+leave **Annual Maintenance Value** empty and type the **Maintenance Cost Basis** yourself.
 
 ### 3. Read the lines
 

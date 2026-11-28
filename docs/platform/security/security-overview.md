@@ -59,13 +59,13 @@ When the system asks "can user X edit a sales invoice?" the answer is calculated
 Within each set of lines (user or profile) there is also a priority order for matching:
 
 1. A line that names the specific entity type in its **Type** field (e.g., sales invoice) wins first.
-2. Then a line whose **Type List** — a record of type *EntityType List* — contains that type.
+2. Then a line whose **Type List** — a record of type *Entity Type List* — contains that type.
 3. Then the **Wildcard line** where both Type and Type List are left empty, which applies to everything not covered by a more specific line.
 
 This lets you write profiles like: "a permissive wildcard line for all types, a stricter line for financial documents (via a type list), and a very specific line for journal entries alone."
 
-::: tip Type Lists (EntityType List)
-EntityType List records (**Administration → Display Customization → EntityType List**) are simple named groups of entity types. They are used across all permission screens, so a single list like "All Sales Documents" can be reused in standard security lines, field settings, page security, and extra filters all at once.
+::: tip Type Lists (Entity Type List)
+Entity Type List records (**Administration → Display Customization → Entity Type List**) are simple named groups of entity types. They are used across all permission screens, so a single list like "All Sales Documents" can be reused in standard security lines, field settings, page security, and extra filters all at once.
 :::
 
 ### Delegation Also Plays a Role

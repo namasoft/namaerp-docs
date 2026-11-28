@@ -37,11 +37,7 @@ The menu calls it simply **Product** (`منتج`), which undersells it. Everywhe
 Every workshop page in this documentation is about this car.
 
 ::: danger The workshop's vehicle file and the showroom's car record are not connected
-Al-Sahra also sells cars, and a car it sells gets a completely different record in a completely different register — the **[car file](/modules/servicecenter/cars-setup/car-master-file.md)**, under the `cars` menu root, with its own status engine and its own documents.
-
-There is **no working link between the two**. A car sold by the showroom does not appear in the workshop's product list, and servicing a car does not touch the showroom record.
-
-If you need the same physical vehicle to be visible on both sides, you must create it twice — once as a car record when it is bought, once as a product when it first comes in for service — and keep the chassis number identical so a human can match them. Nothing automates that, and nothing checks it.
+A car the showroom sells lives in a different register — the **[car file](/modules/servicecenter/cars-setup/car-master-file.md)**, under the `cars` menu root — and nothing links it to this file; see [The Sold Car and the Serviced Car Are Different Records](/modules/servicecenter/servicecenter-overview#The-Sold-Car-and-the-Serviced-Car-Are-Different-Records). To see one physical vehicle on both sides, create it in each register and keep the chassis number identical so a person can match them.
 :::
 
 ## The Screen
@@ -59,28 +55,28 @@ Everything lives on one page, in two blocks and three lists.
 | Production Year | سنة الموديل | 2023. |
 | Status | الحالة | **Read-only.** Where the car is in its visit — see below. |
 | Color | اللون | Silver. |
-| Last Requester / Last Requester Contact | مقدم آخر طلب / جهة اتصال مقدم اخر طلب | Filled by the system from the most recent service request. |
+| Last Requester / Last Requester Contact | مقدم آخر طلب / جهة اتصال مقدم آخر طلب | Filled by the system from the most recent service request. |
 | Current Car Owner | المالك الحالي | Fahad Al-Otaibi. The party the workshop deals with. |
 | Initial Car Owner / Customer Contact | المالك الأصلي / جهة اتصال العميل | Who first owned it, and the contact person. |
 | Insurance Company | شركة التأمين | Wafa Insurance — the party behind an insurance share on a job. |
-| Warranty company | شركه الضمان | NAWA Warranty Programme — the party behind a warranty share. |
+| Warranty company | شركة الضمان | NAWA Warranty Programme — the party behind a warranty share. |
 
 ### Product Details — the Metal and the Mileage
 
 | Field | Arabic label | Notes |
 |---|---|---|
 | Chassis No | رقم الشاسيه | The chassis number again, in the details block. |
-| Car Plate Numbers / Car Plate Characters | ارقام اللوحة / حروف اللوحة | The plate typed in two parts. |
+| Car Plate Numbers / Car Plate Characters | أرقام اللوحة / حروف اللوحة | The plate typed in two parts. |
 | Car Plate Number | رقم لوحة السيارة | **Calculated** — the numbers and the characters joined with a space. Do not type into it. |
 | Engine No | رقم المحرك | `S16-224471`. |
 | Gear Box | ناقل الحركة | Manual, automatic, and so on. |
 | Supplier Code | كود المورد | The supplier's own reference for the vehicle. |
-| Accessories | مجموعة المحلقات | The **Accessories Kit** (مجموعة ملحقات) that came with the vehicle. Accessories kits are a small master file under **Service Center → Master Files → Accessories Kit**: a code, a name and up to five attachments — photos or a checklist of what the kit contains. The kit is copied onto the job documents and gate passes opened for the vehicle. |
+| Accessories | مجموعة الملحقات | The **Accessories Kit** (مجموعة ملحقات) that came with the vehicle. Accessories kits are a small master file under **Service Center → Master Files → Accessories Kit**: a code, a name and up to five attachments — photos or a checklist of what the kit contains. The kit is copied onto the job documents and gate passes opened for the vehicle. |
 | Last Odometer / Last Odometer Date | قراءة العداد السابقة / تاريخها | 41,600 on 1 January 2026. |
 | Current Odometer / Current Odometer Date | قراءة العداد الحالية / تاريخها | 45,300 on 3 March 2026. |
-| Difference Between Current OdoMeter and Last OdoMeter | الفرق بين القراءة الحالية وأخر قراءة | 3,700 km. |
+| Difference Between Current Odometer and Last Odometer | الفرق بين القراءة الحالية وآخر قراءة | 3,700 km. |
 | Average KM Daily Consumption | متوسط استهلاك الكيلومتر يوميا | **Calculated** — 3,700 ÷ 61 days = **60.7 km/day**. |
-| Recall Campaign | حملة الإستدعاء | The [recall campaign](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md) this vehicle was serviced under. A committed job document that names a campaign fills it when it is empty. |
+| Recall Campaign | حملة الاستدعاء | The [recall campaign](/modules/servicecenter/inspections-and-campaigns/servicecenter-recall-campaigns.md) this vehicle was serviced under. A committed job document that names a campaign fills it when it is empty. |
 | Insurance Kilometer | كيلومتر الضمان | The mileage limit on the cover. |
 | Insurance Start Date / Insurance Period / Insurance End Date | تاريخ بداية التأمين / فترة التأمين / تاريخ انتهاء الضمان | The cover's window. |
 | Item Brand / Item Model / Production Year | الماركة / الموديل / سنة الموديل | Repeated here for convenience — the same values as the block above. |
@@ -88,13 +84,9 @@ Everything lives on one page, in two blocks and three lists.
 
 ### How the Odometer Behaves
 
-The two readings work as a pair, and the rule is simple: **a newer reading pushes the old one down a slot.** When a document reports a fresh reading, the current odometer becomes the last odometer, the new figure becomes the current one, and both dates move with them.
+The two readings work as a pair: **a newer reading pushes the old one down a slot**, so the current odometer becomes the last odometer, the new figure becomes the current one, and both dates move with them. Which documents write readings, when a lower reading is refused, and how the module setting *Min Days To Calculate Average KM Consumption* governs the average are set out in [Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals).
 
-The reading refuses to go backwards. A document trying to record a lower number than the vehicle already carries is rejected unless it is explicitly forced — which is the behaviour you want, because a mistyped odometer would otherwise corrupt every service interval on the car.
-
-The average daily consumption is only recomputed when enough time has passed. A module setting names the **minimum number of days** between readings for the average to be recalculated; readings closer together than that leave the previous average in place, precisely so that two visits in the same week do not produce a nonsensical figure.
-
-That average is what turns mileage into dates. `VEH-2031` last had its oil changed at 36,000 km, the interval is 10,000 km, so the next is due at 46,000 — 700 km away at 60.7 km a day, about eleven and a half days, which is why the [job order closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) projects a next visit of **15 March 2026**.
+That average is what turns mileage into dates: the [job order closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) divides the shortest task interval by it to project the next visit, **14 August 2026** for `VEH-2031`. The rule and the worked figures are in [The expected next visit](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals#The-expected-next-visit).
 
 ### Almost Nothing Financial Is Typed Here
 
@@ -116,13 +108,13 @@ The statuses available are:
 | Status | Arabic |
 |---|---|
 | Not Started | لم تبدأ |
-| Waiting Reception | إنتظار استقبال |
-| Reception In Progress | جارى الاستقبال |
-| Loading | إنتظار التحميل |
+| Waiting Reception | انتظار استقبال |
+| Reception In Progress | جاري الاستقبال |
+| Loading | انتظار التحميل |
 | In Progress | قيد التنفيذ |
 | Discontinued Work | أعمال متوقفة |
-| Repair Completed | إنتهاء الإصلاح |
-| An Invoice Was Issued | تم اصدار فاتورة |
+| Repair Completed | انتهاء الإصلاح |
+| An Invoice Was Issued | تم إصدار فاتورة |
 | Exited From The Center | خرجت من المركز |
 | Canceled | ألغيت |
 | Other 1 … Other 5 | أخرى 1 … أخرى 5 |
@@ -141,7 +133,7 @@ At the bottom of the page sit three read-only lists, and together they are the v
 
 **Services** (الخدمات) — the [job orders](/modules/servicecenter/job-cycle/servicecenter-job-order.md) raised against this vehicle. The first place to look when a customer says "you already fixed that".
 
-**Product Last Service** (أخر الخدمات) — one row per task or service, holding when it was last performed and at what mileage. This is the register that [mileage-based maintenance](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md) reads. For a vehicle that was serviced before the system went live, the register is seeded by the product task opening document, so intervals work from day one instead of treating every car as new.
+**Product Last Service** (آخر الخدمات) — one row per task or service, holding when it was last performed and at what mileage. This is the register that [mileage-based maintenance](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md) reads. For a vehicle that was serviced before the system went live, the register is seeded by the product task opening document, so intervals work from day one instead of treating every car as new.
 
 **Product Status Entries** (ملخص تغير حالة منتج) — the audit trail behind the status field: which document, from which status to which, and over what dates. When somebody asks why a car shows *Repair Completed* when it is standing in the yard, this list has the answer.
 

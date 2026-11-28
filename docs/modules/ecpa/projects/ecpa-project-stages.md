@@ -51,7 +51,8 @@ wider picture.
 Two different records, and the names are close enough to trip anyone up. A **Project Milestone** is a
 master file — one named phase of one project ("Concept Design" on Marina Tower). A **Project Stage**
 is this document, which lists several of those milestones and puts a schedule and a margin around
-them. Milestones are generated from the Milestones page of the project itself; see
+them. Milestones come from the Milestones page of the project itself, or are created on the Project
+Milestone screen; see
 [Milestones and the Phase–Discipline Matrix](/modules/ecpa/projects/ecpa-milestones-and-matrix).
 :::
 
@@ -192,7 +193,8 @@ reach them.
 :::
 
 **Stock Suppliers Costs** — materials issued out of a warehouse for the work. Pick a **Stock Issue**
-and the row fills with its source document, date, customer and net value.
+and the row fills with its source document, date, customer and the issue's total cost (the cost of
+the quantities it took out of stock).
 
 **Workers Costs** — the only labour figure on this sheet, and it is typed rather than collected.
 Three columns: employee, **Working Days Count** and **Working Day Cost**. The fourth, *Employee Cost

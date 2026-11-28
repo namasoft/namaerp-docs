@@ -94,9 +94,10 @@ Two flags sit beside the status and explain most of the rest of this page:
 
 - **Draft Created** (تم إنشاء مسودة) — the first step happened. A record whose draft was never
   started cannot be committed, which is what *Draft not started, can not commit* means.
-- **Commited Before** (تم الحفظ مسبقا) — this record has been live at least once. It is the flag
+- **Committed Before** (تم الحفظ مسبقا) — this record has been live at least once. It is the flag
   that separates "a draft I am still writing" from "a document I am correcting", and the two are
-  governed by different permissions: **Delete Draft** for the first, **Delete** for the second.
+  governed by different permissions: **Draft Deletion Capability** for the first, **Delete** for
+  the second.
 
 ## Editing a document after it is live
 
@@ -105,14 +106,14 @@ effects, and may start a new approval cycle. Some document types refuse outright
 a commited document*, because their type says corrections are made by another document rather than
 by rewriting history.
 
-Three settings and one state tighten this further:
+Four things tighten this further:
 
-- **Prevent Editing After From Doc** on the [document term](/platform/documents-and-records/document-books) stops editing
+- **Prevent Editing Documents After Using In From Doc** on the [document term](/platform/documents-and-records/document-books) stops editing
   a document once another document has been built on it — the receipt you already invoiced, the
   order you already delivered. The refusal names the document that is blocking you: *Record cannot
   be edited, because {0}-{1} use this record in from doc*.
 - **An open approval cycle** blocks editing unless the approval definition allows it; see
-  [Approvals](/platform/approvals/approvals-system) for *Allow Modify While Under Approval* and the
+  [Approvals](/platform/approvals/approvals-system) for *Allow Modification While Waiting Approval* and the
   per-step policy.
 - **Revising** freezes the record deliberately. Unrevise it first — see
   [Revise and Unrevise](/platform/governance/revise-and-unrevise).
@@ -140,13 +141,13 @@ restore the documents it cancelled as drafts, if it was told to.
 | Message | Why | What to do |
 |---|---|---|
 | *Draft not started, can not commit* — «لم يتم بدء مسودة. لا يمكن الحفظ» | Something asked the system to commit a record that was never drafted. Users do not normally meet it; integrations, imports and API calls that skip the draft step do. | Save the record from the screen, or fix the integration so that it drafts before committing. |
-| *Element is not drafted, can not commit* — «لم يتم بدء المسودة. لا يمكن انهاء عملية الحفظ» | The same condition, caught one layer deeper. | As above. |
+| *Element is not drafted, can not commit* — «لم يتم بدء المسودة. لا يمكن إنهاء عملية الحفظ» | The same condition, caught one layer deeper. | As above. |
 | *Can not save draft for documents after first save* — «لا يمكن حفظ مسودة للمستندات بعد الحفظ الطبيعي» | Someone pressed **Draft** on a document that has already been committed once. There is no un-commit. | Edit and save the document, or cancel it. |
 | *Can not edit a commited document* — «لا يمكن تعديل مستند منتهي» | This document type does not allow editing after the first commit. | Correct it with the document the business uses for corrections, or cancel it and enter a new one. |
 | *Can not edit a rejected document* — «لا يمكن تعديل مستند مرفوض» | The document was rejected in its approval cycle and was never live. | Enter a new document; a rejected draft cannot be rewritten into an accepted one. |
-| *Can not edit while under Approval* — «لا يمكن التعديل أثناء الموافقات» | The document is in an approval cycle whose definition does not allow modification while it is pending. | Wait for the decision, or turn on **Allow Modify While Under Approval** on the approval definition if editing mid-cycle is really wanted. |
-| *Can not edit while under Approval for step {0}* — «لا يمكن التعديل أثناء انتظار الموافقة للخطوة {0}» | Modification is allowed on this definition, but the step that is now waiting forbids it. | Wait for that step, or change that step's *Modify While Under Approval* policy. |
-| *Can not operate on revised record {0}* — «لا يمكن التعامل مع السجل {0} لانه تمت مراجعته» | The record is revised, and revising freezes it. | Unrevise it, make the change, revise it again. |
+| *Can not edit while under Approval* — «لا يمكن التعديل أثناء الموافقات» | The document is in an approval cycle whose definition does not allow modification while it is pending. | Wait for the decision, or turn on **Allow Modification While Waiting Approval** on the approval definition if editing mid-cycle is really wanted. |
+| *Can not edit while under Approval for step {0}* — «لا يمكن التعديل أثناء انتظار الموافقة للخطوة {0}» | Modification is allowed on this definition, but the step that is now waiting forbids it. | Wait for that step, or change that step's **Modify While Under Approval Policy**. |
+| *Can not operate on revised record {0}* — «لا يمكن التعامل مع السجل {0} لأنه تمت مراجعته» | The record is revised, and revising freezes it. | Unrevise it, make the change, revise it again. |
 | *The record was modified by someone else, please refresh and re-enter your changes* — «لقد تم تعديل السجل بواسطة شخص آخر. فضلا قم بتحديث السجل و أعد إدخال التعديلات المطلوبة» | Two users opened the same record and the other one saved first. Nama will not let the second save overwrite the first silently. | Reload the record, look at what changed, and re-enter your own change on top. |
 | *Code {0} exists before for record with id {1}* — «الكود {0} موجود مسبقا للسجل بالمعرف {1}» | The code is already taken. It surfaces at draft time on books with **Use Next Real Number For Drafts**, and at commit time otherwise. | Let the book number the record, or pick a free code. |
 

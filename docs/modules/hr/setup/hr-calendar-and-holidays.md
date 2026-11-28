@@ -13,8 +13,8 @@ Found at **Payroll > Settings > HR Calendar**, an HR Calendar is the reference e
 | Field | Purpose |
 |---|---|
 | Code / Group / Arabic Name / English Name | Identification. |
-| Main Calendar (For Taxes) (التقويم الاساسي للضرائب) | An optional link to another HR Calendar that should be used as the tax reference — so a company's own working calendar and the calendar its tax computations rely on don't have to be the same record. |
-| Days In Month (عدد ايام الشهر) | The day-count convention (commonly 30) used wherever a daily rate needs to be derived from a monthly figure. |
+| Main Calendar (For Taxes) (التقويم الأساسي (للضرائب)) | An optional link to another HR Calendar that should be used as the tax reference — so a company's own working calendar and the calendar its tax computations rely on don't have to be the same record. A chain of main calendars that loops back on itself is refused on save. |
+| Days In Month (عدد أيام الشهر) | The month length used for this calendar when the HR Period leaves its own **Days In Month** empty. It is read in two places. When **Make Work Days Of Month Fixed For Salary Document** is ticked in the [HR configuration](hr-configuration.md), a salary document's period length is the HR Period's value, then this one, then the configuration's **Fixed Work Days Count** and **Days In Month**, and otherwise the period's actual number of days. The daily rate behind day-based performance factors and dues-liquidation lines takes the HR Period's value, then this one, then the configuration's **Days In Month**, and otherwise 30; ticking **Use Period Actual Days Count For Performance Factors (Absence, Overtime, Rewards, and so on)** replaces that whole chain with the period's actual number of days. |
 
 ![HR Calendar](../../../ar/modules/hr/images/setup/hr-calendar-en.png)
 
@@ -29,12 +29,12 @@ Found at **Payroll > Settings > HR Calendar**, an HR Calendar is the reference e
 | Nationality (الجنسية) | A national holiday only applies to employees of that nationality. |
 | Work Place (مكان العمل) / Job Position (الموقع الوظيفي) | Further narrows which employees the set applies to. |
 
-Inside the record, a **Details** (التفاصيل) grid lists the actual holiday dates, each with its own Arabic/English name, **Vacation Start Date** and **Vacation End Date** (تاريخ بداية العطلة / تاريخ نهاية العطلة), and its own dimension scoping (legal entity, branch, sector, department, analysis set) — so one HR Holidays record can hold an entire year's worth of discrete holiday events.
+Inside the record, a **Details** (التفاصيل) grid lists the actual holiday dates, each with its own Arabic/English name, **Vacation Start Date** and **Vacation End Date** (تاريخ بداية العطلة / تاريخ نهاية العطلة), and its own dimension scoping (legal entity, branch, sector, department, analysis set) — so one HR Holidays record can hold an entire year's worth of discrete holiday events. A line saved without an end date becomes a one-day holiday (the end date is set to the start date), and an end date before the start date is refused with *Vacation end date {0} must be after or equal vacation start date {1}* — «تاريخ نهاية العطلة {0} يجب أن يكون أكبر من أو يساوي تاريخ بداية العطلة {1}».
 
 ![HR Holidays, with the Details grid of individual holiday dates](../../../ar/modules/hr/images/setup/hr-holidays-en.png)
 
 ::: tip Recommit Vacation Documents That Fall Within The Added Or Deleted Dates
-If a holiday date is added or removed **after** vacation documents spanning that date have already been saved, turning on **Recommit Vacation Documents That Fall Within The Added Or Deleted Dates** (إعادة حفظ سندات الأجازه التى تقع فى التواريخ المضافة او المحذوفة) tells Nama to recompute those existing vacation documents so their day-count correctly reflects the change, instead of leaving them silently stale.
+If a holiday date is added or removed **after** vacation documents spanning that date have already been saved, turning on **Recommit Vacation Documents That Fall Within The Added Or Deleted Dates** (إعادة حفظ سندات الإجازة التي تقع في التواريخ المضافة أو المحذوفة) tells Nama to recommit those existing vacation documents so their day-count reflects the change. It runs when the HR Holidays record is saved or deleted, and picks every saved vacation document whose start date is on or before an added or removed date and whose return date is after it.
 :::
 
 ## Weekends: set on the Attendance Plan, not the calendar
@@ -51,9 +51,9 @@ The **HR Calendar** and **HR Holidays** screens have no buttons of their own —
 
 Holidays and weekends aren't just calendar trivia — they change how attendance and salary numbers come out:
 
-- A calculation-line bracket in a [salary formula](../payroll/salary-calculation-formulas.md) can carry a distinct **Factor For WeekEnds** (المعامل للعطلات الإسبوعية), so overtime worked on a weekend can be paid at a different multiplier than overtime on an ordinary day.
+- A calculation-line bracket in a [salary formula](../payroll/salary-calculation-formulas.md) can carry a distinct **Factor For Weekends** (المعامل للعطلات الأسبوعية), so overtime worked on a weekend can be paid at a different multiplier than overtime on an ordinary day.
 - A performance indicator can be flagged **Not Included In Week Ends** (لا يتم احتسابه في أيام العطلات الأسبوعية), excluding weekend days from a measure entirely.
-- On the [vacation type](../vacations/vacation-types-and-balances.md) itself, **Include Weekend (Balance)** (تشمل العطلة الأسبوعية - أرصدة) decides whether a weekend that falls inside a multi-day vacation is deducted from the employee's balance, while a separate **Weekend Policy (Salary)** (معاملة أجازة اسبوعية - رواتب) setting — Like Balances, Include, or Exclude — controls how that same weekend is treated for salary purposes, independently of the balance decision.
+- On the [vacation type](../vacations/vacation-types-and-balances.md) itself, **Include Weekend (Balance)** (تشمل العطلة الأسبوعية (أرصدة)) decides whether a weekend that falls inside a multi-day vacation is deducted from the employee's balance, while a separate **Weekend Policy (Salary)** (معاملة إجازة أسبوعية (رواتب)) setting — Like Balances, Include, or Exclude — controls how that same weekend is treated for salary purposes, independently of the balance decision.
 
 In short: the calendar and holiday list decide *which dates are special*; the attendance plan decides *which day of the week is the weekend*; and the formulas, indicators, and vacation types decide *what that specialness is worth* in attendance and pay.
 

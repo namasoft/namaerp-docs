@@ -42,12 +42,12 @@ There is no document term (توجيه) on this document and nothing to configure
 | **Term Code** (كود البند) | must resolve to a term on the chosen budget |
 | **Standard Term**, **Treat As Detail**, **Work Area**, term categories, **Phase** | inherited from the budget line; the phase decides which milestone slot the quantity is credited to |
 | **Count**, **Quantity From Dimensions**, **Discounted Quantity** | measure by physical dimensions instead of typing a quantity — length × width × height × count, less anything discounted |
-| **Current Quantity** (الكمية الحالية) | **the number you actually fill in**: how much of this item was executed |
-| **Contracted Quantity** (الكمية \| متعاقد عليها) | brought in from the budget line; you do not type it |
+| **Quantity \| Current** (الكمية \| حالي) | **the number you actually fill in**: how much of this item was executed |
+| **Quantity \| Contracted** (الكمية \| متعاقد عليها) | brought in from the budget line; you do not type it |
 | **Assay Quantity**, **UOM** | reference figures from the budget |
 | the price block | unit price, total, discount, the two sales taxes and the net — these produce the header total and are for information |
-| **% OF Finished** (نسبة التنفيذ) | the completion percentage for this line |
-| **Term Remark**, **Description** | free text |
+| **% Of Finished** (نسبة التنفيذ) | the completion percentage for this line |
+| **Term Description**, **Description** | free text |
 
 A **Dimensions** (المحددات) block closes the page.
 
@@ -69,17 +69,18 @@ When the document is processed — not while it is still a draft or awaiting app
 
 Everything else the document validates is about consistency — the grid must not be empty, the term codes must exist on the budget, the project and the customer must match the budget's. One check is a real ceiling on quantity:
 
-**The permitted percentage.** Each budget term line carries a **Permitted Percentage** (نسبة السماحية) — how much over-measurement that item tolerates. The survey fails when the surveyed quantity for a line goes past the contracted quantity *and* the overrun beyond the planned quantity is a larger percentage than the line allows, with the message *Current Quantity Percentage can not Exceed Permitted Percentage{0} %*. Leave the permitted percentage at zero and any over-measurement is refused; set it to 10 and you have a 10% tolerance.
+**The permitted percentage.** Each budget term line carries a **Permitted Percentage** (نسبة السماحية) — how much over-measurement that item tolerates. The survey fails when the line's quantity, added to the *Quantity | From Execution* already on the budget line (or to that phase's executed quantity when the line names a phase), goes past the budget line's planned quantity *and* the overrun, as a percentage of the planned quantity, is larger than the line allows. When you edit a survey, its own earlier quantity is taken out of that sum first. The message is:
+*Current Quantity Percentage can not Exceed Permitted Percentage{0} %*
+
+Leave the permitted percentage at zero and any over-measurement is refused; set it to 10 and you have a 10% tolerance.
 
 The whole check can be switched off for the database by the module setting **Allow Current Quantity Percentage Exceed Permitted Percentage** (السماح بتجاوز نسبة الكمية الحالية للنسبة المسموح بها) — see [Contracting Configuration](/modules/contracting/contracting-configuration.md).
-
-Separately, when the module setting **Prevent Update Execution If Extract On It** (منع التعديل في حصر الكميات إذا تم عليه مستخلص) is on, a survey that an extract has already drawn on can no longer be edited.
 
 ## The tower, three months in
 
 Executive budget `CEB-EXE-001` for **Tower A** plans `X-1` *Excavation* at 1,000 m³, `X-2` *Reinforced concrete* at 60 m³, `X-3` *Blockwork* at 2,000 m² and `X-4` *Plastering* at 1,000 m². At the end of month three the site engineer raises survey `CBE-2026-003` against that budget:
 
-| Term code | Item of work | Planned | Current Quantity | % OF Finished |
+| Term code | Item of work | Planned | Quantity \| Current | % Of Finished |
 |---|---|---|---|---|
 | `X-1` | Excavation | 1,000 m³ | 1,000 | 100 |
 | `X-3` | Blockwork | 2,000 m² | 900 | 45 |
@@ -92,7 +93,7 @@ This is the distinction that makes the difference between reading a budget corre
 
 - **Quantity | From Execution** — from this document. **Physical progress.** How much work is on the ground.
 - **Actual Quantity** and **Actual Cost** (الكمية الفعلية / التكلفة الفعلية) — **money and materials actually consumed**, written by every document that spends against a term code: material issues, the daily labour book, subcontractor extracts, purchase orders, miscellaneous invoices. These are the budget-versus-actual columns, and this survey contributes nothing to them. What does contribute is listed on [How Project Cost Is Built](/modules/contracting/costs/contracting-cost-model.md).
-- **Quantity | From Extract**, **Quantity | From Cost Execution**, **Quantity | From Opening Extracts** — quantities already billed or rolled up by other documents.
+- **Quantity | From Extract**, **Quantity | From Cost Execution**, **Quantity | Quantity From Opening Extracts** — quantities already billed or rolled up by other documents.
 - **Term Quantity From Contractors Extract** (كمية البند المنفذة بمستخلصات مقاول باطن) — quantity certified through [subcontractor extracts](/modules/contracting/contractor-contracting/contracting-contractor-extracts.md), pushed onto budget lines when the matching module setting is on.
 
 So: a budget line whose *Quantity | From Execution* is 900 and whose *Actual Cost* is far above plan is telling you that 45% of the blockwork is standing and it has already eaten more than 45% of the money. That comparison is the reason to keep budgets at all — and it is a comparison you make with your eyes, because nothing in the module blocks anything on the strength of it. The one ceiling that can be switched on is described on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).

@@ -33,21 +33,13 @@ Manual execution for bulk inventory request regeneration across multiple documen
 
 ## Parameters
 
-**Parameter 1:** Query (Required) - SQL query returning entityType and id columns
+It takes the same six parameters, in the same order and with the same rules, as EARecommitFromQuery: see [its Parameters section](/entity-flows/core/EARecommitFromQuery#Parameters). On this flow the titles of Parameters 3, 4 and 6 read *Do not RegenInvTransReq cancelled Records (true,false)*, *Flush After Each RegenInvTransReq (true,false)* and *Run Update Query After Selecting Entities, and Before RegenInvTransReq*.
+
+Example for Parameter 1:
 
 ```sql
 select entityType,id from StockIssue where fromDoc_id = {id}
 ```
-
-**Parameter 2:** Flush Before Starting (Optional) - true/false to flush database before processing (default: false)
-
-**Parameter 3:** Do not RegenInvTransReq cancelled Records (Optional) - true/false to skip cancelled documents (default: true)
-
-**Parameter 4:** Flush After Each RegenInvTransReq (Optional) - true/false to flush after each document (default: false)
-
-**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - true/false to process remaining documents if errors occur (default: false)
-
-**Parameter 6:** Run Update Query After Selecting Entities (Optional) - SQL update query to run before processing
 
 ## Database Tables Affected
 

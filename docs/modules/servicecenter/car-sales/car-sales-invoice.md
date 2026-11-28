@@ -74,7 +74,7 @@ Alongside the standard sales-invoice layout, the car sales invoice carries **ن�
 [instalment block](/modules/servicecenter/car-installments/car-installment-quotation.md) and the
 **Used Car Info** tab carried forward from the sales order.
 
-The chassis is named in the **السياره (Customer Car)** column of the line, exactly as on every other
+The chassis is named in the **السيارة (Customer Car)** column of the line, exactly as on every other
 document in this family. When the invoice is built on an allocation or an order through **From
 Document**, the picker offers only the cars on that source.
 
@@ -108,27 +108,13 @@ invoice; it is settled the ordinary way, through the customer's account.
 
 ## The one setup rule that keeps stock correct
 
-::: danger The car can be issued from stock twice
-The Car Sales Invoice generates a stock issue. So can the
-[**Car Final Delivery**](/modules/servicecenter/car-sales/car-final-delivery.md). Neither document
-can see the other's stock document — each looks only for an issue raised from itself — and neither
-checks whether the car has already left stock.
-
-Follow the natural path with both terms configured to generate, and the same chassis is issued
-**twice**: the landed cost is relieved to cost of sales twice and the car sits at **−1** on hand.
-Where negative stock is allowed, both documents commit silently and nothing warns. Where it is
-blocked, the second document fails with a generic shortage error that names an auto-generated stock
-document rather than the car document you were saving — which reads as an unrelated inventory
-problem.
-
-**The rule: fill *Generation Book* and *Generation Term* on exactly one of the two
-[document terms](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md).**
-If the invoice is your stock-out document — the normal choice for an ordinary sale, and the one
-Al-Sahra makes — leave the final-delivery term's generation book and term **empty**.
-
-To stop the final delivery generating, clear the generation book or the generation term on its
-term. The invoice and the final delivery are **alternatives** for moving stock, never a sequence.
-:::
+The Car Sales Invoice and the
+[Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery) can each generate a
+stock issue for the same car, so fill *Generation Book* and *Generation Term* on exactly one of the
+two [document terms](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other.md);
+the full rule is on the final delivery page. If the invoice is your stock-out document — the normal
+choice for an ordinary sale, and the one Al-Sahra makes — leave the final-delivery term's generation
+book and term **empty**.
 
 ## Actions on these screens
 
@@ -137,22 +123,19 @@ ones a car sale actually uses:
 
 **Main page:**
 
-- **Sales Collect Lots** (*تجميع الشحنات*) and **=Supplychain  Collect Locators** (*تحميع المواقع*) —
-  fill the lot and the locator on every line from what is available in the header warehouse. The
-  second one's English label ships exactly as shown.
+- **Sales Collect Lots** (*تجميع الشحنات*) and **Supply Chain Collect Locators** (*تجميع المواقع*) —
+  fill the lot and the locator on every line from what is available in the header warehouse.
 - **Pay Invoice** (*ادفع الفاتورة*), **Pay Part Of Invoice** (*دفع جزء من الفاتورة*), **Fetch Last
   Terminal Payment Transaction** (*ايجاد اخر عمليه دفع تمت ولم تصل معلوماتها*), **Request Redeem
   Customer Amount** and **Upload Invoice To GoPay** (*إرسال الفاتورة إلى GoPay*) — the card-terminal,
   loyalty and payment-gateway buttons, which behave as on the
-  [Sales Invoice](/modules/supplychain/sales-journey.md#Actions-on-this-screen). *Request Redeem
-  Customer Amount* reads the same in Arabic.
+  [Sales Invoice](/modules/supplychain/sales-journey.md#Actions-on-this-screen).
 
 **Billing page:**
 
-- **GeneratePayments** (*إنشاء الدفعات*) — splits the remaining value into an instalment schedule,
+- **Generate Payments** (*إنشاء الدفعات*) — splits the remaining value into an instalment schedule,
   asking for the number of payments, the period between them and its unit, the start date, a grace
-  period, down / first / second / last payment values and a rounding mode. The English label ships as
-  the raw name shown here.
+  period, down / first / second / last payment values and a rounding mode.
 - **Generate Receipt Voucher** (*إنشاء سند قبض*) — creates a receipt voucher for the whole remaining
   value against the customer. **Generate Receipt Voucher For Selected Payments** (*إنشاء سند قبض
   للدفعات المختارة*) does the same for only the instalment lines you ticked, and refuses when none is

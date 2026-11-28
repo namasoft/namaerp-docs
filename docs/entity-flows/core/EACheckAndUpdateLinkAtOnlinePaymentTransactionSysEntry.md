@@ -14,13 +14,13 @@ Performs maintenance on online payment transaction entries by checking for expir
 
 ## When This Action Runs
 
-Scheduled maintenance task or manual execution on OnlinePaymentTransactionSysEntry entities with "Valid" link status. Typically run periodically to keep payment link statuses current.
+Scheduled maintenance task or manual execution. The record the flow runs on is not used: it always checks every online payment transaction entry whose link status is "Valid". Typically run periodically from a task schedule to keep payment link statuses current.
 
 ## How It Works
 
 1. **Finds all entries** with linkStatus = 'Valid'
 2. **Processes in batches** of 300 records for efficiency
-3. **Calculates expiry times** using OnlinePaymentUtils and payment configuration
+3. **Calculates expiry times** from each entry's creation date and its online payment configuration
 4. **Compares with current time** to identify expired links
 5. **Updates status** from "Valid" to "Expired" for expired entries
 6. **Uses separate transactions** for each batch to ensure safety

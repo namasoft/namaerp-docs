@@ -67,7 +67,7 @@ Three small conveniences, all of them on the **Products** grid of a
 [Lead](/modules/crm/sales-pipeline/crm-leads.md), a
 [Potential](/modules/crm/sales-pipeline/crm-potentials.md) or a
 [Call](/modules/crm/activities/crm-calls.md). That grid has a *Competitor Company* column and a
-*Competitor Item / صنف الشركة المنافسة* column next to each product you are quoting.
+*Competitor Company Item / صنف الشركة المنافسة* column next to each product you are quoting.
 
 1. **Pick the competitor item and the company fills itself.** Choose `CITM-011` on a product line
    and *Competitor Company* becomes `COMP-03` without being asked.
@@ -80,13 +80,6 @@ Three small conveniences, all of them on the **Products** grid of a
    the conversation by naming the rival's model.
 
 That is the complete functional footprint. Nothing else in the module consults these two files.
-
-::: tip If an old competitor item stops appearing in the picker
-The narrowing in point 2 relies on an index that each competitor item rebuilds when it is saved. A
-record that was created before the item grid was filled in, or imported without going through the
-screen, can be missing from it — the symptom is a competitor item that exists but never appears once
-a product has been chosen on the line. Open the competitor item and save it again.
-:::
 
 ## Setting them up
 

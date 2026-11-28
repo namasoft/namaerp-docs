@@ -12,7 +12,7 @@ title: التنبيهات
 
 <LandingGrid>
   <LandingCard icon="🔔" title="تعريفات التنبيهات" link="/ar/platform/notifications/notifications-system.md" details="شاشة التعريف حقلاً حقلاً — ما يُطلق التنبيه، ومن يستقبله، وماذا يقرأ، ومتى يُرسَل." />
-  <LandingCard icon="💬" title="تكامل WhatsApp" link="/ar/platform/notifications/sms-and-whatsapp.md" details="اضبط مزودي SMS وWhatsApp من شاشة الإعدادات العامة ليتمكن النظام من مراسلة المستخدمين والعملاء." />
+  <LandingCard icon="💬" title="تكامل WhatsApp" link="/ar/platform/notifications/sms-and-whatsapp.md" details="اضبط بوابات الرسائل القصيرة في الإعدادات العامة ومزودي WhatsApp في شاشة WhatsApp Message Configuration ليتمكن النظام من مراسلة المستخدمين والعملاء." />
   <LandingCard icon="✈️" title="التنبيهات عبر تليجرام" link="/ar/platform/notifications/telegram.md" details="أنشئ بوت تليجرام، ودع العملاء يربطون أنفسهم بمشاركة أرقامهم، وأرسل التنبيهات مباشرة إلى محادثاتهم." />
   <LandingCard icon="📣" title="الإعلانات العامة" link="/ar/platform/notifications/general-announcements.md" details="لوحة إعلانات الشركة — اكتب النص مرة واحدة، وحدد من يراه وبين أي تاريخين، فيظهر بجوار تنبيهاتهم." />
   <LandingCard icon="✉️" title="الرسائل المجمعة ورسائل واتساب والمحادثات الداخلية" link="/ar/platform/notifications/bulk-messages-whatsapp-and-chat.md" details="أرسل رسالة واحدة إلى قائمة تختارها، واضبط ما يخرج عبر واتساب، واقرأ سجل رسائل الخطأ، وتحدّث مع زملائك." />

@@ -12,14 +12,14 @@ decided years ago. In practice, if the person creating the record types the code
 convention lasts about a month: one user writes `CUST-001`, the next writes `cust 2`, and a third
 reuses a code that was already taken.
 
-The **Files Auto Coding** grid takes the pen out of the user's hand. You describe the code once, as
+The **Automatic Coding** grid takes the pen out of the user's hand. You describe the code once, as
 a formula, and the system builds it when the record is saved — so a customer opened in the Riyadh
 branch in 2026 comes out as `RYD-2026-00147` every time, without anybody having to remember the
 rule. The same grid can build the Arabic and English names and the alternative code from the same
 kind of formula.
 
-On the **Main** tab the grid is headed **Automatic Coding**; its own list and search screen is
-called **Files Auto Coding**.
+On the **Main** tab the grid is headed **Automatic Coding**; the collapsible list under it, which
+shows the coding lines of every Fields and Entities Settings record, is called **Files Auto Coding**.
 
 ![The Automatic Coding grid](../../ar/platform/images/fields-settings/fields-settings-auto-coding-grid-en.png)
 
@@ -48,17 +48,16 @@ condition columns of its own.
 |---|---|
 | For Type | The single entity type the line codes, e.g. Customer or Warehouse. |
 | Entity List | A reusable named list of entity types, so one line can cover several files at once. |
-| Criteria Definition | A saved [Criteria Definition](/platform/automation-and-rules/criteria-definitions) record; the line only runs when the record being saved matches it. |
+| Criteria | A saved [Criteria Definition](/platform/automation-and-rules/criteria-definitions) record; the line only runs when the record being saved matches it. |
 | Reversed Criteria Definition | The opposite: the line is skipped when the record matches this criteria. |
-| Apply When Query | A query; the line only runs when the query returns a result for the record being saved. |
-| Do Not Apply When Query | The opposite: the line is skipped when this query returns a result. |
-| Inactive | Switches this single line off without deleting it. |
+| Apply When Query | A query run against the record being saved. The line is skipped when the first value the query returns is `0` or false; any other answer, including no rows at all, lets it run. |
+| Do Not Apply When Query | The opposite: the line runs only when the first value this query returns is `0` or false. Any other answer, including no rows at all, skips it. |
 
 Matching is by **entity type**. When a master file is saved, the system looks for lines whose
 **For Type** or **Entity List** names that type. A line with **no For Type and no Entity List** is
 the system-wide default — it is used for any master file that no more specific line claims.
 
-::: warning Only the first matching line for an entity type is ever used
+::: warning Only the first line for an entity type is ever used
 The system picks the **first** line found for the entity type and works with that one alone. If its
 criteria do not match the record, the record simply gets **no automatic code** — the system does
 not move on and try the next line.
@@ -76,7 +75,7 @@ and the query columns when the decision depends on something the record does not
 records the branch already has, whether the customer exists in another system.
 
 ::: tip Keep one entity type in one record
-Because only the first matching line wins and the order across several **Fields and Entities
+Because only the first line for the type wins and the order across several **Fields and Entities
 Settings** records is not something you control, splitting the coding of the same entity type over
 two records makes the winner unpredictable. Keep all the coding lines for one file in one record.
 :::
@@ -303,7 +302,8 @@ formula only runs where the record is actually created.
 Items do not start with this grid. When an item is saved the system looks first at the item's
 **Item Section** — the section's own coding formula, or the first of its criteria lines that
 matches. If nothing is defined there it falls back to the item coding formula held in the global
-configuration, and only if **both** are empty does it come down to a Files Auto Coding line.
+configuration, and only if **both** are empty does it go on like any other master file: its
+[Master Group](/platform/documents-and-records/master-groups) first, then an Automatic Coding line.
 
 ::: tip Coding item variants
 The revision code, the size-and-colour code, their four name formulas and the two
@@ -330,18 +330,18 @@ Every grid and column this page covers, with its exact on-screen label in both l
 |---|---|---|---|
 | `autoCodingLines` | Automatic Coding | التكويد الآلي | [Choosing the line that runs](#Choosing-the-line-that-runs) |
 | `autoCodingLines.criteriaDefinition` | Criteria | المعايير | [Choosing the line that runs](#Choosing-the-line-that-runs) |
-| `autoCodingLines.reversedCriteriaDefinition` | Reversed Criteria Definition | معيار عدم التفيذ | [Choosing the line that runs](#Choosing-the-line-that-runs) |
+| `autoCodingLines.reversedCriteriaDefinition` | Reversed Criteria Definition | معيار عدم التنفيذ | [Choosing the line that runs](#Choosing-the-line-that-runs) |
 | `autoCodingLines.applyWhenQuery` | Apply When Query | تطبيق عند التوافق مع الاستعلام | [Choosing the line that runs](#Choosing-the-line-that-runs) |
 | `autoCodingLines.doNotApplyWhenQuery` | Do Not Apply When Query | منع التطبيق عند التوافق مع الاستعلام | [Choosing the line that runs](#Choosing-the-line-that-runs) |
 | `autoCodingLines.codingFormula.codeCalculationFormula` | Code Calculation Formula | صيغة حساب الكود | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.codeValidityQuery` | Code Validity Query (Skip code if 1 is returned, and calculate next) | Code Validity Query (Skip code if 1 is returned, and calculate next) | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.name1CalculationFormula` | Name1 Calculation Formula | صيغة حساب الاسم العربي | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.name2CalculationFormula` | Name2 Calculation Formula | صيغة حساب الاسم الإنجليزي | [The formula columns](#The-formula-columns) |
-| `autoCodingLines.codingFormula.altCodeFormula` | Alternate Code Formula | صيغه الكود البديل | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.altCodeFormula` | Alternate Code Formula | صيغة الكود البديل | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.szName1Formula` | Name 1 Encoding Formula For Colour And Size | صيغة تكويد اسم 1 للون والمقاس | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.szName2Formula` | Name 2 Encoding Formula For Colour And Size | صيغة تكويد اسم 2 للون والمقاس | [The formula columns](#The-formula-columns) |
-| `autoCodingLines.codingFormula.rvName1Formula` | Name 1 Encoding Formula For Revision | صيغة تكويد اسم 1 للاصدارة | [The formula columns](#The-formula-columns) |
-| `autoCodingLines.codingFormula.rvName2Formula` | Name 2 Encoding Formula For Revision | صيغة تكويد اسم 2 للاصدارة | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.rvName1Formula` | Name 1 Encoding Formula For Revision | صيغة تكويد اسم 1 للإصدارة | [The formula columns](#The-formula-columns) |
+| `autoCodingLines.codingFormula.rvName2Formula` | Name 2 Encoding Formula For Revision | صيغة تكويد اسم 2 للإصدارة | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.codeSequencePrefix` | Code Sequence Prefix | بادئة حساب التسلسل | [The formula columns](#The-formula-columns) |
 | `autoCodingLines.codingFormula.codeSuffixLength` | Code Suffix Length | طول لاحقة الكود | [The formula columns](#The-formula-columns) |
 

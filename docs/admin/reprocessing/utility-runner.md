@@ -62,7 +62,7 @@ A few things on the form are worth knowing:
 - **The link under the fields** is the utility link for the values you have filled, rebuilt as you type. **Copy link** copies it — handy for a ticket, or for sending to the customer's administrator to run.
 - **A parameter reserved for the support team** is greyed out with the note *Needs a Namasoft CRM support login. The default value is used.* unless you signed in through the Namasoft CRM. You can still run the utility; that parameter simply stays at its default, which for the database utilities means a dry run.
 - **When the values you filled mean the run will change data**, the form says *With the current values this run changes data.*, the **Run** button turns red, and pressing it asks you to confirm first.
-- **Recent** buttons beside **Run** refill the form with the values you used the last few times on this browser.
+- **Recent** buttons beside **Run** refill the form with the values you ran the utility with before on this browser. The browser keeps the last five different sets of values for each utility.
 
 Press **Run** and the page moves to the run.
 
@@ -143,7 +143,7 @@ A utility link is the address form that has always started utilities, and the fo
 |---|---|
 | A browser signed in as an administrator | The utility starts at once and the browser lands on its run in the Utility Runner. |
 | The same, while that utility is already running | Nothing new starts; the browser lands on the run in progress. |
-| A browser signed in as anyone else | Nothing starts. The page opens on the utility's form, and the server refuses to run it. |
+| A browser signed in as anyone else | Nothing starts. The Utility Runner opens, the server refuses with *Only an admin user can run utilities*, and in place of the utility's form the page shows *This class could not be opened as a utility:* followed by the utility's name. |
 | A script or a scheduled command | As before: the request waits until the utility ends and receives its result as text. |
 
 ::: warning A link starts its utility immediately
@@ -166,7 +166,8 @@ The [critical errors](/admin/troubleshooting/critical-errors#Database-schema-fix
 | *Tick at least one row first* — «حدد صفاً واحداً على الأقل أولاً» | The tip on a greyed-out button above a table: it acts on the ticked rows and none is ticked. | Tick the rows it should act on. |
 | *The server cut this table at its limit. Only the first {0} rows are shown.* — «قطع الخادم هذا الجدول عند الحد الأقصى. تُعرض أول {0} صف فقط.» | A result table reached 50,000 rows. | Fix what is listed and run the report again for the rest, or narrow the run with the utility's parameters. |
 | *Could not read the runs from the server. Retrying…* — «تعذرت قراءة عمليات التشغيل من الخادم. جارٍ إعادة المحاولة…» | The page lost contact with the server — a network drop, an expired session, or a restart. | Wait; it keeps trying. Runs already started go on working on the server. If it persists, sign in again. |
-| *This class could not be opened as a utility:* — «تعذر فتح هذا الكلاس كأداة:» | The name typed under **Run by class name** is not a utility on this server: a typing mistake, or a utility from a module or a version this server does not have. | Copy the `className` again from the launcher on the documentation page. |
+| *This class could not be opened as a utility:* — «تعذر فتح هذا الكلاس كأداة:» | The name typed under **Run by class name** is not a utility on this server: a typing mistake, or a utility from a module or a version this server does not have. It also takes the place of the form when the user is not an administrator. | Copy the `className` again from the launcher on the documentation page. |
+| *Only an admin user can run utilities* — «يمكن لمستخدم آدمن فقط تشغيل الأدوات المساعدة» | The page or a utility link was opened by a user who is neither `admin` nor has **Allow Access to Admin Restricted Functionality (utils.html, kill tasks, logout users and so on)**. The catalogue stays empty and nothing can be started. | Sign in as an administrator. |
 
 ## Related pages
 

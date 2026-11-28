@@ -11,7 +11,7 @@ It is the atom of the whole workshop. Everything larger is built from tasks: a [
 
 | | |
 |---|---|
-| Menu | **Service Center → Master Files → Service Center Task** (`مركز خدمة > الملفات > المهمه`) |
+| Menu | **Service Center → Master Files → Service Center Task** (`مركز خدمة > الملفات > المهمة`) |
 | Kind | Master file — no inventory effect, no accounting effect |
 
 ::: info Required licence
@@ -50,7 +50,7 @@ The performed work lives elsewhere: as a line on a job order (planned), and as a
 | Brand | الماركة | Header classification — which marque this task belongs to. |
 | Item Model | الموديل | Header classification — which model. |
 | Average Period | متوسط مدة العملية | **The generic standard duration**, in hours. `1.0` for the oil change. This is the figure used when no model-specific row fits. |
-| classification | التصنيف | A free tag from the Standard Operation Classification file. |
+| Classification | التصنيف | A free tag from the Standard Operation Classification file. |
 | Service Item | صنف الخدمة | **The item that gets invoiced.** When a job order is [invoiced](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md), this is the item on the labour line — `SRV-OIL` for the oil change — with a quantity of standard hours × count. Without it the task cannot be billed. |
 | Materials Issue Type | طريقة صرف المواد الخام | **Automatic** (تلقائي) or **Manual** (يدوي) — how the parts this task consumes are meant to leave the store. |
 | Total | إجمالي السعر | A flat total price for the task. |
@@ -66,7 +66,7 @@ Below the basic block is the grid headed **Products** (منتج), and despite th
 
 | Column | Arabic label | What it holds |
 |---|---|---|
-| Brand | الماركه | The marque. Required on every row. |
+| Brand | الماركة | The marque. Required on every row. |
 | Item Model | الموديل | The model — `MDL-SAIF16`. |
 | Labor Time | مدة التشغيل | Hours this task takes on this model — `1.0`. |
 | Hour Price | سعر الساعة | The rate — `120`. |
@@ -137,13 +137,13 @@ The rest of the tab is about mileage-based maintenance.
 
 The first matching row wins; if none matches, the default interval applies.
 
-That interval is what makes the arithmetic on the [vehicle's file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) mean something. `VEH-2031` last had its oil done at **36,000 km**; the interval is **10,000 km**; so the next one falls due at **46,000 km**. The car reads **45,300** on 3 March and burns about **60.7 km a day**, which puts the next visit around **15 March 2026** — and that is the date the job order closing projects.
+That interval is what makes the arithmetic on the [vehicle's file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) mean something. `VEH-2031` last had its oil done at **36,000 km**; the interval is **10,000 km**; so the next one falls due at **46,000 km**. The job order closing divides that interval by the car's **60.7 km a day** to project the next visit, **14 August 2026**; the rule is in [The expected next visit](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals#The-expected-next-visit).
 
 ## Finding and Tagging Tasks
 
 **The picker lists the whole catalogue.** On a job order, the task picker shows every task in the catalogue. If you want technicians to find the right task quickly, use codes and groups that sort well.
 
-**The classification is a free tag.** The **classification** field, and the Standard Operation Classification file behind it, give you a column to search and filter the task list by. See [tags and classification files](/modules/servicecenter/workshop-setup/servicecenter-classification-files.md).
+**The classification is a free tag.** The **Classification** field, and the Standard Operation Classification file behind it, give you a column to search and filter the task list by. See [tags and classification files](/modules/servicecenter/workshop-setup/servicecenter-classification-files.md).
 
 ## Building the Catalogue
 

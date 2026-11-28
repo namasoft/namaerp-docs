@@ -10,7 +10,7 @@ This is where operational work turns into financial effect: you sell services to
 
 ### Sales Order
 
-The optional starting point: you offer the customer the services and their prices before executing the shipment. The sales order carries the same structure as the invoice (customer, sales man, operation order, service lines with prices and taxes) but creates no financial effect — it's a promise of service, later converted into an invoice.
+The optional starting point: you offer the customer the services and their prices before executing the shipment. The sales order carries the same structure as the invoice (customer, sales man, operation order, service lines with prices and taxes) and shares the sales invoice's term shape. When it is saved it is processed through the debit and credit sides of its own term, exactly like an invoice, so leave those sides empty on the sales-order term if only the invoice should book the revenue (see [Freight Document Terms](/modules/freight/freight-document-terms)). It also records its term's **Status** against the operation order.
 
 ![Sales order](../../ar/modules/freight/images/invoicing/sales-order-en.png)
 
@@ -21,7 +21,7 @@ The invoice is the document that records the sale in accounting and bills the cu
 - **Customer, sales man, and operation order**, plus the service provider.
 - **Service lines (Details)** — each line with its service item, quantity, price, currency, and tax, plus the **Cost** and **Diff** computed automatically.
 - **Invoiced Bills of Lading** — links bills to the invoice, so bill and container numbers are gathered into the invoice header.
-- **E-Invoice Details** — a consolidated version of the lines sent to the tax authority (see [E-Invoicing](./freight-einvoicing.md)).
+- **E Invoice Details** — a consolidated version of the lines sent to the tax authority (see [E-Invoicing](./freight-einvoicing.md)).
 - **Payment Lines / External Payments** — to record cash collection or collection via payment methods.
 
 ![Sales invoice](../../ar/modules/freight/images/invoicing/sales-invoice-en.png)
@@ -43,13 +43,17 @@ Where a service item has a commission item, the [e-invoice](./freight-einvoicing
   with the line's tax taken from the service item's tax plan. Ocean-freight lines that carry ENS-CDD
   or ISPS amounts add a line for each, under the default service items of
   [Freight Configuration](./freight-configuration.md). The same lines are brought in when you pick
-  the invoice currency after the operation order. The invoice must already have the operation order.
-- **Pay Invoice** and **Sales Collect Lots** (main tab), and **GeneratePayments**, **Generate
+  the invoice currency after the operation order, and when you pick the operation order itself,
+  which also fills the **Customer** with the order's Shipper, that customer's sales man and the
+  **Actual Date Sailing**. The button needs the operation order and at least one line already on
+  the invoice.
+- **Pay Invoice** and **Sales Collect Lots** (main tab), and **Generate Payments**, **Generate
   Receipt Voucher** and **Collect Receipt Vouchers** on the **Billing** tab — the standard payment
   buttons of Nama invoices; they behave here as on an ordinary sales invoice.
-- **Collect Bill of Ladings** (**Bills of Lading** tab) — fills the tab with every container line of
+- **Collect Bills of Lading** (**Bills of Lading** tab) — fills the tab with every container line of
   every bill of lading created from the invoice's operation order. Tick the ones this invoice
-  covers and press **Delete UnRelated Lines** to drop the rest.
+  covers and press **Delete Unrelated Lines** to drop the rest. On save, the invoice joins the bill
+  numbers and container numbers of these lines into its header.
 
 The Sales Return carries the payment buttons but not **Update Data** or the bill-of-lading buttons;
 the Sales Order has only **Generate Receipt Voucher** and **Collect Receipt Vouchers**.
@@ -82,10 +86,12 @@ To reverse a purchase invoice fully or partially when cancelling a service you b
 The document's **Term Config** controls each invoice's accounting effect: revenue/cost accounts, tax accounts (Tax / Tax 2 / addition and discount taxes), the various discount accounts, and cash. The sales invoice term config also carries two freight-specific settings:
 
 - **Status** — the operation-order status that is recorded automatically when the invoice is saved, so you track which shipment has been invoiced.
-- **Do not send a cost line for commission items** — an option for the agent model in [E-Invoicing](./freight-einvoicing.md).
+- **Do not Send Line for Cost of Service Item With Commission** — an option for the agent model in [E-Invoicing](./freight-einvoicing.md).
 
 Every option on the freight invoice terms is explained on [Freight Document Terms](./freight-document-terms.md).
 
 ::: warning Repeated items not allowed
-The system won't accept the same service item with the same currency and same quantity twice in one invoice, to keep cost matching accurate. If you need two identical lines, merge them into one line with a combined quantity.
+The system won't accept the same service item with the same currency and same quantity twice in one sales invoice, sales return or sales order, to keep cost matching accurate. The save is refused with
+*Item {0} with currency {1} repeated for line {2}* — «بند الخدمة {0} والعملة {1} مكرر للسطر {2}».
+If you need two identical lines, merge them into one line with a combined quantity.
 :::

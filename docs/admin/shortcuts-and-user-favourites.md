@@ -54,7 +54,7 @@ template, on **Alt + Shift + I**.
 
 At sign-in, Nama picks **one** Shortcuts Definition for the user, in this order:
 
-1. The record in the **Default Short Cuts** field of the user's own record.
+1. The record in the **Default Shortcuts** field of the user's own record.
 2. Otherwise, a record with **System Default Menu** ticked. The tick has a menu-sounding label, but
    on this screen it means "the shortcuts everyone gets".
 3. Otherwise, the first Shortcuts Definition the system finds.
@@ -69,7 +69,7 @@ Nama ships a record with the code `default`, and it holds the keys listed on
 record and build it again, the same way they rebuild the shipped menu (see
 [Licensing](/getting-started/licensing)). Any key you changed on it is lost. Instead, duplicate it,
 change the copy, and either tick **System Default Menu** on the copy or put it in the users'
-**Default Short Cuts** field.
+**Default Shortcuts** field.
 :::
 
 The `default` record does not have **System Default Menu** ticked. As long as it is the only
@@ -87,8 +87,7 @@ record, so each user sees their own.
 
 ### How a record gets built
 
-Most users never open this screen. Their record is created for them the first time they use one of
-these actions:
+Most users never open this screen. Their record is built for them by these actions:
 
 - **Add To Current User Favourites**, in the More menu of a record. It pins that record. On a list
   view the same action pins the screen itself.
@@ -97,7 +96,7 @@ these actions:
 - **Add Selected Records To Lines of Current User Favourite**, on a list view. It pins every row you
   ticked in one step. See [Acting on Several Records at Once](/platform/list-views/mass-operations).
 
-The first time one of these actions runs for a user who has no record yet, Nama creates one with the
+The first time one of the two Add actions runs for a user who has no record yet, Nama creates one with the
 code `<user code>_favourites`, for example `ahmed_favourites`, and fills the user into **For User**.
 Later additions are appended to the same record.
 

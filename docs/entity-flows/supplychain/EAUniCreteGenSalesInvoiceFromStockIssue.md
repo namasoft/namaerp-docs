@@ -15,26 +15,25 @@ Creates sales documents (typically invoices) from stock issue documents by traci
 
 ## When This Action Runs
 
-Automatic execution on stock issue documents when corresponding sales documents need to be generated, typically used in workflows where stock issues trigger invoice creation or when converting stock movements into billable sales transactions.
+Runs on the event it is attached to on a stock issue, when corresponding sales documents need to be generated, typically used in workflows where stock issues trigger invoice creation or when converting stock movements into billable sales transactions.
 
 ## How It Works
 
 1. **Prevents recursion** - Uses document mapping to avoid infinite loops during automatic processing
 2. **Identifies parent documents** - For each stock issue line, finds the corresponding parent document line
-3. **Validates parent relationships** - Ensures all stock issue lines have valid parent document references
+3. **Validates parent relationships** - Fails with *Could not find parent of line number {0} in document {1} with item {2}* when a line has no parent line in a document of the parent type
 4. **Creates or finds target document** - Uses SQL query to locate existing target or creates new one
-5. **Sets header information** - Copies book, term, warehouse, and location data from parent document
+5. **Sets header information** - Keeps the target document's own book and term, and takes the warehouse, locator and the other header data from the parent document of the first line
 6. **Maps fields** - Applies field mapping from source to target document
-7. **Processes document lines** - For each stock issue line:
+7. **Processes document lines** - Removes the existing lines of the target document, then for each stock issue line:
    - Skips service items (no physical inventory impact)
    - Creates corresponding line in target document
    - Copies line data from original parent document
    - Sets quantities from stock issue document
    - Establishes origin document relationships
-   - Processes any slave lines (related or dependent lines)
+   - Copies the dependent lines of the parent line as well, with the same quantity as the new line
 8. **Handles special relationships** - For StockIssue → SalesInvoice:
-   - Links invoice to stock issue document
-   - Sets up proper stock document relationships
+   - Replaces the stock documents of the invoice with this stock issue
 9. **Applies inverse mapping** - Copies selected fields back from target to source
 
 ## Parameters
@@ -50,16 +49,21 @@ Example: `SalesOrder`, `PurchaseOrder`
 **Parameter 3:** Finder Query (Required) - SQL query to find or create target document
 
 ```sql
-select id from SalesInvoice where customer_id = {customer.id} and invoiceDate = {creationDate}
+select id from SalesInvoice where ref5Id={id}
 ```
 
-**Parameter 4:** Fields Map (Required) - Field mapping from source to target document
+**Parameter 4:** Fields Map (Required) - Field mapping from source to target document, one `target=source` mapping per line
 
-Example: `customer=customer,invoiceDate=creationDate,notes=remarks`
+```fieldmap
+customer=customer
+ref5=$this
+```
 
-**Parameter 5:** Inverse Fields Map (Optional) - Field mapping from target back to source
+**Parameter 5:** Inverse Fields Map (Optional) - Field mapping from target back to source, in the same format
 
-Example: `invoiceNumber=generatedInvoiceRef`
+```fieldmap
+ref5=$this
+```
 
 ## Database Tables Affected
 

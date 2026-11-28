@@ -37,7 +37,7 @@ The five classifications appear on far more screens than their modest master fil
 - On the machine lines of virtually every maintenance document — contracts, sales quotations and orders, work plans, notices, orders and invoices.
 - On the header of the technician's execution sheet.
 
-Some of that is filled in for you. When a machine goes onto a **notice**, or when an **execution sheet** is created, the machine's five classifications are copied across with its location. Order lines are the exception — the classifications are on the line, but nothing copies them there automatically, so they are yours to fill in if you want them.
+Some of that is filled in for you. Picking a machine on a machine line — on a notice, an order or order request, a contract, a sales quotation or sales order, a work plan or an invoice — copies the machine's five classifications across with its location, and so does picking the machine on an **execution sheet**. Lines created by *Generate Work Plans* and *Generate Mn Orders* carry the contract line's classifications forward, and an execution generated from an order takes them from the order's machine line.
 
 ## Renaming the Captions
 

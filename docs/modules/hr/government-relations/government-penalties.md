@@ -46,12 +46,14 @@ lives. Find it under **Human Resources → Work List → Violation Item**
 | Group | المجموعة | Its grouping. |
 | Arabic Name / English Name | الاسم العربي / الاسم الإنجليزي | The offence's display name. |
 | Violation List | مادة لائحة إدارية | The parent article this item belongs to. |
-| violation | المخالفة | A description of the violation. |
+| Violation | المخالفة | A description of the violation. |
 | Penalty | العقوبة | A description of the penalty. |
 | Financial Penalty | الغرامة المالية | A flat fine amount (and currency). |
-| penalty From Salary | الخصم من الراتب | A salary deduction expressed as a time period (e.g. deduct 2 days' pay). |
-| From Salary \| percentage | من الراتب \| % | A penalty expressed as a percentage of salary. |
-| Component Group / Component Used… | مجموعة مفردات راتب / المفرد المستعمل… | Which salary component the penalty shows up under on the payslip. |
+| Penalty From Salary | الخصم من الراتب | A salary deduction expressed as a time period (e.g. deduct 2 days' pay). |
+| From Salary \| Percentage | من الراتب \| % | A penalty expressed as a percentage of salary. |
+| Unit | الوحدة | `Day` takes the percentage of one day's salary (the salary ÷ 30); `Month` takes it of the whole salary. |
+| Component Group | مجموعة مفردات راتب | The salary components whose total is "the salary" for the time-period and percentage penalties. Left empty, the employee's basic salary is used. |
+| Component Used To Show HO Violation Item In Salary Document | المفرد المستعمل لإظهار بند المخالفة في سند الراتب | The salary component whose deduction the penalty is added to on the salary document (see the accounting section below). |
 
 ![Violation Item](../../../ar/modules/hr/images/government-relations/ho-violation-item-en.png)
 
@@ -66,10 +68,10 @@ carries:
 | Repetition Count | عدد مرات التكرار | The occurrence number this tier applies from (1st, 2nd, 3rd…). |
 | During | خلال | The window over which repetitions are counted. |
 | Penalty | العقوبة | A description of the tier's penalty. |
-| Financial Penalty / penalty From Salary / From Salary % | الغرامة المالية / الخصم من الراتب / من الراتب % | The harsher amounts for this tier. |
+| Financial Penalty / Penalty From Salary / From Salary \| Percentage / Unit | الغرامة المالية / الخصم من الراتب / من الراتب \| % / الوحدة | The harsher amounts for this tier. |
 
 The **During** window decides *which* previous penalties count toward the repetition tally. It can be
-one of four values:
+one of four values, or left empty to count every earlier penalty of the employee for the item:
 
 | During (English) | Arabic label | Counts repetitions within… |
 |---|---|---|
@@ -79,18 +81,25 @@ one of four values:
 | Fiscal Year | سنة مالية | The same accounting year. |
 
 So a rule can read: *first offence in the payroll year — one day's pay; second offence in the same
-year — three days' pay; third — a flat fine.* When a penalty document is committed for the employee,
-the system counts how many penalty documents for that same violation item the employee already has
-within the chosen window, and picks the **applicable tier** — the highest tier whose repetition count
-is at or below the employee's next occurrence number. If no tier matches, the item's base penalty is
-used.
+year — three days' pay; third — a flat fine.* Each time you pick a violation item on a line of a
+Penalty Request or a Penalty Document, and again when the record is saved, the system counts the
+employee's earlier **committed Penalty Documents** that contain the same violation item within the
+tier's window (the record being edited is not counted), and picks the **applicable tier**: the highest
+tier whose Repetition Count is at or below that count plus one. An empty Repetition Count counts as 1.
+When no tier qualifies, the tier with the lowest Repetition Count applies. The item's own penalty
+fields (the base penalty) are used only when its Details grid has no rows.
+
+A window that needs a value the record lacks counts nothing: a **Salary Period** or **Salary Year**
+window with no HR Period on the record, or a **Fiscal Period** or **Fiscal Year** window with no fiscal
+period or year.
 
 ::: tip Worked example
-Suppose the *late arrival* item has base penalty = 1 day's pay, and two tiers, both **During = Salary
-Year**: tier at repetition **2** = 3 days' pay, tier at repetition **3** = a flat 500 fine. An
-employee with **no** prior late-arrival penalties this year gets the base (1 day). Their **second**
-committed penalty this year jumps to the tier-2 penalty (3 days). Their **third** lands on the flat
-500 fine.
+Suppose the *late arrival* item has three tiers, all **During = Salary Year**: tier at repetition
+**1** = 1 day's pay, tier at repetition **2** = 3 days' pay, tier at repetition **3** = a flat 500
+fine. An employee with **no** prior late-arrival penalties this year gets tier 1 (1 day). Their
+**second** penalty this year jumps to tier 2 (3 days). Their **third** and every later one lands on
+the flat 500 fine. Without the tier at repetition 1, the first offence would already get the 3 days of
+tier 2, because the lowest tier applies when none qualifies.
 :::
 
 ## Applying a penalty: Request then Document
@@ -136,18 +145,27 @@ total: a balanced journal with a **debit** side and a **credit** side, both take
 entry, processed like any other through a **business request** (`طلب أعمال`) with its own
 **processing status** (`حالة المعالجة`) that you can retry from the **Business Requests** view.
 
-The **Penalty Request** creates **no entry** — it is only a proposal. And this is the opposite of the
-[Payment Request](./government-relations-overview), which merely *records* that a government fee was
-paid and does **not** create a ledger entry by itself. So within this one area you have two documents
-that look similar but behave oppositely: the payment request tracks a fee without creating an entry; the penalty
-document actually creates one. Do not assume they are the same.
+The **Penalty Request** creates **no entry** — it is only a proposal. The
+[Payment Request](/modules/hr/government-relations/government-relations-overview) is the opposite case: it records a government fee
+without creating an entry.
 :::
 
-The penalty total the entry carries is the sum of each line's computed penalty — flat fine, plus any
-salary-based deduction (a time-period deduction is converted to money against the employee's basic
-salary), plus any percentage-of-salary component — after the applicable escalation tier has been
-selected. The penalty also surfaces on the employee's payslip through the salary component named on
-the violation item, so the deduction and the payroll record stay in step.
+The penalty total the entry carries is the sum of each line's computed penalty, taken from the
+applicable escalation tier: the flat fine, plus the time-period deduction, plus the percentage of
+salary. "The salary" is the total of the employee's salary components that belong to the violation
+item's **Component Group**, or the basic salary when the item has no group. A time-period deduction
+counts a day as 8 hours and a month as 30 days, so 2 days cost 2 × 8 ÷ 240 = 1/15 of the salary.
+
+The penalty reaches the employee's salary document only when the salary document's term has
+**Collect HO Penalties In Salary Lines** ticked (see
+[Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues)). Salary
+generation then takes the employee's committed Penalty Documents whose value date falls between the
+salary document's from and to dates, and adds each line's Financial Penalty to the **Deduction** of
+the salary document line for the violation item's **Component Used To Show HO Violation Item In Salary
+Document**. A line whose item has no such component is skipped. When the salary document has no line
+for that component, salary generation reports:
+
+*The component {0} from HO Penalties could not be found for the employee {1} in salary document {2}* — «المفرد {0} الموجود في سند المخالفة لا يمكن إيجاده للموظف {1} في سند الراتب {2}»
 
 ## Related
 

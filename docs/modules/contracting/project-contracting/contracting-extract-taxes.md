@@ -18,7 +18,7 @@ A tax extract term is a small master file, and there are usually only a handful 
 | **Group** | a master group, which can supply the tax code for a whole family at once |
 | **Name1** / **Name2** | the Arabic and English names — these are what appear on the reported invoice |
 | **Tax Authority Code** | the official code the authority expects for this item |
-| the unit-type field next to it | the unit of measure the authority expects, in the authority's own vocabulary. Its label is not translated on the screen, so recognise it by position |
+| **Tax Authority Unit Type** | the unit of measure the authority expects, in the authority's own vocabulary |
 | **Tax Plan** | the tax policy applied when the roll-up line is priced |
 | **Do Not Send To Tax Authority** | anything mapped to this term is excluded from the reported invoice entirely |
 

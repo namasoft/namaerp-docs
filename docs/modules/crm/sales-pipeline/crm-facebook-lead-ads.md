@@ -89,6 +89,8 @@ For the full syntax — fixed values in quotes, SQL lookups, conditional values 
 
 Whatever your map says, every lead or potential saved from Facebook gets **Lead Source** = **Social Networks** (مواقع التواصل الاجتماعي).
 
+A lead brought in by **Update Leads** also carries its Facebook campaign name, and Nama puts the [CRM Campaign](/modules/crm/marketing/crm-campaigns) whose code is that name into the record's *Campaign* box (in the code, every character other than a letter, a digit, `_`, `.` or `@` becomes `_`). Leads that arrive through the webhook carry no campaign name, so their *Campaign* box is left to your Fields Map.
+
 Facebook's own test leads — the ones its lead-ads testing tool sends, whose answers start with `<test lead:` or use `test@meta.com` — are skipped by **Update Leads**.
 
 ## Connecting a page, step by step

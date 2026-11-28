@@ -20,7 +20,7 @@ When a document of a given type is opened, the system reads the switch matching 
 - **Lot Configurations** (`value.lot`) — where the lot/shipment number is entered. For items tracked by batch (food, pharma, expiry-bound goods).
 - **Serial Configurations** (`value.serial`) — where the serial number (and second serial) is entered. For serialized goods (electronics, machinery, warranty-tracked items).
 - **Revision Configurations** (`value.revision`) — where the revision (version/model variant) is entered.
-- **Size & Color Configurations** (`value.sizeAndColor`) — where the size and color variant is entered. For apparel/footwear or any variant item.
+- **Size And Color Configurations** (`value.sizeAndColor`) — where the size and color variant is entered. For apparel/footwear or any variant item.
 - **Measures Configurations** (`value.measures`) — where multi-dimensional measurements (length/width/height) are entered, for items stocked by physical dimensions such as glass, steel sheet, or fabric.
 
 ## Item Dimension Options
@@ -31,23 +31,23 @@ When a document of a given type is opened, the system reads the switch matching 
 
 **Prevent Revision Purchase from Different Supplier** (`value.preventRevsionPurchaseFromDifSupplier`) *(default on)* — When a revision has a designated default supplier, it can only be purchased from that supplier; a purchase for a different supplier is blocked.
 
-**Enable Not Sellable and Not Purchasable on Color & Size Lines** (`value.enableNotSellableAndNotPurchasableOnColorAndSizeLines`) — Lets individual size/color variants be marked "not sellable" and/or "not purchasable", so specific variants can be blocked while others stay active.
+**Enable Not Sellable And Not Purchasable On Colors And Sizes Lines** (`value.enableNotSellableAndNotPurchasableOnColorAndSizeLines`) — Lets individual size/color variants be marked "not sellable" and/or "not purchasable", so specific variants can be blocked while others stay active.
 
-**First Revision of Allowed Revisions is Default with Color & Size** (`value.firstRevisionOfAllowedRevisionsIsDefaultWithColorAndSize`) — When building variant codes for size/color, fills in the first revision from the item's allowed-revisions list as the default instead of leaving it blank.
+**First Revision Of Allowed Revisions Is Default With Color And Size** (`value.firstRevisionOfAllowedRevisionsIsDefaultWithColorAndSize`) — When building variant codes for size/color, fills in the first revision from the item's allowed-revisions list as the default instead of leaving it blank.
 
-**Allow Issue of Non-Existing Lots** (`value.allowIssueOfNonExistingLots`) — Normally you can only issue from a lot that exists in stock. When on, the system allows issuing a lot that was never received — for migration/correction scenarios; use with caution.
+**Allow Issue Of Non Existing Lots** (`value.allowIssueOfNonExistingLots`) — Normally you can only issue from a lot that exists in stock. When on, the system allows issuing a lot that was never received — for migration/correction scenarios; use with caution.
 
 **Do Not Update Item Lot and Box from Issue and Sales** (`value.doNotUpdateItemLotAndBoxFromIssueAndSales`) — When on, issue and sales documents do **not** update the item's lot and box (package) records; only receipt-side activity maintains them.
 
-**Allow Changing Cost and Quantity Tracking After Item Usage** (`value.allowChangingCostAndQtyTrackingAfterUsage`) — Normally an item's cost-tracking and quantity-tracking settings are locked once it has transactions. When on, they can still be changed afterward — for controlled corrections only, as it can affect existing balances and costing.
+**Allow Changing Cost and Quantity Tracking After Item Usage** (`value.allowChangingCostAndQtyTrackingAfterUsage`) — Normally an item's cost-tracking and quantity-tracking settings are locked once it has transactions. When on, they can still be changed afterward — for controlled corrections only, as it can affect existing balances and costing. The same switch lifts the lock on the **Issue Cost Policy** and on the four dimension tracking configurations of the [Costing tab](/modules/supplychain/configuration/costing-configuration). It sits at a protected security level: a save that switches it on from a normal session is refused with *You are not authorized to change the field  {0} because it belongs to the security level {1}, please contact technical support team*, and while it is on it is reported as a critical error at login.
 
 **Search on Item by Box or Lot** (`value.searchOnItemByBoxOrLot`) — When on, entering a box or lot id on a line looks it up and fills in the matching item, so staff can add a line by scanning a box/lot label rather than the item code.
 
 **Zip Serials in Dialog** (`value.zipSerialsInDialog`) — Shows serial numbers in a compressed form in the serials-selection dialog, so long runs of serials display compactly.
 
-**Search in Serials When Entering Item Code** (`value.searchInSerialsWhenEnterItemCode`) — When on, the value typed into the item-code field is also matched against serial numbers, so scanning a unit's serial adds the corresponding item.
+**Search In Serials When Entering Item Code in Supply Chain Documents** (`value.searchInSerialsWhenEnterItemCode`) — When on, the value typed into the item-code field is also matched against serial numbers, so scanning a unit's serial adds the corresponding item.
 
-**Update Prices According to Lot** (`value.updatePricesAccordingToLotId`) — When on, changing the lot on a sales/invoice line re-triggers price calculation (price can depend on the chosen lot). Use it when you maintain lot-specific pricing.
+**Update Prices According To Lot Id** (`value.updatePricesAccordingToLotId`) — When on, changing the lot on a sales/invoice line re-triggers price calculation (price can depend on the chosen lot). Use it when you maintain lot-specific pricing.
 
 **Use Color / Size / Revision in Unit Conversions** (`value.useColorInUomConversions`, `value.useSizeInUomConversions`, `value.useRevisionInUomConversions`) — When on, a unit-of-measure conversion rule that specifies a color/size/revision applies only to lines with the same value, letting the same item have variant-specific conversion factors.
 
@@ -61,7 +61,7 @@ When a document of a given type is opened, the system reads the switch matching 
 
 **Allow Inconsistent Expiry Date** (`value.allowInconsistentExpiryDate`) — The same for expiry date — different expiry dates for the same lot are allowed.
 
-**Do Not Check Conformity of Production and Expiry Date** (`value.notCheckingConformityOfProductionAndExpiry`) — Normally the system enforces that production date is before expiry date. When on, that sanity check is skipped. Leave off to catch data-entry mistakes.
+**Not Checking the conformity of Production Date and Expiry Date** (`value.notCheckingConformityOfProductionAndExpiry`) — Normally the system enforces that production date is before expiry date. When on, that sanity check is skipped. Leave off to catch data-entry mistakes.
 
 ## Active & Inactive Percentage
 
@@ -70,8 +70,6 @@ When a document of a given type is opened, the system reads the switch matching 
 ## Measures
 
 > "Measures" are physical dimensions captured on a line (length × width × height) used to compute quantity for cut materials such as glass, steel sheet, fabric, or wood. The "clipped" parts are the trimmed/cut-off portions deducted from the measured area.
-
-**Only Standard Measures Used in Purchase Invoice** (`value.restrictInPurchases`) *(default on)* — Restricts purchase lines to standard (pre-defined) measures rather than ad-hoc dimensions, keeping purchased dimensions limited to your defined standard set.
 
 **Measures Factor** (`value.measuresFactor`) — A global factor multiplied into the quantity computed from a line's measures, used to convert measured dimensions into the stocked quantity.
 
@@ -101,7 +99,7 @@ The dimensions available:
 | Inactive % | `value.considerInActivePercWhenValidatingOldItemPriceWithNewItemPrice` |
 | Sub-Item | `value.considerSubItemWhenValidatingOldItemPriceWithNewItemPrice` |
 
-**Ignore Serials Processing Before a Specific Date** (`value.ignoreSerialsProcessingBeforeSpecificDate`) — Any transaction dated on or before this cutoff skips serial processing/validation entirely. Set it to your serials go-live date so historical documents that predate serial tracking aren't reprocessed.
+**Ignore Serials Processing Before Specific Date** (`value.ignoreSerialsProcessingBeforeSpecificDate`) — Any transaction dated on or before this cutoff skips serial processing/validation entirely. Set it to your serials go-live date so historical documents that predate serial tracking aren't reprocessed.
 
 ## Dimension Checks When Editing Linked Stock Documents
 

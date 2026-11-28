@@ -52,7 +52,7 @@ contract books revenue, or that a temporary reservation protects a unit. Neither
 
 | Document | Does it take the unit off the market? | Does it create accounting effects? | Licence |
 |---|---|---|---|
-| Sales offer | No | Only if its term is configured — normally left empty, so no | `realestate-sales` |
+| Sales offer | No | **No** | `realestate-sales` |
 | Temporary reservation | No | **No** | `realestate-sales` |
 | Reservation document | Yes — but only once its status is **Confirmed** | Yes — the reservation deposit only, one debit and one credit line | `realestate` |
 | Reservation cancellation | Releases the unit | Yes — a full sales-style entry for what is retained and refunded | `realestate` |
@@ -65,10 +65,9 @@ contract books revenue, or that a temporary reservation protects a unit. Neither
 
 Two consequences are worth spelling out.
 
-**The initial sales contract books nothing.** It can carry a 1,200,000 price, a 60-line installment
-schedule and a signed customer, and it can lock the unit — and it still produces no journal entry
-whatsoever. Its document term (توجيه) has a settings page and no accounts, because there is nothing
-for accounts to do. Revenue appears when the sales contract is committed, not before.
+**The initial sales contract books nothing**, even though it can carry the full price and schedule
+and lock the unit; revenue appears only when the sales contract is committed. See
+[the initial sales contract](/modules/realestate/sales/realestate-reservations-and-initial-contracts#The-initial-sales-contract).
 
 **The cancellation request cancels nothing.** *Cancel Contract Request* is a form for recording that
 a customer asked to get out of a sale, together with the commissions that will have to be settled.
@@ -95,11 +94,9 @@ contract, so the simulation is not an approximation — it is the plan the contr
 What makes it safe to hand out freely is that it does not commit anything:
 
 - It does not reserve villa B-12. Another salesperson can sell it that afternoon.
-- It reaches the ledger only if you deliberately configure it to. The offer carries its own
-  document term with the same full set of accounting sides as the contract, and on commit it
-  raises an accounting request exactly as the contract does — but with those sides left empty,
-  as they normally are, nothing is written. Fill them in and the offer will create its entry like any other
-  document, so leave the offer's term unconfigured unless you mean it.
+- It never reaches the ledger: committing an offer creates no journal entry, whatever accounts its
+  document term holds. The one thing a committed offer can create is a commercial paper, for an installment line that
+  carries commercial-paper creation data.
 - The buyer field is not mandatory. An offer is normally addressed instead to a CRM lead or
   opportunity through the *Offer For* field — the only point in the whole sales chain that reaches
   into CRM.

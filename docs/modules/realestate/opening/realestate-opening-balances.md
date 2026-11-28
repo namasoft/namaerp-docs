@@ -33,7 +33,7 @@ The order matters, because every opening document points at something that must 
 | Document | What it carries in |
 |---|---|
 | **Opening sales doc / عقد بيع افتتاحي** | a unit that was already sold: the buyer, the price, the installment schedule, and which installments were already settled — see [Opening Sales Contracts](/modules/realestate/opening/realestate-opening-sales) |
-| **Opening rent contract / عقد ايجار افتتاحي** | a lease that was already running: the tenant, the term, the schedule, and the periods already collected — see [Opening Rent Contracts](/modules/realestate/opening/realestate-opening-rent-contracts) |
+| **Opening rent contract / عقد إيجار افتتاحي** | a lease that was already running: the tenant, the term, the schedule, and the periods already collected — see [Opening Rent Contracts](/modules/realestate/opening/realestate-opening-rent-contracts) |
 | **RE Estate Opening Cost / سند افتتاحي تكلفة عقار** | the historical cost sitting on each estate |
 
 They are independent of one another. A unit that was sold and whose cost you also want to load takes
@@ -48,11 +48,10 @@ period**, and the message says so plainly: *Fiscal period must be openning*. Thi
 opening entries are supposed to land in the period that carries the rest of the migration, not in
 the first live month, where they would distort it.
 
-So create the opening fiscal period before you start, and select it on the documents. There is one
-escape hatch, on the opening sales contract only: its term carries **Allow Non Opening Fiscal Period
-In Opening Sales / السماح بفترات محاسبيه غير افتتاحيه في عقد البيع الإفتتاحي**, which lifts the
-restriction for the books using that term. Use it for the late arrivals — the contract nobody
-mentioned until three months after go-live — rather than as the normal setting.
+So create the opening fiscal period before you start, and select it on the documents. The one
+escape hatch is on the opening sales contract only — its term option **Allow Non Opening Fiscal
+Period In Opening Sales**, described in
+[Opening Sales Contracts](/modules/realestate/opening/realestate-opening-sales#The-opening-fiscal-period).
 
 ### Turning off the status timeline for migrated history
 
@@ -68,9 +67,10 @@ entries whose earlier half is dated before it, so migrated contracts commit with
 justify a past that was never loaded.
 
 ::: warning Treat the cut-off date as a one-time decision
-The field is marked as a critical setting: changing or clearing it after it has been used raises a
-dangerous-change warning, because moving it retroactively changes which documents the validator is
-willing to police. Set it once, at go-live, to the go-live date.
+Entering the date or changing it to another date is a protected change that is refused unless your
+login carries the authority for its security level — see
+[Real Estate Module Configuration](/modules/realestate/realestate-configuration). Set it once, at
+go-live, to the go-live date.
 :::
 
 ## Loading historical cost

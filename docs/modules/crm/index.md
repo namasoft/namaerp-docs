@@ -112,6 +112,7 @@ A self-contained booking system for businesses that send crews to customer addre
   <LandingCard icon="👤" title="My Appointments" link="/modules/crm/technician-appointments/crm-my-appointments.md" details="The field schedule for technicians, section supervisors and administrators, with filters." />
   <LandingCard icon="📝" title="Service Distribution" link="/modules/crm/technician-appointments/crm-technician-service-distribution.md" details="What was actually done, by whom and for how long — and how it moves the appointment to Executed." />
   <LandingCard icon="🔀" title="Technician Transfers" link="/modules/crm/technician-appointments/crm-technician-transfers.md" details="Moving somebody between crews in one committed document, and what the move deliberately leaves alone." />
+  <LandingCard icon="🚫" title="Technician Unavailability" link="/modules/crm/technician-appointments/crm-technician-unavailability.md" details="Blocking a technician's time for leave or training so their crew cannot be booked." />
 </LandingGrid>
 
 ## Reference
@@ -126,5 +127,6 @@ The files everything else points at, the term settings behind the buttons, and a
   <LandingCard icon="⚖️" title="Competitors" link="/modules/crm/master-files/crm-competitors.md" details="Recording who you are bidding against, and the honest limits of that capture." />
   <LandingCard icon="❔" title="FAQ" link="/modules/crm/master-files/crm-faq.md" details="The answer file created from a ticket — and why it is not a knowledge base." />
   <LandingCard icon="📐" title="Document Terms" link="/modules/crm/document-terms/crm-terms-basics.md" details="Which CRM documents have terms, the accounts behind them, and the generation pairs that drive every button." />
+  <LandingCard icon="🧩" title="Maintenance Document Terms" link="/modules/crm/document-terms/crm-maintenance-terms.md" details="The book-and-term pairs behind every maintenance generate button, and which maintenance documents reach the ledger." />
   <LandingCard icon="⚠️" title="Risk Register" link="/modules/crm/risk-register/crm-risk-register.md" details="An FMEA-style register of the company's own problems, likelihood and solutions." />
 </LandingGrid>

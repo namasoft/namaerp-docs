@@ -52,7 +52,7 @@ Winding down an employment relationship, and Gulf-specific government procedures
 <LandingGrid>
   <LandingCard icon="📤" title="Provisions & End of Service" link="/modules/hr/end-of-service/" details="End-of-service provisions, firing and termination, dues liquidation, and departmental evacuation approval." />
   <LandingCard icon="🏛️" title="Government Relations" link="/modules/hr/government-relations/" details="The PRO fee catalog, visas, residence (Iqama) renewal, the company visa pool, GOSI and sponsorship, and government penalties." />
-  <LandingCard icon="➕" title="Health Insurance" link="/modules/hr/health-insurance/" details="Adding and removing employees from insurance, offers, claims, upgrades and credence letters." />
+  <LandingCard icon="➕" title="Health Insurance" link="/modules/hr/health-insurance/" details="Adding and removing employees from insurance, offers, claims, upgrades and batch enrolment by credence." />
 </LandingGrid>
 
 ## Everyday & Help

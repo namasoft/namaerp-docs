@@ -48,31 +48,31 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 | الخيار (عربي / إنجليزي) | معرّف الحقل | الافتراضي | ما يفعله |
 |---|---|---|---|
 | منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية / **Prevent Closing When Unfinished Task** | `value.preventClosingWUnfinishTask` | **مفعّل** | يرفض [إغلاق أمر الشغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) ما دامت هناك مهمة مسجّلة ينقصها وقت بدء أو انتهاء. اتركه مفعّلًا ما لم يكن لديك سبب متعمّد. |
-| عدم السماح بفتح اكتر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | `value.doNotAllowMultipleOpenedJobOrderOnProduct` | معطّل | يرفض [أمر شغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order.md) ثانيًا لمركبة لها أمر مفتوح بالفعل. مفيد في ورشة مزدحمة قد يُدخل فيها مستشاران السيارة نفسها مرتين. |
+| عدم السماح بفتح أكثر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | `value.doNotAllowMultipleOpenedJobOrderOnProduct` | معطّل | يرفض [أمر شغل](/ar/modules/servicecenter/job-cycle/servicecenter-job-order.md) ثانيًا لمركبة لها أمر مفتوح بالفعل. مفيد في ورشة مزدحمة قد يُدخل فيها مستشاران السيارة نفسها مرتين. |
 | الالتزام بأصناف وكميات وأسعار أمر الشغل في الفاتورة / **Force Service Center Order Invoice Quantities and Prices** | `value.forceSrvCOrderInvoiceQtyAndPrices` | معطّل | يقيّد الفاتورة المُنشأة بأصناف أمر الشغل وكمياته وأسعاره، فلا يحرّرها أحد بعيدًا عن العمل الذي جاءت منه. |
-| عدم نسخ المخزن من سطور أمر الشغل الى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | `value.doNotCopyWarehouseFromOrderToInvoiceLines` | معطّل | يمنع نقل المخزن من سطور أمر الشغل إلى سطور [الفاتورة المُنشأة](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md). فعّله حيث تكون الفوترة والمخزون في مخازن مختلفة. |
+| عدم نسخ المخزن من سطور أمر الشغل إلى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | `value.doNotCopyWarehouseFromOrderToInvoiceLines` | معطّل | يمنع نقل المخزن من سطور أمر الشغل إلى سطور [الفاتورة المُنشأة](/ar/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md). فعّله حيث تكون الفوترة والمخزون في مخازن مختلفة. |
 | إظهار الضرائب في أوامر الشغل ومستنداتها / **Show Taxes Grid In Job Order and Other Documents** | `value.showTaxesGridInJobOrderAndOtherDocuments` | معطّل | مفتاح تخطيط محض: يُظهر جدول الضرائب أو يخفيه على أمر الشغل وشاشاته المرتبطة. |
-| إعتبار المخزن و الموقع في جدول قطع الغيار النظامى / **Consider Warehouse And Locator In Material Entries** | `value.considerWarehouseInMaterialEntries` | معطّل | يجعل [جدول قطع الغيار النظامي](/ar/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) يعتمد على المخزن والموقع إضافة إلى الصنف، فتُتابَع القطعة الواحدة المصروفة من مخزنين متابعةً منفصلة. |
+| اعتبار المخزن و الموقع في جدول قطع الغيار النظامي / **Consider Warehouse And Locator In Material Entries** | `value.considerWarehouseInMaterialEntries` | معطّل | يجعل [جدول قطع الغيار النظامي](/ar/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) يعتمد على المخزن والموقع إضافة إلى الصنف، فتُتابَع القطعة الواحدة المصروفة من مخزنين متابعةً منفصلة. |
 
 ## شاشة التنفيذ
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | الافتراضي | ما يفعله |
 |---|---|---|---|
-| عدم نسخ السطور عند إختيار أمر الشغل / **Do Not Copy Details From Job Order** | `value.doNotCopyDetailsFromJobOrder` | معطّل | حين يُفعّل، فإن اختيار أمر شغل على [مستند التنفيذ](/ar/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) لا يملأ سطور مهامه وخاماته مسبقًا. مفيد حيث يسجّل الفنيون جزءًا من الأمر فقط. |
-| لا يمكن التعديل في السطر الذى حالته منتهى / **Can Not Edit Line Status Is Finished** | `value.canNotEditLineStatusIsFinished` | معطّل | يجعل كل أعمدة سطر التنفيذ المنتهي للقراءة فقط، فلا يُعدَّل تسجيل مكتمل في صمت بعد إتمامه. |
-| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Has Open Task In Job Order Execution** | `value.doNotShowTechniciansWhoHasOpenTaskInJobOrderExecution` | **مفعّل** | يُخرج الفنيين الذين لديهم مهمة غير منتهية من منتقي الفنيين على مستند التنفيذ. |
+| عدم نسخ السطور عند اختيار أمر الشغل / **Do Not Copy Details From Job Order** | `value.doNotCopyDetailsFromJobOrder` | معطّل | حين يُفعّل، فإن اختيار أمر شغل على [مستند التنفيذ](/ar/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) يضيف الأمر إلى جدول الأوامر لكنه لا يملأ سطور مهامه مسبقًا، ولا خانتي المهمة الحالية والتالية. مفيد حيث يسجّل الفنيون جزءًا من الأمر فقط. |
+| لا يمكن التعديل في السطر الذي حالته منتهي / **Can Not Edit Line Status Is Finished** | `value.canNotEditLineStatusIsFinished` | معطّل | يجعل كل أعمدة سطر التنفيذ المنتهي للقراءة فقط، فلا يُعدَّل تسجيل مكتمل في صمت بعد إتمامه. |
+| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Have Open Task In Job Order Execution** | `value.doNotShowTechniciansWhoHasOpenTaskInJobOrderExecution` | **مفعّل** | يُخرج الفنيين الذين لديهم مهمة غير منتهية من منتقي الفنيين على مستند التنفيذ. |
 
 ## تاريخ المركبة
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| أقل عدد من الأيام لحساب متوسط إستهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | `value.minDaysToCalcAvgKMConsump` | أقل عدد أيام يجب أن يمر بين قراءتَي عداد قبل إعادة حساب متوسط المسافة اليومية للمركبة. يمنع قراءةً أُخذت صباح اليوم التالي للقراءة السابقة من إنتاج متوسط شاذ. راجع [قراءات العداد وفترات الصيانة](/ar/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
+| أقل عدد من الأيام لحساب متوسط استهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | `value.minDaysToCalcAvgKMConsump` | لا يُعاد حساب متوسط المسافة اليومية للمركبة إلا حين يفصل بين قراءة العداد الجديدة والقراءة التي تُقارن بها أكثر من هذا العدد من الأيام؛ وإلا بقي المتوسط القديم. يمنع قراءةً أُخذت صباح اليوم التالي للقراءة السابقة من إنتاج متوسط شاذ. راجع [قراءات العداد وفترات الصيانة](/ar/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
 
 ## السيارات
 
 | الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
 |---|---|---|
-| إعدادات حالة الصنف الفرعي الإفتراضية / **Default SubItem Configuration** | `value.defaultSubItemConfig` | يوفّر سطور فلترة الحالة التي يعرضها منتقي السيارة — وذلك فقط حين لا تكون لدى **الصنف** إعدادات حالة سيارة خاصة به. |
+| إعدادات حالة الصنف الفرعي الافتراضية / **Default SubItem Configuration** | `value.defaultSubItemConfig` | يوفّر سطور فلترة الحالة التي يعرضها منتقي السيارة — وذلك فقط حين لا تكون لدى **الصنف** إعدادات حالة سيارة خاصة به. |
 
 ::: warning ما لا تفعله إعدادات الحالة الافتراضية
 يُقرأ هذا الخيار في موضع واحد بالضبط: قائمة الفلاتر على منتقي السيارة. وكثيرًا ما يُساء فهمه على أنه قيمة احتياطية تجعل دورة حياة السيارة تعمل للأصناف التي لم يضبطها أحد. وليس كذلك.
@@ -81,6 +81,15 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 إذن: **كل صنف مركبة يظل محتاجًا إلى سجل إعدادات حالة سيارة خاص به.** ووضع قيمة افتراضية هنا لا يغيّر شيئًا في الحالات ولا في إنشاء السيارات. راجع [إعدادات حالة السيارة](/ar/modules/servicecenter/cars-setup/car-status-configurations.md).
 :::
+
+## تامين السيارات (Cars Policies)
+
+المجموعة الثانية على الشاشة، **تامين السيارات** (*Cars Policies*)، تخدم مستندات تأمين السيارات.
+
+| الخيار (عربي / إنجليزي) | معرّف الحقل | ما يفعله |
+|---|---|---|
+| صنف خدمة الوثيقة / **Policy Service Item** | `value.policyServiceItem` | صنف الخدمة الذي يستعمله [أمر بيع السيارة](/ar/modules/servicecenter/car-sales/car-sales-order) لسطر وثيقة التأمين. فحين يكون **إضافة سطر صنف خدمة الوثيقة مع الحفظ** (*Add Policy Service Item Line With Save*) مؤشَّرًا في توجيه الأمر، فإن حفظ أمر فيه وثيقة يضيف سطرًا واحدًا لهذا الصنف بكمية 1 وسعر وحدة يساوي قيمة الوثيقة، ويُبقيه مطابقًا لها مع كل حفظ؛ ويُحذف السطر حين لا تكون في الأمر وثيقة أو يكون هذا الخيار فارغًا. ويجب أن يكون الصنف صنف خدمة، وإلا رفضت شاشة الإعدادات الحفظ بالرسالة «صنف خدمة الوثيقة {0} يجب أن يكون صنف خدمة». |
+| السماح بحساب قيمة الوثيقة يدوياٌ / **Allow Calculating Policy Value Manually** | `value.allowCalculatePolicyValueManually` | يُبقي قيمة الوثيقة المكتوبة يدويًا على وثيقة تأمين السيارة بدل حسابها من شريحة البرنامج. راجع [وثيقة تأمين السيارة](/ar/modules/servicecenter/car-insurance/car-insurance-policy). |
 
 ## ما ليس هنا
 

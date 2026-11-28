@@ -17,8 +17,8 @@ paragraph each.
 
 Everything on this page assumes you have read
 [How Real Estate Document Terms Work](/modules/realestate/document-terms/realestate-terms-basics) —
-the accounting-side anatomy, the rule that a pair only fires when both halves are filled, and the
-Confiuration List routing grid.
+the accounting-side anatomy, what happens to a half-filled pair (on the collect, exemption and fine
+terms each side is applied on its own), and the Configuration List routing grid.
 
 ## The collection term
 
@@ -60,13 +60,13 @@ links in the chain always answered.
 
 | Option | Field id | What it does |
 |---|---|---|
-| installment Effect | `termConfig.installmentEffect` | **The most consequential setting on the whole screen.** It decides which bucket on the contract's installment line the collected amount lands in — requested collection, collected by commercial paper, or system paid. There is no fallback: leave it empty on a collect document and the money is booked to the ledger but nothing lands on the installment. |
+| installment Effect | `termConfig.installmentEffect` | **The most consequential setting on the whole screen.** It decides which bucket on the contract's installment line the collected amount lands in — requested collection, collected by commercial paper, system paid, or none. Left empty, the collection is recorded as system paid. |
 | Type | `termConfig.type` | Restricts the document to one installment type. If the term names a type, the document's own type must match or the commit fails with *"Term config contain a different type"*. This is how you build a dedicated maintenance-collection book that physically cannot collect ordinary installments. |
 | Do not apply effects on installments | `termConfig.doNotApplyEffectsOnInstallments` | On, committing the collect document does not touch the contract's paid and remaining figures at all — an accounting-only collection. |
 | Allow Collection From Finished Contracts | `termConfig.allowCollectionFromFinishedContracts` | On, the check that refuses collections against cancelled or waivered contracts is skipped. Essential for chasing arrears after a lease has been terminated. |
 | Ignore Pay Installments In Order | `termConfig.ignorePayInstallmentsInOrder` | Overrides the contract term's *Pay Installments In Order* for this collection book only, so a customer can pay a specific future installment out of sequence. |
 | Split Installment Value If It Spans More Than Two Years | `termConfig.splitInstallmentValueIfItSpansMoreThanTwoYears` | The same pro-rata year-split as the rent family, applied to the routing-grid effects. |
-| Confiuration List | `termConfig.configLineList` | Per-installment-type routing, exactly as described on the basics page. |
+| Configuration List | `termConfig.configLineList` | Per-installment-type routing, exactly as described on the basics page. |
 
 ![The Effect tab of the Collect Document term](../../../ar/modules/realestate/images/collections/re-term-collect-doc-effect-en.png)
 
@@ -81,7 +81,7 @@ generated documents are created with, and that is where the accounting actually 
 |---|---|---|
 | Aggregated Collect Document Book | `termConfig.aggrRECollectDocBook` | The book the generated collect documents are created in |
 | Aggregated Collect Document Term | `termConfig.aggrRECollectDocTerm` | The term they are created with — the collection term described above |
-| Exclude Installments Previously Added To AggrCollectDoc | `termConfig.excludeInstallmentsPreviouslyAddedToAggrCollectDoc` | When the button that loads due installments is pressed, each candidate is checked against the installments already aggregated before, and the ones already taken are skipped. This is what stops a repeated monthly run double-collecting. |
+| Exclude Installments Previously Added To Aggregated Collect Document | `termConfig.excludeInstallmentsPreviouslyAddedToAggrCollectDoc` | When the button that loads due installments is pressed, each candidate is checked against the installments already aggregated before, and the ones already taken are skipped. This is what stops a repeated monthly run double-collecting. |
 
 Both the book and the term are **mandatory at commit**: leave either empty and the document fails
 with *"You must fill aggregated collect document book and term in term {0}"*.
@@ -94,7 +94,7 @@ A property manager collects 120 shop rents on the 1st of every month.
    Pair it with a book called, say, *Monthly rent collection*.
 2. Build the **aggregated collect term** second. It has only three fields: name the *Monthly rent
    collection* book and the collection term from step 1, and tick *Exclude Installments Previously
-   Added To AggrCollectDoc*.
+   Added To Aggregated Collect Document*.
 3. The aggregated document itself now produces no entry. Its 120 generated collect documents produce
    120 entries, all through the term from step 1.
 
@@ -124,7 +124,7 @@ titled **Effect** carries a **Return Payment Value** debit and credit pair for t
 
 | Option | Field id | What it does |
 |---|---|---|
-| installment Effect | `termConfig.installmentEffect` | Which bucket the returned amount is written back to. Unlike the collect document, this one has a sensible default: leave it empty and the return is recorded as system paid. |
+| installment Effect | `termConfig.installmentEffect` | Which bucket the returned amount is written back to. Left empty, the return is recorded as system paid, as on the collect document. |
 | Do not apply effects on installments | `termConfig.doNotApplyEffectsOnInstallments` | On, the return is recorded in the ledger without touching the contract's installment figures. |
 
 One behaviour worth knowing when you read the resulting entry: the return payment is recorded in the legal
@@ -227,7 +227,7 @@ A third group controls what ends up in the capitalised cost:
 | Exclude Tax 1 … Exclude Tax 4 From Cost | `termConfig.excludeTax1FromCost` … `termConfig.excludeTax4FromCost` | Keeps each tax out of the cost base, so it is expensed rather than capitalised into the estate's cost |
 | Exclude Discount 1 … Exclude Discount 8 From Cost | `termConfig.excludeDiscount1FromCost` … `termConfig.excludeDiscount8FromCost` | Keeps each discount out of the cost base |
 | Link With Invoice Lines In accounting Document | `termConfig.linkWithInvoiceLinesInAccountingDocument` | Makes the invoice appear in the invoice grid of receipt and payment vouchers, so it can be settled from there |
-| =Track Quantity Fields From Doc | `termConfig.trackQuantityFieldsFromDoc` | Which fields identify a quantity when the document is created from another one *(the shipped English caption really does begin with an equals sign)* |
+| Track Quantity Fields From Doc | `termConfig.trackQuantityFieldsFromDoc` | Which fields identify a quantity when the document is created from another one |
 | Copy Remaining Quantity From Doc Considering Fields | `termConfig.copyRemainingQtyFromDocConsideringFields` | The same, for copying the remaining quantity forward |
 
 ### Page 1 — Other effects

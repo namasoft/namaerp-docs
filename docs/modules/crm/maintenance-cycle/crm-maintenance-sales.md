@@ -36,7 +36,7 @@ There is no Billing page on either document — the payment schedule belongs to 
 - **Generate Machine** (*إنشاء الآلة*) — Maintenance Sales Order only. Creates a machine file for every
   line of the Machines grid that has none and refreshes the order; read [Generate Machine](#Generate-Machine)
   before you press it. The order must be saved first.
-- **Collect All Machines Related To The Customer** (*تجميع كل الألات المرتبطة بالعميل*) — on both
+- **Collect All Machines Related To The Customer** (*تجميع كل الآلات المرتبطة بالعميل*) — on both
   screens. Fills the Machines grid with every top-level machine file of the header customer, replacing
   what the grid held. Refused with *"Customer must be entered"* if the customer is empty. Since these
   documents are usually about machines that do not exist yet, it is of more use on the contract.

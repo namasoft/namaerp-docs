@@ -273,7 +273,7 @@ select case when {d6} is not null and {d6} < {date1} then 0 else 1 end
 > The expected return date cannot be earlier than the exit date
 
 Tick *With Insert*, *With Update* and *With Draft* so the rule applies whenever the record is
-written. The [Criteria-Based Validation](/platform/governance/criteria-based-validation.md) page covers the
+written. The [Criteria-Based Validation](/platform/governance/criteria-based-validation) page covers the
 query language, the `{field}` placeholders and how to put a clickable link to the offending record
 into the message.
 
@@ -307,7 +307,7 @@ n1=07,10
 ```
 
 Each line says "take this amount, debit the first side, credit the second". The sides themselves
-are [Accounting Side Configurations](/platform/shared-master-files/accounting-side-config.md) — that is where the
+are [Accounting Side Configurations](/platform/shared-master-files/accounting-side-config) — that is where the
 account, the subsidiary and the narration are decided.
 
 ::: warning No switch, no entry
@@ -359,8 +359,8 @@ are.
 
 **There is no built-in validation of any kind.** A form document will save with every field empty.
 Everything that makes it trustworthy — required fields, sensible ranges, no duplicates — is
-configuration you add. [Required Fields](/platform/governance/required-fields.md) and
-[Criteria-Based Validation](/platform/governance/criteria-based-validation.md) are where that lives.
+configuration you add. [Required Fields](/platform/governance/required-fields) and
+[Criteria-Based Validation](/platform/governance/criteria-based-validation) are where that lives.
 
 **Field ids are forever.** Once records exist, moving *Plate Number* from `description1` to
 `description2` means migrating data, rewriting every report, flow, validator and export that
@@ -374,4 +374,4 @@ because somebody configured it — which is exactly the trade you are making.
 
 If the one-off thing the customer needs is not a *document* but a *file* — a register of something,
 a list of parties, a classification nobody else has — the same escape-hatch idea exists for master
-files. See [Spare Master Files](/platform/documents-and-records/spare-master-files.md).
+files. See [Spare Master Files](/platform/documents-and-records/spare-master-files).

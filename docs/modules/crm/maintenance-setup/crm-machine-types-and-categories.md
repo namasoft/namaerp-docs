@@ -34,7 +34,7 @@ This is the file that earns its keep. One record per model you maintain:
 
 Then one grid, **قطع الغيار / Spare Parts**, with these columns: item, unit of measure, quantity, reference number, a default warranty start period, a [warranty period type](/modules/crm/maintenance-setup/crm-machines), a default purchase price, a default sales price and a description.
 
-**This is the grid the system actually uses.** When a technician fills the spare-parts grid on a maintenance notice, order or invoice for a machine, the item lookup is restricted to the parts listed on that machine's Machine Type. So `MT-CHL300` lists `SP-FLT-14` (14-inch air filter), `SP-CMP-30` (30 HP compressor), `SP-GAS-410` (R-410A refrigerant) and `SP-OIL-05` (compressor oil), and those are what the crew can pick when working on either Marina Plaza chiller.
+**This is the grid the system actually uses.** When a technician fills the spare-parts grid on a maintenance notice, order or invoice whose header names a machine, the item lookup is restricted to the parts listed on that machine's Machine Type; a type whose list is empty leaves every spare-part item on offer. So `MT-CHL300` lists `SP-FLT-14` (14-inch air filter), `SP-CMP-30` (30 HP compressor), `SP-GAS-410` (R-410A refrigerant) and `SP-OIL-05` (compressor oil), and those are what the crew can pick when working on either Marina Plaza chiller.
 
 ::: warning A prerequisite that catches people out
 **An item is only ever offered as a spare part if it is flagged *Spare Part / قطعة غيار* on the item master.** That flag is set in the supply-chain item file, not here. A part listed on the Machine Type but not flagged on the item master will never appear in a lookup, and the message you get is simply an empty list.

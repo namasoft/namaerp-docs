@@ -126,8 +126,10 @@ because your changes will not survive the next save of the wizard:
 
 - the code, and the Arabic and English names
 - the report type and its order
+- the form entity (the wizard's main table) and the **Form Page**
 - the group it appears under, and the capabilities that govern who may see and change it
-- the fixed language and the point-of-sale flag
+- the fixed language, the default report design and the point-of-sale flag
+- the legal entity, sector, branch, department and analysis set, copied from the wizard's own
 - the report file itself, and the background image
 
 ::: info Regeneration is not optional and not scheduled

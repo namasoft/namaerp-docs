@@ -21,9 +21,11 @@ Throughout this page we sell **villa B-12 in Palm Compound** for **1,200,000**, 
 
 The top of page 0 is the usual document header — book and code, document term, issue date, value date and fiscal period — followed by the two fields that decide what the rest of the screen will look like.
 
-**From Document** (بناءا على) is how a contract inherits its history. Point it at the confirmed reservation for villa B-12 and the system carries the buyer, the estate, the deposit already paid and the payment template forward. Point it at a preliminary contract instead and the same thing happens from there. The **Reservation** field a little further down is *system-maintained* — it is filled from the From Document and cannot be typed into. If you want the contract linked to a reservation, set the From Document; do not go looking for a way to edit the reservation field.
+**From Document** (بناءً على) is how a contract inherits its history. Point it at the confirmed reservation for villa B-12 and the system carries the buyer, the estate, the deposit already paid and the payment template forward. Point it at a preliminary contract instead and the same thing happens from there. The **Reservation** field a little further down is *system-maintained* — it is filled from the From Document and cannot be typed into. If you want the contract linked to a reservation, set the From Document; do not go looking for a way to edit the reservation field.
 
-**Estate** (العقار) is the property being sold — a unit, a land plot, a floor, a building, a block or a [unit group](/modules/realestate/properties/realestate-buildings-floors-and-units.md). Choosing it back-fills the whole location breadcrumb underneath (project, square, block, building, floor, land, unit, unit group), so you never type the address twice. The picker is filtered: it offers only estates that are currently *Avaliable* (the spelling on screen) and not already reserved, which is why a unit someone else is holding simply does not appear in the list.
+**Sold estate** (العقار) is the property being sold — a unit, a land plot, a floor, a building, a block or a [unit group](/modules/realestate/properties/realestate-buildings-floors-and-units.md). Choosing it back-fills the whole location breadcrumb underneath (project, square, block, building, floor, land, unit, unit group), so you never type the address twice. The picker is filtered: it offers only estates that are currently *Available* and not already reserved, which is why a unit someone else is holding simply does not appear in the list.
+
+To sell several units on one contract, leave *Sold estate* empty and list them in the **Units Details** (تفاصيل الوحدات) grid instead — project, building, floor, unit and **Unit Value** per row. The contract's price is then the total of the unit values, and on save the system creates a unit group holding those units, files it under the term's *Generated Unit Group Group* (which must then be filled on the term) and makes that group the sold estate. One of the two must be filled — *"You must fill either Sold Estate or Units Details"* — a unit may appear only once in the grid, and the units cannot be changed once the contract has been committed.
 
 The rest of the block is **Type** (see [Contract or extension](#Contract-or-extension) below), the investment fund the unit belongs to if any, the document category, five attachments and remarks.
 
@@ -37,15 +39,15 @@ Four party fields and one employee:
 | **Buyer** (المشتري) | the customer; this is the party the receivable is raised against |
 | **Mediator** (الوسيط) | an intermediary third party recorded for reference |
 | **Broker** (وسيط) | the real-estate broker |
-| **Sales Man** (مندوب المبيعات) | your own employee, or a third party |
+| **Salesman** (مندوب المبيعات) | your own employee, or a third party |
 
-Two things are worth knowing here. First, the **Buyer** is mandatory unless the term switches *Has Buyer* (له مشتري) off — it is on by default, and you want it on for a real sale. Second, the **Broker** field is informational: naming a broker in the header does not create a commission line and does not create any entry. Commissions are entered by hand in the commissions grid further on, and they are what actually books money. The broker master file itself is described in the [catalogue page](/modules/realestate/costs/realestate-fee-commission-and-expense-types.md).
+Two things are worth knowing here. First, the **Buyer** is always mandatory on the sales contract. Second, the **Broker** field is informational: naming a broker in the header does not create a commission line and does not create any entry. Commissions are entered by hand in the commissions grid further on, and they are what actually books money. The broker master file itself is described in the [catalogue page](/modules/realestate/costs/realestate-fee-commission-and-expense-types.md).
 
 Just below the parties sits a small group of three read-only fields — the waiver document, a *waivered* marker and a *handed over* marker. You never fill these; they light up when a [waiver](/modules/realestate/sales/realestate-waiver-and-cancellation.md) or a [handover](/modules/realestate/sales/realestate-handover.md) is issued against the contract.
 
 ### The money
 
-The whole middle of page 0 — the price block, the installment-construction block, the *Multiple Construction Info* grid, the action buttons and the Installments grid — is the money model shared by every sales-family document. It has [its own page](/modules/realestate/sales/realestate-installment-plans.md), and it is the page to read before you fill anything here. In outline: the price block derives 1,200,000 from the areas and meter prices (or you type it), takes off the 240,000 down payment, adds fees and the maintenance deposit, and leaves a remaining value; the construction block describes how that remaining value becomes sixty lines; and **Create installments** builds them.
+The whole middle of page 0 — the price block, the installment-construction block, the *Multiple Construction Info* grid, the action buttons and the Installments grid — is the money model shared by every sales-family document. It has [its own page](/modules/realestate/sales/realestate-installment-plans.md), and it is the page to read before you fill anything here. In outline: the price block derives 1,200,000 from the areas and meter prices (or you type it), takes off any header discount to leave the remaining value, and adds fees and the maintenance deposit; **Create installments** turns the 240,000 down payment into its own line and builds the other 960,000 into sixty lines in the shape the construction block describes.
 
 If your organisation publishes price books and payment templates, pick a **Sales Payment Method** and the whole plan arrives pre-filled — see [price lists and payment plan templates](/modules/realestate/sales/realestate-price-lists-and-payment-methods.md).
 
@@ -55,9 +57,9 @@ Page 1, *Terms And Fees*, carries three grids that all end up as money.
 
 ![The fees and commissions tab](../../../ar/modules/realestate/images/sales/re-sales-doc-terms-and-fees-en.png)
 
-**Fees Info Lines** is a generator, not a list of charges. One line describes a *recurring* fee — a percentage or a value, how many of them, over what period, starting when, rounded to what multiple, and of which fee type. Pressing **Create Fees** (إنشاء الرسوم) expands those descriptions into the real **Other Fees** grid, dating the generated lines from the down-payment date (or the document value date if there is none) and sorting them by fee date.
+**Fees Info Lines** is a generator, not a list of charges. One line describes a *recurring* fee — a percentage or a value, how many of them, over what period, starting when, rounded to what multiple, and of which fee type. Pressing **Create Fees** (إنشاء الرسوم) expands those descriptions into the real **Other Fees Lines** grid, dating the generated lines from the down-payment date (or the document value date if there is none) and sorting them by fee date. It replaces whatever that grid held, so lines typed there by hand are dropped; a description without a count or a value is skipped.
 
-**Other Fees** is where the actual charges live, whether they were generated or typed straight in: fee type, fee value, the line's own subsidiary, the fee date, and *Add To Installments* (إضافة إلى الأقساط), which folds the fee into the generated schedule instead of leaving it standing alone. The accounts for these lines come from **the fee type's own Fee Debit and Fee Credit** — one of the few places in the module where accounts are read from a master file rather than from the document term. A term option, *Prevent Accounting Effects For Other Fees Lines*, suppresses those ledger lines entirely if you would rather account for fees another way.
+**Other Fees Lines** is where the actual charges live, whether they were generated or typed straight in: fee type, fee value, the line's own subsidiary, the fee date, and *Add To Installments* (إضافة إلى الأقساط), which folds the fee into the generated schedule instead of leaving it standing alone. The accounts for these lines come from **the fee type's own Fee Debit and Fee Credit** — one of the few places in the module where accounts are read from a master file rather than from the document term. A term option, *Prevent Accounting Effects For Other Fees Lines*, suppresses those ledger lines entirely if you would rather account for fees another way.
 
 **Terms** (the clause grid on the same page) holds the contract's own conditions text, usually copied in from a standard-terms master file. The separate *Terms* page at index 3 is the structured version — one row per standard clause with a planned end date, an extended end date, a fulfilment date and any extension fines. Both are described on the [owners and standard clauses page](/modules/realestate/properties/realestate-owners-and-contract-clauses.md).
 
@@ -92,7 +94,7 @@ If the sale is later given up, the [waiver document](/modules/realestate/sales/r
 
 ## What committing the contract does
 
-Saving the contract is instant; the effects are produced as a **business request** processed in the background. In order, a commit:
+Saving the contract is instant; the effects are produced as a **business request** processed in the background. A commit:
 
 1. **Marks the property sold.** The estate's status becomes *Sold*, its sold flag is set, the contract's buyer is written onto it as buyer and owner, and the estate is pointed back at this contract. Selling a block or a building cascades the status down to everything beneath it.
 2. **Closes off the reservation.** A linked reservation flips to *Sold*; a linked preliminary contract is stamped sold and pointed at this contract. Cancelling or deleting the contract puts the reservation back to *Confirmed*.
@@ -108,7 +110,7 @@ The entry is assembled from a series of independent blocks, each drawing its acc
 
 | What is recorded | Where its accounts come from |
 |---|---|
-| Installment lines routed per installment type | the **Confiuration List** (سطور إعدادات التوجيه) grid on the term — each row routes one installment type to its own pair |
+| Installment lines routed per installment type | the **Configuration List** (سطور إعدادات التوجيه) grid on the term — each row routes one installment type to its own pair |
 | Installments due **in this fiscal year** | *Income Debit* / *Income Credit* |
 | Installments due **in a later fiscal year** | *Advance Income Debit* / *Advance Income Credit* |
 | The total price | the plain *debit* / *credit* pair on the term |
@@ -139,12 +141,12 @@ Tax marked as a deduction is held as a negative amount on the line and is booked
 
 ### Two switches that change everything
 
-- ***Create Accounting Effects For Handovered Documents Only*** (إنشاء تأثير محاسبى لمستندات التسليم فقط) suppresses the **whole** journal entry until the unit is delivered. The contract commits, the receivable schedule exists, the estate is sold — and nothing is in the ledger. The [handover document](/modules/realestate/sales/realestate-handover.md) is what finally releases it. This is how "recognise revenue on delivery" is configured.
+- ***Create Accounting Effects For Handed Over Documents Only*** (إنشاء تأثير محاسبي لمستندات التسليم فقط) suppresses the **whole** journal entry until the unit is delivered. The contract commits, the receivable schedule exists, the estate is sold — and nothing is in the ledger. The [handover document](/modules/realestate/sales/realestate-handover.md) is what finally releases it. This is how "recognise revenue on delivery" is configured.
 - ***Shorten Ledger Effect*** (اختصار القيد) compresses the generated lines, so a contract with sixty installments does not produce a journal entry sixty lines long.
 
 ## Contract or extension
 
-The **Type** field offers *Contract* (عقد) and *Extension* (ملحق). An extension is an annex on an existing contract: an agreed price increase, an extra fee, a rescheduling. Choosing *Extension* makes the **Extension For** (مٌلحق ل) field mandatory — it points at the sales contract, opening sales contract or waiver being annexed — and choosing *Contract* requires that field to be empty.
+The **Type** field offers *Contract* (عقد) and *Extension* (ملحق). An extension is an annex on an existing contract: an agreed price increase, an extra fee, a rescheduling. Choosing *Extension* makes the **Extension For** (مُلحق ل) field mandatory — it points at the sales contract, opening sales contract or waiver being annexed — and choosing *Contract* requires that field to be empty.
 
 The important difference is behavioural: an extension **does not re-run the property bookkeeping**. It does not re-mark the estate, does not touch the reservation and does not rewrite the system entries. It only adds money lines to a contract that already exists. An extension dated on or after the date of a waiver on the contract it extends is rejected, and every extension shows up on the parent contract's *Related Records* page.
 
@@ -183,14 +185,14 @@ Finally, each row of the **Installments** grid — and of the *Multiple Construc
 
 ## The validations you will actually meet
 
-- **The installment total must match the remaining value**, within the tolerance set in [module configuration](/modules/realestate/realestate-configuration.md). This is the check that stops a contract over a one-piastre rounding gap, which is exactly what the tolerance is for. The term option *Validate Installments Total* can switch the check off per document term.
-- **A paid line cannot be deleted or re-coded.** Once an installment has been collected, requested for collection or covered by a commercial paper, its code is frozen and the line cannot disappear — you get *"Can not delete or change code of a paid line {0}"*. This is what protects you from an accidental rebuild of the grid.
+- **The installment total must match the remaining value**, within the tolerance set in [module configuration](/modules/realestate/realestate-configuration.md). This is the check that stops a contract over a one-piastre rounding gap, which is exactly what the tolerance is for. The term option *Validate Remaining And Installments Total Equality* can switch the check off per document term.
+- **A paid line cannot be deleted or re-coded.** Once an installment has been collected, requested for collection or covered by a commercial paper, its code is frozen — *"The installment code {0} can not be modified to {1}"* — and a line carrying a system-paid value cannot disappear from a committed contract — *"Can not delete or change code of a paid line {0}"*. This is what protects you from an accidental rebuild of the grid.
 - **Installment codes must be unique** across the contract. They are generated automatically unless the term has *Manual Coding* on.
 - **The reservation must be consistent.** If the estate already carries a reservation and this contract does not link to it, commit fails with *"The estate {0} has a reservation doc"*.
 - **The maintenance deposit needs a payment method.** If a deposit value is present, the payment type is required, and for *One Value* the payment date is required too. The total maintenance cost must equal the maintenance-cost installment lines plus the deposit.
 - **Construction-info lines must be coherent** — each needs either a value or a percentage, and the line that distributes the remainder must have neither.
 - **A waivered contract is frozen.** Once a waiver has been issued against it you get *"This contract can not be modified,because there is waiver Document {0} based on it"*. To change anything you deal with the waiver, not the contract.
-- **Force Price List**, if the term switches it on, requires the contract price to equal the price the price list produces for that estate, and names both figures in the error.
+- **Force Price List**, if the term switches it on, requires the contract price to equal the price the price lists give that estate today, and the error names the estate and the price-list price; see [making the price list binding](/modules/realestate/sales/realestate-price-lists-and-payment-methods#Making-the-price-list-binding).
 
 ## From here
 

@@ -27,7 +27,7 @@ Manual execution for bulk recommitting entities after system updates, configurat
 
 ## Parameters
 
-**Parameter 1:** Query (Required) - SQL query returning entityType and id columns (e.g., `select entityType,id from StockIssue where fromDoc_id = {id}`)
+**Parameter 1:** Query (Required) - SQL query whose first column is the entity type and second column is the id; the columns are read by position (e.g., `select entityType,id from StockIssue where fromDoc_id = {id}`). A query that uses line fields of the record running the flow is run once per line. A record returned more than once is processed once
 
 **Parameter 2:** Flush Before Starting (Optional) - true/false to flush database before starting (default: false)
 
@@ -35,9 +35,11 @@ Manual execution for bulk recommitting entities after system updates, configurat
 
 **Parameter 4:** Flush After Each Recommit (Optional) - true/false to flush after each entity (default: false)
 
-**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - true/false to continue processing if individual entities fail (default: false)
+**Parameter 5:** Do In New Transaction - Continue on Errors (Optional) - `true` processes each record in its own transaction, so a record that fails is rolled back alone and the run carries on with the next one. Empty or `false` stops the run at the first failure (default: false)
 
-**Parameter 6:** Run Update Query After Selecting Entities, and Before Recommit (Optional) - SQL update query to run before recommitting
+**Parameter 6:** Run Update Query After Selecting Entities, and Before Recommit (Optional) - SQL update query run after the records are selected and before the first one is recommitted. When Parameter 5 is `true` it runs once, in a transaction of its own; otherwise a query that uses line fields runs once per line
+
+Parameter 1 must be filled and Parameters 2 to 5 accept only `true`, `false` or empty; the entity flow is refused on save otherwise. [EADeleteFromQuery](/entity-flows/core/EADeleteFromQuery), [EASaveRecordsFromQuery](/entity-flows/core/EASaveRecordsFromQuery), [EARegenAccFromQuery](/entity-flows/core/EARegenAccFromQuery), [EARunBulkMassagesFromQuery](/entity-flows/core/EARunBulkMassagesFromQuery) and [EARunManualNotificationFromQuery](/entity-flows/core/EARunManualNotificationFromQuery) take the same six parameters with the same rules (the last one adds a seventh); only what is done to each record differs. The supply chain flows [EARegenInvTransReqFromQuery](/entity-flows/supplychain/EARegenInvTransReqFromQuery) and [EAEGBRASSFixCreationDates](/entity-flows/supplychain/EAEGBRASSFixCreationDates) take the same six parameters too. On each of these flows the titles of Parameters 3, 4 and 6 carry the flow's own operation name in place of *Recommit*.
 
 ## Database Tables Affected
 

@@ -23,7 +23,7 @@ has a book, a term (توجيه), a commit, and an accounting effect of its own. 
 the project invoice re-bills to the customer — the expense document plays no part in billing at
 all. Keep that asymmetry in mind while you read; it explains most of what follows.
 
-And one column on the claim — **Internal Account** (مصروف داخلى) — quietly decides both which
+And one column on the claim — **Internal Account** (مصروف داخلي) — quietly decides both which
 accounts the entry uses *and* whether the customer ever sees the amount. It has its own section
 below, and it is the field to get right before anything else.
 
@@ -166,9 +166,15 @@ the header first.
 :::
 
 Two rules are enforced when the document is committed, and both are about consistency with the
-header: a line's task must belong to the header **Project**, and that task must list the header
-**Employee** among its executers. This is why one expense document covers one employee on one
-project — treat that as the shape of the document rather than a limitation.
+header:
+
+- A line's task must belong to the header **Project**, or the commit is refused on that line with
+  *This task is not belong to this project* — «هذه المهمة لا تنتمي لهذا المشروع».
+- That task must list the header **Employee** on an executer row whose **Work Done** is not ticked,
+  or the commit is refused with *This task is not for this employee* — «هذه المهمة ليست لهذا الموظف».
+
+This is why one expense document covers one employee on one project — treat that as the shape of the
+document rather than a limitation.
 
 Committing also stamps every collected claim line as processed, so the next *Collect Requests* on
 any document will not offer it again. Editing a committed document redoes that bookkeeping for you:
@@ -222,8 +228,6 @@ working task `TSK-0042-03` "Site survey".
 6. The project's own **Total Project Cost** is unchanged by every step above. It still shows only
    approved timesheet hours × rate.
 
-That last point surprises people, so it is worth stating on its own.
-
 ## Where the money goes next
 
 **No payment is created, and none can be linked.** Neither the request nor the expense document
@@ -233,9 +237,7 @@ the credit side of your term to credit the employee's — or the supplier's — 
 then clear that account with a normal Payment Voucher. Sara gets her 300 back through her employee
 account, and the voucher that pays her simply will not carry a link to `PER-000117`.
 
-Nor do these documents feed the project screen's cost figure. Expense claims reach the general
-ledger and they reach the customer's invoice, but the **Total Project Cost** on the Managed Project
-screen is labour cost only — the sum of task executer hours × rate. To see spending by project
-including expenses you need an accounting report filtered on the project dimension, not an ECPA
-screen. The whole map of which cost lands where is on
+Expense claims reach the general ledger and the customer's invoice, never the project screen's
+**Total Project Cost**; to see spending by project including expenses, use an accounting report
+filtered on the project. The whole map of which cost lands where is on
 [Where Project Cost and Revenue Come From](/modules/ecpa/ecpa-costing-and-profitability).

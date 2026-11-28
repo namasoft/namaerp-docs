@@ -12,13 +12,13 @@ This page is the order to check them in.
 
 ## Which menu record a person gets
 
-A person is not shown "the menu". They are shown one **menu record**, chosen the first time they
-sign in, by working down this list until something is found:
+A person is not shown "the menu". They are shown one **menu record**, chosen each time they sign
+in, by working down this list until something is found:
 
 1. the menu named on **their user record**;
 2. otherwise the menu named on **their security profile**;
 3. otherwise the menu named on the **legal entity** they signed in to;
-4. otherwise the menu marked **System Default**;
+4. otherwise the menu marked **System Default Menu**;
 5. otherwise, whichever menu the system finds first.
 
 That last step is a genuine fallback, not a formality. It is what happens on a system where nobody
@@ -82,7 +82,7 @@ security profile. Use the menu rules to shorten a menu, not to secure one.
 ::: tip Blocking by code needs the entry to have a code
 Blocking works off the entry's code, so an entry with a blank code cannot be blocked individually.
 Most entries get a code automatically, but the three that take no target at all — **User
-Favourites**, **All Reports** and **Auto Dash Boards** — can end up without one. Those are blocked by removing them from the menu
+Favourites**, **All Reports** and **Auto Dashboards** — can end up without one. Those are blocked by removing them from the menu
 instead.
 :::
 

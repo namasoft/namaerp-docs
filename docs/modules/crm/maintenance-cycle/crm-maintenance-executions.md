@@ -15,7 +15,7 @@ The spare-parts grid on an execution carries warehouse, locator, lot, serial and
 a record of what the technician fitted. Committing an execution creates no accounting entry and
 issues nothing from any store. The parts leave stock when a
 [maintenance invoice](/modules/crm/maintenance-cycle/crm-maintenance-invoicing.md) is saved, or
-when somebody presses *mnSparePartsIssue* and saves the supply-chain document that opens.
+when somebody presses *Mn Spare Parts Issue* and saves the supply-chain document that opens.
 :::
 
 ::: info Required licence
@@ -46,9 +46,8 @@ On 1 April 2026 the three machine lines of order `MO-0513` produce three executi
 | `OEX-0773` | `MCH-00318` Air Handling Unit | AHU Monthly Checklist (3 tasks) | 14:00 | 15:00 | 1:00 |
 | | | | | **On site** | **6:00** |
 
-Which checklist arrives depends on one option on the order's term. Normally the tasks come from the
-**machine line's own task template**; tick *Consider task templates tasks when creating executions*
-and they come from the **header** template instead. See
+The checklist comes from the **task template on the order's machine line**: each execution receives
+that template's tasks. See
 [Task Templates](/modules/crm/maintenance-setup/crm-maintenance-task-templates.md).
 
 Pressing the buttons again does not duplicate anything — the existing executions are updated in
@@ -59,7 +58,7 @@ place.
 **Main page.** The order in *From document*, the machine, the task template, customer, technician,
 maintenance group, building, floor, room, the five machine classifications, warranty period type,
 current status, a *from date and time* pair, a *to date and time* pair, the calculated **net time**,
-a **status** (*In Progress* / *Finished* / *ReOpen*), currency and rate, six attachment slots, the
+a **status** (*In Progress* / *Finished* / *ReOpen*), currency and rate, five attachment slots, the
 maintenance contract, trouble level, trouble description, response time and two remark boxes.
 
 **Tasks grid.** The checklist itself: a *done* tick, the task, a second task column, remarks and two
@@ -83,7 +82,7 @@ total, matching the order's grid exactly.
 - **Make All Lines Done** (*تفعيل اختيار في جميع السطور*) — ticks *done* on every line of the tasks grid.
 - **Start** (*بدء*) — stamps today's date and the current time into the *from* pair if they are
   empty, and sets the status to *In Progress* if the status is empty.
-- **End** (*انهاء*) — sets the status to *Finished*, stamps the *to* pair with now, and computes the
+- **End** (*إنهاء*) — sets the status to *Finished*, stamps the *to* pair with now, and computes the
   net time as the difference. On an execution that is already *Finished* it does nothing.
 - **Change Status To In Progress** (*تغيير الحالة إلى قيد التنفيذ*) — despite its label, sets the
   status to **ReOpen** (*معاد فتحه*), not *In Progress*. It is the button you use to reopen a
@@ -99,11 +98,10 @@ pressing them.** If the technician presses End and closes the browser, nothing w
 
 **Spare parts and services page:**
 
-- **mnSparePartsIssueRequest** (*طلب صرف قطع غيار*) — opens an unsaved stock issue request for the
-  spare-part lines. The English label ships as the raw name shown here.
-- **mnSparePartsIssue** (*صرف قطع غيار*) — opens an unsaved stock issue for the spare-part lines. The
-  English label ships as the raw name shown here.
-- **Create Sales Quotation For Priceless Lines** (*إنشاء عرض أسعار للأصناف التى بدون سعر*) — opens a
+- **Mn Spare Parts Issue Request** (*طلب صرف قطع غيار*) — opens an unsaved stock issue request for the
+  spare-part lines.
+- **Mn Spare Parts Issue** (*صرف قطع غيار*) — opens an unsaved stock issue for the spare-part lines.
+- **Create Sales Quotation For Priceless Lines** (*إنشاء عرض أسعار للأصناف التي بدون سعر*) — opens a
   sales quotation for the lines that have no price.
 
 The last three are explained in [Getting the parts out of the store](#Getting-the-parts-out-of-the-store).
@@ -116,11 +114,11 @@ The last three are explained in [Getting the parts out of the store](#Getting-th
 |---|---|
 | **Ledger** | None. There is no accounting logic on this document at all, and its document term has no accounting pages — only tax plan, taxable, modifiable tax and "allow editing header tax in details". |
 | **Stock** | **None.** See the box at the top of this page. |
-| **On the order** | The execution's status is written into the matching machine line's *execution status*; the order's status type becomes *In Progress* while any line is still running and *Finished* once they all report finished; the execution's current status is pushed onto the order. |
+| **On the order** | The execution's status is written into the matching machine line's *execution status*; the order's status type becomes *In Progress* while any machine line's execution status is *In Progress* or *ReOpen*, and *Finished* as soon as none is — a machine line that has no execution yet does not hold the order open; the execution's current status, when it has one, is pushed onto the order. |
 
 Nothing else changes. In particular the contract entitlement is untouched — that was drawn down when
-the order was committed — and the machine's *Last Visit Date* is **not** updated, here or anywhere
-else.
+the order was committed — and the machine's *Last Visit Date* is **not** updated; only a
+[Machine Update Document](/modules/crm/maintenance-cycle/crm-machine-updates-and-transfers) writes it.
 
 ## Getting the parts out of the store
 
@@ -129,8 +127,8 @@ lines:
 
 | Button | Opens |
 |---|---|
-| mnSparePartsIssueRequest (*طلب صرف قطع غيار*) | A stock issue **request**, which somebody then approves and issues |
-| mnSparePartsIssue (*صرف قطع غيار*) | A stock **issue** — the real inventory document |
+| Mn Spare Parts Issue Request (*طلب صرف قطع غيار*) | A stock issue **request**, which somebody then approves and issues |
+| Mn Spare Parts Issue (*صرف قطع غيار*) | A stock **issue** — the real inventory document |
 
 Both open in a pop-up as an unsaved draft, and both need the execution saved first. Neither fills
 in the warehouse — choose it on the document that opens. Nothing moves until you save it.

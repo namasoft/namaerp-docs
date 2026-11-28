@@ -44,7 +44,7 @@ to be generated**. This is the single most consequential block in the module, an
 documentation warns about most.
 
 **Stamping settings.** Service Center terms are unusually chatty with master files. A workshop term
-can move the [**vehicle's status**](/modules/servicecenter/cars-setup/car-status-configurations.md) when the document commits, and fire a notification when it does. A
+can move the [**serviced vehicle's status**](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) when the document commits, and fire a notification when it does. A
 car term can stamp a dozen back-references onto the car record — which invoice sold it, which traffic
 letter was issued, which salesperson handled it.
 
@@ -60,7 +60,7 @@ other, which is worth knowing before you tune anything.
 
 | Term family | Documents that use it |
 |---|---|
-| Common workshop documents | Service Request, Job Estimation, Estimation Update, Add Task To Job Order, Pending Operation, Resume Operation, Product Inspection Document |
+| Common workshop documents | Service Request, Job Estimation, Estimation Update, Add Task To Job Order, Pending Operation, Resuming Operation, Product Inspection Document |
 | Job Order | Job Order |
 | Job Order Closing | Job Order Closing |
 | Gate Pass | Gate Pass |
@@ -78,40 +78,39 @@ other, which is worth knowing before you tune anything.
 | Car Purchase Invoice | Car Purchase Invoice |
 | Car Purchase Return | Car Purchase Return |
 | Sub Item Assembly Document | Sub Item Assembly Document — the only document in the module that needs the **`supplychain-assembly`** licence on top of `srvcenter-subitems` |
-| Insurance Policy Order | Insurance Policy Order, Insurance Policy Renewal |
-| Insurance Policy Receipt | Insurance Policy Receipt |
-| Insurance Policy Receipt Cancellation | Insurance Policy Receipt Cancellation |
-| Insurance Policy Delivery | Insurance Policy Delivery |
-| Insurance Policy Delivery Cancellation | Insurance Policy Delivery Cancellation |
-| Insurance Policy Purchase Invoice | Insurance Policy Purchase Invoice |
-| Insurance Policy Purchase Return | Insurance Policy Purchase Return |
+| Insurance Policy Order | Insurance Policy Issuance Order, Car Insurance Policy Renewal |
+| Insurance Policy Receipt | Car Insurance Policy Receipt, Car Insurance Policy Receipt Cancellation |
+| Insurance Policy Delivery | Car Insurance Policy Delivery, Car Insurance Policy Delivery Cancellation |
+| Insurance Policy Purchase Invoice | Car Insurance Policy Purchase Invoice, Car Insurance Policy Purchase Return |
 | Rental | Rental Request, Rental Invoice |
 | Reservation Cancel | Reservation Cancel |
 | Delivery Document | Delivery Document |
 | Batch Delivery Document | Batch Delivery Document |
 | Invoice Receipt Document | Invoice Receipt Document |
 
-Thirty families for eighty-odd documents — which means most of your configuration effort goes
+Twenty-seven families for fifty-two documents — which means most of your configuration effort goes
 into a handful of screens. The two that repay attention first are the [**Job Order**](/modules/servicecenter/job-cycle/servicecenter-job-order.md) term and the
 [**Car sales**](/modules/servicecenter/car-sales/car-sales-cycle.md) term, because between them they cover the whole of both halves of the business.
 
-## Eight documents have no term at all
+## Nine documents have no term at all
 
 Some documents in this module have nothing to configure. Their document book still shows a *توجيه*
 tab, but there is no term class behind it, so there is no rulebook to write and nothing you can tune
 per book:
 
-- Attendance
-- Odometer Reading Log
-- Product Task Opening
-- Customer Insurance Policy
-- Insurance Policy Cancellation
-- Insurance Policy Period Adjustment
-- Insurance Policy Value Adjustment
-- Instalment Quotation
+- Service Center Attendance
+- Kilo Metrage (the odometer reading log)
+- Product Task Opening Document
+- Loading Table
+- External Delivery Order
+- Car Insurance Policy Cancellation
+- Car Insurance Policy Period Adjustment
+- Car Insurance Policy Value Adjustment
+- Car Installment Quotation
 
-Four of those eight are insurance-policy documents: the policy record itself, the cancellation and
-the two adjustments. None of them books anything, so there is nothing to configure.
+Three of those nine are insurance-policy documents: the cancellation and the two adjustments, and
+none of them books anything. The
+**Car Insurance Policy** itself is a master file, not a document, so it has no book and no term.
 
 ## The rule that governs the other two pages
 
@@ -133,32 +132,11 @@ document generates its stock document. To stop these documents generating, **cle
 book or the generation term**.
 :::
 
-And then the two symmetric traps. They are the reason this page exists at all, because a document
-term is the only place a reader can act on them.
-
-::: danger Stock in — the car can be received twice
-Both the **Car Receipt** and the [**Car Purchase Invoice**](/modules/servicecenter/car-purchasing/car-purchase-invoice.md) are able to generate a Stock Receipt for
-the same chassis, and neither can see the other's stock document. Configure both and the car arrives
-in stock **twice**, at double cost, with no error at all.
-
-**The safe rule: fill the generation Book and Term on exactly one of the two terms.** Al-Sahra Motors
-generates on the purchase invoice (`SIPI-2026-021` produced stock receipt `STR-2026-0552`) and leaves
-the car receipt's generation book and term **empty**, so car receipt `SIR-2026-0088` records the
-physical arrival, the accessory checklist and the parking slots and moves nothing.
-
-Treat the two documents as **alternatives**, never as a sequence.
-:::
-
-::: danger Stock out — the car can be issued twice
-The mirror image. Both the [**Car Sales Invoice**](/modules/servicecenter/car-sales/car-sales-invoice.md) and the **Car Final Delivery** are able to generate
-a Stock Issue for the same chassis, and again neither sees the other's document. Configure both and
-the car leaves stock twice, its cost is relieved twice, and on-hand goes negative — silently, or with
-a shortage error that names a stock document nobody created by hand.
-
-**Same rule: fill the generation Book and Term on exactly one of the two terms.** Al-Sahra issues
-from the sales invoice (`SISI-2026-0498` produced stock issue `STI-2026-1201`) and leaves the final
-delivery's generation book and term empty, so `SIFD-2026-0357` is purely the hand-over record.
-:::
+And then the two symmetric traps: the Car Receipt and the Car Purchase Invoice can both bring the
+same car into stock, and the Car Sales Invoice and the Car Final Delivery can both issue it. Fill the
+generation book and term on exactly one document of each pair — the rule, Al-Sahra's set-up and the
+second line of defence are on
+[Car, Insurance and Rental Document Terms](/modules/servicecenter/document-terms/servicecenter-terms-cars-and-other).
 
 ## Where to go next
 

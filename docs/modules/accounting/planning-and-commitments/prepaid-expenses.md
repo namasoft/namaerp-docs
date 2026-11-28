@@ -34,15 +34,15 @@ The **Prepaid Expense Item** (`Accounting > Prepaid Expense Contracts > Prepaid 
 On the **Prepaid Expense Contract** (`Accounting > Prepaid Expense Contracts > Prepaid Expense Contract`) the header carries the **Document Term** and **Value Date** (which sets the **Period**), the **Currency**, and the contract's **from/to dates**. Each **details** line then describes one prepaid expense:
 
 - the **Prepaid Expense Item** and the **account** it is recorded on,
-- the line's own **from/to dates** and **month count** — the span over which it's recognized,
-- the amount, expressed one of three ways: a fixed **monthly amount** × month count, a **day cost** × **days count** (so a contract that doesn't start on the first of the month is prorated by actual days), or a **Yearly Amount** — the line total is then the yearly amount × the line's month count ÷ 12, which is handy when the contract price is quoted per year,
+- the line's **from/to dates** — the span over which it's recognized. When the header's from/to dates are filled, saving copies them onto every line,
+- the amount: either the **Total Amount** for the whole span, or a **Yearly Amount** — the line total is then the yearly amount × the line's months count ÷ 12, which is handy when the contract price is quoted per year. **Months Count**, **Monthly Amount**, **Days Count** and **Day Cost** are calculated from the dates and the value after discount; you don't type them,
 - an optional **discount** and **tax** (percentage or value), giving the **value after discount**, **value after tax**, and the line **total amount**,
 - the **credit side** and, where relevant, a **subsidiary** and its **subsidiary account type**,
 - and the full set of **dimensions** (legal entity, sector, branch, department, analysis set).
 
 ### Where the credit comes from
 
-The line's **credit side** tells the system where to take the offsetting credit when the contract is committed — you're not limited to one fixed account. The options are a **specific account**, a **specific subsidiary**, the **current user's subsidiary**, the **supplier account**, a **bank account**, the customs / insurance / shipping **company accounts** (handy for import-related prepaids), or the account taken **from the purchase item** itself.
+The line's **credit side** tells the system where to take the offsetting credit when the contract is committed — you're not limited to one fixed account. The options are **Specific Account**, **Specific Subsidiary**, **Current User Subsidiary**, **Supplier Account** and **From Purchase Item**.
 
 ## Paying the contract in instalments
 
@@ -75,6 +75,8 @@ The prepaid system records its effect in two stages, and that's the whole point:
 - **When the contract is committed**, it records the prepaid amount as an asset — its effect runs through the **Debit / Credit** sides (plus **Discount** and **Tax** sides when present) for the line totals.
 - **Each monthly Prepaid Expense Ledger** then recognizes that month's share: it moves the month's portion out of the prepaid asset and into the expense account. Twelve months of an annual contract therefore produce twelve recognition entries, each carrying one-twelfth (or its day-prorated share).
 
+How each month's share is worked out is set on the contract's document term. With nothing ticked there, each calendar month takes its own days × the line's **Day Cost**, so a contract that doesn't start on the first of the month is prorated by actual days. **Use Fixed Monthly Amount** and **Repeat Installments Monthly on Contract Start Date Day** change that — see [Prepaid expenses](/modules/accounting/document-terms/acc-terms-investments-and-prepaid#Prepaid-expenses) in the term reference.
+
 The generated monthly ledger and payment documents are created as **drafts**. A draft is written down, not counted, so each one writes its entry only when somebody commits it — normally the month's ledger at that month's end, and each payment when it is made. Saving the contract again updates the generated documents; those already committed are committed again with the new figures.
 
 Where each side's account actually comes from is governed by the document term of each — see the [Document terms](../support/accounting-document-terms.md) reference. (Both the contract and the monthly ledger are processed in the background like any other document — see [How documents are processed into accounting effects](../support/accounting-request-processing.md).)
@@ -83,6 +85,6 @@ Where each side's account actually comes from is governed by the document term o
 
 - **"The whole amount hit one month as an expense"** — that's not how it should work; the contract books an asset and the **monthly ledger entries** recognize the expense over time. Check that the contract generated its monthly ledger documents, that they have been committed (they are generated as drafts), and that they were processed.
 - **"The monthly entries weren't generated"** — review the line's **from/to dates** and **month count**; the number of monthly entries follows that span.
-- **"A partial first or last month looks wrong"** — use the **day cost × days count** method instead of a fixed monthly amount so partial months are prorated by actual days.
-- **"The wrong account was credited"** — check the line's **credit side** (specific account, supplier, bank, subsidiary...) and the item's defaults.
+- **"A partial first or last month looks wrong"** — the split comes from the contract's term: partial months are prorated by actual days × **Day Cost** unless **Use Fixed Monthly Amount** or **Repeat Installments Monthly on Contract Start Date Day** is ticked there.
+- **"The wrong account was credited"** — check the line's **credit side** (specific account, supplier, subsidiary...) and the item's defaults.
 - **"Where do the asset/expense accounts come from?"** — from the **Prepaid Expense Contract** and **Prepaid Expense Ledger** terms; see [Document terms](../support/accounting-document-terms.md).

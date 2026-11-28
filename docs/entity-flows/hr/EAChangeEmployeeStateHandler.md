@@ -17,7 +17,7 @@ This entity flow automatically updates employee states based on vacation documen
 
 The handler takes a SQL query that finds vacation documents requiring employee state changes, then updates each employee's state to the **Change Employee State To** of the document's leave reason or, when the reason has none, of its vacation type.
 
-It is the companion of the vacation document term option **Change Employee State only If vacation Start Date Match Today**. With that option, saving a vacation that starts in the future does not change the employee's state; this flow, run daily from a task schedule, changes it on the day the vacation starts.
+It is the companion of the vacation document term option **Change Employee State Only If Vacation Start Date Matches Today**. With that option, saving a vacation that starts in the future does not change the employee's state; this flow, run daily from a task schedule, changes it on the day the vacation starts.
 
 ## When This Action Runs
 
@@ -39,7 +39,7 @@ This action typically runs in the following scenarios:
 3. **State Change Validation**
    - The target state is the **Change Employee State To** of the document's leave reason; when the reason has none, that of its vacation type
    - Documents with no target state are skipped
-   - When the document's term has **Change Employee State only If vacation Start Date Match Today** ticked and the vacation starts after today, the document is skipped; it is picked up again on its start date
+   - When the document's term has **Change Employee State Only If Vacation Start Date Matches Today** ticked and the vacation starts after today, the document is skipped; it is picked up again on its start date
 
 4. **Employee State Update**
    - The employee's state is changed to the target state from the vacation's start date, and the employee is saved

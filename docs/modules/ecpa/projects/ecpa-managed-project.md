@@ -41,11 +41,11 @@ This block is the contract in fields. It is shared with the quotation and the [p
 |---|---|
 | **Project Class** | a classification label for filtering and reporting |
 | **Project Type** / **Proj Sub Type** | the work vocabulary — the sub-type lookup is narrowed by the type you chose. See [project setup](/modules/ecpa/projects/ecpa-project-setup) |
-| **Manager** / **Vice Manager** | the two employees who own the job. They matter beyond reporting: they decide whose timesheets a manager can collect for approval, and they are always included in the project's team |
+| **Manager** / **Vice Manager** | the two employees who own the job. They matter beyond reporting: they decide whose timesheets a manager can collect for approval, and they join the project's team list whenever the Team Work grid has rows (see Team Work below) |
 | **From Date** / **To Date** (editable pair) | the planned window |
 | **Planned Project Time** | a number plus a unit, defaulting to months, and **required** |
 | **From Date** / **To Date** (greyed pair) | the actual window. These are filled in by the system, never typed |
-| **Responsible Employee**, **Responsible**, **Mediator** | the day-to-day owner, an outside responsible party, and the agent or intermediary who brought the work |
+| **Responsible Employee**, **Responsible**, **Mediator** | the day-to-day owner (an employee), an outside responsible party (a third party), and the employee who acted as intermediary on the work |
 | **Contract Total Cost**, **Currency**, **Rate** | the contracted value in the deal's currency, and the rate to convert it |
 | **Contract Local Cost** | the contracted value in the local currency — recomputed on every save as *Contract Total Cost × Rate*, so treat it as a result rather than an input |
 | **Estimated Cost** | your own estimate of what the job will cost to deliver, a planning figure |
@@ -55,14 +55,14 @@ The planned window is self-balancing, which saves a lot of arithmetic. Type the 
 For the Riyadh clinic: type *Interior*, manager *Ahmed S.*, planned from **01-03-2026**, planned project time **6 Month** — and the planned to-date arrives on its own as **01-09-2026**. Contract total **900,000**, currency **SAR**, rate **1**, so on save the contract local cost reads **900,000** too.
 
 ::: info The two date pairs
-The planned dates and the actual dates carry the same English labels, and the actual pair sits directly under the planned one. The reliable way to tell them apart is that **the actual pair is greyed out** — the system writes it from the project's tasks: the earliest task start, and, once the completion figure reaches 100 %, the latest task end.
+The planned dates and the actual dates carry the same English labels, and the actual pair sits directly under the planned one. The reliable way to tell them apart is that **the actual pair is greyed out** — the system writes the actual From Date from the project's tasks, as the earliest task *Start From*.
 :::
 
 ### Recurring invoicing
 
 Not every engagement is billed against work done. A retainer, a maintenance agreement or a fixed monthly fee is the same charge issued again and again, and the **Auto Invoice** block is where a project describes that arrangement once.
 
-**Auto Invoice Period** sets the rhythm — a number and a unit, arriving as *1 Month* on a new project. It must be at least a day.
+**Auto Invoice Period** sets the rhythm — a number and a unit, arriving as *1 Month* on a new project. Whenever the grid below carries a value, the period must be at least one day or the save is refused.
 
 The **Auto Invoice** grid below the classifications is where the charge itself is written. One row per recurring line:
 
@@ -116,7 +116,7 @@ Milestones are the phases the firm plans and bills against: concept, detailed de
 
 ![The Milestones page of a Managed Project, with the Miles Group field and the milestone grid](../../../ar/modules/ecpa/images/projects/project-milestones-en.png)
 
-Each row carries a **Milestone Name**, a **% Of Project** weight, planned **Start Date** and **End Date**, a free-text **Deliveries** note, a responsible employee, a **% of Finishing** figure, and a set of estimated-cost columns. When you save the project, every row that does not yet point at an existing milestone **creates a real Project Milestone master record**, filed under the master group you named in **Miles Group** and coded from the project's code plus the row's position when that group has no coding formula of its own. Remove a row and its generated milestone is removed with it.
+Each row carries a **Milestone Name**, a **% Of Project** weight, planned **Start Date** and **End Date**, a **Deliveries** number, a responsible employee, a **% of Finishing** figure, and a set of estimated-cost columns. When you save the project, every row that does not yet point at an existing milestone **creates a real Project Milestone master record**, filed under the master group you named in **Miles Group** and coded from the project's code plus the row's position when that group has no coding formula of its own. Remove a row and its generated milestone is removed with it.
 
 For the Riyadh clinic, group `MG-MILES` and three rows:
 
@@ -162,9 +162,11 @@ The roster of who is allowed to work on this project.
 
 ![The Team Work page, with the For Every One checkbox and the employee grid](../../../ar/modules/ecpa/images/projects/project-team-work-en.png)
 
-Add one row per employee, with an optional note. On save the project quietly keeps a list of everyone entitled to book time to it: the manager, the vice manager, and every employee on this grid. That list is what the [timesheet](/modules/ecpa/task-execution/ecpa-timesheets) screen matches against — an employee who is not on it will not find the project or its tasks in the picker. Tick **For Every One** when the job is open to the whole firm and you do not want to maintain the roster.
+Add one row per employee, with an optional note. The project quietly keeps a list of everyone entitled to book time to it. Saving the project while this grid has rows rebuilds that list from the manager, the vice manager and every employee on the grid; with the grid empty, saving the project leaves the list as it was. Saving a [task](/modules/ecpa/tasks/ecpa-tasks) also adds that task's executors (those not marked as having finished their work) to the list.
 
-For the clinic we add *Sara M.* and *Khalid R.*, which together with Ahmed S. makes the four people whose timesheets this project will accept.
+That list is what the **Project** picker on a [timesheet](/modules/ecpa/task-execution/ecpa-timesheets) line matches against: an employee who is not on it will not find the project there, and a *Finished* project is never offered. Tick **For Every One** when the job is open to the whole firm and you do not want to maintain the roster. The **Task** picker on the same line works from the task, not the project: it offers only *Not Started* and *In Progress* tasks on which the employee is an executor.
+
+For the clinic we add *Sara M.* and *Khalid R.*, which together with the manager Ahmed S. (and the vice manager, when one is set) make up the people whose time this project will accept.
 
 ## The status list
 
@@ -185,7 +187,7 @@ The status is displayed read-only in the Project Status group and changed with t
 Three other things move it without anyone pressing the button:
 
 - creating the project from an **accepted sales quotation** sets it to *In Progress*;
-- the **first timesheet** booked against a project that is still *Not Started* moves it to *In Progress*;
+- saving a **timesheet** whose header **Project** is still *Not Started* moves that project to *In Progress*;
 - an **invoice line** can carry an *Update Project Status To* value, which is applied to the project when the invoice is processed.
 
 ::: info It is a list, not a workflow
@@ -211,7 +213,7 @@ Two facts about these five decide how you read the screen.
 **Total Project Cost is labour only.** It is task executors' hours valued at their rates, and nothing else — expenses, purchases, stock and fixed assets never reach it, however they were recorded against the project. If you need cost against revenue, read the [costing and profitability page](/modules/ecpa/ecpa-costing-and-profitability), which is honest about which screen shows what.
 
 ::: tip The only percentage the system calculates
-**Current Finished Percentage is the module's one computed progress figure, and it measures hours, not delivery.** A job that has burned all its planned hours reads 100 % whether or not anything has been handed over. Every other percentage on the project — the milestone *% of Finishing*, the discipline *% OF Finished*, the matrix rows' *Finished Percentage* — is typed in by hand, and stays exactly as typed.
+**Current Finished Percentage is the module's one computed progress figure, and it measures hours, not delivery.** A job that has burned all its planned hours reads 100 % whether or not anything has been handed over. Every other percentage on the project — the milestone *% of Finishing*, the discipline *% Of Finished*, the matrix rows' *Finished Percentage* — is typed in by hand, and stays exactly as typed.
 :::
 
 By the time two tasks on the Riyadh clinic have been worked and their hours approved — 400 hours planned, 260 actual, 31,000 of actual cost — saving the second task writes **Total Project Cost 31,000**, **Total Planned Time 400**, **Total Actual Time 260** and **Current Finished Percentage 65.00 %**, and stamps the actual start date from the earliest task. The milestone *% of Finishing* columns still read zero, because nobody has typed into them.
@@ -226,9 +228,9 @@ Besides the three matrix buttons already covered, the project screen carries a s
 The action duplicates the selected project **once for every customer in the From/To range**. Leave that range empty and it will produce one copy for every customer in the database. Name the single customer in both fields when you want a single copy.
 :::
 
-**Repeat Miles** does not create a project. It appends copies of the milestone rows to the project you are already on, and can bring the last milestone's tasks onto the new one — the tool for a job that repeats the same phase, such as a retainer that runs another survey cycle each quarter. It needs at least two milestone rows to work with.
+**Repeat Miles** does not create a project. It appends copies of the milestone rows (*Last Mile* or *All Miles*) to the project you are already on, and with *All Miles* and task copying ticked it also duplicates the project's tasks onto the new rows — the tool for a job that repeats the same phase, such as a retainer that runs another survey cycle each quarter. The project must already have at least one milestone row.
 
-**copy from**, on the Basic Information group, prefills a new project from an existing one: the header, project details, accounts, currency and rate, the phases-discipline group, and all four grids — disciplines, milestones and the details matrix. The copied milestone rows arrive unlinked, so saving the new project generates its own milestone records rather than sharing the source's.
+**copy from**, on the Basic Information group, prefills a new project from an existing one: the header, project details, accounts, currency and rate, the phases-discipline group, and all four grids — disciplines, milestones, the details matrix and the auto invoice lines. The copied milestone rows arrive unlinked, so saving the new project generates its own milestone records rather than sharing the source's.
 
 **Generate Invoice**, in the *More* menu, opens a new [project invoice](/modules/ecpa/invoicing/ecpa-project-invoice) already carrying the project's customer and pointing at this project on both sides, so the collect buttons on the invoice know what to sweep. The project must be saved first.
 

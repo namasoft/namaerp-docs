@@ -1,5 +1,5 @@
 ---
-description: "The Job Estimation quote: pricing the work and splitting it between payers before the job starts, what the estimation does not check, committing it, revising it with an Estimation Update, and the next step."
+description: "The Job Estimation quote: pricing the work and splitting it between payers before the job starts, committing it, revising it with an Estimation Update, and the next step."
 entities: [SrvCJobEstimation, SrvCJobEstimationUpdate]
 menu: Service Center → Documents → Job Estimation
 ---
@@ -65,25 +65,6 @@ estimate the split works out at 695 / 60 / 2,400 / 60.
 The third grid, **Resources** (موارد التشغيل), lists the machines a task needs, so the estimate
 shows what the job will occupy.
 
-## The estimation checks nothing
-
-::: warning Errors on an estimation surface later, on the job order
-The job estimation performs **no validation of its own**. An estimation with no operation lines at
-all, with a task repeated twice, with an operation row that has no sub-rows, or with a payer split
-whose percentages do not add up to 100 and whose values do not add up to the line price, all save
-and commit without a word of complaint.
-
-Those same errors *are* enforced on the [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md).
-So an estimate that saved cleanly can produce a job order that refuses to commit — and the person
-who has to fix it is usually not the person who typed the estimate.
-
-Practical rule: if the estimate matters (because it was printed and signed, or because it will be
-copied straight into a job order), check the payer split by eye before you send it. Percentages down
-each line's four columns must total 100, and the four values must total the line price.
-:::
-
-Do not describe or teach the estimation as a validated document. It is a pricing sheet.
-
 ## Committing it
 
 Committing the estimation moves a source service request to **Under Processing**, adds a product
@@ -113,21 +94,11 @@ service request are moved to *Under Processing*, so the whole trail lights up at
 
 ## Actions on these screens
 
-The estimation and the estimation update carry the same two actions.
-
-- **Collect Resources And Materials** (*تجميع الموارد والمواد الخام*) — on the main page. It
-  rebuilds the **Resources** and **Spare Parts** grids from the tasks already in the operations grid:
-  each task's standard resources, and each task's standard spare parts that fit the vehicle's brand
-  and model, priced through the ordinary supply-chain sales price engine for this customer. The two
-  grids are **replaced**, not added to, so a line typed in by hand beforehand is gone afterwards.
-  Spare parts come only when the **Product** field is filled.
-- **Create Reservation Doc** (*إنشاء سند حجز*) — in the More menu. Opens a new, unsaved
-  supply-chain reservation document whose *From Document* is this estimation, with one line per row of
-  the Spare Parts grid (item, quantity, remarks). Save the estimation first. With an empty Spare Parts grid
-  it refuses with:
-  *No Materials to be reserved* — «لا يوجد قطع غيار ليتم حجزها»
-
-Use the reservation when the quote depends on a part you want held.
+The estimation and the estimation update carry the job order's **Collect Resources And Materials**
+(main page) and **Create Reservation Doc** (More menu) actions, and they behave exactly as described
+in [the job order's actions](/modules/servicecenter/job-cycle/servicecenter-job-order#Actions-on-this-screen).
+Here the reservation document's *From Document* is the estimation. Use the reservation when the quote
+depends on a part you want held.
 
 ## What comes next
 

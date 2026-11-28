@@ -12,7 +12,7 @@ Everything on the [salary components](salary-components.md), [formulas](salary-c
 |---|---|---|
 | Scope | One **period + issuance** for many employees | **One employee** for one period |
 | Role | The batch run: collect employees, generate their payslips | The individual payslip, and the accounting source |
-| Creates the ledger entry? | No — it orchestrates | **Yes** — the GL entry lives here |
+| Creates the ledger entry? | Only when its term has **Generate Accounting Effects** ticked — then one combined entry for the whole run | **Yes**, unless its term has **Without Accounting Effect** ticked |
 
 The sheet is the button you press once a month; the documents are what come out of it, one per employee. You review and adjust on the sheet, but the money is defined, line by line, on each document.
 
@@ -20,7 +20,7 @@ The sheet is the button you press once a month; the documents are what come out 
 
 - **Salary Sheet** — **Payroll > Payroll > Salary Sheet** (الرواتب > الرواتب > سجل الرواتب).
 - **Salary Document** — **Payroll > Payroll > Salary Document** (الرواتب > الرواتب > سند الراتب).
-- **Salary Generation Range** — **Payroll > Salary Configurations > Salary Generation Range** (الرواتب > إعدادات الراتب > مجال اصدار الرواتب).
+- **Salary Generation Range** — **Payroll > Salary Configurations > Salary Generation Range** (الرواتب > إعدادات الراتب > مجال إصدار الرواتب).
 
 ## The Salary Sheet — the batch run
 
@@ -29,15 +29,15 @@ A sheet is built for one **HR Period** and one **Salary Issuance** at a time —
 | Field (Arabic → English) | Purpose |
 |---|---|
 | تقويم الرواتب / فترة الرواتب / سنة الرواتب (HR Calendar / HR Period / HR Year) | The [time framework](../setup/hr-years-and-periods.md) this run belongs to. |
-| توجيه المستند (Term) | The document term that governs the sheet's numbering. |
+| توجيه المستند (Term) | The sheet's term: it names the book and term of the salary documents the sheet generates, and carries the options described on [Salary and Dues Document Terms](/modules/hr/document-terms/hr-terms-salary-and-dues#The-Salary-Sheet-term). |
 | معايير تجميع الموظفين (Employee Criteria Definition) | A free-form criteria filter for which employees to collect. |
-| مجال اصدار الرواتب (Salary Generation Range) | A saved, reusable employee-selection template (see below) used instead of typing the criteria each time. |
+| مجال إصدار الرواتب (Salary Generation Range) | A saved, reusable employee-selection template (see below) used instead of typing the criteria each time. |
 | Employee range (من موظف / إلى موظف … From/To Employee, Department, Branch, Sector, Job Position, Nationality, and more) | An explicit *from / to* range block that narrows the collected population. |
 | تجميع بمرجع 1 … 5 (Collect By Ref 1 … 5) | Five equality filters on the employee's own **Reference 1 … 5** fields — the usual way to collect by a classification Nama does not ship as a field of its own. |
-| عدم دفع السلف في السند (Do Not Pay Loans) | Suppress this run's automatic installment deductions. |
-| عدم حذف سندات الرواتب الموجودة بالسطور المحذوفة (Do Not Delete Salary Documents Of Removed Sheet Lines) | Keep already-generated payslips even if their line is removed from the sheet. |
-| الحفظ نهائياً (Save Finally) | Save the run as final rather than draft. |
-| إجمالي الإضافات / إجمالي الإستقطاعات / إجمالي الأخرى / المرتب النهائي (Total Additions / Total Deduction / Total Other / Net Salary) | Roll-up totals across every line, computed by the run. |
+| عدم دفع السلف في السند (Do Not Pay Loans) | Suppress this run's automatic installment deductions. When ticked it is copied to every line on save. |
+| عدم حذف سندات الرواتب الموجودة بالسطور المحذوفة من سجل الراتب (Do Not Delete Salary Documents Of Removed Sheet Lines) | Keep already-generated payslips even if their line is removed from the sheet. Without it, removing a line deletes its salary document. |
+| الحفظ نهائياً (Save Finally) | Save the salary documents the sheet generates as final rather than as drafts. |
+| إجمالي الإضافات / إجمـــالي الاستقطاعات / إجمـــالي الأخرى / المرتب النهائي (Total Additions / Total Deduction / Total Other / Net Salary) | Roll-up totals across every line, computed by the run. |
 
 Once collected, each employee appears as a line in the **Salary Sheet Lines** grid (السجلات), carrying that employee's net salary, working days, addition/deduction/other totals, a **Selected** checkbox (اختيار) to include or exclude them from generation, and — after generation — a link to the **Salary Document** produced for them and its last-generation timestamp.
 
@@ -62,7 +62,7 @@ Every filter on the header is combined with **and**. Nothing you fill in overrid
 | **فترة الرواتب** (HR Period) | Only employees whose **تاريخ المباشرة الفعلية** (Commencement date) falls on or before the **period end date**. Someone who started the day after the period closed is never collected, whatever else you fill in. |
 | **تجميع بمرجع 1–5** (Collect By Ref 1–5) | An exact match on the employee's own **Reference 1–5** fields — see the next section. |
 | The employee range block (**من موظف / إلى موظف** … From/To Employee) | An alphabetical *from / to* comparison **on codes**, not on names — employee, branch, sector, analysis set, group, work place, department section, nationality, health insurance company, job position, department, employee department and organization position. |
-| **مجال اصدار الرواتب** (Salary Generation Range) | The saved range's own *from / to* block is added **on top of** the one typed on the sheet, together with its **قصر الإصدار على الموظفين التاليين** (Limit To Employees) list and its own criteria. |
+| **مجال إصدار الرواتب** (Salary Generation Range) | The saved range's own *from / to* block is added **on top of** the one typed on the sheet, together with its **قصر الإصدار على الموظفين التاليين** (Limit To Employees) list and its own criteria. |
 | **معايير تجميع الموظفين** (Employee Criteria Definition) | A free-form criteria record, added to everything above. |
 | The sheet's own dimensions (legal entity, branch, sector, analysis set, department) | The employee's HR information must carry the same dimension. Employees whose dimension is the public value (`PUBLIC`) always pass the legal-entity test. |
 
@@ -142,12 +142,12 @@ Each line the sheet generates becomes a full **Salary Document**: one employee, 
 | أيام العمل / أيام عدم العمل (Working Days / None Working Days) | The day-count that pro-rates the pay. |
 | أيام أجازات مدفوعة الأجر / أيام أجازات بدون مرتب (Paid Vacation Days / Vacation Days Without Salary) | Vacation days split by whether they are paid. |
 | أيام إيقاف عن العمل بدون مرتب (Suspension Days Without Salary) | Unpaid suspension days that reduce the pay. |
-| إجمالي الإضافات / إجمالي الإستقطاعات / إجمالي الآخري (Total Additions / Total Deductions / Others Total) | The three effect-type roll-ups. |
+| إجمالي الإضافات / إجمالي الاستقطاعات / إجمالي الآخري (Total Additions / Total Deductions / Others Total) | The three effect-type roll-ups. |
 | جزاءات الشهر الحالي / الجزاءات المرحلة من الشهر السابق / المرحلة للشهر التالي (Current Month Penalties / Postponed From Previous Month / Postponed To Next Month) | How penalties this period carry in and out. |
 | إجمالي الأقساط المدفوعة (Total Paid Installments) | Loan installments recovered this run. |
 | إجمالي وعاء التأمينات الثابتة / المتغيرة / إجمالي وعاء الضريبة (Fixed / Variable Insurance Basis Total / Tax Basis Total) | The insurance and tax bases the formulas built up. |
 | المرتب النهائي (Net Salary) | The bottom line: additions − deductions. |
-| ما تم صرفة / المتبقي (Issued Value / Remaining Value) | How much has been paid out against this document, and what is still owed. |
+| ما تم صرفه / المتبقي (Issued Value / Remaining Value) | How much has been paid out against this document, and what is still owed. |
 | فترة غير مكتملة (جزئية) (Partial Period) | Marks a run that covers only part of the period. |
 
 The **Salary Document Lines** grid (المفردات) is the heart of the payslip. Each line names a **Component** (مكون), its **Component Effect Type** (نوع التأثير — Addition / Deduction / Other), the addition and deduction amounts, the base and original values, an indicator value where a performance indicator fed the figure, and a full day-count breakdown (work / vacation / non-work days, each split by weekend vs. weekly-rest day). Two further grids capture the **Rewards / Penalties** applied this run (المكافأت / الجزاءات) and the **Paid Installments** (الأقساط المدفوعة), each installment line linking back to its [loan document](../loans/hr-loan-documents.md).
@@ -191,9 +191,9 @@ The **Salary Generation Range** has no buttons of its own.
 
 ## How it's processed / its accounting effect
 
-The **Salary Document** is the accounting source — the sheet itself creates no entry; it only orchestrates. Once a salary document is committed, its ledger effect is built as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails.
+The **Salary Document** is the accounting source. Once a salary document is committed, its ledger effect is built as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails. Two term options change where the entry lands: **Without Accounting Effect** on the salary document's term stops the document's own entry, and **Generate Accounting Effects** on the salary sheet's term makes the sheet record one combined entry built from all its saved salary documents, refreshed whenever one of them is saved or deleted. Ticking both moves the entry from the employees to the run — see the consolidated-entry question in the [Payroll and Human Resources FAQ](/modules/hr/human-resources-faq) for that setup.
 
-The document carries **no accounting logic of its own**. Instead, it records its entry **line by line through the account lines of the components that make it up**: for every [salary component](salary-components.md) on the document, that component's own **debit account lines** and **credit account lines** produce the entry — an addition-effect component debiting a salary-expense account and crediting a payable, a deduction crediting the relevant liability, and so on. Reward/penalty lines are recorded through their own account lines the same way. This is exactly why the accounting is configured on the components, not here: the salary document simply totals its lines and drives each one through its component's accounts.
+The document carries **no accounting logic of its own**. Instead, it records its entry **line by line through the account lines of the components that make it up**: for every [salary component](salary-components.md) on the document, that component's own **debit account lines** and **credit account lines** produce the entry — an addition-effect component debiting a salary-expense account and crediting a payable, a deduction crediting the relevant liability, and so on. Reward/penalty lines are recorded through their own account lines the same way. This is exactly why the accounting is configured on the components, not here: the salary document simply totals its lines and drives each one through its component's accounts. The sheet's combined entry is built from the same lines.
 
 ::: info Optional: contracting cost allocation
 Beyond the per-component ledger lines, a salary document's term can additionally allocate the labor cost as a **contracting cost** — a **Contracting Cost Debit / Contracting Cost Credit** (مدين / دائن تكلفة المقاولات) pair configured on the document term — for organizations that carry employee time onto project/contract costing. This is an add-on to the main component-driven entry, not a replacement for it, and only applies when the contracting module is in use.
@@ -205,15 +205,16 @@ Beyond the per-component ledger lines, a salary document's term can additionally
 |---|---|---|
 | *Please select period* — «من فضلك اختر الفترة» | **Collect Employees** was pressed with **HR Period** empty. | Choose the period first. |
 | *You Must Fill Salary Generation Range* — «يجب ملء حقل مجال إصدار الرواتب» | The sheet's term has **Salary Range Must be Specified** ticked and no **Salary Generation Range** is chosen. | Choose a range, or untick the option on the term. |
-| *There are {0} out of {1} employees already have salary documents for period {2}* — «يوجد {0} موظف من اصل {1} لديهم سندات رواتب بالفعل لهذه الفترة {2}» | Not a refusal — the sheet is telling you how many of the employees it found were left out because they already have a document for this period **and** this issuance. | Nothing, if that is what you expect. If it is not, check whether you are on the same issuance as the earlier run. |
+| *There are {0} out of {1} employees already have salary documents for period {2}* — «يوجد {0} موظف من أصل {1} لديهم سندات رواتب بالفعل لهذه الفترة {2}» | Not a refusal — the sheet is telling you how many of the employees it found were left out because they already have a document for this period **and** this issuance. | Nothing, if that is what you expect. If it is not, check whether you are on the same issuance as the earlier run. |
 | *Hr period {0} is closed* — «فترة الرواتب {0} حالتها مغلقة» | The HR period is closed, and closing an HR period stops every payroll document that names it — sheets and payslips alike. | Reopen the period on [HR Years and Periods](/modules/hr/setup/hr-years-and-periods), run what you need, close it again. |
 | *The Employee {0} is not working* — «الموظف {0} ليس على رأس العمل» | The employee's state is not *Working* and they did not qualify as partially working for this period. | If they should be paid, correct the state history so the change falls inside the period; the collection rules above describe exactly what counts. |
-| *The employee {0} already has another salary document for the same period* — «الموظف {0} لديه سند راتب اخر على نفس الفترة» | A payslip already exists for that employee, period and issuance — drafts included. | Find and edit the existing document instead of making a second one. |
+| *The employee {0} already has another salary document for the same period* — «الموظف {0} لديه سند راتب آخر على نفس الفترة» | A payslip already exists for that employee, period and issuance — drafts included. | Find and edit the existing document instead of making a second one. |
 | *The employee {0} already has the salary document {1} for the same period* — «الموظف {0} لديه سند الراتب {1} على نفس الفترة» | Raised when saving a **Salary Sheet**: an employee on the sheet already has salary document {1} for this period and issuance that was not generated by this sheet (cancelled documents are ignored). | Remove the employee from the sheet, or cancel document {1} if the sheet should issue this employee's pay. |
-| *Cannot generate salary document for employee {0} because vacation {1} has no registered work starting document* — «لا يمكن اصدار راتب للموظف {0} لان سند الأجازة {1} لم يسجل له سند مباشرة عمل» | Vacation {1} is of a type with **Prevent Generate Salary If Working Start Document Not Registered** ticked, its return date is on or before the end of the period, and no Work Starting Document has been recorded for it. | Record the employee's [Work Starting Document](../recruitment/work-starting.md) for that vacation, then generate again. |
+| *Cannot generate salary document for employee {0} because vacation {1} has no registered work starting document* — «لا يمكن إصدار راتب للموظف {0} لأن سند الإجازة {1} لم يسجل له سند مباشرة عمل» | Vacation {1} is of a type with **Prevent Generate Salary If Working Start Document Not Registered** ticked, its return date is on or before the end of the period, and no Work Starting Document has been recorded for it. | Record the employee's [Work Starting Document](../recruitment/work-starting.md) for that vacation, then generate again. |
 | *Cannot Apply two documents of same type on {0} on the same period* — «لا يمكن حفظ مستندين للموظف {0} على نفس فترة الرواتب» | A second HR document of the same type is being saved for the same employee and payroll period. | Edit the existing one. |
-| *Can not regenerate revised salary document {0}* — «لا يمكن إعادة إصدار سند الراتب {0} الذي تمت مراجته» · *Can not regenerate revised salary sheet {0}* — «لا يمكن إعادة إصدار سجل الرواتب {0} الذي تمت مراجعته» | Regeneration was attempted on a document or sheet that carries a revision sign-off. | Unrevise it first — see [Revise and Unrevise](/platform/governance/revise-and-unrevise). |
+| *Can not regenerate revised salary document {0}* — «لا يمكن إعادة إصدار سند الراتب {0} الذي تمت مراجعته» · *Can not regenerate revised salary sheet {0}* — «لا يمكن إعادة إصدار سجل الرواتب {0} الذي تمت مراجعته» | Regeneration was attempted on a document or sheet that carries a revision sign-off. | Unrevise it first — see [Revise and Unrevise](/platform/governance/revise-and-unrevise). |
 | *Line without amount* — «سطر بدون مبالغ» | Not a refusal at save time: the error of the document's failed accounting request on the [Business Requests](/platform/background-processing/business-requests) screen. A line of the entry built from the components' account lines has neither a debit nor a credit. | Check the document's component lines and the **Percentage** on the account lines of the [salary components](salary-components.md) involved, correct them, then Recommit the document from Business Requests. See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests). |
+| *Salary For {0} is negative* | The document's **Net Salary** is below zero and the HR configuration does not tick **Allow Negative Salary**. A salary document whose term ticks **Last Salary Doc for Employee before Firing** is not checked. | Check the deductions and installments on the document, or tick **Allow Negative Salary** on [HR Configuration](/modules/hr/setup/hr-configuration) if a negative payslip is acceptable. |
 
 ## Related pages
 

@@ -12,7 +12,8 @@ A **Loan Request** and a **Loan Document** follow the general request/document p
 1. The employee (or HR on their behalf) fills in a **Loan Request**: employee, loan type, loan amount, and payment start date. Picking a loan type pre-fills the default amount and installment count from the [Loan Type](hr-loan-types.md); entering the amount or the installment count recalculates the other. The request starts in state Initial (مبدئي).
 2. A reviewer clicks **Accept** (قبول) or **Reject** (رفض).
 3. HR then creates a **Loan Document** and points its **From Document** (بناءا على) field at the accepted request, which copies the employee, loan type, amount, and dates across. Only **Accepted** requests are offered by that picker.
-4. On the Loan Document, clicking **Generate Installments** (إنشاء الأقساط) builds the actual installment schedule — one line per installment, dated and valued according to the loan's period type (Weekly/Monthly), rounding rule, and any fixed/first/last-installment override. This is what the employee is actually disbursed against.
+4. On the Loan Document, clicking **Generate Installments** (إنشاء الأقساط) builds the actual installment schedule — one line per installment, dated and valued according to the loan's period type (Weekly/Monthly), rounding rule, and any fixed/first/last-installment override. This is what the employee is actually disbursed against. With the document term's **Generate Installments With Save** ticked, saving a Loan Document whose grid is still empty builds the schedule for you.
+5. Committing the Loan Document marks the request it came from as **Processed**.
 
 **Where to find them:** Payroll > Loans / Installments > Loan Request / Loan Document.
 
@@ -30,13 +31,14 @@ A **Loan Request** and a **Loan Document** follow the general request/document p
 | Calc Installments From Payment Start Date Not Period Start Date | حساب الاقساط من تاريخ بدء السداد وليس من تاريخ بداية فترة الرواتب | Whether the schedule is anchored to the exact payment start date or to the start of the payroll period it falls in. |
 | HR Calendar | تقويم الرواتب | The [calendar](../setup/hr-calendar-and-holidays.md) used when spacing installment dates. |
 | From Document | بناءا على | Points back at the Loan Request the document was generated from, when applicable. |
+| Manual Payment | يدوي | Ticked on this loan only, it has the same effect as **Manual Payment** on the loan type: the salary run does not deduct this loan's installments. |
 
 Each installment line carries its own state — **Not Paid** (غير مُسَدّدْ), **Paid** (مسدد), **Exempt** (معفي), **Initial** (مبدئي), or **Payment Is Being Made** (جاري التسديد) — plus a live running total of what has actually been paid and what remains, so the whole schedule stays visible on the document at every point.
 
 ![Loan Document](../../../ar/modules/hr/images/loans/loan-document-en.png)
 
 ::: tip Automatic vs. manual recovery
-The [loan type](hr-loan-types.md#Key-fields)'s **Automatically Deducted From Salary** and **Manual** flags decide how the installments actually get collected. When automatic, the salary engine reads the outstanding installment for the period through the loan type's own salary component and deducts it as part of the ordinary [salary document](../payroll/salary-documents.md) — no separate action needed. When manual (or in addition to automatic, for an early or off-cycle repayment), someone records a **Loan Payment Document** instead.
+Unless **Manual Payment** is ticked on the [loan type](hr-loan-types.md#Key-fields) or on this document, the salary engine reads the outstanding installment for the period through the loan type's own salary component and deducts it as part of the ordinary [salary document](../payroll/salary-documents.md) — no separate action needed. With **Manual Payment** ticked (or for an early or off-cycle repayment), someone records a **Loan Payment Document** instead.
 :::
 
 ## Loan Payment Document
@@ -75,7 +77,7 @@ The **Loan Payment Document** has no buttons of its own.
 
 Both documents generate their ledger effect as a background **business request** with a **processing status**, retryable from the **Business Requests** view if it fails.
 
-- **Loan Document** — on commit, the full **Loan Amount** is recorded as a single line, debited and credited to whichever accounts are configured as the *debit* and *credit* sides on the document's own term (التوجيه), tied to the employee's subsidiary accounts. In a typical setup this debits an employee-loans/advances account (an asset — the company now has a receivable from the employee) and credits cash/bank (the money actually handed out). Cancelling or deleting the document reverses the same entry.
+- **Loan Document** — on commit, the full **Loan Amount** is recorded as a single line, debited and credited to whichever accounts are configured as the *debit* and *credit* sides on the document's own term (التوجيه), tied to the employee's subsidiary accounts. In a typical setup this debits an employee-loans/advances account (an asset — the company now has a receivable from the employee) and credits cash/bank (the money actually handed out). No entry is made when the term has **Without Accounting Effect** ticked or lacks either side. Cancelling or deleting the document reverses the same entry.
 - **Loan Payment Document** — on commit, each installment line records its own **Paid Amount** on the debit/credit sides configured on the *payment* document's own term — normally the mirror of the disbursement, crediting down the employee-loans account by the amount collected and debiting cash/bank (or whichever account the repayment channel uses).
 
 ::: info Automatic payroll recovery is recorded through the salary document, not here

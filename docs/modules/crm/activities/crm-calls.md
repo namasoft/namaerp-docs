@@ -36,8 +36,8 @@ against a trouble ticket or a customer is a plain record of a conversation.
 
 Beside it sits **Connected Person** (*المتصل به*), which is the person you actually spoke to: a
 contact, a customer, or the lead itself. On `CALL-0342` the subject is the lead `LD-00417` and the
-connected person is `CNT-0905`, Ms. Mona Shaaban in purchasing. Two more boxes, **Related Record 1**
-and **Related Record 2**, accept a reference to any record, so you can link the call to whatever else
+connected person is `CNT-0905`, Ms. Mona Shaaban in purchasing. Two more boxes, **Related Entity1**
+and **Related Entity2** (*السجل المرتبط 1* / *السجل المرتبط 2*), accept a reference to any record, so you can link the call to whatever else
 it concerns; narrow them with a generic reference overrider if your site wants them limited to
 particular record types.
 
@@ -50,7 +50,7 @@ off — it is honoured by the Lead screen only. See [CRM Settings](/modules/crm/
 Pick a Lead or a Potential in **Related To** and four read-only boxes fill themselves in from that
 record: **Related Record Status**, **Current Lead Classification**, **Current Activity Type** and
 **Current Rejection Reason**. They are a snapshot of where the lead stood when the call started, and
-they are filled only while they are still empty — so they keep showing the "before" picture even
+saving fills them only while they are still empty — so they keep showing the "before" picture even
 after the call has changed it.
 
 Underneath each snapshot sits its lever — a box you type into, which is written back onto the lead
@@ -58,11 +58,11 @@ when the Call is committed:
 
 | Lever on the Call | What it overwrites on the lead or potential |
 |---|---|
-| **Change Status To** (*تغيير الحالة إلي*) | Status |
-| **Update Lead Classification To** (*تحديث تصنيف العميل المرتقب إلي*) | Lead Classification |
+| **Change Status To** (*تغيير الحالة إلى*) | Status |
+| **Update Lead Classification To** (*تحديث تصنيف العميل إلى*) | Lead Classification |
 | **Next Activity Type** (*نوع النشاط التالي*) | Activity Type |
 | **New Rejection Reason** (*سبب الرفض الجديد*) | Rejection Reason |
-| **Planned Re Call Date** (*التاريخ المخطط لمعاودة الإتصال*) | Planned Re-Call Date — **Calls only** |
+| **Planned Re Call Date** (*التاريخ المخطط لمعاودة الاتصال*) | Planned Re-Call Date — **Calls only** |
 
 Each one is applied only if you filled it in and only if the value is actually different from what
 the lead already holds. Leave a lever empty and that part of the lead is untouched. Re-committing an
@@ -97,9 +97,8 @@ lead when the salesperson judges it is time.
 
 ## Calling back
 
-Ticking **Re Call Record** (*سجل معاودة الاتصال*) and setting a **Planned Re Call Date** puts the
-call into a waiting list. On a later Call, the field **CRM Call**, labelled *بناءا على اتصال (المعاود
-الإتصال به)*, offers exactly the calls that are waiting: those ticked as a re-call record and not yet
+Ticking **Re Call Record** (*معاودة الاتصال*) and setting a **Planned Re Call Date** puts the
+call into a waiting list. On a later Call, the field **CRM Call**, labelled *بناءً على اتصال (المعاود الاتصال به)*, offers exactly the calls that are waiting: those ticked as a re-call record and not yet
 called back, optionally narrowed to the same subject.
 
 Pick one and two things happen. The earlier call is stamped **Called Back** and drops out of the
@@ -148,8 +147,8 @@ column's English heading reads **Criteria** on screen; it holds the question.
 
 | Button | What it does |
 |---|---|
-| **escaleted to** (*تصعيد الي*) | Asks for an employee, writes it into the Escalated To box, then saves and commits the Call and refreshes the screen. **Nobody is notified** — the escalation is a field, not a message. |
-| **create CRM Task** (*إنشاء مهمة خدمة العملاء*) | Opens a new [CRM Task](/modules/crm/activities/crm-tasks-and-follow-ups) in a pop-up with this Call as its subject. The task is not saved for you. |
+| **escalated to** (*تصعيد إلى*) | Asks for an employee, writes it into the **escalated to** box, then saves and commits the Call and refreshes the screen. **Nobody is notified** — the escalation is a field, not a message. |
+| **create CRM Task** (*إنشاء مهمة خدمة العملاء*) | Opens a new [CRM Task](/modules/crm/activities/crm-tasks-and-follow-ups) in a pop-up with this Call as its subject and the Call's **escalated to** employee copied into the task's own **escalated to**. The task is not saved for you. |
 | **Instant Temporary Reservation** (*حجز مؤقت مباشر*) | A shortcut into the Real Estate module. It needs a Lead or Potential in Related To and one Products line ticked as **Selected Product**. If the lead has already been converted to a customer it reuses that customer; otherwise it creates and commits a real-estate owner from the lead's data, then opens a new reservation document with buyer, mediator, sold estate and salesman filled. This is the only place in the Activities folder that creates a record in another module, and it needs the Real Estate module to be licensed. |
 
 The usual platform actions — export, audit trail, remarks, approvals, favourites, **Add To Agenda** —
@@ -175,6 +174,6 @@ the book, the code and your dimensions; a Call with no subject, no telephone num
 commits cleanly. Sites that need a rule here — a mandatory subject, a mandatory outcome — add it with
 an entity flow or an approval definition.
 
-**Reporting: none.** This module ships no system reports, and this screen has no print form. To
-review calling activity, use the Calls list view with its filters and Excel export, or build a BI
-dashboard over it.
+**Reporting: none.** This screen has no print form, and CRM ships no system reports (see
+[CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms)). To review calling activity, use
+the Calls list view with its filters and Excel export, or build a BI dashboard over it.

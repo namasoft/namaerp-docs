@@ -80,4 +80,4 @@ Ticking **Ignore Branch** for customers means a user restricted to one branch no
 | Message | Why | What to do |
 |---|---|---|
 | *You must at least ignore one thing, at line {0}* (this message has no Arabic text, so it appears in English on Arabic screens too) | The line has none of the six "Ignore …" boxes ticked. | Tick what the line should skip, or delete the line. |
-| *You can not fill the field {0}, {1} and {2}, either fill {0} alone or {1} and {2}* — «لا يمكنك ملء الحقل {0}، {1} و{2} معاً، إما أن تملء {0} فقط أو {1} و{2}» | The line has **Applicable For** and also an entity type or entity type list. | Keep **Applicable For** alone, or clear it and keep the type and/or list. |
+| *You can not fill the field {0}, {1} and {2}, either fill {0} alone or {1} and {2}* — «لا يمكنك ملء الحقل {0}، {1} و{2} معاً، إما أن تملأ {0} فقط أو {1} و{2}» | The line has **Applicable For** and also an entity type or entity type list. | Keep **Applicable For** alone, or clear it and keep the type and/or list. |

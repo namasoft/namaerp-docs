@@ -173,26 +173,24 @@ Issue Document Type** — see [Pharmacy, Supplies & Blood Bank](./hms-pharmacy-a
 - **Multiple Surgery In Same Time** — when several operations are done in one session, the most expensive
   line keeps its price and every other line gets the **Other Surgery Discount Value** percentage as a
   discount, placed in Discount 1 or Discount 2 according to **Other Surgery Discount In**. In Discount 2 the
-  percentage is taken of the price after Discount 1. Their cost and subsidiary values are reduced by the same
-  percentage. Two lines sharing the highest price both keep it.
+  percentage is taken of the price after Discount 1. Their **Cost Value** and **Subsidiary Cost | Value** are
+  reduced by the same percentage; the Subsidiary 1 and Subsidiary 2 costs are not. Two lines sharing the
+  highest price both keep it.
 - **Anesthesia Doctor** and **Assistant Doctor** — recorded alongside the surgeon.
 - **Do Not Remove Supplies And Services With Surgery Type** — see above.
 
 ### Freezing prices: the More-menu actions
 
-The invoice's term can have **Update Prices With Save** ticked. Then every save prices the lines again from
-the price sources, which keeps the invoice in step with price lists and approvals but overwrites any price
-typed by hand. The **More** menu of a saved invoice has three actions that turn re-pricing off for one part
-of this invoice:
+When the term has **Update Prices With Save** ticked, every save prices the lines again, and the three
+**More** menu actions keep one part of a saved invoice as entered — see
+[Freezing a price](/modules/hms/hms-invoicing#Freezing-a-price). On the surgery invoice each action guards
+one tab:
 
 | Action | What stays as entered |
 |---|---|
 | **Allow Changing Main Prices** | The operation lines |
 | **Allow Changing Services Prices** | The Medical Services lines |
 | **Allow Changing Supplies Prices** | The Medical Supplies lines |
-
-Each action ticks the header check box of the same name, and the screen reloads. From then on, prices
-you type on that part survive saving.
 
 ### The term options that govern surgery invoices
 
@@ -222,11 +220,9 @@ it. That path adds two screens.
 
 ### The package deal and the admission
 
-A **Surgery Package Deal** names a **Doctor** and a **Surgery Type**, a **Non Agreed Items** package item for
-anything billed outside the deal, and a details grid of package items, each with a room classification, a
-count and a **Price** — the agreed price for that part of the stay. Picking a package item fills the room
-classification from it. See [Medical Service Catalog](./hms-service-catalog#Surgery-packages) for package
-items.
+A **Surgery Package Deal** holds the agreed **Price** of each package item, plus a **Non Agreed Items**
+package item for anything billed outside the deal. The screen and its package items are described on
+[Medical Service Catalog](/modules/hms/hms-service-catalog#Surgery-packages).
 
 ![Surgery package](../../ar/modules/hms/images/catalog/surgery-package-en.png)
 

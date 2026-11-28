@@ -16,7 +16,7 @@ Each of these caps how long one kind of query may run before it is abandoned. Th
 
 **Max Minutes To Execute SqlField Query** `value.info.maxMinutesToExecuteSqlFieldQuery` — Ceiling in minutes for an SQL field query.
 
-**Max Seconds To Execute SqlField Query** `value.info.maxSecondsToExecuteSqlFieldQuery` — The same limit expressed in seconds, for finer control.
+**Max Seconds To Execute SqlField Query** `value.info.maxSecondsToExecuteSqlFieldQuery` — Seconds added to the minutes above: the limit for one SQL field query is minutes × 60 + seconds. With both empty, no limit is set here.
 
 **Max Seconds To Execute User Timed Queries** `value.info.maxSecondsToExecuteUserTimedQueries` — For queries users schedule themselves.
 
@@ -42,7 +42,7 @@ Each of these caps how long one kind of query may run before it is abandoned. Th
 
 **Count Number Of Prints Per User** `value.info.countPrintsPerUser` — Changes how reprints are counted. Normally a record that has been printed once counts as printed for everyone, so the next print by anyone needs the **Print More Than Once** permission and counts toward the print limit. With this on, only the current user's own earlier prints of that record count.
 
-**prevent User To Run Same Report Multiple Times** `value.info.prevUserToRunSameRepMultipleTimes` — Stops a user launching a report again while their previous run of it is still going. This one solves a real and common problem: a slow report appears to hang, the user clicks again, and now two copies compete for the same database. The same option exists in a user's settings and in a security profile, so it can be applied to some users only.
+**Prevent User To Run Same Report Multiple Times** `value.info.prevUserToRunSameRepMultipleTimes` — Stops a user launching a report again while their previous run of it is still going. This one solves a real and common problem: a slow report appears to hang, the user clicks again, and now two copies compete for the same database. The same option exists in a user's settings and in a security profile, so it can be applied to some users only.
 
 ## Search behaviour
 
@@ -60,7 +60,7 @@ The three operators above apply to every search in the system. When only one mas
 
 **Smart Arabic Search In Contains** `value.info.smartArabicSearchInContains` *(default on)* — Arabic is written inconsistently: أ, إ, آ and ا are typed interchangeably, as are ة and ه, and ى and ي. With this on the system expands those letters to their variants, so a user searching for محمد finds محمد however the name was originally typed. Almost always worth keeping on for Arabic data.
 
-**Search With Connected Names In References** `value.info.searchWithConnectedNamesInRefs` — Reference suggestions also match against related record names, so typing a customer's name can find the contract that belongs to them.
+**Search With Connected Names In References** `value.info.searchWithConnectedNamesInRefs` — Normally, when a user types into a reference field, the first space in the typed text matches any run of characters, so `moh ali` suggests *Mohamed Ali*. With this on, the text is searched as typed, space included, so it only matches records where those words stand next to each other.
 
 **Show "Search In" For Top Panel** `value.info.showSearchInForTopPanel` — Adds the "search in" entity selector to the top search bar, letting the user narrow a global search to one kind of record.
 
@@ -78,20 +78,20 @@ Every field on this tab with its exact on-screen label in both languages, so you
 
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
-| `value.info.maxMinutesToExecuteSqlFieldQuery` | Max Minutes To Execute SqlField Query | اقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبه | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteSqlFieldQuery` | Max Seconds To Execute SqlField Query | اقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبه | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteUserTimedQueries` | Max Seconds To Execute User Timed Queries | اقصى مدة بالثواني لتنفيذ الاستعلامات الدورية | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteDashboardQuery` | Max Seconds To Execute Dashboard Query | اقصى مدة بالثواني لتنفيذ استعلام اللوحات | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteListViewQueries` | Max Seconds To Execute List View Queries | اقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteListPageQueries` | Max Seconds To Execute Reference Suggestion Queries | اقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع | [Query time limits](#Query-time-limits) |
-| `value.info.maxSecondsToExecuteReportsQueries` | Max Seconds To Execute Report Queries | اقصى مدة بالثواني لتنفيذ استعلامات التقارير | [Query time limits](#Query-time-limits) |
-| `value.info.logSqlStatementsTakingMS` | Warn About SQL Statements Taking more than (milliseconds) | Warn About SQL Statements Taking more than (milliseconds) | [Query time limits](#Query-time-limits) |
-| `value.info.maxRecordsPerPageForListViews` | Maximum Records Per Page For List Views when using All | اقصي عدد من السجلات عند عرض الكل في القوائم | [Usage limits](#Usage-limits) |
-| `value.info.maxListViewCountPerUser` | Max Concurrent List View Operations Count Per User | اقصي عدد مرات اجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت | [Usage limits](#Usage-limits) |
+| `value.info.maxMinutesToExecuteSqlFieldQuery` | Max Minutes To Execute SqlField Query | أقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبة | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteSqlFieldQuery` | Max Seconds To Execute SqlField Query | أقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبة | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteUserTimedQueries` | Max Seconds To Execute User Timed Queries | أقصى مدة بالثواني لتنفيذ الاستعلامات الدورية | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteDashboardQuery` | Max Seconds To Execute Dashboard Query | أقصى مدة بالثواني لتنفيذ استعلام اللوحات | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteListViewQueries` | Max Seconds To Execute List View Queries | أقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteListPageQueries` | Max Seconds To Execute Reference Suggestion Queries | أقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع | [Query time limits](#Query-time-limits) |
+| `value.info.maxSecondsToExecuteReportsQueries` | Max Seconds To Execute Report Queries | أقصى مدة بالثواني لتنفيذ استعلامات التقارير | [Query time limits](#Query-time-limits) |
+| `value.info.logSqlStatementsTakingMS` | Warn About SQL Statements Taking more than (milliseconds) | التحذير من جمل SQL التي تستغرق أكثر من (ملي ثانية) | [Query time limits](#Query-time-limits) |
+| `value.info.maxRecordsPerPageForListViews` | Maximum Records Per Page For List Views when using All | أقصى عدد من السجلات عند عرض الكل في القوائم | [Usage limits](#Usage-limits) |
+| `value.info.maxListViewCountPerUser` | Max Concurrent List View Operations Count Per User | أقصى عدد مرات إجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت | [Usage limits](#Usage-limits) |
 | `value.info.maxListPageMatchingRefCountPerUser` | Max Concurrent List Page Matching Operations Count Per User | Max Concurrent List Page Matching Operations Count Per User | [Usage limits](#Usage-limits) |
 | `value.info.maxExportCount` | Maximum Export Count | الحد الأقصى لعدد مرات التصدير | [Usage limits](#Usage-limits) |
 | `value.info.countPrintsPerUser` | Count Number Of Prints Per User | احتساب عدد مرات الطباعة لكل مستخدم | [Usage limits](#Usage-limits) |
-| `value.info.prevUserToRunSameRepMultipleTimes` | prevent User To Run Same Report Multiple Times | منع المستخدم من تشغيل نفس التقرير مرتين في نفس الوقت | [Usage limits](#Usage-limits) |
+| `value.info.prevUserToRunSameRepMultipleTimes` | Prevent User To Run Same Report Multiple Times | منع المستخدم من تشغيل نفس التقرير مرتين في نفس الوقت | [Usage limits](#Usage-limits) |
 | `value.info.codeSearchOperator` | Code Search Operator | معامل البحث في الكود | [Search behaviour](#Search-behaviour) |
 | `value.info.name1SearchOperator` | Name 1 Search Operator | معامل البحث في الاسم العربي | [Search behaviour](#Search-behaviour) |
 | `value.info.name2SearchOperator` | Name 2 Search Operator | معامل البحث في الاسم الإنجليزي | [Search behaviour](#Search-behaviour) |

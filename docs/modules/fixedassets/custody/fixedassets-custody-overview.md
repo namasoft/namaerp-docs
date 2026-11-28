@@ -68,10 +68,10 @@ supposed to be with this person" and what lets an employee's holdings be listed 
 ## One licence, six screens
 
 Everything on these pages needs the `fixedassets-custody` licence. Without it, the whole
-**Custodys** menu group disappears — the register and all four documents go with it, and the rest of
+**Custodies** menu group disappears — the register and all four documents go with it, and the rest of
 the Fixed Assets module carries on unaffected.
 
-The menu group sits under **Assets > Custodys** (`الأصول > عهد`) and holds exactly six entries, in
+The menu group sits under **Assets > Custodies** (`الأصول > عهد`) and holds exactly six entries, in
 this order:
 
 | Screen | Arabic | What it is |
@@ -86,11 +86,11 @@ this order:
 Delivery and transfer share a page: [Delivering and Transferring
 Custody](/modules/fixedassets/custody/fixedassets-custody-delivery-and-transfer.md).
 
-Two screens outside this group also accept custody items. The **Delivery/Receipt of Custodies**
-document (سند استلام وتسليم) hands things between employees and can carry fixed assets and custody
-items on the same lines — see [The Delivery and Receipt
-Document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md). And the **Fixed Asset
-Taking** document (جرد الأصول) counts custody items alongside assets and reports shortages and
+Two screens outside this group also accept custody items. The **Custodies Delivery Receipt
+Document** (سند استلام وتسليم عهد) hands things between employees and can carry fixed assets and
+custody items on the same lines — see [The Delivery and Receipt
+Document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md). And the **Fixed Assets
+Taking Document** (مستند جرد أصول) counts custody items alongside assets and reports shortages and
 surpluses for both — see [Stocktaking Assets and
 Custodies](/modules/fixedassets/movement/fixedassets-stocktaking.md).
 
@@ -100,7 +100,7 @@ Worth saying once, here, rather than six times over: **not one of the custody sc
 button of its own.** The type, the register, the purchase, the delivery, the transfer and the disposal
 are all filled in and saved, and everything they do to the register and to the ledger happens when
 they are committed and is undone by cancelling or deleting them. The one exception is the purchase document, which
-borrows the invoice machinery and with it **GeneratePayments** (إنشاء الدفعات) for typing an
+borrows the invoice machinery and with it **Generate Payments** (إنشاء الدفعات) for typing an
 instalment schedule.
 
 So when somebody asks which button collects everything an employee is holding, the answer is that
@@ -134,7 +134,8 @@ plant.
    **Delivered** — the item is still out with somebody, just a different somebody.
 6. **The disposal ends it.** In December 2028 the laptop is sold to the departing employee for
    1,200. The disposal document takes the 6,000 back off the holder and books the 1,200 against the
-   buyer, and the item goes to status **Disposed**. It cannot be delivered or transferred again.
+   buyer, and the item goes to status **Disposed**. It can no longer be transferred, and the delivery
+picker no longer offers it.
 
 ![The custody record](../../../ar/modules/fixedassets/images/custody/fa-custody-main-en.png)
 
@@ -158,7 +159,7 @@ each new record.
 
 ## Undo happens in reverse order
 
-Each custody remembers the last document that touched it. That single marker is what keeps the chain
+Each custody remembers the last delivery or transfer document that touched it. That single marker is what keeps the chain
 honest: if you try to cancel or delete the delivery of `CDY-0033` after a transfer has already moved it on,
 the system refuses, because the delivery is no longer the last word on that item. It tells you a
 later document exists.

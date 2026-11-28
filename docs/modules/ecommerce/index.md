@@ -37,6 +37,6 @@ One page per platform: how to connect the store, and what moves in each directio
 <LandingGrid>
   <LandingCard icon="🏭" title="Salasa" link="/modules/ecommerce/salasa-integration.md" details="Let Salasa's warehouse events create stock transfers and sales returns and update delivery status in Nama." />
   <LandingCard icon="📊" title="OTO Stock Synchronisation" link="/modules/ecommerce/oto-stock-sync.md" details="Send each Nama warehouse's stock to its OTO fulfilment location whenever it changes." />
-  <LandingCard icon="📦" title="Amazon Order Notifications" link="/modules/ecommerce/amazon-order-notifications.md" details="Turn Amazon SP-API order notifications into Sales Orders automatically when an order ships, via an SQS queue." />
+  <LandingCard icon="📦" title="Amazon Order Notifications" link="/modules/ecommerce/amazon-order-notifications.md" details="Turn Amazon SP-API order-change notifications into sales documents automatically, for every status or only the ones you choose, via an SQS queue." />
   <LandingCard icon="🚛" title="Omniful Integration" link="/modules/ecommerce/omniful-integration.md" details="Two-way integration with the Omniful supply-chain platform for warehouse management and order fulfillment." />
 </LandingGrid>

@@ -22,7 +22,7 @@ This script was written for one customer's setup. It is hard-wired to one docume
 |---|---|
 | **Class name** | `EASetDoNotUpdateSalesPrice` |
 | **Script** | [EASetDoNotUpdateSalesPrice.groovy](/groovy-examples/EASetDoNotUpdateSalesPrice.groovy) |
-| **Runs on** | **Document Term**. Target action **PreUpdateCalculatedFields**. |
+| **Runs on** | **Document Term**. Target action **Pre Update Calculated Fields**. |
 | **Uses** | No parameters. Leave Parameter 1 empty. |
 | **Shipped as** | Source to paste. It is not built into the system. |
 
@@ -40,7 +40,7 @@ It also shows a pattern worth knowing: an entity flow on **Document Term** can r
 ## Setting it up
 
 1. Open **Administration → Display Customization → Entity Flow** and create a flow with target type **Document Term**.
-2. In the **Details** grid, add a line with **Target Action** set to **PreUpdateCalculatedFields**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
+2. In the **Details** grid, add a line with **Target Action** set to **Pre Update Calculated Fields**, and paste the whole script into its **Groovy Script** column. Leave **Class Name** empty: it is filled in when you save.
 3. Leave all parameters empty, and save the flow.
 4. Open each existing **Sales Return Request** term on **Basic → Settings → Document Term**, make any change and save it, so that the script runs on it once. Terms created later are covered on their first save.
 

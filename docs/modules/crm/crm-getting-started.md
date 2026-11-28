@@ -32,10 +32,10 @@ The full detail is in [Classification Files](/modules/crm/master-files/crm-lead-
 Complaint Type, Complaint Source, Problem and Problem Classification, covered in [Problem and Complaint Catalogues](/modules/crm/master-files/crm-problem-and-complaint-catalogues). Remember these serve complaints only; the maintenance suite has its own.
 
 **5. Configure the module settings.**
-[CRM Settings](/modules/crm/crm-configuration) is short — nine options — but two of them shape daily data entry: the default complaint source, and whether a new lead's responsible employee defaults to the logged-in user.
+[CRM Settings](/modules/crm/crm-configuration) is short — six options and one grid — but two of them shape daily data entry: the default complaint source, and whether a new lead's responsible employee defaults to the logged-in user.
 
 **6. Create books and terms for the documents that have them.**
-Most CRM screens are master files and need nothing. Calls, visits, work plans, trouble tickets, ticket executions, complaints and service contracts are the ones to configure. See [How CRM Document Terms Work](/modules/crm/document-terms/crm-terms-basics).
+Most CRM screens are master files and need nothing. Calls, visits, work plans, trouble tickets, ticket executions, complaints and service contracts are the ones to configure: each needs a book, and of these only the work plan and the service contract also need a document term. See [How CRM Document Terms Work](/modules/crm/document-terms/crm-terms-basics).
 
 **7. Only then start capturing leads.**
 

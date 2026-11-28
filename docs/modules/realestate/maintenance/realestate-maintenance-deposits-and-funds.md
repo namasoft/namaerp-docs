@@ -30,7 +30,7 @@ with 24,000.
 
 Two more fields sit next to them and decide **how** the buyer pays it:
 
-- **One Installment** — the whole 24,000 falls due on a single date, which you type in the deposit
+- **One Value** — the whole 24,000 falls due on a single date, which you type in the deposit
   payment date field.
 - **Distributed To Installments** — the deposit is carried into the payment plan and collected
   alongside the ordinary installments.
@@ -64,10 +64,10 @@ value field, not the percentage.
 
 ## The deposit becomes installment lines
 
-The deposit is not a separate document and it has no schedule of its own. When the contract is
-saved, the system writes it into the ordinary installment grid as one or more lines of installment
-type **Maintance Cost** (تكاليف صيانة) — the type is what marks them as deposit money rather than
-price money.
+The deposit is not a separate document and it has no schedule of its own. When you press **Create
+installments** on the contract, the system writes it into the ordinary installment grid as one or
+more lines of installment type **Maintenance Cost** (تكاليف صيانة) — the type is what marks them as
+deposit money rather than price money.
 
 From that point on they behave like every other installment line. The buyer pays them with receipt
 vouchers or collect documents, they show up in the same grids, they age the same way, and the
@@ -77,7 +77,7 @@ subject of [Building the Installment Plan](/modules/realestate/sales/realestate-
 and [The Sales Contract](/modules/realestate/sales/realestate-sales-contract).
 
 The same mechanism serves leases: a rent contract carries its own maintenance percentage and value
-plus a *treat maintenance costs as installments* switch, and produces the same **Maintance Cost**
+plus a *Treat Maintenance Costs As Installments* switch, and produces the same **Maintenance Cost**
 line type on the rent schedule.
 
 ## Which accounts the deposit hits
@@ -88,9 +88,9 @@ deposit is booked by the sales document term, not by any of the maintenance docu
 The sales term carries a dedicated debit/credit pair for the maintenance deposit, and it is that
 pair — configured once per sales term — which decides where the money lands. Typically it debits
 the buyer's receivable and credits a maintenance-deposit liability account, because the money is
-being held on behalf of the owners' community rather than earned. The same pair is reused in
-reverse when a contract is cancelled or a reservation is cancelled, so the reversal is automatically
-consistent with the original.
+being held on behalf of the owners' community rather than earned. A contract cancellation and a
+reservation cancellation reverse the deposit through the maintenance pair on **their own** document
+terms, so set that pair up there to mirror the sales term.
 
 The three maintenance document terms — the accrual, the expense and the deposit-profit terms —
 have nothing to do with this pair. They are documented in
@@ -115,12 +115,14 @@ screen fills itself:
 | What you see | Where it comes from |
 |---|---|
 | Total Project Area | the sum of the areas of the project's units that are flagged as subject to maintenance |
-| Total Collected Maintenance Amount | the maintenance-cost installment money the system has actually applied across the project's sales contracts |
+| Total Maintenance Deposit Amount | the total maintenance deposit on the project's committed sales contracts and opening sales documents, leaving out waived contracts |
+| Total Collected Maintenance Amount | the system-collected value on the **Maintenance Cost** installment lines of the project's committed sales contracts and opening sales documents |
+| Remaining Balance | Total Maintenance Deposit Amount less Total Collected Maintenance Amount |
 | the units list | those same maintainable units, with their area, price and buyer |
 | Bank / Bank account | typed by you — this is the account the deposits are held in |
 
 For our example project, "Nakheel Compound", the area total comes out at 12,500 m² across 70 units,
-and the collected total grows every time a buyer pays one of those **Maintance Cost** lines.
+and the collected total grows every time a buyer pays one of those **Maintenance Cost** lines.
 
 Two things about this record are worth internalising. First, the fund itself **holds no ledger
 balance** — it is a reference record and a reading, not an account. The cash lives in the bank
@@ -164,8 +166,8 @@ deposit interest, that has to be worked out outside the document.
 ## Putting the stream end to end
 
 1. The salesperson agrees a 2% deposit on the 1,200,000 villa; the price block shows 24,000.
-2. The contract is committed; 24,000 of **Maintance Cost** installments appear in the payment plan
-   and the sales term books the deposit to the deposit-liability account.
+2. **Create installments** puts 24,000 of **Maintenance Cost** installments in the payment plan;
+   the contract is committed and the sales term books the deposit to the deposit-liability account.
 3. The buyer pays those lines over the life of the plan; the collected total on the project's
    Maintenance Fund grows as each payment is applied.
 4. The cash sits in the bank account named on the fund; each quarter its return is recorded with a

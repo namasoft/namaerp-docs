@@ -13,27 +13,27 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 يحدّ كل من هذه الإعدادات المدة التي يُسمح فيها لنوع من الاستعلامات بالعمل قبل التخلي عنه. ووُجدت لأن فلتراً واحداً سيئ الكتابة قد يحتلّ اتصال قاعدة بيانات إلى ما لا نهاية ويبطئ النظام على الجميع.
 
-**اقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبه** `value.info.maxMinutesToExecuteSqlFieldQuery` — الحد الأعلى بالدقائق لاستعلام حقل SQL.
+**أقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبة** `value.info.maxMinutesToExecuteSqlFieldQuery` — الحد الأعلى بالدقائق لاستعلام حقل SQL.
 
-**اقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبه** `value.info.maxSecondsToExecuteSqlFieldQuery` — الحد نفسه بالثواني، لتحكم أدق.
+**أقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبة** `value.info.maxSecondsToExecuteSqlFieldQuery` — ثوانٍ تُضاف إلى الدقائق أعلاه: فحد استعلام الحقل المحسوب الواحد هو الدقائق × 60 + الثواني. وإن تُرك الاثنان فارغين فلا حد يُضبط من هنا.
 
-**اقصى مدة بالثواني لتنفيذ الاستعلامات الدورية** `value.info.maxSecondsToExecuteUserTimedQueries` — للاستعلامات التي يجدولها المستخدمون بأنفسهم.
+**أقصى مدة بالثواني لتنفيذ الاستعلامات الدورية** `value.info.maxSecondsToExecuteUserTimedQueries` — للاستعلامات التي يجدولها المستخدمون بأنفسهم.
 
-**اقصى مدة بالثواني لتنفيذ استعلام اللوحات** `value.info.maxSecondsToExecuteDashboardQuery` — لعناصر لوحات المعلومات. ويستحق ضبطاً منخفضاً نسبياً: فلوحة المعلومات يُفترض أن تُقرأ بنظرة، والعنصر الذي يستغرق نصف دقيقة معطوب سواء عاد بنتيجة في النهاية أم لا.
+**أقصى مدة بالثواني لتنفيذ استعلام اللوحات** `value.info.maxSecondsToExecuteDashboardQuery` — لعناصر لوحات المعلومات. ويستحق ضبطاً منخفضاً نسبياً: فلوحة المعلومات يُفترض أن تُقرأ بنظرة، والعنصر الذي يستغرق نصف دقيقة معطوب سواء عاد بنتيجة في النهاية أم لا.
 
-**اقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم** `value.info.maxSecondsToExecuteListViewQueries` *(الافتراضي 300)* — لشاشات مطالعة القوائم.
+**أقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم** `value.info.maxSecondsToExecuteListViewQueries` *(الافتراضي 300)* — لشاشات مطالعة القوائم.
 
-**اقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع** `value.info.maxSecondsToExecuteListPageQueries` *(الافتراضي 300)* — للاقتراحات التي يجلبها حقل المرجع وأنت تكتب فيه أو تبحث منه.
+**أقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع** `value.info.maxSecondsToExecuteListPageQueries` *(الافتراضي 300)* — للاقتراحات التي يجلبها حقل المرجع وأنت تكتب فيه أو تبحث منه.
 
-**اقصى مدة بالثواني لتنفيذ استعلامات التقارير** `value.info.maxSecondsToExecuteReportsQueries` — لاستعلامات التقارير. وهو أسخى الحدود عادةً، لأن تقرير آخر الشهر الثقيل يستغرق دقائق بحق.
+**أقصى مدة بالثواني لتنفيذ استعلامات التقارير** `value.info.maxSecondsToExecuteReportsQueries` — لاستعلامات التقارير. وهو أسخى الحدود عادةً، لأن تقرير آخر الشهر الثقيل يستغرق دقائق بحق.
 
-**Warn About SQL Statements Taking more than (milliseconds)** `value.info.logSqlStatementsTakingMS` *(2000 إذا تُرك فارغاً)* — يظهر هذا الإعداد بالإنجليزية حتى في الواجهة العربية. كل جملة قاعدة بيانات أبطأ من هذا الحد تُضاف إلى القائمة في **Utilities ← View SQL Statements With Excessive Time**، مرة واحدة لكل جملة، مع أطول زمن استغرقته وعدد مرات تنفيذها. وهذا هو الإعداد الذي تلجأ إليه حين «يبدو النظام بطيئاً» ولا يستطيع أحد تحديد أين: أنقصه ليوم، واقرأ القائمة، ثم أعده. والقائمة محفوظة في الذاكرة، فتبدأ فارغة بعد كل إعادة تشغيل — انظر [حين يصبح النظام بطيئًا](/ar/admin/troubleshooting/system-is-slow).
+**التحذير من جمل SQL التي تستغرق أكثر من (ملي ثانية)** `value.info.logSqlStatementsTakingMS` *(2000 إذا تُرك فارغاً)* — كل جملة قاعدة بيانات أبطأ من هذا الحد تُضاف إلى القائمة في **Utilities ← View SQL Statements With Excessive Time**، مرة واحدة لكل جملة، مع أطول زمن استغرقته وعدد مرات تنفيذها. وهذا هو الإعداد الذي تلجأ إليه حين «يبدو النظام بطيئاً» ولا يستطيع أحد تحديد أين: أنقصه ليوم، واقرأ القائمة، ثم أعده. والقائمة محفوظة في الذاكرة، فتبدأ فارغة بعد كل إعادة تشغيل — انظر [حين يصبح النظام بطيئًا](/ar/admin/troubleshooting/system-is-slow).
 
 ## حدود الاستخدام
 
-**اقصي عدد من السجلات عند عرض الكل في القوائم** `value.info.maxRecordsPerPageForListViews` — يحدّ عدد السجلات التي تعرضها القائمة حين يختار المستخدم *الكل* حجماً للصفحة. وبدونه سيطلب أحدهم يوماً خمسين ألف سطر في صفحة واحدة. ويمكن أن تضع إعدادات المستخدم نفسه، أو ملف صلاحياته، حداً مختلفاً له؛ ولا يمكن أن يُعطى مستخدمٌ *الكل* حجماً افتراضياً للصفحة ما دام هذا الحقل فارغاً.
+**أقصى عدد من السجلات عند عرض الكل في القوائم** `value.info.maxRecordsPerPageForListViews` — يحدّ عدد السجلات التي تعرضها القائمة حين يختار المستخدم *الكل* حجماً للصفحة. وبدونه سيطلب أحدهم يوماً خمسين ألف سطر في صفحة واحدة. ويمكن أن تضع إعدادات المستخدم نفسه، أو ملف صلاحياته، حداً مختلفاً له؛ ولا يمكن أن يُعطى مستخدمٌ *الكل* حجماً افتراضياً للصفحة ما دام هذا الحقل فارغاً.
 
-**اقصي عدد مرات اجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت** `value.info.maxListViewCountPerUser` *(الافتراضي 20)* — كم عملية تحميل لشاشات القوائم يُسمح للمستخدم الواحد أن تعمل له على الخادم في اللحظة نفسها. ومن يتجاوزه يُرفض طلبه حتى ينتهي بعضها.
+**أقصى عدد مرات إجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت** `value.info.maxListViewCountPerUser` *(الافتراضي 20)* — كم عملية تحميل لشاشات القوائم يُسمح للمستخدم الواحد أن تعمل له على الخادم في اللحظة نفسها. ومن يتجاوزه يُرفض طلبه حتى ينتهي بعضها.
 
 **Max Concurrent List Page Matching Operations Count Per User** `value.info.maxListPageMatchingRefCountPerUser` *(الافتراضي 10)* — يظهر بالإنجليزية حتى في الواجهة العربية. وهو الحد نفسه لعمليات البحث في حقول المرجع: كم منها يُسمح للمستخدم الواحد أن تعمل له في وقت واحد.
 
@@ -59,7 +59,7 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 **استعمال البحث الذكي للغة العربية** `value.info.smartArabicSearchInContains` *(مفعل افتراضياً)* — تُكتب العربية بصور مختلفة: فالألف تُكتب أ وإ وآ وا بالتبادل، والتاء المربوطة والهاء كذلك، والألف المقصورة والياء أيضاً. ومع تفعيل هذا الخيار يوسّع النظام هذه الحروف إلى صورها، فيجد الباحث عن «محمد» الاسم مهما كُتب أصلاً. ويستحق الإبقاء عليه مفعّلاً مع البيانات العربية دائماً تقريباً.
 
-**البحث في المراجع بالاسم متصل** `value.info.searchWithConnectedNamesInRefs` — تطابق اقتراحات المراجع أسماء السجلات المرتبطة أيضاً، فكتابة اسم العميل قد تجد العقد الذي يخصه.
+**البحث في المراجع بالاسم متصل** `value.info.searchWithConnectedNamesInRefs` — في الوضع المعتاد، حين يكتب المستخدم في حقل مرجع، تطابق أول مسافة في النص المكتوب أي سلسلة من الحروف، فكتابة `محم علي` تقترح *محمد علي*. ومع تفعيل هذا الخيار يُبحث عن النص كما كُتب بمسافته، فلا يطابق إلا السجلات التي تتجاور فيها تلك الكلمات.
 
 **عرض حقل "البحث في"** `value.info.showSearchInForTopPanel` — يضيف قائمة اختيار الكيان «البحث في» إلى شريط البحث العلوي، فيضيّق المستخدم بحثه الشامل إلى نوع سجل واحد.
 
@@ -77,20 +77,20 @@ menu: إدارة النظام ← الإعدادات ← إعدادات النظ
 
 | الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
 |---|---|---|---|
-| اقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبه | Max Minutes To Execute SqlField Query | `value.info.maxMinutesToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبه | Max Seconds To Execute SqlField Query | `value.info.maxSecondsToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ الاستعلامات الدورية | Max Seconds To Execute User Timed Queries | `value.info.maxSecondsToExecuteUserTimedQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ استعلام اللوحات | Max Seconds To Execute Dashboard Query | `value.info.maxSecondsToExecuteDashboardQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم | Max Seconds To Execute List View Queries | `value.info.maxSecondsToExecuteListViewQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع | Max Seconds To Execute Reference Suggestion Queries | `value.info.maxSecondsToExecuteListPageQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصى مدة بالثواني لتنفيذ استعلامات التقارير | Max Seconds To Execute Report Queries | `value.info.maxSecondsToExecuteReportsQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| Warn About SQL Statements Taking more than (milliseconds) | Warn About SQL Statements Taking more than (milliseconds) | `value.info.logSqlStatementsTakingMS` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
-| اقصي عدد من السجلات عند عرض الكل في القوائم | Maximum Records Per Page For List Views when using All | `value.info.maxRecordsPerPageForListViews` | [حدود الاستخدام](#Hdwd-lstkhdm) |
-| اقصي عدد مرات اجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت | Max Concurrent List View Operations Count Per User | `value.info.maxListViewCountPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| أقصى مدة بالدقائق لتنفيذ استعلام الحقول المحسوبة | Max Minutes To Execute SqlField Query | `value.info.maxMinutesToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ استعلام الحقول المحسوبة | Max Seconds To Execute SqlField Query | `value.info.maxSecondsToExecuteSqlFieldQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ الاستعلامات الدورية | Max Seconds To Execute User Timed Queries | `value.info.maxSecondsToExecuteUserTimedQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ استعلام اللوحات | Max Seconds To Execute Dashboard Query | `value.info.maxSecondsToExecuteDashboardQuery` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ استعلامات عرض القوائم | Max Seconds To Execute List View Queries | `value.info.maxSecondsToExecuteListViewQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ استعلامات عرض اقتراحات المراجع | Max Seconds To Execute Reference Suggestion Queries | `value.info.maxSecondsToExecuteListPageQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى مدة بالثواني لتنفيذ استعلامات التقارير | Max Seconds To Execute Report Queries | `value.info.maxSecondsToExecuteReportsQueries` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| التحذير من جمل SQL التي تستغرق أكثر من (ملي ثانية) | Warn About SQL Statements Taking more than (milliseconds) | `value.info.logSqlStatementsTakingMS` | [حدود زمن الاستعلامات](#Hdwd-zmn-lstaalmt) |
+| أقصى عدد من السجلات عند عرض الكل في القوائم | Maximum Records Per Page For List Views when using All | `value.info.maxRecordsPerPageForListViews` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| أقصى عدد مرات إجراء عرض بقائمة للمستخدم الواحد خلال نفس الوقت | Max Concurrent List View Operations Count Per User | `value.info.maxListViewCountPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
 | Max Concurrent List Page Matching Operations Count Per User | Max Concurrent List Page Matching Operations Count Per User | `value.info.maxListPageMatchingRefCountPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
 | الحد الأقصى لعدد مرات التصدير | Maximum Export Count | `value.info.maxExportCount` | [حدود الاستخدام](#Hdwd-lstkhdm) |
 | احتساب عدد مرات الطباعة لكل مستخدم | Count Number Of Prints Per User | `value.info.countPrintsPerUser` | [حدود الاستخدام](#Hdwd-lstkhdm) |
-| منع المستخدم من تشغيل نفس التقرير مرتين في نفس الوقت | prevent User To Run Same Report Multiple Times | `value.info.prevUserToRunSameRepMultipleTimes` | [حدود الاستخدام](#Hdwd-lstkhdm) |
+| منع المستخدم من تشغيل نفس التقرير مرتين في نفس الوقت | Prevent User To Run Same Report Multiple Times | `value.info.prevUserToRunSameRepMultipleTimes` | [حدود الاستخدام](#Hdwd-lstkhdm) |
 | معامل البحث في الكود | Code Search Operator | `value.info.codeSearchOperator` | [سلوك البحث](#slwk-lbHth) |
 | معامل البحث في الاسم العربي | Name 1 Search Operator | `value.info.name1SearchOperator` | [سلوك البحث](#slwk-lbHth) |
 | معامل البحث في الاسم الإنجليزي | Name 2 Search Operator | `value.info.name2SearchOperator` | [سلوك البحث](#slwk-lbHth) |

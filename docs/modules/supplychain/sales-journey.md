@@ -45,7 +45,7 @@ The pricing and discount details - price lists, automatic margin pricing, discou
 
 **Validity is enforced.** A sales document created from a quotation must have a value date inside the quotation's **Valid from** / **Valid to** range (an empty end is open). Otherwise the save is refused with:
 
-*Value date must be within the range of sales quotation valid from and valid to.* — «التاريخ الفعلي يجب ان يكون في المدي المحدد في صالح من و صالح إلي في عرض الأسعار»
+*Value date must be within the range of sales quotation valid from and valid to.* — «التاريخ الفعلي يجب أن يكون في المدى المحدد في صالح من و صالح إلى في عرض الأسعار»
 
 To accept an expired quotation anyway, tick **Allow Creating Document From Expired Quotation** on the term of the document being created (see [From-Document Configuration](./document-terms/doc-term-from-document.md)).
 
@@ -55,7 +55,7 @@ The customer accepted your quote! Time for the formal commitment. The **Sales Or
 
 **Conversion from the quotation** is easiest: the system copies all the information from the quote, links the order to it (audit trail), changes the status from "quote" to "order," and starts fulfillment. For existing customers with standard items, you can skip the quote and create the order directly.
 
-The order carries everything in the quote, plus fulfillment details (requested delivery date, delivery address that may differ from the billing address, shipping method), inventory allocation (which warehouse will fulfill, and whether items are available), and financial terms (final prices, payment terms whether cash, credit, or installments, and credit-limit verification for credit customers).
+The order carries everything in the quote, plus fulfillment details (requested delivery date, delivery address that may differ from the billing address, shipping method), inventory allocation (which warehouse will fulfill, and whether items are available), and financial terms (final prices, and payment terms whether cash, credit, or installments).
 
 ![Sales order screen in NaMa ERP](../../ar/modules/supplychain/images/sales/sales-order-edit-en.png)
 
@@ -79,7 +79,7 @@ The **Sales Invoice** is at once the invoice (the customer owes you an amount) a
 When the invoice is saved (not as a draft):
 - **Inventory movement**: the system automatically generates the issue of sold items, so inventory quantities decrease, they're removed from their locations, sold serials/batches are tracked, and the cost of goods sold is recorded.
 - **Accounting entries**: debit receivables (or cash on immediate payment), credit sales revenue, credit collected tax, debit cost of goods sold, credit inventory.
-- **Customer account**: the balance rises, credit-limit usage updates, and the due date is created.
+- **Customer account**: the balance rises and the due date is created.
 
 ### Electronic Invoicing
 
@@ -93,7 +93,7 @@ The last step is collecting what's due. In a **cash sale**, it's paid immediatel
 
 Sometimes sales don't stick. The **Sales Return** is used when the customer wants to return (a defective item, a wrong shipment, a change of mind within the return window, or damage in shipping). Most returns are entered directly as a Sales Return: the goods are received and their value is processed. A **Sales Return Request** (SalesReturnRequest) is optional - use it when returns need an approval step, then create the actual return once it is authorized.
 
-**Returning against a specific invoice:** each return line has an **Invoice** column. Its list shows only the customer's invoices that contain the line's item and are not yet fully returned. Choosing one fills the line's price and discounts from that invoice, so the customer is credited what they actually paid. The Sales Return then cannot take back more than that invoice line sold, counting what earlier returns already took; saving refuses with *You can not return {0} because returned qty will be {1} and allowed qty {2} only*. The same column works in the Sales Return Request and in the Service Center's sales return.
+**Returning against a specific invoice:** each return line has an **Invoice** column. Its list shows only the customer's invoices that contain the line's item and are not yet fully returned. Choosing one fills the line's price and discounts from that invoice, so the customer is credited what they actually paid. The Sales Return then cannot take back more than that invoice line sold, counting what earlier returns already took; saving refuses with *You can not return {0} because returned qty will be {1} and allowed qty {2} only* — «لا يمكن رد كمية {0} حيث أن كمية المردود ستكون {1} و الكمية المسموح بها {2}». The same column works in the Sales Return Request and in the Service Center's sales return.
 
 **Accounting effect of a return:** debit sales returns (a contra-revenue account), debit inventory (goods coming back), debit tax (reversing it), credit receivables (the customer owes less).
 
@@ -113,11 +113,11 @@ The sales documents carry more buttons than any other family in Supply Chain, an
 
 **On the Sales Invoice:**
 
-- **Collect** — asks for a **from date** and a **to date**, then fills the invoice's stock-documents grid with the stock issues already made to this customer, from the same warehouse, that have been committed at least once, are not flagged *Do Not Auto Collect In Invoices*, and have not been invoiced yet. Contact and subsidiary narrow the search as well, but only when the term has *Consider Contact In Collecting Stock Documents Inside Invoices* / *Consider Subsidiary In Collecting Stock Documents Inside Invoices* switched on. This is how a month of deliveries becomes one invoice.
+- **Collect** — asks for a **from date** and a **to date**, then fills the invoice's stock-documents grid with the stock issues already made to this customer, from the invoice's warehouse when it has one, that have been committed at least once, are not flagged *Do Not Auto Collect In Invoices*, and have not been invoiced yet. Contact and subsidiary narrow the search as well, but only when the term has *Consider Contact In Collecting Stock Documents Inside Invoices* / *Consider Subsidiary In Collecting Stock Documents Inside Invoices* switched on. This is how a month of deliveries becomes one invoice.
 - **Apply Receipts** — reads the issues sitting in that grid and turns them into priced invoice lines, applying the invoice's price classifiers, salesman, tax settings, classification and term. **Collect** fills the grid; **Apply Receipts** turns it into the invoice. When the term has *Instantly Apply On Stock Doc Selection* switched on, picking an issue in the grid fires this for you.
 - **Create Inventory Doc.** — the opposite direction: for an invoice typed by hand, it generates the Stock Issue and opens it.
 - **Collect Lots** and **Collect Locators** — fill the batch and the locator on every detail line from what is actually available in the header warehouse, instead of picking them line by line. Both ask first whether to clear what you already entered.
-- **GeneratePayments** — splits the remaining value into an instalment schedule. It asks for the number of payments, the period between them and its unit, the date the payments start, a grace period, an optional day of the week to land on, down / first / second / last payment values, and a rounding mode. It refuses if the net value is zero.
+- **Generate Payments** — splits the remaining value into an instalment schedule. It asks for the number of payments, the period between them and its unit, the date the payments start, a grace period, an optional day of the week to land on, down / first / second / last payment values, and a rounding mode. It refuses if the net value is zero.
 - **Generate Receipt Voucher** — creates a receipt voucher for the invoice's whole remaining value against the customer. **Generate Receipt Voucher For Selected Payments** does the same for only the instalment lines you ticked, and refuses if you selected none or if the ones you selected have nothing remaining. **Collect Receipt Vouchers** works the other way, bringing existing vouchers onto the invoice.
 - **Request Redeem Customer Amount** — spends the customer's loyalty balance against this invoice. It shows the invoice net value, the points owner and the reward balance still available, and asks how much to redeem and against which reward code.
 - **Pay Invoice**, **Pay Part Of Invoice** and **Fetch Last Terminal Payment Transaction** — the card-terminal buttons, which need the payment-gateway sub-module. **Pay Part Of Invoice** asks for an amount and rejects anything larger than the remaining value, or any amount at all once the invoice is fully paid. **Fetch Last Terminal Payment Transaction** recovers a payment that went through on the terminal but whose confirmation never made it back to the invoice.
@@ -125,7 +125,7 @@ The sales documents carry more buttons than any other family in Supply Chain, an
 **On the quotation request, the quotation, the order and the proforma:**
 
 - **Generate Invoice** — builds the Sales Invoice from the document and opens it.
-- **GeneratePayments** — the same scheduling dialog as on the invoice, available on the Sales Quotation Request, Sales Quotation, Sales Order, Coupons Sales Order, Proforma Sales Invoice and Coupons Sales Order Return.
+- **Generate Payments** — the same scheduling dialog as on the invoice, available on the Sales Quotation Request, Sales Quotation, Sales Order, Coupons Sales Order, Proforma Sales Invoice and Coupons Sales Order Return.
 - The **Sales Quotation** also carries **Request Redeem Customer Amount** on its billing page.
 
 **On the Sales Return and the Sales Return Request:**
@@ -134,7 +134,7 @@ The sales documents carry more buttons than any other family in Supply Chain, an
 - **collect Installments By From Doc** — rebuilds the return's instalment grid from the unpaid instalments of the invoice it was built on, consuming the return value from the earliest instalment onward until it runs out.
 - **Distribute Return Value On All Unpaid installments** — fills the same grid, but spreads the return value evenly across the unpaid instalments rather than settling them in order. Both need a **based on** document; neither does anything without one.
 
-**On the Sales Replacement:** **Sales Collect Lots** and **GeneratePayments**. The **Sales Replacement Request** adds **Generate Receipt Voucher** and **Collect Receipt Vouchers**.
+**On the Sales Replacement:** **Sales Collect Lots** and **Generate Payments**. The **Sales Replacement Request** adds **Generate Receipt Voucher** and **Collect Receipt Vouchers**.
 
 **On the Order Delivery:** **Generate Invoice** — the delivery must be saved first; it builds the sales invoice for the delivery and opens it.
 

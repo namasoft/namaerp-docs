@@ -35,23 +35,23 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **نسخ بيانات سطر واحد فقط من بناءً على مع الصنف بدون تكرار (Copy One Line Details Of FromDoc For Item Without Repeat)** `termConfig.copyOneLineDetailsOfFromDocForItemWithoutRepeat` — عند ظهور صنف على عدة سطور مصدر، يُنسخ التفاصيل من سطر مصدر واحد فقط لذلك الصنف، تجنباً لتكرار السطور.
 
-**ملء بيانات الصنف في السطر عند إضافة هذا الصنف من بناءً على (Spread Selected Item Data When Item Of From Doc Added)** `termConfig.spreadSelectedItemDataWhenItemOfFromDocAdded` — عند إضافة صنف من المستند المصدر إلى سطر، يملأ تلقائياً بيانات الصنف على السطر (السعر، الوحدة، المحددات، إلخ).
+**ملء بيانات الصنف في السطر عند إضافة هذا الصنف من السند الموجود في بناءً على (Spread Selected Item Data When Item Of From Doc Added)** `termConfig.spreadSelectedItemDataWhenItemOfFromDocAdded` — عند إضافة صنف من المستند المصدر إلى سطر، يملأ تلقائياً بيانات الصنف على السطر (السعر، الوحدة، المحددات، إلخ).
 
 **فرد سطور لإصدارات الصنف (Spread Item Revision Lines)** `termConfig.spreadItemRevisionLines` — يفكّ سطر الصنف الواحد إلى سطر لكل إصدار من إصدارات الصنف عند النسخ/الإضافة.
 
 **فرد سطور لمقاسات وألوان الصنف (Spread Item Colors And Sizes Lines)** `termConfig.spreadItemColorAnsSizeLines` — يفكّ سطر الصنف الواحد إلى سطر لكل تركيبة لون/مقاس.
 
-**تشغيل الإجراء اللاحق لحقل بعد فرد الإصدارات أو المقاسات (Call Post Action Of Field After Spreading Revisions Or Sizes)** `termConfig.callPostActionOfFieldAfterSpreadingRevisionsOrSizes` — بعد فرد سطور الإصدار/اللون/المقاس، يشغّل الإجراء اللاحق لمعرّف الحقل المحدد على السطور المُنشأة (مثل إعادة حساب الأسعار).
+**Call Post Action Of Field After Spreading Revisions Or Sizes** (لا نص عربي لهذا الخيار، فيظهر بالإنجليزية) `termConfig.callPostActionOfFieldAfterSpreadingRevisionsOrSizes` — بعد فرد سطور الإصدار/اللون/المقاس، يشغّل الإجراء اللاحق لمعرّف الحقل المحدد على السطور المُنشأة (مثل إعادة حساب الأسعار).
 
 **نسخ السعر من المستند الأعلى مع بناءً على (Copy Price From Parent Document With From Document)** `termConfig.copyPriceFromParentDocWithFromDoc` — يأخذ سعر الوحدة من المستند الأعلى/المصدر بدلاً من إعادة حسابه. للفواتير فقط.
 
-**ناسخ الحقول الإضافية من بناءً على (Extra From Doc Fields Copier)** `termConfig.extraFromDocFieldsCopier` — خريطة حقول نصية حرة من أزواج إضافية `sourceField=targetField` تُنسخ من المستند المصدر (الرأس والتفاصيل) إضافة إلى الحقول المنسوخة القياسية.
+**Extra From Doc Fields Copier** (لا نص عربي لهذا الخيار، فيظهر بالإنجليزية) `termConfig.extraFromDocFieldsCopier` — خريطة حقول نصية حرة من أزواج إضافية `sourceField=targetField` تُنسخ من المستند المصدر (الرأس والتفاصيل) إضافة إلى الحقول المنسوخة القياسية.
 
 **منع ملء رقم الشحنة طبقاً لتاريخ الانتهاء إن كان حقل الشحنة فارغاً (Prevent Fill Lot Id According To Expiry Date If Empty)** `termConfig.preventFillLotIdAccordingToExpiryDateIfEmpty` — يعطّل السلوك الافتراضي الذي يشتق رقم الشحنة/الدفعة من تاريخ الانتهاء عندما يكون حقل الشحنة فارغاً.
 
 **السماح بعمل فاتورة مستند على عرض سعر منتهي (Allow Creating Document From Expired Quotation)** `termConfig.allowCreatingDocumentFromExpiredQuotation` — افتراضيًا يجب أن يقع التاريخ الفعلي لمستند المبيعات المنشأ بناءً على عرض أسعار داخل مدى **صالح من** / **صالح حتي** في العرض، وإلا رُفض الحفظ بالرسالة «التاريخ الفعلي يجب ان يكون في المدي المحدد في صالح من و صالح إلي في عرض الأسعار». فعّل هذا الخيار في توجيه المستند الجديد لقبول العروض المنتهية. لمستندات المبيعات فقط.
 
-**اعتبار التاريخ الفعلي من بناءا علي في حساب الأسعار والعروض (Consider Value Date From From Document In Pricing And Offers)** `termConfig.considerValueDateFromFromDocInPricingAndOffers` — عند التحقق من أسعار المستند عند الحفظ مقابل قوائم الأسعار والعروض، يُستخدم التاريخ الفعلي لمستند **بناءا على** بدلًا من تاريخ المستند نفسه. فالفاتورة المؤرخة بعد تغيير الأسعار والمبنية على أمر أُخذ قبله تُفحص بأسعار الأمر. لمستندات المبيعات فقط.
+**اعتبار التاريخ الفعلي من بناءً على في حساب الأسعار والعروض (Consider Value Date From From Document In Pricing And Offers)** `termConfig.considerValueDateFromFromDocInPricingAndOffers` — عند التحقق من أسعار المستند عند الحفظ مقابل قوائم الأسعار والعروض، يُستخدم التاريخ الفعلي لمستند **بناءا على** بدلًا من تاريخ المستند نفسه. فالفاتورة المؤرخة بعد تغيير الأسعار والمبنية على أمر أُخذ قبله تُفحص بأسعار الأمر. لمستندات المبيعات فقط.
 
 **السماح بإدخال كود واسم صنف بدون اختيار صنف (Allow Item Code And Name Without An Item)** `termConfig.allowItemCodeAndNameWithoutAnItem` — يسمح بكتابة كود/اسم صنف حر على السطر دون اختيار سجل صنف مُسجّل.
 
@@ -63,7 +63,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **نسخ السطور التي تحتوي على الصنف المختار فقط عند اختيار سند "تم النسخ من" (Fetch Only Lines Matching Selected Item When Origin Document is Selected)** `termConfig.fetchOnlyLinesMatchingItemFromOriginDoc` — عند اختيار مستند مصدر، يُنسخ فقط سطور المصدر التي يطابق صنفها الصنف الموجود على السطر الحالي، بدلاً من كل السطور.
 
-**عرض الأصناف الموجودة في المستند على السطر أو بناءً على فقط (Show Only Items In OriginDoc Or FromDoc)** `termConfig.showOnlyItemsInOriginDocOrFromDoc` — يقصر اختيار الأصناف على السطور على الأصناف الموجودة في المستند المصدر / بناءً على فقط.
+**عرض الأصناف الموجودة في المستند على السطر أو بناءا على فقط (Show Only Items In OriginDoc Or FromDoc)** `termConfig.showOnlyItemsInOriginDocOrFromDoc` — يقصر اختيار الأصناف على السطور على الأصناف الموجودة في المستند المصدر / بناءً على فقط.
 
 **فلترة السطور بنفس المخزن من رأس السند مع بناءً على (Filter Lines With Same Warehouse From Doc Header)** `termConfig.filterFromDocLinesByHeaderWarehouse` — عند سحب سطور بناءً على، يجلب فقط السطور التي يساوي مخزنها مخزن رأس المستند الحالي.
 
@@ -77,7 +77,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **الفلترة على الأصناف المختارة فقط في السطور مع بناءً على (Filter On Selected Items Only With From Doc)** `termConfig.filterOnSelectedItemsOnlyWithFromDoc` — عند النسخ، يجلب فقط سطور المصدر للأصناف المُدخلة بالفعل على المستند الحالي.
 
-**عرض اوامر الشراء التي بها كميات غير منفذه فقط في بناءا علي (Show Only Orders With Unsatisfied Quantities In FromDoc)** `termConfig.showOnlyOrdersWithUnsatisfiedQtyInFromDoc` — يقصر بحث "بناءً على" / المستند المصدر على الأوامر التي لا تزال بها كمية غير منفّذة (متبقية)، مُخفيًا الأوامر المنفّذة بالكامل. وعند تشغيل البحث من سطر بعينه، تُضيَّق النتائج أكثر إلى الأوامر التي بها كمية متبقية لصنف ذلك السطر.
+**عرض أوامر الشراء التي بها كميات غير منفذة فقط في بناءً على (Show Only Orders With Unsatisfied Quantities In From Doc)** `termConfig.showOnlyOrdersWithUnsatisfiedQtyInFromDoc` — يقصر بحث "بناءً على" / المستند المصدر على الأوامر التي لا تزال بها كمية غير منفّذة (متبقية)، مُخفيًا الأوامر المنفّذة بالكامل. وعند تشغيل البحث من سطر بعينه، تُضيَّق النتائج أكثر إلى الأوامر التي بها كمية متبقية لصنف ذلك السطر.
 
 تقصر الخيارات التالية النسخ على سطور المصدر التي يطابق محددها المحاسبي محدد المستند الحالي.
 
@@ -119,7 +119,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | اعتبار الشحنة | `termConfig.propertiesOfLinesLinkedToFromDoc.considerLotId` |
 | اعتبار الإصدار | `termConfig.propertiesOfLinesLinkedToFromDoc.considerRevisionId` |
 | اعتبار النسبة الفعالة | `termConfig.propertiesOfLinesLinkedToFromDoc.considerActivePercentage` |
-| اعتبار النسبة غير الفعالة | `termConfig.propertiesOfLinesLinkedToFromDoc.considerInActivePercentage` |
+| اعتبار النسبة الغير فعالة | `termConfig.propertiesOfLinesLinkedToFromDoc.considerInActivePercentage` |
 | اعتبار الصندوق | `termConfig.propertiesOfLinesLinkedToFromDoc.considerBox` |
 | اعتبار اللون | `termConfig.propertiesOfLinesLinkedToFromDoc.considerColor` |
 | اعتبار المقاس | `termConfig.propertiesOfLinesLinkedToFromDoc.considerSize` |
@@ -148,11 +148,11 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ## الحقول التي لا تُنسخ (Fields Not Copied)
 
-**عدم نسخ الحقول مع بناءً على (Do Not Copy Fields With From Doc)** `termConfig.doNotCopyFieldsWithFromDoc` *(جدول)* — يسرد حقولاً محددة يجب ألا تُنسخ من المستند المصدر. كل سطر يسمّي حقلاً واحداً (العمود `fieldID`، المعرّف `termConfig.doNotCopyFieldsWithFromDoc.fieldID`) يُستثنى عند نسخ البيانات من بناءً على.
+**عدم نسخ الحقول التالية مع بناء على (Do Not Copy Fields With From Doc)** `termConfig.doNotCopyFieldsWithFromDoc` *(جدول)* — يسرد حقولاً محددة يجب ألا تُنسخ من المستند المصدر. كل سطر يسمّي حقلاً واحداً (العمود `fieldID`، المعرّف `termConfig.doNotCopyFieldsWithFromDoc.fieldID`) يُستثنى عند نسخ البيانات من بناءً على.
 
 ## معايير الإنشاء (Creation Criteria)
 
-**تعريفات المعايير (Criteria Definitions)** `termConfig.criteriaDefinitions` *(جدول)* — يعرّف قواعد نسخ لكل نوع هدف: عند تطابق معيار، يستخدم النوع المنشأ المُسمّى ناسخ الحقول الإضافية المحدد.
+**تعريف معايير (Criteria Definition)** `termConfig.criteriaDefinitions` *(جدول)* — يعرّف قواعد نسخ لكل نوع هدف: عند تطابق معيار، يستخدم النوع المنشأ المُسمّى ناسخ الحقول الإضافية المحدد.
 
 | العمود | معرّف الحقل | المعنى |
 |---|---|---|
@@ -172,7 +172,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **نسخ السندات المخزنية من حقل تم النسخ من سند (Copy Stock Docs From Origin Doc)** `termConfig.copyStockDocsFromOriginDoc` — عند نسخ مستند من مصدر، ينقل أيضاً روابط السندات المخزنية المرفقة بذلك المصدر.
 
-**نسخ كمية التسعير من حقل السند المخزني (Copy Pricing Qty From Stock Doc Field)** `termConfig.copyPricingQtyFromStockDocField` — يحدد أي حقل كمية رقمي (`N1`/`N2`/`N3`) في السند المخزني المرتبط يوفّر كمية التسعير المستخدمة على سطر الفاتورة.
+**نسخ كمية التسعير من أحد حقول السندات المخزنية (Copy Pricing Quantity From Stock Document Field)** `termConfig.copyPricingQtyFromStockDocField` — يحدد أي حقل كمية رقمي (`N1`/`N2`/`N3`) في السند المخزني المرتبط يوفّر كمية التسعير المستخدمة على سطر الفاتورة.
 
 **تفعيل منع الظهور في السندات المخزنية اذا كانت كل الاصناف خدمية (Mark Do Not Show In Stock Docs If All Items Type Are Service)** `termConfig.markDoNotShowInStockDocsIfAllItemsService` — عندما تكون كل سطور المستند أصنافًا خدمية، يعلِّم الحفظ خيار **منع الظهور في بناءا على بالسندات المخزنية** في المستند نفسه، فلا يظهر بعد ذلك في اختيار **بناءا على** في التوريد والصرف المخزني — إذ لا شيء يُستلم أو يُصرف مقابله. فواتير المشتريات ومردودات المبيعات.
 
@@ -204,7 +204,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | اعتبار السائق | `termConfig.stockDockInInvoiceCollectionOptions.considerDriver` |
 | اعتبار سعر الوحدة بالسطر أو ببناءً على | `termConfig.stockDockInInvoiceCollectionOptions.considerUnitPriceOfLineOrFromParent` |
 | يجب تطابق كمية الفاتورة مع المستندات المخزنية المرتبطة | `termConfig.stockDockInInvoiceCollectionOptions.matchInvoiceQtyWithRelatedDocsQty` |
-| فك الارتباط بالسندات المخزنية التي رُبطت يدوياً آلياً عند حذفها | `termConfig.stockDockInInvoiceCollectionOptions.autoUnlinkManuallyLinkedStockDocsWithDelete` |
+| فك الارتباط بالسندات المخزنية التي تم ربطها يدويا آليا عند حذفها | `termConfig.stockDockInInvoiceCollectionOptions.autoUnlinkManuallyLinkedStockDocsWithDelete` |
 
 تقصر عائلة **الفلترة على السندات المخزنية** السندات المُجمَّعة على ما يطابق محددها المحاسبي محدد الفاتورة.
 
@@ -219,7 +219,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 عندما يربط زر **التطبيق** السندات المخزنية بفاتورة أو مرتجع، تتحكم هذه الخيارات في ما إذا كانت أسعار السطور تُعاد حسابها وكيف. وهي تنطبق على عائلة الفواتير/المرتجعات.
 
-**عدم تحديث الأسعار مع تطبيق السندات المخزنية (Don Not Update Price When Apply)** `termConfig.donNotUpdatePriceWhenApply` — عند تطبيق (ربط) السندات المخزنية بالفاتورة، لا يعيد حساب/تحديث أسعار السطور.
+**عدم تحديث الأسعار مع تطبيق السندات المخزنية (Do Not Update Price When Apply)** `termConfig.donNotUpdatePriceWhenApply` — عند تطبيق (ربط) السندات المخزنية بالفاتورة، لا يعيد حساب/تحديث أسعار السطور.
 
 **تطبيق المستند المخزني بمجرد اختياره (Instantly Apply On Stock Doc Selection)** `termConfig.instantlyApplyOnSIssuesSelection` — يطبّق السند المخزني على الفاتورة فور اختياره، دون خطوة تطبيق منفصلة.
 
@@ -233,7 +233,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | اعتبار المقاس | `termConfig.priceUpdateDimensionsOnApply.considerSize` |
 | اعتبار اللون | `termConfig.priceUpdateDimensionsOnApply.considerColor` |
 | اعتبار النسبة الفعالة | `termConfig.priceUpdateDimensionsOnApply.considerActivePercentage` |
-| اعتبار النسبة غير الفعالة | `termConfig.priceUpdateDimensionsOnApply.considerInActivePercentage` |
+| اعتبار النسبة الغير فعالة | `termConfig.priceUpdateDimensionsOnApply.considerInActivePercentage` |
 
 ## التحقق من صرف الخامات (Material-Issue Validation)
 
@@ -241,6 +241,6 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **نسخ الكمية المتبقية واعتبار ما تم صرفه سابقاً (Copy Remaining Quantity Considering Previously Issued Quantity)** `termConfig.copyRemainingQtyConsideringPreviouslyIssued` — عند نسخ الكمية المتبقية من المصدر، يطرح الكميات التي صُرفت في مستندات صرف سابقة، فلا يُنقل إلا المتبقي فعلاً.
 
-**منع الحفظ إذا تعدّت الكمية الفعلية الكمية المخططة في كارت التحليل (Do Not Save If Actual Quantity Greatr Than Planned Quantity)** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` — يمنع الحفظ عندما تتجاوز الكمية المصروفة الفعلية الكمية المخططة في كارت التحليل.
+**منع الحفظ إذا تعدّت الكمية الفعلية الكمية المخططة في كارت التحليل (Do Not Save If Actual Quantity Greater Than Planned Quantity)** `termConfig.doNotSaveIfActualQtyGreatrThanTotalQty` — يمنع الحفظ عندما تتجاوز الكمية المصروفة الفعلية الكمية المخططة في كارت التحليل.
 
-**منع الحفظ إذا تعدّت التكلفة الفعلية التكلفة المخططة في كارت التحليل (Do Not Save If Actual Cost Greatr Than Planned Cost)** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — يمنع الحفظ عندما تتجاوز التكلفة الفعلية التكلفة المخططة في كارت التحليل.
+**منع الحفظ إذا تعدّت التكلفة الفعلية التكلفة المخططة في كارت التحليل (Do Not Save If Actual Cost Greater Than Planned Cost)** `termConfig.doNotSaveIfActualCostGreatrThanTotalCost` — يمنع الحفظ عندما تتجاوز التكلفة الفعلية التكلفة المخططة في كارت التحليل.

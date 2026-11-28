@@ -18,15 +18,15 @@ What you set here is a default for a whole record type. The screen that does the
 
 ## Screen additions
 
-**Filter Folders By Location in DMS Documents** `value.info.dmsDocFilterFoldersByLocation` — Filters the folder selector on an archived document down to folders whose default archive matches the one chosen on the document, so a user in one office doesn't have to scroll past every other office's filing structure. See [Settings and Integration](/platform/dms/dms-configuration.md).
+**Filter Folders By Location in DMS Documents** `value.info.dmsDocFilterFoldersByLocation` — Filters the folder selector on an archived document down to folders whose default archive matches the one chosen on the document, so a user in one office doesn't have to scroll past every other office's filing structure. See [Settings and Integration](/platform/dms/dms-configuration).
 
-**Detailed Work Tasks** `value.info.detailedWorkTasks` — Switches the work-task screens to their detailed layout, which carries more fields per task.
+**Detailed Work Tasks** `value.info.detailedWorkTasks` — Adds a **Details** page to the Work Task screen with an **Executers** grid: each executer's employee, planned and actual hours, planned and actual cost, and finished percentage.
 
 **Add Work Tasks List To Employee** `value.info.addWorkTasksListToEmployee` — Adds a list of the employee's work tasks to the Employee screen, so a manager can see someone's workload from their record rather than running a separate query.
 
 **Use Update EmpInfoDoc** `value.useUpdateEmpInfoDoc` — Employee data is changed through a dedicated *Update Employee Info* document instead of being edited directly on the Employee screen. This is how you get an approval trail and a dated history for HR changes: the change becomes a document that can be reviewed, approved and reported on, rather than a silent edit.
 
-**Google Maps API Key** `value.info.googleMapsApiKey` — The key used by the map picker on location fields and by the delivery application. Without it, map-based fields fall back to manual entry.
+**Google Maps API Key** `value.info.googleMapsApiKey` — The key used by the map picker on location fields and by the delivery application. Without it, the map picker opens an error page instead of the map (showing an already-stored location opens it in Google Maps instead), and the delivery application cannot arrange a driver's orders by route.
 
 ## Extra pages on other entities
 
@@ -40,9 +40,9 @@ Each of these tables names the entity types that should receive one extra page. 
 
 **Add Contacts Page To** `value.info.addContactsPageTo` — Adds a Contacts page, for the named people at that customer or supplier.
 
-**Add Related Archive Docs To** `value.info.addDMSDocsTo` — Adds a **DMS Documents** page to each listed entity type, so archived paperwork is visible on the record it belongs to. Preset with the five types that can own an archived document. See [Document Management](/platform/dms/).
+**Add Related Archive Docs To** `value.info.addDMSDocsTo` — Adds a **DMS Documents** page to each listed entity type, so archived paperwork is visible on the record it belongs to. Comes preset with the same five types as the Remarks list: Employee, Supplier, Customer, Fixed Asset and Third Party. See [Document Management](/platform/dms/).
 
-**Add Subsidiary Balance To** `value.info.addSubsidiaryBalanceTo` — Adds an account balances block, so you can open a customer and see what they owe without leaving the screen.
+**Add Subsidiary Balance To** `value.info.addSubsidiaryBalanceTo` — Adds a collapsible **Balances** list of the record's account balances to its main page, so you can open a customer and see what they owe without leaving the screen.
 
 ::: tip Add pages where they will be used, not everywhere
 Every page added here appears for every user who opens that entity. A Contacts page on Customer earns its place; the same page on twelve other entities that nobody fills in is just twelve more empty tabs to scroll past.
@@ -52,7 +52,7 @@ Every page added here appears for every user who opens that entity. A Contacts p
 
 **Use Color For** `value.info.useColorFor` — The scope of record colour coding: **All Documents**, **All Master Files**, **All Entities**, or **Specific Entities**.
 
-**Use Colors In** `value.info.useColorsIn` *(table)* — When the scope is Specific Entities, this is the list. Colour coding is most useful when it is rare — apply it to the handful of screens where a status needs to jump out, not across the board.
+**Use Colors In** `value.info.useColorsIn` *(table)* — Entity types that get colour coding on top of the scope above. With **Specific Entities**, which is also what an empty **Use Color For** means, this list is the whole scope. Colour coding is most useful when it is rare — apply it to the handful of screens where a status needs to jump out, not across the board.
 
 ## Entity images
 
@@ -81,24 +81,24 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.dmsDocFilterFoldersByLocation` | Filter Folders By Location in DMS Documents | فلترة المجلدات حسب الأرشيف في المستندات الأرشيفية | [Screen additions](#Screen-additions) |
 | `value.info.detailedWorkTasks` | Detailed Work Tasks | مهام العمل التفصيلية | [Screen additions](#Screen-additions) |
 | `value.info.addWorkTasksListToEmployee` | Add Work Tasks List To Employee | إضافة مهام العمل لشاشة الموظف | [Screen additions](#Screen-additions) |
-| `value.useUpdateEmpInfoDoc` | Use Update EmpInfoDoc | إستخدام مستند تحديث موظف | [Screen additions](#Screen-additions) |
+| `value.useUpdateEmpInfoDoc` | Use Update EmpInfoDoc | استخدام مستند تحديث موظف | [Screen additions](#Screen-additions) |
 | `value.info.googleMapsApiKey` | Google Maps API Key | Google Maps API Key | [Screen additions](#Screen-additions) |
-| `value.info.addRemarksPageTo` | Add Related Remarks To | إضافة الملحوظات إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addRemarksPageTo` | Add Related Remarks To | إضافة الملحوظات إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addRemarksPageTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addRemarksPageTo.entityTypeList` | Entity Type List | قائمة الأنواع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
-| `value.info.addDetailedRemarksPageTo` | Add Detailed Remarks To | إضافة الملحوظات التفصيلية إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addDetailedRemarksPageTo` | Add Detailed Remarks To | إضافة الملحوظات التفصيلية إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addDetailedRemarksPageTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addDetailedRemarksPageTo.entityTypeList` | Entity Type List | قائمة الأنواع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
-| `value.info.addMeetingRemarksPageTo` | Add Meeting Remarks Page To | إضافة ملحوظات الإجتماع  إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addMeetingRemarksPageTo` | Add Meeting Remarks Page To | إضافة ملحوظات الاجتماع إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addMeetingRemarksPageTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addMeetingRemarksPageTo.entityTypeList` | Entity Type List | قائمة الأنواع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
-| `value.info.addContactsPageTo` | Add Contacts Page To | إضافة جهات الاتصال  إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addContactsPageTo` | Add Contacts Page To | إضافة جهات الاتصال إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addContactsPageTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addContactsPageTo.entityTypeList` | Entity Type List | قائمة الأنواع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
-| `value.info.addDMSDocsTo` | Add Related Archive Docs To | إضافة المستندات الارشيفية إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addDMSDocsTo` | Add Related Archive Docs To | إضافة المستندات الأرشيفية إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addDMSDocsTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addDMSDocsTo.entityTypeList` | Entity Type List | قائمة الأنواع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
-| `value.info.addSubsidiaryBalanceTo` | Add Subsidiary Balance To | إضافة أرصدة الذمم إلي | [Extra pages on other entities](#Extra-pages-on-other-entities) |
+| `value.info.addSubsidiaryBalanceTo` | Add Subsidiary Balance To | إضافة أرصدة الذمم إلى | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.addSubsidiaryBalanceTo.entityType` | Entity Type | النوع | [Extra pages on other entities](#Extra-pages-on-other-entities) |
 | `value.info.useColorFor` | Use Color For | استعمال الألوان في | [Record colours](#Record-colours) |
 | `value.info.useColorsIn` | Use Colors In | استعمال الألوان في | [Record colours](#Record-colours) |
@@ -111,9 +111,9 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | `value.info.entityImages.widthInSuggestion` | Width In Suggestion | العرض بالمقترحات | [Entity images](#Entity-images) |
 | `value.info.entityImages.heightInSuggestion` | Height In Suggestion | الارتفاع بالمقترحات | [Entity images](#Entity-images) |
 | `value.info.entityImages.useInGridColumns` | Use In Grid Columns | استعمال بالجداول | [Entity images](#Entity-images) |
-| `value.info.entityImages.widthInGridColumns` | Width In GridColumns | العرض بالجدوال | [Entity images](#Entity-images) |
+| `value.info.entityImages.widthInGridColumns` | Width In Grid Columns | العرض بالجداول | [Entity images](#Entity-images) |
 | `value.info.entityImages.heightInGridColumns` | Height In Grid Columns | الارتفاع بالجداول | [Entity images](#Entity-images) |
-| `value.info.entityImages.showInSeparateColumn` | Show In Separate Column | اظهار الصورة في عمود منفصل في الجداول | [Entity images](#Entity-images) |
+| `value.info.entityImages.showInSeparateColumn` | Show In Separate Column | إظهار الصورة في عمود منفصل في الجداول | [Entity images](#Entity-images) |
 | `value.info.entityImages.widthOfSeparateColumns` | Width Of Separate Column | عرض العمود المنفصل | [Entity images](#Entity-images) |
 | `value.info.entityImages.heightOfSeparateColumns` | Height Of Separate Column | ارتفاع العمود المنفصل | [Entity images](#Entity-images) |
 | `value.info.entityImages.useInSearch` | Use In Search View | استعمال بشاشة البحث | [Entity images](#Entity-images) |

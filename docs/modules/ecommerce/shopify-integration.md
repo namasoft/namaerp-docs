@@ -71,7 +71,7 @@ come in as sales returns. Each read fetches **Max Orders Per Read** orders at a 
 
 **Read Sales** reports success on screen even when some orders could not be saved. Orders that failed
 are listed, with the reason, in the **Log List** on the site's **Statistics** tab, where
-**ReRead Selected Orders** tries them again once the cause is fixed.
+**Reread Selected Orders** tries them again once the cause is fixed.
 
 ### Payment methods
 
@@ -83,9 +83,10 @@ payment-method lines and their queries work.
 
 ### What is not sent back to Shopify
 
-Nama reads orders from Shopify but does not change them there. When the sales document is saved in
-Nama, the Shopify order keeps its status: the status settings that update the order in the shop do not
-change Shopify orders. Fulfil, close or cancel the order in Shopify itself.
+Nama does not change a Shopify order's status. When the sales document is saved in Nama, the Shopify
+order keeps its status even when a row of **Update Magento Order Status To** matches; only that row's
+**Comment**, when filled, is written to the Shopify order. Fulfil, close or cancel the order in Shopify
+itself.
 
 ## Sending products, prices and quantities
 
@@ -136,7 +137,7 @@ example after linking the warehouses for the first time, press **Update All Qtys
 
 Every call Nama makes to Shopify (listing orders, reading one order, finding a product, creating or
 updating a product, and updating a price, a sale price or a quantity) uses a built-in GraphQL query.
-The **Graph QL Lines** grid lets you replace one of them, for example to read an extra order field
+The **GraphQL Lines** grid lets you replace one of them, for example to read an extra order field
 that your payment-method queries need.
 
 Leave the grid empty to use the built-in queries. To change one, add a row and choose its

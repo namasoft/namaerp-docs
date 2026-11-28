@@ -7,7 +7,7 @@ This is a short page, and the shortness is the point.
 
 ## What ships
 
-**One printed form.** `SYSF-CRM001` prints a customer visit. That is the entire standard printing and reporting content of a ninety-six-screen module.
+**One printed form.** `SYSF-CRM001` prints a customer visit. That is the entire standard printing and reporting content of a module with more than a hundred screens.
 
 **No system reports.** There is no CRM report folder in the product — no pipeline report, no ticket ageing report, no contract expiry list, no machine service history, no maintenance revenue analysis. Not a reduced set: none.
 

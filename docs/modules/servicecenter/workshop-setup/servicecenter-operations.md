@@ -42,7 +42,7 @@ It is worth being blunt about the relationship, because the two words sound like
 | Code, Group, Name1, Name2 | الكود، المجموعة، الاسم العربي، الاسم الإنجليزي | Identity. Name1 Arabic, Name2 English. |
 | Item Brand | الماركة | The marque this service belongs to. It also governs the model price table — see below. |
 | Item Model | الموديل | The model this service belongs to. |
-| Pricing strategy | سياسه التسعير | **Per Line** (لكل سطر) or **Total** ( الإجمالي). The fork this whole page is about. |
+| Pricing strategy | سياسة التسعير | **Per Line** (لكل سطر) or **Total** (الإجمالي). The fork this whole page is about. |
 | Service Item | صنف الخدمة | The item [invoiced](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md) for the package. |
 | Total | إجمالي السعر | The package price, used when the strategy is Total. |
 | Manufacturer Suggested Retail Total Price | إجمالي سعر المورد | The manufacturer's package price, used instead when the installation runs the MSRP pricing strategy. |
@@ -75,10 +75,10 @@ Pressing **Collect Models** saves typing: it reads the marque in the header and 
 
 Two rules govern the grid at save time. A row whose brand is **not** the header's brand is refused when you commit. And after a successful commit, each row's brand is filled in from its model, so rows produced by the button keep themselves tidy.
 
-::: warning The brand column does not select anything
-When the system looks for the price of this service on a particular car, it matches on the **model alone**. The Item Brand column in the model price table is displayed, is validated against the header, and is then ignored by the lookup.
+::: warning How a row is chosen
+When a service priced by **Total** is picked for a particular car, the system walks the model price table in order and takes the **first** row that fits: a row whose model is the car's model, or a row with no model whose brand is the car's brand. A row with a zero price is skipped. If no row fits, the header's Total is used. When prices are recalculated on a saved document, only a row for the car's model counts.
 
-Consequence: two rows for the same model with different brands are indistinguishable to the matcher, and the **first** one always wins. Keep one row per model.
+Consequence: two rows for the same model are indistinguishable to the matcher, and the **first** one always wins. Keep one row per model, and put brand-only rows after the model rows.
 :::
 
 ![An operation with its model price grid and the Collect Models button](../../../ar/modules/servicecenter/images/execution/sc-operation-collect-models-en.png)
@@ -95,10 +95,10 @@ The **Pricing strategy** field decides which level of the record carries the mon
 
 **Per Line** — each task row is priced in its own right: *hours × hour price*. The header's Total is forced to **zero**. Use this when the customer should see the components: "oil change 120, brake pads 180, alignment 60".
 
-**Total** — the header's Total is the price of the package, and **every task row's price is forced to zero**. Use this when you sell "the 10,000 km service" for one figure and do not want the parts of it argued over. With this strategy, the price the job order actually takes is the row of the model price table that matches the vehicle's model, and whether it reads the ordinary Total column or the manufacturer's column depends on the installation-wide Service Price Strategy setting.
+**Total** — the header's Total is the price of the package, and **every task row's Total and Manufacturer Suggested Retail Total Price are forced to zero** (the rows keep their hours and hour prices). Use this when you sell "the 10,000 km service" for one figure and do not want the parts of it argued over. With this strategy, the price the job order actually takes is the row of the model price table that matches the vehicle's model, and whether it reads the ordinary Total column or the manufacturer's column depends on the installation-wide Service Price Strategy setting.
 
-::: warning Switching strategy destroys the other side's prices
-Because the losing side is zeroed on save, changing an existing service from Per Line to Total wipes the per-task prices, and changing it back does not bring them back. Decide the strategy when you create the service, and if you must change it, expect to retype prices.
+::: warning Switching strategy clears the package price
+Because the losing side is zeroed on save, changing an existing service from Total to Per Line clears the header's Total and Manufacturer Suggested Retail Total Price, and changing it back does not bring them back. The task rows recompute their totals from hours × hour price whenever the strategy is Per Line. Decide the strategy when you create the service, and if you must change it, expect to retype the package price.
 :::
 
 ## How a Service Reaches a Job Order
@@ -119,10 +119,12 @@ Four rules are enforced when you save the document:
 
 | If you do this | The document refuses with |
 |---|---|
-| Put a service **and** a task on the same row | *Task and operation not allowed at the same line* |
-| Enter a service with no child rows under it | *Operation must have sub-rows* |
+| Put a service **and** a task on the same row | *Task and operation  not allowed at the same line* |
+| Enter a service with no child rows under it | *Operation  must have sub-rows* |
 | Put a service on a row that is itself a child | *It is slave line and must not have operations* |
-| Repeat the same task twice in one job order | *The task {0} cannot be repeated for the same job order* |
+| Repeat the same task twice in one job order | *The task {0} cannot be repeated for the same job order* — «لا يمكن تكرار المهمة {0} لنفس أمر الشغل» |
+
+The first three messages have no Arabic text and appear in English on Arabic screens; the first two carry a double space after *operation* / *Operation*, exactly as the product writes them.
 
 That last rule is worth remembering when you build packages: if two of your services share a task, they cannot both go on the same job order.
 

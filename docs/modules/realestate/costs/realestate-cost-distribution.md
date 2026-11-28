@@ -74,7 +74,7 @@ Check the basis before you commit a large distribution.
 ### Distribute Value On Estates Of Type / توزيع التكلفة على العقارات من نوع
 
 The second field decides **how far down the tree the amount travels**. It accepts three levels:
-housing unit, building, or land plot.
+housing unit (*Rental Unit*), building (*RE Building*), or land plot (*RE Land*).
 
 - Leave it empty, or book the line against an estate that is already of that type, and the amount
   stays where you put it — no spreading at all.
@@ -86,7 +86,7 @@ against **Building B3** and have the system find every flat under B3 by itself. 
 the units.
 
 The rest of the element is defaults it pushes onto the cost document line when you pick it —
-**Default Purchase Price / سعر الشراء الأفتراضي**, **Account / حساب**, **Credit side / الجانب
+**Default Purchase Price / سعر الشراء الافتراضي**, **Account / حساب**, **Credit side / الجانب
 الدائن**, **Subsidiary / الذمة**, **Subsidiary account type / نوع الحافظة** and a **Tax Plan /
 سياسة الضريبة** — plus a full Accounts block, so a cost element can itself be used as an accounting
 subsidiary when you want the payable to sit against the element rather than a supplier.
@@ -117,16 +117,17 @@ when the chosen credit side calls for it and the column is still empty, the subs
 when empty, and the tax 1 and tax 2 percentages resolved from the element's tax plan for the current
 legal entity.
 
-The **Credit side / الجانب الدائن** column is what decides who is owed the money: the supplier's
-account (حساب المورد), a specific account (حساب محدد), the current user's subsidiary (ذمة المستخدم
-الحالي) or a specific subsidiary (ذمة محددة).
+The **Credit side / الجانب الدائن** column (its English screen label is *Account*) is what decides
+who is owed the money: *Supplier Account* (حساب المورد), *Specific Account* (حساب محدد), *Current User
+Subsidiary* (ذمة المستخدم الحالي), *Specific Subsidiary* (ذمة محددة) or *From Purchase Item*
+(حساب بند الشراء).
 
 The second page, **Payment Documents / سندات الدفع**, is the payment side: a grid of external
-payment documents, the **GeneratePayments** button, and the payment schedule it fills.
+payment documents, the **Generate Payments** button, and the payment schedule it fills.
 
 ## Actions on these screens
 
-The cost voucher has exactly one button, **GeneratePayments**, on its *Payment Documents* page. It
+The cost voucher has exactly one button, **Generate Payments**, on its *Payment Documents* page. It
 splits the voucher's remaining value into a payment schedule, asking for the number of payments, the
 period between them and its unit, the start date, a grace period, a day of the week, down / first /
 second / last payment values, a rounding multiple and rounding mode, and whether the periods count
@@ -144,7 +145,7 @@ Building B3 has 40 flats totalling 4,800 m². The lift contractor invoices 300,0
 2. Enter one cost document line: Purchase Element = Lift installation, Estate = **Building B3**,
    quantity 1, price 300,000. Net value comes out at 300,000.
 3. Commit. The document is processed in the background, and the distribution appears in the
-   read-only **Estate Cost Distribution / توزيع تكلفة العقار** list on page 0.
+   read-only **Estate Cost Distribution / توزيع تكلفة العقار** list on the document's first page.
 
 For each flat the system computes
 
@@ -218,7 +219,7 @@ confused.
 
 By default the mapping comes from the **project contract**: each of its term lines names an estate,
 and the cost of that term is assigned there. Turn on the Contracting setting **Calculate Estate Cost
-From Term Analysis Card / حساب تكلفة العقارات الفعلية من الكارت التحليلى** and the mapping comes
+From Term Analysis Card / حساب تكلفة العقارات الفعلية من الكارت التحليلي** and the mapping comes
 from the **term analysis card** instead — and the estate column on the project contract's terms grid
 must then be left empty; filling both is refused, and the message names the option that caused it.
 Either way, the parent estate's cost is pushed down to its children by area, or by contracting

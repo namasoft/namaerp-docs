@@ -13,7 +13,7 @@ Nama ERP provides three integrated layers of period control that cover all these
 | Layer | Tool | Effect |
 |-------|------|--------|
 | **Base** | Fiscal Period Status | General open/close for the period — applies to everyone and all document types |
-| **Narrowing** | Fiscal Year Status Update | **Selective** closing of an open period for specific permission files / users / document types |
+| **Narrowing** | Fiscal Year Status Update | **Selective** closing of an open period for specific security profiles / users / document types |
 | **Exception** | Ignore Closed Periods | **Selective** permission to work in a closed period for a specific party or document type |
 
 ::: tip Core Concept
@@ -31,7 +31,7 @@ Each accounting period has a default status: **Opened** or **Closed**. When a pe
 
 ## Part One: Fiscal Year Status Update — Selective Closing
 
-This is a master file that lets you close (or open) periods in a precise, granular way based on **permission file or user**, **document type**, and **Dimensions** (Legal Entity / Sector / Branch / Department / Analysis Group) — instead of a blanket close.
+This is a master file that lets you close (or open) periods in a precise, granular way based on **security profile or user**, **document type**, and **Dimensions** (Legal Entity / Sector / Branch / Department / Analysis Group) — instead of a blanket close.
 
 ### Screen Location
 
@@ -51,25 +51,26 @@ Create a new record and add lines to the detail grid — **each line represents 
 
 | Field | Description |
 |-------|-------------|
-| **Fiscal Year / Fiscal Period** | The period the rule applies to (leave blank to apply to all) |
+| **Fiscal Year** | The year the rule applies to (required on every line) |
+| **Fiscal Period** | The period the rule applies to. Blank = every period of that year. It must belong to the line's fiscal year |
 | **Target Entity** | The target document type (e.g., Sales Invoice). Blank = all types |
 | **Entity Type List** | A predefined list of types to apply the rule to multiple documents at once |
-| **User / Permission File** | Choose either a specific user or a full **permission file** to apply the rule to all its users |
+| **User** | Either a specific user or a whole **Security Profile**, to apply the rule to all its users |
 | **Legal Entity / Sector / Branch / Department / Analysis Group** | Optional dimensions to restrict the rule to a specific organizational unit |
 | **Status** | Rule outcome: **Opened** or **Closed** (required field) |
 
-At the header level there is a **Priority** field for ordering the rules, and an **Inactive** option to disable the record without deleting it.
+At the header level there is a **Priority** field for ordering the records, and an **Inactive** option to disable the record without deleting it. The header also carries the same fields as a line (Fiscal Year, Fiscal Period, Target Entity, Entity Type List, User, Status and the dimensions): whatever you fill on the header is copied onto **every** line when you save, replacing what the line had. Two identical lines in the same record are refused on save.
 
 ### How Does the System Apply Rules?
 
 When a user attempts to save a document in a given period:
 
-1. The system collects all active rules ordered **by priority**.
-2. It takes the **first matching rule** for the combination: document type + dimensions + period + fiscal year + current user (or their permission file).
+1. The system collects the lines of all saved, active records, ordered by the record's **Priority** — the **smallest number first** — and, within a record, in grid order.
+2. It takes the **first matching rule** for the combination: document type + dimensions + period + fiscal year + current user (or their security profile).
 3. If that rule's status is **Closed**, saving is blocked for that user/document in that period.
 
 ::: tip The Most Important Matching Rule
-Any field left blank in a line means **"applies to all"**. So a line with only: Status = Closed + Permission File = "Sales Representatives" + Target Entity = "Sales Invoice" closes sales invoices for sales representatives only and leaves everything else open.
+Any field left blank in a line means **"applies to all"**. So a line with only: Fiscal Year + Status = Closed + User = the "Sales Representatives" security profile + Target Entity = "Sales Invoice" closes sales invoices for sales representatives only, for that year, and leaves everything else open.
 :::
 
 ### Two Important Notes
@@ -79,20 +80,20 @@ The base period close is the strongest within this layer: if the period is alrea
 :::
 
 ::: info Priority Resolves Conflicts
-When more than one rule can apply to the same situation, the highest-priority rule (the first matching rule in order) is applied, so order your rules carefully when they overlap.
+When more than one rule can apply to the same situation, the first matching rule in order is applied: the record with the smallest **Priority** number wins, and inside a record the earlier line wins. Order your rules carefully when they overlap.
 :::
 
 ### Practical Examples
 
-**Closing the period for specific permission files:**
-Add a line, select the period, and in the User/Permission File field select the relevant **permission file**. Leave the Target Entity blank. Set Status = **Closed**.
-*Result:* The period is closed for all users in that file and remains open for everyone else.
+**Closing the period for specific security profiles:**
+Add a line, select the year and period, and in the **User** field select the relevant **Security Profile**. Leave the Target Entity blank. Set Status = **Closed**.
+*Result:* The period is closed for all users of that security profile and remains open for everyone else.
 
 **Closing the period for specific document types:**
-Add a line, select the period, and in Target Entity select the document type (or an entity type list for multiple documents at once). Leave the user blank. Set Status = **Closed**.
+Add a line, select the year and period, and in Target Entity select the document type (or an entity type list for multiple documents at once). Leave the user blank. Set Status = **Closed**.
 *Result:* Those documents are closed for everyone in this period; all other documents remain open.
 
-You can also combine a permission file, a document type, and a dimension (branch/legal entity) in a single rule for the most precise level of control.
+You can also combine a security profile, a document type, and a dimension (branch/legal entity) in a single rule for the most precise level of control.
 
 ---
 
@@ -100,7 +101,7 @@ You can also combine a permission file, a document type, and a dimension (branch
 
 Sometimes a period is closed for everyone, but you want to **allow** a specific party or document to work in it (a corrective entry, a late adjustment, a special privilege for the Finance Manager). This is what **Ignore Closed Periods** does: an exception rule that makes the system treat a closed period as open — but only for those to whom the rule applies.
 
-These exceptions can be defined in two places, both with the same fields and the same behavior:
+These exceptions can be defined in two places, with the same fields and the same behavior, except that the Fiscal Year grid has no Fiscal Year column (the year is the record itself):
 
 ### A. At the Global Configuration Level (Applies to All Fiscal Years)
 
@@ -119,21 +120,22 @@ When checking any document, the system merges the ignore rules from **Global Con
 | Field | Description |
 |-------|-------------|
 | **Entity Type** | The document type allowed to bypass the close. Blank = all types |
-| **Fiscal Year / Fiscal Period** | Restrict the exception to a specific year or period |
+| **Fiscal Year / Fiscal Period** | Restrict the exception to a specific year or period. When a period is chosen, the year is not checked |
 | **User** | Allow a specific user |
-| **Allow For** | A broader party to allow: **Employee**, **Permission File**, **Employee Group**, or **Main Group**. The current user only needs to belong to any one of these |
+| **Allow For** | A broader party to allow: an **Employee**, a **Security Profile**, or a **Group**. The current user only needs to belong to the one chosen |
 | **Legal Entity / Sector / Branch / Department / Analysis Group** | Optional dimensions to restrict the exception to a specific organizational unit |
 
 ### How Does the System Apply the Ignore Rule?
 
-- If all fields of a rule are blank, the rule is **invalid and will not be applied** (protection against accidentally opening all periods).
+- In the Global Configuration grid, a rule with every field blank is **never applied** (protection against accidentally opening all periods).
+- In the Fiscal Year grid, a line whose **Entity Type**, **Fiscal Period**, **User** and **Allow For** are all blank is refused when you save the year. A line with a blank **Fiscal Period** covers every period of that year.
 - For every filled field, it must match the current document/user; blank fields mean "all".
-- The **Allow For** field matches the user through: the user themselves, their employee record, their permission file, or their group; if it is an "Employee Group", the user's employee must be a member.
+- The **Allow For** field matches the user through: the user themselves, their employee record, their security profile, or their group.
 
 ### Practical Examples
 
 **Allowing the Finance Manager alone to work in a closed period:**
-In Global Configuration, add a line in "Ignore Closed Periods In": specify the period, and in **User** select the Finance Manager (or in **Allow For** select their permission file). Leave the document type blank.
+In Global Configuration, add a line in "Ignore Closed Periods In": specify the period, and in **User** select the Finance Manager (or in **Allow For** select their security profile). Leave the document type blank.
 *Result:* The period remains closed for everyone except the Finance Manager.
 
 **Allowing only journal entries in a closed period for a specific fiscal year:**
@@ -166,7 +168,10 @@ The rules for "Fiscal Year Status Update" and "Ignore Closed Periods" are cached
 
 | Message | Why | What to do |
 |---|---|---|
-| *Can not have transactions on the closed period {0}* — «{0} لا يمكن إجراء معاملات في الفترة المغلقة» | The document's value date falls in a period that is closed for you — either closed at the base level, or closed for your party by a Fiscal Year Status Update rule. | Move the value date into an open period, reopen the period, or grant an Ignore Closed Periods exception for the party or the document type. |
+| *Can not have transactions on the closed period {0}* — «لا يمكن إجراء معاملات في الفترة المغلقة {0}» | The document's value date falls in a period that is closed for you — either closed at the base level, or closed for your party by a Fiscal Year Status Update rule. | Move the value date into an open period, reopen the period, or grant an Ignore Closed Periods exception for the party or the document type. |
 | *Can not delete transactions on closed periods* — «لا يمكن حذف مستندات في فترة مغلقة» | Deleting a document whose value date sits in a closed period. Deletion is checked the same way as saving. | Reopen the period or grant the exception, then delete. |
 | *Value Date {0} is not in the range of the fiscal period: [{1} - {2}]* — «التاريخ الفعلي {0} خارج نطاق تواريخ الفترة المالية [{1} - {2}]» | The fiscal period named on the document does not contain the value date. This is not a closing rule — the two simply disagree. | Correct the value date, or let the document pick its own period again. |
-| *Could not find a fiscal period for the date {0}, please define a fiscal year or period* — «لم يمكن العثور على فترة مالية للتاريخ {0} - يرجي تعريف سنة مالية او فترة مالية لهذا التاريخ» | No fiscal period covers that date at all — commonly a recurring document rolling into a year nobody has defined yet. | Define the fiscal year and its periods for that date. |
+| *Could not find a fiscal period for the date {0}, please define a fiscal year or period* — «لم يمكن العثور على فترة مالية للتاريخ {0} - يرجى تعريف سنة مالية أو فترة مالية لهذا التاريخ» | No fiscal period covers that date at all — commonly a recurring document rolling into a year nobody has defined yet. | Define the fiscal year and its periods for that date. |
+| *The line {0} is repeated with line {1}* | Two lines of a Fiscal Year Status Update record are identical in every field. The message has no Arabic translation, so it appears in English on Arabic screens. | Delete one of the two lines. |
+| *Fiscal Period {0} does not belong to the selected Fiscal Year {1}* | On a Fiscal Year Status Update record, the period chosen (on the header or a line) is from another year. The message has no Arabic translation. | Pick a period of the selected year, or leave the period blank to cover the whole year. |
+| *Entity type, fiscal period and user can not all be empty* — «لا يمكن ترك النوع والفترة والمستخدم فارغين معًا» | A line of the Fiscal Year's **Ignore Closed Periods** grid has none of Entity Type, Fiscal Period, User and Allow For, so it would open every closed period of the year for everyone. | Fill at least one of them. |

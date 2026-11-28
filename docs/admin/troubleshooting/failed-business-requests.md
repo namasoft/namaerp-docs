@@ -174,10 +174,12 @@ Stock Issue's inventory request.
 
 *Line without amount* — «سطر بدون مبالغ»
 
-A salary document's entry came out with a line that has neither a debit nor a credit. Each line of
-that entry comes from the account lines of a salary component, so check the component lines of the
-document and the **Percentage** on the account lines of the components involved, correct them, and
-Recommit the document. See [Salary Documents](/modules/hr/payroll/salary-documents).
+An accounting entry came out with a line that has neither a debit nor a credit. The check covers
+every entry except those of stock issues, stock receipts, stock transfers, cost revaluations,
+currency difference journals and exchange rate updates. The usual case is a salary document: each
+line of its entry comes from the account lines of a salary component, so check the component lines
+of the document and the **Percentage** on the account lines of the components involved, correct
+them, and Recommit the document. See [Salary Documents](/modules/hr/payroll/salary-documents).
 
 *For serial {0} of item {1} in document {2}, warehouse must be {3} and locator must be {4}*
 
@@ -195,13 +197,12 @@ one that was wrong — and Recommit.
 There are two buttons in the **More** menu of the Business Requests screen, and the right one depends
 on what you changed.
 
-- **Reprocess** puts the stored request back in the queue exactly as it is.
-  - An **accounting request** already holds its lines with the accounts chosen at save time.
-  - An **inventory request** holds the term's account sides as they were at save time, and reads
-    the warehouse, item and party accounts again when it runs.
-- **Recommit** saves the origin document again, which raises fresh requests from the document, its
-  term and the master data as they are now. For an invoice's stock effect, the document recommitted
-  is the generated Stock Issue or Stock Receipt.
+**Reprocess** puts the stored request back in the queue exactly as it is. **Recommit** saves the
+origin document again, which raises fresh requests from the document, its term and the master data
+as they are now. What each kind of request reads again when it runs is explained under
+[The two things you can do about it](/platform/background-processing/business-requests#The-two-things-you-can-do-about-it);
+the table below turns that into a decision. For an invoice's stock effect, the document recommitted
+is the generated Stock Issue or Stock Receipt.
 
 | What did you change? | Failed inventory request | Failed accounting request |
 |---|---|---|
@@ -211,14 +212,9 @@ on what you changed.
 | The document | Recommit | Recommit |
 | Nothing on the document: a period was reopened, a lock cleared | Reprocess | Reprocess |
 
-::: warning Who can press them
-Both buttons need the **Edit After Commit** level on the **Configuration Group** screen in the user's
-[security profile](/platform/security/security-profiles). Recommit also needs **Allow Record
-Recommitting**, a switch that is on by default but
-[hidden from the security profile screen](/platform/security/security-profiles#Fields-Hidden-on-Purpose).
-Without it the button is still there, and pressing it is refused with
-*Current User {0} Cannot Recommit Records, Please Review Security Profile Options* — «المستخدم الحالي {0} لا يستطيع إعادة حفظ الملفات برجاء مراجعة اختيارات ملف الصلاحيات».
-:::
+Both buttons are governed by the user's security profile. The levels they need, and the refusal a
+user without them gets, are under
+[Who can Reprocess and Recommit](/platform/background-processing/business-requests#The-two-things-you-can-do-about-it).
 
 Nothing retries a failed request on its own. Once the row is **Processed**, the critical error count
 updates itself.
@@ -232,7 +228,7 @@ updates itself.
 | *The account {0} must be used with types {2}{3}{4}{5}{6}{7}{8}{9}{10}, you are using it with {1}* — «الحساب {0} يجب أن يستخدم مع الأنواع {2}{3}{4}{5}{6}{7}{8}{9}{10}، بينما يتم استخدامه الآن مع {1}» | The party's type is not one of the account's Subsidiary Types. | Add the type on the account and Reprocess, or use the right account and Recommit. |
 | *The account {0} can not be used with subsidiary {1} because it is a detail account* — «الحساب {0} لا يمكن أن يستعمل مع الذمة {1} لأنه حساب فرعي» | A detail account was given a party. | Clear the party or use the subsidiary account, then Recommit. |
 | *Error while generating entity {0}: {1} from entity {2}:{3}:-* — «خطأ أثناء إنشاء {0}: {1} من السجل {2}: {3}:-» | A document generated after costing (usually a Processing Document's output receipt) was refused. | Read the reason after `:-` in Error Description, fix it, Reprocess the issue's inventory request. |
-| *Line without amount* — «سطر بدون مبالغ» | A salary entry line has neither debit nor credit. | Correct the component lines or the account-line percentages, then Recommit. |
+| *Line without amount* — «سطر بدون مبالغ» | An entry line has neither debit nor credit, usually on a salary document. | On a salary document, correct the component lines or the account-line percentages, then Recommit. |
 | *For serial {0} of item {1} in document {2}, warehouse must be {3} and locator must be {4}* — «المسلسل {0} للصنف {1} في المستند {2} , يجب أن يكون المخزن {3} و الموقع {4}» | The serial is not in the warehouse or locator it is issued from. | Correct the warehouse, locator or serial, then Recommit. |
 | *There are {0} failed requests, please contact our support team and provide them the following message: SYSFRQS is {1}* — «يوجد {0} مستندات فشلت معالجتها. يرجى التواصل مع الدعم الفني و إبلاغهم بالخطأ التالي: SYSFRQS is {1}» | The critical error at login that counts failed requests. | Work through the failed rows with this page. |
 

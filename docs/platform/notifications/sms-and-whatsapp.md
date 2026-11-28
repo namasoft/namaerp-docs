@@ -4,17 +4,18 @@ entities: [WhatsAppMessageConfiguration, WhatsAppMessage]
 # SMS and WhatsApp Configuration in Nama ERP
 
 Nama ERP supports sending messages via SMS and WhatsApp to users, customers, suppliers, and other entities.
-To enable this feature, configure the appropriate settings from the **Global Configuration** screen.
+SMS gateways are set up in the **SMS Settings** grid of **Global Configuration**; WhatsApp services are set up on the
+**WhatsApp Message Configuration** screen (**Administration → Other → WhatsApp Message Configuration**).
 
 ## The two provider lists
 
-Messages leave Nama through one of two grids in Global Configuration: the **SMS settings** grid, whose **Provider** list holds every gateway this build ships, and the **WhatsApp message settings** grid, whose **Provider** list holds the WhatsApp services. Several services sit in both — a WhatsApp gateway chosen from the SMS grid sends the message over WhatsApp rather than as an SMS.
+Messages leave Nama through one of two places: the **SMS Settings** grid in Global Configuration, whose **Service Provider** list holds every gateway this build ships, and the **WhatsApp Message Configuration** screen, whose **Service Provider** list holds the WhatsApp services. Several services sit in both — a WhatsApp gateway chosen from the SMS grid sends the message over WhatsApp rather than as an SMS.
 
-The **SMS settings** Provider list reads:
+The **SMS Settings** Service Provider list reads:
 
 `mobilyws` · `maktoobicom` · `androidsmsgateway` · `sms.com.eg` · `SMS Misr` · `taqnyat.sa` · `Vodafone Egypt` · `jawalbsms.ws` · `Unifonic` · `URL Generic` · `waboxapp` · `UltraMsg.com WhatsApp Integration` · `Waapi.app WhatsApp Integration` · `WaPilot.net` · `WasenderAPI`
 
-The **WhatsApp message settings** Provider list reads:
+The **WhatsApp Message Configuration** Service Provider list reads:
 
 `Unifonic` · `Rasayel` · `Wati` · `Morasalaty` · `WaApi` · `UltraMsg` · `WaPilot.net` · `respond.io` · `WasenderAPI` · `Yeastar`
 
@@ -48,11 +49,11 @@ A few entries read as bare lower-case identifiers (`mobilyws`, `maktoobicom`, `a
 ## SMS Provider: Vodafone Egypt
 
 * **SMS Provider**: `Vodafone Egypt`
-* **User Name**: Account ID
+* **Username**: Account ID
 * **Password**: API Password
 * **Sender**: Sender Name
 * **Other Settings**: Secret Key
-* **Correction Query** (to ensure correct phone format):
+* **Phone Number Corrector Query** (to ensure correct phone format):
 
   ```sql
   select case when {to} like '2%' then {to} else concat('2',{to}) end
@@ -68,7 +69,7 @@ expects each value; Nama fills them in for every message:
 |---|---|
 | `{sender}` | The **Sender** of the line. |
 | `{to}` | The recipient's number. |
-| `{user}` | The **User Name** of the line. |
+| `{user}` | The **Username** of the line. |
 | `{password}` | The **Password** of the line. |
 | `{message}` | The message text as it is. |
 | `{utf8message}` / `{utf8msg}` | The message text encoded for a web address — the usual choice. Spaces are sent as `+`. |
@@ -195,11 +196,11 @@ To enable sending WhatsApp messages from Nama ERP using [wapilot.net](https://wa
 
 ### Nama ERP Settings
 
-In the WhatsApp message settings screen:
+In the **WhatsApp Message Configuration** screen:
 
-* **Provider**: `WaPilot.net`
-* **Username (Public ID)**: Instance ID
-* **Password (Secret)**: API Token
+* **Service Provider**: `WaPilot.net`
+* **Public Id / API Endpoint**: Instance ID
+* **Secret / Access Token**: API Token
 
 ::: tip
 WaPilot can also be used as an SMS provider through the SMS settings screen, where messages are sent via WhatsApp instead of traditional SMS.
@@ -229,13 +230,13 @@ To send WhatsApp messages from Nama ERP using [wasenderapi.com](https://wasender
 
 ### Nama ERP Settings
 
-In the WhatsApp message settings screen:
+In the **WhatsApp Message Configuration** screen:
 
-* **Provider**: `WasenderAPI`
-* **Password (Secret)**: the session API Key
-* **Username (Public ID)**: leave empty. WasenderAPI has no instance identifier, so the field is disabled for this provider
+* **Service Provider**: `WasenderAPI`
+* **Secret / Access Token**: the session API Key
+* **Public Id / API Endpoint**: leave empty. WasenderAPI has no instance identifier, so the field is disabled for this provider
 
-To send from several numbers, create one session per number and add a row per sender in the **Public IDs by Sender** table with the session's API Key in the **Secret** column. Leave the **Public ID** column empty; it is only required for providers that work with instance identifiers.
+To send from several numbers, create one session per number and add a row per sender in the **Public IDs by Sender** table with the session's API Key in the **Secret / Access Token** column. Leave the **Public Id / API Endpoint** column empty; it is only required for providers that work with instance identifiers.
 
 ::: tip Media messages
 Set the **Media Type** of the WhatsApp message to File, Image, Video, or Audio so the attachment reaches the recipient in the matching form: an invoice PDF as a document, a picture as an inline image. As with the other providers, the **Media URL** must be reachable from the internet.
@@ -246,7 +247,7 @@ WasenderAPI paid plans accept roughly one message every 5 seconds per session; t
 :::
 
 ::: tip
-WasenderAPI can also be used as an SMS provider through the SMS settings screen (Provider `WasenderAPI`, Password = session API Key), where messages are sent via WhatsApp instead of traditional SMS.
+WasenderAPI can also be used as an SMS provider through the SMS Settings grid (Service Provider `WasenderAPI`, Password = session API Key), where messages are sent via WhatsApp instead of traditional SMS.
 :::
 
 ---
@@ -337,16 +338,16 @@ This feature is available for all WhatsApp service providers supported in the sy
 
 ### Setting Up Multiple Numbers in WhatsApp Settings
 
-In the **WhatsApp Message Settings** screen, there is a **Public IDs by Sender** table that allows you to define multiple numbers (Instances) for the same settings:
+In the **WhatsApp Message Configuration** screen, there is a **Public IDs by Sender** table that allows you to define multiple numbers (Instances) for the same settings:
 
 | Field | Description | Required |
 |-------|-------------|----------|
 | **Sender ID** | Sender identifier (such as phone number or employee code) | Yes |
-| **Public ID** | The Instance identifier for this number | Yes, except for Morasalaty and WasenderAPI, which do not use it |
-| **Secret** | The secret key — can be left empty to be read from the main field | No |
+| **Public Id / API Endpoint** | The Instance identifier for this number | Yes, except for Morasalaty and WasenderAPI, which do not use it |
+| **Secret / Access Token** | The secret key — can be left empty to be read from the main field | No |
 
 ::: tip
-If the **Secret** field is left empty in any row, the system will use the value in the main (Secret) field in the screen header.
+If the **Secret / Access Token** column is left empty in any row, the system will use the value in the **Secret / Access Token** field in the screen header.
 :::
 
 ---
@@ -359,14 +360,16 @@ In the **Notification Definition** or **Approval Definition** screen, there is a
 
 | Syntax | Description |
 |--------|-------------|
-| `{salesRep.mobile}` | Phone number of the sales representative linked to the record |
-| `{createdByUser.mobile}` | Phone number of the user who created the record |
-| `{customer.accountManager.mobile}` | Phone number of the customer's account manager |
+| `{customer.salesMan.contactInfo.mobile}` | Mobile number of the customer's salesman |
+| `{firstAuthor.employee.contactInfo.mobile}` | Mobile number of the employee linked to the user who created the record |
+| `{customer.responsibleForCustomer.contactInfo.mobile}` | Mobile number of the employee responsible for the customer |
+
+Whatever the expression produces must equal a **Sender ID** in the **Public IDs by Sender** table, so write the Sender IDs in the same form.
 
 ::: info How the System Works
-1. When sending a WhatsApp message, the system calculates the **Preferred Sender** value using Tempo syntax
-2. The system searches for this value in the **Public IDs by Sender** table
-3. If a match is found, it uses the Public ID and Secret from that row
+1. When sending a WhatsApp message, the system calculates the **WhatsApp Preferred Sender** value using Tempo syntax
+2. The system searches for this value in the **Sender ID** column of the **Public IDs by Sender** table
+3. If a match is found, it uses that row's **Public Id / API Endpoint** and **Secret / Access Token**; a column left empty on the row falls back to the header field
 4. If no match is found, it uses the default values from the screen header
 :::
 
@@ -428,8 +431,8 @@ To enable sending WhatsApp messages from Nama ERP using WaboxApp, follow these s
 * **WhatsApp Web must remain open** in the Chrome browser.
 * If either side is closed, **messages will not be sent**.
 * WaboxApp charges the credit card if you exceed **100 messages/month** (sent or received).
-* It is preferable to use this provider in the `Preferred Message Provider` field in notification and scheduled task settings.
-* Use the field `Used only if added in the preferred sender` in the service provider settings (as in request `KKDRQ00577`) to avoid always replacing the message provider with WhatsApp.
+* It is preferable to name this provider in the **Preferred SMS Sender** field of the notification definitions and task schedules that should use it.
+* Tick **Use Only If Specified in Preferred Sender** on its SMS Settings row so that it is used only where it is named, instead of replacing the SMS provider for every message.
 * The phone number must be in international format, i.e. starting with the **country code**.
 
 :::

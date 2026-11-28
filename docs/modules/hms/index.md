@@ -25,15 +25,7 @@ Each of these services produces its own **invoice** (lab test invoice, radiology
 
 ## How documents work in Nama ERP
 
-::: tip Understanding document states
-Unlike systems that require a separate step before a saved document reaches the accounts, Nama ERP acts immediately:
-
-**Draft:** create and edit the document with no accounting effect.
-
-**Saved:** the moment a document is saved out of draft, it creates its accounting effect **immediately** (revenue, costs, patient and insurer balances), and may auto-generate other documents (accommodation, invoice, stock issue).
-
-**Edits:** any change to a saved document is reflected at once, with no separate confirmation step.
-:::
+A hospital document saved as a **Draft** has no effect. Once it is saved out of draft, its accounting effect (revenue, costs, patient and insurer balances) is raised as a **business request** processed in the background, and some documents generate others on the same save (an admission its accommodation, an accommodation exit its accommodation invoices, a pharmacy invoice its stock issue). Later edits flow through the same way, with no separate confirmation step. The full story is on [The Life of a Document](/platform/documents-and-records/document-lifecycle).
 
 ## Licensing
 

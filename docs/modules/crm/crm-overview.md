@@ -3,7 +3,7 @@ description: "Map of the CRM menu: the five separate products it holds (support 
 ---
 # CRM Overview
 
-The Customer Relationship Management menu — «خدمة العملاء» — is one of the widest branches in Nama ERP. It holds ninety-six screens covering sales leads, marketing campaigns, customer visits, support tickets, service contracts, questionnaires, and a full equipment-maintenance operation with its own contracts, work orders and invoices.
+The Customer Relationship Management menu — «خدمة العملاء» — is one of the widest branches in Nama ERP. It holds more than a hundred screens covering sales leads, marketing campaigns, customer visits, support tickets, service contracts, questionnaires, and a full equipment-maintenance operation with its own contracts, work orders and invoices.
 
 Before you set any of it up, there is one thing worth understanding, because almost every wrong expectation about this module comes from not knowing it.
 
@@ -35,7 +35,7 @@ None of this makes the module unusable. It means you should choose the part you 
 |---|---|---|
 | Support | الدعم | Trouble tickets, complaints, service contracts, warranties, visits, calls, tasks, and most of the CRM classification files |
 | Marketing | التسويق | Leads, potentials, campaigns, marketing and target plans, competitors, offers and analysis |
-| Questionairs | استبيانات | Questionnaire templates, questions, questionnaires and the follow-up document |
+| Questionnaires | استبيانات | Questionnaire templates, questions, questionnaires and the follow-up document |
 | Maintenance Files | ملفات الصيانة | Machines, machine types, locations, classifications, fault catalogues and the service catalogue |
 | Maintenance Documents | مستندات الصيانة | The whole machine-maintenance document cycle |
 | Service Documents | سندات خدمات الصيانة | The parallel service-maintenance suite |
@@ -45,19 +45,17 @@ None of this makes the module unusable. It means you should choose the part you 
 
 Two screens inside this menu do not belong to the CRM module at all: **Contact** and **Social Media Subscriber Configuration** are shared Basic-module files that appear here for convenience, and they need only the `basic` licence.
 
-The English spelling of the Questionnaires folder reads **"Questionairs"** on screen. That is the real label; look for it as spelled.
-
 ## Licences
 
 The CRM branch appears as soon as the module licence is present, and then each screen hides itself according to its own licence. Use these codes exactly as written:
 
 | Licence code | Screens | Covers |
 |---|---|---|
-| `crm` | 43 | Support, Marketing, Questionairs, the risk register |
+| `crm` | 43 | Support, Marketing, Questionnaires, the risk register |
 | `crm-maintenance` | 38 | Maintenance Files and Maintenance Documents |
 | `crm-maintenance-services` | 10 | Service Documents |
 | `crm-kitchen-net` | 5 | The Kitchen Net back office |
-| `crm-technician-appointments` | 7 | Technician Appointments, plus the booking calendar and My Appointments |
+| `crm-technician-appointments` | 8 | Technician Appointments, plus the booking calendar and My Appointments |
 
 Two further codes exist in the licence manager — one for the maintenance mobile app and one for the visits mobile app — but they unlock no ERP screen. They license the phone applications, not anything in this menu. If a screen you expect is missing, it is one of the five codes above that you need.
 
@@ -65,7 +63,7 @@ Two further codes exist in the licence manager — one for the maintenance mobil
 
 This trips up experienced users, so it is worth naming them plainly. **Leads, Potentials, Campaigns, Marketing Plans, Target Plans, Tasks, Projects, Warranties and Service Records are master files**, not documents.
 
-That means no book, no document term, no document number and value date, and no approval cycle. You cannot configure accounts on them, they never create an accounting entry, and there is nothing to process. One of them is even labelled "MarketingPlan document" on screen; it is still a master file.
+That means no book, no document term, no document number and value date, and no approval cycle. You cannot configure accounts on them, they never create an accounting entry, and there is nothing to process. One of them is even labelled "Marketing Plan document" on screen; it is still a master file.
 
 If you are looking for the document term of a lead, there isn't one — and the absence is by design rather than a missing setup step.
 
@@ -79,7 +77,7 @@ Knowing the ceiling early saves a great deal of wasted configuration:
 **Nothing in this module runs on a schedule.** There is no task schedule, no reminder, no alarm, no SLA timer, no automatic escalation and no notification to a customer or a technician. Every "planned" date on every screen is a note to a human being. Work that looks automatic — expanding a maintenance contract into visit schedules, turning those into orders — happens when somebody presses a button.
 :::
 
-Also absent, despite fields that suggest otherwise: any weighted pipeline or sales forecast, any campaign return-on-investment calculation, any comparison of a target plan against actual results, and any aggregation of questionnaire answers.
+Also absent, despite fields that suggest otherwise: any weighted pipeline or sales forecast, any campaign return-on-investment calculation, any comparison of a target plan against orders, invoices or revenue (a [target plan](/modules/crm/marketing/crm-target-plans) compares activity counts only), and any aggregation of questionnaire answers.
 
 ## Where to go next
 

@@ -56,7 +56,7 @@ The software stack on that machine is:
 | Application server | Apache Tomcat 10 |
 | Database | Microsoft SQL Server 2016 or higher; 2022 or newer recommended |
 
-Installation itself is performed by a graphical installer that creates the database and its user, sets up the backup jobs, deploys the application and can obtain an SSL certificate — the full walkthrough is in the [Installation Guide](../getting-started/installation-guide.md).
+Installation itself is performed by a graphical installer that generates the scripts for the database, its user and the backup jobs, deploys the application and can obtain an SSL certificate — the full walkthrough is in the [Installation Guide](../getting-started/installation-guide.md).
 
 ## Network and ports
 
@@ -87,14 +87,13 @@ Nama ERP keeps data in three places, and a complete recovery plan has to account
 
 ## Backup and recovery
 
-The installer configures a backup regime through SQL Server Agent, and it is worth understanding rather than simply inheriting:
+The installer's **DB Scripts** window generates a backup regime that runs through SQL Server Agent, and it is worth understanding rather than simply inheriting:
 
-- A **full backup** on a nightly schedule.
-- **Differential backups** every two to three hours through the working day, so the worst case is measured in hours rather than a day.
-- A **cleanup job** that removes older backup files, so the backup volume does not silently fill.
-- An optional **upload to cloud storage** — Google Drive, Dropbox, OneDrive or similar — which is what turns a backup into a disaster-recovery plan. A backup sitting on a second drive inside the same server does not survive the events you are insuring against.
+- A **full backup** every night at 3:00 AM.
+- **Differential backups** every 20 minutes, around the clock, so the worst case on the server itself is measured in minutes rather than a day.
+- A **cleanup task** — a Windows scheduled task that runs every hour and keeps the five newest files in each database's `full` and `diff` backup folders, so the backup volume does not silently fill.
 
-Two things are worth adding to what the installer sets up. First, if attachments are kept outside the database, include their folder in the off-site copy. Second, test a restore before you need one; an untested backup is a hypothesis.
+Three things are worth adding to what the installer sets up. First, an **upload to cloud storage** — Google Drive, Dropbox, OneDrive or similar — which is what turns a backup into a disaster-recovery plan; the installer does not set it up. A backup sitting on a second drive inside the same server does not survive the events you are insuring against. Second, if attachments are kept outside the database, include their folder in the off-site copy. Third, test a restore before you need one; an untested backup is a hypothesis.
 
 ## Availability and disaster recovery
 

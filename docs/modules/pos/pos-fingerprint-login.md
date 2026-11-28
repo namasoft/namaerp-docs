@@ -43,7 +43,7 @@ This option is the master switch — without enabling it, none of the fingerprin
 Not every user should be able to enroll other users' fingerprints. That is why a dedicated permission was added to control this:
 
 1. Open the **POS Security Profile** (POS Security Profile) for the user or group.
-2. Enable the **"CanEnrollFingerprints"** permission.
+2. Enable the **"Can Enroll Fingerprints"** permission.
 3. Save the file.
 
 ::: tip
@@ -56,7 +56,7 @@ After setup, authorized users can enroll new fingerprints. The process is done d
 
 1. Open the **side menu**.
 2. Go to **"Actions"**.
-3. Select **"Fingerprint Enrollment"**.
+3. Select **"Fingerprint Enrollment"** (or press `Ctrl+F`).
 
 The enrollment window will appear, containing:
 
@@ -114,5 +114,5 @@ Fingerprint data follows the same synchronization mechanism as other POS data wi
 
 - When a new fingerprint is enrolled or an existing one is deleted, the record is flagged as **not sent** (sent = false).
 - The system automatically sends unsent fingerprints to the server within the regular synchronization cycle.
-- On the server, fingerprints are stored in the **"User Fingerprint"** file within the core system — see [User Fingerprints](/platform/security/user-fingerprints) for that screen and for removing a fingerprint from every register at once.
+- On the server, fingerprints are stored in the **"User Fingerprints"** file within the core system — see [User Fingerprints](/platform/security/user-fingerprints) for that screen and for removing a fingerprint from every register at once.
 - The fingerprint file ID is recorded in the **Action History** for tracking and auditing purposes.

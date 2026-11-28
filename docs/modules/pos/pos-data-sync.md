@@ -28,13 +28,17 @@ The practical promise is simple: **an outage never costs you a shift's sales.** 
 
 Usually sync is invisible. Occasionally a document gets stuck, and it helps to know why and what to do.
 
-Each time a document fails to send, the register counts the failure against it. After **25** failed attempts (the default), it stops retrying that document automatically, so a single bad document does not jam the queue forever. Common reasons a document fails:
+Each time a document fails to send, the register counts the failure against it. After **25** failed attempts it stops retrying that document automatically, so a single bad document does not jam the queue forever. The limit is **Number Of Times For Resending Failed Invoice** on the POS Settings screen; 25 applies when it is empty or zero. Invoices, returns and replacements that are held, or whose payment is delayed, are not sent until they are completed. Common reasons a document fails:
 
 - **The server is unreachable** — an outage or a network problem. These clear themselves once the connection is back.
 - **A validation error on the server** — the document breaks a business rule (a blocked customer, an item that no longer exists, and so on). This needs the underlying issue fixed in the main system first; then the document can go up.
 - **An authentication problem** — the register's credentials are not accepted. One for IT.
 
-A document that has hit the retry limit stays unsent and waits for someone to look at it. Once the root cause is resolved, the attempt counter can be reset so the register tries again — the exact steps (and the SQL behind them) are in the [technical points guide](./nama-pos.md#Resetting-the-Send-Attempt-Counter-for-Unsent-Documents).
+A document that has hit the retry limit stays unsent and waits for someone to look at it. Once the root cause is resolved, there are three ways to make the register try again:
+
+- **Send All** («إرسال الكل», on the toolbar and as **ReSendAllDocs** in the slide menu) opens a small window with two buttons. **Force Send** («إرسال إجباري») sends every unsent document now, including those that used up their retries, without changing their counters; with nothing waiting it says *No Data to send* — «لا توجد بيانات للإرسال». **Reset and Force Send** («إعادة تعيين وإرسال إجباري») sets the counter of the documents that reached the limit back to zero and sends them; with none it says *No failed documents exceeding retry limit* — «لا توجد سندات تجاوزت الحد الأقصى لمحاولات الإرسال».
+- On the server, tick **Resend POS Data To Nama** on the register record. When the machine next receives the record it resets the counters of its unsent documents, sends them, and clears the box.
+- Run the SQL in the [technical points guide](/modules/pos/nama-pos#Resetting-the-Send-Attempt-Counter-for-Unsent-Documents) against the register's database.
 
 ::: warning Fix the cause first
 Resetting the counter only tells the register to try again. If the reason for the failure is still there — the network is still down, the validation still fails — it will just fail again. Sort out the cause, then reset.

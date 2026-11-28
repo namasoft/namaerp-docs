@@ -20,7 +20,7 @@ Manual execution when document lines need dimension values populated from availa
 ## How It Works
 
 1. **Updates base quantities** - Recalculates base unit quantities for all lines
-2. **Clears existing dimensions** - Optionally removes existing dimension values first
+2. **Clears existing dimensions** - Optionally removes the existing value of the collected dimension first. A line that still has a value in that dimension is left as it is
 3. **Searches available inventory** - Queries ItemDimensionsQty for items with positive quantities and specific dimensions
 4. **Splits lines by availability** - Creates multiple lines when quantities are available in different lots/dimensions
 5. **Fills dimension values** - Populates lot ID, color, size, box, revision, warehouse, locator from inventory records
@@ -28,15 +28,15 @@ Manual execution when document lines need dimension values populated from availa
 
 ## Parameters
 
-**Parameter 1:** Property Name (Optional) - Dimension to collect by
+**Parameter 1:** Property, can be one of the following(lotId,box,size,color,revisionId,warehouse,locator) (Optional) - Dimension to collect by
 - Options: `lotId`, `box`, `size`, `color`, `revisionId`, `warehouse`, `locator`
 - Default: `lotId`
 
-**Parameter 2:** Clear Existing Data (Optional) - true/false to clear dimension values first
+**Parameter 2:** Clear Existing Data(true,false) (Optional) - true/false to clear the value of the collected dimension on every line first
 - Default: false
 
-**Parameter 3:** Minimum Quantity (Optional) - Skip lines with quantity below this value
-- Example: `10` to ignore lines with less than 10 units
+**Parameter 3:** Do Not Collect If Quantity Less Than (Optional) - A quantity taken from one stock record is skipped when it is below this value, in the unit of the line
+- Example: `10` to ignore available quantities of less than 10 units
 
 ## Database Tables Affected
 

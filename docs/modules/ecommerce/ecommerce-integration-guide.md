@@ -18,7 +18,7 @@ Most of a site's settings work the same way on every platform, and they are expl
 | Salla | Salla Site | [Salla integration](/modules/ecommerce/salla-integration.md) |
 | Zid | Zid Site | [Zid integration](/modules/ecommerce/zid-integration.md) |
 | Shopify | Shopify Site | [Shopify integration](/modules/ecommerce/shopify-integration.md) |
-| WooCommerce | Woo Commerce Site | [WooCommerce integration](/modules/ecommerce/woocommerce-integration.md) |
+| WooCommerce | WooCommerce Site | [WooCommerce integration](/modules/ecommerce/woocommerce-integration.md) |
 | BigCommerce | BigCommerce Site | [BigCommerce integration](/modules/ecommerce/bigcommerce-integration.md) |
 | Atheer | Atheer Site | [Atheer integration](/modules/ecommerce/atheer-integration.md) |
 | Amazon | Amazon / Amazon (Sandbox) | [Amazon order notifications](/modules/ecommerce/amazon-order-notifications.md) |
@@ -48,7 +48,7 @@ Items, prices, stock quantities, order statuses and Magento invoices and shipmen
 2. Pick the **Site Type**. The connection fields (**URL**, **User Name (Consumer Key)**, **Password (Consumer Secret)** and the platform tab) mean different things on each platform, so fill them as the platform's page says. For Magento, see [Magento sites](#Magento-sites).
 3. Fill the site's **Legal Entity** and other dimensions. They decide which stock movements the site reacts to (see [Sending stock quantities](#Sending-stock-quantities)) and which dimensions are used when Nama looks up an item's current price for the shop.
 4. Fill the order settings: **Order Info** and, if you take returns, **Return Info**, plus the customer and payment settings explained in [Bringing orders in](#Bringing-orders-in).
-5. Fill the **QTy Update Configuration** grid if the site should receive stock quantities.
+5. Fill the **Qty Update Configuration** grid if the site should receive stock quantities.
 6. Save.
 
 A few general fields are worth knowing:
@@ -109,13 +109,13 @@ Each platform names and filters its statuses differently, and some offer a pick 
 
 The **Order Info** group says what an order becomes: **Import As** (Sales Invoice, Sales Order, Sales Quotation, POS Sales Invoice, Sales Return, Sales Return Request or POS Sales Return), its **Book** and its **Term**. The term must belong to the document type in **Import As**. **Return Info** does the same for returns, and **Request Info** for the platforms that send requests (Atheer).
 
-When one shop needs different documents for different orders, for example a sales order for cash-on-delivery orders and a sales invoice for prepaid ones, use the **Generate Document Based On Order Criteria Lines** grid. Each row has an **Ecommerce Entity Type** (Order, Order Return …), an **Apply When Query** run against the order's data, and its own Import As, book and term. Nama uses the first row of the right type whose query returns a result, and falls back to Order Info or Return Info when none does.
+When one shop needs different documents for different orders, for example a sales order for cash-on-delivery orders and a sales invoice for prepaid ones, use the **Generate Document Based On Order Criteria Lines** grid. Each row has an **Ecommerce Entity Type** (Order, Order Return …), an **Apply When Query** run against the order's data, its own Import As, book and term, and its own **Save Order As Draft**. Nama uses the first row of the right type whose query returns a result, and falls back to Order Info or Return Info when none does.
 
 How the document is saved:
 
 - By default the document is committed, following any approvals set up for it.
-- **Save Order As Draft** saves new documents as drafts, for someone to review and commit. A document that was committed before is committed again.
-- **Save Orders As Draft If Errors Occurs** keeps orders from being lost: when an order cannot be committed, Nama saves it as a draft instead.
+- **Save Order As Draft** saves new documents as drafts, for someone to review and commit. A document that was committed before is committed again. When a row of **Generate Document Based On Order Criteria Lines** is used for the order, the row's own **Save Order As Draft** decides instead of the site's.
+- **Save Orders As Draft If Errors Occur** keeps orders from being lost: when an order cannot be committed, Nama saves it as a draft instead.
 - An order already imported as a committed document is left alone on later reads. Tick **Update Sales Document Even If It was Read Before** to update it from the shop each time. **Ignore Matched Documents Query** and **Ignore Matched Documents Criteria** let you protect particular documents from being updated, for example those already delivered.
 
 The document's date is the order's creation time. Its currency is the order's currency when a Nama currency has the same code. Its dimensions come from the book. Each document keeps the shop's order number, which is how Nama recognises the order on later reads.
@@ -131,7 +131,7 @@ Each order line's SKU is matched to an item as described in [Linking items to th
 - Size, colour and revision come from the order's product options or from the linker line. **Prefer Specific Dimensions From Linker Than Metadata** makes the linker win.
 - **Put SKU In Order Details Item Code** writes the SKU into the line's item code.
 - **Read Item Specifications With Order** reads the product options with each line, so field maps can use them.
-- **Copy To Details Remarks (Keys Seperated By Comma)** copies the listed order-line keys into the line remarks.
+- **Copy To Details Remarks (Keys Separated By Comma)** copies the listed order-line keys into the line remarks.
 
 ### Customers
 
@@ -152,7 +152,7 @@ If no customer is found and **Create Customer If Not Found** is ticked, Nama cre
 - Line discounts: a line's discount percent goes to **Put Lines Discount To (Percent)** (Discount 1 when empty), and a line's discount amount goes to **Put Lines Discount 2 To (Percent)** (Discount 2 when empty) as a percent of the line.
 - Coupon discounts go to **Put Coupon Discount To (Percent)** (the document's Header Discount when empty).
 - The order's header discount goes to the document's header discount, or to a line discount when **Put Header Discount In Line Discount** is filled.
-- **From Discount1** … **From Discount4** and **To Discount** in Order Info handle a product sold below its list price: the gap between the shop's original price and the sold price, less the discounts named in the From fields, is put into the discount named in To Discount.
+- **From Discount 1** … **From Discount 4** and **To Discount** in Order Info handle a product sold below its list price: the gap between the shop's original price and the sold price, less the discounts named in the From fields, is put into the discount named in To Discount.
 
 ### Shipping, cash on delivery and gift wrapping
 
@@ -169,7 +169,7 @@ Charges of zero are not added. Tick **Calculate Service Items Price From Sales P
 Payment lines are added to document types that have them, when **Payment Method Calculate Type** is set:
 
 - **From Site Header**: a payment method whose name contains `cod` or `cash` uses **Cash on delivery Payment Method**; anything else uses **Visa Payment Method**.
-- **From Payment Grid**: the first **Payment Methods** row that matches is used. A row matches when its **Apply When Query** matches the order, or its **Payment Method Type** equals the order's payment method, or its **Payment Method Name** equals the method's name. A row can be limited to a period with its From and To dates, which helps when a payment provider changes. When the method is stored elsewhere in the order's data, point **Payment Method Name Type ID** and **Payment Method Name Field ID** at it.
+- **From Payment Grid**: the first **Payment Methods** row that matches is used. A row matches when its **Apply When Query** matches the order, or its **Payment Method Type** equals the order's payment method, or its **Payment Method Name** equals the method's name. A row can be limited to a period with its From and To dates, which helps when a payment provider changes. When the method is stored elsewhere in the order's data, point **Payment Method Type Field ID** and **Payment Method Name Field ID** at it.
 
 The payment line carries the amount paid. Its authorization number is the payment's transaction id, or the value found at **Authorization Number Path** in the order's data. An order paid in several ways gets one line per payment. **Copy Specific Fields To Payment Line** on a row, or **Copy Payment Line Field Map** on the site, fills more fields of the payment line.
 
@@ -190,7 +190,7 @@ The rows of **Generate Document Based On Order Criteria Lines** carry their own 
 An order that cannot be saved does not stop the read: Nama records it and carries on with the next order. The **Read Sales** button still reports success, so after a read check **Log List** on the site's **Statistics** tab. Each row shows the order number, the operation and the reason.
 
 1. Fix the cause, for example link the unknown SKU or correct the term.
-2. Select the row and use **ReRead Selected Orders** from the list's actions. Nama reads that order from the shop again; when it saves, the row disappears.
+2. Select the row and use **Reread Selected Orders** from the list's actions. Nama reads that order from the shop again; when it saves, the row disappears.
 3. **Delete Error** removes rows you no longer need.
 
 To hear about failures without watching the list, pick a notification in **Order Read Error Notification**; it is sent for every failed order. To fetch a single order again from one of its documents, use the document's **Re Read Order From Ecommerce Site** action.
@@ -204,9 +204,9 @@ Whenever the stock of an item changes in Nama, every active site is asked whethe
 
 The site then works out the quantity, looks the product up in the shop by SKU (the linker SKU for that item, size, colour and unit, otherwise the item code) and sends it. Nama sends one update per unit linked on the linkers, so an item sold both by the piece and by the carton updates both products.
 
-### Choosing what is sent: QTy Update Configuration
+### Choosing what is sent: Qty Update Configuration
 
-The **QTy Update Configuration** grid on the main tab says which items are sent and which warehouses count. Each row can be narrowed by item section, item, unit, revision, size, colour, lot, measures and dimensions. Its warehouse columns list up to 20 warehouses, and **Warehouse Apply Type** says whether the stock of those warehouses is counted (**Include**) or left out (**Exclude**).
+The **Qty Update Configuration** grid on the main tab says which items are sent and which warehouses count. Each row can be narrowed by item section, item, unit, revision, size, colour, lot, measures and dimensions. Its warehouse columns list up to 20 warehouses, and **Warehouse Apply Type** says whether the stock of those warehouses is counted (**Include**) or left out (**Exclude**).
 
 All the rows that match the item are added together. Tick **First Applied Line** to use only the first matching row. An item that matches no row is not sent, and its request fails with *Could not find matched configuration lines for request with item {0}* followed by the item's details.
 
@@ -230,13 +230,13 @@ For example, a shop that sells from the two retail warehouses but never from the
 
 ### One total, or one figure per location
 
-By default the shop receives one total quantity per product. Shops that keep stock per branch or location can receive one figure per Nama warehouse instead: fill **Link Ecommerce Warehouses By Nama** with a **Warehouse** and its **Ecommerce Warehouse Id** in the shop. This grid is used by Salla, Zid, Shopify and OTO only. On every other platform leave it empty, and the shop receives the total. The platform pages explain the location ids.
+By default the shop receives one total quantity per product. Shops that keep stock per branch or location can receive one figure per Nama warehouse instead: fill **Link Ecommerce Warehouses By Nama** with a **Warehouse** and its **Ecommerce Warehouse Id** in the shop. Each location then receives the stock of its own warehouse, worked out as in steps 1 and 2 above; the minimum-quantity rule and the rounding of steps 3 and 4 apply only to the single total, so they do not change per-location figures. Warehouses that are not in the grid are not sent. This grid is used by Salla, Zid, Shopify and OTO only. On every other platform leave it empty, and the shop receives the total. The platform pages explain the location ids.
 
 ### Resending quantities
 
 **Update All Qtys** on the site sends every item's quantity again, for example after setting the site up or changing its quantity settings. It asks **Quantities Send Type**:
 
-- **ALL** takes every stock record that matches each **QTy Update Configuration** row. This is the usual choice.
+- **All** takes every stock record that matches each **Qty Update Configuration** row. This is the usual choice.
 - **First Matched** takes only the first matching stock record of each row, so only one item per row is sent. It suits rows that name a single item.
 
 Whichever you choose, each item's quantity is recalculated in full before it is sent. That is why **Resend Quantities for Selected Lines** on a linker can use **First Matched** safely: there it takes one stock record for each selected line's item, which is enough to resend that item.
@@ -290,7 +290,7 @@ With **Send Items To Magento** ticked, saving an item in Nama sends it to the sh
 
 Saving a linker also sends its items, unless Send Item When New Only is ticked, and the **Update Ecommerce Items** button on a linker or a price document sends its items on demand.
 
-When the shop has no product with the item's SKU, Nama creates one with the item's name, description and current price; on Magento the new product starts disabled and hidden, ready for the shop team to complete. When the product exists, Nama keeps its name, status and description as they are in the shop and updates only the fields listed in **Copy Fields Value From The System To Ecommerce Site**. Each row of that grid names the shop's field (**Product Field Name In Ecommerce Site**), the value (**Product Field Value**, which can use the item's fields) and the type of the value (**Product Type**: String, Integer, Double, Boolean or Array).
+When the shop has no product with the item's SKU, Nama creates one with the item's name, description and current price; on Magento the new product starts disabled and hidden, ready for the shop team to complete. When the product exists, Nama keeps its name, status and description as they are in the shop and updates only the fields listed in **Copy Fields Value From The System To Ecommerce Site**. Each row of that grid names the shop's field (**Product Field Name In Ecommerce Site**), the value (**Product Field Value**, which can use the item's fields) and the type of the value (**Product Field Type**: String, Integer, Double, Boolean or Array). With **Product Field Type** = Groovy, the row runs its **Groovy Script** on the product instead.
 
 Item requests are listed in **Items Change Requests** on the **Statistics** tab. Items are sent to Magento, WooCommerce, BigCommerce, Shopify, Zid and Salla sites; the platform pages describe what each one receives.
 
@@ -367,18 +367,18 @@ Most of these messages have no Arabic translation and appear in English on Arabi
 |---|---|---|
 | *Attribute send-ecommerce-data is not true in nama.properties and magento sites with codes {0} is active* — «الخاصية send-ecommerce-data غير مفعلة في nama.properties و مواقع ماجنتو بالأكواد {0} مفعلة» | Sites are active but the server is not allowed to send data to shops. | Add `send-ecommerce-data=true` to `nama.properties`, or mark the listed sites **Inactive**. |
 | *Your licence has {0} magento sites, you are trying to create {1} active sites* | Saving or reading would make more sites active than the licence allows. | Mark an unused site **Inactive**, or extend the licence. |
-| *un defined item with code {0}* | An order line's SKU matches no linker line and no item code. | Link the SKU on a Magento Item Linker, then use **ReRead Selected Orders**. Or tick **Ignore Error If No Item Matches SKU**. |
+| *un defined item with code {0}* | An order line's SKU matches no linker line and no item code. | Link the SKU on a Magento Item Linker, then use **Reread Selected Orders**. Or tick **Ignore Error If No Item Matches SKU**. |
 | *Book not configured for Type {0}* / *Term  not configured for Type {0}* | The Order Info, Return Info or generation row used for the order has no book or term. | Fill **Book** and **Term** in that group or row. |
 | *Document term {0} not compatible with {1}* | The term belongs to a different document type from **Import As**. | Pick a term of the Import As type. |
 | *Could not create customer because the code is null or empty* | A new customer was needed, but the order has no phone number to use as its code. | Correct the order in the shop, or adjust the **Mobile Correction Query**. |
 | *No source invoice found for the return of order {0}; the return was skipped. Enable "Create invoice for returns if invoice not found" on the site to auto-create the invoice.* | An order in a return status was read, but its original order was never imported. | Tick **Create Invoice For Returns If Invoice Not Found**, or import the original order first. |
 | *method readReturns not implemented for site of type {0}* | **Read Returns** was pressed on a site that is not a Magento or Amazon site. | Bring returns in through the return statuses. |
-| *Could not find matched configuration lines for request with item {0}* (followed by the item's details) | The item changed stock but matches no **QTy Update Configuration** row. | Add or widen a row, or ignore it if the item is not meant for the shop. |
+| *Could not find matched configuration lines for request with item {0}* (followed by the item's details) | The item changed stock but matches no **Qty Update Configuration** row. | Add or widen a row, or ignore it if the item is not meant for the shop. |
 | *Could not find item with sku {0} in ecommerce site {1}* | A price was sent for a SKU the shop does not have. | Create the product or correct the linker, then **Retry Selected Lines**. |
-| *Magento Site {0} can not used to link Items, please check this option {1} must be true* — «موقع ماجنتو {0} لا يمكن استخدامه لربط الأصناف, الرجاء التاكد من تفعيل الأوبشن {1}» | A linker points at a site whose **Link Items To This Site** is unticked. | Tick the option on the site, or link the items to another site. |
+| *Magento Site {0} can not used to link Items, please check this option {1} must be true* — «موقع ماجنتو {0} لا يمكن استخدامه لربط الأصناف, الرجاء التأكد من تفعيل الأوبشن {1}» | A linker points at a site whose **Link Items To This Site** is unticked. | Tick the option on the site, or link the items to another site. |
 | *SKU {0} is repeated in linker {1} line {2} and linker {3} line {4}* | The same SKU is used twice among the site's linkers. | Remove one of the two lines. |
-| *Fields {0} , {1} should not be empty, you must fill at least one* — «لا يجب ترك الحقلين فارغين {0} , {1} , يجب علي الأقل ملئ واحد منهم» | A price updater document has neither a special price source nor an original price source. | Fill at least one of them. |
-| *Special price from date and to date is required* — «لا يمكن ترك من تاريخ وإلي تاريخ للسعر الخاص فارغين» | A special price source is chosen but one of its dates is empty. | Fill both dates, or clear the special price source. |
+| *Fields {0} , {1} should not be empty, you must fill at least one* — «لا يجب ترك الحقلين فارغين {0} , {1} , يجب على الأقل ملء واحد منهم» | A price updater document has neither a special price source nor an original price source. | Fill at least one of them. |
+| *Special price from date and to date is required* — «لا يمكن ترك من تاريخ وإلى تاريخ للسعر الخاص فارغين» | A special price source is chosen but one of its dates is empty. | Fill both dates, or clear the special price source. |
 | *You can not create more than one file for type {0} for ecommerce site {1}* — «لا يمكنك إنشاء أكثر من ملف من النوع {0} للمتجر الإلكتروني {1}» | The site already has a committed category configuration. | Edit the existing record instead. |
-| *Percentage must be between 0 and 100* — «النسبه يجب أن تكون بين صفر و 100» | **Minimum Quantity To Send(Percent)** is outside 0-100. | Correct the percent. |
+| *Percentage must be between 0 and 100* — «النسبة يجب أن تكون بين صفر و 100» | **Minimum Quantity To Send(Percent)** is outside 0-100. | Correct the percent. |
 | *User name or password are missing for site {0}* / *URL is missing for site {0}* | A Magento site is missing its admin user, password or URL. | Fill the connection fields. |

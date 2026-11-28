@@ -65,15 +65,18 @@ The hidden columns here are **Code**, **Request Body** and **Response**.
 4. Fix the record in Nama.
 
 The platform may answer a refusal with HTTP 200 and `"success":false` in the body; Nama counts that
-as a failure too, so always read **Success**, not only **HTTP Status**. When a whole request fails
-— the platform was unreachable, or it refused a master-data batch as a whole — every row in that
-batch is marked as not successful.
+as a failure too, so always read **Success**, not only **HTTP Status**. When the platform refuses a
+whole request — a master-data batch, or an invoice batch without naming one document — every row
+in that batch is marked as not successful. When the platform cannot be reached at all, the batch
+writes no rows: a record or document sent before keeps the row of its earlier send, and the run
+reports `Failed to send a batch of …` instead.
 
 ## Retrying — nothing to do
 
 A row that is not ticked as successful is retried automatically. The next run of the schedule
-sends every failed master record and every failed document again, whether or not you changed
-anything. Fix the data, and let the schedule do the rest — or press **Run Now** on the task
+sends again every failed record or document it selects, whether or not you changed anything. A
+master-data run without a query selects every record; the invoice run selects only what its query
+returns, so a failed document is retried only while the query still returns it. Fix the data, and let the schedule do the rest — or press **Run Now** on the task
 schedule if you do not want to wait.
 
 ## Forcing a resend
@@ -117,4 +120,4 @@ the entity flow's message.
 | `Alwatania did not accept {0} of the {1} documents selected, the rest were sent; every document it refused is on its own row of the Alwatania Invoice Log with the answer that refused it` | The run's summary: some documents were still refused after the second attempt | Filter the Invoices Send Log on failed rows and read their **Response** |
 | `{0} is not one of the master files Alwatania accepts, it must be one of {1}` | The entity flow action runs on a screen the platform has no place for | Move the flow to one of the listed master files |
 | `{0} can not be sent to Alwatania as {1}, it can only be sent as {2}` | Parameter 2 of the entity flow action names a type that does not fit the record | Leave parameter 2 empty, or use one of the listed types |
-| `{0} was not sent to Alwatania ({1})` | The entity flow could not send the record; the reason is in brackets | Fix the cause; the scheduled sweep sends the record on its next run |
+| `{0} was not sent to Alwatania ({1})` | The entity flow could not send the record; the reason is in brackets | Fix the cause shown in the brackets |

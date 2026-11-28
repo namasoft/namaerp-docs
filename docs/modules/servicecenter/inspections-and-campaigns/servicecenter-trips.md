@@ -17,7 +17,7 @@ Three master files, in the order you create them:
 
 | What | Where |
 |---|---|
-| Station | Service Center > Master Files > Station |
+| Service Center Station | Service Center > Master Files > Service Center Station |
 | Service Center Trip Route | Service Center > Master Files > Service Center Trip Route |
 | Service Center Trip | Service Center > Master Files > Service Center Trip |
 
@@ -76,13 +76,6 @@ with the vehicle's own odometer.
 Picking a route brings across the departure time, the arrival time and the fuel figure — but **not**
 the distance. If both odometer readings are left empty the trip's distance is zero, whatever the
 route says. Always enter the two readings; they are the whole point of the record.
-:::
-
-::: warning The fuel figure lands where you cannot see it
-When you pick a route, the system copies the route's *Consumed Fuel In Litres* onto the trip — into a
-field that is **not on the trip screen**. The trip shows a distance but no fuel, so fuel per
-kilometre cannot be read off the record, and a driver cannot correct the figure when a journey burnt
-more than usual. Treat fuel as a property of the route, not of the journey.
 :::
 
 ## What trips are not

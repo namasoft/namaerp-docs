@@ -19,7 +19,7 @@ The five **Fixed Asset Classification** levels exist for exactly that. They are 
 Before setting them up it is worth stating plainly what they do *not* do, because the name suggests more than the system delivers:
 
 - They **do not resolve accounts.** No journal entry anywhere in the module looks at a classification. The accounts always come from the asset, which inherited them from its [type](/modules/fixedassets/master-files/fixedassets-asset-types.md).
-- They **supply no defaults.** Choosing a classification never fills a useful life, a salvage value, a depreciation method or anything else on the asset.
+- They **supply no defaults.** Choosing a classification never fills a useful life, a salvage value, a depreciation method or any account on the asset. The only things it fills are the classification levels above it and the asset's Fixed Asset Type, as described below.
 - They **change no behaviour.** No document, no validation and no calculation behaves differently because of them.
 
 What they are is a set of indexed labels on the asset record: something to group by, filter on, print in a report, and use as a range when collecting assets into a document. That is a genuinely useful thing to have, and it is all they are.
@@ -53,7 +53,7 @@ Al-Waha's tree for the CNC machine reads:
 
 ## How They Land on an Asset
 
-On the asset's main page the five classification fields sit under Basic Information, and they fill each other in. Pick `C3-CNC` at level 3 and levels 2 and 1 are filled from the record's own parentage, along with the asset type — you never have to walk the tree downwards by hand.
+On the asset's main page the five classification fields sit under Basic Information, and the first three fill in the tree for you. Pick `C3-CNC` at level 3 and levels 2 and 1 are filled from the record's own parentage, along with the asset type taken from the first classification in that chain that names one. Picking level 2 fills level 1 the same way, and picking level 1 fills only the asset type. Levels 4 and 5 are filled by hand.
 
 Two rules apply when you save the asset:
 

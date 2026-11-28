@@ -65,8 +65,8 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 | المجموعة على الشاشة | الحقل | ماذا يقيّد |
 |---|---|---|
 | **مدين / دائن إلغاء القرض** | `termConfig.cancelLoanDebit`، `termConfig.cancelLoanCredit` | **قيمة القرض** المكتوبة في مستند التعديل. |
-| **مدين / دائن رسوم التعديل** | `termConfig.modificationFeesDebit`، `termConfig.modificationFeesCredit` | جانبا رسوم التعديل. |
-| **مدين / دائن ضريبة رسوم التعديل** | `termConfig.modificationFeesTaxDebit`، `termConfig.modificationFeesTaxCredit` | جانبا الضريبة على رسوم التعديل. |
+| **مدين / دائن رسوم التعديل** | `termConfig.modificationFeesDebit`، `termConfig.modificationFeesCredit` | مطلوبان مع الزوجين الآخرين (انظر أدناه). |
+| **مدين / دائن ضريبة رسوم التعديل** | `termConfig.modificationFeesTaxDebit`، `termConfig.modificationFeesTaxCredit` | مطلوبان مع الزوجين الآخرين (انظر أدناه). |
 
 ::: warning قيد عند الإلغاء فقط، وبالجوانب الستة كلها
 لا يقيّد التوجيه شيئًا إلا إذا كانت خانة **إلغاء قرض** في المستند مؤشَّرة. فمستند التعديل الذي يعدّل القرض

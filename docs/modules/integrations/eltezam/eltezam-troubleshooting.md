@@ -36,14 +36,28 @@ Arabic screens too. The ministry's own refusals appear in whatever language MCS 
 When the ministry's server fails to answer — it cannot be reached, it times out, the address is
 wrong, it answers with nothing or with a web page — **three times in a row**, Nama stops the run
 instead of trying every remaining employee against a server that is down. The employees not yet
-reached stay **Not Sent**, and the run reports:
+reached are marked **Not Sent**, and the run reports:
 
 *Sending stopped after 3 technical failures in a row, the MCS server ({0}) is not answering*
 
 where `{0}` is the address Nama was calling. Only `500-` failures count toward the three; a
 refusal from the ministry, or a record held back by Nama's own checks, does not. One successful
-request resets the count. Fix the address or the connection, then press **Resend Failed
-Employees** — it picks up the Failed and the Not Sent lines alike.
+request resets the count.
+
+A normal send ends as a failure when it stops this way, and what is kept depends on what started
+it:
+
+- **The entity flow on Post Commit** — the save of the submission is refused with this message,
+  so nothing of the run is kept: no line states, no request log. Fix the address or the
+  connection and save the submission again.
+- **`EASubmitEltezamData` with document codes** — the task schedule's run is rolled back, so the
+  listed submissions keep the states and log they had before. Fix the problem and run it again.
+- **`EASubmitEltezamData` without document codes** — the submission it created is kept, with the
+  lines not reached marked Not Sent.
+
+**Resend Failed Employees** does not end as a failure: it keeps what it sent, marks the lines it
+did not reach Not Sent and ends its summary with the message above. Fix the address or the
+connection, then press it again — it picks up the Failed and the Not Sent lines alike.
 
 ## Common problems
 
@@ -58,14 +72,15 @@ the Nama server itself; the service sits on the Government Service Bus, which is
 reachable from ordinary networks.
 
 **The request log is empty but the grid says Succeeded.** The submission was saved again after it
-was sent, which clears its log. The grid still shows the last send's result.
+was sent, which clears its log, and no entity flow sent it again on that save. The grid still
+shows the last send's result.
 
 **An employee's line is Not Sent although nothing failed.** Nothing was produced for that
 employee: for example, only payslips were selected and the employee has no committed salary
 document in the period, or only vacations were selected and none starts in the period.
 
 **Vacations or historical info from past years were sent.** The submission had an HR Period but no
-From / To Date. Those two operations are narrowed by the dates, not by the HR period — see
+From / To Date and no HR Year. Those two operations are narrowed by the dates, not by the HR period — see
 [which documents count as "in the period"](./eltezam-data-sources#Which-documents-count-as-in-the-period).
 
 **A date "falls outside the configured hijri calendar".** Every date is sent in Hijri. Load the
@@ -79,6 +94,11 @@ or hiring date.
 The field name at the start of each message is the ministry's name for the value. Where the
 message says where to fill it, that is the place to look; the tables on
 [What Nama sends to Eltezam](./eltezam-data-sources) give the full source of every value.
+
+These messages carry the code `001-000000` when **Do Not Send Records Having Validation Errors** is
+ticked on the configuration and the request is held back. With it not ticked the request is sent
+anyway, and if the ministry refuses it, the same messages appear in the error message above the
+ministry's own answer, under the ministry's error code.
 
 | Message | Why | What to do |
 |---|---|---|
@@ -121,6 +141,7 @@ message says where to fill it, that is the place to look; the tables on
 | *Could not find an Eltezam configuration with code {0}* | The configuration code in the task schedule is wrong | Correct the code |
 | *Either an Eltezam configuration code or the Eltezam submission documents to send is required* | `EASubmitEltezamData` was given neither | Fill parameter 1 or 3 |
 | *Could not find an Eltezam submission document with code {0}* | A code in the list of submissions is wrong | Correct the list |
+| *Could not find a book for the Eltezam submission document, create one or correct the book code given as the last parameter* | `EASubmitEltezamData` without document codes has no book to create the submission in | Create a book for MCS Eltezam Submission, or correct parameter 8 |
 | *Could not find an HR period with code {0}* / *Could not find an HR year with code {0}* | The HR Period or HR Year parameter does not exist | Correct the code |
 | *From Date ({0}) must be written as yyyy-MM-dd, for example 2026-01-31* (or *To Date …*) | A date parameter is in another format | Rewrite it as `yyyy-MM-dd` |
 | *Save the Eltezam submission document before retrying it* | Resend was pressed on an unsaved document | Save and commit first |

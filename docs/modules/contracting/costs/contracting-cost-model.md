@@ -52,18 +52,19 @@ the module, and the column it lands in on a Cost Execution.
 | Daily Labor Book | Contracting > Contractor Contracting | Workers |
 | Project Contract Fine, Subcontractor Fine | Contracting > project and contractor menus | Fines |
 | Employee And Equipment Project Cost Distribution | Contracting > Master Files | Salaries for a person, Depreciations for a machine |
-| Contracting Purchase Request, Contracting Purchase Order | Contracting > Costs | **quantity only** — they raise the ordered quantity on the term line and add no money |
+| Contracting Purchase Order, Contracting Purchase Request | Contracting > Contractor Contracting | Materials, with the quantity also counted as *Purchase Order Quantity* — the order unless its term ticks *Do Not Apply Contracting Cost And Quantity Effects*, the request only when its term ticks *Apply Contracting Cost And Quantity Effects* (see [Contracting Purchase Requests and Orders](/modules/contracting/costs/contracting-purchasing)) |
 
 And from outside the module, against the same term codes:
 
 | Document | Module | Shows up as |
 |---|---|---|
-| Journal Entry, Receipt and Payment Vouchers, Credit and Debit Notes | Accounting | Invoices |
+| Journal Entry, Receipt and Payment Vouchers | Accounting | Invoices |
+| Credit and Debit Notes | Accounting | the note's own **Cost Type**, required once a project contract is chosen; when the document term sets a Cost Type, the note takes the term's |
 | Asset Depreciation | Fixed Assets | Depreciations |
 | Salary Document | Payroll | Salaries |
 | Dues liquidation, provisions recalculation and the vehicle-insurance documents | Payroll | staff cost — salary cost, or insurance cost which the module tracks without a separate breakdown column |
 
-That last row is the reason a general ledger entry typed by an accountant can legitimately appear in
+The accounting rows are the reason a general ledger entry typed by an accountant can legitimately appear in
 a project's cost: any of those documents can carry a project contract term code on its lines, and
 when it does, the contracting cost machinery picks it up exactly like a material issue.
 
@@ -71,15 +72,11 @@ when it does, the contracting cost machinery picks it up exactly like a material
 
 Four cases surprise people regularly. None of them is a mistake on your part.
 
-- **Contracting Employee And Equipment Issue Invoice** (فاتورة صرف عمالة ومعدات) is the invoice you
-  raise for hired-in labour and plant. It books the money — a payable to whoever supplied them — and
-  it contributes **nothing to project cost**. The document that puts hired staff and machine cost on
-  a project is the **Employee And Equipment Project Cost Distribution**, described in
+- **Contracting Employee And Equipment Issue Invoice** (فاتورة صرف عمالة ومعدات) books a payable for
+  hired-in labour and plant and contributes **nothing to project cost**; see
   [Employees, Equipment and Their Costs](/modules/contracting/costs/contracting-equipment-and-allocations).
-- **Equipment Statement Document** (مستند بيان معدات) is an accounting document. It produces a
-  journal entry for the machine usage you record on it, and it **writes no cost entries at all** —
-  nothing reaches the contract's term lines and no Cost Execution can see it. Treat it as the way you
-  book a plant-hire charge to the ledger, not as a way to load cost onto a project.
+- **Equipment Statement Document** (مستند بيان معدات) produces a journal entry only and **writes no
+  cost entries at all**; see the same page.
 - **The material issue *request*** moves nothing and costs nothing; only the issue does. Same for the
   **Misc Contracting Request** and **Misc Contracting Order** — in that trio only the invoice books
   anything.
@@ -150,7 +147,7 @@ the analysis card:
 | Material / مواد خام | consumables and supplied materials |
 | Worker / عمالة | labour, priced per day or per hour |
 | Contractor / مقاول باطن | work bought from someone else |
-| Other / أخري | everything else — plant hire, utilities, permits, transport |
+| Other / أخرى | everything else — plant hire, utilities, permits, transport |
 
 Those four are the same four families a [term analysis card](/modules/contracting/setup/contracting-term-analysis-cards)
 uses to build up a term's planned cost, which is what makes the catalogue useful in both directions:

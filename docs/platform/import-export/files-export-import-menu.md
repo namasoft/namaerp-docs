@@ -15,13 +15,13 @@ You will find it under **Basic → Settings → Files Export / Import Menu**. Th
 
 ![The Export tab](../../ar/platform/import-export/images/ie-files-export-menu-export-en.png)
 
-The top half repeats the options from the export dialog — *Exporetd Fields*, *Or specify the list*, *Include ID Field*, *Ignore Attachments*, *Include Lines ID Filed*, *Exporting Type* — so that a saved menu carries its own answers and nobody has to remember them. (The *Exporetd Fields* and *Include Lines ID Filed* labels are misspelt on screen; they mean "Exported Fields" and "Include Lines ID Field".)
+The top half repeats the options from the export dialog — *Exported Fields*, *Or specify the list*, *Include ID Field*, *Ignore Attachments*, *Include Lines ID Field*, *Exporting Type* — so that a saved menu carries its own answers and nobody has to remember them. A new menu starts with different defaults from the dialog: *Exported Fields* is *Export All Fields*, *Ignore Attachments* is ticked, and *Exporting Type* is JSON.
 
 Two options appear here that the dialog does not offer:
 
 | Option | Arabic label | What it does |
 |---|---|---|
-| **Export Formatted Json** | تنسيق الملف المُصدر | Writes the JSON indented and readable instead of on one long line. Only matters for JSON. |
+| **Export Formatted JSON** | تنسيق الملف المُصدر | Writes the JSON indented and readable instead of on one long line. Only matters for JSON. |
 | **Export Inner Reference** | تصدير الحقول المرجعية التي لم تذكر مع التصدير | Also exports the master records your records point at, even though you did not select them. Export a batch of invoices with this on and the customers and items they reference come along too — which is what you want when you are moving data to another installation and the target does not have them yet. |
 
 The **Exported Files** grid underneath is where you say *what* to export. Each line is one block of records:
@@ -31,7 +31,7 @@ The **Exported Files** grid underneath is where you say *what* to export. Each l
 | **For Type** | للنوع | The entity type this line exports. |
 | **Entity List** | قائمة الأنواع | A list of types, when one line should cover several. |
 | **Criteria** | المعايير | A saved criteria definition that narrows the records down. The picker only offers criteria built for the type you chose. |
-| **Record** | السجل | A single specific record, when you want to export exactly one. |
+| **Record** | السجل | A single specific record, when you want to export exactly one. A line that names a Record must leave For Type, Entity List and Criteria empty; saving refuses it otherwise with *Field {0} must be empty when field {1} not empty*, which has no Arabic translation. |
 
 Add several lines and one run produces one file containing all of them — the customers, the items and the price lists together. Press **Export Records** and the result arrives as a download, packaged as a zip.
 
@@ -151,11 +151,11 @@ A Files Export / Import Menu is an ordinary master file: it has a code, names, a
 
 ## Messages you may see
 
-All four are refused when you save a menu with **Export Company Logo** ticked; none of them can appear while that box is clear.
+The four logo messages are refused when you save a menu with **Export Company Logo** ticked; none of them can appear while that box is clear.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Logo column start can't be negative value* — «لا يمكن ان يكون بداية عامود الشعار قيمة سالبة» | The logo's starting column is a negative number. Spreadsheet cells start at one. | Enter a positive column number, or leave the field empty. |
-| *Logo row start can't be negative value* — «لا يمكن ان يكون بداية سطر الشعار قيمة سالبة» | The logo's starting row is a negative number. | Enter a positive row number, or leave the field empty. |
-| *Logo column end {0} must be greater than logo column start {1}* — «يجب ان يكون نهاية عمود الشعار {0} أكبر من بداية عمود الشعار {1}» | An end column was given that is not past the start column. Equal counts as not greater, so a one-column-wide logo has to be expressed by leaving the end empty. | Raise the end column, or clear it and let the logo size itself. |
-| *Logo row end {0} must be greater than logo row start {1}* — «يجب ان يكون نهاية سطر الشعار {0} أكبر من بداية سطر الشعار {1}» | An end row was given that is not past the start row. | Raise the end row, or clear it — left empty, the logo is given three rows. |
+| *Logo column start can't be negative value* — «لا يمكن أن يكون بداية عامود الشعار قيمة سالبة» | The logo's starting column is a negative number. Spreadsheet cells start at one. | Enter a positive column number, or leave the field empty. |
+| *Logo row start can't be negative value* — «لا يمكن أن يكون بداية سطر الشعار قيمة سالبة» | The logo's starting row is a negative number. | Enter a positive row number, or leave the field empty. |
+| *Logo column end {0} must be greater than logo column start {1}* — «يجب أن يكون نهاية عمود الشعار {0} أكبر من بداية عمود الشعار {1}» | An end column was given that is not past the start column. Equal counts as not greater, so a one-column-wide logo has to be expressed by leaving the end empty. | Raise the end column, or clear it and let the logo size itself. |
+| *Logo row end {0} must be greater than logo row start {1}* — «يجب أن يكون نهاية سطر الشعار {0} أكبر من بداية سطر الشعار {1}» | An end row was given that is not past the start row. | Raise the end row, or clear it — left empty, the logo is given three rows. |

@@ -21,7 +21,7 @@ Manual execution on electronic stock taking documents when duplicate or similar 
 
 1. **Scans document lines** - Iterates through all stock taking electronic lines in the document
 2. **Compares line properties** - For each line, checks all subsequent lines for identical properties
-3. **Identifies matches** - Lines are considered identical if their propertiesAsText() values match exactly
+3. **Identifies matches** - Lines are considered identical when all of these are the same: item code, department code, expiry date, production date, item, department, locator, unit, lot, serial number, second serial and revision
 4. **Merges quantities** - Adds the quantity from duplicate lines to the first matching line
 5. **Removes duplicates** - Deletes the duplicate lines after merging their quantities
 6. **Continues processing** - Repeats for all lines until no duplicates remain

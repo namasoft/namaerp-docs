@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Retrieves specific order data from Magento e-commerce sites using order IDs. Connects to Magento API to fetch detailed information about individual orders, enabling order synchronization and processing between Magento and the ERP system.
+Reads specific orders from an e-commerce site by their order IDs and saves each one through the site's order import. The IDs are either typed in parameter 2 or rendered from a template in parameter 3 against the record the flow runs on.
 
 ## When This Action Runs
 
@@ -19,18 +19,21 @@ Manual execution when specific orders need to be imported or synchronized. Typic
 
 ## How It Works
 
-1. **Validates site code** - Finds the Magento site using the provided site code
-2. **Creates utility instance** - Initializes EcommerceReaderUtils with the site ID
-3. **Parses order IDs** - Processes the comma-separated list of order IDs
-4. **Calls API** - Invokes readOrdersByIds method to fetch specific orders from Magento
-5. **Processes results** - Handles returned order information and any errors
-6. **Accumulates results** - Collects status information and errors during processing
+1. **Validates site code** - Finds the e-commerce site (`MAGMagentoSite`) by the code in parameter 1; the flow fails with *Can not find site with code {0}* when there is none
+2. **Takes the order IDs** - Uses parameter 2 when it is filled; otherwise renders the template in parameter 3 against the record the flow runs on. When both give nothing, no order is read
+3. **Parses order IDs** - Splits the list on commas and drops repeated IDs
+4. **Reads and saves each order** - Reads each order from the site by its ID and saves it through the site's order import
+5. **Accumulates results** - Collects the result of every saved order
 
 ## Parameters
 
 **Parameter 1:** Site Code (Required) - Code of the MagentoSite to read orders from
 
-**Parameter 2:** Order IDs (Required) - Comma-separated list of Magento order IDs to retrieve
+**Parameter 2:** Order IDs (separated by comma [,]) (Optional) - Comma-separated list of the site's order IDs to read
+
+**Parameter 3:** Order IDs template (e.g. {remarks}), used only when Order IDs is empty (Optional) - A template rendered against the record the flow runs on; its result is used as the comma-separated list of order IDs
+
+Fill parameter 2 or parameter 3, not both: with both filled the entity flow is rejected on saving with *Parameter {0} and parameter {1} can not both be filled, use only one of them*.
 
 ## Example Order IDs Parameter
 
@@ -40,7 +43,7 @@ Manual execution when specific orders need to be imported or synchronized. Typic
 
 ## Database Tables Affected
 
-- **MAGMagentoSite** - References the Magento site configuration (read-only)
+- **MAGMagentoSite** - References the e-commerce site configuration (read-only)
 - **Order Tables** - Creates or updates order data (varies by implementation)
 - **Customer Tables** - May update customer information from orders
 - **Integration Logs** - May create log entries for API calls

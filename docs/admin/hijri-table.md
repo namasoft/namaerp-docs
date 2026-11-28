@@ -22,7 +22,7 @@ one fails with *You can not use hijri dates because hijri files are not configur
   written (the order of day, month and year, and the separator) is set on Global Config's
   [General tab](/platform/global-config/global-config-general#Hijri-date-format).
 - **Real estate contracts and installment plans kept in Hijri.** When **Dates in hijri** is ticked on a
-  rent contract, or **Work With Hijri Dates** on an installment plan, every due date is stepped
+  rent contract or in the installment plan of a real estate sales document, every due date is stepped
   through this table. See [Leases kept in the Hijri calendar](/modules/realestate/rent/realestate-rent-schedule#Leases-kept-in-the-Hijri-calendar).
 - **Eltezam.** Every date sent to the ministry is converted to Hijri, including old birth and hiring
   dates. See [Eltezam setup](/modules/integrations/eltezam/eltezam-setup).
@@ -34,13 +34,13 @@ the last installment of your longest Hijri contract.
 
 | Field | What to put in it |
 |---|---|
-| **Greg StartDate** | The Gregorian date of the **first day of Muharram** of the start year. |
+| **Greg Start Date** | The Gregorian date of the **first day of Muharram** of the start year. |
 | **Hijri Start Year** | The Hijri year that begins on that date. |
 | **Previous** | Empty on the first table. Fill it only on a table that continues another one (see below). |
 | **Details** grid: **Year**, **Month**, **Days Count** | One line per Hijri month, in order, with the number of days that month has in the official calendar. |
 
 Only the **Days Count** column and the start date take part in the conversion. Nama counts forward
-from **Greg StartDate**, month by month, adding each line's days. The **Year** and **Month** columns
+from **Greg Start Date**, month by month, adding each line's days. The **Year** and **Month** columns
 are checked to make sure no month is skipped or repeated, but the conversion does not read them. So
 the first line must be month 1 of the **Hijri Start Year**, and every month after it must be listed.
 
@@ -51,7 +51,7 @@ When you add a line, the grid fills in the next year and month for you, so you o
 Suppose you need dates from the start of 1446 AH onward. 1 Muharram 1446 fell on 7 July 2024.
 
 1. Open **Hijri Table**, give it a code such as `1446-1450`.
-2. **Greg StartDate** = 07/07/2024, **Hijri Start Year** = 1446, **Previous** empty.
+2. **Greg Start Date** = 07/07/2024, **Hijri Start Year** = 1446, **Previous** empty.
 3. In **Details**, enter line 1: Year 1446, Month 1, and the days of Muharram 1446 from the official
    calendar. Add a line; it fills Year 1446, Month 2, and you type the days of Safar. Continue to
    month 12, then on to 1447 month 1, and so on, as far ahead as you need.
@@ -74,7 +74,7 @@ ended. You can chain as many tables as you like, but:
 - no two tables may name the same table as their **Previous**.
 
 To reach further **back** in time (Eltezam's old birth dates are the usual reason), you cannot put a
-table in front of the first one. Instead, edit the first table: move **Greg StartDate** and **Hijri
+table in front of the first one. Instead, edit the first table: move **Greg Start Date** and **Hijri
 Start Year** back to the new starting Muharram, and add the earlier months at the top of its grid.
 
 ## Messages you may see
@@ -89,6 +89,6 @@ Start Year** back to the new starting Muharram, and add the earlier months at th
 | *Theis table apeared as previous moe than one: {0}* | Two tables name the same table as their **Previous**. | Point one of them at the correct table. |
 | *The year must be {0}* / *The month must be {0}* | A line skips or repeats a month. | Correct the line to the year or month the message names. |
 | *Invalid month number {0}* — «رقم شهر غير صحيح {0}» | A month outside 1 to 12. | Fix the month. |
-| *Invalid days count {0}* — «عدد أيام غير صحيح {0}» | A days count that is not a plausible month length. | Enter 29 or 30, as the official calendar gives. |
+| *Invalid days count {0}* — «عدد أيام غير صحيح {0}» | A days count below 29 or above 32. | Enter 29 or 30, as the official calendar gives. |
 
 Apart from the last two, these messages have no Arabic text and appear in English on Arabic screens too.

@@ -20,7 +20,9 @@ Each grid below starts with the usual scope columns, explained in full on the [o
 
 ## Allow Usage Of Prevented Records
 
-Master files get retired. An item is withdrawn from the catalogue, a customer is blocked after a payment dispute, a supplier is struck off the approved list. Rather than delete the record — which would break every historical document that points at it — the record is flagged so that it may no longer be used on **new** documents. When somebody selects it anyway, the save fails with a message telling them the record's usage is prevented.
+Master files get retired. An item is withdrawn from the catalogue, a customer is blocked after a payment dispute, a supplier is struck off the approved list. Rather than delete the record — which would break every historical document that points at it — the record is flagged so that it may no longer be used on **new** documents. When somebody selects it anyway, the save fails with:
+
+*Can not use record {0}-{1}, usage is prevented* — «لا يمكن استعمال السجلات التي تم منع استعمالها {0}-{1}»
 
 That block is deliberate, and it applies system-wide. The problem is that "no longer usable" is rarely true of *every* document. If a customer returns a withdrawn item, the Sales Return has to name that item — it is the whole point of the document. Blocking the sale while allowing the return is exactly the behaviour you want, and this grid is how you get it: it whitelists one specific field on which the block should not apply.
 
@@ -88,8 +90,8 @@ The reason to want this is a genuinely shared master file. A group of companies 
 
 | Column | What it does |
 |---|---|
-| Target Entity | A single record type to make public. |
-| Target Entities | A named list of record types, so one line makes several public at once. |
+| Tooltip Target Type | A single record type to make public. |
+| Entity Type List | A named list of record types, so one line makes several public at once. |
 
 Two things about this grid catch people out.
 
@@ -115,7 +117,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `allowUsageOfPreventedRecords.owner` | Document Owner | مالك المستند | [Allow Usage Of Prevented Records](#Allow-Usage-Of-Prevented-Records) |
 | `dimensionsConsistency` | Ignore Dimensions Consistency for Fields | تجاهل تناسق المحددات لحقول | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
 | `dimensionsConsistency.ignoreLegalEntity` | Ignore Legal Entity | تجاهل الشركة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
-| `dimensionsConsistency.ignoreAnalysisSet` | Ignore Analysis Set | تجاهل المجموعة التحليلة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
+| `dimensionsConsistency.ignoreAnalysisSet` | Ignore Analysis Set | تجاهل المجموعة التحليلية | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
 | `dimensionsConsistency.ignoreBranch` | Ignore Branch | تجاهل الفرع | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
 | `dimensionsConsistency.ignoreSector` | Ignore Sector | تجاهل القطاع | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |
 | `dimensionsConsistency.ignoreDepartment` | Ignore Department | تجاهل الإدارة | [Ignore Dimensions Consistency for Fields](#Ignore-Dimensions-Consistency-for-Fields) |

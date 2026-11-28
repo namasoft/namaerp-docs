@@ -40,7 +40,7 @@ An instalment programme is a lender's product: *Bayan Finance will finance cars 
 
 Two fields on the programme drive the quotation:
 
-- **Financing Percent** (*نسبه التمويل* — the label is spelled this way on screen) — the annual flat rate, used to work out the monthly instalment on a quotation.
+- **Financing Percent** (*نسبة التمويل*) — the annual flat rate, used to work out the monthly instalment on a quotation.
 - **Admin Fees** (*مصاريف إدارية*) — the fixed amount the quotation charges as its administrative fee.
 
 The two long-text blocks, **Customer Acceptance Conditions** (*شروط قبول العميل*) and **General Conditions** (*شروط عامة*), hold the lender's wording for the offer.

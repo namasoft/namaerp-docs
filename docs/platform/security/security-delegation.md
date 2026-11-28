@@ -22,7 +22,7 @@ The document is straightforward: a standard header (number, date, period, dimens
 | **Granted User** | The stand-in — the user who *receives* the additional permissions. (Required) |
 | **User Profile** | The delegator — the user whose permissions (basic rows, security profile, and everything associated with them) are granted to the stand-in. |
 | **Additional Security Profile** | An alternative or addition: a security profile granted directly without referencing a specific user. |
-| **From Date / To Date** | The period during which the delegation is active. Outside this range the row has no effect. |
+| **From Date / To Date** | The period during which the delegation is active. Outside this range the row has no effect; an empty date leaves that end of the period open. Only rows of a saved (committed) document take effect — a draft grants nothing. |
 
 You can delegate to multiple people or cover multiple periods in the same document — each row is self-contained.
 

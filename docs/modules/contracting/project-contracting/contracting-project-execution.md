@@ -55,7 +55,7 @@ Only a handful of these columns are yours:
 |---|---|---|
 | **Term Code** | yours | must be a term that exists on the contract |
 | **Quantity \| Current** | **yours** | the quantity executed *in this document* |
-| **% OF Finished** | yours, as an alternative | type a percentage instead of a quantity and the quantity is derived from the contracted quantity — the two fields are two ways of saying the same thing |
+| **% Of Finished** | yours, as an alternative | type a percentage instead of a quantity and the quantity is derived from the contracted quantity — the two fields are two ways of saying the same thing |
 | **Count**, and the length, width and height behind it | yours, as an alternative | multiply out into **Quantity From Dimensions** |
 | **Discounted Quantity** | yours | subtracted from the dimension quantity, for the void you are not paid for |
 | **Phase** | yours | **required** when the contract's term line is split into [phases](/modules/contracting/setup/contracting-phases-and-work-areas.md) |

@@ -38,19 +38,23 @@ apply, and the answer is short: **priority, and nothing else.**
 keyed three ways: on a specific standard term, on a term category, or on the second term category.
 That is deliberate — category pricing lets you publish "all civil works at these rates" without listing
 every term. At least one of the three must be filled in, and the save tells you the line number if you
-leave all three empty.
+leave all three empty:
+
+*Please enter term or category or category2 on line {0}* — «من فضلك أدخل البند القياسي أو التصنيف 1 أو التصنيف 2 على السطر {0}»
+
+A list with no rate lines at all is refused with *Details must be filled* — «لا يمكن ترك التفاصيل فارغة».
 
 Reading the columns by purpose rather than by their captions, a rate line carries:
 
 | Purpose | Columns |
 |---|---|
 | What is being priced | standard term, term category, term category 2, unit |
-| From what size upwards | a minimum count, a minimum length, a minimum width, a minimum height and a minimum quantity — thresholds, not filters: a line applies from that size **upwards** |
+| From what size upwards | a minimum length, a minimum width, a minimum height and a minimum quantity — thresholds, not filters: a line applies from that size **upwards** |
 | The rate | a minimum, a maximum and a **default** unit price |
 | Extra keys | five free text keys and, where they are switched on, up to five sales-price classifiers |
 
 The **default price** is the one that lands on the term line. The minimum and maximum are a price
-band. When an assay, a project contract or a subcontract is saved, each term line's net unit price (its
+band. When an assay, a contracting offer, a project contract or a subcontract is saved, each term line's net unit price (its
 total price divided by its quantity) is checked against the band of the price list line that matches
 it, and a price outside the band stops the save with one of these messages on the unit price:
 
@@ -59,12 +63,6 @@ it, and a price outside the band stops the save with one of these messages on th
 *Unit price must not be greater than {0}* — «سعر الوحدة لا يمكن أن يكون أكبر من {0}»
 
 Leave the minimum or the maximum empty for no limit on that side.
-
-::: info Reading the grid's English captions
-Some English column captions on the rate-line grid are spelled differently from the names used on this
-page, and a few show the field's internal name. Match them by position and purpose using the table
-above.
-:::
 
 Each standard term's own **Statistics** page carries the mirror image of this screen: a read-only list
 of every price list line that mentions that term, with its dates, minimum quantity, prices and
@@ -112,10 +110,11 @@ number first.
 
 **3. Narrow in memory, then take the first survivor.** A candidate is dropped when:
 
-- its minimum count, length, width, height or quantity is **greater than** the line's — the thresholds
-  are floors, so a row keyed "from 500 m³ upwards" is discarded for a 300 m³ line;
-- its unit differs from the line's unit;
-- one of its five text keys is filled in and differs from the line's;
+- its minimum length, width, height or quantity is **greater than** the line's (a threshold is
+  compared only when both the row and the line carry a non-zero value) — the thresholds are floors,
+  so a row keyed "from 500 m³ upwards" is discarded for a 300 m³ line;
+- its unit differs from the line's unit, when both carry one;
+- one of its five text keys is filled in and differs from the line's, when the line carries that key;
 - it does not apply to the employee on the document.
 
 **The first row still standing wins.** Its default price becomes the line's unit price, and its minimum

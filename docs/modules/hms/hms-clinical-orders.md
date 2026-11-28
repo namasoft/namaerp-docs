@@ -78,7 +78,7 @@ Saving the result writes it into the request's **Radiology Result** field; cance
 Nothing is billed automatically from a request or a result. The charge is entered on the invoice of the same kind — see [Invoicing & Billing](./hms-invoicing.md) — where the line is priced from the price lists and the insurance approval and split between patient and insurer:
 
 - Each line of a **Laboratory Test Invoice** has a **Test Result** column, and each line of a **Radiology Invoice** a **Radiology Result** column. Their lookups list the results of the invoice's patient, so every billed line can point at the result it bills. The test or radiology type is picked on the line as usual.
-- When the patient admission lists planned procedures in its **Services** grid (a **Procedure Type** and the **Invoice Type** to bill), picking that admission on a Laboratory Test Invoice or a Radiology Invoice adds one line for each planned procedure of that invoice's kind.
+- When the patient admission lists planned procedures in its **Services** grid, picking that admission on the invoice adds them as lines — see [Starting an invoice from the admission](/modules/hms/hms-invoicing#Starting-an-invoice-from-the-admission).
 
 The surgery side is the exception only in detail: a Surgery Invoice can start from the Surgery Request through its **From Document** field — see [The Surgery Lifecycle](./hms-surgery-lifecycle.md).
 

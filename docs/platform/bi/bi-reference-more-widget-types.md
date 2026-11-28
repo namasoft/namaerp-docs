@@ -97,13 +97,14 @@ room, a vehicle, a machine) and time running across, with **day**, **week** and 
 it opens on the month. Use it when the question is *who is busy when*, for example to spot a free
 technician or a double-booked room.
 
-It takes every Calendar setting above, plus three of its own:
+It takes every Calendar setting above, plus four of its own:
 
 | Setting | What to put in it |
 |---|---|
 | **ResourceID** | The column that identifies the resource, such as an employee code. Entries with the same value share a row. A row whose ResourceID is empty is not placed on any resource |
 | **ResourceName** | The column with the name shown at the start of the resource's row |
 | **ParentResourceID** | Optional: the ResourceID of a parent, to group resources under a heading row, such as technicians under their team. The heading shows the parent's name when the parent is itself a resource in the query, and its ResourceID otherwise |
+| **color** | Optional: the column holding each entry's colour, such as `#1976d2` |
 
 ```sql
 SELECT s.id, 'SalesInvoice' entityType, s.code title,
@@ -170,12 +171,12 @@ every morning can sit beside the charts instead of in a separate window. It need
 | Field | What to put in it |
 |---|---|
 | **Report Definition** | The report to run |
-| **Launch Type** | **Direct** runs the report as soon as the dashboard opens and shows the result. **WithParamter** shows the report's parameters form inside the widget; the user fills it and runs the report from there |
+| **Launch Type** | **Direct** runs the report as soon as the dashboard opens and shows the result. **With Parameter** shows the report's parameters form inside the widget; the user fills it and runs the report from there |
 
 Both fields are enabled only while the **Type** is Report, and choosing another type clears them.
 
 Choose **Direct** for a report whose parameters all have sensible defaults, such as today's cash
-position. Choose **WithParamter** when every user needs to pick something first, such as a customer
+position. Choose **With Parameter** when every user needs to pick something first, such as a customer
 or a period. Give the widget a generous height either way, since a report needs more room than a
 chart.
 
@@ -213,14 +214,14 @@ the template
 
 shows a heading, the newest invoice number and a list of all five.
 
-The Parameters grid has one row for this type, **HTMLOpenInIFrame**. Left at `false`, the HTML is
+The Parameters grid has one row of its own for this type, **HTMLOpenInIFrame**. Left at `false`, the HTML is
 placed straight into the dashboard and takes on the dashboard's own text style. Set to `true`, it is shown
 in a separate frame of its own, which suits a complete page with its own styles.
 
 ::: tip HTML or Text Block?
 For a heading or a fixed paragraph with no figures in it, use a **Text Block** widget instead: it
 has a rich-text editor and needs no query. Use HTML when the content comes from the data. See
-[TextBlock](./bi-module-technical-reference.md#9b-TextBlock-Widget).
+[TextBlock](/platform/bi/bi-module-technical-reference#9b-TextBlock-Widget).
 :::
 
 ![The HTML Settings tab of an HTML widget](../../ar/platform/bi/images/bi-widget-html-settings-tab-en.png)
@@ -349,8 +350,8 @@ item:
 | **Color** | The button's background colour. The text turns white or black to stay readable |
 
 Four types turn one line into several buttons: **User Favourites** becomes a button per favourite of
-the signed-in user, **All Reports** a button per report group, **Dashboards Group** a button per
-dashboard in the group, and **Auto Dash Boards** a button per dashboard of every automatic group.
+the signed-in user, **All Reports** a button per top-level report group, **Dashboard Group** a button per
+dashboard in the group, and **Auto Dashboards** a button per dashboard of every automatic group.
 
 Tick **Display Card Menus as Bullets** to draw the buttons as a narrow vertical list instead of a
 grid of cards, which fits a side column of the dashboard.
@@ -363,7 +364,7 @@ A Card Menu sizes itself to its buttons, so the height you give it on the dashbo
 
 A **Recent Visits** widget shows the screens the user has opened most, grouped under the last day
 they used the system, the day before, and earlier days. Each card names the screen or record, shows
-roughly how often it was opened, and opens it again with one click. Once enough screens have been
+roughly how often it was opened, and opens it again with one click. Once at least ten screens have been
 opened three times or more, the ones opened only once or twice are left out, so the list stays
 short. Opening a blank new record is not counted. It is a personal shortcut list
 that builds itself, which makes it a good companion to a Card Menu on a home dashboard.

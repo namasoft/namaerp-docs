@@ -37,6 +37,6 @@ description: "أدلة ربط نما بالمتاجر الإلكترونية و�
 <LandingGrid>
   <LandingCard icon="🏭" title="سلاسه" link="/ar/modules/ecommerce/salasa-integration.md" details="اجعل أحداث مستودعات سلاسه تُنشئ التحويلات المخزنية ومردودات المبيعات وتحدّث حالة التوصيل في نما." />
   <LandingCard icon="📊" title="مزامنة المخزون مع OTO" link="/ar/modules/ecommerce/oto-stock-sync.md" details="أرسل مخزون كل مخزن في نما إلى موقع التنفيذ المقابل لدى OTO كلما تغيّر." />
-  <LandingCard icon="📦" title="إشعارات طلبات أمازون" link="/ar/modules/ecommerce/amazon-order-notifications.md" details="تحويل إشعارات طلبات SP-API من أمازون إلى أوامر بيع تلقائيًا عند شحن الطلب، عبر طابور SQS." />
+  <LandingCard icon="📦" title="إشعارات طلبات أمازون" link="/ar/modules/ecommerce/amazon-order-notifications.md" details="تحويل إشعارات تغيّر الطلبات من SP-API في أمازون إلى مستندات مبيعات تلقائيًا، لكل الحالات أو للحالات التي تختارها فقط، عبر طابور SQS." />
   <LandingCard icon="🚛" title="التكامل مع Omniful" link="/ar/modules/ecommerce/omniful-integration.md" details="تكامل ثنائي الاتجاه مع منصّة سلاسل الإمداد Omniful لإدارة المستودعات وتنفيذ الطلبات." />
 </LandingGrid>

@@ -53,7 +53,7 @@ Whichever you choose, every recovery is capped at what is left. An advance can n
 The mechanism is entirely automatic, and it runs through the extract's conditions grid rather than through any field of its own:
 
 1. When conditions are collected — by the *Collect Conditions* button or automatically on save, depending on the extract term's setting — the extract looks for every **committed** advance on its contract that still has a remaining balance and is dated **on or before** the extract's value date. On a **Final** extract the date filter is dropped, so even future-dated advances are swept in.
-2. Each one becomes a **deduction** row in *Additions And Deductions*: the advance in the condition-document column, the advance's condition, its term code, and a deduction amount worked out from the payment method above. If the advance carried tax, a proportional share of the remaining tax is taken off the recovered amount.
+2. Each one becomes a **deduction** row in *Additions And Deductions*: the advance in the condition-document column, the advance's condition, its term code, and a deduction amount worked out from the payment method above. If the advance carried tax, a proportional share of the remaining tax is taken off the recovered amount — always on a Final extract and for every other method, and for *Percentage From Due Value With Every Extract* only when the module option **Subtract Remaining Tax Value With Percent From Due Value With Every Extract** is ticked.
 3. On commit, the recovery is written back: the advance's **Total Paid** goes up, its **Remaining** goes down, and a record is kept of which extract recovered how much. That record is what makes the figures on the advance trustworthy after a dozen certificates.
 4. Any residue of a hundredth or less is snapped to zero, so a Final extract is never blocked by a rounding tail.
 
@@ -73,8 +73,8 @@ The advance can also be reported to the tax authority as an invoice in its own r
 
 - **The project contract is required.**
 - **A term code, if given, must exist on the contract.**
-- **The payment value or percentage the method needs must be filled** — a fixed-value method with no value, or a percentage method with no percentage, is refused.
-- **The payment value cannot exceed the due value of the term code** it is attached to.
+- **The payment value or percentage the method needs must be filled** — *Fixed Value With Every Extract* with no value, or *Percentage With Every Extract* with no percentage, is refused.
+- **The payment value cannot exceed the advance's total after tax** — *Payment value {0} is greater than due value {1} of term code {2}* — «مبلغ الدفعة {0} أكبر من القيمة المستحقة {1} لكود البند {2}».
 - **The total after tax cannot fall below what has already been recovered.** Once extracts have clawed back 23,000, the advance cannot be edited down to 20,000.
 - **The amount cannot be edited at all once a Final extract exists** on the contract, because the closing certificate has already settled against it.
 - **A contract that already has a Final extract cannot take a new advance.**

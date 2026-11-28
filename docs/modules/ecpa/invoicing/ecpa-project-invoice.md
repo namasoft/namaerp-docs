@@ -19,7 +19,7 @@ grid. Understanding **which button reads which data, and how it turns that data 
 difference between an invoice that is right and an invoice that is quietly wrong.
 
 You will find it under **Project Management → Invoice → Project Invoice**
-(**ادارة المشاريع ← الفاتورة ← فاتورة المشروع**).
+(**إدارة المشاريع ← الفاتورة ← فاتورة المشروع**).
 
 ![The Project Invoice screen — the Collect Way group, the collect buttons, the details grid and the totals](../../../ar/modules/ecpa/images/invoicing/invoice-main-en.png)
 
@@ -78,7 +78,8 @@ in before you press anything:
 
 If the Customer, the CollectOn, or both project fields are empty, the button stops and tells you
 which one is missing. And on commit, if either project in the range belongs to a different customer
-than the header, the document refuses with a message naming the project.
+than the header, the document refuses with *{0} is Not Customer for project {1}*, naming the project
+field.
 
 ### Collect Times
 
@@ -95,9 +96,9 @@ line value = the employee's hourly rate on that task's executors grid
 ```
 
 Two consequences you will meet in practice. If the employee is **not on the task's executors grid**,
-there is no rate to find and the line values at **zero**. And if **Normal Time Rate** is left empty
-on the [settings screen](/modules/ecpa/ecpa-configuration), every collected time line also comes out
-at zero — by far the most common reason an invoice collects rows but shows no money.
+there is no rate to find and the line values at **zero**. And if **Normal Time Rate** is `0` on the
+[settings screen](/modules/ecpa/ecpa-configuration), every collected time line also comes out at
+zero — the first thing to check when an invoice collects rows but shows no money.
 
 ### Collect Expenses
 
@@ -231,9 +232,9 @@ one screen, covered in
 the [Project Return](/modules/ecpa/invoicing/ecpa-project-returns) share the same term screen.
 
 Two things about the entry are worth knowing here rather than there. The amount booked for the line
-itself is the **Actual Value** — not the net, not the calculated value. And every pair of accounts on
-the term is optional: if one side of a pair is left empty, that part of the entry is simply not
-produced. A term that only has the main debit and credit filled in books only the line amounts.
+itself is the **Actual Value** — not the net, not the calculated value. The main debit and credit are
+required (the term will not save without them); every other pair of accounts on the term is
+optional, and a term that only has the main debit and credit filled in books only the line amounts.
 
 Before it will commit, the invoice checks exactly three things: the projects in the From/To range
 belong to the header customer, and every line has a non-zero Actual Value. Nothing else is
@@ -252,44 +253,15 @@ If a firm needs a ceiling, it has to be built as a custom validation.
 
 ## Term options that change what a collection does
 
-Most of the term screen is about accounts. A handful of flat options on it change how the collect
-buttons behave and what gets booked, and they belong in the same conversation as the buttons
-themselves.
-
-The first two below act **only at the moment you press a collect button**. Changing them has no
-effect on a document that is already saved and none on what it books, so a term edit will never
-correct an invoice that has already been collected — re-collect it instead.
-
-**Calculated Value Collection Method** (طريقة تجميع القيمة المحسوبة) changes where *Calculated Value*
-comes from. Leave it empty and a collected line's Calculated Value simply mirrors the amount that was
-collected. Fill it in — with either **Collect All Values** or **Collect Only Approved Values** — and
-Calculated Value is instead taken from the underlying timesheet lines' cost for that project and
-task, so the two columns deliberately show different numbers: what the work cost beside what you are
-charging. Choosing *Collect Only Approved Values* restricts that to approved timesheet lines, and it
-does the same for *Collect Executions*, which otherwise pulls unapproved lines into the Executions
-grid as well.
-
-**Consider Value Date When Collecting Times And Expenses**
-(الأخذ في الاعتبار التاريخ الفعلي عند تجميع الفواتير) is the option that makes month-end billing
-behave. Ticked, the three sweeps only pick up source lines dated on or before the invoice's value
-date. Unticked, dates are ignored entirely and an invoice dated 31 January will happily bill
-February's work.
-
-**Create Accounting Effect For external Expense** (إنشاء التأثير الحسابي للمصاريف الخارجية) switches
-on a second accounting entry alongside the main one: the external (billable) portion of the expense
-request lines that fed each invoice line, booked to the term's external account pair. Because it
-works from the source rows a line remembers, it books nothing at all on hand-typed lines or on
-periodic invoices — those have no source rows.
-
-Its companion, **Create Accounting Effect For Lines With Empty Expenses**, only does anything when
-that first option is also ticked. With both on, any line that carries an expense item is left out of
-the main entry altogether and appears only in the expense entry; lines with no expense item are
-booked normally. That combination is what most implementations want: revenue booked once, recharged
-expenses booked separately.
-
-Finally, the term's four **line-discount** account pairs and its **calculated value** pair are
-configured differently from the rest of the screen: each is a pointer to an *Accounting Side Config*
-record rather than an account you fill in place. Create those records first, then pick them here.
+A handful of flat options on the invoice term change how the collect buttons behave and what gets
+booked: **Consider Value Date When Collecting Times And Expenses** (whether the sweeps stop at the
+invoice's value date), **Calculated Value Collection Method** (whether *Collect Executions* pulls only
+approved timesheet lines), and the pair **Create Accounting Effect For External Expense** /
+**Create Accounting Effect For Lines With Empty Expenses** (whether re-billed expenses get their own
+entry). Each is explained, with its exact effect, on
+[Document Terms for Project Documents](/modules/ecpa/invoicing/ecpa-document-terms). On this
+document, the external-expense entry books nothing on hand-typed lines or on periodic invoices,
+because those lines have no source rows behind them.
 
 ## Periodic and retainer billing
 
@@ -299,11 +271,13 @@ the recurring amount on the project's own periodic-billing grid — see
 **Create Auto Invoices** (إنشاء الفواتير الدورية) button on the invoice screen.
 
 It is not a collect button: it does not touch the invoice you are looking at. You give it a value
-date, and it works in the background across all projects that carry a periodic amount and are not
-finished, checks which of them are due against their invoice period, groups the due ones **by
-customer**, and creates **one draft invoice per customer** — one line per periodic-billing row, at
-the amount on that row. The new documents are created on the **book and term of the screen you
-pressed the button from**, so open the invoice screen on the right book first.
+date, and it works across all projects that carry a periodic amount and are not finished, checks
+which of them are due against their invoice period, groups the due ones **by customer**, and creates
+and saves **one invoice per customer** — one line per periodic-billing row, at the amount on that
+row. The new documents are created on the **book and term of the screen you pressed the button
+from**, so open the invoice screen on the right book first; with the book, the term or the value
+date empty the button stops with *Please select book,term, and value date* —
+«فضلا قم باختيار الدفتر و التوجيه و التاريخ».
 
 The amount is the fixed figure held on the project. Nothing about it is derived from hours,
 expenses or progress.

@@ -39,7 +39,8 @@ Configurations**:
 The look-ups happen as you type:
 
 - **Receptacles Receipt** — entering a **Receptacles Id** on a line fills its **Receptacles Weight
-  IPS**, **Seal No**, **Receptacles Mail Items No** and **Mail Subclass Id**.
+  IPS**, **Seal No**, **Receptacles Mail Items No**, **Mail Subclass Id**, **Dispatch Id** and origin
+  country.
 - **IPS Postal Parcels Sort** — entering the header **Receptacle Id** fills **Receptacle Mail Items
   Count**, which the sort then compares against the items you scan.
 - **Every mail-item document** — entering a **Mail Item Id** on a line fills its weight, mail

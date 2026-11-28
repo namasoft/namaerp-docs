@@ -9,7 +9,7 @@ Some jobs leave the building. The A/C compressor on Fahad Al-Otaibi's Saif has t
 and Al-Sahra has no rig for it, so it goes across town to `SUP-91` Al-Faisal Auto Electric, who
 charge **400** for the work.
 
-The **External Repair** document (مستند اصلاج خارجي) is how that 400 is recorded. It is worth being
+The **External Repair** document (مستند إصلاح خارجي) is how that 400 is recorded. It is worth being
 precise about what it is, because its name suggests a workshop document and it is not one: **it is a
 purchase invoice for sublet work**, and it behaves like one.
 
@@ -19,11 +19,6 @@ You will find it at **Service Center > Documents > External Repair**.
 `srvcenter`
 :::
 
-::: tip The screen title
-The screen title shows in Arabic in an English session too, spelled **«مستند اصلاج خارجي»** on
-screen. The menu entry reads *External Repair*.
-:::
-
 ![The External Repair screen](../../../ar/modules/servicecenter/images/spare-parts/sc-external-repair-en.png)
 
 ## What the document holds
@@ -31,7 +26,7 @@ screen. The menu entry reads *External Repair*.
 The **Main** page carries the document book and code, term, dates and fiscal period, a description,
 and then the commercial block: **مورد / Supplier**, **مندوب المشتريات / Purchases man**, **الذمة /
 Subsidiary** — which may be an employee or an account — currency and rate, six attachments, and a
-**بناءا على / From Document** field.
+**بناءً على / From Document** field.
 
 The **details** grid is where the work is listed, and it has no item and no warehouse:
 
@@ -101,15 +96,6 @@ analysed, and do not expect the job order to reconcile to it.
 The moment the external repair is committed, every task it names goes to **Finished** on the job
 order — not when the outside workshop returns the work, but when the invoice is entered.
 
-::: warning Cancelling does not put the tasks back
-If you cancel or correct an external repair, the tasks it marked *Finished* **stay finished**. The
-document's cancellation restores nothing, and there is no message. Put the task status back yourself
-from the
-[job order execution](/modules/servicecenter/workshop-execution/servicecenter-production-execution.md)
-document — its *change status* buttons and its Review grid are the only way — before the closing
-picks up work that was never actually done.
-:::
-
 ::: danger Cancelling destroys the line attachments
 Cancelling or deleting an external repair sets every detail line's **attachment to empty, permanently**. The
 outside workshop's quotation, its report, the photographs of the stripped part — all gone, and they
@@ -128,7 +114,7 @@ So the module has no answer to *where is the car, and since when?* while it is a
 workshop. If you need that, the options are the job order's own remarks, a suspension raised from the
 [pending operation document](/modules/servicecenter/workshop-execution/servicecenter-pending-and-resume.md)
 with a *sent for external repair* reason — which at least puts the order into a visible *Pending*
-state and stops it being closed — or a procedure outside the system. Do not look for it on the
+state, which a job order closing refuses unless its term allows closing suspended orders — or a procedure outside the system. Do not look for it on the
 external repair.
 
 Note also that the

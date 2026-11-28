@@ -26,9 +26,9 @@ Before the individual screens, one block recurs so often that it is worth learni
 
 | Option | Arabic label | Field id | What it does |
 |---|---|---|---|
-| Change Product Status To | تغيير حالة الصنف إلى | `termConfig.changeProductStatusTo` | When the document commits, writes a status entry for the vehicle and recomputes the vehicle's current status |
+| Change Product Status To | تغيير حالة المنتج إلى | `termConfig.changeProductStatusTo` | When the document commits, writes a status entry for the vehicle and recomputes the vehicle's current status |
 | Change Status Only When Criteria Matches | تغيير الحالة فقط عند توافق المعيار | `termConfig.changeStatusOnlyWhenCriteriaMatches` | Guards the above with criteria, so the status only moves for documents that match |
-| Notify On Status Change | تشغيل التنبيه عند تغير الحالة | `termConfig.notifyOnStatusChange` | Fires a notification for each vehicle whose status actually changed |
+| Trigger Alert On Status Change | تشغيل التنبيه عند تغير الحالة | `termConfig.notifyOnStatusChange` | Fires a notification for each vehicle whose status actually changed |
 
 This is how the vehicle file tells you where the car is. Al-Sahra sets *Change Product Status To* =
 *In Workshop* on the term used by the reception inspection sheet, and *Ready For Delivery* on the
@@ -36,7 +36,8 @@ term used by the job order closing, and the vehicle screen then reads correctly 
 anybody typing a status.
 
 The status is **replayed from the entries in date order**, not simply overwritten, so a back-dated
-document inserts itself in the middle of the history rather than at the end.
+document inserts itself in the middle of the history rather than at the end. Cancelling or deleting
+the document removes its entry again, and the status is recomputed without it.
 
 **No tax settings on these terms.** The shared workshop term, the Job Order term and the Job Order
 Closing term have no *Taxable*, *Tax Plan*, *Modifiable Tax* or *Allow Editing Header Tax In
@@ -51,7 +52,7 @@ Workshop labour lines apply a single tax. Give the tax plans used on them one ta
 ## The shared workshop term
 
 One term family covers seven documents at once: [**Service Request**](/modules/servicecenter/job-cycle/servicecenter-service-request.md), [**Job Estimation**](/modules/servicecenter/job-cycle/servicecenter-job-estimation.md), **Estimation
-Update**, **Add Task To Job Order**, **Pending Operation**, **Resume Operation** and the **Product
+Update**, **Add Task To Job Order**, **Pending Operation**, **Resuming Operation** and the **Product
 Inspection Document**.
 
 It is a small screen, and deliberately so — these documents move paper and status, not money. It
@@ -62,8 +63,8 @@ spare parts are added to the parts grid automatically. This one is offered on th
 the Job Estimation and the Add Task To Job Order only.
 
 Two notes about this family. On the **Product Inspection Document**, the **Estimation Update**,
-**Pending Operation** and **Resume Operation** the term screen shows only the status trio. And on
-**Pending Operation** and **Resume Operation** the term field is shown but not required; those
+**Pending Operation** and **Resuming Operation** the term screen shows only the status trio. And on
+**Pending Operation** and **Resuming Operation** the term field is shown but not required; those
 documents work perfectly well without one.
 
 ## The Job Order term
@@ -85,11 +86,11 @@ to build their invoice with:
 Leave a pair empty and that payer's button has nothing to build with. Three more switches shape what
 comes out:
 
-- **Save Invoices As Draft** (`termConfig.saveInvoicesAsDraft`) — the generated invoice arrives uncommitted, so somebody reviews it
+- **Generate Invoices As Draft** (`termConfig.saveInvoicesAsDraft`) — the generated invoice arrives uncommitted, so somebody reviews it
   before it is committed. Sensible where the service advisor prices the job and accounts commits it.
-- **Generate Sales Orders Not Invoices** (`termConfig.generateSOrdersNotInvoices`) — produces sales orders instead of invoices, for
+- **Generate Sales Orders Not Sales Invoices** (`termConfig.generateSOrdersNotInvoices`) — produces sales orders instead of invoices, for
   installations that invoice from the sales side.
-- **Use Today For Invoice Value Date** (`termConfig.useTodayForInvoiceValueDate`) — dates the invoice on the day it is generated rather than
+- **Use Today Date For Invoice Value Date** (`termConfig.useTodayForInvoiceValueDate`) — dates the invoice on the day it is generated rather than
   carrying the job order's value date.
 
 ### Parts behaviour
@@ -99,9 +100,9 @@ Four options decide how the job order and the parts documents relate:
 | Option | Arabic label | Field id | Effect |
 |---|---|---|---|
 | Restrict In Issuing | المطابقة في السحب | `termConfig.restrictInIssuing` | Only lines ticked for matching are subject to the "issued exceeds planned" limit |
-| Add Tasks And Materials to Job Order From Other Documents | إضافة مهام قطع غيار لأمر الشغل من سندات خارجيه | `termConfig.addTasksAndMatsToJOFromOut` | The order's grids are **rebuilt** from the issue and return documents; the planned-quantity checks are skipped entirely |
-| Use Issued Qty not Transferred Qty | استعمال الكمية المصروفة و ليست المحولة | `termConfig.useIssuedNotTransferredQtyForAddedMats` | Which pair of quantities feeds that rebuild |
-| Spread Items Quantity If It Is Issued In Different Material Issues | فرد كميات الأصناف في السطور | `termConfig.spreadItemsQtyIfItIsIssuedInDifferentMaterialIssues` | One job-order line per issue line, instead of one aggregated line per item |
+| Add Tasks And Materials to Job Order From Other Documents | إضافة مهام قطع غيار لأمر الشغل من سندات خارجية | `termConfig.addTasksAndMatsToJOFromOut` | The order's grids are **rebuilt** from the issue and return documents; the planned-quantity checks are skipped entirely |
+| Use Issued Qty not Transferred Qty when Adding Tasks And Materials to Job Order From Other Documents | استعمال الكمية المصروفة و ليست المحولة عند إضافة قطع الغيار لأمر الشغل من سندات خارجية | `termConfig.useIssuedNotTransferredQtyForAddedMats` | Which pair of quantities feeds that rebuild |
+| Spread Items Quantity If It Is Issued In Different Material Issues | فرد كميات الأصناف في السطور في حالة تم صرفها في أكثر من سند صرف قطع غيار | `termConfig.spreadItemsQtyIfItIsIssuedInDifferentMaterialIssues` | One job-order line per issue line, instead of one aggregated line per item |
 
 The first two are a fork in the road. With *Add Tasks And Materials…* **off**, the job order is a
 plan and the storekeeper must stay inside it — that is Al-Sahra's setup, and the one this
@@ -127,7 +128,7 @@ Insurance and warranty reach accounting later, through their own sales invoices.
 reaches accounting nowhere at all. Do not configure these two accounts expecting the full 3,215.
 :::
 
-**The stock issue.** *Issue Book* and *Issue Term* (`termConfig.issueBook`, `termConfig.issueTerm`) name the book and term of the **Stock Issue** the
+**The stock issue.** *Issue Items Book* and *Issued Items Term* (`termConfig.issueBook`, `termConfig.issueTerm`) name the book and term of the **Stock Issue** the
 closing generates for the parts consumed on the job — Al-Sahra's `STI-2026-1188`, relieving 1,668 of
 inventory cost. Leave them empty and the closing consumes nothing from stock.
 
@@ -135,9 +136,9 @@ inventory cost. Leave them empty and the closing consumes nothing from stock.
 
 | Option | Arabic label | Field id | Effect |
 |---|---|---|---|
-| Allow Closing Suspended Orders | — | `termConfig.allowClosingSuspendedOrders` | Lets a job order that is paused be closed anyway |
+| Allow Closing Suspended Orders | السماح بإغلاق الأوامر المعلقة | `termConfig.allowClosingSuspendedOrders` | Lets a job order that is paused be closed anyway |
 | Do Not Close Job Order If All Materials Are Not Issued | منع إغلاق أمر الشغل إذا لم يتم صرف الخامات بالكامل | `termConfig.doNotCloseJobOrderIfAllMaterialsAreNotIssued` | Refuses the closing while any planned part is short-issued |
-| Do Not Consider Job Order Operations Lines Status | عدم اعتبار حالة سطور المهمات وقطع الغيار | `termConfig.doNotConsiderOperationsLinesStatus` | Closes regardless of whether the task lines are marked finished |
+| Do Not Consider Job Order Operations Lines Status When Making Job Order Closing Based On Job Order | عدم اعتبار حالة سطور المهمات وقطع الغيار لأمر الشغل عند عمل إغلاق أمر شغل بناء على أمر الشغل | `termConfig.doNotConsiderOperationsLinesStatus` | Closes regardless of whether the task lines are marked finished |
 
 ::: tip The materials check counts per item, not per task
 *Do Not Close Job Order If All Materials Are Not Issued* totals each **item** across the whole order.
@@ -179,8 +180,8 @@ Small, but with a trap.
 
 | Option | Arabic label | Field id | Effect |
 |---|---|---|---|
-| Prevent Opening More Than One Unfinished Task | منع فتح اكثر من مهمة للفنى في نفس اليوم | `termConfig.preventOpenMoreOneUnFinTask` | Refuses a save that would leave one technician with two unfinished tasks on the same date |
-| Close Book / Close Term | — | `termConfig.closeBook` / `termConfig.closeTerm` | The book and term used for the Job Order Closing produced by the *Generate Closing* button |
+| Prevent Opening more than unfinished Task to Technical in same day | منع فتح أكثر من مهمة للفني في نفس اليوم | `termConfig.preventOpenMoreOneUnFinTask` | Refuses a save that would leave one technician with two unfinished tasks on the same date |
+| Order Close Book / Order Close Term | دفتر سند الإغلاق / توجيه سند الإغلاق | `termConfig.closeBook` / `termConfig.closeTerm` | The book and term used for the Job Order Closing produced by the *Generate Closing* button |
 | Allow Time Overlap | السماح بتداخل الوقت | `termConfig.allowTimeOverlap` | Lets one technician have overlapping from/to intervals on two lines. Unticked, the save is refused when the intervals overlap |
 
 Plus the vehicle-status trio.
@@ -210,8 +211,8 @@ One switch changes the direction of the entry:
 default, books a **payable** to the supplier; on, it books a receivable instead, for the rare
 installation that does sublet work for others through this screen.
 
-The rest of the **General Effect Settings** group, and the switches at the top of the **Serivce
-Fees** group (the label is misspelt on screen), work as on any purchase invoice:
+The rest of the **General Effect Settings** group, and the switches at the top of the **Service
+Fees** group, work as on any purchase invoice:
 
 | Option | Field id | What it does |
 |---|---|---|
@@ -263,8 +264,8 @@ store — Al-Sahra's `SCRMI-2026-1902` generating stock issue `STI-2026-1188` ou
 the parts move to the work-in-progress store `WH-WIP` instead and stay on the books until the job
 consumes them.
 
-To stop an issue or a return creating its stock document, **clear the Generation Book and the
-Generation Term** — or, in transfer mode, the Transfer Book and Transfer Term.
+To stop an issue or a return creating its stock document, **clear the Generation Book or the
+Generation Term** — or, in transfer mode, the Transfer Book or the Transfer Term.
 
 The Spare Parts Issue Request is a paper request that the issue is later built from: it moves no
 stock and creates no journal entry. The stock settings that apply are the ones on the issue's own

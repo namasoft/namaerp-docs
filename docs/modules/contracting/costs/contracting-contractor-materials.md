@@ -36,14 +36,14 @@ looking like a sale on credit.
 
 | Field | |
 |---|---|
-| **Contract** | required, and it accepts a **subcontract only** — never a project contract |
+| **Contractor Contract** | required, and it accepts a **subcontract only** — never a project contract |
 | **Warehouse** | the source of the material; the header value is pushed onto every line |
-| **Payment Method** | required — how the charge is to be settled, which in practice means deduction from his extract |
-| **Payment Percent**, **Payment Value** | how much of the charge is settled by that method |
+| **Payment Method** | required — the rule that decides how much of the charge each extract takes: *First Next Extract*, *Fixed Value With Every Extract*, *Percentage With Every Extract*, *Percentage From Due Value With Every Extract* or *Final Extract*. They are the five methods of an advance, described under [Subcontractor Advances and Other Payments](/modules/contracting/contractor-contracting/contracting-contractor-advances-and-payments) |
+| **Payment Percentage**, **Payment Value** | the percentage for the two percentage methods, and the amount for the fixed-value method. Payment Value is required with *Fixed Value With Every Extract* and may not exceed the net value of any term code's lines; Payment Percentage is required with *Percentage With Every Extract* |
 | **Condition** | required — the [contract condition](/modules/contracting/setup/contracting-conditions) the deduction will ride on when it reaches the extract |
 | **Term Code** | a header default, pushed down onto every line |
-| **Total Paid Amount**, **Remaining Value** | system — how much of the charge has been settled, and how much is still outstanding |
-| **Issue Number** | system — this document's ordinal among the issues on this subcontract, so the first issue is 1, the second 2 |
+| **Total Paid**, **Remaining Value** | system — how much of the charge has been settled, and how much is still outstanding |
+| **Issue #** | system — this document's ordinal among the committed issues on this subcontract, in value-date order, so the first issue is 1, the second 2 |
 | Subsidiary, dates, *From Document*, remarks | the ordinary document header |
 
 The **Condition** field is the one people skip past, and it matters more than its position suggests.
@@ -83,18 +83,22 @@ Four things happen, and they are worth separating because each is visible in a d
 
 When a [subcontractor extract](/modules/contracting/contractor-contracting/contracting-contractor-extracts)
 is prepared for the same subcontract, it collects the committed material issues that still have a
-remaining value and dated on or before it, and turns each one into a **condition line carrying a
-deduction value** — the named condition, the term code, and the money. The deduction then flows into
-the extract's net payable alongside retention, advance recovery and fines, and is reversed if the
-extract is cancelled.
+remaining value and dated on or before it, and writes one **condition line carrying a deduction
+value** for each term code on each issue — the named condition, the term code, and the money. How much
+money is decided by the issue's **Payment Method**: *First Next Extract* takes the whole remaining
+value, the three *With Every Extract* methods take their slice (never more than what remains), and
+*Final Extract* is skipped until the final extract, which takes whatever remains of every issue. The
+deduction then flows into the extract's net payable alongside retention, advance recovery and fines,
+and is reversed if the extract is cancelled.
 
 On committing the extract, two things settle:
 
 - each charge-back record is **stamped with the extract that absorbed it**, which is what you see on
   the issue's **Statistics** page — the row's extract column answers "has this material already been
   deducted?" without opening anything else;
-- the issue's Total Paid Amount rises to the deducted value and its Remaining Value drops to zero, so
-  **the same material is never collected onto a second extract.**
+- the issue's Total Paid rises by the deducted value and its Remaining Value drops by the same amount.
+  An issue is collected again only while it has a remaining value, so with *First Next Extract* it
+  reaches zero at once and **the same material is never collected onto a second extract.**
 
 ::: warning Once an extract has consumed a line, the issue is frozen
 From that point on the line cannot be edited or deleted. The attempt fails with
@@ -115,8 +119,9 @@ and back into your warehouse, so:
 - and on the extract the value appears as an **addition rather than a deduction** — the system does not
   merely stop deducting, it gives him the money back.
 
-Its header carries the same payment block and a **Return Number** counting the returns on the
-subcontract, and building it from the issue copies the subcontract, the condition, the payment block
+Its header carries the same payment block and a **Number Of Material Return Document** counting the
+returns on the subcontract. Its *From Document* accepts a Contractor Material Issue, and building it
+from the issue copies the subcontract, the condition, the payment block
 and the term code across.
 
 ## The request
@@ -127,9 +132,12 @@ is a record of the agreement: the ledger entry, the stock document and the charg
 issue.
 
 Its value is what it saves you when it becomes an issue. Select it in *From Document* on the issue and
-the subcontract, the condition, the payment method, the payment percent, the payment value and the term
-code all come across, so the priced request only has to be agreed once. As on the project side, the
-issue does not require a request — you can sell material directly.
+the subcontract, the condition, the payment method, the payment percentage, the payment value and the
+term code all come across, so the priced request only has to be agreed once. Out of the box the issue's
+*From Document* offers two document types, **Stock Issue Request** and **Stock Transfer**; to select a
+Contractor Material Issue Request there, add that type to the field with **Add To Existing** ticked in
+[Allowed Values For Generic References](/platform/fields-and-entities-settings/fields-settings-reference-lookups#Allowed-Values-For-Generic-References).
+The issue does not require a request — you can sell material directly.
 
 ## Setting it up once
 
@@ -140,7 +148,7 @@ that works and one that half-works:
 |---|---|
 | the generated document's **book and term** | without both, no stock issue is created and the material never leaves the warehouse |
 | the **debit and credit accounts**, and the tax accounts | this is a sale; without them there is no ledger entry |
-| default **condition**, **payment method**, **payment percent** and **payment value** | so the settlement terms are right without being retyped, on every issue |
+| default **condition**, **payment method**, **payment percentage** and **payment value** | so the settlement terms are right without being retyped, on every issue |
 | whether the **project term code is optional** | leave it required unless you have a reason; the term code is what places the deduction against a line of his work |
 
 The return has the same set, pointed at a stock receipt and the credit-note accounts.
@@ -155,10 +163,11 @@ blocks, but the mortar cement is bought from us.
 contracting condition, deducting whatever value is put on it.
 
 1. **He asks.** `CIQ-000012`, a Contractor Material Issue Request: subcontract `CC-0042`, condition
-   `MATDED`, payment method *deduct from extract*, term `3.01`, one line — 80 bags of `CEM-42.5` at
+   `MATDED`, payment method *First Next Extract*, term `3.01`, one line — 80 bags of `CEM-42.5` at
    **30.00**, net **2,400**. Nothing happens yet.
-2. **We issue.** `CTI-000031`, a Contractor Material Issue with *From Document* = `CIQ-000012`, so the
-   subcontract, condition and payment block copy themselves in. Commit, and:
+2. **We issue.** `CTI-000031`, a Contractor Material Issue with *From Document* = `CIQ-000012` (the
+   request type has been added to the field's allowed values), so the subcontract, condition and
+   payment block copy themselves in. Commit, and:
    - stock issue `SI-001231` is generated — 80 bags leave `WH-SITE-A`;
    - the ledger entry raises 2,400 receivable on Modern Construction Est. against inventory out, plus
      tax per the term;
@@ -176,7 +185,7 @@ contracting condition, deducting whatever value is put on it.
    | Net before advance recovery and tax | **26,400** |
 
 4. **It settles.** On commit, `CTI-000031`'s charge-back row is stamped with that extract — visible on
-   the issue's Statistics page — its Total Paid Amount becomes 2,400 and its Remaining Value zero. The
+   the issue's Statistics page — its Total Paid becomes 2,400 and its Remaining Value zero. The
    next extract will not see it again. And from now on its line cannot be touched.
 5. **Twenty bags come back.** `CTR-000004`, a Contractor Material Return: 20 bags at 30.00 = **600**.
    Stock receipt `SR-000488` brings them into the warehouse, the money side is booked as a credit note,

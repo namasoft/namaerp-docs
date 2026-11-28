@@ -14,7 +14,7 @@ Open the document's **Document Term** (توجيه), then the **Pricing, Taxes & 
 
 ## Taxes
 
-Tax basics surface for any taxable `IInvoice` document (sales and purchase) and require the **Sales Tax** feature to be enabled.
+Tax basics surface for any priced document (sales and purchase invoices, orders, quotations and the like) and require the **Sales Tax** feature to be enabled.
 
 **Taxable** `termConfig.taxable` — Marks documents created under this term as subject to tax, enabling tax calculation on the document. When off, no tax is computed.
 
@@ -52,7 +52,7 @@ These sub-fields of the price strategy (ids `termConfig.priceStrategy.<x>`) gove
 
 **Force Price List** `termConfig.priceStrategy.forcePriceList` — On a purchase invoice, checks every line's price against the purchase price list when the document is saved and refuses the save where the two differ, so hand-typed prices cannot deviate from the list. Two limits are worth knowing: the check runs **only while *Reapply Price List on Save* is off** — with that option on, prices are simply re-fetched from the list and nothing is validated — and it applies to purchase invoices only, not to the other purchase documents.
 
-**Do Not Check Items Without Price List** `termConfig.priceStrategy.doNotCheckItemsWithoutPriceList` — When Force Price List is on, allows saving even if some items have no price-list entry (skips the "item has no price" block).
+**Do Not Check Items Without Price List (With Force Price Lists Option)** `termConfig.priceStrategy.doNotCheckItemsWithoutPriceList` — When Force Price List is on, allows saving even if some items have no price-list entry (skips the "item has no price" block).
 
 **Apply Discounts** `termConfig.priceStrategy.useVendorDiscounts` — Applies the configured vendor/supplier discounts when pricing the purchase document. On by default.
 
@@ -115,13 +115,13 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Ignore Force Price List With Free Item** `termConfig.ignoreForcePriceListWithFreeItem` — Skips the Force-Price-List check for free items, so giveaway lines are not rejected for having no list price.
 
-**Do Not Check Items Without Price List** `termConfig.doNotCheckItemsWithoutPriceList` — With Force Price List on, allows saving even if some sale items have no price-list entry.
+**Do Not Check Items Without Price List (With Force Price Lists Option)** `termConfig.doNotCheckItemsWithoutPriceList` — With Force Price List on, allows saving even if some sale items have no price-list entry.
 
 **Do Not Force Price List When There is Sales Doc In From Doc** `termConfig.doNotForcePriceListWhenThereSalesDocInFromDoc` — Disables Force Price List when the from-document chain already contains a sales document, keeping the prices carried from the prior sales doc.
 
 **Ignore Current Price When Calculating Prices** `termConfig.ignoreCurrentPriceWhenCalculatingPrices` — Ignores the line's existing/current price during recalculation, recomputing prices from scratch.
 
-**Consider Discount Offers For Employee Discount Percentage Validation** `termConfig.considerDiscountOffersForEmpDiscountPercentageValidation` — Includes discount offers when validating the maximum discount percentage an employee may grant — an alternative to using Force Price List.
+**Consider Discount Offers For Employee Discount Percentage Validation (Used If You Do Not Want Force Price Lists Option)** `termConfig.considerDiscountOffersForEmpDiscountPercentageValidation` — Includes discount offers when validating the maximum discount percentage an employee may grant — an alternative to using Force Price List.
 
 **Ignore Max Discount Validation If Discount Exists In From Doc** `termConfig.ignoreMaxDiscValidationIfDiscountExistsInFromDoc` — Skips the employee maximum-discount check for a discount that was already granted on the from-document. A quotation may have been approved with a 20% discount that exceeds what the salesman is normally allowed to give; without this option, converting it into an invoice re-runs the check and blocks the save even though nothing changed. With it on, each discount slot (1–8) on the line is compared with the same slot on the matching from-document line, and the header discount with the from-document's header discount — if the value and percentage are not higher than what was already there, the check is skipped. Raise a discount above the from-document figure and it is validated against the employee's limit as usual. Line matching relies on the line being carried over from the source document, so lines added manually on the new document are always validated.
 
@@ -137,7 +137,7 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Consider Total Qty In Doc For Prevent Sales Less Than Min Qty** `termConfig.considerTotalQtyInDocForPreventSalesLessThanMinQty` — When applying the min-quantity check, sums the item's total quantity across the whole document rather than evaluating each line separately.
 
-**Do Not Consider Current Discount Values When Recalculating** `termConfig.doNotConsiderCurrentDiscountValuesWhenRecalculating` — Ignores existing line discount values when re-running the price/discount recalculation.
+**Do Not Consider Current Discount Values When Recalculating Prices and Discounts** `termConfig.doNotConsiderCurrentDiscountValuesWhenRecalculating` — Ignores existing line discount values when re-running the price/discount recalculation.
 
 **Stop Items Count Offers If From Document Not Empty** `termConfig.stopItemsCountOffersIfFromDocNotEmpty` — Disables item-count-based free-item offers when the document was built from a from-document.
 
@@ -153,7 +153,7 @@ This block is added only for **Sales** documents. It governs how sale prices are
 
 **Reward Points Configuration** `termConfig.rewardPointsConfig` — Links the reward/loyalty-points configuration applied when these sales documents are saved.
 
-**Use Pick List** `termConfig.usePickList` — Enables pick-list (stock pulling) rules for the sales invoice. Sales Invoice only.
+**Use Pick List** `termConfig.usePickList` — Turns on the **Pick Rules** for the sales invoice: on save, each line's quantity is drawn from the warehouses the matching rule picks, through generated stock issues, transfers or their requests — see [Delivery & Loading](/modules/supplychain/delivery-and-loading). Sales Invoice only.
 
 Three more options in this group are for Magento shops only. Each acts once per document, when it is first saved, and works back up the From Document chain to the order that came from Magento. See [E-Commerce Integration Guide](/modules/ecommerce/ecommerce-integration-guide#Magento-only-features).
 
@@ -167,20 +167,20 @@ Three more options in this group are for Magento shops only. Each acts once per 
 
 A common complaint is "I changed the term and my discounts disappeared". This is not data loss. On a sales document, the prices and discounts of **every line** are worked out again when the user changes the **term**, the **value date** or the **subsidiary**. They are also worked out again when the user changes the **customer**, but only if *Update Price After Updating Customer* is on in supply chain configuration. Any price or discount typed by hand is replaced by what the price lists and offers give. Changing an item's quantity or unit reprices that one line. The options below switch these recalculations off, either for one event or completely.
 
-These options are added to the From-Document group for any `IInvoice` document (sales and purchase). They decide when automatic price recalculation runs, which suggested price is offered, and whether prices freeze after a from-document, term change, or value-date change.
+These options are added to the From-Document group for any priced document (sales and purchase). They decide when automatic price recalculation runs, which suggested price is offered, and whether prices freeze after a from-document, term change, or value-date change.
 
 **Do Not Update Prices At All** `termConfig.doNotUpdatePricesAtAll` — Completely disables automatic price recalculation for the document; prices remain as entered.
 
 **Do Not Calculate Prices, Discounts, and Free Items If Unit Price Exists** `termConfig.doNotCalcPricesIfUnitPriceExist` — Skips price/discount/free-item calculation for any line that already has a unit price.
 
-**Ignore "Do Not Calculate Prices If Unit Price Exists" Before First Save** `termConfig.ignoreDoNotCalcPricesIfUnitPriceExistBeforeFirstSave` — Suspends the above flag until the document's first save, so initial pricing still runs.
+**Ignore "Do not Calculate Prices, Discounts, and Free Items If Unit Price Exists" before first save** `termConfig.ignoreDoNotCalcPricesIfUnitPriceExistBeforeFirstSave` — Suspends the above flag until the document's first save, so initial pricing still runs.
 
 With *Do Not Calculate Prices … If Unit Price Exists* on, changing an item reprices its line but changing anything else on it does not. The four options below name other line fields whose change should still reprice the line, on sales documents:
 
 | Option | Field ID |
 |---|---|
 | Recalculate Prices Always With UOM | `termConfig.recalculatePricesAlwaysWithUOM` |
-| Recalculate Prices Always With Color (captioned *recalculatePricesAlwaysWithColor* on English screens) | `termConfig.recalculatePricesAlwaysWithColor` |
+| Recalculate Prices Always With Color | `termConfig.recalculatePricesAlwaysWithColor` |
 | Recalculate Prices Always With Size | `termConfig.recalculatePricesAlwaysWithSize` |
 | Recalculate Prices Always With Revision | `termConfig.recalculatePricesAlwaysWithRevisionId` |
 
@@ -204,7 +204,7 @@ The flags below freeze prices after specific events so they are not recalculated
 
 ## Installments
 
-These options govern installment scheduling on `IInvoice` documents and the broader from-document set.
+These options govern installment scheduling on priced documents and the broader from-document set.
 
 **Paid in Installments** `termConfig.paidInInstallments` — Marks documents under this term as paid via an installment schedule, enabling installment lines.
 

@@ -21,11 +21,12 @@ Automatically creates journal entries (accounting vouchers) from any document in
 
 ## How It Works
 
-1. **Finds or creates** journal entry using finder query
-2. **Updates fields** from source document to journal entry
-3. **Generates accounting lines** based on effects configuration
-4. **Applies currency conversion** if specified
-5. **Saves and commits** journal entry to ledger
+1. **Finds or creates** the journal entry using the finder query
+2. **Updates fields** of the journal entry from the source document (Parameter 2)
+3. **Replaces the journal entry lines** with the lines built from the effects (Parameter 3), in the currency and rate of Parameters 7 and 8. Lines the found journal entry already had are overwritten.
+4. **Merges similar lines** when Parameter 4 is `true`
+5. **Saves and commits** the journal entry
+6. **Copies fields back** from the journal entry to the source document (Parameter 5)
 
 ## Parameters
 
@@ -43,59 +44,56 @@ SELECT id FROM JournalEntry WHERE 1 = 0
 Field assignments from source to journal entry:
 ```fieldmap
 book="JEB"
-ref1=id
-date1=issueDate
-description1=description
+term="JET"
+ref1=$this
 ```
 
 ### Parameter 3: Effects Configuration (Required)
-Defines debit/credit accounting lines:
+One effect per line: the field holding the amount, `=`, then the codes of two accounting side records, the debit side first. A header field gives one debit and one credit line; a line field gives a pair per document line. Empty and zero amounts are skipped.
 ```
--- Header field
-totalAmount=RECEIVABLE_DR,SALES_CR
-
--- Detail lines
-lines.amount=EXPENSE_DR,PAYABLE_CR
+n1=N1EffectDR,N1EffectCR
+lines.n2=DetailsN2EffectDR,DetailsN2EffectCR
 ```
+A side code that matches no accounting side stops the run with *Could not find AccountingSideConfig with code {0}*.
 
 ### Parameter 4: Shorten Ledger (Optional)
-- `true` - Consolidate lines with same account
-- `false` - Keep separate lines
+- `true` - Merge similar lines. Lines are similar when they agree on the account, the subsidiary, the dimensions, the currency, the rate, both narrations and the three reference fields; see [EAAddAccountingEffect](/entity-flows/accounting/EAAddAccountingEffect).
+- `false` or empty - Keep separate lines
 
 ### Parameter 5: Inverse Copy Fields (Optional)
-Copy values back to source document:
+Copy values back to the source document after the journal entry is committed. Here the source of each line is the journal entry, so `$this` is the journal entry itself:
 ```fieldmap
-ledgerTransReqId=ledgerTransReqId
+ref1=$this
 ```
 
 ### Parameter 6: Apply When Query (Optional)
-SQL query to conditionally include lines:
+SQL query run once per document line; a line whose result is 0 or empty gets no effect. It applies only to effects whose amount field is a line field. An effect on a header field is applied whatever the query returns.
 ```sql
-SELECT CASE WHEN {lines.amount} > 0 THEN 1 ELSE 0 END
+select case when {lines.ref1.entityType} in ('Branch','Department') then 1 else 0 end
 ```
 
 ### Parameter 7: Currency Field (Optional)
-Field containing currency reference for multi-currency support.
+Field holding the currency of the generated lines, on the header or on the lines. Empty: the main currency of the legal entity's ledger.
 
 ### Parameter 8: Rate Field (Optional)
-Field containing exchange rate for currency conversion.
+Field holding the rate of the generated lines, on the header or on the lines. Empty: a rate of 1.
 
 ## Example Configurations
 
-### Sales Invoice
+### Effect From a Header Field
 ```
-Finder: SELECT id FROM JournalEntry WHERE ref1Id = {id}
-Fields: book="SAL"\nref1=id\ndate1=issueDate
-Effects: totalAmount=RECEIVABLE_DR,SALES_CR
+Finder: select id from JournalEntry where ref1Id = {id}
+Fields: book="JEB"\nterm="JET"\nref1=$this
+Effects: n1=N1EffectDR,N1EffectCR
 Shorten: true
 ```
 
-### Purchase Invoice with Details
+### Effect From a Line Field
 ```
-Finder: SELECT id FROM JournalEntry WHERE ref1Id = {id}
-Fields: book="PUR"\nref1=id\ndate1=issueDate
-Effects: lines.amount=EXPENSE_DR,PAYABLE_CR
-Apply When: SELECT CASE WHEN {lines.amount} > 0 THEN 1 ELSE 0 END
+Finder: select id from JournalEntry where ref1Id = {id}
+Fields: book="JEB"\nterm="JET"\nref1=$this
+Effects: lines.n2=DetailsN2EffectDR,DetailsN2EffectCR
+Apply When: select case when {lines.ref1.entityType} in ('Branch','Department') then 1 else 0 end
 ```
 
 ## Related Actions

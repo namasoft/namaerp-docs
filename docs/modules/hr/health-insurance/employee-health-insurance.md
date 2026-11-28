@@ -1,5 +1,5 @@
 ---
-description: "Following an employee's Gulf health insurance from start to end: the policy and insurance offer, enrolling employees and dependants, medical claims, mid-term category upgrades, moving a batch to a new insurer with Credence, and removing someone from the insurance."
+description: "Following an employee's Gulf health insurance from start to end: the policy and insurance offer, enrolling employees and dependants, medical claims, mid-term category upgrades, enrolling a batch at once with Credence, and removing someone from the insurance."
 entities: [EmployeeHealthInsurance, HealthInsuranceOffer, HealthInsuranceClaimDoc, HealthInsuranceUpgrade, HealthInsuranceCredence, EmpHealthInsurDelete, EmployeeHealthInsuranceReq, HealthInsuranceOfferRequest, HealthInsuranceClaimRequest, HealthInsuranceUpgradeReq, EmpHealthInsurDeleteReq]
 ---
 # Employee Health Insurance
@@ -9,7 +9,7 @@ benefit, and covering the wrong category, missing a spouse, or letting a policy 
 liability. Nama's Health Insurance area follows one employee's insurance from the day the company
 picks a policy to the day that employee is finally removed from it: set up the policy the insurer
 offered, enrol employees (and their families) onto it, submit medical claims against it, upgrade
-someone to a richer coverage tier mid-year, credit a batch of employees to a new company, and — when
+someone to a richer coverage tier mid-year, enrol a whole batch of employees at once, and — when
 someone leaves — take them off cleanly.
 
 ::: info Gulf-specific
@@ -30,20 +30,20 @@ translate loosely as "insurance policy":
 - **Social Insurance Policy** (سياسة التأمينات الاجتماعية) is an unrelated, much simpler master file
   used for the *government* social-insurance contribution brackets on an employee's HR record (fixed
   and variable percentages, by date range, capped at a minimum/maximum) — it lives under Payroll
-  licensing and has nothing to do with the private health-insurance offer described below. It is
-  only grouped in this same menu because Nama files health-related setup together.
+  licensing and has nothing to do with the private health-insurance offer described below, although
+  it appears in the same menu group.
 
 ### Filling in the Insurance Offer
 
 Open **Human Resources → Health Insurance → Health Insurance Offer** and pick a **Type** — health
-insurance offers use **Healthy**, while the same screen family is reused elsewhere in Nama for fire,
-car and other insurance types, so always confirm **Healthy** is selected. Set the **Insurance
-Period** (From Date / To Date) the quote covers, and note the insurer's own reference in **Policy**
-— a free-text field, not a link to the Social Insurance Policy master file above.
+insurance offers use **Healthy** (the list also offers Fire, Cars and other lines of business). Set
+the **Insurance Period** (From Date / To Date) the quote covers — each date is copied onto the grid's
+lines when you set it — and note the insurer's own reference in **Policy** — a free-text field, not a
+link to the Social Insurance Policy master file above.
 
 The offer's **Details** grid is the actual price list: one line per combination of **Insurance
-Category** (the tier — VIP Plus, VIP, A, AA, B, B Plus, C, CC, or the spare tiers Other 1 to Other 5), who it insures (**Insured
-From** — Employees, Wifes, Husbands, Childrens, and so on down to named children Child 1–5), an
+Category** (the tier — VIP+, VIP, A, AA, B, B+, C, CC, or the spare tiers Other 1 to Other 5), who it insures (**Insured
+From** — Employees, Wives, Husbands, Children, and so on down to named children Child 1–5), an
 age bracket (**Age | From/To**), and **Gender**. Each line carries its own **Value**, the resulting
 **Total Cost**, and a **Coverage** cap (percentage and/or maximum value) — the portion the insurer
 pays versus what falls back on the company or employee.
@@ -53,7 +53,7 @@ pays versus what falls back on the company or employee.
 | Type | النوع | Insurance line of business — choose Healthy for this area. |
 | Policy | الوثيقة | The insurer's own reference number (free text). |
 | Insurance Period | فترة التأمين | The from/to dates this quote covers. |
-| Insurance Category | فئة التأمين | The coverage tier (VIP Plus, VIP, A, AA, B, B Plus, C, CC, Other 1 to Other 5). |
+| Insurance Category | فئة التأمين | The coverage tier (VIP+, VIP, A, AA, B, B+, C, CC, Other 1 to Other 5). |
 | Insured From | المؤمن عليهم من | Who this price line covers — employee, spouse, child, etc. |
 | Coverage | التحمل | The percentage and/or maximum value the insurer covers on this line. |
 
@@ -84,7 +84,22 @@ Daughter, Father, Mother, and further categories down to Second Degree or Friend
 in the person's **Insurance Category**, **Birth Date**, **Age**, **Nationality**, **Gender**,
 **Residency Id**, and works out **Insurance Cost Per Day** / **Insurance Cost Per Month**, together
 with the **Coverage** and **Employee Due** split — how much of the cost the company absorbs versus
-what is deducted from the employee.
+what is deducted from the employee. On every save a line without its own start date takes the
+header **Start Date**, and the line's value is recalculated as its cost per day times the days from
+its start date to its end date.
+
+Committing refuses a line whose end date is before its start date, a line without a start or end
+date, a line that starts before the offer's From Date, and the same employee twice under the same
+name. On the first commit (unless **Add Attendants Only** is ticked), an employee whose current
+health insurance ends after the document's value date is refused too; the document term's **Allow
+Manual Insurance Without Insurance Offer** switches that check off.
+
+When the document is committed, each employee's file takes the line's insurance category, insurance
+value, card number and start and end dates, and the document's **Company** as the employee's health
+insurance company (that last one is skipped with **Add Attendants Only**). Each family member's line
+updates the matching attendant on the employee's file in the same way. An employee who already has a
+later Employee Health Insurance (by value date) is left as it is. Cancelling the document clears
+those insurance details again.
 
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
@@ -115,10 +130,12 @@ skip straight to the document where it does not.
 
 Once an employee is insured, **Health Insurance Claim Document** (سند تعويض طبي) is how a medical
 bill actually gets reimbursed. Open it from **Human Resources → Health Insurance → Health Insurance
-Claim Document**, pick the **Employee**, and Nama pulls in their current **Insurance Offer**,
-**Repaid Percentage**, and the **Health Insurance** block (card **Number**, **Issue** date, **End
-at** date) straight from their enrolment — so the claim is always evaluated against the coverage
-that was actually active for them.
+Claim Document**, pick the insurance **Company** and the **Employee**, and Nama pulls in the
+employee's **Health Insurance** block (card **Number**, **Issue** date, **End at** date), Residency
+Id and work place straight from the employee's file, and copies them again on every save — so the
+claim always shows the coverage currently on the employee's file. The **Insurance Offer** and the
+header **Repaid Percentage** are yours to fill; entering the header percentage puts it on every
+line that has no percentage of its own.
 
 The **Details** grid holds one line per invoice: **Invoice Number**, **Service Description**,
 **Invoice Amount**, the line's own **Repaid Percentage**, the resulting **Repaid Value**, and up to
@@ -129,10 +146,10 @@ insurer or company actually reimburses).
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
 | Employee | الموظف | The insured employee the claim is filed for. |
-| Insurance Offer | البوليصة | The offer this employee is enrolled under, copied in automatically. |
-| Repaid Percentage | نسبة التعويض | The share of the claim that gets reimbursed. |
+| Insurance Offer | البوليصة | The offer the claim is filed under. |
+| Repaid Percentage | نسبة التعويض | The share of the claim that gets reimbursed, copied onto lines that have none. |
 | Invoice Amount | مبلغ الفاتورة | The billed amount on one medical invoice line. |
-| Repaid Value | مبلغ التعويض | The calculated reimbursement for that line. |
+| Repaid Value | مبلغ التعويض | The line's Invoice Amount × its own Repaid Percentage ÷ 100, recalculated on save. |
 | Claim Total Amount | إجمالى مبلغ المطالبة | The sum of every invoice line on the document. |
 | Repaid Total Amount | إجمالى مبلغ التعويض | The sum actually reimbursed across every line. |
 
@@ -148,34 +165,42 @@ When an employee (or a family member on their policy) needs richer coverage than
 category offers — moving from B to A, say — **Health Insurance Upgrade** (سند ترقية تأمين) handles
 the switch without waiting for the next renewal. Each line in its **Details** grid names the
 **Insurance Category** the person is leaving and the **New Insurance Category** they are moving to,
-along with **Previous Insurance Category Days** and **Previous Insurance Category Value** — the
-unused portion of what was already paid for the old tier — and a **Refund Value** (with its own tax
-percentage/value) that credits that unused portion back against the cost of the new category.
+along with **Previous Insurance Category Days**, **Previous Insurance Category Value** and a
+**Refund Value** (with its own tax percentage/value). Nama fills those three when the upgrade is
+committed, from the person's latest insurance entry: the days are the line's start date minus that
+entry's start date, the value is those days times the old cost per day (the part of the old tier
+already used), and the refund is the old entry's amount minus that used value (the unused part
+credited back). With no earlier entry, or a line that starts on or before it, all three are 0.
 
 | Field (English) | Arabic label | Purpose |
 |---|---|---|
 | Insurance Category | فئة التأمين | The tier the person currently holds. |
 | New Insurance Category | الفئه المراد الترقية إليها | The tier they are upgrading to. |
-| Previous Insurance Category Value | قيمة تأمين الفئة السابقة | What was already paid for the old tier's remaining period. |
-| Refund Value | القيمة المستردة | The unused value credited back against the new category's cost. |
+| Previous Insurance Category Value | قيمة تأمين الفئة السابقة | The old tier's cost for the days already used, up to the upgrade's start date. |
+| Refund Value | القيمة المستردة | The unused value of the old tier, credited back against the new category's cost. |
+
+On commit, the upgrade writes the new category, value, card number and dates onto the employee's file
+and attendants, the same way the enrolment does.
 
 An **Administrative Fees** block and an **Update Start Date For Lines** action work exactly as they
 do on the enrolment document, and a matching **Health Insurance Upgrade Request** (طلب ترقية تأمين)
 offers the same approval step before the upgrade is committed.
 
-## Moving a batch of employees to a new insurer: Credence
+## Enrolling a batch of employees at once: Credence
 
-**Health Insurance Credence** (سند تعميد شركة تأمين) is the batch tool for re-assigning a whole group
-of already-insured employees to a new insurance offer at once — typically when the company switches
-insurers and needs every current policy-holder re-registered under the new company's offer in a
-single operation, rather than one Employee Health Insurance document per person.
+**Health Insurance Credence** (سند تعميد شركة تأمين) is the batch tool for putting a whole group of
+employees on an insurance offer at once, for the header's **From Date** – **To Date** period (lines
+without their own dates take them), rather than one Employee Health Insurance document per person.
+It runs the same commit checks as the enrolment, including the refusal of an employee whose current
+health insurance has not ended yet, and writes the same insurance details onto each employee's file;
+cancelling it clears them again.
 
 Like the Offer Request above, it can build its employee list for you: fill in the **Collect
 Employees** range (department, job/organization position, branch, sector, nationality — plus a
-**From/To Health Insurance Company** filter unique to this screen, letting you target specifically
-the people currently insured with the insurer you are leaving) and press **collect Employees**
-(تجميع الموظفين). Every matching employee is added as a line with the same category/relation/cost
-detail described for enrolment, ready to be committed under the new **Insurance Offer** in one save.
+**From/To Health Insurance Company** filter, letting you target the people currently insured with a
+given insurer) and press **collect Employees** (تجميع الموظفين). Every matching employee is added as a
+line with the same category/relation/cost detail described for enrolment, ready to be committed under
+the chosen **Insurance Offer** in one save.
 
 ![Health Insurance Credence](../../../ar/modules/hr/images/health-insurance/health-insurance-credence-en.png)
 
@@ -185,8 +210,11 @@ When an employee (or a dependant) no longer needs coverage — they left the com
 out, a dependant relation ended — **Employee Health Insurance Delete** (سند حذف تأمين موظف) removes
 them. It mirrors the enrolment document field for field (Company, Insurance Offer, Start Date,
 Administrative Fees, the same Details grid of employee/relation/category lines) but its effect runs
-the other way: it takes the listed people off the policy from the given date rather than adding
-them. An **Employee Health Insurance Delete Request** (طلب حذف تأمين موظف) again offers the same
+the other way: when committed, it clears the insurance company, value, category, card number and
+dates from each listed employee's file and from the listed family members (an **Add Attendants
+Only** delete clears only the family members). With the term's **Do Not Override Value With Save**
+ticked, saving keeps the line values you entered instead of recalculating them. An **Employee Health
+Insurance Delete Request** (طلب حذف تأمين موظف) again offers the same
 accept-then-generate approval step first, for organisations that require sign-off before someone is
 dropped from coverage.
 
@@ -228,9 +256,11 @@ between the accounts configured on the claim document's own term.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Employee {0} is repeated in line {1}* — «الموظف {0} مكرر فى السطر رقم {1}» | The same employee appears twice in the details grid under the same name — one enrolment line per person (attendants are separate lines with their own names). | Delete the duplicate line, or correct the name if the second line is meant to be a dependant. |
-| *The employee {0} Has valid Health Insurance* — «الموظف {0} لم ينتهى تأمينه بعد» | The employee's current health-insurance cover has not expired yet at this document's value date, so enrolling them again would leave two overlapping covers. | Wait until the current cover ends, remove the employee from the existing policy first, or use the upgrade document if the aim is a better category. |
-| *Cant upgrade To Low or same Category* — «لايمكن الترقية إلى نفس الفئة او فئة اقل» | On a Health Insurance Upgrade line the **New Category** is the same as, or lower than, the employee's present one. The ladder runs C, CC, B, B+, A, AA, VIP, VIP+, then Other 1 up to Other 5, so every Other tier counts as higher than VIP+. | Pick a higher category, or drop the line — moving someone down is done by removing them and re-enrolling, not by an upgrade. |
+| *Employee {0} is repeated in line {1}* — «الموظف {0} مكرر في السطر رقم {1}» | On an Employee Health Insurance, the same employee appears twice in the details grid under the same name — one enrolment line per person (attendants are separate lines with their own names). | Delete the duplicate line, or correct the name if the second line is meant to be a dependant. |
+| *The employee {0} Has valid Health Insurance* — «الموظف {0} لم ينتهي تأمينه بعد» | On the first commit of an Employee Health Insurance or Health Insurance Credence, the employee's current health-insurance cover ends after this document's value date, so enrolling them again would leave two overlapping covers. Not checked with **Add Attendants Only**, or when the term has **Allow Manual Insurance Without Insurance Offer** ticked. | Wait until the current cover ends, remove the employee from the existing policy first, or use the upgrade document if the aim is a better category. |
+| *Cant upgrade To Low or same Category* — «لا يمكن الترقية إلى نفس الفئة أو فئة أقل» | On a Health Insurance Upgrade line the **New Insurance Category** is the same as, or lower than, the employee's present one. The ladder runs C, CC, B, B+, A, AA, VIP, VIP+, then Other 1 up to Other 5, so every Other tier counts as higher than VIP+. Not checked when the upgrade's term has **Use Health Insurance Upgrade Document To Downgrade Employee Insurance** ticked. | Pick a higher category, or use a term with that option ticked to move someone down. |
+| *Insurance Start Date cant be Before Insurance Offer Start Date* — «تاريخ بداية التأمين لا يمكن أن يكون قبل تاريخ بداية التأمين للبوليصة» | A line's start date is before the From Date of the chosen Insurance Offer. | Move the line's start date to the offer's period, or choose the offer that covers it. |
+| *From date can not be after to date* — «من تاريخ لا يمكن أن يكون بعد إلى تاريخ» | A line's end date is before its start date. | Correct the line's dates. |
 
 ## Related pages
 

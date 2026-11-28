@@ -1,7 +1,7 @@
 ---
 description: "The Custody Purchase Document: buying custody items on a full purchase invoice, why the cost is not expensed at once, what committing it does, paying and correcting it."
 entities: [FACustodyPurchaseDocument]
-menu: Assets → Custodys → Custody purchase document
+menu: Assets → Custodies → Custody purchase document
 ---
 # Buying Custody Items
 
@@ -37,7 +37,7 @@ custody family differs from the
 [fixed asset purchase document](/modules/fixedassets/acquisition/fixedassets-purchase-document.md),
 which can create the asset it capitalises.
 
-**Assets > Custodys > Custody purchase document** (`الأصول > عهد > شراء عهدة`), licence
+**Assets > Custodies > Custody purchase document** (`الأصول > عهد > شراء عهدة`), licence
 `fixedassets-custody`. Like every document in the module it needs a book and a
 [document term](/modules/fixedassets/document-terms/fixedassets-terms-custody-and-lc.md).
 
@@ -48,7 +48,7 @@ which can create the asset it capitalises.
 This is not a stripped-down internal form. The custody purchase document is a proper invoice and
 carries the whole invoice machinery: supplier, currency and rate, line discounts, tax, a header
 discount, cash paid and remaining, external payment vouchers, and an instalment schedule with a
-*GeneratePayments* action. If you know the supply-chain purchase invoice, you already know this
+*Generate Payments* action. If you know the supply-chain purchase invoice, you already know this
 screen.
 
 **The header** (page *Main*) asks for the book and code, the term, issue date and value date, the
@@ -60,7 +60,7 @@ purchases man (مندوب المشتريات), the currency and its rate, and re
 | Column | Arabic | Notes |
 |---|---|---|
 | Custody | عهدة | The record being bought — `CDY-0033` |
-| Price | السعر | What the supplier is charging for it |
+| Unit Price | سعر الوحدة | What the supplier is charging for it; the line's quantity is set to 1 when you pick the custody |
 | Discount 1 — % / Value / After value | خصم 1 — % / قيمة / صافي | Line discount |
 | Item Tax — % / Tax value | ضريبة مبيعات — % / القيمة | Tax on the line, driven by the item's tax plan |
 | Net value | الصافي | **The important one** — what the line is finally worth |
@@ -113,7 +113,7 @@ at ten custody records.
 
 Because this is a real invoice, the money side works the way it does everywhere else: enter what was
 paid in cash on the document, or leave the whole amount as remaining and settle it later with
-payment vouchers, or build an instalment schedule with **GeneratePayments** (إنشاء الدفعات) and
+payment vouchers, or build an instalment schedule with **Generate Payments** (إنشاء الدفعات) and
 settle the instalments as they fall due. Vouchers already raised against the invoice appear in the payment documents grid
 on the second page, and the *Remaining* figure moves as they are recorded.
 
@@ -123,7 +123,6 @@ Cancelling or deleting a custody purchase reverses its accounting entry and clea
 stamped on the item. If several items were on the document and you remove one line and re-commit,
 that item's price is cleared too while the others keep theirs.
 
-Because each custody remembers the last document that touched it, the usual ordering rule applies:
-if the item has since been delivered or transferred, cancel or delete those documents first and work
-backwards. See [Custody — Items Handed to
+The purchase document does not look for later documents on the item, so when the item has since been
+delivered or transferred, cancel or delete those documents first and work backwards. See [Custody — Items Handed to
 Staff](/modules/fixedassets/custody/fixedassets-custody-overview.md) for the full ordering rule.

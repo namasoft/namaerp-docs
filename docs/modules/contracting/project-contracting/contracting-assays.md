@@ -14,7 +14,7 @@ Our worked example continues the **Tower A** project for **Al-Fanar Development*
 
 ## What it is for, and how it differs from an offer
 
-The مقايسة and the [contracting offer](/modules/contracting/project-contracting/contracting-offers.md) are siblings. They are built on the same foundation, so the header fields are the same, the terms grid is the same, and both can be turned into a contract by the same buttons. Three things separate them:
+The مقايسة and the [contracting offer](/modules/contracting/project-contracting/contracting-offers.md) are siblings. They are built on the same foundation, so the header fields are the same, the terms grid is the same, and both carry a **Convert Contract** button that turns them into a project contract. Four things separate them:
 
 | | Contracting assay (مقايسة) | Contracting offer |
 |---|---|---|
@@ -43,7 +43,7 @@ For Tower A, tender sheet in hand, the terms grid arrives as:
 
 with the header totalling **230,000**. Parent rows carry no rates of their own — the system zeroes them and re-totals them from their children on every save, so line `1` reads 50,000 because line `1.01` does, and line `3` reads 126,000 because its two children add up to that, and the *Totals* block reports 230,000 before tax and, at 15% VAT, 264,500 after.
 
-The **From Document** (بناءا على) field is the alternative route in: point it at a term sheet, at another مقايسة, or at a contracting offer, and the same copy happens from there. Use *From Document* when you are re-pricing something that already exists, and *Term Sheet* when you are pricing a tender for the first time.
+The **From Document** (بناءً على) field is the alternative route in: point it at a term sheet, at another مقايسة, or at a contracting offer, and the same copy happens from there. Use *From Document* when you are re-pricing something that already exists, and *Term Sheet* when you are pricing a tender for the first time.
 
 The term-sheet picker is filtered by the document's customer and project, so once you have named the client you only see that client's sheets.
 
@@ -54,7 +54,7 @@ The columns are the ones you already know from the rest of the module: term code
 Two columns exist here that the contract's grid does not have:
 
 - **Manual Level** lets you force a line's outline depth instead of letting position decide it.
-- **Term Status** marks a line as accepted or rejected during negotiation. This matters at conversion time: when a contract is built from this document, **rejected lines are not carried over**. It is the tidy way to keep the client's deletions visible on the bid record without polluting the signed contract.
+- **Term Status** marks a line as *Accepted* or *Rejected* during negotiation. It takes effect in one place: when a contract picks this document in its **Source** field, the **rejected lines are not copied**. The four convert buttons on this screen do not look at the status — they carry every line, or every ticked line. So to keep the client's deletions visible on the bid record and out of the signed contract, either build the contract from its *Source* field, or tick the accepted lines and use a *Selected Lines Only* button.
 
 Term codes behave as everywhere else — **Update Codes** renumbers the whole grid, **Update Empty Term Codes Only** fills the blanks safely, and *Manual Terms Codes* in the header switches automatic coding off. The [standard terms page](/modules/contracting/setup/contracting-standard-terms.md) explains the parent/leaf model and the dotted-code convention in full.
 
@@ -69,12 +69,25 @@ Both of these do useful work; both are named in a way that sends readers looking
 **تحديث الأرباح من كراسة الشروط** (*update Profits From Term Sheet*) copies profit percentage, unit price and total price from the matching term sheet line, matched by term code. It is how a company governs its margin centrally: the sheet is the sanctioned rate card, and this button re-imposes it on a document somebody has been editing.
 
 ::: tip There is no "copy terms" button on a contract
-This is worth stating here because it is the question the pair of buttons above provokes. Terms reach a project contract in one of two ways: by **converting** a مقايسة or an offer (or by pointing the contract's *Source* field at one), or by choosing a **contract template** on the contract, whose selection triggers the copy. There is no action anywhere that copies terms onto an existing contract on demand.
+This is worth stating here because it is the question the pair of buttons above provokes. Terms reach a project contract by **converting** a مقايسة or an offer (or by pointing the contract's *Source* field at one), by choosing a **contract template** on the contract, whose selection triggers the copy, or through the *Copied From Doc* column of a term line. There is no button that copies terms onto an existing contract on demand — see [How terms arrive on a contract](/modules/contracting/project-contracting/contracting-project-contract#How-terms-arrive-on-a-contract).
 :::
 
 ## Status
 
-The **Status** field has two values, *Initial* (مبدئي) and *Confirmed* (مؤكد), and it is system-maintained — you cannot type into it. A new document reads *Initial*, and on a plain installation it stays there; it is moved, if at all, by whatever approval arrangement your organisation has built around the document. Do not expect the module itself to advance it as you work.
+The **Status** field has two values, *Initial* (مبدئي) and *Confirmed* (مؤكد), and it is system-maintained — you cannot type into it. A new document reads *Initial*. The contract built from it moves it:
+
+- Committing a [project contract](/modules/contracting/project-contracting/contracting-project-contract) or a [subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract) whose **Source** is this document sets the status to *Confirmed*. The same commit ticks *Converted To Contract* on the document's term sheet and on its measurements request.
+- Deleting that contract, or changing its *Source* to another document, sets the status back to *Initial* and clears the two ticks.
+
+Once the status is *Confirmed*, these refusals follow from it:
+
+| Message | Raised when |
+|---|---|
+| *Cannot update in confirmed assay* — «لا يمكن التعديل في مقايسة مؤكدة» | you save a change to the confirmed document, unless the contracting configuration option **Allow Making More Than Contractor Contract On The Same Contracting Assay And Editing It After Making Contractor Contract On It** is ticked |
+| *Assay is confirmed* — «حالة المقايسة مؤكدة» | you save a contract that newly points its *Source* at the confirmed document: always for a project contract, and for a subcontract only while that same option is not ticked |
+| *Sheet is Related to confirmed assay* — «كراسة الشروط مرتبطة بمقايسة مؤكدة» | you save another مقايسة, or a contracting offer, on a term sheet that a confirmed مقايسة already uses |
+| *Measurements Request is Related to confirmed assay* — «طلب رفع المقاسات مرتبط بمقايسة مؤكدة» | the same, for the measurements request, when the document being saved has no term sheet |
+| *Rejected assay* — «مقايسة مرفوضة» | you save a new project contract or subcontract whose *Source* is a مقايسة whose term sheet or measurements request already carries *Converted To Contract* |
 
 ## What it books
 
@@ -104,9 +117,7 @@ All of them sit above the terms grid; the first two need the assay saved.
 - **update Profits From Term Sheet** — copies profit percentage, unit price and total price from the matching term-sheet lines.
 - **Update Codes** — renumbers every term line from scratch by walking the grid top to bottom (`1`, `1.1`, `1.2`, `2` …), following the parent/leaf type of each line. It overwrites codes you typed yourself.
 - **Update Empty Term Codes Only** — the safe version: gives a code only to lines that have none, leaving existing codes alone.
-- **Convert Contract** — opens a new, unsaved project contract built from this assay's terms and conditions, for you to review and save. The document must be saved first.
-- **Convert Contract With Selected Lines Only** — the same, carrying only the term lines you ticked.
-- **Convert Contractor Contract** and **Convert Contractor Contract With Selected Lines Only** — the same pair, producing a subcontract instead.
+- **Convert Contract**, **Convert Contract With Selected Lines Only**, **Convert Contractor Contract** and **Convert Contractor Contract With Selected Lines Only** — the four conversion buttons, described under [Carrying it to signature](#Carrying-it-to-signature).
 
 ![The assay's action bar](../../../ar/modules/contracting/images/project-contracting/contracting-assay-actions-en.png)
 
@@ -114,11 +125,11 @@ All of them sit above the terms grid; the first two need the assay saved.
 
 Four buttons turn the document into a contract:
 
-- **Convert Contract** (تحويل لعقد) — builds a new, unsaved [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) and opens it for you to review and save.
-- **Convert Contract With Selected Lines Only** — the same, for the ticked lines only, which is what you use when the client awarded part of the scope.
+- **Convert Contract** (تحويل لعقد) — builds a new, unsaved [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) and opens it for you to review and save. The document must be saved first.
+- **Convert Contract With Selected Lines Only** — the same, for the lines whose **Selected** box is ticked, which is what you use when the client awarded part of the scope. A line under a ticked heading line is carried too, ticked or not.
 - **Convert Contractor Contract** (تحويل لعقد مقاول باطن) and its selected-lines twin — the same conversion, producing a [subcontract](/modules/contracting/contractor-contracting/contracting-contractor-contract.md) instead.
 
-The generated contract carries the project, the customer, the responsible engineer, the price before discount and the discount, the contract type and the main-contract reference, the remarks, all the term lines with their quantities and prices, and the condition lines. Its **Source** field points back at this document, so the signed contract always names the bid it came from.
+The generated contract carries the project, the customer, the price before discount and the discount, the contract type and the main-contract reference, the remarks, and the term lines with their quantities and prices. Its **Responsible Engineer** is filled from this document's **Responsible Employee** — or, when the document names a measurements request, from that request's responsible employee, and on a project contract the request's salesman is copied as well. The condition lines come from this document's **Conditions** grid (with a *Selected Lines Only* button, only the ticked ones); when that leaves none, the conditions of the document's term sheet are copied instead. The contract's **Source** field points back at this document, so the signed contract always names the bid it came from.
 
 For Tower A, one press of **Convert Contract** produces project contract `PC-2026-001` of **230,000** with the same four priced lines and the 10% retention condition already in place. From that point on, the story continues on [the project contract page](/modules/contracting/project-contracting/contracting-project-contract.md).
 

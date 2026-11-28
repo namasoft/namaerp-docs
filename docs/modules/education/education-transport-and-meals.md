@@ -118,7 +118,7 @@ with its **currency**, and a **description** for the detail that does not fit an
 
 ### The cost and the responsible person's share
 
-Two more figures sit under a Costs heading: the **responsible percentage** and the **responsible
+Two more figures sit beside the amount: the **responsible percentage** and the **responsible
 value** — how much of the cost the responsible person carries.
 
 Say a driver clips a gatepost and the bodywork costs 4,000 to put right. The school decides the
@@ -188,8 +188,8 @@ each line of the grid is one change to one bus:
 | Current Running KM / New Running KM | The odometer reading before, and the new reading |
 
 Every column is typed by you; picking a bus does not fill in its current values for you. The status
-columns use a list of their own (Active, Accident, Suspended and a few spare slots), which is not the
-status list on the bus card.
+columns use a list of their own (Active, Accident, Suspended, Fixed Asset Maintenance and a few spare slots),
+which is not the status list on the bus card.
 
 ::: info The update is a record of the change, not the change itself
 Committing a Bus Info Updater keeps the before-and-after on the document; it does **not** write the
@@ -334,7 +334,3 @@ name as custodians, responsible drivers or trip escorts are ordinary employee re
 was on a given day is a matter for
 [Attendance, Daily Monitoring and Leave](./education-attendance) — a trip record lists who went, not
 who was marked present.
-
-And, to say it once more because it is the question people ask: nothing on this page carries a charge
-to a family. Fees live entirely on the [Course Contract](./education-course-contracts) and its
-[payment schedule](./education-payment-schedules).

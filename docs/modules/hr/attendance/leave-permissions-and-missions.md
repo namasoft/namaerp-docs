@@ -14,8 +14,8 @@ A Leave Permission records a specific, time-boxed absence for one employee, with
 
 | Permission Type | Arabic | Typical use |
 |---|---|---|
-| Early Leave | اذن مبكر | Leaving before the shift ends. |
-| Late Arrival | اذن تاخير | Arriving after the shift starts. |
+| Early Leave | إذن مبكر | Leaving before the shift ends. |
+| Late Arrival | إذن تأخير | Arriving after the shift starts. |
 | Leave During Work | انصراف خلال العمل | Stepping out mid-shift and returning. |
 | Forgot Check In | نسيان بصمة دخول | Covers a missing check-in — typically one an [Electronic Attendance](time-attendance.md#Electronic-Attendance-mobile-self-service-punches) record flagged that way. |
 | Forgot Check Out | نسيان بصمة خروج | Covers a missing check-out, the same way. |
@@ -25,7 +25,7 @@ Its header carries the usual document identity plus two fields worth calling out
 
 | Field (English → Arabic) | Purpose |
 |---|---|
-| From Document (بناءا على) | An optional link to whatever record this permission originates from — most often the **Leave Permission Request** it answers (choosing a request there copies its type, employee, period, dates, hours and reason), following the same "document tells you where it came from" idea covered in [HR Requests & Documents](../concepts/hr-requests-and-documents.md). |
+| From Document (بناءً على) | An optional link to whatever record this permission originates from — most often the **Leave Permission Request** it answers (choosing a request there copies its type, employee, period, dates, hours and reason), following the same "document tells you where it came from" idea covered in [HR Requests & Documents](../concepts/hr-requests-and-documents.md). |
 | Extended Multi Day Permission (إذن ممتد لأكثر من يوم) | Lets a single permission span more than one calendar day, instead of being confined to one. |
 | HR Period (فترة الرواتب) | The payroll period this permission counts against. |
 
@@ -34,8 +34,8 @@ The body of the document pins down exactly how long the absence is:
 | Field (English → Arabic) | Purpose |
 |---|---|
 | From Date / To Date (من تاريخ / إلى تاريخ) | The date span the permission covers. |
-| From Hour / To Hour (من ساعة / إلي ساعة) | The specific hours within that span. |
-| Duration — Value / Unit (المدة — القيمة / الوحدة) | The computed length of the permission, in Day/Week/Month/Year/Hour/Minute/Second. |
+| From Hour / To Hour (من ساعة / إلى ساعة) | The specific hours within that span. |
+| Leave Period — Value / Unit (مدة الإذن) | The computed length of the permission, in Day/Week/Month/Year/Hour/Minute/Second. |
 | Reason (السبب) | A [Leave Reason](#Leave-Reason-catalog-of-reasons) picked from the shared reasons catalog. |
 
 ![Leave Permission document, showing the permission type and duration](../../../ar/modules/hr/images/attendance/leave-permission-en.png)
@@ -76,11 +76,13 @@ and each rule then sets:
 
 | Field (English → Arabic) | Field id | Purpose |
 |---|---|---|
-| Max Permission Hours Per Month (أقصى عدد ساعات إذون انصراف شهريا) | `details.maxPermissionsHoursPerMonth` | The total hours of leave permission an employee can take in a month. |
+| Max Permission Hours Per Month (أقصى عدد ساعات أذون انصراف شهريا) | `details.maxPermissionsHoursPerMonth` | The total hours of leave permission an employee can take in a month. |
 | Max Single Permission Hours (أقصى عدد ساعات للإذن الواحد) | `details.maxSinglePermissionHours` | The longest any one permission can be. |
-| Max Permissions Per Month (أقصى عدد إذون انصراف شهريا) | `details.maxPermissionsPerMonth` | The number of separate permissions allowed in a month, regardless of their individual length. |
+| Max Permissions Per Month (أقصى عدد أذون انصراف شهريا) | `details.maxPermissionsPerMonth` | The number of separate permissions allowed in a month, regardless of their individual length. |
 
 Because a rule can be scoped narrowly (one department) or broadly (the whole company), an organization can give, say, sales staff a looser allowance than back-office staff, all from the same configuration record.
+
+Each of the three caps is taken from the first place that sets it to a non-zero value, in this order: the applicable Leave Permission Configuration rules, the permission's **Leave Reason**, the Employee record, the employee's Job Position, Organization Position and Employee Department, and finally HR Configuration. The lower places are not added on top; they are used only when nothing above them sets the cap. A "month" here is the fiscal period of the permission, or its **HR Period** when HR Configuration's **Max Permission Count Per Hr Period Not Fiscal Period** is ticked (the HR Period then becomes required and must contain the From Date).
 
 ## Leave Reason catalog of reasons
 
@@ -88,8 +90,8 @@ Because a rule can be scoped narrowly (one department) or broadly (the whole com
 
 | Selected Group | Arabic | Applies to |
 |---|---|---|
-| Vacation | الأجازة | Vacation documents. |
-| Leave | إنصراف | Leave Permission documents. |
+| Vacation | الإجازة | Vacation documents. |
+| Leave | انصراف | Leave Permission documents. |
 | Reward | مكافأة | Reward records. |
 | Penalty | جزاء | Penalty records. |
 | Suspension | وقف عن العمل | Suspension documents. |
@@ -101,11 +103,11 @@ For a reason scoped to **Leave**, the fields that matter are:
 |---|---|
 | Without Salary Deducted From Termination (بدون مرتب و يخصم من نهاية الخدمة) | This reason's leave is unpaid, and counts against end-of-service calculations. |
 | Without Salary Not Deducted From Termination (بدون مرتب ولا يخصم من نهاية الخدمة) | Unpaid, but does **not** affect end-of-service. |
-| Max Permission Count Per Reason (أقصي عدد أذون شهريا لكل سبب على حدة) | A monthly cap specific to this one reason, on top of whatever Leave Permission Configuration allows overall. |
-| Deducted From Paid Vacation Period In Dues (تخصم من مدة الأجازة مدفوعة الأجر في التصفية) | Whether time taken under this reason eats into the paid-vacation period counted at final settlement. |
-| Consider Return Date As Working Start Date (إعتبار تاريخ العودة تاريخ مباشرة العمل) | Treats the day the employee returns as a fresh work-start date for calculation purposes. |
-| Change Employee State To (تغير حالة الموظف إلى) | Optionally flips the employee's working state (e.g. to Suspended) while this reason is in effect. |
-| Max Permissions Per Month / Max Permission Hours Per Month / Max Single Permission Hours | The same three caps as Leave Permission Configuration, settable per reason instead of (or in addition to) globally. |
+| Max Permission Count Per Reason (أقصى عدد أذون شهريا لكل سبب على حدة) | A tick. When it is on, the monthly permission count compares only the employee's earlier permissions with this same reason, so each reason has its own count. HR Configuration has a field of the same name that does this for every reason. |
+| Deducted From Paid Vacation Period In Dues (تخصم من مدة الإجازة مدفوعة الأجر في التصفية) | Whether time taken under this reason eats into the paid-vacation period counted at final settlement. |
+| Consider Return Date As Working Start Date (اعتبار تاريخ العودة تاريخ مباشرة العمل) | Treats the day the employee returns as a fresh work-start date for calculation purposes. |
+| Change Employee State To (تغيير حالة الموظف إلى) | Optionally flips the employee's working state (e.g. to Suspended) while this reason is in effect. |
+| Max Permissions Per Month / Max Permission Hours Per Month / Max Single Permission Hours | The same three caps as Leave Permission Configuration, set per reason. A reason's value is used only when no applicable Leave Permission Configuration rule sets that cap (see the order above). |
 
 ## Mission Document — time out of the office on business
 
@@ -116,12 +118,12 @@ A Mission Document records an employee being away from their normal workplace **
 | Field (English → Arabic) | Purpose |
 |---|---|
 | Employee (الموظف) | Who is on the mission. |
-| From Document (بناءا على) | The optional originating record, same idea as on Leave Permission. |
+| From Document (بناءً على) | The optional originating record, same idea as on Leave Permission. |
 | From Date / To Date, From Hour / To Hour | The span of the mission. |
 | Mission Period — Value / Unit (مدة المأمورية) | The computed length of the mission. |
 | Allowance Value (قيمة البدلات) | A monetary allowance associated with the mission (e.g. transport or per-diem), which a salary formula can pick up. |
-| Not Include Week Ends (لا تشمل العطله الأسبوعية) | On a mission whose hours span several days — a two-week assignment in Alexandria — leaves the weekly rest days inside that span out of the counted period. A mission that fits inside one day always counts, rest day or not: it happened. Cannot be combined with Full Day Mission. |
-| Full Day Mission (مهمه يوم كامل) | The mission runs around the clock rather than for set hours — a three-day delivery run to Aswan — so every day between From Date and To Date counts as worked, weekly rest days among them. |
+| Not Include Week Ends (لا تشمل العطلة الأسبوعية) | On a mission whose hours span several days — a two-week assignment in Alexandria — leaves the weekly rest days inside that span out of the counted period. A mission that fits inside one day always counts, rest day or not: it happened. Cannot be combined with Full Day Mission: saving with both ticked is refused with *Full day mission must include week ends* — «مهمة اليوم الكامل يجب أن تشمل العطلات الأسبوعية». |
+| Full Day Mission (مهمة يوم كامل) | The mission runs around the clock rather than for set hours — a three-day delivery run to Aswan — so every day between From Date and To Date counts as worked, weekly rest days among them. |
 | Reason (السبب) | A Leave Reason scoped to **Mission**. |
 | Attachment 1–5 | Supporting documents (a travel order, a client visit report, and so on). |
 
@@ -147,10 +149,10 @@ With it enabled, the day's records are laid out on a single timeline and compare
 
 | Setting (English → Arabic) | Default |
 |---|---|
-| Mission Document Priority With Overlap (اولوية المأموريات عند التداخل) | 1 |
-| Time Attendance Priority With Overlap (اولوية الحضور و الانصراف عند التداخل) | 2 |
-| Leave Permission Priority With Overlap (اولوية الأذون عند التداخل) | 3 |
-| Partial Vacation Priority With Overlap (اولوية الاجازات الجزئية عند التداخل) | 4 |
+| Mission Document Priority With Overlap (أولوية المأموريات عند التداخل) | 1 |
+| Time Attendance Priority With Overlap (أولوية الحضور و الانصراف عند التداخل) | 2 |
+| Leave Permission Priority With Overlap (أولوية الأذون عند التداخل) | 3 |
+| Partial Vacation Priority With Overlap (أولوية الإجازات الجزئية عند التداخل) | 4 |
 
 So out of the box a mission outranks everything else: in the example above the mission keeps 09:00–17:00 and the punch line is dropped, because the mission covers it from end to end. Swapping the first two numbers makes the fingerprint the authority instead, leaving the mission only the hours the machine did not already account for.
 
@@ -178,7 +180,7 @@ Start with the ordinary case. On a working day a mission's hours are measured ag
 
 With it enabled, an eight-hour mission against an eight-hour shift produces **zero** overtime. The mission accounted for the day and nothing is left over, which is what everyone expects to see.
 
-A weekly rest day has no shift behind it, so it has no expected hours — there is nothing to measure the mission against and nothing to subtract. A different rule applies there: **the whole mission counts as overtime**. The same eight hours therefore appear twice on the same day, in two different columns:
+A weekly rest day has no shift behind it, so it has no expected hours — there is nothing to measure the mission against and nothing to subtract. (The one exception is a rest day to which the shift gives its own times through **Allow Specifying Times For Weekends**; that day is measured like a working day.) A different rule applies there: **the whole mission counts as overtime**. The same eight hours therefore appear twice on the same day, in two different columns:
 
 | The day | Net Mission Time (إجمالي وقت المأموريات) | Net Overtime (إجمالي الوقت الإضافي) |
 |---|---|---|
@@ -191,24 +193,20 @@ Neither figure needs correcting, then — what decides the pay is which of them 
 
 | Indicator type | What it reads |
 |---|---|
-| OverTime (Hours) — وقت إضافي (بالساعة) | Net overtime on every day, rest days included. |
-| OverTime Normal Day (Hours) — وقت إضافي يوم عادي (بالساعة) | Net overtime on working days only — zero on rest days, official holidays and vacation days. |
-| OverTime In Week Ends (Hours) — وقت إضافي عطلة أسبوعية (بالساعة) | Net overtime on weekly rest days only. |
+| Overtime (Hours) — وقت إضافي (بالساعة) | Net overtime on every day, rest days included. |
+| Overtime Normal Day (Hours) — وقت إضافي يوم عادي (بالساعة) | Net overtime on working days only — zero on rest days, official holidays and vacation days. |
+| Overtime In Week Ends (Hours) — وقت إضافي عطلة أسبوعية (بالساعة) | Net overtime on weekly rest days only. |
 | Hours Missions — مأمورية بالساعات | The day's net mission time. |
-| Total Mission Hours From Mission Doc — إجمالي عدد ساعات المأموريات من السندات | The mission documents' own periods, taken without regard to overlap. |
+| Total Mission Hours From Mission Doc (Does not consider intersections) — إجمالي عدد ساعات المأموريات من السندات (لا تأخذ التقاطع في الحسبان) | The mission documents' own periods, taken without regard to overlap. |
 
-An overtime component built on **OverTime Normal Day** alongside a mission component on **Hours Missions** pays the rest-day mission once, as mission hours, and still pays ordinary weekday overtime. A component on **OverTime** with no mission component beside it pays it once, as overtime. The combination that pays twice is **OverTime** together with a mission-hours component — and where the components are already built that way, clearing *Consider Missions in Overtime Calculation* takes mission hours out of overtime on every day, rest days included.
+An overtime component built on **Overtime Normal Day** alongside a mission component on **Hours Missions** pays the rest-day mission once, as mission hours, and still pays ordinary weekday overtime. A component on **Overtime** with no mission component beside it pays it once, as overtime. The combination that pays twice is **Overtime** together with a mission-hours component — and where the components are already built that way, clearing *Consider Missions in Overtime Calculation* takes mission hours out of overtime on every day, rest days included.
 
 ::: warning Not Included In Week Ends is not a mission switch
 The Performance Indicator's **Not Included In Week Ends** (لا يتم احتسابه في أيام العطلات الأسبوعية) flag looks like the surgical answer to this, and it is not: it zeroes the whole indicator on every weekly rest day, so an employee who merely punched overtime on a Friday with no mission in sight loses it too. Choose the indicator type that matches the day you mean to pay for instead.
 :::
 
 ::: info Holidays and vacation days can be told to behave like working days
-The all-overtime rule is not peculiar to the weekly rest day — an official holiday and a vacation day are treated the same way by default. Unlike the rest day, though, those two can be switched back, so that the day measures the mission against expected hours the way a working day does:
-
-<HRConfigOption option-code="value.calculateNormalWorkHoursForHolidays" link-title="Calculate Normal Work Hours For Holidays (Overtime will not be all day)" />
-
-<HRConfigOption option-code="value.calculateNormalWorkHoursForVacations" link-title="Calculate Normal Work Hours For Vacations (Overtime will not be all day)" />
+The all-overtime rule is not peculiar to the weekly rest day — an official holiday and a vacation day are treated the same way by default. Unlike the rest day, those two have settings that make the day measure the mission against expected hours the way a working day does; they are described under [Days that are not working days](/modules/hr/attendance/overtime-and-lateness#Days-that-are-not-working-days).
 :::
 
 ## Many employees at once: Aggregated Leave Permission and Aggregated Mission Document
@@ -216,7 +214,7 @@ The all-overtime rule is not peculiar to the weekly rest day — an official hol
 When a whole team leaves early for a training session, or ten engineers go out to one site visit, entering ten separate permissions or missions is slow. Two batch screens do it in one document:
 
 - **Aggregated Leave Permission** (إذن انصراف مجمع) — *Payroll > Time Attendance > Aggregated Leave Permission*.
-- **Aggregated Mission Document** (سند مأموريه مجمع) — *Payroll > Time Attendance > Aggregated Mission Document*.
+- **Aggregated Mission Document** (سند مأمورية مجمع) — *Payroll > Time Attendance > Aggregated Mission Document*.
 
 Each grid line is one employee with its own dates, hours and reason (plus permission type and HR period on the leave permission, or allowance value, **Full Day Mission** and **Not Include Week Ends** on the mission). The header carries the shared values — employee, dates, hours, reason, and on the leave permission also permission type and HR period — and whatever is filled in the header is copied to every line on save, so fill the header for what everyone shares and leave it empty for what differs per line.
 

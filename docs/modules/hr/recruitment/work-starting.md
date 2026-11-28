@@ -30,7 +30,7 @@ Found at **Payroll > Recruitment > Work Starting Document**, this is where the r
 | Work Start Type | Arabic | What it means |
 |---|---|---|
 | New Hiring | تعيين جديد | A candidate is joining for the first time — this is the document that follows an [accepted job offer](job-offers-and-tests.md). |
-| Back From Vacation | عودة من أجازة | An existing employee is returning from a vacation. |
+| Back From Vacation | عودة من إجازة | An existing employee is returning from a vacation. |
 | Back From Suspension | عودة من إيقاف | An existing employee is returning from a disciplinary suspension. |
 | Other 1 / Other 2 / Other 3 | أخرى 1 / 2 / 3 | Free slots for company-specific return scenarios that don't fit the three above. |
 
@@ -53,8 +53,8 @@ Found at **Payroll > Recruitment > Work Starting Document**, this is where the r
 
 Committing a Work Starting Document is the moment the person is actually put back to work: Nama marks the target — the new employee or the returning one — as **Working**, effective on the Starting Date, and carries the chosen salary structure onto their record as its fallback.
 
-- For a **New Hiring** start with **Create Employee** checked, saving does not just flag an existing record — it creates the **Employee** record and its companion [Employee HR Information](../setup/employee-hr-information.md) record from scratch, copying the candidate's name and salary component lines across. This is the exact moment a candidate becomes a real employee.
-- For a **Back From Vacation** start generated from a vacation document, Nama also writes the actual return date back onto that vacation document, closing the loop between "how long the leave was supposed to be" and "when the person actually came back."
+- For a document that names a **Candidate** with **Create Employee** checked and no **Employee** yet (normally a **New Hiring** start), saving does not just flag an existing record — it creates the **Employee** record, with the **Employee Code** given, and its companion [Employee HR Information](../setup/employee-hr-information.md) record from scratch, copying the candidate's names, salary structure and salary component lines across. This is the exact moment a candidate becomes a real employee.
+- For a start whose **From Document** is a vacation document (directly, or through a Work Starting Request made from it), Nama also writes the Starting Date back onto that vacation document as its actual return date, closing the loop between "how long the leave was supposed to be" and "when the person actually came back."
 - The document itself has no accounting effect — it is purely an HR/payroll-eligibility event, not an accounting document.
 
 ## Aggregated Vacation Work Starting Document
@@ -80,9 +80,9 @@ The **Work Starting Request**, the **Work Starting Document** and the **Aggregat
 
 | Message | Why | What to do |
 |---|---|---|
-| *You can not modify or remove this document because it is generated from {0}* — «لا يمكنك تعديل او حذف هذ المستند لانه منشأ من {0}» | This work-starting document was spawned by the aggregated document named in the message, which owns it — the same rule applies to deleting it. | Make the change on the aggregated document; the generated singles follow it. |
-| *You should choose candidate OR Employee To Start work* — «يجب إختيار متقدم للعمل / موظف لبدء العمل» | Neither **Candidate** nor **Employee** is filled, so the document does not say who is starting work. | Fill one of the two: a candidate for a new hire, an employee for someone already on the master file. |
-| *You must create a job offer for the employee {0} before creating a work starting document because the employee state is {1}* — «يجب عليك إنشاء عرض وظيفى للموظف {0} قبل إنشاء سند مباشرة عمل له لأن حالة الموظف {1}» | The employee's last recorded state change left them *Resigned*, *Dismissed* or *On Pension*, so re-starting them needs the terms of the new engagement on record first. | Raise a job offer for the return — ticking **Re Recruit** on it — and then write the work-starting document. |
+| *You can not modify or remove this document because it is generated from {0}* — «لا يمكنك تعديل أو حذف هذا المستند لأنه منشأ من {0}» | This work-starting document was spawned by the aggregated document named in the message, which owns it — the same rule applies to deleting it. | Make the change on the aggregated document; the generated singles follow it. |
+| *You should choose candidate OR Employee To Start work* — «يجب اختيار متقدم للعمل / موظف لبدء العمل» | Neither **Candidate** nor **Employee** is filled, so the document does not say who is starting work. | Fill one of the two: a candidate for a new hire, an employee for someone already on the master file. |
+| *You must create a job offer for the employee {0} before creating a work starting document because the employee state is {1}* — «يجب عليك إنشاء عرض وظيفي للموظف {0} قبل إنشاء سند مباشرة عمل له لأن حالة الموظف {1}» | The employee's last recorded state change left them *Resigned*, *Dismissed* or *On Pension*, so re-starting them needs the terms of the new engagement on record first. | Raise a job offer for the return — ticking **Re Recruit** on it — and then write the work-starting document. |
 
 ## Related pages
 

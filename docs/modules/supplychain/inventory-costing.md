@@ -18,11 +18,11 @@ But reality imposes cases where this automatic tracking needs intervention: frei
 
 Most wrong costs start from a wrong entry rather than from the costing itself: a purchase entered at the wrong price, or against the wrong item. Issues are priced from the average that receipts build, and uncosted receipts can copy their cost from the latest purchase (see [Ignore Current Average for Uncosted Receipt](./configuration/costing-configuration.md#Uncosted-Receipts)), so one wrong line can spread across many documents.
 
-**Correcting it.** Fix the source document — the price or the item on the purchase — and save it. Saving raises a new inventory transaction request, and processing it recalculates that item's cost from the document's position onwards: it starts from the balances stored for the movements before it and replays everything after, recalculating uncosted receipts, returns and stock-taking receipts on the way. If you change a costing setting to repair the damage, the change alone recalculates nothing; reprocess the inventory transaction request of a document of that item dated before the first wrong one from [Business Requests](/platform/background-processing/business-requests), and the recalculation runs forward from there. When many items are affected, **Partial Reprocess of Average Cost (Fast)** on [Reprocessing Quantity, Cost, and Stock Ages](/admin/reprocessing/reprocess-qty-and-cost) reprocesses every item from a date.
+**Correcting it.** Fix the source document — the price or the item on the purchase — and save it. Saving raises a new inventory transaction request, and processing it recalculates that item's cost from the document's position onwards: it starts from the balances stored for the movements before it and replays everything after, recalculating uncosted receipts, returns and stock-taking receipts on the way. If you change a costing setting to repair the damage, the change alone recalculates nothing; reprocess the inventory transaction request of a document of that item dated before the first wrong one from [Business Requests](/platform/background-processing/business-requests), and the recalculation runs forward from there. When many items are affected on an installation that costs by moving average, **Partial Reprocess of Average Cost (Fast)** on [Reprocessing Quantity, Cost, and Stock Ages](/admin/reprocessing/reprocess-qty-and-cost) reprocesses every item from a date.
 
 **Where a recalculation keeps the old cost.** Uncosted receipts, returns and stock-taking receipts keep the cost they have:
 
-- in a period that **When to Recalculate Cost of Uncosted Receipts, Returns and Stock Taking** treats as closed;
+- in a period that **When to recalculate cost of uncosted receipt, returns, and stock taking** treats as closed;
 - when they covered an overdraft and **Do not Re-Calculate Sales Return and Stock Taking, Uncosted Receipt Cost From Overdraft** is on;
 - when **Line Cost** is the cost source that answers for them.
 
@@ -38,7 +38,7 @@ The supplier's item price isn't the whole true cost. There's freight, insurance,
 
 ### How It Works
 
-You link the document to the relevant receipt (or purchase order), then enter the charge lines. The system distributes them across the items on a basis you choose - by value, by weight, by quantity, or manually. The result is that each item's cost rises by its fair share of the charges, so inventory value - and therefore cost of sale - reflects the true cost, not the supplier price alone.
+You link the document to the relevant receipt (or purchase order), then enter the charge lines. Each charge line names an **Expense Item**, and the expense item's **Distribution on items** decides how that charge is spread across the items: on value, quantity, weight, volume, length, density or area, on N1, N2 or N3, on the total average sales price (assembly documents), or manually. The result is that each item's cost rises by its fair share of the charges, so inventory value - and therefore cost of sale - reflects the true cost, not the supplier price alone.
 
 The document supports automatic, manual, and calculated lines, and supports scheduling payment of external charges via scheduling templates, linking charges to their payees over time.
 
@@ -65,45 +65,31 @@ When you assemble or manufacture a finished product, its cost accumulates from i
 
 ## Freezing Cost at Close (FrozenCostAccounts)
 
-When you close an accounting period (month-end, for example), you don't want inventory cost changing retroactively after statements are issued. **Frozen Cost Accounts** prevents cost adjustments during a date-bounded period, preserving the stability of the numbers your financial statements were built on, and preventing late receipts or adjustments from moving the cost of a closed period.
+When you close an accounting period (month-end, for example), you don't want late receipts or back-dated corrections to move the cost figures in the general ledger after statements are issued. A **Freeze Of Cost Effects On Accounts** record names one legal entity and a **From Date** to **To Date** range. While it exists, an inventory transaction request of that legal entity whose value date falls in the range raises no journal entry for its cost. The stock side still calculates and recalculates cost as usual; only the general-ledger effect of that cost is held back, so the statements built on the period keep their numbers.
 
-::: tip Preventing the Use of Specific Batches
-Alongside freezing cost, the system lets you **prevent using a batch** during a period (for example a batch under recall or quarantine), so that batch can't be issued until the prevention is lifted - a quality-control tool that intersects with cost by preventing movement of stock that shouldn't be sold.
-:::
+To keep a batch from being used for a while (a recall or a quarantine), use **Prevent Using Batch**; see [Warehouses and Locators](/modules/supplychain/warehouses-and-locators#Taking-a-Batch-Out-of-Circulation-Prevent-Using-Batch).
 
 ## Actions on these screens
 
-**On the Receipt Additional Cost:** **Collect Items** fills the cost lines from the receipt, letter of credit or shipment named on the header, so the cost is spread over what actually arrived; **GeneratePayments** splits the document's value into an instalment schedule, asking for the number of payments, the period and its unit, the start date, a grace period, down / first / second / last payment values and a rounding mode.
+**On the Receipt Additional Cost:** **Collect Items** fills the cost lines from the receipt, letter of credit or shipment named on the header, so the cost is spread over what actually arrived; **Generate Payments** splits the document's value into an instalment schedule, asking for the number of payments, the period and its unit, the start date, a grace period, down / first / second / last payment values and a rounding mode.
 
 **On the Finished Product Pricing:** **Collect Materials** fills the materials grid from the products being priced and the document's term; **Recalculate Materials Qty** re-derives those material quantities after the product quantities change; and **Collect CoProducts**, on the details page, fills the co-products grid from the products.
-
-## Best Practices
-
-::: tip Practical Tips
-**Distribute additional costs before close**: Enter freight and customs charges on the receipt as soon as they're available, so inventory cost reflects reality before cost of sales is computed.
-
-**Document the reason for revaluation**: Every revaluation needs a clear justification (market drop, obsolescence, correction) for audit and compliance purposes.
-
-**Freeze cost right after close**: Enable freezing as soon as the period's statements are approved to prevent any later movement of their numbers.
-
-**Review landed cost periodically**: Compare actual landed cost to expected to catch supplier or freight deviations early.
-:::
 
 ## Messages you may see
 
 | Message | Why | What to do |
 |---|---|---|
 | *No items found to distribute the additional cost on* — «لا توجد أصناف لتوزيع التكاليف الإضافية عليها» | The receipt, order or shipment named on the Additional Cost header carries no item lines for the charges to be spread over, and the document's term does not allow an empty system distribution grid. | Point the header at a document that really has item lines and run **Collect Items** again, or — if an empty distribution grid is intended — enable the term's *Allow Empty Sys Distribution Lines* option. |
-| *You can only use One Assembly Document per Receipt Additional Cost Document* — «يمكنك استعمال سند تجميع واحد فقط فى سند تكاليف إستلام إضافية» | The document lists more than one costed document and one of them is an assembly document. | Give the assembly document an Additional Cost document of its own and enter the remaining charges on a separate document. |
-| *You Can Not have more than One Document Type in Receipt Additional Cost documents* — «لا يمكنك استعمال أكثر من نوع مستند فى سند تكاليف إستلام إضافية» | The costed documents listed on this document are of different types — a receipt and a shipment, for example. Purchase orders and purchase invoices count as one type. | Split the charges so each Additional Cost document distributes over one document type only. |
+| *You can only use one assembly document per receipt additional cost document* — «يمكنك استعمال سند تجميع واحد فقط في سند تكاليف استلام إضافية» | The document lists more than one costed document and one of them is an assembly document. | Give the assembly document an Additional Cost document of its own and enter the remaining charges on a separate document. |
+| *You can not have more than one document type in receipt additional cost documents* — «لا يمكنك استعمال أكثر من نوع مستند في سند تكاليف استلام إضافية» | The costed documents listed on this document are of different types — a receipt and a shipment, for example. Purchase orders and purchase invoices count as one type. | Split the charges so each Additional Cost document distributes over one document type only. |
 | *Line {0} has a different costed document {1} than expected {2}* — «السطر رقم {0} مرتبط بمستند تكلفة مختلف {1} عن المستند المتوقع {2}» | A manual or system cost line names a costed document other than the one on the header. | Clear the costed document on that line so it follows the header, or change it to the header's document. |
-| *You can not use the order {0} as from doc for invoice {1} because it was used before with the invoice {2} and the order was found in the receipt additional cost {3}* — «لا يمكن إستخدام المستند {0} كبناءا علي للفاتورة {1} لانه استخدم من قبل الفاتورة {2} ووجد في مستند تكاليف الإستلام الإضافية {3}» | Raised while saving a purchase invoice built on an order whose charges were already distributed by an Additional Cost document against a different invoice. One order's costs cannot follow two invoices. | Either build the invoice on the order that is still free, or open the Additional Cost document and repoint it at the invoice you are saving. |
-| *FIFO is not supported for Cost Revaluation* — «التكلفة فيفو لا تدعم إعادة تقييم المخزون» | The costing method in Supply Chain configuration is First In First Out. Cost Revaluation works only with the other costing methods. | Adjust value through a document the costing method supports (a stock adjustment, or an Additional Cost document on the receipt) instead of Cost Revaluation. |
-| *You can not choose assembly BOM {0} twice in products lines* — «لا يمكن إختيار طريقة التجميع {0} مرتين فى سطور المنتجات» | A product line on Finished Product Pricing names the same assembly method in two of its semi-finished assembly slots. | Name each assembly method once on the line. |
-| *You can not choose BOM {0} twice in products lines* — «لا يمكن إختيار مكونات المنتج {0} مرتين فى سطور المنتجات» | A product line on Finished Product Pricing names the same bill of materials in two of its semi-finished slots. | Name each bill of materials once on the line. |
+| *You can not use the order {0} as from doc for invoice {1} because it was used before with the invoice {2} and the order was found in the receipt additional cost {3}* — «لا يمكن استخدام المستند {0} كبناءً على للفاتورة {1} لأنه استخدم من قبل الفاتورة {2} ووجد في مستند تكاليف الاستلام الإضافية {3}» | Raised while saving a purchase invoice built on an order whose charges were already distributed by an Additional Cost document against a different invoice. One order's costs cannot follow two invoices. | Either build the invoice on the order that is still free, or open the Additional Cost document and repoint it at the invoice you are saving. |
+| *FIFO is not supported for Cost Revaluation* — «التكلفة فيفو لا تدعم إعادة تقييم المخزون» | The costing method in Supply Chain configuration is First In First Out. Cost Revaluation works only with moving average cost. | Adjust value through a document the costing method supports (a stock adjustment, or an Additional Cost document on the receipt) instead of Cost Revaluation. |
+| *You can not choose assembly BOM {0} twice in products lines* — «لا يمكن اختيار طريقة التجميع {0} مرتين في سطور المنتجات» | A product line on Finished Product Pricing names the same assembly method in two of its semi-finished assembly slots. | Name each assembly method once on the line. |
+| *You can not choose BOM {0} twice in products lines* — «لا يمكن اختيار مكونات المنتج {0} مرتين في سطور المنتجات» | A product line on Finished Product Pricing names the same bill of materials in two of its semi-finished slots. | Name each bill of materials once on the line. |
 | *Legal entity can not be PUBLIC* — «لا يمكن أن تكون الشركة عام» | Frozen Cost Accounts was saved with the legal entity left public (shared across companies) or set to a composite one. Freezing cost has to name one real company. | Choose a single legal entity, and make one record per company if you are freezing several. |
 | *User {0} is not authorized to perform this action* — «المستخدم {0} غير مسموح له باتخاذ هذا الإجراء» | Frozen Cost Accounts may only be saved by `admin` or by a user whose settings allow editing frozen cost accounts. | Ask an administrator to save the record, or have that allowance added to your user's settings. |
-| *You have disabled cost effect on the legal entity {0} from {1} to {2}. Please make sure you intended this* — «لقد قمت بإيقاف تأثير التكاليف على شركة {0} من {1} إلى {2}. برجاء التأكد من ذلك» | A warning rather than a refusal — it appears on every Frozen Cost Accounts save, restating the company and the date range in which cost will no longer move. | Read back the dates and the company; if they are right, confirm and the record saves. |
+| *You have disabled cost effect on the legal entity {0} from {1} to {2}. Please make sure you intended this* — «لقد قمت بإيقاف تأثير التكاليف على شركة {0} من {1} إلى {2}. برجاء التأكد من ذلك» | A warning rather than a refusal — it appears on every Frozen Cost Accounts save, restating the company and the date range whose cost effects will no longer reach the accounts. | Read back the dates and the company; if they are right, confirm and the record saves. |
 
 ## Next Steps
 

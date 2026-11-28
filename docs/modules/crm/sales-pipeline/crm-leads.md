@@ -38,10 +38,10 @@ The first tab holds one large group of header fields, then the contact-informati
 | Lead Classification (تصنيف العميل المرتقب) | Classification master file | `LC-B` Mid-Market |
 | Activity Type (نوع النشاط للفرع) | The next kind of contact planned | `AT-01` Follow-up Call |
 | Rejection Reason (سبب الرفض) | Filled when a lead dies | empty |
-| Planned Re-Call Date (التاريخ المخطط لمعاودة الإتصال) | The date you intend to call back | set by the Call document |
+| Planned Re Call Date (التاريخ المخطط لمعاودة الاتصال) | The date you intend to call back | set by the Call document |
 | Sales Stage (مرحلة البيع) | One of twelve labels | Qualification / تأهيل |
-| Probability (%) (الإحتمالية) | A number you type | 40 |
-| Lead Type (نوع الخيط) | Fresh, Cold Call, or three spare labels | Fresh / جديد |
+| Probability(%) (الاحتمالية (%)) | A number you type | 40 |
+| Lead Type (نوع العميل المرتقب) | Fresh, Cold Call, or three spare labels | Fresh / جديد |
 | Platform (المنصة) | The channel it arrived through | Walk-In / زيارة مباشرة |
 | Customer Classification (تصنيف العميل) | Carried over to the Customer on conversion | — |
 | Internal Source (المصدر الداخلي) | An employee or a partner who referred it | — |
@@ -51,7 +51,7 @@ The first tab holds one large group of header fields, then the contact-informati
 | Currency group (العملة) | Currency and exchange rate | EGP |
 | Dimensions (محددات) | Legal entity, sector, branch, department, analysis set | `NOK`, `SEC-SRV`, `BR-ALX`, `DPT-SLS` |
 
-Five more fields sit on the screen read-only and are maintained by the conversion buttons: *Converted To Potential* (تم تحويلة إلي فرصة), *Potential* (الفرصة), *Converted To Customer* (تم تحويلة إلي عميل), *Customer* (العميل) and *Generated Record* (السجل المنشأ). You never type in them — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion).
+Five more fields sit on the screen read-only and are maintained by the conversion buttons: *Converted To Potential* (تم تحويله إلى فرصة), *Potential* (الفرصة), *Converted To Customer* (تم تحويله إلى عميل), *Customer* (العميل) and *Generated Record* (السجل المنشأ). You never type in them — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion).
 
 ::: warning Two different fields are both labelled "Legal Entity"
 The **Legal Entity (الشركة)** in the header group is free text naming the *prospect's* company — and if you leave it empty it is filled with the lead's Arabic name every time you save. The **Legal Entity (الشركة)** in the Dimensions group is *your own* company dimension. They are unrelated fields with the same label; read the group heading to tell them apart.
@@ -68,10 +68,10 @@ The *Currency* group shows a currency and a rate only — the amount that goes w
 | Arabic | English |
 |---|---|
 | مبدئي | Initial |
-| لم يتم الأتصال | Not Contacted |
-| محاولة الأتصال | Attempted To Contact |
-| تم الأتصال | Contacted |
-| الأتصال مستقبلا | Contact In Future |
+| لم يتم الاتصال | Not Contacted |
+| محاولة الاتصال | Attempted To Contact |
+| تم الاتصال | Contacted |
+| الاتصال مستقبلا | Contact In Future |
 | مؤهل مبدئيا | PreQualified |
 | مؤهل | Qualified |
 | دافئ | Warm |
@@ -80,19 +80,15 @@ The *Currency* group shows a currency and a rate only — the amount that goes w
 | بدون قيمة | Junk Lead |
 | فاشل | Lost Lead |
 
-**Lead Source** offers Cold Call, Existing Customer, Self Generated, Employee, Partner, Public Relations, Direct Mail, Conference, Trade Show, Web site, Word Of Mouth, Campaign, Mediator, Grant, Social Networks and Other. **Platform** offers Broker, WhatsApp, SMS Campaign, Customer Call Center, Owner, Freelance, Personal, Hotline, Walk-In, Instagram, Google, Outdoor, Facebook, Empty Platform and three spare labels. **Lead Type** offers only Fresh, Cold Call (which reads **إتصال ارتجالي** in Arabic) and three spare labels.
+**Lead Source** offers Cold Call, Existing Customer, Self Generated, Employee, Partner, Public Relations, Direct Mail, Conference, Trade Show, Web site, Word Of Mouth, Campaign, Mediator, Grant, Social Networks and Other. **Platform** offers Broker, WhatsApp, SMS Campaign, Customer Call Center, Owner, Freelance, Personal, Hotline, Walk-In, Instagram, Google, Outdoor, Facebook, Empty Platform and three spare labels. **Lead Type** offers only Fresh, Cold Call (which reads **اتصال ارتجالي** in Arabic) and three spare labels.
 
 Leads can also arrive on their own from Facebook lead forms, with **Lead Source** set to Social Networks — see [Facebook Lead Ads](/modules/crm/sales-pipeline/crm-facebook-lead-ads.md).
-
-::: warning The campaign picker offers every campaign
-The Campaign field looks as though it excludes cancelled and inactive campaigns. It does not — the filter behind it never removes anything, so every campaign in the system is offered. Check the campaign's own status before you pick it.
-:::
 
 ## The Contacts Grid, and Real Contact Records
 
 The **Contacts** grid (جهات الاتصال) holds the people: contact code, contacts group, title, name, job title, mobile, phone, fax, e-mail and address. On its own it is just a list inside the lead.
 
-Two fields above it change that. Tick **Create Contact For Every Line** (إنشاء جهة اتصال لكل سطر) and set a **Contacts Group** (مجموعة تكويد جهات الاتصال المنشأة), and every row of the grid becomes a real **Contact** master file the moment you save. On `LD-00417` that produced `CNT-0904` (Eng. Ramy Abdel Moneim, chief engineer) and `CNT-0905` (Ms. Mona Shaaban, purchasing), and the generated record is shown back in the grid's read-only *Contact* column.
+Two fields above it change that. Tick **Create Contact For Every Line** (إنشاء جهة اتصال لكل سطر) and set a **Group Of Encoding Contacts Created** (مجموعة تكويد جهات الاتصال المنشأة), and every row of the grid becomes a real **Contact** master file the moment you save. On `LD-00417` that produced `CNT-0904` (Eng. Ramy Abdel Moneim, chief engineer) and `CNT-0905` (Ms. Mona Shaaban, purchasing), and the generated record is shown back in the grid's read-only *Contact* column.
 
 Two behaviours to know before you switch it on:
 
@@ -113,9 +109,9 @@ Picking a competitor item fills in the competitor company for you, and the compe
 
 The screen offers three ways to put a name on a lead, and they do not talk to each other.
 
-1. **Responsible Employee** — one employee, filled automatically with the employee attached to the logged-in user when the lead is created. This is the only CRM screen where that auto-fill is governed by a setting; see [CRM Settings](/modules/crm/crm-configuration).
+1. **Responsible Employee** — one employee. When a lead is created it is filled with the employee attached to the logged-in user, but only if *fill Responsible Employee With Current Employee* is ticked in [CRM Settings](/modules/crm/crm-configuration); otherwise it starts empty. This is the only CRM screen where that auto-fill is governed by a setting.
 2. **Salesman and Sales Manager** — free employee references. The Salesman picker offers only employees flagged as salesmen, and saving with anybody else is refused with *"Must be sales man"*. There is no territory, no quota and no commission logic anywhere in the module.
-3. **The Assigned To grid** (مسند إلي) — the real assignment, one row per employee. On `LD-00417` it holds `EMP-1042` and `EMP-1001`.
+3. **The Assigned To grid** (مسند إلى) — the real assignment, one row per employee. On `LD-00417` it holds `EMP-1042` and `EMP-1001`.
 
 Every save compares the grid with what was there before and writes the difference into **Assigning History** (سجل التصعيدات), the read-only list on the Related Records tab: a row per employee added, stamped with the date, time and the user who assigned, and a closing date written onto the rows of employees who were removed. It is a genuine audit trail and it is maintained for you.
 
@@ -137,9 +133,9 @@ The fourth tab, **Actions** (*الحركات*), is the same story told as a time
 
 | Button | What it does |
 |---|---|
-| Convert To Potential (تحويل إلي فرصة) | Opens a new, unsaved Potential — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion) |
-| Convert To Customer (تحويل إلي عميل) | Opens a new, unsaved Customer |
-| Convert To REOwner (تحويل الي مشتري) | Opens a new, unsaved Real Estate owner; only present when Real Estate is installed |
+| Convert To Potential (تحويل إلى فرصة) | Opens a new, unsaved Potential — see [Converting a Lead](/modules/crm/sales-pipeline/crm-lead-conversion) |
+| Convert To Customer (تحويل إلى عميل) | Opens a new, unsaved Customer |
+| Convert To REOwner (تحويل إلى مشتري) | Opens a new, unsaved Real Estate owner; only present when Real Estate is installed |
 | Create Sales Quotation (إنشاء عرض أسعار) | Refused until the lead has been converted to a customer |
 | Create Contact (إنشاء جهة اتصال) | A new Contact linked back to this lead, with the header contact details copied |
 | create CRM Call (إنشاء اتصال) | A new Call with this lead's current status, classification, activity type and rejection reason already loaded into its "current…" fields |
@@ -152,7 +148,7 @@ All of them open a **new, unsaved screen**. Nothing is created until you save wh
 The Lead list carries quick-filter chips on **Status** and **Sales Stage**, and criteria for mediator, campaign, status, probability, potential, customer, lead type, area and budget. Two mass actions sit in its toolbar:
 
 - **Change Records Status** (تغيير الحالة) — asks for a status and writes it onto every selected lead.
-- **Assign Records To** (تصعيد إلي) — asks for one employee and applies it to every selected lead.
+- **Assign Records To** (إسناد السجلات إلى) — asks for one employee and applies it to every selected lead.
 
 ::: danger "Assign Records To" replaces the assignees — it does not add one
 This action **clears the whole Assigned To grid** on each selected lead and leaves a single row for the employee you chose. A supervisor who uses it to put a second salesman onto a batch of leads silently removes the first one from all of them. The Assigning History will faithfully record what happened — the earlier employee's row is closed — but the grid is gone.
@@ -162,10 +158,11 @@ To add an employee without losing the existing ones, open the lead and add a row
 
 ## What the System Actually Refuses
 
-Only two rules are enforced on this screen, and it is worth knowing that the list is that short:
+Only three rules are enforced on this screen, and it is worth knowing that the list is that short:
 
 - **The Salesman must be flagged as a salesman.** Anything else is refused with *"Must be sales man"*.
 - **A converted lead cannot be edited.** Once *Converted To Customer* is ticked, saving the lead fails with *"Cannot be updated as it is converted to customer"* — unless *Allow Editing CRM Lead After Connection* is switched on in [CRM Settings](/modules/crm/crm-configuration).
+- **Generated contacts need a code source.** With *Create Contact For Every Line* ticked, a Contacts row with no contacts group (on the row or above the grid) and no contact code is refused with *"You should choose contacts group or fill contact code field"* (see above).
 
 Everything else — a probability of 900, a Closed Won lead with no customer, an empty Assigned To grid — saves without complaint.
 

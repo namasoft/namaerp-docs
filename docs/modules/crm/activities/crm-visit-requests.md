@@ -30,8 +30,8 @@ or inventory effect.
 The screen is a single tab, and it is the [Visit](/modules/crm/activities/crm-visits) screen's *Visit
 details* block with the parts that only make sense after the fact taken out. You get responsible
 employee, mediator, assignee, escalated-to, job, start and end times, visit date, visit location,
-address, customer representative, status, the three expense boxes, the Action Plan group, an
-**Employees** grid and a remarks grid.
+address, customer representative, status, the three expense boxes, Attachment to Attachment 5, the
+Action Plan group, an **Employees** grid and a remarks grid.
 
 What is deliberately missing, compared with the Visit: Visit Cost, Payment Status, the coordinates,
 the signatures, and the four levers that write onto a lead. A Visit Request cannot change a lead's
@@ -65,10 +65,10 @@ staff maintain themselves, or an entity flow — and stick to it. The product wi
 you.
 :::
 
-A few fields do not survive the trip either: the visit cost, the address, the payment status, the
-attachments and the Action Plan group are not carried over. Setting **From Document** on a Visit and
-pointing it at the request copies a very slightly different set — the two routes were built
-separately — so it is worth doing the copy one way consistently rather than mixing them.
+A few fields do not survive the trip either: the assignee, the address, the attachments and the
+Action Plan group are not carried over. Setting **From Document** on a Visit and pointing it at the
+request copies exactly the same set of fields as the button, and it also leaves the link to the
+request on the Visit.
 
 In the worked example, `VREQ-0044` was raised on 24 March 2026 for a commissioning visit on 26 March.
 Convert To Visit was pressed once and produced `VISIT-0131`, which Hala saved by hand. `VREQ-0044`
@@ -76,11 +76,8 @@ itself is still sitting there today looking exactly as it did before the button 
 
 ## Where visit requests come from
 
-Only from this screen. **Nothing in the product generates a Visit Request** — not a work plan, not a
-lead, not a trouble ticket, and not a maintenance document. Somebody types it.
-
-Do not assume the mobile app can raise one either; that path is not confirmed to work, and the app's
-visit screen is built around the Visit document. Raise visit requests from the web screen.
+**Nothing in the product generates a Visit Request** — not a work plan, not a lead, not a trouble
+ticket, and not a maintenance document. Somebody creates it.
 
 ## What the system will not stop you doing
 
@@ -88,5 +85,6 @@ Nothing. The only required fields are the book, the code, your dimensions and �
 the Employees grid — the employee on that row. A request with no subject, no date and no location
 commits cleanly.
 
-**Reporting: none.** This module ships no system reports, and this screen has no print form. Use the
-Visit Requests list view with its filters and Excel export.
+**Reporting: none.** This screen has no print form, and CRM ships no system reports (see
+[CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms)). Use the Visit Requests list view
+with its filters and Excel export.

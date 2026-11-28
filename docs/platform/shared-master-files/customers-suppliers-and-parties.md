@@ -18,9 +18,11 @@ customer can raise from the portal.
 
 ## The customer file
 
-You reach it from **Sales → Master Files → Customer**. It also appears in the Basic, Service Centre,
-Projects and Car menus — the same screen and the same records each time, listed where those teams
-expect to find it, so it does not matter which one you open.
+You reach it from **Sales → Master Files → Customer**. It also appears under **Basic → Document
+Management System**, **Service Center → Master Files**, **Project Management → Projects**, **Cars → Car
+Files** and **Auditing → Definitions** — the same
+screen and the same records each time, listed where those teams expect to find it, so it does not
+matter which one you open.
 
 Like every master file the customer has a **Code**, an Arabic name and an English name, and a
 **Group** that decides how the code is built. Beyond that it has eight tabs — six of its own, plus
@@ -44,18 +46,15 @@ main account and up to twenty further accounts, or an accounts bag. If the custo
 somebody else you leave those empty and fill **Paying Customer** on the *Credit limits* tab instead —
 the system refuses to save both at once.
 
-The **Portal services** group switches on the customer portal for this customer: **Use portal**, the
-**Security Profile** they get, and the portal login id and password.
+The **Portal services** group sets up the customer portal for this customer: the **Security Profile**
+they get, and the **Portal Id** and **Portal Password** they log in with.
 
-Buttons sit above and below the fields: **Create Sales Invoice** starts an invoice for this
-customer, **Search The Web** looks the name up, **Open Customer Class** jumps to the class record,
-**Create Locator** creates a delivery locator, and **Convert To REOwner** creates a real-estate
-owner record from the same data.
+Two buttons sit below the fields: **Create Locator** creates a delivery locator, and **Convert To
+REOwner** creates a real-estate owner record from the same data.
 
 ### Contact Info
 
-Everything you would phone, post or ship to: **Birth date**, marital status (the field is labelled
-**Martial status**), **Title**, the residency and passport documents with their issue and end dates,
+Everything you would phone, post or ship to: **Birth date**, **Marital status**, **Title**, the residency and passport documents with their issue and end dates,
 then the contact block itself (**Phone 1** and **Phone 2**, **Mobile**, **Fax**, **E-mail**,
 **Website**) and two full addresses — a **Shipping address** and a **Billing address**, each with a
 *same as* tick so you only type one when the two are identical.
@@ -68,15 +67,16 @@ specified mission and nature of dealing pairs. The **Bank Info** group underneat
 account the customer pays from — bank, branch, country, SWIFT and IBAN.
 
 The **contacts grid** at the bottom is the quick way to record the people you actually deal with:
-code, name, job description, mobile, phone, fax, e-mail, address and loading point. Fill **Contacts
-Group** and tick **Generate Contacts**, and saving the customer turns each of those rows into a real
-Contact record in its own right — which is what the *Contacts* tab then shows.
+code, name, job description, mobile, phone, fax, e-mail, address and loading point. Fill **Group Of
+Encoding Contacts Created** and tick **Create Contact For Every Line**, and saving the customer turns
+each of those rows into a real Contact record in its own right — which is what the *Contacts* tab then
+shows.
 
 ### Contacts
 
 Not a grid but a live list of the Contact records attached to this customer, including any inherited
-from the CRM lead it was generated from. Contacts created by the **Generate Contacts** tick appear
-here after the save.
+from the CRM lead it was generated from. Contacts created by the **Create Contact For Every Line**
+tick appear here after the save.
 
 ### Credit limits
 
@@ -153,8 +153,8 @@ fields, the **Purchase Man**, and the GLN. The supplier has seven tabs; there is
 because credit with a supplier is a contract condition rather than a ceiling.
 
 The **Details** tab is the interesting one. Its **Contract Conditions** group is the commercial deal
-you have struck with this supplier: the **Payment Starategy** — *Cash*, *Debit* or *Under Discharge*
-— the **Payment Period**, **Has Letter Of Credit** and **Has Paper Of Credit**, whether goods
+you have struck with this supplier: the **Payment Strategy** — *Cash*, *Debit* or *Under Discharge*
+— the **Maximum Credit Limit**, the **Payment Period**, **Has Letter Of Credit** and **Has Paper Of Credit**, whether goods
 **Can be Replaced** and **Can be Returned** and within what **Replacing Period** / **Return Period**,
 the **Profit Margin**, **Show Goods Discount Percentage**, and a **Payment Template**. Each period is
 a pair — a number and its unit — so "30 days" and "1 month" are both sayable. Underneath it,
@@ -165,9 +165,12 @@ freight module filters on.
 
 ![The supplier Details tab: contract conditions, statistics and service provider scope](../../ar/platform/images/parties/supplier-contract-conditions-en.png)
 
-The **Contact Info** tab repeats the customer's contact, tax and bank groups, plus attachment slots
-for the commercial and tax registration papers and an **Extra Info** grid of free description, number,
-date and reference columns for whatever else you need to keep.
+Above the contract conditions, the **Details** tab also holds ten attachment slots, the
+**Commercial Registration Attachment** and **Tax Registration Attachment**, and the supplier's default
+currency.
+
+The **Contact Info** tab repeats the customer's contact, tax and bank groups, plus an **Extra Info**
+grid of free description, number, date and reference columns for whatever else you need to keep.
 
 ## Contacts
 
@@ -180,7 +183,7 @@ customer's purchasing officer, a supplier's sales representative and a third par
 ![A contact record: identity, who it is related to, and how to reach them](../../ar/platform/images/parties/contact-screen-en.png)
 
 You rarely create contacts here. The usual route is the contacts grid on the customer or supplier
-file with **Generate Contacts** ticked, which produces exactly these records and marks each one as
+file with **Create Contact For Every Line** ticked, which produces exactly these records and marks each one as
 generated.
 
 ## Third parties
@@ -237,7 +240,7 @@ screen because it holds a proposed copy of it. Two buttons on it decide what hap
   *Term Config* says so — and links the two together.
 
 What a request is allowed to touch is not up to the customer. The request's **Term Config** carries
-an **Update Allowed Fields** grid: list the field ids there and only those are copied onto the
+an **Allowed Fields For Update** grid: list the field ids there and only those are copied onto the
 customer, whatever else the request contains. Leave the grid empty and every filled field is copied.
 As with Update Customer Information, an empty value never overwrites a filled one.
 
@@ -273,13 +276,14 @@ directly; it is documented under
 | *Paying Customer cannot be the same customer* | The **Paying Customer** field points at the customer you are editing. | Leave it empty, or point it at a different customer. |
 | *Accounts must be empty because you selected a paying customer* | A paying customer settles the bills, so this customer's own accounts must not be filled. | Clear the accounts on the *Main* tab, or clear **Paying Customer**. |
 | *Can not use legal entity {0} in line {1} of credit limits. It must be {1}* | A credit-limit row names a legal entity that the customer itself does not belong to. | Use the customer's own legal entity in the row, or leave the row's legal entity empty. |
-| *There is a repeated row* — «لا يمكن تكرار المحددات للضوابط» | Two credit-limit rows describe the same combination of legal entity, branch, department, sector, analysis set and currency. | Merge them; one combination may appear once. |
-| *There is Invalid row for legal entity* — «لا يمكن استخدام null و قيمة اخري للشركه» | The credit-limit grid mixes rows that leave the legal entity at *any* with rows that name a specific one. The grid is read either way round, not both at once. | Name a legal entity on every row, or leave it at *any* on every row. |
-| *Credit period can't be less than 0* | A negative credit or payment period. | Enter zero or a positive number of days. |
+| *Dimensions for limits can not be repeated* — «لا يمكن تكرار المحددات للضوابط» | Two credit-limit rows describe the same combination of legal entity, branch, department, sector, analysis set and currency. | Merge them; one combination may appear once. |
+| *Can not use null and another value for legal entity* — «لا يمكن استخدام null و قيمة أخرى للشركة» | The credit-limit grid mixes rows that leave the legal entity at *any* with rows that name a specific one. The grid is read either way round, not both at once. | Name a legal entity on every row, or leave it at *any* on every row. |
+| *Credit period can not be less than 0* — «مدة الائتمان لا يمكن أن تكون سالبة» | A credit-limit row has a negative credit period. | Enter zero or a positive number of days. |
+| *Limit value can not be less than 0* — «الحد الأقصى لا يمكن أن يكون سالبا» | A credit-limit row has a negative limit value. | Enter zero or a positive amount. |
 | *Must be phone number* — «يجب أن يكون رقم تليفون» | Global Configuration is set to use the phone number as the customer code, and the code you typed does not match the expected pattern. | Type the mobile number as the code, or turn that setting off. |
-| *This Lead has customer* — «هذا الخيط مرتبط بعميل» | The CRM lead in **Lead Or Potential** has already produced a different customer. | Open that lead to find the customer it created instead of making a second one. |
+| *This Lead has customer* — «هذا العميل المحتمل مرتبط بعميل» | The CRM lead in **Lead - Potential** has already produced a different customer. | Open that lead to find the customer it created instead of making a second one. |
 
-Four of these carry an Arabic translation; the rest appear in English even when the screen is in
+Six of these carry an Arabic translation; the other three appear in English even when the screen is in
 Arabic, which is why the English wording is the one to search for.
 
 ## See also

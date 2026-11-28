@@ -31,20 +31,7 @@ This is the single most important idea to understand about Nama POS, and it is c
 
 ## What you can do at the register
 
-Think of the rest of this guide as a tour of the register, roughly in the order you would meet each part:
-
-| Area | What it covers |
-|---|---|
-| [Getting started](./pos-getting-started.md) | Launching, signing in, the menu, shortcuts, locking the screen, language & theme |
-| [The sales invoice](./pos-sales-invoice.md) | The main selling screen: adding items, discounts, the customer, holding a sale |
-| [Payment & tender](./pos-payment-and-tender.md) | Taking the money: cash, card, split payments, coupons, credit notes, reward points |
-| [Returns & replacements](./pos-returns-and-replacements.md) | Refunds, exchanges, credit notes, depreciation on returned goods |
-| [Shifts & cash](./pos-shifts-and-cash.md) | Opening and closing a shift, counting the drawer, pay-ins and pay-outs |
-| [Tables & restaurant](./pos-tables-and-restaurant.md) | Halls and tables, reservations, suspended orders, the call-center flow, Captain Order |
-| [Item add-ons](./pos-item-addons.md) | Sizes, colours, and extras (like sugar and milk for a coffee) |
-| [Inventory operations](./pos-inventory-operations.md) | Receiving, transferring, counting, scrapping stock from the register |
-| [Reports & tools](./pos-reports-and-tools.md) | Running reports, internal messages, the price checker, maintenance utilities |
-| [Data sync](./pos-data-sync.md) | How "sent" and "unsent" work, and what to do when a document won't go up |
+Think of the rest of this guide as a tour of the register, roughly in the order you would meet each part: getting started, the sales invoice, payment, returns, shifts and cash, tables and Captain Order, item add-ons, inventory operations, reports and tools, and data sync. The [Point of Sale landing page](/modules/pos/) lists every page with a one-line summary.
 
 ::: tip Configuration is a separate topic
 This guide is about **using** Nama POS day to day. Setting it up — defining registers, payment methods, security profiles, screen layouts, and the many POS settings — is covered in [POS — Server-Side Setup](./erp-setup/).

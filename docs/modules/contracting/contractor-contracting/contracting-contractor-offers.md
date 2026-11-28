@@ -35,7 +35,7 @@ We award `CCO-0031`, and it becomes subcontract **CC-0042**.
 
 ## Page 1 — who is quoting, and for what
 
-The header is the subcontract's header, field for field, minus one thing: because an offer never produces documents, it has none of the collapsible lists of executions, extracts, fines and payments that crowd the bottom of a subcontract's main page.
+The header is the subcontract's header, field for field, minus two things: because an offer never produces documents, it has none of the collapsible lists of executions, extracts, fines and payments that crowd the bottom of a subcontract's main page; and it has no accounts block, because an offer is not an accounting subsidiary.
 
 The fields that carry the meaning:
 
@@ -44,13 +44,13 @@ The fields that carry the meaning:
 | **Contractor** (مقاول باطن) | mandatory — whose quotation this is. One offer per firm per package |
 | **Project Contract** (عقد المشروع) | the client contract the package is being carved out of |
 | **Project** (المشروع) and **Customer** (العميل) | carried as context, because the package lives inside a client contract |
-| **Advisory** (الإستشاري) | the consultant on the job, where one is appointed |
+| **Advisory** (الاستشاري) | the consultant on the job, where one is appointed |
 | **Contract Type** (نوع العقد) | *Contract*, *Addendum* or *Modify To Contract*, the same three values as on a subcontract |
 | **Price Before Discount**, the **Discount** pair, **Total** and **Total Cost** | the money, all calculated from the lines |
 | **Contracting Date**, **Start In**, **End In**, **Project Period In Days** | the programme he is quoting to |
 | **Payment Period** (مدة السداد) | the credit period he is asking for, as a value plus a unit |
 
-Alongside them sit the accounts and taxes blocks — an offer can be an accounting subsidiary in its own right, the same as a subcontract — the dimensions, the five attachments (the natural home for the PDF he emailed you), and a free *Additional Info* grid of numbers, texts, dates and references for your own data, to record, filter and report on.
+Alongside them sit the dimensions, the five attachments (the natural home for the PDF he emailed you), and a free *Additional Info* grid of numbers, texts, dates and references for your own data, to record, filter and report on.
 
 ## Page 2 — the priced bill of quantities
 
@@ -68,7 +68,7 @@ For `CCO-0031` there is a single priced line:
 
 That last column is the one that has no owner-side equivalent, and it is worth filling at the offer stage even though nothing forces you to yet: the **project term code** ties the line to the item you sold Al-Fanar, and it carries across to the subcontract, where it becomes mandatory. Its two siblings — the estimated and executive **budget term codes** — do the same job against the [budgets](/modules/contracting/budgets/contracting-executive-budget.md).
 
-Above the grid, **Update Codes** renumbers the whole grid from scratch by walking it top to bottom (it will overwrite codes you typed yourself), and **Update Empty Term Codes Only** is the safe version that fills the blanks and leaves existing codes alone. Quantities can be typed, or derived from a count and the length, width and height columns when the module configuration puts those on screen.
+Below the grid, **Update Codes** renumbers the whole grid from scratch by walking it top to bottom (it will overwrite codes you typed yourself), and **Update Empty Term Codes Only** is the safe version that fills the blanks and leaves existing codes alone. Quantities can be typed, or derived from a count and the length, width and height columns when the module configuration puts those on screen.
 
 ### The conditions grid
 
@@ -96,7 +96,7 @@ Two things to weigh besides the bottom line, since both will cost you real money
 
 ## Actions on this screen
 
-All four buttons sit on page 2, above the terms grid:
+All four buttons sit on page 2 — the two code buttons below the terms grid, the two conversion buttons above it:
 
 - **Update Codes** — renumbers every term line from scratch by walking the grid top to bottom (`1`, `1.1`, `1.2`, `2` …), following the parent/leaf type of each line. It overwrites codes you typed yourself.
 - **Update Empty Term Codes Only** — the safe version: gives a code only to lines that have none, leaving existing codes alone.
@@ -107,7 +107,7 @@ All four buttons sit on page 2, above the terms grid:
 Save the offer first — both conversion buttons require it — and then press one of the two buttons above the terms grid:
 
 - **Convert To Contract** (تحويل لعقد) takes the whole offer.
-- **Convert To Contract With Selected Lines Only** (تحويل لعقد بالسطور المختارة فقط) takes only the term lines whose **Selected** box is ticked, for the case where you are awarding part of a package to one firm and part to another.
+- **Convert To Contract With Selected Lines Only** (تحويل لعقد بالسطور المختارة فقط) takes only the term lines and the condition lines whose **Selected** box is ticked, for the case where you are awarding part of a package to one firm and part to another.
 
 Either way what opens is a **new, unsaved subcontract** with the offer's content already in it. Nothing has been created yet: review the rates, fill in what did not come across, and save. Close the screen instead and there is no contract — and the offer is untouched, so you can convert it again.
 
@@ -117,15 +117,15 @@ What crosses over:
 |---|---|
 | Contractor, project contract, advisory, project, customer | The instalment schedule and the payment template |
 | Price before discount, discount value and percentage | Contracting date, start and end dates |
-| Responsible engineer, remarks, contract type | The two header tax percentages, and the unified lines discount |
+| Responsible engineer, remarks, contract type, main contract | The two header tax percentages, and the unified lines discount |
 | **Source** — a reference back to this offer | The phases group and the parent estate |
-| Every term line, with its quantities, rates and cross-references | The accounts block, the names and the English code |
-| Every condition line | Attachments and the additional-info grid |
+| Every term line, with its quantities, rates and cross-references (only the ticked ones with the selected-lines button) | The names and the English code |
+| Every condition line (only the ticked ones with the selected-lines button) | Attachments and the additional-info grid |
 
 The **Source** reference is how the subcontract remembers where it came from: an auditor opening CC-0042 can walk straight back to the quotation that produced it, and the site office can see which firm's numbers the rates came from.
 
 ::: info The offer is not the only road into a subcontract
-Three other routes exist, and they are all one-button conversions like this one: the [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) can spawn a subcontract from its own selected term lines — which is the natural route when you are simply subletting part of what you sold — and so can a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md), an [estimated budget](/modules/contracting/budgets/contracting-estimated-budget.md) and an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md). Use the offer when the numbers came from the subcontractor; use the others when they came from you.
+Other routes exist, and they are all one-button conversions like this one: the [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) can spawn a subcontract from its own selected term lines — which is the natural route when you are simply subletting part of what you sold — and so can a [contracting assay](/modules/contracting/project-contracting/contracting-assays.md), an [estimated budget](/modules/contracting/budgets/contracting-estimated-budget.md) and an [executive budget](/modules/contracting/budgets/contracting-executive-budget.md). Use the offer when the numbers came from the subcontractor; use the others when they came from you.
 :::
 
 ## Where to read next

@@ -12,7 +12,7 @@ Yes, this is possible through system settings by using custom Entity Flows or cr
 
 ### ✅ **Best Option: Use the `EAPreventQtyMoreThan` Entity Flow**
 
-* This flow prevents transactions (such as purchasing or receiving) when the **total item quantity** in the document exceeds the value defined in the `maxQuantity` field on the item card.
+* This flow prevents transactions (such as purchasing or receiving) when the **total item quantity** in the document reaches or exceeds the value defined in the `maxQuantity` field on the item card. A total equal to the maximum is refused too; only a total below it is accepted.
 
 #### 🟢 **Comparison Query:**
 
@@ -64,27 +64,30 @@ Yes, this is possible by using the <LinkToNewRecord entityType="ItemWarehouseRel
 ### **Required Steps:**
 
 1. **Enable the following option in Supply Chain settings:**
-<SupplyChainOption option-code="value.activateItemWarehouseRelation" link-title="Activate Item-Warehouse Relation" />
+<SupplyChainOption option-code="value.activateItemWarehouseRelation" link-title="Activate Item Warehouse Relation" />
 
-2. **Create an "Item-Warehouse Relation" record:**
-   This record contains a details table divided into two main sections:
+2. **Create an "Item Warehouse Relation" record:**
+   This record has a required **Priority** and a details table divided into two main sections:
 
    #### **First: Specify the Item**
 
    Items can be specified using one or more of the following criteria:
 
   * The item itself
-  * Any of the item's ten classifications
-  * Item category
-  * Any of the five item classes
+  * Any of the item's ten classes (**Class 1** to **Class 10**)
+  * **Item Section**
+  * Any of the five item categories (**Item Category1** to **Item Category5**)
+  * **Item Brand**, and the color, size or revision
 
    #### **Second: Specify the Warehouse or Location and Relation Type**
 
-  * The **warehouse or location** you want to restrict transactions with.
-  * The **relation type**, which includes:
+  * The **warehouse**, **warehouse group** or **locator** you want to restrict transactions with.
+  * The **Relation Type**, which includes:
 
-    * **Allow dealings**: Permits transactions only from the specified warehouses.
-    * **Prevent dealings**: Prevents transactions with the specified warehouses.
+    * **Allow Dealing**: Permits transactions with the specified warehouses.
+    * **Prevent Dealing**: Prevents transactions with the specified warehouses.
+
+   For each document line, the system takes the **first** relation line that matches the item and the warehouse, reading the records in **Priority** order, and that line's relation type decides. A line with no matching relation is refused while **Item Relation To Warehouse Must Be Specified** is on (see the note below).
 
 ---
 
@@ -92,11 +95,11 @@ Yes, this is possible by using the <LinkToNewRecord entityType="ItemWarehouseRel
 
 #### ✅ Allow Dealings:
 
-**Example:** Allow items whose category is "Raw Materials" to be issued and received only from the "Raw Materials" warehouse.
+**Example:** Allow items whose section is "Raw Materials" to be issued and received only from the "Raw Materials" warehouse.
 
-* Enter "Raw Materials" in the **Item Category** field.
+* Enter "Raw Materials" in the **Item Section** field.
 * Enter "Raw Materials" in the **Warehouse** field.
-* Select relation type: **Allow dealings**.
+* Select relation type: **Allow Dealing**.
 
 #### ❌ Prevent Dealings:
 
@@ -106,23 +109,23 @@ Yes, this is possible by using the <LinkToNewRecord entityType="ItemWarehouseRel
 
   * **Item:** Sulfuric Acid
   * **Warehouse:** Finished Goods
-  * **Relation Type:** Prevent dealings
+  * **Relation Type:** Prevent Dealing
 
 ---
 
 ::: warning **Important Note:**
 
-When enabling the following option in Supply Chain settings:
-<SupplyChainOption option-code="value.itemRelationToWarehouseMustBeSpecified" link-title="Item-Warehouse relation must be specified" />
-The system **will not allow saving or executing transactions** unless an **"Allow dealings"** relation is defined between the item and the warehouse.
+While the following option in Supply Chain settings is on (it is on by default):
+<SupplyChainOption option-code="value.itemRelationToWarehouseMustBeSpecified" link-title="Item Relation To Warehouse Must Be Specified" />
+The system **will not allow saving or executing transactions** unless an **"Allow Dealing"** relation is defined between the item and the warehouse. Turn it off if items with no relation line should be allowed in every warehouse.
 :::
 
 ## Example query to calculate the cost of a sales receipt from the sales issue cost linked to the invoice
 
-By default, **Nama ERP** automatically calculates the sales receipt cost using the **average item cost at the time of receipt**.
-However, in some scenarios, you may want to tie the receipt cost directly to the item cost that was actually issued in the **sales invoice** itself.
+The stock receipt of a sales return normally takes its cost from the stock issue lines of the invoice it returns. When it cannot, for example when the return is marked **For Previous Year**, is made without invoices, or **Do Not Calculate Return Cost From Invoice** is on, it is costed as an uncosted receipt: at the running average, or from the **Receipt Cost Sources** (see [Uncosted Receipts](/modules/supplychain/configuration/costing-configuration#Uncosted-Receipts) and [Cost Sources](/modules/supplychain/configuration/costing-configuration#Cost-Sources)).
+In that case you may still want to tie the receipt cost to the item cost that was actually issued for the **sales invoice** itself.
 
-You can implement this using the following query inside the **Cost Sources for Uncosted Receipt** grid in the **Supply Chain Configuration** settings:
+You can implement this with the following query on a line of the **Receipt Cost Sources** grid in the **Supply Chain Configuration** settings, choosing **Query** as that line's first source:
 
 ```sql
 select top 1 l.unitCost 
@@ -137,9 +140,9 @@ where l.item_id = {item_id}
 
 ::: tip
 For this query to be used in calculating the receipt cost, you must enable the following option in Supply Chain settings:
-<SupplyChainOption option-code="value.ignoreCurrentAvgForUnCostedReceipt" link-title="Ignore current average cost for uncosted receipts" />
+<SupplyChainOption option-code="value.ignoreCurrentAvgForUnCostedReceipt" link-title="Ignore Current Average For Uncosted Receipt" />
 
-This option makes the system skip the current average for every uncosted receipt and take its cost from the cost sources, starting with the query above. If the query returns no row, the next source on the line is tried.
+This option makes the system skip the current average for every uncosted receipt and take its cost from the cost sources, starting with the query above. If the query returns no row, the next source on the line is tried. Without it, the cost sources are used only when the running average is zero.
 :::
 
 ## How do I set a specific price for a wholesale invoice classification in Point of Sale or the sales invoice in the system?
@@ -170,7 +173,7 @@ If you want wholesale invoices to be priced based on "minimum price", all you ne
 2. Set the **`Price List Default Price`** field to the value **"MinPrice"**.
 3. Save the changes.
 
-After that, any new invoice following this classification will automatically use the lowest available price for the item in Point of Sale.
+After that, any new invoice following this classification takes the item's min price, unless a place with higher priority (see the next question) sets a different value.
 
 ## How does the system determine the price used in the invoice based on the **`Price List Default Price`** field?
 
@@ -183,7 +186,7 @@ This field appears in the following locations (ordered by application priority):
 1. **Customer**
 2. **Document Term**
 3. **Customer Category**
-4. **Customer Classy**
+4. **Customers' Class**
 5. **Invoice Classification**
 6. **Price Classifier 1**
 7. **Price Classifier 2**
@@ -196,7 +199,7 @@ This field appears in the following locations (ordered by application priority):
 
 The system searches for the first defined value of this field according to the order above.
 In other words, if a value for this field exists on the customer record, it will be used directly.
-If not defined, the system automatically moves to the next record in the order (Document Term, then Customer Classification, and so on) until it finds the first defined value.
+If not defined, the system automatically moves to the next record in the order (Document Term, then Customer Category, and so on) until it finds the first defined value. When none of them has a value, **DefaultPrice** is used.
 
 ### Illustrative Example:
 
@@ -295,14 +298,14 @@ where s.code = 'Salla2025229014'
 To calculate the provisional cost of a stock receipt based on a purchase order, follow these steps:
 
 In the stock receipt Document Term, do the following:
-1. Enable the **Uncosted Delivery** option.
-2. Enable the **Calculate provisional cost based on (purchase order)** option.
+1. Enable the **Receipt Without Cost** option.
+2. Enable the **Calculate Temp Cost By From Doc (Purchase Order)** option.
 
 In the **Supply Chain** settings, do the following:
-1. Enable the **Ignore current average cost for uncosted receipts** option
-<SupplyChainOption option-code="value.ignoreCurrentAvgForUnCostedReceipt" link-title="Ignore current average cost for uncosted receipts" />
-2. Set **Line Cost** as the first source in the cost sources grid for uncosted receipts.
-<SupplyChainOption option-code="value.costSources" link-title="Cost sources grid for uncosted receipts" />
+1. Enable the **Ignore Current Average For Uncosted Receipt** option
+<SupplyChainOption option-code="value.ignoreCurrentAvgForUnCostedReceipt" link-title="Ignore Current Average For Uncosted Receipt" />
+2. Set **Line Cost** as the first source in the **Receipt Cost Sources** grid.
+<SupplyChainOption option-code="value.costSources" link-title="Receipt Cost Sources" />
 
 ---
 
@@ -310,14 +313,14 @@ In the **Supply Chain** settings, do the following:
 
 When saving the stock receipt voucher, the system performs the following steps:
 
-1. **Check settings**: The system verifies that the "Calculate provisional cost from purchase order" option is enabled in the receipt Document Term.
+1. **Check settings**: The system verifies that **Calculate Temp Cost By From Doc (Purchase Order)** is enabled in the receipt Document Term. It skips the step when the receipt already belongs to an invoice or its From Document is a purchase invoice.
 
 2. **Find the matching purchase line**: The system searches for the purchase line corresponding to each receipt line by:
-   - Looking for the source document (purchase order or purchase invoice)
+   - Looking for the purchase document the receipt was created from
    - Matching the line using the `sourceLineId`
-   - If not found, it searches for the first matching line with the same item and quantity
+   - If not found, it takes the first line with the same item and quantity, then the first line with the same item
 
-3. **Calculate unit cost**: The unit cost is copied from the purchase line, taking into account the **exchange rate**:
+3. **Calculate unit cost**: The unit cost is copied from the purchase line (converted to the receipt line's unit), taking into account the **exchange rate**:
    ```
    Unit cost in receipt = Unit cost in purchase × Exchange rate
    ```
@@ -328,21 +331,14 @@ When saving the stock receipt voucher, the system performs the following steps:
    ```
 
 ::: tip Important note about cost source order
-If no custom cost sources are specified in the settings grid, the system uses the following default order:
-1. Issue cost by date (OutCostOnDate)
-2. Receipt cost by date (InCostOnDate)
-3. Last average cost (LastAverageCost)
-4. Line cost (LineCost)
-5. Standard cost (StandardCost)
-
-Therefore, if you want to use **Line Cost** as the first source, you must specify it explicitly in the cost sources grid.
+With no matching line in the **Receipt Cost Sources** grid, the built-in order puts **Line Cost** fourth (see [Cost Sources](/modules/supplychain/configuration/costing-configuration#Cost-Sources)). So if you want **Line Cost** to be used first, you must specify it explicitly in the grid.
 :::
 
 ---
 
 ## Why does the system allow saving stock receipt vouchers with a quantity greater than the quantity in the purchase invoice?
 
-If you notice that the system allows saving a stock receipt voucher containing a quantity greater than the quantity entered in the purchase invoice, the reason is that the **"Distribute cost based on received quantity regardless of invoice quantity"** option (DistributeCostBasedOnReceiptQty) is enabled in the purchase invoice Document Term.
+If you notice that the system allows saving a stock receipt voucher containing a quantity greater than the quantity entered in the purchase invoice, the reason is that the **Distribute Cost Based On Receipt Quantity** option (DistributeCostBasedOnReceiptQty) is enabled in the purchase invoice Document Term.
 
 - *What does this option do?*
 
@@ -372,52 +368,7 @@ If you want to force the system to match the receipt quantity with the purchase 
 
 ## What is the difference between Stock Transfer, Issue Stock Transfer, and Receipt Stock Transfer?
 
-There are three types of stock transfers in the system. They all serve the same fundamental purpose but differ in implementation based on the customer's workflow:
-
-### 📦 Stock Transfer (StockTransfer)
-- **Use:** Direct transfer in a single voucher from one warehouse to another
-- **Meaning:** Move goods directly from the source warehouse to the destination warehouse
-
-### 📤 Issue Stock Transfer (IssueStockTransfer)  
-- **Use:** Issue goods from the original warehouse to "goods in transit"
-- **Meaning:** The first step in the transfer process — removing goods from the original warehouse
-
-### 📥 Receipt Stock Transfer (ReceiptStockTransfer)
-- **Use:** Receive goods from "goods in transit" to the destination warehouse
-- **Meaning:** The second step in the transfer process — bringing goods into the new warehouse
-
----
-
-### 🔄 Difference in Implementation:
-
-#### **Method One: Direct Transfer**
-- Use `StockTransfer` only
-- A single operation that moves goods directly from one warehouse to another
-
-#### **Method Two: Staged Transfer**  
-- Use `IssueStockTransfer` then `ReceiptStockTransfer`
-- Two separate operations:
-  1. Issue from the original warehouse → goods in transit
-  2. Receive from goods in transit → destination warehouse
-
----
-
-### 🎯 When to use each type?
-
-::: tip **Direct Transfer (StockTransfer)**
-- When warehouses are in the same location
-- When there is no need to track transfer stages
-- For quick, direct operations
-:::
-
-::: info **Staged Transfer (Issue + Receipt)**
-- When warehouses are in different locations
-- When goods need to be tracked during transit
-- When the transfer process may take a long time
-- For greater control over issue and receipt operations
-:::
-
-**In summary:** All three types achieve the same final outcome, but the choice between them depends on the workflow and the need to track transfer stages.
+The **Stock Transfer** (StockTransfer) moves goods from one warehouse to another in a single document. The **Issue Stock Transfer** (IssueStockTransfer) and **Receipt Stock Transfer** (ReceiptStockTransfer) split the same move into two steps: the issue takes the goods out of the source warehouse into transit, and the receipt brings them into the destination warehouse. Use the single document when transit time is negligible, and the two-step pair when goods spend time in transit or different people ship and receive. The full explanation is in [Moving Stock Between Warehouses](/modules/supplychain/moving-stock#The-Two-Step-Transfer-More-Control-and-Tracking).
 
 ---
 
@@ -434,7 +385,7 @@ The issue here is not related to quantity tracking; the reason is **a mismatch b
 **Solution:**
 To allow the warehouse or location to appear in quantity suggestions regardless of dimension differences, enable the following option in Supply Chain settings:
 
-<SupplyChainOption option-code="value.doNotFilterWarehouseAndLocatorByDimensionsInQtySuggestion" link-title="Do not filter warehouse and location by dimensions in quantity suggestion" />
+<SupplyChainOption option-code="value.doNotFilterWarehouseAndLocatorByDimensionsInQtySuggestion" link-title="Do Not Filter Warehouse And Locator By Dimensions In Quantity Suggestion" />
 
 ::: tip Note
 This option affects both warehouse and location in quantity suggestions, not just the location.

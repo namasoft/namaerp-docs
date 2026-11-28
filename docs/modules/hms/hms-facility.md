@@ -62,7 +62,7 @@ Raise the room's *Beds Count* first if the room really gained a bed.
 You never tick a bed as reserved or set a room's status by hand. Every time an **Accommodation**, **Accommodation Transfer** or **Accommodation Exit** is saved or cancelled, the system re-reads the stay history of every bed and room it touched:
 
 1. A bed whose latest stay is still open (the patient is in it) is marked **Reserved**; a bed whose latest stay has ended is cleared.
-2. The room's **Room Status** then follows its beds: **Empty** when none of its beds is reserved, **Partially Busy** when some are, and **Completely Busy** when all are.
+2. The **Room Status** of a room that holds beds then follows its beds: **Empty** when none of its beds is reserved, **Partially Busy** when some are, and **Completely Busy** when all are.
 3. The patient's current location, and the current location on the admission, are updated in the same pass.
 
 That status is what the pickers use. On the admission and accommodation documents the **Bed** list hides reserved beds and the **Room** list hides completely busy rooms — unless the bed or room is ticked **Always Available**, in which case it stays on offer whatever its occupancy. Because the status is rebuilt from the stay history, correcting or cancelling a transfer or an exit puts the bed back in the right state on its own.

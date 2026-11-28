@@ -14,7 +14,7 @@ Both drive the ordinary assembly machinery described in [Assembly Requests & Ass
 
 ## The Multi Assembly Document
 
-**Inventory → Assembly Documents → Multi Assembly Docuemnt** (*المخازن ← التجميع ← سند تجميع متعدد*). The menu spells it *Docuemnt*.
+**Inventory → Assembly Documents → Multi Assembly Document** (*المخازن ← التجميع ← سند تجميع متعدد*).
 
 A workstation, **WS-900**, is built from a DT-500 desktop, a monitor and a keyboard; the DT-500 is itself built from a case, a motherboard and memory. In the WS-900's Assembly BOM, the DT-500 line has **Sub Assembly BOM** set to the DT-500's BOM. That link is all the Multi Assembly Document needs.
 
@@ -65,7 +65,7 @@ A WS-900 cannot be assembled until the DT-500s it needs are in stock. **Change D
 
 **Inventory → Assembly Documents → Aggregated Packaging Document** (*المخازن ← التجميع ← سند تعبئة متعدد*).
 
-This document was built for packing lines that weigh their output: bulk material goes into cartons, cartons go onto pallets (the screen says *ballets*), some product is sorted out as a lower grade, and some is lost. It records a day's work in one document and generates one Stock Issue and one Stock Receipt for it.
+This document was built for packing lines that weigh their output: bulk material goes into cartons, cartons go onto pallets, some product is sorted out as a lower grade, and some is lost. It records a day's work in one document and generates one Stock Issue and one Stock Receipt for it.
 
 ### The recipe for packing
 
@@ -73,17 +73,17 @@ The Assembly BOM of a packed product uses four columns that only this document r
 
 - **Main Material** — the bulk material, measured by weight. One line per BOM.
 - **Dependent On Carton Count** — packing material used per carton.
-- **One Per Ballet** — material used once per pallet, i.e. once per document line.
+- **One Per Pallet** — material used once per pallet, i.e. once per document line.
 - **For Main Materials** — material that depends on the quantity of main material actually issued.
 
 ### The Main tab
 
 The header has the issue **Warehouse** and **Locator**, a **Farza Warehouse** for sorted grades, a **Stale Warehouse** for waste, and **Generate Issue Documents** / **Generate Receipt Documents** (the latter on by default). The generated **Stock Issue**, **Stock Receipt** and **Receipt Additional Cost** appear in the header once saved.
 
-Each line of **Receipt Lines** (*سطور الصادر*) is one pallet of a finished product: its **Assembly BOM**, item, quantity in cartons, and the weights — **Ballet Empty Weight**, **Ballet Gross Weight**, **Carton Empty Weight** — plus **Ready Made Cartons**, cartons that were already packed and are only being palletised. On save the system works out:
+Each line of **Receipt Lines** (*سطور الصادر*) is one pallet of a finished product: its **Assembly BOM**, item, quantity in cartons, and the weights — **Pallet Empty Weight**, **Pallet Gross Weight**, **Carton Empty Weight** — plus **Ready Made Cartons**, cartons that were already packed and are only being palletised. On save the system works out:
 
 - **Carton Count** = quantity − Ready Made Cartons;
-- **Main Material Weight** = Ballet Gross Weight − Ballet Empty Weight − Carton Empty Weight × Carton Count;
+- **Main Material Weight** = Pallet Gross Weight − Pallet Empty Weight − Carton Empty Weight × Carton Count;
 - **Carton Net Weight** = Main Material Weight ÷ Carton Count.
 
 A pallet of 50 cartons, 5 of them ready-made, weighing 520 kg gross on a 20 kg pallet with 0.5 kg cartons, gives 45 cartons, 477.5 kg of material and 10.61 kg per carton.
@@ -98,7 +98,7 @@ Tick **Move To Next Day Document** on a pallet that is not finished. Name today'
 
 The materials to issue sit on the tab titled **Spare Parts** (*قطع غيار*). **Calc Materials** (*حساب الخامات*) fills it from the pallets' BOMs: the main material by total Main Material Weight, carton-dependent lines by Carton Count, once-per-pallet lines by the number of lines, and everything else by quantity. Ready-made cartons are issued as the finished item itself. **Calculate Main Materials Dependent Data** (*حساب مستلزمات الخامات الرئيسية*) then adds the For Main Materials lines from the main material quantity on the tab. Both need the document saved first.
 
-**Collect Material Lots** (*تجميع الشحنات للخامات*) and **Collect Material Boxs** (*تجميع صناديق الخامات*) fill the lot or box on each material line from what is available in the header warehouse, asking first whether to **Clear Existing Data**. All four buttons are on the Spare Parts tab and in the More menu; the two Calc buttons are also on the Main tab.
+**Collect Material Lots** (*تجميع الشحنات للخامات*) and **Collect Material Boxes** (*تجميع صناديق الخامات*) fill the lot or box on each material line from what is available in the header warehouse, asking first whether to **Clear Existing Data**. All four buttons are on the Spare Parts tab and in the More menu; the two Calc buttons are also on the Main tab.
 
 ### The Costs tab
 
@@ -110,7 +110,7 @@ The Stock Issue is generated from the Spare Parts grid with the term's **Stock I
 
 | Message | Why | What to do |
 |---|---|---|
-| *Assembly Bom Can not be empty in line {0}* — «لايمكن ترك طريقة التجميع فارغة» | A Details line of the Multi Assembly Document has no Assembly BOM. | Fill the BOM on that line. The Arabic text does not repeat the line number. |
+| *Assembly Bom Can not be empty in line {0}* — «لا يمكن ترك طريقة التجميع فارغة في السطر {0}» | A Details line of the Multi Assembly Document has no Assembly BOM. | Fill the BOM on that line. |
 | *The item {0} at line {1} is not included in the grid* — «الصنف {0} في السطر {1} غير موجود في تفاصيل بنود المصروفات» | An expense line of the Multi Assembly Document names an item that no Details line assembles, so there is nothing to charge it to. | Change the expense line's item, or add that item to Details. |
 | *Can not handle more than 10 levels of assembly bom recursion, most probably there is a cyclic dependency.* | Following the Sub Assembly BOM links went more than ten levels deep — almost always a BOM that leads back to itself. This message has no Arabic translation. | Find the BOM whose Sub Assembly BOM points back up the tree and correct it. |
-| *You should activate option {0} in supply chain configuration to activate option {1}* — «يجب أن تختار الأوبشن {0} في إعدادات الSupply Chain  لتفعيل الأوبشن {1}» | A quantity-tracking option was ticked on the multi-assembly term while the Supply Chain configuration does not keep quantity-tracking entries. | Turn on the named option in the Supply Chain configuration first, or untick the term option. |
+| *You should activate option {0} in supply chain configuration to activate option {1}* — «يجب أن تختار الأوبشن {0} في إعدادات الSupply Chain لتفعيل الأوبشن {1}» | A quantity-tracking option was ticked on the multi-assembly term while the Supply Chain configuration does not keep quantity-tracking entries. | Turn on the named option in the Supply Chain configuration first, or untick the term option. |

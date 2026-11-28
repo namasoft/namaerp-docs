@@ -74,7 +74,7 @@ Because the shared foundation was written for machines first, machine wording su
 
 - A header field labelled **Machine Category** (تصنيف آلة) appears on service contracts, orders and notices. It filters the task-template lookup, so fill it.
 - **Machine Classification 1..5** and **Serial Number** are on the screens too, as free reference fields.
-- On the Maintenance Service Order the services grid is **titled "Machines" (ألآت)** although every row in it is a service. The other five documents in the folder title the same grid correctly.
+- On the Maintenance Service Order the services grid is **titled "Machines" (آلات)** although every row in it is a service. Every other screen in the folder that has a services grid titles it **Maintenance Services** (خدمات صيانة).
 
 ## What Is in the Folder
 
@@ -105,7 +105,7 @@ A site licensed for `crm-maintenance-services` alone will find reference fields 
 
 Two module-wide facts apply here exactly as they do everywhere else in CRM:
 
-- **There are no system reports and no dashboards for CRM at all.** One print form — the CRM Visit form — is the entire shipped reporting story, and it belongs to a different part of the module. For anything in this folder, use list views, Excel export, or a BI dashboard built by your site.
+- **There are no system reports and no dashboards for CRM at all.** One print form — the CRM Visit form — is the entire shipped reporting story, and it belongs to a different part of the module. For anything in this folder, use list views, Excel export, or a BI dashboard built by your site; [CRM Reports and Printed Forms](/modules/crm/crm-reports-and-forms) covers the options.
 - **There is no scheduler anywhere in this module.** No task schedule, no reminder, no alarm, no escalation, no notification. Work plans, orders and executions look scheduled, but every one of them is produced by somebody pressing a button.
 
 ## The Example Used Throughout This Folder

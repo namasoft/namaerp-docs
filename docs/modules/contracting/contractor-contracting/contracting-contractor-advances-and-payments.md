@@ -41,7 +41,7 @@ the value of each extract. The subcontract will produce three extracts worth 32,
 
 ![The Contractor Advance Payment screen: the subcontract, the amount, the payment method, the recovery condition and the totals](../../../ar/modules/contracting/images/contractor-contracting/contractor-advance-payment-main-en.png)
 
-It is a short document. Pick the **Contract** and the subcontractor, project, project contract and
+It is a short document. Pick the **Contractor Contract** and the subcontractor, project, project contract and
 client fill themselves. Type the **Amount** and the currency; add a **tax percentage** if the advance
 is taxed and the tax value and the total after taxes are worked out for you. Then the two fields that
 make the document do anything:
@@ -53,23 +53,24 @@ depends entirely on which you pick:
 |---|---|
 | First Next Extract | the whole remaining balance, on the very next extract |
 | Fixed Value With Every Extract | the fixed amount you typed, or the remaining balance if that is less |
-| Percentage With Every Extract | that percentage of the advance's own value |
-| Percentage From Due Value With Every Extract | that percentage of **the extract's** value |
+| Percentage With Every Extract | that percentage of the advance's **Total After Taxes**, or the remaining balance if that is less |
+| Percentage From Due Value With Every Extract | that percentage of **the extract's** value — the total price of its lines, before discounts, taxes and conditions — or the remaining balance if that is less |
 | Final Extract | nothing at all until the Final extract, then the whole remaining balance |
 
 The screen follows your choice: the **Payment Percentage** field is only enabled for the two
-percentage methods, and the **Payment Value** field only for the fixed-value method. Whichever the
-method needs is required before the document will save.
+percentage methods, and the **Payment Value** field only for the fixed-value method. The save requires
+**Payment Value** with *Fixed Value With Every Extract* and **Payment Percentage** with *Percentage With
+Every Extract*.
 
 **Condition** is the clause the recovery will be recorded through — the same kind of clause that carries
 retention, from the
 [contract conditions](/modules/contracting/setup/contracting-conditions.md) catalogue. It is required,
 and it is what decides which accounts the recovery entry lands on when the extract collects it. The
-picker only offers conditions that have not been marked as belonging to the owner side.
+picker only offers conditions on which **Do Not Use With Contractor Contract** is not ticked.
 
-Two optional fields are worth knowing. **Term Code** restricts the advance to one subcontract term,
-which is how you keep an advance for the blockwork out of the plastering surveyor's extracts; if you
-fill it, it must be a term that exists on the contract. **Subsidiary** (الذمة) is the account the
+Two optional fields are worth knowing. **Term Code** ties the advance to one subcontract term: every
+recovery line an extract writes for this advance carries that term code, so the deduction is counted
+against that term's line on the extract. If you fill it, it must be a term that exists on the contract. **Subsidiary** (الذمة) is the account the
 money is paid from or to when your chart of accounts wants it stated on the document.
 
 ::: tip Standardise the recovery on the document term
@@ -79,10 +80,15 @@ condition from the term's settings. That is how a company makes "all mobilisatio
 picks the right book and the fields arrive correct.
 :::
 
-Two read-only fields track the recovery — **Total Paid** and **Remaining** — and two more track the
+Two read-only fields track the recovery — **Total Paid** and **Remaining Value** — and two more track the
 cash, **Paid From Vouchers** and **Remaining After Vouchers**, because paying the advance and
 recovering it are separate stories. Each advance also gets a sequential number within its
-subcontract, so the second advance on CC-0042 is advance number 2 regardless of the document book.
+subcontract, filled on commit: one more than the number of committed advances on the same subcontract
+with an earlier value date (or the same value date and an earlier creation time). The count runs
+across all document books, so the second advance on CC-0042 is advance number 2 whichever book it is
+in — unless **Consider Document Book When Calculating Fines And Extract Docs Numbers** is ticked in the
+[contracting configuration](/modules/contracting/contracting-configuration), in which case each book
+is counted on its own.
 
 ## What it books
 
@@ -109,7 +115,9 @@ Nothing about the recovery is manual. Each
 scans the subcontract for advances, other payments and fines that are committed and still carry a
 balance and are dated no later than the extract, and writes a deduction line for each into its
 **Additions And Deductions** grid, carrying this document as the condition document. Either the
-surveyor presses *Collect Conditions*, or the extract's document term has it collect on every save.
+surveyor presses *Collect Conditions*, or the extract's document term does it on save: its
+**Automatic Collect Payment Document With Save** option is *Without* (never), *With Every Extract* or
+*With Final Extract Only*.
 
 With *Percentage From Due Value With Every Extract* at 20%, the 16,000 advance on CC-0042 unwinds
 like this:
@@ -125,14 +133,17 @@ exactly as the last extract closes. That is not automatic — set the percentage
 survives into the Final extract, where a different rule takes over.
 
 **On a Final extract the whole remaining balance is taken**, whatever the recovery method says. And a
-Final extract **refuses to save while any advance, other payment or fine still has a balance** —
-*"the payment … for the contract … still has a remaining …"*. In other words the system will not let
-you close a subcontract and walk away from money you advanced. Rounding is handled for you: a
+Final extract **refuses to save while any advance, other payment or fine dated no later than it still
+has a balance**:
+
+*The payment {0} for the contract {1} still has a remaining {2}* — «مستند الدفع {0} للعقد {1} لا يزال متبقي مبلغ {2} فيه»
+
+In other words the system will not let you close a subcontract and walk away from money you advanced. Rounding is handled for you: a
 remaining balance of a hundredth or less is snapped to zero, so a penny does not keep an advance
 alive.
 
 ::: info Where to see what was actually recovered
-Two places. On the advance itself, **Total Paid** and **Remaining**. On the extract, the
+Two places. On the advance itself, **Total Paid** and **Remaining Value**. On the extract, the
 **Statistics** page lists row by row which advance or other payment gave up how much on that extract,
 with the term code and the value date — the audit trail for the conversation that starts "why was he
 only paid 24,800?".
@@ -144,15 +155,17 @@ The guards on this document all exist to protect a recovery already in progress:
 
 - **The contract is required**, even though it is not starred on the screen.
 - You **cannot reduce the amount below what has already been recovered**.
-- You **cannot change the amount at all** once a Final extract exists on the subcontract.
+- You **cannot change the amount at all** once a Final extract is committed on the subcontract. From
+  then on any other save of the advance is refused as well, unless **Allow Creating Documents For
+  Contracts That Have a Final Extract** is ticked in the contracting configuration.
 - You **cannot change or remove a term code** that already has recovery transactions against it.
 - You **cannot delete** the document once anything has been recovered from it.
 - You cannot raise a new advance against a subcontract that a Final extract has already closed.
-- The amount is checked against the value of the term it is tied to, so an advance cannot exceed the
-  work it is an advance against.
+- The **Payment Value** cannot be greater than the advance's **Total After Taxes**.
 
-One term option relaxes the arithmetic: it allows the remaining balance to go **negative**, for
-organisations that would rather over-recover and settle up than have a save refused.
+One term option relaxes the arithmetic: **Allow Negative Remaining** lets the remaining balance go
+**negative**, for organisations that would rather over-recover and settle up than have an extract's
+save refused.
 
 ## The other payment, and when to use it
 

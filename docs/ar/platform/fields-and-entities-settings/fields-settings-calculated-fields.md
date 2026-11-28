@@ -19,13 +19,13 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 | العمود | ماذا يفعل |
 |---|---|
-| قائمة الأنواع (For Type List) | قائمة مسماة قابلة لإعادة الاستخدام بأنواع الكيانات، ليغطي سطر واحد عدة شاشات دفعة واحدة. |
+| لقوائم أنواع (For Type List) | قائمة مسماة قابلة لإعادة الاستخدام بأنواع الكيانات، ليغطي سطر واحد عدة شاشات دفعة واحدة. |
 | للنوع (For Type) | نوع كيان واحد يسري عليه السطر (مثلاً فاتورة مبيعات). |
 | معرف السطور (Detail Field) | اتركه فارغاً ليخص رأس السجل نفسه. واملأه بمعرف حقل جدول (مثلاً `details`) لتعريف الخانات لـ**سطور** ذلك الجدول بدلاً من الرأس، فيحصل كل سطر على أعمدته المحسوبة الخاصة. |
-| استعلام الحقل المحسوب 1 … 20 (Field 1 Query … Field 20 Query) | الاستعلام الذي يقف خلف كل خانة من الخانات العشرين. |
+| استعلام الحقل المحسوب 1 … 20 (Field1 Query … Field20 Query) | الاستعلام الذي يقف خلف كل خانة من الخانات العشرين. |
 
 ::: warning اذكر نوع الكيان دائماً
-على خلاف معظم جداول هذه الشاشة، هذه السطور **ليست** عامة: فالسطر لا يسري إلا على الأنواع التي يسمّيها. املأ **النوع**، أو وجّه **قائمة الأنواع** إلى قائمة أنواع.
+على خلاف معظم جداول هذه الشاشة، هذه السطور **ليست** عامة: فالسطر لا يسري إلا على الأنواع التي يسمّيها. املأ **للنوع**، أو وجّه **لقوائم أنواع** إلى قائمة أنواع.
 :::
 
 ### أين تظهر القيم
@@ -38,7 +38,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 
 واغتنم الفرصة لتضع عنواناً مفهوماً. `sqlField3` اسم ذو معنى لك أنت وحدك؛ أما المستخدم فيجب أن يرى «رصيد العميل».
 
-ست عشرة خانة منها تحمل نصاً قصيراً عادياً. والخانتان 17 و18 تحملان نصاً طويلاً، فاستخدم إحداهما حين تكون الإجابة فقرة لا رقماً. والخانتان 19 و20 تحملان **كود لون** لا نصاً — وهو مفيد حين تريد استعلاماً يحدد لون خلية بعينها.
+ست عشرة خانة منها تحمل نصاً قصيراً عادياً. وفي رأس السجل تحمل الخانتان 17 و18 نصاً طويلاً، فاستخدم إحداهما حين تكون الإجابة فقرة لا رقماً؛ أما في سطور الجدول فهما نص قصير كبقية الخانات. والخانتان 19 و20 تحملان **كود لون** لا نصاً — وهو مفيد حين تريد استعلاماً يحدد لون خلية بعينها.
 
 ::: warning كل الخانات نصية، فنسّق الأرقام داخل الاستعلام
 لا توجد خانة رقمية. الرقم الذي يعيده الاستعلام يتحول إلى نص كما تكتبه قاعدة البيانات تماماً، فيرى المستخدم `1009280.000000000` — تسع خانات عشرية بلا فاصل آلاف — في موضع كان يتوقع فيه `1,009,280.00`. والحقل لن يقرّب الرقم عنك، كما أنه لا يُرتَّب ترتيباً رقمياً.
@@ -116,7 +116,7 @@ where s.customer_id = {customer.id}
 | للنوع (For Type) | نوع الكيان الذي تحمل شاشته الجدول (مثلاً أمر بيع). |
 | قائمة الأنواع (Entity List) | قائمة مسماة قابلة لإعادة الاستخدام بأنواع الكيانات، ليغطي سطر واحد عدة شاشات. |
 | الحقل (Field) | معرف حقل **الجدول** الذي تُلوَّن صفوفه، مثلاً `details`. **إلزامي** — السطر بلا حقل لا يفعل شيئاً. |
-| استعلام لون خلفية السطر (Row Background Colour Query) | الاستعلام الذي يعيد لون الصف. |
+| استعلام لون خلفية السطر (Row Background Color Query) | الاستعلام الذي يعيد لون الصف. |
 
 الاستعلام يُكتب تماماً كاستعلام الحقل المحسوب أعلاه: نفس المعاملات، ونفس الصيغة `{$line.…}` للسطر الحالي، ولا يُستخدم منه إلا العمود الأول من الصف الأول. والفرق في ما يعيده — **لون** يُطبَّق مباشرة كخلفية للصف. والصيغة المعتادة كود ست عشري:
 
@@ -149,7 +149,7 @@ select case
 
 | الاسم العربي | الاسم الإنجليزي | معرّف الحقل | المعنى |
 |---|---|---|---|
-| استعلامات الحقول المحسوبة | calculated Fields Queries | `queryBasedScreenField` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلامات الحقول المحسوبة | Calculated Fields Queries | `queryBasedScreenField` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | معرف السطور | Detail Field | `queryBasedScreenField.detailField` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | استعلام الحقل  المحسوب 1 | Field1 Query | `queryBasedScreenField.field1Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | استعلام الحقل  المحسوب 2 | Field2 Query | `queryBasedScreenField.field2Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
@@ -161,15 +161,15 @@ select case
 | استعلام الحقل  المحسوب 8 | Field8 Query | `queryBasedScreenField.field8Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | استعلام الحقل  المحسوب 9 | Field9 Query | `queryBasedScreenField.field9Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | استعلام الحقل  المحسوب 10 | Field10 Query | `queryBasedScreenField.field10Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 11 | Field1 Query | `queryBasedScreenField.field11Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 12 | Field2 Query | `queryBasedScreenField.field12Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 13 | Field3 Query | `queryBasedScreenField.field13Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 14 | Field4 Query | `queryBasedScreenField.field14Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 15 | Field5 Query | `queryBasedScreenField.field15Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 16 | Field6 Query | `queryBasedScreenField.field16Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 17 | Field7 Query | `queryBasedScreenField.field17Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 18 | Field8 Query | `queryBasedScreenField.field18Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
-| استعلام الحقل  المحسوب 19 | Field9 Query | `queryBasedScreenField.field19Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 11 | Field11 Query | `queryBasedScreenField.field11Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 12 | Field12 Query | `queryBasedScreenField.field12Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 13 | Field13 Query | `queryBasedScreenField.field13Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 14 | Field14 Query | `queryBasedScreenField.field14Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 15 | Field15 Query | `queryBasedScreenField.field15Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 16 | Field16 Query | `queryBasedScreenField.field16Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 17 | Field17 Query | `queryBasedScreenField.field17Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 18 | Field18 Query | `queryBasedScreenField.field18Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
+| استعلام الحقل  المحسوب 19 | Field19 Query | `queryBasedScreenField.field19Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | استعلام الحقل  المحسوب 20 | Field20 Query | `queryBasedScreenField.field20Query` | [استعلامات الحقول المحسوبة (calculated Fields Queries)](#staalmt-lHqwl-lmHswb-calculated-Fields-Queries) |
 | Style Overrider Details | Style Overrider Details | `styleOverriderLines` | [Style Overrider Details](#Style-Overrider-Details----tlwyn-khlfy-lSfwf) |
 | استعلام لون خلفية السطر | Row Background Color Query | `styleOverriderLines.rowBackgroundColorQuery` | [Style Overrider Details](#Style-Overrider-Details----tlwyn-khlfy-lSfwf) |

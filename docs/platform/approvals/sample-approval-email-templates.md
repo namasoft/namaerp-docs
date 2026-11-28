@@ -4,12 +4,12 @@ menu: Administration → Display Customization → Approval Definition
 ---
 # Sample Approval Email Templates
 
-When a document enters an approval workflow, NAMA can send the responsible person an email asking them to **approve**, **reject**, or **return** it. The body of that email is just a [Tempo](../../admin/tempo.md) template defined on the approval rule — which means you can make it as plain or as beautiful as you like.
+When a document enters an approval workflow, NAMA can send the responsible person an email asking them to **approve**, **reject**, or **return** it. The body of that email is just a [Tempo](../../admin/tempo.md) template defined on the approval definition — which means you can make it as plain or as beautiful as you like.
 
-This page collects ready-to-use, good-looking templates you can copy straight into an approval rule's email body. We start with a **generic template** that works for any document type, and we'll grow this page with templates tailored to specific documents (sales invoices, orders, and so on) over time.
+This page collects ready-to-use, good-looking templates you can copy straight into an approval definition's e-mail template. We start with a **generic template** that works for any document type, and we'll grow this page with templates tailored to specific documents (sales invoices, orders, and so on) over time.
 
 ::: tip How to use a template
-Copy the HTML block, paste it into the **email body** of your approval rule, and adjust the field names (`code`, `valueDate`, `firstAuthor`, …) if your document uses different ones. The three action buttons rely on the Tempo placeholders `{approvelink}`, `{rejectlink}`, and `{returnlink}` — see [Adding Approval Action Links](../../admin/tempo.md#2-Adding-Approval-Action-Links).
+Copy the HTML block, paste it into the e-mail template in the **Templates** group of the approval definition's **Advanced** tab (see [Step 3: Notification Configuration](/platform/approvals/approvals-system#Step-3-Notification-Configuration)), and adjust the field names (`code`, `valueDate`, `firstAuthor`, …) if your document uses different ones. The three action buttons rely on the Tempo placeholders `{approvelink}`, `{rejectlink}`, and `{returnlink}` — see [Adding Approval Action Links](../../admin/tempo.md#2-Adding-Approval-Action-Links).
 :::
 
 ::: warning A note on styling
@@ -152,7 +152,7 @@ The footer uses `{translate("applicationName")}` and `{translate("appUrl")}` ins
 
 While the generic template above works for any document, a sales invoice carries information that really deserves to be shown in the email itself — *how much* is being approved and *what* it's made of. This template builds on the generic card and adds two things tailored to such documents: a **money summary** (total, header discount, and net value) and an **itemized table** of the lines (item, quantity, unit price, and net value per line).
 
-Although it's written here with a sales invoice in mind, **the exact same template works unchanged for the whole family of sales/inventory documents** — sales orders, sales returns, purchase invoices, purchase orders, quotations, and so on. They all share the same `money.*` header fields and the same `details` line structure, and the header title adapts automatically via `{entityType.$arabic}`. So you can copy this block onto any of those documents' approval rules without editing a thing.
+Although it's written here with a sales invoice in mind, **the exact same template works unchanged for the whole family of sales/inventory documents** — sales orders, sales returns, purchase invoices, purchase orders, quotations, and so on. They all share the same `money.*` header fields and the same `details` line structure, and the header title adapts automatically via `{entityType.$arabic}`. So you can copy this block onto any of those documents' approval definitions without editing a thing.
 
 It uses these fields, all confirmed against the `SalesInvoice` entity (and shared by its siblings):
 

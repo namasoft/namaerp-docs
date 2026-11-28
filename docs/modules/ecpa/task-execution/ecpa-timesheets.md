@@ -9,7 +9,7 @@ Everything a professional-services firm sells passes through this screen. **Task
 
 You will find it at **Project Management > Task Execution / Approvals > Tasks Executing**, under licence `ecpa`.
 
-Unlike a [task](/modules/ecpa/tasks/ecpa-tasks), which is a master file edited in place, this is a **document**: it has a book, a code, an issue date and a value date, and committing it produces effects. Three of them, to be exact — it pushes hours onto the task, it moves the task and the project into *In Progress*, and it raises a labour cost entry in the ledger. What it does **not** do is finish the story. Recorded hours land in the task's *registered* bucket, which is the module's word for "claimed but not yet accepted"; turning them into actual work is the job of [Approving Worked Hours](/modules/ecpa/task-execution/ecpa-timesheet-approval).
+Unlike a [task](/modules/ecpa/tasks/ecpa-tasks), which is a master file edited in place, this is a **document**: it has a book, a code, an issue date and a value date, and committing it produces effects. Three of them carry the weight — it pushes hours onto the task, it moves the task and the project into *In Progress*, and it raises a labour cost entry in the ledger. What it does **not** do is finish the story. Recorded hours land in the task's *registered* bucket, which is the module's word for "claimed but not yet accepted"; turning them into actual work is the job of [Approving Worked Hours](/modules/ecpa/task-execution/ecpa-timesheet-approval).
 
 ![The Tasks Executing document: header defaults, the stopwatch buttons, and the Project Times grid](../../../ar/modules/ecpa/images/task-execution/timesheet-main-en.png)
 
@@ -35,11 +35,11 @@ A **Dimensions** group closes the screen — legal entity, analysis set, branch,
 
 Two filters decide what an employee can pick, and between them they explain nearly every "the task isn't in the list" call support receives.
 
-The **project** picker offers projects the employee actually belongs to, and skips projects that are Finished. A project builds that list from its manager, its vice-manager and the people named on its **Team Work** page, plus everyone appearing on the executers grid of any of its tasks.
+The **project** picker offers projects whose team list includes the line's employee, or that have **For Every One** ticked, and skips projects that are Finished. How a project builds that list — from its manager, vice-manager, **Team Work** page and the executers of its tasks — is set out under Team Work on [The Managed Project](/modules/ecpa/projects/ecpa-managed-project).
 
 ![The project's Team Work page, which decides who may book time to the project](../../../ar/modules/ecpa/images/projects/project-team-work-en.png)
 
-The **task** picker then narrows that to tasks of the chosen project that are *Not Started* or *In Progress*, and on whose executers grid this employee appears. And the save checks it again: an employee who is not an executer of the task he named is refused, as is one whose executer row has been ticked **Work Done**, or one whose executer row's date window does not contain the document's value date.
+The **task** picker then narrows that to tasks of the chosen project that are *Not Started* or *In Progress*, and on whose executers grid this employee appears. And the save checks it again: a line is refused when its task does not list the sheet's employee among its executers, when the task's status is *Finished*, when the employee's executer row has been ticked **Work Done**, or when no executer row of that employee has a date window containing the document's value date.
 
 So the sequence for onboarding somebody onto a piece of work is always the same: add him to the task's executers grid, **save the task**, and only then can he record time.
 
@@ -96,7 +96,11 @@ Do not confuse this with the **Employee Rate** on the task's executer row, which
 
 Four buttons sit between the header and the grid, and the first two turn the screen into a timer for people who record work as they do it rather than at the end of the day.
 
-**Start** looks at the last row of the grid. If that row is complete, it appends a new one — copying the employee, project and task from it — with today's date and the current time as From Time. If the last row is only half filled in, it completes whichever of From Date and From Time is missing. Either way you get a running block with no end.
+**Start** looks at the last row of the grid. If that row is complete — From Date, To Date, From Time and To Time all filled — it appends a new one, copying the employee, project and task from it, with today's date and the current time as From Time: a running block with no end. If the last row has its To Date and To Time but is missing its From Date or From Time, Start fills the missing one in. If the last row has no To Date or no To Time, Start refuses with one of these messages:
+
+*To Date Shuold not be Empty* — «لايمكن ترك إلى تاريخ فارغاً»
+
+*To Time Shuold not be Empty* — «لايمكن ترك إلى وقت  فارغاً»
 
 **Stop** closes that block: To Date is set to the row's From Date, To Time to the current time, and the row's net time and the document's Total Time are recomputed on the spot.
 
@@ -178,11 +182,13 @@ The menu holds a second, near-identical screen: **Time Sheet Request** (طلب �
 | Overlapping blocks on the same day | refused | allowed |
 | Employee must be an executer of the task | checked | not checked |
 | Actual hours against the executer's planned hours | checked | not checked |
+| Daily and monthly ceilings, *Work Done* and *Finished* task | checked | checked |
 | A line's From Date | always forced to the Value Date | defaulted from the Value Date only when empty |
 | Hours added to the task's Registered Time | yes | no |
+| A *Not Started* task and header project moved to *In Progress* | yes | yes |
 | Ledger entry from the document term | yes | yes |
 
-Read that last row twice, because it is the point of the screen and the thing that surprises people: **a committed request books its cost to the ledger exactly as a timesheet does**, through the same term, valued the same way, processed the same way. What it does not do is touch the task. Registered hours stay where they were, planned-hours ceilings are not consulted, and the task's status does not change.
+Read the ledger row twice, because it is the point of the screen and the thing that surprises people: **a committed request books its cost to the ledger exactly as a timesheet does**, through the same term, valued the same way, processed the same way. What it does not do is add hours to the task: registered hours stay where they were and the planned-hours comparison is not made.
 
 That combination makes it useful for capturing work loosely — hours claimed for a period before anyone has decided which task they belong to, or work by people who are not yet on the task's executers grid — while still getting the cost onto the books. Approval and billing run off the Tasks Executing document, so a firm that needs its hours approved and invoiced records them there.
 

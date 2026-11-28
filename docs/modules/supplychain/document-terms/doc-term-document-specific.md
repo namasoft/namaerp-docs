@@ -18,9 +18,9 @@ Open the document's **Document Term** (توجيه). The options below show up on
 
 **Returnable** `termConfig.config.returnable` — Marks the receipt's accounting effect as a return so the supplier/customer side is validated accordingly.
 
-**Calculate Temp Cost By From Doc** `termConfig.calculateTempCostByFromDoc` — Uses the from-document's cost as the temporary receipt cost instead of recalculating it.
+**Calculate Temp Cost By From Doc (Purchase Order)** `termConfig.calculateTempCostByFromDoc` — Uses the from-document's cost as the temporary receipt cost instead of recalculating it.
 
-**Allow Revision Purchase From Different Supplier** `termConfig.allowRevsionPurchaseFromDifSupplier` — Allows receiving an item revision from a supplier other than the revision's default supplier. On the English screen this box is captioned *Prevent Revsion Purchase From Different Supplier*, but ticking it **allows** the purchase; the Arabic caption «السماح بشراء الإصدارات من مورد مختلف» says what it does.
+**Allow Revision Purchase From Different Supplier** `termConfig.allowRevsionPurchaseFromDifSupplier` — Allows receiving an item revision from a supplier other than the revision's default supplier.
 
 **Receipt Without Cost** `termConfig.config.rwc` — Lets a stock receipt stand on its own, with no invoice behind it: the goods enter stock as a receipt without cost and are costed later. With the box clear, a receipt that is not built on an invoice is refused on save with *Document is not linked with invoice* — «المستند غير مرتبط بفاتورة». The box is also checked when a purchase invoice built on another document drops a receipt from its stock-documents grid: if the receipt's term does not have it, the invoice is refused with *Stock Receipt {0} cannot be removed from stock docs, please make sure the option Receipt Without Cost is checked in its document term {1}* — «لا يمكن حذف سند التوريد {0} من سطور السندات المخزنية. يرجي التأكد من التعليم علي الاختيار توريد غير مكلف في توجيه التوريد {1}».
 
@@ -117,7 +117,7 @@ Saving an aggregated request generates ordinary stock transfer requests from its
 
 **Must Have Sales And Return Lines** `termConfig.mustHaveSalesAndReturnLines` — Requires the replacement to contain both a sale line and a return line.
 
-**Prevent Save If Replaced Item Not Exist In From Doc** `termConfig.preventSaveIfReplacedItemNotExistInFromDoc` — Blocks saving when a replaced item is not found in the from-document.
+**Prevent Save If Replaced Item Does Not Exist In From Doc** `termConfig.preventSaveIfReplacedItemNotExistInFromDoc` — Blocks saving when a replaced item is not found in the from-document.
 
 ## Invoices
 
@@ -158,25 +158,25 @@ The **Electronic Invoice** group appears on Sales Invoice and Sales Return terms
 
 *Applies to: Assembly Document (تجميع) and Multi-Assembly (تجميع متعدد), as noted per option.*
 
-**Calculate BOM Qty From Co-Products** `termConfig.calculateBOMQtyFromCoProducts` — Derives BOM quantities from the co-product output quantities (assembly).
+**Calculate BOM Quantity From CoProducts** `termConfig.calculateBOMQtyFromCoProducts` — Derives BOM quantities from the co-product output quantities (assembly).
 
-**Spread Issue Lines When Co-Products Qty Changed** `termConfig.spreadIssueLinesWhenCoProductsQtyChanged` — Re-spreads the issued-material lines when co-product quantities change (assembly).
+**Spread Issue Lines When CoProducts Quantity Changes** `termConfig.spreadIssueLinesWhenCoProductsQtyChanged` — Re-spreads the issued-material lines when co-product quantities change (assembly).
 
 **Use Planned Details For Cost Calculation** `termConfig.usePlannedDetailsForCostCalculation` — Uses planned (rather than actual) details when calculating cost (assembly).
 
-**Distribute Cost By Avg Sales Price** `termConfig.distributeCostByAvgSalesPrice` — Distributes the joint cost across products by their average sales price (assembly).
+**Distribute Material Cost By Total Average Sales Price Not By Quantity** `termConfig.distributeCostByAvgSalesPrice` — Distributes the joint cost across products by their average sales price (assembly).
 
 **Calculate Co-Products From Issued Item Assembly BOM** `termConfig.calculateCoProductsFromIssuedItemAssemblyBom` — Computes co-products from the issued item's assembly BOM (assembly).
 
-**Allow Issue And Receipt The Same Item In The Same Assembly Doc** `termConfig.allowIssueAndReceiptTheSameItemInTheSameAssemblyDoc` — Permits issuing and receiving the same item within one assembly document (assembly).
+**Allow Issue And Receipt The Same Item In The Same Assembly Document** `termConfig.allowIssueAndReceiptTheSameItemInTheSameAssemblyDoc` — Permits issuing and receiving the same item within one assembly document (assembly).
 
-**Prevent Save If Co-Product Not In Assembly Operations** `termConfig.preventSaveIfCoProdNotInAssemblyOperations` — Blocks saving when a co-product is not part of the assembly operations (assembly).
+**Prevent Saving If Co-Products Not In Assembly Operations** `termConfig.preventSaveIfCoProdNotInAssemblyOperations` — Blocks saving when a co-product is not part of the assembly operations (assembly).
 
-**Distribute Cost On Source Co-Product Line Only** `termConfig.distributeCostOnSourceCoProdLineOnly` — Restricts cost distribution to the source co-product line (assembly).
+**Distribute Details Line Cost On Co-Product Line From Assembly BOM Only** `termConfig.distributeCostOnSourceCoProdLineOnly` — Restricts cost distribution to the source co-product line (assembly).
 
 **Prevent Save Without Issued Items If Using BOM** `termConfig.preventSaveWithoutIssuedItemsIfUsingBOM` — Blocks saving with no issued items when a BOM assembly method is used (assembly).
 
-**Calc Average Sales Price From Disassembly Issue Cost** `termConfig.calcAverageSalesPriceFromDisAssemblyIssueCost` — Derives the average sales price from the disassembly issue cost (assembly).
+**Calculate Average Sales Price From Disassembly Issue Cost** `termConfig.calcAverageSalesPriceFromDisAssemblyIssueCost` — Derives the average sales price from the disassembly issue cost (assembly).
 
 **Do Not Affect Issued Qty By Actual Receipt Qty** `termConfig.doNotAffectDetailsQtyByActualReceiptQty` — Normally the issued-material (details) quantities are recalculated from the quantity of finished product actually received. With this option on, they stay driven by the assembly quantity instead, so editing the actual receipt quantity no longer changes the issued quantities (assembly).
 
@@ -218,9 +218,9 @@ Its term has one **Settings** tab. Besides the shared From Document options (con
 
 **Force Price List** `termConfig.forcePriceList` — Forces line prices to come from a price list.
 
-**Do Not Check Items Without Price List** `termConfig.doNotCheckItemsWithoutPriceList` — Skips the validation that items must have a price-list entry.
+**Do Not Check Items Without Price List (With Force Price Lists Option)** `termConfig.doNotCheckItemsWithoutPriceList` — Skips the validation that items must have a price-list entry.
 
-**Do Not Force Price List When There Sales Doc In From Doc** `termConfig.doNotForcePriceListWhenThereSalesDocInFromDoc` — Relaxes price-list enforcement when the from-document is a sales document.
+**Do Not Force Price List When There is Sales Doc In From Doc** `termConfig.doNotForcePriceListWhenThereSalesDocInFromDoc` — Relaxes price-list enforcement when the from-document is a sales document.
 
 **Ignore Current Price When Calculating Prices** `termConfig.ignoreCurrentPriceWhenCalculatingPrices` — Ignores existing prices during recalculation.
 
@@ -290,10 +290,10 @@ The generated stock-adjustment documents use these books and terms:
 
 | Option | Field ID |
 |---|---|
-| Stock Issue Book | `termConfig.issueBook` |
-| Stock Issue Term | `termConfig.issueTerm` |
-| Stock Receipt Book | `termConfig.receiptBook` |
-| Stock Receipt Term | `termConfig.receiptTerm` |
+| Issue Items Book | `termConfig.issueBook` |
+| Issued Items Term | `termConfig.issueTerm` |
+| Received Items Book | `termConfig.receiptBook` |
+| Received Items Term | `termConfig.receiptTerm` |
 
 ## Quality Control / Assurance
 
@@ -305,9 +305,9 @@ The generated stock-adjustment documents use these books and terms:
 
 *Applies to: Item Cutting Document (تقطيع أصناف).*
 
-**Generated Assembly Document Book** `termConfig.generatedDocAssembBook` — Book for the assembly document generated from the cutting document.
+**Generated Assembly Doc Book** `termConfig.generatedDocAssembBook` — Book for the assembly document generated from the cutting document.
 
-**Generated Assembly Document Term** `termConfig.generatedDocAssembTerm` — Term for that generated assembly document.
+**Generated Assembly Doc Term** `termConfig.generatedDocAssembTerm` — Term for that generated assembly document.
 
 ## Processing Document
 
@@ -318,7 +318,7 @@ Saving a processing document generates two stock issues and a stock receipt, and
 | Option | Field ID | What it does |
 |---|---|---|
 | Materials Issue Book / Term (group *Raw Materials*) | `termConfig.materialsIssueBook` / `termConfig.materialsIssueTerm` | Book and term of the stock issue made from the Raw Materials grid. |
-| Indirect Materials Issue Book (both fields of group *Indirect Materials*) | `termConfig.indirectIssueBook` / `termConfig.indirectIssueTerm` | Book and term of the stock issue made from the Indirect Materials grid. In English both fields carry the same caption; the second is the term. |
+| Indirect Materials Issue Book / Term (group *Indirect Materials*) | `termConfig.indirectIssueBook` / `termConfig.indirectIssueTerm` | Book and term of the stock issue made from the Indirect Materials grid. |
 | Received Items Book / Term (group *Outputs Materials*) | `termConfig.receiptBook` / `termConfig.receiptTerm` | Book and term of the stock receipt made from the outputs. |
 | Debit / Credit (Effect tab) | `termConfig.feesDebit` / `termConfig.feesCredit` | Account sides of the indirect-cost entry. The entry is made only when both are set. Each is a full account side; see [Anatomy of an Account Side](./doc-term-accounting-effects.md#Anatomy-of-an-Account-Side). |
 

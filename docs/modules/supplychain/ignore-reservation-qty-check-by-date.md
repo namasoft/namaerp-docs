@@ -13,10 +13,12 @@ This feature only affects Reservation operations and has no impact on regular is
 
 ## Settings in Supply Chain Configurations
 
+Both switches sit in the **Quantity Check by Date** group.
+
 | Name | Field ID |
 |------|----------|
-| Enable ignore in reservation quantity check by date for warehouses | `enableIgnoreInReservationQtyCheckByDateForWarehouses` |
-| Enable ignore in reservation quantity check by date for locators | `enableIgnoreInReservationQtyCheckByDateForLocators` |
+| Enable Check Qty In Reservations By Date For Warehouses | `enableIgnoreInReservationQtyCheckByDateForWarehouses` |
+| Enable Check Qty In Reservations By Date For Locators | `enableIgnoreInReservationQtyCheckByDateForLocators` |
 
 ::: warning Note
 These options must be enabled first for the ignore flag to be read from the warehouse or locator. If you attempt to enable the option on a warehouse or locator without enabling the corresponding setting in Supply Chain Configurations, an error message will appear with a direct link to the required setting.
@@ -26,7 +28,7 @@ These options must be enabled first for the ignore flag to be read from the ware
 
 | Name | Field ID |
 |------|----------|
-| Ignore in reservation quantity check by date | `ignoreInReservationQtyCheckByDate` |
+| Ignore In Reservation Qty Check By Date | `ignoreInReservationQtyCheckByDate` |
 
 ![Ignore In Reservation Qty Check By Date on the Warehouse screen](../../ar/modules/supplychain/images/reservation/warehouse-ignore-reservation-check-en.png)
 
@@ -34,7 +36,7 @@ These options must be enabled first for the ignore flag to be read from the ware
 
 | Name | Field ID |
 |------|----------|
-| Ignore in reservation quantity check by date | `ignoreInReservationQtyCheckByDate` |
+| Ignore In Reservation Qty Check By Date | `ignoreInReservationQtyCheckByDate` |
 
 ## How to Use
 

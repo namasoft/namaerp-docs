@@ -17,7 +17,7 @@ Like every other platform, OTO is set up on the **Magento Site** screen, which k
 1. Create a new **Magento Site** and set **Site Type** to **OTO Updater**.
 2. In **Password (Consumer Secret)**, paste the API refresh token from your OTO account. Nama uses it to obtain a fresh access token whenever it sends quantities. You do not need to fill **URL**: Nama always talks to OTO's own address.
 3. Fill the **Link Ecommerce Warehouses By Nama** grid. Each row links a Nama **Warehouse** to an OTO location: put the OTO location code in **Ecommerce Warehouse Id**. The site cannot be saved while this grid is empty, because OTO keeps every quantity per location.
-4. Fill the **QTy Update Configuration** grid so it covers the items and warehouses you want to send, exactly as for any other platform (see the shared guide).
+4. Fill the **Qty Update Configuration** grid so it covers the items and warehouses you want to send, exactly as for any other platform (see the shared guide).
 5. Save.
 
 ::: tip Sending must be switched on for the server
@@ -28,10 +28,10 @@ Nama sends nothing to any shop or platform unless the server's `nama.properties`
 
 ## What OTO receives
 
-Whenever the stock of an item changes in one of the linked warehouses, Nama calculates the item's quantity the same way it does for every platform: the quantity basis, the minimum-quantity rule and the rounding all come from the site's quantity settings. It then sends that figure to the OTO location linked to the warehouse.
+Whenever the stock of an item changes, Nama works out the item's stock in each warehouse that the site's **Qty Update Configuration** rows count, using the site's quantity basis or quantity query, and sends each linked warehouse's figure to its OTO location. The minimum-quantity rule and the rounding settings apply only to the single total that other platforms receive, so they do not change the figures sent to OTO.
 
 - **OTO replaces its quantity with Nama's.** The figure Nama sends becomes OTO's quantity for that item in that location; it is not added to what OTO already had. Sending the same figure twice therefore changes nothing.
-- **Each location is updated separately.** A sale from the Riyadh warehouse updates only the OTO location linked to Riyadh.
+- **Each location gets its own warehouse's stock.** A sale from the Riyadh warehouse lowers only the figure of the OTO location linked to Riyadh; the other locations receive their unchanged figures.
 - **Warehouses that are not in the grid are not sent.** Their stock never reaches OTO.
 - **Quantities are whole numbers.** A stock of 12.5 is sent as 12.
 - **Items are identified by SKU:** the SKU in the **Magento Item Linker**, or the item code when there is none. The SKU must exist in OTO.

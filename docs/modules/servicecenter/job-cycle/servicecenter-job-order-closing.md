@@ -49,9 +49,9 @@ figures you can adjust:
 | Box | Arabic | Fahad's job |
 |---|---|---|
 | Total Customer | إجمالي العميل | **695** |
-| Total Insurance | إجمالى التأمين | **60** |
-| Total Warranty | إجمالى الضمان | **2,400** |
-| Total Internal | إجمالى الشركة | **60** |
+| Total Insurance | إجمالي التأمين | **60** |
+| Total Warranty | إجمالي الضمان | **2,400** |
+| Total Internal | إجمالي الشركة | **60** |
 
 Together, 3,215 — the job total. The full derivation is on
 [Who Pays for What](/modules/servicecenter/job-cycle/servicecenter-payer-split.md).
@@ -112,22 +112,19 @@ has produced, so you can always see whether one exists.
 
 ## The next visit
 
-The closing also works out when the vehicle should come back. It takes the vehicle's average daily
-mileage and the shortest kilometre interval among the job order's tasks, projects a date, and writes
-it onto both the closing and the job order.
-
-Fahad's car covers about 60.7 km a day. Its oil service recurs every 10,000 km and the last one was
-at 36,000, so the next falls due at 46,000 — 700 km, about 11.5 days, from the 45,300 read on
-arrival. The closing projects **15 March 2026**. If it cannot compute a date it falls back to
-whatever the job order already said. Full mechanics on
-[Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md).
+The closing also works out when the vehicle should come back: the shortest kilometre interval among
+the job order's tasks, divided by the vehicle's average daily mileage, counted in days from the
+vehicle's current odometer date. It writes the date onto both the closing and the job order; for
+Fahad's job that is **14 August 2026**. The rule, the fallback and the worked figures are on
+[Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals#The-expected-next-visit).
 
 ## What the closing refuses
 
-1. **An order that is already closed.** One closing per job order; a second is refused outright.
-2. **Suspended orders.** A *Cancelled*, *Pending* or *Stopped* job order is refused unless the term
-   ticks *Allow Closing Suspended Orders*.
-3. **Unfinished work.** With the module setting *Prevent Closing With Unfinished Task* on — and it is
+1. **An order that is already closed, or already has a committed closing.** One closing per job
+   order; a second is refused outright.
+2. **Suspended orders.** A *Cancelled*, *Pending* or *Manually Stopped* job order is refused unless the
+   term ticks *Allow Closing Suspended Orders*.
+3. **Unfinished work.** With the module setting *Prevent Closing When Unfinished Task* on — and it is
    **on by default** — any execution line for this job order that is missing a start or an end time
    blocks the close, naming the task and the technician. This is the check that makes technicians
    finish their time sheets.
@@ -153,9 +150,10 @@ closing once it is saved:
 | Message | Why | What to do |
 |---|---|---|
 | *Job order {0} is already closed* — «أمر الشغل {0} مغلق بالفعل» | A second closing is being raised for a job order that is already closed. One closing per order. | Find the existing closing from the job order's related documents. If it was wrong, cancel it and raise a new one. |
-| *Can not close the order {0} because the status is {1}* — «لا يمكن اغلاق أمر الشغل {0} لان حالته {1}» | The order's status is *Cancelled*, *Pending* or *Stopped*. | Put the order back into a working status, or tick **Allow Closing Suspended Orders** (السماح باغلاق الاوامر المعلقة) on the closing's document term. |
-| *Can not close the order {0} because there is unfinished line for the task {1} and technician {2}* — «لا يمكن أغلاق أمر الشغل {0} لوجود مهمة {1} غير منتهيه للفنى {2}.» | An execution line for this order is missing its start or end time, and **Prevent Closing When Unfinished Task** (منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية) is on in the service centre configuration — which it is by default. | Have the technician complete the time sheet on that execution line. One message is raised per unfinished line. |
-| *You can not close job order {0}, because the quantity of the material {1} is {2} and the issued quantity is {3}* — «لا يمكن غلق أمرالإنتاج {0} لأن كمية الصنف {1} تساوي {2} والكمية المصروفة {3}» | The closing term ticks **Do Not Close Job Order If All Materials Are Not Issued** (منع إغلاق أمر الشغل إذا لم يتم صرف الخامات بالكامل), and a spare part has been issued in less than the planned quantity. Quantities are aggregated per item across the whole order. | Issue the rest of the material, reduce the planned quantity on the job order, or untick the option on the term. |
+| *The Job Order {0} already has closing one {1}* — «أمر الشغل {0} تم غلقه بالفعل بالمستند {1}» | Another committed closing already names this job order; {1} is that closing. | Open the closing it names. If it was wrong, cancel it and raise a new one. |
+| *Can not close the order {0} because the status is {1}* — «لا يمكن إغلاق أمر الشغل {0} لأن حالته {1}» | The order's status is *Cancelled*, *Pending* or *Manually Stopped*. | Put the order back into a working status, or tick **Allow Closing Suspended Orders** (السماح بإغلاق الأوامر المعلقة) on the closing's document term. |
+| *Can not close the order {0} because there is unfinished line for the task {1} and technician {2}* — «لا يمكن إغلاق أمر الشغل {0} لوجود مهمة {1} غير منتهية للفني {2}.» | An execution line for this order is missing its start or end time, and **Prevent Closing When Unfinished Task** (منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية) is on in the service centre configuration — which it is by default. | Have the technician complete the time sheet on that execution line. One message is raised per unfinished line. |
+| *You can not close job order {0}, because the quantity of the material {1} is {2} and the issued quantity is {3}* — «لا يمكن غلق أمر الإنتاج {0} لأن كمية الصنف {1} تساوي {2} والكمية المصروفة {3}» | The closing term ticks **Do Not Close Job Order If All Materials Are Not Issued** (منع إغلاق أمر الشغل إذا لم يتم صرف الخامات بالكامل), and a spare part has been issued in less than the planned quantity. Quantities are aggregated per item across the whole order. | Issue the rest of the material, reduce the planned quantity on the job order, or untick the option on the term. |
 
 ## Undoing a closing
 

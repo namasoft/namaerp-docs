@@ -17,7 +17,7 @@ All three screens are in the basic module, under `Basic → Master Files`: **Pay
 The first group on the screen says which cash or bank account a payment by this method ends up in:
 
 - **Bank account** (رقم حساب البنك) — for a card or transfer method, the bank account the money is credited to.
-- **Safe Deposite - Subsidiary** (الخزينة - الذمة) — for a method that does not go through a bank account. It can be a safe, a third party or a plain account.
+- **Safe Deposit - Subsidiary** (الخزينة - الذمة) — for a method that does not go through a bank account. It can be a safe, a third party or a plain account.
 - **Bank** (البنك) — the bank itself, for reference.
 
 When both are filled, the bank account wins. A document's payment line debits (or, on a return, credits) the main account of that bank account or safe.
@@ -42,13 +42,13 @@ When the fee depends on the amount, the date or the document, use the **Fee Rang
 
 | Column | Meaning |
 |---|---|
-| **From Value** / **To Value** (من قيمة / إلي قيمة) | The payment amounts the row applies to. Leave either end empty for no limit. |
+| **From Value** / **To Value** (من قيمة / إلى قيمة) | The payment amounts the row applies to. Leave either end empty for no limit. |
 | **From Date** / **To Date** (من تاريخ / إلى تاريخ) | The period the row applies to, compared with the document's value date. |
 | **Entity Type** / **Entity Type List** (النوع / قائمة الأنواع) | The document types the row applies to. Leave both empty for all documents. |
 | **Fee Percentage** / **Fixed Fee Value** (نسبة الرسوم / قيمة الرسوم الثابتة) | The fee for a matching payment. |
-| **Maximum Value** (أقصي قيمة) | A cap on the fee calculated by the row. |
+| **Maximum Value** (أقصى قيمة) | A cap on the fee calculated by the row. |
 
-Rows are checked from top to bottom, and the first row that matches the amount, the date and the document type is used. If none matches, the header's percentage and value apply. A row normally carries either a percentage or a fixed value. Tick **Allow Fee Value And Percentage** (السماح بوجود قيمة رسوم ثابته بالإضافة الي نسبة رسوم) to allow both on one row, which is how a "1% + 1 riyal" tariff is entered.
+Rows are checked from top to bottom, and the first row that matches the amount, the date and the document type is used. If none matches, the header's percentage and value apply. A row normally carries either a percentage or a fixed value. Tick **Allow Fee Value And Percentage** (السماح بوجود قيمة رسوم ثابتة بالإضافة إلى نسبة رسوم) to allow both on one row, which is how a "1% + 1 riyal" tariff is entered.
 
 **Allow Edit Fees Value Manually** (السماح بتعديل قيمة الرسوم يدويا) lets the user overwrite the calculated fee on the document. Once a non-zero fee is typed, it is kept.
 
@@ -61,7 +61,7 @@ On a receipt, the fee normally reduces what the company actually receives, so it
 - **Customer Pays Expenses In Receipt** (يتحمل العميل المصاريف عند القبض) — on a receipt voucher, the fee is charged to the paying party instead of being the company's expense.
 - **Company Pays Expenses In Payment** (تتحمل الشركة المصاريف عند الصرف) — on a payment voucher, the fee is the company's expense, booked as a debit on the Fees Account.
 
-By default, a voucher books the cash or bank side net of the fee: a 2,000 receipt with a 30 fee debits the bank with 1,970. Tick **Expand Payment Method Effect** (عدم إختصار قيود مصروفات طرق الدفع) to book the full 2,000 on the bank side instead, with the fee as a separate counter-line. The entry then shows the gross amount and the commission side by side, as the bank statement does.
+By default, a voucher books the cash or bank side net of the fee: a 2,000 receipt with a 30 fee debits the bank with 1,970. Tick **Expand Payment Method Effect** (عدم اختصار قيود مصروفات طرق الدفع) to book the full 2,000 on the bank side instead, with the fee as a separate counter-line. The entry then shows the gross amount and the commission side by side, as the bank statement does.
 
 ### Tax on the fee
 
@@ -78,7 +78,7 @@ Banks charge VAT on their commission. The **Fees Tax** group (ضريبة الر�
 - **Authorization Number Required** (رقم العملية مطلوب) — a payment line with this method cannot be saved without an **Authorization Number** (رقم العملية). Turn it on for card methods so every line can be matched to the acquirer's statement.
 - **Do Not Affect Remaining** (عدم التأثير على المتبقي) — the line is recorded but does not reduce the invoice's remaining amount. Use it for a payment that is recorded for information only.
 - **Tax Authority Code** (كود مصلحة الضرائب) — the code the e-invoicing integrations send as the payment means. For ZATCA, see [the payment-means rule](/modules/invoicing/zatca-guide).
-- **Used With Reward Point Discount Coupons** (يستخدم مع قسائم الخصومات الخاصة بنقاط المكأفاة) and **Reward Points Configuration** tie the method to the loyalty programme. **Use To Sell And Purchase Reward Points** (تستخدم لشراء و بيع نقاط الولاء) marks the method used when points themselves are bought or sold. **Exclude Amounts Paid By This Method From Reward Points** (استثناء المبالغ المدفوعة بهذه الطريقة من احتساب نقاط الولاء في الفواتير والمرتجعات) takes whatever an invoice or return collects through this method out of the value that earns loyalty points; see [Payment methods that earn no points](/modules/invoicing/reward-points-setup#Payment-methods-that-earn-no-points).
+- **Used With Reward Point Discount Coupons** (يستخدم مع قسائم الخصومات الخاصة بنقاط المكافأة) and **Reward Points Configuration** tie the method to the loyalty programme. **Use To Sell And Purchase Reward Points** (تستخدم لشراء وبيع نقاط الولاء) marks the method used when points themselves are bought or sold. **Exclude Amounts Paid By This Method From Reward Points** (استثناء المبالغ المدفوعة بهذه الطريقة من احتساب نقاط الولاء في الفواتير والمرتجعات) takes whatever an invoice or return collects through this method out of the value that earns loyalty points; see [Payment methods that earn no points](/modules/invoicing/reward-points-setup#Payment-methods-that-earn-no-points).
 
 ## Cash, shifts and the POS counter
 
@@ -86,16 +86,17 @@ These settings matter only where cash drawers and shifts are used, in [cashier s
 
 | Setting | What it does |
 |---|---|
-| **Cash Payment Method** (طريقة دفع نقدي) | Marks the method as cash, so it is counted with the cash in the drawer. Do not change it once the method has been used. Changing it is the cause of *Payment method {0} repeated in multi line* at shift close, described in the [POS FAQ](/modules/pos/pos-faq). |
+| **Cash Payment Method** (طريقة دفع نقدي) | Marks the method as cash, so it is counted with the cash in the drawer. Do not change it once the method has been used. |
 | **Reset Balance With Shift Close** (تصفير الرصيد مع غلق الوردية) | Closing a cashier shift clears the whole system balance of this method instead of carrying it to the next shift. |
-| **Shift Difference Debit Side** / **Shift Difference Credit Side** (الجانب المدين / الدائن لفرق الورديه) | Where a shortage or an overage counted at shift close is booked for this method. |
-| **Hide In Shifts** (اخفاء في شاشة الورديات) | Leaves the method off the POS shift screens. |
+| **Shift Difference Debit Side** / **Shift Difference Credit Side** (الجانب المدين / الدائن لفرق الوردية) | Where a shortage or an overage counted at shift close is booked for this method. |
+| **Hide In Shifts** (إخفاء في شاشة الورديات) | Leaves the method off the POS shift screens. |
 | **Disable Actual Balance In POS** (تعطيل الرصيد الفعلي في نقطة البيع) / **Actual Balance Is Required In POS** (الرصيد الفعلي في نقطة البيع إجباري) | Whether the cashier enters a counted balance for this method at shift close, and whether that balance is mandatory. |
 | **Hide In POS Payment Dialog** (إخفاء في شاشة الدفع في نقاط البيع) | Hides the method from the POS payment screen. Ticking it also ticks the next two. |
 | **Hide In Sales Payment** (إخفاء في دفع المبيعات) / **Hide In Returns Payment** (إخفاء في دفع المردودات) | Hides the method on sales only or on returns only. |
 | **Do Not Use In POS Payments** / **Do Not Use In POS Receipts** (لا تستخدم في مصروفات / مقبوضات نقاط البيع) | Keeps the method off the POS pay-out and pay-in screens. |
-| **Critical Pos Payment Method** (طريقة دفع حرجه لنقاط البيع) | Only POS users whose security profile has **Can Use Critical Methods** (امكانية استعمال طرق الدفع الحرجة) can pick the method. |
-| **Must Be With Fees Percentage In Return** (الأرتجاع بها مع عدم خفض العموله في الفاتورة الاصليه) | A POS return must refund through this method at least the same share of the total as the original invoice was paid with it. If 60% of the invoice was paid by mada, at least 60% of the return goes back by mada. |
+| **Critical Pos Payment Method** (طريقة دفع حرجة لنقاط البيع) | Only POS users whose security profile has **Can Use Critical Methods** (إمكانية استعمال طرق الدفع الحرجة) can pick the method. |
+| **Must Be With Fees Percentage In Return** (الارتجاع بها مع عدم خفض العمولة في الفاتورة الأصلية) | A POS return must refund through this method at least the same share of the total as the original invoice was paid with it. If 60% of the invoice was paid by mada, at least 60% of the return goes back by mada. |
+| **Returns Must Be Refunded With This Method** (مردودات الفواتير المدفوعة بها تسدد بها إجباريا) | A POS return of an invoice paid with this method must refund through it at least the amount the invoice was paid with it, or the whole return when the return is smaller. If 300 of the invoice was paid by mada, a 200 return goes back by mada in full and a 500 return refunds at least 300 by mada. |
 | **Days Before Allowing Return** (عدد الأيام قبل السماح بالمرتجع) | A POS invoice paid with this method cannot be returned until this many days have passed. The global setting **Enable Days Before Allowing Return in Payment Methods** (تفعيل عدد الأيام قبل السماح بالمرتجع حسب طريقة الدفع) must be on first. |
 | **Apply Header Discount Offer with Payment Method in Invoice** (خصم نسبة من الفاتورة مع طريقة الدفع (في خصم الهيدر)) | A percentage discount the POS gives on the whole invoice when it is paid with this method, for example a bank-card promotion. |
 | **Keyboard Shortcut** (الاختصار) | A key, with optional Ctrl, Alt or Shift, that selects the method on the POS payment screen. |
@@ -117,14 +118,14 @@ A **Payment Terminal** record stands for one card machine. It is part of the **P
 
 The terminal is chosen on the document or on the register:
 
-- **Sales Invoice** (and the Service Center sales invoice) has a **Payment Terminal** field in the header. Its payment area has three buttons: **Pay Invoice** (ادفع الفاتورة), **Pay Part Of Invoice** (دفع جزء من الفاتورة) and **Fetch Last Terminal Payment Transaction** (ايجاد اخر عمليه دفع تمت ولم تصل معلوماتها).
+- **Sales Invoice** (and the Service Center sales invoice) has a **Payment Terminal** field in the header. Its payment area has three buttons for the terminal: **Pay Invoice** (ادفع الفاتورة), **Pay Part Of Invoice** (دفع جزء من الفاتورة) and **Fetch Last Terminal Payment Transaction** (إيجاد آخر عملية دفع تمت ولم تصل معلوماتها).
 - The CRM maintenance order and maintenance invoice have the same field and buttons.
 - **Receipt Voucher** and **Payment Voucher** show **Pay Invoice** above their payment-methods grid when **Allow Multiple Payment In Payment Voucher And Receipt Voucher Documents** (السماح بطرق الدفع المتعددة في سندات الصرف والقبض) is on in the accounting configuration. Their **Payment Terminal** field is not on the default screen, so add it with the [Screen Modifier](/platform/screen-modifier/screen-modifier-edit-screen) before using the button.
 - In **Nama POS**, the terminal is set on the **Register** (ماكينة). A register without one uses the terminal in the POS configuration. Card payments at the counter are described in [Payment & Tender](/modules/pos/pos-payment-and-tender).
 
 ### What happens when the cashier presses Pay Invoice
 
-1. Nama takes the amount: the remaining amount of the invoice for **Pay Invoice**, the amount the cashier enters for **Pay Part Of Invoice**, or the voucher amount on a voucher. The amount for a partial payment cannot be more than the remaining amount.
+1. Nama takes the amount: the remaining amount of the invoice for **Pay Invoice**, the amount the cashier enters for **Pay Part Of Invoice**, or the voucher amount on a voucher.
 2. It sends that amount to the terminal and waits while the customer taps or inserts the card.
 3. The approved transaction comes back with its card details: card type, masked card number, scheme, terminal and merchant IDs, and the authorization code. Nama writes them on a payment line. The authorization code goes into **Authorization Number**, and the line is marked as paid from the terminal.
 4. Nama looks up the terminal's **Method Group** and fills in the line's **Payment Method** from the first row that matches the card. The fee, the accounts and everything else on this page then follow from that method.
@@ -147,7 +148,7 @@ The method group answers the question: *this card was mada, so which payment met
 - **Card Type**
 - **Masked Card Number**
 
-The matching rule is **Contains** (يحتوي علي), **Starts With** (يبدأ بـ) or **Ends With** (ينتهي بـ). Contains is used when the rule is left empty, and letter case is ignored. A detail with no value matches every card.
+The matching rule is **Contains** (يحتوي على), **Starts With** (يبدأ بـ) or **Ends With** (ينتهي بـ). Contains is used when the rule is left empty, and letter case is ignored. A detail with no value matches every card.
 
 Rows are checked from the top, and the first row whose filled details all match wins. A typical group has a row with Card Type `mada` pointing at the *mada* method, rows for `visa` and `mastercard`, and a last row with nothing filled in pointing at a general *Cards* method to catch everything else. If no row matches, the payment line is filled in without a payment method, and the cashier picks one by hand.
 
@@ -177,15 +178,16 @@ Most of these messages have no Arabic text in the product and appear in English 
 | Message | Why | What to do |
 |---|---|---|
 | *Payment method {0} fees account is required* — «حساب الرسوم لطريقة الدفع {0} مطلوب» | A voucher calculated a fee for this method, from the fee ranges, but the method has no **Fees Account**. | Fill **Fees Account** on the payment method, then reprocess the voucher. |
-| *you should insert only one field fee percentage {0} or fee value {1}* — «يجب ادخال قيمة واحدة نسبة الرسوم {0} او  قيمة الرسوم {1}» | A fee-range row has both a percentage and a fixed value. | Keep one of them, or tick **Allow Fee Value And Percentage**. |
+| *you should insert only one field fee percentage {0} or fee value {1}* — «يجب إدخال قيمة واحدة نسبة الرسوم {0} أو قيمة الرسوم {1}» | A fee-range row has both a percentage and a fixed value. | Keep one of them, or tick **Allow Fee Value And Percentage**. |
 | *The line at {0} is completely empty, please remove it or set any field value in it* — «السطر رقم {0} فارغ تماماً، يرجى حذفه أو ملء أي حقل فيه» | A fee-range row has no amounts and no fee. | Delete the row. |
 | *You must enable (Enable Days Before Allowing Return In Payment Method) in global configuration before using the option (Days Before Allowing Return)* | **Days Before Allowing Return** was filled while the global setting is off. | Turn on **Enable Days Before Allowing Return in Payment Methods** in Global Configuration first. |
 | *You must select key* — «يجب اختيار مفتاح» | The keyboard shortcut has Ctrl, Alt or Shift ticked but no key. | Pick the key, or clear the modifiers. |
 | *Cannot return invoice paid with {0} before {1} days* — «لا يمكن إرجاع فاتورة مدفوعة بطريقة {0} قبل مرور {1} يوم» | A POS return of an invoice paid with a method that has **Days Before Allowing Return**. | Wait until the period has passed, or refund through another channel your policy allows. |
 | *Required payment method  - {0}* | A POS return pays nothing through a method marked **Must Be With Fees Percentage In Return** that the original invoice was paid with. | Refund at least part of the return through that method. |
 | *Invalid Payment percentage with method  - {0}* | The return refunds a smaller share through that method than the original invoice was paid with it. | Raise that method's amount on the return. |
+| *Invoice {0} was paid with {1}, so at least {2} of this return must be refunded with {1}* — «الفاتورة {0} مدفوعة بـ {1}، لذلك يجب رد {2} على الأقل من هذا المردود بـ {1}» | A POS return refunds less through a method marked **Returns Must Be Refunded With This Method** than the rule requires. | Refund at least the amount shown through that method. |
 | *Actual balance is required for payment method {0}* — «الرصيد الفعلي إجباري لطريقة الدفع {0}» | Closing a POS shift without a counted balance for a method marked **Actual Balance Is Required In POS**. | Enter the counted amount for that method. |
-| *Please select payment terminal* — «برجاء إختيار payment terminal» | **Pay Invoice** or **Fetch Last Terminal Payment Transaction** was pressed on a document with no **Payment Terminal**. | Pick the terminal on the document. |
+| *Please select payment terminal* — «برجاء اختيار payment terminal» | **Pay Invoice** or **Fetch Last Terminal Payment Transaction** was pressed on a document with no **Payment Terminal**. | Pick the terminal on the document. |
 | *There is no uncompleted transaction* | **Fetch Last Terminal Payment Transaction** was pressed in a browser that has not sent any payment to a terminal. | Use the button in the same browser that sent the payment. |
 | *Purchase Transaction refused* | The card machine or the acquirer declined the payment. The response code and its reason are added after the message when the terminal returns them. | Ask for another card or another payment method. |
 | *Purchase Transaction not completed successfully* | The terminal returned an answer without any transaction details, for example because the customer cancelled. | Try the payment again. |

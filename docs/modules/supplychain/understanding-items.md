@@ -47,34 +47,7 @@ Why all these descriptions? Because different people need different information.
 
 Imagine you have 10,000 items in your system. How do you make sense of it all? Through classification!
 
-### Hierarchical Categories
-
-NaMa ERP gives you five levels of categories that work hierarchically:
-
-```
-Category 1: Electronics
-  Category 2: Computers
-    Category 3: Laptops
-      Category 4: Business Laptops
-        Category 5: Dell Business Laptops
-```
-
-This hierarchy lets you:
-- Run reports at any level ("show me all Electronics sales")
-- Apply rules to entire categories ("all Business Laptops require serial numbers")
-- Search efficiently ("find items in the Computers category")
-
-### Additional Classification Dimensions
-
-Sometimes hierarchical categories aren't enough. What if you also need to classify by:
-- Brand (Dell, HP, Lenovo)
-- Product line (Budget, Premium, Enterprise)
-- Supplier source (local, imported)
-- Department that uses it (IT, Admin, Production)
-
-This is where the **ten item classifications** come in. These are independent dimensions you define however you need: you might use the first for brand, the second for product line, the third for price range, and so on.
-
-Alongside these, the system offers ready-made classifications such as **Brand**, **Section**, and **Assortment** that you can use directly without extra setup.
+Each item carries **ten item classes** (**Class 1** to **Class 10**): independent slots you define however you need — product line, manufacturer, storage requirement, price range. They are what pricing rules, item relations and the bulk item tools match on. Alongside them sit the **Item Section** and the **Item Brand**, and five **Item Category** slots that the item classes have superseded. Each category record is given one of the five levels; the system does not link a category to a parent category. What each file holds and which to use is on [Item Classification Files](/modules/supplychain/item-classification-files).
 
 ::: tip Classification Strategy
 Start simple! Don't try to define all ten classifications from day one. Set up the two or three you need most, and add more as your needs evolve. You can always reclassify items later.
@@ -99,7 +72,7 @@ Then you define **conversion factors**:
 - 1 bottle = 0.5 liters
 
 ::: warning Every unit must reach the base unit directly
-Conversion rates are never chained. A pallet holding 50 cartons still needs its own row saying `1 pallet = 1,200 bottles` — defining it as `1 pallet = 50 cartons` and trusting the system to multiply through the carton row does not work, and the item refuses to save with *Could not find conversion between base unit and unit*. [Units of Measure](./units-of-measure.md) covers unit groups, shared conversions and the rest of the subject in full.
+Conversion rates are never chained. A pallet holding 50 cartons still needs its own row saying `1 pallet = 1,200 bottles` — defining it as `1 pallet = 50 cartons` and trusting the system to multiply through the carton row does not work, and the item refuses to save with *Could not find conversion between base unit ({0}) and unit ({1})*. [Units of Measure](./units-of-measure.md) covers unit groups, shared conversions and the rest of the subject in full.
 :::
 
 Now you can:
@@ -205,23 +178,22 @@ These flags give you precise control. You might have:
 
 ### Safety Stock and Reorder Points
 
-Each item can have a **safety stock** level - the minimum quantity you want to keep on hand. Dropping below it triggers a system alert.
+Each item can have a **Safety Stock** level - the minimum quantity you want to keep on hand - and an **Order Limit**, the reorder point.
 
-You can set:
-- **Safety stock quantity**: "never let laptop stock drop below 10 units"
-- **Reorder point**: "when you reach 10 units, automatically suggest creating a purchase order"
+- **Safety Stock**: "never let laptop stock drop below 10 units". Requirements planning (MRP) in the Manufacturing module plans to keep this quantity on hand, and uses the **Order Limit** when no safety stock is set.
+- **Order Limit**: "when you reach 10 units, it is time to order". The **Item Order Limit** report (`SYSR-INV007`, see [Supply Chain and Sales Reports](/modules/supplychain/supplychain-reports#Availability-Reorder-Points-and-Reservations)) lists each item against its limit with the quantity needed to bring it back up.
 
 The system also helps you identify slow-moving items via a **slow-moving period**: if an item hasn't moved in 180 days, maybe it's time to discount it or stop stocking it.
 
 ### Overdraft Policy: What Happens When You Run Out?
 
-Reality isn't perfect. Sometimes you need to issue more than you have - perhaps an urgent customer order arrived before your scheduled delivery. The **overdraft policy** determines what happens:
+Reality isn't perfect. Sometimes you need to issue more than you have - perhaps an urgent customer order arrived before your scheduled delivery. The item's **Over Draft Policy** determines what happens:
 
-- **Prevent**: never allow negative stock under any circumstances
-- **Warn**: show a warning but allow the transaction
-- **Allow**: go ahead, we'll track the negative balance
+- **Yes**: the item may go negative
+- **No** (and an empty policy): the issue is refused
+- **Inherited**: the item section's policy decides, and then the company-wide policy
 
-Different items need different policies. Critical medical supplies might prevent overdraft, while office supplies might just warn.
+Different items need different policies. Critical medical supplies might block overdraft, while office supplies might allow it. The full order of checks is on [Overdraft & Quantity Checking](/modules/supplychain/configuration/overdraft-and-quantity-checking).
 
 ### Reservation: Holding Stock for Specific Purposes
 
@@ -290,7 +262,7 @@ Each item can also carry several attachments: product images, technical specs, s
 
 ## Revisions
 
-When a product changes design but the old version is still in stock, switch **Has Revisions** on. The item then gets a revisions grid with one row per revision id, and no id may repeat. From then on every stock line for the item carries a revision next to its colour, size and batch, so the old and new versions are counted apart. A revision that already has stock movements cannot be deleted from the grid unless the supply chain option *Allow Delete From Item Revisions After Transactions* is on.
+When a product changes design but the old version is still in stock, switch **Has Revisions** on. The item then gets a revisions grid with one row per revision id, and no id may repeat. From then on every stock line for the item carries a revision next to its colour, size and batch, so the old and new versions are counted apart. A revision that already has stock movements cannot be deleted from the grid unless the supply chain option *Allow Delete From Item Revisions Grid If Transactions Found* is on.
 
 ## Actions on these screens
 
@@ -322,7 +294,7 @@ A well-configured item definition means:
 Don't try to configure everything perfectly on your first item. Start with the basics:
 1. Code and name
 2. Primary unit of measure
-3. Category
+3. Item section or item class
 4. Whether it's purchasable/sellable
 5. Basic accounting accounts
 
@@ -332,7 +304,7 @@ You can always come back later to add serial tracking, quality checklists, or au
 ## In practice
 
 - **Catalogue size**: across Nama installations a typical company keeps a little over a thousand items, and the largest tenth keep more than 15,000 — the range where classification and the bulk tools in [Creating and Maintaining Items](./item-maintenance.md) earn their keep.
-- **Classification follows the "start simple" advice.** About 9 in 10 companies group items by **Item Section**, about 2 in 3 fill the first item class and about half the second; each further class is used by fewer companies, and the hierarchical categories by only about 1 in 4. The full picture is on [Item Classification Files](./item-classification-files.md#In-practice).
+- **Classification follows the "start simple" advice.** About 9 in 10 companies group items by **Item Section**, about 2 in 3 fill the first item class and about half the second; each further class is used by fewer companies, and the item categories by only about 1 in 4. The full picture is on [Item Classification Files](./item-classification-files.md#In-practice).
 - **Colours and sizes** are switched on by about 1 in 10 companies — standard in fashion, home textiles and phone retail, and rarely needed elsewhere.
 
 ## Messages you may see
@@ -341,28 +313,28 @@ The item card refuses a save when its switches and its grids disagree. Unit-rela
 
 | Message | Why | What to do |
 |---|---|---|
-| *You can not reuse item opining request {0} as it is used with item {1}* — «لايمكن اعادة استعمال طلب اضافة الصنف {0} حيث انه تم استعمالة فى الصنف {1}» | The opening request named on this item was already consumed by the other item the message names. One request produces one item. | Clear the field, or raise a new opening request for this item. |
-| *Color is not enabled* — «الألوان غير مفعلة» | A row in the item's dimensions grid carries a colour while **Has Color** is off on the item. | Either switch **Has Color** on, or clear the colour from that row. |
+| *You can not reuse item opining request {0} as it is used with item {1}* — «لا يمكن إعادة استعمال طلب إضافة الصنف {0} حيث أنه تم استعماله في الصنف {1}» | The opening request named on this item was already consumed by the other item the message names. One request produces one item. | Clear the field, or raise a new opening request for this item. |
+| *Color is not enabled* — «الألوان غير مفعلة» | A row in the item's dimensions grid carries a colour while **Has Colors** is off on the item. | Either switch **Has Colors** on, or clear the colour from that row. |
 | *Size is not enabled* — «المقاسات غير مفعلة» | A row in the dimensions grid carries a size while **Has Size** is off. | Switch **Has Size** on, or clear the size from the row. |
 | *Lot is not enabled* — «الشحنات غير مفعلة» | A row in the dimensions grid carries a batch while **Has Lot** is off. | Switch **Has Lot** on, or clear the batch from the row. |
 | *Revision is not enabled* — «الإصدارات غير مفعلة» | A row in the dimensions grid carries a revision while **Has Revisions** is off. | Switch **Has Revisions** on, or clear the revision from the row. |
-| *Active Percentage is not enabled* — «النسبة ابفعالة غير مفعلة» | A row in the dimensions grid carries an active percentage while **Has Active Percentage** is off. The Arabic text carries a typo of its own. | Switch the option on, or clear the percentage from the row. |
+| *Active Percentage is not enabled* — «النسبة الفعالة غير مفعلة» | A row in the dimensions grid carries an active percentage while **Has Active Percentage** is off. | Switch the option on, or clear the percentage from the row. |
 | *Inactive Percentage is not enabled* — «النسبة الغير فعالة غير مفعلة» | A row in the dimensions grid carries an inactive percentage while **Has Inactive Percentage** is off. | Switch the option on, or clear the percentage from the row. |
-| *Sub Item is not enabled* — «الصنف الفرعي غير مفعل» | A row in the dimensions grid names a sub-item while **Has Sub Item** is off. | Switch the option on, or clear the sub-item from the row. |
-| *Dimensions repeated* — «ألمحددات مكررة مع سطر آخر» | Two rows of the dimensions grid describe exactly the same combination — same warehouse, locator, colour, size, batch, box, revision, percentages, sub-item and analysis dimensions. The message is raised on both rows. | Merge the two rows, or make one of them different. If duplicates are genuinely wanted, the supply chain option *Allow Duplicate Item Details* removes the check. |
+| *Sub Item is not enabled* — «الصنف الفرعي غير مفعل» | A row in the dimensions grid names a sub-item while **Has SubItem** is off. | Switch the option on, or clear the sub-item from the row. |
+| *Dimensions repeated* — «المحددات مكررة مع سطر آخر» | Two rows of the dimensions grid describe exactly the same combination — same warehouse, locator, colour, size, batch, box, revision, percentages, sub-item and analysis dimensions. The message is raised on both rows. | Merge the two rows, or make one of them different. If duplicates are genuinely wanted, the supply chain option *Allow Duplicate Details In Item* removes the check. |
 | *Min quantity must be less than or equal to max quantity* — «أقل كمية يجب أن تكون أقل من أو تساوي أقصى كمية» | A dimensions row has a minimum quantity above its maximum. Rows where either figure is left empty or zero are not checked. | Correct one of the two figures. |
 | *Revisions should be empty if has revisions is not enabled* — «الإصدارات يجب أن تكون فارغة في حالة عدم تفعيلها» | The revisions grid has rows while **Has Revisions** is off. Switching the option off does not empty the grid for you. | Delete the revision rows, or switch **Has Revisions** back on. |
-| *Revision id repeated* — «معرف الإضدارة مكرر» | Two rows of the revisions grid share the same revision id. The message is raised on both rows. | Give each revision its own id. |
+| *Revision id repeated* — «معرف الإصدارة مكرر» | Two rows of the revisions grid share the same revision id. The message is raised on both rows. | Give each revision its own id. |
 | *Has lot must be enabled in order to enable has expiry* — «يجب تفعيل الشحنات لتتمكن من تفعيل تاريخ الصلاحية» | **Has Expiry** was switched on while **Has Lot** is off. An expiry date belongs to a batch, so there is nowhere to record it without batches. | Switch **Has Lot** on first, then **Has Expiry**. |
-| *Can not have sizes and colors lines if both has size and has color are disabled* — «لا يمكن تحديد ألوان أو مقاسات إذا لم يكونوا مفعلين» | The sizes-and-colours grid has rows while both **Has Size** and **Has Color** are off. | Switch at least one of the two on, or empty the grid. |
+| *Can not have sizes and colors lines if both has size and has color are disabled* — «لا يمكن تحديد ألوان أو مقاسات إذا لم يكونوا مفعلين» | The sizes-and-colours grid has rows while both **Has Size** and **Has Colors** are off. | Switch at least one of the two on, or empty the grid. |
 | *Can not have size if has size is not enabled* — «لا يمكن تحديد مقاس إذا لم تكن المقاسات مفعلة» | A row of the sizes-and-colours grid carries a size while **Has Size** is off — the item is colour-only. | Clear the size from the row, or switch **Has Size** on. |
-| *Can not have color if has color is not enabled* — «لا يمكن تحديد لون إذا لم تكن الألوان مفعلة» | A row of the sizes-and-colours grid carries a colour while **Has Color** is off — the item is size-only. | Clear the colour from the row, or switch **Has Color** on. |
-| *You can not use not sellable, nor not purchasable in sizes and colors without enabling this feature in supply chain configurations* — «لا يمكن استخدام لا يمكن بيعه ولا يمكن شراؤه في سطور المقاسات و الألوان بدون تفعيل هذه الخاصية في إعدادات المخازن» | A sizes-and-colours row is marked not sellable or not purchasable while the supply chain option *Enable Not Sellable And Not Purchasable On Color And Size Lines* is off. | Have the option enabled, or untick the marks on the rows. |
-| *Should have at least one color.* — «يجب تحديد لون واحد على الأقل» | **Has Color** is on, but no row of the sizes-and-colours grid names a colour. | Add the item's colours, or switch **Has Color** off. |
+| *Can not have color if has color is not enabled* — «لا يمكن تحديد لون إذا لم تكن الألوان مفعلة» | A row of the sizes-and-colours grid carries a colour while **Has Colors** is off — the item is size-only. | Clear the colour from the row, or switch **Has Colors** on. |
+| *You can not use not sellable, nor not purchasable in sizes and colors without enabling this feature in supply chain configurations* — «لا يمكن استخدام لا يمكن بيعه ولا يمكن شراؤه في سطور المقاسات و الألوان بدون تفعيل هذه الخاصية في إعدادات المخازن» | A sizes-and-colours row is marked not sellable or not purchasable while the supply chain option *Enable Not Sellable And Not Purchasable On Colors And Sizes Lines* is off. | Have the option enabled, or untick the marks on the rows. |
+| *Should have at least one color.* — «يجب تحديد لون واحد على الأقل» | **Has Colors** is on, but no row of the sizes-and-colours grid names a colour. | Add the item's colours, or switch **Has Colors** off. |
 | *Should have at least one size.* — «يجب تحديد مقاس واحد على الأقل» | **Has Size** is on, but no row of the sizes-and-colours grid names a size. | Add the item's sizes, or switch **Has Size** off. |
-| *You can not remove old lines for field {0} - {1}, because {2} transactions found* — «لا يمكنك حذف السطور الخاصة بالحقل {0} - {1} لان له {2} حركات» | A colour, size or revision was deleted from the item after stock movements or price list lines were recorded against it. The message names the field, the value removed and how many records use it. | Put the row back. The supply chain options *Allow Delete From Item Colors And Size After Transactions* and *Allow Delete From Item Revisions After Transactions* lift the check if the history really is disposable. |
+| *You can not remove old lines for field {0} - {1}, because {2} transactions found* — «لا يمكنك حذف السطور الخاصة بالحقل {0} - {1} لأن له {2} حركات» | A colour, size or revision was deleted from the item after stock movements or price list lines were recorded against it. The message names the field, the value removed and how many records use it. | Put the row back. The supply chain options *Allow Delete From Item Colors And Sizes Grid If Transactions Found* and *Allow Delete From Item Revisions Grid If Transactions Found* lift the check if the history really is disposable. |
 | *You can not change item type from Service to Stock or vice-versa after using it in Stock Issue, Receipt, or Transfer* — «لا يمكنك تغيير نوع الصنف من خدمة إلى مخزني أو العكس بعد استخدامه في سند الصرف , التوريد المخزني أو التحويل المخزني» | The item's type was switched between Service and Stock after saved issues, receipts or transfers already carried it. A service item holds no quantity, so those documents would become meaningless. | Leave the type alone and create a second item of the right type. |
-| *You can not modify configuration after making transaction* — «لا يمكنك تغيير الاعدادات بعد عمل حركة» | The item's **Configurations** profile — the one that decides what cost and quantity are tracked by — was changed after the item already had movements. | Keep the profile the item was used with, or have the supply chain option *Allow Changing Cost And Qty Tracking After Usage* enabled and accept that existing balances were tracked the old way. |
+| *You can not modify configuration after making transaction* — «لا يمكنك تغيير الإعدادات بعد عمل حركة» | The item's **Configurations** profile — the one that decides what cost and quantity are tracked by — was changed after the item already had movements. | Keep the profile the item was used with, or have the supply chain option *Allow Changing Cost And Quantity Tracking After Item Usage* enabled and accept that existing balances were tracked the old way. |
 
 ## Next Steps
 

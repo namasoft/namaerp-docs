@@ -45,9 +45,9 @@ The basic-information block is the project contract's, with three fields that ar
 |---|---|
 | **Contractor** (مقاول باطن) | mandatory — the firm you are paying, and the party the payable will stand against |
 | **Project Contract** (عقد المشروع) | the client contract this package sits inside. Filled for you when the subcontract came from a project contract, and the anchor for the cross-checks described below |
-| **Advisory** (الإستشاري) | the consultant, where one supervises the package |
+| **Advisory** (الاستشاري) | the consultant, where one supervises the package |
 
-Then the familiar ones: **Project** and **Customer** — the *client's* project and the *client*, carried as context because a subcontract always lives inside a client contract — the responsible engineer and sales owner, the **Contract Type** with its *Contract* / *Addendum* / *Modify To Contract* values, and the field whose English caption reads *Addendum contract* but which is in fact the **main, parent contract** this one hangs off (the Arabic `العقد الرئيسي` says it correctly). **Finished Contract** is switched on for you by a Final extract, and **Opening Number Of Extract** seeds extract numbering for a package migrated in mid-life with certificates already issued elsewhere.
+Then the familiar ones: **Project** and **Customer** — the *client's* project and the *client*, carried as context because a subcontract always lives inside a client contract — the responsible engineer and sales owner, the **Contract Type** with its *Contract* / *Addendum* / *Modify To Contract* values, and the field whose English caption reads *Addendum contract* but which is in fact the **main, parent contract** this one hangs off (the Arabic `العقد الرئيسي` says it correctly). **Finished Contract** is switched on for you by a Final extract, and **Opening Number Of Extracts** seeds extract numbering for a package migrated in mid-life with certificates already issued elsewhere.
 
 The dates — contracting date, start, end, project period in days — and the **Payment Period** (مدة السداد) matter more here than they look: the payment period is what the extract uses to work out when his certificate falls due.
 
@@ -71,7 +71,7 @@ Below them sit a free *Additional Info* grid — numbers, texts, dates and refer
 
 ## Actions on this screen
 
-The subcontract carries only the two code buttons, above the terms grid on page 2:
+The subcontract carries only the two code buttons, on page 2 between the terms grid and the conditions grid:
 
 - **Update Codes** — renumbers every term line from scratch by walking the grid top to bottom (`1`, `1.1`, `1.2`, `2` …), following the parent/leaf type of each line. It overwrites codes you typed yourself.
 - **Update Empty Term Codes Only** — the safe version: gives a code only to lines that have none, leaving existing codes alone.
@@ -82,7 +82,7 @@ Nothing on this screen pulls terms in — see [How a subcontract gets its conten
 
 ### The terms grid
 
-This is the bill of quantities you are buying, and it behaves exactly as it does on a project contract: every row points at a mandatory **Standard Term** which supplies the unit, the default rate and the accounts the extract will record on; dotted **term codes** form a tree in which only leaf rows carry money and parent rows are zeroed and re-totalled from their children on every save; **Treat As Detail** forces a heading term to behave as a priced line here; **Update Codes** and **Update Empty Term Codes Only** sit above the grid, the second being the safe one.
+This is the bill of quantities you are buying, and it behaves exactly as it does on a project contract: every row points at a mandatory **Standard Term** which supplies the unit, the default rate and the accounts the extract will record on; dotted **term codes** form a tree in which only leaf rows carry money and parent rows are zeroed and re-totalled from their children on every save; **Treat As Detail** forces a heading term to behave as a priced line here; **Update Codes** and **Update Empty Term Codes Only** sit below the grid, the second being the safe one.
 
 ![The terms and conditions page: the priced lines, the conditions, and the instalment schedule](../../../ar/modules/contracting/images/contractor-contracting/contractor-contract-terms-en.png)
 
@@ -101,7 +101,7 @@ Three families of column are worth separating:
 **The cross-references, which exist only on this side.** The **project term code** and its two budget siblings — the estimated and executive budget term codes, each with a remark column. The project term code is not decoration:
 
 ::: warning Every priced line must name the client-contract item it belongs to
-Unless the module configuration says the project term code may be empty in subcontracts, **the save fails on any non-parent line whose project term code is blank**. It is the single most frequently hit validation on this screen, and it exists because almost everything interesting on the cost side is computed by grouping subcontract lines by the client-contract item they deliver.
+Unless **Project Term Code Can Be Empty In Contractor Contracts** is ticked in the contracting configuration, **the save fails on any non-parent line whose project term code is blank**. It is the single most frequently hit validation on this screen, and it exists because almost everything interesting on the cost side is computed by grouping subcontract lines by the client-contract item they deliver.
 :::
 
 **What the system fills.** *Quantity | From Execution*, *Quantity | From Extract*, *Quantity | From Cost Execution*, the actual quantity and actual cost, the purchase-order quantity, and the per-phase measured and certified quantities. You never type them. After the first certificate on CC-0042, line `3.01` still reads 2,000 contracted while its *from extract* quantity reads 800 — which is why this record, and not a report, is where you look to see where the package stands.
@@ -160,9 +160,13 @@ Both are about the relationship between what you sold and what you are sublettin
 
 ## Once an extract exists, the subcontract freezes
 
-As soon as **any** extract has been issued against the subcontract — and unless your configuration explicitly allows editing prices and quantities after extracts — the header's commercial fields, every condition line, and the term lines that have been measured or certified all become read-only.
+Once the subcontract has been committed and **any** extract on it exists — committed or still a draft — every later save is compared with the saved version, unless **Allow Editing Contractor Contract After Making Contractor Contr Extract On It** is ticked in the [contracting configuration](/modules/contracting/contracting-configuration). The fields stay open on screen; it is the save that is refused when it:
 
-Untouched lines stay editable and you can still add new ones. For anything else you raise a [subcontract update](/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md), which is the audited path through the freeze. Note that the update re-commits the contract through its ordinary route, so every rule on this page — including the two checks above — still applies to it.
+- changes a frozen header field — the main contract, the **Record Category**, the project, the customer, the start and end dates, the phases group, or the header discount percentage, discount value and unified lines discount;
+- adds or deletes a term line or a condition line — *There was {0} lines in the table {1}, now there are {2}*;
+- changes, on any term line, the term code, quantity, unit, prices, discounts, standard term, taxes, dimensions and count or a phase slot, or, on any condition line, the condition, value type, value, finished percentage, term code, phase or *Calculated After Previous Conditions* — *Field ({0}) Value changed from {1} to {2} line number {3} in grid ({4})* (*Field ({0}) Value changed from {1} to {2}* for a header field).
+
+Unlike the project contract, the rule covers **every** term line, measured or not. A [subcontract update](/modules/contracting/contractor-contracting/contracting-contractor-contract-updates.md) does not get round it: the update re-commits the contract through its ordinary route, so it is held to the same freeze and to every other rule on this page, including the two checks above.
 
 ## Where to read next
 

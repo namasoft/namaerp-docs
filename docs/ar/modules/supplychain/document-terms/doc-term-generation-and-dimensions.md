@@ -19,7 +19,7 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **الربط مرة واحدة فقط (Relate Only Once)** (`termConfig.relateOnlyOnce`) — يمكن ربط/سحب سطر المستند بناءً عليه داخل مستند واحد فقط من هذا النوع، مما يمنع استهلاك السطر المصدر مرتين.
 
-**منع تعديل السطور بناءً عليه (Prevent Modify From Doc Lines)** (`termConfig.preventModifyFromDocLines`) — يقفل السطور المسحوبة من مستند بناءً عليه فلا يمكن تعديلها.
+**منع تعديل سطور بناءا على (Prevent Modify From Doc Lines)** (`termConfig.preventModifyFromDocLines`) — يقفل السطور المسحوبة من مستند بناءً عليه فلا يمكن تعديلها.
 
 **السماح بالحفظ بدون تفاصيل (Allow Save Without Details)** (`termConfig.allowSaveWithoutDetails`) — يسمح بحفظ المستند بدون أي سطور تفاصيل.
 
@@ -55,9 +55,9 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 **إنشاء يدوي (Manual Generation)** (`termConfig.generationConfigurations.manualGeneration`) — يُشغَّل التوليد يدوياً (عبر إجراء/زر) بدلاً من التلقائي.
 
-**دفتر المستند المُنشأ (Generation Book)** (`termConfig.generationConfigurations.generationBook`) — الدفتر المخصص للمستند المُنشأ.
+**دفتر المستند (Generation Book)** (`termConfig.generationConfigurations.generationBook`) — الدفتر المخصص للمستند المُنشأ.
 
-**توجيه المستند المُنشأ (Generation Term)** (`termConfig.generationConfigurations.generationTerm`) — التوجيه المخصص للمستند المُنشأ.
+**توجيه المستند (Generation Term)** (`termConfig.generationConfigurations.generationTerm`) — التوجيه المخصص للمستند المُنشأ.
 
 **عدم إنشاء المستندات تلقائياً إذا تم إضافة مستندات يدوية (Do Not Generate Documents Automatically If Manual Documents Are Found)** (`termConfig.generationConfigurations.doNotGenDocsIfManualDocsFound`) — يمنع التوليد التلقائي عند وجود مستند لاحق مُنشأ يدوياً بالفعل.
 
@@ -69,29 +69,29 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ### توليد التكلفة الإضافية (Additional Cost)
 
-**إنشاء مستند تكلفة إضافية للاستلام بأصناف الخدمة (Create Receipt Additional Cost With Service Items)** (`termConfig.createReceiptAdditionalCostWithServiceItems`) — عند التوليد، يُنشئ مستند تكلفة إضافية للاستلام من أصناف الخدمة في الفاتورة (فاتورة الشراء).
+**إنشاء سند تكاليف استلام إضافية بالأصناف الخدمية (Create Receipt Additional Cost With Service Items)** (`termConfig.createReceiptAdditionalCostWithServiceItems`) — عند التوليد، يُنشئ مستند تكلفة إضافية للاستلام من أصناف الخدمة في الفاتورة (فاتورة الشراء).
 
-**دفتر مستند التكلفة الإضافية (Additional Cost Document Book)** (`termConfig.additionalCostDocBook`) — دفتر مستند التكلفة الإضافية المُنشأ (فاتورة الشراء، التجميع).
+**دفتر سند التكاليف الإضافية (Additional Cost Document Book)** (`termConfig.additionalCostDocBook`) — دفتر مستند التكلفة الإضافية المُنشأ (فاتورة الشراء، التجميع).
 
-**توجيه مستند التكلفة الإضافية (Additional Cost Document Term)** (`termConfig.additionalCostDocTerm`) — توجيه مستند التكلفة الإضافية المُنشأ (فاتورة الشراء، التجميع).
+**توجيه سند التكاليف الإضافية (Additional Cost Document Term)** (`termConfig.additionalCostDocTerm`) — توجيه مستند التكلفة الإضافية المُنشأ (فاتورة الشراء، التجميع).
 
 ### توليد الاستبدال / المبيعات (Replacement / Sales)
 
-**دفتر استلام المُنشأ (Receipt Generation Book)** (`termConfig.receiptGenerationBook`) — دفتر مستند الاستلام المخزني المُنشأ بواسطة الاستبدال (استبدال المبيعات / طلب الاستبدال).
+**دفتر مستند التوريد (Receipt Generation Book)** (`termConfig.receiptGenerationBook`) — دفتر مستند الاستلام المخزني المُنشأ بواسطة الاستبدال (استبدال المبيعات / طلب الاستبدال).
 
-**توجيه استلام المُنشأ (Receipt Generation Term)** (`termConfig.receiptGenerationTerm`) — توجيه ذلك الاستلام المُنشأ.
+**توجيه مستند التوريد (Receipt Generation Term)** (`termConfig.receiptGenerationTerm`) — توجيه ذلك الاستلام المُنشأ.
 
 **دفتر فاتورة المبيعات (Sales Invoice Book)** (`termConfig.salesInvoiceBook`) — دفتر فاتورة المبيعات المُنشأة (استبدال المبيعات، تسليم الأمر).
 
 **توجيه فاتورة المبيعات (Sales Invoice Term)** (`termConfig.salesInvoiceTerm`) — توجيه فاتورة المبيعات المُنشأة.
 
-**دفتر مرتجع المبيعات (Sales Return Book)** (`termConfig.salesReturnBook`) — دفتر مرتجع المبيعات المُنشأ (استبدال المبيعات).
+**دفتر مردود مبيعات (Sales Return Book)** (`termConfig.salesReturnBook`) — دفتر مرتجع المبيعات المُنشأ (استبدال المبيعات).
 
-**توجيه مرتجع المبيعات (Sales Return Term)** (`termConfig.salesReturnTerm`) — توجيه مرتجع المبيعات المُنشأ.
+**توجيه مردود مبيعات (Sales Return Term)** (`termConfig.salesReturnTerm`) — توجيه مرتجع المبيعات المُنشأ.
 
-**أنواع المستندات المُنشأة من مستند الاستبدال (Generated Document Types From Sales Replacement Document)** (`termConfig.generatedDocsType`) — يحدد أي أنواع مستندات ينتجها الاستبدال (تركيبة مرتجع / فاتورة / استلام).
+**نوع السندات المنشأة من سند استبدال المبيعات (Generated Document Types From Sales Replacement Document)** (`termConfig.generatedDocsType`) — يحدد أي أنواع مستندات ينتجها الاستبدال (تركيبة مرتجع / فاتورة / استلام).
 
-**طريقة ترميز كوبونات المبيعات (Sales Coupons Coding Method)** (`termConfig.salesCouponsCodingMethod`) — طريقة الترميز المستخدمة عند توليد كوبونات المبيعات من الأمر (أمر بيع الكوبونات).
+**طريقة تكويد قسائم البيع (Sales Coupons Coding Method)** (`termConfig.salesCouponsCodingMethod`) — طريقة الترميز المستخدمة عند توليد كوبونات المبيعات من الأمر (أمر بيع الكوبونات).
 
 ### توليد توقع الشراء (Purchase Forecast)
 
@@ -117,30 +117,30 @@ menu: الأساسيات ← الإعدادات ← توجيه مستند
 
 ### تأريخ وتقسيم توريد فاتورة الشراء (Purchase-Invoice Receipt Dating & Splitting)
 
-تظهر هذه الحقول على توجيه **فاتورة الشراء** وتهذّب سندات التوريد التي تولّدها الفاتورة من سطورها.
+تظهر هذه الحقول على توجيه **فاتورة الشراء** وتهذّب سندات التوريد التي تولّدها الفاتورة من سطورها. وتشرح [صفحة طلب التطوير نفسها](/ar/modules/supplychain/development-requests/stock-receipt-for-unsatisfied-order-quantities) متى تستعملها.
 
-**التاريخ الفعلي للتوريد المنشأ هو التاريخ الفعلي لمستند بناءا علي (Use From Document Value Date For Receipt)** (`termConfig.useFromDocValueDateForReceipt`) — يأخذ سند التوريد المُنشأ تاريخه الفعلي من الأمر الذي بُنيت عليه الفاتورة (مستند "بناءً على")، بدلاً من وراثة التاريخ الفعلي للفاتورة نفسها.
+**التاريخ الفعلي للتوريد المنشأ هو التاريخ الفعلي لمستند بناءً على (Use From Document Value Date For Receipt)** (`termConfig.useFromDocValueDateForReceipt`) — يأخذ سند التوريد المُنشأ التاريخ الفعلي لمستند "بناءً على" في الفاتورة — أو، إن لم يكن لها، للمستند المصدر للسطر — بدلاً من وراثة التاريخ الفعلي للفاتورة نفسها.
 
 **إنشاء سند توريد مخزني لكل سند بالحقل (تم النسخ من سند) (Generate Receipt Document For Each Lines Origin Document)** (`termConfig.genReceiptDocsForLinesOriginDocs`) — يجمّع سندات التوريد المُنشأة حسب المستند المصدر لكل سطر (الأمر الذي نُسخ منه السطر) إضافةً إلى المخزن، فيحصل كل أمر مصدر على سند توريده الخاص بدلاً من سند واحد مجمّع لكل مخزن.
 
 ## الإنشاء التلقائي مع الحفظ (Auto-Generate With Save)
 
-تظهر هذه المجموعة فقط لمستندات **BasicSCDocument**. وهي عملية توليد غير متزامنة (حفظ مؤجل) يقودها إجراء على حقل إدخال — مختلفة عن مجموعة التوليد عند الاعتماد أعلاه. فبدلاً من التوليد عند كل حفظ، يمكنها إنشاء أو تحديث مستند مرتبط في الخلفية عند تشغيل الإجراء التالي لحقل معيّن.
+تظهر هذه المجموعة فقط لمستندات سلاسل الإمداد. وهي عملية توليد غير متزامنة (حفظ مؤجل) يقودها إجراء على حقل إدخال — مختلفة عن مجموعة التوليد عند الاعتماد أعلاه. فبدلاً من التوليد عند كل حفظ، يمكنها إنشاء أو تحديث مستند مرتبط في الخلفية عند تشغيل الإجراء التالي لحقل معيّن.
 
 **إنشاء المستند مع الزر وليس الحفظ (Generate Document With Button Not Save)** (`termConfig.generateDocWithActionNotSave`) — يُنشأ المستند التلقائي عبر زر/إجراء صريح بدلاً من كل حفظ.
 
-**حفظ أو تحديث المستند المُنشأ بشكل غير متزامن مع إجراء الإدخال (Generate Or Update Auto Generated Document Asynchronous With Input Action)** (`termConfig.generateOrUpdateDocAsyncWithAction`) — يُنشئ أو يحدّث المستند المرتبط بشكل غير متزامن (حفظ مؤجل) عند تشغيل إجراء حقل الإدخال.
+**حفظ أو تحديث المستند المُنشأ مع الحفظ مع الإدخال في الخلفية (حفظ مؤجل) (Generate Or Update Auto Generated Document Asynchronous With Input Action)** (`termConfig.generateOrUpdateDocAsyncWithAction`) — يُنشئ أو يحدّث المستند المرتبط بشكل غير متزامن (حفظ مؤجل) عند تشغيل إجراء حقل الإدخال.
 
 **حقل مرجع المستند المُنشأ (Automatic Generated Document Reference Field)** (`termConfig.autoGeneratedDocReferenceField`) — الحقل على هذا المستند الذي يخزّن مرجع الربط بالمستند المُنشأ تلقائياً.
 
 **تشغيل الحفظ المؤجل مع الحقل (Async Save With Field)** (`termConfig.asyncWithActionFieldId`) — حقل الإدخال الذي يُشغّل إجراؤه التالي التوليد المؤجل غير المتزامن.
 
-**نوع المستند المُنشأ تلقائياً (Automatic Generated Type)** (`termConfig.autoGeneratedType`) — نوع كيان المستند المُنشأ تلقائياً.
+**نوع المستند المُنشأ مع الحفظ (Automatic Generated Type)** (`termConfig.autoGeneratedType`) — نوع كيان المستند المُنشأ تلقائياً.
 
-**دفتر المستند المُنشأ تلقائياً (Automatic Generated Document Book)** (`termConfig.autoGeneratedDocBook`) — دفتر المستند المُنشأ تلقائياً.
+**دفتر المستند المُنشأ مع الحفظ (Automatic Generated Document Book)** (`termConfig.autoGeneratedDocBook`) — دفتر المستند المُنشأ تلقائياً.
 
-**توجيه المستند المُنشأ تلقائياً (Automatic Generated Document Term)** (`termConfig.autoGeneratedDocTerm`) — توجيه المستند المُنشأ تلقائياً.
+**توجيه المستند المُنشأ مع الحفظ (Automatic Generated Document Term)** (`termConfig.autoGeneratedDocTerm`) — توجيه المستند المُنشأ تلقائياً.
 
-**تاريخ الإنشاء دائماً ما يبدأ في الساعة (Creation Date Time Always Start At Hour)** (`termConfig.creationAlwaysDateStartAtHour`) — يقيّد تاريخ ووقت إنشاء المستند المُنشأ بحيث لا يكون وقته من اليوم أبكر من هذه الساعة.
+**تاريخ الإنشاء دائماً ما يبدأ في الساعة (Creation Date Time Always Start At Hour)** (`termConfig.creationAlwaysDateStartAtHour`) — ينطبق على المستند نفسه لا على مستند مُنشأ منه. فعند الحفظ يُنقل تاريخ ووقت إنشاء المستند إلى تاريخه الفعلي، ويُبقى وقته من اليوم غير أبكر من هذه الساعة.
 
-**تاريخ الإنشاء دائماً ما ينتهي عند الساعة (Creation Date Time Always End At Hour)** (`termConfig.creationAlwaysDateEndAtHour`) — يقيّد تاريخ ووقت إنشاء المستند المُنشأ بحيث لا يكون وقته من اليوم أبعد من هذه الساعة.
+**تاريخ الإنشاء دائماً ما ينتهي عند الساعة (Creation Date Time Always End At Hour)** (`termConfig.creationAlwaysDateEndAtHour`) — مثله، مع إبقاء الوقت من اليوم غير متأخر عن هذه الساعة. وإذا مُلئ الحقلان معًا بقي الوقت بين الساعتين. والمستند الذي يأخذ تاريخ إنشائه من مستند "بناءً على" يحتفظ به.

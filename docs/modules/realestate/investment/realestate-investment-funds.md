@@ -59,11 +59,8 @@ each transaction's change to the running balance. A joining transaction stamps t
 full-exit transaction stamps the full-exit date, and the most recently seen main-investor settings
 win.
 
-**Investment Total** on the header is then the sum of the investors' current investments. It is
-displayed, never typed, and it is recalculated whenever any investment document is committed,
-updated or cancelled. Cancel a finance addition and the total drops the moment the cancellation is
-processed — the fund's figure is always derived from documents, so it can never drift away from
-them.
+**Investment Total** on the header is displayed, never typed. The system recalculates it from the
+investor rows whenever an investment document is committed, updated or cancelled.
 
 ## Money in — the Finance Addition
 

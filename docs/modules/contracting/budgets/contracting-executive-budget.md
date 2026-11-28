@@ -15,12 +15,7 @@ You will find it at **Contracting > Master Files > Contracting Executive Budget*
 
 ## What it is, and what it is not
 
-Everything said about the estimated budget's *nature* applies here word for word, and it is worth repeating because it is the part people get wrong:
-
-- It is a **master file**, not a document. No document book, no value date, no fiscal period, **no document term (توجيه)** — and therefore **no accounting effect and no stock movement, ever**. Committing an executive budget moves no money.
-- It lives under the **Master Files** menu group, not under a documents group, even though it behaves like a plan you revise over time.
-- **Neither budget creates the other.** The two are linked by a mutual reference field plus a pair of symmetric copy buttons, and that is the whole relationship. There is no approval step that promotes an estimated budget into an executive one.
-- **A project contract can exist with neither budget**, and an executive budget can exist with no contract. The **Project Contract** (عقد المشروع) field is optional on both sides.
+Everything said about the estimated budget's *nature* applies here word for word: it is a master file with no document term (توجيه), so saving it never has an accounting or a stock effect; neither budget creates the other; and the **Project Contract** (عقد المشروع) link is optional on both. The full explanation is on [Estimated Budgets](/modules/contracting/budgets/contracting-estimated-budget).
 
 ::: tip The practical order of work
 Price the job with an [offer](/modules/contracting/project-contracting/contracting-offers.md) or an [assay](/modules/contracting/project-contracting/contracting-assays.md) → sign the [project contract](/modules/contracting/project-contracting/contracting-project-contract.md) → create the estimated budget and point it at the contract → create the executive budget, point it at the contract *and* at the estimated budget, then press **Collect Estimated Budget Terms** to bring the structure across and refine the numbers. None of those steps is enforced; this is a convention, not a workflow.
@@ -32,7 +27,7 @@ The header is the estimated budget's header: project contract, the counterpart b
 
 The addition is on page 2, and it is important:
 
-**Do Not Edit Saved Submittals** (عدم التعديل في الإعتمادات التي تم إنشاؤها). Tick it and the submittal-generation described below is skipped entirely from then on. It is the switch you use once the client has approved a set of submittals and you do not want a later edit of the budget to touch them.
+**Do Not Edit Saved Submittals** (عدم التعديل في الاعتمادات التي تم إنشاؤها). Tick it and the submittal-generation described below is skipped entirely from then on. It is the switch you use once the client has approved a set of submittals and you do not want a later edit of the budget to touch them.
 
 ## The Terms page
 
@@ -48,7 +43,7 @@ The grid is the bill-of-quantities grid, with the budget-specific columns pointi
 | **Quantity \| From Execution** (الكمية \| من حصر الكميات) | filled by a [budget quantity survey](/modules/contracting/budgets/contracting-budget-execution.md) — physical progress rather than money |
 | **Permitted Percentage** (نسبة السماحية) | how much over-execution this item tolerates; it is what the budget survey's quantity check measures against |
 
-Above the grid: **Collect Estimated Budget Terms** (تجميع بنود الموازنة التقديرية), the **Update Codes** / **Update Empty Term Codes Only** pair, and the four *Convert to contract* buttons.
+Above the grid: **Collect Estimated Budget Terms** (تجميع بنود الموازنة التقديرية) and the four *Convert to contract* buttons. The **Update Codes** / **Update Empty Term Codes Only** pair sits at the bottom of the page, below the last grid.
 
 ::: warning Collect Estimated Budget Terms replaces the grid
 It clones every term line of the paired estimated budget — prices and costs included — into this grid. It is a copy, not a merge. Press it first, then re-code and refine; do not press it after you have done the refining.
@@ -67,17 +62,8 @@ That matters because submittal generation, below, only looks at lines that name 
 Every button on the budget sits on the **Terms** page.
 
 - **Collect Estimated Budget Terms** — replaces the terms grid with a copy of every term line of the paired estimated budget (see the warning above).
-- **Convert Contract** — opens a new, unsaved project contract built from this document's terms and conditions, for you to review and save. The document must be saved first.
-- **Convert Contract With Selected Lines Only** — the same, carrying only the term lines you ticked.
-- **Convert Contractor Contract** and **Convert Contractor Contract With Selected Lines Only** — the same pair, producing a subcontract instead.
-- **Update Codes** — renumbers every term line from scratch by walking the grid top to bottom (`1`, `1.1`, `1.2`, `2` …), following the parent/leaf type of each line. It overwrites codes you typed yourself.
-- **Update Empty Term Codes Only** — the safe version: gives a code only to lines that have none, leaving existing codes alone.
 
-Above the cost grids:
-
-- **Collect Contract Items From Standard Terms** — explodes every term line into its cost ingredients: it reads each line's standard term, scales the term's cost recipe to the line's quantity (allowing for waste and productivity) and routes each row into the Material, Workers, Contractors or Other Expenses grid. It also fills any empty term codes first.
-- **Collect Sub Items Cost** — the reverse: sums those four cost grids by term code and writes the result back onto each term line as its total cost and unit cost.
-- **Create Sales Offer for Selected Items**, **Create Contracting Purchase Order for Selected Items** and **Create Material Issue Order for Selected Items** — each opens a new, unsaved contracting offer, miscellaneous contracting order or project material issue in a pop-up, carrying the rows you ticked in the cost grids. With nothing ticked you are asked to select rows.
+Every other button is one the estimated budget also has, and does the same here: the four **Convert** buttons above the terms grid, the three buttons above the cost grids, and **Update Codes** / **Update Empty Term Codes Only** at the bottom of the page. They are described under [Actions on this screen](/modules/contracting/budgets/contracting-estimated-budget#Actions-on-this-screen) on the estimated budget page.
 
 ## The tower's executive budget
 
@@ -100,7 +86,7 @@ It works like this, at the moment the budget is committed:
 
 1. If **Do Not Edit Saved Submittals** is ticked, nothing happens at all.
 2. Otherwise, generation runs only if the module setting **Create Submittal For Each Line With Item** (إنشاء سند اعتماد عميل للصنف لكل سطر به صنف) is on. With it off, nothing happens either — this is the master switch.
-3. For each term line that **names an item** — lines with no item are skipped — the system finds the submittal it made for that line before, or creates a new one, and copies across the quantity, the unit of measure, the description, the unit price, the unit cost and the term code, with the budget recorded as the submittal's source document.
+3. For each term line that **names an item** — lines with no item are skipped — the system finds the submittal it made for that line before — or, failing that, an existing submittal of this budget for the same item — or creates a new one, and copies across the quantity, the unit of measure, the description, the unit price, the unit cost and the term code, with the budget recorded as the submittal's source document.
 4. The new submittal's document book and document term come from the module settings **Generated Submittal Book** and **Generated Submittal Term**. Set those two before you turn generation on, or there is nothing for the submittal to be filed under.
 5. The submittal's id is written back onto the budget line, into the **Customer Submittal** column, so you can see from the budget which approval belongs to which line.
 
@@ -112,11 +98,11 @@ What happens to a submittal afterwards — who records the quantity and price ap
 
 ## The Related Documents page
 
-The executive budget has a third page, **Related Documents**, that the estimated budget does not. It carries two embedded lists filtered to this budget: the **Customer Submittals** generated from it, and the [**Executive Budget Item Requests**](/modules/contracting/budgets/contracting-budget-item-requests.md) raised against it. It is a convenience view — there is nothing to fill in there — but it is the quickest way to see what a budget has set in motion.
+The executive budget has a third page, **Related Documents**, that the estimated budget does not. It carries two embedded lists filtered to this budget: **Customer Submittal**, the submittals whose From Document is this budget, and [**Executive Budget Item Request**](/modules/contracting/budgets/contracting-budget-item-requests.md), the requests raised against it. It is a convenience view — there is nothing to fill in there — but it is the quickest way to see what a budget has set in motion.
 
 ## What the system checks, and what it does not
 
-The three checks on save are the same as on the estimated budget, and they are all about term codes lining up: the counterpart budget must not already be paired elsewhere; every **Estimated Term Code** must exist in the paired estimated budget (checked both ways); every **Project Term Code** must exist on the linked project contract. The conditions grid and the parent/child term-code tree are validated too.
+The checks on save are the same as on the estimated budget, with **Estimated Term Code** in the place of Executive Term Code. They are listed under [What the system checks when you save](/modules/contracting/budgets/contracting-estimated-budget#What-the-system-checks-when-you-save) on the estimated budget page.
 
 ::: info The executive budget does not lock spending
 Approving a budget here does not stop a single purchase, issue or invoice. The only budget-aware ceiling in the module lives on the documents that *spend*, and only when an option on their document term is ticked. That is explained in full, with the exact option to tick, on [Budget Item Requests](/modules/contracting/budgets/contracting-budget-item-requests.md).

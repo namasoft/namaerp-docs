@@ -23,7 +23,7 @@ There *is* a document called **Cancel Contract Request** (طلب فسخ تعاق
 That makes it genuinely useful as a routing and approval record — the customer's request, captured, with the commission clawback listed on it — as long as everyone understands it is a request and not the reversal.
 
 ::: info Looking for the lease termination?
-There is a second, similarly named document — **Cancel Contract** (انهاء عقد ايجار), in the **Rents** menu — and despite the name it has nothing to do with sales. It terminates a **lease**: it settles the insurance deposit, the unused commission, the water and maintenance charges and the rent already paid, each through its own accounts.
+There is a second, similarly named document — **Cancel Contract** (إنهاء عقد إيجار), in the **Rents** menu — and despite the name it has nothing to do with sales. It terminates a **lease**: it settles the insurance deposit, the unused commission, the water and maintenance charges and the rent already paid, each through its own accounts.
 
 If that is what you came for, it is documented under [renewing and ending a lease](/modules/realestate/rent/realestate-rent-renewal-and-termination.md).
 :::
@@ -42,9 +42,9 @@ Our example: a customer bought villa B-12 for 1,200,000 on a ten-installment pla
 
 **Type** (النوع) is the field that decides everything, and it defaults to *For Another Buyer*.
 
-**For Another Buyer** (لمشتري اخر) is a resale before completion. The unit **stays sold** — it never comes back to the company's stock — and the new buyer simply takes over the seven unpaid installments. This is the common case in a market where units change hands while the building is still going up.
+**For Another Buyer** (لمشتري آخر) is a resale before completion. The unit **stays sold** — it never comes back to the company's stock — and the new buyer simply takes over the seven unpaid installments. This is the common case in a market where units change hands while the building is still going up.
 
-**For Company** (للشركة) brings the unit back. The property's sold flag is cleared and its status returns to *Avaliable* (the spelling on screen), so it can be sold again to somebody else. This is the closest thing the module has to cancelling a sale.
+**For Company** (للشركة) brings the unit back. The property's sold flag is cleared and its status returns to *Available*, so it can be sold again to somebody else. This is the closest thing the module has to cancelling a sale.
 
 In **both** cases the property is stamped as waivered with a pointer to this document, and so is the original contract. That stamp matters: **a waivered contract can no longer be modified.** Any change you need after this point is made on the waiver, not on the contract behind it.
 
@@ -54,7 +54,7 @@ Choosing the property on a waiver seeds nearly the whole screen from the contrac
 
 - the **unpaid** installments of the current contract are copied into the installment grid — the three already paid stay where they belong, on the original contract;
 - **Owner** is set to the contract's buyer, because on this document the outgoing buyer is the party the company is dealing with;
-- the entire price block, the **Original Price**, the installment-construction block, the multiple-construction lines, the other-fees lines and the currency are all copied;
+- the entire price block, the **Original Price**, the installment-construction block, the multiple-construction lines and the currency are all copied;
 - **From Document** is set to the sales or opening sales contract.
 
 A few consequences of that seeding are worth knowing. *Paid With Reservation* is disabled on this screen. The **From Document cannot be changed after the first commit** — *"From document can not be changed from {0} to {1}"* — so if it is wrong, cancel and start again. And unlike a sales contract, the **Buyer is optional**: a *For Company* waiver has no incoming buyer to name.
@@ -88,13 +88,13 @@ The button beside it, **Create Payment Voucher For Waiver Price** (إنشاء س
 
 ## What a waiver books
 
-A waiver produces everything a sales contract produces — the price, the income and advance-income split by installment due date, owner and buyer fees, the maintenance deposit, discounts, penalties, the header discount, the fee lines from their fee types and the commission lines from their commission types. That whole block-by-block list is on the [sales contract page](/modules/realestate/sales/realestate-sales-contract.md) and is not repeated here. The waiver also writes the real-estate system entries, exactly as a real sale does, so the property's status and the sales-transaction views stay consistent.
+A waiver produces what a sales contract produces — the price, the income and advance-income split by installment due date, owner and buyer fees, the maintenance deposit, discounts, penalties, the header discount and the fee lines from their fee types — with one exception: its commission lines book nothing unless the reversal option below is on. That whole block-by-block list is on the [sales contract page](/modules/realestate/sales/realestate-sales-contract.md) and is not repeated here. The waiver also writes the real-estate system entries, exactly as a real sale does, so the property's status and the sales-transaction views stay consistent.
 
 On top of that, two things are specific to a waiver.
 
 **The waiver price gets its own pair of account sides** on the waiver's document term — the page where you set where the waiver charge is booked. The 24,000 charged to the outgoing buyer lands there.
 
-**Commissions can be reversed.** A term option, ***Reverse Commissions Accounting Effects*** (عكس التأثير المحاسبي للعمولات), records every commission line on the waiver with its debit and credit sides **swapped**. This is the counterpart to a fact from the sales contract: commissions are recognised in full when the **contract** commits, out of the commission type's own accounts, and not when the broker is eventually paid. If the sale is undone, that recognition has to come back out, and this switch is what does it.
+**Commissions can be reversed.** A term option, ***Reverse Commissions Accounting Effects*** (عكس التأثير المحاسبي للعمولات), records every commission line on the waiver with its debit and credit sides **swapped**, using the commission type's own accounts; a commission type with either side empty is skipped. This is the counterpart to a fact from the sales contract: commissions are recognised in full when the **contract** commits, out of the commission type's own accounts, and not when the broker is eventually paid. If the sale is undone, that recognition has to come back out, and this switch is what does it.
 
 Which way you want it depends on the type of waiver:
 
@@ -103,7 +103,7 @@ Which way you want it depends on the type of waiver:
 
 Since the option lives on the document term, the clean way to run both is **two terms** — one for each waiver type — rather than one term that has to be edited depending on the case.
 
-The waiver term also carries *Validate Installments Total*, *Force Price List* and the switch that decides whether money paid on the reservation counts as paid against the installments. They behave exactly as they do on the sales contract; see [sales document terms](/modules/realestate/document-terms/realestate-terms-sales.md).
+The waiver term also carries *Validate Remaining And Installments Total Equality*, *Force Price List* and the switch that decides whether money paid on the reservation counts as paid against the installments. They behave exactly as they do on the sales contract; see [sales document terms](/modules/realestate/document-terms/realestate-terms-sales.md).
 
 ## Choosing the route
 

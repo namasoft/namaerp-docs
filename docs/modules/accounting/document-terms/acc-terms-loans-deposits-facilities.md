@@ -68,8 +68,8 @@ The document that amends or cancels an issued loan has a term with one **Effect*
 | Group on screen | Field | What it books |
 |---|---|---|
 | **Cancel Loan Debit / Credit** | `termConfig.cancelLoanDebit`, `termConfig.cancelLoanCredit` | The **Loan Value** typed on the changing document. |
-| **Modification Fees Debit / Credit** | `termConfig.modificationFeesDebit`, `termConfig.modificationFeesCredit` | The sides for the modification fees. |
-| **Modification Fees Tax Debit / Credit** | `termConfig.modificationFeesTaxDebit`, `termConfig.modificationFeesTaxCredit` | The sides for the tax on the modification fees. |
+| **Modification Fees Debit / Credit** | `termConfig.modificationFeesDebit`, `termConfig.modificationFeesCredit` | Required together with the other two pairs (see below). |
+| **Modification Fees Tax Debit / Credit** | `termConfig.modificationFeesTaxDebit`, `termConfig.modificationFeesTaxCredit` | Required together with the other two pairs (see below). |
 
 ::: warning An entry only on cancellation, and only with all six sides
 The term records an entry only when the document's **Cancel Loan** box is ticked. A changing document

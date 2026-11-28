@@ -1,9 +1,9 @@
 # Loans, Deposits and Bank Facilities
 
-What you arrange with your bank beyond an ordinary account: loans you borrow, deposits you place, the credit facility limits that cap both, and the letters of guarantee and letters of credit the bank issues on your behalf. Each family has its own licence.
+What you arrange with your bank beyond an ordinary account: loans you borrow, deposits you place, credit facilities, the letters of guarantee and letters of credit the bank issues on your behalf, and the facility limits that loans, guarantees and letters of credit draw on. Each family has its own licence.
 
 ## Loans, Deposits & Credit Facilities
-`accounting-loans` licence — covers bank loans, fixed deposits and credit facilities together: from request to issue, instalment scheduling, interest calculation and repayment.
+`accounting-loans` licence — covers bank loans, fixed deposits and credit facilities together: from request to issue, instalment scheduling, interest calculation and repayment. The Facility Limit screen is under the `accounting-financial-commitments-regulation` licence.
 
 <LandingGrid>
   <LandingCard icon="💳" title="Bank Loans" link="/modules/accounting/bank-facilities/bank-loans.md" details="Bank loans from request to issue, instalments, interest and repayment." />

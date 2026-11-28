@@ -19,11 +19,11 @@ Everything used to **build** dashboards sits in one menu group, *Administration 
 | **DashBoard Widget** | Administration → DashBoards → DashBoard Widget | One chart, table, card strip, calendar, report or other widget, with its SQL or wizard data source |
 | **Dashboard Widget Wizard** | Administration → DashBoards → Dashboard Widget Wizard | A no-SQL data source that widgets can use instead of a query |
 | **DashBoard** | Administration → DashBoards → DashBoard | The grid that places widgets, or a Tabbed dashboard that holds other dashboards |
-| **Dash Board Group** | Administration → DashBoards → Dash Board Group | A hand-picked set of dashboards, used to put them on the menu |
+| **Dashboard Group** | Administration → DashBoards → Dashboard Group | A hand-picked set of dashboards, used to put them on the menu |
 | **BI Cross Filter** | Administration → DashBoards → BI Cross Filter | A shared filter (branch, date range, customer…) that slices several widgets at once |
 | **BI Period Comparison Config** | Administration → DashBoards → BI Period Comparison Config | The "this period against last period" set-up used by comparison widgets |
 
-How each one is used is in the [BI module guide](./bi-module-guide.md).
+How each one is used is in the [BI module guide](/platform/bi/bi-module-guide).
 
 ![The DashBoards group of the Administration menu](../../ar/platform/bi/images/bi-menu-dashboards-group-en.png)
 
@@ -51,11 +51,11 @@ once on their profile, and override it on the user record only for the exception
 [Menu structure](/platform/menus/menu-structure)):
 
 - an item of type **Dashboard** opens one dashboard;
-- an item of type **Dashboards Group** lists every dashboard in a Dash Board Group as its own entry;
-- an item of type **Auto Dash Boards** lists, as separate sub-menus, every Dash Board Group that has
+- an item of type **Dashboard Group** lists every dashboard in a Dashboard Group as its own entry;
+- an item of type **Auto Dashboards** lists, as separate sub-menus, every Dashboard Group that has
   **Automatically Add To Menu** ticked. The menu that ships with the system already carries one, in a
   root folder named **DashBoards**, so a group with that tick appears there without anyone editing the
-  menu. The steps are in [Dashboard Groups](./bi-module-guide.md#Dashboard-Groups----Putting-Dashboards-on-the-Menu).
+  menu. The steps are in the Dashboard Groups section of the [BI module guide](/platform/bi/bi-module-guide).
 
 **A record's screen.** A Screen Modifier can embed a dashboard on a page of any screen, fed with
 the open record's values (**Page Dashboards**, see
@@ -74,7 +74,7 @@ or a dashboard's layout.
 
 The edit right on **DashBoard Widget** also decides whether an AI assistant connected over MCP may
 read the SQL a widget ran: it sees the SQL only when the user it signs in as may edit dashboard
-widgets (see [Creating Dashboards with AI](./bi-module-guide.md#Creating-Dashboards-with-AI)).
+widgets (see [Creating Dashboards with AI](/platform/bi/bi-module-guide#Creating-Dashboards-with-AI)).
 
 ## Hiding a widget or a tab from some users
 
@@ -104,5 +104,5 @@ allowed to change a widget always see it.
 A View Capability decides whether a user sees a widget at all. It does not change what the widget's
 query returns. When users should see the same chart but only their own branch's figures, bind the
 widget to a branch cross-filter or filter the query on the signed-in user instead; see
-[Cross-Filtering](./bi-module-guide.md#Cross-Filtering).
+[Cross-Filtering](/platform/bi/bi-module-guide#Cross-Filtering).
 :::

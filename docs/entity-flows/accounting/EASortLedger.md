@@ -39,8 +39,8 @@ Same sign → Order preserved
 ## Database Impact
 
 ### Fields Used
-- `credit_local_amount` - Local currency credit amount
-- `debit_local_amount` - Local currency debit amount
+- `creditLocalAmount` - Local currency credit amount
+- `debitLocalAmount` - Local currency debit amount
 
 ### Tables Affected
 - **LedgerTrans** - Final sorted transactions

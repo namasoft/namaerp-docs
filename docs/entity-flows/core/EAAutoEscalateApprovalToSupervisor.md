@@ -49,7 +49,7 @@ Automatically escalates overdue approval cases to the supervisor of the assigned
 ## Configuration Requirements
 
 ### Approval Definition Setup
-- **autoEscalateAfter:** Must specify time period (value + unit)
+- **Automatic Escalate To After Period** (`autoEscalateAfter`): Must specify time period (value + unit). It is counted for each waiting candidate from the time the approval was requested from that candidate
 - **Examples:** "2 Days", "1 Week", "4 Hours"
 
 ### Employee Hierarchy
@@ -60,12 +60,12 @@ Automatically escalates overdue approval cases to the supervisor of the assigned
 
 ```sql
 SELECT ac.id, ac.nearestAutoEscalateDate, ac.state, 
-       ad.autoEscalateAfter_value, ad.autoEscalateAfter_uom
+       ad.autoEscalateAfterValue, ad.autoEscalateAfterUom
 FROM ApprovalCase ac
 INNER JOIN ApprovalDefinition ad ON ac.approvalDefinition_id = ad.id
 WHERE ac.nearestAutoEscalateDate <= GETDATE()
     AND ac.state = 'InProgress'
-    AND ad.autoEscalateAfter_value > 0;
+    AND ad.autoEscalateAfterValue > 0;
 ```
 
 ## Related Actions

@@ -76,11 +76,10 @@ with every user who is trying to save.
 - **End it.** Each row of **Running Reports** has a **Kill Report** link that asks the database to
   stop the query. Nothing is left half-written, because a report only reads.
 - **Stop the double click.** A slow report looks stuck, so the user runs it again, and now two
-  copies compete. **prevent User To Run Same Report Multiple Times** stops that. It can be ticked
+  copies compete. **Prevent User To Run Same Report Multiple Times** stops that. It can be ticked
   in Global Configuration for everyone, or on a single user or security profile. A user who tries again
   while the first run is still going sees
-  *You already run this Report wait until your request proceed*. This message appears in English
-  on Arabic screens too.
+  *You already run this Report wait until your request proceed* — «لقد قمت بتشغيل التقرير بالفعل انتظر حتى يتم معالجة طلبك».
 - **Cap how many reports one user runs at once.** **Max Number To Run Report**, on the user or on
   the security profile, limits how many reports one person can have running together. Past it the
   user sees
@@ -107,7 +106,7 @@ starts at ten in the morning slows everyone from ten in the morning.
   all deferred entity flows, so one long job delays everything behind it. Task queues split them
   into parallel lanes — see [Task Queues](/platform/background-processing/task-queues).
 - **A save that waits for an entity flow.** An entity flow that runs as part of the save makes the
-  user wait for it. Ticking **Run After Committing Document And Affect On DataBase** on the flow
+  user wait for it. Ticking **Run After Committing Document And Affect On Database** on the flow
   moves it after the save, into the background — the same Task Queues page explains what changes
   when you do.
 
@@ -156,13 +155,12 @@ first, and run them outside working hours.
 
 ### Which SQL statements are slow
 
-Nama can keep a list of every SQL statement that took longer than a threshold you choose, set in
-Global Configuration as **Warn About SQL Statements Taking more than (milliseconds)** (an entity flow
-can set its own threshold for the work it runs). The list lives in the server's memory from the last
-restart and is shown by this link, sorted by how often each statement ran, with the slowest time, the
-last time it was seen, the tool that ran it and where in the program it came from. Opening it changes
-nothing; a button under the table sorts it by the slowest time instead, and double-clicking a cell
-opens its full text with a **Copy** button.
+The link below opens the same **View SQL Statements With Excessive Time** list described under
+[What the server is doing right now](#What-the-server-is-doing-right-now). It opens sorted by how
+often each statement ran, and besides the slowest time it shows the last time each statement was
+seen, the tool that ran it and where in the program it came from. An entity flow can set its own
+threshold for the work it runs. Opening it changes nothing; a button under the table sorts it by the
+slowest time instead, and double-clicking a cell opens its full text with a **Copy** button.
 
 <UtilityLinkBuilder
 className="com.namasoft.infra.domainbase.persistence.repos.QueryExecutionLogTracker"/>

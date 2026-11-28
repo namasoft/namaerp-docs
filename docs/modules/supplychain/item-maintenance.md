@@ -18,7 +18,7 @@ The **Item Opening Request** screen (*Inventory → Master Files → Item Openin
 Then the item master team reviews the request and creates the real item from it.
 
 ::: tip The direction may surprise you
-There is no "approve" or "create item" button on the request itself. You go the other way round: create the new **Item**, and on the item card pick the request in the **Opining Request** field. Choosing it copies the whole request across in one step — the basic data, the revisions, the keywords, the per-warehouse rows, the sizes and colours, the customer and supplier codes, the unit conversions, and both the primary and secondary unit grids.
+There is no "approve" or "create item" button on the request itself. You go the other way round: create the new **Item**, and on the item card pick the request in the **Opening Request** field. Choosing it copies the whole request across in one step — the basic data, the revisions, the keywords, the per-warehouse rows, the sizes and colours, the customer and manufacturer item codes, the unit conversions, and both the primary and secondary unit grids. The request's code is copied as the item code too, unless supply chain configuration has **Do Not Copy Code When Convert To Item** ticked.
 
 So the request is a *filled-in draft* that the item master team pulls from, not a document that pushes an item into existence.
 :::
@@ -68,16 +68,16 @@ Above the dimension blocks sit four switches about balances and cost:
 
 - **Include Reserved In Balance** (`includeReservedInBalance`) — reserved quantities are counted when the system checks whether there is enough stock, so stock promised to one order is not offered to the next.
 - **Allow Overdraft In Reservation** (`allowOverdraftInReservation`) — the item may go negative in every document except real stock issues, receipts and transfers; see [Overdraft & Quantity Checking](./configuration/overdraft-and-quantity-checking.md).
-- **Track Cost On Wares** (`trackCostOnWares`) — cost is kept separately per warehouse rather than one cost for the whole company. Like the other tracking switches it cannot be changed once the profile's items have transactions.
+- **Track Cost On Wares** (`trackCostOnWares`) — cost is kept separately per warehouse rather than one cost for the whole company. Like the dimension blocks and the per-dimension tracking below, it cannot be changed once the profile's items have transactions, unless supply chain configuration has **Allow Changing Cost And Quantity Tracking After Item Usage** ticked.
 - **Ignore Cost For Item** (`ignoreCostForItem`) — the cost engine skips these items altogether, so their stock documents carry no cost. Turning it on or off is a critical change that needs the matching permission.
 
 The **Default Item Values** group — **Has Lot** (`hasLot`), **Has Expiry** (`hasExpiry`), **Has Packages** (`hasPackages`), **Purchasable** (`purchasable`), **Sellable** (`sellable`), **Manufacturable** (`manufacturable`), **Returnable** (`returnable`), **Has Size** (`hasSize`), **Has Colors** (`hasColor`), **Has Revisions** (`hasRevisions`), **Has Serial** (`hasSerial`), **Has Two Serials** (`hasTwoSerials`), **Has Measures** (`hasMeasures`), **Has SubItem** (`hasSubItem`), **Has Active Percentage** (`hasActivePercentage`), **Has Inactive Percentage** (`hasInActivePercentage`), **Over Draft Policy** (`overDraftPolicy`), **Type** (`itemType`, required) and **Replaceable** (`replaceable`) — is copied onto the item card the moment the profile is picked in the item's **Configurations** field. They are starting values: the item card can still be changed afterwards.
 
 Three more groups sit below the dimension blocks:
 
-**Quantity and cost by dimension.** **Track Qty On Sector** (`trackQtyOnSector`), **Track Cost On Sector** (`trackCostOnSector`) and their equivalents for Branch (`trackQtyOnBranch`, `trackCostOnBranch`), Department (`trackQtyOnDepartment`, `trackCostOnDepartment`) and Analysis Set (`trackQtyOnAnalysisSet`, `trackCostOnAnalysisSet`) decide whether balances and costs are held separately per organisational dimension, rather than only per warehouse.
+**Quantity and cost by dimension.** **Track Qty On Sector** (`trackQtyOnSector`), **Track Cost On Sector** (`trackCostOnSector`) and their equivalents for Branch (`trackQtyOnBranch`, `trackCostOnBranch`), Department (`trackQtyOnDepartment`, `trackCostOnDepartment`) and Analysis Set (`trackQtyOnAnalysisSet`, `trackCostOnAnalysisSet`) decide whether balances and costs are held separately per organisational dimension, rather than only per warehouse. A cost setting is free to choose only when its quantity setting is *Yes*: when **Track Qty On …** is *No*, *Inherited* or empty, saving sets the matching **Track Cost On …** to the same value.
 
-**Dimensions For Delivery.** A row of **Consider…** switches (`dimensionsForDelivery.considerRevisionId`, `…considerSize`, `…considerColor`, `…considerLotId`, `…considerActivePerc`, `…considerInactivePerc`, `…considerSubItem`, `…considerMeasures`, `…considerBox`, `…considerWarehouse`, `…considerLocator`) — Revision, Size, Colour, Lot, Active and Inactive Percentage, SubItem, Measures, Box, Warehouse, Locator. These decide which details have to match for delivered stock to count against what was ordered. If **Consider Colour** is off, delivering the blue one settles a line that ordered the red one; if it is on, it does not.
+**Dimensions For Delivery.** A row of **Consider…** switches (`dimensionsForDelivery.considerRevisionId`, `…considerSize`, `…considerColor`, `…considerLotId`, `…considerActivePerc`, `…considerInactivePerc`, `…considerSubItem`, `…considerMeasures`, `…considerBox`, `…considerWarehouse`, `…considerLocator`) — Revision, Size, Colour, Lot, Active and Inactive Percentage, SubItem, Measures, Box, Warehouse, Locator. These decide which details have to match for delivered stock to count against what was ordered. If **Consider Color** is off, delivering the blue one settles a line that ordered the red one; if it is on, it does not. A **Consider…** switch is ticked automatically on save whenever its dimension block has **Track Quantity** ticked (Warehouse and Locator have no block and stay as you set them).
 
 **Auto Sales Pricing Info.** **Auto Sales Pricing** (`autoSalesPricingInfo.autoSalesPricing`) with minimum, default and maximum profit percentages (`autoSalesPricingInfo.autoPricingMinProfitPercent`, `…autoPricingDefaultProfitPercent`, `…autoPricingMaxProfitPercent`) for automatic pricing, defined once on the profile rather than per item.
 
@@ -101,9 +101,7 @@ You pick one **Item** in the header, then fill the **Prices Policies** grid with
 
 Each row is qualified by the combination it applies to, so the policy can differ per **Warehouse**, **Locator**, **Lot ID**, **Revision ID**, **Size**, **Colour**, serial, and the organisational dimensions. One document can therefore set one minimum for the main warehouse and a different one for a branch.
 
-Two header fields are easy to overlook and change how the document behaves. **From Date** and **To Date** bound the period the update applies to, and **Priority** decides which update wins when more than one covers the same item and period. A seasonal uplift can be raised in advance, given a date range and a higher priority, and left to take effect on its own.
-
-The **Copy To Item** action writes the document's rows onto the item itself.
+Saving the document changes nothing on the item. The **Copy To Item** action, available once the document is saved, is what applies it: it replaces the item's whole per-dimension grid with the document's rows, so rows the document does not list are removed from the item.
 
 ## Controlling Who May Buy or Supply an Item
 
@@ -121,7 +119,7 @@ Recording links has no effect by itself. The behaviour is controlled from supply
 These are documented on [Items and Master Data Configuration](./configuration/items-and-master-data-configuration.md).
 :::
 
-The most useful thing to know about these screens is what counts as a match, because it is broader than it first appears. When the system decides whether a customer may be offered an item, it accepts a link to the customer **or to that customer's group, customer class, or any of customer classes 1 to 5**. Supplier links behave the same way through the supplier class.
+The most useful thing to know about these screens is what counts as a match, because it is broader than it first appears. When the system decides whether a customer may be offered an item, it accepts a link to the customer **or to that customer's group, customer class, or any of customer classes 1 to 5**. Supplier links behave the same way through the supplier's group and supplier class.
 
 That changes how you should set them up. Linking an item to a class of customers is one line; linking it to every customer in that class is a hundred, and they go stale the moment a new customer joins. Prefer the class.
 
@@ -139,10 +137,10 @@ Six kinds of relation ship:
 |---|---|
 | **Substitute** | An alternative that does the same job |
 | **Cross Sell** | A suggested item to offer alongside |
-| **Supercede** | The item this one has been replaced by |
+| **Supersede** | The item this one has been replaced by |
 | **Added Service** | A service that goes with the item |
 | **Item Accessories** | An accessory belonging to the item |
-| **FreeItem** | An item given away with this one |
+| **Free Item** | An item given away with this one |
 
 Each line in the **Items Relations' Details** grid names the **Item** it applies to and the **Item 2** it points at, along with the **Relations Type** and a quantity. What makes the screen scale is that the left-hand side does not have to be a single item: a line can be matched by **Class 1–10**, by **Item Category 1–5**, by **Item Brand**, or by department, so one line can say "every item of this brand comes with this accessory" rather than repeating itself per item.
 
@@ -156,6 +154,6 @@ The last screen answers a question nobody asks until a warehouse gets big: when 
 
 **Item Storage Allocation** (*Inventory → Master Files → Item Storage Allocation*) holds rules that pair a group of items with a place to keep them. Each line in the **Details** grid picks items by **Item**, **Item Section**, **Class 1–10** or **Item Category 1–5**, and points them at a **Ware location class** and a **Locator**.
 
-Lines can also be qualified by the physical size of what is being stored — **Min length** and **Max length**, minimum and maximum width and height, minimum weight, and a **Capacity**. That lets one rule send small boxes of a product to picking locations and pallets of the same product to bulk storage, without creating two items.
+Lines can also be qualified by the physical size of what is being stored — **Min length** and **Max length**, minimum and maximum width, height and weight, and a **Capacity**, which every line must have. That lets one rule send small boxes of a product to picking locations and pallets of the same product to bulk storage, without creating two items.
 
 Location classes themselves, and the locators the rules point at, are covered in [Warehouses and Locators](./warehouses-and-locators.md).

@@ -26,8 +26,16 @@ This action has no parameters. It uses the AI module configuration settings.
 ## Prerequisites
 
 ### Required AI Module Configuration (System Settings)
-- **Vector Store URI** - Milvus/Zilliz database connection URL
-- **Vector Store Token** - Database authentication token
+- **Vector Store URI (Zilliz or Milvus)** - Milvus/Zilliz database connection URL
+- **Vector Store Token (Zilliz or Milvus)**, or **Vector Store Username** and **Vector Store Password** - Database authentication
+- **Open AI Embedding Key** and **Text Embedding Model** - The vector store counts as configured only when both are filled as well
+
+When any of the URI, the key or the model is empty the flow stops with *AI vector store is not configured*.
+
+## Result
+
+- **Success:** the message *Zilliz cluster ping successful. Found {0} collections.*
+- **Failure:** *Failed to ping Zilliz cluster: {0}*
 
 ## Related Actions
 

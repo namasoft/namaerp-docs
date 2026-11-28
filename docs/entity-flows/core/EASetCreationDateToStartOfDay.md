@@ -39,7 +39,7 @@ Manual execution for date standardization, reporting preparation, or when groupi
 **Full Class Name:** `com.namasoft.infor.domainbase.util.actions.EASetCreationDateToStartOfDay`
 
 **Related Actions:**
-- [EASetCreationDateToEndOfDay](EASetCreationDateToEndOfDay.md) - Similar action for end-of-day adjustment (currently unsupported)
+- [EASetCreationDateToEndOfDay](EASetCreationDateToEndOfDay.md) - The end-of-day counterpart, which is not supported
 
 
 </div>

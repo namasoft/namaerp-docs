@@ -1,7 +1,7 @@
 ---
 description: "Moving stock between warehouses: the one-step Stock Transfer, the two-step issue and receipt transfers, stock transfer requests and aggregated requests, and transfers between companies."
 entities: [StockTransfer, IssueStockTransfer, ReceiptStockTransfer, StockTransferReq, AggrStockTransferReq]
-menu: Inventory → Stock transfer Docs → Stock Transfer
+menu: Inventory → Stock Transfer Docs → Stock Transfer
 ---
 # Moving Stock Between Warehouses
 
@@ -39,7 +39,7 @@ A transfer simultaneously:
 
 It's essentially an issue and a receipt together, bundled into one document. If the transfer fails or is cancelled, both sides are reversed together - you won't find items lost in the middle.
 
-**Cost note**: Items are usually moved at their current cost - no revaluation. An item carries the same cost wherever it is.
+**Cost note**: A transfer does not revalue anything: the items arrive at the cost they left at. When the item's configuration has **Track Cost On Wares** ticked, each warehouse keeps its own average cost, so the arriving quantity is blended into the destination's average; otherwise the item has one cost across warehouses and the transfer leaves it unchanged.
 
 ## The Two-Step Transfer: More Control and Tracking
 
@@ -69,7 +69,7 @@ The **Stock Transfer Request** adds a layer above: requesting the transfer befor
 When transfer requests recur from several branches or for several items, the **Aggregated Stock Transfer Request** (AggrStockTransferReq) consolidates them into a single document that makes planning and execution easier in one batch.
 
 Each of its lines names an item, a from warehouse and a to warehouse. Saving it generates the actual **Stock Transfer
-Requests** in the **Stock transfer Request Book** and **Stock transfer Request Term** set on its own term; with either
+Requests** in the **Stock Transfer Request Book** and **Stock Transfer Request Term** set on its own term; with either
 left empty the save is refused with *You must fill stock transfer request book and term in term {0}* (no Arabic text; it
 shows in English on Arabic screens). The same term decides how the lines are shared out:
 
@@ -98,18 +98,6 @@ This route is for companies that keep their books **in the same currency**. A Sa
 
 - **Add Stock Transfer Req** — asks you to pick another transfer request and appends its **unsatisfied** lines to this one, skipping anything already fulfilled. It needs the from-warehouse, the to-warehouse and the term to be filled in first, and it does nothing if any of them is missing.
 - **Collect Requests** — the bulk version of the same idea, gathering the open requests rather than adding them one at a time.
-
-## Tips for Accurate Transfer Tracking
-
-::: tip Best Practices
-**Transfer only for real movements**: Create transfers only when items physically move, not "virtual" transfers for reporting purposes.
-
-**Consolidate transfers wisely**: If you move 100 items in one batch, one document for quantity 100 is cleaner than 100 documents. But if they move at different times, create separate transfers.
-
-**Track transit time**: In two-step transfers, minimize the time between issue and receipt. Long transit periods signal lost items or a process that needs improvement.
-
-**Handle discrepancies immediately**: When you receive less than was shipped, document the difference and investigate rather than ignoring it.
-:::
 
 ## Frequently Asked Questions
 

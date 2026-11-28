@@ -7,8 +7,9 @@
 ## أين تجد الرمز
 
 - **أجهزة Geidea.** يعرض نما الرمز ومعناه في رسالة الرفض نفسها، مثل *Purchase Transaction refused - 116 - Not Enough Balance*.
-- **أجهزة Neoleap.** يعرض نما *Purchase Transaction refused* بلا رمز. افتح نافذة **Last Transactions** في PGW، فرد الجهاز (السطر الذي يبدأ بـ *Here is the body of neoleap response*) فيه الرمز في `TerminalStatusCode` ونتيجة مختصرة بالإنجليزية مثل `DECLINED`.
+- **أجهزة Neoleap.** تحمل رسالة الرفض في نما المعنى المذكور في جدول رموز Neoleap أدناه، مثل *PIN timeout.*، لكن بلا الرمز نفسه. ولترى الرمز افتح نافذة **Last Transactions** في PGW، فرد الجهاز (السطر الذي يبدأ بـ *Here is the body of neoleap response*) فيه الرمز في `TerminalStatusCode` ونتيجة مختصرة بالإنجليزية مثل `DECLINED`.
 - **InterPay.** يعيد softPOS السبب نصًّا، وتجده في الحقل `message` من الرد في نافذة **Last Transactions** في PGW.
+- **الرمز `BUSY` مع أي جهاز.** لا يترك PGW إلا طلبًا واحدًا يصل إلى الجهاز في الوقت نفسه، فالدفعة أو الاسترجاع الذي يُرسل وطلب آخر ما زال يعمل يرفضه PGW نفسه دون أن يصل إلى الجهاز، فلا يُخصم شيء بسببه. ويذكر السبب الطلب الجاري ووقت بدئه، مثل *Purchase Transaction refused - BUSY - The terminal is still busy with a payment of 1150 since 14:05:12. Finish or cancel it on the terminal and try again. If this continues, restart the PGW app*.
 
 ## رموز Geidea
 

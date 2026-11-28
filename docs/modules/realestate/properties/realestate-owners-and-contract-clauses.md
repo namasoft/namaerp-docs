@@ -105,7 +105,7 @@ record you edit.
 ## Standard Contract Clauses
 
 *Real Estate and Property > Master Files > RE Standard Terms And Conditions*
-(… > الملفات > بنود تعاقد قياسيه)
+(… > الملفات > بنود تعاقد قياسية)
 
 Every sales contract and every lease you issue carries the same twenty paragraphs — payment terms,
 late-payment rules, what the tenant may not do, how disputes are settled. Typing them each time is
@@ -122,7 +122,7 @@ three records, and pick the right one on each contract.
 ### Copy the clauses, or point at them
 
 The record carries one switch, and it decides the whole behaviour: **Do Not Copy Lines To Document**
-(عدم نسخ السطور الي المستند).
+(عدم نسخ السطور إلى المستند).
 
 - **Left off (the default) — the clauses are copied.** Picking the master file on a contract copies
   its clauses straight into the contract's own terms grid. The contract now owns a *snapshot*: edit
@@ -133,8 +133,9 @@ The record carries one switch, and it decides the whole behaviour: **Do Not Copy
   contract that points at it is understood to say. Use this where the clause set is genuinely a
   living policy rather than signed text.
 
-The clause set is picked on the **Terms and conditions** page (البنود) of the document, and it is
-available on the whole contract family: rent offers and their cancellations, sales offers, initial
+The clause set is picked on the document's second page — titled *Terms and conditions*, *Terms And
+Fees* or *Terms And Fees And Expenses* depending on the document — and it is available on the whole
+contract family: rent offers and their cancellations, sales offers, initial
 sales contracts, sales contracts, opening sales contracts, rent contracts and opening rent contracts.
 
 ### The Standard Terms grid — undertakings with a deadline

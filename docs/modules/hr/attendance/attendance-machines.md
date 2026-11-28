@@ -44,7 +44,7 @@ A configuration is identified like any master file — Code, Group, Arabic Name,
 ::: warning The cron expression has six fields
 Nama uses six-field cron syntax — **seconds** first, then minutes, hours, day-of-month, month, day-of-week. `0 5 * * * *` means "at five minutes past every hour". The familiar five-field syntax from Unix (`5 */1 * * *`) is **not** valid here.
 
-Nama checks the expression when you save and refuses an invalid one with *"Invalid cron expression: … "*. If an invalid expression somehow reaches the agent, the agent quietly falls back to running every twelve hours — so a collection that seems mysteriously slow is worth checking here first.
+Nama checks the expression when you save and refuses an invalid one with *Invalid cron expression: {0} - Error:{1}*. If an invalid expression somehow reaches the agent, the agent quietly falls back to running every twelve hours — so a collection that seems mysteriously slow is worth checking here first.
 
 The check is skipped entirely when **Only Work Manually** is ticked.
 :::
@@ -119,12 +119,12 @@ You do not have to write either from scratch. The **Add Default Queries** action
 | Action | Writes queries for |
 |---|---|
 | Add Default Queries For Zk Bio Time (إضافة الاستعلامات الافتراضية لـ Zk Bio Time) | The ZkBioTime database's transaction table. |
-| Add Default Queries For Zk (إضافة الاستعلامات الافتراضية لـ Zk) | ZK's classic check-in/check-out tables — in T-SQL on the SQL Server tab, in Access syntax on the Access tab. |
+| Add Default Queries For ZK (إضافة الاستعلامات الافتراضية لـ Zk) | ZK's classic check-in/check-out tables — in T-SQL on the SQL Server tab, in Access syntax on the Access tab. |
 
 Both actions also populate the mapping grid with a standard set of thirteen lines, so a default configuration is complete in one click.
 
-::: warning The Zk button is the wrong button for the ZkBioTime type
-Pressing **Add Default Queries For Zk** while the connection type is ZkBioTime **clears** both query fields rather than filling them. For that type, use **Add Default Queries For Zk Bio Time**.
+::: warning The ZK button is the wrong button for the ZkBioTime type
+**Add Default Queries For ZK** writes queries only when the connection type is SQLSERVER or ACCESS. Pressed while the type is ZkBioTime or Timetaag, it **clears** both query fields rather than filling them. For ZkBioTime, use **Add Default Queries For Zk Bio Time**.
 :::
 
 ### The mapping grid
@@ -137,7 +137,7 @@ The mapping grid answers one question per line: *which column of my query's resu
 | Column Index (Column Index) | Its position in the result, counting from 1. Takes priority when filled in. | `mappingLines.columnIndex` |
 | Column Alias (Column Alias) | Its name in the result, used when Column Index is left empty. | `mappingLines.columnAlias` |
 
-Give **one** of Column Index or Column Alias for every line; a line with neither is rejected when the record is saved, with both columns reported as required.
+Give **one** of Column Index or Column Alias for every line; on a SQLSERVER or ACCESS configuration a line with neither is rejected when the record is saved, with both columns reported as required.
 
 The available Response Fields are `EmployeeCode`, `firstName`, `lastName`, `department`, `punchTime`, `punchState`, `punchStateDisplay`, `verifyType`, `verifyTypeDisplay`, `gpsLocation`, `areaAlias`, `terminalSN` and `uploadTime`.
 
@@ -177,17 +177,7 @@ The formula in that task is the same little pattern language used for manual fil
 
 ### How the agent knows where to resume
 
-You will never be asked to manage this, but understanding it explains a lot of "why did it fetch that?" questions. Each time the agent finishes a collection it remembers how far it got, and starts from there next time. On a completely fresh install, with nothing remembered yet, it works down a short list:
-
-1. the latest punch time already stored in Nama for this configuration — so reinstalling the agent does not re-send months of history;
-2. failing that, the **Fetching Transaction Start Date** on this record;
-3. failing that, two months ago.
-
-**Fetching Transaction Start Date** therefore only ever matters on a first run against an empty configuration. Setting it later has no effect; to re-collect an old period, use the agent's own *Read For Period* button instead.
-
-A **Timetaag** connection is the exception, because the Timetaag service filters by date rather than by time: whatever start and end moments the agent asks for, it returns every reading whose punch time falls on those calendar dates. Each scheduled collection therefore re-reads the whole of the current day, not only the minutes since the last one. Because Nama discards readings it already holds, this produces no duplicates — though it does mean the agent's own statistics table shows how many readings the day held at the moment of the run, rather than how many were new. Seeing the same number repeat all afternoon is normal, and is not a sign that collection has stalled.
-
-The agent also steps its starting point back by half an hour on every run, and that half hour earns its keep at exactly one moment: just after midnight, when subtracting it puts the start of the window back on the previous date. The previous day is then collected one last time — which is how a punch made just before midnight still reaches Nama when the device uploads it a few minutes into the new day.
+The agent decides where each collection starts, and it takes the latest punch time Nama holds for this configuration ahead of anything else. The full rule, including how a Timetaag connection re-reads the current day, is on [The attcron Attendance Agent](/integration/attcron-agent#Where-the-agent-keeps-its-state). On this record, **Fetching Transaction Start Date** is used only while Nama holds no reading for the configuration and the agent has no stored position; to re-collect an old period, use the agent's own *Read For Period* button.
 
 ### Validation messages
 
@@ -197,7 +187,7 @@ The agent also steps its starting point back by half an hour on every run, and t
 | A required-field error on Database Port, Database Name or SQL Query | These become mandatory as soon as the type is SQLSERVER or ACCESS. |
 | Required-field errors on both Column Index and Column Alias of a mapping row | That row gives neither; supply one of them. |
 | *Cron expression is required when automatic scheduling is enabled* | The expression is empty and **Only Work Manually** is not ticked. |
-| *Invalid cron expression: … - Error: …* | The expression could not be understood. Remember it needs six fields. |
+| *Invalid cron expression: {0} - Error:{1}* | The expression could not be understood. Remember it needs six fields. |
 
 ## Actions on this screen
 
@@ -205,7 +195,7 @@ The attendance machine configuration has three buttons, all of them shortcuts th
 
 - **Create Task Schedule** (main page) — creates the scheduled task that turns collected punches into a Time Attendance document and opens it in a popup, pre-filled. What it fills in, and the two values you must change, are under *From raw readings to a Time Attendance document* above.
 - **Add Default Queries For Zk Bio Time** (ZkBioTime tab) — writes the incremental and the period query for the ZkBioTime database and adds the standard mapping lines.
-- **Add Default Queries For Zk** (SQL Server and Access tabs) — the same for ZK's classic tables, in the syntax of the tab's connection type. See *The two queries* above, including why it is the wrong button for a ZkBioTime connection.
+- **Add Default Queries For ZK** (SQL Server and Access tabs) — the same for ZK's classic tables, in the syntax of the tab's connection type. See *The two queries* above, including why it is the wrong button for a ZkBioTime connection.
 
 ## The manual path: importing an exported file
 

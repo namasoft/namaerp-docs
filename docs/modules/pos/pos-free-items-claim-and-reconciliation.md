@@ -8,17 +8,17 @@ When you have a promotion of the "buy one item and get another for free" type, t
 
 Imagine a supermarket running a promotion "buy a large bottle of oil and get a small bottle free." If the system automatically added the small bottle the moment the cashier scanned the large bottle, a line item would appear in the invoice for something the customer never picked up from the shelf! The correct approach here is for the customer to pick up the small bottle themselves, and the cashier scans its barcode just like any other item — the system then recognizes it and makes it free.
 
-This is exactly what the option **"Do not add free items automatically (claim at scan or reconcile at payment)"** in the POS settings provides.
+This is exactly what the option **"Do Not Auto-Add Free Items (Claim By Scan Or Resolve At Payment)"** in the POS settings provides.
 
 ## Activating the Feature
 
 From the **POS Settings (POS Configuration)** screen, enable the option:
 
-* **Do not add free items automatically (claim at scan or reconcile at payment)**
+* **Do Not Auto-Add Free Items (Claim By Scan Or Resolve At Payment)**
 
 Next to it you will find the complementary option:
 
-* **Free items must be added before payment** — determines whether the cashier can complete payment without fulfilling the free items or not (explained below).
+* **Must Add Item Free Items Before Payment** — determines whether the cashier can complete payment without fulfilling the free items or not (explained below).
 
 ## How Does the System Work After Activation?
 
@@ -65,15 +65,15 @@ When the last owed item is scanned, the window closes on its own and payment car
 
 | Button | Arabic caption | What pressing it does |
 |---|---|---|
-| **Continue Payment** | «استكمال الدفع» | Closes the window and goes on to payment with the free items still owed left off the invoice. Disabled while items are still owed if **Free items must be added before payment** is on (see below). |
+| **Continue Payment** | «استكمال الدفع» | Closes the window and goes on to payment with the free items still owed left off the invoice. Disabled while items are still owed if **Must Add Item Free Items Before Payment** is on (see below). |
 
 ::: tip
-If the cashier scans an item that does not match any pending entitlement, the system rejects it with the message "The scanned item is not part of any pending free offer" — so there is no way to accidentally add unentitled free items.
+If the cashier scans an item that does not match any pending entitlement, the system rejects it with the message *Scanned item is not part of any pending free offer* — «الصنف الممسوح ليس ضمن أي عرض مجاني معلق» — so there is no way to accidentally add unentitled free items.
 :::
 
 ## What If the Customer Does Not Want the Free Item?
 
-This is where the **"Free items must be added before payment"** option comes in:
+This is where the **"Must Add Item Free Items Before Payment"** option comes in:
 
 * **Disabled:** The **Continue Payment** button on the pending items screen remains always available, and the cashier can proceed and complete the invoice without the remaining free items (the customer waived them).
 * **Enabled:** The **Continue Payment** button is disabled until all free items are fulfilled — suitable for businesses that consider the free item an inseparable part of the promotion.

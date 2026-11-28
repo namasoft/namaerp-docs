@@ -88,4 +88,4 @@ For organizations in the Gulf there are additional documents usually gathered un
 
 ## Notes for the administrator
 
-The books used for each type (attendance, vacations, permissions…) and their working criteria are configured from the [Mobile App configuration](./mobile-application-guide.md) screen. You can also **restrict the creation of attendance, vacation and permission documents to the app only**, or allow editing for authorized users only, and customize the **attendance summary** cards shown on the home screen. These screens appear in the menu only if the employee self-service module is licensed for your organization.
+The books used for each type (attendance, vacations, permissions…) and their working criteria are configured from the [Mobile Apps Configurations](/modules/mobile/mobile-apps-configuration) screen. You can also **restrict the creation of attendance, vacation and permission documents to the app only**, or allow editing for authorized users only, and customize the **attendance summary** cards shown on the home screen. These screens appear in the menu only if the employee self-service module is licensed for your organization.

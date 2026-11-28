@@ -33,8 +33,9 @@ What is specific to accounting is the list of reasons a ledger request refuses:
 
 - **The period is closed.** The document's date falls inside a closed accounting period — see
   [Year-end and Period Control](/modules/accounting/ledger-setup/year-end-and-period-control).
-- **A Prevent Accounting Transactions document covers it** — the account, the subsidiary and the
-  date range it names are all blocked while it is committed.
+- **A Prevent Transactions On Accounts Or Subsidiaries record covers it** — while the record is
+  saved and not **Inactive**, each of its lines blocks the account and subsidiary it names (an empty
+  one matches any) within the line's from and to dates and the record's own dimensions.
 - **The account is not ready.** A subsidiary account with no party on the line, or an account whose
   balance nature is protected and would be broken by this entry — see
   [Accounts](/modules/accounting/ledger-setup/accounts).

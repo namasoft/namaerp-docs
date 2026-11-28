@@ -13,6 +13,6 @@ Some documents shouldn't go through without a sign-off — a large purchase orde
 
 <LandingGrid>
   <LandingCard icon="✅" title="Approvals System — Approval Definition Full Guide" link="/platform/approvals/approvals-system.md" details="The complete walkthrough: approval definitions, steps, responsible parties, conditions, and the lifecycle of an approval case." />
-  <LandingCard icon="✉️" title="Sample Approval Email Templates" link="/platform/approvals/sample-approval-email-templates.md" details="Ready-to-use, good-looking email templates with clickable approve, reject, and return buttons you can paste into an approval rule." />
+  <LandingCard icon="✉️" title="Sample Approval Email Templates" link="/platform/approvals/sample-approval-email-templates.md" details="Ready-to-use, good-looking email templates with clickable approve, reject, and return buttons you can paste into an approval definition." />
   <LandingCard icon="🧑‍💼" title="Responsibilities, Special Responsibles and Delegation" link="/platform/approvals/responsibilities-and-delegation.md" details="Route approvals to roles instead of names, find the approver from the document, and hand work to a stand-in while someone is away." />
 </LandingGrid>

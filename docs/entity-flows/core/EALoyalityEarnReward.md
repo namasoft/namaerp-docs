@@ -25,6 +25,16 @@ Loyalty point processing for invoices after completion or approval to award rewa
 4. **Processes points earning/updates** including return deductions and external system communication
 5. **Creates reward entries** in loyalty system with transaction tracking
 
+On an installation with replication enabled, the flow does nothing on a site that is not the head office.
+On a return invoice it reduces the points earned by the invoice it was returned from (its From Document).
+The flow stops with one of these messages:
+
+- *The document {0} is not an invoice* — «المستند {0} ليس بفاتورة» - the record, or the From Document of a return, is not an invoice
+- *Reward config can not be empty* — «لا يمكن ترك إعدادات نقاط المكافأة فارغ» - no reward points config has the code in Parameter 1
+- *Reward points config type must be support eran policy Loyalty Points* — «إعدادات نقاط المكافأة يجب أن تكون من نوع نقاط ولاء مُدعمة لاكتساب النقاط» - the config does not support earning points
+- *Could not find points owner* — «لا يمكن إيجاد مالك النقاط» - the points owner field of the config is empty on the invoice
+- *Points owner {0} does not have a phone number* — «مالك النقاط {0} لا يحتوي على رقم هاتف» - the points owner has no mobile number
+
 ## Parameters
 
 **Parameter 1:** Reward Points Config (Required) - Code of RewardPointsConfig entity defining earning rules (e.g., STANDARD_LOYALTY, VIP_REWARDS, STC_LOYALTY_CONFIG)

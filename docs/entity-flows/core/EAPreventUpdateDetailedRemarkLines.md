@@ -27,12 +27,14 @@ Automatic execution during detailed remark entity save operations to maintain da
 
 ## Parameters
 
-**No Parameters Required** - This action runs automatically without configuration.
+**No Parameters Required** - The flow line needs no parameter.
 
 ## Database Tables Affected
 
-- **AbsDetailedRemark Header** - Restores original header field values from old data
-- **AbsDetailedRemarkLine Details** - Preserves existing lines and appends new lines with audit information
+The flow is meant for the remark screens that have a `details` grid of remark lines, such as **Detailed Remark**, **Remark**, **Meeting Remark** and **Employee Agenda**.
+
+- **Remark header** - Restores original header field values from old data
+- **Remark lines (`details`)** - Puts back existing lines exactly as they were (a changed or deleted line returns to its saved version) and appends new lines with audit information
 - **Employee Reference** - Sets current employee on new lines for user tracking
 
 **Module:** core

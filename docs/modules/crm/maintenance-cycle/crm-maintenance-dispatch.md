@@ -57,7 +57,7 @@ One thing, to each notice listed on it:
 
 | Written onto the notice | From |
 |---|---|
-| Responsible employee (the technician) | The route line's technician |
+| Responsible employee (the technician) | The technician on the notice line — the one filled in from the route line, or whoever you typed over it |
 | Maintenance itinerary | The route the notice was put on |
 | Planned visit date | The plan's date |
 

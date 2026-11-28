@@ -44,13 +44,13 @@ Then the grid, one row per financing option you want to show the customer, and t
 
 The line carries the car, the parties, the money and the result.
 
-**The parties:** the **item** (required), the **car**, the **bank**, the **finance company**, the **insurance company**, the [**insurance programme**](/modules/servicecenter/car-insurance/car-insurance-overview.md) and the **Car Installment Program** (*برنامج تقسيط سيارة*).
+**The parties:** the **item** (required), the **car**, the **bank**, the **finance company**, the **insurance company**, the [**insurance programme**](/modules/servicecenter/car-insurance/car-insurance-overview.md) and the **Car Installment Program** (*برنامج تقسيط سيارة*). When the header carries an item or a car, saving copies them onto every line.
 
-**The inputs you type:** the **Car Price** (*سعر سيارة*), the **Financing Amount** (*قيمة التمويل*), the **Down Payment**, the **Installment Years** (*سنوات التقسيط*), **Other Expenses**, and the various discounts — **Car Price Discount** and its percentage, **Admin Fees Discount** and its percentage, **Insurance Discount Value** and its percentage — and the **Insurance Value**, the premium the insurer quoted.
+**The inputs you type:** the **Car Price** (*سعر سيارة*), the **Financing Amount** (*قيمة التمويل*), the **Down Payment**, the **Installment Years** (*سنوات التقسيط*), **Other Expenses**, the **Insurance Value** (the premium the insurer quoted), and the three discount percentages — **Car Price Discount Percentage** (*نسبة خصم سعر سيارة*), **Administrative Fees Discount Percentage** (*نسبة خصم المصاريف الإدارية*) and **Insurance Discount Percentage** (*نسبة خصم التأمين*).
 
-**The figures the document works out:** **Admin Fees** (*مصاريف إدارية*), taken from the instalment programme's fixed *Admin Fees* amount, **Total Discounts**, **Total**, **Net Value** and — the point of the exercise — the **Monthly Installment Amount** (*قيمة القسط الشهري*).
+**The figures the document works out:** the three discount values — **Car Price Discount**, **Admin Fees Discount** and **Insurance Discount Value** — **Admin Fees** (*مصاريف إدارية*), taken from the instalment programme's fixed *Admin Fees* amount once the line has a programme and a financing amount (zero otherwise), **Total Discounts**, **Total**, **Net Value** and — the point of the exercise — the **Monthly Installment Amount** (*قيمة القسط الشهري*).
 
-The arithmetic around the edges is straightforward: the total is the car price plus admin fees plus other expenses plus the insurance value; each discount percentage is applied to its own base; the net value is the total less the discounts.
+The arithmetic around the edges is straightforward: the total is the car price plus admin fees plus other expenses plus the insurance value; each discount value is its percentage applied to its own base (car price, admin fees, insurance value); the net value is the total less the discounts. Saving recalculates every one of these figures, so a discount value typed without its percentage is reset to zero on save.
 
 ## How the monthly instalment is worked out
 

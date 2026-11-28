@@ -8,7 +8,7 @@ menu: Real Estate and Property → Rents → Cancel Contract
 Every lease ends. Most of them end by being renewed, some of them end early because the tenant
 leaves, and the two cases are handled by two different buttons on the
 [rent contract](/modules/realestate/rent/realestate-rent-contract.md) screen — **Extend Contract**
-(تمديد عقد الايجار) and **Cancel Rent Contract** (انهاء العقد). Neither of them edits the contract
+(تمديد عقد الإيجار) and **Cancel Rent Contract** (إنهاء العقد). Neither of them edits the contract
 you are standing on. Nama's model is that a lease term is a document: renewing produces a **new**
 contract for the new term, and ending produces a **settlement document** that works out what the
 tenant gets back.
@@ -65,11 +65,12 @@ is being closed in the same breath.
 A few rules worth knowing before you renew:
 
 - **A cancelled lease cannot be extended.** Once a termination document has closed a contract, the
-  Extend button refuses it; renew from the live contract, not from a dead one.
-- **The auto-cancel flag cannot be changed after the first save**, and while it is on you cannot
-  change the estate on the contract.
-- The extension needs something to cancel: if the estate has no previous contract at all, the commit
-  fails rather than silently going ahead.
+  Extend button refuses it with *Cancelled Contracts Can Not Be Extended*; renew from the live
+  contract, not from a dead one.
+- **The auto-cancel flag has its own rules once the new contract has been committed** — it cannot be
+  changed, the estate cannot be changed while it is on, and a previous contract must exist. They are
+  listed with their messages in
+  [The Rent Contract](/modules/realestate/rent/realestate-rent-contract#The-validations-you-will-actually-hit).
 - The new contract's schedule is a *shift* of the old one, not a fresh calculation. If the rent has
   changed for the new term, adjust the values and press
   [Create Rents](/modules/realestate/rent/realestate-rent-schedule.md) — remembering that the button
@@ -77,7 +78,7 @@ A few rules worth knowing before you renew:
 
 ## Ending a lease: the termination document
 
-The **Cancel Contract** document (انهاء عقد ايجار), reached from
+The **Cancel Contract** document (إنهاء عقد إيجار), reached from
 `Real Estate and Property > Rents > Cancel Contract` or from the **Cancel Rent Contract** button on
 the lease, is the settlement. It is not an "undo": the lease happened, rent was earned and money
 changed hands, and this document works out the balance between the two parties at the moment the
@@ -103,12 +104,14 @@ was charged, what is being withheld, what is left to hand back.
 - **Insurance.** The deposit taken at the start, plus any top-up taken during an extension, gives the
   total held. Against it you set a withholding — as a percentage or as a value — plus any other
   discounts, and the document shows the net deposit the tenant actually receives.
-- **Commission.** The total agency commission for the lease and the unused part of it.
+- **Commission.** The total agency commission on the lease's commission lines and the part of it
+  still unpaid.
 - **Water expenses** and **maintenance**, each with their own discount percentage and value, total
   and remainder — the tenant does not get back the share of the service costs already consumed.
-- **Rent already paid.** Two figures: the rent that belongs to the current year, and rent that was
-  paid in advance for the next year. Prepaid rent for a year the tenant will not be there is a
-  straightforward refund; the current year's is where an early departure has to be apportioned.
+- **Rent after the termination date.** Two figures, worked out day by day from the lease's rent
+  lines: the part that falls between the termination's value date and the end of the current fiscal
+  year, and the part that falls after the fiscal year ends. Both are measured on the lines' net value
+  unless the companion option described below measures them on what was paid.
 - **The expenses grid**, carrying the contract's non-rent lines, each split between what belongs to
   the current year and what was prepaid for the next one.
 - A **subsidiary** on the header says who the settlement is against — a safe deposit, an employee or
@@ -121,24 +124,26 @@ each of those going out through its own accounts.
 
 ### Early or ordinary
 
-The **End Type** on the header is either **Early** (مبكر) or **Ordinary** (عادي), and a new document
-defaults to *Ordinary*. It is the document's own record of why the lease is ending — a tenant walking
-out mid-term against a lease that simply ran its course — and it is what a report or an entity flow
-would filter on when you want to see how much early-exit withholding a portfolio produced in a year.
+**Reason of canceling contract** (نوع إلغاء العقد) on the header is either **Early** (مبكر) or
+**Ordinary** (عادي), and a new document defaults to *Ordinary*. It records why the lease is ending — a
+tenant walking out mid-term against a lease that simply ran its course — and it also decides whether
+the unpaid-rent check below runs.
 
 ### Terminating a lease with money still owing
 
-By default Nama will not let you close a lease while installments are still unpaid; the arrears have
-to be collected, exempted or otherwise cleared first. The termination term carries
-**Allow Cancel Of Rent Contract With Unpaid Installments**
-(السماح بانهاء عقد الايجار مع وجود اقساط غير مسددة) for the cases where that is not realistic — a
-tenant who has disappeared, a lease being written off. With it on, the termination goes through and
-the outstanding balance is carried by the accounts configured on the term's *Remaining Effects* page.
+On an *Ordinary* termination Nama will not let you close the lease while its rent lines still have a
+remaining amount; the commit is refused with *In Ordinary status, remaining must be zero*, and the
+arrears have to be collected, exempted or otherwise cleared first. An *Early* termination is not
+checked. The termination term carries **Allow Cancel Of Rent Contract With Unpaid Installments**
+(السماح بإنهاء عقد الإيجار مع وجود أقساط غير مسددة) for the ordinary cases where clearing first is not
+realistic — a tenant who has disappeared, a lease being written off. With it on, the termination goes
+through and the outstanding balance is carried by the accounts configured on the term's *Remaining
+Effects* page.
 
 A companion option, **Calculate Remaining Rent Values Based On System Paid Rent**
 (احتساب المتبقي من الإيجار بناءً على الإيجارات المدفوعة نظامياً), changes how the current-year and
-next-year rent figures are derived: with it on they follow what was actually collected through the
-system rather than what the contract's schedule says was due.
+next-year rent figures are derived: with it on they follow what was actually paid on each rent line
+(its paid value plus what collection documents paid) rather than the line's net value.
 
 ### What happens to the accrual ledgers
 
@@ -146,17 +151,15 @@ A lease that ends early usually leaves
 [accrual documents](/modules/realestate/rent/realestate-rent-accrual-ledger.md) standing for periods
 that will now never be earned. Two options on the termination term deal with that:
 
-- **Delete Ldegers Saved As Draft After Saving Cancel Contract**
+- **Delete Ledgers Saved As Draft After Saving Cancel Contract**
   (حذف مسودات القيود عند إنشاء إنهاء العقد) — when the termination is saved, any accrual documents of
   that lease still sitting as **drafts** are deleted, so future accruals do not quietly get committed
   later. This works hand in hand with the contract term's *Save Generated Ledger As Draft*: if
   accruals are committed immediately, there are no drafts to clear.
-- **ReCreate Ledgers After Deleting Cancel Contract**
+- **Recreate Ledgers After Deleting Cancel Contract**
   (إعادة إنشاء القيود مع حذف إنهاء العقد) — if the termination document is later deleted, the
   contract's accrual documents are generated again, so undoing a termination restores the lease's
   accruals rather than leaving a hole.
-
-(The shipped spelling *Ldegers* is reproduced here so you can find the field on screen.)
 
 ### Where the accounting comes from
 

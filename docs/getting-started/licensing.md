@@ -19,8 +19,8 @@ Restoring the database on another server does not carry the licence with it. The
 |---|---|
 | **Modules and sub-modules** | A module that is not licensed has no menu entries and its screens cannot be opened. Module pages on this site open with a *Required licence* box naming the code — for example [CRM](/modules/crm/crm-overview). |
 | **Users signed in at the same time** | The next login is refused until someone logs out. When the licence defines user levels, the count is kept for each level. |
-| **User levels** | A user's **User Level (Licene User Group)** field must name a level the licence contains, and a level can be limited to certain kinds of records — see [User Level](/platform/security/users-and-login#User-Level). |
-| **Mobile-app users** | When the licence has a mobile-user count, only users with **Allow Login From Apps** ticked may sign in from the apps, and no more users than the count may have it ticked. |
+| **User levels** | A user's **User Level (License User Group)** field must name a level the licence contains, and a level can be limited to certain kinds of records — see [User Level](/platform/security/users-and-login#User-Level). |
+| **Mobile-app users** | When the licence has a mobile-user count, only users with **Allow Login from Mobile Apps** ticked may sign in from the apps, and no more users than the count may have it ticked. |
 | **Legal entities** | Active legal entities beyond the licensed count are refused. Inactive and composite legal entities do not count. |
 | **POS machines** | Active POS **Register** records beyond the licensed count are refused. Captain Order sub-registers have a count of their own. Inactive registers do not count. |
 | **Magento sites** | Active Magento sites beyond the licensed count are refused. |
@@ -123,7 +123,7 @@ Work down this list; the first match is almost always the answer.
 6. **Is the user on a menu that has the entry at all?** A user, a security profile or a legal entity can each name a menu of its own, and a custom menu may simply not contain the screen — see [who sees which menu](/platform/menus/menu-visibility).
 7. **May the user open it?** No list-view permission, or a **Menu Allow/Block** line on their [security profile](/platform/security/security-profiles), hides the entry for that person only.
 
-A screen reached but refused on save with *The user {0} level ({1}) does not include the entity type {2}* is a different matter: the screen is visible, and the user's licence level does not cover it.
+A screen reached but refused on save with *The user {0} level ({1}) does not include the entity type {2}* — «المستخدم {0} يتبع المستوى {1} و هو غير مسموح له بحفظ السجلات من النوع {2}» — is a different matter: the screen is visible, and the user's licence level does not cover it.
 
 ## Why can't I see field Y?
 
@@ -144,10 +144,10 @@ Only the support-contract and POS messages have an Arabic translation; the other
 | *Your server needs to be connected to the internet - a lot of time has passed since last licence verification occurred* | A warning on saves: the server has not reached Namasoft's licence servers for about two weeks. | Give the server internet access before the grace period ends. |
 | *Invalid Licence - Your server needs to be connected to the internet - too much time has passed since last licence verification occurred* | The grace period has ended; every request is refused. | Give the server internet access. |
 | *Invalid Licence - No Licence is defined* | The server has no licence yet — typically a new server whose key was never requested. | Request a key from the installer. |
-| *Your licence includes {0} mobile users, but you have defined {1} mobile users* | Saving a user would tick **Allow Login From Apps** on more users than the licence allows. | Untick it on a user who no longer uses the apps, or extend the licence. |
-| *The user {0} is not allowed to login from mobile apps, please contact your administrator to change this setting* | The licence counts mobile users and this user does not have **Allow Login From Apps**. | Tick it on the user, within the licensed count. |
+| *Your licence includes {0} mobile users, but you have defined {1} mobile users* | Saving a user would tick **Allow Login from Mobile Apps** on more users than the licence allows. | Untick it on a user who no longer uses the apps, or extend the licence. |
+| *The user {0} is not allowed to login from mobile apps, please contact your administrator to change this setting* | The licence counts mobile users and this user does not have **Allow Login from Mobile Apps**. | Tick it on the user, within the licensed count. |
 | *The legal entity count is {0} in your licence and you have {1} active entities* | Saving a legal entity would make more active legal entities than the licence allows. | Deactivate one you no longer use, or extend the licence. |
-| *Cannot save, available count of registers is {0}* — «لا يمكن الحفظ , عدد الماكينات لا يمكن ان يتخطي {0}» | Saving this register would make more active POS registers than the licence allows. | Deactivate a register that is no longer used, or extend the licence. |
-| *Cannot save, available count of sub-registers is {0}* — «لا يمكن الحفظ , عدد الماكينات الفرعية الخاصة بكابتن أوردر لا يمكن ان يتخطي {0}» | The same, for Captain Order sub-registers. | The same. |
+| *Cannot save, available count of registers is {0}* — «لا يمكن الحفظ , عدد الماكينات لا يمكن أن يتخطى {0}» | Saving this register would make more active POS registers than the licence allows. | Deactivate a register that is no longer used, or extend the licence. |
+| *Cannot save, available count of sub-registers is {0}* — «لا يمكن الحفظ , عدد الماكينات الفرعية الخاصة بكابتن أوردر لا يمكن أن يتخطى {0}» | The same, for Captain Order sub-registers. | The same. |
 | *Your licence has {0} magento sites, you are trying to create {1} active sites* | Saving this Magento site would exceed the licensed count. | Deactivate a site, or extend the licence. |
-| *Support contract for customer {0} expired on {1}* — «عقد الدعم الفني للعميل {0} انتهي في تاريخ {1}» | A support request was raised after the support contract ended. | Renew the support contract with Namasoft. |
+| *Support contract for customer {0} expired on {1}* — «عقد الدعم الفني للعميل {0} انتهى في تاريخ {1}» | A support request was raised after the support contract ended. | Renew the support contract with Namasoft. |

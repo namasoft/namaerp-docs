@@ -80,11 +80,12 @@ flowchart LR
    you tick. After the invoice, the only way back is a **Car Sales Return**.
 5. **The plates.** A **Car Traffic Letter Request**, built on the order or the invoice, and then the
    **Car Traffic Letter** produce the registration paperwork. Neither creates a journal entry.
-6. **The hand-over.** The **Car Final Delivery** records the hand-over. Its term has no generation book
-   or term, so it moves no stock: the invoice already did.
+6. **The hand-over.** The **Car Final Delivery** records the hand-over. It generates a stock issue only
+   when its term names a **Generation Book** and a **Generation Term**. Here both are left empty, so it
+   moves no stock: the invoice already did.
 
-Every one of these documents writes a status line on the car record, but only where the model's **Car
-Status Configuration** says so. The car's **Statistics** tab shows the whole trail.
+Every one of these documents writes a status line on the car record, but only where the item's
+**Car Status Configurations** record says so. The car's **Statistics** tab shows the whole trail.
 
 ### Servicing a car
 
@@ -118,8 +119,9 @@ flowchart LR
 5. **The invoices.** The **Create Customer Invoice**, **Create Insurance Invoice** and **Create Warranty
    Invoice** buttons on the closed job order each produce a **Sales Invoice** for one payer's share. The
    internal share is never invoiced. The customer pays by **Receipt Voucher** or on the invoice.
-6. **The release.** The **Service Center Gate Pass** is refused until the required invoices exist, and,
-   unless its term allows otherwise, until they are paid. Then the car leaves.
+6. **The release.** Unless its term allows otherwise, the **Service Center Gate Pass** is refused until
+   every payer with a share in the job order (customer, insurance, warranty) has its invoice and that
+   invoice is fully paid. Then the car leaves.
 7. **The follow-up.** Many workshops log a follow-up call or send a satisfaction questionnaire after each
    job. See [CRM Questionnaires](/modules/crm/questionnaires/crm-questionnaires).
 
@@ -132,9 +134,9 @@ flowchart LR
    centres, tasks and services. The model drives labour times, rates and service intervals. See
    [Brands and models](/modules/servicecenter/workshop-setup/servicecenter-brands-and-models) and
    [Work centres](/modules/servicecenter/workshop-setup/servicecenter-work-centers).
-3. **Turn car tracking on.** Remove the Sub Items feature from the prevented features, tick **Has Sub
-   Item** and attach a **Car Status Configuration** to each vehicle item, and add the chassis and engine
-   columns to the purchase screens. All three are needed. See
+3. **Turn car tracking on.** Remove the **Sub Items** feature from the **Unused Features** list, tick
+   **Has SubItem** and attach a **Car Status Configurations** record to each vehicle item, and add the
+   chassis and engine columns to the purchase screens. All three are needed. See
    [The Car Dealership in Nama](/modules/servicecenter/cars-setup/servicecenter-cars-overview).
 4. **Draw the car's lifecycle.** Write the status configuration's updater lines and movement lines
    together, so that every document you use moves the car to a status the movements allow. See
@@ -151,7 +153,7 @@ flowchart LR
 7. **Capacity.** Commit a loading table for each work centre, so that service requests can be booked
    against it. See [Setting Up a Service Center](/modules/servicecenter/servicecenter-getting-started).
 8. **CRM questionnaire templates,** if you survey customers after each job. List the screens that should
-   carry the **Create Questionair** action in the CRM settings. See
+   carry the **Create Questionnaire** action in the CRM settings. See
    [CRM Questionnaires](/modules/crm/questionnaires/crm-questionnaires).
 
 ## Settings and tools most companies use
@@ -174,8 +176,8 @@ flowchart LR
 
 **The receipt moves the stock.** Some dealers bring cars into stock with the **Car Receipt** when they
 physically arrive, and keep the purchase invoice for the money. That works as long as only one of the
-two terms generates. Leave the invoice's generation off, and use **Collect** and **Apply** on the
-invoice's Related Documents tab. See
+two terms generates. Leave the invoice's generation off, and use **Collect** and **Apply Receipts** on the
+invoice's **Related Documents** tab. See
 [Receiving Cars into the Showroom](/modules/servicecenter/car-purchasing/car-receipt).
 
 **Financed sales and insurance.** With `srvcenter-insurance-and-installments`, the sales order carries a
@@ -194,7 +196,7 @@ receipt each have one. See
 [Cancellation Documents](/modules/servicecenter/car-sales/car-cancellation-documents).
 
 **Sales orders instead of invoices.** Workshops that bill through their ordinary sales process tick
-**Generate Sales Orders Not Invoices** on the job order's term. The three buttons then produce sales
+**Generate Sales Orders Not Sales Invoices** on the job order's term. The three buttons then produce sales
 orders. See [Invoicing a Job Order](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing).
 
 **Insurance and warranty work.** When an insurer or a warranty programme pays part of a repair, the

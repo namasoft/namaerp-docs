@@ -27,20 +27,20 @@ Molds are part of the `manufacturing-molds` license, a sub-license of the Manufa
 
 **Code** and **Name1 / Name2** identify the tooling — `MLD-001`, AC Bracket Press Die.
 
-**Item** links the mold to the product it makes, where the relationship is one-to-one. **Type** classifies the tooling, and **Count** is how many of this mold you hold.
+**Item** links the mold to an item, or to an item section or item class, that it serves. **Type** classifies the tooling (**Printing Mold**, **Crease Mold** or **Other**), and **Count** is how many of this mold you hold — set by the documents, not typed: the receipt adds its count and the disposal takes it back to zero.
 
 The value fields are the heart of the screen and they work as a set:
 
-- **Initial Value** is what the mold was worth when it entered service — 180,000 here.
-- **Consumed Value** is how much of that has been used up by production so far. It is not editable, because it is a consequence of the work the mold has done rather than something you assert.
-- **Current value** is what remains.
+- **Initial Value** is what the mold was worth when it entered service — 180,000 here, taken from its receipt.
+- **Consumed Value** is the total of the mold vouchers charged against it so far. It is not editable, because it is a consequence of the work the mold has done rather than something you assert.
+- **Current value** is what remains: the value the receipt brought in, less every mold voucher.
 
-**Cost Per Hour** (45) is the rate at which the mold is consumed as it runs. This is the number that turns tooling from a lump of capital into a per-unit product cost: run the die for two hours on a job and 90 of its value has moved onto that job's cost.
+**Cost Per Hour** (45) is the rate at which the mold is consumed, also taken from the receipt. This is the number that turns tooling from a lump of capital into a product cost: each mold voucher line charges **Cost Per Hour** × the line's **Count**, so a line with a count of 2 moves 90 of the die's value onto that job's cost.
 
-**Mold Status** — `Running` here — is likewise not directly editable. It reflects where the mold is in its life, and it moves as the documents below are raised against it.
+**Mold Status** — `Running` here — is likewise not directly editable. It is **Initial** before the receipt, **Running** once the receipt is saved, and **Disposed** after the disposal.
 
 ::: tip Cost Per Hour is a policy decision, not a measurement
-Nothing in the system can tell you what a die's hourly wear really is. You are choosing how to spread a known capital cost over an estimated life — 180,000 over an expected 4,000 hours gives 45. If the estimate is wrong, product costs are wrong in the same direction for as long as the mold runs, so it is worth revisiting when a mold's actual life turns out different from the plan.
+Nothing in the system can tell you what a die's wear really is. You are choosing how to spread a known capital cost over an estimated life — 180,000 over an expected 4,000 charged units gives 45. If the estimate is wrong, product costs are wrong in the same direction for as long as the mold runs, so it is worth revisiting when a mold's actual life turns out different from the plan.
 :::
 
 **Measures | Length**, **Width** and **Height** record the tooling's physical size, and **Length Formula** / **Width Formula** let dimensions be derived rather than typed where the mold's geometry follows the product's. **Location** is where it is kept.
@@ -57,31 +57,31 @@ Tooling enters service on a **Manufacturing Mold Receipt** (توريد قالب 
 
 The header carries the **Document Code**, **Term**, **Issue Date**, **Value Date** and **Fiscal Period**. Each **Details** row brings one mold into service, and the columns are exactly the value fields from the master file: **Mold**, **Count**, **Initial Value**, **Current value**, **Cost Per Hour** and **Location**.
 
-That repetition is deliberate. The receipt is what *establishes* those figures — the master file displays them, but this document is where they come from and where their audit trail begins. Receiving two dies at 180,000 and 120,000 on one document, as in the example, sets both molds running with their own values and rates.
+That repetition is deliberate. The receipt is what *establishes* those figures — saving it sets the mold's **Initial Value** and **Cost Per Hour**, adds its **Count**, and starts the mold's value at the line's **Current value**. The master file displays them, but this document is where they come from and where their audit trail begins. The mold's own **Location** stays as set on the master file. Receiving two dies at 180,000 and 120,000 on one document, as in the example, sets both molds running with their own values and rates.
 
 ## Mold Voucher
 
-The **Manufacturing Mold Voucher** (استهلاك قالب تصنيع), under **Manufacturing → Manufacturing Molds → Manufacturing Mold Voucher**, records consumption — the hours a mold spent on a job, converted at its cost-per-hour into value moved from the mold onto the production order.
+The **Manufacturing Mold Voucher** (استهلاك قالب تصنيع), under **Manufacturing → Manufacturing Molds → Manufacturing Mold Voucher**, records consumption — each line charges the mold's **Cost Per Hour** × its **Count**, and that value moves from the mold onto the production order.
 
-Much of this happens without a voucher. A [standard operation](/modules/manufacturing/manufacturing-work-centers) can list its molds in the **Molds** grid, with an **Hours Count** and a **Charge Type**, and the consumption is charged as production is recorded. Tick **Specify Hours Count From Operation Execution** on that grid and the hours come from what execution actually reports rather than from a fixed figure.
+Most vouchers are not typed. A [standard operation](/modules/manufacturing/manufacturing-work-centers) can list its molds in the **Molds** grid, and the routing and the production order carry them. Every production execution generates a mold voucher, in the book and term its document term names ([What an execution generates](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery#What-an-execution-generates)), for the order's mold rows whose **Charge Type** is **Automatic**, at the operations the execution covers. Picking a **Production Order** on a voucher entered by hand fills the grid with all of that order's mold rows. Picking a production execution in **From Document** instead fills it with the order's **Manual** mold rows for the operations that execution covered, and the **Manual Molds For Operation In Range** and **Manual Molds For Specific Operations** sections narrow those down the same way as on a [resource voucher](/modules/manufacturing/manufacturing-resource-voucher#Choosing-Which-Operations-to-Charge).
 
-The voucher is for what falls outside that: a mold used on a job whose routing does not list it, or a run where the tooling was engaged far longer than standard.
+The hand-entered voucher is for what falls outside that: rows whose Charge Type is **Manual**, a mold used on a job whose routing does not list it, or a run where the tooling was engaged far longer than standard.
 
 ## Mold Disposal
 
 Eventually a die cracks, wears past tolerance, or the product it makes is discontinued. The **Manufacturing Mold Disposal** (تخريد قالب تصنيع), under **Manufacturing → Manufacturing Molds → Manufacturing Mold Disposal**, takes it out of service and settles whatever value it still carries.
 
 ::: warning A mold with value left is not free to scrap
-Disposing of a mold that still shows a current value writes that remaining value off — it has to go somewhere, and it lands as a loss rather than being spread over future production. That is the honest treatment, but it means an unexpected disposal is a hit to the period rather than a non-event. Where a mold has failed early, this write-off is exactly the number worth showing the person who chose the supplier.
+Disposing of a mold that still shows a current value writes that remaining value off, along with its count — the line's **Remaining Value** is worked out on save from the mold's documents up to the disposal date, and it is recorded on the accounts the disposal's term names rather than being spread over future production. That is the honest treatment, but it means an unexpected disposal is a hit to the period rather than a non-event. Where a mold has failed early, this write-off is exactly the number worth showing the person who chose the supplier.
 :::
 
 ## Mold Location
 
-**Manufacturing Mold Location** (موقع قالب تصنيع) is a small master file listing the places tooling is kept — a store, a rack, a specific machine. Molds reference it, receipts set it, and a factory with two hundred dies across three buildings needs it far more than a factory with three.
+**Manufacturing Mold Location** (موقع قالب تصنيع) is a small master file listing the places tooling is kept — a store, a rack, a specific machine. Molds and receipt lines reference it, and a factory with two hundred dies across three buildings needs it far more than a factory with three.
 
 ## How the Pieces Fit
 
-The cycle is short and it mirrors the life of a physical object. A **receipt** brings a die into service with a value and an hourly rate. **Vouchers** — mostly raised automatically through standard operations — consume that value as the die runs, moving it onto the production orders that used it. The mold's **consumed** and **current** values track the drain. When there is nothing useful left, a **disposal** retires it.
+The cycle is short and it mirrors the life of a physical object. A **receipt** brings a die into service with a value and an hourly rate. **Vouchers** — mostly generated by production executions from the order's mold rows — consume that value as the die runs, moving it onto the production orders that used it. The mold's **consumed** and **current** values track the drain. When there is nothing useful left, a **disposal** retires it.
 
 What you get out of that is the ability to answer a question most factories cannot: not just *what did this job cost in material and labour*, but *what did it cost in tooling*. On products made with expensive dies, that is not a rounding error — it is often the difference between a product that looks profitable and one that is.
 
@@ -92,5 +92,5 @@ What you get out of that is the ability to answer a question most factories cann
 | *The mold {0} already has a mold receipt, can not create another mold receipt for the same mold* — «القالب {0} لديه بالفعل مستند توريد قالب , لا يمكن عمل مستند توريد قالب لنفس القالب» | A second **Mold Receipt** was raised for a mold that is already in service. A die enters service once; what happens afterwards is vouchers and, at the end, a disposal. | If the value or the rate was wrong on the first receipt, correct that receipt instead of adding another. |
 | *The first document for the mold {0} must be a mold receipt, it can not be {1}* — «المستند الأول للقالب {0} يجب أن يكون مستند توريد قالب, لا يمكن أن يكون {1}» | A voucher or a disposal is the earliest document on the mold's history — nothing has brought the die into service with a value yet. The message names the document that came first. | Record the mold receipt, dated before that document, then save again. |
 | *The mold {0} was disposed, can not allow the transaction {1}* — «القالب {0} تم تخريده, لا يمكن السماح بالحركة {1}» | A document dated after the mold's disposal is trying to move it. A retired die takes no further transactions. | Date the document before the disposal if it belongs to the die's working life, or reverse the disposal if the die is genuinely back in use. |
-| *The mold {0} count is {1}, can not allow the transaction {2} which will change it to {3}* — «عدد القالب {0} هو {1} , لايمكن السماح بالحركة {2} لان العدد سيتغير إالي {3}» | Replaying the mold's documents in date order, this one would drive its count below zero — usually because a voucher was inserted before the receipt that supplied that count, or because a receipt was edited downwards after vouchers were issued. | Read the numbers in the message: the count before the transaction, the transaction, and what it would become. Fix the date order or the quantity that is wrong. |
-| *The mold {0} value is {1}, can not allow the transaction {2} which will change it to {3}* — «قيمة القالب {0} هو {1} , لايمكن السماح بالحركة {2} لان القيمة ستتغير إالي {3}» | The same replay on the money side: the consumed value would exceed what the receipt put in, so the die would end up worth less than nothing. | Check the mold's hourly rate and the hours charged against it. A rate that is too high drains the value faster than the die is really wearing out. |
+| *The mold {0} count is {1}, can not allow the transaction {2} which will change it to {3}* — «عدد القالب {0} هو {1} , لا يمكن السماح بالحركة {2} لأن العدد سيتغير إلى {3}» | Replaying the mold's documents in date order, this one would drive its count below zero. The count rises only on the receipt and falls only on the disposal, so this usually means the receipt was edited downwards after a disposal had taken the earlier count. | Read the numbers in the message: the count before the transaction, the transaction, and what it would become. Fix the date order or the quantity that is wrong. |
+| *The mold {0} value is {1}, can not allow the transaction {2} which will change it to {3}* — «قيمة القالب {0} هو {1} , لا يمكن السماح بالحركة {2} لأن القيمة ستتغير إلى {3}» | The same replay on the money side: the consumed value would exceed what the receipt put in, so the die would end up worth less than nothing. | Check the mold's cost per hour and the counts charged against it. A rate that is too high drains the value faster than the die is really wearing out. |

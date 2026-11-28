@@ -48,7 +48,7 @@ The register is where the plan meets the consultant. It has no header fields of 
 
 | Column | What goes in it |
 |---|---|
-| **ITP** | a reference to a saved ITP document. This is the one document-to-document link in the whole quality family |
+| **ITP** | a reference to a saved ITP document. This is the only place where one quality document points at another |
 | **Revision** | the revision letter or number of that submission — *Rev.A*, *Rev.B* |
 | **Description** | what the plan covers, in a phrase |
 | **Type** | your own classification — *Civil*, *MEP*, *Civil+MEP* |

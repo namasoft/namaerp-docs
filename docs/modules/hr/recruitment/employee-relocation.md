@@ -29,7 +29,9 @@ The Legal Entity under New Dimensions must match the employee's current one — 
 Committing an Employee Relocate document does two things at once:
 
 1. It immediately updates the employee's own master record so their branch, department, sector, and analysis set become the New Dimensions.
-2. It looks back through the employee's accounting history for any **balance-sheet account** (not income-statement accounts like expenses or revenue) whose debit and credit don't net to zero under the *old* dimension combination — typically an accrued or provisioned balance carried against that employee — and creates a reallocating journal entry that debits one dimension combination and credits the other, so the balance follows the employee to their new placement instead of being silently split across two locations.
+2. It looks back through the ledger lines recorded against the employee as subsidiary before the document's value date, in the same legal entity, for any **balance-sheet account** (not income-statement accounts like expenses or revenue) whose debit and credit don't net to zero under a dimension combination other than the new one — typically an accrued or provisioned balance carried against that employee — and creates a reallocating journal entry that moves each such balance from its old combination to the New Dimensions, so the balance follows the employee to their new placement instead of being silently split across two locations.
+
+Deleting the document puts the employee's dimensions back to the Current Dimensions it recorded and removes the reallocating entry.
 
 A **Without Accounting Effect** switch on the document term can turn off step 2 for organisations that don't want relocation to touch the ledger at all; step 1 (updating the employee's own record) always happens regardless.
 
@@ -81,14 +83,16 @@ Found at **Human Resources > Main > Work Place Update**, this is a lighter, narr
 
 | Field | Purpose |
 |---|---|
-| Current Work Place / From Date / To Date (header) | Defaults applied to every line that doesn't set its own. |
+| Current Work Place / From Date / To Date (header) | On save, a filled header From Date or To Date overwrites that date on every line; the header Current Work Place fills only the lines whose Work Place is empty. |
 | Employee (per line) | Who is being temporarily reassigned. |
 | Work Place / Previous Work Place (per line) | The new location, and the one it's replacing (captured automatically). |
 | From Date / To Date (per line) | The window this particular line's reassignment covers. |
 
 ::: tip A date-gated effect
-The new work place only takes hold on lines whose From/To window includes the current date at the moment the document is committed. If a line's window starts in the future, resave the document once that date arrives (or use a from-document/scheduling process) to make the reassignment actually stick on the employee's record.
+The new work place only takes hold on lines whose From/To window includes the current date at the moment the document is committed. If a line's window starts in the future, resave the document once that date arrives (or use a from-document/scheduling process) to make the reassignment actually stick on the employee's record. The window only decides whether the change is applied on save: when the To Date passes, the employee's work place is not put back. Record the return with another Work Place Update.
 :::
+
+A line needs at least one of its From Date and To Date, and its From Date cannot be after its To Date; the two refusals are listed under Messages you may see below.
 
 ## Actions on this screen
 
@@ -106,16 +110,18 @@ The new work place only takes hold on lines whose From/To window includes the cu
 
 | Message | Why | What to do |
 |---|---|---|
-| *Can not Relocate Employee To Diffrent Legal Entity {0}* — «لايمكن نقل الموظف الى شركة أخري  {0}» | The **Legal Entity** under New Dimensions differs from the employee's current one; a relocation only moves branch, department, sector and analysis set. | Keep the same legal entity. A genuine move between legal entities is a new employment relationship, not a relocation. |
-| *Can not modify this document another document created after it* — «لايمكن تعديل هذا المستند تم عمل مستد بتاريخ بعده» | Another relocation on or after this document's value date exists for the employee, or their record has already been updated after that date. | Work on the latest document affecting the employee; cancel it first if this earlier one really has to change. |
-| *{0} Has No Job Offer* — «ليس له عرض وظيفى {0}» | An Update Employee Info document names an employee who has no committed job offer at all, so there is no starting package for the change to amend. | Create the employee's job offer first — it is the record the update document amends. |
+| *Can not Relocate Employee To Diffrent Legal Entity {0}* — «لا يمكن نقل الموظف إلى شركة أخرى {0}» | The **Legal Entity** under New Dimensions differs from the employee's current one; a relocation only moves branch, department, sector and analysis set. | Keep the same legal entity. A genuine move between legal entities is a new employment relationship, not a relocation. |
+| *Can not modify this document another document created after it* — «لا يمكن تعديل هذا المستند تم عمل مستند بتاريخ بعده» | Another relocation on or after this document's value date exists for the employee, or their record has already been updated after that date. | Work on the latest document affecting the employee; cancel it first if this earlier one really has to change. |
+| *{0} Has No Job Offer* — «ليس له عرض وظيفي {0}» | An Update Employee Info document names an employee who has no committed job offer at all, so there is no starting package for the change to amend. | Create the employee's job offer first — it is the record the update document amends. |
 | *Value date {0} is before value date {1} of job offer {2}* — «التاريخ الفعلي {0} يسبق التاريخ الفعلي {1} للعرض الوظيفي {2}» | The change is dated before the employee's own job offer takes effect. | Move the value date to a day on or after the job offer's value date. |
-| *Document {0} was created in the same date {1}* — «{1} السند {0} تم إنشاؤه في نفس التاريخ» | Another committed Update Employee Info for this employee already carries the same value date, and HR Configuration's **Allow More Than One Update Employee Info Doc For Same Emp In Same Day** is switched off. | Fold the change into the existing document, use a different value date, or have that configuration option enabled. |
-| *You can not update vacations balance for the employee {0} for type {1} because he has a vacation {2} overlapping with current document value date {3}* — «لا يمكن تحديث رصيد أجازات الموظف {0} من النوع {1} لان له مستند اجازة {2} متداخل مع التاريخ الفعلي {3} للمستند الحالي» | A vacation lines change would restate a balance the employee is already drawing on: an existing leave document straddles this document's value date. Only applies when HR Configuration's **Consider Multiple Update Documents Balance Changes Within Year** is on and balances are not calculated from the start date. | Date the change outside the leave that is already booked, or amend that leave document first. |
+| *Document {0} was created in the same date {1}* — «السند {0} تم إنشاؤه في نفس التاريخ {1}» | Another committed Update Employee Info for this employee already carries the same value date, and HR Configuration's **Allow More Than One Update Employee Info Doc For Same Emp In Same Day** is switched off. | Fold the change into the existing document, use a different value date, or have that configuration option enabled. |
+| *You can not update vacations balance for the employee {0} for type {1} because he has a vacation {2} overlapping with current document value date {3}* — «لا يمكن تحديث رصيد إجازات الموظف {0} من النوع {1} لأن له مستند إجازة {2} متداخل مع التاريخ الفعلي {3} للمستند الحالي» | A vacation lines change would restate a balance the employee is already drawing on: an existing leave document straddles this document's value date. Only applies when HR Configuration's **Consider Multiple Update Documents Balance Changes Within Year** is on and balances are not calculated from the start date. | Date the change outside the leave that is already booked, or amend that leave document first. |
 | *Legal entity can not be PUBLIC* — «لا يمكن أن تكون الشركة عام» | The target information block on an Update Employee Info leaves the **Legal Entity** at the shared *public* value instead of naming a real company. | Pick the employee's own legal entity. |
 | *The employee {0} is repeated* — «الموظف {0} مكرر» | On an Aggregated Update Employee Info the same employee was collected twice into the **Employee Info** grid. | Delete the duplicate line; each employee spawns one update document. |
 | *You can not add the employee {0} to element lines, because he is not found in the employee info lines* — «لا يمكن إضافة الموظف {0} إلى سطور مفردات الراتب، لأنه غير موجود في سطور معلومات الموظف» | A salary-component line on the batch names an employee who is not among the collected employees. | Collect that employee into the Employee Info grid first, or leave the component line's employee empty so it applies to everyone in the batch. |
 | *You can not add the employee {0} to vacation lines, because he is not found in the employee info lines* — «لا يمكن إضافة الموظف {0} إلى سطور الأجازات، لأنه غير موجود في سطور معلومات الموظف» | Same rule on the vacation lines grid. | Add the employee to the batch, or clear the employee on that vacation line. |
+| *From date and to date are empty ,at least one must filled* — «من تاريخ وإلى تاريخ لا يمكن ترك كلاهما فارغا، على الأقل لابد من ملء أحدهما» | A **Work Place Update** line has neither a From Date nor a To Date, and the header does not supply one. | Fill at least one date on the line or on the header. |
+| *From date must be before to date* — «من تاريخ لابد أن يكون قبل إلى تاريخ» | A **Work Place Update** line's From Date is later than its To Date. | Correct the dates on that line (or on the header, which overwrites the lines). |
 | *You must fill update employee info doc book and term in term {0}* — «يجب ملء دفتر وتوجيه سند تحديث بيانات الموظف في التوجيه {0}» | The batch is trying to spawn the individual Update Employee Info documents, but its own document term does not say which book and term to create them with. | Fill the generated document's book and term on the aggregated document's term, then save again. |
 
 ## Related pages

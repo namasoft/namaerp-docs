@@ -61,12 +61,12 @@ Employee {employee.name1} cannot take more than five days of vacation.
 
 - **قوالب التنويهات والموافقات** ورسائل التحقق — الموطن التقليدي لـ Tempo.
 - **التقارير**، عبر دوال `NamaRep` الموصوفة في
-  [مرجع NamaRep](/ar/platform/reports/reports-namarep-reference.md).
+  [مرجع NamaRep](/ar/platform/reports/reports-namarep-reference).
 - **تعديل الشاشات ← تنويهات و اجرائات ← قالب الوصلة** — العمود الذي يحوّل القالب إلى **زر على
   الشاشة**. فما يُخرجه القالب يُفتح بوصفه وصلة، فقد يكون عنوانًا عاديًّا تُستبدل فيه قيم السجل
   (`https://www.google.com/search?q={name2}`)، أو وصلة إلى سجل آخر، أو مُنشئًا يفتح مستندًا جديدًا
   مملوءًا مسبقًا. راجع
-  [إضافة أزرار إلى الشاشة](/ar/platform/screen-modifier/screen-modifier-action-buttons.md).
+  [إضافة أزرار إلى الشاشة](/ar/platform/screen-modifier/screen-modifier-action-buttons).
 
 ---
 
@@ -264,16 +264,16 @@ The user {#firstAuthor.name2} created the document {link($this)}
 
 ### 4. فتح السجل في قائمة أو عرض محدد
 
-يمكنك تخصيص طريقة فتح الرابط بتحديد معاملات إضافية:
+يمكنك تخصيص طريقة فتح الرابط بتحديد معاملات إضافية. `menu` و`view` يحددان القائمة والعرض اللذين يُفتح فيهما السجل. أضف `newwindow="true"` لفتح الرابط في نافذة جديدة، واتركه لفتحه في النافذة نفسها:
 
 ```tempo
-{link(record, menu="MenuCode", newindow="true or false", view="ViewName")}
+{link(record, menu="MenuCode", newwindow="true", view="ViewName")}
 ```
 
 أو بعنوان مخصص:
 
 ```tempo
-{titledlink(record, menu="MenuCode", newindow="true or false", view="ViewName")}
+{titledlink(record, menu="MenuCode", newwindow="true", view="ViewName")}
 Link Content Here
 {endlink}
 ```
@@ -282,13 +282,13 @@ Link Content Here
 فتح سجل موظف في نافذة جديدة عبر قائمة وعرض محددين:
 
 ```tempo
-{link(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
+{link(employee, menu="NewEmp", newwindow="true", view="NewEmpsView")}
 ```
 
 مع عنوان:
 
 ```tempo
-{titledlink(employee, menu="NewEmp", newindow="true", view="NewEmpsView")}
+{titledlink(employee, menu="NewEmp", newwindow="true", view="NewEmpsView")}
 Employee code {code}, Name {name1}
 {endlink}
 ```
@@ -335,7 +335,7 @@ Employee code {code}, Name {name1}
 
 والاستدعاء نفسه يصلح زراً على المستند: ضع `{OpenInNewWindow}` يليه الاستدعاء في **قالب الوصلة** بسطر من صلاحيات الإجراءات في تعديل الشاشات. انظر قسم «زر على المستند» في [تقويم الحجز](/ar/modules/crm/technician-appointments/crm-technician-appointment-calendar).
 
-ولما يحدث حين يُفتح التقويم، انظر [تقويم الحجز](/ar/modules/crm/technician-appointments/crm-technician-appointment-calendar.md).
+ولما يحدث حين يُفتح التقويم، انظر [تقويم الحجز](/ar/modules/crm/technician-appointments/crm-technician-appointment-calendar).
 
 ---
 
@@ -569,7 +569,7 @@ The lines that are below the default sales price:
 
 #### الخصائص الاختيارية
 
-يقبل كل من الروابط الأربعة الخصائص الاختيارية التالية داخل الأقواس:
+يقبل كل رابط من هذه الروابط الخصائص الاختيارية التالية داخل الأقواس:
 
 | الخاصية | الوصف |
 |---------|-------|
@@ -771,7 +771,6 @@ The lines that are below the default sales price:
 
 * بالعربية: `{valueDate.$arDayName}`
 * بالإنجليزية: `{valueDate.$enDayName}`
-* حسب اللغة الحالية: `{valueDate.$dayName}`
 
 ---
 
@@ -925,7 +924,7 @@ The lines that are below the default sales price:
 {translate(orderStatus)}
 ```
 
-يُترجم هذا قيمة `orderStatus` إلى اللغة الأخرى (عربي ↔ إنجليزي).
+يعرض هذا قيمة `orderStatus` بلغة المستخدم الحالي.
 
 ::: tip
 يمكنك أيضًا استخدام `{orderStatus.$english}` أو `{orderStatus.$arabic}` مباشرةً.
@@ -943,7 +942,7 @@ The lines that are below the default sales price:
 {translate("applicationName")}
 ```
 
-يُصيَّر كـ `Nama ERP` أو `Capital Solutions ERP` أو `Exceed ERP` وما إلى ذلك، وفقًا لعلامة الترخيص الحالية.
+يُصيَّر كـ `Nama ERP 7` (و«نما 7» في الواجهة العربية) أو `Capital Solutions ERP` أو `Exceed ERP` وما إلى ذلك، وفقًا لعلامة الترخيص الحالية.
 
 * **عنوان URL للتطبيق** — عنوان الموقع الإلكتروني ذو العلامة التجارية:
 
@@ -951,7 +950,7 @@ The lines that are below the default sales price:
 {translate("appUrl")}
 ```
 
-يُصيَّر كـ `namasoft.com` أو `exceed-erp.com` وما إلى ذلك، وفقًا لعلامة الترخيص الحالية.
+يُصيَّر العنوان كاملًا، مثل `https://www.namasoft.com` أو `https://www.exceed-erp.com`، وفقًا لعلامة الترخيص الحالية.
 
 **مثال:**
 
@@ -1006,7 +1005,7 @@ For more information, visit {translate("appUrl")}.
 {if(code)}Content shown if `code` is not empty{endif}
 ```
 
-* **إذا لم يكن الرقم صفرًا**:
+* **إذا لم يكن الرقم صفرًا**. يُختبر الجزء الصحيح من الرقم فقط، فالقيمة `0.75` تُعد صفرًا:
 
 ```tempo
 {if(money.remaining)}Remaining is {#money.remaining}{endif}
@@ -1023,12 +1022,6 @@ For more information, visit {translate("appUrl")}.
 ```tempo
 {ifnot(code)}Code is missing{endif}
 {if!(code)}Code is missing{endif}
-```
-
-* **إذا كان النص يمثّل رقمًا غير صفري**:
-
-```tempo
-{ifnumber(description1)}
 ```
 
 ---
@@ -1050,10 +1043,12 @@ For more information, visit {translate("appUrl")}.
 
 ### الشروط الخاصة بالأرقام
 
+الشروط ذات القيمتين في الجدول السابق تقارن القيمتين **كنص**، فالشرط `{if<(n1,5)}` يتحقق حين تكون قيمة `n1` هي `10`، لأن النص `10` يسبق النص `5` في الترتيب. لمقارنة الأرقام استخدم صيغ `ifnumber` التالية.
+
 | الصياغة | الوصف |
 | ------- | ----- |
-| `{ifnumber(n)}` | يُصيَّر إذا لم يكن `n` صفرًا |
-| `{ifnumber!(n)}`، `{ifnumbernot(n)}` | يُصيَّر إذا كان `n` صفرًا |
+| `{ifnumber(n)}` | نفس اختبار `{if(n)}` |
+| `{ifnumber!(n)}`، `{ifnumbernot(n)}` | نفس اختبار `{ifnot(n)}` |
 | `{ifnumber=(a,b)}`، `{ifnumberequal(a,b)}` | يُصيَّر إذا تساوت الأرقام |
 | `{ifnumber!=(a,b)}`، `{ifnumbernotequal(a,b)}` | يُصيَّر إذا اختلفت الأرقام |
 | `{ifnumber<(a,b)}`، `{ifnumberless(a,b)}` | يُصيَّر إذا كان `a < b` |
@@ -1070,7 +1065,7 @@ For more information, visit {translate("appUrl")}.
 ```tempo
 {if=(code,"a")}Case A
 {else if=(code,"b")}Case B
-{else if<(n1,5)}Case C
+{else ifnumber<(n1,5)}Case C
 {else}No match found
 {endif}
 ```
@@ -1079,7 +1074,7 @@ For more information, visit {translate("appUrl")}.
 
 * يجب أن يأتي `else` أخيرًا.
 * `endelse` اختياري وغير موصى به.
-* يمكنك إضافة `else` قبل أي شرط `if`.
+* يمكنك إضافة `else` قبل `ifnot` وقبل كل شرط ذي قيمتين (`if=` و`if!=` و`if<` و`if<=` و`if>` و`if>=` وصيغ `ifnumber` منها).
 :::
 
 يتيح هذا الهيكل تحكمًا كاملًا في عرض المحتوى الشرطي ضمن قوالب Tempo.
@@ -1188,11 +1183,10 @@ subject:The employee {name2} was updated by {$user.name2}
 
 ### 2. إضافة المرفقات
 
-استخدم وسمًا أو أكثر من `emailattachment` للحقول أو مسارات الخادم:
+استخدم وسمًا أو أكثر من `emailattachment`، وكل وسم يذكر حقل مرفق:
 
 ```tempo
 {emailattachment(attachmentField)}
-{emailattachment("C:\Path\To\File.pdf")}
 ```
 
 **مثال:**
@@ -1202,12 +1196,6 @@ subject:Attachments of employee {code} - {name1}
 Dear Sir,  
 Please note that the employee {name1} was changed. The email contains all files attached to the employee.  
 {emailattachment(attachment)}{emailattachment(attachment1)}{emailattachment(attachment2)}{emailattachment(attachment3)}{emailattachment(attachment4)}{emailattachment(attachment5)}{emailattachment(mainFile)}
-```
-
-**مثال آخر:**
-
-```tempo
-Attached our catalog {emailattachment("E:\Media\Prochures\catalog.pdf")}
 ```
 
 ::: tip 
@@ -1313,7 +1301,7 @@ order by customerCode
 {description1.$trim}
 ```
 
-* **تجريد المسافات البيضاء الأمامية والخلفية** (يدعم Unicode — يتعامل مع التبويبات، NBSP، إلخ):
+* **تجريد المسافات البيضاء الأمامية والخلفية** (يدعم Unicode — يتعامل مع التبويبات ومسافات Unicode، أما المسافة غير المنقسمة NBSP فتبقى):
 
 ```tempo
 {description1.$strip}
@@ -1408,53 +1396,40 @@ order by customerCode
 {left(code, 3)} → "Nam" if code is "NamaSoft"
 ```
 
-* **استخراج أحرف من اليمين:**
+* **استخراج سلسلة فرعية بموضع البداية والطول.** يبدأ عدّ `start` من 0. اترك `length` لأخذ كل ما بعد البداية حتى النهاية:
 
 ```tempo
-{right(string, length)}
+{substring(string, start, length)}
 ```
 
 **مثال:**
 
 ```tempo
-{right(code, 3)} → "oft" if code is "NamaSoft"
-```
-
-* **استخراج سلسلة فرعية من نطاق محدد:**
-
-```tempo
-{substring(string, startIndex, endIndex)}
-```
-
-**مثال:**
-
-```tempo
-{substring("NamaSoft", 3, 5)} → "maS"
+{substring("NamaSoft", 2, 3)} → "maS"
 ```
 
 ---
 
 ### الحشو (Padding) (قص أو إضافة مسافات)
 
-* **حشو أو قص من اليسار:**
+* **حشو من اليسار** — تُضاف مسافات قبل النص حتى يصير طوله `length` حرفًا:
 
 ```tempo
-{leftpad(length)}YourTextHere{endpad}
+{padleft(length)}YourTextHere{endpad}
 ```
 
-* **حشو أو قص من اليمين:**
+* **حشو أو قص من اليمين** — تُضاف مسافات بعد النص حتى يصير طوله `length` حرفًا، والنص الأطول يُقص إلى أول `length` حرفًا منه:
 
 ```tempo
-{rightpad(length)}YourTextHere{endpad}
+{padright(length)}YourTextHere{endpad}
 ```
 
 **أمثلة:**
 
 ```tempo
-{leftpad(10)}123{endpad}     → "       123"
-{rightpad(10)}123{endpad}    → "123       "
-{leftpad(5)}123456789{endpad}→ "12345"
-{rightpad(5)}123456789{endpad}→ "56789"
+{padleft(10)}123{endpad}     → "       123"
+{padright(10)}123{endpad}    → "123       "
+{padright(5)}123456789{endpad}→ "12345"
 ```
 
 ---
@@ -1741,8 +1716,8 @@ Thanks and Best Regards
     {requestdescription1}optional description that can be viewed in the list view{enddescription1}
     {requestdescription2}Add row number {@rownumber} to use as extra info{enddescription2}
 
-    {requestrelatedtoid1}{id}{endrelatedto1}
-    {requestrelatedtoid2}{customer.id}{endrelatedto2}
+    {requestrelatedtoid1}{id}{endrelatedtoid1}
+    {requestrelatedtoid2}{customer.id}{endrelatedtoid2}
   {endrequest}
 {endloop}
 ```
@@ -1767,7 +1742,7 @@ Thanks and Best Regards
     {paramname}company_name{endparamname}
     {paramvalue}{legalEntity.name2}{endparamvalue}
 
-    {requestbody}
+    {fullbody}
       \{
         "user_whatsapp_number":"{details.ref1.$toReal.contactInfo.mobile}",
         "ordernumber":"{details.ref2.$toReal.code}"
@@ -1790,7 +1765,7 @@ Thanks and Best Regards
 المنشئ عنصر من عناصر Tempo، لا خاصيّة من خواصّ التقارير. فبلوك `{creator(...)}` نفسه يعمل في أي موضع
 يُقيَّم فيه قالب Tempo — ومن ذلك عمود **قالب الوصلة** في تعديل الشاشات، وهو ما يتيح لك وضع زر «أنشئ
 سجلًّا مملوءًا مسبقًا» على الشاشة مباشرة دون المرور بتقرير أصلًا. راجع
-[إضافة أزرار إلى الشاشة](/ar/platform/screen-modifier/screen-modifier-action-buttons.md).
+[إضافة أزرار إلى الشاشة](/ar/platform/screen-modifier/screen-modifier-action-buttons).
 :::
 
 ---
@@ -1798,7 +1773,7 @@ Thanks and Best Regards
 ### صياغة المنشئ الأساسية
 
 ```tempo
-{creator(entity="EntityName", menu="MenuName", title="Link Title", view="ViewName", newwindow="true/false")}
+{creator(entity="EntityName", menu="MenuName", title="Link Title", view="ViewName", newwindow="true")}
   ...field assignments...
 {endcreator}
 ```
@@ -1807,7 +1782,7 @@ Thanks and Best Regards
 * `menu` *(اختياري)*: اسم القائمة المستهدفة (إذا كانت مخصَّصة).
 * `title` *(اختياري)*: العنوان المعروض في رابط المنشئ.
 * `view` *(اختياري)*: اسم عرض الشاشة المخصص.
-* `newwindow` *(اختياري)*: ما إذا كان يُفتح في تبويب جديد.
+* `newwindow` *(اختياري)*: أضف `newwindow="true"` للفتح في تبويب جديد، واتركه للفتح في التبويب نفسه.
 
 **مثال:**
 
@@ -1955,7 +1930,7 @@ more, refresh, homePage, goToRecord
   branchIdOrCode=...,
   analysisSetIdOrCode=...,
   departmentIdOrCode=...,
-  revisionIdCode=...,
+  revisionIdOrCode=...,
   colorCode=...,
   sizeCode=...,
   priceClassifier1IdOrCode=...,
@@ -2052,7 +2027,7 @@ more, refresh, homePage, goToRecord
   branchIdOrCode=...,
   analysisSetIdOrCode=...,
   departmentIdOrCode=...,
-  revisionIdCode=...,
+  revisionIdOrCode=...,
   colorCode=...,
   sizeCode=...,
   priceClassifier1IdOrCode=...,

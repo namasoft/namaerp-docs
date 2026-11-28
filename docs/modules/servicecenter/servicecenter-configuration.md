@@ -49,31 +49,31 @@ Both are worth settling before the first document exists. Prices already written
 | Option (Arabic / English) | Field id | Default | What it does |
 |---|---|---|---|
 | منع إغلاق أمر الشغل في حالة وجود مهام غير منتهية / **Prevent Closing When Unfinished Task** | `value.preventClosingWUnfinishTask` | **On** | Refuses a [job order closing](/modules/servicecenter/job-cycle/servicecenter-job-order-closing.md) while any recorded task is still missing a start or end time. Leave it on unless you have a deliberate reason. |
-| عدم السماح بفتح اكتر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | `value.doNotAllowMultipleOpenedJobOrderOnProduct` | Off | Refuses a second open [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md) for a vehicle that already has one. Useful in a busy shop where the same car can be booked in twice by two advisors. |
+| عدم السماح بفتح أكثر من أمر شغل للمنتج في نفس الوقت / **Do Not Allow Multiple Opened Job Orders On Product At The Same Time** | `value.doNotAllowMultipleOpenedJobOrderOnProduct` | Off | Refuses a second open [job order](/modules/servicecenter/job-cycle/servicecenter-job-order.md) for a vehicle that already has one. Useful in a busy shop where the same car can be booked in twice by two advisors. |
 | الالتزام بأصناف وكميات وأسعار أمر الشغل في الفاتورة / **Force Service Center Order Invoice Quantities and Prices** | `value.forceSrvCOrderInvoiceQtyAndPrices` | Off | Locks the generated invoice to the job order's own items, quantities and prices, so nobody edits the invoice away from the job it came from. |
-| عدم نسخ المخزن من سطور أمر الشغل الى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | `value.doNotCopyWarehouseFromOrderToInvoiceLines` | Off | Stops the warehouse being carried from the job order's lines onto the [generated invoice](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md) lines. Switch it on where invoicing and stock live in different stores. |
+| عدم نسخ المخزن من سطور أمر الشغل إلى الفاتورة / **Do Not Copy Warehouse From Order To Invoice Lines** | `value.doNotCopyWarehouseFromOrderToInvoiceLines` | Off | Stops the warehouse being carried from the job order's lines onto the [generated invoice](/modules/servicecenter/job-cycle/servicecenter-job-order-invoicing.md) lines. Switch it on where invoicing and stock live in different stores. |
 | إظهار الضرائب في أوامر الشغل ومستنداتها / **Show Taxes Grid In Job Order and Other Documents** | `value.showTaxesGridInJobOrderAndOtherDocuments` | Off | A pure layout switch: shows or hides the taxes grid on the job order and its related screens. |
-| إعتبار المخزن و الموقع في جدول قطع الغيار النظامى / **Consider Warehouse And Locator In Material Entries** | `value.considerWarehouseInMaterialEntries` | Off | Makes the system's [spare-parts ledger](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) key on warehouse and locator as well as item, so the same part issued from two stores is tracked separately. |
+| اعتبار المخزن و الموقع في جدول قطع الغيار النظامي / **Consider Warehouse And Locator In Material Entries** | `value.considerWarehouseInMaterialEntries` | Off | Makes the system's [spare-parts ledger](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md) key on warehouse and locator as well as item, so the same part issued from two stores is tracked separately. |
 
 ## The Execution Screen
 
 | Option (Arabic / English) | Field id | Default | What it does |
 |---|---|---|---|
-| عدم نسخ السطور عند إختيار أمر الشغل / **Do Not Copy Details From Job Order** | `value.doNotCopyDetailsFromJobOrder` | Off | When on, picking a job order on the [execution document](/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) does not pre-fill its task and material lines. Useful where technicians clock only part of an order. |
-| لا يمكن التعديل في السطر الذى حالته منتهى / **Can Not Edit Line Status Is Finished** | `value.canNotEditLineStatusIsFinished` | Off | Makes every column of a finished execution line read-only, so a completed clocking cannot be quietly edited afterwards. |
-| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Has Open Task In Job Order Execution** | `value.doNotShowTechniciansWhoHasOpenTaskInJobOrderExecution` | **On** | Filters technicians who already have an unfinished task out of the picker on the execution document. |
+| عدم نسخ السطور عند اختيار أمر الشغل / **Do Not Copy Details From Job Order** | `value.doNotCopyDetailsFromJobOrder` | Off | When on, picking a job order on the [execution document](/modules/servicecenter/workshop-execution/servicecenter-production-execution.md) adds the order to the orders grid but does not pre-fill the job order's task lines, nor the current and next task fields. Useful where technicians clock only part of an order. |
+| لا يمكن التعديل في السطر الذي حالته منتهي / **Can Not Edit Line Status Is Finished** | `value.canNotEditLineStatusIsFinished` | Off | Makes every column of a finished execution line read-only, so a completed clocking cannot be quietly edited afterwards. |
+| لا تظهر الفنيين المفتوح لهم مهمة في مستند تنفيذ أمر شغل / **Do Not Show Technicians Who Have Open Task In Job Order Execution** | `value.doNotShowTechniciansWhoHasOpenTaskInJobOrderExecution` | **On** | Filters technicians who already have an unfinished task out of the picker on the execution document. |
 
 ## Vehicle History
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| أقل عدد من الأيام لحساب متوسط إستهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | `value.minDaysToCalcAvgKMConsump` | The minimum number of days that must have elapsed between two odometer readings before the vehicle's average daily distance is recalculated. It stops a reading taken the morning after the last one from producing a wild average. See [Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
+| أقل عدد من الأيام لحساب متوسط استهلاك الكيلومتر / **Min Days To Calculate Average KM Consumption** | `value.minDaysToCalcAvgKMConsump` | The vehicle's average daily distance is recalculated only when more than this number of days separates the new odometer reading from the one it is compared with; otherwise the old average is kept. It stops a reading taken the morning after the last one from producing a wild average. See [Odometer Readings and Service Intervals](/modules/servicecenter/job-cycle/servicecenter-odometer-and-service-intervals.md). |
 
 ## Cars
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| إعدادات حالة الصنف الفرعي الإفتراضية / **Default SubItem Configuration** | `value.defaultSubItemConfig` | Supplies the status-filter rows that the car picker offers — and only when the **item** has no car status configuration of its own. |
+| إعدادات حالة الصنف الفرعي الافتراضية / **Default SubItem Configuration** | `value.defaultSubItemConfig` | Supplies the status-filter rows that the car picker offers — and only when the **item** has no car status configuration of its own. |
 
 ::: warning What Default SubItem Configuration does not do
 This option is read in exactly one place: the filter list on the car picker. It is commonly misread as a fallback that makes the car lifecycle work for items nobody configured. It is not.
@@ -82,6 +82,15 @@ Both the status engine and automatic car creation read the configuration attache
 
 So: **every vehicle item still needs its own Car Status Configurations record.** Setting a default here changes nothing about statuses or car creation. See [Car Status Configurations](/modules/servicecenter/cars-setup/car-status-configurations.md).
 :::
+
+## Cars Policies
+
+The second group on the screen, **Cars Policies** (*تامين السيارات*), serves the car insurance documents.
+
+| Option (Arabic / English) | Field id | What it does |
+|---|---|---|
+| صنف خدمة الوثيقة / **Policy Service Item** | `value.policyServiceItem` | The service item that a [car sales order](/modules/servicecenter/car-sales/car-sales-order) uses for the insurance policy's line. When the order's document term has **Add Policy Service Item Line With Save** (*إضافة سطر صنف خدمة الوثيقة مع الحفظ*) ticked, saving an order that names a policy adds one line for this item with quantity 1 and the policy value as its unit price, and keeps it in step on every save; the line is removed when the order has no policy or this option is empty. The item must be a service item, or the settings screen refuses to save with *Policy service item {0} must be a service item* — «صنف خدمة الوثيقة {0} يجب أن يكون صنف خدمة». |
+| السماح بحساب قيمة الوثيقة يدوياٌ / **Allow Calculating Policy Value Manually** | `value.allowCalculatePolicyValueManually` | Keeps a policy value typed on the car insurance policy instead of working it out from the programme band. See [The Insurance Policy Record](/modules/servicecenter/car-insurance/car-insurance-policy). |
 
 ## What Is Not Here
 

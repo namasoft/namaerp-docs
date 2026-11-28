@@ -5,7 +5,7 @@ menu: cars → Car Files → Customer Car
 ---
 # The Car File
 
-**السياره / Customer Car** — `سيارات > ملفات السيارات > السياره` — is one physical vehicle. It is a
+**السيارة / Customer Car** — `سيارات > ملفات السيارات > السيارة` — is one physical vehicle. It is a
 master file like a customer or an item, with a code, a group and a name, but almost everything on it
 describes one particular car: this chassis, this engine, this key, this slot in the yard, this pile
 of customs paper.
@@ -29,8 +29,9 @@ is what makes "what did chassis `NWA7R24C26K000318` actually cost us" a question
 
 ## Five tabs
 
-The Basic Information block and the Dimensions block are repeated at the top of **every** tab. That
-is a layout quirk, not five different copies of the data — it is the same fields shown again.
+The Basic Information block is repeated at the top of **every** tab, and the Dimensions block on
+every tab except Statistics. That is a layout quirk, not five different copies of the data — it is
+the same fields shown again.
 
 ### Tab 1 — المعلومات الأساسية / Basic Information
 
@@ -39,7 +40,7 @@ The identity of the vehicle:
 | Field | English | Typed or written |
 |---|---|---|
 | الكود / المجموعة | Code / Group | Written by the coding rule of the group named on the status configuration |
-| الموديل | Model — **free text**, not the workshop's model file | Typed, or copied from the document line |
+| الموديل | Model — **free text**, not the workshop's model file | Typed, or copied from the item's Model whenever a document creates or updates the car |
 | رقم الهيكل | Chassis Number | Typed on the document line, or here |
 | رقم المحرك | Engine Number | Typed on the document line, or here |
 | ناقل الحركة / نوع الهيكل / عدد الركاب | Gearbox / Body Type / Number of Passengers | Typed |
@@ -61,9 +62,12 @@ warranty periods with their units. And an attachment grid for scans of anything 
 the car.
 
 ::: warning *Prevent Sales* blocks more than sales
-The **منع البيع (Prevent Sales)** tick is the one field on this screen with real teeth: a sales
-document refuses any line whose car is flagged, with *"The subItem … at line … is prevented from
-sale."*
+The **منع البيع (Prevent Sales)** tick is the one field on this screen with real teeth: the car sales
+documents — Car Sales Quotation Request, Car Sales Quotation, Car Sales Order, Car Sales Approval,
+Car Proforma Sales Invoice, Car Allocation, Car Traffic Letter Request, Car Traffic Letter, Car Final
+Delivery and their cancels — refuse any line whose car is flagged, with:
+
+*The subItem {0} at line {1} is prevented from sale.* — «الصنف الفرعي {0} في السطر {1} ممنوع من البيع»
 
 What is easy to miss is that the car picker on **every** document filters flagged cars out
 completely — including purchase documents, the
@@ -84,7 +88,8 @@ deliver to related, and two attachment slots.
 ::: info Most of this tab is typed by hand
 **Delivery status, delivered to customer, deliver to related, condition, mileage, PDI performed /
 date / by, plate number, customs paid, customs paid date, customs release number and date, and
-traffic letter stamping** are typed here by a person, after the event.
+traffic letter stamping** are typed by a person, on this tab or on the Document Control Data tab,
+after the event.
 
 That includes the hand-over: a
 **[Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md)** moves the car's
@@ -93,8 +98,9 @@ on this tab. The plate number, once the
 **[Traffic Letter](/modules/servicecenter/car-sales/car-traffic-letters.md)** has produced it, is
 typed here too.
 
-**Warehouse** and **locator** are the exceptions: document terms can copy them onto the car through
-the *Copy Warehouse To Sub Item* and *Copy Locator To Sub Item* options.
+**Warehouse** and **locator** are the exceptions: the document that creates or updates the car from
+its lines copies the line's warehouse and locator onto it, and document terms can copy them later
+through the *Copy Warehouse To Sub Item* and *Copy Locator To Sub Item* options.
 :::
 
 ### Tab 3 — بيانات البيع / Sales Data
@@ -163,8 +169,9 @@ when a field is not filling in:
    options named
    *Update Purchase Invoice / Sales Invoice / Stock Receipt / Purchase Order / Sales Order / Traffic
    Letter / Traffic Letter Request / Sales Quotation / Sales Quotation Request / Salesman In Sub
-   Item*, plus *Update Delivery Date In Sub Item* and *Update Cancelled By Doc*. Each writes its
-   reference when the document commits and clears it when the document is cancelled.
+   Item*, plus *Update Cancelled By Doc In Sub Item*. Each writes its reference when the document
+   commits and clears it when the document is cancelled. *Update Delivery Date In Sub Item* stamps
+   the document's value date as the car's delivery date.
 
 There is a fourth, quieter one: when the **item** is saved, every car record hanging off it is
 refreshed using the field map named on the item's status configuration. That is how a change to a
@@ -176,10 +183,12 @@ You can. Give it an item, type the chassis and engine numbers, and save. It is t
 opening balances — the cars already in the yard on the day you go live — and for correcting a record
 that a document created badly.
 
-Two cautions. First, a hand-made car has no status entries, so its status is whatever the item's
-configuration names as the initial status. Second, remember there is no chassis-number uniqueness
-check anywhere: search the file before you create, because a duplicate will be accepted silently and
-will then carry its own separate stock and cost.
+Two cautions. First, a hand-made car has no status entries and its Status field stays empty; the
+first document that moves it is checked as a move from the initial status named on the item's status
+configuration. Second, remember there is no chassis-number uniqueness
+check anywhere: search the file before you create, because a duplicate — made by hand or by a second
+document — will be accepted silently, given its own code, and will then carry its own separate stock
+and cost. For the same reason, switch automatic car creation on for exactly one document type.
 
 ## The worked example
 

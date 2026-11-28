@@ -27,12 +27,7 @@ The classic use is on document totals and grid amount columns. On a Sales Invoic
 | For Type | The entity type the line applies to (for example Sales Invoice). |
 | Entity List | A named list of entity types, so one line covers several at once. |
 | On Field | The field ID to format, for example `netValue`, `details.quantity`. |
-| Display Mask | The format string read by the older screens. |
-| Display Mask (G2) | The format string read by the current screens. |
-
-::: warning Fill in both mask columns
-There are two mask columns because the older interface and the current interface read different ones. If you fill in only one, the other interface shows the field completely unformatted and users will report the setting as "not working" from whichever screen they happen to be on. Unless you are deliberately formatting one interface differently, put the **same mask in both columns**.
-:::
+| Display Mask | The format string. Both the current screens and the older screens read this column. |
 
 Display Masks is also the one grid on this whole screen with a **recursive wildcard lookup**. When the system needs a mask for `details.quantity` it tries, in order:
 
@@ -40,7 +35,7 @@ Display Masks is also the one grid on this whole screen with a **recursive wildc
 2. `details.*` — any field inside the `details` grid,
 3. `*` — any field at all.
 
-The first line it finds wins. That makes a single line with `details.*` in the On Field column enough to format **every** numeric column of that grid at once, which is usually what you want on a document with a wide detail grid. It also means a `*` line is a genuinely global default — use it deliberately, because it reaches every screen in the system.
+It walks this chain first through the lines that name the screen's entity type (in **For Type** or **Entity List**), and only then through the generic lines that name no type. The first line it finds wins, so a Sales Invoice line on `*` beats a generic line on `details.quantity`. That makes a single line with `details.*` in the On Field column enough to format **every** numeric column of that grid at once, which is usually what you want on a document with a wide detail grid. It also means a `*` line is a genuinely global default — use it deliberately, because it reaches every screen in the system.
 
 ::: tip Start narrow, then widen
 Set the mask on one specific field first and confirm it renders the way you expect. Only then replace it with a `details.*` or `*` line. Debugging a wildcard that is quietly winning over the exact field you meant to change is far harder than building up from a single field.
@@ -60,15 +55,15 @@ To force an English-only, upper-case, left-to-right code field on Item, add one 
 | Entity List | A named list of entity types, so one line covers several at once. |
 | On Field | The field ID to style. |
 | Text Direction | Forces the field itself to read right-to-left or left-to-right (RTL / LTR). |
-| Suggestion Direction | The direction of the type-ahead suggestion list under the field (RTL / LTR). |
-| List Column Direction | The direction of this field's column in list views and grids (RTL / LTR). |
+| Text Direction in Suggestion Menu (Search) | The direction of the type-ahead suggestion list under the field (RTL / LTR). |
+| Text Direction in List Column | The direction of this field's column in list views and grids (RTL / LTR). |
 | Fixed Input Language | Forces the input language to Arabic or English regardless of the user's keyboard. |
 | Fixed Letter Case | Leaves the text as typed (All), or forces Lower Case or Upper Case. |
 | Show As Password | Draws the value as asterisks instead of readable text. |
-| Foreground Colour | The colour of the text in the field. |
-| Background Colour | The colour of the field's background. |
+| Foreground Color | The colour of the text in the field. |
+| Background Color | The colour of the field's background. |
 | Disable Suggestion Provider | Switches off the type-ahead suggestion list for this field. |
-| Do Not Go To Next With Enter | Pressing Enter keeps the cursor in this field instead of jumping to the next one. |
+| Do Not Go To Next With Enter(Big Text Only) | Pressing Enter keeps the cursor in this field instead of jumping to the next one. |
 
 ::: tip Typing the other language in a fixed-language field
 A fixed input language is the default, not a lock. Sometimes a user really does need the other language: a customer's Arabic name with an English brand in the middle of it, for example. Pressing **Ctrl + Space** inside the field stops the fixed language, and the field then takes whatever language the keyboard is set to. Pressing **Ctrl + Space** again brings the fixed language back. The field also returns to its fixed language by itself as soon as the cursor leaves it, so the next time anyone enters it the setting applies again. A fixed letter case keeps working either way.
@@ -80,12 +75,12 @@ In the new interface, a small badge in the corner of the field (**ع** for Arabi
 
 **Disable Suggestion Provider** earns its place on fields where the suggestion list is either unhelpful — a free-text remarks field where past values are noise — or slow, because the underlying data is large enough that the type-ahead lookup makes typing feel sticky. **Do Not Go To Next With Enter** is for fields the user types several lines into: without it, Enter jumps to the next field and the user loses their place mid-sentence.
 
-::: warning A line with no style set is ignored
-If you add a line and leave **every** style column empty — no direction, no language, no case, no colour, no flag — the whole line is discarded rather than treated as "default styling". You must set at least one style column for the line to have any effect at all. An empty line is a common cause of "I configured it and nothing happened".
+::: warning A line is used only when it sets one of eight columns
+A line is kept only when it sets at least one of **Text Direction**, **Text Direction in Suggestion Menu (Search)**, **Text Direction in List Column**, **Fixed Input Language**, **Foreground Color**, **Background Color**, **Show As Password** or **Disable Suggestion Provider**. Any other line is discarded as a whole. **Fixed Letter Case** and **Do Not Go To Next With Enter** take effect only on a line that also sets one of those eight, so a line that only fixes the letter case does nothing. A line like that is a common cause of "I configured it and nothing happened".
 :::
 
-::: info Two screens ignore the direction settings
-The SQL and query text fields on the **Report Wizard** and **Printing Form Wizard** screens are always forced left-to-right, because a query is code and mixing directions makes it unreadable. A Field Styles line cannot override that — it is deliberate, not a fault.
+::: info Code fields are always left-to-right
+Fields that hold code are always drawn left-to-right, because mixing directions makes a query unreadable: the SQL, expression and alias fields of the **Report Wizard**, **Printing Form Wizard** and **Data Source** screens, the expression and cell-name fields of the record import configuration, and the two mask columns of Display Masks. A generic Field Styles line does not change them.
 :::
 
 Do not confuse this grid with **Field Formats**, which lives on a different grid of the same screen: Field Styles is cosmetic and applied by the browser, while formats are rules **enforced when the record is saved**. If what you actually need is "this code must match a pattern or be rejected", see [Input Restrictions and Validation](/platform/fields-and-entities-settings/fields-settings-input-validation).
@@ -148,8 +143,8 @@ The natural example is a delivery note signed by the receiving customer on a tab
 | For Type | The entity type the line applies to (for example a delivery document). |
 | Entity List | A named list of entity types, so one line covers several at once. |
 | On Field | The attachment or binary field that becomes a signature field. |
-| Width | The width of the signing canvas. |
-| Height | The height of the signing canvas. |
+| Pixels Dimension \| Width | The width of the signing canvas, in pixels. |
+| Pixels Dimension \| Height | The height of the signing canvas, in pixels. |
 | Signature Line Width | The thickness of the pen stroke. |
 | Background Image | An image drawn behind the signature — a ruled signing line, or a company frame. |
 | ePad Ink | Captures the signature from a connected signature-pad device instead of the on-screen canvas. |
@@ -188,7 +183,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `fieldStyles.textDirection` | Text Direction | اتجاه الكتابة | [Field Styles](#Field-Styles) |
 | `fieldStyles.fixedInputLanguage` | Fixed Input Language | تثبيت لغة الإدخال | [Field Styles](#Field-Styles) |
 | `fieldStyles.fixedLetterCase` | Fixed Letter Case | تثبيت حالة الحروف | [Field Styles](#Field-Styles) |
-| `fieldStyles.suggestionDirection` | Text Direction in Suggestion Menu (Search) | اتجاة النص في قائمة المقترحات(البحث) | [Field Styles](#Field-Styles) |
+| `fieldStyles.suggestionDirection` | Text Direction in Suggestion Menu (Search) | اتجاه النص في قائمة المقترحات(البحث) | [Field Styles](#Field-Styles) |
 | `fieldStyles.listColumnDirection` | Text Direction in List Column | اتجاه النص في العرض بالقائمة | [Field Styles](#Field-Styles) |
 | `fieldStyles.showAsPassword` | Show As Password | إخفاء النص (كلمة مرور) | [Field Styles](#Field-Styles) |
 | `fieldStyles.foregroundColor` | Foreground Color | لون الكتابة | [Field Styles](#Field-Styles) |
@@ -196,13 +191,13 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `fieldStyles.disableSuggestionProvider` | Disable Suggestion Provider | Disable Suggestion Provider | [Field Styles](#Field-Styles) |
 | `fieldStyles.doNotGoToNextWithEnter` | Do Not Go To Next With Enter(Big Text Only) | عدم التحرك إلى الحقل التالي عند الضغط على انتر(Big Text Only) | [Field Styles](#Field-Styles) |
 | `richTextFields` | Rich Text Fields | Rich Text Fields | [Rich Text Fields](#Rich-Text-Fields) |
-| `textToLinkFields` | Text To Link Fields | الحقول النصية المحوله الي روابط | [Text To Link Fields](#Text-To-Link-Fields) |
+| `textToLinkFields` | Text To Link Fields | الحقول النصية المحولة إلى روابط | [Text To Link Fields](#Text-To-Link-Fields) |
 | `textToLinkFields.linkType` | Link Type | نوع الرابط | [Text To Link Fields](#Text-To-Link-Fields) |
 | `notColorFields` | Not Color Fields | ليست حقول ألوان | [Not Color Fields](#Not-Color-Fields) |
 | `signatures` | Signatures | Signatures | [Signatures](#Signatures) |
 | `signatures.backgroundImage` | Background Image | صورة الخلفية | [Signatures](#Signatures) |
 | `signatures.width` | Pixels Dimension \| Width | الأبعاد (بالبيكسيل) \| العرض | [Signatures](#Signatures) |
-| `signatures.height` | Pixels Dimension \| Height | الأبعاد (بالبيكسيل) \| الأرتفاع | [Signatures](#Signatures) |
+| `signatures.height` | Pixels Dimension \| Height | الأبعاد (بالبيكسيل) \| الارتفاع | [Signatures](#Signatures) |
 | `signatures.signatureLineWidth` | Signature Line Width | عرض خط التوقيع | [Signatures](#Signatures) |
 | `signatures.epadInk` | ePad Ink | ePad Ink | [Signatures](#Signatures) |
 | `useScannerInFields` | Use Scanner In Fields | Use Scanner In Fields | [Use Scanner In Fields](#Use-Scanner-In-Fields) |

@@ -7,14 +7,14 @@ entities: [DashBoardWidgetWizard, DashBoardWidget]
 This page is the reference for dashboard widgets built from a **Dashboard Widget Wizard**, that is, the widgets
 whose **Wizard Data Source** field is filled. Open it when such a widget shows the wrong data, when a drill-down
 or cross-filter from it does not behave as expected, or when you edit its **Chart Config JSON** by hand. Widgets
-written directly in SQL are covered by the [BI technical reference](./bi-module-technical-reference.md), and
+written directly in SQL are covered by the [BI technical reference](/platform/bi/bi-module-technical-reference), and
 nothing on this page applies to them.
 
 When a widget has a `wizardDataSource`, its `chartConfigJSON` references **wizard field IDs** instead of raw SQL column names. The backend resolves each ID to a SQL alias from cached metadata; SQL-mode widgets are unaffected by anything here.
 
 ## 1. Metadata caching
 
-When a `DashBoardWidgetWizard` is saved, its `postCommitAction` runs `ReportWizardQuery.build()` once and stores per-field metadata in each line's (system) `fieldMetadata` JSON:
+When a `DashBoardWidgetWizard` is saved, the server builds the wizard's query once and stores per-field metadata in each line's (system) `fieldMetadata` JSON:
 
 - `fieldId` — wizard field property path
 - `chartUsage` — `Dimension` | `Measure`
@@ -26,11 +26,11 @@ When a `DashBoardWidgetWizard` is saved, its `postCommitAction` runs `ReportWiza
 - `sqlLeftHandSide` — fully-qualified LHS used for cross-filter WHERE injection
 - `arabicTitle` / `englishTitle` — pass-through
 
-Render-time lookup deserializes the cached records — no `ReportWizardQuery` rebuild.
+Render-time lookup reads the cached records — the wizard's query is not rebuilt for it.
 
 ## 2. Data-mapping keys
 
-For every column slot in §3 of the main reference, wizard mode adds a `*WizardFieldId` sibling:
+For every column slot in §3 of the [technical reference](/platform/bi/bi-module-technical-reference), wizard mode adds a `*WizardFieldId` sibling:
 
 | SQL key | Wizard sibling | Resolves to |
 |---|---|---|
@@ -77,11 +77,11 @@ Entries without `wizardFieldId` are always-active (legacy SQL-mode behavior).
 The "currently active dimensions" list, in order:
 
 1. If the request carries `drillDownByTargetDimension`, that field ID is first.
-2. Then `categoryWizardFieldId`, `labelWizardFieldId`, `xWizardFieldId`, `yWizardFieldId` — whichever are set in `dataMapping`.
+2. Then `categoryWizardFieldId`, `labelWizardFieldId`, `xWizardFieldId`, `yWizardFieldId`, `innerLabelWizardFieldId`, `outerLabelWizardFieldId` — whichever are set in `dataMapping`, in that order.
 
 Duplicates skipped. This list drives:
 
-- **SQL rebuild** via `ReportWizardQuery.buildForDrillDown(wizard, primary, otherDims)`. Primary becomes first GROUP BY; others are appended; measures stay.
+- **SQL rebuild** of the wizard's query: the primary dimension becomes the first GROUP BY, the others are appended, and the measures stay.
 - **Click/drill filtering** (§3 above).
 - **Drill-by menu exclusion** — already-active dimensions are hidden from the right-click "Drill down by…" menu.
 
@@ -182,8 +182,13 @@ Wizard widgets expose a runtime selector (toolbar / echarts toolbox icon) so vie
 | `Heatmap` | `xWizardFieldId`, `yWizardFieldId` | `valueWizardFieldId` | No |
 | `Gauge` | — | `valueWizardFieldId` | No |
 | `Tree` | `labelWizardFieldId` | `valueWizardFieldId` | No |
+| `Waterfall` | `categoryWizardFieldId` | `valueWizardFieldId` | No |
+| `Radar` | `categoryWizardFieldId` | — | No |
+| `GaugeMulti` | `labelWizardFieldId` | `valueWizardFieldId` | No |
+| `NestedLabelValue` | `innerLabelWizardFieldId`, `outerLabelWizardFieldId` | `innerValueWizardFieldId`, `outerValueWizardFieldId` | No |
+| `FunnelComparison` | `labelWizardFieldId` | `leftValueWizardFieldId`, `rightValueWizardFieldId` | No |
 
-`Waterfall`, `NestedLabelValue`, `GaugeMulti`, `Radar`, `FunnelComparison`, `Custom`, `Raw` → no runtime selector.
+`Custom` and `Raw` → no runtime selector.
 
 **Flexible vs. fixed CategoryValue**: a CategoryValue is "flexible" only when every `series[]` entry is uniform — same `type`, no `yAxisIndex`, no `stack`, no `target`. Dual-axis / combo bar+line / stacked / with-target charts are fixed: their multi-measure picker is hidden.
 

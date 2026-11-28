@@ -76,7 +76,7 @@ the message reads *Fiscal period must be openning*. Create the opening period fi
 the document.
 
 The one exception in the whole opening family lives here: the term option **Allow Non Opening Fiscal
-Period In Opening Sales / السماح بفترات محاسبيه غير افتتاحيه في عقد البيع الإفتتاحي**. Books using a
+Period In Opening Sales / السماح بفترات محاسبية غير افتتاحية في عقد البيع الافتتاحي**. Books using a
 term with that option ticked will accept an ordinary period, which is how you handle the contract
 that surfaces months after the migration was closed. See
 [Going Live: Opening Balances in Real Estate](/modules/realestate/opening/realestate-opening-balances)

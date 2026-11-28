@@ -32,7 +32,7 @@ This script closes both gaps. Whenever the Cancel Contract is saved, including w
 
 ## How it works
 
-1. **It reads the lease.** It takes the rent contract in **From Doc**. If there is none, nothing changes.
+1. **It reads the lease.** It takes the rent contract in **From Document**. If there is none, nothing changes.
 2. **It empties the Expense grid.** Every line already in the grid is removed, including lines typed by hand.
 3. **It copies the lease's other lines.** Each line of the lease whose type is not *Installment* becomes a new Expense line, with the lease line's code, amount, net value, due date, to date, type and expense type.
 
@@ -50,7 +50,7 @@ Because the grid is emptied first, anything changed by hand in it is lost at the
 
 ## Example
 
-A lease has four quarterly rent lines of type *Installment* and one *Insurance* line, `INS1`, of 10,000 due on 01-06-2026. A Cancel Contract is imported for it, with the lease in **From Doc** and no Expense lines. When it is saved, the Expense grid holds one line: `INS1`, type *Insurance*, amount 10,000, net value 10,000, due 01-06-2026. The four rent lines are not copied.
+A lease has four quarterly rent lines of type *Installment* and one *Insurance* line, `INS1`, of 10,000 due on 01-06-2026. A Cancel Contract is imported for it, with the lease in **From Document** and no Expense lines. When it is saved, the Expense grid holds one line: `INS1`, type *Insurance*, amount 10,000, net value 10,000, due 01-06-2026. The four rent lines are not copied.
 
 ## The script
 

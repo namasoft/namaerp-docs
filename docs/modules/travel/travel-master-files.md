@@ -1,6 +1,6 @@
 ---
-description: "Setting up the Travel master files in order: travel countries and cities, hotel, restaurant and tour service classes, hotels, restaurants, tour guides and tour services, including how hotels and restaurants act as account parties you owe money to."
-entities: [TRHotel, TRRestaurant, TRTourService, TRTourGuide, TRCity, TRCountry, TRHotelClass, TRRestaurantClass, TRTourServiceClass]
+description: "Setting up the Travel master files in order: travel countries and cities, hotel, restaurant and tour service classes, hotels, restaurants, tour guides, tour services, platforms and external drivers, including how hotels and restaurants act as account parties you owe money to."
+entities: [TRHotel, TRRestaurant, TRTourService, TRTourGuide, TRCity, TRCountry, TRHotelClass, TRRestaurantClass, TRTourServiceClass, TRPlatform, TRExternalDriver]
 menu: Travel → Master Files → Hotel
 ---
 # Travel Master Files
@@ -31,6 +31,8 @@ if you work down it in this order:
    city, a class, and its own set of accounts.
 5. **Tour Service** — the things you actually sell and buy. Every invoice line in the module points
    at one of these.
+6. **Platform** and **External Driver** — two short lists a tour picks from. They depend on nothing,
+   so add them whenever you first need them.
 
 Once that is done you can move on to [Tour Programs](./tour-programs), which are the reusable
 itinerary templates, and from there to the [tours](./tours) you actually operate.
@@ -323,6 +325,23 @@ travel invoice line means is simply "how many of this service" — 40 transfers,
 For electronic invoicing, the tour service behaves as the item: it supplies its own tax authority
 code, and where the code is defined at group level, the service's group supplies it.
 
+## Platform and External Driver
+
+### Platform
+
+A **Platform** (منصة) is a booking channel a traveller came through. Beyond the
+code, group and names it has one field, **Percentage** (النسبة), which is shown on the platform list
+and is for your own reference. You pick a platform on each traveller row of a tour's
+[Pax Data](/modules/travel/tours#Pax-Data-and-Pax-Check-In) tab.
+
+### External Driver
+
+An **External Driver** (سائق خارجي) is a driver who is not on your staff. The record holds a
+**Phone Number** (رقم الهاتف) and an **Address** (العنوان) besides the code, group and names. You
+pick one in the tour's **External Driver** field; a driver on your staff goes in **Internal Driver**
+instead, as an employee. The same driver cannot be on two tours whose periods overlap — see
+[Tours](/modules/travel/tours#What-Nama-checks-before-it-commits).
+
 ## Statuses and situation lists
 
 Two short pick-lists show up on the planning side of the module, so it is worth knowing them while
@@ -336,7 +355,7 @@ the trip stands:
 | Initial | Drafted, not yet running. |
 | In Progress | Currently being operated. |
 | Finished | Completed. |
-| Canceled | Called off. |
+| Canceled | Called off. A Canceled tour is left out of the check that stops a guide, car or driver being booked on two tours at once. |
 
 **Situation** appears on the accommodation lines and the flight lines of a tour program and a tour,
 and offers three short booking markers:

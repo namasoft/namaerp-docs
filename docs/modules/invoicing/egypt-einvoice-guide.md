@@ -22,7 +22,7 @@ In Nama ERP both are driven by the same **Electronic Tax Authority Configuration
 
 ## Connecting to the portal
 
-In **Global Configuration**, page 2, set **e-Invoice Page To Show** to **Egypt Page** (or **All Pages** if you file in more than one country), then run a **Regen UI** so the Egypt page appears on the configuration screen.
+Set **e-Invoice Page To Show** to **Egypt Page** (or **All Pages** if you file in more than one country), as described in [Switching e-invoicing on](/modules/invoicing/e-invoices-guide#Switching-e-invoicing-on), then run a **Regen UI** so the Egypt page appears on the configuration screen.
 
 Create the **Electronic Tax Authority Configuration** and pick the **Tax Payer Type**. A new record starts on pre-production on purpose; choosing a type fills in the three addresses for you:
 
@@ -37,7 +37,7 @@ Your ERP system is registered on the portal as an application, and the portal gi
 |---|---|
 | **User Name** (`userName`) | The **Client ID** of the ERP system registered on the portal |
 | **Password** (`password`) | The **Client Secret** that goes with it |
-| **Tax Registeration NO** (`taxRegNo`) | Your company's 9-digit tax registration number |
+| **Tax Registration No** (`taxRegNo`) | Your company's 9-digit tax registration number |
 | **Activity Type** (`activityType`) | The activity code your registration was issued under, from the authority's activity list |
 
 The pre-production portal issues its own client ID and secret, separate from the live ones. Moving to live means changing the **Tax Payer Type** *and* pasting in the live credentials.
@@ -48,7 +48,7 @@ A document goes to the authority when its **document book** or **term** has **Se
 
 From that moment, every committed document dated on or after the configuration's **Start Sending From Date** (`startSendingFromDate`) is queued for the next collection. Two settings guard the dates:
 
-- **Max Days To Send Invoices** (`maxDaysToSendInvoice`, 3 days on a new record) — the authority's deadline. A document dated further back than that cannot be saved at all once its book or term sends to the authority.
+- **Max Days To Send Invoices** (`maxDaysToSendInvoice`, 3 days on a new record) — the authority's deadline. A document dated more than that many days before today still saves, but a collection whose end date is today does not pick it up, and sending it is refused with *We will not send document {0}, please check value date is before {1} days from today or in the period of two fields start from {2} to {3}*.
 - **Days To Allow Save Document In Future** (`futureDaysToAllowSaveDoc`) — how many days ahead a document may be dated. Zero means not at all.
 
 Each document goes to the portal as one of these types:
@@ -75,9 +75,9 @@ The customer's **The legal entity of the company** field, on its tax data, decid
 
 | Customer's legal entity | Buyer type | Identity sent | Checked by Nama |
 |---|---|---|---|
-| **Government** or **Private Sector** | Business | **Tax Registeration NO** | Digits only, exactly 9 |
-| **Individual** | Person | **Id Number** | Digits only, exactly 14, with a valid birth date inside it |
-| **Foreigner** | Foreigner | **Id Number** (the passport number) | Must be filled |
+| **Government** or **Private Sector** | Business | **Tax Registration No** | Digits only, exactly 9 |
+| **Individual** | Person | **ID Number** | Digits only, exactly 14, with a valid birth date inside it |
+| **Foreigner** | Foreigner | **ID Number** (the passport number) | Must be filled |
 
 The field is required for Egypt: a customer without it cannot be sent.
 
@@ -90,7 +90,7 @@ Asking every walk-in customer for a national ID is not practical, and the author
 ![Minimum Value For Personal Receipts](../../ar/modules/invoicing/images/electronic-receipt-nama-min-value-for-personal-en.png)
 
 ::: tip Example
-With the receipt threshold at 25,000 EGP, a 300 EGP sale to an individual goes out without an ID number. A 40,000 EGP sale is held back until the customer's **Id Number** is filled.
+With the receipt threshold at 25,000 EGP, a 300 EGP sale to an individual goes out without an ID number. A 40,000 EGP sale is held back until the customer's **ID Number** is filled.
 :::
 
 ## Item codes: EGS and GS1
@@ -106,7 +106,7 @@ The authority does not know your item codes. Every line has to carry a code from
 
 When the code has to be built from several pieces, set **Calculate Item Code From** to the template option and write the expression in **Item Code Template** (`itemCodeTemplate`). The template replaces everything above, and it is required in that mode and must be empty in every other.
 
-Nama decides which catalogue a code belongs to by looking at it: a code that starts with `EG-` followed by the configuration's **Tax Registeration NO** and a dash is EGS; anything else is sent as GS1.
+Nama decides which catalogue a code belongs to by looking at it: a code that starts with `EG-` followed by the configuration's **Tax Registration No** and a dash is EGS; anything else is sent as GS1.
 
 ### Checking EGS codes before sending
 
@@ -125,10 +125,12 @@ With the box unticked, Nama sends the codes unchecked and the portal itself refu
 
 ### The other line settings
 
-- **Item Internal Code Template** (`internalCodeTemplate`) and **Item Description Template** (`taxDescriptionTemplate`) decide the internal code and description sent for each line (by default the item's code and its first name). **Run Item Nama Code Template On** (`internalCodeFrom`) and **Run Item Description Template On** (`taxDescriptionFrom`) say what each template reads: the **Item** (the default), the **Document Header** or the **Document Line**. A template that produces nothing falls back to the default. **Internal Item Code Maximum Length** (`internalItemCodeMaxLength`) limits the internal code; zero means 50 characters.
+- **Item Internal Code Template** (`internalCodeTemplate`) and **Item Description Template** (`taxDescriptionTemplate`) decide the internal code and description sent for each line (by default the item's code and its first name). **Run Item Nama Code Template On (Item Code by Default)** (`internalCodeFrom`) and **Run Item Description Template On (Item Name 1 by Default)** (`taxDescriptionFrom`) say what each template reads: the **Item** (the default), the **Document Header** or the **Document Line**. A template that produces nothing falls back to the default. **Internal Item Code Maximum Length** (`internalItemCodeMaxLength`) limits the internal code; zero means 50 characters.
 - **Ignore Lines With Item Whose Tax Code Is** (`ignoreItemWithTaxCode`) drops every line whose item tax code equals that value — handy for service lines the authority shouldn't see.
-- **Don Not Send Assembly Components** (`dontSendAssemblyComponentLines`) sends an assembly as one line instead of its components.
-- **Document Level Extra Discount Location** (`extraDiscountLocation`) names one discount slot, **Discount 1**–**Discount 8**, that is sent as the invoice's document-level extra discount instead of a discount on the lines. That discount must come after all the taxes in the line's calculation; otherwise the document stops with *E-invoice discount {0} is configured as the document level extra discount but is applied before tax for document {1}. The extra discount must be applied after all taxes; otherwise the reported net amount and tax will not reconcile with the tax authority.* This message has no Arabic text.
+- **Do Not Send Assembly Components** (`dontSendAssemblyComponentLines`) sends an assembly as one line instead of its components.
+- **Document Level Extra Discount Location** (`extraDiscountLocation`) names one discount slot, **Discount 1**–**Discount 8**, that is sent as the invoice's document-level extra discount instead of a discount on the lines. That discount must come after all the taxes in the line's calculation; otherwise the document stops with *E-invoice discount {0} is configured as the document level extra discount but is applied before tax for document {1}. The extra discount must be applied after all taxes; otherwise the reported net amount and tax will not reconcile with the tax authority.* This message has no Arabic text. The setting is read only for Egyptian e-invoices (invoices, credit and debit notes, and their export variants); e-receipts and the other countries ignore it.
+
+  For example: an item at 10,000, with Discount 1 = 300 and Discount 2 = 200 applied before tax, VAT at 14%, and an 830 cash discount in Discount 3, applied after tax and named as the extra discount. The portal receives a total sales amount of 10,000, a total discount of 500 (Discounts 1 and 2), a net amount of 9,500, tax of 1,330 (14% of 9,500), an extra discount of 830, and a total of 9,500 + 1,330 − 830 = 10,000. The VAT stays exactly 14% of the net.
 - The unit price, quantity decimals, rounding, the **Discount Configs** grid and the service-fees grid work as in every country — see [Shared settings on every country page](./e-invoices-guide.md#Shared-settings-on-every-country-page).
 
 ## Units, currency and taxes
@@ -439,7 +441,7 @@ Most Egyptian messages share one frame — the document, the line, and the field
 | *Field {0} in selected dimension {1} is required* — «الحقل {0} في الفرع المختار {1} مطلوب» | The issuing branch (or other dimension) lacks its **Tax Authority Code** or part of its address. | Complete it on that dimension record. |
 | *Please specify tax payer configuration file in book or term* — «الرجاء تحديد ملف إعدادت مصلحة الضرائب في دفتر او توجيه المستند» | The book or term sends to the authority but names no configuration. | Fill **Tax Configuration** on the book or term. |
 | *Book {0} with configuration {1} and term {2} with configuration {3}* — «الدفتر {0} يحتوي علي إعدادت ضرائب {1} والتوجيه {2} يحتوي علي إعدادات ضرائب {3}» | The book and the term name different configurations. | Make them name the same one, or clear one of them. |
-| *Value date can not be {0} - which is older than today with {1} days, because the document {2} will be sent to the tax authority* — «التاريخ الفعلي لا يمكن ان يكون {0} - حيث انه اقدم من تاريخ اليوم ب {1} أيام, لأن المستند {2} يتم إرساله للضرائب» | The document is dated further back than **Max Days To Send Invoices**. | Date it within the window. Sending older documents needs the authority's permission first. |
+| *We will not send document {0}, please check value date is before {1} days from today or in the period of two fields start from {2} to {3}* — «لن يتم إرسال المستند {0}, الرجاء التحقق من التاريخ الفعلي قبل {1} أيام من اليوم أو بداخل الفترة المحددة بالحقلين من {2} إلى {3}» | The document is dated further back than **Max Days To Send Invoices** (for a cancel document, **Max Days To Cancel Sent Invoices**). | Date it within the window. Sending older documents needs the authority's permission first. |
 | *Value date can not be {0} - which is newer than today with {1} days, because the document {2} will be sent to the tax authority* — «التاريخ الفعلي لا يمكن ان يكون {0} - حيث انه احدث من تاريخ اليوم ب {1} أيام, لأن المستند {2} يتم إرساله للضرائب» | The document is dated further ahead than **Days To Allow Save Document In Future**. | Date it today, or raise the setting. |
 | *Can not cancel document {0} because it is not sent to tax authority* — «لا يمكنك إلغاء المستند {0} لانه لم يُرسل لمصلحة الضرائب» | The document being cancelled was never accepted by the authority. | Nothing to cancel on the portal; correct the document in Nama instead. |
 | *Document {0} was sent before* — «تم إرسال المستند {0} من قبل» | The document is already accepted. | Nothing to do; a change now means cancelling it and issuing a new one. |

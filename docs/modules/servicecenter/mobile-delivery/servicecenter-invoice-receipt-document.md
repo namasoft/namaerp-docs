@@ -11,13 +11,7 @@ menu: Service Center → Mobile Apps - Service Center → Invoice Receipt Docume
 
 The van gets back to Al-Sahra at five o'clock, and the driver reports that Nasser Trading Est. took four of the six oil filters on invoice `SINV-2026-3320` and sent two back because they were the wrong grade. The invoice says six. Something has to reconcile the two, credit the customer for the shortfall, and account for the crate the filters travelled in.
 
-That is the **Invoice Receipt Document** — *مستند استلام الفاتورة*. It answers one question: *[the courier](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md) delivered this sales invoice — what did the customer actually receive, and what packaging came back?*
-
-::: warning The source must be a sales invoice, and it is not checked politely
-**From Document is mandatory, and it must be a Sales Invoice.** Leave it empty, or point it at any other document type, and saving the document — or pressing the mismatch button — produces an **unhandled server error** rather than a validation message telling you what is wrong.
-
-If a user reports that this screen "crashes on save", check the From Document field first. It is almost always the cause, and there is no message that will tell them so.
-:::
+That is the **Invoice Receipt Document** — *مستند استلام الفاتورة*. It answers one question: *[the courier](/modules/servicecenter/mobile-delivery/servicecenter-mobile-delivery-overview.md) delivered this sales invoice — what did the customer actually receive, and what packaging came back?* Its *From Document* is always that sales invoice.
 
 ## The screen
 
@@ -29,15 +23,15 @@ A single **الرئيسية / Main** page.
 
 | Field | Arabic | What it is for |
 |---|---|---|
-| From Document | بناءا على | The sales invoice being reconciled. Mandatory — see the warning above. |
+| From Document | بناءً على | The sales invoice being reconciled. |
 | Customer | العميل | Who received it. |
-| Generated Returns Document | سند المردودات المنشئ | Read-only pointer to the sales return this document generated. |
-| Package Item Transfer Warehouse / Locator | — | Destination of the packaging stock transfer. |
-| Package Items Issue Warehouse / Locator | — | Source of the packaging stock transfer. |
-| Generated Stock Transfer | سند تحول مخزنى | Read-only pointer to that transfer. |
+| Generated Returned Document | سند المردودات المنشأ | Read-only pointer to the sales return this document generated. |
+| Package Item Transfer Warehouse / Locator | مخزن تحويل أصناف التعبئة | Destination of the packaging stock transfer. |
+| Package Items Issue Warehouse / Locator | مخزن صرف أصناف التعبئة | Source of the packaging stock transfer. |
+| Stock Transfer Document | سند تحويل مخزني | Read-only pointer to that transfer. |
 | Warehouse | المخزن | The document's warehouse. |
 | Difference Warehouse | مخزن الفرق | Where the short-received goods are booked back to. |
-| Save Even There Are Missing Items | الحفظ بالرغم من وجود أصناف مفقودة من الفاتورة | Lets the document save when an invoice item is entirely absent from the lines. |
+| Save Even If There Are Missing Items From Invoice | الحفظ بالرغم من وجود أصناف مفقودة من الفاتورة | Lets the document save with mismatched rows flagged *Missing Item From Invoice* (see below). |
 | From Time / To Time | — | The delivery window. |
 | Package 1 … Package 7 | — | Calculated totals per package type; read-only in practice. |
 | Net Value, Description, Currency, Rate | — | Standard document fields. |
@@ -51,15 +45,13 @@ A single **الرئيسية / Main** page.
 
 A dimensions block closes the page.
 
-::: warning The line-level warehouse column cannot be used
-Every recalculation overwrites **every** detail line's warehouse with the header's **Difference Warehouse**. Treat *Difference Warehouse* as the document's warehouse for all lines, and do not try to route different lines to different warehouses — the column will not keep what you type. If *Difference Warehouse* is left empty, the lines end up with no warehouse at all.
-:::
+Every recalculation sets **every** detail line's warehouse to the header's **Difference Warehouse**, so *Difference Warehouse* is the warehouse of all lines and the line-level warehouse column does not keep a different value. If *Difference Warehouse* is left empty, the lines have no warehouse.
 
 ## Generating the mismatched lines
 
 The action **تحديث جدول الكميات الغير متطابقة / Generate Mismatched Quantities Lines** is the pivot of the whole document. Press it after you have entered the received quantities, and it:
 
-- merges duplicate rows for the same item — summing quantities and receipt quantities, joining serial numbers and widening the from/to time window;
+- merges duplicate rows for the same item — summing receipt quantities (and quantities too, for an item that is not on the source invoice), joining serial numbers and widening the from/to time window;
 - recomputes every difference;
 - checks that each line's item is either on the source invoice or is a classified **packaging** item, failing with *The item in line {0} does not have specific classification* if it is neither;
 - totals the packaging items into the seven header package counters, according to the classifications configured on the توجيه;
@@ -71,9 +63,9 @@ The checks are strict, and they are all about keeping the two grids consistent w
 
 - **A difference may never be negative.** The customer cannot receive more than was invoiced.
 - If a line has a non-zero difference, there must be a mismatched row carrying the **same** difference — otherwise you get *The line number {0} was not reviewed, please click on Generate Mismatched Quantities Lines*. The reverse holds too: a stale mismatched row with no matching line is refused the same way.
-- A mismatched row pointing at a line you have since deleted is refused with *The line number {0} does not exist now, please click on Generate Mismatched Quantities Lines*.
+- A mismatched row for an item on the source invoice with no details line behind it — one pointing at a line you have since deleted, or one the button added for an invoice item that has no details line — is refused with *The line number {0} does not exist now, please click on Generate Mismatched Quantities Lines*. So every invoice item needs a details line, with a receipt quantity of zero if nothing was received.
 - An invoice item that appears in neither grid is refused with the same instruction.
-- A mismatched row flagged *Missing Item From Invoice* blocks the save altogether, unless **الحفظ بالرغم من وجود أصناف مفقودة من الفاتورة** is ticked.
+- On save the *Missing Item From Invoice* flag of every mismatched row is recalculated: it is ticked when the row's item is **not on the source sales invoice** (a packaging item, for example). A flagged row blocks the save unless **Save Even If There Are Missing Items From Invoice** is ticked.
 
 The pattern is consistent: whenever the document complains, press the button again and the two grids are rebuilt in step.
 
@@ -120,6 +112,6 @@ So a crate classified into slot 3 as *Returnable Crate*, mapped to package type 
 |---|---|---|
 | *The item in line {0} does not have specific classification* — «الصنف المختار فى السطر {0} ليس له تصنيفات خاصة» | Raised by **Generate Mismatched Quantities Lines**: the item on that line is neither on the source sales invoice nor classified as a packaging item by the classifications listed on the توجيه. | Remove the line, or classify the item as packaging and map its classification to a package type on the توجيه. |
 | *The line number {0} was not reviewed, please click on Generate Mismatched Quantities Lines* — «السطر رقم {0} لم تتم مراجعته ,برجاء الضغط على تحديث جدول الكميات الغير متطابقة» | A details line has a difference with no mismatched row carrying the same difference, or a mismatched row carries a difference while the line itself no longer has one. The two grids have drifted apart. | Press **Generate Mismatched Quantities Lines** again; it rebuilds the mismatched grid from the current differences. |
-| *The line number {0} does not exist now, please click on Generate Mismatched Quantities Lines* — «السطر رقم {0} لم يعد موجود ,برجاء الضغط على تحديث جدول الكميات الغير متطابقة» | A mismatched row points at a details line that has since been deleted. The number in the message is the row number in the **mismatched** grid, not in the details grid. | Press the button again. |
-| *Please click on Generate Mismatched Quantities Lines* — «برجاء الضغط على تحديث جدول الكميات الغير متطابقة» | An item that is on the source sales invoice appears in neither grid — nothing at all was recorded for it. | Enter the line for that item with its received quantity, then press the button. |
-| *The line number {0} has a missing item from invoice* — «السطر رقم {0} به صنف مفقود من الفاتورة» | A mismatched row is flagged *Missing Item From Invoice*: an invoice item that the delivery did not account for at all. | Either record what happened to that item, or tick **Save Even There Are Missing Items** (الحفظ بالرغم من وجود أصناف مفقودة من الفاتورة) on the header when the omission is intended. |
+| *The line number {0} does not exist now, please click on Generate Mismatched Quantities Lines* — «السطر رقم {0} لم يعد موجود ,برجاء الضغط على تحديث جدول الكميات الغير متطابقة» | A mismatched row for an item on the source invoice has no details line behind it: the line was deleted, or the row was added by the button for an invoice item that has no details line. The number in the message is the row number in the **mismatched** grid, not in the details grid. | Add a details line for every invoice item (receipt quantity zero if nothing was received), then press the button again. |
+| *Please click on Generate Mismatched Quantities Lines* — «برجاء الضغط على تحديث جدول الكميات الغير متطابقة» | An item that is on the source sales invoice appears in neither grid — nothing at all was recorded for it. | Enter the line for that item with its received quantity (zero if nothing was received), then press the button. |
+| *The line number {0} has a missing item from invoice* — «السطر رقم {0} به صنف مفقود من الفاتورة» | A mismatched row is flagged *Missing Item From Invoice*: its item is not on the source sales invoice. The number is the row number in the mismatched grid. | Remove or correct the line behind that row, or tick **Save Even If There Are Missing Items From Invoice** (الحفظ بالرغم من وجود أصناف مفقودة من الفاتورة) on the header when the row is intended. |

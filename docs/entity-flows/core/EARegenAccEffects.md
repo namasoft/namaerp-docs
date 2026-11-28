@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Regenerates accounting effects for entities implementing IGeneratesAccountingRequest. Can process either the current entity directly or entities referenced through a specified field, triggering recalculation of journal entries and ledger transactions.
+Regenerates accounting effects for records that generate an accounting (ledger) request. Can process either the current entity directly or entities referenced through a specified field, triggering recalculation of journal entries and ledger transactions.
 
 ## When This Action Runs
 
@@ -20,8 +20,8 @@ Manual execution after configuration changes, account corrections, or when accou
 ## How It Works
 
 1. **Determines scope** - If no field specified, processes current entity; if field specified, processes referenced entities
-2. **Validates entities** - Ensures target entities implement IGeneratesAccountingRequest interface
-3. **Generates effects** - Calls genAccEffect() method on each target entity
+2. **Filters entities** - A record found through the field that does not generate accounting effects is skipped
+3. **Generates effects** - Rebuilds and sends the accounting request of each target entity
 4. **Handles collections** - For reference fields pointing to collections, processes each unique entity once
 5. **Accumulates results** - Collects and reports results from all accounting effect generation operations
 

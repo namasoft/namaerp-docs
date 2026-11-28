@@ -49,7 +49,6 @@ The **Title** column is the caption the entity flow line shows above each parame
 
 **Related Actions:**
 - [EAFieldsValuesCalculator](EAFieldsValuesCalculator.md) - Standard field value calculator without error tolerance
-- `EAAutomaticFieldsValuesCalculator` - Automatic field value calculation
 
 
 </div>

@@ -53,7 +53,7 @@ The MobileQRIntegrator is a master file entity with the following key fields:
 
 The entity flow referenced by the integrator must:
 1. Have at least one action with `targetAction: "Manual"`
-2. Set `requiresCommitOnManual: true` for automatic commit, otherwise updates will fail
+2. Set `requiresCommitOnManual: true`, otherwise the changes the flow makes to an existing record are not saved (a new record is saved by the integrator either way)
 3. Access QR parameters via `$map` variables
 
 ![A Mobile QR Integrator that creates or updates a CRM lead from an exhibition QR code](../../ar/modules/mobile/images/administration/mobile-qr-integrator-en.png)
@@ -196,7 +196,7 @@ The mobile app's QR scanner (Flutter) provides:
 
 To enable the QR scanner in the mobile app:
 1. Create or modify a `MobileAppMenuDefinition`
-2. Add the integrator to `targetItems.linkTarget`
+2. Add a `targetItems` line whose `linkTarget` is **QR Scanner Integrator** (`QRScannerIntegrator`). The integrator that runs is not chosen here: the scanned QR names it by code or id
 3. Assign the menu to users/roles
 
 ## Practical Examples
@@ -269,5 +269,5 @@ NamaRep.mobileQr()
    - For CreateOnly: Creates new entity
    - For UpdateOnly/CreateAndUpdate: Executes finder query
 4. **Flow Execution**: Runs entity flow with parameters
-5. **Auto-Commit**: Commits if requiresCommitOnManual is true
+5. **Saving**: A new record is committed by the integrator after the flow runs. An existing record is saved only by the flow, when requiresCommitOnManual is true
 6. **Response Generation**: Renders successTempo against entity

@@ -79,7 +79,7 @@ There are a few hundred elements, but a handful do most of the work. Across the 
 
 Normally a flow runs *inside* the save: you press Save, the flow runs, the save finishes. Whatever the flow does — however slow, however likely to fail — the user is sitting there waiting for it, and a failure in the flow fails the save.
 
-That is the right behaviour for a flow that validates something or fills in a field. It is the wrong behaviour for a flow that calls an outside system, rebuilds a costing, or generates a pile of related documents. For those, tick **Run After Committing Document And Affect On DataBase**.
+That is the right behaviour for a flow that validates something or fills in a field. It is the wrong behaviour for a flow that calls an outside system, rebuilds a costing, or generates a pile of related documents. For those, tick **Run After Committing Document And Affect On Database**.
 
 A flow marked that way is *deferred*. The document is saved and committed, its accounting and inventory effects are raised, the user gets the screen back — and only afterwards is the flow picked up, separately, and run. Nothing it does can slow the save down, and nothing it does can fail the save.
 
@@ -93,9 +93,9 @@ Deferring a flow raises the questions that come with any unattended work, and th
 | **Wait For Quantity Processing** | Holds the flow back while inventory work is still outstanding, so it does not read stock quantities or costs that are about to change. |
 
 ::: warning Only five events can be deferred
-The tick box is refused unless **every** element in the flow targets one of five actions: **Add Draft**, **Revise**, **UnRevise**, **Post Commit** or **Post Delete**. Anything that runs as part of building the record — Validate On Save, Update Calculated Fields, Pre Apply Effects and the rest — cannot be deferred, because by then the save is over and there is nothing left to influence. Saving the flow with any other element returns:
+The tick box is refused unless **every** element in the flow targets one of five actions: **Add Draft**, **Revise**, **UnRevise**, **Post Commit** or **Post Delete**. Anything that runs as part of building the record — Validate On Save, Update Calculated Fields, Pre Apply Effects and the rest — cannot be deferred, because by then the save is over and there is nothing left to influence. Saving the flow with any other element returns this message, which has no Arabic translation and shows in English on Arabic screens too:
 
-> Option ( Run After Committing Document And Affect On DataBase ) does not work with target action {0}
+> Option RunAfterCommitDocAndEffectOnDB does not work with target action {0}
 
 So a slow flow on Update Calculated Fields is not made background by ticking the box; it has to be rewritten to run at Post Commit first.
 :::
@@ -149,7 +149,7 @@ The purpose of this action is to modify values **before** the system calculates 
 
 - Example: If you want to change the quantity before the total price is calculated, you must do it here.
 
-## `AfterTemplate` — After Applying a Default Value Template
+## `AfterTermplate` — After Applying a Default Value Template
 
 If there is a **default values template** (Template) associated with the screen and it has been applied, elements attached to this action will run immediately after the template is applied.
 
@@ -340,7 +340,7 @@ This action is used to trigger an Entity Flow manually by the user, through:
 
 ::: tip
 - Entity Flows using this action must be added to the target screen.
-- This is done via "Edit Screen" → the "Actions and Notifications" table.
+- This is done with a line on the **Notifications** tab of a **Screen Modifier** for that screen — see [Adding Buttons to a Screen](/platform/screen-modifier/screen-modifier-action-buttons).
 :::
 
 ### Saving the record after a manual run
@@ -363,5 +363,5 @@ Some programming elements determine the appropriate action automatically, so the
 
 ::: warning
 - Users are not expected to create elements with this action.
-- If an element is created using `Automatic`, it will run with **all other system events** (except `Manual`).
+- If an element is created using `Automatic`, it is called at **every event**. A manual run calls it too, as long as the flow also has an active `Manual` line.
 :::

@@ -29,7 +29,7 @@ An **LGT Opening Doc** is used to enter the balances of existing letters when st
 On the **Letter Of Guarantee** screen (`Banks > Letters Of Guarantee > Letter Of Guarantee`) the letter's data is defined:
 
 - **Basic information**: linking the letter to the **LGT request** that preceded it, to the **facility limit** it reserves from, and to a **project contract** when needed.
-- **Initial LGT values**: a snapshot of the issue terms — the **amount** and **currency**, **who it's delivered to**, **from date / to date**, the **covered amount** (covered in cash), the **facilities** (the reserved portion of the facility limit), and the **fees**.
+- **Initial LGT values**: the terms you type on the master file, copied into the current values until the letter gets its first document — the **amount** and **currency**, **who it's delivered to**, **from date / to date**, the **covered amount** (covered in cash), the **facilities** (the reserved portion of the facility limit), and the **fees**.
 - **Letter of guarantee (current values)**: the **LGT type**, the **guarantee type** and the **status**, plus the values in force after any amendment (amount, covered, facilities, change fees).
 
 ![Letter of Guarantee screen](../../../ar/modules/accounting/images/lg/letter-of-guarantee-en.png)
@@ -42,19 +42,20 @@ The **guarantee type** classifies the letter's purpose: **initial guarantee** (t
 |---|---|
 | Initial | when saved before issuing. |
 | Issued | after the issue document is saved. |
-| Received / Totally Delivered | after tracking the circulation of the letter copy. |
-| Finished | after a normal close. |
-| Canceled | on cancellation. |
-| Liquidated | when the letter is liquidated (the beneficiary claims its value). |
+| Received | after an **LGT Receipt** is saved. |
+| Totally Delivered | after an **LGT Delivery** is saved. |
+| Finished | after an **LGT Closing** whose **Status** field is Finished (a normal close). |
+| Canceled | after an **LGT Closing** whose **Status** field is Canceled. |
+| Liquidated | after an **LGT Closing** whose **Status** field is Liquidated (the beneficiary claims the letter's value). |
 
 ## Issuing and reserving the facility
 
-When an **LGT Issue** (`Banks > Letters Of Guarantee > LGT Issue`) is recorded its accounting effect is created and the facility portion is reserved. The issue term covers several sides: **LGT amount debit/credit**, **facilities amount debit/credit** (the reserved portion of the facility limit), **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where these accounts come from is explained in the [Document terms](../support/accounting-document-terms.md) reference.)
+When an **LGT Issue** (`Banks > Letters Of Guarantee > LGT Issue`) is recorded its accounting effect is created and, when the letter carries a facility limit, the letter's full value is reserved against it. The issue term covers several sides: **LGT amount debit/credit**, **facilities amount debit/credit** (the reserved portion of the facility limit), **fees debit/credit** (with **tax fees 1 and 2**), and the **covering** side. (Where these accounts come from is explained in the [Document terms](../support/accounting-document-terms.md) reference.)
 
 ![LGT Issue screen](../../../ar/modules/accounting/images/lg/lgt-issue-en.png)
 
 ::: warning Facility-limit check
-At issue, the system checks that the total reserved doesn't exceed the **facility limit** linked to the letter. If it does, issuing is blocked. The details of facility limits are in [Credit Facilities](./credit-facilities.md).
+When the letter carries a **facility limit**, the issue recalculates that limit and is blocked if any of its lines is left with a negative remaining amount. The issue is also checked against the limit line that matches the letter's project contract. The details of facility limits are in [Credit Facilities](./credit-facilities.md).
 :::
 
 ## Receipt, delivery, amendment and closing
@@ -69,7 +70,9 @@ simply carries forward whatever the chain says at that point.
 
 So if a delivery is showing 200,000 and you need it to read 250,000, typing over the amount on the
 delivery will not do it. The document still saves, but the figure snaps back to what the chain says
-and you get a warning telling you the edit was dropped. Enter an **LGT Changing** dated before the
+and you get this warning:
+*The values of letter of guarantee {0} are inherited from the document before this one in the letter's chain and cannot be edited here. Use an LGT Changing document to change the value or the fees.* — «قيم خطاب الضمان {0} موروثة من السند السابق له في سلسلة الخطاب ولا يمكن تعديلها هنا. استخدم سند تعديل خطاب ضمان لتغيير القيمة أو الرسوم»
+Enter an **LGT Changing** dated before the
 delivery instead, and the delivery picks the new figure up on its own.
 Editing the amount on the **Letter Of Guarantee** master file has no effect on the documents
 either, for the same reason: the chain, not the master file, is what they read.
@@ -77,12 +80,12 @@ either, for the same reason: the chain, not the master file, is what they read.
 
 ## Actions on this screen
 
-The request is where the chain starts, and two buttons on it save re-keying the whole letter twice:
+Two buttons, one on each screen, save re-keying the whole letter twice:
 
-- **Create Letter Of Guarantee** — turns the approved request into the letter's master file, carrying over its type, amount, bank, bank account, dates, covered amount, facilities and fees. The letter opens as a new record for you to review and save.
-- **Create LGTIssue** — goes one step further and opens the **LGT Issue** document for the letter, pre-filled from the request's account, bank and bank account. Reach for it when the bank has actually issued the letter and you want to record the accounting effect straight away.
+- **Create Letter Of Guarantee**, on the **LGT Request** — turns the request into the letter's master file, carrying over its type, amount, bank, bank account, dates, covered amount and fees. The letter opens as a new record for you to review and save. It is refused when the request's type is **Rejected**, and when the request was already turned into a letter.
+- **Create LGT Issue**, on the **Letter Of Guarantee** master file — opens a new **LGT Issue** document for that letter, pre-filled with its bank, bank account, dates, amount and currency, covered amount and fees. Reach for it when the bank has actually issued the letter and you want to record the accounting effect straight away.
 
-Both need the request **saved** first — an unsaved request has nothing for the new document to be built from.
+Each needs its record **saved** first — an unsaved record has nothing for the new document to be built from.
 
 ## Reports
 
@@ -95,6 +98,6 @@ Both need the request **saved** first — an unsaved request has nothing for the
 ## For Support
 
 - **"Couldn't issue the letter — limit exceeded"** — the reserved amount exceeds the linked facility limit; see [Credit Facilities](./credit-facilities.md).
-- **"What's the difference between initial and current values?"** — the initial ones are a snapshot of the issue terms, and the current ones reflect the latest amendment; both stay on the letter for comparison.
+- **"What's the difference between initial and current values?"** — the initial ones are typed on the master file, and the current ones are written by the latest document on the letter; both stay on the letter for comparison.
 - **"Where do the amount, facility and fee accounts come from?"** — from the **LGT Issue** term; see [Document terms](../support/accounting-document-terms.md).
 - The accounting-processing mechanism is in [How documents are processed into accounting effects](../support/accounting-request-processing.md).

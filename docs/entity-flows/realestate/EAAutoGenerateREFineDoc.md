@@ -38,11 +38,11 @@ Manual execution or scheduled batch processing for penalty calculation. Typicall
 
 **Parameter 4:** Fine Is Value Not Percent (Optional) - true for fixed amount, false for percentage (default: false)
 
-**Parameter 5:** Fine Per (Required) - Time unit for fine calculation: "year", "month", or "day"
+**Parameter 5:** Fine Percent/Value Per (year,month,day) (Required) - Time unit for fine calculation: `year`, `month`, or `day`, in lower case
 
 **Parameter 6:** Fine Percent/Value (Required) - Fine rate as percentage or fixed amount
 
-**Parameter 7:** Fine Calculation Query (Optional) - Custom SQL query for complex fine calculations
+**Parameter 7:** Fine Calculation Query (Optional) - Custom SQL query for complex fine calculations. When filled, the number it returns is the fine of the installment, in place of the calculation below
 
 **Parameter 8:** Contracts To Search In CSV (Optional) - Comma-separated contract types to process
 
@@ -55,12 +55,12 @@ Manual execution or scheduled batch processing for penalty calculation. Typicall
 
 ## Fine Calculation Logic
 
-Fine = Base Amount × Rate × Time Factor
+The fine is calculated for each overdue installment:
 
-Where:
-- **Base Amount**: Outstanding payment amount (or fixed value if configured)
-- **Rate**: Fine percentage or fixed amount from parameter 6
-- **Time Factor**: Late days adjusted by fine period (day=1, month=days/30, year=days/360)
+- **Percent** (parameter 4 empty or `false`): Fine = remaining amount of the installment × parameter 6 ÷ 100 × Time Factor
+- **Value** (parameter 4 `true`): Fine = parameter 6 × Time Factor
+- **Time Factor**: from parameter 5: `day` = late days, `month` = late days ÷ 30, `year` = late days ÷ 360
+- **Late days**: counted up to and including today, starting from the installment's due date plus the grace period (from the due date itself when parameter 3 is `true`), and never from earlier than the first day of the current month. A run therefore fines only the late days of the current month
 
 ## Custom Query Variables
 

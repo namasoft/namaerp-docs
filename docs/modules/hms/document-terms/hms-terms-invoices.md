@@ -70,6 +70,9 @@ the "other" fee component of an operation (see below). On every other invoice it
 A typical cash-and-insurance setup: *Patient Value* debits the patient (source Patient) and credits a
 revenue account; *Insurance Value* debits the insurer (source Medical Insurance Company) and credits
 the same revenue; the two tax pairs debit the patient or insurer and credit the output-tax account.
+The discount pairs debit a discounts-allowed account and credit revenue when revenue should show the
+gross price; the cost pair debits the cost of the service and credits what is owed for it; the
+subsidiary pairs debit an expense and credit the party who earns the share, usually the doctor.
 
 ::: info Overhead lines are recorded through their own item
 The estimated or actual overhead carried on an invoice's overhead grid is not recorded by the term. Each
@@ -138,7 +141,7 @@ therapy type or medical service, and each supplies line under its own item.
 The accommodation invoice records the **accommodation price** of each of its day lines through the Effect
 group. The medical-supervision part of the same lines is billed separately, by a **Supervision Invoice**
 the accommodation invoice can create for you. The group **Generated Supervision Invoice** («فاتورة
-الإشراف الطبى المنشأة») sets that up:
+الإشراف الطبي المنشأة») sets that up:
 
 | Field | Field id | What it does |
 |---|---|---|
@@ -150,7 +153,7 @@ The generated Supervision Invoice carries the accommodation invoice's admission,
 insurer, endurance percentages and medical document category, and is priced again when it is built.
 Each later save of the accommodation invoice rebuilds its lines. How the stay is split into
 accommodation invoices in the first place is decided on the **Accommodation** term — see
-[Stay and Operations Document Terms](./hms-terms-stay-and-operations.md#Accommodation-and-Accommodation-Transfer--building-the-accommodation-invoices).
+[Stay and Operations Document Terms](/modules/hms/document-terms/hms-terms-stay-and-operations#Accommodation-and-Accommodation-Transfer----building-the-accommodation-invoices).
 
 ![The Generated Supervision Invoice group of the Accommodation Invoice term](../../../ar/modules/hms/images/document-terms/hms-term-accommodation-invoice-en.png)
 

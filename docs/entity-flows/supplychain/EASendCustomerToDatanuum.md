@@ -20,10 +20,10 @@ Manual execution when customer data needs to be synchronized with the Datanuum l
 ## How It Works
 
 1. **Validates reward config** - Looks up the RewardPointsConfig by provided code or ID
-2. **Extracts POS register** - Gets POS register code from customer's ref5 field if available
+2. **Extracts POS register** - Takes the code of the record in the customer's ref5 field when that record is a POS register. The request needs this code or the branch ID of the reward points configuration; when both are empty it fails with *At least one of those fields must be provided Pos Register Code or branch Id*
 3. **Initializes API client** - Creates DatanuumApiClient with config and POS register information
 4. **Builds customer payload** - Creates JSON request body with customer details:
-   - Personal information (first name, last name, gender, birth date)
+   - Personal information (first name = the customer's Name 1, last name = the customer's Name 2, gender, birth date)
    - Contact details (mobile phone, email address)
    - Address information (nationality from country field)
 5. **Sends to Datanuum** - Transmits customer data to Datanuum API endpoint

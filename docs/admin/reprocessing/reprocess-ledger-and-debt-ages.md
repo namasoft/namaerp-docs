@@ -123,7 +123,7 @@ order by valueDate
 ::: details
 ```sql
 select l.originCode,l.originType,l.lineNumber+1,l.subsidiaryCode
-from LedgerTransLine l left join EntitySystemEntry e on e.targetId = l.subsidiaryId where e.id is null and l.subsidiaryId
+from LedgerTransLine l left join EntitySystemEntry e on e.targetId = l.subsidiaryId where e.id is null and l.subsidiaryId is not null
 
 ```
 :::
@@ -330,7 +330,7 @@ with x AS
 	inner join AccountsChart ch8 on ch8.id = ch7.parent_id
 	inner join AccountsChart ch9 on ch9.id = ch8.parent_id
 	UNION ALL
-	SELECT acc.id accountId,ch8.id parentid
+	SELECT acc.id accountId,ch10.id parentid
     FROM Account acc inner join AccountsChart ch1 on ch1.id = acc.chartWhenDebit_id
 	inner join AccountsChart ch2 on ch2.id = ch1.parent_id
 	inner join AccountsChart ch3 on ch3.id = ch2.parent_id

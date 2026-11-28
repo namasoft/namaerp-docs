@@ -33,12 +33,14 @@ Time window enforcement for DocumentFile entities requiring creation time constr
 
 **Parameter 3:** End Hour (Required) - Ending hour (0-23) of time window, exclusive (e.g., 17 for 5 PM)
 
-*Note: Start hour must be less than end hour and different from end hour*
+*Note: Start hour must be less than end hour and different from end hour. Saving the entity flow is refused otherwise with* Start hour and end hour can not be the same *or* Start hour can not be after end hour.
+
+The flow line shows the titles *Ignore*, *Start Hour (e.g: 10,13* and *End Hour (e.g: 11,18*. A document with no value date, or one that keeps the creation date given by its From Document, is left unchanged.
 
 ## Database Tables Affected
 
 - **DocumentFile Creation Date** - Updates creation date field with time adjusted to target window
-- **Document Date Fields** - Synchronizes related date fields for consistency
+- **Value Date** - Read only; the creation date is moved onto it
 - **Self-Contained Operation** - Changes isolated to target document only
 
 **Module:** core

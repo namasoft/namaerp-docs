@@ -68,9 +68,17 @@ and the check is enforced; tick it and the check is waived.
 | Allow Gate Pass Without Customer Invoice | a **committed** customer invoice exists — but only if some line of the order actually has a customer share |
 | Allow Gate Pass Without Insurance Invoice | the same, for the insurance share and the insurance invoice |
 | Allow Gate Pass Without Warranty Invoice | the same, for the warranty share and the warranty invoice |
-| Allow Gate Pass With Remaining In Customer Invoice | the customer invoice is **fully paid**; otherwise the message names the invoice and the amount still outstanding |
-| Allow Gate Pass With Remaining In Insurance Invoice | the same, for the insurance invoice |
-| Allow Gate Pass With Remaining In Warranty Invoice | the same, for the warranty invoice |
+| Allow Gate Pass Without Fully Paying The Customer Invoice | the customer invoice is **fully paid**; otherwise the message names the invoice and the amount still outstanding |
+| Allow Gate Pass Without Fully Paying The Insurance Invoice | the same, for the insurance invoice |
+| Allow Gate Pass Without Fully Paying The Warranty Invoice | the same, for the warranty invoice |
+
+The invoice checks read the job order named in *From Document*, not the job orders on the grid
+rows. The options also nest:
+
+- Ticking **Allow Gate Pass Without Job Order** waives every check on the list, not only the first.
+- The *fully paid* check for a payer runs only while that payer's *without … invoice* option is
+  unticked, so ticking **Allow Gate Pass Without Customer Invoice** also waives the customer's
+  fully-paid check.
 
 Notice how sensibly the invoice checks are scoped: a job order with no insurance share at all is not
 asked for an insurance invoice. The check only bites where money is owed.
@@ -82,8 +90,8 @@ invoice, plus committed insurance and warranty invoices — the insurer and the 
 on account, so their invoices need not be settled before the car leaves, but the retail customer's
 must be.
 
-Gate pass `SCGP-2026-0475` is raised on 4 March 2026 with one grid row for job order
-`SCJO-2026-0417`. At that point:
+Gate pass `SCGP-2026-0475` is raised on 4 March 2026 from job order `SCJO-2026-0417` (its
+*From Document*), with one grid row for the same order. At that point:
 
 - the customer invoice `SINV-2026-3311` exists and Fahad has paid its 799.25 in cash — ✔
 - the warranty invoice `SINV-2026-3312` exists and is committed — ✔
@@ -104,7 +112,8 @@ Almost nothing, and that is by design:
 - It fills in empty fields on the
   [vehicle file](/modules/servicecenter/workshop-setup/servicecenter-product-file.md), like every
   other job document.
-- If the term names a **status to change the product to**, it adds a product status entry — which is
+- If the term names a **Change Product Status To** value, it adds a status entry for the header's
+  *Product* (the grid rows' vehicles are not touched) — which is
   how a vehicle's file can show *Exited From The Center* once its pass has been issued. The usual
   companions apply: an optional criteria filter so the status only changes when the criteria match,
   and an optional notification.
@@ -131,7 +140,7 @@ status entry and the pass documents themselves are what you have.
 
 | Message | Why | What to do |
 |---|---|---|
-| *From doc must be job order* — «بناءا على يجب ان تكون أمر شغل» | *From Document* is filled with something that is not a job order, while **Allow Gate Pass Without Job Order** is unticked on the term. | Point *From Document* at the job order the vehicle was worked on under. |
+| *From doc must be job order* — «بناءً على يجب أن تكون أمر شغل» | *From Document* is filled with something that is not a job order, while **Allow Gate Pass Without Job Order** is unticked on the term. | Point *From Document* at the job order the vehicle was worked on under. |
 | *The order {0} does not have a customer invoice* — «لا توجد فاتورة عميل لأمر الشغل {0}» | Some task or material line on the order carries a customer share, and the order's customer invoice is either missing or still a draft. Only a **committed** invoice counts. | Raise and commit the customer invoice for the order, or tick **Allow Gate Pass Without Customer Invoice** (السماح بعمل التصريح بدون فاتورة العميل) on the term if this workshop releases before invoicing. |
 | *The order {0} does not have an insurance invoice* — «لا توجد فاتورة تأمين لأمر الشغل {0}» | The same, for the insurance share and the insurance invoice. | Commit the insurance invoice, or tick **Allow Gate Pass Without Insurance Invoice** (السماح بعمل التصريح بدون فاتورة التأمين). |
 | *The order {0} does not have an warranty invoice* (the product's own wording; this message has no Arabic string, so it appears in English on Arabic screens too) | The same, for the warranty share and the warranty invoice. | Commit the warranty invoice, or tick **Allow Gate Pass Without Warranty Invoice** (السماح بعمل التصريح بدون فاتورة الضمان). |

@@ -20,13 +20,13 @@ The flag lives on the account itself (**Accounting → Master Files → Account*
 
 When it is on, saving any of these documents with that account on a line is refused with the message *"The Account {0} Can Be Used Only By The System"*, pointing at the offending line:
 
-- **Journal Entry** (and adjustment entries)
-- **Receipt Voucher**
+- **Journal Entry**, and the two documents built on it: **Bank Adjustment** and **Currency Diff Journal**
+- **Receipt Voucher** and **Receipt Order**
 - **Payment Voucher**
 - **Bank Transfer**
-- **Inter-Company Transfer**
+- **Inter Company Transfer**
 
-Everything else is untouched. A sales invoice, a stock issue, a depreciation run or a payroll document still records its effect on the account normally — the flag polices what a **user types**, not what the system generates. Two internally-generated documents are deliberately exempt as well: the **closing entry** produced at year-end, and the roll-up journal produced by data purging. Both restate balances the system itself created, so refusing them would mean refusing to restate history.
+Everything else is untouched. A sales invoice, a stock issue, a depreciation run or a payroll document still records its effect on the account normally — the flag polices what a **user types**, not what the system generates. The journal entries a **Closing Entry** generates at year-end are exempt as well: they restate balances the system itself created.
 
 ## The three ways to open a system account
 
@@ -34,11 +34,11 @@ Before the check refuses a line, it looks for three escape routes, in this order
 
 ### 1. The module option — open for a whole document type
 
-In the accounting module configuration there is one option per document type: **allow using a system account in receipt voucher / payment voucher / bank transfer / journal entry**. Ticking one switches the check off entirely for that document type — every user, every account, every date. It is the bluntest instrument available and it should normally stay off; see [Accounting Configuration](../support/accounting-configuration.md).
+In the accounting module configuration there are four options: **Can Use Sys Acc For RV Voucher** (receipt voucher and receipt order), **Can Use Sys Acc For PV Voucher** (payment voucher), **Can Use Sys Acc For Bank Transfer**, and **Can Use Sys Acc For Journal Entry** (journal entry, bank adjustment, currency diff journal and inter company transfer). Ticking one switches the check off entirely for those document types — every user, every account, every date. It is the bluntest instrument available and it should normally stay off; see [Accounting Configuration](../support/accounting-configuration.md).
 
 ### 2. Allow System Account In Opening — open outside normal periods
 
-Next to the **System Account** flag on the account sits **Allow System Account In Opening**. With it ticked, the account can be used manually in any period whose type is **not** Normal — that is, in **Opening**, **Adjustment** and **Closing** periods. It exists for exactly the case above: loading opening balances and making year-end adjustments on accounts that are otherwise system-owned, without leaving them open during the year. In ordinary (Normal) periods the lock still applies. Period types are set on the fiscal calendar — see [Year-End Closing & Period Control](./year-end-and-period-control.md).
+Next to the **System Account** flag on the account sits **Allow System Account In Opening**. With it ticked, the account can be used manually in any period whose type is **not** Normal — that is, in **Opening**, **Adjustment** and **Closing** periods. It exists for exactly the case above: loading opening balances and making year-end adjustments on accounts that are otherwise system-owned, without leaving them open during the year. In ordinary (Normal) periods the lock still applies. The period type is set on each period of the fiscal year — see [Accounting Concepts & First-Time Setup](/modules/accounting/ledger-setup/accounting-concepts-and-setup).
 
 ### 3. The exceptions master file — open one account, for one purpose
 
@@ -69,7 +69,7 @@ Each line is one permission. A document line is allowed through if **at least on
 
 | Column | Effect when filled | Effect when empty |
 |---|---|---|
-| **Document Type** | The exception applies only to that type: Journal Entry, Receipt Voucher, Payment Voucher or Bank Transfer. | Any of them (this is also how you cover an Inter-Company Transfer, which is checked but is not offered in the list). |
+| **Document Type** | The exception applies only to that type: Journal Entry, Receipt Voucher, Payment Voucher or Bank Transfer. | Any checked document. This is also the only way to cover a Receipt Order, Bank Adjustment, Currency Diff Journal or Inter Company Transfer: they are checked but are not offered in the list, and a line whose **Document Type** is filled matches that exact type only. |
 | **Account** | The account being unlocked. **This column is required** — an exception is always about one specific account. | — |
 | **Subsidiary** | Only lines carrying that exact party (customer, supplier, employee, bank account, fixed asset, item section, resource, partner, warehouse). | Any subsidiary, including lines with none. |
 | **User** | Only that user. You may instead pick a **Security Profile**, and then every user carrying that profile is covered — which is the practical way to say "the chief accountants". | Any user. |
@@ -116,6 +116,6 @@ Anyone else, any other book, any other month, or a debit on that account is stil
 
 | Message | Why | What to do |
 |---|---|---|
-| *The Account {0} Can Be Used Only By The System* — «الحساب  {0} يستخدم فقط بواسطة النظام» | The account on the flagged line has **System Account** ticked, and none of the three escape routes applies to this document, date or user. | Work the three routes above in order; an exception record for the specific account, window and document type is almost always the right answer. |
+| *The Account {0} Can Be Used Only By The System* — «الحساب {0} يستخدم فقط بواسطة النظام» | The account on the flagged line has **System Account** ticked, and none of the three escape routes applies to this document, date or user. | Work the three routes above in order; an exception record for the specific account, window and document type is almost always the right answer. |
 | *From date {0} cant be after to date {1}* — «إلى تاريخ {1} يجب أن يكون بعد من تاريخ {0}» | The exception record's **From Date** is later than its **To Date**, so the window would never open. | Correct the two dates; leaving **To Date** empty keeps the exception open-ended. |
 | *{0} must be of document type {1} not {2}* | A detail line names a **Book** or a **Term** that belongs to a different document type than the line's **Document Type** column. | Pick a book and term that belong to the document type on the line, or clear the column. This message has no Arabic text in the product, so it appears in English on Arabic screens too. |

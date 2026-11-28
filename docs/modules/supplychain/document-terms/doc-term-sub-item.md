@@ -16,13 +16,13 @@ Open the document's **Document Term** (توجيه), then the **Sub-Item** tab.
 
 These toggles control how many sub-item records a line produces and where their warehouse/locator come from.
 
-**Spread Sub-Item Lines If Qty Greater Than One** `termConfig.spreadSubItemLinesIfQtyGreaterThanOne` — When a line carries a quantity greater than one, splits it into multiple lines of quantity 1 so each unit can be tracked as its own sub-item.
+**Spread Sub Item Lines If Qty Greater Than One** `termConfig.spreadSubItemLinesIfQtyGreaterThanOne` — When the document is created from another document, a copied line of a sub-item item with a quantity greater than one is split into that many lines of quantity 1, so each unit can be tracked as its own sub-item.
 
-**Create Sub-Item From Line Information** `termConfig.createSubItemFromLineInfo` — Auto-creates a new sub-item record populated from the line's data when none is supplied on the line.
+**Create Sub Item From Line Information** `termConfig.createSubItemFromLineInfo` — On save, each line of a sub-item item gets a sub-item record filled from the line's data: a new one when the line has none, otherwise its existing sub-item is updated. The item's sub-item status configuration must name a **Created Sub Item Master Group**; otherwise the save is refused.
 
-**Copy Warehouse To Sub-Item** `termConfig.copyWarehouseToSubItem` — On save, writes the line's destination warehouse into each line's sub-item record.
+**Copy Warehouse To Sub Item** `termConfig.copyWarehouseToSubItem` — On save, writes the line's destination warehouse into each line's sub-item record.
 
-**Copy Locator To Sub-Item** `termConfig.copyLocatorToSubItem` — On save, writes the line's destination locator into each line's sub-item record.
+**Copy Locator To Sub Item** `termConfig.copyLocatorToSubItem` — On save, writes the line's destination locator into each line's sub-item record.
 
 ## Copying Document References into the Sub-Item
 
@@ -30,74 +30,74 @@ Each toggle below stamps the **current document's reference** into the matching 
 
 | Option | Field ID |
 |---|---|
-| Update Purchase Invoice In Sub-Item | `termConfig.updatePurchaseInvoiceInSubItem` |
-| Update Sales Invoice In Sub-Item | `termConfig.updateSalesInvoiceInSubItem` |
-| Update Purchase Order In Sub-Item | `termConfig.updatePurchaseOrderInSubItem` |
-| Update Sales Order In Sub-Item | `termConfig.updateSalesOrderInSubItem` |
-| Update Stock Receipt In Sub-Item | `termConfig.updateStockReceiptInSubItem` |
-| Update Traffic Letter In Sub-Item | `termConfig.updateTrafficLetterInSubItem` |
-| Update Traffic Letter Request In Sub-Item | `termConfig.updateTrafficLetterReqInSubItem` |
-| Update Sales Quotation In Sub-Item | `termConfig.updateSalesQuotationInSubItem` |
-| Update Sales Quotation Request In Sub-Item | `termConfig.updateSalesQuotationReqInSubItem` |
+| Update Purchase Invoice In Sub Item | `termConfig.updatePurchaseInvoiceInSubItem` |
+| Update Sales Invoice In Sub Item | `termConfig.updateSalesInvoiceInSubItem` |
+| Update Purchase Order In Sub Item | `termConfig.updatePurchaseOrderInSubItem` |
+| Update Sales Order In Sub Item | `termConfig.updateSalesOrderInSubItem` |
+| Update Stock Receipt In Sub Item | `termConfig.updateStockReceiptInSubItem` |
+| Update Traffic Letter In Sub Item | `termConfig.updateTrafficLetterInSubItem` |
+| Update Traffic Letter Request In Sub Item | `termConfig.updateTrafficLetterReqInSubItem` |
+| Update Sales Quotation In Sub Item | `termConfig.updateSalesQuotationInSubItem` |
+| Update Sales Quotation Request In Sub Item | `termConfig.updateSalesQuotationReqInSubItem` |
 
-**Update Salesman In Sub-Item** `termConfig.updateSalesmanInSubItem` — Writes the document's salesman into the sub-item's salesman field. Effective only when the document type carries a salesman.
+**Update Salesman In Sub Item** `termConfig.updateSalesmanInSubItem` — Writes the document's salesman into the sub-item's salesman field. Effective only when the document type carries a salesman.
 
 ## Copying Dimensions into the Sub-Item
 
-These toggles copy the analytic **dimensions** (محددات) — branch, sector, department and analysis set — into the sub-item record. Each dimension has two variants: one that takes the value **from the invoice** (the document/line dimension) and one that takes it **from the warehouse** (the line warehouse's dimension). Enable the variant that matches where you maintain the dimension.
+These toggles copy the analytic **dimensions** (محددات) — branch, sector, department and analysis set — into the sub-item record. Each dimension has two variants: one that takes the value **from the invoice** (the document/line dimension) and one that takes it **from the warehouse** (the dimension of the document's header warehouse — the **To Warehouse** on a stock transfer). Enable the variant that matches where you maintain the dimension.
 
 **From the invoice** — copies the document/line dimension into the sub-item:
 
 | Option | Field ID |
 |---|---|
-| Update Branch In Sub-Item From Invoice | `termConfig.updateBranchInSubItemFromInvoice` |
-| Update Sector In Sub-Item From Invoice | `termConfig.updateSectorInSubItemFromInvoice` |
-| Update Department In Sub-Item From Invoice | `termConfig.updateDepartmentInSubItemFromInvoice` |
-| Update Analysis Set In Sub-Item From Invoice | `termConfig.updateAnalysisSetInSubItemFromInvoice` |
+| Update Branch In Sub Item From Invoice | `termConfig.updateBranchInSubItemFromInvoice` |
+| Update Sector In Sub Item From Invoice | `termConfig.updateSectorInSubItemFromInvoice` |
+| Update Department In Sub Item From Invoice | `termConfig.updateDepartmentInSubItemFromInvoice` |
+| Update Analysis Set In Sub Item From Invoice | `termConfig.updateAnalysisSetInSubItemFromInvoice` |
 
-**From the warehouse** — copies the line warehouse's dimension into the sub-item:
+**From the warehouse** — copies the document warehouse's dimension into the sub-item:
 
 | Option | Field ID |
 |---|---|
-| Update Branch In Sub-Item From Warehouse | `termConfig.updateBranchInSubItemFromWarehouse` |
-| Update Sector In Sub-Item From Warehouse | `termConfig.updateSectorInSubItemFromWarehouse` |
-| Update Department In Sub-Item From Warehouse | `termConfig.updateDepartmentInSubItemFromWarehouse` |
-| Update Analysis Set In Sub-Item From Warehouse | `termConfig.updateAnalysisSetInSubItemFromWarehouse` |
+| Update Branch In Sub Item From Warehouse | `termConfig.updateBranchInSubItemFromWarehouse` |
+| Update Sector In Sub Item From Warehouse | `termConfig.updateSectorInSubItemFromWarehouse` |
+| Update Department In Sub Item From Warehouse | `termConfig.updateDepartmentInSubItemFromWarehouse` |
+| Update Analysis Set In Sub Item From Warehouse | `termConfig.updateAnalysisSetInSubItemFromWarehouse` |
 
 ## Tax Percentages
 
-These toggles copy the four tax percentages between the line and its sub-item. They take effect only on invoice lines. The **From Sub-Item** family pulls the stored percentage out of the sub-item and onto the line; the **To Sub-Item** family writes the line's percentage back into the sub-item record.
+These toggles copy the four tax percentages between the line and its sub-item. They take effect only on invoice lines. The **From Sub Item** family pulls the stored percentage out of the sub-item and onto the line; the **To Sub Item** family writes the line's percentage back into the sub-item record.
 
 **From the sub-item onto the line:**
 
 | Option | Field ID |
 |---|---|
-| Copy Tax 1 Percentage From Sub-Item | `termConfig.copyTax1PercentageFromSubItem` |
-| Copy Tax 2 Percentage From Sub-Item | `termConfig.copyTax2PercentageFromSubItem` |
-| Copy Tax 3 Percentage From Sub-Item | `termConfig.copyTax3PercentageFromSubItem` |
-| Copy Tax 4 Percentage From Sub-Item | `termConfig.copyTax4PercentageFromSubItem` |
+| Copy Tax 1 Percentage From Sub Item | `termConfig.copyTax1PercentageFromSubItem` |
+| Copy Tax 2 Percentage From Sub Item | `termConfig.copyTax2PercentageFromSubItem` |
+| Copy Tax 3 Percentage From Sub Item | `termConfig.copyTax3PercentageFromSubItem` |
+| Copy Tax 4 Percentage From Sub Item | `termConfig.copyTax4PercentageFromSubItem` |
 
 **From the line into the sub-item:**
 
 | Option | Field ID |
 |---|---|
-| Copy Tax 1 Percentage To Sub-Item | `termConfig.copyTax1PercentageToSubItem` |
-| Copy Tax 2 Percentage To Sub-Item | `termConfig.copyTax2PercentageToSubItem` |
-| Copy Tax 3 Percentage To Sub-Item | `termConfig.copyTax3PercentageToSubItem` |
-| Copy Tax 4 Percentage To Sub-Item | `termConfig.copyTax4PercentageToSubItem` |
+| Copy Tax 1 Percentage To Sub Item | `termConfig.copyTax1PercentageToSubItem` |
+| Copy Tax 2 Percentage To Sub Item | `termConfig.copyTax2PercentageToSubItem` |
+| Copy Tax 3 Percentage To Sub Item | `termConfig.copyTax3PercentageToSubItem` |
+| Copy Tax 4 Percentage To Sub Item | `termConfig.copyTax4PercentageToSubItem` |
 
-**Copy Taxes From Sub-Item After** `termConfig.copyTaxesFromSubItemAfter` — A cut-off date that gates the copy-taxes logic above. If a date is set and the document's value date is on or before it, the tax-percentage copy is skipped entirely; only documents dated after this date apply the copy.
+**Copy Taxes From Sub Item After** `termConfig.copyTaxesFromSubItemAfter` — A cut-off date that gates the copy-taxes logic above. If a date is set and the document's value date is on or before it, the tax-percentage copy is skipped entirely; only documents dated after this date apply the copy.
 
 ## Misc
 
-**Sub-Item Status Value Date Field ID** `termConfig.subItemStatusValueDateFieldId` — Selects which document field supplies the effective ("value") date used when ordering and applying sub-item status entries. If empty, the document's normal value date is used.
+**Sub Item Status Value Date Field ID** `termConfig.subItemStatusValueDateFieldId` — Selects which document field supplies the effective ("value") date used when ordering and applying sub-item status entries. If empty, the document's normal value date is used.
 
-**Update Delivery Date In Sub-Item** `termConfig.updateDeliveryDateInSubItem` — On apply, writes the document's delivery date into the sub-item's delivery-date field.
+**Update Delivery Date In Sub Item** `termConfig.updateDeliveryDateInSubItem` — On save, writes the document's value date into the sub-item's delivery-date field.
 
-**Update Cancelled By Doc In Sub-Item** `termConfig.updateCancelledByDoc` — Stamps this document's reference into the sub-item's "cancelled by document" field, recording which document cancelled / voided the sub-item.
+**Update Cancelled By Doc In Sub Item** `termConfig.updateCancelledByDoc` — Stamps this document's reference into the sub-item's "cancelled by document" field, recording which document cancelled / voided the sub-item.
 
-**Do Not Filter Sub-Items By From-Document Sub-Items** `termConfig.doNotFilterSubItemsByFromDocSubItems` — When building a document **based on** a From-Document, does not restrict the selectable sub-items to those present on the From-Document lines; any matching sub-item is allowed.
+**Do Not Filter Sub Items By From Document Sub Items** `termConfig.doNotFilterSubItemsByFromDocSubItems` — When building a document **based on** a From-Document, does not restrict the selectable sub-items to those present on the From-Document lines; any matching sub-item is allowed.
 
-**Do Not Spread Line Data When Sub-Item Of From-Document Added** `termConfig.doNotSpreadLineDataWhenSubItemOfFromDocAdded` — When a sub-item that already exists on the From-Document is selected, skips auto-spreading / copying that From-Document line's data onto the new line.
+**Do Not Spread Line Data When Sub Item Of From Document Added** `termConfig.doNotSpreadLineDataWhenSubItemOfFromDocAdded` — When a sub-item that already exists on the From-Document is selected, skips auto-spreading / copying that From-Document line's data onto the new line.
 
-**Ignore Validate If Return Should Be Sent To Tax Authority** `termConfig.ignoreValidateIfReturnShouldBeSentToTaxAuthority` — Sales-return documents only (Sales Return, Sales Return Request, Service-Center Sales Return). Suppresses the validation that blocks a return when the return itself should be sent to the tax authority, in the case where the parent (From-Document / invoice) is already eligible to be sent to the tax authority.
+**Ignore Validate If Return Should Be Sent To Tax Authority If Parent can be sent to Tax Authority** `termConfig.ignoreValidateIfReturnShouldBeSentToTaxAuthority` — Sales-return documents only (Sales Return, Sales Return Request, Service-Center Sales Return). When the return is one that is sent to the tax authority, its from-document is normally checked: a from-document that is not sent to the tax authority is refused with *Document {0} can not be from document for document {1}, because document {0} should not be sent to tax authority and document {1} should be sent to tax authority* — «المستند {0} لا يمكن أن يكون في بناءً على للمستند {1}, حيث أن المستند {0} لا يُرسل إلى الضرائب والمستند {1} يُرسل للضرائب», and a different tax payer configuration with *Tax payer configuration {0} for document {1} and tax payer configuration {2} for document {3}, both document should be the same tax payer configuration* — «إعدادات مصلحة الضرائب {0} للمستند {1} و إعدادات مصلحة الضرائب {2} للمستند {3}, يجب أن يكون كلا المستندين لهم نفس إعدادات مصلحة الضرائب». Ticking this option skips both checks.

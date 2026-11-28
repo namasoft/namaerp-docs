@@ -26,13 +26,14 @@ Think of a stay as a row of entries in a ledger of beds:
 
 1. The **Accommodation** writes an *in* entry: this patient, this bed, from this date and time.
 2. Each **Accommodation Transfer** closes the current bed and opens a new one — an *out* for the old
-   bed and an *in* for the new.
+   bed and an *in* for the new. With **Leave From Bed Reserved** ticked on the transfer, no *out* is
+   written, so the old bed stays reserved.
 3. The **Accommodation Exit** writes the final *out*.
 
 The entries of one admission must follow each other in time. A transfer dated before the accommodation,
 or an accommodation that is not the first entry of its admission, is refused with a message naming the
-two documents (see the table at the end). For the same reason, the accommodation cannot be deleted while
-a transfer after it exists — delete the transfer first.
+two documents (see the table at the end). For the same reason, an accommodation or a transfer cannot be deleted
+or cancelled while a later transfer or the exit of the stay exists — remove the later document first.
 
 Every change to the history updates three things at once:
 
@@ -41,7 +42,8 @@ Every change to the history updates three things at once:
 - the patient file's **current accommodation**, and the admission's **Current Accommodation Info** —
   the room and bed the patient is in now, emptied once the patient has left.
 
-Unless the admission's term allows it, a bed cannot hold two overlapping stays (see
+A bed cannot hold two overlapping stays unless the term of the admission whose stay is already on that
+bed allows it (see
 [Stay and Operations Document Terms](./document-terms/hms-terms-stay-and-operations.md)). The check works
 both ways: a new stay cannot start on a bed whose previous stay is still open, and a back-dated stay
 cannot be slipped in before a later stay that already left that bed.
@@ -147,7 +149,7 @@ blocks for it. The new bed is required.
 the transfer time, so a back-dated transfer moves the patient out of the right bed even if they have
 moved since. The transfer's **Accommodation Exit Doc** is filled when the patient leaves.
 
-With *update Invoice Prices After Save* ticked on the transfer's term, saving, cancelling or deleting a
+With *Update Invoice Prices After Save* ticked on the transfer's term, saving, cancelling or deleting a
 transfer re-prices the stay's invoices.
 
 ![Accommodation transfer](../../ar/modules/hms/images/accommodation/accommodation-transfer-en.png)
@@ -198,7 +200,7 @@ not yet closed), reads the **diagnosis diseases** on each one's admission, picks
   **Assembly BOM** and dimensions, plus the patient, admission, room and feeding type it is for.
 
 A feeding type matches a patient when every disease it names is among the patient's diagnosis diseases;
-a type that names no disease matches everyone. Among the matches the one with the highest order wins. A
+a disease slot left empty matches anything, so a type that names no disease matches everyone. Among the matches the one with the highest order wins. A
 patient whose admission has no diagnosis diseases, or whom no feeding type matches, is left out. The room
 on each row is the room entered on the admission, so after a transfer it still shows the room of
 admission. Pressing the button again replaces both grids — saving the nurse from choosing diets by hand.
@@ -224,7 +226,7 @@ lists the stock issues.
 | *Exit Date {0} Could not be before In Date {1}.* — «تاريخ الخروج {0} لا يجب أن يكون قبل تاريخ الدخول {1}» | The exit is dated before the accommodation it closes. | Correct the exit date and time. |
 | *The document {0} can not be the first entry for admission document {1}* — «المستند {0} لا يمكن أن يكون أول مستند تسكين لاستمارة الدخول {1}» | A transfer or exit is dated before the admission's accommodation, so it would be the first entry of the stay. | Check the dates; every stay starts with its accommodation. |
 | *The document {0} date [{1} , {2}] can not be the next document after document {3} date [{4} , {5}]* — «المستند {0} الذي تاريخه [ {2} , {1}] لا يمكن أن يكون بعد مستند التسكين {3} الذي تاريخه [{4} , {5}]» | The entries of the stay are out of order — for example a second accommodation after one that is still open. | Fix the date of the document named first, or transfer the patient instead of opening a new accommodation. |
-| *You can not delete this doc {0} before delete transfer doc {1}* — «لا يمكن حذف هذا السند {0} , حيث هناك سند نقل تسكين {1} بعد هذا السند» | A transfer exists after the document you are deleting. | Delete the transfer named in the message first. |
+| *You can not delete this doc {0} before delete transfer doc {1}* — «لا يمكن حذف هذا السند {0} , حيث هناك سند نقل تسكين {1} بعد هذا السند» | A later transfer or the exit of the stay exists after the document you are deleting or cancelling. | Delete the document named in the message first. |
 | *Previous document {0} in date [{1} , {2}] Must Be Out for bed {3}, intersect with same bed* — «السند السابق {0} بتاريخ [{2} , {1}] يجب أن يكون خروج للغرفة {3} , لأنه متقاطع مع نفس الغرفة» | The chosen bed is still occupied by the stay named in the message. | Choose another bed, or move the other patient out first. |
 | *Next document {0} in date [{1} , {2}] Must Be In for bed {3}, intersect with same bed* — «السند التالي {0} بتاريخ [{1} , {2}] يجب أن يكون دخول للغرفة {3} , لأنه متقاطع مع نفس الغرفة» | The stay is back-dated onto a bed that another patient left later, so the two stays would overlap. | Choose another bed, or correct the date. |
 | *You can not create exit document for the admission document {0} because that document already has an exit document {1}* — «لا يمكن عمل سند خروج لسند الدخول {0} حيث أن له سند خروج بالفعل {1}» | The admission was already discharged by the exit named in the message. | Open that exit instead; cancel it first if the discharge must be redone. |

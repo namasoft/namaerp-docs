@@ -33,7 +33,7 @@ That address is what a line in this grid defines. You give the endpoint a name, 
 | Finder Query(Retriever) | A query that looks for an existing record matching the incoming data. |
 | Fields Map | Describes how the incoming values map onto the record's fields. |
 | Response Template (Tempo) | Shapes the reply sent back to the caller, written in Tempo. |
-| Close Browser Window | For endpoints opened in a browser tab: closes the tab when the call finishes. |
+| Close Browser Window | For endpoints opened in a browser tab: closes the tab when the call finishes. This column is not on the grid by default; add it with the [Screen Modifier](/platform/screen-modifier/screen-modifier-edit-screen). |
 | Run Entity Flow | Hands the incoming data to an entity flow instead of filling fields directly. |
 | Export Integrator | Marks the line as one that sends data out rather than taking data in. |
 | Create Only (No-Updates) | The endpoint may create a record but must never touch an existing one. |
@@ -102,9 +102,9 @@ Those seven switches are exactly the choices the interactive import screen puts 
 Two of them deserve a moment's thought before you tick them. **Continue On Errors** decides whether one bad row ruins a two-thousand-row file or is simply reported and skipped; for a nightly price list, skipping is almost always right, but for a batch of financial documents a full stop is safer. **Save As Draft** turns the endpoint into a proposal rather than a decision — the records land in Nama but wait for a human before they count. That is the setting to reach for while you are still learning to trust a new integration.
 
 ::: tip An integrator that looks right but is never found
-The line is only picked up when its **Inactive** column holds an explicit "no". A line created before this screen started tracking that column may have nothing stored there at all, and the endpoint will report that no integrator matches — even though the line is sitting there on screen looking perfectly correct.
+An Import Integrators line is only picked up when its stored inactive flag holds an explicit "no". That flag is not a column you see: it is copied onto every line from the record's **Inactive** header switch each time the record is saved. A line created before the screen started tracking it may have nothing stored there at all, and the endpoint will report that no integrator matches — even though the line is sitting there on screen looking perfectly correct.
 
-The fix takes seconds: open the record, save it once, and the column is filled in. If a configuration looks right and is not being found, re-save the record before investigating anything else.
+The fix takes seconds: open the record, save it once, and the flag is filled in. If a configuration looks right and is not being found, re-save the record before investigating anything else.
 :::
 
 ## Invoice Retriever Lines
@@ -218,7 +218,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `integratorConfig.saveAsUser` | Save As User | Save As User | [Integrator Config](#Integrator-Config) |
 | `integratorConfig.runEntityFlow` | Run Entity Flow | Run Entity Flow | [Integrator Config](#Integrator-Config) |
 | `integratorConfig.exportIntegrator` | Export Integrator | Export Integrator | [Integrator Config](#Integrator-Config) |
-| `integratorConfig.createOnly` | Create Only (No-Updates) | Create Only (No-Updates) | [Integrator Config](#Integrator-Config) |
+| `integratorConfig.createOnly` | Create Only (No-Updates) | إنشاء فقط (بدون تحديث) | [Integrator Config](#Integrator-Config) |
 | `integratorConfig.authenticateFromURL` | Authenticate From URL User and Pass | Authenticate From URL User and Pass | [Integrator Config](#Integrator-Config) |
 | `integratorConfig.authenticateFromSession` | Authenticate From Session | Authenticate From Session | [Integrator Config](#Integrator-Config) |
 | `integratorConfig.integratorUrl` | Integrator URL | Integrator URL | [Integrator Config](#Integrator-Config) |
@@ -238,7 +238,7 @@ Every grid and column this page covers, with its exact on-screen label in both l
 | `importIntegratorLines.continueOnErrors` | Continue On Errors | المتابعة عند حدوث خطأ | [Import Integrators](#Import-Integrators) |
 | `importIntegratorLines.trimExtraSpaces` | Trim Extra Spaces | حذف المسافات الزائدة | [Import Integrators](#Import-Integrators) |
 | `importIntegratorLines.saveAsDraft` | Save As Draft | الحفظ كمسودة | [Import Integrators](#Import-Integrators) |
-| `importIntegratorLines.useUserDimensions` | Use User Dimensions While Importing | استعمال محددات المستخدم اثناء الاستيراد | [Import Integrators](#Import-Integrators) |
+| `importIntegratorLines.useUserDimensions` | Use User Dimensions While Importing | استعمال محددات المستخدم أثناء الاستيراد | [Import Integrators](#Import-Integrators) |
 | `importIntegratorLines.integratorUrl` | Integrator URL | Integrator URL | [Import Integrators](#Import-Integrators) |
 | `importIntegratorLines.responseFields` | Response Fields (CSV - write mode) | Response Fields (CSV - write mode) | [Import Integrators](#Import-Integrators) |
 | `invoiceRetrieverLines` | Invoice Retriever Lines | Invoice Retriever Lines | [Invoice Retriever Lines](#Invoice-Retriever-Lines) |

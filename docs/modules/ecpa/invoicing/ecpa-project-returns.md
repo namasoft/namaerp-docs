@@ -175,7 +175,7 @@ an invoice — which is exactly why the approval route on the return's book is w
 
 Take the invoice worked through on the [Project Invoice page](/modules/ecpa/invoicing/ecpa-project-invoice):
 project `Q-000123` for customer `C-0012`, billed by *Collect Times And Expenses* as a single line of
-**10,860.00**, less a 5 % discount and plus 15 % tax, for a net of **11,864.55**. Five source lines —
+**10,860.00**, less a 5 % discount and plus 15 % tax, for a net of **11,864.55**. Four source lines —
 three blocks of approved hours and one billable travel expense — were stamped as billed when it
 committed.
 
@@ -184,7 +184,7 @@ to credit them.
 
 1. Open a new **Project Return**, choose the return's book (the one carrying the mirrored term) and
    customer `C-0012`.
-2. Press *Collect Times And Expenses* out of curiosity and **nothing arrives** — all five source
+2. Press *Collect Times And Expenses* out of curiosity and **nothing arrives** — all four source
    lines from the invoice are already flagged as billed. So add **one line by hand**: project
    `Q-000123`, *Actual Value* **1,800.00**, tax 1 = 15 %.
 3. The line arithmetic runs on save: after-discount value 1,800.00, tax 1 = 270.00, line net

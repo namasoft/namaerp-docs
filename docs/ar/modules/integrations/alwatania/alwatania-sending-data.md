@@ -15,8 +15,8 @@ description: "كيف تصل البيانات الأساسية وفواتير ا�
 المنشأة المعتادة تستخدم مهمتين مجدولتين — واحدة للبيانات الأساسية وأخرى للفواتير — ومسارات كيان
 اختيارية حتى يصل العملاء والأصناف الجدد إلى المنصة لحظة حفظهم.
 
-في المهمة المجدولة اجعل **نوع المهمة** *إجراء* واكتب الإجراء في **إسم العنصر**؛ وفي مسار
-الكيان اكتبه في عمود **إسم العنصر** في سطر التفاصيل. الحقل يحتاج **الاسم الكامل** للإجراء —
+في المهمة المجدولة اجعل **نوع المهمة** *إجراء* واكتب الإجراء في **اسم العنصر**؛ وفي مسار
+الكيان اكتبه في عمود **اسم العنصر** في سطر التفاصيل. الحقل يحتاج **الاسم الكامل** للإجراء —
 `com.namasoft.modules.integrations.utils.actions.` يليه الاسم المختصر، مثل
 `com.namasoft.modules.integrations.utils.actions.EASendInvoicesToAlwatania`. الاسم المختصر وحده لا
 يُعثر عليه. وأسهل طريقة أن تكتب الاسم المختصر في الحقل ثم تختار الاسم الكامل من قائمة الاقتراحات. المدخلات تُكتب نصًا عاديًا في **المدخل 1**،
@@ -79,13 +79,13 @@ select entityType, id from MasterGroup where forType = 'Customer'
 ### مثال مهمة مجدولة
 
 - **نوع المهمة:** إجراء
-- **إسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendMasterDataToAlwatania`
+- **اسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendMasterDataToAlwatania`
 - **المدخل 1:** `ALW01`
 - **المدخل 2:** `All`
 - **المدخل 3:** *(فارغ)*
 - **الجدولة:** كل ليلة، أو كل ساعة إذا كان على المنصة أن ترى العملاء الجدد بسرعة
 
-استخدم زر **تشغيل الان** للإرسال الكامل الأول بدلًا من انتظار موعد الجدولة.
+استخدم زر **تشغيل الآن** للإرسال الكامل الأول بدلًا من انتظار موعد الجدولة.
 
 ## إرسال السجل الأساسي لحظة حفظه
 
@@ -111,7 +111,7 @@ select entityType, id from MasterGroup where forType = 'Customer'
 
 - **نوع الكيان:** العميل
 - **مع الإجراء:** تأثيرات الحفظ (PostCommit)
-- **إسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendMasterDataRecordToAlwatania`
+- **اسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendMasterDataRecordToAlwatania`
 - **المدخل 1:** `ALW01`
 
 ## إرسال الفواتير والمردودات
@@ -154,7 +154,7 @@ select entityType, id from SalesReturn where valueDate >= dateadd(day, -1, getda
 ### مثال مهمة مجدولة
 
 - **نوع المهمة:** إجراء
-- **إسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendInvoicesToAlwatania`
+- **اسم العنصر:** `com.namasoft.modules.integrations.utils.actions.EASendInvoicesToAlwatania`
 - **المدخل 1:** `ALW01`
 - **المدخل 2:** الاستعلام أعلاه
 - **الجدولة:** كل ساعة، أو كل ليلة

@@ -1,7 +1,7 @@
 ---
 description: "The Custody Type master file in Fixed Assets: its fields, what the Priceless flag changes on custody records and documents, and what a custody type does not control."
 entities: [CustodyType]
-menu: Assets → Custodys → Custody Type
+menu: Assets → Custodies → Custody Type
 ---
 # Custody Types
 
@@ -12,7 +12,7 @@ That is what a custody type is for. It is a short classification — Laptops, Mo
 Tools, Uniforms, Access Badges — and its practical job is to carry the answer to that question so
 the person creating a custody record does not have to remember it.
 
-**Assets > Custodys > Custody Type** (`الأصول > عهد > نوع العهدة`), licence
+**Assets > Custodies > Custody Type** (`الأصول > عهد > نوع العهدة`), licence
 `fixedassets-custody`.
 
 ![The custody type screen](../../../ar/modules/fixedassets/images/custody/custody-type-main-en.png)

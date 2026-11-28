@@ -19,8 +19,8 @@ Manual execution on item sections or item classes when bulk item generation is n
 
 ## How It Works
 
-1. **Validates input entity** - Ensures target is an item class or section with proper item section reference
-2. **Prevents concurrent execution** - Uses locking mechanism to prevent multiple simultaneous runs
+1. **Validates input entity** - Fails with *The object {0} is not a section nor an item class* when the record is neither, and with *The object {0} does not have an item section* when it has no item section
+2. **Prevents concurrent execution** - A second run while one is in progress fails with *Someone else is using this action right now, please wait.* followed by the current status
 3. **Builds item class tree** - Loads all item classes (1-10) related to the specified section
 4. **Creates hierarchical tree** - Constructs tree structure representing all class relationships
 5. **Processes tree relationships** - Handles null children and copies relationships appropriately
@@ -45,7 +45,7 @@ Manual execution on item sections or item classes when bulk item generation is n
 
 **Parameter 3:** Mark Items for Deletion (Optional) - true to write `Delete` in the Description 5 field of the section's items that are not in the generated set (and clear it on the others)
 
-**Parameter 4:** Delete Unneeded Items (Optional) - true to actually delete items not in generated set
+**Parameter 4:** Delete Unneeded Items (Optional) - true to actually delete items not in generated set; when it is true the items are deleted and not marked, whatever Parameter 3 holds
 
 ## Database Tables Affected
 

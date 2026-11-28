@@ -69,5 +69,5 @@ Getting the costs in, and getting the invoice out.
   <LandingCard icon="🚕" title="Project Expenses" link="/modules/ecpa/expenses/ecpa-project-expenses.md" details="The expense catalogue, the employee's claim and the accountant's document — and the one tick box that decides who pays." />
   <LandingCard icon="💵" title="Project Invoice" link="/modules/ecpa/invoicing/ecpa-project-invoice.md" details="Billing the customer: how a line's amount is produced, the collect buttons that sweep unbilled time and expenses, and what the invoice books." />
   <LandingCard icon="↩️" title="Project Return" link="/modules/ecpa/invoicing/ecpa-project-returns.md" details="Reversing a project invoice — what it links back to and what it books." />
-  <LandingCard icon="🧾" title="Document Terms for Project Documents" link="/modules/ecpa/invoicing/ecpa-document-terms.md" details="The term screens behind the six project documents that have one, described by purpose and by what each books." />
+  <LandingCard icon="🧾" title="Document Terms for Project Documents" link="/modules/ecpa/invoicing/ecpa-document-terms.md" details="The five term screens behind the seven project documents that have one, described by purpose and by what each books." />
 </LandingGrid>

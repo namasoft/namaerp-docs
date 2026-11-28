@@ -27,6 +27,12 @@ Take a recurring service invoice that is raised for the same customer every mont
 
 ::: warning A line needs a scope
 Unlike most grids on this screen, a Clear On Duplicate line may not be left completely open. At least one of **For Type**, **Entity List** or **Applicable For** must be filled in — the screen refuses to save a line where all three are empty. If you really do want the field cleared everywhere, use Applicable For = `AllScreens` rather than leaving the three boxes blank.
+
+Applicable For also cannot be combined with the other two: fill **Applicable For** alone, or **For Type** and/or **Entity List**. A line with both is refused with:
+
+*You can not fill the field {0}, {1} and {2}, either fill {0} alone or {1} and {2}* — «لا يمكنك ملء الحقل {0}، {1} و{2} معاً، إما أن تملأ {0} فقط أو {1} و{2}»
+
+The same rule holds on the Audit Fields, Add Discussion To and Add Related Documents To grids below.
 :::
 
 The clearing is done by the server at the moment the copy is made, so a change here is live as soon as you save the record. There is nothing to reload and no session to restart.
@@ -47,11 +53,10 @@ Keep the list short. Detailed auditing is not free, and a hundred audited fields
 |---|---|
 | For Type List | A named list of entity types, so one line covers several at once. |
 | For Type | The single entity type this line applies to, for example Customer. |
-| Applicable For | A broad category — `AllScreens`, `Documents` or `MasterFiles`. |
 | On Field | The field ID to audit in detail, for example `creditLimit`, `details.price`. |
 
 ::: tip Name the type in For Type
-On this grid, name the entity type in **For Type** (or list the types in **For Type List**) rather than relying on the Applicable For category.
+On this grid, name the entity type in **For Type**, or list the types in **For Type List**.
 :::
 
 This grid is applied by the server, so it takes effect the moment you save. The next edit of an audited field is already recorded in detail; edits made before you added the line are not, because the detail simply was not captured at the time.
@@ -68,15 +73,17 @@ Questions about a document are usually asked in e-mail, in a chat group, or by w
 
 Several screens carry that panel already. **Add Discussion To** adds it to the screens that do not — a Purchase Order, a Job Order, a Customer file, whatever your users argue about most.
 
-A line names the entity type, the tab the panel should be added to, and where on that tab it should sit. For example, For Type = Purchase Order, Add To Page = the notes tab of the screen, Insert At = 10, puts the conversation at the bottom of the tab your users already open when they want the background to a document.
+A line names the entity type, the tab the panel should be added to, and where on that tab it should sit. For example, For Type = Purchase Order, Add To Page = the notes tab of the screen, Insert At left empty, puts the conversation at the bottom of the tab your users already open when they want the background to a document. A tab that already shows a discussion panel does not get a second one.
 
 | Column | What it does |
 |---|---|
 | For Type List | A named list of entity types, so one line covers several at once. |
 | For Type | The single entity type this line applies to, for example Purchase Order. |
 | Applicable For | A broad category — `AllScreens`, `Documents` or `MasterFiles`. |
-| Add To Page | The name of the tab the panel is added to. |
-| Insert At | The panel's position on that tab — a smaller number puts it higher up. |
+| Add To Page | The name of the tab the panel is added to. A screen with no tab of that name gets the panel on its first tab. The mobile screen and the quick-creation screen get the panel too, by the same rule. |
+| Insert At | The panel's position among the blocks of that tab: `1` puts it first, `2` second, and so on. Left empty, or larger than the number of blocks on the tab, it puts the panel last. |
+
+A line with For Type, For Type List and Applicable For all empty applies to every edit screen.
 
 ::: tip Always name a page
 Leaving **Add To Page** empty does not mean "the default tab" — it means **every** tab of the screen, including the mobile screen and the quick-creation screen. A discussion panel repeated on eight tabs is not what anyone had in mind. Set a page name unless you genuinely want the panel everywhere.
@@ -84,9 +91,9 @@ Leaving **Add To Page** empty does not mean "the default tab" — it means **eve
 
 ## Add Related Documents To
 
-The related-documents panel answers the other recurring question: where did this document come from and what came out of it? It shows the chain around the record — the sales order behind the invoice, the delivery that followed it, the return that reversed it — so a user can walk the chain without going back to the menu and searching.
+The related-documents panel answers the other recurring question: what came out of this record? It is a collapsible list titled **Related From Documents** that shows every record whose *From Document* is the record on screen — on a sales order, the invoices made from it; on an invoice, the return made from it — so a user can walk down the chain without going back to the menu and searching.
 
-**Add Related Documents To** works exactly like the discussion grid: the same scope columns, the same **Add To Page** and **Insert At**, and the same trap if you leave the page name empty. Put the panel on the tab where users look for context — typically the first tab of a document, so the chain is visible the moment the record opens.
+**Add Related Documents To** works exactly like the discussion grid: the same scope columns, the same **Add To Page** and **Insert At**, and the same trap if you leave the page name empty. A tab that already shows the list does not get a second one. Put the panel on the tab where users look for context — typically the first tab of a document, so the chain is visible the moment the record opens.
 
 | Column | What it does |
 |---|---|
@@ -94,7 +101,7 @@ The related-documents panel answers the other recurring question: where did this
 | For Type | The single entity type this line applies to, for example Sales Invoice. |
 | Applicable For | A broad category — `AllScreens`, `Documents` or `MasterFiles`. |
 | Add To Page | The name of the tab the panel is added to. Leaving it empty adds the panel to every tab. |
-| Insert At | The panel's position on that tab — a smaller number puts it higher up. |
+| Insert At | The panel's position among the blocks of that tab, as on the discussion grid. Left empty, it puts the panel last. |
 
 ::: warning These two grids need a server restart
 The discussion and related-documents panels are the exception to everything else on this screen. They are not read fresh each time; they are cached together with the screen layouts, and that cache is **not** refreshed automatically. After you add or change a line in either grid, the panel will not appear — no matter how many times the user signs out and back in — until the **server is restarted**. Plan the change for a restart window, and do not spend an afternoon debugging a line that is perfectly correct.
@@ -102,23 +109,23 @@ The discussion and related-documents panels are the exception to everything else
 
 ## Email Send To Types
 
-When a user sends a document or a report by e-mail from inside Nama, the send dialog does not ask them to type an address. It gives them a recipient box they can pick records from, and the address is taken from the record they choose. That only works if the box knows which kinds of record it is allowed to offer — a Sales Invoice should offer customers and perhaps the salesman, an internal cost report should offer employees, a purchase document should offer suppliers.
+When a user sends a document or a report by e-mail from inside Nama, the send dialog does not ask them to type an address. It gives them recipient boxes they can pick records from, and the address is taken from the record they choose. Out of the box every recipient box offers two kinds of record: employees and customers. A purchase document may also need suppliers, a cost report may need salesmen.
 
-**Email Send To Types** is where that list is decided. Each line names the recipient box being configured — the "to" and "cc" boxes of the send dialog — and up to five entity types that box may choose from.
+**Email Send To Types** adds those extra types. Each line names one recipient box of the send dialog — `to1`, `to2`, `to3` for the three "to" boxes, `cc1`, `cc2`, `cc3` for the three "cc" boxes — and up to five entity types that box may choose from, on top of employees and customers. The grid has no For Type column: a line applies to that box in every send dialog of its kind, whatever the record or report being sent.
 
 | Column | What it does |
 |---|---|
-| Send Type | Whether the line applies to the report dialog (`SendReport`) or the printed-form dialog (`SendForm`). Leaving it empty applies the line to both. |
-| On Field | The recipient box being configured — the "to" or "cc" box of the send dialog. |
+| Send Type | Whether the line applies to the report dialog (`SendReport`) or to the dialog that sends a record's printed form from its screen or list (`SendForm`). Leaving it empty applies the line to both. |
+| On Field | The recipient box being configured: `to1`, `to2`, `to3`, `cc1`, `cc2` or `cc3`. |
 | Type 1 | An entity type this box may pick from, for example Customer. |
 | Type 2 | A second allowed entity type. |
 | Type 3 | A third allowed entity type. |
 | Type 4 | A fourth allowed entity type. |
 | Type 5 | A fifth allowed entity type. |
 
-Five types per line is not the limit, because lines for the same box **merge** rather than overwrite each other. If you need customers, suppliers, employees, salesmen and two more types in the same box, write a second line for the same box with the extra types and the dialog offers all of them.
+Five types per line is not the limit, because lines for the same box and the same Send Type **merge** rather than overwrite each other. If you need six extra types in the same box, write a second line for the same box and Send Type with the extra types and the dialog offers all of them.
 
-**Send Type** exists because the two dialogs are used by different people for different things. Reports tend to go to managers, printed forms tend to go to the customer or the supplier named on the document. Setting `SendReport` on one line and `SendForm` on another lets each dialog offer a sensible, short list instead of one long combined list that everybody has to scroll past.
+**Send Type** exists because the two dialogs are used by different people for different things. Reports tend to go to managers, printed forms tend to go to the customer or the supplier named on the document. Setting `SendReport` on one line and `SendForm` on another lets each dialog offer a sensible, short list instead of one long combined list that everybody has to scroll past. Give a box either lines with a Send Type or lines without one, not both.
 
 ::: warning Users must sign out and back in
 This grid is applied by the browser, not the server. After you save your changes, a user who is already signed in keeps seeing the old recipient list until they **sign out and sign back in** (or force a hard reload). Test your line in a fresh session before concluding it did not work.
@@ -130,18 +137,18 @@ Every grid and column this page covers, with its exact on-screen label in both l
 
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
+| `lines` | Clear On Duplicate | Clear On Duplicate | [Clear On Duplicate](#Clear-On-Duplicate) |
 | `auditFields` | Audit Fields | Audit Fields | [Audit Fields](#Audit-Fields) |
-| `addDiscussionTo` | Add Discussion To | إضافة النقاش إلي | [Add Discussion To](#Add-Discussion-To) |
-| `addDiscussionTo.addToPage` | Add To Page | إضافة إلي صفحة | [Add Discussion To](#Add-Discussion-To) |
+| `addDiscussionTo` | Add Discussion To | إضافة النقاش إلى | [Add Discussion To](#Add-Discussion-To) |
+| `addDiscussionTo.addToPage` | Add To Page | إضافة إلى صفحة | [Add Discussion To](#Add-Discussion-To) |
 | `addDiscussionTo.insertAt` | Insert At | إضافة في | [Add Discussion To](#Add-Discussion-To) |
 | `addRelatedDocumentsTo` | Add Related Documents To | إضافة المستندات المرتبطة إلى | [Add Related Documents To](#Add-Related-Documents-To) |
-| `addRelatedDocumentsTo.addToPage` | Add To Page | إضافة إلي صفحة | [Add Related Documents To](#Add-Related-Documents-To) |
+| `addRelatedDocumentsTo.addToPage` | Add To Page | إضافة إلى صفحة | [Add Related Documents To](#Add-Related-Documents-To) |
 | `addRelatedDocumentsTo.insertAt` | Insert At | إضافة في | [Add Related Documents To](#Add-Related-Documents-To) |
-| `lines` | Details | التفاصيل | [Email Send To Types](#Email-Send-To-Types) |
-| `emailSendToTypes` | Email Send To Types | أنواع المراجع في نافذة ارسال بريد الكترونى | [Email Send To Types](#Email-Send-To-Types) |
-| `emailSendToTypes.sendType` | Send Type | نوع الارسال | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes` | Email Send To Types | أنواع المراجع في نافذة إرسال بريد إلكتروني | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.sendType` | Send Type | نوع الإرسال | [Email Send To Types](#Email-Send-To-Types) |
 | `emailSendToTypes.entityType1` | Type 1 | النوع 1 | [Email Send To Types](#Email-Send-To-Types) |
-| `emailSendToTypes.entityType2` | TypE 2 | النوع 2 | [Email Send To Types](#Email-Send-To-Types) |
+| `emailSendToTypes.entityType2` | Type 2 | النوع 2 | [Email Send To Types](#Email-Send-To-Types) |
 | `emailSendToTypes.entityType3` | Type 3 | النوع 3 | [Email Send To Types](#Email-Send-To-Types) |
 | `emailSendToTypes.entityType4` | Type 4 | النوع 4 | [Email Send To Types](#Email-Send-To-Types) |
 | `emailSendToTypes.entityType5` | Type 5 | النوع 5 | [Email Send To Types](#Email-Send-To-Types) |

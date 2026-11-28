@@ -25,7 +25,7 @@ This is the page you will spend nearly all your time on. It is organised into gr
 
 **The property and its site.** **rented Estate** (العقار المؤجر) is required, and it accepts a rental unit, a floor, a whole building, or a [unit group](/modules/realestate/properties/realestate-buildings-floors-and-units.md). Picking it fills in the read-only site breadcrumb — project, building, floor, unit, square, block, unit group — so you never type the address, and so every list and report can filter leases by location.
 
-**Rent Info.** From Date and To Date, the **Rent Period** (فترة العقد, a value and a unit of measure), the **Rent type** (نوع الايجار) which sets the installment frequency — Monthly, Quarterly, Year Third, Half Year, Yearly, and the multi-year rhythms — the purpose of the rent as free text, the **Dates in hijri** switch (العمل بالتاريخ الهجري), and the **Yearly added value type** that governs the escalation on page 2.
+**Rent Info.** From Date and To Date, the **Rent Period** (فترة العقد, a value and a unit of measure), the **Rent type** (نوع الإيجار) which sets the installment frequency — Monthly, Quarterly, Year Third, Half Year, Yearly, and the multi-year rhythms — the purpose of the rent as free text, and the **Dates in hijri** switch (العمل بالتاريخ الهجري).
 
 Dates and period are mutually derived: type the dates and the period fills itself, type the period and the To Date follows. The Hijri switch changes every date calculation in the document, not just how dates are displayed — see [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule.md).
 
@@ -37,7 +37,7 @@ The values block is the input side of the whole document. The schedule generator
 
 | Field | Arabic label | What it is |
 |---|---|---|
-| Rent Value Per Year | اساس العقد السنوي | **Required — the annual base.** Every other figure on the contract is calculated from it, and the schedule pro-rates it per period. |
+| Rent Value Per Year | أساس العقد السنوي | **Required — the annual base.** Every other figure on the contract is calculated from it, and the schedule pro-rates it per period. |
 | Rent Value per period | قيمة الإيجار بالفترة الواحدة | A convenience input, and only an input. Type the quarterly rent here and Nama multiplies it by the number of periods in a year to fill the annual base; change the Rent type and it recalculates. Nothing ever writes it back, so it keeps whatever you typed — or stays empty — when the annual base is later filled from a price list or by an import. It is not the installment either: what the tenant is billed is the *Total After Taxes* column of the Rents grid. |
 | Commission % / value | السعي % / قيمة السعي | The agency or brokerage fee, emitted once as its own line on the first date of the schedule. |
 | Insurance % / value | التأمين % / التأمين | The refundable security deposit — also emitted once, on the first date. |
@@ -46,7 +46,7 @@ The values block is the input side of the whole document. The schedule generator
 | Treat Maintenance Costs As Installments | معاملة تكاليف الصيانة معاملة الأقساط | Ticked, the maintenance amount is spread across every installment in proportion to the period; unticked, it is charged once a year in the contract's anniversary month. |
 | Treat Water Costs As Installments | معاملة المياه معاملة الأقساط | The same choice for water. |
 | Commission Collection Value / Percentage | عمولة التحصيل / نسبة عمولة التحصيل | The collection commission. Present on the contract; hidden on offers. |
-| Total Rent Value | إجمالي ايجارات العقد | **Calculated.** The net of the rent lines only — the lines whose type is *Installment*. |
+| Total Rent Value | إجمالي إيجارات العقد | **Calculated.** The net of the rent lines only — the lines whose type is *Installment*. |
 | Total Contract Value | إجمالي قيمة التعاقد | **Calculated.** The net of *all* lines, so it includes commission, deposit, water, maintenance and expenses. |
 
 Every percentage and its matching value are kept in step in both directions against the annual base: type 10% into Insurance % on our 120,000 lease and 12,000 appears in the value, and typing 12,000 into the value puts 10% back into the percentage. That applies to commission, insurance, maintenance, water and collection commission alike.
@@ -57,7 +57,7 @@ The gap between *Total Rent Value* and *Total Contract Value* is a frequent supp
 
 ## The Rents grid — the payment schedule
 
-The **Rents** (الايجارات) grid is the contract's schedule: one line per amount the tenant owes on a date. You rarely build it by hand — the *Create Rents* button generates it from the values block, and [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule.md) explains exactly what it calculates.
+The **Rents** (الإيجارات) grid is the contract's schedule: one line per amount the tenant owes on a date. You rarely build it by hand — the *Create Rents* button generates it from the values block, and [Generating the Rent Schedule](/modules/realestate/rent/realestate-rent-schedule.md) explains exactly what it calculates.
 
 The columns fall into three groups.
 
@@ -79,7 +79,7 @@ Three grids, all optional, all feeding the schedule or the paperwork.
 
 Expense lines are turned into schedule lines by *Create Rents*, and each one books through the accounts on its **own expense type**, not through the contract term.
 
-**Other Fees Lines** (رسوم أخري) covers one-off charges — a registration fee, a paperwork charge. Each line names a fee type and a value, optionally its own subsidiary and date, and a switch that adds it to the installments. Like expenses, a fee books through the accounts on its own fee type.
+**Other Fees Lines** (رسوم أخرى) covers one-off charges — a registration fee, a paperwork charge. Each line names a fee type and a value, optionally its own subsidiary and date, and a switch that adds it to the installments. Like expenses, a fee books through the accounts on its own fee type.
 
 **Terms** (البنود) is free text: a code and a clause, for the wording that goes in the printed contract.
 
@@ -89,7 +89,7 @@ Long leases rarely hold one price for their whole life, and this page is where t
 
 The **Discount** group holds a percentage for each of the first ten contract years, applied to that year's rent lines. If your lease runs longer than ten years, or you prefer a grid, the **Discounts** grid takes a year number and a percentage and covers any year.
 
-The increase side is governed by **Yearly added value type** (طريقة الزيادة السنوية) on page 0, and the three choices genuinely change what this page lets you do:
+The increase side is governed by **Yearly added value type** (طريقة الزيادة السنوية), the first field of the yearly-rate group on this page, and the three choices genuinely change what this page lets you do:
 
 | Yearly added value type | Arabic | What you may fill in |
 |---|---|---|
@@ -177,11 +177,11 @@ Every ledger line carries the contract's own dimensions: the owner as supplier, 
 
 **The property has to be available.** A commit fails if the estate is already rented. It also fails if the estate is **sold**, unless the term ticks *Allow Rent Sold Estate* (السماح بتأجير الوحدات المباعة) — which is what you use when the developer sold a unit to an investor and then manages the letting on his behalf. Both checks are skipped when *Auto Cancel Previous Contract* is on, because a renewal is meant to overlap.
 
-**Auto Cancel Previous Contract has three rules of its own.** It cannot be changed after the first save; the estate cannot be changed while it is ticked; and it needs a previous contract to exist on that estate, or the commit fails with *Estate has no previous contract for auto cancel*. On top of that, the term must define both a cancel-contract book and a cancel-contract term, otherwise the save fails and points you straight at the term field.
+**Auto Cancel Previous Contract has three rules of its own, checked once the contract has been committed.** The switch cannot be changed (*Can not change auto cancel previous contract field after first save*); the estate cannot be changed while it is ticked; and it needs a previous contract to exist on that estate, or the save fails with *Estate has no previous contract for auto cancel*. On top of that, the term must define both a cancel-contract book and a cancel-contract term, otherwise the save fails and points you straight at the term field.
 
-**Installment codes are unique and, after commit, immutable.** Nor can a line that has been paid be deleted, or its value reduced below what has been collected against it. Collect first and regenerate the schedule afterwards, and you will lose the collection history; regenerate first, then collect.
+**Installment codes are unique, and a paid line keeps its code.** Once collection documents have paid a line, in full or in part, the line can be neither deleted nor recoded: *Can not delete or change code of a paid line {0}*, and *The installment code {0} can not be modified to {1}* for a code change on a line with money against it. A line's manually entered **Paid Value** cannot exceed its net value (*Paid value cannot exceed {0}*). Because *Create Rents* replaces every line, pressing it after money has been collected makes the next save fail with the first of those messages; regenerate first, then collect.
 
-**A cancelled contract is frozen.** Once a termination has ended the lease, the contract cannot be modified and cannot be extended.
+**A cancelled contract is frozen.** Once a termination has ended the lease, the contract cannot be modified (*Can not modify a cancelled document*) and cannot be extended.
 
 **The expense lines have their own checks:** a percentage-based expense must say what the percentage is measured against, every line needs either a percentage or a value, and the to-year cannot be earlier than the from-year.
 

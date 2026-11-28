@@ -21,7 +21,7 @@ menu: Customer Relationship Management → Technician Appointments → Technicia
 
 **Technician Procedure** (*إجراء فني*) — the job. The picker offers the procedures whose Department Sections grid names the section you chose, plus the procedures whose grid is empty.
 
-**From Document** (*بناءا على*) — the document that promised the visit, such as a sales invoice, order or contract. Any document type is accepted, unless the From Document field of **Technician Appointment** has been narrowed in [Allowed Values For Generic References](/platform/fields-and-entities-settings/fields-settings-reference-lookups.md#Allowed-Values-For-Generic-References); then the calendar offers the same types the appointment screen does. You must pick it before you can draw: if you try to draw without it, the calendar tells you to *"Pick the source document (from doc)"*.
+**From Document** (*بناءً على*) — the document that promised the visit, such as a sales invoice, order or contract. Any document type is accepted, unless the From Document field of **Technician Appointment** has been narrowed in [Allowed Values For Generic References](/platform/fields-and-entities-settings/fields-settings-reference-lookups.md#Allowed-Values-For-Generic-References); then the calendar offers the same types the appointment screen does. You must pick it before you can draw: if you try to draw without it, the calendar tells you to *"Pick the source document (from doc)"*.
 
 Until both the section and the procedure are set, the calendar stays behind a *"Pick department & procedure to start drawing periods"* panel. Once both are set, the crew list and the week fill in. If you change the section or the procedure later, any periods you have drawn and not saved are discarded without a warning.
 
@@ -128,14 +128,14 @@ When a save moves or deletes a period of an existing appointment, the appointmen
 
 ### The reason for a change
 
-**Add a reason** opens a small box with the hint *"Optional, saved to the change history"*. The reason is saved with the periods you **moved** and shows up as the Remark on those rows of the appointment's [Change History](/modules/crm/technician-appointments/crm-technician-appointment.md#Change-History). A week later, "why did the Giza visit go to Thursday" has an answer. Type the reason before the change is saved.
+**Add a reason** opens a small box with the hint *"Optional, saved to the change history"*. The reason is written into the Remark of the periods you **moved** and shows up as the Remark on those rows of the appointment's [Change History](/modules/crm/technician-appointments/crm-technician-appointment.md#Change-History). A week later, "why did the Giza visit go to Thursday" has an answer. Type the reason before the change is saved.
 
 A few details:
 
 - One reason covers every period of that appointment you moved in the same save.
-- A reason typed only for a status change is not stored.
+- A reason saved without any moved period, for example with a status change or a period deletion alone, is written into the Remark of every remaining period of the appointment. Each period whose Remark changed gets an *Edit* row in the Change History, with its old and new times the same.
 - A period keeps its last reason. If you move it again later without typing a new one, the history repeats the old reason. When a period is deleted, its history row shows the last reason it was given.
-- **No reason can be recorded while Confirm each change immediately is on**, because each move is saved before you get the chance to add one.
+- While **Confirm each change immediately** is on, each move is saved before you can add a reason, so the move keeps the period's previous reason. **Add a reason** is then saved straight away on its own, as a reason without a moved period.
 
 ### Saving your changes
 
@@ -189,28 +189,13 @@ The calendar follows the same security profile as the **Technician Appointment**
 
 A notification, email or SMS can carry a link that opens this calendar with the section, the procedure and the From Document already filled in. A typical use is right after a sale: when a sales invoice for an installation is committed, the booking team gets a message with a link that opens the calendar on that invoice, and all they have left to do is draw the periods.
 
-The Tempo function `createappointment` builds the link. For a notification template on the sales invoice:
-
-```tempo
-Invoice {code} for {customer.name1} needs an installation visit.
-<a href="{createappointment(technicianProcedure="01",departmentSection="01",fromDocType=entityType,fromDocCodeOrId=id)}">Book it now</a>
-```
-
-`entityType` and `id` are the current record's type and id, so the same template works on any document. A fixed type such as `fromDocType="SalesInvoice"` works too. The link it renders has this shape:
+The Tempo function `createappointment` builds the link. Its parameters (`departmentSection`, `technicianProcedure`, `fromDocType` and `fromDocCodeOrId`) and a notification template for the sales invoice are in the Tempo guide, under [Link to Book a Technician Appointment](/admin/tempo#6-Link-to-Book-a-Technician-Appointment). Leave out the parameters the booking clerk should choose. The link it renders has this shape, with the parameters in the order the template names them:
 
 ```
-<your Nama address>#/tech-appointment?menu=technicianAppointmentCreator&fromDocType=SalesInvoice&fromDocCodeOrId=<invoice id>&technicianProcedure=01&departmentSection=01
+<your Nama address>#/tech-appointment?menu=technicianAppointmentCreator&technicianProcedure=01&departmentSection=01&fromDocType=SalesInvoice&fromDocCodeOrId=<invoice id>
 ```
 
-| Parameter | What it fills in |
-|---|---|
-| `departmentSection` | Department Section, by its code or id |
-| `technicianProcedure` | Technician Procedure, by its code or id |
-| `fromDocType` + `fromDocCodeOrId` | From Document: the document type, plus that document's code or id. The document is used only when both are passed |
-
-The function produces a bare address, so put it inside an `href` or a button. Parameter names are not case-sensitive, and every parameter is optional: leave out the ones the booking clerk should choose. When the calendar opens, it looks up each value and fills in the field. If it cannot find a value, it leaves the field empty. The parameters are then removed from the address bar, so refreshing the page does not refill fields you have changed since.
-
-The full reference is in the Tempo guide, under [Link to Book a Technician Appointment](/admin/tempo.md#6-Link-to-Book-a-Technician-Appointment).
+When the calendar opens, it looks up each value and fills in the field: Department Section and Technician Procedure by code or id, and the From Document by its type plus its code or id, used only when both are passed. If it cannot find a value, it leaves the field empty. The parameters are then removed from the address bar, so refreshing the page does not refill fields you have changed since.
 
 ### A button on the document
 
@@ -238,11 +223,11 @@ None of the working week is configured on this screen. Each limit comes from som
 | Which procedures are offered | The procedure's Department Sections grid: names the section, or is empty |
 | Which weeks you can page to | From/To dates on the booking settings Details grid |
 | The height of a grid row | Slot Duration In Minutes, the shortest one if the rows differ. 30 minutes when blank |
-| Working hours and rest days | The attendance shift named on the booking settings. 06:00–24:00 when the section has no booking settings |
+| Working hours and rest days | The attendance shift named on the booking settings. 06:00–24:00 when no attendance shift applies |
 | Time before now | The current time. The past is never bookable |
 | Which crews are listed | Committed crews, by their Department Section and Procedures grid |
 | Each crew's colour | Color Code on the crew, or an automatic colour |
-| Which appointments are drawn | Committed, not cancelled appointments of the ticked crews that match the filters, up to 200 for the period on screen |
+| Which appointments are drawn | Committed, not cancelled appointments of the ticked crews that match the filters, for the period on screen |
 | *Unavailable* blocks | Committed Technician Unavailability documents for the crew's technicians |
 | The book the appointment is numbered in | Appointment Books And Terms Per Section |
 

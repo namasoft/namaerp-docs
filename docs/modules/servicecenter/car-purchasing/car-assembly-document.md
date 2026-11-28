@@ -36,15 +36,15 @@ The header names what is being built and what it is built from:
 
 | Field | English | Notes |
 |---|---|---|
-| صنف التجميع | Assembly Item | The finished vehicle item |
-| قائمة مكونات التجميع | Assembly BOM | **Required.** Supplies the chassis item and the engine item |
-| كمية التجميع | Assembly Quantity | How many vehicles this document builds |
-| المخزن | Source warehouse | Where the chassis and engines are drawn from |
-| مخزن الاستلام | Receipt Warehouse | Where the finished vehicles land |
+| صنف مجمع | Assembly Item | The finished vehicle item |
+| طريقة التجميع | Assembly BOM | **Required.** Supplies the chassis item and the engine item |
+| الكمية | Quantity | How many vehicles this document builds |
+| المخزن | Warehouse | Where the chassis and engines are drawn from |
+| مخزن التوريد | Receipt Warehouse | Where the finished vehicles land |
 
-Then the details grid — one row per vehicle — carrying **chassis number**, **chassis number 2**,
-**engine number** and **engine number 2**, alongside the usual line columns and the
-**السياره (Customer Car)** picker.
+Then the details grid — one row per vehicle — carrying **chassis number**, **Chassis Number 2**,
+**engine number** and **Engine Number 2**, alongside the usual line columns and the
+**السيارة (Customer Car)** picker.
 
 ![The Sub Item Assembly Document, with the chassis and engine columns visible on the grid](../../../ar/modules/servicecenter/images/car-purchasing/sc-car-assembly-en.png)
 

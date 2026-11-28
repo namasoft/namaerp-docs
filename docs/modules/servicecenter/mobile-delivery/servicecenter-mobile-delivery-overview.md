@@ -11,7 +11,7 @@ entities: [MobDeliveryDoc, MultiMobDeliveryDoc, ExternalDeliveryOrder]
 ::: danger These documents have nothing to do with vehicles
 Read this before anything else, because the folder's position inside Service Center makes the wrong reading almost irresistible.
 
-**Mobile Delivery has no connection whatsoever to car delivery.** It is not the [Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md), it does not hand a sold car over to a buyer, it does not touch the [car register](/modules/servicecenter/cars-setup/car-master-file.md), and no code path connects the two. A delivery line here can point at a sales invoice, a sales return, a work task or an invoice receipt document — a car final delivery is not even an option.
+**Mobile Delivery has no connection whatsoever to car delivery.** It is not the [Car Final Delivery](/modules/servicecenter/car-sales/car-final-delivery.md), it does not hand a sold car over to a buyer, it does not touch the [car register](/modules/servicecenter/cars-setup/car-master-file.md), and no code path connects the two. A delivery line here can point at a sales invoice, a sales return, a work task, an invoice receipt document or an external delivery order — a car final delivery is not even an option.
 
 What it actually is: **the route sheet for a courier carrying goods to customers**, driven from the Nama Delivery phone app. If you came here looking for how a sold car is handed over, that belongs to the [car sales cycle](/modules/servicecenter/car-sales/car-sales-cycle.md) and this is the wrong folder.
 :::
@@ -61,7 +61,7 @@ The delivery document is written for a phone app the courier carries, not for th
 1. **The courier opens the app and sees the stops.** The list is drawn from delivery-document lines where the courier is the logged-in employee — or where no courier has been named at all — whose delivery state is still open (*Initial*, *Moved* or *Customer Not Available*), and whose value date falls inside a recent window. Lines are also limited to the courier's own legal entity and branch, as set on the courier's employee record; a line with no legal entity or branch is shown to everyone. The stops still waiting at the branch and the stops already on the road are listed separately.
 
    ::: info The collection window is configurable
-   The window is the setting **Previous Days Count To Limit Mob Deliver Document Search Period** (*عدد الأيام السابقة للبحث عن مستند حركة*) on the **Mobile Apps Configurations** screen. Left empty, it is **three days**. If a courier reports that yesterday's stop is missing from the app, that window is the first thing to check — then the legal entity and branch on the courier's employee record.
+   The window is the setting **Previous Days Count To Limit Mob Delivery Document Search Period** (*عدد الأيام السابقة للبحث عن مستند حركة*) on the **Mobile Apps Configurations** screen. Left empty, it is **three days**. If a courier reports that yesterday's stop is missing from the app, that window is the first thing to check — then the legal entity and branch on the courier's employee record.
    :::
 
 2. **The courier moves the orders out.** Leaving the branch, the courier picks the stops being taken and records the move. Each picked stop goes from *Initial* to **Moved**, takes this courier if it had none, and gets its own line in the **Courier Check In And Out** grid with the **Move Date Time** and the **Move Location** (the phone's position). Only stops waiting at the branch are moved; a stop taken by another courier, already delivered or marked *Customer Not Available* is refused.
@@ -70,14 +70,14 @@ The delivery document is written for a phone app the courier carries, not for th
 
 4. **The app can re-order the stops.** The courier asks for the route to be arranged, and the stops come back in driving order rather than the order somebody happened to type them in.
 
-5. **The courier records what happened.** Each line carries a **delivery state** — *Initial*, *Moved*, *Delivered* or *Customer Not Available* — plus the arrival date and time, the customer address as the courier found it, free remarks, and a voice note. The state can only move forward:
+5. **The courier records what happened.** Each line carries a **delivery state** — *Initial*, *Moved*, *Totally Delivered* or *Customer Not Available* — plus the arrival date and time, the customer address as the courier found it, free remarks, and a voice note. The state can only move forward:
 
    | From | Allowed next states |
    |---|---|
-   | *Initial* (waiting at the branch) | *Moved*, *Delivered*, *Customer Not Available* |
-   | *Moved* | *Delivered*, *Customer Not Available* |
-   | *Customer Not Available* | *Moved* (another visit), *Delivered* |
-   | *Delivered* | none — it is final |
+   | *Initial* (waiting at the branch) | *Moved*, *Totally Delivered*, *Customer Not Available* |
+   | *Moved* | *Totally Delivered*, *Customer Not Available* |
+   | *Customer Not Available* | *Moved* (another visit), *Totally Delivered* |
+   | *Totally Delivered* | none — it is final |
 
    Nothing goes back to *Initial*.
 
@@ -105,13 +105,9 @@ These messages have no Arabic text; they appear in English on Arabic phones too.
 
 ## Addresses go back onto the customer file
 
-One thing on the delivery document reaches outside it. The courier types the address as actually found — *"gate 4, behind the mosque"* — and the delivery screen has an action that copies the addresses from the selected lines **back onto the customer master files**.
+One thing on the delivery document reaches outside it. The courier types the address as actually found — *"gate 4, behind the mosque"* — and the delivery screen has an action, **Copy Customer Locations From Selected Lines**, that copies the first address line of each selected line **back onto the customer master files**.
 
 That is deliberate, and it is how a delivery operation gradually cleans up its address book. But it is a master-file change made from a document screen, so treat it accordingly: it is not local to the document, and it will affect every future document raised for that customer.
-
-::: warning One bad line stops the rest
-If a selected line's recipient is not a party that can hold contact information, the copy stops there — the remaining selected lines are silently skipped rather than processed. After running the action on a large selection, spot-check that the addresses you expected actually landed.
-:::
 
 ## Where to read next
 

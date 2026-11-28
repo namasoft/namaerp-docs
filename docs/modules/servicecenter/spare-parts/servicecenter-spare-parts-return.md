@@ -1,5 +1,5 @@
 ---
-description: "The Spare Parts Return document that returns unused parts from a job order to stock: what committing does, one return line per item, prices, and checks before invoicing the job."
+description: "The Spare Parts Return document that returns unused parts from a job order to stock: what committing does, how it mirrors the issue, prices, and checks before invoicing the job."
 entities: [SrvcRawMaterialReturn]
 menu: Service Center → Documents → Spare Parts Return
 ---
@@ -7,7 +7,7 @@ menu: Service Center → Documents → Spare Parts Return
 
 Not everything the store issues gets used. The storekeeper sends six litres of oil out with the
 service kit and the engine takes five; a gasket turns out to be the wrong one; a part is issued for a
-job the customer then declines. The **Spare Parts Return** (إرتجاع قطع غيار) is how those parts come
+job the customer then declines. The **Spare Parts Return** (ارتجاع قطع غيار) is how those parts come
 back — off the job, out of the customer's bill, and into stock.
 
 You will find it at **Service Center > Documents > Spare Parts Return**.
@@ -25,7 +25,7 @@ The return is the
 the screen says so: the same **أمر الشغل / Job Order**,
 the same warehouse and locator, the same read-only work-in-progress store and *Transfer Not Issue*
 flag copied from the term, and the same details grid keyed on **المهمة / Task** and item. Its
-**الحركات / Actions** page shows the generated stock transfer documents.
+**الحركات / Actions** page shows the generated stock transfers and stock receipts.
 
 Committing does three things:
 
@@ -34,29 +34,17 @@ Committing does three things:
    work-in-progress store and back into your store when the
    [term](/modules/servicecenter/document-terms/servicecenter-terms-workshop.md) says
    *Transfer Not Issue*. As with
-   the issue, an empty generation book or term means **nothing moves at all** — clearing the book or
-   term is how you stop it.
+   the issue, an empty book or term (the generation pair for the stock receipt, the transfer pair for
+   the transfer) means **nothing moves at all** — clearing the book or term is how you stop it.
 2. It **nets the parts ledger**: the job order's issued quantity for that item less what has come
    back.
-3. It **refreshes the job order's materials grid**, so the closing and the invoices bill the net
+3. When the job order's term has *Add Tasks And Materials to Job Order From Other Documents* on, it
+   **refreshes the job order's materials grid**, so the closing and the invoices bill the net
    quantity.
 
 On Al-Sahra's job `SCJO-2026-0417`, return `SRMR-2026-0344` brings one litre of `SP-OIL-5W30` back on
 a **single line**. Six litres issued, one returned, five consumed, and the customer is billed
 5 × 32 = 160.
-
-## One return line per item — and one return document at a time
-
-In normal (stock receipt) mode, work to these rules:
-
-- one line per item on a return — if two litres come back, return them as a single line of 2;
-- one return document per job order at a time — if more of the same item comes back, amend the
-  existing return rather than raising a new one;
-- before invoicing a job that had returns, open the job order and check the material quantities
-  against what is physically back.
-
-After cancelling a return, reopen the job order and save it again before closing or invoicing. That
-save rebuilds the materials grid from the parts ledger.
 
 ## Where the return is and is not the issue's mirror
 
@@ -64,14 +52,12 @@ save rebuilds the materials grid from the parts ledger.
 |---|---|---|
 | Generates the document that moves stock | Stock issue, or transfer to the work-in-progress store | Stock receipt, or transfer back |
 | Updates the parts ledger on commit | Yes | Yes |
-| Refreshes the job order's materials grid on commit | Yes | Yes |
+| Refreshes the job order's materials grid on commit | Yes, when the job order's term accepts materials from other documents | Yes, under the same condition |
 | Writes a price back onto the job order | Yes, when the plan had none | No — and correctly so; a return should never set a price |
 | Counted in the "issued exceeds planned" limit | Added | Subtracted |
-| Deletion refused once the job order is closed or invoiced | No | **Yes** |
 
-That last row is worth reading twice, because it is the opposite of what people expect: the return is
-the *protected* document. Once a job order has been closed or invoiced, a committed return cannot be
-deleted — while a committed issue can.
+A committed return cannot be deleted once its job order is closed or cancelled, or once a customer,
+insurance or warranty invoice has been raised for it.
 
 ## Prices, and what the return does not touch
 

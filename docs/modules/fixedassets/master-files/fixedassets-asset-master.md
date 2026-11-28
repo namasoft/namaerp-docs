@@ -42,8 +42,8 @@ The identity block, and all of it is yours to fill.
 | Name1 / Name2 | الاسم العربي / الاسم الإنجليزي | Arabic name first, English name second. |
 | English Code | الكود الإنجليزي | An alternative code. |
 | Fixed Asset Type | نوع أصل | `FAT-MCH`. Choosing it fills the accounts, the behaviour flags and the components grid — see [Fixed Asset Types](/modules/fixedassets/master-files/fixedassets-asset-types.md). |
-| Main Asset Custodian | مسؤل العهدة الأساسي | The employee responsible for the asset. Khaled Al-Mutairi holds `MCH-0007`. |
-| Fixed Asset Classification 1…5 | تصنيف أصل ثابت 1..5 | Five reporting levels; picking a lower level fills the ones above it. See [Classifications](/modules/fixedassets/master-files/fixedassets-classifications.md). |
+| Main Asset Custodian | مسؤول العهدة الأساسي | The employee responsible for the asset. Khaled Al-Mutairi holds `MCH-0007`. |
+| Fixed Asset Classification 1…5 | تصنيف أصل ثابت 1..5 | Five reporting levels. Picking Classification 2 or 3 fills the levels above it, and picking Classification 1, 2 or 3 also fills Fixed Asset Type from the classification tree. See [Classifications](/modules/fixedassets/master-files/fixedassets-classifications.md). |
 
 ### The Block Underneath
 
@@ -52,7 +52,7 @@ The group below carries no heading on screen, and it mixes fields you type with 
 | Field | Arabic label | Typed? |
 |---|---|---|
 | Serial Number | الرقم المسلسل | Yes — although a purchase document will overwrite it with the serial number on its line. |
-| Asset Location | موقع الاصل | **No.** Written by the documents that move the asset. See [Locations](/modules/fixedassets/master-files/fixedassets-locations.md). |
+| Asset Location | موقع الأصل | **No.** Written by the documents that move the asset. See [Locations](/modules/fixedassets/master-files/fixedassets-locations.md). |
 | Useful Life | العمر الافتراضي | **No.** In months. `60` for `MCH-0007`. |
 | Remaining Life | العمر المتبقي | **No.** In months, reduced by one after every depreciation run. `48` at the end of 2026. |
 | Market value | القيمة السوقية | Yes — a free reference figure. Depreciation ignores it entirely. |
@@ -70,7 +70,7 @@ There is also a unit-of-measure code for the tax authority beside the tax author
 
 Two buttons sit under this block. **Generate Car** (إنشاء سيارة) creates a vehicle record carrying the asset's code, names and custodian, and links the two together — useful when a van in the asset register also has to exist in the fleet. It only does anything when **Car Asset** is ticked and no car is linked yet; untick the flag and pressing it simply clears the link.
 
-When the Real Estate module is installed, **Create Real Estate** (تحويل لعقار) turns the asset into a property. It asks two questions — the estate type (building, land, floor, block or rental unit, with rental unit offered by default) and the master group the new record should sit in — and then opens the new estate in a popup, pre-filled with the asset's code, names and market value and pointing back at the asset. The asset has to be saved before you press it; the estate itself is not created until you save what the popup opens. The bulk form of the same conversion is **Create Real Estates** (تحويل لعقارات) on the list screen: select the assets, answer the same two questions, and the records are created for you.
+When the Real Estate module is installed, **Create Real Estate** (تحويل لعقار) turns the asset into a property. It asks two questions — the estate type (building, land, floor, block or rental unit, with rental unit offered by default) and the master group the new record should sit in — and then opens the new estate in a popup, pre-filled with the asset's names and market value and pointing back at the asset. The asset's code is copied only when no master group is chosen; with a group, the estate takes its code from that group. The asset has to be saved before you press it; the estate itself is not created until you save what the popup opens. The bulk form of the same conversion is **Create Real Estates** (تحويل لعقارات) on the list screen: select the assets, answer the same two questions, and the records are created for you.
 
 ### Purchase Price Information
 
@@ -149,23 +149,23 @@ This is the financial report on the asset, and **every field on it is read-only*
 
 | Field | Arabic label | Value | What it is |
 |---|---|---|---|
-| Opening Document | سند الإقتتاح | — | The opening document, for assets brought in from a previous system. |
-| Openning Cost | قيمة الإقتناء | 240,000 | The acquisition cost, from the purchase or opening document. |
+| Opening Document | سند الافتتاح | — | The opening document, for assets brought in from a previous system. |
+| Opening Cost | قيمة الاقتناء | 240,000 | The acquisition cost, from the purchase or opening document. |
 | Acquire opening value | قيمة الاقتناء الافتتاحية | — | The cost stated on an opening document. |
 | Acc. Depreciation opening value | قيمة الإهلاك التراكمي الافتتاحية | — | The depreciation already taken before the asset entered Nama. |
 | Additions | الإضافات | 0 | Everything capitalised onto the asset since. |
-| Deductions | الإستقطاعات | 0 | Everything written off its value. |
-| Year Depreciation | إهلاك السنة الحالية | 43,200 | Depreciation charged inside the current fiscal year. |
+| Deductions | الاستقطاعات | 0 | Everything written off its value. |
+| Year Depreciation | إهلاك السنة الحالية | 43,200 | Depreciation charged inside the fiscal year of the last document that touched the asset. |
 | Total Depreciation | مجمع الإهلاك | 43,200 | Accumulated depreciation. A revaluation resets this to zero. |
 | Total Cost | إجمالي قيمة الأصل | 240,000 | Acquisition cost plus additions minus deductions. |
 | Current System Value | القيمة الدفترية الحالية | 196,800 | The book value — total cost minus accumulated depreciation. |
 | Fixed Asset System Value Before Disposal | قيمة الأصل الدفترية قبل التخلص | — | Filled at disposal; the book value at the moment the asset left. |
 | Useful Life | العمر الافتراضي | 60 | In months. |
-| Depreciation Start Date | تاريخ بداية الاهلاك | 01/01/2026 | The first period the asset may be depreciated in. |
+| Depreciation Start Date | تاريخ بداية الإهلاك | 01/01/2026 | The first period the asset may be depreciated in. |
 | Remaining Life | العمر المتبقي | 48 | In months. |
 | Current Installment | قسط الإهلاك | 3,600 | (196,800 − 24,000) ÷ 48 = 3,600. |
 | Market value | القيمة السوقية | — | Free reference figure. |
-| Last Depreciation Date | تاريخ اخر إهلاك | 31/12/2026 | Stops the same period being charged twice. |
+| Last Depreciation Date | تاريخ آخر إهلاك | 31/12/2026 | Stops the same period being charged twice. |
 | Disposal Value | قيمة التخلص من الأصل | — | Filled by a disposal document. |
 | Disposal Date | تاريخ التخلص من الأصل | — | Likewise. |
 
@@ -223,6 +223,6 @@ Everything else on the module's menu is a way of writing rows into that third li
 |---|---|---|
 | *Cannot change depreciation method from {0} to {1} for asset {2} because it used in fixed asset transactions entries by document {3}* — «لا يمكن تغيير طريقة الإهلاك من {0} إلى {1} للأصل {2} لأنه مستخدم في حركات الأصول الثابتة بواسطة المستند {3}» | The asset already carries at least one transaction and the depreciation method on the record was changed. The message names the document that wrote that transaction. | Put the method back, or reverse the named document first. Straight line versus revaluation is a decision to take before the asset enters service. |
 | *Fixed asset component type {0} is repeated* — «نوع مكون الأصل {0} مكرر» | The same combination of component type and maintenance type appears twice in the **Asset Components** grid. | Delete the duplicate line; a combination may appear only once. |
-| *Parent of fixed asset classification {0} must be equal to the fixed asset classification {1}* — «تنصيف أصل ثابت الأعلى ل {0} يجب أن يساوي تصنيف أصل ثابت {1}» | A classification level and the level above it are both filled, but the upper one is not the parent of the lower one in the classification tree. | Pick the classification whose parent really is the one on the level above, or clear the upper level and let it fill itself. |
-| *Fixed asset type of fixed asset classification {0} is not consistent with fixed asset type of {1}* — «نوع أصل ثابت لتنصيف أصل ثابت {0} غير متناسق مع نوع أصل ثابت للتصنيف {1}» | A classification level and the level above it belong to different fixed asset types. | Correct the classification tree, or choose classifications that all sit under one fixed asset type. |
+| *Parent of fixed asset classification {0} must be equal to the fixed asset classification {1}* — «تصنيف أصل ثابت الأعلى ل {0} يجب أن يساوي تصنيف أصل ثابت {1}» | A classification level and the level above it are both filled, but the upper one is not the parent of the lower one in the classification tree. | Pick the classification whose parent really is the one on the level above. For Classification 2 and 3, picking the lower level again fills the levels above it. |
+| *Fixed asset type of fixed asset classification {0} is not consistent with fixed asset type of {1}* — «نوع أصل ثابت لتصنيف أصل ثابت {0} غير متناسق مع نوع أصل ثابت للتصنيف {1}» | A classification level and the level above it belong to different fixed asset types. | Correct the classification tree, or choose classifications that all sit under one fixed asset type. |
 | *Fixed asset type of fixed asset classification {0} is not consistent with fixed asset type {1}* — «نوع أصل ثابت لتصنيف أصل ثابت {0} غير متناسق مع نوع أصل ثابت {1}» | A classification on the asset belongs to a fixed asset type other than the asset's own **Fixed Asset Type**. | Change the classification, or change the asset type so the two agree. |

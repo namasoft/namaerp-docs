@@ -19,14 +19,15 @@ Manual execution or automated cleanup workflows to remove related entities when 
 ## How It Works
 
 1. Executes finder SQL query with parameter substitution (`{fieldName}` placeholders)
-2. Loads first matching entity using specified target type
-3. Performs business deletion through EntityMediator with validation rules
-4. Handles cascade deletions and maintains transaction safety
+2. Loads the first row's record using the specified target type; later rows are ignored, and when the query returns no row nothing is deleted
+3. Deletes that record with the normal delete validations of its type; a failed validation fails the flow
+
+When a document is deleted, the records returned by the finder SQL of a line of this flow with **Target Action** = *Post Delete* are left out of the check that raises *Record cannot be deleted, {0}-{1} Created from this record*, so they do not block deleting their source.
 
 ## Key Parameters
 
-- **Parameter 1:** Target Type (Required) - Entity type name (e.g., "CreditNote", "PaymentVoucher")
-- **Parameter 2:** Finder SQL (Required) - SQL query returning ID column of target entities
+- **Parameter 1:** Target Type (Required) - Title: *Target Type*. Entity type name (e.g., "CreditNote", "PaymentVoucher")
+- **Parameter 2:** Finder SQL (Required) - Title: *Finder SQL. eg: select id from CreditNote where ref5Id={id}*. SQL query whose first column is the id of the record to delete
 
 ### SQL Examples:
 ```sql
@@ -34,8 +35,10 @@ Manual execution or automated cleanup workflows to remove related entities when 
 SELECT id FROM CreditNote WHERE ref5Id = {id}
 
 -- Delete journal entry from document
-SELECT id FROM JournalEntry WHERE fromDoc_id = {id} AND fromDoc_type = '{entityType}'
+SELECT id FROM JournalEntry WHERE fromDoc_id = {id} AND fromDoc_type = {entityType}
 ```
+
+Placeholders are passed to the query as parameters, so they are written without quotes.
 
 ## Database Tables Affected
 

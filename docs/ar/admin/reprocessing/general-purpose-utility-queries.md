@@ -151,11 +151,11 @@ update LedgerTrans set requestid = null where id = 0x-------
 :::
 ::: details
 ```sql
-delete l from left join Qtytrans h QtyTransLine l on h.id = l.qtytrans_id where h.requestId is null
+delete l from QtyTrans h left join QtyTransLine l on h.id = l.qtyTrans_id where h.requestId is null
 go
 delete from QtyTrans where requestId is null
 go
-delete m from FifoCostTrans h left join FifoCostTransLine l on h.id = l.FifoCostTrans_id left join FifoCostMatcher m on m.id = l.inLine or m.id  = l.outLine_id where h.requestId is null
+delete m from FifoCostTrans h left join FifoCostTransLine l on h.id = l.FifoCostTrans_id left join FifoCostMatcher m on m.inLine_id = l.id or m.outLine_id = l.id where h.requestId is null
 go
 delete l from FifoCostTrans h left join FifoCostTransLine l on h.id = l.FifoCostTrans_id where h.requestId is null
 go
@@ -266,7 +266,7 @@ DECLARE @EndLoop INT
 
 
 INSERT INTO @Queries
-select 'update e set revised = s.primitiveValue from EntitySystemEntry e inner join ' +case when targetType = 'User' then 'NamaUser' else targetType end + 's on e.targetId = s.id' SQLScript from  (
+select 'update e set revised = s.primitiveValue from EntitySystemEntry e inner join ' +case when targetType = 'User' then 'NamaUser' else targetType end + ' s on e.targetId = s.id' SQLScript from  (
 		select distinct targetType from EntitySystemEntry
 		) s
 SELECT @EndLoop = MAX(ID), @StartLoop = MIN(ID)

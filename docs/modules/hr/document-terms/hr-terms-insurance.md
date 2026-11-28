@@ -1,6 +1,6 @@
 ---
 description: "The document terms of the employee health insurance, car insurance and car action documents: the accounts, tax and accounting switches each term carries, and what each health insurance document adds to their shared term layout."
-entities: [EmployeeHealthInsurance, HealthInsuranceUpgrade, HealthInsuranceUpgradeReq, EmpHealthInsurDelete, HealthInsuranceClaimDoc, HealthInsuranceCredence, CarInsurancePolicy, CarInsuranceAddingDoc, CarInsuranceRemovingDoc, CarInsuranceInstallmentProofDoc, CarAction]
+entities: [DocumentTerm]
 menu: Basic → Settings → Document Term
 ---
 
@@ -60,12 +60,13 @@ is often taxed at a different rate from the premium.
 | Option | Field | What it does |
 |---|---|---|
 | **Allow Empty Company** | `termConfig.allowEmptyCompany` | The insurance document may be saved without naming the insurance company. |
-| **Allow Manual Insurance Without Insurance Offer** | `termConfig.allowManualInsuranceValues` | Values may be typed in directly instead of coming from an insurance offer. This is the term for insuring somebody outside the normal offer process. Not on the upgrade request's term. The shipped Arabic label misspells «التأمينات». |
+| **Allow Manual Insurance Without Insurance Offer** | `termConfig.allowManualInsuranceValues` | Values may be typed in directly instead of coming from an insurance offer. This is the term for insuring somebody outside the normal offer process. Not on the upgrade request's term. |
 
 **Always Generate Accounting Effects For Attendants** `termConfig.genAccountingEffectsForAttendants`
-— dependants ("attendants") always produce their own accounting effect, rather than being folded
-into the employee's. Only the **Employee Health Insurance** and **Employee Health Insurance Delete**
-terms show it.
+— on a document with **Add Attendants Only** ticked, the dependants' ("attendants'") rows are not
+linked to an employee row, and such rows create no premium or discount entry lines unless this
+option is ticked. Ticked, every row creates its entry lines. Only the **Employee Health Insurance**
+and **Employee Health Insurance Delete** terms show it.
 
 ### What each document adds
 
@@ -88,7 +89,7 @@ option on it that changes anything is *Use Health Insurance Upgrade Document To 
 Insurance*: ticked, the request may name a lower category; unticked, a line that names the same or a
 lower category is refused with:
 
-*Cant upgrade To Low or same Category* — «لايمكن الترقية إلى نفس الفئة او فئة اقل»
+*Cant upgrade To Low or same Category* — «لا يمكن الترقية إلى نفس الفئة أو فئة أقل»
 
 The account sides on a request's term are ignored.
 
@@ -129,16 +130,10 @@ After that they differ:
 | *Modifiable Tax* `termConfig.modifiableTax` | ✓ | ✓ | — | — |
 | The instalment proof chain (below) | ✓ | ✓ | — | — |
 | *Allow Adding Insurances Without Insurance Request or Insurance Offer* `termConfig.allowAddingInsuranceWithoutRequestOrOffer` | ✓ | ✓ | — | — |
-| *Allow Adding Car To Insurance If It Found In Policy* `termConfig.allowAddingCarToInsuranceIfItFoundInPolicy` | — | ✓ | — | — |
+| *Allow Adding Car To Insurance If It Is Found In Policy* `termConfig.allowAddingCarToInsuranceIfItFoundInPolicy` | — | ✓ | — | — |
 
 So the **Removing** term is the leanest — accounts, taxes and discount only — and only the **Policy**
 term has the fees.
-
-::: warning The fees labels are borrowed from another module
-The Arabic labels on *Fees Debit* and *Fees Credit* read «مدين/دائن رسوم انهاء خطاب الضمان» —
-letter-of-guarantee termination fees — which has nothing to do with car insurance. The fields work
-correctly; only the caption was copied from elsewhere. Read them as the insurance fees.
-:::
 
 **Cost and the daily rate.** *Calculate Day Cost From Value After Discount* decides whether the
 per-day cost of insuring a car is derived from the gross premium or from the net after discount —
@@ -150,21 +145,23 @@ Cost* sides carry the insurance to a contracting project's cost.
 
 | Option | Field | What it does |
 |---|---|---|
-| **Generate Insurance Installment Proof Document** | `termConfig.generateInsuranceInstallmentProofDoc` | Saving the document also creates the entry that proves the premium instalment is due. |
-| **Proof Document Book** / **Proof Document Term** | `termConfig.proofDocBook`, `termConfig.proofDocTerm` | Where that proof document is filed and what accounting effect it has. |
-| **Save Insurance Installment Proof Document As Draft** | `termConfig.saveInsuranceInstallmentProofDocAsDraft` | The proof is created as a draft, so somebody reviews it before it reaches the accounts. |
+| **Generate Insurance Installment Proof Document** | `termConfig.generateInsuranceInstallmentProofDoc` | Saving the document also creates one **Car Insurance Installment Proof Document** for each month from the insurance's issue date to its end date, each proving that month's premium instalment is due. Nothing is created when the insurance dates, the proof book or the proof term are empty. |
+| **Proof Document Book** / **Proof Document Term** | `termConfig.proofDocBook`, `termConfig.proofDocTerm` | Where those proof documents are filed and what accounting effect they have. |
+| **Save Insurance Installment Proof Document As Draft** | `termConfig.saveInsuranceInstallmentProofDocAsDraft` | The proofs are saved as drafts instead of being committed, so somebody reviews them before they reach the accounts. |
 
 **Allow Adding Insurances Without Insurance Request or Insurance Offer** is the car-side equivalent
 of the health side's manual tolerance: insurance may be added without a request or an offer behind
 it.
 
-**Allow Adding Car To Insurance If It Found In Policy**, on the adding term only, lets a car already
-on the policy be added again. Normally that is a mistake, but it is legitimate when a car is re-added
-after a mid-term removal.
+**Allow Adding Car To Insurance If It Is Found In Policy**, on the adding term only, lets a car already
+on the policy, or already on another committed adding document of the same policy, be added again.
+Without it such a line is refused with *The car {0} was already added in the policy {1}* or *The
+car {0} was already added in another adding document {1}*. Normally that is a mistake, but it is
+legitimate when a car is re-added after a mid-term removal.
 
 ## The Car Action term
 
-A [Car Action](/modules/hr/employee-services#Recording-what-happened-to-a-car-Car-Action) records
+A [Car Action](/modules/hr/employee-services) records
 what a company car cost — a repair, an accident, a licence renewal — and splits that cost between
 the company and the responsible employee. Its term decides where each part of the split lands.
 
@@ -180,7 +177,7 @@ The term has two tabs. Each pair below creates entries only when **both** its si
 | **Update Tax Percent** | `termConfig.updateTaxPercent` | **Ticked by default**: the tax percentage on each line stays as the user left it when the document is saved. Untick it and every save resets each line's tax percentage to the tax plan's rate. |
 | **Do Not Copy From Date And To Date To Car Licence Start Date And Licence End Date** | `termConfig.doNotCopyFromDateAndToDateToCarLicenceDate` | Normally, saving a *License Renewal* action copies the line's From and To dates onto the car's licence start and end dates (when the new end date is not earlier than the car's current one). Tick this to leave the car's licence dates alone. |
 
-**Responsability Effect** (the label is spelled that way on screen) — the responsible employee's
+**Responsibility Effect** — the responsible employee's
 part:
 
 | Option | Field | What it does |

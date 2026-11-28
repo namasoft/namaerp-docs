@@ -22,23 +22,27 @@ The simple rule: **if you want to know "how much do I have here?" independently,
 
 ### Warehouse Types
 
-Not all warehouses are the same. The system distinguishes several types, each with different behavior:
+Two required fields on the warehouse say what kind of place it is. A new warehouse starts as **Storage** / **Normal**.
 
-- **Standard warehouse**: ordinary storage for goods available to sell and issue.
-- **Transit warehouse**: holds goods while they move between two locations, so they appear available at neither the sending nor the receiving side until the transfer completes.
-- **Inspection/sorting warehouse**: received goods land here before approval, so they don't enter available stock until quality clears them.
-- **Reservation warehouse**: dedicated to items reserved for specific customers or orders.
+**Warehouse Type** decides which documents may use the warehouse:
 
-Choosing the right type matters because it determines when a location's stock counts toward "available to sell."
+| Warehouse Type | Where it can be used |
+| --- | --- |
+| **Storage** | Every supply chain document. The warehouse pickers on every other document offer only Storage warehouses. |
+| **Inspection** | Only the **Stock Receipt Inspection** document, whose warehouse picker offers only Inspection warehouses. Any other document whose line names it is refused with *Invalid Warehouse Type*. A Storage warehouse can name its own **Inspection Warehouse**, and that field accepts only warehouses of this type. |
+| **WIP** | Not offered by the warehouse pickers on supply chain documents. |
 
-### Who's Responsible? The Warehouse Keeper and Permissions
+**Storage Type** (**Normal**, **Show** or **Central**) can be set only on a Storage warehouse and is cleared when you choose another Warehouse Type. Pick rules use it to choose the warehouse that goods are picked from.
 
-For each warehouse you can assign a **warehouse keeper** - the employee responsible for it. This helps you:
-- Route receiving and issuing tasks to the right person
-- Set permissions that prevent users from transacting in warehouses outside their scope
-- Maintain accountability during stock taking and reconciling differences
+There is no separate "transit" or "reservation" type. A goods-in-transit warehouse is an ordinary Storage warehouse used by the two-step transfer, and reservations go to the warehouse named in the **Reservation Warehouse** field, or stay in this warehouse when that field is empty.
 
-You can also link the warehouse to a branch and a group, set its priority (for automatic warehouse selection), and configure its own default purchase and sales units.
+### Who's Responsible? The Warehouse Keeper
+
+For each warehouse you can record a **Warehouse Keeper** - the employee responsible for it. It is a reference for people and reports: it does not route documents or limit who can use the warehouse. To stop users from transacting in a warehouse, use the [Warehouse Usage Policy](#Warehouse-Usage-Policy) below.
+
+You can also link the warehouse to a branch and a group, set its **Priority** (read by pick rules that order warehouses by priority), and configure its own default purchase and sales units.
+
+Two more options close the warehouse to ordinary stock documents: **Prevent Receipt to Warehouse except through Inventory and Aggregation** and **Prevent Issue from Warehouse except through Inventory and Aggregation**. With the first ticked, a **Stock Receipt** that names the warehouse is refused; with the second, a **Stock Issue** is refused. Documents generated from an **Assembly Document**, an **Aggregated Packaging Document**, a **Processing Document** or an **End Stock Taking** still go through. Locators carry the same two options.
 
 ### Warehouses and Requirements Planning (MRP)
 
@@ -61,11 +65,11 @@ A locator is a subdivision within the warehouse: aisle A, shelf 3, or a "fast-mo
 
 ### Locator Policy: Required or Prevented?
 
-For each warehouse you set the locator policy:
+For each warehouse you set the **Locator Usage** field:
 - **Required**: no item can be received or issued without specifying its location - ideal for large, organized warehouses.
-- **Prevented**: don't use locators at all - suitable for a small warehouse or a distribution truck.
+- **Prevented**: don't use locators at all - suitable for a small warehouse or a distribution truck. A warehouse saved with the field empty is saved as Prevented, and a Prevented warehouse cannot list any locators.
 
-Each locator can also prevent receiving or issuing individually (e.g. a "damaged" locator that accepts goods but prevents issuing them for sale), be linked to a specific supplier or customer when needed, and take a selection priority within automatic picking.
+Each locator can also be linked to a specific supplier or customer when needed, and carries the same two prevent-receipt and prevent-issue options as the warehouse (same labels), which work on that locator exactly as they work on the warehouse. A "damaged" locator, for instance, can accept a Stock Receipt while a Stock Issue from it is refused.
 
 ### Location Classes
 
@@ -77,10 +81,11 @@ Large distribution centres often have several racks inside one locator. **Rack Q
 
 ## Linking Items to Warehouses
 
-It's impractical for every item to be stored in every warehouse. So the system lets you **link items to warehouses**, defining the preferred warehouses for each item with a given priority. The benefits:
-- The system automatically suggests the most appropriate warehouse on receipt or issue
-- It prevents storing items in warehouses unsuited to them
-- It simplifies document entry for the user
+It's impractical for every item to be stored in every warehouse. The **Item Warehouse Relation** master file records which items may and may not be used in which warehouses. It does nothing until **Activate Item Warehouse Relation** is ticked in supply chain configuration (the record itself refuses to save while it is off).
+
+Each line names the items - by the item itself, its section, brand, categories, classes, and optionally its color, size or revision - then **either** a **Warehouse** or a **Warehouse Group** (never both), an optional **Locator**, and **Allow Dealing** or **Prevent Dealing**.
+
+When a supply chain document is saved, each line's warehouse is checked (on a transfer, the destination warehouse too). The records are read in order of their **Priority**, and the first relation line that matches the item and the warehouse decides: **Allow Dealing** lets the line through, **Prevent Dealing** refuses it with *This Warehouse {0} can not used for item {1}*. When no relation line matches, the warehouse is allowed - unless **Item Relation To Warehouse Must Be Specified** is also ticked, in which case it is refused. The check is skipped on the stock issues and stock receipts generated by an end stock taking.
 
 ## Warehouse Groups
 
@@ -90,7 +95,7 @@ When the number of warehouses grows, **warehouse groups** bundle them for report
 
 ## Warehouse Usage Policy
 
-Linking items to warehouses tells the system which warehouses *suit* an item. Sometimes, though, you need the opposite kind of rule: you want to *stop* a warehouse from being used at all - in certain documents, by certain users, or during a certain period. That's the job of the **Warehouse Usage Policy**.
+Linking items to warehouses tells the system which warehouses an item may use. Sometimes, though, you need a different kind of rule: you want to *stop* a warehouse from being used at all - in certain documents, by certain users, or during a certain period. That's the job of the **Warehouse Usage Policy**.
 
 Picture a few everyday situations:
 - A warehouse is being counted this week, so nobody should issue or receive against it until the stock take is finished.
@@ -136,7 +141,7 @@ The check happens the moment you save a supply chain document - not buried in a 
 
 A warehouse is then blocked when a matching line of an *Allow All … Except* policy names it (directly or through its warehouse group), or when the user has at least one matching line of a *Prevent All … Except* policy and none of those lines names that warehouse. The save is rejected with a message naming the blocked warehouse, the date, and the user:
 
-*Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع إستخدامة في تاريخ {1} للمستخدم {2}»
+*Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع استخدامه في تاريخ {1} للمستخدم {2}»
 
 Documents created in the background by the system, with no user entering them, are not checked.
 
@@ -170,7 +175,7 @@ A document line is refused when all of these are true at once:
 - the document's value date falls inside the rule's **From/To** window (an empty window always matches),
 - and the rule's **Warehouse** and **Locator** are either empty or exactly the ones on that line.
 
-Two things about that deserve to be said plainly. First, this is a **hard block, not a warning**: the save is rejected and the Lot ID column of the offending line is flagged, so the document never comes into existence. Second, it blocks the batch **in both directions**. It is natural to assume a rule like this only stops stock going out, but the check never asks whether the line is an issue or a receipt - a stock receipt, a purchase invoice or a transfer *into* a warehouse naming that batch is refused exactly as a sale of it would be. For a recalled or expired lot that is usually what you want; it is occasionally a surprise to whoever tries to bring quarantined goods back in on a correcting document.
+Two things about that deserve to be said plainly. First, this is a **hard block, not a warning**: the save is rejected with *This lot is prevented from using* on the Lot ID column of the offending line, so the document never comes into existence. Second, it blocks the batch **in both directions**. It is natural to assume a rule like this only stops stock going out, but the check never asks whether the line is an issue or a receipt - a stock receipt, a purchase invoice or a transfer *into* a warehouse naming that batch is refused exactly as a sale of it would be. For a recalled or expired lot that is usually what you want; it is occasionally a surprise to whoever tries to bring quarantined goods back in on a correcting document.
 
 ::: warning A rule line needs both an Item and a Lot ID
 It is tempting to name the item, leave **Lot ID** empty and expect every batch of that item to be blocked. That is not what happens - a blank Lot ID matches only document lines that carry no batch at all. To stop several batches of one item, give each batch its own line.
@@ -180,16 +185,16 @@ It is tempting to name the item, leave **Lot ID** empty and expect every batch o
 **Capability Types** on a line is an exemption, not a target. Point it at a capability type and any user whose security profile grants that capability *on the document type being saved* may use the batch anyway - the quality manager entitled to move held stock, for instance, while everybody else is stopped. Leave it empty and nobody is exempt. Capability types themselves live under *Administration → Security → Capability Types*; see [Security Profile](/platform/security/security-profiles.md).
 :::
 
-Rules take effect immediately. Saving or changing a Prevent Using Batch record applies to the very next document saved, with no restart and no waiting.
+Rules take effect immediately. Saving or changing a Prevent Using Batch record applies to the very next document saved, with no restart and no waiting. As with the warehouse policy, documents created in the background by the system, with no user entering them, are not checked.
 
 ## How It All Fits Together
 
 Imagine a typical distribution center:
 
-1. A shipment arrives and is first received into the **inspection warehouse**.
+1. A shipment arrives and is first received into the **inspection warehouse** with a Stock Receipt Inspection.
 2. After quality clears it, it's transferred to the **main warehouse**, specifically to a **locator** in the appropriate aisle.
 3. Items requiring refrigeration are routed automatically to locators of the **"refrigerated" class**.
-4. When a sales order arrives, the system suggests the warehouse and locator based on **item-warehouse links** and **locator priorities**.
+4. When the goods are sold, the **item-warehouse links** refuse any warehouse the item is not allowed to leave from.
 5. Goods distributed to distant branches are held in a **transit warehouse** during transport until they arrive and the transfer is received.
 
 This spatial structure is the foundation on which all the stock movements we'll cover in the next sections operate.
@@ -205,17 +210,20 @@ This spatial structure is the foundation on which all the stock movements we'll 
 
 | Message | Why | What to do |
 |---|---|---|
-| *Locators can not be modified because there is a transaction on warehouse* — «هناك حركة علي المخزن , لايمكن تغيير سياسة استعمال الموقع» | The warehouse's **Locator Policy** is being changed while movements already exist that contradict the new policy — stock sitting without a locator when the policy becomes *required*, or stock sitting in locators when it becomes *prevented*. | Leave the policy as it is on a warehouse that has history, or have **Allow Update Locator Of Warehouse In Trans** switched on in supply chain configuration if the change is deliberate. |
-| *You can not change the legal entity from {0} to {1} because there are {2} quantity transactions.* — «لا يمكن تغيير الشركه من {0} إلى  {1} لوجود  {2} حركات مخزنية» | The warehouse is being moved to another company after stock has already moved through it. The message counts the movements. | Create a warehouse under the other company and transfer the stock to it, or have **Allow Changing Warehouse Legal Entity** switched on. |
-| *You can not change the legal entity from {0} to {1} because there are {2} reservation transactions.* — «لا يمكن تغيير الشركه من {0} إلى  {1} لوجود  {2} حركات حجز» | The same block, raised by reservation movements rather than quantity movements — so it can appear on a warehouse that looks empty. | Cancel or move the reservations first, or have that same configuration option switched on. |
-| *Reservation warehouse {0} in reservation locator {1} must equal to reservation warehouse {2}* — «مخزن الحجز {0} فى موقع الحجز {1} يجب ان يساوي مخزن الحجز {2}» | The warehouse names both a **Reservation Warehouse** and a **Reservation Locator**, and that locator belongs to a third warehouse. | Pick a locator that belongs to the reservation warehouse you named. |
-| *Reservation warehouse {0} in reservation locator {1} must equal to current warehouse {2}* — «مخزن الحجز {0} فى موقع الحجز {1} يجب ان يساوي المخزن الحالي {2}» | A **Reservation Locator** was named without a reservation warehouse, so reservations stay in this warehouse — but the locator belongs to another one. | Use a locator of this warehouse, or name the reservation warehouse the locator really belongs to. |
-| *Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع إستخدامة في تاريخ {1} للمستخدم {2}» | A **Warehouse Usage Policy** blocks this warehouse for this document type, this date and this user — either a block-list line names it, or the user has an allow list that does not. It is raised for the header warehouse and, separately, for a warehouse typed on a line. | Use a warehouse the policy allows, change the document date, or have the policy amended. The message names the user, which is what tells you the block is user-specific. |
+| *Locators can not be modified because there is a transaction on warehouse* — «هناك حركة على المخزن , لا يمكن تغيير سياسة استعمال الموقع» | The warehouse's **Locator Usage** is being changed while movements already exist that contradict the new policy — stock sitting without a locator when the policy becomes *Required*, or stock sitting in locators when it becomes *Prevented*. | Leave the policy as it is on a warehouse that has history, or have **Allow Update Locator Policy if it has transactions** switched on in supply chain configuration if the change is deliberate. |
+| *Invalid Warehouse Type* — «نوع المخزن غير صحيح» | A document line names a warehouse whose **Warehouse Type** is *Inspection*, and the document is not a Stock Receipt Inspection. | Use a Storage warehouse on that line. |
+| *This Warehouse {0} can not used for item {1}* — «هذا المخزن {0} لا يمكن أن يستخدم للصنف {1}» | An **Item Warehouse Relation** line with **Prevent Dealing** matches this item and warehouse, or no relation line matches while **Item Relation To Warehouse Must Be Specified** is ticked. | Use a warehouse the relation allows, or have the relation amended. |
+| *This lot is prevented from using* — «هذه الشحنة تم منع استعمالها» | A **Prevent Using Batch** line matches the item, the lot, the warehouse and locator, and the document's value date, and the user does not hold the line's capability. | Use another batch, or have the rule's dates or exemption changed. |
+| *You can not change the legal entity from {0} to {1} because there are {2} quantity transactions.* — «لا يمكن تغيير الشركة من {0} إلى {1} لوجود {2} حركات مخزنية» | The warehouse is being moved to another company after stock has already moved through it. The message counts the movements. | Create a warehouse under the other company and transfer the stock to it, or have **Allow Changing Warehouse Legal Entity** switched on. |
+| *You can not change the legal entity from {0} to {1} because there are {2} reservation transactions.* — «لا يمكن تغيير الشركة من {0} إلى {1} لوجود {2} حركات حجز» | The same block, raised by reservation movements rather than quantity movements — so it can appear on a warehouse that looks empty. | Cancel or move the reservations first, or have that same configuration option switched on. |
+| *Reservation warehouse {0} in reservation locator {1} must equal to reservation warehouse {2}* — «مخزن الحجز {0} في موقع الحجز {1} يجب أن يساوي مخزن الحجز {2}» | The warehouse names both a **Reservation Warehouse** and a **Reservation Locator**, and that locator belongs to a third warehouse. | Pick a locator that belongs to the reservation warehouse you named. |
+| *Reservation warehouse {0} in reservation locator {1} must equal to current warehouse {2}* — «مخزن الحجز {0} في موقع الحجز {1} يجب أن يساوي المخزن الحالي {2}» | A **Reservation Locator** was named without a reservation warehouse, so reservations stay in this warehouse — but the locator belongs to another one. | Use a locator of this warehouse, or name the reservation warehouse the locator really belongs to. |
+| *Warehouse {0} is prevented from being used on this date {1} for user {2}* — «المخزن {0} ممنوع استخدامه في تاريخ {1} للمستخدم {2}» | A **Warehouse Usage Policy** blocks this warehouse for this document type, this date and this user — either a block-list line names it, or the user has an allow list that does not. It is raised for the header warehouse and, separately, for a warehouse typed on a line. | Use a warehouse the policy allows, change the document date, or have the policy amended. The message names the user, which is what tells you the block is user-specific. |
 | *You must enable (Apply Warehouse Usage Policies) in supply chain configurations before using this screen* | A Warehouse Usage Policy is being saved while the company-wide switch is off. No Arabic translation exists, so it shows in English on Arabic screens too. | Tick **Apply Warehouse Usage Policies** in supply chain configuration (Documents & Details tab), then save the policy. |
 | *The locator {0} does not belong to warehouse {1}* — «الموقع {0} لا ينتمي إلى المخزن {1}» | A **Prevent Using Batch** line names a warehouse and a locator that sits in a different warehouse. | Either clear the warehouse and let the locator speak for itself, or use a locator of the warehouse you named. |
-| *You must activate validate item warehouse relation in the SupplyChain Configurations* — «لا بد اولاً من تفعيل خيار ربط الاصناف بالمخزن فى إعدادات المخازن» | An **Item Warehouse Relation** record is being saved while the switch that makes those records mean anything is still off. | Switch **Activate Item Warehouse Relation** on in supply chain configuration, then save the record. |
-| *You must fill one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد من الحقول الأتية:{0}, {1} في السطر {2}» | An item-warehouse link line names neither a warehouse nor a warehouse group, so there is nothing for the item to be linked to. | Fill one of the two on that line. |
-| *You must fill only one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد فقط من الحقول الأتية:{0}, {1} في السطر {2}» | The same line names both a warehouse and a warehouse group. One link per line. | Clear one of the two, and add a second line if you meant both. |
+| *You must activate validate item warehouse relation in the SupplyChain Configurations* — «لا بد أولاً من تفعيل خيار ربط الأصناف بالمخزن في إعدادات المخازن» | An **Item Warehouse Relation** record is being saved while the switch that makes those records mean anything is still off. | Switch **Activate Item Warehouse Relation** on in supply chain configuration, then save the record. |
+| *You must fill one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد من الحقول الآتية:{0}, {1} في السطر {2}» | An item-warehouse link line names neither a warehouse nor a warehouse group, so there is nothing for the item to be linked to. | Fill one of the two on that line. |
+| *You must fill only one of the following fields: {0}, {1} at line {2}* — «يجب ملء حقل واحد فقط من الحقول الآتية:{0}, {1} في السطر {2}» | The same line names both a warehouse and a warehouse group. One link per line. | Clear one of the two, and add a second line if you meant both. |
 | *Error while creating account of {0} side for subsidiary {1}  - source type {2} - entity type {3} - account type {4} {5} {6}* — «خطأ أثناء إنشاء التأثير المحاسبي للجانب {0} للذمة {1} - نوع المصدر {2} - نوع المرجع {3} - الحافظة (الحساب) {4} {5} {6}» | The transfer's inventory request could not build its entry. With entity type `Warehouse`, account type `MainAccount` and `toWarehouse` at the end, the **To Warehouse** has no Main Account; with `null` as the subsidiary, the field the term reads is empty. | Fill the **Main Account** in the warehouse's **Subsidiary Accounts**, then **Reprocess** the transfer's inventory request. See [Fixing a Failed Business Request](/admin/troubleshooting/failed-business-requests#The-account-the-term-asks-for-is-missing). |
 
 ## Next Steps

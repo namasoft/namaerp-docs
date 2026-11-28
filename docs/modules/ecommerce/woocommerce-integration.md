@@ -31,7 +31,7 @@ Consumer Secret (starting `cs_`). Copy both before you leave the page.
 
 Then create a Magento Site record in Nama:
 
-1. Set **Site Type** to **Woo Commerce Site**.
+1. Set **Site Type** to **WooCommerce Site**.
 2. In **URL**, enter the address of the shop **including the scheme**, for example
    `https://shop.example.com`. Nama adds the API path itself.
 3. In **User Name (Consumer Key)**, paste the Consumer Key; in **Password (Consumer Secret)**, paste the Consumer Secret.
@@ -45,7 +45,7 @@ With an `https://` address Nama sends the key and secret as standard authenticat
 encrypted connection. Use https for any shop that is reachable from the internet.
 :::
 
-![A Woo Commerce Site with the shop address, the REST API key and secret, and the Date Pattern WooCommerce needs](../../ar/modules/ecommerce/images/woocommerce-site-main-en.png)
+![A WooCommerce Site with the shop address, the REST API key and secret, and the Date Pattern WooCommerce needs](../../ar/modules/ecommerce/images/woocommerce-site-main-en.png)
 
 ## Reading orders from the shop
 
@@ -74,11 +74,9 @@ customer and payment method lines exactly as the shared guide describes. The pay
 reads from a WooCommerce order is the method's slug as WooCommerce stores it (for example `cod` or
 `bacs`), so use that text in your payment method lines.
 
-::: warning A "success" message does not mean every order was imported
-**Read Sales** reports success on screen even when some orders fail. An order that could not be
-saved is listed, with the reason, in **Log List** on the site's **Statistics** tab. Check that list
-after a read, fix the cause, and re-read the order from there.
-:::
+An order that could not be saved is listed, with the reason, in **Log List** on the site's
+**Statistics** tab, while **Read Sales** still reports success; see
+[When an order fails](/modules/ecommerce/ecommerce-integration-guide#When-an-order-fails).
 
 ## What Nama sends to the shop
 
@@ -94,7 +92,7 @@ which items qualify). Nama looks the product up by SKU: if the shop has no produ
 existing product.
 
 Shops that publish each product in several languages (for example with a translation plugin such
-as WPML) keep a separate product copy per language. Two settings on the **Woo Commerce Site** tab
+as WPML) keep a separate product copy per language. Two settings on the **WooCommerce Site** tab
 make Nama update those copies too:
 
 - **Update Ecommerce Item Through Translation Ids** — when ticked, Nama reads the list of translated
@@ -131,20 +129,16 @@ from the price or quantity request list on the **Statistics** tab.
 ### Order status and order notes
 
 Nama can move the WooCommerce order forward when the matching sales document is committed in Nama —
-for example, mark the order `completed` once its invoice is saved.
+for example, mark the order `completed` once its invoice is saved. The setup (**Change Request Status
+With Sales Document Commit** and the **Update Magento Order Status To** grid) is described in
+[Sending order status back to the shop](/modules/ecommerce/ecommerce-integration-guide#Sending-order-status-back-to-the-shop).
+On WooCommerce:
 
-1. Tick **Change Request Status With Sales Document Commit**.
-2. Add lines to **Update Magento Order Status To**. Use **Apply When Query** (or the criteria
-   column) to decide which documents a line applies to, and put the WooCommerce status slug to set
-   in **Status**, for example `completed`.
-3. Optionally fill **Comment**. Nama adds it to the order as an **order note**; the text can use
-   fields of the document, for example `Invoiced in Nama as {code}`. Tick **Comment Visible To
-   Customer** to add it as a note to the customer rather than a private note.
-
-When the document is committed, Nama reads the order again from the shop, sets the status and adds
-the note. It sends the status only if it differs from the last status it sent for that document,
-and the note only if its text differs from the last note, so saving the document again does not
-repeat them.
+- **Status** takes the WooCommerce status slug, for example `completed`.
+- **Comment** is added to the order as an **order note**, for example `Invoiced in Nama as {code}`.
+  Tick **Comment Visible To Customer** to add it as a note to the customer rather than a private note.
+- When the document is committed, Nama reads the order again from the shop before setting the status
+  and adding the note.
 
 ## Reward points
 
@@ -164,8 +158,8 @@ them.
 1. Open the **Reward Points Configuration** that governs the points (**Basic → Documents → Reward
    Points Configuration**; how points are earned is explained in
    [Customer reward points](/modules/invoicing/reward-points.md)).
-2. In **Synchronize Reward Points With Woo Commerce Site** (`synchronizeRewardPointsWithWooCommerceSites`), pick the WooCommerce Magento Site
-   record. Only a site whose Site Type is Woo Commerce Site takes part.
+2. In **Synchronize Reward Points With WooCommerce Site** (`synchronizeRewardPointsWithWooCommerceSites`), pick the WooCommerce Magento Site
+   record. Only a site whose Site Type is WooCommerce Site takes part.
 3. Fill **Discount Coupon Book** on the same configuration — Nama needs it to create the coupons
    described below.
 4. Make sure each customer's **Mobile** in Nama is the same number, in the same format, as the

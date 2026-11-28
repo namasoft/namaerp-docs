@@ -20,7 +20,7 @@ Once a legal entity uses a ledger, its main currency is fixed — changing it is
 
 **Currency** (`Basic → Master Files → Currency`, also under the accounting settings menu) holds one record per currency. Besides the code and the two names, it has:
 
-- **English Code** — a required second code.
+- `altCode` — a required second code, shown beside the code; the screen labels the two as the currency's symbols.
 - **Arabic Fraction** / **English Fraction** — the name of the fractional unit (piaster, halala, cent).
 - **Fraction Decimal Places** — how many decimals an amount in this currency carries. A new currency starts at 2; set 3 for dinars that split into 1000 fils.
 - **Tax Authority Code** and **ISO Code** — the codes the e-invoicing integrations send for this currency.
@@ -101,6 +101,6 @@ Most of these have no Arabic text in the product and appear in English on Arabic
 | *Currency repeated in line {0}* | The same currency appears on two lines. | Keep one line per currency. |
 | *Fiscal year does not belong to the ledger calendar {0}* | The fiscal year belongs to another calendar than the ledger's. | Pick a year of the ledger's calendar. |
 | *Fiscal period does not belong to the selected fiscal year {0}* | The period and the year do not match. | Pick a period of that year. |
-| *Cannot change record after using it* — «لا يمكن تعديل السجل بعد إستخدامه» | You changed the main currency, chart type or calendar of a ledger that a legal entity uses. | These cannot change once the ledger is in use. |
-| *Currency must be the account currency ({0}) or the local currency ({1}). Account {2}, transaction currency {3}* — «يجب ان تكون العملة عملة الحساب {0} أو العملة المحلية {1}. الحساب {2} - عملة الحركة {3}» | A line records an amount on an account held in one foreign currency using a different foreign currency. | Use the account's currency or the local currency on that line. |
-| *Rate must be 1 because the currency is the same as the local currency* — «المعدل يجب ان يكون 1.0» | A line in the local currency carries a rate other than 1. | Set the rate to 1. |
+| *Cannot change record after using it* — «لا يمكن تعديل السجل بعد استخدامه» | You changed the main currency, chart type or calendar of a ledger that a legal entity uses. | These cannot change once the ledger is in use. |
+| *Currency must be the account currency ({0}) or the local currency ({1}). Account {2}, transaction currency {3}* — «يجب أن تكون العملة عملة الحساب {0} أو العملة المحلية {1}. الحساب {2} - عملة الحركة {3}» | A line records an amount on an account held in one foreign currency using a different foreign currency. | Use the account's currency or the local currency on that line. |
+| *Rate must be 1 because the currency is the same as the local currency* — «المعدل يجب أن يكون 1.0» | A line in the local currency carries a rate other than 1. | Set the rate to 1. |

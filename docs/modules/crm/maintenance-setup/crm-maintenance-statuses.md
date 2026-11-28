@@ -8,7 +8,7 @@ Everything about how a maintenance order behaves — whether the system understa
 ::: danger Fill in the Status field on every order status
 The **Maintenance Order Status** file has one field that matters: a drop-down captioned **الحالة / Status**, which tells the system what your status *means*. The names are entirely yours — *Open*, *Awaiting Parts*, *Waiting for the customer*, anything — but each name must be tied to one of seven built-in meanings.
 
-A status saved with that field **left blank carries no meaning to the system**. Documents using it are treated as though they were still at their initial state, so nothing registers that work opened, was held or finished. The screens keep working, the status names appear as expected, and the whole lifecycle silently records nothing.
+A status saved with that field **left blank carries no meaning to the system**. An order, request or notice that uses it ends up with its read-only *Status* field blank, so nothing registers that work opened, was held or finished. The screens keep working, the status names appear as expected, and the whole lifecycle silently records nothing.
 
 If you inherit an installation where the order statuses look right but nothing behaves, open the status records and check this field first.
 :::
@@ -38,7 +38,7 @@ It is the fourth field down on an otherwise ordinary master file:
 
 | Value | What the system understands by it |
 |---|---|
-| **Initial** (مبدئي) | Not started. This is also what a document is treated as when no status is chosen at all. |
+| **Initial** (مبدئي) | Not started. This is also what an order or order request is treated as when no status is chosen at all. |
 | **Open** (مفتوحة) | Raised and live, but work has not begun. |
 | **In Progress** (قيد التنفيذ) | Work is under way. |
 | **On Hold** (معلقة) | Live but stalled — waiting for parts, access or a decision. |
@@ -62,7 +62,7 @@ Notice that `MOS-HLD` says *why* it is on hold. That is the point of separating 
 
 Three things happen once your statuses carry meanings.
 
-**The document takes the status's meaning as its own.** When you set the **الحالة الحالية / Current Status** on a maintenance order, notice or request, the document copies that status's meaning into its own state. That is what later screens, filters and buttons read. Choose no status at all and the document is treated as Initial.
+**The document takes the status's meaning as its own.** When you set the **الحالة الحالية / Current Status** on a maintenance order, notice or request, the document copies that status's meaning into its own read-only *Status* field, which the list screens and their filters read. Choose no status at all and an order or request is treated as Initial.
 
 **Every status change is logged.** Change the current status — or even just its remark — and a line is appended automatically to the document's status-change grid: from which status, to which status, when, and by whom. Nobody types it and nobody can skip it. On `MO-0513` that grid is the record of the order moving from `MOS-NEW` to `MOS-WIP` on the morning of 2026-04-01.
 

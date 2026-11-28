@@ -71,8 +71,8 @@ will refuse to depreciate it in February until the gap is either filled or docum
 
 *Collect Assets* applies your from/to filters and then a fixed set of conditions that you cannot
 change: status **Running**, method **Straight Line**, depreciation start date on or before the
-period end, the period immediately following the asset's last depreciation, no prevention covering
-it, and a computed instalment above zero. The full list, with the reasoning behind each condition,
+period end, the period immediately following the asset's last depreciation, and no prevention
+covering it. The full list, with the reasoning behind each condition,
 is on the concepts page.
 
 The practical version: if an asset you expected is missing, look at its status first, then at its
@@ -114,14 +114,15 @@ itself does not need to be touched.
 
 This document does **not** require a term — it commits perfectly well without one, because it takes
 its accounts from the asset. A term adds narration templates and a handful of options; the one that
-changes behaviour for ordinary users is the one whose label lists four documents — *addition,
-deduction, transfer and partial disposal* (السماح بعمل مستندات اهلاك سابقا لتاريخ سندات).
+changes behaviour for ordinary users is **Allow Previous FA Depreciation Document For (Addition,
+Deduction, Transfer, and Partial Disposal Documents)** (السماح بعمل مستندات إهلاك سابقا لتاريخ سندات
+(إضافة واستبعاد و تخلص جزئي و نقل)).
 
 Normally the module insists you work strictly forwards: once an addition, deduction, transfer or
 partial disposal exists on an asset, you cannot slip a depreciation run in behind it. With this
-option on, you can — which is what you need when a late-arriving upgrade invoice was dated into a
-month you have not depreciated yet. With it on, the run also re-derives each line's instalment when
-the document is saved and drops any line whose instalment has fallen to zero or below.
+option on, a depreciation document can be dated before those four documents on the same asset; any
+other later document still blocks it. With it on, the run also re-derives each line's instalment
+when the document is saved and drops any line whose instalment has fallen to zero or below.
 
 Sites that also run Contracting get depreciation as a project cost source; those options live on the
 same term and are covered with the rest of the module's accounting wiring in
@@ -206,7 +207,9 @@ takes a period range and creates the individual runs for you.
 | *Asset {0} is not depreciated in period {1}* — «الأصل {0} غير مُهلك في الفترة {1}» | Saving a **Closing Entry** found a running asset that has not been depreciated in the period before the closing period. | Run this document for the period the message names, then save the closing entry again — or use one of the two configuration options above. |
 | *You can not change fiscal period in Depreciation Documents, please delete and re-insert* — «لا يمكنك التغيير في الفترة في مستندات الإهلاك الرجاء مسح وإعادة الإدخال» | You reopened a saved depreciation document and changed its **Fiscal Period**. | Delete the document and enter a new one for the period you want. The period is fixed once the run exists. |
 | *Fixed asset {0} is repeated* — «الأصل {0} مكرر» | The same asset appears on two lines of the details grid. | Remove the duplicate line. Use the collect button rather than typing lines to avoid this. |
-| *Cannot Depreciate Asset because it is undepreciable* — «لا يمكن اهلاك الاصل لأنه اصل غير قابل للاهلاك» | A line names an asset flagged **Undepreciable** — land and the like are never depreciated. | Take the line off. Neither translation prints the asset code, so find it by sorting the grid on the undepreciable flag. |
-| *Cannot Depreciation because the status is Initial* — «لا يمكن عمل اهلاك للاصل الثابت لان الحالة ابتدائية» | A line's asset is still **Initial**: it has no cost, no life and nothing to write down. | Raise a purchase or opening document for that asset first, then run the depreciation. |
-| *The Asset {0} Cannot depreciated by this document because the depreciation method is {1} use document {2} instead* — «لا يمكن اهلاك الأصل {0} باستخدام هذا المستند لان طريقة اهلاك الاصل: {1} يجب استخدام المستند {2} بدلاٌ منه» | The asset's depreciation method is revaluation, and this document only handles straight line. | Take the asset off and use the revaluation document for it instead. |
-| *Can not depreciate the fixed asset {0} in the period {1} because last depreciation was in period {2}* — «لا يمكن اهلاك الاصل {0} في الفترة  {1} حيث انه كان اخر اهلاك للاصل كان في الفترة {2}» | There is a gap between the asset's last depreciated period and the period on this document. | Run the missing periods first, or cover them with a prevent-depreciation document, then come back to this one. |
+| *Can not depreciate asset {0} because it is undepreciable* — «لا يمكن إهلاك الأصل {0} لأنه أصل غير قابل للإهلاك» | A line names an asset flagged **Undepreciable** — land and the like are never depreciated. | Take the line for asset `{0}` off. |
+| *Cannot Depreciation because the status is Initial* — «لا يمكن عمل إهلاك للأصل الثابت لأن الحالة ابتدائية» | A line's asset is still **Initial**: it has no cost, no life and nothing to write down. | Raise a purchase or opening document for that asset first, then run the depreciation. |
+| *The Asset {0} Cannot depreciated by this document because the depreciation method is {1} use document {2} instead* — «لا يمكن إهلاك الأصل {0} باستخدام هذا المستند لأن طريقة إهلاك الأصل: {1} يجب استخدام المستند {2} بدلاً منه» | The asset's depreciation method is revaluation, and this document only handles straight line. | Take the asset off and use the revaluation document for it instead. |
+| *Can not depreciate the fixed asset {0} in the period {1} because last depreciation was in period {2}* — «لا يمكن إهلاك الأصل {0} في الفترة {1} حيث أنه كان آخر إهلاك للأصل كان في الفترة {2}» | There is a gap between the asset's last depreciated period and the period on this document. | Run the missing periods first, or cover them with a prevent-depreciation document, then come back to this one. |
+| *Value Date must be last date in Fiscal Period* — «التاريخ الفعلي يجب أن يكون آخر تاريخ في الفترة» | The value date is not the last day of the document's fiscal period. | Set the value date to the period's last day. |
+| *Cannot Depreciate Asset {0} because of next document {1}* — «لا يمكن إهلاك الأصل {0} لوجود المستند {1}» | Another document dated after this run has already touched the asset. | Undo `{1}` first, or turn on the term option described above when `{1}` is an addition, deduction, transfer or partial disposal. |

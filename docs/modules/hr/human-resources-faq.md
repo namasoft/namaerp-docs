@@ -33,12 +33,8 @@ at all. There is no setting that changes this.
 On a **public holiday** or a **vacation day**, the same is true by default, but two settings on
 [HR Configuration](/modules/hr/setup/hr-configuration) let you measure the day like an ordinary
 working day instead: *Calculate Normal Work Hours For Holidays* and *Calculate Normal Work Hours For
-Vacations*. Both labels end with the reminder *(Overtime will not be all day)*.
-
-::: warning An earlier version of this page was wrong about this
-It said the weekly day off was controlled by the "for vacations" setting. It is not — weekends and
-weekly rest days have **no** opt-out, and the vacation setting governs vacation days only.
-:::
+Vacations*. Both labels end with the reminder *(Overtime will not be all day)*. The vacation setting
+governs vacation days only; the weekly day off has no such setting.
 
 Which shift the day is measured against comes from the employee's
 [attendance plan](/modules/hr/attendance/attendance-plans-and-shifts), and a day that is a holiday

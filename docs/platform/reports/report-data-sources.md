@@ -124,7 +124,7 @@ on Arabic screens as well.
 
 | Message | Why | What to do |
 |---|---|---|
-| *You must select the option {0} because the datasource {1} uses sort fields* — «يجب اختيار الاوبش {0} لأن مصدر البيانات {1} يستخدم حقول ترتيب» | The data source has **Sort Fields**, and they only work when it is read once per report row. | Tick **Use Data Source N As Sub Query** on that tab, or clear the data source's sort fields. |
+| *You must select the option {0} because the datasource {1} uses sort fields* — «يجب اختيار الأوبشن {0} لأن مصدر البيانات {1} يستخدم حقول ترتيب» | The data source has **Sort Fields**, and they only work when it is read once per report row. | Tick **Use Data Source N As Sub Query** on that tab, or clear the data source's sort fields. |
 | *There are one or more parameter with ids ({0}) are not handled* | The data source has parameters that no filter line on the report's tab answers. | Add a **Filter Lines** row for each parameter listed. |
 | *You should define data source field or data source parameter* | A filter line names neither a **Data Source Field** nor a **Data Source Parameter**, or names both. | Fill exactly one of the two. |
 | *You should define reporting wizard field or reporting wizard parameter* | A linking or filter line names neither a report field nor a report parameter, or names both. | Fill exactly one of the two. |

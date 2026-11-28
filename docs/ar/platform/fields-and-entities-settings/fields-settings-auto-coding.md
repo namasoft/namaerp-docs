@@ -11,13 +11,14 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 يُنشئ السجل هو من يكتب الكود بيده فإن هذا العرف لا يصمد أكثر من شهر: مستخدم يكتب `CUST-001`،
 والتالي يكتب `cust 2`، وثالث يعيد استخدام كود مأخوذ بالفعل.
 
-جدول **التكويد الالي للملفات** (Files Auto Coding) يسحب القلم من يد المستخدم. تصف الكود مرة واحدة
+جدول **التكويد الآلي** (Automatic Coding) يسحب القلم من يد المستخدم. تصف الكود مرة واحدة
 في صورة صيغة، فيبنيه النظام عند حفظ السجل — فيخرج العميل الذي فُتح في فرع الرياض سنة 2026 بالكود
 `RYD-2026-00147` في كل مرة، دون أن يحتاج أحد إلى تذكّر القاعدة. ونفس الجدول يستطيع بناء الاسم
 العربي والاسم الإنجليزي والكود البديل بنفس النوع من الصيغ.
 
-في تبويب **الرئيسية** يظهر الجدول بعنوان **التكويد الآلي** (Automatic Coding)، بينما تحمل شاشة
-العرض والبحث الخاصة به اسم **التكويد الالي للملفات** (Files Auto Coding).
+في تبويب **الرئيسية** يظهر الجدول بعنوان **التكويد الآلي** (Automatic Coding)، بينما تحمل القائمة
+القابلة للطي تحته، التي تعرض سطور الترقيم من كل سجلات أعدادات الحقول و الشاشات، اسم **التكويد الآلي
+للملفات** (Files Auto Coding).
 
 ![جدول التكويد الآلي](../images/fields-settings/fields-settings-auto-coding-grid-ar.png)
 
@@ -44,17 +45,16 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 |---|---|
 | للنوع (For Type) | نوع الكيان الوحيد الذي يرقّمه السطر، مثل عميل أو مخزن. |
 | قائمة الأنواع (Entity List) | قائمة مسماة قابلة لإعادة الاستخدام من أنواع الكيانات، ليغطي سطر واحد عدة ملفات. |
-| المعايير (Criteria Definition) | سجل [تعريف معايير](/ar/platform/automation-and-rules/criteria-definitions) محفوظ؛ لا يُنفَّذ السطر إلا إذا طابقه السجل الجاري حفظه. |
-| معيار عدم التفيذ (Reversed Criteria Definition) | العكس: يُتخطى السطر إذا طابق السجلُ هذه المعايير. |
-| تطبيق عند التوافق مع الاستعلام (Apply When Query) | استعلام؛ لا يُنفَّذ السطر إلا إذا أعاد الاستعلام نتيجة للسجل الجاري حفظه. |
-| منع التطبيق عند التوافق مع الاستعلام (Do Not Apply When Query) | العكس: يُتخطى السطر إذا أعاد هذا الاستعلام نتيجة. |
-| غير نشط (Inactive) | يوقف هذا السطر وحده دون حذفه. |
+| المعايير (Criteria) | سجل [تعريف معايير](/ar/platform/automation-and-rules/criteria-definitions) محفوظ؛ لا يُنفَّذ السطر إلا إذا طابقه السجل الجاري حفظه. |
+| معيار عدم التنفيذ (Reversed Criteria Definition) | العكس: يُتخطى السطر إذا طابق السجلُ هذه المعايير. |
+| تطبيق عند التوافق مع الاستعلام (Apply When Query) | استعلام يُنفَّذ على السجل الجاري حفظه. يُتخطى السطر إذا كانت أول قيمة يُرجعها الاستعلام `0` أو false؛ وأي إجابة أخرى، حتى عدم إرجاع أي صف، تسمح بتنفيذه. |
+| منع التطبيق عند التوافق مع الاستعلام (Do Not Apply When Query) | العكس: لا يُنفَّذ السطر إلا إذا كانت أول قيمة يُرجعها هذا الاستعلام `0` أو false. وأي إجابة أخرى، حتى عدم إرجاع أي صف، تتخطاه. |
 
 المطابقة تتم **بنوع الكيان**. عند حفظ ملف رئيسي يبحث النظام عن السطور التي يذكر عمود **للنوع** أو
 **قائمة الأنواع** فيها هذا النوع. والسطر الذي **لا يحمل نوعًا ولا قائمة أنواع** هو الافتراضي على
 مستوى النظام — يُستخدم لأي ملف رئيسي لم يطالب به سطر أكثر تحديدًا.
 
-::: warning لا يُستخدم إلا أول سطر مطابق لنوع الكيان
+::: warning لا يُستخدم إلا أول سطر لنوع الكيان
 يختار النظام **أول** سطر يجده للنوع ويكتفي به وحده. وإذا لم تطابق معاييرُه السجلَ فإن السجل ببساطة
 **لا يحصل على كود تلقائي** — ولا ينتقل النظام إلى السطر التالي ليجربه.
 
@@ -69,7 +69,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 على معلومة لا يحملها السجل — مثل عدد السجلات الموجودة في الفرع، أو وجود العميل في نظام آخر.
 
 ::: tip اجمع إعدادات النوع الواحد في سجل واحد
-لأن أول سطر مطابق هو الفائز، ولأن ترتيب السطور بين عدة سجلات من **أعدادات الحقول و الشاشات** ليس
+لأن أول سطر للنوع هو الفائز، ولأن ترتيب السطور بين عدة سجلات من **أعدادات الحقول و الشاشات** ليس
 تحت سيطرتك، فإن توزيع ترقيم نفس نوع الكيان على سجلين يجعل الفائز غير متوقع. اجعل كل سطور ترقيم
 الملف الواحد في سجل واحد.
 :::
@@ -85,7 +85,7 @@ menu: الأساسيات ← الإعدادات ← أعدادات الحقول 
 | Code Validity Query (Skip code if 1 is returned, and calculate next) | استعلام يفحص الكود الذي حُسب للتو ويرفضه، فيُجرَّب الرقم التالي. |
 | صيغة حساب الاسم العربي (Name1 Calculation Formula) | يبني الاسم العربي. |
 | صيغة حساب الاسم الإنجليزي (Name2 Calculation Formula) | يبني الاسم الإنجليزي. |
-| صيغه الكود البديل (Alternate Code Formula) | يبني الكود البديل في الملفات التي تحتوي عليه. |
+| صيغة الكود البديل (Alternate Code Formula) | يبني الكود البديل في الملفات التي تحتوي عليه. |
 | بادئة حساب التسلسل (Code Sequence Prefix) | تحدد **أي عدّاد** يُؤخذ منه الرقم التالي. |
 | طول لاحقة الكود (Code Suffix Length) | عدد الخانات التي يُستكمل بها الرقم المتسلسل. |
 | أول رقم في لاحقة الكود (Suffix First Number) | الرقم الذي يبدأ منه العدّاد. |
@@ -285,8 +285,8 @@ then 1 else 0 end
 
 الأصناف لا تبدأ من هذا الجدول. فعند حفظ صنف ينظر النظام أولًا إلى **قسم الصنف** (Item Section) —
 صيغة الترقيم الخاصة بالقسم، أو أول سطر من سطور معاييره يطابق الصنف. فإن لم يكن هناك شيء معرّف رجع
-إلى صيغة ترقيم الأصناف الموجودة في الإعدادات العامة، ولا ينزل إلى سطر من سطور **التكويد الالي
-للملفات** إلا إذا كان الاثنان فارغين.
+إلى صيغة ترقيم الأصناف الموجودة في الإعدادات العامة، ولا يكمل كأي ملف رئيسي آخر إلا إذا كان الاثنان
+فارغين: [مجموعته](/ar/platform/documents-and-records/master-groups) أولًا، ثم سطر من سطور **التكويد الآلي**.
 
 ::: tip ترقيم متغيرات الأصناف
 كود الإصدارة، وكود المقاس واللون، وصيغ الأسماء الأربع الخاصة بهما، ومفتاحا "إذا كان فارغًا فقط"،
@@ -294,7 +294,7 @@ then 1 else 0 end
 فإن كنت ترقّم متغيرات الأصناف فاضبط الصيغة هناك، واستخدم هذا الجدول لبقية الملفات الرئيسية.
 :::
 
-كما يمكن ضبط القسم على **منع التكويد الالي**، وعندها لا تُرقَّم أصنافه تلقائيًا مهما كانت هذه
+كما يمكن ضبط القسم على **منع التكويد الآلي**، وعندها لا تُرقَّم أصنافه تلقائيًا مهما كانت هذه
 الإعدادات.
 
 ## متى تسري الإعدادات
@@ -311,18 +311,18 @@ then 1 else 0 end
 |---|---|---|---|
 | التكويد الآلي | Automatic Coding | `autoCodingLines` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
 | المعايير | Criteria | `autoCodingLines.criteriaDefinition` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
-| معيار عدم التفيذ | Reversed Criteria Definition | `autoCodingLines.reversedCriteriaDefinition` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
+| معيار عدم التنفيذ | Reversed Criteria Definition | `autoCodingLines.reversedCriteriaDefinition` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
 | تطبيق عند التوافق مع الاستعلام | Apply When Query | `autoCodingLines.applyWhenQuery` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
 | منع التطبيق عند التوافق مع الاستعلام | Do Not Apply When Query | `autoCodingLines.doNotApplyWhenQuery` | [اختيار السطر الذي يُنفَّذ](#khtyr-lsTr-ldhy-yunfaWdh) |
 | صيغة حساب الكود | Code Calculation Formula | `autoCodingLines.codingFormula.codeCalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
 | Code Validity Query (Skip code if 1 is returned, and calculate next) | Code Validity Query (Skip code if 1 is returned, and calculate next) | `autoCodingLines.codingFormula.codeValidityQuery` | [أعمدة الصيغ](#aamd-lSyG) |
 | صيغة حساب الاسم العربي | Name1 Calculation Formula | `autoCodingLines.codingFormula.name1CalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
 | صيغة حساب الاسم الإنجليزي | Name2 Calculation Formula | `autoCodingLines.codingFormula.name2CalculationFormula` | [أعمدة الصيغ](#aamd-lSyG) |
-| صيغه الكود البديل | Alternate Code Formula | `autoCodingLines.codingFormula.altCodeFormula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة الكود البديل | Alternate Code Formula | `autoCodingLines.codingFormula.altCodeFormula` | [أعمدة الصيغ](#aamd-lSyG) |
 | صيغة تكويد اسم 1 للون والمقاس | Name 1 Encoding Formula For Colour And Size | `autoCodingLines.codingFormula.szName1Formula` | [أعمدة الصيغ](#aamd-lSyG) |
 | صيغة تكويد اسم 2 للون والمقاس | Name 2 Encoding Formula For Colour And Size | `autoCodingLines.codingFormula.szName2Formula` | [أعمدة الصيغ](#aamd-lSyG) |
-| صيغة تكويد اسم 1 للاصدارة | Name 1 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName1Formula` | [أعمدة الصيغ](#aamd-lSyG) |
-| صيغة تكويد اسم 2 للاصدارة | Name 2 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName2Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 1 للإصدارة | Name 1 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName1Formula` | [أعمدة الصيغ](#aamd-lSyG) |
+| صيغة تكويد اسم 2 للإصدارة | Name 2 Encoding Formula For Revision | `autoCodingLines.codingFormula.rvName2Formula` | [أعمدة الصيغ](#aamd-lSyG) |
 | بادئة حساب التسلسل | Code Sequence Prefix | `autoCodingLines.codingFormula.codeSequencePrefix` | [أعمدة الصيغ](#aamd-lSyG) |
 | طول لاحقة الكود | Code Suffix Length | `autoCodingLines.codingFormula.codeSuffixLength` | [أعمدة الصيغ](#aamd-lSyG) |
 

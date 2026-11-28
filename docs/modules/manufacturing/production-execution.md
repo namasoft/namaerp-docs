@@ -43,17 +43,27 @@ Maybe the paint job is uneven, so they need to go back to sanding and repainting
 
 Some defects can't be fixed. The part is cracked, the measurement is way off spec, the material is contaminated. These units move to Scrap status.
 
-Scrap gets written off - it's a loss. The system tracks scrap quantities for cost accounting (you still spent money on those units) and process improvement (high scrap rates indicate problems to investigate).
+Moving units to Scrap posts nothing by itself. The money already spent on them stays in the order's cost, so the good units delivered carry it, and the scrap quantity shows where the losses happen. Scrap material that still has value is booked into stock with a [Scrap Receipt](/modules/manufacturing/scrap-receipt).
 
 ### Sample (عينة) - Held for Testing
 
 Quality assurance might require you to pull samples for testing - maybe destructive testing, chemical analysis, or long-term performance evaluation. These units move to Sample status.
 
-They're not defective, they're just set aside for testing purposes. Depending on the test results and whether the testing is destructive, they might move back to ToMove (if they can be used after testing) or to Scrap (if the testing destroyed them).
+They're not defective, they're just set aside for testing purposes. A sample can only be taken from ToMove and returned to ToMove, at the same operation. Samples used up by testing are recorded on a Production Sample Document, which takes them out of the operation's Sample quantity.
 
 ## How Products Move Through Operations
 
 Here's where it gets interesting. Production execution is all about moving quantities from one operation-and-step to another operation-and-step.
+
+A new order's whole quantity starts at **operation 1**, in ToMove — the order's starting point. The first execution of an order therefore moves from operation 1 into the first operation of the routing, and every later one moves on from there.
+
+A few moves are refused: from and to the same operation and step; from Rejected to a later operation; Rejected to Scrap, or Scrap to Rejected, across two operations; and any Sample move other than ToMove to Sample or Sample to ToMove. The message is:
+
+*Cannot apply from seq {0} as {1} to seq {2} as {3}* — «لا يمكن تنفيذ من عملية {0} وخطوة {1} إلى عملية {2} وخطوة {3}»
+
+A Sample move between two operations is refused with:
+
+*Cannot take a sample from 2 different operations {0} , {1}* — «لا يمكن سحب عينة من عملية {0} إلى عملية مختلفة {1}»
 
 ### The Normal Forward Flow
 
@@ -97,7 +107,7 @@ From: Operation 40, ToMove status, 3 units
 To:   Operation 40, Scrap status, 3 units
 ```
 
-These 3 units are gone. The system will track the scrap cost and generate the appropriate accounting entries.
+These 3 units are gone. Their cost stays in the order's cost; nothing is posted for them by the execution.
 
 ### Taking Samples
 
@@ -115,11 +125,7 @@ From: Operation 50, Sample status, 5 units
 To:   Operation 50, ToMove status, 5 units
 ```
 
-Or if the testing was destructive:
-```
-From: Operation 50, Sample status, 5 units
-To:   Operation 50, Scrap status, 5 units
-```
+If the testing was destructive, the samples do not move on: the Production Sample Document records them and takes them out of operation 50's Sample quantity (see [Sample Documents](#Sample-Documents)).
 
 ## Creating a Production Execution
 
@@ -189,24 +195,24 @@ Of course, you can override this with actual times if you tracked them more prec
 
 ### Auto-Delivery: Finishing Production Automatically
 
-Here's a really nice feature. If you set "Auto Delivery" to true in the header, the system watches for executions that complete the final operation.
+Here's a really nice feature. If **Automatic Product Delivery** is ticked in the header (it is copied from the term), the system watches for executions that complete the final operation.
 
-When it sees an execution moving units from the last operation to ToMove status, it automatically:
+When a line moves units into the ToMove step of the order's last operation, it automatically:
 1. Creates a Product Delivery document
 2. Receives the finished goods into inventory
 3. Applies all the lot numbers, serial numbers, and dimensional attributes from the execution
 4. Delivers to the warehouse and location you specified
 5. Handles co-products if your production order has any
 
-This eliminates a manual step and ensures that as soon as production is done, finished goods are available in inventory.
+This eliminates a manual step and ensures that as soon as production is done, finished goods are available in inventory. An execution with the option ticked whose quantity does not reach the last operation is refused; the message, and the term options that shape the delivery, are on [Execution and Delivery Document Terms](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery#Automatic-delivery).
 
 ## What Happens When You Commit an Execution
 
-When you save and commit a production execution, several things happen automatically (depending on your configuration):
+When you save and commit a production execution, several things happen automatically (depending on your configuration). Each generated document takes its book and term from a block of the execution's document term; the blocks, the approval switches and what happens to generated documents on edit and delete are on [Execution and Delivery Document Terms](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery).
 
 ### Material Issues are Generated
 
-If components are configured to be issued "Auto with Execution", the system creates Material Issue documents. It looks at which components should be consumed at the operations you just executed and creates issues for them.
+If components are configured to be issued "Automatic With Execution", the system creates Raw Materials Issue documents. It looks at which components should be consumed at the operations you just executed and creates issues for them.
 
 For example, if you moved 50 units through Operation 20 and Operation 20 consumes 2 screws per unit, the system issues 100 screws from inventory to the production order.
 
@@ -214,9 +220,7 @@ This keeps materials flowing without manual intervention.
 
 ### Resource Vouchers Record Time
 
-The time and resources you recorded get documented in Resource Vouchers. These track labor hours and machine hours for cost accounting.
-
-If you recorded that Employee John worked 4 hours on this execution, a resource voucher captures that, links it to the production order, and feeds it into the costing system.
+The generated Resource Voucher charges the order's resource rows that have **Auto Charge** ticked, for the operations the units passed through; lines that move units to Scrap or Sample charge nothing. The time charged is the resource rate on the routing, or the line's from-to time when **Resource Voucher Based On Production Execution Time** is on in the manufacturing configuration. The details are on [Resource Voucher](/modules/manufacturing/manufacturing-resource-voucher).
 
 ### Mold Usage is Tracked
 
@@ -230,7 +234,7 @@ You can even configure that production can't continue until quality approves the
 
 ### Sample Documents
 
-If "Auto Gen Sample Docs" is enabled and you moved quantities to Sample status, the system creates Sample Documents to track what samples were taken and for what purpose.
+If **Auto Generate Sample Docs** is ticked on the execution, the lines that move quantities to Sample status create a Production Sample Document for each order. Saving that document takes the samples out of the operation's Sample quantity, unless its term has **Do Not Affect Production Order Quantities** ticked.
 
 ### The Big One: Product Deliveries
 
@@ -248,7 +252,7 @@ This is real-time. Other users looking at the production order immediately see t
 
 ## Common Scenarios
 
-Let's see how this works in practice.
+Let's see how this works in practice. Scenario 1 starts from a new order; the others pick the order up once the units have reached the first operation they show, which on a real order takes an execution out of operation 1 first.
 
 ### Scenario 1: Smooth Production
 
@@ -256,41 +260,41 @@ You're making 100 widgets. Everything goes well:
 
 **Execution 1**:
 ```
-From: Op 10 (Cutting), ToMove, 100 units
-To:   Op 20 (Assembly), ToMove, 100 units
+From: Op 1 (start), ToMove, 100 units
+To:   Op 10 (Cutting), ToMove, 100 units
 Time: 8:00 AM to 10:00 AM
 Worker: Ahmed
 ```
 
-System creates material issue for components used in cutting, records 2 hours of labor from Ahmed.
+System creates the material issue for components used in cutting, and the resource voucher for cutting.
 
 **Execution 2**:
 ```
-From: Op 20 (Assembly), ToMove, 100 units
-To:   Op 30 (Painting), ToMove, 100 units
+From: Op 10 (Cutting), ToMove, 100 units
+To:   Op 20 (Assembly), ToMove, 100 units
 Time: 10:30 AM to 2:00 PM
 Worker: Fatima
 ```
 
-Material issue for assembly components, 3.5 hours of labor from Fatima.
+Material issue for assembly components, resource voucher for assembly.
 
 **Execution 3**:
 ```
-From: Op 30 (Painting), ToMove, 100 units
-To:   Op 40 (Final QC), ToMove, 100 units
+From: Op 20 (Assembly), ToMove, 100 units
+To:   Op 30 (Painting), ToMove, 100 units
 Time: 2:30 PM to 4:00 PM
 Worker: Mohammed
 ```
 
 **Execution 4**:
 ```
-From: Op 40 (Final QC), ToMove, 100 units
-To:   [Last operation complete, ToMove status]
+From: Op 30 (Painting), ToMove, 100 units
+To:   Op 40 (Final QC), ToMove, 100 units
 Time: 4:15 PM to 5:00 PM
 Worker: Sara
 ```
 
-Since this is the last operation and Auto Delivery is enabled, the system automatically creates a Product Delivery, receiving all 100 widgets into finished goods inventory.
+Since Op 40 is the order's last operation and Automatic Product Delivery is ticked, the system automatically creates a Product Delivery, receiving all 100 widgets into finished goods inventory.
 
 Done! Clean production run with full traceability of who did what, when, and with which materials.
 
@@ -372,44 +376,29 @@ From: Op 20 (Grinding), ToMove, 95 units
 To:   Op 30 (Heat Treatment), ToMove, 95 units
 ```
 
-**Execution 5**: Samples are tested (destructive)
-```
-From: Op 20 (Grinding), Sample, 2 units
-To:   Op 20 (Grinding), Scrap, 2 units
-```
+**Samples are tested (destructive)**: with **Auto Generate Sample Docs** ticked on Execution 3, a Production Sample Document for the 2 units was created with it, and it takes them out of Op 20's Sample quantity. A sample cannot be moved to Scrap.
 
-**Execution 6**: Continue with the 95 units through remaining operations
+**Execution 5**: Continue with the 95 units through remaining operations
 
-Final result: 95 good units delivered, 5 units scrapped (3 from defects, 2 from testing). System tracked exactly what happened and why.
+Final result: 95 good units delivered, 3 units scrapped from defects, 2 drawn as samples. System tracked exactly what happened and why.
 
 ### Scenario 4: Over-Production
 
 Sometimes yields are better than expected:
 
-Your order is for 100 units. Because you expect some scrap, you started with 110 units of raw material.
+Your order is for 100 units, and the 100 units are at Op 10 (Cutting). The cut material turns out to yield more good pieces than planned.
 
-**Execution 1**: Cut 110 pieces (permitted over-completion at first operation)
-```
-From: Op 10 (Cutting), ToMove, 110 units
-To:   Op 20 (Assembly), ToMove, 110 units
-```
+A step can only give what it holds, so the extra output is not recorded by moving more than 100 out of Op 10. It goes in the line's **To Qty**, the quantity that arrives:
 
-**Execution 2**: Assembly goes surprisingly well, only 2 scrapped
+**Execution 1**: Assembly gets 108 good units out of the 100 that left cutting
 ```
-From: Op 20 (Assembly), ToMove, 2 units
-To:   Op 20 (Assembly), Scrap, 2 units
-
-From: Op 20 (Assembly), ToMove, 108 units
-To:   Op 30 (Finishing), ToMove, 108 units
+From: Op 10 (Cutting), ToMove, 100 units
+To:   Op 20 (Assembly), ToMove, To Qty 108 units
 ```
 
-**Execution 3**: Finishing also goes well, no losses
-```
-From: Op 30 (Finishing), ToMove, 108 units
-To:   [Last operation]
-```
+**To Qty** may exceed the moved quantity by up to the **Permitted Percentage** on the order's routing line for the from operation (10% here, so up to 110), or by any amount when that line has **Unlimited Overcompletion** ticked. More is refused with *To Quantity can not exceed from quantity by more than {0} percent at line {1}*. The **To Qty** column only appears when **Use To Quantity In Execution** is on in the manufacturing configuration.
 
-The order was for 100, but you produced 108. If your permitted percentage allows this (say, 10% over-completion), the system accepts it. You deliver 108 units.
+**Execution 2**: Op 20 now holds 108 units, and the rest of the run carries them on to the last operation. You deliver 108 units.
 
 Now you have extra inventory - bonus! The costing system will account for this properly when you close the order.
 
@@ -450,11 +439,7 @@ A few settings control how execution works:
 
 ### Document Term Configuration
 
-The term you select on the execution controls:
-- Which documents get auto-generated (material issues, resource vouchers, product deliveries, etc.)
-- Whether approvals are required for those generated documents
-- Default "Auto Delivery" setting
-- Whether to delete auto-generated documents when you delete the execution
+The term you select on the execution decides which documents get generated and with which book and term, whether they go through approval, the default **Automatic Product Delivery**, the quality gates, and what happens to generated documents when the execution is edited or deleted. Every option is on [Execution and Delivery Document Terms](/modules/manufacturing/document-terms/mfg-terms-execution-and-delivery).
 
 Get these settings right, and the system does a lot of heavy lifting for you.
 
@@ -463,14 +448,14 @@ Get these settings right, and the system does a lot of heavy lifting for you.
 Module-wide settings like:
 - **Subtract Lines Quantities From Operation Calculated Quantities**: When suggesting quantities to move, should the system subtract quantities already entered in other lines of the same execution? Useful to prevent accidentally moving the same units twice in one document.
 
-- **Do Not Suggest From Time**: Some shops don't want the system pre-filling start times - they want to enter them manually for accuracy.
+- **Do Not Suggest From Time In Execution**: Some shops don't want the system pre-filling start times - they want to enter them manually for accuracy.
 
 - **Use Production Movement System Entry**: Records every quantity movement as its own entry and rebuilds each step's balance from them in date order. Needed for **Allow Negative Quantity** (see Scenario 5).
 
 ### Production Order Term Configuration
 
 Settings on the production order itself affect execution:
-- **Cost Per Batch**: If enabled, costs are tracked separately for each lot/batch. Execution must specify lot numbers.
+- **Cost Per Batch**: If enabled, costs are tracked separately for each lot/batch. The Lot ID becomes required on the order's raw materials issues and returns and on its resource vouchers (see [Production Costing](/modules/manufacturing/production-costing)).
 
 ## Getting Good Results From Execution
 

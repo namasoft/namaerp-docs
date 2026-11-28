@@ -1,7 +1,7 @@
 ---
 description: "Late-payment fines in Real Estate: the fine document and how its amount is set, billing and collecting it separately from the installment, raising a fine from the contract, fine types, generating fines automatically and the accounts they affect."
 entities: [REFineDoc, REFineDocType]
-menu: Real Estate and Property → Fines → Real state fine Doc
+menu: Real Estate and Property → Fines → Real estate fine Doc
 ---
 # Late-Payment Fines
 
@@ -11,7 +11,7 @@ That separation is the whole design of the fine document, and it is the thing to
 
 ## The Fine Document
 
-**Real Estate and Property > Fines > Real state fine Doc** (العقارات و الممتلكات > الغرامات > سند غرامة), available with the base `realestate` licence.
+**Real Estate and Property > Fines > Real estate fine Doc** (العقارات و الممتلكات > الغرامات > سند غرامة), available with the base `realestate` licence.
 
 ![The fine document screen](../../../ar/modules/realestate/images/collections/re-fine-doc-en.png)
 
@@ -53,7 +53,7 @@ Fines raised against a contract are also listed back on that contract's own scre
 Two buttons on the contract screens save you from re-typing everything:
 
 - **Create Fine Document** (إنشاء سند غرامة) opens a fine in a popup, pre-filled with the owner, buyer, estate and location, related to that contract, and carrying **all** of the contract's installment lines. If that is more than you want, switch on the fine term's option *Do Not Copy Installments With Related To* (عدم نسخ الأقساط مع اختيار يرتبط بـ) and the fine arrives with an empty grid instead.
-- **Create Fine Document From Selected Line** (إنشاء سند غرامة للأقساط المختارة) does the same for the installment lines you have ticked — and only those that still have something outstanding. Tick a fully paid line and it refuses, asking you to select an installment with a remaining value.
+- **Create Fine Document From Selected Line** (إنشاء سند غرامة للأقساط المختارة) does the same for the installment lines you have ticked — and only those that still have something outstanding; ticked lines that are fully paid are left out. If none of the ticked lines has a remaining value, it refuses with *Please select installment line with remaining value*.
 
 ## Actions on this screen
 
@@ -67,30 +67,17 @@ It is worth being explicit about what it is *not*. A fine type carries **no rate
 
 ## Generating Fines Automatically
 
-Chasing late payers by hand does not scale, so the module ships an entity flow (مسار كيان) that raises fines on a schedule. You attach it to a task schedule, give it the parameters below, and let it run — monthly is the usual rhythm.
-
-The parameters, in the order they appear:
-
-| Parameter | What it does |
-|---|---|
-| Fields Map | Required. The values to stamp on every generated fine — at minimum the document book and the term it must use. |
-| Grace Period | How many days late an installment must be before it is fined at all. |
-| Add Grace Period To Fine | Whether the grace days themselves count towards the number of late days being charged. |
-| Fine Is Value Not Percent | Switches the next field from a percentage to a flat amount. |
-| Fine Percent/Value Per | Whether the rate is charged per **day**, per **month** or per **year**. |
-| Fine Percent/Value | The rate itself. |
-| Fine Calculation Query | Optional. When filled, its result replaces the built-in calculation entirely, for companies whose penalty formula does not fit a simple rate. |
-| Contracts To Search In | Which contract types to scan. By default: sales contracts, opening sales contracts, rent contracts and opening rent contracts. |
+Chasing late payers by hand does not scale, so the module ships an entity flow (مسار كيان) that raises fines on a schedule. You attach it to a task schedule, give it its parameters — the fields to stamp on each fine (at minimum the book and the term), the grace period, the rate and whether it is charged per day, month or year — and let it run. Its parameters and the exact calculation are on the [EAAutoGenerateREFineDoc page](/entity-flows/realestate/EAAutoGenerateREFineDoc).
 
 ### What a run does
 
-The run takes today's date, steps back by the grace period, and looks for committed contracts of the listed types that have at least one installment with something still outstanding and a due date earlier than that cut-off. For each such contract it creates a fine — or reuses the fine it created earlier in the same month, since the run marks everything it produces as *Generated From System* and looks for its own earlier output before making a new one.
+The run takes today's date, steps back by the grace period, and looks for committed contracts of the listed types that have at least one installment with something still outstanding and a due date earlier than that cut-off. For each such contract it creates a fine with **one line per overdue installment** — or reuses the fine it created for that contract earlier in the same month, since the run marks everything it produces as *Generated From System* and looks for its own output of the current month before making a new one.
 
-The amount is a rate multiplied by how late the money is. The late days are counted from the installment's due date (plus the grace period, unless you asked for the grace days to be charged) or from the start of the month, whichever is later, up to today. That day count is then converted to the unit you chose — a per-month rate divides the late days by 30, a per-year rate by 360 — and multiplied by the basis: either the flat value you configured, or your percentage applied to what the installment still owes.
+Each line's penalty is a rate multiplied by how late the money is, and the late days are counted only within the current month: from the installment's due date plus the grace period (or from the due date itself when the grace days are charged), but never from earlier than the first day of the month, up to and including today.
 
-**Take our 50,000 installment at 0.5% per month, 90 days overdue.** The basis is 0.5% × 50,000 = 250. The repetition rate is 90 ÷ 30 = 3. The fine is 750.
+**Take our 50,000 installment, overdue since before April, at 0.5% per month, with the run on 30 April.** The late days are 1 to 30 April, so 30. The basis is 0.5% × 50,000 = 250, the repetition rate is 30 ÷ 30 = 1, and the line's fine is 250. A customer who stays late is charged again by each month's run, on that month's fine.
 
-Two things about the result are worth planning around. Each run produces **one fine document per contract per month** — the automatic route is a per-contract charge, so use the manual buttons above when you need a penalty itemised installment by installment. And **system-generated fines from an earlier run that no longer match any overdue contract are deleted**, which is how a customer who pays up stops being chased; a fine you want to keep permanently should not be left in the automatic run's hands.
+Two things about the result are worth planning around. Each run produces **one fine document per contract per month**, itemised by installment. And **each run deletes the system-generated fines of the current month whose contract is no longer overdue**, which is how a customer who pays up stops being chased; a fine you want to keep permanently should not be left in the automatic run's hands.
 
 ## Where the Money Goes
 

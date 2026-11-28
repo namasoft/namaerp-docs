@@ -11,7 +11,7 @@ Open the document's **Document Term** (توجيه), then the **Track Quantities*
 :::
 
 ::: tip Two policies, two directions
-`trackInvoiceQuantity` controls **this document's own** quantity policy. `relatedDocQtyPolicy` controls the policy applied **against the related/source document** this one was created from (بناءً على). They are independent — set each according to whether you are checking the document itself or its link back to the order/receipt that spawned it.
+`trackInvoiceQuantity` is read from the **source** document's term: set it on the order's term to decide how much of that order the documents created from it (بناءً على) may satisfy. `relatedDocQtyPolicy` sits on the **later** document's term and is used only when **Force Qty** is ticked there and the source document's term leaves **Track Quantities** empty.
 :::
 
 ![The quantity tracking tab of the Sales Invoice document term](../../../ar/modules/supplychain/images/document-terms/doc-term-quantity-tracking-en.png)
@@ -20,7 +20,7 @@ Open the document's **Document Term** (توجيه), then the **Track Quantities*
 
 This group is hidden entirely when the supply-chain configuration option to hide it is enabled; otherwise it is shown for all inventory document terms.
 
-**Track Quantities** `termConfig.trackInvoiceQuantity` — The master switch for this document's own quantity-tracking policy. It decides whether the document's quantity must be less than, equal to, or more than the source quantity it satisfies, or whether no policy check runs at all.
+**Track Quantities** `termConfig.trackInvoiceQuantity` — The quantity-tracking policy of documents on this term, applied when other documents are created from them: it decides whether those documents together may satisfy more than this document's quantity.
 
 **Track Invoice Quantity Fields** `termConfig.trackInvoiceQuantityFields` — Selects which quantity field (the first/primary quantity or the second quantity) the policy above is applied to.
 
@@ -28,12 +28,14 @@ This group is hidden entirely when the supply-chain configuration option to hide
 
 The two policy fields above accept these values:
 
-| Policy value (`trackInvoiceQuantity` / `relatedDocQtyPolicy`) | Meaning |
-|---|---|
-| `LessQuantity` | The tracked quantity may be **less than** the source quantity. |
-| `SameQuantity` | The tracked quantity must **equal** the source quantity. |
-| `MoreQuantity` | The tracked quantity may be **more than** the source quantity. |
-| `None` | No policy check is applied. |
+| Policy value (`trackInvoiceQuantity` / `relatedDocQtyPolicy`) | Label | Meaning |
+|---|---|---|
+| `LessQuantity` | Less Quantity | The total satisfied quantity may not exceed the source quantity (plus the **Permitted Percentage Value To Skip Quantity Track Value** of the later document's term). |
+| `SameQuantity` | Same Quantity | The same limit as Less Quantity. |
+| `MoreQuantity` | Over Quantity | The total satisfied quantity may exceed the source quantity. |
+| `None` | None | No quantity tracking against this document; a later document's **Related Doc Qty Policy** is not used in its place. |
+
+A save that pushes the total satisfied quantity of a source line over its limit is refused with *Satisfied quantity ({0}) greater than order quantity ({1})* — «الكمية المسلمة ({0}) أكبر من كمية المستند الأصلي ({1})».
 
 The "fields" selectors above accept these values:
 
@@ -54,11 +56,11 @@ And `updateQtyOnSave` accepts:
 
 This group is added for all inventory document terms. It governs how the document tracks its quantities back against the related (from/origin) document — and writes the satisfied amount back into it.
 
-**relatedDocQtyPolicy** `termConfig.relatedDocQtyPolicy` — The quantity-tracking policy applied specifically against the related/linked document — the counterpart of `trackInvoiceQuantity`, but for the from-document relationship. Uses the same `TrackQuantityPolicy` values (`LessQuantity` / `SameQuantity` / `MoreQuantity` / `None`).
+**Related Doc Qty Policy** `termConfig.relatedDocQtyPolicy` — The policy this document applies against its source document when **Force Qty** is ticked and the source document's term leaves **Track Quantities** empty. Uses the same values as `trackInvoiceQuantity`, and is required when **Force Qty** is ticked.
 
-**Related Doc Qty Fields** `termConfig.relatedDocQtyFields` — Selects which quantity field (first or second) is tracked for the related-document policy.
+**Related Doc Qty Fields** `termConfig.relatedDocQtyFields` — Selects which quantity field (first or second) is tracked in that case.
 
-**Force Qty** `termConfig.forceTrackQtyOfRelatedDocs` — Forces quantity tracking against the related (from/origin) document even when it would not otherwise be triggered.
+**Force Qty** `termConfig.forceTrackQtyOfRelatedDocs` — Lets this document track its quantities against a source document whose term leaves **Track Quantities** empty, using **Related Doc Qty Policy**. When the supply chain option **Use System Table to Track Quantities** is on, a document creates quantity-tracking entries only when its term has **Force Qty** ticked.
 
 **Ignore Track Qty When Adding Lines Manually** `termConfig.ignoreTrackQtyWhenAddingLinesManually` — Skips track-quantity validation and recording for lines the user adds by hand, rather than lines pulled from a linked document.
 
@@ -72,7 +74,7 @@ This group is added for all inventory document terms. It governs how the documen
 
 **Allow Negative Remaining In Track Quantity** `termConfig.allowNegativeRemainingInTrackQty` — Permits over-satisfying: the remaining (un-satisfied) tracked quantity may go below zero.
 
-**Order Status Qty Track Config** `termConfig.orderStatusQtyTrackConfig` — References an `OrderStatusQtyTrackConfig` master file whose lines map order-status criteria to which quantity value is copied into tracking — i.e. it defines the *source* of the tracked quantity.
+**Quantity Tracking Source Config File** `termConfig.orderStatusQtyTrackConfig` — References a **Quantity Tracking Source Config File** (`OrderStatusQtyTrackConfig`) whose lines decide which quantity the document passes back to its source document — see [Specialized Scenarios](/modules/supplychain/specialized-scenarios).
 
 **Negate Quantity Tracking** `termConfig.negativeQtyTrackValue` — Records the tracking quantity with a negated sign, used for return / reverse-direction documents.
 

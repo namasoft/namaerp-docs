@@ -22,7 +22,7 @@ Every screen hangs off the **Banks > Treasury Bill** root:
    - **Treasury Bill Sales Document** — an early sale before maturity.
    - **Treasury Bill Close Document** — collecting the value at maturity.
 
-On sale or close, the bill's status flips to "Closed".
+A close document sets the bill's status to "Closed"; deleting the close document sets it back to "Running".
 
 ::: warning Sale and close are mutually exclusive
 A single bill is closed either by an early sale or by a close at maturity — not both.
@@ -46,7 +46,7 @@ The due return is then locked in periodically via the **Treasury Bill ROI Proof 
 
 ## Sale or close
 
-Eventually the bill is closed by one of two documents: a **Treasury Bill Sales Document** for an early sale before maturity, or a **Treasury Bill Close Document** to collect its nominal value at the due date. In both cases the status becomes "Closed".
+Eventually the bill is closed by one of two documents: a **Treasury Bill Sales Document** for an early sale before maturity, or a **Treasury Bill Close Document** to collect its nominal value at the due date. Once either document is committed for a bill, the other is refused for that bill.
 
 ## Actions on this screen
 
@@ -66,6 +66,6 @@ One button saves the tedium when you are proving the return on many bills at onc
 
 | Message | Why | What to do |
 |---|---|---|
-| *The Treasury bill {0} has been already purchased by this Document {1}* — «إذن الخزانة {0} قد تم شرائه بالفعل بالمستند {1}» | A second **Treasury Bill Purchase** document is being created for a bill that already has a committed one. | Edit the existing purchase document instead of creating another. |
+| *The Treasury bill {0} has been already purchased by this Document {1}* — «إذن الخزانة {0} قد تم شراؤه بالفعل بالمستند {1}» | A second **Treasury Bill Purchase** document is being created for a bill that already has a committed one. | Edit the existing purchase document instead of creating another. |
 | *The Treasury bill {0} has been already sold by this Document {1}* — «إذن الخزانة {0} قد تم بيعه بالمستند {1}» | The bill has a committed sale document, so it can be neither sold again nor closed. | If the sale was wrong, delete it first; otherwise the bill's life has already ended. |
 | *The Treasury bill {0} has been already closed by this Document {1}* — «إذن الخزانة {0} قد تم إقفاله بالفعل بالمستند {1}» | The bill has a committed close document; sale and close are mutually exclusive endings. | Delete the close document if it was raised by mistake, then sell. |

@@ -15,7 +15,7 @@ Receipt and payment vouchers, orders, and requests are part of the core `account
 ## The chain: Request → Order → Voucher
 
 - **Receipt Request / Payment Request** (`Accounting > Documents > Receipt Request`) — a demand to collect or pay an amount. It's an organizational document that produces **no accounting effect**; it merely records the need.
-- **Receipt Order / Payment Order** (`Accounting > Documents > Receipt Order`) — the authorization to execute the receipt or payment. It carries an **order status** that tracks its progress until it becomes a voucher.
+- **Receipt Order / Payment Order** (`Accounting > Documents > Receipt Order`) — the authorization to execute the receipt or payment. It carries an **order status** that tracks its progress until it becomes a voucher. An order creates no accounting effect unless its document term has **Create Accounting Effects** ticked; a term with **Treated As Receipt Voucher Document With All Effects** (on a payment order, **Treated As Payment Voucher Document With All Effects**) makes the order behave as a full voucher.
 - **Receipt Voucher / Payment Voucher** (`Accounting > Documents > Receipt Voucher`) — the moment of truth: cash actually moves, and this is where the **accounting effect** is recorded in the general ledger.
 
 Not every organization needs the full chain; many start straight from the **voucher**. But those who need to separate "request" from "approval" from "disbursement" find the structure ready.
@@ -41,7 +41,7 @@ A **receipt** voucher makes the cash/bank side **debit** (money came in) and the
 
 ## Consolidated requests
 
-When many receipt/payment requests for the same party pile up and you want to execute them at once, the **Consolidated Receipt Request** / **Consolidated Payment Request** (`Accounting > Documents > Consolidate Receipt Voucher Request`) gathers them: it bundles several requests into one document from which a single combined voucher is generated, instead of issuing a voucher per request.
+When many receipt/payment requests for the same party pile up and you want to execute them at once, the **Consolidated Receipt Request** / **Consolidated Payment Request** (`Accounting > Documents > Consolidated Receipt Voucher Request`) gathers them: it bundles several requests into one document from which a single combined voucher is generated, instead of issuing a voucher per request.
 
 ![The Consolidated Receipt Request screen](../../../ar/modules/accounting/images/receipts/consolidated-rv-request-en.png)
 
@@ -99,7 +99,7 @@ There is no overdraft switch on the payment voucher itself. A treasury or bank i
 
 With both on, a payment voucher that would turn the cash account's debit balance into a credit is refused when you save it. The balance is checked both on the voucher's value date and overall:
 
-*The balance of account {0} will become {1}, You can not change the natural side of the account balance from Debit to Credit* — «رصيد الحساب {0} سيكون {1}, فلذلك لا يمكن تغيير طبيعه رصيد الحساب من مدين الي دائن»
+*The balance of account {0} will become {1}, You can not change the natural side of the account balance from Debit to Credit* — «رصيد الحساب {0} سيكون {1}, فلذلك لا يمكن تغيير طبيعة رصيد الحساب من مدين إلى دائن»
 
 ## In practice
 
@@ -112,7 +112,7 @@ With both on, a payment voucher that would turn the cash account's debit balance
 
 ## For Support
 
-- **"The request/order has no effect in the accounts"** — that's expected; the request creates no journal entry, and the accounting effect is recorded at the **voucher**.
+- **"The request/order has no effect in the accounts"** — that's expected; the request creates no journal entry, an order creates one only when its term says so (see the chain above), and the accounting effect is otherwise recorded at the **voucher**.
 - **"The received amount didn't settle the invoice"** — check the **Invoices** tab and that the line is matched to the correct invoice.
 - **"The wrong cash/party account in the entry"** — the accounts' source is the **document term**; review the receipt/payment voucher term in the [Document terms](../support/accounting-document-terms.md) reference.
 - **"Tax/fees fields don't appear"** — their switches are in the [Accounting configuration](../support/accounting-configuration.md) catalog.
@@ -123,5 +123,5 @@ With both on, a payment voucher that would turn the cash account's debit balance
 | Message | Why | What to do |
 |---|---|---|
 | *Put the receipt paper either in the header or in the lines, not in both* — «ضع الإيصال إما في رأس المستند وإما في سطوره، لا في الاثنين» | A receipt paper is filled in the voucher header **and** on a detail line; the voucher takes one or the other. | Clear the paper from the header, or from the lines. |
-| *Amount can not be less than {0}* — «القيمة لا يمكن ان تقل عن {0}» | The value on a **Receipt/Payment Request** is being lowered below the total of the vouchers already issued against it — the figure in the message is that voucher total. | Raise the request value back, or delete/reduce the vouchers first. |
-| *Payment request {0} remaining {1} can not be negative* — «طلب الصرف {0}، المتبقي {1} لايمكن ان يكون رقم سالب» | The voucher (or consolidated request) allocates more against a payment request than the request still has remaining. | Reduce the amount on the voucher line, or raise the request value. |
+| *Amount can not be less than {0}* — «القيمة لا يمكن أن تقل عن {0}» | The value on a **Receipt/Payment Request**, or on a **Consolidated Payment Request**, is being lowered below the total of the vouchers already issued against it — the figure in the message is that voucher total. | Raise the request value back, or delete/reduce the vouchers first. |
+| *Payment request {0} remaining {1} can not be negative* — «طلب الصرف {0}، المتبقي {1} لا يمكن أن يكون رقم سالب» | The voucher (or consolidated request) allocates more against a payment request than the request still has remaining. | Reduce the amount on the voucher line, or raise the request value. |

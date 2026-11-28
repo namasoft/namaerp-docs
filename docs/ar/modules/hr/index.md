@@ -52,7 +52,7 @@ title: الموارد البشرية
 <LandingGrid>
   <LandingCard icon="📤" title="المخصصات وإنهاء الخدمة" link="/ar/modules/hr/end-of-service/" details="مخصصات نهاية الخدمة، الفصل وإنهاء الخدمة، تصفية المستحقات، وموافقة إخلاء الطرف." />
   <LandingCard icon="🏛️" title="العلاقات الحكومية" link="/ar/modules/hr/government-relations/" details="كتالوج رسوم المعاملات، التأشيرات، تجديد الإقامة، مجمّع تأشيرات الشركة، التأمينات الاجتماعية والكفالة، والمخالفات الحكومية." />
-  <LandingCard icon="➕" title="التأمين الصحي" link="/ar/modules/hr/health-insurance/" details="إضافة الموظف للتأمين وحذفه منه، العروض، المطالبات، الترقيات، وخطابات الإحلال." />
+  <LandingCard icon="➕" title="التأمين الصحي" link="/ar/modules/hr/health-insurance/" details="إضافة الموظف للتأمين وحذفه منه، العروض، المطالبات، الترقيات، والإضافة الجماعية بسند التعميد." />
 </LandingGrid>
 
 ## خدمات يومية ومساعدة

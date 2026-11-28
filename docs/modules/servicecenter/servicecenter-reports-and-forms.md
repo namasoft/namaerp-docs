@@ -3,7 +3,7 @@ description: "The only shipped Service Center report and print form, the rental-
 ---
 # Reports and Print Forms
 
-Set your expectations before you go looking: **this module ships almost no reporting at all.** Across 85 record types and two complete business cycles there is exactly **one** system report and exactly **one** printed form, and no dashboard of any kind.
+Set your expectations before you go looking: **this module ships almost no reporting at all.** Across 88 record types and two complete business cycles there is exactly **one** system report and exactly **one** printed form, and no dashboard of any kind.
 
 That is not an oversight in this documentation. It is the whole list.
 
@@ -27,7 +27,7 @@ It is a genuinely useful report for a rental desk, and it is the only shipped re
 |---|---|---|
 | `SYSF-SCS001` | سند فحص واستلام | The reception [inspection document](/modules/servicecenter/inspections-and-campaigns/servicecenter-inspections.md) |
 
-This is the sheet you hand to a customer when their vehicle arrives. It prints the document's code and date, the inspection template it was built from, the service request it relates to, the customer and the current owner, the work centre, the vehicle's code, name, chassis and second serial number and colour, and then the inspection points with the finding recorded against each one.
+This is the sheet you hand to a customer when their vehicle arrives. It prints the document's code and date, the inspection template it was built from, the service request it relates to, the customer and the current owner, the work centre, the vehicle's code and name, the serial number, second serial number and colour recorded on the inspection document, and then the inspection points with the finding recorded against each one.
 
 ## There Is No Printed Form for the Job Order
 
@@ -58,7 +58,7 @@ There is a single place where the module expects *you* to name a report: the **t
 With so little shipped reporting, most day-to-day questions are answered from the screens rather than from reports, and it is worth knowing which screen answers which question:
 
 - **What is in the shop right now** — the job order list view, filtered by status. The [work centre's own screen](/modules/servicecenter/workshop-setup/servicecenter-work-centers.md) also carries read-only lists of its executions, exceptions and waiting orders.
-- **What was done to this vehicle** — the [vehicle file's](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) history grids, which show its past job orders and its odometer readings.
+- **What was done to this vehicle** — the [vehicle file's](/modules/servicecenter/workshop-setup/servicecenter-product-file.md) history lists, which show its past job orders, when and at what mileage each task was last done, and its status changes.
 - **Where a car has been in its lifecycle** — the [car's status entries grid](/modules/servicecenter/cars-setup/car-master-file.md), which records every status change, the document that caused it and its date. That grid is the first thing to open when somebody asks why a car will not sell.
 - **What parts a job consumed** — the system spare-parts ledger on the [spare parts overview](/modules/servicecenter/spare-parts/servicecenter-spare-parts-overview.md).
 - **Why a document's effects did not appear** — the Business Requests list view. A saved document creates its accounting and inventory effects as background business requests; filter that view by failed status and use **More → Reprocess / Recommit** to retry them.

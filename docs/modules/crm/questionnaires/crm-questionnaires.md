@@ -1,7 +1,7 @@
 ---
-description: "The CRM Questionair document, one respondent's filled-in survey: how to create and fill one, how to get the survey to the respondent, and what is available for reading the results."
+description: "The CRM Questionnaire document, one respondent's filled-in survey: how to create and fill one, how to get the survey to the respondent, and what is available for reading the results."
 entities: [CRMQuestionair]
-menu: Customer Relationship Management → Questionairs → Questionair
+menu: Customer Relationship Management → Questionnaires → Questionnaire
 ---
 # CRM Questionnaires
 
@@ -13,7 +13,7 @@ That design is worth understanding early, because it decides everything else on 
 answers are collected, and how they are read back. Collecting them works well. Reading them back is
 where this feature stops, and the honest picture of that is the most useful thing here.
 
-![Questionair screen](../../../ar/modules/crm/images/questionnaires/crm-questionnaire-en.png)
+![Questionnaire screen](../../../ar/modules/crm/images/questionnaires/crm-questionnaire-en.png)
 
 ::: info Required licence
 `crm`
@@ -21,7 +21,7 @@ where this feature stops, and the honest picture of that is the most useful thin
 
 | What | Where |
 |---|---|
-| Questionair | Customer Relationship Management > Questionairs > Questionair |
+| Questionnaire | Customer Relationship Management > Questionnaires > Questionnaire |
 
 Unlike the marketing screens, the questionnaire really is a **document**: it takes a document book
 and a document number, and it has an issue date, a value date and a fiscal period. It needs **no
@@ -30,21 +30,22 @@ document term**, has no accounting effect, no inventory effect and generates not
 ## Creating one and filling it in
 
 There are two ways in. The straightforward one is the menu entry above. The more convenient one is
-the **إنشاء استبيان / Create Questionair** action that appears in the *more* menu of other screens —
+the **إنشاء استبيان / Create Questionnaire** action that appears in the *more* menu of other screens —
 a customer, a lead, a trouble ticket — which opens a new questionnaire with the record already
-filled into *Related Entity 1*, and the record's customer or supplier into *Related Entity 2*. Those
-same screens gain a **Questionairs** page listing every questionnaire already linked to the record.
+filled into *Related Entity1*, and the record's customer or supplier into *Related Entity2*. Those
+same screens gain a **Questionnaires** page listing every questionnaire already linked to the record.
 
 ::: tip That button and page have to be switched on, screen by screen
 The action and the related-questionnaires page appear only on screens you list in
-[CRM Settings](/modules/crm/crm-configuration.md), under *Add Questionairs Page To*. They also only
+[CRM Settings](/modules/crm/crm-configuration.md), under *Add Questionnaires Page To*. They also only
 appear on a screen's **default** layout — if your site has built a customised layout for that screen,
 the page is not added to it.
 :::
 
 Once the questionnaire is open, pick the **القالب / Template**. That is the moment the work happens:
 the answer grid fills itself with one line per template question, in the template's order, each line
-pre-filled with the question's default answer. From there:
+pre-filled with the question's default result. Picking a template again replaces the grid's lines
+with a fresh set. From there:
 
 - Only the answer column that matches the question's response type is editable. A Number question
   offers the numeric box and nothing else; if a question has no response type, all three columns are
@@ -54,7 +55,7 @@ pre-filled with the question's default answer. From there:
 - The same question may not appear twice on the sheet.
 - Each answer line has its own remarks box and two attachment slots.
 
-Fill in *Related Entity 1* (a customer or a supplier) and *Related Entity 2* (anything) so the
+Fill in *Related Entity1* (a customer or a supplier) and *Related Entity2* (anything) so the
 questionnaire can be found from the record it is about — those two references are the only way a
 questionnaire is ever connected to the rest of the system.
 
@@ -97,18 +98,12 @@ that template exists, the web channel is not available — no amount of clicking
 will produce a URL.
 :::
 
-::: warning Always pick a template before saving
-A questionnaire saved without a template has a public page that cannot be built: opening its link
-shows only a generic *"An error occurred, sorry for any inconvenience"* message with no explanation.
-If a respondent reports that, the first thing to check is the *Template* box on the questionnaire.
-:::
-
 A couple of things to expect on the public page: the questions come out in template order with a
 submit button underneath, plus whatever welcome header and footer the template defines and an upload
 box for each attachment slot the template enables. After submitting, the respondent sees a short
-fixed English confirmation — `Thanks for your reponse`, misspelling included. It is not translatable
-and not configurable; if that matters for a customer-facing survey, keep the survey inside your own
-team's hands or have your site put the closing message in the template's footer instead.
+fixed English confirmation, `Thanks for your reponse`. It is not translatable and not configurable;
+if that matters for a customer-facing survey, keep the survey inside your own team's hands or have
+your site put the closing message in the template's footer instead.
 
 When the answers arrive, the questionnaire is updated in place and flagged as answered from the
 link, with the date and time of the answer.
@@ -123,11 +118,11 @@ rating, nothing compares this quarter with last, and there is no total on the qu
 Scoring is not merely missing from a screen — it is not possible in the module's data, because a
 choice carries no numeric weight and a questionnaire has no total field.
 
-The only cross-record view that exists is the *Questionairs* page on a related record, which lists
+The only cross-record view that exists is the *Questionnaires* page on a related record, which lists
 **which** questionnaires exist for that customer — not what anybody answered.
 :::
 
-So a two-hundred-respondent survey is read one of two ways, and it is worth choosing before you run
+So a two-hundred-respondent survey is read one of three ways, and it is worth choosing before you run
 it rather than after:
 
 1. **One document at a time.** Perfectly reasonable for a small, qualitative follow-up survey where

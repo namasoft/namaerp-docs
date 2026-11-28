@@ -1,7 +1,7 @@
 ---
 description: "The Custody record: one record per physical item handed to staff, the identity fields you fill, the fields documents write, the Details grid of who holds it and how much, and reading what one employee is holding."
 entities: [FACustody]
-menu: Assets → Custodys → Custody
+menu: Assets → Custodies → Custody
 ---
 # The Custody Record
 
@@ -10,7 +10,7 @@ has handed out, or is about to. `CDY-0033` is *the* laptop with serial `5CG3210X
 Five identical office chairs are five records, because five people can be holding them in five
 different places, and the point of the register is to know which is where.
 
-**Assets > Custodys > Custody** (`الأصول > عهد > عهدة`), licence `fixedassets-custody`.
+**Assets > Custodies > Custody** (`الأصول > عهد > عهدة`), licence `fixedassets-custody`.
 
 ![The custody record screen](../../../ar/modules/fixedassets/images/custody/fa-custody-main-en.png)
 
@@ -49,7 +49,7 @@ branch, sector and department.
 | Price | السعر | The [custody purchase document](/modules/fixedassets/custody/fixedassets-custody-purchase.md) — it stamps the line's net value here. For `CDY-0033` that is **6,000** |
 | Purchase date | تاريخ الشراء | The same document, from its value date — 1 February 2026 |
 | Status | الحالة | Initial → Purchased → Delivered → Disposed, each moved by the corresponding document |
-| Custodian | المسئول عن العهدة | The named holder recorded by the [Delivery/Receipt of Custodies document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md) |
+| Custodian | المسئول عن العهدة | The named holder, rewritten by the [Custodies Delivery Receipt Document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md); the field can also be typed by hand |
 | Details grid | التفاصيل | The holding history, built by the delivery and transfer documents |
 
 The **Price** is the one people ask about most. It is not a list price you maintain — it is what the
@@ -93,7 +93,8 @@ and after the September 2027 transfer to Nouf Al-Harbi it reads:
 
 ## The second page
 
-The custody's second page lists the **Delivery/Receipt of Custodies** lines that name this item —
+The custody's second page, **Statistics** (الإحصائيات), lists the **Custodies Delivery Receipt
+Documents** lines that name this item —
 the hand-over documents that passed it from one person to another outside the four custody
 documents. If your organisation uses that document rather than the custody delivery document, this
 page is where the item's movements show up.
@@ -116,10 +117,11 @@ delivered" is a filter away.
 
 ![The custody list screen](../../../ar/modules/fixedassets/images/custody/fa-custody-list-en.png)
 
-**The employee's own screen** carries a Fixed Assets page with a **Common Custodies** (عهد مشتركة)
-list on it. That list is built from the holding lines described above — every custody line naming
-that employee — so it is the direct answer to "what has this person been given?", including items
-they share with somebody else.
+**The employee's own screen** carries a Fixed Assets page with two custody lists on it. **Custodies**
+(عهد) lists the items whose Custodian field names the employee. **Common Custodies** (عهد مشتركة) is
+built from the holding lines described above — every custody line naming that employee — so it is
+the direct answer to "what has this person been given?", including items they share with somebody
+else.
 
 **The stocktaking document** is what you use when the question is not "what should this person have"
 but "what do they actually have". Run it for a custodian and it collects every custody not yet

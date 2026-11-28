@@ -15,18 +15,18 @@ Generates MyFatoorah payment URLs for documents supporting online payment proces
 
 ## When This Action Runs
 
-MyFatoorah payment URL generation for documents implementing ISupportOnlinePaymentDoc interface (invoices, orders, bills).
+MyFatoorah payment URL generation for documents that support online payment (invoices, orders, bills).
 
 ## How It Works
 
-1. **Validates entity compatibility** with ISupportOnlinePaymentDoc interface
+1. **Validates entity compatibility:** on a record that does not support online payment the flow fails with *Entity flow {0} only could be run with document instance of ISupportOnlinePaymentDoc*
 2. **Validates MyFatoorah configuration** exists and type is MyFatoorah
 3. **Evaluates country code parameter** — if the value contains `'`, `"`, or `+`, it is treated as a constant value; otherwise it is resolved as a field reference
 4. **Extracts customer information** from specified entity fields (name required, contact details optional)
-5. **Creates payment invoice** through MyFatoorah API via `MyFatoorahPaymentUtil`
+5. **Creates payment invoice** through MyFatoorah API
 6. **Assigns generated URL** to the target field:
    - If the entity is in **draft** state, the field is set directly
-   - If the entity is **not draft**, the field is updated via `doSetWhileForceStable` and the last change version is incremented
+   - If the entity is **not draft**, the field is written on the saved record without a new save, and the record's last change version is incremented
 
 ## Parameters
 

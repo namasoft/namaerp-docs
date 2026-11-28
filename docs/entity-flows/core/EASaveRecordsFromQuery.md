@@ -11,7 +11,7 @@ entities: [EntityFlow]
 
 ## Overview
 
-Bulk saves entities identified by a SQL query. Extends EARecommitFromQuery but performs entity editing and saving operations instead of simple recommit, triggering full validation and business logic with transaction control.
+Bulk saves entities identified by a SQL query. It works like [EARecommitFromQuery](/entity-flows/core/EARecommitFromQuery), with the same six parameters and rules, but opens each record for editing and saves it instead of recommitting it, triggering full validation and business logic.
 
 ## When This Action Runs
 
@@ -22,8 +22,8 @@ Manual execution for bulk entity saving operations after data modifications, cor
 1. **Executes query** - Runs the provided SQL query to find entities (must return entityType and id columns)
 2. **Processes results** - Extracts entity type and ID pairs from query results
 3. **Optional pre-update** - Runs optional update query after selection but before saving
-4. **Starts editing** - Calls startEditing() on each entity to prepare for modification
-5. **Commits entities** - Calls EntityMediator.commitFromBusinessAction() to complete the save
+4. **Starts editing** - Opens each entity for editing; a record that cannot be edited fails
+5. **Commits entities** - Saves the record as final
 6. **Handles errors** - Processes errors based on configuration (continue or stop)
 
 ## Parameters

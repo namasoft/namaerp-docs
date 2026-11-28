@@ -35,7 +35,7 @@ Reaching the document from the Assets menu and picking the project by hand does 
 
 The standard document header — document code (book and code), **term** (توجيه المستند), issue date, value date, fiscal period and description. The value date is the one that matters: it is copied onto the purchase document this one generates.
 
-One header field is an output rather than an input: **Generated Fa Purchase Document** (سند شراء أصول المنشأ) shows the purchase document that this document produced when it was committed. Until then it is empty.
+One header field is an output rather than an input: **Generated FA Purchase Document** (سند شراء أصول المنشأ) shows the purchase document that this document produced when it was committed. Until then it is empty.
 
 ### The Details Grid
 
@@ -45,12 +45,12 @@ One row per asset to be created.
 |---|---|---|
 | Project | المشروع | The contracting project being capitalised. This is the pivot of the whole document. |
 | Fixed Asset Code | كود الأصل | The code the new asset will carry — `BLD-0003`. Leave it empty and the asset is auto-coded from its type's coding group instead. |
-| Asset Name1 / Asset Name2 | الإسم العربي للأصل / الإسم الإنجليزي للأصل | The new asset's Arabic and English names. |
+| Asset Name1 / Asset Name2 | الاسم العربي للأصل / الاسم الإنجليزي للأصل | The new asset's Arabic and English names. |
 | Group | المجموعة | The master group to file the asset under, used when the type carries no coding group. |
 | Fixed Asset Type | نوع أصل | The most important column: it gives the new asset its accounts, its coding group and its Countable, Car Asset, Has Insurance and Undepreciable flags. See [Fixed Asset Types](/modules/fixedassets/master-files/fixedassets-asset-types.md). |
 | Useful Life | العمر الافتراضي | In **months**. `300` for the warehouse. |
 | Salvage Value | قيمة الأصل كخردة | `250,000`. |
-| Depreciation Start Date | تاريخ بداية الاهلاك | `01/10/2026`. |
+| Depreciation Start Date | تاريخ بداية الإهلاك | `01/10/2026`. |
 | Fixed Asset | الأصل الثابت | An output — the asset the row created. Fill it in advance and that existing asset is updated instead of a new one being created. |
 
 Below the grid sits the usual Dimensions group.
@@ -59,7 +59,9 @@ There are no action buttons on this screen. Nothing is collected, nothing is gen
 
 ## The One Rule It Enforces
 
-**One fixed asset per project.** At commit the document checks whether any other asset in the database already points at the project on the line, and refuses if one does — *"There is another asset … depend on this project …"*.
+**One fixed asset per project.** At commit the document checks whether any other asset in the database already points at the project on the line, and refuses if one does:
+
+*There is another asset {0} depend on this project {1}* — «الأصل الثابت {0} المنشأ يعتمد على هذا المشروع {1}»
 
 The check spans the whole database regardless of company or branch, so an asset belonging to a different legal entity still blocks you. This is deliberate: the point of the document is to say "this project became that asset", and that sentence only makes sense once.
 
@@ -92,7 +94,7 @@ That generated purchase document is what actually puts the assets into service:
 - the purchase date is set to its value date, and the asset's Purchase Invoice field points at it;
 - useful life, remaining life, salvage value and depreciation start date are written onto the asset.
 
-The pointer to it appears in the **Generated Fa Purchase Document** field on the header.
+The pointer to it appears in the **Generated FA Purchase Document** field on the header.
 
 ## It Does Not Set the Asset's Cost
 

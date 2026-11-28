@@ -43,7 +43,7 @@ go-live of any size, creating the master files first is usually cleaner.)
 **2. You need an opening fiscal period.** By default the opening document may only be issued in a
 fiscal period of type *opening* — the zero-length period that sits before your first real trading
 period. If your chart of periods does not work that way, the module setting **Allow Normal Periods In
-Fixed Assets Opening** (السماح بالفترات العادية في افتتاحي الاصول) in the
+Fixed Assets Opening** (السماح بالفترات العادية في افتتاحي الأصول) in the
 [Fixed Assets configuration](/modules/fixedassets/fixedassets-configuration.md) lifts the
 restriction.
 
@@ -63,7 +63,7 @@ account**, an optional term, and a description.
 
 Below it sits a block of **from / to** range fields — group, fixed asset type, fixed asset, legal
 entity, branch, sector, department and analysis set — which are not filters on the document but the
-criteria for the **Collect Fixed assets** (تجميع الأصول الثابته) button that sits with them.
+criteria for the **Collect Fixed assets** (تجميع الأصول الثابتة) button that sits with them.
 
 ::: tip Collect Fixed assets
 Set the ranges — say, from asset type `FAT-VEH` to `FAT-VEH` — and press the button. Every asset in
@@ -82,7 +82,7 @@ Then the **Details** grid, which is where the real work happens:
 |---|---|---|
 | Fixed Asset | الأصل الثابت | The record being opened |
 | Count | العدد | For countable assets, how many units the record represents |
-| Depreciation Start Date | تاريخ بداية الاهلاك | The date the asset **originally** started depreciating, in the old system |
+| Depreciation Start Date | تاريخ بداية الإهلاك | The date the asset **originally** started depreciating, in the old system |
 | Useful Life | العمر الافتراضي الافتتاحي | The **original** total life in months |
 | Salvage Value | قيمة الأصل كخردة الافتتاحية | The residual value |
 | Remaining Life | العمر المتبقي | Usually left to the system to compute |
@@ -196,7 +196,7 @@ change how the dates and the remaining life are derived:
 |---|---|---|
 | Make Last Depreciation Date Period End Date | جعل تاريخ آخر إهلاك في الأصول المدرجة هو تاريخ نهاية الفترة المختارة في السند | Treats the assets as depreciated up to the **end of the document's own month**, instead of the end of the previous period |
 | Calculate Depreciation Start Date For Depreciated Assets | احتساب تاريخ بداية الإهلاك آليا للأصول المهلكة | For a line that is **fully** depreciated (cost = salvage + accumulated depreciation), forces the remaining life to zero and back-computes the depreciation start date from the useful life |
-| Calculate Depreciation Start Date Based On Difference Between Default Useful Life And Remaining Life | احتساب تاريخ بداية الإهلاك بناءا على الفرق بين العمر الافتراضي والعمر المتبقي | Derives the depreciation start date from the two life figures, for legacy data that has lives but no reliable dates |
+| Calculate Depreciation Start Date Based On Difference Between Default Useful Life And Remaining Life | احتساب تاريخ بداية الإهلاك بناءً على الفرق بين العمر الافتراضي والعمر المتبقي | Derives the depreciation start date from the two life figures, for legacy data that has lives but no reliable dates |
 | Do Not Calc Remaining Life From Dates | عدم حساب العمر المتبقي من التواريخ | Keeps the remaining life you typed instead of recomputing it from the dates |
 
 The last two are the ones to reach for when your legacy data is thin. If the old system recorded
@@ -254,7 +254,10 @@ How you use it:
    useful life, remaining life, salvage value, disposal date, acquisition opening value, accumulated
    depreciation opening value and location. That photograph is what makes the update reversible.
 3. Commit. The header and every matching line are written back into the original opening document,
-   its calculations are re-run, and the assets' figures are rebuilt from scratch.
+   its calculations are re-run, and the assets' figures are rebuilt from scratch: every document that
+   holds an entry in the asset's history is replayed in date order, each depreciation document
+   recalculates its instalment for the asset, and the journal entries of the opening document and of
+   those later documents are regenerated.
 4. If you cancel the update, the photographed values are copied back into the opening document and
    the assets are rebuilt again — back to where they were.
 
@@ -268,9 +271,17 @@ The rules that keep this honest:
 - a line carrying a depreciation value whose depreciation start date falls on or after the start of
   the fiscal period is rejected.
 
-By default an update will not touch an asset whose status has moved on. The module setting **Ignore
-Asset Status With Fixed Asset Opening Document Update**
-(تجاهل حالة الأصل مع تعديل افتتاح أصل ثابت) lifts that guard for the installations that need it.
+By default an update is refused when one of its assets has already been used by any document other
+than an opening document, a purchase document or a depreciation document (a transfer, an addition or
+deduction, a disposal and so on). The module setting **Ignore Asset Status With Fixed Asset Opening
+Document Update** (تجاهل حالة الأصل مع تعديل افتتاح أصل ثابت) lifts that guard for the installations
+that need it.
+
+When the correction leaves an asset fully depreciated while a later depreciation document still lists
+it, the update is refused, unless the module setting **Remove Fixed Asset From Depreciation Document
+Details If Status Is Depreciated With FA Opening Document Update**
+(حذف الأصل الثابت من سندات الإهلاك إذا تم إهلاكه عند حفظ سند تعديل افتتاح أصل ثابت) is on, in which
+case the asset's line is dropped from those depreciation documents.
 
 ### Correcting the truck
 
@@ -287,6 +298,9 @@ cancelling the update would put the truck back exactly as it was.
 
 | Message | Why | What to do |
 |---|---|---|
-| *Fixed asset {0} repeated in line number {1}* — «الاصل الثابت {0} مكرر في السطر رقم {1}» | The same asset appears on two lines of the details grid. | Delete the duplicate line; one opening line per asset. |
-| *Depreciation start date {0} for asset {1} must be before date {2} because there is a depreciation value* — «تاريخ بداية الإهلاك  {0} للأصل الثابت {1} يجب ان يكون قبل تاريخ بداية الفترة {2} لان له قيمة إهلاك تراكمي» | The line carries accumulated depreciation, but its depreciation start date is not before the fiscal period's start date — depreciation that was never earned. | Either move the depreciation start date back to when the asset really entered service, or clear the accumulated depreciation figure. |
-| *Error in fixed asset status {0}, current status is {1} and it has to be {2}* — «خطأ في حالة الأصل {0} الحالة الحالية هى {1} ويجب أن تكون {2}» | A line names an asset that is not **Initial** — it has already been capitalised by another document. | Take the line off, or reverse the document that capitalised the asset. An opening may only bring in a fresh asset. |
+| *Fixed asset {0} repeated in line number {1}* — «الأصل الثابت {0} مكرر في السطر رقم {1}» | The same asset appears on two lines of the details grid. | Delete the duplicate line; one opening line per asset. |
+| *Depreciation start date {0} for asset {1} must be before date {2} because there is a depreciation value* — «تاريخ بداية الإهلاك {0} للأصل الثابت {1} يجب أن يكون قبل تاريخ بداية الفترة {2} لأن له قيمة إهلاك تراكمي» | The line carries accumulated depreciation, but its depreciation start date is not before the fiscal period's start date — depreciation that was never earned. | Either move the depreciation start date back to when the asset really entered service, or clear the accumulated depreciation figure. |
+| *Accumulative depreciation value {0} must be less than acquire value {1} for asset {2} at line {3}* — «قيمة الإهلاك التراكمي {0} لا يمكن أن تزيد عن قيمة الاقتناء {1} للأصل {2} بالسطر رقم {3}» | The line's accumulated depreciation is greater than its acquisition value minus its salvage value. | Correct the salvage value or the accumulated depreciation so that accumulated depreciation is no more than cost minus salvage. |
+| *Error in fixed asset status {0}, current status is {1} and it has to be {2}* — «خطأ في حالة الأصل {0} الحالة الحالية هي {1} ويجب أن تكون {2}» | A line names an asset that is not **Initial** — it has already been capitalised by another document. | Take the line off, or reverse the document that capitalised the asset. An opening may only bring in a fresh asset. |
+| *The asset {0} was used in the document {1}, {2}. You can not modify this opening document.* — «الأصل {0} تم استخدامه في المستند {1} و {2}. لا يمكنك تعديل سند الافتتاح هذا» | An opening document update names an asset that a later document other than an opening, purchase or depreciation document has already used. | Reverse that document first, or switch on **Ignore Asset Status With Fixed Asset Opening Document Update**. |
+| *The asset {0} is fully depreciated but is mentioned in depreciation document {1}* — «الأصل {0} مهلك ولكن تم ذكره في سند الإهلاك {1}» | After the correction the asset is fully depreciated, yet a later depreciation document still lists it. | Remove the asset from that depreciation document, or switch on **Remove Fixed Asset From Depreciation Document Details If Status Is Depreciated With FA Opening Document Update**. |

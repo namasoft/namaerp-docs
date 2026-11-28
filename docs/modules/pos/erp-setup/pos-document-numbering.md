@@ -14,7 +14,7 @@ Every code a register produces is made of up to five parts, in this order:
 
 | Part | Where it comes from | Example |
 |---|---|---|
-| 1. Prefix | The **Prefix** column of the register's coding grid (see below), if filled | `BR1-` |
+| 1. Prefix | The **Prefix** column of the register's coding grid (see below), if filled; otherwise the `codePrefix` entry of the register machine's local `nama.properties` file, if set | `BR1-` |
 | 2. Document-type prefix | Fixed per document type — `1` for a sales invoice, `2` for a return, and so on (table below) | `1` |
 | 3. Register code | The register's own **Code** | `R01` |
 | 4. Date part | A date pattern such as `yyMMdd`, if one is set | `261010` |
@@ -36,7 +36,7 @@ The document-type prefixes are:
 | POS Stock Transfer Request | `6` |
 | POS Payment | `7` |
 | POS Receipt | `8` |
-| Point of Sale StockTaking Details Document | `9` |
+| Point of Sale Stock Taking Details Document | `9` |
 | POS Order Reservation | `r` |
 | POS Cancel Reservation | `c` |
 | POS Stock Receipt | `rcpt` |

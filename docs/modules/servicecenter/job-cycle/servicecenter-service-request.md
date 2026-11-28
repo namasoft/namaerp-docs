@@ -73,17 +73,10 @@ Two grids that mirror the job order's:
 
 ### Actions on this screen
 
-- **Collect Resources And Materials** (*تجميع الموارد والمواد الخام*) — on the main page. It
-  rebuilds the **Resources** and **Spare Parts** grids from the tasks already in the operations grid:
-  each task's standard resources, and each task's standard spare parts that fit the vehicle's brand
-  and model, priced through the ordinary supply-chain sales price engine for this customer. The two
-  grids are **replaced**, not added to, so a line typed in by hand beforehand is gone afterwards.
-  Spare parts come only when the **Product** field is filled.
-- **Create Reservation Doc** (*إنشاء سند حجز*) — in the More menu. Opens a new, unsaved
-  supply-chain reservation document whose *From Document* is this service request, with one line per row of
-  the Spare Parts grid (item, quantity, remarks). Save the service request first. With an empty Spare Parts grid
-  it refuses with:
-  *No Materials to be reserved* — «لا يوجد قطع غيار ليتم حجزها»
+The service request carries the job order's **Collect Resources And Materials** (main page) and
+**Create Reservation Doc** (More menu) actions, and they behave exactly as described in
+[the job order's actions](/modules/servicecenter/job-cycle/servicecenter-job-order#Actions-on-this-screen).
+Here the reservation document's *From Document* is the service request.
 
 A service request is a planning document: nothing is reserved or issued until you raise that
 reservation, or the job order's spare-parts documents.
@@ -99,27 +92,32 @@ splits each day's total available hours into four
 buckets — appointments, carry-over, walk-ins and emergencies. Al-Sahra's Mechanical Hall has 5 bays × 8 hours = **40 hours** a day, with
 80 % — **32 hours** — allocated to appointments.
 
-When you commit a service request, two checks run:
+When you commit a service request that has a **visit type** and reserved hours, two checks run:
 
-1. **The reception window.** The reservation time must fall inside the work centre's reception start
-   and end times, which default to 08:00–14:00. A booking at 16:00 is refused.
-2. **The appointment hours.** The sum of the reserved hours of *all* service requests for that work
-   centre on that date is compared with the day's appointment hours. If the new booking would push
-   the total past 32, it is refused with a message saying the reservation cannot be allowed.
+1. **The reception window.** The reservation time must fall inside the reception start and end times
+   of the day entry the loading table published for that work centre and date (the work centre's
+   reception times default to 08:00–14:00). A booking at 16:00 is refused with
+   *Reservation time must be between {0} and {1}*.
+2. **The appointment hours.** The reserved hours of the other committed service requests for that
+   work centre on that date, plus this request's, are compared with the day's appointment hours. If
+   the new booking would push the total past 32, it is refused with:
+   *Can not allow this reservaqtion, total appointment hours avaiable is {0}, previously reserved {1}, and this request requires {2} hours*
+
+Both messages have no Arabic string, so they appear in English on Arabic screens too.
 
 Fahad's 6.5 hours are checked against the 32, and the day entry's remaining hours drop accordingly.
 Cancelling or deleting the request gives the hours back.
 
-There is one deliberate way past the check: a **visit type** with *Always Allow Reservation* switched
-on bypasses the appointment-hours test entirely. That is what you use for the customer who has broken
-down outside and must be taken today. Keep it on one clearly named visit type — an emergency type —
-rather than on your everyday ones.
+The checks are skipped for a request with no visit type, and for a **visit type** with *Always Allow
+Reservation* switched on — that skips both checks, the reception window as well as the appointment
+hours. That is what you use for the customer who has broken down outside and must be taken today.
+Keep it on one clearly named visit type — an emergency type — rather than on your everyday ones.
 
 ## What committing actually does
 
 - Reserves the request's hours against the work centre's day entry.
 - Fills in **empty** fields on the vehicle file — chassis, plate, engine, gear box, accessories,
-  supplier code, brand, model, production year and the insurance dates. Fields that already have a
+  supplier code, recall campaign, brand, model, production year and the insurance dates and period. Fields that already have a
   value are left alone.
 - Records the customer's contact as the vehicle's last requester contact.
 - Adds a product status entry, if the term names a status to change to — this is how a booked vehicle

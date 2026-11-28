@@ -6,7 +6,7 @@ A self-checkout kiosk lets shoppers scan their own items and pay by card without
 
 **A register that serves the kiosk.** On the register record (**Point of sale → Register → Register**, see [Setting Up a Register](./erp-setup/pos-register-setup.md)):
 
-- **Machine Port** (*رقم منفذ الماكينه*) — the port the register program listens on for mobile apps, for example `8090`. The register program opens it when it starts, so restart it after the change has synced.
+- **Machine Port** (*رقم منفذ الماكينة*) — the port the register program listens on for mobile apps, for example `8090`. The register program opens it when it starts, so restart it after the change has synced.
 - **Available In Mobile Application** — ticked, or the kiosk cannot connect.
 - **Payment Terminal**, on the register or on POS Settings — its payment gateway method group decides which payment method each card becomes, exactly as described in [Payment Methods and Payment Terminals](/platform/payments/payment-methods-and-terminals).
 
@@ -34,7 +34,7 @@ Press **Login**. From then on the app opens straight into the kiosk's start scre
 1. The customer taps **Start**. The kiosk first checks that the register's shift is open.
 2. They enter their mobile number (up to ten digits) and tap **Confirm**. A POS customer with that number is used; otherwise a new one is created on the register, with the number as its code, and reaches the server with the next sync.
 3. They scan each item with the kiosk's barcode scanner, or tap the camera icon in the item field. Each line shows the item's picture, name, code and price, and the totals show the item count and the invoice net. Scans made in quick succession are queued, so none is lost. An item with [add-ons](./pos-item-addons.md) offers them as it is added.
-4. They tap **Checkout**. When POS Settings has **Dont Auto-Add Free Items (Claim By Scan Or Resolve At Payment)** ticked, offers are applied now and any free items still owed are listed for the customer to scan, as described in [Free Items in POS](./pos-free-items-claim-and-reconciliation.md).
+4. They tap **Checkout**. When POS Settings has **Do Not Auto-Add Free Items (Claim By Scan Or Resolve At Payment)** ticked, offers are applied now and any free items still owed are listed for the customer to scan, as described in [Free Items in POS](./pos-free-items-claim-and-reconciliation.md).
 5. The kiosk asks for the card for the full invoice net. Once the card is approved, the register saves the invoice and records the payment.
 6. **Payment Successful** appears with **Do you want a receipt?** — **Print Receipt** prints the register's invoice form on the kiosk printer.
 

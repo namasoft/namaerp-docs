@@ -36,12 +36,12 @@ Sector, branch, department and analysis set each get an identical group of four 
 
 **Sector Order** / **Branch Order** / **Department Order** / **Analysis Set Order** `value.sectorOrder` *(1)*, `value.branchOrder` *(2)*, `value.departmentOrder` *(3)*, `value.analysisSetOrder` *(4)* — The relative weight of the dimension when the system resolves a dimension hierarchy. The defaults describe the usual containment: a sector holds branches, a branch holds departments. Change these only if your organisation nests them differently.
 
-**Consistency Level** `value.sectorConsistencyLevel`, `value.branchConsistencyLevel`, `value.departmentConsistencyLevel`, `value.analysisSetConsistencyLevel` *(all default Error on Saving)* — What happens when a document line's dimension contradicts its header or its warehouse. **Error on Saving** refuses the save, **Warn on Saving** lets it through with a warning, **None** says nothing at all. Leaving these at Error is the safe choice: an inconsistent dimension quietly corrupts every report that groups by it.
+**Consistency Level** `value.sectorConsistencyLevel`, `value.branchConsistencyLevel`, `value.departmentConsistencyLevel`, `value.analysisSetConsistencyLevel` *(all default Error On Saving)* — What happens when a document line's dimension contradicts its header or its warehouse. **Error On Saving** refuses the save, **Warn On Saving** lets it through with a warning, **None** says nothing at all. Leaving these at Error is the safe choice: an inconsistent dimension quietly corrupts every report that groups by it.
 
 **Accessibility Enabled** `value.sectorAcessibilityEnabled`, `value.branchAcessibilityEnabled`, `value.departmentAcessibilityEnabled`, `value.analysisSetAcessibilityEnabled` *(all default on)* — Whether the dimension participates in record-level accessibility. With it on, a user restricted to one branch sees only that branch's records. Switching it off makes the dimension purely descriptive — still recorded and still reportable, but no longer a security boundary.
 
 ::: tip Enabled, ordered, checked, enforced
-It helps to read the four options as a sequence: *Enabled* asks whether the dimension exists at all, *Order* where it sits in the hierarchy, *On Inconsistency* how loudly the system complains when it doesn't add up, and *Prevent Access* whether it also restricts who can see the record.
+It helps to read the four options as a sequence: *Enabled* asks whether the dimension exists at all, *Order* where it sits in the hierarchy, *Consistency Level* how loudly the system complains when it doesn't add up, and *Accessibility Enabled* whether it also restricts who can see the record.
 :::
 
 ## Account code segments
@@ -63,10 +63,10 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
 | `value.info.showPublicDocumentsToAll` | Show Public Document To All | عرض المستندات العامة لكل المستخدمين | [Legal entity](#Legal-entity) |
-| `value.info.ignoreDimensionsConsistency` | Ignore Legal Entity Consistency if All Dimensions are Ignored | تجاهل تطابق الشركة اذا لم يتم تحديد تطابق لاي محدد اخر | [Legal entity](#Legal-entity) |
+| `value.info.ignoreDimensionsConsistency` | Ignore Legal Entity Consistency if All Dimensions are Ignored | تجاهل تطابق الشركة إذا لم يتم تحديد تطابق لأي محدد آخر | [Legal entity](#Legal-entity) |
 | `value.info.allowChangingDimsOfDims` | Allow Changing Dimensions Of Dimensions | السماح بتعديل محددات المحددات | [Legal entity](#Legal-entity) |
-| `value.info.customDimensionsDescriptionTemplateAr` | Custom Dimensions Description Template Ar | قالب مخصص لوصف المحددات عربى | [Legal entity](#Legal-entity) |
-| `value.info.customDimensionsDescriptionTemplateEn` | Custom Dimensions Description Template En | قالب مخصص لوصف المحددات إنجليزى | [Legal entity](#Legal-entity) |
+| `value.info.customDimensionsDescriptionTemplateAr` | Custom Dimensions Description Template Ar | قالب مخصص لوصف المحددات عربي | [Legal entity](#Legal-entity) |
+| `value.info.customDimensionsDescriptionTemplateEn` | Custom Dimensions Description Template En | قالب مخصص لوصف المحددات إنجليزي | [Legal entity](#Legal-entity) |
 | `value.sectorEnabled` | Enabled | مفعل | [The four optional dimensions](#The-four-optional-dimensions) |
 | `value.sectorOrder` | Sector Order | ترتيب القطاع | [The four optional dimensions](#The-four-optional-dimensions) |
 | `value.sectorConsistencyLevel` | Consistency Level | عند وجود عدم اتساق | [The four optional dimensions](#The-four-optional-dimensions) |

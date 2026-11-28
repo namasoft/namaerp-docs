@@ -30,28 +30,28 @@ The first tab (إعدادات التطبيق المُجمع) holds the options e
 |---|---|---|
 | عدم إظهار المستندات المرسلة لنما / **Do Not Show Documents Sent To Nama** | `value.doNotShowDocsSentToNama` | Hides from the app's on-phone lists of saved documents those already sent to the server, so only the unsent ones remain. |
 | **copyScheduleLinesWithFromDocToReceiptDoc** (no label) | `value.copyScheduleLinesWithFromDocToReceiptDoc` | For an electronic receipt in Nama Mobile that copies from a document with instalments. Ticked: the instalments land in the receipt's instalment-payment lines. Unticked: they land in its schedule lines. The screen shows the raw field id because the option has no translation. |
-| مطالعة نموذج الطباعة قبل طباعة المستند فى التطبيق / **Preview Printing Form Before Printing Document** | `value.reviewPrintingFormBeforePrintingDocument` | Shows a preview of the printed form before it goes to the printer. |
+| مطالعة نموذج الطباعة قبل طباعة المستند في التطبيق / **Preview Printing Form Before Printing Document** | `value.reviewPrintingFormBeforePrintingDocument` | Shows a preview of the printed form before it goes to the printer. |
 | طباعة المستندات مع الحفظ دائما / **Print Documents On Save** | `value.printDocumentsOnSave` | Prints the document as soon as it is saved in the app, instead of just closing the screen. Applies to electronic receipts, stock issues and receipts, stock transfers and sales returns. |
 | عدم زيادة كمية السطر الموجود عند اختيار الصنف من الهيدر / **Do Not Increment Quantity With Header Item** | `value.doNotIncrementQtyWithHeaderItem` | Normally, scanning an item that is already on the document adds to that line's quantity. Ticked, every scan makes a new line. |
 | السماح بتعديل السطور المجانية / **Allow Editing Free Lines** | `value.allowEditFreeLines` | On sales lines in the app, lines marked as free are read-only unless this is ticked. Ticked, the user can edit them and change the free tick. |
-| تحديد سطور مردود المبيعات فى التطبيق / **Custom Sales Return Lines In Mobile App** | `value.customSalesReturnLines` | Changes the app's sales return screen. Copying from an invoice no longer brings in all its lines. They become a pick list, and the user adds only the items actually returned. An item that is not on the source document is refused. |
-| عدم تحديث أسعار وخصومات الأصناف المنسوخة من بناءا على فى مردود المبيعات / **Do Not Update Prices And Discounts Copied From Doc In Sales Return** | `value.doNotUpdatePricesAndDiscountsCopiedFromDocInSalesReturn` | For a sales return copied from a document. Ticked: each line keeps the source document's price and discounts. Unticked: the app fetches the item's current selling price. |
+| تحديد سطور مردود المبيعات في التطبيق / **Custom Sales Return Lines In Mobile App** | `value.customSalesReturnLines` | Changes the app's sales return screen. Copying from an invoice no longer brings in all its lines. They become a pick list, and the user adds only the items actually returned. An item that is not on the source document is refused. |
+| عدم تحديث أسعار وخصومات الأصناف المنسوخة من بناءً على في مردود المبيعات / **Do Not Update Prices And Discounts Copied From Doc In Sales Return** | `value.doNotUpdatePricesAndDiscountsCopiedFromDocInSalesReturn` | For a sales return copied from a document. Ticked: each line keeps the source document's price and discounts. Unticked: the app fetches the item's current selling price. |
 | نوع طابعة الموبايل / **Mobile Printer Type** | `value.mobilePrinterType` | Forces the printer the app prints with. Empty leaves the printer chosen in the app's own printer settings. Only **Old SDK**, **New SDK**, **Bluetooth** and **External Bluetooth** are applied as chosen. Any other choice prints as a normal printer, so for the other printers leave this empty and pick the printer on the phone. |
-| إظهار رقم الشحنة وتاريخ الصلاحية فى سطور التطبيق / **Show LotId And Expire Date In Mobile App Lines** | `value.showLotIdAndExpireDateInMobileAppLines` | Shows the lot number and expiry date on sales lines and on electronic stock taking lines. |
-| عدد خانات الكسر فى أسعار التطبيق / **Fraction Decimal Places In Mobile App** | `value.fractionDecimalPlacesInMobileApp` | How many decimal places a sales line's total is rounded to in the app. Empty or 0 means 3. |
-| اقصى مسافة مسموحة للفاتورة بالنسبة لموقع العميل / **Allowance Distance For Customer Invoice** | `value.allowanceDistanceForCustomerInvoice` | The furthest, in metres, the user may be from the customer's map location when saving a sales or stock document. Further away, the save is blocked and a map shows both points. Empty or 0 switches the check off. Customers without a map location are never checked. |
+| إظهار رقم الشحنة وتاريخ الصلاحية في سطور التطبيق / **Show Lot ID And Expire Date In Mobile App Lines** | `value.showLotIdAndExpireDateInMobileAppLines` | Shows the lot number and expiry date on sales lines and on electronic stock taking lines. |
+| عدد خانات الكسر في أسعار التطبيق / **Fraction Decimal Places In Mobile App** | `value.fractionDecimalPlacesInMobileApp` | How many decimal places a sales line's total is rounded to in the app. Empty or 0 means 3. |
+| أقصى مسافة مسموحة للفاتورة بالنسبة لموقع العميل / **Allowance Distance For Customer Invoice** | `value.allowanceDistanceForCustomerInvoice` | The furthest, in metres, the user may be from the customer's map location when saving a sales or stock document. Further away, the save is blocked and a map shows both points. Empty or 0 switches the check off. Customers without a map location are never checked. |
 | طريقة الدفع الافتراضية / **Default Payment Method** | `value.defaultPaymentMethod` | The payment method the app proposes on sales documents. Once a customer is chosen, the app adds a payment line for the whole total with this method. |
 | **Default Payment Method Expression** | `value.defaultPaymentMethodExpression` | Picks the payment method from the document instead, for example from a field on the customer. When it gives a method, that method wins over **Default Payment Method**. |
 | دفتر سند تعريف هاتف مستخدم / **User Mobile Identifier Document Book** | `value.mobileIdentifierDocumentBook` | The book used when a user registers their phone from the app. A book on a matching line of the documents grid below takes priority. See [Binding users to their phones](./mobile-device-binding.md). |
-| تأكيد الحضور والانصراف الإلكترونى بالبصمة / **Use Biometrics Authorization For Electronic Attendance** | `value.useBiometricsAuthorizationForElecAttendance` | Asks for a fingerprint or face scan (or the phone's PIN when it has neither) before each check-in or check-out. A phone with no lock at all cannot check in. |
-| إظهار زر الحفظ كمسودة فى التطبيق / **Show Save As Draft Button In Mobile** | `value.showSaveAsDraftInMobile` | Shows a **Save as draft** button on the app's sales and stock documents, and keeps those drafts editable. It also switches on the per-document **Auto Save Doc As Draft** timer in the grid below. In the current app it also decides whether the "could not find any record" box appears when a typed or scanned code matches nothing. |
-| إظهار المستندات المحفوظة كمسودة فى التطبيق / **Show Draft Documents In Mobile** | `value.showDraftDocsInMobile` | Lists the app downloads normally hold saved records only. Ticked, drafts are included too. Lookups inside a field are not affected. |
-| منع إنشاء سند زيارة جديد فى حالة وجود سند غير مغلق / **Prevent Create New Visit If There are One Open** | `value.preventNewCRMVisitIfThereAreOpenOne` | A sales rep with visits still open cannot start a new one. The app tells them how many visits are open. |
-| خيارات الحضور و الإنصراف / **Attendance Options** | `value.attendanceOptions` | Which actions the attendance screen offers: **Attending Only** (check-out is recorded as forgotten), **Leaving Only** (check-in is recorded as forgotten) or **Attending And Leaving**. Empty means Attending And Leaving. |
-| **Use Web Sockets** | `value.useWebSockets` | Keeps a live connection between the app and the server. When this configuration changes, the app logs in again by itself and picks up the new settings. |
+| تأكيد الحضور والانصراف الإلكتروني بالبصمة / **Use Biometrics Authorization For Electronic Attendance** | `value.useBiometricsAuthorizationForElecAttendance` | Asks for a fingerprint or face scan (or the phone's PIN when it has neither) before each check-in or check-out. A phone with no lock at all cannot check in. |
+| إظهار زر الحفظ كمسودة في التطبيق / **Show Save As Draft Button In Mobile** | `value.showSaveAsDraftInMobile` | Shows a **Save as draft** button on the app's sales and stock documents, and keeps those drafts editable. It also switches on the per-document **Auto Save Doc As Draft** timer in the grid below. In the current app it also decides whether the "could not find any record" box appears when a typed or scanned code matches nothing. |
+| إظهار المستندات المحفوظة كمسودة في التطبيق / **Show Draft Documents In Mobile** | `value.showDraftDocsInMobile` | Lists the app downloads normally hold saved records only. Ticked, drafts are included too. Lookups inside a field are not affected. |
+| منع إنشاء سند زيارة جديد في حالة وجود سند غير مغلق / **Prevent Create New Visit If There Is One Open** | `value.preventNewCRMVisitIfThereAreOpenOne` | A sales rep with visits still open cannot start a new one. The app tells them how many visits are open. |
+| خيارات الحضور و الانصراف / **Attendance Options** | `value.attendanceOptions` | Which actions the attendance screen offers: **Attending Only** (check-out is recorded as forgotten), **Leaving Only** (check-in is recorded as forgotten) or **Attending And Leaving**. Empty means Attending And Leaving. |
+| استخدام Web Sockets / **Use Web Sockets** | `value.useWebSockets` | Keeps a live connection between the app and the server. When this configuration changes, the app logs in again by itself and picks up the new settings. |
 | رمز إعدادات الموبايل / **Mobile Settings Pin** | `value.mobileSettingsPin` | When filled, the app's Settings screen asks for this PIN before it opens. The app checks it with the server each time, so with no connection Settings does not open. Empty leaves Settings open to everyone. |
 | تعطيل تسجيل الدخول بالبصمة في الموبايل / **Disable Biometric Login In Mobile** | `value.disableBiometricLoginInMobile` | By default, reopening the app with a saved login asks for a fingerprint or face scan. Ticking this skips that step. |
-| **Mobile Request Timeout In Seconds** | `value.mobileRequestTimeOutInSeconds` | How long the app waits for the server on each request before giving up. Empty or 0 means 60 seconds. Raise it for slow connections or heavy lists. |
+| مهلة طلب الموبايل بالثواني / **Mobile Request Timeout In Seconds** | `value.mobileRequestTimeOutInSeconds` | How long the app waits for the server on each request before giving up. Empty or 0 means 60 seconds. Raise it for slow connections or heavy lists. |
 | الحد الأقصى لعدد أسطر التفاصيل في الموبايل / **Mobile Details Max Length** | `value.mobileDetailsMaxLength` | The most lines one document may have in the app. Adding one more shows *Lines limit reached (N) You must create a new document.* Empty or 0 means 500. |
 | ملحوظة سند التوصيل الافتراضية / **Default Delivery Note** | `value.defaultDeliveryNote` | Text put in the remarks of a new delivery document in the app, unless the document already has remarks. |
 
@@ -76,11 +76,11 @@ How a line is chosen depends on the request. Saving an attendance, a vacation, a
 | طباعة السجلات كتقرير / **Print Record As Report** | `value.docOrFileConfigList.printRecordAsReport` | The app prints this screen's records through an ERP report run on the server, instead of the HTML formula. |
 | حفظ المستند كمسودة كل (بالثانية) / **Auto Save Doc As Draft Every (In Seconds)** | `value.docOrFileConfigList.autoSaveDocAsDraftInSeconds` | While an unsaved document is open, the app saves it as a draft every so many seconds if it changed. Needs **Show Save As Draft Button In Mobile**. Empty or 0 switches it off. |
 | تعريف التقرير / **Report Definition** | `value.docOrFileConfigList.reportDefinition` | The report used by **Print Record As Report** when no printer-specific form below suits the phone's printer. |
-| نسخ التفاصيل من بناءا علي / **Copy Details From Doc** | `value.docOrFileConfigList.copyDetailsFromDoc` | On stock issue, receipt, transfer, transfer request and purchase invoice screens: picking a source document copies its lines straight in. Unticked, the user scans or searches the lines, with the source document as a reference. |
+| نسخ التفاصيل من بناءً على / **Copy Details From Doc** | `value.docOrFileConfigList.copyDetailsFromDoc` | On stock issue, receipt, transfer, transfer request and purchase invoice screens: picking a source document copies its lines straight in. Unticked, the user scans or searches the lines, with the source document as a reference. |
 | **Old SDK Printer Form** | `value.docOrFileConfigList.oldSdkFormDefinition` | The report used for **Print Record As Report** on phones set to the old SDK printer. |
 | **New SDK Printer Form** | `value.docOrFileConfigList.newSdkFormDefinition` | The same for the new SDK printer. |
 | **Bluetooth Printer Form** | `value.docOrFileConfigList.bluetoothSdkFormDefinition` | The same for Bluetooth and the other printers. |
-| تطبق علي / **Apply To** | `value.docOrFileConfigList.applyTo` | Narrows the line to one employee, user, employee group, security profile, master group, or the employees or users matching a criteria. |
+| تطبق على / **Apply To** | `value.docOrFileConfigList.applyTo` | Narrows the line to one employee, user, employee group, security profile, master group, or the employees or users matching a criteria. |
 | تطبق عند توافق ملف المستخدم مع الاستعلام / **Apply To Matched User Profile** | `value.docOrFileConfigList.applyToMatchedUserProfile` | A query on the user record. The line applies only to users it matches. Ignored when **Apply To** is filled. |
 | الشركة / **Legal Entity**, الفرع / **Branch**, القطاع / **Sector**, الإدارة / **Department**, المجموعة التحليلية / **Analysis set** | `value.docOrFileConfigList.dimensions.legalEntity`, `.branch`, `.sector`, `.department`, `.analysisSet` | Narrow the line to users logged in with these dimensions. Empty means any. |
 | **Object HTML Print Formula** | `value.docOrFileConfigList.objectHTMLFormula` | The HTML template one record of this screen is printed with on the phone's printer. |
@@ -100,7 +100,7 @@ The app keeps a copy of some master files on the phone, such as customers, items
 
 Two grids narrow what the user can enter in a field.
 
-**Allowed Values For Reference Fields In Mobile Screens** (القيم المسموح بها لحقول المراجع فى شاشات تطبيق الموبايل, `value.allowedFieldsInMobileScreens`) concerns fields that can point to several kinds of record, such as *Related To* or *From Doc*. It decides which kinds the user may pick.
+**Allowed Values For Reference Fields In Mobile Screens** (القيم المسموح بها لحقول المراجع في شاشات تطبيق الموبايل, `value.allowedFieldsInMobileScreens`) concerns fields that can point to several kinds of record, such as *Related To* or *From Doc*. It decides which kinds the user may pick.
 
 | Column (Arabic / English) | Field id | What it does |
 |---|---|---|
@@ -108,7 +108,7 @@ Two grids narrow what the user can enter in a field.
 | الحقل / **On Field** | `value.allowedFieldsInMobileScreens.fieldId` | The field. When two lines name the same screen and field, the first wins. |
 | القيمة المسموح بها 1 … 10 / **Allowed Value 1** … **10** | `value.allowedFieldsInMobileScreens.allowedValue1` … `allowedValue10` | The kinds of record offered. The first is selected by default. With none filled, the app's own default applies. |
 
-**Allowed Values For Text Fields In Mobile Screens** (القيم المسموح بها للحقول النصية فى شاشات تطبيق الموبايل, `value.allowedValuesForTextFields`) turns a free-text field into a drop-down of fixed values, or into a link.
+**Allowed Values For Text Fields In Mobile Screens** (القيم المسموح بها للحقول النصية في شاشات تطبيق الموبايل, `value.allowedValuesForTextFields`) turns a free-text field into a drop-down of fixed values, or into a link.
 
 | Column (Arabic / English) | Field id | What it does |
 |---|---|---|
@@ -140,8 +140,8 @@ The **Mobile Report Configurations** grid (إعدادات تقارير التط�
 | Column (Arabic / English) | Field id | What it does |
 |---|---|---|
 | تعريف التقرير / **Report Definition** | `value.mobileReportLines.reportDefinition` | The report that runs. Every line needs one: a line without it breaks the whole Reports screen. |
-| عنوان التقرير عربى / **Report Arabic Title** | `value.mobileReportLines.reportArabicTitle` | The title shown when the app is in Arabic. |
-| عنوان التقرير إنجليزى / **Report English Title** | `value.mobileReportLines.reportEnglishTitle` | The title shown in English. |
+| عنوان التقرير عربي / **Report Arabic Title** | `value.mobileReportLines.reportArabicTitle` | The title shown when the app is in Arabic. |
+| عنوان التقرير إنجليزي / **Report English Title** | `value.mobileReportLines.reportEnglishTitle` | The title shown in English. |
 | **URL Prefix** | `value.mobileReportLines.urlPrefix` | A short key that identifies the report, also used as the downloaded file's name. Fill it on every line, keep it unique and without spaces, and do not reuse a prefix from the KAS **Reports** grid, which would win. |
 | الصيغة / **Output Format** | `value.mobileReportLines.outputFormat` | The file format. Empty means PDF. |
 
@@ -176,14 +176,14 @@ The second tab (إعدادات تطبيق NAMA ESS) holds the rules for employee
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| عدم السماح بإنشاء سند حضور/إنصراف إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Attendance Through Application** | `value.onlyAllowCreationOfElecAttendanceThroughApp` | Ticked by default. An electronic attendance can be saved only from the mobile app. A save from the browser is refused. Administrators, replication and saves made by an approval are never refused. |
+| عدم السماح بإنشاء سند حضور/انصراف إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Attendance Through Application** | `value.onlyAllowCreationOfElecAttendanceThroughApp` | Ticked by default. An electronic attendance can be saved only from the mobile app. A save from the browser is refused. Administrators, replication and saves made by an approval are never refused. |
 | السماح بتعديل مستند "حضور الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Attendance For Authorized** | `value.onlyAllowUpdateOfElecAttendanceForAuthorized` | Matters only while the box above is ticked. Ticked, an attendance that was already saved once can be edited from the browser by any user with the normal edit right on the screen. New attendance must still come from the app. |
-| عدد الساعات المسموح بها قبل منع تسجيل الانصراف من خلال التطبيق / **Number Of Hours Allowed Before Preventing CheckOut** | `value.numberOfHoursAllowedBeforePreventingCheckOut` | The most hours allowed between check-in and check-out. Default 24, and empty or 0 also means 24. An older check-in is no longer offered for check-out in the app, and saving an attendance longer than this is refused. A non-zero value on the employee's attendance shift overrides this field. |
+| عدد الساعات المسموح بها قبل منع تسجيل الانصراف من خلال التطبيق / **Number Of Hours Allowed Before Preventing Check Out** | `value.numberOfHoursAllowedBeforePreventingCheckOut` | The most hours allowed between check-in and check-out. Default 24, and empty or 0 also means 24. An older check-in is no longer offered for check-out in the app, and saving an attendance longer than this is refused. A non-zero value on the employee's attendance shift overrides this field. |
 | تنبيه رمز التحقق / **Verification Code Notification** | `value.verificationCodeNotification` | A notification definition used for a second login step. On every app login the server makes a one-time code and sends it to the user with this notification. Only the NAMA ESS app asks for the code. Empty means no code step. |
 | استخدام مناطق الحضور الإلكتروني / **Use Electronic Attendance Zone** | `value.useAttendanceZones` | Switches on location zones. Each check-in and check-out records the nearest allowed zone and the distance from it. One with no allowed zone for the employee is refused. The zones themselves are defined on the attendance zone screens, and saving an allowed zone is refused while this box is off. |
 | منع حفظ الحضور الإلكتروني إذا كان الحضور أو الانصراف خارج النطاق / **Prevent Save If Attendance Out Of Zone** | `value.preventSaveIfAttendanceOutOfZone` | Needs zones switched on. Refuses a check-in or check-out made further from the nearest zone than that zone allows. Unticked, it saves and is only flagged as out of zone. |
-| يجب أن تكون منطقة الحضور نفس منطقة الإنصراف / **Check Out Zone Must Be Same As Check In Zone** | `value.checkOutZoneMustBeSameAsCheckIn` | Needs zones switched on. Refuses a check-out made in a different zone from the check-in. |
-| السماح بحفظ سند حضور وانصراف الكتروني على تطبيق الهاتف بدون اتصال بالإنترنت / **Allow Save Electronic Attendance On Mobile Without Connection** | `value.allowSaveElectronicAttendanceOnMobileWithoutConnection` | NAMA ESS app only. If sending an attendance fails because the server turns down the app's login, the app keeps it on the phone and sends it later. In Nama Mobile, offline saving is set per document with **Allow Save Offline** in the documents grid. |
+| يجب أن تكون منطقة الحضور نفس منطقة الانصراف / **Check Out Zone Must Be Same As Check In Zone** | `value.checkOutZoneMustBeSameAsCheckIn` | Needs zones switched on. Refuses a check-out made in a different zone from the check-in. |
+| السماح بحفظ سند حضور وانصراف إلكتروني على تطبيق الهاتف بدون اتصال بالإنترنت / **Allow Save Electronic Attendance On Mobile Without Connection** | `value.allowSaveElectronicAttendanceOnMobileWithoutConnection` | NAMA ESS app only. If sending an attendance fails because the server turns down the app's login, the app keeps it on the phone and sends it later. In Nama Mobile, offline saving is set per document with **Allow Save Offline** in the documents grid. |
 | التأكد من معرف الجهاز قبل الحفظ / **Check Mobile Identifier Document Before Save** | `value.checkMobileIdentifierBeforeSave` | The general phone check for attendance, vacations and permissions saved from the NAMA ESS app. A line for the document in the documents grid overrides it. See [Binding users to their phones](./mobile-device-binding.md#Switching-the-check-on). |
 | إخفاء لوحة معلومات الحضور بالتطبيق / **Hide Mobile Attendance Dashboard** | `value.hideMobileAttendanceDashboard` | Hides the monthly attendance summary card on Nama Mobile's home page. |
 | معايير عرض عملاء المهام في تطبيق NAMA ESS / **List Attendance Customers Criteria For ESS App** | `value.listAttendanceCustomersCriteria` | NAMA ESS app only. Limits the customers the app downloads, so an attendance can be linked to one of them. Empty sends every customer the user can see. |
@@ -209,8 +209,8 @@ The attendance summary card on Nama Mobile's home page always shows ten figures 
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| عدم السماح بإنشاء طلب اجازة إلا من خلال التطبيق / **Only Allow Creation Of Vacation Request Through Application** | `value.onlyAllowCreationOfElecVacationReqThroughApp` | A vacation request can be saved only from the app, with the same exceptions as attendance. A vacation document is not covered. |
-| السماح بتعديل مستند "طلب اجازة الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Vacation Request For Authorized** | `value.onlyAllowUpdateOfElecVacationReqForAuthorized` | Lets a vacation request that was already saved be edited from the browser by users with the normal edit right. |
+| عدم السماح بإنشاء طلب إجازة إلا من خلال التطبيق / **Only Allow Creation Of Vacation Request Through Application** | `value.onlyAllowCreationOfElecVacationReqThroughApp` | A vacation request can be saved only from the app, with the same exceptions as attendance. A vacation document is not covered. |
+| السماح بتعديل مستند "طلب إجازة الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Vacation Request For Authorized** | `value.onlyAllowUpdateOfElecVacationReqForAuthorized` | Lets a vacation request that was already saved be edited from the browser by users with the normal edit right. |
 | عدم السماح بإنشاء طلب إذن إلا من خلال التطبيق / **Only Allow Creation Of Permission Request Through Application** | `value.onlyAllowCreationOfElecPermissionReqThroughApp` | A leave permission request can be saved only from the app. The leave permission document itself is not covered. |
 | السماح بتعديل مستند "طلب إذن الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic permission request For Authorized** | `value.onlyAllowUpdateOfElecPermissionReqForAuthorized` | Lets a permission request that was already saved be edited from the browser by users with the normal edit right. |
 
@@ -222,7 +222,7 @@ The third tab (إعدادات تطبيق الجرد المخزني) controls ele
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| عدم السماح بإنشاء جرد إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Stocktaking Through Application** | `value.onlyAllowCreationOfElecStockTakingThroughApp` | Ticked by default. An electronic stock taking can be saved only from the app. Administrators, replication and saves made by an approval are exempt. |
+| عدم السماح بإنشاء جرد إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Stocktaking Through Application** | `value.onlyAllowCreationOfElecStockTakingThroughApp` | Ticked by default. An electronic stock taking can be saved only from the app. Administrators, replication and saves made by an approval are exempt. |
 | السماح بتعديل مستند "جرد الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Stock Taking For Authorized** | `value.onlyAllowUpdateOfElecStockTakingForAuthorized` | Matters only while the box above is ticked. Ticked, a stock taking that was already saved can be edited from the browser by users with the normal edit right. |
 | ماسك كود الصنف / **Item Regular Expression** | `value.itemRegEx` | A pattern every scanned or typed item code must match. Empty means no check. Nama Mobile accepts a code when the pattern matches any part of it, so write `^…$` to require the whole code to match. |
 | رسالة خطأ كود الصنف / **Item Regular Expression Error MSG** | `value.itemRegExErrorMSG` | The message shown under the item code when it does not match the pattern. |
@@ -250,14 +250,14 @@ The fourth tab (إعدادات تطبيق سندات القبض) controls electr
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| عدم السماح بإنشاء قبض إلكنروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Receipt Through Application** | `value.onlyAllowCreationOfElecReceiptThroughApp` | Ticked by default. An electronic receipt voucher can be saved only from the app. Administrators, replication and saves made by an approval are exempt. |
+| عدم السماح بإنشاء قبض إلكتروني إلا من خلال التطبيق / **Only Allow Creation Of Electronic Receipt Through Application** | `value.onlyAllowCreationOfElecReceiptThroughApp` | Ticked by default. An electronic receipt voucher can be saved only from the app. Administrators, replication and saves made by an approval are exempt. |
 | السماح بتعديل مستند "القبض الإلكتروني" لمن له الصلاحية / **Only Allow Update Of Electronic Receipt For Authorized** | `value.onlyAllowUpdateOfElecReceiptForAuthorized` | Matters only while the box above is ticked. Ticked, a receipt that was already saved can be edited from the browser by users with the normal edit right. |
 | معايير عرض العملاء في تطبيق سندات القبض / **List Customers Criteria For Receipts App** | `value.listReceiptsCustomersCriteria` | Android Receipts app only. Limits the customers the app downloads. Empty sends them all. |
 | **LegalEntity Logo** | `mobileLegalEntityLogo` | The company logo the apps download. Nama Mobile shows it in the side menu and on receipts, remarks and maintenance visits. The Android Receipts app prints it as `{companyLogo}`. |
-| **Html Receipt Formula** | `value.mobileHtmlFormula` | Android Receipts app only. The HTML template one receipt is printed with. It can use `{receipt.code}` and the other receipt fields, `{customer}`, `{currency}`, `{createdAtDate}`, `{createdAtTime}`, `{userName}`, `{collector}`, `{companyLogo}`, `{customerSignature}` and `{salesmanSignature}`. The **Receipt Formula Example** button below the field replaces it with a short sample. |
-| **Multi Receipt Html Formula** | `value.multiReceiptHtmlFormula` | Android Receipts app only. The template for printing several receipts as one summary. It can use `{docsCount}`, `{cashCount}`, `{totalCash}`, `{chequeCount}`, `{totalCheque}` and a `{loop(list)}…{endloop}` block that repeats per receipt. The **Multi Receipt Formula Example** button fills a sample. |
-| حفظ سندات القبض الالكتروني كمسودة اذا حدث خطأ / **Save Electronic Receipts as Draft When Errors Happen** | `value.saveDocAsDraftIfErrorInReceiptsApp` | Android Receipts app only. A receipt that fails to save, for example on a validation error, is kept as a draft instead of being rejected. |
-| عدم حفظ السند اذا لم يتم اختيار النوع / **Do Not Save If No Type Is Selected** | `value.doNotSaveIfNoTypeSelectedInReceiptsApp` | Android Receipts app only. The app will not save a receipt until a receipt type is chosen. |
+| **HTML Receipt Formula** | `value.mobileHtmlFormula` | Android Receipts app only. The HTML template one receipt is printed with. It can use `{receipt.code}` and the other receipt fields, `{customer}`, `{currency}`, `{createdAtDate}`, `{createdAtTime}`, `{userName}`, `{collector}`, `{companyLogo}`, `{customerSignature}` and `{salesmanSignature}`. The **Receipt Formula Example** button below the field replaces it with a short sample. |
+| **Multi Receipt HTML Formula** | `value.multiReceiptHtmlFormula` | Android Receipts app only. The template for printing several receipts as one summary. It can use `{docsCount}`, `{cashCount}`, `{totalCash}`, `{chequeCount}`, `{totalCheque}` and a `{loop(list)}…{endloop}` block that repeats per receipt. The **Multi Receipt Formula Example** button fills a sample. |
+| حفظ سندات القبض الإلكتروني كمسودة إذا حدث خطأ / **Save Electronic Receipts as Draft When Errors Happen** | `value.saveDocAsDraftIfErrorInReceiptsApp` | Android Receipts app only. A receipt that fails to save, for example on a validation error, is kept as a draft instead of being rejected. |
+| عدم حفظ السند إذا لم يتم اختيار النوع / **Do Not Save If No Type Is Selected** | `value.doNotSaveIfNoTypeSelectedInReceiptsApp` | Android Receipts app only. The app will not save a receipt until a receipt type is chosen. |
 
 ### Default Login Settings
 
@@ -267,7 +267,7 @@ The **Default Login Settings** group (قيم إعدادات الدخول الا�
 |---|---|---|
 | عنوان السيرفر / **Server Url** | `value.serverUrl` | The server address put in the QR code. Empty uses the address the browser has open, which is wrong when users reach the server from outside by another address. |
 | الايميل / **Default Email** | `value.defaultEmail` | The email put in the QR code. It fills the Email setting of the app being set up. |
-| نسخة sdk الطباعه / **Default Printing Sdk Version** | `value.defaultPrintingSdkVersion` | Android Receipts app only. The printing mode put in the QR code: Old SDK Version, New SDK Version or Normal Print. |
+| نسخة sdk الطباعة / **Default Printing Sdk Version** | `value.defaultPrintingSdkVersion` | Android Receipts app only. The printing mode put in the QR code: Old SDK Version, New SDK Version or Normal Print. |
 | أنواع مستندات القبض (تكتب نصية بينهم ,) / **Receipt Types(Text Separated by ,)** | `value.receiptTypes` | The receipt types the apps offer, separated by commas, for example `Cash,Cheque,Transfer`. The chosen type is saved on the receipt. It is also the list of allowed **For Type** values for electronic receipt lines in the documents grid. Do not put spaces after the commas, or the types after the first are refused there. This field is not part of the QR code. |
 
 ### Electronic Receipt Vouchers Bank Accounts
@@ -285,7 +285,7 @@ The fifth tab (إعدادات تطبيق NAMA SCM) sets up item lookup: what the
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| السماح بإستخدام كاميرا الهاتف لمسح كود الصنف / **Allow Using Mobile Camera To Scan Item Code** | `value.allowUsingCameraToScanItemCode` | NAMA SCM app. Shows a camera button for scanning barcodes. Unticked, codes are typed or read by a hardware scanner. |
+| السماح باستخدام كاميرا الهاتف لمسح كود الصنف / **Allow Using Mobile Camera To Scan Item Code** | `value.allowUsingCameraToScanItemCode` | NAMA SCM app. Shows a camera button for scanning barcodes. Unticked, codes are typed or read by a hardware scanner. |
 | استعلام الصنف / **Item Query** | `value.itemQuery` | An optional SQL query run for the looked-up item, for example to bring its price or stock. It can use `{item…}`, `{barcode}`, `{user…}` and `{dimensions…}`. Its columns are available to the templates below. Empty fills the templates from the item record directly. |
 | النموذج الإنجليزي / **Item English Template** | `value.itemEnglishTemplate` | The template the lookup result is shown with when the app is in English. Empty uses the Arabic template. |
 | النموذج العربي / **Item Arabic Template** | `value.itemArabicTemplate` | The same in Arabic. Empty uses the English template. |
@@ -300,24 +300,24 @@ The group at the top of the tab holds the settings for every country. The **shop
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| المستوي الاول / **Level One** | `value.config.levelOne` | The top level of the catalogue: item section or one of item classes 1 to 10. The app's first screen lists those records. |
-| معيار عرض المستوي الاول / **Level One Criteria** | `value.config.levelOneCriteria` | Limits which level-one records are shown. Empty shows them all. |
-| المستوي الثاني / **Level Two** | `value.config.levelTwo` | The second level, an item class deeper than level one. Empty goes straight from level one to the items. |
-| معيار عرض المستوي الثاني / **Level Two Criteria** | `value.config.levelTwoCriteria` | Limits the level-two records. |
-| المستوي الثالث / **Level Three** | `value.config.levelThree` | The third level, deeper than level two. Needs levels one and two. |
-| معيار عرض المستوي الثالث / **Level Three Criteria** | `value.config.levelThreeCriteria` | Limits the level-three records. |
+| المستوى الأول / **Level One** | `value.config.levelOne` | The top level of the catalogue: item section or one of item classes 1 to 10. The app's first screen lists those records. |
+| معيار عرض المستوى الأول / **Level One Criteria** | `value.config.levelOneCriteria` | Limits which level-one records are shown. Empty shows them all. |
+| المستوى الثاني / **Level Two** | `value.config.levelTwo` | The second level, an item class deeper than level one. Empty goes straight from level one to the items. |
+| معيار عرض المستوى الثاني / **Level Two Criteria** | `value.config.levelTwoCriteria` | Limits the level-two records. |
+| المستوى الثالث / **Level Three** | `value.config.levelThree` | The third level, deeper than level two. Needs levels one and two. |
+| معيار عرض المستوى الثالث / **Level Three Criteria** | `value.config.levelThreeCriteria` | Limits the level-three records. |
 | معيار عرض الأصناف / **InvItem Criteria** | `value.config.itemsCriteria` | Limits which items the shop lists. Prices come from the normal sales price lists. |
 | نوع طلب المبيعات المنشأ / **Order Entity Type** | `value.config.orderEntityType` | The document an order placed in the app becomes: sales order, sales quotation or sales quotation request. Type, book and term must be filled together. |
 | دفتر طلب المبيعات المنشأ / **Order Book** | `value.config.orderBook` | The book of that document, which also gives its dimensions. Without it, placing an order fails with *Please contact administrator to config order book and term*. |
 | توجيه طلب المبيعات المنشأ / **Order Term** | `value.config.orderTerm` | The توجيه of that document. The order is saved for the customer linked to the shopper's user. |
 | **Mobile Application Action Group** | `value.config.mobileAppActionFileGroup` | The group, and so the code prefix, given to the record the app creates when someone registers or asks to reset their password. |
-| دفتر اقتراح / شكوي / **Suggest / Complaint Book** | `value.config.suggestOrComplainBook` | The book of the CRM complaint created from the app's suggestion and complaint screen. |
+| دفتر اقتراح / شكوى / **Suggest / Complaint Book** | `value.config.suggestOrComplainBook` | The book of the CRM complaint created from the app's suggestion and complaint screen. |
 | اسم المستخدم للمستخدمين الغير مسجلين / **Not Logged In Users User Name** | `value.config.notLoggedInUserName` | The guest account the server uses for everything done before a shopper logs in: browsing, prices, registering and complaints. It must have the Commit right on Mobile App Action. |
 | كلمة المرور للمستخدمين الغير مسجلين / **Not Logged In Users Password** | `value.config.notLoggedInPassword` | That guest account's password. It must match the user's real password. |
 | رقم التواصل / **Contact Phone** | `value.config.contactPhone` | The number the app's call button dials. |
 | ارتفاع نموذج الصنف / **Item Card Height** | `value.config.itemCardHeight` | The height of the item and category cards in the app. Empty or 0 means 300. |
-| **IOS Application Link** | `value.iosKASAppLink` | The App Store link the app's "share" and "rate" buttons use on iPhones. |
-| **Andriod Application Link** | `value.androidKASAppLink` | The Google Play link for the same buttons on Android. |
+| **iOS Application Link** | `value.iosKASAppLink` | The App Store link the app's "share" and "rate" buttons use on iPhones. |
+| **Android Application Link** | `value.androidKASAppLink` | The Google Play link for the same buttons on Android. |
 
 ### Shopping lines per country
 
@@ -338,8 +338,8 @@ The **Reports** grid (`value.reportLines`) lists the reports offered under "My R
 | Column (Arabic / English) | Field id | What it does |
 |---|---|---|
 | تعريف التقرير / **Report Definition** | `value.reportLines.reportDefinition` | The report that runs. Every line needs one. |
-| عنوان التقرير عربى / **Report Arabic Title** | `value.reportLines.reportArabicTitle` | The report's name when the app is in Arabic. |
-| عنوان التقرير إنجليزى / **Report English Title** | `value.reportLines.reportEnglishTitle` | Its name when the app is in English. |
+| عنوان التقرير عربي / **Report Arabic Title** | `value.reportLines.reportArabicTitle` | The report's name when the app is in Arabic. |
+| عنوان التقرير إنجليزي / **Report English Title** | `value.reportLines.reportEnglishTitle` | Its name when the app is in English. |
 | **URL Prefix** | `value.reportLines.urlPrefix` | A short key that identifies the report in the link the app opens, also used as the downloaded file's name. It must be unique. Keep it in lower case with no spaces: the Mobile Delivery app lower-cases it before asking. |
 | الصيغة / **Output Format** | `value.reportLines.outputFormat` | The file format the report is produced in. Empty means PDF. |
 | كود المجموعة / **Group Code** | `value.reportLines.groupCode` | The report group, from the Report Groups grid on the Mobile Delivery tab, that the report is shown under in the Mobile Delivery app. The KAS app does not use it. |
@@ -355,9 +355,9 @@ The **Branches** grid (`value.branchLines`) fills the app's "Contact us" screen 
 | عنوان الفرع / **Branch Address** | `value.branchLines.branchAddress` | The address on the card. |
 | تليفون الفرع / **Branch Phone** | `value.branchLines.branchPhone` | The phone number on the card. |
 | لينك موقع الفرع / **Branch Location Link** | `value.branchLines.branchLocationLink` | The map link the card opens. |
-| لينك فيسبوك / **Branch FaceBook Link** | `value.branchLines.branchFaceBookLink` | Adds a Facebook icon to the card. |
+| لينك فيسبوك / **Branch Facebook Link** | `value.branchLines.branchFaceBookLink` | Adds a Facebook icon to the card. |
 | لينك يوتيوب / **Branch Youtube Link** | `value.branchLines.branchYoutubeLink` | Adds a YouTube icon. |
-| لينك واتساب / **Branch Whats App Link** | `value.branchLines.branchWhatsAppLink` | Adds a WhatsApp icon. |
+| لينك واتساب / **Branch WhatsApp Link** | `value.branchLines.branchWhatsAppLink` | Adds a WhatsApp icon. |
 | لينك تيليجرام / **Branch Telegram Link** | `value.branchLines.branchTelegramLink` | Adds a Telegram icon. |
 
 ### Shopping Mobile Application Configuration records
@@ -398,8 +398,8 @@ The seventh tab (إعدادات تطبيق NAMA ORDERS) serves the Android **Nam
 | إنشاء عميل في حال عدم وجوده / **Generate Customer If Not Exist** | `value.ordersGenCustomerIfNotExist` | When an order names a customer that does not exist, creates one, coded by the order's mobile number and named after the order's customer name. Ticked here, it applies to every device. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.ordersItemsSendingCriteria` | Limits the items downloaded to the phone. A device line's criteria takes priority. Empty sends them all. |
 | معايير استقبال العملاء / **Customers Sending Criteria** | `value.ordersCustomersSendingCriteria` | The same for customers. |
-| نسخ اسم الجهاز الي / **Copy Device Id To** | `value.ordersCopyDeviceIdTo` | A text field on the created document, such as a description, that receives the device name. Empty copies nothing. |
-| نسخ كود المستند الي / **Copy Document Code To** | `value.ordersCopyDocCodeTo` | A text field that receives the code the app gave the order. |
+| نسخ اسم الجهاز إلى / **Copy Device Id To** | `value.ordersCopyDeviceIdTo` | A text field on the created document, such as a description, that receives the device name. Empty copies nothing. |
+| نسخ كود المستند إلى / **Copy Document Code To** | `value.ordersCopyDocCodeTo` | A text field that receives the code the app gave the order. |
 | إضافة حقل دولة الشحن / **Add Customer Shipping Country** | `value.addCustomerShippingCountry` | Shows a Country box in the app's customer and shipping dialog. The value goes to the document's shipping address, and to a generated customer's. |
 | إضافة حقل مدينة الشحن / **Add Customer Shipping City** | `value.addCustomerShippingCity` | The same for the city. |
 | إضافة حقل محافظة الشحن / **Add Customer Shipping State** | `value.addCustomerShippingState` | The same for the state. |
@@ -435,9 +435,9 @@ The **Config Lines** grid (`value.ordersConfigLines`) holds one line per device.
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.ordersConfigLines.ordersItemsSendingCriteria` | Overrides the header's items criteria when filled. |
 | الحفظ كمسودة / **Save As Draft** | `value.ordersConfigLines.ordersSaveAsDraft` | Saves this device's orders as drafts. |
 | إنشاء عميل في حال عدم وجوده / **Generate Customer If Not Exist** | `value.ordersConfigLines.ordersGenCustomerIfNotExist` | Creates missing customers for this device's orders. |
-| الحقول المحسوبه للعميل / **Customers Calculated Fields** | `value.ordersConfigLines.ordersCustomerCalculatedFields` | Field assignments, written like the field values of an entity flow (for example `group = "G1"`), applied to a customer generated from this device's orders. |
-| نسخ اسم الجهاز الي / **Copy Device Id To** | `value.ordersConfigLines.ordersCopyDeviceIdTo` | Overrides the header's field when filled. |
-| نسخ كود المستند الي / **Copy Document Code To** | `value.ordersConfigLines.ordersCopyDocCodeTo` | Overrides the header's field when filled. |
+| الحقول المحسوبة للعميل / **Customers Calculated Fields** | `value.ordersConfigLines.ordersCustomerCalculatedFields` | Field assignments, written like the field values of an entity flow (for example `group = "G1"`), applied to a customer generated from this device's orders. |
+| نسخ اسم الجهاز إلى / **Copy Device Id To** | `value.ordersConfigLines.ordersCopyDeviceIdTo` | Overrides the header's field when filled. |
+| نسخ كود المستند إلى / **Copy Document Code To** | `value.ordersConfigLines.ordersCopyDocCodeTo` | Overrides the header's field when filled. |
 | استعلام الصنف / **Item Query** | `value.ordersConfigLines.ordersItemQuery` | Overrides the header's scan query when filled. |
 | النموذج العربي / **Item Arabic Template** | `value.ordersConfigLines.ordersItemArabicTemplate` | Overrides the header's Arabic template when filled. |
 | النموذج الإنجليزي / **Item English Template** | `value.ordersConfigLines.ordersItemEnglishTemplate` | Overrides the header's English template when filled. |
@@ -448,7 +448,7 @@ The last tab (إعدادات تطبيق Mobile Delivery) serves the **Mobile Del
 
 | Option (Arabic / English) | Field id | What it does |
 |---|---|---|
-| عدد الأيام السابقة للبحث عن مستند حركة / **Previous Days Count To Limit Mob Deliver Document Search Period** | `value.previousDaysCountToLimitMobDeliveryDocSearchPeriod` | The courier's order list shows only delivery lines dated within this many days back. Empty or 0 means 3 days. |
+| عدد الأيام السابقة للبحث عن مستند حركة / **Previous Days Count To Limit Mob Delivery Document Search Period** | `value.previousDaysCountToLimitMobDeliveryDocSearchPeriod` | The courier's order list shows only delivery lines dated within this many days back. Empty or 0 means 3 days. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.deliveryItemsSendingCriteria` | Limits the items the app offers when a customer requests items, places an order or returns expired goods. A matching delivery line's criteria takes priority. Empty offers every item. |
 | مجموعة مهمة العمل / **Work Task File Group** | `value.deliveryConfig.workTaskFileGroup` | The group, and so the code prefix, of the work tasks the app creates. When empty, the first delivery line that has one is used. |
 
@@ -458,8 +458,8 @@ The last tab (إعدادات تطبيق Mobile Delivery) serves the **Mobile Del
 |---|---|---|
 | كود/اسم جهاز الجرد / **Device Code/Name** | `value.deliveryLines.deviceId` | The device the line's item criteria apply to. Empty means any device. The first line whose device matches, or is empty, is used. |
 | معايير استقبال الأصناف / **Items Sending Criteria** | `value.deliveryLines.deliveryItemsSendingCriteria` | The item criteria for that device. Empty falls back to the header's. |
-| دفتر اقتراح / شكوي / **Suggest / Complaint Book** | `value.deliveryLines.config.suggestOrComplainBook` | The book of the CRM complaint created from the app's suggestion and complaint screen. The server takes the first line that has both this and the term below, whatever its device. |
-| توجيه اقتراح / شكوي / **Suggest / Complaint Term** | `value.deliveryLines.config.suggestOrComplainTerm` | Must be filled for the line's complaint book to be used, but the complaint itself is created without a term. With no line holding both, the app gets *Can not find book and term for suggestion or complain* — «لا يمكن العثور على دفتر و توجيه للاقتراح أو الشكوى». |
+| دفتر اقتراح / شكوى / **Suggest / Complaint Book** | `value.deliveryLines.config.suggestOrComplainBook` | The book of the CRM complaint created from the app's suggestion and complaint screen. The server takes the first line that has both this and the term below, whatever its device. |
+| توجيه اقتراح / شكوى / **Suggest / Complaint Term** | `value.deliveryLines.config.suggestOrComplainTerm` | Must be filled for the line's complaint book to be used, but the complaint itself is created without a term. With no line holding both, the app gets *Can not find book and term for suggestion or complain* — «لا يمكن العثور على دفتر و توجيه للاقتراح أو الشكوى». |
 | مجموعة مهمة العمل / **Work Task File Group** | `value.deliveryLines.config.workTaskFileGroup` | Used only when the header's **Work Task File Group** is empty. The first line that has one is used, whatever its device. |
 
 ### Book grids
@@ -478,11 +478,11 @@ The server takes the first line whose device is empty or equal to the app's, and
 | إعدادات دفاتر أوامر الشراء / **Mobile Item Request Configurations** | `value.deliveryItemRequestBooks` (`.book`, `.deviceId`, `.forType`, `.term`) | The item request a customer sends from the order screen. For Type: `ItemRequest`. | Refused: *Can not find book and term for Item Request* — «لا يمكن العثور على دفتر و توجيه لطلب صنف». |
 | إعدادات دفاتر أوامر البيع / **Mobile Sales Order Configurations** | `value.deliverySalesOrderBooks` (same four) | The sales order a customer places. For Type: `SalesOrder`. | Refused with the same English *Item Request* message, «لا يمكن إيجاد دفتر و توجيه لطلب صنف» in Arabic. |
 | إعدادات دفاتر سندات القبض / **Mobile Receipt Voucher Configurations** | `value.deliveryReceiptVoucherBooks` (same four) | The electronic receipt voucher a courier takes. For Type: `ElectronicReceiptVoucher`. | The voucher is left without a term and amount. Always keep a line here. |
-| إعدادات دفاتر طلب مردود مبيعات / **Mobile Expired Sales Return Request Configurations** (the label repeats the next grid's) | `value.deliverySalesReturnReqBooks` (same four) | The sales return request a courier raises from an invoice. For Type: `SalesReturnRequest`. | No error. The document is created without the configured book. |
+| إعدادات دفاتر طلب مردود مبيعات / **Mobile Sales Return Request Configurations** | `value.deliverySalesReturnReqBooks` (same four) | The sales return request a courier raises from an invoice. For Type: `SalesReturnRequest`. | No error. The document is created without the configured book. |
 | إعدادات دفاتر طلب مردود أصناف منتهية الصلاحية / **Mobile Expired Sales Return Request Configurations** | `value.deliveryExpSalesReturnReqBooks` (same four) | The return request a customer raises for expired items. For Type: `SalesReturnRequest`. | Refused: *Can not find book and term for Expired Items Sales Return Request* — «لا يمكن العثور على دفتر و توجيه لأمر ارتجاع أصناف مبيعات منتهبة الصلاحية». |
 | إعدادات دفاتر مردودات مبيعات / **Mobile Sales Return Configurations** | `value.deliverySalesReturnBooks` (same four) | The sales return a courier creates from an invoice dated within the last seven days. For Type: `SalesReturn`. | No error. The document is created without the configured book. |
 
-Two grids on this tab carry the same English title, **Mobile Expired Sales Return Request Configurations**. The upper one (`value.deliverySalesReturnReqBooks`) is for ordinary sales return requests. Its Arabic title, «إعدادات دفاتر طلب مردود مبيعات», is the correct one. The group between them holds **Delivery Expired Products Sales Return Requests Criteria** (معايير استقبال طلبات مردودات الأصناف المنتهية الصلاحية, `value.deliveryExpProdSalesReturnCriteria`). It filters the customer's list of their own past expired-item return requests. Empty shows them all.
+Right after the expired-items grid, a group with the same title, **Mobile Expired Sales Return Request Configurations**, holds **Delivery Expired Products Sales Return Requests Criteria** (معايير استقبال طلبات مردودات الأصناف المنتهية الصلاحية, `value.deliveryExpProdSalesReturnCriteria`). It filters the customer's list of their own past expired-item return requests. Empty shows them all.
 
 ### Report groups and reports
 
@@ -490,8 +490,8 @@ Two grids on this tab carry the same English title, **Mobile Expired Sales Retur
 |---|---|---|
 | مجموعات تقارير / **Report Groups** | `value.reportGroupLines` | The report groups shown as cards on the customer's home screen in the Mobile Delivery app. |
 | كود المجموعة / **Group Code** | `value.reportGroupLines.groupCode` | The code reports point to. Saving a report whose group code is not in this grid is refused. |
-| **Arabic Name** | `value.reportGroupLines.arabicName` | The card's title in Arabic. |
-| **English Name** | `value.reportGroupLines.englishName` | The card's title in English. |
+| الاسم العربي / **Arabic Name** | `value.reportGroupLines.arabicName` | The card's title in Arabic. |
+| الاسم الإنجليزي / **English Name** | `value.reportGroupLines.englishName` | The card's title in English. |
 
 The **Reports** grid below it is the same `value.reportLines` grid shown on the KAS tab. See [Reports](#Reports) there. In the Mobile Delivery app, give every report a **Group Code**, because a report with none does not appear under any card.
 
@@ -500,11 +500,11 @@ The **Reports** grid below it is the same `value.reportLines` grid shown on the 
 | Message | Why | What to do |
 |---|---|---|
 | *You can only save records of type {0} from the mobile application* — «يمكنك حفظ المستند من نوع {0} من خلال تطبيق الهاتف المحمول فقط» | An electronic attendance, vacation request, permission request, electronic stock taking or electronic receipt was saved from the browser while its **Only Allow Creation … Through Application** box is ticked. | Create it from the app. To let users correct saved ones in the browser, tick the matching **Only Allow Update … For Authorized** box. |
-| *Total hours {0} for document {1} exceeded the maximum allowed hours {2}* — «إجمالي الساعات {0} للمستند {1} تجاوز الحد الأقصى المسموح به وهو {2}» | The check-out is further from the check-in than **Number Of Hours Allowed Before Preventing CheckOut**, or the hours set on the employee's shift. | Check whether the employee forgot to check out the day before. Raise the limit only if long shifts are real. |
-| *Could not find allowed zone to check in* — «لا يمكن إيجاد مناصق مسموح تسجيل دخول بها» (and the same with *check out*) | Zones are switched on and no allowed zone covers this employee. | Add an allowed zone line for the employee, their department or their group. |
+| *Total hours {0} for document {1} exceeded the maximum allowed hours {2}* — «إجمالي الساعات {0} للمستند {1} تجاوز الحد الأقصى المسموح به وهو {2}» | The check-out is further from the check-in than **Number Of Hours Allowed Before Preventing Check Out**, or the hours set on the employee's shift. | Check whether the employee forgot to check out the day before. Raise the limit only if long shifts are real. |
+| *Could not find allowed zone to check in* — «لا يمكن إيجاد مناطق مسموح تسجيل دخول بها» (and the same with *check out*) | Zones are switched on and no allowed zone covers this employee. | Add an allowed zone line for the employee, their department or their group. |
 | *You cannot check in from your current location. The distance between your location and the nearest zone ({0}) is {1}* — «لا يمكنك تسجيل دخول من الموقع الحالي, المسافة بين موقعك وأقرب منطقة ({0}) هي {1}» (and the same with *check out*) | **Prevent Save If Attendance Out Of Zone** is ticked and the phone is outside every zone. | Ask the employee to move into the zone, or widen the zone's maximum distance. |
 | *Check in zone {0} is not the same as check out zone {1}* | **Check Out Zone Must Be Same As Check In Zone** is ticked. This message has no Arabic text and shows in English on Arabic screens. | Check out from the zone of the check-in, or untick the option. |
-| *Only two or four items can be displayed!* | One or three app bar items are filled. | Fill two or four. |
+| *Only two or four items can be displayed!* — «لا يمكن عرض غير عنصرين أو 4 عناصر فقط» | One or three app bar items are filled. | Fill two or four. |
 | *The report group code {0} does not exist* — «كود مجموعة التقارير {0} غير موجود» | A report's **Group Code** is not in the Report Groups grid. | Add the group, or correct the code. |
 | *Please contact administrator to config order book and term* | The KAS app placed an order with no order book or term in the settings that apply. This message has no Arabic text. | Fill **Order Book** and **Order Term** in the group, or on the matching shopping line. |
 | *Can not find book and term for Item Request* — «لا يمكن العثور على دفتر و توجيه لطلب صنف» | The Mobile Delivery app found no line in the item request grid, or in the sales order grid, for the device. A sales order shows the same English text, with «لا يمكن إيجاد دفتر و توجيه لطلب صنف» in Arabic. | Add a line, with an empty device for a catch-all. |

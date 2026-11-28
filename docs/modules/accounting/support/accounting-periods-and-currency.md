@@ -33,11 +33,11 @@ Rates move, though, and that creates **currency differences** on open foreign ba
 - **Exchange Rate Update** (`Accounting > Documents > Exchange Rate Update`) — revalues foreign-currency account balances at a new rate and records the resulting gain/loss, so the local value of those balances reflects today's rate.
 - **Currency Diff Journal** (`Accounting > Documents > Currency Diff Journal`) — records a currency-difference entry directly (see also [Journal entries & adjustments](../ledger-setup/journal-entries.md), where currency-difference journals are covered).
 
-Two account-level flags shape this behavior: one makes an account **keep its transaction's local currency** (rather than being revalued), and another **excludes the account from the automatic exchange-rate update** — so accounts that shouldn't be revalued (a fixed-rate settlement account, say) are left alone.
+Two account-level flags shape this behavior. **Use Transaction Local Currency** makes the account take its currency from the main currency of the company's ledger instead of its own **Currency** field. **Do Not Automatically Include In Exchange Rate Update** leaves the account out of an Exchange Rate Update line that does not name an account, so an account that shouldn't be revalued (a fixed-rate settlement account, say) is revalued only when a line names it explicitly.
 
 ## For Support
 
 - **"The document won't save into this date"** — its **period** is closed, for everyone or (through a Fiscal Year Status Update rule) for this user or document type. Reopen it with **Open Periods** on the Fiscal Year, or add an **Ignore Closed Periods** rule for the user or document type — see [Fiscal Period Control](/platform/governance/fiscal-period-control-guide). Also check **Prevent Transactions** locks on the account/subsidiary.
 - **"A foreign balance's local value changed"** — an **Exchange Rate Update** revalued it at a new rate; that's expected, and the difference is the currency gain/loss.
-- **"An account shouldn't be revalued but is (or vice-versa)"** — check its **keep transaction local currency** and **exclude from exchange-rate update** flags.
+- **"An account shouldn't be revalued but is (or vice-versa)"** — check its **Do Not Automatically Include In Exchange Rate Update** flag, and whether the Exchange Rate Update line names the account.
 - **"The wrong period was stamped"** — it follows the document's **value date**; correct the date and reprocess (see [How documents are processed into accounting effects](./accounting-request-processing.md)).

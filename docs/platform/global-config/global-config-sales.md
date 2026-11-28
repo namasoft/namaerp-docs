@@ -17,15 +17,15 @@ The salesman on a sales document drives commission, targets and often pricing, s
 
 **Do Not Override Sales Man When Changing Customer In Invoices** `value.info.doNotOverrideSalesManWithCustomer` — Customers can have a default salesman, and selecting the customer normally applies it, overwriting whatever was there. With this on, a salesman already chosen on the document is left alone. Turn it on where the person selling is not always the customer's assigned representative.
 
-**Search for sales man for customer at update sales man document** `value.info.salesManSearch` — The salesman lookup on a sales document goes through a customer-aware service instead of a plain search, so the list offered is the salesmen actually linked to that customer.
+**Search for sales man for customer at update sales man document** `value.info.salesManSearch` — When a customer is picked on a sales document, the salesman filled in comes from the newest **Sales Man Update Document** line for that customer and the document's legal entity. When no such line matches, the customer's own default salesman is used, as it is with this option off.
 
 **Use Sales Man For Price Lists** `value.info.useSalesManAsEmployeeForPriceLists` — Price lists can be resolved per employee. With this on, the *document's salesman* is the employee used for pricing; with it off, the *logged-in user's* employee is used. The difference matters in a back office where one clerk enters orders on behalf of many salespeople — there, the salesman is almost always the right answer.
 
 ## Customer coding
 
-**Use Phone As Code** `value.info.useUserPhoneAsCode` — The customer's phone number becomes the customer code. Retail and delivery businesses like this because the phone number is what the customer knows and what the call centre searches by.
+**Use Phone As Code** `value.info.useUserPhoneAsCode` — The customer code is the customer's mobile number: each time a customer is saved, its code is copied into its **Mobile** field. Retail and delivery businesses like this because the phone number is what the customer knows and what the call centre searches by.
 
-**Code Mask** `value.info.userCodeMask` — A pattern the generated code must match, which is how you enforce a phone-number shape rather than accepting any digits. This is **required** when the option above is on; the system refuses to save otherwise.
+**Code Mask** `value.info.userCodeMask` — A regular expression the customer code must match while the option above is on, which is how you enforce a phone-number shape rather than accepting any text. A customer whose code does not match is refused with *Must be phone number* — «يجب أن يكون رقم تليفون».
 
 ## Error reporting
 
@@ -46,9 +46,9 @@ Every field on this tab with its exact on-screen label in both languages, so you
 | Field id | English label | Arabic label | Meaning |
 |---|---|---|---|
 | `value.info.useCurrentUserAsSalesMan` | use Current User As Sales Man | استخدام الموظف الحالي كبائع آليا | [Salesman](#Salesman) |
-| `value.info.doNotOverrideSalesManWithCustomer` | Do Not Override Sales Man When Changing Customer In Invoices | عدم تغيير المندوب في الفواتير ان وجد مع اختيار العميل | [Salesman](#Salesman) |
+| `value.info.doNotOverrideSalesManWithCustomer` | Do Not Override Sales Man When Changing Customer In Invoices | عدم تغيير المندوب في الفواتير إن وجد مع اختيار العميل | [Salesman](#Salesman) |
 | `value.info.salesManSearch` | Search for sales man for customer at update sales man document | البحث عن بائع للعميل في سند تحديث مندوب مبيعات | [Salesman](#Salesman) |
 | `value.info.useSalesManAsEmployeeForPriceLists` | Use Sales Man For Price Lists | استعمال البائع بدلا من المستخدم للأسعار | [Salesman](#Salesman) |
-| `value.info.useUserPhoneAsCode` | Use Phone As Code | أستخدام هاتف المستخدم ككود | [Customer coding](#Customer-coding) |
+| `value.info.useUserPhoneAsCode` | Use Phone As Code | استخدام هاتف المستخدم ككود | [Customer coding](#Customer-coding) |
 | `value.info.userCodeMask` | Code Mask | هيئة الكود | [Customer coding](#Customer-coding) |
 | `value.info.errorReportEntityType` | Entity Type For Reporting Errors | نوع الكيان المستخدم للإبلاغ عن الأخطاء | [Error reporting](#Error-reporting) |

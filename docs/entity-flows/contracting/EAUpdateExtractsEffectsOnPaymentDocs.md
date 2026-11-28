@@ -14,10 +14,10 @@ Automatically synchronizes payment transaction records when contracting extract 
 
 ## When This Action Runs
 
-- **Trigger:** Automatic when extract documents are saved
-- **Target:** Contracting extract documents with payment references
+- **Trigger:** The event chosen in **Target Action** on the flow line. An extract already runs this same recalculation by itself every time it is saved, so the flow is only needed to repeat it on demand, for example from a manual run
+- **Target:** Project extracts and contractor extracts whose condition lines point to payment documents
 - **Purpose:** Synchronize payment calculations with extract conditions
-- **Timing:** After extract document save/modification
+- **Parameters:** None
 
 ## How It Works
 
@@ -59,16 +59,16 @@ GROUP BY cpt.paymentDocId, cpt.termCode
 
 ### Payment Limit Validation
 - **Rule:** No payment term can have negative remaining balance
-- **Exception:** Documents with `allowForNegativeRemaining=true` bypass check
-- **Error:** "Term Code {termCode} remaining value is {amount} is negative"
+- **Exception:** An advance payment document whose term has **Allow Negative Remaining** ticked bypasses the check
+- **Error:** *Term Code {0} remaining value is {1} is negative in document {2}* — «كود البند {0} المتبقي {1} سالب في المستند {2}»
 
 ### Final Extract Validation
 - **Rule:** Final extracts must not leave remaining balances
-- **Error:** "The payment {payment} for contract {contract} still has remaining {amount}"
+- **Error:** *The payment {0} for the contract {1} still has a remaining {2}* — «مستند الدفع {0} للعقد {1} لا يزال متبقي مبلغ {2} فيه»
 
 ### Term Code Restrictions
-- **Rule:** Cannot modify term codes with existing transactions
-- **Error:** "Cannot change or remove term code {termCode} because it has {count} transactions"
+- **Rule:** A term code that already has transactions cannot be changed or removed from its payment document. This check runs when the payment document itself is saved, not in this flow
+- **Error:** *Document {0} you can not change or remove term code {1} because it has {2} transactions* — «المستند {0} لا يمكن تغيير أو حذف كود البند {1} لأنه له {2} عدد حركات»
 
 ## Related Actions
 

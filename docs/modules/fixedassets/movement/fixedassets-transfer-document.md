@@ -47,12 +47,14 @@ The document is one page, and it is built around a *from* and a *to*.
 The top group carries the usual document identity — book and code, issue date, value date — plus two
 fields that do the real work:
 
-- **From Document** (بناءا على) — an existing [transfer request](/modules/fixedassets/movement/fixedassets-transfer-requests.md),
-  if the move was asked for on paper first. Picking one copies the asset, the locations, both
-  dimension sets and the accounts onto this document so nothing is typed twice.
+- **From Document** (بناءً على) — an existing [transfer request](/modules/fixedassets/movement/fixedassets-transfer-requests.md),
+  if the move was asked for on paper first. Picking one copies the asset, both locations, both
+  dimension sets and the custodian onto this document. The request's accounts and *To*
+  classifications are not copied: the accounts are filled from the asset when you save, and the
+  classifications are entered here.
 - **Fixed Asset** (الأصل الثابت) — the machine being moved. Choosing it fills in almost everything
   else: the *From* dimensions, the accounts, and the asset's current location.
-- **To Location** (إلي موقع) — where it is going.
+- **To Location** (إلى موقع) — where it is going.
 
 There is no *From Location* box to fill. The system knows where the asset is, because it knows the
 last transfer that touched it, and it writes that in for you.
@@ -72,7 +74,7 @@ Below that sit four groups:
 
 | Group | What it holds |
 |---|---|
-| **الحسابات / Detail Accounts** | The three accounts the asset should sit on from now on — **Asset account** (حساب الأصل), **Depreciation account** (حساب الإهلاك) and **Accumulative depreciation account** (حساب الإهلاك التراكمي) — plus **Mediator Account 1** and **Mediator Account 2**, which only come into play when the company changes |
+| **الحسابات / Detail Accounts** | The three accounts the asset should sit on from now on — **Asset account** (حساب الأصل), **Depreciation account** (حساب الإهلاك) and **Accumulative depreciation account** (حساب الإهلاك التراكمي) — plus **Mediator Account1** and **Mediator Account2**, which only come into play when the company changes |
 | **من / From** | Where the asset is now: its custodian and its five current dimensions. Filled from the asset |
 | **إلى / To** | Where it is going: the five destination dimensions, and **To Fixed Asset Classification 1** to **5** (إلى تصنيف أصل ثابت) when the move also reclassifies the asset |
 | **المحددات / Dimensions** | The document's *own* dimensions — the ones the document is filed under. These matter more than they look; see below |
@@ -161,33 +163,19 @@ replaces the matching **Fixed Asset Classification** (1 to 5) on the asset; the 
 asset's classification as it is. So a machine moving from the workshop into the production line can
 change its classification from "Maintenance equipment" to "Production equipment" in the same document.
 
-There is one condition on the write-back. The asset takes its header values from its **latest**
-movement. Enter a back-dated transfer behind one that is already recorded, and the history gains a row
-in the right chronological place while the asset's own location and dimensions stay as the later
-document left them. That is correct behaviour — the most recent move is the one that describes where
-the thing is now — but it does surprise people who expect the last document *entered* to win.
+The asset takes its header values from its **latest** movement, which is why a transfer cannot be
+dated behind one that is already recorded — see
+[what stops a transfer from committing](#What-stops-a-transfer-from-committing).
 
 Who holds the asset is a separate question, handled by the
 [delivery and receipt of custodies document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md).
 The **Custodian** field in the *From* group records who was holding the machine when the move was
 raised, and it is part of the paper trail rather than a way to reassign it.
 
-::: warning Committing a transfer clears the asset's custodian
-Watch for this one. Every committed transfer wipes the **Custodian** on the asset record and leaves it
-empty — and there is no field on the transfer screen that sets a new one. The machine arrives in its
-new department with nobody shown as holding it.
-
-After each transfer, put the custodian back: either raise a
-[delivery and receipt of custodies document](/modules/fixedassets/acquisition/fixedassets-delivery-receipt.md)
-for the new holder — the proper route, because it also books the value and writes the custody history —
-or set the field by hand on the asset. If your company transfers assets often, ask your administrator
-about adding the new-custodian field to the transfer screen with a screen modifier.
-:::
-
 ## Actions on this screen
 
 The transfer document has no buttons of its own. Everything it does happens when it is committed —
-the location, custodian and dimensions are written onto the asset, and the accounting entry is
+the location, dimensions and accounts are written onto the asset, and the accounting entry is
 raised. The screen's conveniences are not buttons either. Picking the **asset** fills the *from*
 location, the custodian, the asset's accounts and both sets of dimensions from the asset's own
 record, so an unchanged dimension needs no typing at all. Picking the **destination location** then
@@ -200,8 +188,11 @@ The transfer sits in the middle of an asset's timeline, so most of its rules are
 hole in that timeline. All failures are reported together, so you see the full list at once.
 
 1. **A transfer can never be an asset's first document.** The system needs a previous position to
-   move the asset *from*. If you get *"The first transaction for the asset can not be transfer"*, the
-   asset was never brought into service — it still needs a
+   move the asset *from*. If you get
+
+   *The first transaction for the asset {0} can not be transfer. Please check the date* — «أول حركة للأصل {0} لا يمكن أن تكون نقل. يرجى التأكد من التواريخ»
+
+   the asset was never brought into service — it still needs a
    [purchase](/modules/fixedassets/acquisition/fixedassets-purchase-document.md) or an
    [opening document](/modules/fixedassets/acquisition/fixedassets-opening-balances.md).
 2. **The asset must be in service.** An asset still in its initial state cannot be transferred, and a
@@ -225,7 +216,7 @@ never allowed to become ambiguous.
 
 ## Turning the accounting off
 
-The transfer document's term has exactly one setting: **بدون تاثير محاسبي / Without Accounting
+The transfer document's term has exactly one setting: **بدون تأثير محاسبي / Without Accounting
 Effect**. Tick it and the document does all of its register work — location, dimensions, accounts,
 history — and sends nothing to the ledger.
 
@@ -239,10 +230,14 @@ were unticked: it books.
 ## Cancelling or deleting
 
 Cancelling or deleting a transfer removes its ledger requests, restores the asset's location, dimensions and
-accounts from the *previous* movement, and deletes the history row. The asset ends up exactly where
-it was before, which is what you want when a move was recorded in error.
+accounts from the *previous* movement, puts back the custodian named in the *From* group, and deletes
+the history row — which is what you want when a move was recorded in error.
 
-The one refusal you may meet is *"asset location changed by …"*. That means a **newer** movement
+The one refusal you may meet is
+
+*Error in fixed asset status {0},asset location changed by {1}* — «خطأ في حالة الأصل {0} موقع الأصل قد تم تغييره بواسطة {1}»
+
+That means a **newer** movement
 already exists, and rolling this one back would leave the newer one dangling. Cancel or delete the newer
 document first.
 
@@ -252,14 +247,11 @@ same menu shows the ledger transactions the document produced, which is the fast
 particular transfer actually did.
 
 ::: info Entries are processed in the background
-Like everything else in the module, the ledger side of a transfer is a business request. The document
-saves immediately and the entry is produced by the request processor a moment later. If it fails —
-a closed period, a missing account — the document stays committed and the request is retried from the
-**Business Requests** list view with **More → Reprocess**. It is also worth remembering that the
-balances are read *as at the transfer's value date* from ledger entries that have already been
-processed, so a transfer
-entered while an earlier document is still queued can read a stale figure. Let the queue drain before
-transferring an asset that was only just bought.
+The ledger side of a transfer is a business request, processed and retried like any other — see
+[Business Requests](/platform/background-processing/business-requests). What is specific to the
+transfer is that the balances are read *as at the transfer's value date* from ledger entries that have
+already been processed, so a transfer entered while an earlier document is still queued can read a
+stale figure. Let the queue drain before transferring an asset that was only just bought.
 :::
 
 ## Moving many assets at once
